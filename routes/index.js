@@ -46,7 +46,10 @@ const authenticatedAdmin = (req, res, next) => {
     res.redirect("/admin/signin");
   }
 };
-
+router.use(function (req, res, next) {
+  console.log("%s - status:%s | %s", req.method, res.statusCode, req.path);
+  next();
+});
 router.use("/", homeRouter);
 router.use("/users", authenticated, usersRouter);
 router.use("/admin", authenticatedAdmin, adminRouter);

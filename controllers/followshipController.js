@@ -2,7 +2,7 @@ const db = require("../models");
 const { User, Tweet, Followship } = db;
 const { Op } = require("sequelize");
 const moment = require("moment");
-const { getTestUser } = require("./util.service");
+const { getTestUser, getTopUsers } = require("./util.service");
 //for test only
 
 const listAttributes = [
@@ -17,8 +17,8 @@ const listAttributesTop = ["id", "name", "account", "avatar"];
 
 const followshipController = {
   getFollowers: async (req, res) => {
-    let rankedUsers;
     try {
+      const TopUsers = await getTopUsers(user);
       let profile = await User.findByPk(req.params.id, {
         attributes: ["id", "name"],
         include: [
@@ -41,34 +41,13 @@ const followshipController = {
         follower.updatedAtFormated = moment(follower.updatedAt).fromNow();
 
         //get top users
-        User.findAll({
-          attributes: listAttributesTop,
-          include: [{ model: User, as: "Followers", attributes: ["id"] }],
-          where: {
-            id: { [Op.not]: getTestUser(req).id },
-            role: { [Op.not]: "admin" },
-          },
-        })
-          .then((rawUsers) => {
-            rankedUsers = rawUsers
-              .map((data) => ({
-                ...data.dataValues,
-                FollowerCount: data.Followers.length,
-                isFollowed: getTestUser(req)
-                  .Followings.map((d) => d.id)
-                  .includes(data.id),
-              }))
-              .sort((a, b) => b.FollowerCount - a.FollowerCount);
-            rankedUsers = rankedUsers.slice(0, 10);
-          })
-          .then(() => {
-            return res.render("followship", {
-              tagA: true,
-              profile,
-              followers: profile.Followers,
-              users: rankedUsers,
-            });
-          });
+
+        return res.render("followship", {
+          tagA: true,
+          profile,
+          followers: profile.Followers,
+          users: TopUsers,
+        });
       });
     } catch (error) {
       res.status(400).json(error);

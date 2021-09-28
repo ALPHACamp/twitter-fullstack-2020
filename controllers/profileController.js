@@ -1,14 +1,12 @@
 const db = require("../models");
 const { Op } = require("sequelize");
-const moment = require("moment");
 const { Reply, User, Tweet, Like, Followship } = db;
-const multer = require("multer");
 const fs = require("fs");
 const imgur = require("imgur-node-api");
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 //for test only
-const { getTestUser } = require("./util.service");
+const { getTestUser, getMyProfile, getTopUsers } = require("./util.service");
 
 const listAttributes = ["id", "name", "account", "avatar"];
 
@@ -16,13 +14,8 @@ const profileController = {
   getPosts: async (req, res) => {
     const user = getTestUser(req);
     try {
-      // 前端判斷
-      const isPost = true;
-      //get selfInformation
-      const myProfile = await User.findByPk(user.id, {
-        attributes: ["id", "avatar"],
-        raw: true,
-      });
+      const myProfile = await getMyProfile(user);
+      const TopUsers = await getTopUsers(user);
       //get selfInformation
       const Profile = await User.findByPk(req.params.id, {
         include: [
@@ -58,27 +51,9 @@ const profileController = {
       const followersCount = Profile.Followers.length;
       const followingsCount = Profile.Followings.length;
       const tweetsCount = Tweets.length;
-
-      // get TopUser
-      const rawUsers = await User.findAll({
-        attributes: listAttributes,
-        include: [{ model: User, as: "Followers", attributes: ["id"] }],
-        where: {
-          id: { [Op.not]: user.id },
-          role: { [Op.not]: "admin" },
-        },
-      });
-      const Users = await rawUsers
-        .map((data) => ({
-          ...data.dataValues,
-          FollowerCount: data.Followers.length,
-          isFollowed: user.Followings.map((d) => d.id).includes(data.id),
-        }))
-        .sort((a, b) => b.FollowerCount - a.FollowerCount);
-      const TopUsers = Users.slice(0, 10);
       const isSelf = Number(req.params.id) === Number(user.id);
       return res.render("profile", {
-        isPost,
+        isPost: true,
         isSelf,
         myProfile,
         users: TopUsers,
@@ -269,13 +244,13 @@ const profileController = {
     const { name, introduction, avatar, cover } = req.body;
     const errors = [];
     if (!name || !introduction) {
-      errors.push({ message: '名稱或自我介紹欄位，不可空白' })
+      errors.push({ message: "名稱或自我介紹欄位，不可空白" });
     }
     if (name.length > 50) {
-      errors.push({ message: '名稱必須在50字符以內' })
+      errors.push({ message: "名稱必須在50字符以內" });
     }
     if (introduction.length > 160) {
-      errors.push({ message: '自我介紹，必須在160字符以內' })
+      errors.push({ message: "自我介紹，必須在160字符以內" });
     }
     if (errors.length > 0) {
       return res.render("edit", { name, introduction, avatar, cover });
@@ -307,7 +282,7 @@ const profileController = {
       avatar: images.avatar ? images.avatar.data.link : profile.avatar,
     });
 
-    req.flash('success_msg', '您的個人資訊已更新')
+    req.flash("success_msg", "您的個人資訊已更新");
     return res.redirect(`/users/${user.id}/tweets`);
   },
 };
