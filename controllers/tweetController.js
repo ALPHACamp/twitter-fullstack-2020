@@ -82,10 +82,11 @@ const tweetController = {
             .LikedTweets.map(likeTweet => likeTweet.id)
             .includes(tweetJson.id)
         : false
-      const tweetReplies = tweetJson.Replies.map(reply => ({
+      let tweetReplies = tweetJson.Replies.map(reply => ({
         ...reply
       }))
-
+      // 增加排序，目前無規定，故先以時間最新排越前面
+      tweetReplies = tweetReplies.sort((a, b) => b.id - a.id)
       res.render('tweet', {status: (200), tweetReplies, tweet: tweetJson, popularUser })
     } catch (err) {
       res.status(302);

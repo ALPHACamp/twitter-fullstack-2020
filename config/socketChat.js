@@ -49,7 +49,7 @@ module.exports = {
             ...msg.dataValues,
             createdAt: timeConvert(msg.dataValues.createdAt)
           }))
-
+    
           io.emit(`historyPublicChats-${userMsg.senderId}`, historyPublicChats)
           io.emit('publicRoomUsers', publicRoomUsers)
           if (userMsg.behavior === 'enter-public') {

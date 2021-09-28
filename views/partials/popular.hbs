@@ -5,28 +5,30 @@
   <div class="popular-user row">
     <div class="col-2">
       <a href="/users/{{this.id}}/tweets">
-      <img class="rounded-circle" src="{{this.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
+        <img class="rounded-circle" src="{{this.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
       </a>
     </div>
     <div class="col-6 d-flex align-items-center">
       <a href="/users/{{this.id}}/tweets">
         <p class="popular-name">&nbsp;&nbsp;{{this.name}}<br />&nbsp;&nbsp;<span
-        class="popular-account">@{{this.account}}</span></p>
+            class="popular-account">@{{this.account}}</span></p>
       </a>
-      
+
     </div>
 
     <div class="follow-btn col-4 ">
       {{#if this.isFollowed }}
       <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-      {{!-- <input type="hidden" name="id" value="{{this.id}}"> --}}
-      <button type="submit" class="btn rounded-pill fw-bolder common-button unFollow-axios" data-url="{{baseURL}}" data-id="{{this.id}}">正在跟隨</button>
+        {{!-- <input type="hidden" name="id" value="{{this.id}}"> --}}
+        <button type="submit" class="btn rounded-pill fw-bolder common-button unFollow-axios" data-url="{{baseURL}}"
+          data-id="{{this.id}}">正在跟隨</button>
       </form>
       {{else}}
-        <form action="/followships" method="POST">
+      <form action="/followships" method="POST">
         <input type="hidden" name="id" value="{{this.id}}">
-        <button type="submit" class="btn rounded-pill fw-bolder unfollow-button follow-axios" data-url="{{baseURL}}" data-id="{{this.id}}">跟隨</button>
-        </form>
+        <button type="submit" class="btn rounded-pill fw-bolder unfollow-button follow-axios" data-url="{{baseURL}}"
+          data-id="{{this.id}}">跟隨</button>
+      </form>
       {{/if}}
 
     </div>
@@ -34,24 +36,3 @@
   {{/each}}
 
 </div>
-
-{{!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
-  const popular = document.querySelector('#popular')
-
-  popular.addEventListener('click', function onIconClicked(event) {
-    const baseURL = event.target.dataset.url
-    const userId = event.target.dataset.id
-    if (event.target.matches('.unFollow-axios')) {
-      axios.post(`${baseURL}/followships/${userId}?_method=DELETE`)
-        .then(() => {
-          event.target.classList.toggle("common-button")
-          event.target.classList.toggle("unFollow-axios")
-          event.target.classList.toggle("unfollow-button")
-          event.target.classList.toggle("follow-axios")
-          event.target.innerText = '跟隨'
-        })
-    }
-
-  })
-</script> --}}

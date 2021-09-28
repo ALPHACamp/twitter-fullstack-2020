@@ -35,20 +35,23 @@ const userController = {
           : false
       }))
 
-      res.render('userTweets', {status: (200), profileUser, popularUser, tweets })
+      res.render('userTweets', {
+        status: 200,
+        profileUser,
+        popularUser,
+        tweets
+      })
     } catch (err) {
       res.status(302)
       console.log('getUserTweets err')
       req.flash('error_messages', '讀取使用者貼文失敗')
       return res.redirect('/')
-      
     }
   },
   getSetting: async (req, res) => {
     try {
       User.findByPk(helpers.getUser(req).id, { raw: true }).then(user => {
         res.render('setting', { userdata: user })
-
       })
     } catch (error) {
       res.status(302)
@@ -80,7 +83,13 @@ const userController = {
       }
 
       if (error_messages.length) {
-        return res.render('setting', {status: (302), error_messages, account, userdata: user,})}
+        return res.render('setting', {
+          status: 302,
+          error_messages,
+          account,
+          userdata: user
+        })
+      }
 
       await User.findByPk(userId).then(user => {
         user.update({
@@ -96,7 +105,7 @@ const userController = {
         })
       })
     } catch (err) {
-      res.status(302);
+      res.status(302)
       console.log('editSetting err')
       req.flash('error_messages', '帳戶更動失敗')
       return res.redirect('back')
@@ -121,9 +130,14 @@ const userController = {
         order: [['createdAt', 'DESC']]
       })
 
-      res.render('userReply', {status: (200), profileUser, popularUser, replies })
+      res.render('userReply', {
+        status: 200,
+        profileUser,
+        popularUser,
+        replies
+      })
     } catch (err) {
-      res.status(302);
+      res.status(302)
       console.log('getReplies err')
       req.flash('error_messages', '讀取回覆失敗')
       return res.redirect('back')
@@ -158,9 +172,14 @@ const userController = {
           : true // 為了測試檔而新增的
       }))
 
-      res.render('userLike', { status: (200), profileUser, popularUser, likedTweets })
+      res.render('userLike', {
+        status: 200,
+        profileUser,
+        popularUser,
+        likedTweets
+      })
     } catch (err) {
-      res.status(302);
+      res.status(302)
       console.log('getLikes err')
       req.flash('error_messages', '點擊失敗')
       return res.redirect('back')
@@ -193,13 +212,17 @@ const userController = {
           .includes(item.id)
       }))
 
+      followingsUser = followingsUser.sort(
+        (a, b) => b.followshipId - a.followshipId
+      )
+
       return res.render('following', {
         popularUser,
         currentUserFollowings,
         followingsUser
       })
     } catch (err) {
-      res.status(302);
+      res.status(302)
       console.log('getFollowings err')
       req.flash('error_messages', '獲取追蹤中使用者失敗')
       return res.redirect('back')
@@ -233,13 +256,17 @@ const userController = {
           .includes(item.id)
       }))
 
+      followersUser = followersUser.sort(
+        (a, b) => b.followshipId - a.followshipId
+      )
+
       return res.render('follower', {
         popularUser,
         currentUserFollowers,
         followersUser
       })
     } catch (err) {
-      res.status(302);
+      res.status(302)
       console.log('getFollowers err')
       req.flash('error_messages', '獲取追蹤者失敗')
       return res.redirect('back')
