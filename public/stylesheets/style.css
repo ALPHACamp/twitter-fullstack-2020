@@ -1914,7 +1914,7 @@ svg {
 .admin-tweet-container .row {
   margin: 15px 15px 0px 15px;
   padding: 0px;
-  width: 1025px;
+  width: 1040px;
   justify-content: space-between;
   flex-wrap: wrap;
 }
@@ -1926,7 +1926,7 @@ svg {
 
 .admin-tweet-container .col-3 {
   max-width: 245px;
-  margin: 0px 0px 15px 0px;
+  margin: 0px 15px 15px 0px;
   padding: 0px;
 }
 
