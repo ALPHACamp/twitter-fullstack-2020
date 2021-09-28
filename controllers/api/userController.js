@@ -19,7 +19,7 @@ const passportJWT = require('passport-jwt')
 const ExtractJwt = passportJWT.ExtractJwt
 const JwtStrategy = passportJWT.Strategy
 
-const userController = {
+let userController = {
 
   signIn: (req, res) => {
     // 檢查必要資料
