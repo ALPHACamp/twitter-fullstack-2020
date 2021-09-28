@@ -14,6 +14,11 @@ const followshipController = {
         followerId: helpers.getUser(req).id,
         followingId: req.body.id
       })
+      
+      // 因為了符合test user編輯基本資料後是以render形式渲染頁面，但接下來動作是追蹤的化res.redirect('back')會回傳json檔案頁面，故使用此解法提升使用者體驗也能過test
+      if (req.headers.referer.includes('api') && req.headers.referer.includes('users')) {
+        return res.redirect(`/users/${helpers.getUser(req).id}/tweets`)
+      }
       return res.redirect('back')
     } catch (err) {
       console.log('addFollowing err')
@@ -31,6 +36,11 @@ const followshipController = {
           followingId: req.params.userId
         }
       })
+      
+      // 因為了符合test user編輯基本資料後是以render形式渲染頁面，但接下來動作是追蹤的化res.redirect('back')會回傳json檔案頁面，故使用此解法提升使用者體驗也能過test
+      if (req.headers.referer.includes('api') && req.headers.referer.includes('users')){
+        return res.redirect(`/users/${helpers.getUser(req).id}/tweets`)
+      }
       res.status(200)
       return res.redirect('back')
     } catch {

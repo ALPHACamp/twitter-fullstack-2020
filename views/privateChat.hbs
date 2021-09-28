@@ -5,75 +5,31 @@
         <span class="home-word ms-1">訊息</span>
         <i class="far fa-envelope fa-lg my-auto me-3"></i>
       </div>
-    {{!-- 帶userId進去 data-receiver--}}
     <div class="chat-user-list">
-      <div class="chat-user user-private align-middle d-flex" data-receiver=""> 
-        <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg" alt="avatar" title="avatar" width="50px" height="50px">
+     {{#each userList}}
+     <a href="/chat/private/{{this.id}}"> 
+      <div class="chat-user user-private align-middle d-flex"> 
+      <img class="rounded-circle" src="{{this.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
           <div class="info ms-2">
-            <span class="name">Apple Pie</span>
-            <span class="account">@helloApplePie</span>
-            <p class="ms-1 mt-1">最後的內容擷取大概15-20char...</p>
+            <span class="name">{{this.name}}</span>
+            <span class="account">@{{this.account}}</span>
+            <p class="msg-preview ms-1 mt-1">最後的內容擷取大概15-20char...</p>
           </div>
           <div class="time ms-auto">
-            <span class="time">9月26號</span>
+            <span>9月26號</span>
           </div>
-      </div>
-      <div class="chat-user user-private align-middle d-flex" data-receiver="">
-        <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
-          alt="avatar" title="avatar" width="50px" height="50px">
-        <div class="info ms-2">
-          <span class="name">Apple Pie</span>
-          <span class="account">@helloApplePie</span>
-          <p class="ms-1 mt-1">最後的內容擷取大概15-20char...</p>
-        </div>
-        <div class="time ms-auto">
-          <span class="time">9月26號</span>
-        </div>
-      </div>
-      <div class="chat-user user-private align-middle d-flex" data-receiver="">
-        <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
-          alt="avatar" title="avatar" width="50px" height="50px">
-        <div class="info ms-2">
-          <span class="name">Apple Pie</span>
-          <span class="account">@helloApplePie</span>
-          <p class="ms-1 mt-1">最後的內容擷取大概15-20char...</p>
-        </div>
-        <div class="time ms-auto">
-          <span class="time">9月26號</span>
-        </div>
-      </div>
-      <div class="chat-user user-private align-middle d-flex" data-receiver="">
-        <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
-          alt="avatar" title="avatar" width="50px" height="50px">
-        <div class="info ms-2">
-          <span class="name">Apple Pie</span>
-          <span class="account">@helloApplePie</span>
-          <p class="ms-1 mt-1">最後的內容擷取大概15-20char...</p>
-        </div>
-        <div class="time ms-auto">
-          <span class="time">9月26號</span>
-        </div>
-      </div>
-      <div class="chat-user user-private align-middle d-flex" data-receiver="">
-        <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
-          alt="avatar" title="avatar" width="50px" height="50px">
-        <div class="info ms-2">
-          <span class="name">Apple Pie</span>
-          <span class="account">@helloApplePie</span>
-          <p class="ms-1 mt-1">最後的內容擷取大概15-20char...</p>
-        </div>
-        <div class="time ms-auto">
-          <span class="time">9月26號</span>
-        </div>
-      </div>
+      </div>  
+      </a>
+      {{/each}}
     </div>
 
     
   </div>
+  {{#if receiverData}}
   <div class="chats col-6 me-5">
     <div class="home-word-box-private p-2">
-      <p class="home-word ms-2">ApplePie</p>
-      <p class="home-account ms-2">@applepie</p>
+      <p class="home-word ms-2">{{receiverData.name}}</p>
+      <p class="home-account ms-1">@{{receiverData.account}}</p>
     </div>
     <div class="chat-scroll" id="chat-scroll">
       <div class="chat-messages d-flex flex-column justify-content-end p-2" id="chat-messages">
@@ -91,6 +47,7 @@
         </div>
       </div>
     </div>
+    
     <form id="chat-form" action="">
       <input id="input" autocomplete="off" />
       <button class="send-btn" type="submit"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -101,16 +58,33 @@
         </svg></button>
 
     </form>
-
   </div>
+  {{else}}
+    <div class="chats col-6 me-5">
+      <div class="home-word-box-private p-2">
+        <p class="home-word ms-2 my-auto">選擇一個使用者 開始聊天吧</p>
+      </div>
+    </div>
+
+  {{/if}}
 
 </div>
 <script>
+const socket = io();
+const chatUsers = document.querySelector('.chat-users')
+const messages = document.querySelector('.chat-messages');
+const form = document.querySelector('#chat-form');
+const input = document.getElementById('input');
+
+const userId = `{{ userData.id }}`
+const userName = `{{ userData.name }}`
+const userAccount = `{{ userData.account }}`
+const userAvatar = `{{ userData.avatar }}`
+const receiverId = `{{receiverData.id}}`
+
 const userList = document.querySelector('.chat-user-list') 
-const users = document.querySelector('.chat-user')
-
-
-userList.addEventListener('click', function(event) {
+// DOM選擇 user 並回傳建立room
+{{!-- userList.addEventListener('click', function(event) {
   if (event.target.closest('.chat-user')){
    if (event.classList.contains("selected")) {
       event.classList.remove("selected");
@@ -122,10 +96,23 @@ userList.addEventListener('click', function(event) {
       event.classList.add("selected");
     }
   }
-}) 
+})  --}}
 
 
-
-
-
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  if (input.value) {
+    const userMsg = {
+      senderId: userId,
+      receiverId,
+      senderName: userName,
+      senderAvatar: userAvatar,
+      senderMsg: input.value,
+      behavior: 'private-chat',
+      createdAt: new Date()
+    }
+    socket.emit('chat message', userMsg);
+    input.value = '';
+  }
+});
 </script>

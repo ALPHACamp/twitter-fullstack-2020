@@ -7,15 +7,19 @@ const PublicChat = db.PublicChat
 const helpers = require('../_helpers')
 const dayjs = require('dayjs')
 
-
-
-
 function timeConvert (time) {
   const amPm = dayjs(time).format('A') === 'PM' ? '下午' : '上午'
   const hourMinute = dayjs(time).format('HH:mm')
   const formatTime = amPm + hourMinute
   return formatTime
 }
+
+function generateRoomId (userId1, userId2) {
+  const roomId =
+    userId1 > userId2 ? userId2 + '-' + userId1 : userId1 + '-' + userId2
+  return roomId
+}
+
 
 module.exports = {
   Server (server) {
@@ -36,12 +40,16 @@ module.exports = {
             nest: true,
             where: { publicRoom: 1 }
           })
-          const historyPublicChats = await PublicChat.findAll({
-            raw: true,
-            nest: true,
+          const historyPublicChatsRaw = await PublicChat.findAll({
             order: [['createdAt']],
             include: [User]
           })     
+
+          const historyPublicChats = historyPublicChatsRaw.map( msg => ({
+            ...msg.dataValues,
+            createdAt: timeConvert(msg.dataValues.createdAt)
+          }))
+
           io.emit(`historyPublicChats-${userMsg.senderId}`, historyPublicChats)
           io.emit('publicRoomUsers', publicRoomUsers)
           if (userMsg.behavior === 'enter-public') {
@@ -69,10 +77,9 @@ module.exports = {
         io.emit('publicRoomUsers', publicRoomUsers)
       })
       
-
-      // 公開聊天室的行為
       socket.on('chat message', async (userMsg) => {
         try {
+
           if (userMsg.behavior === 'public-chat') {
             await PublicChat.create({
               UserId: userMsg.senderId,

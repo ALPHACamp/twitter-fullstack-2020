@@ -13,9 +13,9 @@
   background-color: #999999;
 }
 
-.user-tweets .user-info-block {
+/* .user-tweets .user-info-block {
   height: 140px;
-}
+} */
 
 .user-tweets .user-img {
   position: absolute;
@@ -39,6 +39,10 @@
 
 .user-tweets .user-acc-name {
   color: #657786;
+}
+
+.user-tweets .user-intro {
+  width: 400px;
 }
 
 .user-tweets .user-nav {
