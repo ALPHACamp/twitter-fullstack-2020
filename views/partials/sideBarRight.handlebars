@@ -16,7 +16,19 @@
           <span class='name'>Pizza Hut</span>
           <span class='account'>@pizzahut</span>
         </div>
-        <button class='followed'>正在跟隨</button>
+        {{#if users.isFollowed}}
+          <form action='/followships/{{users.id}}?_method=DELETE' method='POST'>
+            <button class='followed'>正在跟隨</button>
+          </form>
+        {{else}}
+          <form action='/followships' method='POST'>
+            <button
+              class='tofollow-button'
+              name='id'
+              value='{{users.id}}'
+            >跟隨</button>
+          </form>
+        {{/if}}
       </div>
       <div class='card'>
         <img
@@ -30,7 +42,19 @@
           <span class='name'>Pizza Hut</span>
           <span class='account'>@pizzahut</span>
         </div>
-        <button class='follow'>跟隨</button>
+        {{#if users.isFollowed}}
+          <form action='/followships/{{users.id}}?_method=DELETE' method='POST'>
+            <button class='followed'>正在跟隨</button>
+          </form>
+        {{else}}
+          <form action='/followships' method='POST'>
+            <button
+              class='tofollow-button'
+              name='id'
+              value='{{users.id}}'
+            >跟隨</button>
+          </form>
+        {{/if}}
       </div>
       <div class='card'>
         <img
@@ -44,7 +68,19 @@
           <span class='name'>Pizza Hut</span>
           <span class='account'>@pizzahut</span>
         </div>
-        <button class='follow'>跟隨</button>
+        {{#if users.isFollowed}}
+          <form action='/followships/{{users.id}}?_method=DELETE' method='POST'>
+            <button class='followed'>正在跟隨</button>
+          </form>
+        {{else}}
+          <form action='/followships' method='POST'>
+            <button
+              class='tofollow-button'
+              name='id'
+              value='{{users.id}}'
+            >跟隨</button>
+          </form>
+        {{/if}}
       </div>
       <div class='card'>
         <img
@@ -58,7 +94,19 @@
           <span class='name'>Pizza Hut</span>
           <span class='account'>@pizzahut</span>
         </div>
-        <button class='follow'>跟隨</button>
+        {{#if users.isFollowed}}
+          <form action='/followships/{{users.id}}?_method=DELETE' method='POST'>
+            <button class='followed'>正在跟隨</button>
+          </form>
+        {{else}}
+          <form action='/followships' method='POST'>
+            <button
+              class='tofollow-button'
+              name='id'
+              value='{{users.id}}'
+            >跟隨</button>
+          </form>
+        {{/if}}
       </div>
       <div class='card'>
         <img
@@ -72,7 +120,19 @@
           <span class='name'>Pizza Hut</span>
           <span class='account'>@pizzahut</span>
         </div>
-        <button class='follow'>跟隨</button>
+        {{#if users.isFollowed}}
+          <form action='/followships/{{users.id}}?_method=DELETE' method='POST'>
+            <button class='followed'>正在跟隨</button>
+          </form>
+        {{else}}
+          <form action='/followships' method='POST'>
+            <button
+              class='tofollow-button'
+              name='id'
+              value='{{users.id}}'
+            >跟隨</button>
+          </form>
+        {{/if}}
       </div>
       <div class='card'>
         <img
@@ -86,7 +146,19 @@
           <span class='name'>Pizza Hut</span>
           <span class='account'>@pizzahut</span>
         </div>
-        <button class='follow'>跟隨</button>
+        {{#if users.isFollowed}}
+          <form action='/followships/{{users.id}}?_method=DELETE' method='POST'>
+            <button class='followed'>正在跟隨</button>
+          </form>
+        {{else}}
+          <form action='/followships' method='POST'>
+            <button
+              class='tofollow-button'
+              name='id'
+              value='{{users.id}}'
+            >跟隨</button>
+          </form>
+        {{/if}}
       </div>
       <div class='card'>
         <img
@@ -100,7 +172,19 @@
           <span class='name'>Pizza Hut</span>
           <span class='account'>@pizzahut</span>
         </div>
-        <button class='follow'>跟隨</button>
+        {{#if users.isFollowed}}
+          <form action='/followships/{{users.id}}?_method=DELETE' method='POST'>
+            <button class='followed'>正在跟隨</button>
+          </form>
+        {{else}}
+          <form action='/followships' method='POST'>
+            <button
+              class='tofollow-button'
+              name='id'
+              value='{{users.id}}'
+            >跟隨</button>
+          </form>
+        {{/if}}
       </div>
       <div class='card'>
         <img
@@ -114,7 +198,19 @@
           <span class='name'>Pizza Hut</span>
           <span class='account'>@pizzahut</span>
         </div>
-        <button class='follow'>跟隨</button>
+        {{#if users.isFollowed}}
+          <form action='/followships/{{users.id}}?_method=DELETE' method='POST'>
+            <button class='followed'>正在跟隨</button>
+          </form>
+        {{else}}
+          <form action='/followships' method='POST'>
+            <button
+              class='tofollow-button'
+              name='id'
+              value='{{users.id}}'
+            >跟隨</button>
+          </form>
+        {{/if}}
       </div>
       <div class='card'>
         <img
@@ -128,7 +224,19 @@
           <span class='name'>Pizza Hut</span>
           <span class='account'>@pizzahut</span>
         </div>
-        <button class='follow'>跟隨</button>
+        {{#if users.isFollowed}}
+          <form action='/followships/{{users.id}}?_method=DELETE' method='POST'>
+            <button class='followed'>正在跟隨</button>
+          </form>
+        {{else}}
+          <form action='/followships' method='POST'>
+            <button
+              class='tofollow-button'
+              name='id'
+              value='{{users.id}}'
+            >跟隨</button>
+          </form>
+        {{/if}}
       </div>
       <div class='card'>
         <img
@@ -142,7 +250,19 @@
           <span class='name'>Pizza Hut</span>
           <span class='account'>@pizzahut</span>
         </div>
-        <button class='follow'>跟隨</button>
+        {{#if users.isFollowed}}
+          <form action='/followships/{{users.id}}?_method=DELETE' method='POST'>
+            <button class='followed'>正在跟隨</button>
+          </form>
+        {{else}}
+          <form action='/followships' method='POST'>
+            <button
+              class='tofollow-button'
+              name='id'
+              value='{{users.id}}'
+            >跟隨</button>
+          </form>
+        {{/if}}
       </div>
     </div>
   </div>

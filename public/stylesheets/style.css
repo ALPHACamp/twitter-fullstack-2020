@@ -675,7 +675,6 @@ svg {
   flex-direction: column;
   position: sticky;
   top: 15px;
-  z-index: -1;
   overflow: hidden;
 }
 
@@ -744,17 +743,18 @@ svg {
   color: #657786;
 }
 
-#sidebar-right .popular .card-wrapper .card .followed {
+.followed {
   position: absolute;
   width: 90px;
   height: 35px;
   right: 15px;
   top: 17px;
   background: #ff6600;
-  cursor: pointer;
+
   border: 1px solid #ff6600;
   box-sizing: border-box;
   border-radius: 100px;
+  text-align: center;
   /*   文字 */
   font-family: Noto Sans TC;
   font-style: normal;
@@ -764,7 +764,7 @@ svg {
   color: #ffffff;
 }
 
-#sidebar-right .popular .card-wrapper .card .follow {
+.tofollow-button {
   position: absolute;
   width: 60px;
   height: 35px;
@@ -1076,7 +1076,7 @@ svg {
 
 /* settingPage */
 .setting-main-content {
-  width:75%;
+  width:74.3%;
   border-left:1px solid #E6ECF0;
   display: flex;
   flex-direction: column;
