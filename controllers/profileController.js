@@ -1,9 +1,6 @@
 const db = require("../models");
 const { Op } = require("sequelize");
-const moment = require("moment");
 const { Reply, User, Tweet, Like, Followship } = db;
-const multer = require("multer");
-const fs = require("fs");
 const imgur = require("imgur-node-api");
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
@@ -23,7 +20,7 @@ const profileController = {
         attributes: ["id", "avatar"],
         raw: true,
       });
-      //get selfInformation
+      // get selfInformation
       const Profile = await User.findByPk(req.params.id, {
         include: [
           { model: User, as: "Followers", attributes: ["id"] },
@@ -105,25 +102,9 @@ const profileController = {
       const Profile = await User.findByPk(req.params.id, {
         include: [
           { model: Tweet, attributes: ["id"] },
-          {
-            model: Reply,
-            include: [
-              {
-                model: Tweet,
-                include: [
-                  {
-                    model: User,
-                    attributes: ["id", "account"],
-                  },
-                ],
-                attributes: ["id", "description"],
-              },
-            ],
-          },
-          { model: User, as: "Followers" },
-          { model: User, as: "Followings" },
+          { model: User, as: "Followers", attributes: ["id"] },
+          { model: User, as: "Followings", attributes: ["id"] },
         ],
-        order: [["createdAt", "DESC"]],
       });
       // get followship
       let followship = await Followship.findOne({
@@ -136,6 +117,22 @@ const profileController = {
       const tweetsCount = Profile.Tweets.length;
       const followersCount = Profile.Followers.length;
       const followingsCount = Profile.Followings.length;
+
+      // getTweet&Reply
+      const Replies = await Reply.findAll({
+        where: {
+          UserId: req.params.id
+        },
+        include: [
+          { model: User, attributes: listAttributes },
+          {
+            model: Tweet,
+            include: [{ model: User, attributes: ['id', 'account'] }],
+            attributes: ['id', 'description'],
+          }
+        ],
+        order: [["createdAt", "DESC"]],
+      })
 
       // get TopUser
       const rawUsers = await User.findAll({
@@ -159,6 +156,7 @@ const profileController = {
       return res.render("profile", {
         isComment,
         isSelf,
+        reply: Replies,
         myProfile: user,
         users: TopUsers,
         profile: Profile,

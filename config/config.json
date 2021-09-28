@@ -22,7 +22,9 @@
     "host": "127.0.0.1",
     "dialect": "mysql",
     "dialectOptions": {
-      "ssl": { "rejectUnauthorized": false }
+      "ssl": {
+        "rejectUnauthorized": false
+      }
     }
   },
   "travis": {
