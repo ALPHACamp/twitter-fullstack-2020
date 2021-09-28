@@ -13,7 +13,7 @@ const sequelize = require('sequelize')
 const express = require('express')
 
 const tweetService = {
-  getTweets: (req, res) => {
+  getTweets: (req, res, callback) => {
     return Promise.all([
       Tweet.findAll({
         include: [User, Reply,

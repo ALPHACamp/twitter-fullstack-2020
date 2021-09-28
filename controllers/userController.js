@@ -2,7 +2,6 @@ const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const bcrypt = require('bcryptjs')
-const { raw } = require('body-parser')
 const { Op } = require("sequelize")
 const db = require('../models')
 const User = db.User
