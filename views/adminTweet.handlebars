@@ -50,33 +50,7 @@
                             <div class="col-12 mt-1" onclick="javascript:location.href='/tweets/{{this.id}}'">
                                 <p class="fw-bold">{{this.description}}</p>
                             </div>
-                            <div class="col-12 d-flex align-items-center">
-                                <button type="button" class="btn btn-outline-light" data-toggle="modal"
-                                    data-target="#replyModal" data-bs-toggle="modal">
-                                    <i class="far fa-comment" style="color: navy;width:12px;height:12px;"></i>
-                                </button>
-                                <input type="hidden" name="TweetId" value="{{this.id}}">
-                                <span
-                                    style="display:inline-block;margin-left:20px;margin-right:33px;">{{this.replyCount}}</span>
 
-
-
-                                {{#if this.isLiked}}
-                                <form action="/tweets/{{this.id}}/unlike" method="POST">
-                                    <button type="submit" class="btn btn-outline-light">
-                                        <i class="fas fa-heart" style="color: red;width:12px;height:12px;"></i>
-                                    </button>
-                                    <span style="display:inline-block;margin-left:20px;">{{this.likeCount}}</span>
-                                </form>
-                                {{else}}
-                                <form action="/tweets/{{this.id}}/like" method="POST">
-                                    <button type="submit" class="btn btn-outline-light">
-                                        <i class="far fa-heart" style="color: red; width: 12px; height: 12px;"></i>
-                                    </button>
-                                    <span style="display:inline-block;margin-left:20px;">{{this.likeCount}}</span>
-                                </form>
-                                {{/if}}
-                            </div>
                         </div>
                     </div>
                 </div>
