@@ -3,9 +3,6 @@ const helpers = require('../_helpers')
 const db = require('../models')
 const { User, Tweet, Reply, Followship, Like } = db
 const multer = require('multer')
-const upload = multer({ dest: 'temp/' })
-const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
   signupPage: (req, res) => {
@@ -107,8 +104,7 @@ const userController = {
           .includes(user.id)
       }))
       users = users.filter(
-        (user) =>
-          user.role === 'user' && user.name !== helpers.getUser(req).name
+        (user) => user.isAdmin == 0 && user.name !== helpers.getUser(req).name
       )
       users = users
         .sort((a, b) => b.FollowerCount - a.FollowerCount)

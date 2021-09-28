@@ -52,26 +52,31 @@ router.put(
 router.get(
   '/users/:id/tweets',
   auth.authenticatedGeneral,
+  userController.getPopularUser,
   userController.getUserTweets
 )
 router.get(
   '/users/:id/replies',
   auth.authenticatedGeneral,
+  userController.getPopularUser,
   userController.getUserReplies
 )
 router.get(
   '/users/:id/likes',
   auth.authenticatedGeneral,
+  userController.getPopularUser,
   userController.getUserLikes
 )
 router.get(
   '/users/:id/followings',
   auth.authenticatedGeneral,
+  userController.getPopularUser,
   userController.getUserFollowings
 )
 router.get(
   '/users/:id/followers',
   auth.authenticatedGeneral,
+  userController.getPopularUser,
   userController.getUserFollowers
 )
 
@@ -79,12 +84,23 @@ router.get(
 router.get('/', auth.authenticatedGeneral, (req, res) =>
   res.redirect('/tweets')
 )
-router.get('/tweets', auth.authenticatedGeneral, tweetController.getTweets)
-router.get('/tweets/:id/', auth.authenticatedGeneral, tweetController.getTweet)
+router.get(
+  '/tweets',
+  auth.authenticatedGeneral,
+  userController.getPopularUser,
+  tweetController.getTweets
+)
+router.get(
+  '/tweets/:id/',
+  auth.authenticatedGeneral,
+  userController.getPopularUser,
+  tweetController.getTweet
+)
 router.post('/tweets', auth.authenticatedGeneral, tweetController.postTweet)
 router.get(
   '/tweets/:id/replies',
   auth.authenticatedGeneral,
+  userController.getPopularUser,
   tweetController.getReplyPage
 )
 router.post(
@@ -99,11 +115,6 @@ router.delete(
   '/followships/:id',
   auth.authenticatedGeneral,
   userController.unFollow
-)
-router.get(
-  'followships/top',
-  auth.authenticatedGeneral,
-  userController.getPopularUser
 )
 
 // Like

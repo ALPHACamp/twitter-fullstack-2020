@@ -42,7 +42,7 @@
         type='button'
         class='button-white'
         data-toggle='modal'
-        data-target='#exampleModal'
+        data-target='#userModal'
       >編輯個人資料</button>
       {{else}}
         {{#if users.isFollowed}} 
@@ -94,7 +94,7 @@
           </div>
 
           <div class='modal-body' style='padding: 0px;'>
-            <form action='' method='POST' enctype='multipart/form-date'>
+            <form action='/api/users/{{user.id}}' method='POST' enctype='multipart/form-date'>
               <!--      cover form -->
               <div class='form-group'>
                 <img
