@@ -13,11 +13,11 @@
         </a>
       </div>
       <div class="navItem userProfile d-flex mb-4">
-        <div class="icon d-flex align-items-center {{#ifCond user.id tweetUser.id}} color-orange {{/ifCond}}">
+        <div class="icon d-flex align-items-center {{#ifCond user.id anotherUser.id}} color-orange {{/ifCond}}">
           <i class="fas fa-users"></i>
         </div>
         <a href="/users/{{user.id}}/tweets"
-          class="btn sidebarItem {{#ifCond user.id tweetUser.id}} color-orange {{/ifCond}}">
+          class="btn sidebarItem {{#ifCond user.id anotherUser.id}} color-orange {{/ifCond}}">
           <span class="fs-5 fw-bolder">個人資料</span>
         </a>
       </div>

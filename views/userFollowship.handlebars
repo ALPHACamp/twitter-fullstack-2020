@@ -7,18 +7,18 @@
         <i class="fas fa-arrow-left fs-4"></i>
       </a>
       <div>
-        <h4 class="fw-bolder m-0">{{tweetUser.name}}</h4>
+        <h4 class="fw-bolder m-0">{{anotherUser.name}}</h4>
         <p class="m-0">{{tweetCount}}推文</p>
       </div>
     </div>
     <ul class="nav nav-tabs">
       <li class="nav-item">
         <a class="nav-link text-secondary {{#if (renderFollower renderType)}}active{{/if}}"
-          href="/users/{{tweetUser.id}}/followers">跟隨者</a>
+          href="/users/{{anotherUser.id}}/followers">跟隨者</a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-secondary {{#if (renderFollower renderType)}}{{else}}active{{/if}}"
-          href="/users/{{tweetUser.id}}/followings">正在跟隨</a>
+          href="/users/{{anotherUser.id}}/followings">正在跟隨</a>
       </li>
     </ul>
     {{#each data}}

@@ -38,7 +38,7 @@ const userService = {
         ],
         where: { role: "user" }
       })
-    ]).then(([tweets, followersCount, followingsCount, tweetUser, users]) => {
+    ]).then(([tweets, followersCount, followingsCount, anotherUser, users]) => {
       const data = tweets.map(tweet => ({
         ...tweet.dataValues,
         isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id),
@@ -52,7 +52,7 @@ const userService = {
         .slice(0, 10)
       return callback({
         tweets: data,
-        tweetUser: tweetUser.toJSON(),
+        anotherUser: anotherUser.toJSON(),
         followersCount,
         followingsCount,
         topUsers,
