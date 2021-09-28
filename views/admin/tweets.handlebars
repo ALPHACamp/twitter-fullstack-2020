@@ -7,10 +7,10 @@
   <div class='content-wrap'>
     {{#each tweets}}
     <div class='tweet-item'>
-      <div class='item-avatar'><img src='https://randomuser.me/api/portraits/women/17.jpg' alt='' width='50' height='50' /></div>
+      <div class='item-avatar'><img src='{{this.User.avatar}}' alt='avatar' width='50' height='50' /></div>
       <div class='item-body'>
         <div class='item-header'>
-          <div class='item-name'>{{this.Uer.name}}</div>
+          <div class='item-name'>{{this.User.name}}</div>
           <div class='item-account'><span>@{{this.Uer.account}}・</span><span>{{moment this.createdAt}}</span></div>
           <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
             <button type="submit" class="close">

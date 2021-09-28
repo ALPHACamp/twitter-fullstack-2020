@@ -10,14 +10,12 @@
         <div class="headerItem"><span>{{results.name}}</span><p class="tweet-count">{{results.Tweets.length}} 推文</p></div>
       </div>
       <div class="follower-tag list-group">
-        <a href="/users/{{user.id}}/followers">
-        <div class="follower list-group-item" data-toggle="list" href="">
+        <a class="follower list-group-item" href="/users/{{user.id}}/followers">
           <span class="follower-word">
             跟隨者
           </span>
-        </div>
         </a>
-        <div class="following list-group-item active" data-toggle="list" href="#following">
+        <div class="following list-group-item active">
           <span class="following-word">
             正在跟隨
           </span>

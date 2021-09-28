@@ -294,7 +294,7 @@ body {
   color: #1c1c1c;
 }
 
-#main-content .post {
+#main-content .main-post {
   background: #ffffff;
   margin-bottom: 10px;
   width: auto;
@@ -302,17 +302,18 @@ body {
   position: relative;
 }
 
-#main-content .post .postItem {
+#main-content .main-post .postItem {
   display: flex;
   align-items: center;
 }
 
-#main-content .post .postItem .avatar {
+#main-content .main-post .postItem .avatar {
+  margin: 13px 10px 0px 15px;
   margin-right: 10px;
   border-radius: 50%;
 }
 
-#main-content .post .tweetButton {
+#main-content .main-post .tweetButton {
   position: absolute;
   width: 66px;
   height: 38px;
@@ -485,7 +486,7 @@ body {
 }
 
 /* postModal */
-#main-content .post .postModal {
+#main-content .main-post .postModal {
   cursor: pointer;
   position: absolute;
   top: 72px;
@@ -499,7 +500,7 @@ body {
   border-radius: 100px;
 }
 
-#main-content .post .postModal span {
+#main-content .main-post .postModal span {
   all: initial;
   cursor: pointer;
   font-family: Noto Sans TC;
@@ -510,46 +511,47 @@ body {
   color: #ffffff;
 }
 
-#main-content .post .modal-header .post-close-button {
+#main-content .main-post .modal-header .post-close-button {
   all: initial;
   cursor: pointer;
 }
 
-#main-content .post .post-close-icon {
+#main-content .main-post .post-close-icon {
   cursor: pointer;
   fill: #1c1c1c;
 }
 
-#main-content .post .modal-header .post-close-button:hover .post-close-icon {
+#main-content .main-post .modal-header .post-close-button:hover .post-close-icon {
   fill: #ff6600;
 }
 
-#main-content .post .modal-content {
+#main-content .main-post .modal-content {
   border-radius: 14px;
   margin-top: 54px;
 }
 
-#main-content .post .modal-content .modal-body {
+#main-content .main-post .modal-content .modal-body {
+  margin: 13px 10px 0px 15px;
   display: flex;
 }
 
-#main-content .post .modal-content .modal-body img {
+#main-content .main-post .modal-content .modal-body img {
   border-radius: 100%;
   margin-right: 10px;
 }
 
-#main-content .post .modal-content .modal-body textarea {
+#main-content .main-post .modal-content .modal-body textarea {
   all: initial;
   margin-top: 15px;
   border: none;
   width: auto;
 }
 
-#main-content .post .modal-content .modal-footer {
+#main-content .main-post .modal-content .modal-footer {
   border: none;
 }
 
-#main-content .post .modal-content .modal-footer .post-submit-button {
+#main-content .main-post .modal-content .modal-footer .post-submit-button {
   position: absolute;
   width: 66px;
   height: 38px;
@@ -561,7 +563,7 @@ body {
   border-radius: 100px;
 }
 
-#main-content .post .modal-content .modal-footer .post-submit-button span {
+#main-content .main-post .modal-content .modal-footer .post-submit-button span {
   color: #ffffff;
 }
 
@@ -673,7 +675,6 @@ svg {
   flex-direction: column;
   position: sticky;
   top: 15px;
-  z-index: -1;
   overflow: hidden;
 }
 
@@ -742,17 +743,18 @@ svg {
   color: #657786;
 }
 
-#sidebar-right .popular .card-wrapper .card .followed {
+.followed {
   position: absolute;
   width: 90px;
   height: 35px;
   right: 15px;
   top: 17px;
   background: #ff6600;
-  cursor: pointer;
+
   border: 1px solid #ff6600;
   box-sizing: border-box;
   border-radius: 100px;
+  text-align: center;
   /*   文字 */
   font-family: Noto Sans TC;
   font-style: normal;
@@ -762,7 +764,7 @@ svg {
   color: #ffffff;
 }
 
-#sidebar-right .popular .card-wrapper .card .follow {
+.tofollow-button {
   position: absolute;
   width: 60px;
   height: 35px;
@@ -783,7 +785,7 @@ svg {
 }
 
 /* reply page */
-#main-content .post {
+#main-content .reply .post {
   width: auto;
   padding: 15px 15px 0px 15px;
   display: flex;
@@ -791,26 +793,26 @@ svg {
   background: #ffffff;
 }
 
-#main-content .post .modal-content {
+#main-content .reply .post .modal-content {
   width: 600px;
 }
 
-#main-content .post .postHead {
+#main-content .reply .post .postHead {
   display: flex;
 }
 
-#main-content .post .postHead .postAvatar {
+#main-content .reply .post .postHead .postAvatar {
   border-radius: 100%;
   margin-right: 10px;
 }
 
-#main-content .post .postHead .headItem {
+#main-content .reply .post .postHead .headItem {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-#main-content .post .postContent p {
+#main-content .reply .post .postContent p {
   padding-right: 75px;
   font-family: Noto Sans TC;
   font-style: normal;
@@ -820,11 +822,11 @@ svg {
   color: #1c1c1c;
 }
 
-#main-content .post .postContent .postItem {
+#main-content .reply .post .postContent .postItem {
   margin-bottom: 15px;
 }
 
-#main-content .post .postContent .postItem .postDate {
+#main-content .reply .post .postContent .postItem .postDate {
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: 600;
@@ -833,13 +835,13 @@ svg {
   color: #657786;
 }
 
-#main-content .post .postFooter {
+#main-content .reply .post .postFooter {
   padding-top: 20px;
   padding-bottom: 20px;
   border-top: 1px solid #e6ecf0;
 }
 
-#main-content .post .postFooter .number {
+#main-content .reply .post .postFooter .number {
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: bold;
@@ -848,7 +850,7 @@ svg {
   color: #000000;
 }
 
-#main-content .post .postFooter .string {
+#main-content .reply .post .postFooter .string {
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: bold;
@@ -858,31 +860,31 @@ svg {
   margin-right: 20px;
 }
 
-#main-content .post .postFeedback {
+#main-content .reply .post .postFeedback {
   display: flex;
   padding-top: 20px;
   padding-bottom: 20px;
   border-top: 1px solid #e6ecf0;
 }
 
-#main-content .post .postFeedback .icon-reply {
+#main-content .reply .post .postFeedback .icon-reply {
   margin-right: 155px;
   cursor: pointer;
 }
 
-#main-content .post .postFeedback .icon-reply:hover .iconReply {
+#main-content .reply .post .postFeedback .icon-reply:hover .iconReply {
   fill: #ff6600;
 }
 
-#main-content .post .postFeedback .icon-reply .iconReply {
+#main-content .reply .post .postFeedback .icon-reply .iconReply {
   fill: #657786;
 }
 
-#main-content .post .postFeedback .icon-like:hover .iconLike {
+#main-content .reply .post .postFeedback .icon-like:hover .iconLike {
   fill: #ff6600;
 }
 
-#main-content .post .postFeedback .icon-like .iconLike {
+#main-content .reply .post .postFeedback .icon-like .iconLike {
   fill: #657786;
   cursor: pointer;
 }
@@ -909,7 +911,7 @@ svg {
 }
 
 .reply-modal-body .reply-modal-avatar-item {
-  height: auto;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1074,13 +1076,14 @@ svg {
 
 /* settingPage */
 .setting-main-content {
+  width:74.3%;
+  border-left:1px solid #E6ECF0;
   display: flex;
   flex-direction: column;
 }
 
 .setting-main-content .register {
-  margin: auto;
-  margin-top: 30px;
+  margin: 30px 0px 0px 16px;
   width: 540px;
 }
 
@@ -1912,7 +1915,7 @@ svg {
 .admin-tweet-container .row {
   margin: 15px 15px 0px 15px;
   padding: 0px;
-  width: 1025px;
+  width: 1040px;
   justify-content: space-between;
   flex-wrap: wrap;
 }
@@ -1924,7 +1927,7 @@ svg {
 
 .admin-tweet-container .col-3 {
   max-width: 245px;
-  margin: 0px 0px 15px 0px;
+  margin: 0px 15px 15px 0px;
   padding: 0px;
 }
 

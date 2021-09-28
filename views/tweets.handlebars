@@ -4,7 +4,7 @@
   <div class='header'>
     <div class='headerItem'><span>首頁</span></div>
   </div>
-  <div class='post'>
+  <div class='main-post'>
     <div class='postItem'><img
         class='avatar'
         src='{{user.avatar}}'
@@ -90,9 +90,10 @@
     </div>
 
   </div>
-  <div class='tweet-body'>
+  
     {{!-- tweets區 --}}
     {{#each tweets}}
+    <div class='tweet-body'>
     <div class='card-tweets'>
 
       <div>
@@ -288,8 +289,9 @@
                 </div>
               </div>
             </div>
+          </div>
     {{/each}}
-  </div>
+  
 </div>
 {{> sideBarRight}}
 
