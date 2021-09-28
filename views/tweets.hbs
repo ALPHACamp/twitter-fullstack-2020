@@ -89,8 +89,8 @@
               <span class="reply-to">回覆給</span>
               <span class="reply-account">&nbsp;${tweetModal.User.account}</span>
             `
+          // 因先前用innerHTML整個FORM架構被置換，雖然ID CLASS內容沒改變，但監聽器卻失效，故改變想法只更換需要更換的內容嘗試
           replyValidForm.action = `/tweets/${tweetModal.id}/replies`
-          console.log('replyValidForm.action', replyValidForm.action)
         })
 
     }
