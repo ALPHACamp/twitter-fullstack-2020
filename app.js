@@ -7,6 +7,8 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
+const passport = require('./config/passport')
+
 const session = require('express-session')
 const methodOverride = require('method-override')
 const helpers = require('./_helpers');
@@ -14,7 +16,6 @@ const helpers = require('./_helpers');
 const app = express()
 const port = process.env.PORT || 3000
 
-const passport = require('./config/passport')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -47,5 +48,3 @@ app.listen(port, () => {
 })
 
 require('./routes')(app)
-
-module.exports = app

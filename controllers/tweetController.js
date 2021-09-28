@@ -46,7 +46,6 @@ const tweetController = {
         userAccount: tweet.User.account,
         isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id),
       }))
-      console.log(data)
 
       return res.render('index', {
         tweets: data,
