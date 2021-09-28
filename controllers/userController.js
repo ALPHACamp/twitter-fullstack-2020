@@ -383,9 +383,9 @@ const userController = {
       Tweet.count({
         where: { Userid: req.params.id }
       })
-    ]).then(([followers, usersdata, anotherUser, tweetCount]) => {
+    ]).then(([followers, userData, anotherUser, tweetCount]) => {
 
-      const users = usersdata.map(user => ({
+      const users = userData.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
         isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
@@ -426,9 +426,9 @@ const userController = {
       Tweet.count({
         where: { Userid: req.params.id }
       })
-    ]).then(([followings, usersdata, anotherUser, tweetCount]) => {
+    ]).then(([followings, userData, anotherUser, tweetCount]) => {
 
-      const users = usersdata.map(user => ({
+      const users = userData.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
         isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user

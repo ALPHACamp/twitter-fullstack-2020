@@ -65,7 +65,7 @@ const adminController = {
       ],
       where: { role: "user" }
     }).then(users => {
-      const usersData =
+      const userData =
         users.map(user => ({
           ...user.dataValues,
           followersCount: user.Followers.length,
@@ -76,7 +76,7 @@ const adminController = {
           }, 0)
         })).sort((a, b) => b.tweetCount - a.tweetCount)
 
-      res.render('admin/users', { users: usersData })
+      res.render('admin/users', { users: userData })
     })
   }
 }
