@@ -3,12 +3,16 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const bcrypt = require('bcryptjs')
 const { raw } = require('body-parser')
+const { Op } = require("sequelize")
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
+const Like = db.Like
 const Followship = db.Followship
 const helpers = require('../_helpers')
+
+const userService = require('../services/userService')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -21,32 +25,33 @@ const userController = {
       req.flash('error_messages', '所有欄位都是必填');
       return res.redirect('/signup')
     }
+
     if (password !== checkPassword) {
-      // req.flash('error_messages', '兩次密碼輸入不同！')
       req.flash('error_messages', '兩次密碼輸入不一致');
       return res.redirect('/signup')
     }
-    // confirm unique user
-    User.findOne({ where: [{ email }, { account }] }).then(user => {
-      if (user) {
-        if (user.email === email) {
-          req.flash('error_messages', '信箱重複！')
-        }
-        if (user.account === account) {
-          req.flash('error_messages', '信箱重複！')
-        }
+
+    User.findAll({ where: { [Op.or]: [{ email }, { account }] } }).then(users => {
+      if (users.some(item => item.account === account)) {
+        req.flash('error_messages', '此帳號已有人使用！')
         return res.redirect('/signup')
-      } else {
-        User.create({
-          account: account,
-          name: name,
-          email: email,
-          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
-        }).then(user => {
-          req.flash('success_messages', '成功註冊帳號！')
-          return res.redirect('/signin')
-        })
       }
+
+      if (users.some(item => item.email === email)) {
+        req.flash('error_messages', '此信箱已有人使用！')
+        return res.redirect('/signup')
+      }
+
+      User.create({
+        account: account,
+        name: name,
+        email: email,
+        password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+      }).then(() => {
+        req.flash('success_messages', '成功註冊帳號！')
+        return res.redirect('/signin')
+      })
+
     })
   },
   signInPage: (req, res) => {
@@ -64,45 +69,22 @@ const userController = {
     res.redirect('/signin')
   },
 
-
-  getUserTweets: async (req, res) => {
-    // const currentUser = helpers.getUser(req)
-    return Promise.all([
-      Tweet.findAll({
-        where: { UserId: req.params.id },
-        include: [User, Reply],
-        order: [['createdAt', 'DESC']]
-      }),
-      Followship.count({
-        where: { followingId: req.params.id }
-      }),
-      Followship.count({
-        where: { followerId: req.params.id }
-      }),
-      User.findByPk(
-        req.params.id
-      ),
-      User.findAll({
-        include: [
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' }
-        ],
-        where: { role: "user" }
-      }),
-    ]).then(([tweets, followersCount, followingsCount, tweetUser, users]) => {
-      const topUsers =
-        users.map(user => ({
-          ...user.dataValues,
-          followerCount: user.Followers.length,
-          isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
-        }))
-          .sort((a, b) => b.followerCount - a.followerCount)
-          .slice(0, 10)
-      return res.render('userSelf', { tweets, tweetUser: tweetUser.toJSON(), followersCount, followingsCount, topUsers, theUser: helpers.getUser(req).id })
+  getUserTweets: (req, res) => {
+    userService.getUserTweets(req, res, data => {
+      return res.render('userSelf', data)
     })
+      .catch(err => console.log(err))
   },
 
   getUserSelfReply: async (req, res) => {
+    const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
+    const users = await User.findAll({
+      include: [
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' }
+      ],
+      where: { role: "user" }
+    })
 
     const replies = await Reply.findAll({
       raw: true,
@@ -116,16 +98,86 @@ const userController = {
       include: [User, Reply],
       order: [['createdAt', 'DESC']]
     })
+
+    const tweetUser = await User.findByPk(req.params.id)
+
+    const topUsers = await users.map(user => ({
+      ...user.dataValues,
+      followerCount: user.Followers.length,
+      isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+    }))
+      .sort((a, b) => b.followerCount - a.followerCount)
+      .slice(0, 10)
+
+    const followersCount = await Followship.count({
+      where: { followingId: req.params.id }
+    })
+    const followingsCount = await Followship.count({
+      where: { followerId: req.params.id }
+    })
+
+    return res.render('userSelfReply', { users, replies, tweets, tweetUser, followersCount, followingsCount, topUsers })
+  },
+
+  getUserSelfLike: async (req, res) => {
+    const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
+
+    const users = await User.findAll({
+      include: [
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' }
+      ],
+      where: { role: "user" }
+    })
+
+    const likes = await Like.findAll({
+      where: { UserId: req.params.id },
+      include: [User, { model: Tweet, include: [User, Reply, { model: User, as: 'LikedUsers' }] }],
+      order: [['createdAt', 'DESC']]
+    })
+    const tweets = await Tweet.findAll({
+      where: { UserId: req.params.id },
+      include: [User, Reply],
+      order: [['createdAt', 'DESC']]
+    })
     const tweetUser = await User.findByPk(
       req.params.id
     )
-    return res.render('userSelfReply', { replies, tweets, tweetUser })
+    const data = likes.map(like => ({
+      id: like.Tweet.id,
+      avatar: like.Tweet.User.avatar,
+      name: like.Tweet.User.name,
+      account: like.Tweet.User.account,
+      createdAt: like.Tweet.createdAt,
+      description: like.Tweet.description,
+      RepliesLength: like.Tweet.Replies.length,
+      LikedUsersLength: like.Tweet.LikedUsers.length,
+      isLiked: like.Tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
+    }))
+
+    const topUsers =
+      users.map(user => ({
+        ...user.dataValues,
+        followerCount: user.Followers.length,
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+      }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+        .slice(0, 10)
+
+    const followersCount = await Followship.count({
+      where: { followingId: req.params.id }
+    })
+    const followingsCount = await Followship.count({
+      where: { followerId: req.params.id }
+    })
+
+    return res.render('userSelfLike', { BASE_URL, data, tweets, tweetUser, followersCount, followingsCount, topUsers })
   },
 
-  getSetting: (req, res) => {
-    return res.render('setting')
+  getUserSetting: (req, res) => {
+    return res.render('setting', { renderType: "user" })
   },
-  putUser: async (req, res) => {
+  putUserSetting: async (req, res) => {
     const user = await User.findByPk(req.params.id)
 
     user.update({
@@ -140,144 +192,115 @@ const userController = {
 
   putUserProfile: async (req, res) => {
     const user = await User.findByPk(req.params.id)
-    console.log(user)
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!")
+    const { name, description } = req.body
+    const files = Object.assign({}, req.files)
 
-    const { file } = req
-    if (file) {
-      imgur.setClientID(IMGUR_CLIENT_ID);
-      imgur.upload(file.path, (err, img) => {
-        user.update({
+    if (!name.trim('')) {
+      return req.flash('error_messages', '請輸入有效名稱！')
+    } else if (name.trim('').length > 50) {
+      return req.flash('error_messages', '名稱不得超過50字！')
+    }
+
+    if (description.length > 160) {
+      return req.flash('error_messages', '自我介紹不得超過160字！')
+    }
+
+    imgur.setClientID(IMGUR_CLIENT_ID)
+
+    if (files.avatar && files.cover) {
+      imgur.upload(files.avatar[0].path, async (err, avaImg) => {
+        imgur.upload(files.cover[0].path, async (err, covImg) => {
+          await user.update({
+            name: req.body.name,
+            avatar: files.avatar[0] ? avaImg.data.link : user.avatar,
+            cover: files.cover[0].path ? covImg.data.link : user.cover,
+            description: req.body.description
+          })
+        })
+      })
+      req.flash('success_messages', 'Your profile was successfully updated!')
+      res.redirect('back')
+    } else if (files.avatar && !files.cover) {
+      imgur.upload(files.avatar[0].path, async (err, avaImg) => {
+        await user.update({
           name: req.body.name,
-          avatar: file ? img.data.link : user.avatar,
-          cover: file ? img.data.link : user.cover,
+          avatar: files.avatar[0] ? avaImg.data.link : user.avatar,
           description: req.body.description
         })
-      }).then((user) => {
-        req.flash('success_messages', 'Your profile was successfully to update')
-        res.redirect('back')
       })
+      req.flash('success_messages', 'Your profile was successfully updated!')
+      res.redirect('back')
+    } else if (!files.avatar && files.cover) {
+      imgur.upload(files.cover[0].path, async (err, covImg) => {
+        await user.update({
+          name: req.body.name,
+          cover: files.cover[0].path ? covImg.data.link : user.cover,
+          description: req.body.description
+        })
+      })
+      req.flash('success_messages', 'Your profile was successfully updated!')
+      res.redirect('back')
+    } else {
+      await user.update({
+        name: req.body.name,
+        description: req.body.description
+      })
+      req.flash('success_messages', 'Your profile was successfully updated!')
+      res.redirect('back')
+    }
+
+  },
+
+  // Like
+  addLike: async (req, res) => {
+
+    try {
+      const currentUserId = helpers.getUser(req).id
+      await Like.findOrCreate({
+        where: {
+          UserId: currentUserId,
+          TweetId: req.params.id
+        }
+      })
+        .then((like) => {
+          return res.redirect('back')
+        })
+    } catch (error) {
+      console.log(error)
+      res.render('/index', { Error })
     }
   },
 
-  // getUserTweets: (req, res) => {
-  //   const id = req.params.id
-  //   const loginUserId = helpers.getUser(req).id
-  //   const whereQuery = {}
-
-  //   // 類似餐廳與類別的關係
-  //   // 多個餐廳屬於一種類別: 多個推文屬於一個使用者
-  //   if (req.query.tweetId) {
-  //     tweetId = Number(req.query.userId)
-  //     whereQuery.userId = tweetId
-  //   }
-
-  //   // 顯示個人資料及推文
-  //   Tweet.findAndCountAll({
-  //     raw: true,
-  //     nest: true,
-  //     where: { UserId: id }
-  //   })
-  //     .then((result) => {
-  //       const data = result.rows.map(r => ({
-  //         ...r.dataValues
-  //       }))
-  //       User.findByPk(id)
-  //         .then((user) => {
-  //           const userProfile = user.toJSON()
-  //           return res.render('user', {
-  //             data,
-  //             tweets: data,
-  //             userProfile,
-  //             loginUserId,
-  //             replyNum,
-  //           })
-  //         }).catch(err => console.log(err))
-  //     }).catch(err => console.log(err))
-  // },
-
-  // // 尋找回覆過且正在追隨的使用者推文
-  // // 不需要認證使用者
-  // getReplyTweets: (req, res) => {
-  //   const id = req.params.id
-  //   const whereQuery = {}
-
-  //   if (req.query.tweetId) {
-  //     tweetId = Number(req.query.userId)
-  //     whereQuery.userId = tweetId
-  //   }
-
-  //   // 顯示回覆過的推文
-  //   Reply.findAll({
-  //     include: tweet,
-  //     where: { UserId: id }
-  //   })
-  //     .then((result) => {
-  //       // 回覆過的推文數量
-  //       const replyNum = result.count
-  //       const replyTweets = result.rows
-  //       const data = replyTweets.map(r => ({
-  //         ...r.dataValues
-  //       }))
-
-  //       tweet.findAll({
-  //         raw: true,
-  //         nest: true,
-  //         where: whereQuery
-  //       }).then(() => {
-  //         User.findByPk(id)
-  //           .then((user) => {
-  //             const userProfile = user.toJSON()
-  //             return res.render('user', {
-  //               data,
-  //               tweets: data,
-  //               userProfile,
-  //               loginUserId,
-  //               replyNum,
-  //             })
-  //           }).catch(err => console.log(err))
-  //       })
-
-  //       // TODO 2.顯示喜歡的內容
-
-  //     })
-  //     .catch(err => console.log(err))
-  // },
-
-  // Like
-  addLike: (req, res) => {
-    return Like.create({
-      UserId: req.user.id,
-      TweetId: req.params.tweetId
-    })
-      .then(() => {
-        return res.redirect('back')
+  removeLike: async (req, res) => {
+    try {
+      const currentUserId = helpers.getUser(req).id
+      await Like.findOne({
+        where: {
+          UserId: currentUserId,
+          TweetId: req.params.id
+        }
       })
-  },
-  removeLike: (req, res) => {
-    return Like.findOne({
-      where: {
-        UserId: req.user.id,
-        TweetId: req.params.tweetId
-      }
-    })
-      .then((Like) => {
-        Like.destroy()
-          .then(() => {
-            return res.redirect('back')
-          })
-      })
+        .then(like => {
+          like.destroy()
+            .then(tweet => {
+              return res.redirect('back')
+            })
+        })
+    } catch (error) {
+      console.log(error)
+      res.render('/index', { Error })
+    }
   },
 
   // Followship
   addFollowing: (req, res) => {
-    const followerId = req.user.id
-    const followingId = req.params.userId
+    const followerId = helpers.getUser(req).id
+    const followingId = req.body.id
 
     // 確認不能追蹤自己
-    if (followerId === followingId) {
+    if (Number(followerId) === Number(followingId)) {
       req.flash('error_messages', 'You can\'t follow yourself!')
-      res.render('/tweets')
+      return res.end()
     }
 
     // 確認該筆追蹤尚未存在於followship中，若不存在才創建新紀錄
@@ -288,30 +311,51 @@ const userController = {
     }).then(followship => {
       if (followship.length) {
         req.flash('error_messages', 'You already followed this user')
-        return res.render('/tweets')
+        return res.redirect('/tweets')
       } else {
-        Followship.create({
-          followerId,
-          followingId
+        return Promise.all([
+          User.findByPk(followerId)
+            .then(user => {
+              user.increment('followingCount', { by: 1 })
+            }),
+          User.findByPk(followingId)
+            .then(user => {
+              user.increment('followerCount', { by: 1 })
+            }),
+          Followship.create({
+            followerId,
+            followingId
+          })
+        ]).then(() => {
+          return res.redirect('back')
         })
-        return res.redirect('back')
       }
     })
   },
 
   removeFollowing: (req, res) => {
+    const followerId = helpers.getUser(req).id
+    const followingId = req.params.userId
     return Followship.findOne({
       where: {
-        followerId: req.user.id,
-        followingId: req.params.userId
+        followerId,
+        followingId
       }
-    })
-      .then((followship) => {
+    }).then(followship => {
+      return Promise.all([
+        User.findByPk(followerId)
+          .then(user => {
+            user.decrement('followingCount', { by: 1 })
+          }),
+        User.findByPk(followingId)
+          .then(user => {
+            user.decrement('followerCount', { by: 1 })
+          }),
         followship.destroy()
-          .then((followship) => {
-            return res.redirect('back')
-          })
+      ]).then((followship) => {
+        return res.redirect('back')
       })
+    })
   },
 
   getFollowers: (req, res) => {
@@ -331,12 +375,21 @@ const userController = {
           { model: User, as: 'Followers' }
         ],
         where: { role: "user" },
+      }),
+      User.findOne({
+        where: { id: req.params.id },
+        nest: true,
+        raw: true
+      }),
+      Tweet.count({
+        where: { Userid: req.params.id }
       })
-    ]).then(([followers, usersdata]) => {
+    ]).then(([followers, usersdata, tweetUser, tweetCount]) => {
+
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
       }))
 
       const data = followers.map(d => ({
@@ -344,7 +397,7 @@ const userController = {
       }))
 
       const topUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
-      res.render('userSelfFollowship', { data, topUsers, theUser: helpers.getUser(req).id, renderType: "follower" })
+      res.render('userFollowship', { data, topUsers, currentUser: helpers.getUser(req).id, tweetUser, tweetCount, renderType: "follower" })
     })
   },
 
@@ -365,12 +418,21 @@ const userController = {
           { model: User, as: 'Followers' }
         ],
         where: { role: "user" },
+      }),
+      User.findOne({
+        where: { id: req.params.id },
+        nest: true,
+        raw: true
+      }),
+      Tweet.count({
+        where: { Userid: req.params.id }
       })
-    ]).then(([followings, usersdata]) => {
+    ]).then(([followings, usersdata, tweetUser, tweetCount]) => {
+
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
       }))
 
       const data = followings.map(d => ({
@@ -378,7 +440,7 @@ const userController = {
       }))
 
       const topUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
-      res.render('userSelfFollowship', { data, topUsers, theUser: helpers.getUser(req).id, renderType: "following" })
+      res.render('userFollowship', { data, topUsers, currentUser: helpers.getUser(req).id, tweetUser, tweetCount, renderType: "following" })
     })
   }
 }

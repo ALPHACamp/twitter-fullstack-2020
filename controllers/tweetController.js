@@ -3,6 +3,7 @@ const user = require('../models/user')
 const Tweet = db.Tweet
 const Reply = db.Reply
 const User = db.User
+const Like = db.Like
 const Followship = db.Followship
 
 const helpers = require('../_helpers')
@@ -12,9 +13,11 @@ const tweetController = {
   getTweets: (req, res) => {
     return Promise.all([
       Tweet.findAll({
-        include: [User, Reply],
+        include: [User, Reply,
+          { model: User, as: 'LikedUsers' }
+        ],
         order: [
-          ['createdAt', 'DESC'], // Sorts by createdAt in descending order
+          ['createdAt', 'DESC']
         ]
       }),
       User.findAll({
@@ -26,32 +29,31 @@ const tweetController = {
         where: { role: "user" }
       }),
     ]).then(([tweets, users]) => {
-      // TODO 為什麼更換 tweets 和 users 的順序會有錯誤？
-      const topUsers =
-        users.map(user => ({
-          ...user.dataValues,
-          followerCount: user.dataValues.followerCount,
-          isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
-        }))
-          .sort((a, b) => b.followerCount - a.followerCount)
-          .slice(0, 10)
-      
+
+      const topUsers = users.map(user => ({
+        ...user.dataValues,
+        followerCount: user.Followers.length,
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+      })).sort((a, b) => b.followerCount - a.followerCount)
+        .slice(0, 10)
+
       const data = tweets.map(tweet => ({
         ...tweet.dataValues,
-        id : tweet.id,  //拿到tweet的id
-        // likeCount: req.user.LikedTweets.length,
+        id: tweet.id,  //拿到tweet的id
         description: tweet.description,
         createdAt: tweet.createdAt,
         userName: tweet.User.name,
         userAccount: tweet.User.account,
+        isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id),
       }))
+      console.log(data)
 
-      return res.render('tweets', {
+      return res.render('index', {
         tweets: data,
-        users: topUsers,
-        theUser: helpers.getUser(req).id
+        topUsers,
+        currentUser: helpers.getUser(req).id
       })
-    })
+    }).catch(error => (console.log(error)))
   },
 
   postTweet: async (req, res) => {
@@ -70,40 +72,21 @@ const tweetController = {
     })
     res.redirect('/tweets')
   },
-  getTweet: async (req, res) => {
-    // return Tweet.findByPk(req.params.id, {
-    //   include: [
-    //     ,
-    //     // { model: User, as: 'Followers' },
-    //     // { model: User, as: 'LikedUsers' },
-    //     // { model: Reply, include: [User] }
-    //   ]
-    // })
-    //   // .then(tweet => tweet.increment('viewCounts'))
-    //   .then(tweet => {
-    //     // const isFollowed = tweet.Followers.map(d => d.id).includes(req.user.id)
-    //     // const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id)
-    //     return res.render('tweet', {
-    //       tweet: tweet.toJSON(),
-    //       // isFollowed,
-    //       // isLiked
-    //     })
-    //   })
-    // console.log(req.params.id)
-    try {
-      const tweet = await Tweet.findByPk(
-        req.params.id, {
+
+  getTweet: (req, res) => {
+    return Promise.all([
+      Tweet.findByPk(req.params.id, {
         include: [
           User,
-          { model: Reply, include: [User] }
+          { model: Reply, include: [User] },
+          { model: User, as: 'LikedUsers' }
         ],
         order: [['Replies', 'createdAt', 'DESC']]
+      }).then(tweet => {
+        const isLiked = tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
+        return res.render('tweet', { tweet: tweet.toJSON(), isLiked })
       })
-      console.log('tweet:', tweet)
-      return res.render('tweet', { tweet: tweet.toJSON() })
-    } catch (e) {
-      console.log(e.message)
-    }
+    ])
   },
 }
 

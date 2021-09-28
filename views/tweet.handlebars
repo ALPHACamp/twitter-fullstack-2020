@@ -1,25 +1,4 @@
-<!-- Modal -->
-<div class="modal fade" id="newTwitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <button type="button" class="btn-close m-3" data-bs-dismiss="modal" aria-label="Close"></button>
-      <div class="createTweet border">
-        <div class="d-flex">
-          <a href="" class="avatar m-2">
-            <img src="{{noImage user.avatar}}" alt="" class="rounded-circle userImage">
-          </a>
-          <textarea class="whathtNew" id="description" name="description" placeholder="有甚麼新鮮事?"></textarea>
-        </div>
-        <div class="d-flex justify-content-end">
-          <div class="round m-3">
-            <button type="button" class="orange btn text-white round" data-bs-toggle="modal"
-              data-bs-target="#newTwitModal">推文</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{{>newTweet}}
 
 <!-- Modal -->
 <div class="modal fade" id="newReplyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -49,7 +28,7 @@
         </div>
       </div>
       <div class="createReply">
-        <form action="/replies" method="POST">
+        <form action="/tweets/{{tweet.id}}/replies" method="POST">
           <div class="d-flex">
             <a href="" class="avatar m-2">
               <img src="{{noImage user.image}}" alt="" class="rounded-circle userImage">
@@ -73,54 +52,7 @@
 
 <div class="row grid">
 
-  <div>
-    <nav class="userSidebar fixed">
-      <div class="logo">
-        <img src="https://i.imgur.com/ZUJriDp.png" alt="" id="ac-logo">
-      </div>
-      <div class="buttonList mt-5">
-        <div class="navItem index d-flex mb-4 ">
-          <div class="icon d-flex align-items-center color-orange">
-            <i class="fas fa-home my-auto"></i>
-          </div>
-          <a href="/tweets" class="btn sidebarItem">
-            <span class="fs-5 fw-bolder">首頁</span>
-          </a>
-        </div>
-        <div class="navItem userProfile d-flex mb-4 ">
-          <div class="icon d-flex align-items-center">
-            <i class="fas fa-users"></i>
-          </div>
-          <a href="/user/{{user.id}}/tweets" class="btn sidebarItem">
-            <span class="fs-5 fw-bolder">個人資料</span>
-          </a>
-        </div>
-        <div class="navItem setting d-flex mb-4">
-          <div class="icon d-flex align-items-center">
-            <i class="fas fa-cog"></i>
-          </div>
-          <a href="/setting" class="btn sidebarItem">
-            <span class="sidebar-item fs-5 fw-bolder">設定</span>
-          </a>
-        </div>
-      </div>
-      <div class="d-grid gap-2 col-9 round">
-        <button type="button" class="orange btn text-white round" data-bs-toggle="modal"
-          data-bs-target="#newTwitModal">推文</button>
-      </div>
-      <div class="logout d-flex">
-        <div class="logoutLogo me-3 d-flex align-items-center">
-          <i class="fas fa-sign-out-alt"></i>
-        </div>
-        <a href="/logout" class="btn">
-          <span class="fs-5 fw-bolder">登出</span>
-        </a>
-      </div>
-    </nav>
-  </div>
-
-
-
+  {{>leftSidebar}}
 
   <div class="mainSection">
     {{>message}}
@@ -132,11 +64,12 @@
     </div>
     <div class="tweet border">
       <div class="d-flex">
-        <a href="/user/{{tweet.User.id}}/tweets" class="avatar m-2">
+        <a href="/users/{{tweet.User.id}}/tweets" class="avatar m-2">
           <img src="{{noImage tweet.User.avatar}}" alt="" class="rounded-circle userImage">
         </a>
         <div class="name ">
-          <a href="/user/{{tweet.User.id}}/tweets" class="text-secondary m-0 mt-1 fw-bolder btn">{{tweet.User.name}}</a>
+          <a href="/users/{{tweet.User.id}}/tweets"
+            class="text-secondary m-0 mt-1 fw-bolder btn">{{tweet.User.name}}</a>
           <p class="text-secondary m-0">@{{tweet.User.account}}</p>
         </div>
       </div>
@@ -154,86 +87,57 @@
           <div>回覆</div>
         </div>
         <div class="likes d-flex">
-          <div class="likesAmount fw-bolder me-2">808</div>
+          <div class="likesAmount fw-bolder me-2">{{tweet.LikedUsers.length}}</div>
           <div>喜歡次數</div>
         </div>
       </div>
     </div>
     <div class="border">
       <div class="d-flex">
-        <button type="button" class="btn commentIcon me-5" data-bs-toggle="modal"data-bs-target="#newReplyModal">
+        <button type="button" class="btn commentIcon me-5" data-bs-toggle="modal" data-bs-target="#newReplyModal">
           <i class="far fa-comment fs-3 text-secondary"></i>
         </button>
-        
-        <div class="likeIcon btn">
-          <i class="far fa-heart fs-3 text-secondary"></i>
-        </div>
+
+        {{#if isLiked}}
+        <form action="/tweets/{{tweet.id}}/unlike" method="POST">
+          <button type="submit" class="btn">
+            <i class="fas fa-heart fs-3 "></i>
+          </button>
+        </form>
+        {{else}}
+        <form action="/tweets/{{tweet.id}}/like" method="POST">
+          <button type="submit" class="btn">
+            <i class="far fa-heart fs-3"></i>
+          </button>
+        </form>
+        {{/if}}
       </div>
     </div>
     <div class="commentsList">
       {{#each tweet.Replies}}
-        <div class="comment d-flex border">
-          <a href="/user/{{this.User.id}}/tweets" class="avatar m-3">
-            <img src="{{noImage this.User.avatar}}" alt="" class="rounded-circle userImage">
-          </a>
+      <div class="comment d-flex border">
+        <a href="/users/{{this.User.id}}/tweets" class="avatar m-3">
+          <img src="{{noImage this.User.avatar}}" alt="" class="rounded-circle userImage">
+        </a>
+        <div>
+          <div class="d-flex">
+            <a href="/users/{{this.User.id}}/tweets" class="name m-1 fw-bolder btn">{{this.User.name}}</a>
+            <div class="account m-1 mt-2">@{{this.User.account}}</div>
+            <div class="timefrom  m-1 mt-2">{{moment this.createdAt}}</div>
+          </div>
           <div>
             <div class="d-flex">
-              <a href="/user/{{this.User.id}}/tweets" class="name m-1 fw-bolder btn">{{this.User.name}}</a>
-              <div class="account m-1 mt-2">@{{this.User.account}}</div>
-              <div class="timefrom  m-1 mt-2">{{moment this.createdAt}}</div>
+              <div class="m-1">回覆</div>
+              <div class="m-1 color-orange">@{{../tweet.User.account}}</div>
             </div>
             <div>
-              <div class="d-flex">
-                <div class="m-1">回覆</div>
-                <div class="m-1 color-orange">@{{../tweet.User.account}}</div>
-              </div>
-              <div>
-                <p>{{this.comment}}</p>
-              </div>
+              <p>{{this.comment}}</p>
             </div>
           </div>
         </div>
+      </div>
       {{/each}}
     </div>
-
-
   </div>
-  <div class="">
-    <div class="popularArea mt-4 border">
-      <div class="title m-3">
-        <h5 class="fw-bolder">Popular</h5>
-      </div>
-      <div class="popularList border-top">
-        <div class="popularUser d-flex border-bottom justify-content-between">
-          <div class="user d-flex">
-            <div class="avatar m-2">
-              <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
-            </div>
-            <div class="information">
-              <div class="name mt-3 ms-1 fw-bolder">Pizza Hut</div>
-              <div class="account ms-1">@Pizza Hut</div>
-            </div>
-          </div>
-          <div class="round m-3">
-            <button class="orange btn text-white round">正在跟隨</button>
-          </div>
-        </div>
-        <div class="popularUser d-flex border-bottom justify-content-between">
-          <div class="user d-flex">
-            <div class="avatar m-2">
-              <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
-            </div>
-            <div class="information">
-              <div class="name mt-3 ms-1 fw-bolder">McDonald's</div>
-              <div class="account ms-1">@McDonald's</div>
-            </div>
-          </div>
-          <div class="round m-3">
-            <button class="btn followButton round">跟隨</button>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
+  {{>popular}}
 </div>

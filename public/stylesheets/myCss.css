@@ -103,3 +103,32 @@
    border: 5px solid white;
 
 }
+
+.modal-backdrop {
+  top: auto;
+}
+
+.editAvatar > .userAvatar {
+  margin-top: -50px;
+  margin-bottom: 50px;
+  margin-left: 20px;
+  width: 130px;
+}
+
+.userSidebar {
+  width: 235px;
+  height: 1196px;
+  left: 103px;
+  top: 4px;
+}
+.logout {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  
+  position: inherit;
+  width: 235px;
+  height: 60px;
+  top: 850px;
+}

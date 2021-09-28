@@ -25,7 +25,7 @@
           <div class="icon d-flex align-items-center">
             <i class="fas fa-cog"></i>
           </div>
-          <a href="/setting" class="btn sidebarItem">
+          <a href="/users/{{user.id}}/setting?_method=PUT" class="btn sidebarItem">
             <span class="sidebar-item fs-5 fw-bolder">設定</span>
           </a>
         </div>
@@ -102,7 +102,7 @@
         <h5 class="fw-bolder">Popular</h5>
       </div>
       {{#each topUsers}}
-      {{#ifCondNot this.id ../theUser}}
+      {{#ifCondNot this.id ../currentUser}}
       <div class="popularList border-top">
         <div class="popularUser d-flex border-bottom justify-content-between">
           <div class="user d-flex">
@@ -123,7 +123,7 @@
               <button type="submit" class="btn orange text-white round">取消跟隨</button>
             </form>
             {{else}}
-            <form action="/following/{{this.id}}" method="POST">
+            <form action="/following/" method="POST">
               <button type="submit" class="btn followButton round">跟隨</button>
             </form>
             {{/if}}
