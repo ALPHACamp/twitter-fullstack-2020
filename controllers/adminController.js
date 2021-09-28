@@ -57,33 +57,20 @@ const adminController = {
     },
 
     getTweets: (req, res, next) => {
-        const a = req.body.TweetId
-        return Promise.all([
-            User.findAll({
+        Tweet
+            .findAll({
                 raw: true,
                 nest: true,
-                where: {
-                    isAdmin: true,
-                    id: req.params.id
-                },
-                include: [{ model: User, as: 'Followers' }]
-            }),
-            Tweet.findAndCountAll({
-                raw: true,
-                nest: true,
+                include: [User],
                 order: [['createdAt', 'DESC']],
-                include: [User]
-            }),
-        ]).then(([followship, tweets, tweet]) => {
-            tweets = tweets.rows.map(r => ({
-                ...r,
-                description: r.description.substring(0, 50),
-                isLiked: helpers.getUser(req).LikedTweet.map(d => d.id).includes(r.id),
-            }))
-            return res.render('adminTweet', {
-                tweets: tweets,
             })
-        })
+            .then((tweets) => {
+                tweets = tweets.map(r => ({
+                    ...r,
+                    description: r.description.substring(0, 50),
+                }))
+                return res.render('adminTweet', { tweets: tweets })
+            })
             .catch(next)
     }
 }

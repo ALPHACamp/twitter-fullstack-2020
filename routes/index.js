@@ -3,7 +3,6 @@ const adminController = require('../controllers/adminController')
 const tweetController = require('../controllers/tweetController')
 const helpers = require('../_helpers')
 const replyController = require('../controllers/replyController')
-const messageController = require('../controllers/messageController')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -29,15 +28,13 @@ module.exports = (app, passport) => {
         if (helpers.ensureAuthenticated(req)) {
             if (helpers.getUser(req).role !== 'admin') { return next() }
             req.flash('error_messages', '此帳號為管理者帳號，不可登入前台！')
-            return res.redirect('/signin')
+            return res.redirect('/admin/tweets')
         }
-        res.redirect('/signin')
     }
 
-    app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
     app.get('/tweets', authenticatedUser, tweetController.getTweets)
     app.post('/tweets', tweetController.postTweet)
-    app.get('/tweets/:id',authenticatedUser, tweetController.getTweet)
+    app.get('/tweets/:id', authenticatedUser, tweetController.getTweet)
 
     app.post('/tweets/:id/replies', authenticatedUser, replyController.postReply)
 
@@ -54,14 +51,14 @@ module.exports = (app, passport) => {
     app.put('/setting', authenticatedUser, userController.putSetting)
 
     app.get('/users/noti/:id', authenticatedUser, userController.toggleNotice)
-    app.get('/users/:id', authenticatedUser, userController.getProfile)
+    app.get('/users/:id/tweets', authenticatedUser, userController.getProfile)
     app.put('/users/:id/edit', authenticatedUser, upload.fields([{
         name: 'cover', maxCount: 1
     }, {
         name: 'avatar', maxCount: 1
     }]), userController.putProfile)
 
-  
+
     app.get('/admin/signin', adminController.signInPage)
     app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
     app.get('/admin/logout', adminController.logout)
@@ -74,6 +71,6 @@ module.exports = (app, passport) => {
     app.get('/users/:id/followers', authenticatedUser, userController.getFollowers)
     app.get('/users/:id/followings', authenticatedUser, userController.getFollowings)
 
-    app.get('/messages/public', authenticatedUser, messageController.getPublic)
+    app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 
 }
