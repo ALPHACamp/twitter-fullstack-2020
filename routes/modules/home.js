@@ -3,8 +3,6 @@ const express = require("express");
 const userController = require("../../controllers/usercontroller");
 const adminController = require("../../controllers/adminController");
 const router = express.Router();
-const db = require("../../models");
-const { User, Tweet, Reply } = db;
 const passport = require("passport");
 
 router.get("/", (req, res) => {
