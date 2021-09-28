@@ -1,0 +1,84 @@
+<!-- 新推文Modal -->
+{{>newTweet}}
+
+<div class="row grid">
+
+  {{>leftSidebar}}
+
+  <div class="mainSection ">
+    {{>message}}
+    <div class="title border">
+      <h5 class="fw-bolder m-3">首頁</h5>
+    </div>
+    <div class="createTweet border">
+      <div class="d-flex">
+        <a href="" class="avatar m-2">
+          <img src="{{noImage user.avatar}}" alt="" class="rounded-circle userImage">
+        </a>
+        <div class="d-flex align-items-center">
+          <button type="button" class="btn text-secondary" data-bs-toggle="modal"
+            data-bs-target="#newTwitModal">有甚麼新鮮事?</button>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <div class="round m-3">
+          <button type="button" class="orange btn text-white round" data-bs-toggle="modal"
+            data-bs-target="#newTwitModal">推文</button>
+        </div>
+      </div>
+    </div>
+    <div class="tweets border-top border-5">
+      {{#each tweets}}
+      <div class="tweet border">
+        <div class="d-flex">
+          <a href="/users/{{this.User.id}}/tweets" class="avatar m-2">
+            <img src="{{noImage this.User.avatar}}" alt="" class="rounded-circle userImage">
+          </a>
+          <div class="">
+            <div class="d-flex">
+              <a href="/users/{{this.User.id}}/tweets" class="name m-2 btn">{{this.userName}}</a>
+              <div class="tag m-2 mt-2 pt-1">@{{this.userAccount}}</div>
+              <div class="time m-2 mt-2 pt-1" title="{{momentFormat this.createdAt}}">
+                {{moment this.createdAt}}
+              </div>
+            </div>
+            <a href="/tweets/{{this.id}}/replies" class="tweetContent m-2 btn">
+              <p>{{this.description}}</p>
+            </a>
+            <div class="d-flex mb-2 align-items-center">
+              <a href="/tweets/{{this.id}}/replies" class="comment d-flex me-2 btn">
+                <span class="commentIcon me-2">
+                  <i class="far fa-comment"></i>
+                </span>
+                <span class="commentAmount">{{this.Replies.length}}</span>
+              </a>
+              <div class="like d-flex">
+                <span class="likeIcon me-2">
+                  {{#if isLiked}}
+                  <form action="/tweets/{{this.id}}/unlike" method="POST">
+                    <button type="submit" class="btn">
+                      <i class="fas fa-heart"></i>
+                    </button>
+                  </form>
+                  {{else}}
+                  <form action="/tweets/{{this.id}}/like" method="POST">
+                    <button type="submit" class="btn">
+                      <i class="far fa-heart"></i>
+                    </button>
+                  </form>
+                  {{/if}}
+                </span>
+                <span class="likeAmount mt-1">{{this.LikedUsers.length}}</span>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  {{>popular}}
+
+</div>
