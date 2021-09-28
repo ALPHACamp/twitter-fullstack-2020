@@ -31,7 +31,6 @@ const getTopUsers = async (user) => {
       role: { [Op.not]: "admin" }
     }
   });
-  console.log(datas[0].toJSON());
   const topusers = datas
     .map((data) => ({
       ...data.dataValues,

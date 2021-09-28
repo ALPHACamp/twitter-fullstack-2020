@@ -2,17 +2,7 @@ const db = require("../models");
 const { Op } = require("sequelize");
 const { Tweet, User, Reply, Like } = db;
 const moment = require("moment");
-//for development
-
-//設定在測試模式下，使用 helper 作為 user 來源
-const helpers = require("../_helpers.js");
-const getTestUser = function (req) {
-  if (process.env.NODE_ENV === "test") {
-    return helpers.getUser(req);
-  } else {
-    return req.user;
-  }
-};
+const { getTestUser } = require("../services/generalService");
 
 const listAttributes = ["id", "name", "account", "avatar"];
 const tweetController = {
@@ -20,22 +10,22 @@ const tweetController = {
     const user = getTestUser(req);
     try {
       const Profile = await User.findByPk(user.id, {
-        attributes: ["id", "avatar"],
+        attributes: ["id", "avatar"]
       });
       const rawTweets = await Tweet.findAll({
         include: [
           { model: User, attributes: listAttributes },
           { model: Reply, attributes: ["id"] },
-          { model: User, as: "LikedUsers", attributes: ["id"] },
+          { model: User, as: "LikedUsers", attributes: ["id"] }
         ],
         order: [["createdAt", "DESC"]],
-        limit: 20,
+        limit: 20
       });
       const Tweets = await rawTweets.map((data) => ({
         ...data.dataValues,
         ReplyCount: data.Replies.length,
         LikedCount: data.LikedUsers.length,
-        createdAt: moment(data.createdAt).fromNow(),
+        createdAt: moment(data.createdAt).fromNow()
       }));
 
       // get TopUser
@@ -44,14 +34,14 @@ const tweetController = {
         include: [{ model: User, as: "Followers", attributes: ["id"] }],
         where: {
           id: { [Op.not]: req.user.id },
-          role: { [Op.not]: "admin" },
-        },
+          role: { [Op.not]: "admin" }
+        }
       });
       const Users = await rawUsers
         .map((data) => ({
           ...data.dataValues,
           FollowerCount: data.Followers.length,
-          isFollowed: req.user.Followings.map((d) => d.id).includes(data.id),
+          isFollowed: req.user.Followings.map((d) => d.id).includes(data.id)
         }))
         .sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
@@ -66,7 +56,7 @@ const tweetController = {
       return res.render("index", {
         tweets: Tweets,
         users: TopUsers,
-        profile: Profile,
+        profile: Profile
       });
     } catch (error) {
       res.status(400).json(error);
@@ -79,21 +69,19 @@ const tweetController = {
       //get selfInformation
       const myProfile = await User.findByPk(user.id, {
         attributes: ["id", "avatar"],
-        raw: true,
+        raw: true
       });
       let tweet = await Tweet.findByPk(req.params.id, {
         include: [
           { model: User, attributes: listAttributes },
           { model: User, as: "LikedUsers", attributes: ["id"] },
-          { model: Reply, include: [User] },
-        ],
+          { model: Reply, include: [User] }
+        ]
       });
       const ReplyCount = tweet.Replies.length;
       const LikedCount = tweet.LikedUsers.length;
       Replies = tweet.Replies.sort((a, b) => b.createdAt - a.createdAt);
-      LikedUsers = tweet.LikedUsers.sort(
-        (a, b) => b.Like.createdAt - a.Like.createdAt
-      );
+      LikedUsers = tweet.LikedUsers.sort((a, b) => b.Like.createdAt - a.Like.createdAt);
 
       // get TopUser
       const rawUsers = await User.findAll({
@@ -101,14 +89,14 @@ const tweetController = {
         include: [{ model: User, as: "Followers", attributes: ["id"] }],
         where: {
           id: { [Op.not]: req.user.id },
-          role: { [Op.not]: "admin" },
-        },
+          role: { [Op.not]: "admin" }
+        }
       });
       const Users = await rawUsers
         .map((data) => ({
           ...data.dataValues,
           FollowerCount: data.Followers.length,
-          isFollowed: req.user.Followings.map((d) => d.id).includes(data.id),
+          isFollowed: req.user.Followings.map((d) => d.id).includes(data.id)
         }))
         .sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
@@ -124,7 +112,7 @@ const tweetController = {
         tweet,
         ReplyCount,
         LikedCount,
-        users: TopUsers,
+        users: TopUsers
       });
     } catch (error) {
       res.status(400).json(error);
@@ -144,7 +132,7 @@ const tweetController = {
     // } else {
     return Tweet.create({
       UserId: user.id,
-      description,
+      description
     })
       .then((tweet) => {
         res.redirect("back");
@@ -167,7 +155,7 @@ const tweetController = {
       return Reply.create({
         UserId: user.id,
         TweetId: req.params.id,
-        comment,
+        comment
       })
         .then((reply) => {
           // console.log("成功發送評論", reply.toJSON());
@@ -175,7 +163,7 @@ const tweetController = {
         })
         .catch((error) => res.status(400).json(error));
     }
-  },
+  }
 };
 
 module.exports = tweetController;

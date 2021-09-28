@@ -5,7 +5,7 @@ const imgur = require("imgur-node-api");
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 //for test only
-const { getTestUser } = require("./util.service");
+const { getTestUser } = require("../services/generalService");
 
 const listAttributes = ["id", "name", "account", "avatar"];
 
@@ -18,37 +18,35 @@ const profileController = {
       //get selfInformation
       const myProfile = await User.findByPk(user.id, {
         attributes: ["id", "avatar"],
-        raw: true,
+        raw: true
       });
       // get selfInformation
       const Profile = await User.findByPk(req.params.id, {
         include: [
           { model: User, as: "Followers", attributes: ["id"] },
-          { model: User, as: "Followings", attributes: ["id"] },
-        ],
+          { model: User, as: "Followings", attributes: ["id"] }
+        ]
       });
       // get selfTweet
       const rawTweets = await Tweet.findAll({
         where: { UserId: req.params.id },
         include: [
           { model: Reply, attributes: ["id"] },
-          { model: Like, attributes: ["id", "UserId"] },
+          { model: Like, attributes: ["id", "UserId"] }
         ],
-        order: [["createdAt", "DESC"]],
+        order: [["createdAt", "DESC"]]
       });
       const Tweets = await rawTweets.map((data) => ({
         ...data.dataValues,
         ReplyCount: data.Replies.length,
         LikedCount: data.Likes.length,
-        isLiked: data.Likes.map((data) => Number(data.UserId)).includes(
-          Number(user.id)
-        ),
+        isLiked: data.Likes.map((data) => Number(data.UserId)).includes(Number(user.id))
       }));
       let followship = await Followship.findOne({
         where: {
           followerId: Number(user.id),
-          followingId: Number(req.params.id),
-        },
+          followingId: Number(req.params.id)
+        }
       });
 
       // get Count
@@ -62,14 +60,14 @@ const profileController = {
         include: [{ model: User, as: "Followers", attributes: ["id"] }],
         where: {
           id: { [Op.not]: user.id },
-          role: { [Op.not]: "admin" },
-        },
+          role: { [Op.not]: "admin" }
+        }
       });
       const Users = await rawUsers
         .map((data) => ({
           ...data.dataValues,
           FollowerCount: data.Followers.length,
-          isFollowed: user.Followings.map((d) => d.id).includes(data.id),
+          isFollowed: user.Followings.map((d) => d.id).includes(data.id)
         }))
         .sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
@@ -85,7 +83,7 @@ const profileController = {
         followersCount,
         followingsCount,
         isFollowed: Boolean(followship),
-        notification: Boolean(followship ? followship.notification : false),
+        notification: Boolean(followship ? followship.notification : false)
       });
     } catch (error) {
       console.log(error);
@@ -103,15 +101,15 @@ const profileController = {
         include: [
           { model: Tweet, attributes: ["id"] },
           { model: User, as: "Followers", attributes: ["id"] },
-          { model: User, as: "Followings", attributes: ["id"] },
-        ],
+          { model: User, as: "Followings", attributes: ["id"] }
+        ]
       });
       // get followship
       let followship = await Followship.findOne({
         where: {
           followerId: Number(user.id),
-          followingId: Number(req.params.id),
-        },
+          followingId: Number(req.params.id)
+        }
       });
 
       const tweetsCount = Profile.Tweets.length;
@@ -127,12 +125,12 @@ const profileController = {
           { model: User, attributes: listAttributes },
           {
             model: Tweet,
-            include: [{ model: User, attributes: ['id', 'account'] }],
-            attributes: ['id', 'description'],
+            include: [{ model: User, attributes: ["id", "account"] }],
+            attributes: ["id", "description"]
           }
         ],
-        order: [["createdAt", "DESC"]],
-      })
+        order: [["createdAt", "DESC"]]
+      });
 
       // get TopUser
       const rawUsers = await User.findAll({
@@ -140,14 +138,14 @@ const profileController = {
         include: [{ model: User, as: "Followers", attributes: ["id"] }],
         where: {
           id: { [Op.not]: user.id },
-          role: { [Op.not]: "admin" },
-        },
+          role: { [Op.not]: "admin" }
+        }
       });
       const Users = await rawUsers
         .map((data) => ({
           ...data.dataValues,
           FollowerCount: data.Followers.length,
-          isFollowed: user.Followings.map((d) => d.id).includes(data.id),
+          isFollowed: user.Followings.map((d) => d.id).includes(data.id)
         }))
         .sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
@@ -164,7 +162,7 @@ const profileController = {
         followersCount,
         followingsCount,
         isFollowed: Boolean(followship),
-        notification: Boolean(followship ? followship.notification : false),
+        notification: Boolean(followship ? followship.notification : false)
       });
     } catch (error) {
       console.log(error);
@@ -180,15 +178,15 @@ const profileController = {
       //get selfInformation
       const myProfile = await User.findByPk(user.id, {
         attributes: ["id", "avatar"],
-        raw: true,
+        raw: true
       });
       //get userInformation
       const Profile = await User.findByPk(req.params.id, {
         include: [
           { model: Tweet, attributes: ["id"] },
           { model: User, as: "Followers", attributes: ["id"] },
-          { model: User, as: "Followings", attributes: ["id"] },
-        ],
+          { model: User, as: "Followings", attributes: ["id"] }
+        ]
       });
 
       // get LIkeDTweet
@@ -200,16 +198,16 @@ const profileController = {
             include: [
               { model: Like, attributes: ["id"] },
               { model: Reply, attributes: ["id"] },
-              { model: User, attributes: listAttributes },
-            ],
-          },
+              { model: User, attributes: listAttributes }
+            ]
+          }
         ],
-        order: [["createdAt", "DESC"]],
+        order: [["createdAt", "DESC"]]
       });
       const LikedTweets = await rawLikedTweets.map((data) => ({
         ...data.dataValues,
         ReplyCount: data.Tweet ? data.Tweet.Replies.length : 0,
-        LikedCount: data.Tweet ? data.Tweet.Likes.length : 0,
+        LikedCount: data.Tweet ? data.Tweet.Likes.length : 0
       }));
 
       // get Count
@@ -221,8 +219,8 @@ const profileController = {
       let followship = await Followship.findOne({
         where: {
           followerId: Number(user.id),
-          followingId: Number(req.params.id),
-        },
+          followingId: Number(req.params.id)
+        }
       });
 
       // get Top10User
@@ -231,14 +229,14 @@ const profileController = {
         include: [{ model: User, as: "Followers", attributes: ["id"] }],
         where: {
           id: { [Op.not]: user.id },
-          role: { [Op.not]: "admin" },
-        },
+          role: { [Op.not]: "admin" }
+        }
       });
       const Users = await rawUsers
         .map((data) => ({
           ...data.dataValues,
           FollowerCount: data.Followers.length,
-          isFollowed: user.Followings.map((d) => d.id).includes(data.id),
+          isFollowed: user.Followings.map((d) => d.id).includes(data.id)
         }))
         .sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
@@ -255,7 +253,7 @@ const profileController = {
         followersCount,
         followingsCount,
         isFollowed: Boolean(followship),
-        notification: Boolean(followship ? followship.notification : false),
+        notification: Boolean(followship ? followship.notification : false)
       });
     } catch (error) {
       console.log(error);
@@ -267,13 +265,13 @@ const profileController = {
     const { name, introduction, avatar, cover } = req.body;
     const errors = [];
     if (!name || !introduction) {
-      errors.push({ message: '名稱或自我介紹欄位，不可空白' })
+      errors.push({ message: "名稱或自我介紹欄位，不可空白" });
     }
     if (name.length > 50) {
-      errors.push({ message: '名稱必須在50字符以內' })
+      errors.push({ message: "名稱必須在50字符以內" });
     }
     if (introduction.length > 160) {
-      errors.push({ message: '自我介紹，必須在160字符以內' })
+      errors.push({ message: "自我介紹，必須在160字符以內" });
     }
     if (errors.length > 0) {
       return res.render("edit", { name, introduction, avatar, cover });
@@ -302,12 +300,12 @@ const profileController = {
       name: name,
       introduction: introduction,
       cover: images.cover ? images.cover.data.link : profile.cover,
-      avatar: images.avatar ? images.avatar.data.link : profile.avatar,
+      avatar: images.avatar ? images.avatar.data.link : profile.avatar
     });
 
-    req.flash('success_msg', '您的個人資訊已更新')
+    req.flash("success_msg", "您的個人資訊已更新");
     return res.redirect(`/users/${user.id}/tweets`);
-  },
+  }
 };
 
 module.exports = profileController;

@@ -18,7 +18,7 @@ router.post(
   "/signin",
   passport.authenticate("local", {
     successRedirect: "/tweets",
-    failureRedirect: "/signin",
+    failureRedirect: "/signin"
   })
 );
 router.post("/signup", userController.signup);
@@ -28,7 +28,7 @@ router.post(
   "/admin/signin",
   passport.authenticate("local", {
     successRedirect: "/admin/tweets",
-    failureRedirect: "/admin/signin",
+    failureRedirect: "/admin/signin"
   }),
   adminController.signIn
 );
