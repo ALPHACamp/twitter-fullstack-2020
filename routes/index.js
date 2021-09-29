@@ -66,10 +66,11 @@ module.exports = (app, passport) => {
     app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
     app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
-    app.post('/followships/:userId', authenticatedUser, userController.addFollowing)
+    app.post('/followships', authenticatedUser, userController.addFollowing)
     app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
     app.get('/users/:id/followers', authenticatedUser, userController.getFollowers)
     app.get('/users/:id/followings', authenticatedUser, userController.getFollowings)
+    app.get('/users/:id', authenticatedUser, userController.getProfile)
 
     app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 

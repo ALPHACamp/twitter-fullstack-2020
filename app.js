@@ -60,15 +60,11 @@ app.use((req, res, next) => {
 // 設定每一筆請求都會透過 methodOverride 進行前置處理
 app.use(methodOverride('_method'))
 
-app.get('/follower', (req, res) => res.render('follower'))
-
 io.use((socket, next) => {
   sessionMiddleware(socket.request, socket.request.res, next)
 })
 
 require('./controllers/socketController')(io)
-
-
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

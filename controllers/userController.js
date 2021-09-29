@@ -78,13 +78,13 @@ const userController = {
     },
 
     addFollowing: (req, res, next) => {
-        if (Number(helpers.getUser(req).id) === Number(req.params.userId)) {
+        if (Number(helpers.getUser(req).id) === Number(req.body.id)) {
             req.flash('error_messages', '不可跟隨自己！')
-            return res.redirect('back')
+            return res.redirect(200, 'back')
         }
         Followship.create({
             followerId: helpers.getUser(req).id,
-            followingId: req.params.userId
+            followingId: req.body.id
         })
             .then((followship) => {
                 return res.redirect('back')
@@ -107,7 +107,7 @@ const userController = {
             })
             .catch(next)
     },
-    
+
     toggleNotice: (req, res) => {
         if (helpers.getUser(req).id === Number(req.params.id)) return res.redirect('back')
         return User.findByPk(req.params.id, {
@@ -125,7 +125,7 @@ const userController = {
                     })
             })
     },
-    
+
     getProfile: async (req, res) => {
         let [users, user, followship] = await Promise.all([
             User.findAll({ where: { role: 'user' }, raw: true, nest: true, attributes: ['id'] }),
@@ -151,7 +151,7 @@ const userController = {
                 ]
             })
         ])
-        
+
         const isUser = users.some(i => i.id === Number(req.params.id))
         if (!isUser) return res.redirect('back')
         const UserId = helpers.getUser(req).id
@@ -163,7 +163,7 @@ const userController = {
         followship = followship.map(followships => ({
             ...followships.dataValues,
             FollowerCount: followships.Followers.length,
-            isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes (followships.id),
+            isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(followships.id),
             isMainuser: helpers.getUser(req).id === Number(req.params.id)
         }))
         followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
@@ -219,7 +219,7 @@ const userController = {
             console.warn(error)
         }
     },
-    
+
     getSetting: (req, res) => {
         return User.findByPk(helpers.getUser(req).id).then(theuser => {
             theuser = theuser.toJSON()
@@ -244,16 +244,16 @@ const userController = {
         }
         try {
             const [a, e] = await Promise.all([
-                User.findOne({ 
-                    raw: true, 
-                    nest: true, 
-                    where: { 
+                User.findOne({
+                    raw: true,
+                    nest: true,
+                    where: {
                         [Op.and]: [
-                            { account: account }, 
+                            { account: account },
                             { account: { [Op.notLike]: helpers.getUser(req).account } }
-                        ] 
-                    } 
-                }), 
+                        ]
+                    }
+                }),
                 User.findOne({ raw: true, nest: true, where: { [Op.and]: [{ email }, { email: { [Op.notLike]: helpers.getUser(req).email } }] } })])
             errors = []
             if (a) {
@@ -288,10 +288,10 @@ const userController = {
     getFollowers: async (req, res) => {
         const id = helpers.getUser(req).id
         let user = await User.findByPk(req.params.id, {
-                include: [
-                    Tweet
-                ]
-            })
+            include: [
+                Tweet
+            ]
+        })
         let followers = await User.findAll({
             raw: true,
             nest: true,
@@ -332,12 +332,12 @@ const userController = {
             isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
             isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
         }))
-       
+
         Top10Users = Top10Users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
         return res.render('follower', { followers: followers, id: id, Top10Users: Top10Users, tweetCount: thousandComma(tweetCount) })
 
     },
-    
+
     addLike: (req, res) => {
         return Like.create({
             UserId: helpers.getUser(req).id,
@@ -375,10 +375,10 @@ const userController = {
     getFollowings: async (req, res) => {
         const id = helpers.getUser(req).id
         let user = await User.findByPk(req.params.id, {
-                include: [
-                    Tweet
-                ]
-            })
+            include: [
+                Tweet
+            ]
+        })
         let followings = await User.findAll({
             raw: true,
             nest: true,
@@ -419,7 +419,7 @@ const userController = {
             isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
             isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
         }))
-    
+
         Top10Users = Top10Users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
         return res.render('following', { followings: followings, id: id, Top10Users: Top10Users, tweetCount: thousandComma(tweetCount) })
     }
