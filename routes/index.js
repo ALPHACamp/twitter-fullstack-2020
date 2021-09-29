@@ -54,7 +54,8 @@ module.exports = (app, passport) => {
     app.put('/setting', authenticatedUser, userController.putSetting)
 
     app.get('/users/noti/:id', authenticatedUser, userController.toggleNotice)
-    app.get('/users/:id', authenticatedUser, userController.getProfile)
+    app.get('/users/:id/tweets', authenticatedUser, userController.getProfile)
+    app.get('/users/:id/likes', authenticatedUser, userController.getProfile)
     app.put('/users/:id/edit', authenticatedUser, upload.fields([{
         name: 'cover', maxCount: 1
     }, {

@@ -22,8 +22,9 @@ const replyController = {
       comment: req.body.comment,
     })
       .then(() => {
-        return Tweet.findByPk(req.body.TweetId).then((tweet) => {
-          return tweet.increment('replyCount')
+        return Tweet.findByPk(req.body.TweetId)
+        .then((tweet) => {
+          tweet.increment('replyCount')
         })
       })
       .then(() => {
