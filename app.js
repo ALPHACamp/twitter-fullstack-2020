@@ -68,7 +68,7 @@ require('./controllers/socketController')(io)
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-require('./routes')(app, passport) // 把 passport 傳入 routes
+require('./routes')(app) 
 
 
 module.exports = app

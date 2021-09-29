@@ -21,7 +21,7 @@
           </li>
 
           <li class="nav-item py-1">
-            <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}">
+            <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}/tweets">
               <i class="far fa-user" style="font-size: 1.2em;"></i>
               <span class="h5 menu-text user">個人資料</span>
             </a>
@@ -76,7 +76,7 @@
         <div class="card-body col-12">
           <div class="row  mb-1 p-2">
             <div class="col-1 d-flex justify-content-center align-items-start">
-              <a href="/users/{{this.UserId}}">
+              <a href="/users/{{this.UserId}}/tweets">
                 <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}
               " class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
               </a>
@@ -84,7 +84,7 @@
             <div class="col-11 row">
               <div class="col-12 d-inline-flex justify-content-between align-items-center">
                 <div style="height: 22px; font-size: 15px;">
-                  <a href="/users/{{this.UserId}}" class="text-dark font-weight-bold">{{this.User.name}}</a>
+                  <a href="/users/{{this.UserId}}/tweets" class="text-dark font-weight-bold">{{this.User.name}}</a>
                   <span style="color: #657786;">@{{this.User.account}}．{{moment this.createdAt}}</span>
                 </div>
               </div>
@@ -198,7 +198,7 @@
           <li class="list-group-item bg-light" style="border-left: none;border-right: none">
             <div class="row justify-content-around align-items-center">
               <div class="col-2 d-flex justify-content-center align-items-center" style="padding-left: 20px;">
-                <a href="/users/{{this.id}}">
+                <a href="/users/{{this.id}}/tweets">
                   <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
                     alt="" width="50" height="50" class="rounded-circle">
                 </a>

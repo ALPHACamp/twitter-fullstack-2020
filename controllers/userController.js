@@ -151,9 +151,9 @@ const userController = {
                 ]
             })
         ])
-
-        const isUser = users.some(i => i.id === Number(req.params.id))
-        if (!isUser) return res.redirect('back')
+        
+        // const isUser = users.some(i => i.id === Number(req.params.id))
+        // if (!isUser) return res.redirect('back')
         const UserId = helpers.getUser(req).id
         const followerscount = user.Followers.length
         const followingscount = user.Followings.length
