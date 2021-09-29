@@ -14,16 +14,11 @@
     "dialect": "mysql",
     "logging": false
   },
+  
   "production": {
-    "use_env_variable": "CLEARDB_DATABASE_URL",
-    "dialect": "postgres",
-    "protocol": "postgres",
-    "dialectOptions": {
-      "ssl": {
-        "rejectUnauthorized": false
-      }
-    }
+    "use_env_variable": "CLEARDB_DATABASE_URL"
   },
+
   "travis": {
     "username": "travis",
     "database": "ac_twitter_workspace_test",
