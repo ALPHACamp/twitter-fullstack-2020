@@ -92,11 +92,11 @@ const userService = {
     const { name, description } = req.body
     const files = Object.assign({}, req.files)
 
-    if (!name.trim('')) {
-      return callback({ status: error, message: '請輸入有效名稱！' })
-    } else if (name.trim('').length > 50) {
-      return callback({ status: error, message: '名稱不得超過50字！' })
-    }
+    // if (!name.trim('')) {
+    //   return callback({ status: error, message: '請輸入有效名稱！' })
+    // } else if (name.trim('').length > 50) {
+    //   return callback({ status: error, message: '名稱不得超過50字！' })
+    // }
 
     imgur.setClientID(IMGUR_CLIENT_ID)
 
