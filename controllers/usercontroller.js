@@ -99,7 +99,7 @@ const userController = {
               })
               .then((user) => {
                 req.flash("success_messages", "成功更新個人資料");
-                res.redirect(`/users/${user.id}/edit`);
+                res.redirect('back');
               });
           });
         }
