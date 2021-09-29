@@ -227,6 +227,12 @@ color: #0099FF;
   background: crimson;
   border:2px solid crimson;
   border-radius: 80px;
+  /* 閃爍 */
+  animation: blink 1s linear infinite;  
+  -webkit-animation: blink 1s linear infinite;
+  -moz-animation: blink 1s linear infinite;
+  -ms-animation: blink 1s linear infinite;
+  -o-animation: blink 1s linear infinite;
 }
 
 .list-group-item.active {
@@ -2134,4 +2140,27 @@ color: #FF6600;
 
 .chat-information a {
   color: #FF6600;
+}
+
+/* 閃爍通知動畫 */
+@keyframes blink{
+  0%{opacity: 1;}
+  100%{opacity: 0;} 
+}
+
+@-webkit-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-moz-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-ms-keyframes blink {
+    0% {opacity: 1; } 
+    100% { opacity: 0;}
+}
+@-o-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
 }
