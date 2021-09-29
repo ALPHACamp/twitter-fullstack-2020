@@ -14,7 +14,7 @@ const profileController = {
       // 前端判斷
       const isPost = true;
       const isSelf = Number(req.params.id) === Number(user.id);
-      const myProfile = await getMyProfile(user.id)
+      const myProfile = await getMyProfile(user)
       const topUsers = await getTopUsers(user)
       const profile = await getProfile(req.params.id)
       
@@ -109,7 +109,7 @@ const profileController = {
       // 前端判斷
       const isLikedPosts = true;
       const isSelf = Number(req.params.id) === Number(user.id);
-      const myProfile = await getMyProfile(user.id)
+      const myProfile = await getMyProfile(user)
       const topUsers = await getTopUsers(user)
       const profile = await getProfile(req.params.id)
 

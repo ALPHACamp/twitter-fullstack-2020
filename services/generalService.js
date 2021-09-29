@@ -31,7 +31,7 @@ const getTopUsers = async (user) => {
       role: { [Op.not]: "admin" }
     }
   });
-  const topusers = datas
+  const topUsers = datas
     .map((data) => ({
       ...data.dataValues,
       FollowerCount: data.Followers.length,
@@ -39,7 +39,7 @@ const getTopUsers = async (user) => {
     }))
     .sort((a, b) => b.FollowerCount - a.FollowerCount)
     .slice(0, 10);
-  return topusers;
+  return topUsers;
 };
 
 // 取得使用者資訊
