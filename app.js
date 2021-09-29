@@ -8,6 +8,7 @@ const session = require('express-session')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
 
+//testing
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
