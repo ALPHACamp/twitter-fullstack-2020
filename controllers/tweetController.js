@@ -88,7 +88,6 @@ const tweetController = {
             ...user.dataValues,
             FollowerCount: user.Followers.length,
             isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
-            isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
         }))
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
       const isLiked = tweet.LikedbyUser.map(d => d.id).includes(helpers.getUser(req).id)

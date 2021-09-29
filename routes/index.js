@@ -32,12 +32,13 @@ module.exports = (app, passport) => {
         }
     }
 
-    app.get('/tweets', authenticatedUser, tweetController.getTweets)
-    app.post('/tweets', tweetController.postTweet)
+    // for test
+    app.get('/tweets/:id/replies', authenticatedUser, tweetController.getTweet)
+    // for test尾
     app.get('/tweets/:id', authenticatedUser, tweetController.getTweet)
-
-    app.post('/tweets/:id/replies', authenticatedUser, replyController.postReply)
-
+    app.get('/tweets', authenticatedUser, tweetController.getTweets)
+    app.post('/tweets/:id/replies', replyController.postReply)
+    app.post('/tweets', tweetController.postTweet)
     app.post('/tweets/:TweetId/like', authenticatedUser, userController.addLike)
     app.post('/tweets/:TweetId/unlike', userController.removeLike)
 
@@ -50,6 +51,9 @@ module.exports = (app, passport) => {
     app.get('/setting', authenticatedUser, userController.getSetting)
     app.put('/setting', authenticatedUser, userController.putSetting)
 
+    app.get('/users/:id/followers', authenticatedUser, userController.getFollowers)
+    app.get('/users/:id/followings', authenticatedUser, userController.getFollowings)
+    app.get('/users/:id', authenticatedUser, userController.getProfile)
     app.get('/users/noti/:id', authenticatedUser, userController.toggleNotice)
     app.get('/users/:id/tweets', authenticatedUser, userController.getProfile)
     app.put('/users/:id/edit', authenticatedUser, upload.fields([{
@@ -57,7 +61,8 @@ module.exports = (app, passport) => {
     }, {
         name: 'avatar', maxCount: 1
     }]), userController.putProfile)
-
+    app.post('/followships', authenticatedUser, userController.addFollowing)
+    app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
 
     app.get('/admin/signin', adminController.signInPage)
     app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
@@ -65,12 +70,6 @@ module.exports = (app, passport) => {
     app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
     app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
     app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
-
-    app.post('/followships', authenticatedUser, userController.addFollowing)
-    app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
-    app.get('/users/:id/followers', authenticatedUser, userController.getFollowers)
-    app.get('/users/:id/followings', authenticatedUser, userController.getFollowings)
-    app.get('/users/:id', authenticatedUser, userController.getProfile)
 
     app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 

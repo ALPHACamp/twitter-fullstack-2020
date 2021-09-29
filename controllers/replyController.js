@@ -22,14 +22,16 @@ const replyController = {
       comment: req.body.comment,
     })
       .then(() => {
-        return Tweet.findByPk(req.body.TweetId).then((tweet) => {
-          return tweet.increment('replyCount')
-        })
+      Tweet.findByPk(req.body.TweetId)
+          .then((tweet) => {
+            return tweet.increment('replyCount')
+          })
       })
       .then(() => {
         req.flash('success_messages', '成功回覆推文')
         res.redirect(`/tweets/${req.body.TweetId}`)
       })
+
   }
 }
 
