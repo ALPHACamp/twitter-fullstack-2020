@@ -99,23 +99,23 @@
                 <input type="hidden" name="TweetId" value="{{this.id}}">
                 <span style="display:inline-block;margin-left:20px;margin-right:33px;">{{this.replyCount}}</span>
 
+               
 
-
-                {{#if this.isLiked}}
-                <form action="/tweets/{{this.id}}/unlike" method="POST">
+              {{#ifCond this.likeCount 0 }}
+                <form action="/tweets/{{this.id}}/like" method="POST">
                   <button type="submit" class="btn btn-outline-light">
-                    <i class="fas fa-heart" style="color: red;width:12px;height:12px;"></i>
+                    <i class="far fa-heart" style="color: red;width:12px;height:12px;"></i>
                   </button>
                   <span style="display:inline-block;margin-left:20px;">{{this.likeCount}}</span>
                 </form>
                 {{else}}
-                <form action="/tweets/{{this.id}}/like" method="POST">
+                <form action="/tweets/{{this.id}}/unlike" method="POST">
                   <button type="submit" class="btn btn-outline-light">
-                    <i class="far fa-heart" style="color: red; width: 12px; height: 12px;"></i>
+                    <i class="fas fa-heart" style="color: red; width: 12px; height: 12px;"></i>
                   </button>
                   <span style="display:inline-block;margin-left:20px;">{{this.likeCount}}</span>
                 </form>
-                {{/if}}
+                {{/ifCond}}
               </div>
             </div>
           </div>

@@ -70,7 +70,6 @@ const userController = {
             ]
         })
             .then(users => {
-                console.log(users[0].Followers)
                 return res.render('tweet', { users: users })
             })
             .catch(next)

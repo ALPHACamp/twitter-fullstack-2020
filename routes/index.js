@@ -30,10 +30,11 @@ module.exports = (app, passport) => {
             req.flash('error_messages', '此帳號為管理者帳號，不可登入前台！')
             return res.redirect('/admin/tweets')
         }
+        return res.redirect('/tweets')
     }
 
     app.get('/tweets', authenticatedUser, tweetController.getTweets)
-    app.post('/tweets', tweetController.postTweet)
+    app.post('/tweets', authenticated, tweetController.postTweet)
     app.get('/tweets/:id', authenticatedUser, tweetController.getTweet)
 
     app.post('/tweets/:id/replies', authenticatedUser, replyController.postReply)
