@@ -21,7 +21,7 @@ const followshipController = {
             model: User,
             as: "Followers",
             attributes: listAttributes,
-            include: { model: User, as: "Followers", attributes: ["id"], order: [["createdAt", "DESC"]] }
+            include: { model: User, as: "Followers", attributes: ["id"], order: [["createdAt", "ASC"]] }
           }
         ]
       });
@@ -50,7 +50,7 @@ const followshipController = {
         attributes: ["id", "name"],
         include: [
           { model: Tweet, attributes: ["id"] },
-          { model: User, as: "Followings", attributes: listAttributes }
+          { model: User, as: "Followings", attributes: listAttributes, order: [["createdAt", "ASC"]] }
         ]
       });
       profile = profile.toJSON();
@@ -71,21 +71,22 @@ const followshipController = {
 
   addFollowing: (req, res) => {
     const user = getTestUser(req);
-    if (user.id === req.params.id) {
+    if (Number(user.id) === Number(req.params.id)) {
       req.flash("error_messages", "can not follow self");
-      console.error("can not follow self");
+      console.log("can not follow self");
       return res.redirect("back");
-    }
-    return Followship.findOrCreate({
-      where: {
-        followerId: Number(user.id),
-        followingId: Number(req.params.id)
-      }
-    })
-      .then((data) => {
-        res.redirect(200, "back");
+    } else {
+      Followship.findOrCreate({
+        where: {
+          followerId: Number(user.id),
+          followingId: Number(req.params.id)
+        }
       })
-      .catch((error) => res.status(400).json(error));
+        .then((data) => {
+          res.redirect(`/users/${user.id}/followings`);
+        })
+        .catch((error) => res.status(400).json(error));
+    }
   },
 
   deleteFollowing: (req, res) => {
@@ -93,7 +94,7 @@ const followshipController = {
     return Followship.destroy({
       where: { followerId: user.id, followingId: req.params.id }
     })
-      .then(() => res.redirect(200, "back"))
+      .then(() => res.redirect("back"))
       .catch((error) => res.status(400).json(error));
   },
   putNotification: (req, res) => {
