@@ -30,6 +30,7 @@ module.exports = (app, passport) => {
             req.flash('error_messages', '此帳號為管理者帳號，不可登入前台！')
             return res.redirect('/admin/tweets')
         }
+        return res.redirect('/tweets')
     }
 
     // for test

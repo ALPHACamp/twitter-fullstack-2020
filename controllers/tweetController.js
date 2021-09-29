@@ -22,19 +22,19 @@ const tweetController = {
       Tweet.findByPk(req.body.TweetId, {
         include: [
           User,
-          {model: Reply, include: User}
+          { model: Reply, include: User }
         ]
       })
     ]).then(([users, tweets, tweet]) => {
       users = users.map(user => ({
-            ...user.dataValues,
-            FollowerCount: user.Followers.length,
-            isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
-            isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
-        }))
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+        isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
+      }))
       tweets = tweets.rows.map(r => ({
         ...r,
-        description: r.description.substring(0,50),
+        description: r.description.substring(0, 50),
         isLiked: helpers.getUser(req).LikedTweet.map(d => d.id).includes(r.id),
       }))
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
@@ -57,14 +57,14 @@ const tweetController = {
       req.flash('error_messages', '推文超過140字數限制')
       return res.redirect('/tweets')
     }
-      return Tweet.create({
-        UserId: helpers.getUser(req).id,
-        description: req.body.description,
+    return Tweet.create({
+      UserId: helpers.getUser(req).id,
+      description: req.body.description,
+    })
+      .then((tweet) => {
+        req.flash('success_messages', '成功發布推文')
+        res.redirect('/tweets')
       })
-        .then((tweet) => {
-          req.flash('success_messages', '成功發布推文')
-          res.redirect('/tweets') 
-        })
   },
 
   getTweet: (req, res) => {
@@ -73,7 +73,7 @@ const tweetController = {
         include: [
           User,
           { model: Reply, include: User },
-          { model: User, as: 'LikedbyUser'}
+          { model: User, as: 'LikedbyUser' }
         ],
         order: [[Reply, 'createdAt', 'DESC']]
       }),
@@ -85,10 +85,10 @@ const tweetController = {
       })
     ]).then(([tweet, users]) => {
       users = users.map(user => ({
-            ...user.dataValues,
-            FollowerCount: user.Followers.length,
-            isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
-        }))
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+      }))
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
       const isLiked = tweet.LikedbyUser.map(d => d.id).includes(helpers.getUser(req).id)
       return res.render('tweet', {

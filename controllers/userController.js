@@ -316,7 +316,7 @@ const userController = {
             cover: follower.cover,
             introduction: follower.introduction,
             isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(follower.id),
-            isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(follower.id),
+            // isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(follower.id),
         }))
 
         let Top10Users = await User.findAll({
@@ -330,7 +330,7 @@ const userController = {
             ...user.dataValues,
             FollowerCount: user.Followers.length,
             isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
-            isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
+            // isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
         }))
 
         Top10Users = Top10Users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
@@ -403,7 +403,7 @@ const userController = {
             cover: following.cover,
             introduction: following.introduction,
             isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(following.id),
-            isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(following.id),
+            // isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(following.id),
         }))
 
         let Top10Users = await User.findAll({
@@ -417,7 +417,7 @@ const userController = {
             ...user.dataValues,
             FollowerCount: user.Followers.length,
             isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
-            isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
+            // isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
         }))
 
         Top10Users = Top10Users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
