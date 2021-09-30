@@ -3,6 +3,7 @@ const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
+const Like = db.Like
 
 const tweetController = {
   getTweets: (req, res) => {
@@ -17,30 +18,26 @@ const tweetController = {
         raw: true,
         nest: true,
         order: [['createdAt', 'DESC']],
-        include: [User]
-      }),
-      Tweet.findByPk(req.body.TweetId, {
         include: [
-          User,
-          { model: Reply, include: User }
+          User
         ]
       })
-    ]).then(([users, tweets, tweet]) => {
+    ]).then(([users, tweets]) => {
       users = users.map(user => ({
-        ...user.dataValues,
-        FollowerCount: user.Followers.length,
-        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
-        isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
-      }))
+            ...user.dataValues,
+            FollowerCount: user.Followers.length,
+            isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+            // isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
+        }))
       tweets = tweets.rows.map(r => ({
         ...r,
-        description: r.description.substring(0, 50),
-        isLiked: helpers.getUser(req).LikedTweet.map(d => d.id).includes(r.id),
+        description: r.description.substring(0,50),
+        // isLiked: r.LikedbyUser.map(d => d.id).includes(helpers.getUser(req).id)
+        // isLiked: helpers.getUser(req).LikedTweet.map(d => d.id).includes(r.id),
       }))
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
       return res.render('tweets', {
         tweets: tweets,
-        tweet: tweet,
         users: users
       })
     })
@@ -85,10 +82,11 @@ const tweetController = {
       })
     ]).then(([tweet, users]) => {
       users = users.map(user => ({
-        ...user.dataValues,
-        FollowerCount: user.Followers.length,
-        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
-      }))
+            ...user.dataValues,
+            FollowerCount: user.Followers.length,
+            isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+            // isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
+        }))
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
       const isLiked = tweet.LikedbyUser.map(d => d.id).includes(helpers.getUser(req).id)
       return res.render('tweet', {
