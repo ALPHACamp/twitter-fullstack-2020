@@ -1,0 +1,189 @@
+<div class="modal-dialog" id="editUser" role="document">
+  <div class="modal-content">
+
+    <div class="modal-title">
+      <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="title-text">編輯個人資料</div>
+
+      <form action="/users/{{user.id}}/edit?_method=PUT" method="POST" data-toggle="validator"
+        enctype="multipart/form-data">
+
+        <div class="save-button">
+          <button type="submit" class="btn button" id="save-button">儲存
+          </button>
+        </div>
+    </div>
+    <hr>
+
+    <div class="cover">
+      <img src="" id="cover" alt="">
+    </div>
+
+
+    <div class="edit-delete">
+
+      <label class="pic-icon">
+        <input type="file" onchange="coverPreview()" id="cover_upload" class="form-control-file" name="cover"
+          style="display:none">
+        <i class="fas fa-camera mr-4"></i>
+      </label>
+
+
+      <i class="fas fa-times" id="edit-delete">
+        <input type="hidden" name="isDelete" id="isDelete" class="isDelete" value="isDelete" disabled="true"/>
+      </i>
+
+
+    </div>
+
+    <div class="user-info">
+      <div class="avatar">
+        <img src="" alt="" id="avatar">
+      </div>
+
+      <div class="edit-avatar">
+
+        <label class="pic-icon">
+          <input type="file" onchange="avatarPreview()" id="avatar_upload" class="form-control-file" name="avatar"
+            style="display:none">
+          <i class="fas fa-camera mr-4"></i>
+        </label>
+
+      </div>
+    </div>
+
+    <div class="user-edit-info">
+
+      <div>
+        <div class="edit-name-title">名稱</div>
+        <input type="text" name="name" id="name" class="form-control" aria-label="name" >
+        <div class="invalid-feedback name">
+        </div>
+        <div class="count-down">
+          <div class="count" id="name-count">0</div>
+          <div>/50</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="edit-introduction-title">自我介紹</div>
+        <textarea type="text" name="introduction" id="introduction" class="form-control" aria-label="name"
+          rows="6"></textarea>
+        <div class="invalid-feedback" id="introduction">
+        </div>
+        <div class="count-down introduction">
+          <div class="count" id="introduction-count">0</div>
+          <div>/160</div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    </form>
+  </div>
+</div>
+
+<script>
+  const name = document.querySelector('#name')
+  const nameCount = document.querySelector('#name-count')
+  const introduction = document.querySelector('#introduction')
+  const introductionCount = document.querySelector('#introduction-count')
+  const editUserBtn = document.querySelector('.edit-user')
+  const saveBtn = document.querySelector('#save-button')
+  const deleteCover = document.querySelector('#edit-delete')
+  const avatar = document.querySelector('#avatar')
+  const cover = document.querySelector('#cover')
+
+
+  editUserBtn.addEventListener('click', function countInitial(event) {
+    introductionCount.innerText = introduction.value.length
+    nameCount.innerText = name.value.length
+  })
+
+  name.addEventListener('input', function check(event) {
+    if (name.value.length < 1) {
+      name.classList.add('is-invalid')
+      name.nextElementSibling.innerHTML = "名稱不得為空"
+    }
+    if (name.value.length > 50) {
+      name.classList.add('is-invalid')
+      name.nextElementSibling.innerHTML = "名稱不得超過50個字"
+    }
+    if (name.value.length > 0 && name.value.length < 50) {
+      name.classList.remove('is-invalid')
+    }
+    nameCount.innerText = name.value.length
+  })
+
+  introduction.addEventListener('input', function check(event) {
+    if (introduction.value.length < 1) {
+      introduction.classList.add('is-invalid')
+      introduction.nextElementSibling.innerHTML = "自我介紹不得為空"
+    }
+    if (introduction.value.length > 160) {
+      introduction.classList.add('is-invalid')
+      introduction.nextElementSibling.innerHTML = "自我介紹不得超過160個字"
+    }
+    if (introduction.value.length > 0 && introduction.value.length < 160) {
+      introduction.classList.remove('is-invalid')
+    }
+    introductionCount.innerText = introduction.value.length
+  })
+
+  saveBtn.addEventListener('click', function check(event) {
+    if (introduction.value.length < 1) {
+      introduction.classList.add('is-invalid')
+      introduction.nextElementSibling.innerHTML = "自我介紹不得為空"
+    }
+    if (name.value.length < 1) {
+      name.classList.add('is-invalid')
+      name.nextElementSibling.innerHTML = "名稱不得為空"
+    }
+    if (introduction.classList.contains('is-invalid') || name.classList.contains('is-invalid')) {
+      event.preventDefault()
+    }
+  })
+
+  //預覽圖片
+  function coverPreview() {
+    const cover = document.querySelector('#cover')
+    const coverfile = document.querySelector('#cover_upload').files[0]
+    const reader = new FileReader()
+
+    reader.addEventListener("load", function () {
+      cover.src = reader.result
+    }, false);
+    if (coverfile) {
+      reader.readAsDataURL(coverfile);
+    }
+  }
+
+  function avatarPreview() {
+    const avatar = document.querySelector('#avatar')
+    const avatarFile = document.querySelector('#avatar_upload').files[0]
+    const reader = new FileReader()
+
+    reader.addEventListener("load", function () {
+      avatar.src = reader.result
+    }, false);
+    if (avatarFile) {
+      reader.readAsDataURL(avatarFile);
+    }
+  }
+
+  //刪除圖片
+  deleteCover.addEventListener('click', function deleteCover() {
+    const cover = document.querySelector('#cover')
+    const isDelete = document.querySelector('#isDelete')
+    cover.src = ''
+    isDelete.disabled = false
+  })
+
+
+
+</script>

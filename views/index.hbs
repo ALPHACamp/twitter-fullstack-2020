@@ -1,0 +1,283 @@
+<link rel="stylesheet" href="/stylesheets/showPage.css">
+
+{{!-- 包一層div讓內部有依據照比例縮 --}}
+<div class="wrap d-flex">
+  <div class="row col-md-12  justify-content-center" style="margin:0">
+    {{!-- 左側欄位 --}}
+    <div class="left-side col-md-2">
+      <div class="setting-logo">
+        <img
+          src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
+          alt="" style="max-width: 30px;max-height: 30px;">
+      </div>
+
+      <div style="text-align: left">
+        <ul class="list-group">
+
+          <a href="/tweets">
+            <li class="list-group-item  active">
+              <div class="d-flex">
+                <i class="fas  fa-fw fa-home mr-4"></i>
+                首頁
+              </div>
+            </li>
+          </a>
+
+          <a href="/subscribe">
+            <li class="list-group-item">
+              <div class="d-flex">
+                <i class="fas fa-fw fa-fh fa-bell mr-4">
+                  {{!-- 若有通知 --}}
+                      {{!-- 應該在這 --}}
+                  {{!-- 若有通知 --}}
+                </i>
+                通知
+              </div>
+            </li>
+          </a>
+
+          <a href="/messages">
+            <li class="list-group-item">
+              <div class="d-flex">
+                <i class="fas  fa-fw  fa-fh fa-comments mr-4" id="pubNote">
+                  {{!-- 若有通知 --}}
+                      {{!-- 應該在這 --}}
+                  {{!-- 若有通知 --}}
+                </i>
+                公開聊天室
+              </div>
+            </li>
+          </a>
+
+
+          <a href="/messages/{{user.id}}">
+            <li class="list-group-item">
+              <div class="d-flex">
+                <i class="fas fa-fw fa-fh fa-envelope mr-4" id="priNote">
+           {{!-- 若有通知 --}}
+                  {{!-- 應該在這 --}}
+           {{!-- 若有通知 --}}
+                </i>
+                私人訊息
+              </div>
+            </li>
+          </a>
+
+          <a href="/users/{{user.id}}/tweets">
+            <li class="list-group-item">
+              <div class="d-flex"><i class="fas  fa-fw fa-user mr-4"></i>個人資料</div>
+            </li>
+          </a>
+
+          <a href="/users/{{user.id}}/setting">
+            <li class="list-group-item">
+              <div class="d-flex"><i class="fas  fa-fw fa-cog mr-4"></i>設定</div>
+            </li>
+          </a>
+        </ul>
+
+        <div class="">
+          <button type="summit" class="btn tweet-button" data-toggle='modal' data-target="#add-tweet">推文
+          </button>
+        </div>
+
+
+        <a href="/logout">
+          <div class="logout-button">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+            登出
+          </div>
+        </a>
+
+      </div>
+    </div>
+    {{!-- 中間主欄位 --}}
+    <div class="middle-side col-md-5" style="padding:0; height:100%;">
+      <div class="text-title">首頁</div>
+
+      <hr style="margin:0; padding:0">
+      {{!-- 新增貼文處 --}}
+
+
+      <form action="/tweets" method="POST">
+        <div class="add-post d-flex">
+          <div class="mt-2 ml-2">
+            <a href="/users/{{user.id}}/tweets">
+              <img class="user-pic" src="{{currentUser.avatar}}" alt="">
+            </a>
+          </div>
+
+
+          <div class="type-location">
+            <textarea type="text" class="new-post-content is-invalid" name="description" placeholder="有什麼新鮮事？" rows="2"
+              maxlength="140" id="index-description"></textarea>
+          </div>
+        </div>
+        <div class="send-area">
+          <button type="submit" class="btn send-button" id="send-button">推文</button>
+        </div>
+      </form>
+      <hr style="border: 5px solid #E6ECF0; margin:0">
+      {{!-- 貼文開始 --}}
+      {{#each tweets}}
+      <div class="tweet col-md-12">
+        <div class="d-flex">
+          <div class="mt-2 ml-2 col-md-1" style="padding:0">
+            <a href="/users/{{this.User.id}}/tweets">
+              <img class="user-pic" src="{{this.User.avatar}}" alt="">
+            </a>
+          </div>
+
+          <div class="col-md-11">
+            <div class="account-info d-flex" style="flex:auto">
+              <a href="/users/{{this.User.id}}/tweets">
+                <div class="user-name">{{this.User.name}}</div>
+              </a>
+              <div class="account-time ml-2">@{{this.User.account}}．{{fromNow this.createdAt}}</div>
+            </div>
+
+
+            <a href="/tweets/{{this.id}}" class="text-muted">
+              <div class="post-text d-flex" style="flex:auto">
+                {{this.description}}
+              </div>
+            </a>
+
+
+
+            <div class="reply-like d-flex mt-2">
+              {{!-- modal叫出貼文回覆 --}}
+              <div class="reply" id="reply" data-toggle="modal" data-target="#reply-tweet{{this.id}}">
+                <div class="number"></div>
+                <i class="far fa-comment mr-2"></i>{{this.Replies}}
+              </div>
+
+
+              <div class="ml-4 d-flex index-like">
+
+                {{#if isLiked}}
+                <form action="/tweets/{{this.id}}/unlike" method="POST">
+                  <div class="ml-4 like">
+                    <button type="submit" class="unlike btn">
+                      <i class="fas fa-heart mr-1"></i>
+                    </button>
+                    {{this.Likes.length}}
+                  </div>
+                </form>
+                {{else}}
+                <form action="/tweets/{{this.id}}/like" method="POST">
+                  <div class="ml-4 like">
+                    <button type="submit" class="like btn">
+                      <i class="far fa-heart mr-1"></i>
+                    </button>
+                    {{this.Likes.length}}
+                  </div>
+                </form>
+                {{/if}}
+                <div class="index-like-count ml-2">
+                  <div class="number"></div>{{this.Likes}}
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <hr />
+      {{!-- 貼文結束 --}}
+
+      {{!-- reply-tweet Modal --}}
+      <div class="modal fade" id="reply-tweet{{this.id}}" tabindex="-1" role="dialog" aria-labelledby="reply-tweet"
+        aria-hidden="true">
+
+        {{> reply-tweet account=this.User.account currentUser=../currentUser tweet=this}}
+
+      </div>
+      {{!-- reply-tweet Modal --}}
+
+      {{/each}}
+    </div>
+
+    {{!-- 右側欄位 --}}
+    <div class="right-side col-md-4">
+      <div class="popular mt-2" style="padding:auto;">
+        <div class="popular-title mt-2">
+          Popular
+        </div>
+        <ul class="list-group">
+          {{!-- 跟隨中使用者開始 --}}
+          {{#each topUsers}}
+          <li class="list-group-item">
+            <div class="d-flex col-md-12" style="padding:0">
+              <div class="popular-user-pic">
+                <a href="/users/{{this.id}}/tweets" class="text-muted">
+                  <img class="user-pic" src="{{this.avatar}}" alt="">
+                </a>
+              </div>
+              <div class="name-account">
+                <a href="/users/{{this.id}}/tweets" class="text-muted">
+                  <div class="name">{{this.name}}</div>
+                </a>
+                <div class="account">@{{this.account}}</div>
+              </div>
+              <div class="button">
+
+                {{#if isSelf}}
+                {{else}}
+                {{#if isFollowed }}
+                <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                  <button type="submit" class="btn follow-button">正在跟隨</button>
+                </form>
+                {{else}}
+                <form action="/followships" method="POST" style="display: contents">
+                  <input type="hidden" name="id" value="{{this.id}}">
+                  <button type="submit" class="btn unfollow-button"> 跟隨 </button>
+                </form>
+                {{/if}}
+                {{/if}}
+              </div>
+            </div>
+          </li>
+          {{/each}}
+          {{!-- 使用者結束 --}}
+
+        </ul>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+{{!-- add-tweet Modal --}}
+<div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
+
+  {{> add-tweet currentUser=currentUser}}
+
+</div>
+{{!-- add-tweet Modal --}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
+<script>
+  var socket = io();
+
+  const pubNote = document.getElementById("pubNote");
+  let publicRedDot = 0 //通知數量計數
+
+//接收公眾訊息小紅燈通知
+  socket.on('noteEveryOne', function () {
+  var item = document.createElement('span');
+    let rawHTML = "";
+    publicRedDot += 1
+    item.classList.add('bubble')
+    rawHTML +=
+      `${publicRedDot}`
+    item.innerHTML = rawHTML;
+    pubNote.appendChild(item);
+  })
+</script>
