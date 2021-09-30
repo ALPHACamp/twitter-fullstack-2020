@@ -1,12 +1,12 @@
 <div class="flash-message">
   {{#if success_messages}}
-    <div class="mx-auto col-8 mb-4 alert alert-success alert-dismissible fade show" role="alert">
+    <div class="mx-auto col alert alert-success alert-dismissible fade show" role="alert">
       <strong>{{success_messages}}</strong>
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   {{/if}}
   {{#if error_messages}}
-    <div class="mx-auto col-8 mb-4 alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="mx-auto col alert alert-danger alert-dismissible fade show" role="alert">
       <strong>{{error_messages}}</strong>
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -14,7 +14,7 @@
 
   {{#if errors}}
     {{#each errors}}
-      <div class="mx-auto col-8 mb-4 alert alert-danger alert-dismissible fade show" role="alert">
+      <div class="mx-auto col alert alert-danger alert-dismissible fade show" role="alert">
         <strong>{{this.message}}</strong>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
