@@ -5,6 +5,7 @@ const express = require("express");
 const session = require("express-session");
 const db = require("./models");
 const methodOverride = require("method-override");
+
 const usePassport = require("./config/passport");
 const routes = require("./routes");
 const {

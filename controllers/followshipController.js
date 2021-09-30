@@ -32,7 +32,6 @@ const followshipController = {
         followers: profile.Followers,
         users: TopUsers
       });
-      process.exit();
     } catch (error) {
       console.log(error);
       res.status(400).json(error);
