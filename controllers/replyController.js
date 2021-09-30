@@ -22,10 +22,12 @@ const replyController = {
       comment: req.body.comment,
     })
       .then(() => {
-        Tweet.findByPk(req.body.TweetId)
-          .then((tweet) => {
-            tweet.increment('replyCount')
-          })
+        if (req.body.TweetId) {
+          Tweet.findByPk(req.body.TweetId)
+            .then((tweet) => {
+              tweet.increment('replyCount')
+            })
+        }
       })
       .then(() => {
         req.flash('success_messages', '成功回覆推文')
