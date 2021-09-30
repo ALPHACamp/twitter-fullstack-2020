@@ -65,25 +65,25 @@ const followshipController = {
   },
 
   addFollowing: (req, res) => {
-    const user = getTestUser(req);
+    const followingId = (req.body.id !== undefined) ? Number(req.body.id) : Number(req.params.id);
+    const followerId = getTestUser(req).id;
 
-    if (~~user.id === ~~req.params.id) {
+    if (followerId === followingId) {
       req.flash("error_messages", "can not follow self");
       console.log("can not follow self");
       return res.redirect(200, "back");
     } else {
       Followship.findOrCreate({
         where: {
-          followerId: Number(user.id),
-          followingId: Number(req.params.id)
+          followerId: followerId,
+          followingId: followingId
         }
       })
-        .then((data) => {
-          res.redirect(`/users/${user.id}/followings`);
+        .then(() => {
+          res.redirect('back');
         })
-        .catch((error) => res.status(400).json(error));
+        .catch((error) => console.log(error));
     }
-    res.status(200).redirect("back");
   },
 
   deleteFollowing: (req, res) => {

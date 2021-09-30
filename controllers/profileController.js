@@ -1,5 +1,5 @@
 const db = require("../models");
-const { Op } = require("sequelize");
+const fs = require('fs')
 const { Reply, User, Tweet, Like, Followship } = db;
 const imgur = require("imgur-node-api");
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
@@ -17,7 +17,7 @@ const profileController = {
       const myProfile = await getMyProfile(user)
       const topUsers = await getTopUsers(user)
       const profile = await getProfile(req.params.id)
-      
+
       // get selfTweet
       const rawTweets = await Tweet.findAll({
         where: { UserId: req.params.id },
@@ -39,7 +39,7 @@ const profileController = {
           followingId: Number(req.params.id)
         }
       });
-    
+
       return res.render("profile", {
         isPost,
         isSelf,
@@ -141,7 +141,7 @@ const profileController = {
           followingId: Number(req.params.id)
         }
       });
-     
+
       return res.render("profile", {
         isLikedPosts,
         isSelf,
@@ -173,35 +173,38 @@ const profileController = {
     if (errors.length > 0) {
       return res.render("edit", { name, introduction, avatar, cover });
     }
-    const images = {};
-    const { files } = req;
-    const uploadImg = (path) => {
-      return new Promise((resolve, reject) => {
-        imgur.upload(path, (err, img) => {
-          if (err) {
-            return reject(err);
-          }
-          resolve(img);
+    try {
+      const images = {};
+      const { files } = req;
+      const uploadImg = (path) => {
+        return new Promise((resolve, reject) => {
+          imgur.upload(path, (err, img) => {
+            if (err) {
+              return reject(err);
+            }
+            resolve(img);
+          });
         });
-      });
-    };
-    const user = getTestUser(req);
-    if (files) {
-      imgur.setClientID(IMGUR_CLIENT_ID);
-      for (const key in files) {
-        images[key] = await uploadImg(files[key][0].path);
+      };
+      const user = getTestUser(req);
+      if (files) {
+        imgur.setClientID(IMGUR_CLIENT_ID);
+        for (const key in files) {
+          images[key] = await uploadImg(files[key][0].path);
+        }
       }
+      const profile = await User.findByPk(user.id);
+      profile.update({
+        name: name,
+        introduction: introduction,
+        cover: images.cover ? images.cover.data.link : profile.cover,
+        avatar: images.avatar ? images.avatar.data.link : profile.avatar
+      });
+      req.flash("success_msg", "您的個人資訊已更新");
+      return res.redirect(`/users/${user.id}/tweets`);
+    } catch (error) {
+      console.log(error)
     }
-    const profile = await User.findByPk(user.id);
-    await profile.update({
-      name: name,
-      introduction: introduction,
-      cover: images.cover ? images.cover.data.link : profile.cover,
-      avatar: images.avatar ? images.avatar.data.link : profile.avatar
-    });
-
-    req.flash("success_msg", "您的個人資訊已更新");
-    return res.redirect(`/users/${user.id}/tweets`);
   }
 };
 

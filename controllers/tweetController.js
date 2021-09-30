@@ -85,25 +85,61 @@ const tweetController = {
   postTweet: (req, res) => {
     const user = getTestUser(req);
     const { description } = req.body;
-    // if (!description.trim()) {
-    //   const tweet_message = "你並未輸入任何文字";
-    //   return res.redirect("back");
-    // }
-    // if (description.length > 140) {
-    //   const tweet_message = "字數不可超過140字";
-    //   return res.redirect("back");
-    // } else {
-    return Tweet.create({
-      UserId: user.id,
-      description
-    })
-      .then((tweet) => {
-        res.redirect("back");
+    if (!description.trim()) {
+      const tweet_message = "你並未輸入任何文字";
+      return res.redirect("back");
+    }
+    if (description.length > 140) {
+      const tweet_message = "字數不可超過140字";
+      return res.redirect("back");
+    } else {
+      return Tweet.create({
+        UserId: user.id,
+        description
       })
-      .catch((error) => res.status(400).json(error));
-    // }
+        .then((tweet) => {
+          res.redirect("back");
+        })
+        .catch((error) => res.status(400).json(error));
+      // }
+    }
   },
+  //test only
+  getReply: async (req, res) => {
+    const user = getTestUser(req);
+    try {
+      const profile = await getMyProfile(user)
+      const topUsers = await getTopUsers(user)
 
+      let tweet = await Tweet.findByPk(req.params.id, {
+        include: [
+          { model: User, attributes: listAttributes },
+          { model: User, as: "LikedUsers", attributes: ["id"] },
+          { model: Reply, include: [User] }
+        ]
+      });
+      const ReplyCount = tweet.Replies.length;
+      const LikedCount = tweet.LikedUsers.length;
+      Replies = tweet.Replies.sort((a, b) => b.createdAt - a.createdAt);
+      LikedUsers = tweet.LikedUsers.sort((a, b) => b.Like.createdAt - a.Like.createdAt);
+
+      //add isLike property dynamically
+      tweet = tweet.toJSON();
+      tweet.LikedUsers.forEach((likedUser) => {
+        if (Number(likedUser.id) === Number(user.id)) tweet.isLiked = true;
+      });
+      // return res.json({ tweet, ReplyCount, LikedCount, user: TopUsers,})
+      return res.render("post", {
+        profile: profile,
+        tweet,
+        ReplyCount,
+        LikedCount,
+        users: topUsers
+      });
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  },
   postReply: (req, res) => {
     const user = getTestUser(req);
     const { comment } = req.body;

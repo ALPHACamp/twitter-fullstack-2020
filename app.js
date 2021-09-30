@@ -1,7 +1,11 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 const express = require("express");
 const session = require("express-session");
 const db = require("./models");
 const methodOverride = require("method-override");
+
 const usePassport = require("./config/passport");
 const routes = require("./routes");
 const {
@@ -12,9 +16,7 @@ const handlebars = require("express-handlebars");
 const helpers = require("./_helpers");
 const app = express();
 
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
+
 port = process.env.PORT;
 host = process.env.BASE_URL;
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
