@@ -22,7 +22,7 @@ const userService = {
   putUser: async (req, res, callback, errorCallback) => {
     const user = getTestUser(req);
     const { name, introduction, avatar, cover } = req.body;
-    if (!name || !introduction) {
+    if (!name) {
       return errorCallback("名稱或自我介紹欄位，不可空白");
     }
     if (name.length > 50) {
@@ -50,6 +50,7 @@ const userService = {
         images[key] = await uploadImg(files[key][0].path);
       }
     }
+    const profile = await User.findByPk(user.id);
     User.findByPk(user.id).then((me) => {
       me.update({
         name: name,
