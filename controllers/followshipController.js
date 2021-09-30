@@ -1,12 +1,8 @@
 const db = require("../models");
 const { User, Tweet, Followship } = db;
-const { Op } = require("sequelize");
-const moment = require("moment");
-const { getTestUser, getMyProfile, getTopUsers } = require("../services/generalService");
-//for test only
+const { getTestUser, getTopUsers } = require("../services/generalService");
 
 const listAttributes = ["id", "name", "account", "introduction", "updatedAt", "avatar"];
-const listAttributesTop = ["id", "name", "account", "avatar"];
 
 const followshipController = {
   getFollowers: async (req, res) => {
@@ -70,22 +66,24 @@ const followshipController = {
   },
 
   addFollowing: (req, res) => {
-    const user = getTestUser(req);
-    if (Number(user.id) === Number(req.params.id)) {
+    const followingId = (req.body.id !== undefined) ? Number(req.body.id) : Number(req.params.id);
+    const followerId = getTestUser(req).id;
+
+    if (followerId === followingId) {
       req.flash("error_messages", "can not follow self");
       console.log("can not follow self");
-      return res.redirect("back");
+      return res.redirect(200, "back");
     } else {
       Followship.findOrCreate({
         where: {
-          followerId: Number(user.id),
-          followingId: Number(req.params.id)
+          followerId: followerId,
+          followingId: followingId
         }
       })
-        .then((data) => {
-          res.redirect(`/users/${user.id}/followings`);
+        .then(() => {
+          res.redirect('back');
         })
-        .catch((error) => res.status(400).json(error));
+        .catch((error) => console.log(error));
     }
   },
 
