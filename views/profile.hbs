@@ -1,10 +1,14 @@
-<div class="row justify-content-center">
-    {{>columnLeft profile=myProfile}}
-
+<div class="row justify-content-start">
+  {{>columnLeft profile=myProfile}}
+  {{>message}}
   {{>modalTweet}}
   {{>modalProfile}}
+  {{#each tweets}}
+    {{>modalReplyForProfile modalId=@index posterProfile=../profile myProfile=../myProfile}}
+  {{/each}}
+
   <div class="profile-container">
-    {{>message}}
+    
     <div class="mainpost-nav">
       <div class="row justify-content-start">
         <div class="col1"><a href="javascript:history.back()"><i class="bi bi-arrow-left nav-bold"></i></a></div>
@@ -21,9 +25,8 @@
     <div class="col flex-direction-column">
       <!--start::list of 推文-->
       {{#if isPost}}
-      {{#each tweets}}
+      {{#each tweets}}      
       <div class="post">
-        {{>modalReplyForProfile modalId=@index posterProfile=../profile myProfile=../myProfile}}
         <div class="post-card1">
           <div class="avatar profile-avatar">
             <a href="/users/{{../profile.id}}/tweets">
