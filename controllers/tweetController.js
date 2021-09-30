@@ -86,11 +86,13 @@ const tweetController = {
     const user = getTestUser(req);
     const { description } = req.body;
     if (!description.trim()) {
-      const tweet_message = "你並未輸入任何文字";
+      console.log('none')
+      req.flash("tweet_message", "你並未輸入任何文字")
       return res.redirect("back");
     }
     if (description.length > 140) {
-      const tweet_message = "字數不可超過140字";
+      console.log('many')
+      req.flash("tweet_message", "字數不可超過140字")
       return res.redirect("back");
     } else {
       return Tweet.create({
@@ -101,7 +103,6 @@ const tweetController = {
           res.redirect("back");
         })
         .catch((error) => res.status(400).json(error));
-      // }
     }
   },
   //test only
@@ -144,11 +145,11 @@ const tweetController = {
     const user = getTestUser(req);
     const { comment } = req.body;
     if (!comment) {
-      //req.flash('error_message', '你並未輸入任何文字')
+      req.flash('tweet_message', '你並未輸入任何文字')
       return res.redirect("back");
     }
     if (comment.length > 140) {
-      //req.flash('error_message', '字數不可超過140字')
+      req.flash('tweet_message', '字數不可超過140字')
       return res.redirect("back");
     } else {
       return Reply.create({
