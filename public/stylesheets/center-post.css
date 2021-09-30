@@ -1,0 +1,184 @@
+/*post page css*/
+* {
+  font-family: Noto Sans TC;
+}
+
+body,
+html {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+.profile-container > * {
+  border: 1px solid #e6ecf0;
+}
+.profile-container .mainpost-sm {
+  font: 500 15px "Noto Sans TC", sans-serif;
+}
+.profile-container .mainpost-x {
+  font: 500 23px "Noto Sans TC", sans-serif;
+}
+.profile-container .mainpost-md {
+  font: 500 19px "Noto Sans TC", sans-serif;
+}
+.profile-container .mainpost-nav {
+  height: 55px;
+  background: #fff;
+  border: 1px solid #e6ecf0;
+}
+.profile-container .mainpost-nav h3,
+.profile-container .mainpost-nav h3::before {
+  color: #1c1c1c;
+  line-height: 55px;
+  font-weight: 700;
+  margin: 0 15px;
+  font-size: 16px;
+}
+.profile-container .mainpost-messageboard {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  position: relative;
+}
+.profile-container .mainpost-avatar-container {
+  flex: 0 0 65px;
+  width: 65px;
+}
+.profile-container .mainpost-appendboard {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  position: relative;
+}
+.profile-container .mainpost-appendboard .reply-like-container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.profile-container
+  .mainpost-appendboard
+  .reply-like-container
+  .reply-like-text {
+  display: block;
+  border-top: 1px solid #e6ecf0;
+  border-bottom: 1px solid #e6ecf0;
+  padding-left: 60px;
+  line-height: 70px;
+  color: #657786;
+  margin: 0;
+}
+.profile-container
+  .mainpost-appendboard
+  .reply-like-container
+  .reply-like-text
+  b {
+  color: #1c1c1c;
+  font-family: "Noto Sans TC", sans-serif;
+}
+.profile-container .mainpost-sub-info {
+  padding-left: 15px;
+  line-height: 50px;
+  font: 500 23px "Noto Sans TC", sans-serif;
+}
+.profile-container .mainpost-sub-info .mainpost-icon-block {
+  padding-left: 75px;
+  width: 180px;
+  display: inline-block;
+}
+form.mainpost-icon-block {
+  margin-bottom: 0;
+  height: 23px;
+}
+.profile-container .mainpost-sub-info .mainpost-icon-block i,
+.profile-container .mainpost-sub-info .mainpost-icon-block button {
+  display: inline-block;
+  margin-right: 5px;
+  color: #657786;
+  cursor: pointer;
+  font-size: 23px;
+}
+.profile-container .mainpost-sub-info .mainpost-icon-block button {
+  padding: 0;
+}
+.posts-container {
+  margin-top: 10px;
+}
+
+.post {
+  display: flex;
+  flex: 1;
+  background-color: #fff;
+  position: relative;
+  border: 1px solid #e6ecf0;
+}
+
+.post-card1 {
+  flex: 0 0 65px;
+  width: 65px;
+  font-weight: 400;
+}
+
+.post-card2 {
+  flex: 0 0 535px;
+  width: 535px;
+  padding-left: 10px;
+  padding-top: 10px;
+  min-height: 70px;
+}
+.post-card2 h5,
+.post-card2 p {
+  font-family: "Noto Sans TC", sans-serif;
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.post-sub-info {
+  font-family: "Noto Sans TC", sans-serif;
+  color: #657786;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.post-icon-block {
+  display: inline-block;
+  width: 75px;
+  font-family: "Noto Sans TC", sans-serif;
+  font-size: 13px;
+}
+
+.profile-avatar {
+  position: relative;
+  height: 100%;
+  top: 10px;
+  left: 15px;
+  margin-right: 0;
+  flex: 0 0 50px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.profile-avatar img {
+  object-fit: cover;
+  height: 50px;
+  width: 50px;
+  min-height: 50px;
+  min-width: 50px;
+}
+/*shared style*/
+.orange-text {
+  color: #ff6600;
+  font-family: "Noto Sans TC", sans-serif;
+}
+.post-card1 {
+  position: relative;
+}
+.post-card1.connected::after {
+  content: "";
+  height: calc(100% - 70px);
+  width: 2px;
+  bottom: 0;
+  position: absolute;
+  left: 39px;
+  background-color: #c4c4c4;
+}

@@ -1,0 +1,51 @@
+<div class="row justify-content-start">
+  {{>columnLeft}}
+  {{>modalTweet}}
+  <div class="profile-container">
+    <div class="profile-nav">
+      <h3 class="profile-nav-header">首頁</h3>
+    </div>
+    {{>sendTweetBox}}
+    <div class="posts-container">
+      <!--start::list of post-->
+      {{#each tweets}}
+      <div class="post">
+        {{>modalReply modalId=@index profile=../profile tweet=this}}
+        <div class="post-card1">
+          <div class="avatar profile-avatar">
+            <a href="/users/{{this.User.id}}/tweets">
+              <img src="{{this.User.avatar}}" alt="avatar-img">
+            </a>
+          </div>
+        </div>
+        <div class="post-card2">
+          <h5 class="d-inline-block post-title">{{this.User.name}}&nbsp;<span
+              class="post-sub-info">@{{this.User.account}} ‧
+              {{this.createdAt}}</span></h5>
+          <a href="/tweets/{{this.id}}">
+            <p class="post-text">{{this.description}}</p>
+          </a>
+          <h3 class="post-sub-info">
+            <span class="post-icon-block">
+                <i class="bi bi-chat btn" data-bs-toggle="modal"
+                  id="replyInput{{@index}}" data-bs-target="#replyModel{{@index}}">
+                </i>{{this.ReplyCount}}
+            </span>
+            <span class="post-icon-block">              
+              <form action="/tweets/{{this.id}}/like?_method=PUT" method="POST" class="heart-form">                
+                {{#if this.isLiked}}
+                 <button type="submit" class="bi bi-heart-fill btn"></button><span class="likedText">{{this.LikedCount}}</span>
+                 {{else}}
+                <button type="submit" class="bi bi-heart btn"></button>{{this.LikedCount}}
+                {{/if}}
+              </form>
+            </span>
+          </h3>
+        </div>
+      </div>
+      {{/each}}
+      <!--end::list of post-->
+    </div>
+  </div>
+  {{>columnRight}}
+</div>

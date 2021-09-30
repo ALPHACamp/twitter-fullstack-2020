@@ -1,0 +1,48 @@
+<div class="profilepage-messageboard">
+  <div class="mainpost-messageboard">
+    <div class="post-card1">
+      <div class="avatar profile-avatar">
+        <img src="{{tweet.User.avatar}}" alt="avatar-img" />
+      </div>
+    </div>
+    <div class="post-card2">
+      <h5 class="d-inline-block post-title">{{tweet.User.name}}&nbsp;
+        <br />
+        <span class="post-sub-info mainpost-sm">
+          @{{tweet.User.account}}&#x2027;{{moment tweet.createdAt}}
+        </span>
+      </h5>
+      <p class="mainpost-x">{{tweet.description}}</p>
+      <p class="post-sub-info mainpost-sm">{{moment tweet.updatedAt}}</p>
+    </div>
+  </div>
+  <div class="mainpost-appendboard">
+    <div class="reply-like-container">
+      <p class="mainpost-md reply-like-text"><b>{{ReplyCount}}</b>&nbsp;回覆
+        <b>{{LikedCount}}</b>&nbsp;喜歡次數
+      </p>
+    </div>
+    <h3 class="mainpost-sub-info my-3">
+      <span class="mainpost-icon-block">
+        <i
+          class="bi bi-chat"
+          data-bs-toggle="modal"
+          data-bs-target="#replyModel"
+          id="replyInput"
+        >
+        </i>
+      </span>
+      <form
+        action="/tweets/{{tweet.id}}/like?_method=PUT"
+        method="POST"
+        class="mainpost-icon-block"
+      >
+        {{#if tweet.isLiked}}
+          <button type="submit" class="bi bi-heart-fill btn"></button>
+        {{else}}
+          <button type="submit" class="bi bi-heart btn"></button>
+        {{/if}}
+      </form>
+    </h3>
+  </div>
+</div>

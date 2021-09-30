@@ -1,0 +1,34 @@
+.heart-form {
+  display: inline-block;
+  font-size: 13px;
+}
+.post-icon-block .bi-heart-fill,
+.profile-container
+  .mainpost-sub-info
+  .mainpost-icon-block
+  button.bi-heart-fill {
+  color: #e0245e;
+}
+.post-icon-block .likedText {
+  color: #e0245e;
+}
+.profile-container {
+  position: relative;
+  top: -1px;
+  margin: 0;
+  height: 100%;
+  width: 600px;
+  max-width: 600px;
+  background: #e6ecf0;
+  padding: 0;
+}
+.validate-text {
+  position: absolute;
+  bottom: 15px;
+  right: 0px;
+  font-weight: bold;
+  color: #ff6600;
+}
+.modal-body .validate-text {
+  right: 94px;
+}
