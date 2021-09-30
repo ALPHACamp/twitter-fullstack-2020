@@ -279,7 +279,7 @@
         </div>
       </div>
     </div>
-    {{!-- Followship recommend bar --}}
+     {{!-- follower bar --}}
     <div class="col-auto col-md-3 col-lg-3">
       <div class="card d-none d-md-flex flex-column mt-1" style="border: none;">
         <ul class="list-group-flush">
@@ -295,22 +295,24 @@
               </div>
 
               <div class="col-6 pt-3 d-flex flex-column align-items-start">
-                <h5 style="line-height: 18px;width:inherit;">{{this.name}}</h5>
-                <p class="text-muted" style="line-height: 16px;width:inherit;">@{{this.account}}</p>
+                <h5 style="line-height: 18px; width:inherit;">{{this.name}}</h5>
+                <p class="text-muted" style="line-height: 16px; width:inherit;">@{{this.account}}</p>
               </div>
 
               <div class="col-4 d-flex justify-content-center">
+
                 {{#if this.isFollowed}}
                 <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                  <button type="submit" class="btn btn-tomato rounded-pill fw-bold" name="{{user.id}}"
-                    style="font-size: 15px;border-radius: 30px 30px 30px 30px;font-weight: bold;">正在跟隨</button>
+                  <button type="submit" class="btn btn-tomato" name="id" value = {{this.id}}
+                    style="font-size: 15px; border-radius: 30px 30px 30px 30px;font-weight: bold;">正在跟隨</button>
                 </form>
                 {{else}}
-                <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
-                  <button type="submit" class="btn btn-outline-tomato" name="{{user.id}}"
-                    style="font-size: 15px;border-radius: 30px 30px 30px 30px;font-weight: bold;">跟隨</button>
+                <form action="/followships" method="POST" style="display: contents;">
+                  <button type="submit" class="btn btn-outline-tomato" name="id" value = {{this.id}}
+                    style="font-size: 15px; border-radius: 30px 30px 30px 30px;font-weight: bold;">跟隨</button>
                 </form>
                 {{/if}}
+
               </div>
             </div>
           </li>
@@ -318,6 +320,7 @@
         </ul>
       </div>
     </div>
+    {{!-- follower bar end--}}
     <div class="d-flex fixed-bottom mb-3 ml-5 px-3">
       <a href="/signout" class="d-flex" style="text-decoration:none;">
         <i class="fas fa-sign-out-alt" style="color: #000000; font-size: 1.2em;"></i>

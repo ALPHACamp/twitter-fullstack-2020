@@ -16,15 +16,15 @@ const replyController = {
       req.flash('error_messages', '回覆內容超過140字數限制')
       return res.redirect('back')
     }
-    return Reply.create({
+    Reply.create({
       UserId: helpers.getUser(req).id,
       TweetId: req.body.TweetId,
       comment: req.body.comment,
     })
       .then(() => {
-      Tweet.findByPk(req.body.TweetId)
+        Tweet.findByPk(req.body.TweetId)
           .then((tweet) => {
-            return tweet.increment('replyCount')
+            tweet.increment('replyCount')
           })
       })
       .then(() => {
