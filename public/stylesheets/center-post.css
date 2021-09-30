@@ -1,0 +1,87 @@
+/*post page css*/
+
+.profile-container .mainpost-nav h3,
+.profile-container .mainpost-nav h3::before {
+  color: #1c1c1c;
+  line-height: 55px;
+  font-weight: 700;
+  margin: 0 15px;
+  font-size: 16px;
+}
+.profile-container .mainpost-messageboard {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  position: relative;
+}
+.profile-container .mainpost-avatar-container {
+  flex: 0 0 65px;
+  width: 65px;
+}
+.profile-container .mainpost-appendboard {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  position: relative;
+}
+.profile-container .mainpost-appendboard .reply-like-container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.profile-container .mainpost-appendboard .reply-like-container .reply-like-text {
+  display: block;
+  border-top: 1px solid #e6ecf0;
+  border-bottom: 1px solid #e6ecf0;
+  padding-left: 60px;
+  line-height: 70px;
+  color: #657786;
+  margin: 0;
+}
+.profile-container .mainpost-appendboard .reply-like-container .reply-like-text b {
+  color: #1c1c1c;
+  font-family: "Noto Sans TC", sans-serif;
+}
+.profile-container .mainpost-sub-info {
+  padding-left: 15px;
+  line-height: 50px;
+  font: 500 23px "Noto Sans TC", sans-serif;
+}
+.profile-container .mainpost-sub-info .mainpost-icon-block {
+  padding-left: 75px;
+  width: 180px;
+  display: inline-block;
+}
+form.mainpost-icon-block {
+  margin-bottom: 0;
+  height: 23px;
+}
+.profile-container .mainpost-sub-info .mainpost-icon-block i,
+.profile-container .mainpost-sub-info .mainpost-icon-block button {
+  display: inline-block;
+  margin-right: 5px;
+  color: #657786;
+  cursor: pointer;
+  font-size: 23px;
+}
+.profile-container .mainpost-sub-info .mainpost-icon-block button {
+  padding: 0;
+}
+.profile-avatar {
+  position: relative;
+  height: 100%;
+  top: 10px;
+  left: 15px;
+  margin-right: 0;
+  flex: 0 0 50px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.profile-avatar img {
+  object-fit: cover;
+  height: 50px;
+  width: 50px;
+  min-height: 50px;
+  min-width: 50px;
+}

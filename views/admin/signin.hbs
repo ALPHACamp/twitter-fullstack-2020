@@ -1,0 +1,29 @@
+<form class="form-login mt-5" action="/admin/signin" method="POST" style="width: 100%;" novalidate>
+
+  <div class="text-center my-4">
+    <h1 class="h3 mb-3 font-weight-normal">後台登入</h1>
+  </div>
+  {{> message }}
+  <div class="row justify-content-center">
+    <div class="form-floating col-4 mb-4">
+      <input type="text" class="form-control" id="floatingInput" name="account" placeholder="account"
+        style="background-color: #F5F8FA;" required autofocus />
+      <label for="floatingInput">帳號</label>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="form-floating col-4 mb-4">
+      <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="******"
+        style="background-color: #F5F8FA;" required />
+      <label for="floatingPassword">密碼</label>
+    </div>
+  </div>
+
+  <div class="d-grid gap-2 col-4 mx-auto text-end">
+    <button class="btn rounded-pill" type="submit" style="color:white; background-color:#FF6600">登入</button>
+    <p style="color: #0099FF;font-size: 14px">
+      <a href="/signin">前台登入</a>
+    </p>
+  </div>
+</form>

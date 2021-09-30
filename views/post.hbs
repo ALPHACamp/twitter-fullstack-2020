@@ -1,0 +1,41 @@
+<div class="row justify-content-start">
+  {{>columnLeft}}
+  {{>modalTweet}}
+  {{>modalReply}}
+  <div class="profile-container">
+    <div class="mainpost-nav">
+      <h3>
+        <a href="javascript:history.back()">
+          <i class="bi bi-arrow-left profile-nav-header">
+          </i>&nbsp;&nbsp;&nbsp;&nbsp;</a>推文
+      </h3>
+    </div>
+    <div class="mainpost-wrapper d-f flex-column">      
+      {{>viewTweetBox}}
+      <div class="col-12 flex-direction-column posts-container">
+        <!--start::tweet-->
+        {{#each tweet.Replies}}
+        <div class="post">
+          <div class="post-card1">
+            <div class="avatar profile-avatar">
+              <a href="/users/{{this.User.id}}/tweets"><img src="{{this.User.avatar}}" alt="avatar-img" />
+              </a>
+            </div>
+          </div>
+          <div class="post-card2">
+            <h5 class="d-inline-block profile-nav-header post-title">{{this.User.name}}&nbsp;
+              <span class="post-sub-info">@{{this.User.account}} &#x2027; {{moment this.createdAt}}</span>
+            </h5>
+            <span class="post-sub-info">回覆 <span class="orange-text">@{{../tweet.User.account}}</span></span>
+            <p>{{this.comment}}~</p>
+          </div>
+        </div>
+        {{/each}}
+        <!--start::tweet-->
+      </div>        
+    </div> 
+  </div>
+  {{>columnRight}}
+
+</div>
+

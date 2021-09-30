@@ -4,7 +4,8 @@
     "password": "password",
     "database": "ac_twitter_workspace",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "logging": false
   },
   "test": {
     "username": "root",
@@ -16,10 +17,15 @@
   },
   "production": {
     "username": "root",
-    "password": null,
     "database": "database_production",
+    "use_env_variable": "CLEARDB_DATABASE_URL",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "dialectOptions": {
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    }
   },
   "travis": {
     "username": "travis",
