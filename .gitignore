@@ -89,7 +89,7 @@ note.md
 # DynamoDB Local files
 .dynamodb/
 temp/
-upload/
+upload/*
 
 # Image for default user avatar and cover
 !upload/noImage-banner.jpg 

@@ -5,10 +5,13 @@
 
 /* leftColumn */
 .left_column {
-  flex: 0 0 379px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  flex: 0 1 379px;
   width: 379px;
-  height: 1196px;
-  padding-left: 113px;
+  height: 95vh;
+  padding-left: 8vw;
   margin-top: 4px;
 }
 
@@ -76,13 +79,18 @@
 }
 
 .logout_item {
-  margin-top: auto;
+  position: absolute;
+  left: 8vw;
+  bottom: 0;
 }
 
 /* rightColumn */
 
 .right_column {
-  flex: 0 0 350px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  flex: 0 1 350px;
   width: 350px;
   padding-top: 5px;
   margin-left: 20px;

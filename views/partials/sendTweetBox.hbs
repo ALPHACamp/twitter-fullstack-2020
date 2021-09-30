@@ -7,13 +7,13 @@
       </a>
     </div>
   </div>
-  <form action="/tweets" method="POST">
+  <form action="/tweets" method="POST" novalidate>
     <div class="profile-textarea-container">
-      <div class="validate-text">輸入驗證文字</div>
+      <div class="validate-text">{{tweet_message}}</div>
       <textarea
         name="description"
         class="form-control form-control-lg"
-        id="post"
+        id="tweettextarea"
         placeholder="有什麼新鮮事?"
         rows="3"
         maxlength="140"

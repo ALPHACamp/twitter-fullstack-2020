@@ -35,12 +35,16 @@
                 <img src="{{profile.avatar}}" alt="avatar-img" />
               </div>
             </div>
-            <form action="/tweets/{{tweet.id}}/replies" method="POST">
+            <form
+              action="/tweets/{{tweet.id}}/replies"
+              method="POST"
+              novalidate
+            >
               <div class="profile-textarea-container border-start-0 connected">
                 <textarea
                   name="comment"
                   class="form-control form-control-lg"
-                  id="post"
+                  id="replytextarea"
                   placeholder="推你的回覆"
                   rows="3"
                   maxlength="140"
