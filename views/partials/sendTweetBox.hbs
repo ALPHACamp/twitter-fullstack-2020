@@ -7,11 +7,18 @@
       </a>
     </div>
   </div>
-  <form action="/tweets" method="POST">
+  <form action="/tweets" method="POST" novalidate>
     <div class="profile-textarea-container">
-      {{>message}}
-      <textarea name="description" class="form-control form-control-lg" id="post" placeholder="有什麼新鮮事?" rows="3"
-        maxlength="140" required></textarea>
+      <div class="validate-text">{{tweet_message}}</div>
+      <textarea
+        name="description"
+        class="form-control form-control-lg"
+        id="tweettextarea"
+        placeholder="有什麼新鮮事?"
+        rows="3"
+        maxlength="140"
+        required
+      ></textarea>
     </div>
     <button type="submit" class="btn btn-twitter">
       <span>推文</span>

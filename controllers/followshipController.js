@@ -1,24 +1,14 @@
 const db = require("../models");
 const { User, Tweet, Followship } = db;
-const { Op } = require("sequelize");
-const moment = require("moment");
-const { getTestUser } = require("./util.service");
-//for test only
+const { getTestUser, getTopUsers } = require("../services/generalService");
 
-const listAttributes = [
-  "id",
-  "name",
-  "account",
-  "introduction",
-  "updatedAt",
-  "avatar",
-];
-const listAttributesTop = ["id", "name", "account", "avatar"];
+const listAttributes = ["id", "name", "account", "introduction", "updatedAt", "avatar"];
 
 const followshipController = {
   getFollowers: async (req, res) => {
-    let rankedUsers;
+    const user = getTestUser(req);
     try {
+      const TopUsers = await getTopUsers(user);
       let profile = await User.findByPk(req.params.id, {
         attributes: ["id", "name"],
         include: [
@@ -27,96 +17,46 @@ const followshipController = {
             model: User,
             as: "Followers",
             attributes: listAttributes,
-            include: { model: User, as: "Followers", attributes: ["id"] },
-          },
-        ],
+            include: { model: User, as: "Followers", attributes: ["id"], order: [["createdAt", "ASC"]] }
+          }
+        ]
       });
-
-      profile = profile.toJSON();
       profile.tweetCount = profile.Tweets.length;
       profile.Followers.forEach((follower) => {
-        const arr = follower.Followers.map((el) => el.id);
-        if (arr.indexOf(profile.id) > -1) follower.isFollowed = true;
-        else follower.isFollowed = false;
-        follower.updatedAtFormated = moment(follower.updatedAt).fromNow();
+        follower.isFollowed = follower.Followers.map((el) => el.id).includes(profile.id);
+      });
 
-        //get top users
-        User.findAll({
-          attributes: listAttributesTop,
-          include: [{ model: User, as: "Followers", attributes: ["id"] }],
-          where: {
-            id: { [Op.not]: getTestUser(req).id },
-            role: { [Op.not]: "admin" },
-          },
-        })
-          .then((rawUsers) => {
-            rankedUsers = rawUsers
-              .map((data) => ({
-                ...data.dataValues,
-                FollowerCount: data.Followers.length,
-                isFollowed: getTestUser(req)
-                  .Followings.map((d) => d.id)
-                  .includes(data.id),
-              }))
-              .sort((a, b) => b.FollowerCount - a.FollowerCount);
-            rankedUsers = rankedUsers.slice(0, 10);
-          })
-          .then(() => {
-            return res.render("followship", {
-              tagA: true,
-              profile,
-              followers: profile.Followers,
-              users: rankedUsers,
-            });
-          });
+      return res.render("followship", {
+        tagA: true,
+        profile,
+        followers: profile.Followers,
+        users: TopUsers
       });
     } catch (error) {
-      res.status(400).json(error);
       console.log(error);
+      res.status(400).json(error);
     }
   },
 
   getFollowings: async (req, res) => {
-    let rankedUsers;
+    const user = getTestUser(req);
     try {
       let profile = await User.findByPk(req.params.id, {
         attributes: ["id", "name"],
         include: [
           { model: Tweet, attributes: ["id"] },
-          { model: User, as: "Followings", attributes: listAttributes },
-        ],
+          { model: User, as: "Followings", attributes: listAttributes, order: [["createdAt", "ASC"]] }
+        ]
       });
       profile = profile.toJSON();
-      profile.Followings.forEach((following) => {
-        following.updatedAtFormated = moment(following.updatedAt).fromNow();
-      });
       profile.tweetCount = profile.Tweets.length;
-
-      //get top users
-      let rankedUsers = await User.findAll({
-        attributes: listAttributesTop,
-        include: [{ model: User, as: "Followers", attributes: ["id"] }],
-        where: {
-          id: { [Op.not]: getTestUser(req).id },
-          role: { [Op.not]: "admin" },
-        },
-      });
-      rankedUsers = rankedUsers
-        .map((data) => ({
-          ...data.dataValues,
-          FollowerCount: data.Followers.length,
-          isFollowed: getTestUser(req)
-            .Followings.map((d) => d.id)
-            .includes(data.id),
-        }))
-        .sort((a, b) => b.FollowerCount - a.FollowerCount);
-      rankedUsers = rankedUsers.slice(0, 10);
+      const TopUsers = await getTopUsers(user);
 
       return res.render("followship", {
         tagB: true,
-        profile: profile,
+        profile,
         followings: profile.Followings,
-        users: rankedUsers,
+        users: TopUsers
       });
     } catch (error) {
       res.status(400).json(error);
@@ -126,26 +66,30 @@ const followshipController = {
 
   addFollowing: (req, res) => {
     const user = getTestUser(req);
-    if (user.id === req.params.id) {
-      console.error("Cannot follow yourself");
-      return res.redirect("back");
-    }
-    return Followship.findOrCreate({
-      where: {
-        followerId: Number(user.id),
-        followingId: Number(req.params.id),
-      },
-    })
-      .then((data) => {
-        res.redirect("back");
+
+    if (~~user.id === ~~req.params.id) {
+      req.flash("error_messages", "can not follow self");
+      console.log("can not follow self");
+      return res.redirect(200, "back");
+    } else {
+      Followship.findOrCreate({
+        where: {
+          followerId: Number(user.id),
+          followingId: Number(req.params.id)
+        }
       })
-      .catch((error) => res.status(400).json(error));
+        .then((data) => {
+          res.redirect(`/users/${user.id}/followings`);
+        })
+        .catch((error) => res.status(400).json(error));
+    }
+    res.status(200).redirect("back");
   },
 
   deleteFollowing: (req, res) => {
     const user = getTestUser(req);
     return Followship.destroy({
-      where: { followerId: user.id, followingId: req.params.id },
+      where: { followerId: user.id, followingId: req.params.id }
     })
       .then(() => res.redirect("back"))
       .catch((error) => res.status(400).json(error));
@@ -155,20 +99,18 @@ const followshipController = {
     return Followship.findOne({
       where: {
         followerId: Number(user.id),
-        followingId: Number(req.params.id),
-      },
+        followingId: Number(req.params.id)
+      }
     }).then((followship) => {
       if (!followship) {
-        console.error(
-          "You cannot get notification for someone you don't follow"
-        );
+        console.error("You cannot get notification for someone you don't follow");
       } else {
-        followship.notification = !notification;
+        followship.notification = !followship.notification;
         followship.save();
       }
       return res.redirect("back");
     });
-  },
+  }
 };
 
 module.exports = followshipController;

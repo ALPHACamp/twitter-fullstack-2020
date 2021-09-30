@@ -1,9 +1,9 @@
-<form class="form-login mt-5" action="signup" method="POST" style="width: 100%;">
+<form class="form-login mt-5" action="signup" method="POST" style="width: 100%;" novalidate>
 
   <div class="text-center my-4">
     <h1 class="h3 mb-3 font-weight-normal">建立你的帳號</h1>
   </div>
-  {{> message }}
+  {{>message }}
   <div class="row justify-content-center">
     <div class="form-floating col-4 mb-4">
       <input type="text" class="form-control" id="floatingAccount" placeholder="@Will" value="{{ account }}"
@@ -42,9 +42,9 @@
 
   <div class="row justify-content-center">
     <div class="form-floating col-4 mb-4">
-      <input type="password" class="form-control" id="floatingCheckPassword" placeholder="******"
-        name="checkPassword" style="background-color: #F5F8FA;" required />
-      <label for="floatingCheckPassword">確認密碼</label>
+      <input type="password" class="form-control" id="floatingconfirmPassword" placeholder="******"
+        name="confirmPassword" style="background-color: #F5F8FA;" required />
+      <label for="floatingconfirmPassword">確認密碼</label>
       <div class="invalid-feedback">和密碼不符</div>
     </div>
   </div>

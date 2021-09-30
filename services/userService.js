@@ -1,17 +1,17 @@
-const db = require('../models');
+const db = require("../models");
 const imgur = require("imgur-node-api");
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 const { User } = db;
 
 //for test only
-const { getTestUser } = require("../controllers/util.service.js");
+const { getTestUser } = require("./generalService");
 
 const userService = {
   getUser: (req, res, callback) => {
     const user = getTestUser(req);
     if (user.id !== Number(req.params.id)) {
       return callback({
-        status: 'error',
+        status: "error"
       });
     }
     User.findByPk(user.id).then((me) => {
@@ -23,13 +23,13 @@ const userService = {
     const user = getTestUser(req);
     const { name, introduction, avatar, cover } = req.body;
     if (!name || !introduction) {
-      return errorCallback('名稱或自我介紹欄位，不可空白')
+      return errorCallback("名稱或自我介紹欄位，不可空白");
     }
     if (name.length > 50) {
-      return errorCallback('名稱必須在50字符以內')
+      return errorCallback("名稱必須在50字符以內");
     }
     if (introduction && introduction.length > 160) {
-      return errorCallback('自我介紹，必須在160字符以內')
+      return errorCallback("自我介紹，必須在160字符以內");
     }
 
     const images = {};
@@ -55,10 +55,10 @@ const userService = {
         name: name,
         introduction: introduction,
         cover: images.cover ? images.cover.data.link : profile.cover,
-        avatar: images.avatar ? images.avatar.data.link : profile.avatar,
-      }).then(() => callback(me))
-    })
-  },
-}
+        avatar: images.avatar ? images.avatar.data.link : profile.avatar
+      }).then(() => callback(me));
+    });
+  }
+};
 
-module.exports = userService
+module.exports = userService;
