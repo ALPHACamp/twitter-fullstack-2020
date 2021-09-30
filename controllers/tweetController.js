@@ -85,23 +85,24 @@ const tweetController = {
   postTweet: (req, res) => {
     const user = getTestUser(req);
     const { description } = req.body;
-    // if (!description.trim()) {
-    //   const tweet_message = "你並未輸入任何文字";
-    //   return res.redirect("back");
-    // }
-    // if (description.length > 140) {
-    //   const tweet_message = "字數不可超過140字";
-    //   return res.redirect("back");
-    // } else {
-    return Tweet.create({
-      UserId: user.id,
-      description
-    })
-      .then((tweet) => {
-        res.redirect("back");
+    if (!description.trim()) {
+      const tweet_message = "你並未輸入任何文字";
+      return res.redirect("back");
+    }
+    if (description.length > 140) {
+      const tweet_message = "字數不可超過140字";
+      return res.redirect("back");
+    } else {
+      return Tweet.create({
+        UserId: user.id,
+        description
       })
-      .catch((error) => res.status(400).json(error));
-    // }
+        .then((tweet) => {
+          res.redirect("back");
+        })
+        .catch((error) => res.status(400).json(error));
+      // }
+    }
   },
   //test only
   getReply: async (req, res) => {
