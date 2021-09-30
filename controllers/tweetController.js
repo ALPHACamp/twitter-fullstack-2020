@@ -100,6 +100,7 @@ const tweetController = {
         description
       })
         .then((tweet) => {
+          req.flash('tweet_success', '推文發送成功')
           res.redirect("back");
         })
         .catch((error) => res.status(400).json(error));
@@ -158,7 +159,7 @@ const tweetController = {
         comment
       })
         .then((reply) => {
-          // console.log("成功發送評論", reply.toJSON());
+          req.flash('tweet_success', '回覆發送成功')
           res.redirect("back");
         })
         .catch((error) => res.status(400).json(error));

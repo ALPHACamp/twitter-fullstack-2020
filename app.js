@@ -56,6 +56,7 @@ app.use((req, res, next) => {
   res.locals.error_messages = req.flash("error_messages");
   res.locals.errors = req.flash("errors")
   res.locals.tweet_message = req.flash("tweet_message")
+  res.locals.tweet_success = req.flash("tweet_success")
   res.locals.user = helpers.getUser(req);
   next();
 });
