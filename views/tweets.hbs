@@ -29,8 +29,8 @@
             <span class="account">&nbsp;@{{this.userAccount}}</span>
           </a>
           <span class="time"><b>•</b>&nbsp;{{moment this.createdAt}}</span>
-        </div>
-        <p class="content"><a href="/tweets/{{this.id}}/replies" class="content">{{this.description}}</a></p>
+        </div >
+        <p class="content" style="word-wrap:break-word; word-break:normal; overflow: hidden; text-overflow:  ; display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical; width: 500px"><a href="/tweets/{{this.id}}/replies" class="content">{{this.description}}</a></p>
         <div class="d-flex">
           <div class="me-5">
             <i class="reply-icon far fa-comment" data-bs-toggle="modal" data-bs-target="#tweetReplyModal"

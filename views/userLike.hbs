@@ -79,7 +79,7 @@
           <span class="account">&nbsp;@{{this.Tweet.User.account}}</span></a>
           <span class="time"><b>•</b>&nbsp;{{moment this.Tweet.createdAt}}</span>
         </div>
-        <p class="content">
+        <p class="content" style="word-wrap:break-word; word-break:normal; overflow: hidden; text-overflow:  ; display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical; width: 500px">
           <a href="/tweets/{{this.id}}/replies">
           {{this.Tweet.description}}</p>
           </a>

@@ -82,7 +82,7 @@
           <span class="time"><b>•</b>&nbsp;{{moment this.createdAt}}</span>
         </div>
         <span class="reply-user">回覆<a href="/users/{{this.Tweet.User.id}}/tweets">&nbsp;@{{this.Tweet.User.account}}</a></span>
-        <p class="content">
+        <p class="content" style="word-wrap:break-word; word-break:normal; overflow: hidden; text-overflow:  ; display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical; width: 500px" >
           <a href="/tweets/{{this.Tweet.id}}/replies">{{this.comment}}</a>
           </p>
       </div>
