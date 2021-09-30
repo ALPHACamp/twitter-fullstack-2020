@@ -17,7 +17,8 @@ const followshipController = {
             model: User,
             as: "Followers",
             attributes: listAttributes,
-            include: { model: User, as: "Followers", attributes: ["id"], order: [["createdAt", "ASC"]] }
+            include: { model: User, as: "Followers", attributes: ["id"] },
+            order: [["id", "DESC"]]
           }
         ]
       });
@@ -25,7 +26,7 @@ const followshipController = {
       profile.Followers.forEach((follower) => {
         follower.isFollowed = follower.Followers.map((el) => el.id).includes(profile.id);
       });
-
+      profile.Followers.sort((follower1, follower2) => follower1.id - follower2.id);
       return res.render("followship", {
         tagA: true,
         profile,
@@ -45,8 +46,9 @@ const followshipController = {
         attributes: ["id", "name"],
         include: [
           { model: Tweet, attributes: ["id"] },
-          { model: User, as: "Followings", attributes: listAttributes, order: [["createdAt", "ASC"]] }
-        ]
+          { model: User, as: "Followings", attributes: listAttributes }
+        ],
+        order: [["id", "DESC"]]
       });
       profile = profile.toJSON();
       profile.tweetCount = profile.Tweets.length;
@@ -65,7 +67,7 @@ const followshipController = {
   },
 
   addFollowing: (req, res) => {
-    const followingId = (req.body.id !== undefined) ? Number(req.body.id) : Number(req.params.id);
+    const followingId = req.body.id !== undefined ? Number(req.body.id) : Number(req.params.id);
     const followerId = getTestUser(req).id;
 
     if (followerId === followingId) {
@@ -80,7 +82,7 @@ const followshipController = {
         }
       })
         .then(() => {
-          res.redirect('back');
+          res.redirect("back");
         })
         .catch((error) => console.log(error));
     }
