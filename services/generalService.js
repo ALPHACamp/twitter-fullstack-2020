@@ -12,7 +12,7 @@ const getTestUser = (req) => {
   }
 };
 
-// 取得使用者的大頭與id
+// 取得使用者自己的大頭與id
 const getMyProfile = async (user) => {
   let myProfile = await User.findByPk(user.id, {
     attributes: ["id", "avatar"],
@@ -31,7 +31,7 @@ const getTopUsers = async (user) => {
       role: { [Op.not]: "admin" }
     }
   });
-  const topusers = datas
+  const topUsers = datas
     .map((data) => ({
       ...data.dataValues,
       FollowerCount: data.Followers.length,
@@ -39,6 +39,25 @@ const getTopUsers = async (user) => {
     }))
     .sort((a, b) => b.FollowerCount - a.FollowerCount)
     .slice(0, 10);
-  return topusers;
+  return topUsers;
 };
-module.exports = { getMyProfile, getTopUsers, getTestUser };
+
+// 取得使用者資訊
+const getProfile = async (userId) => {
+  const rawProfile = await User.findByPk(userId, {
+    include: [
+      { model: Tweet, attributes: ["id"] },
+      { model: User, as: "Followers", attributes: ["id"] },
+      { model: User, as: "Followings", attributes: ["id"] }
+    ]
+  });
+
+  const profile = await Object.assign(rawProfile.dataValues, {
+    tweetCount: rawProfile.dataValues.Tweets.length,
+    followersCount: rawProfile.dataValues.Followers.length,
+    followingsCount: rawProfile.dataValues.Followings.length,
+  });
+  // console.log(profile.toJSON())
+  return profile
+}
+module.exports = { getMyProfile, getTopUsers, getTestUser, getProfile };

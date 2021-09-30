@@ -99,7 +99,7 @@ const userController = {
               })
               .then((user) => {
                 req.flash("success_messages", "成功更新個人資料");
-                res.redirect(`/users/${user.id}/edit`);
+                res.redirect('back');
               });
           });
         }
@@ -110,17 +110,3 @@ const userController = {
 
 module.exports = userController;
 
-// User.findByPk(req.params.id)
-//         .then((user) => {
-//           console.log(user)
-//           user.update({
-//             account: req.body.account,
-//             name: req.body.name,
-//             email:req.body.email,
-//             password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-//           })
-//             .then((user) => {
-//               console.log('成功更新個人資料')
-//               res.redirect(`/users/${user.id}/edit`)
-//             })
-//         })
