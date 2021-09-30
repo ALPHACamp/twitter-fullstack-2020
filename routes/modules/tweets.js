@@ -9,7 +9,8 @@ router.get("/", authenticated, tweetController.getPosts);
 router.get("/:id", authenticated, tweetController.getPost);
 router.post("/", authenticated, tweetController.postTweet);
 router.put("/:id/like", authenticated, likeController.changeLike);
-router.get("/:id/replies", authenticated, tweetController.postReply);
+// for test only
+router.get("/:id/replies", authenticated, tweetController.getReply);
 router.post("/:id/replies", authenticated, tweetController.postReply);
 
 module.exports = router;
