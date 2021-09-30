@@ -3,8 +3,6 @@ const express = require("express");
 const userController = require("../../controllers/usercontroller");
 const adminController = require("../../controllers/adminController");
 const router = express.Router();
-const db = require("../../models");
-const { User, Tweet, Reply } = db;
 const passport = require("passport");
 
 router.get("/", (req, res) => {
@@ -18,7 +16,7 @@ router.post(
   "/signin",
   passport.authenticate("local", {
     successRedirect: "/tweets",
-    failureRedirect: "/signin",
+    failureRedirect: "/signin"
   })
 );
 router.post("/signup", userController.signup);
@@ -28,7 +26,7 @@ router.post(
   "/admin/signin",
   passport.authenticate("local", {
     successRedirect: "/admin/tweets",
-    failureRedirect: "/admin/signin",
+    failureRedirect: "/admin/signin"
   }),
   adminController.signIn
 );

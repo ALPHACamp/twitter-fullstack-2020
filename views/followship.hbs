@@ -1,7 +1,8 @@
-<div class="row justify-content-center">
+<div class="row justify-content-start">
     {{>columnLeft}}
    {{>modalTweet}}
   <div class="profile-container">
+    {{>message}}
     <div class="mainpost-nav">
       <div class="row justify-content-start">
         <div class="col1">
@@ -38,7 +39,7 @@
             {{/if}}
             <h5 class="d-inline-block profile-nav-header post-title">{{this.name}}&nbsp;<span
                 class="post-sub-info">@{{this.account}}
-                &#x2027; {{this.updatedAtFormated}}</span></h5>
+                &#x2027; {{moment this.updatedAt}}</span></h5>
             <p>{{this.introduction}}</p>
           </div>
         </div>
@@ -58,7 +59,7 @@
             </form>
             <h5 class="d-inline-block profile-nav-header post-title">{{this.name}}&nbsp;<span
                 class="post-sub-info">@{{this.account}}
-                &#x2027; {{this.updatedAtFormated}}</span></h5>
+                &#x2027; {{moment this.updatedAt}}</span></h5>
             <p>{{this.introduction}}</p>
           </div>
         </div>

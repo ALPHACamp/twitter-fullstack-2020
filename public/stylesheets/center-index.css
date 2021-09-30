@@ -1,35 +1,4 @@
 /*profile page css*/
-* {
-  font-family: "Noto Sans TC", sans-serif;
-  font-weight: 500;
-}
-
-body,
-html {
-  height: 100vh;
-  padding: 0;
-  margin: 0;
-}
-a {
-  text-decoration: none;
-  color: #1c1c1c;
-}
-
-.profile-container > * {
-  border: 1px solid #e6ecf0;
-}
-.profile-container .profile-nav {
-  height: 55px;
-  background: #fff;
-  border: 1px solid #e6ecf0;
-}
-.profile-container .profile-nav h3,
-.profile-container .profile-nav h3::before {
-  color: #1c1c1c;
-  line-height: 55px;
-  margin: 0 15px;
-  font-size: 16px;
-}
 .profile-nav-header {
   font-weight: 700;
   font-size: 18px;
@@ -84,124 +53,13 @@ a {
   font-size: 16px;
   font-family: "Noto Sans TC", sans-serif;
 }
-
-.btn-twitter {
-  background-color: #ff6600;
-  line-height: 16px;
-  position: absolute;
-  right: 15px;
-  bottom: 10px;
-  border-radius: 16px;
-  padding: 8px 15px;
-}
-.btn-twitter span {
-  font-size: 16px;
-  line-height: 16px;
-  color: #fff;
-  font-weight: bold;
-  font-family: "Noto Sans TC", sans-serif;
-  margin: 0;
-}
-
-.posts-container {
-  margin-top: 10px;
-}
-
-.post {
-  display: flex;
-  flex: 1;
-  background-color: #fff;
-  position: relative;
-  border: 1px solid #e6ecf0;
-}
-
-.post-card1 {
-  flex: 0 0 65px;
-  width: 65px;
-  font-weight: 500;
-}
-
-.post-card2 {
-  flex: 0 0 535px;
-  width: 535px;
-  padding-left: 10px;
-  padding-top: 10px;
-  min-height: 70px;
-}
-.post-card2 h5,
-.post-card2 p {
-  font-family: "Noto Sans TC", sans-serif;
-  margin: 0;
-  margin-bottom: 10px;
-  font-size: 15px;
-}
-
 .post-card2 .post-title {
   font-weight: 700;
 }
 .post-card2 .post-text {
   font-weight: 500;
 }
-.post-sub-info {
-  font-family: "Noto Sans TC", sans-serif;
-  color: #657786;
-  font-weight: 500;
-  font-size: 15px;
-}
-
-.post-icon-block {
-  display: inline-block;
-  width: 75px;
-  font-family: "Noto Sans TC", sans-serif;
-  font-size: 13px;
-}
 .post-icon-block i {
   display: inline-block;
   margin-right: 5px;
-}
-
-.modal .modal-dialog {
-  max-width: 600px;
-}
-.modal .modal-dialog .modal-header {
-  height: 54px;
-  padding-top: 5px;
-  padding-left: 15px;
-}
-.modal .modal-dialog .btn-close {
-  margin-right: auto;
-  margin-left: 0;
-  padding: 0;
-  background: none;
-}
-.modal .modal-dialog .btn-close:active,
-.modal .modal-dialog .btn-close:hover,
-.modal .modal-dialog .btn-close:focus {
-  outline: 0;
-  border: none;
-}
-.modal .modal-dialog .btn-close .bi-x-lg {
-  color: #ff6600;
-  font-size: 20px;
-}
-
-.modal-body {
-  padding: 0;
-  position: relative;
-  background-color: rgb(255, 255, 255);
-  border-radius: 0 0 15px 15px;
-  overflow: hidden;
-}
-.modal-body .profile-container {
-  width: 598px;
-  border-bottom: none;
-}
-.modal-body .profile-container .profile-messageboard {
-  width: 598px;
-  border-bottom: none;
-  height: 245px;
-}
-.modal-body .profile-container .profile-edit {
-  width: 598px;
-  border: none;
 }

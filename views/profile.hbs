@@ -1,15 +1,19 @@
-<div class="row justify-content-center">
-    {{>columnLeft profile=myProfile}}
-
+<div class="row justify-content-start">
+  {{>columnLeft profile=myProfile}}
+  {{>message}}
   {{>modalTweet}}
   {{>modalProfile}}
+  {{#each tweets}}
+    {{>modalReplyForProfile modalId=@index posterProfile=../profile myProfile=../myProfile}}
+  {{/each}}
+
   <div class="profile-container">
-    {{>message}}
+    
     <div class="mainpost-nav">
       <div class="row justify-content-start">
         <div class="col1"><a href="javascript:history.back()"><i class="bi bi-arrow-left nav-bold"></i></a></div>
         <div class="col2">
-          <p class="nav-bold">{{profile.name}}</p><small>{{tweetsCount}}推文</small>
+          <p class="nav-bold">{{profile.name}}</p><small>{{profile.tweetCount}}推文</small>
         </div>
       </div>
     </div>
@@ -21,9 +25,8 @@
     <div class="col flex-direction-column">
       <!--start::list of 推文-->
       {{#if isPost}}
-      {{#each tweets}}
+      {{#each tweets}}      
       <div class="post">
-        {{>modalReplyForProfile modalId=@index posterProfile=../profile myProfile=../myProfile}}
         <div class="post-card1">
           <div class="avatar profile-avatar">
             <a href="/users/{{../profile.id}}/tweets">
@@ -64,7 +67,7 @@
       <!--end::list of 推文-->
       <!--start::comment-->
       {{#if isComment}}
-      {{#each profile.Replies}}
+      {{#each reply}}
       <div class="col-12 flex-direction-column">
         <div class="post">
           <div class="post-card1">
@@ -75,8 +78,8 @@
             </div>
           </div>
           <div class="post-card2">
-            <h5 class="d-inline-block profile-nav-header post-title">{{../profile.name}}&nbsp;<span
-                class="post-sub-info">@{{../profile.account}}
+            <h5 class="d-inline-block profile-nav-header post-title">{{this.User.name}}&nbsp;<span
+                class="post-sub-info">@{{this.User.account}}
                 &#x2027; {{moment this.createdAt}}</span></h5>
             <a href="/tweets/{{this.TweetId}}">
               <p>{{this.Tweet.description}}</p>

@@ -4,14 +4,20 @@ module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     "User",
     {
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
-      name: DataTypes.STRING,
-      avatar: DataTypes.STRING,
-      account: DataTypes.TEXT,
-      introduction: DataTypes.STRING,
-      cover: DataTypes.TEXT,
-      role: DataTypes.STRING,
+      email: { type: DataTypes.STRING, defaultValue: "Bibi@bibi.com" },
+      password: { type: DataTypes.STRING, defaultValue: "swanswanCat" },
+      name: {
+        type: DataTypes.STRING,
+        defaultValue: "Sparkling Cocktail"
+      },
+      avatar: { type: DataTypes.STRING, defaultValue: "/upload/noImage-head.jpg" },
+      account: { type: DataTypes.TEXT, defaultValue: "Bibi" },
+      introduction: { type: DataTypes.STRING, defaultValue: "My Intro..." },
+      cover: {
+        type: DataTypes.TEXT,
+        defaultValue: "/upload/noImage-banner.jpg"
+      },
+      role: { type: DataTypes.STRING, defaultValue: "user" }
     },
     {}
   );
@@ -22,17 +28,17 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(User, {
       through: models.Followship,
       foreignKey: "followingId",
-      as: "Followers",
+      as: "Followers"
     });
     User.belongsToMany(User, {
       through: models.Followship,
       foreignKey: "followerId",
-      as: "Followings",
+      as: "Followings"
     });
     User.belongsToMany(models.Tweet, {
       through: models.Like,
       foreignKey: "UserId",
-      as: "LikedTweets",
+      as: "LikedTweets"
     });
   };
   return User;

@@ -3,9 +3,7 @@ const bcrypt = require("bcryptjs");
 const db = require("../models");
 const { Op } = require("sequelize");
 const { User } = db;
-const { getTestUser } = require("./util.service");
-
-//for test only
+const { getTestUser } = require("../services/generalService");
 
 const userController = {
   signInPage: (req, res) => {
@@ -28,13 +26,13 @@ const userController = {
         errors,
         name,
         email,
-        account,
+        account
       });
     }
     User.findOne({
       where: {
-        [Op.or]: [{ email }, { account }],
-      },
+        [Op.or]: [{ email }, { account }]
+      }
     }).then((user) => {
       if (user) {
         console.log(email);
@@ -44,7 +42,7 @@ const userController = {
             errors,
             name,
             email,
-            account,
+            account
           });
         }
         if (user.account === account) {
@@ -54,7 +52,7 @@ const userController = {
             errors,
             name,
             email,
-            account,
+            account
           });
         }
       } else {
@@ -63,7 +61,7 @@ const userController = {
           account: account,
           role: "user",
           email: email,
-          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
+          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
         }).then((user) => {
           req.flash("success_messages", "成功註冊帳號！");
           return res.redirect("/signin");
@@ -97,36 +95,18 @@ const userController = {
                 name: req.body.name,
                 account: req.body.account,
                 email: req.body.email,
-                password: bcrypt.hashSync(
-                  req.body.password,
-                  bcrypt.genSaltSync(10),
-                  null
-                ),
+                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
               })
               .then((user) => {
                 req.flash("success_messages", "成功更新個人資料");
-                res.redirect(`/users/${user.id}/edit`);
+                res.redirect('back');
               });
           });
         }
       });
     }
-  },
+  }
 };
 
 module.exports = userController;
 
-// User.findByPk(req.params.id)
-//         .then((user) => {
-//           console.log(user)
-//           user.update({
-//             account: req.body.account,
-//             name: req.body.name,
-//             email:req.body.email,
-//             password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-//           })
-//             .then((user) => {
-//               console.log('成功更新個人資料')
-//               res.redirect(`/users/${user.id}/edit`)
-//             })
-//         })
