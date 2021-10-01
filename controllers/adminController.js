@@ -20,15 +20,18 @@ const adminController = {
 
   getTweets: (req, res) => {
     Tweet.findAndCountAll({
-      include: [User]
+      include: [User],
     })
       .then((result) => {
         const data = result.rows.map((tweet) => ({
           ...tweet.dataValues,
-          description: tweet.dataValues.description.substring(0, 50)
+          description:
+            tweet.dataValues.description.length >= 50
+              ? tweet.dataValues.description.substring(0, 50) + '...'
+              : tweet.dataValues.description,
         }))
         res.render('admin/tweets', {
-          tweets: data
+          tweets: data,
         })
       })
       .catch((error) => {
@@ -57,8 +60,8 @@ const adminController = {
         Tweet,
         { model: Tweet, as: 'LikedTweets' },
         { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
-      ]
+        { model: User, as: 'Followings' },
+      ],
     })
       .then((usersResult) => {
         const data = usersResult.rows.map((user) => ({
@@ -66,7 +69,7 @@ const adminController = {
           userTweetAmount: user.Tweets.length,
           likedTweetAmount: user.LikedTweets.length,
           followingAmount: user.Followings.length,
-          followerAmount: user.Followers.length
+          followerAmount: user.Followers.length,
         }))
 
         data.sort((a, b) => b.userTweetAmount - a.userTweetAmount)
@@ -76,7 +79,7 @@ const adminController = {
         console.log(error)
         res.render('error', { message: 'error !' })
       })
-  }
+  },
 }
 
 module.exports = adminController

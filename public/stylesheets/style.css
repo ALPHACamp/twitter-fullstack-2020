@@ -1390,13 +1390,7 @@ svg {
 .admin-tweet-main-content .item-content span {
   all: initial;
   outline: none;
-  width: 500px;
   /*   限制顯示寬度 */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
   /*   文字樣式 */
   font-family: Noto Sans TC;
   font-style: normal;
