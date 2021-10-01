@@ -1,0 +1,147 @@
+<div class="container">
+  <header class="border border-1 border-box "
+    style="background-color: #FFFFFF; border-color: #E6ECF0; height: 55px; width: 600px">
+    <div class="m-2 d-flex" style="font-size: 18px; font-family: 'Noto Sans TC'; font-color: #1C1C1C">
+      <a href="/tweets" class="" style="width: 17px; height: 14px;">
+        <i class="fas fa-arrow-left" style="color: black"></i>
+      </a>
+      <p class="fw-bold lh-base ms-4"> 推文 </p>
+    </div>
+  </header>
+
+  <div class="border border-1 border-box card"
+    style="background-color: #FFFFFF; border-color: #E6ECF0; width:600px; font-family: 'Noto Sans TC';">
+    <div class="d-flex flex-row">
+      <a href="/users/{{tweetUser.id}}/tweets">
+        <img src="{{tweetUser.avatar}}" style="width: 50px; height: 50px; background-color: #C4C4C4; "
+          class="rounded-circle m-2" alt="...">
+      </a>
+      <div>
+        <h6 class="fontWeight700 mt-2">{{tweetUser.name}}</h6>
+        <h6 class="fontWeight500" style="color:#657786;">@{{tweetUser.account}}</h6>
+      </div>
+    </div>
+    <div class="m-2" style=" font-size: 23px; font-color: #1C1C1C; line-height: 34px;">
+      <p class="card-text fontWeight500">
+        {{tweet.description}}
+      </p>
+    </div>
+    <div class=" fontWeight500 m-2"
+      style="width: 192; height: 22;font-size: 15px; line-height: 21.72px; font-color: #657786;">
+      {{momentTweetTime tweet.createdAt }}
+    </div>
+
+    <div class="divider my-3 m-auto" style="background-color: #E6ECF0; height: 1px; width: 570px">
+    </div>
+
+    <div class="m-2 d-flex" style="height: 28px;font-size: 19px; line-height: 27.51px; font-color: #000000;">
+      <span class="fontWeight500 me-5">{{tweetRepliesCount}} 回覆</span>
+      <span class="fontWeight500 me-5">{{tweetLikesCount}} 喜歡次數</span>
+    </div>
+
+    <div class="divider mt-3 m-auto" style="background-color: #E6ECF0; height: 1px; width: 570px">
+    </div>
+
+    <div class="my-3">
+      <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#replyModal"
+        data-bs-whatever="@getbootstrap">
+        <i class="far fa-lg fa-comment ms-4 me-5"></i>
+        {{#if this.isLiked }}
+        <form action="/tweets/{{tweet.id}}/unlike?_method=POST" method="POST">
+          <button type="submit" class="btn">
+            <i class="fas fa-heart me-3"></i>
+          </button>
+        </form>
+        {{else}}
+        <form action="/tweets/{{tweet.id}}/like" method="POST">
+          <button type="submit" class="btn">
+            <i class="far fa-lg fa-heart me-3"></i>
+          </button>
+        </form>
+        {{/if}}
+      </button>
+    </div>
+  </div>
+
+  <div class="divider" style="background-color: #E6ECF0; height: 1px; width: 600px"></div>
+
+  {{#each replies}}
+  <div class="card p-3" style=" font-family: 'Noto Sans TC'; width: 600px">
+    <div class="d-flex">
+      <div>
+        <a href="/users/{{this.dataValues.User.dataValues.id}}/tweets">
+          <img src="{{this.dataValues.User.dataValues.avatar}}"
+            style="width: 50px; height: 50px; background-color: #C4C4C4; " class="rounded-circle m-2" alt="...">
+        </a>
+      </div>
+
+      <div class="col-md-8">
+        <div class="userInfo d-flex">
+          <h6 class="fontWeight700 me-2">{{this.dataValues.User.dataValues.name}}</h6>
+          <h6 class="fontWeight500" style="color:#657786;">@{{this.dataValues.User.dataValues.account}}</h6>
+          <h6 class="fontWeight500" style="color:#657786;">‧{{moment this.dataValues.createdAt}}</h6>
+        </div>
+        <div class="d-flex" style="color:#657786;">
+          回覆 <div class="ms-2" style="color: #FF6600;"> @{{../tweetUser.account}}</div>
+        </div>
+        <p class="mt-1" class="card-text fontWeight500">
+          {{this.dataValues.comment}}
+        </p>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+
+
+<!-- Reply Modal -->
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form action="/tweets/{{tweet.id}}/replies" method="POST">
+      <div class="modal-content" style="width: 602px;">
+        <div class="modal-header">
+          <div class="d-flex align-items-center">
+            <i class="fas fa-times modal-close" data-bs-dismiss="modal" aria-label="Close"></i>
+          </div>
+        </div>
+
+        <div class="divider" style="background-color: #E6ECF0; height: 1px;"></div>
+
+        <div class="border border-1 border-box card"
+          style="background-color: #FFFFFF; border-color: #E6ECF0; width:600px; font-family: 'Noto Sans TC';">
+          <div class="d-flex flex-row">
+            <img src="{{tweetUser.avatar}}" style="width: 50px; height: 50px; background-color: #C4C4C4; "
+              class="rounded-circle m-2" alt="...">
+            <h6 class="fontWeight700 mt-2">{{tweetUser.name}}</h6>
+            <h6 class="fontWeight500 ms-2 mt-2" style="color:#657786;">@{{tweetUser.account}}</h6>
+            <h6 class="fontWeight500 mt-2" style="color:#657786;">‧{{moment tweet.createdAt}}</h6>
+          </div>
+          <div class="fontWeight500 m-2 "
+            style="width: 510px; font-size: 23px; line-height: 34px; font-color: #1C1C1C;">
+            <p class="card-text fontWeight500">
+              {{tweet.description}}
+            </p>
+          </div>
+          <div class="d-flex" style="color:#657786;">
+            回覆給 <div class="ms-2" style="color: #FF6600;"> @{{tweetUser.account}}</div>
+          </div>
+
+          <div class="mt-3" style="background-color: #FFFFFF;">
+            <div class=" d-flex flex-row" style="width: 500px">
+              <img src="{{user.avatar}}" style="width: 50px; height: 50px; background-color: #C4C4C4;"
+                class="rounded-circle m-2" alt="...">
+              <div class="" style="width: 480px;  font-size: 18px;">
+                <textarea class="form-control" placeholder="推你的回覆" id="comment" name="comment" rows="5"
+                  aria-label="With textarea" required></textarea>
+              </div>
+            </div>
+            <div class="d-flex flex-row-reverse me-2">
+              <button type="submit" class="btn btn-white-orange rounded-pill" style="width: 66px;">回覆</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

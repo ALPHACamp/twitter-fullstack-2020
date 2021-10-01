@@ -1,0 +1,39 @@
+<div class="container border">
+
+  <div class="row border-bottom">
+    <p class="fw-bold my-1 ms-2" style="font-family: 'Noto Sans TC', sans-serif;">使用者列表</p>
+  </div>
+
+  <div class="row">
+    {{#each users}}
+    <div class="col-3 my-2">
+      <div class="card" style="width: 12rem;border-radius: 20px;">
+        <img src="{{ this.cover }}" alt="" class="admin-users-cover">
+        <img src="{{ this.avatar }}" alt="" class="admin-users-avatar">
+        <div class="card-body pb-0">
+          <p class="card-text fw-bold text-center mb-0" style="font-family: 'Noto Sans TC', sans-serif;">{{ this.account }}</p>
+          <p class="card-text text-center my-0" style="font-family: 'Noto Sans TC', sans-serif;color: #657786">@{{ this.name }}</p>
+          <div class="row mt-0">
+            <div class="col d-flex justify-content-center">
+              <i class="far fa-comment"> {{ this.tweetCount }}</i>
+            </div>
+            <div class="col d-flex justify-content-center">
+              <i class="far fa-heart"> {{ this.likedCount }}</i>
+            </div>
+          </div>
+          <div class="row mb-0 mt-2">
+            <div class="col d-flex justify-content-center">
+              <p style="font-size: 15px;">{{ this.followingCount }} 個</p>
+              <p style="font-size: 15px;color: #657786;">跟隨中</p>
+            </div>
+            <div class="col d-flex justify-content-center">
+              <p style="font-size: 15px;">{{ this.followerCount }} 位</p>
+              <p style="font-size: 15px;color: #657786;">跟隨者</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>

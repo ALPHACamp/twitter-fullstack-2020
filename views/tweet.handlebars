@@ -1,0 +1,205 @@
+<div class="container" id="tweets">
+  <header class="border border-1 border-box " style="background-color: #FFFFFF; border-color: #E6ECF0; height: 55px;">
+    <div class="m-2" style="font-size: 18px; font-family: 'Noto Sans TC'; font-color: #1C1C1C">
+      <p class="fw-bold lh-base ">首頁</p>
+    </div>
+  </header>
+
+  <div class="border border-1 border-box" style="background-color: #FFFFFF; border-color: #E6ECF0; height: 120px;">
+    <form action="/tweets" method="POST">
+      <div class="d-flex flex-row" style="width: 500px">
+        <img src="{{user.avatar}}" style="width: 50px; height: 50px; background-color: #C4C4C4;"
+          class="rounded-circle m-2" alt="...">
+        <div class="m-2" style="width: 500px">
+          <textarea class="form-control" placeholder="有什麼新鮮事?" aria-label="With textarea" id="description"
+            name="description" rows="1" required></textarea>
+        </div>
+      </div>
+      <div class="d-flex flex-row-reverse me-2">
+        <button type="submit" class="btn btn-white-orange rounded-pill" style="width: 66px;">推文</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="divider" style="background-color: #E6ECF0; height: 10px;"></div>
+
+  <div id="dataPanel">
+    {{#each tweets}}
+    <div class="card p-3">
+      <div class="d-flex">
+        <div>
+          <a href="users/{{this.tweetUserId}}/tweets">
+            <img src="{{this.tweetUserAvatar}}" style="width: 3rem" class="rounded-circle me-3" alt="...">
+          </a>
+        </div>
+        <div class="col-md-8">
+          <div class="userInfo d-flex">
+            <h6 class="fontWeight700 me-2">{{this.tweetUserName}}</h6>
+            <h6 class="fontWeight500" style="color:#657786;">@{{this.tweetUserAccount}}</h6>
+            <h6 class="fontWeight500" style="color:#657786;">‧{{moment this.createdAt}}</h6>
+          </div>
+          <p class="card-text fontWeight500">
+
+            <a href="/tweets/{{ this.id }}/replies" style="color:#1C1C1C; text-decoration:none;">
+              {{this.tweetDescription}}
+            </a>
+          </p>
+          <div class="d-flex">
+            <div>
+              {{#if this.isLiked }}
+              <form action="/tweets/{{ this.id }}/unlike?_method=POST" method="POST">
+                <button type="submit" class="btn">
+                  <i class="fas fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.tweetLikesCount}}</span>
+                </button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{ this.id }}/like" method="POST">
+                <button type="submit" class="btn">
+                  <i class="far fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.tweetLikesCount}}</span>
+                </button>
+              </form>
+              {{/if}}
+            </div>
+            <div>
+              <button type="submit" class="btn comment-button" data-bs-toggle="modal" data-bs-target="#replyModal"
+                data-bs-whatever="@getbootstrap" data-id="{{this.id}}" data-url="{{baseURL}}">
+                <i class="far fa-comment me-3"></i><span class="fontWeight500">{{this.tweetRepliesCount}}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+
+<!-- Reply Modal in Tweet view -->
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 602px;">
+      <div class="modal-header">
+        <div class="d-flex align-items-center">
+          <i class="fas fa-times modal-close" data-bs-dismiss="modal" aria-label="Close"></i>
+        </div>
+      </div>
+
+      <div class="divider" style="background-color: #E6ECF0; height: 1px;"></div>
+
+      <div class="border border-1 border-box card"
+        style="background-color: #FFFFFF; border-color: #E6ECF0; width:600px; font-family: 'Noto Sans TC';">
+        <div class="d-flex flex-row">
+          <div id="tweetModalUserAvatar">
+            <a href="/users/{{tweet.UserId}}/tweets">
+              <img src="{{tweetUser.avatar}}" style="width: 50px; height: 50px; background-color: #C4C4C4; "
+                class="rounded-circle m-2" alt="...">
+            </a>
+          </div>
+          <div id="tweetModalUserName">
+            <h6 class="fontWeight700 mt-2">{{tweetUser.name}}</h6>
+          </div>
+          <div id="tweetModalUserAccount">
+            <h6 class=" fontWeight500 ms-2 mt-2" style="color:#657786;">@{{tweetUser.account}}</h6>
+          </div>
+          <div id="tweetModalTweetCreatedAt">
+            <h6 class=" fontWeight500 mt-2" style="color:#657786;">‧{{moment
+              tweet.createdAt}}</h6>
+          </div>
+        </div>
+        <div class="fontWeight500 m-2 " style="width: 510px; font-size: 23px; line-height: 34px; font-color: #1C1C1C;"
+          id="tweetModalDescription">
+          <p class="card-text fontWeight500">
+            {{tweet.description}}
+          </p>
+        </div>
+        <div class="d-flex" style="color:#657786;" id="tweetModalToUserAccount">
+          回覆給 <div class="ms-2" style="color: #FF6600;"> @{{tweetUser.account}}</div>
+        </div>
+
+        <div class="mt-3" style="background-color: #FFFFFF;" id="wayne">
+          <form action="/tweets/{{tweet.id}}/replies" method="POST">
+            <div class=" d-flex flex-row" style="width: 500px">
+              <img src="{{user.avatar}}" style="width: 50px; height: 50px; background-color: #C4C4C4;"
+                class="rounded-circle m-2" alt="...">
+              <div class="" style="width: 480px;  font-size: 18px;">
+                <textarea class="form-control" placeholder="推你的回覆" id="description" name="description" rows="5"
+                  aria-label="With textarea" required></textarea>
+              </div>
+            </div>
+            <div class="d-flex flex-row-reverse me-2">
+              <button type="submit" class="btn btn-white-orange rounded-pill" style="width: 66px;">回覆</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  const tweets = document.querySelector('#tweets')
+  const tweetModalUser = document.querySelector('#tweetModalUserAvatar')
+  const tweetModalUserName = document.querySelector('#tweetModalUserName')
+  const tweetModalUserAccount = document.querySelector('#tweetModalUserAccount')
+  const tweetModalTweetCreatedAt = document.querySelector('#tweetModalTweetCreatedAt')
+  const tweetModalDescription = document.querySelector('#tweetModalDescription')
+  const tweetModalReply = document.querySelector('#wayne')
+  const tweetModalToUserAccount = document.querySelector('#tweetModalToUserAccount')
+
+
+  tweets.addEventListener('click', function replyIconClicked(event) {
+    const baseURL = event.target.dataset.url
+    const tweetId = event.target.dataset.id
+    if (event.target.matches('.comment-button')) {
+      axios.get(`${baseURL}/api/tweets/${tweetId}/replies`)
+        .then(tweet => {
+          const tweetModal = tweet.data.tweetModal
+          const currentUser = tweet.data.user
+          tweetModalUser.innerHTML = `
+          <a href="/users/${tweetModal.User.id}/tweets">
+            <img src="${tweetModal.User.avatar}" style="width: 50px; height: 50px; background-color: #C4C4C4; "
+            class="rounded-circle m-2" alt="...">
+          </a>
+          `
+          tweetModalUserName.innerHTML = `
+          <h6 class="fontWeight700 mt-2">${tweetModal.User.name}</h6>
+          `
+          tweetModalUserAccount.innerHTML = `
+          <h6 class="fontWeight500 ms-2 mt-2" style="color:#657786;">@ ${tweetModal.User.account}</h6>
+          `
+          tweetModalTweetCreatedAt.innerHTML = `
+            <h6 class=" fontWeight500 mt-2" style="color:#657786;">‧${tweetModal.createdAt}</h6>
+          `
+          tweetModalDescription.innerHTML = `
+          <p class="card-text fontWeight500">
+            ${tweetModal.description}
+          </p>
+          `
+          tweetModalToUserAccount.innerHTML = `
+            回覆給 <div class="ms-2" style="color: #FF6600;"> @${tweetModal.User.account}</div>
+          `
+          tweetModalReply.innerHTML = `
+         <form action="/tweets/${tweetModal.id}/replies" method="POST">
+            <div class=" d-flex flex-row" style="width: 500px">
+              <img src="${currentUser.avatar}" style="width: 50px; height: 50px; background-color: #C4C4C4;" class="rounded-circle m-2"
+                alt="...">
+              <div class="" style="width: 480px;  font-size: 18px;">
+                <textarea class="form-control" placeholder="推你的回覆" id="comment" name="comment" rows="5"
+                  aria-label="With textarea" required></textarea>
+              </div>
+            </div>
+            <div class="d-flex flex-row-reverse me-2">
+              <button type="submit" class="btn btn-white-orange rounded-pill" style="width: 66px;">回覆</button>
+            </div>
+          </form>
+          `
+
+        })
+    }
+  })
+
+</script>

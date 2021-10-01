@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twitter</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/cb076d1b6b.js" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+  <div class="container d-flex justify-content-around">
+    <div class="function" style="width: 235px;">
+      <img src="https://coursereport-production.imgix.net/uploads/school/logo/473/original/alpha-camp-logo.png" alt=""
+        style="width: 30px;">
+      <div style="height: 97%">
+        <ul class="nav flex-column mt-3">
+          <li class="nav-item m-2" style="width: 235px; font-size: 18px; font-family: 'Noto Sans TC'">
+            <a class="nav-link  text-start" href="/tweets">
+              <i class=" fas fa-home fs-5"> 首頁 </i>
+            </a>
+          </li>
+          <li class="nav-item m-2" style="width: 235px; font-size: 18px; font-family: 'Noto Sans TC'">
+            <a class="nav-link text-start" href="/users/self/{{user.id}}" style="width: 235px;">
+              <i class="far fa-user fs-5"> 個人資料 </i>
+            </a>
+          </li>
+          <li class="nav-item m-2" style="width: 235px; font-size: 18px; font-family: 'Noto Sans TC'">
+            <a class="nav-link text-start" href="/users/setting/{{user.id}}" style="width: 235px">
+              <i class="fas fa-cog fs-5"> 設定 </i>
+            </a>
+          </li>
+          <li class="nav-item m-2">
+            <button type="button" class="btn btn-white-orange rounded-pill" data-bs-toggle="modal"
+              data-bs-target="#twitterModal" data-bs-whatever="@getbootstrap"
+              style="width: 235px; font-size: 18px; font-family: 'Noto Sans TC'">推文</button>
+          </li>
+        </ul>
+      </div>
+      <ul class="nav flex-column mt-3" style="height: 60px;">
+        <li class="nav-item m-2">
+          <a class="nav-link text-start" href="/logout" style="width: 235px">
+            <i class="fas fa-sign-out-alt fs-5"> 登出 </i>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="body" style="width: 600px;">
+      {{{body}}}
+    </div>
+  </div>
+
+  <!-- Twitter Modal -->
+  <div class="modal fade" id="twitterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form action="/tweets" method="POST">
+        <div class="modal-content" style="width: 600px;">
+          <div class="modal-header">
+            <div class="d-flex align-items-center">
+              <i class="fas fa-times modal-close" data-bs-dismiss="modal" aria-label="Close"></i>
+            </div>
+          </div>
+
+          <div class="divider" style="background-color: #E6ECF0; height: 1px;"></div>
+
+          <div class="border border-1 border-box"
+            style="background-color: #FFFFFF; border-color: #E6ECF0; height: 300px;">
+            <div class="d-flex flex-row" style="width: 500px">
+              <img src="{{user.avatar}}" style="width: 50px; height: 50px; background-color: #C4C4C4;"
+                class="rounded-circle m-2" alt="...">
+              <div class="" style="width: 480px; height: 230px; border-color: #FFFFFF; font-size: 18px;">
+                <textarea class="form-control" placeholder="有什麼新鮮事?" aria-label="With textarea" id="description"
+                  name="description" rows="7" required></textarea>
+              </div>
+            </div>
+            <div class="d-flex flex-row-reverse me-2">
+              <button type="submit" class="btn btn-white-orange rounded-pill" style="width: 66px;">推文</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

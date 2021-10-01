@@ -1,0 +1,120 @@
+<div class="container d-flex flex-column align-items-center">
+
+  <div class="card" style="width: 38rem;">
+
+    <div class="d-flex align-items-center">
+      <a href="/" class="btn">
+        <i class="fas fa-arrow-left"></i>
+      </a>
+      <div class="d-flex flex-column ms-4">
+        <h5 class="mb-0 mt-2 fontWeight900">{{user.name}}</h5>
+        <p class="mt-0 mb-2" style="color:#657786;">{{totalTweet}} 推文</p>
+      </div>
+    </div>
+
+    <img src="{{user.cover}}" style="position:relate; height: 200px" class="" alt="...">
+    <img src="{{user.avatar}}" class="rounded-circle user-avatar" alt="...">
+
+    {{#if isLoginUser}}
+    <div class="d-flex flex-row-reverse m-2" id="edit-profile">
+      <button type="button" class="btn btn-orange-white rounded-pill" data-bs-toggle="modal" data-bs-target="#userModal"
+        id="edit-profile-btn" data-id="{{user.id}}" data-url="{{baseURL}}">編輯個人資料</button>
+    </div>
+    {{else}}
+    <div class="d-flex flex-row-reverse align-items-center m-2">
+      {{#if isFollowed }}
+      <form action="/followships/{{ user.id }}?_method=DELETE" method="POST">
+        <button type="submit" class="btn btn-white-orange rounded-pill p-1"
+          style="width: 90px; height: 35px;;">正在跟隨</button>
+      </form>
+      {{else}}
+      <form action="/followships" method="POST">
+        <input type="hidden" name="id" value="{{user.id}}">
+        <button type="submit" class="btn btn-orange-white rounded-pill p-1"
+          style="width: 90px; height: 35px;;">跟隨</button>
+      </form>
+      {{/if}}
+      <i class="far fa-bell circle d-flex align-items-center justify-content-center me-2"></i>
+      <a href="mailto:{{user.email}}" style="text-decoration:none;"><i
+          class=" far fa-envelope circle d-flex align-items-center justify-content-center me-2"></i></a>
+    </div>
+    {{/if}}
+
+    <div class="card-body">
+      <h5 class="card-title fontWeight900">{{user.name}}</h5>
+      <h6 style="color:#657786;">@{{user.account}}</h6>
+      <p class="card-text">{{user.introduction}}</p>
+    </div>
+
+    <div class="d-flex mx-3">
+      <a href="/users/{{user.id}}/followings" class="btn ps-0">
+        <span class="fontWeight500">{{followerCount}}個</span><span style="color:#657786;">跟隨中</span>
+      </a>
+      <a href="/users/{{user.id}}/followers" class="btn">
+        <span class="fontWeight500">{{followingCount}}位</span><span style="color:#657786;">跟隨者</span>
+      </a>
+    </div>
+
+    <ul class="nav nav-tabs mt-4">
+      <li class="nav-item">
+        <a class="nav-link fontWeight700 active" href="/users/{{user.id}}/tweets">推文</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link fontWeight700" href="/users/{{user.id}}/replies">推文與回覆</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link fontWeight700" href="/users/{{user.id}}/likes">喜歡的內容</a>
+      </li>
+    </ul>
+
+
+    {{#each tweet}}
+    <div class="card p-3">
+      <div class="d-flex">
+        <div>
+          <a href="/users/self/{{../user.id}}" style="text-decoration: none;">
+            <img src="{{../user.avatar}}" style="width: 3rem; height: 3rem;" class="rounded-circle me-3" alt="...">
+          </a>
+        </div>
+        <div class="col-md-8">
+          <div class="userInfo d-flex">
+            <a href="/users/self/{{../user.id}}" style="text-decoration: none; color:black;">
+              <h6 class="fontWeight700 me-2">{{../user.name}}</h6>
+            </a>
+            <a href="/users/self/{{../user.id}}" style="text-decoration: none;">
+              <h6 class="fontWeight500" style="color:#657786;">@{{../user.account}}</h6>
+            </a>
+            <h6 class="fontWeight500" style="color:#657786;">‧{{moment this.createdAt}}</h6>
+          </div>
+          <p class="card-text fontWeight500">{{this.description}}</p>
+
+          <div class="d-flex align-items-center">
+            {{#if this.isLiked }}
+            <form action="/tweets/{{ this.id }}/unlike" method="POST">
+              <button type="submit" class="btn" style="color: #657786">
+                <i class="fas fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.likeCount}}</span>
+              </button>
+            </form>
+            {{else}}
+            <form action="/tweets/{{ this.id }}/like" method="POST">
+              <button type="submit" class="btn" style="color: #657786">
+                <i class="far fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.likeCount}}</span>
+              </button>
+            </form>
+            {{/if}}
+            <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color: 
+          #657786"><i class="far fa-comment me-3"></i><span class="fontWeight500">{{this.replyCount}}</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+
+
+<!-- Profile Modal -->
+{{> profileModal}}
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/javaScript/profileModal.js"></script>
