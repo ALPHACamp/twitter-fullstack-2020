@@ -301,7 +301,7 @@ const userController = {
         .Followings.map((item) => item.id)
         .includes(thisUser.id)
 
-      return res.render('user/like', {
+      return res.render('userLikes', {
         users: thisUser,
         currentUserId: currentUserId,
       })
@@ -339,7 +339,7 @@ const userController = {
         .Followings.map((item) => item.id)
         .includes(thisUser.id)
 
-      return res.render('reply', {
+      return res.render('userReplies', {
         users: thisUser,
         currentUserId: currentUserId,
       })

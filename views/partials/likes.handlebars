@@ -1,6 +1,5 @@
-
-
-  {{#each users.Tweets}}
+{{!-- 個人所有喜歡欄 --}}
+  {{#each users.Likes}}
   <div class="tweet-body">
     <div class='card-tweets'>
       
@@ -19,11 +18,11 @@
       <div class='card-warp'>
       <a href="/tweets/{{this.id}}/replies">
         <div class='card-header' style="flex-direction:row;">
-          <div class='card-name'>{{../user.name}}</div>
-          <div class='card-account'>{{../user.account}} • {{moment this.createdAt}}</div>
+          <div class='card-name'>{{this.Tweet.User.name}}</div>
+          <div class='card-account'>{{this.Tweet.User.account}} • {{moment this.createdAt}}</div>
         </div>
         <div class='card-content'>
-          {{this.description}}
+          {{this.Tweet.description}}
         </div>
         </a>
 
@@ -51,10 +50,24 @@
                   ></path>
                 </svg>
               </span>
-              <span class='reply-count'>{{this.replyCount}}</span>
+              <span class='reply-count'>{{this.Tweet.Replies.length}}</span>
             </button>
         </div>
-          <div class='icon-like'>
+        {{#if isLiked}} 
+          <form action="/tweets/{{this.TweetId}}/unlike" method="post" style="display: inline-block;">
+            <button type="submit" style="background: none;border: none;">
+            <span>
+              <svg class="like-count" width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M11 19.6381H10.986C8.40295 19.5901 0.949951 12.8561 0.949951 6.47812C0.949951 3.41412 3.47495 0.724121 6.35295 0.724121C8.64295 0.724121 10.183 2.30412 10.999 3.45412C11.813 2.30612 13.353 0.724121 15.644 0.724121C18.524 0.724121 21.048 3.41412 21.048 6.47912C21.048 12.8551 13.594 19.5891 11.011 19.6361H11V19.6381Z" fill="#E0245E"/>
+</svg>
+
+            </span>
+            </button>
+            <span class='like-count' style="color:#E0245E;">{{this.Tweet.Likes.length}}</span>
+          </form>
+            {{else}}
+          <form action="/tweets/{{this.TweetId}}/like" method="post" style="display: inline-block;">
+            <button type="submit" style="background: none;border: none;">
             <span>
               <svg
                 class='like-count'
@@ -69,8 +82,10 @@
                 ></path>
               </svg>
             </span>
-            <span class='like-count'>{{this.likeCount}}</span>
-          </div>
+            </button>
+            <span class='like-count'>{{this.Tweet.Likes.length}}</span>
+          </form>
+            {{/if}}
         </div>
       </div>
     </div>

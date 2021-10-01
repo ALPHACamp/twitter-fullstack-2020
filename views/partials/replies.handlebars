@@ -1,0 +1,26 @@
+{{! 個人所有回覆欄 }}
+{{#each users.Replies}}
+        <div class="tweet-body">
+        <div class="card-tweets">
+          <a href="/users/{{../users.id}}/tweets">
+          <img class="card-avatar" src="{{../users.avatar}}" alt="avatar" width="50" height="50">
+          </a>
+          <div class="card-warp">
+            <a href="/tweets/{{this.id}}/replies">
+            <div class="card-header"style="flex-direction:row;" >
+              <span class="card-name">{{../users.name}}</span> <span class="card-account">@{{../users.account}} • {{moment ../users.createdAt}}</span>
+            </div>
+            <div class="card-reply-for">
+              <span class="replyItem">回覆</span>
+              <a href="/users/{{this.Tweet.User.id}}/tweets">
+              <span class="replyReceiver">@{{this.Tweet.User.account}}</span>
+              </a>         
+            </div>
+            <div class="card-content">
+              {{this.comment}}
+            </div>
+            </a>
+          </div>
+        </div>
+      </div>
+{{/each}}
