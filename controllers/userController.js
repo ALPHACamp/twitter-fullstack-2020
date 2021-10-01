@@ -103,9 +103,6 @@ const userController = {
           .Followings.map((d) => d.id)
           .includes(user.id),
       }))
-      users = users.filter(
-        (user) => user.isAdmin == 0 && user.name !== helpers.getUser(req).name
-      )
       users = users
         .sort((a, b) => b.FollowerCount - a.FollowerCount)
         .slice(0, 6)
