@@ -1,0 +1,195 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans TC";
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+/* tweets */
+#tweets .h5 {
+  color: #1C1C1C;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0px;  
+}
+
+.tweet-btn {
+  color: #FFFFFF;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+
+
+.a-tomato {
+  color: #FF6600;
+;
+}
+
+.h-tomato:hover {
+  box-shadow: 0 0 1rem rgba(255, 104, 78, 0.15);
+}
+
+.btn-tomato {
+  color: #fff;
+  background-color: tomato;
+  border-color: tomato;
+}
+.btn-tomato:hover {
+  color: #fff;
+  background-color: rgba(255, 99, 71, 0.8);
+  border-color: rgba(255, 99, 71, 0.8);
+  box-shadow: 0 0 1rem rgba(255, 104, 78, 0.15);
+}
+
+.hovercard:hover {
+  box-shadow: 0 0rem 1rem rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.vertical-line {
+  width: 50px;
+  height: 20%;
+  border-right: solid #CCD6DD;
+
+}
+
+
+
+.bd {
+  outline: 2px solid red;
+}
+
+
+
+/* userprofile */
+.btn-outline-tomato {
+  color: tomato;
+  border-color: tomato;
+}
+.btn-outline-tomato:hover {
+  color: #fff;
+  background-color: tomato;
+  border-color: tomato;
+}
+
+/* followingship.hbs followership.hbs */
+.follower-head .nav-tabs .nav-link {
+  color: lightgray;
+  font-weight: 600;
+  border: none;
+}
+.follower-head .nav-tabs .nav-link.active {
+  color: #ff6600;
+  border: none;
+  border-bottom: 1px solid #ff6600;
+}
+
+/* userprofile.hbs */
+.avatar-holder {
+  border: 4px solid white;
+  position: absolute;
+  object-fit: cover;
+  top: 75%;
+  left: 4%;
+  border-radius: 50%;
+  background: white;
+  overflow: hidden;
+}
+.cover-uploader {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  width: inherit;
+  height: 170px;
+  z-index: 1099;
+  top: 0;
+}
+.cover-uploader:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 1rem rgba(255, 255, 255, 0.15);
+  z-index: 1099;
+}
+.cover-uploader i {
+  visibility: hidden;
+}
+.cover-uploader:hover i {
+  visibility: visible;
+}
+.avator-uploader {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  width: 88px;
+  height: 88px;
+  top: 75%;
+  left: 4%;
+  border-radius: 50%;
+  z-index: 1100;
+}
+.avator-uploader:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 1rem rgba(255, 255, 255, 0.15);
+}
+.avator-uploader i {
+  visibility: hidden;
+}
+.avator-uploader:hover i {
+  visibility: visible;
+}
+.profile-head .nav-tabs .nav-link {
+  margin: auto 20px;
+  color: lightgray;
+  font-weight: 600;
+  border: none;
+}
+.profile-head .nav-tabs .nav-link.active {
+  margin: auto 20px;
+  color: #ff6600;
+  border: none;
+  border-bottom: 1px solid #ff6600;
+}
+
+
+.NoticeAni :hover::before {
+  box-shadow: 0 0 14px 2px #ff6600;
+  transform: scale(1.05);
+}
+
+
+/* Public */
+.msgblockleft {
+  border-radius: 50rem 50rem 50rem 0;
+  background-color: #eee;
+  padding: 0.4rem 0.6rem;
+}
+
+.msgblockright {
+  border-radius: 50rem 50rem 0 50rem;
+  background-color: tomato;
+  color: white;
+  padding: 0.4rem 0.6rem;
+}
+
+
+
+/* adminTweet adminUser */
+.h-delete:hover {
+  box-shadow: 0 0 1rem rgba(255, 104, 78, 0.15);
+}
