@@ -26,12 +26,12 @@
   <div class='personal-info-wrap'>
     <img
       class='cover'
-      src={{user.cover}}
+      src={{users.cover}}
       alt='cover'
     />
     <div class='personal-avatar'>
       <img
-        src='{{user.avatar}}'
+        src='{{users.avatar}}'
         alt='avatar'
         width='140px'
         height='140px'
@@ -39,7 +39,7 @@
     </div>
     <!-- 編輯個人資料 modal trigger  -->
     <div style='position:absolute; right:15px; top:210px;'>
-      {{#ifCond user.id users.id}}
+      {{#ifCond UserId users.id}}
       <button
         type='button'
         class='button-white'

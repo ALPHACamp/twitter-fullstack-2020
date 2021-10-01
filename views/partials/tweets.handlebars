@@ -8,7 +8,7 @@
         
         <img
         class='card-avatar'
-        {{#if ../users.avatar}}src={{../users.avatar}}{{/if}}
+        src={{../users.avatar}}
         alt='avatar'
         width='50'
         height='50'/>
@@ -18,8 +18,8 @@
       <div class='card-warp'>
       <a href="/tweets/{{this.id}}/replies">
         <div class='card-header' style="flex-direction:row;">
-          <div class='card-name'>{{../user.name}}</div>
-          <div class='card-account'>{{../user.account}} • {{moment this.createdAt}}</div>
+          <div class='card-name'>{{this.name}}</div>
+          <div class='card-account'>{{this.account}} • {{moment this.createdAt}}</div>
         </div>
         <div class='card-content'>
           {{this.description}}
