@@ -50,7 +50,7 @@
           class="col-auto d-flex align-items-center">
           <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
         </a>
-        <a href="/users/{{users.id}}/tweets" class="col-auto d-flex flex-column align-items-start justify-content-center link-dark">
+        <a href="/" class="col-auto d-flex flex-column align-items-start justify-content-center link-dark">
           <span class="h5"
             style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{users.name}}</span>
           <span style="color: #657786; font-size: 0.95em; font-size: 13px; line-height: 15px">{{tweetCount}} 推文</span>
@@ -136,104 +136,7 @@
           </div>
         </nav>
       </div>
-      {{!-- tweets reply like --}}
       <div class="tab-content col-12" id="nav-tabContent">
-        {{!-- tweets --}}
-        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-          <ul class="list-group list-group-flush">
-            {{#each users.Tweets}}
-            <li class="list-group-item">
-              <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard"
-                onclick="javascript:location.href='/tweets/{{this.id}}'">
-                <div class="col-1 d-flex justify-content-center align-items-center">
-                  <a href="/users/{{../users.id}}/tweets" class="p-1">
-                    <img
-                      src="{{#if ../users.avatar}}{{../users.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
-                      alt="A user" width="60" height="60" class="rounded-circle" />
-                  </a>
-                </div>
-                <div class="col-11 row px-md-2 px-4">
-                  <div class="col-12 d-inline-flex justify-content-between align-items-center">
-                    <div style="height: 22px; line-height: 22px">
-                      <span class="h5 text-dark fw-bold">{{../users.name}}</span>
-                      <span class="text-muted ps-1" style="font-size: 0.875em;"> @{{../users.account}}‧{{moment
-                        this.createdAt}}</span>
-                    </div>
-
-                  </div>
-                  <div class="col-12 mt-1" onclick="location.href='/tweets/{{this.id}}'">
-                    <p class="fw-bold" style="max-width: 600px; overflow-wrap: break-word;">{{this.description}}</p>
-                  </div>
-                  <div class="col-12 d-flex align-items-center justify-content-start ">
-
-                    {{#ifCond this.likeCount 0 }}
-                    <span style="width: 60px;">
-                      <i class="far fa-heart" style="color: red;">{{ this.likeCount }}</i>
-                    </span>
-                    {{else}}
-                    <span style="width: 60px;">
-                      <i class="fas fa-heart" style="color: red;">{{ this.likeCount }}</i>
-                    </span>
-                    {{/ifCond}}
-                    {{#if this.replyCount}}
-                    <span style="width: 50px;">
-                      <i class="fas fa-comment"> {{ this.replyCount }}</i>
-                    </span>
-                    {{else}}
-                    <span style="width: 50px;">
-                      <i class="far fa-comment"> {{ this.replyCount }}</i>
-                    </span>
-                    {{/if}}
-                  </div>
-                </div>
-              </div>
-            </li>
-
-            {{/each}}
-          </ul>
-        </div>
-        {{!-- repliedTweet --}}
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-          <ul class="list-group list-group-flush">
-            {{#each repiledTweet}}
-            <li class="list-group-item">
-              <div class="row justify-content-around align-items-start mb-1 p-2 bg-white">
-                <div class="col-1 d-flex justify-content-center align-items-center">
-                  <a href="/users/{{this.Tweet.User.id}}/tweets" class="p-1">
-                    <img
-                      src="{{#if this.Tweet.User.avatar}}{{this.Tweet.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
-                      alt="" width="60" height="60" class="rounded-circle" />
-                  </a>
-                </div>
-                <div class="col-11 row px-md-2 px-4">
-                  <div class="col-12 d-inline-flex justify-content-between align-items-center">
-                    <div style="height: 22px; line-height: 22px">
-                      <a href="/users/{{this.Tweet.User.id}}/tweets"
-                        class="h5 text-dark text-decoration-none fw-bold">{{this.Tweet.User.name}}</a>
-                      <span class="text-muted ps-1" style="font-size: 0.875em;"> @{{this.Tweet.User.account}}‧{{moment
-                        this.createdAt}}</span>
-                    </div>
-                  </div>
-                  <div class="card-text col-12" style="margin-top:1vw">
-                    <a href="/tweets/{{this.Tweet.id}}" style="text-decoration: none;">
-                      <p class="mt-2" style="color: tomato; font-size: 0.875em">回覆@{{this.Tweet.User.name}}</p>
-                    </a>
-                  </div>
-                  <div class="col-12 mt-1">
-                    <p class="fw-bold" style="max-width: 600px; overflow-wrap: break-word;">{{this.Tweet.description}}
-                    </p>
-                  </div>
-                  <div class="col-12">
-                    <p class="fw-bold">{{this.content}}</p>
-                  </div>
-                  <div class="col-12 d-flex align-items-center justify-content-start ">
-                  </div>
-                </div>
-              </div>
-            </li>
-            {{/each}}
-          </ul>
-        </div>
         {{!-- likedTweets --}}
         <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
           <ul class="list-group list-group-flush">
@@ -279,7 +182,7 @@
         </div>
       </div>
     </div>
-    {{!-- follower bar --}}
+    {{!-- Followship recommend bar --}}
     <div class="col-auto col-md-3 col-lg-3">
       <div class="card d-none d-md-flex flex-column mt-1" style="border: none;">
         <ul class="list-group-flush">
@@ -295,27 +198,22 @@
               </div>
 
               <div class="col-6 pt-3 d-flex flex-column align-items-start">
-                <h5 style="line-height: 18px; width:inherit;">{{this.name}}</h5>
-                <p class="text-muted" style="line-height: 16px; width:inherit;">@{{this.account}}</p>
+                <h5 style="line-height: 18px;width:inherit;">{{this.name}}</h5>
+                <p class="text-muted" style="line-height: 16px;width:inherit;">@{{this.account}}</p>
               </div>
 
               <div class="col-4 d-flex justify-content-center">
-
-                {{#ifCond this.id ../user.id}}
-                {{else}}
                 {{#if this.isFollowed}}
                 <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                  <button type="submit" class="btn btn-tomato" name="id" value={{this.id}}
-                    style="font-size: 15px; border-radius: 30px 30px 30px 30px;font-weight: bold;">正在跟隨</button>
+                  <button type="submit" class="btn btn-tomato rounded-pill fw-bold" name="{{user.id}}"
+                    style="font-size: 15px;border-radius: 30px 30px 30px 30px;font-weight: bold;">正在跟隨</button>
                 </form>
                 {{else}}
-                <form action="/followships" method="POST" style="display: contents;">
-                  <button type="submit" class="btn btn-outline-tomato" name="id" value={{this.id}}
-                    style="font-size: 15px; border-radius: 30px 30px 30px 30px;font-weight: bold;">跟隨</button>
+                <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
+                  <button type="submit" class="btn btn-outline-tomato" name="{{user.id}}"
+                    style="font-size: 15px;border-radius: 30px 30px 30px 30px;font-weight: bold;">跟隨</button>
                 </form>
                 {{/if}}
-                {{/ifCond}}
-
               </div>
             </div>
           </li>
@@ -323,7 +221,6 @@
         </ul>
       </div>
     </div>
-    {{!-- follower bar end--}}
     <div class="d-flex fixed-bottom mb-3 ml-5 px-3">
       <a href="/signout" class="d-flex" style="text-decoration:none;">
         <i class="fas fa-sign-out-alt" style="color: #000000; font-size: 1.2em;"></i>
