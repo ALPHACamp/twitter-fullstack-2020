@@ -2,12 +2,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           <i class="bi bi-x-lg"></i>
         </button>
       </div>
@@ -20,19 +15,11 @@
               </div>
             </div>
             <form action="/tweets" method="POST" novalidate>
-              <div class="validate-text">{{tweet_message}}</div>
-
+              {{> message }}
               <div class="profile-textarea-container">
 
-                <textarea
-                  name="description"
-                  class="form-control form-control-lg"
-                  id="tweettextarea"
-                  placeholder="有什麼新鮮事?"
-                  rows="3"
-                  maxlength="140"
-                  required
-                ></textarea>
+                <textarea name="description" class="form-control form-control-lg" id="tweettextarea"
+                  placeholder="有什麼新鮮事?" rows="3" required></textarea>
               </div>
 
               <button type="submit" class="btn btn-twitter">
