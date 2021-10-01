@@ -363,6 +363,7 @@ in many similar page layouts.*/
   width: 130px;
   margin-bottom: 0;
   text-align: center;
+  cursor: pointer;
 }
 .nav-item .nav-link {
   margin: 0;
@@ -395,12 +396,13 @@ in many similar page layouts.*/
   background-color: #ff6600;
   width: 0px;
   transition: 0.5s;
+  border-radius: 1px;
 }
 .nav-item .nav-link:hover {
   color: #ff6600;
 }
 .nav-item .nav-link:hover::after {
-  width: 130px;
+  width: 100px;
 }
 li.nav-item:hover {
   box-shadow: 5px -5px 10px #e6e6e669, -5px -5px 10px #ececec69, 0 5px 10px #fff;
