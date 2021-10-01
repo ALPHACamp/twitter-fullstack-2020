@@ -1,6 +1,9 @@
 <div class="row justify-content-start">
   {{>columnLeft}}
   {{>modalTweet}}
+  {{#each tweets}}
+  {{>modalReply modalId=@index profile=../profile tweet=this}}
+  {{/each}}
   <div class="profile-container">
     <div class="profile-nav">
       <h3 class="profile-nav-header">首頁</h3>
@@ -10,7 +13,7 @@
       <!--start::list of post-->
       {{#each tweets}}
       <div class="post">
-        {{>modalReply modalId=@index profile=../profile tweet=this}}
+        
         <div class="post-card1">
           <div class="avatar profile-avatar">
             <a href="/users/{{this.User.id}}/tweets">

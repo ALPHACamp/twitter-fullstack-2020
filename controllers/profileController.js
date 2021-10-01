@@ -1,5 +1,5 @@
 const db = require("../models");
-const fs = require('fs')
+const fs = require("fs");
 const { Reply, User, Tweet, Like, Followship } = db;
 const imgur = require("imgur-node-api");
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
@@ -14,9 +14,9 @@ const profileController = {
       // 前端判斷
       const isPost = true;
       const isSelf = Number(req.params.id) === Number(user.id);
-      const myProfile = await getMyProfile(user)
-      const topUsers = await getTopUsers(user)
-      const profile = await getProfile(req.params.id)
+      const myProfile = await getMyProfile(user);
+      const topUsers = await getTopUsers(user);
+      const profile = await getProfile(req.params.id);
 
       // get selfTweet
       const rawTweets = await Tweet.findAll({
@@ -41,7 +41,7 @@ const profileController = {
       });
 
       return res.render("profile", {
-        isPost,
+        isPost: true,
         isSelf,
         myProfile,
         users: topUsers,
@@ -62,8 +62,8 @@ const profileController = {
       //前端處理判定
       const isComment = true;
       const isSelf = Number(req.params.id) === Number(user.id);
-      const topUsers = await getTopUsers(user)
-      const profile = await getProfile(req.params.id)
+      const topUsers = await getTopUsers(user);
+      const profile = await getProfile(req.params.id);
       // get followship
       let followship = await Followship.findOne({
         where: {
@@ -109,9 +109,9 @@ const profileController = {
       // 前端判斷
       const isLikedPosts = true;
       const isSelf = Number(req.params.id) === Number(user.id);
-      const myProfile = await getMyProfile(user)
-      const topUsers = await getTopUsers(user)
-      const profile = await getProfile(req.params.id)
+      const myProfile = await getMyProfile(user);
+      const topUsers = await getTopUsers(user);
+      const profile = await getProfile(req.params.id);
 
       // get LIkeDTweet
       const rawLikedTweets = await Like.findAll({
@@ -203,7 +203,7 @@ const profileController = {
       req.flash("success_msg", "您的個人資訊已更新");
       return res.redirect(`/users/${user.id}/tweets`);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 };

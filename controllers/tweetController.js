@@ -9,8 +9,8 @@ const tweetController = {
   getPosts: async (req, res) => {
     const user = getTestUser(req);
     try {
-      const profile = await getMyProfile(user)
-      const topUsers = await getTopUsers(user)
+      const profile = await getMyProfile(user);
+      const topUsers = await getTopUsers(user);
 
       const rawTweets = await Tweet.findAll({
         include: [
@@ -41,7 +41,7 @@ const tweetController = {
         profile: profile
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       res.status(400).json(error);
     }
   },
@@ -49,8 +49,8 @@ const tweetController = {
   getPost: async (req, res) => {
     const user = getTestUser(req);
     try {
-      const profile = await getMyProfile(user)
-      const topUsers = await getTopUsers(user)
+      const profile = await getMyProfile(user);
+      const topUsers = await getTopUsers(user);
 
       let tweet = await Tweet.findByPk(req.params.id, {
         include: [
@@ -70,9 +70,10 @@ const tweetController = {
         if (Number(likedUser.id) === Number(user.id)) tweet.isLiked = true;
       });
       // return res.json({ tweet, ReplyCount, LikedCount, user: TopUsers,})
-      return res.render("post", {
+      return res.render("post2", {
         profile: profile,
         tweet,
+        replies: tweet.Replies,
         ReplyCount,
         LikedCount,
         users: topUsers
@@ -86,11 +87,11 @@ const tweetController = {
     const user = getTestUser(req);
     const { description } = req.body;
     if (!description.trim()) {
-      const tweet_message = "你並未輸入任何文字";
+      req.flash("tweet_message", "你並未輸入任何文字")
       return res.redirect("back");
     }
     if (description.length > 140) {
-      const tweet_message = "字數不可超過140字";
+      req.flash("tweet_message", "字數不可超過140字")
       return res.redirect("back");
     } else {
       return Tweet.create({
@@ -98,18 +99,18 @@ const tweetController = {
         description
       })
         .then((tweet) => {
+          req.flash('tweet_success', '推文發送成功')
           res.redirect("back");
         })
         .catch((error) => res.status(400).json(error));
-      // }
     }
   },
   //test only
   getReply: async (req, res) => {
     const user = getTestUser(req);
     try {
-      const profile = await getMyProfile(user)
-      const topUsers = await getTopUsers(user)
+      const profile = await getMyProfile(user);
+      const topUsers = await getTopUsers(user);
 
       let tweet = await Tweet.findByPk(req.params.id, {
         include: [
@@ -129,9 +130,10 @@ const tweetController = {
         if (Number(likedUser.id) === Number(user.id)) tweet.isLiked = true;
       });
       // return res.json({ tweet, ReplyCount, LikedCount, user: TopUsers,})
-      return res.render("post", {
+      return res.render("post2", {
         profile: profile,
         tweet,
+        replies: tweet.Replies,
         ReplyCount,
         LikedCount,
         users: topUsers
@@ -144,11 +146,11 @@ const tweetController = {
     const user = getTestUser(req);
     const { comment } = req.body;
     if (!comment) {
-      //req.flash('error_message', '你並未輸入任何文字')
+      req.flash('tweet_message', '你並未輸入任何文字')
       return res.redirect("back");
     }
     if (comment.length > 140) {
-      //req.flash('error_message', '字數不可超過140字')
+      req.flash('tweet_message', '字數不可超過140字')
       return res.redirect("back");
     } else {
       return Reply.create({
@@ -157,7 +159,7 @@ const tweetController = {
         comment
       })
         .then((reply) => {
-          // console.log("成功發送評論", reply.toJSON());
+          req.flash('tweet_success', '回覆發送成功')
           res.redirect("back");
         })
         .catch((error) => res.status(400).json(error));

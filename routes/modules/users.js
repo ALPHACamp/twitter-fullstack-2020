@@ -1,7 +1,7 @@
 // This modules is for user and profile routers
 const express = require("express");
 const router = express.Router();
-const userController = require("../../controllers/userController");
+const userController = require("../../controllers/usercontroller");
 const followshipController = require("../../controllers/followshipController");
 const profileController = require("../../controllers/profileController");
 const multer = require("multer");
