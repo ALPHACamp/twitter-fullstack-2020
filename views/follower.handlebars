@@ -113,7 +113,7 @@
                 <ul class="list-group-flush">
                     <li class="list-group-item bg-light" style="font-size: 18px; font-weight: bold; border: none;">
                         Popular</li>
-                    {{#each Top10Users}}
+                      {{#each Top10Users}}
                     <li class="list-group-item bg-light" style="border-left: none;border-right: none">
                         <div class="row justify-content-around align-items-center">
                             <div class="col-2 d-flex justify-content-center align-items-center"
@@ -131,6 +131,8 @@
 
                             <div class="col-4 d-flex justify-content-center">
 
+                                {{#ifCond this.id ../user.id}}
+                                {{else}}
                                 {{#if this.isFollowed}}
                                 <form action="/followships/{{this.id}}?_method=DELETE" method="POST"
                                     style="display: contents;">
@@ -143,6 +145,7 @@
                                         style="font-size: 15px; border-radius: 30px 30px 30px 30px;font-weight: bold;">跟隨</button>
                                 </form>
                                 {{/if}}
+                                {{/ifCond}}
 
                             </div>
                         </div>

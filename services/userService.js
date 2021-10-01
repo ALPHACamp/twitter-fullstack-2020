@@ -6,6 +6,7 @@ const helpers = require('../_helpers')
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
+const Followship =db.Followship
 
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -88,7 +89,20 @@ const userService = {
       })
       callback({ status: 'success', message: 'user profile was successfully updated!' })
     }
-  }
+  },
+
+  // addFollowing: (req, res, callback) => {
+  //   if (Number(helpers.getUser(req).id) === Number(req.body.id)) {
+  //     return callback({ status: 'error', message: '無法追蹤自己' })
+  //   }
+  //   Followship.create({
+  //     followerId: helpers.getUser(req).id,
+  //     followingId: req.body.id
+  //   })
+  //     .then(() => {
+  //       return callback({ status: 'success', message: '成功追蹤' })
+  //     })
+  // },
 }
 
 module.exports = userService
