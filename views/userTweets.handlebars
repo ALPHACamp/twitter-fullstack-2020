@@ -94,18 +94,18 @@
           </div>
 
           <div class='modal-body' style='padding: 0px; margin:0px auto 0px;'>
-            <form action='/api/users/{{user.id}}' method='POST' enctype='multipart/form-date'>
+            <form action='/api/users/{{users.id}}' method='POST' enctype='multipart/form-data'>
             <div>
               <button type='submit' class='save-button' style="cursor: pointer;">儲存</button>
             </div>
-              <!--      cover form -->
+              <!-- cover form -->
               <div class='form-group'>
                 <img
                   id='cover-placeholder'
                   src='{{users.cover}}'
                   alt='cover'
                 />
-                <label class='cover-img-label' for='image'>
+                <label class='cover-img-label' for='cover'>
                   <svg
                     width='24'
                     height='24'
@@ -123,10 +123,9 @@
                 </label>
                 <input
                   class='img-input'
-                  onchange='readURL(this);'
                   type='file'
-                  id='image'
-                  name='image'
+                  id='cover'
+                  name='cover'
                 />
               </div>
               <!--      avatar form -->
@@ -137,7 +136,7 @@
                   alt='avatar'
                 />
                 <div class='avatar-background'></div>
-                <label class='avatar-img-label' for='image2'>
+                <label class='avatar-img-label' for='avatar'>
                   <svg
                     width='24'
                     height='24'
@@ -155,20 +154,19 @@
                 </label>
                 <input
                   class='img-input'
-                  onchange='readAvatar(this);'
                   type='file'
-                  id='image2'
-                  name='image2'
+                  id='avatar'
+                  name='avatar'
                 />
               </div>
 
               <div class='input-form-group'>
                 <label for='name' class='label-title'>名稱</label>
-                <input type='text' class='input-name' id='name' name="name" />
+                <input type='text' class='input-name' id='name' name="name" value="{{users.name}}"/>
               </div>
               <div class='input-form-group'>
-                <label for='intro' class='label-title'>自我介紹</label>
-                <textarea class='input-textarea' id='intro' name="intro"></textarea>
+                <label for='introduction' class='label-title'>自我介紹</label>
+                <textarea class='input-textarea' id='introduction' name="introduction" value="{{users.description}}" ></textarea>
               </div>
             </form>
           </div>

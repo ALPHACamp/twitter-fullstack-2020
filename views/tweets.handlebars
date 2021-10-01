@@ -1,6 +1,8 @@
 
 {{> sideBar}}
+
 <div id='main-content'>
+  {{> message}}
   <div class='header'>
     <div class='headerItem'><span>首頁</span></div>
   </div>
@@ -90,7 +92,6 @@
     </div>
 
   </div>
-  
     {{!-- tweets區 --}}
     {{#each tweets}}
     <div class='tweet-body'>

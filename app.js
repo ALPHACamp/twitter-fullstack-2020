@@ -1,7 +1,6 @@
 const express = require('express')
 const handlebars = require('express-handlebars')
 const helpers = require('./_helpers')
-const db = require('./models')
 const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const session = require('express-session')

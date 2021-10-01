@@ -39,10 +39,11 @@ const tweetController = {
       .catch((err) => console.log(err))
   },
   postTweet: (req, res) => {
-    if (!req.body.description) {
+    const description = req.body.description
+    if (!description.trim()) {
       req.flash('error_messages', '貼文不可空白')
       res.redirect('back')
-    } else if (req.body.description.length > 140) {
+    } else if (description.length > 140) {
       req.flash('error_messages', '貼文不得超過 140 個字')
       res.redirect('back')
     } else {
@@ -107,11 +108,12 @@ const tweetController = {
       .catch((err) => console.log(err))
   },
   postReply: (req, res) => {
-    if (req.body.comment.length > 140) {
+    const comment = req.body.comment
+    if (comment.length > 140) {
       req.flash('error_messages', '回覆不可超過 140 個字')
       return res.redirect('back')
     }
-    if (!req.body.comment) {
+    if (!comment.trim()) {
       req.flash('error_messages', '回覆不可為空白')
       return res.redirect('back')
     }

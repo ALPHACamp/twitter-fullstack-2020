@@ -1,31 +1,18 @@
 const express = require('express')
 const router = express.Router()
-const passport = require('../config/passport')
-const helpers = require('../_helpers')
-
-// const tweetController = require('../controllers/api/tweetController')
+const auth = require('../config/auth')
 const userController = require('../controllers/api/userController')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
-const authenticated = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'admin') {
-      req.flash('error_messages', '管理員請由後台登入')
-    }
-    return next()
-  }
-  res.redirect('/signin')
-}
-
 //user's profile
-router.get('/users/:id', authenticated, userController.getUser)
+router.get('/users/:id', auth.authenticatedGeneral, userController.getUser)
 router.post(
   '/users/:id',
-  authenticated,
+  auth.authenticatedGeneral,
   upload.fields([
     { name: 'avatar', maxCount: 1 },
-    { name: 'cover', maxCount: 1 },
+    { name: 'cover', maxCount: 1 }
   ]),
   userController.putUser
 )

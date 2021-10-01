@@ -5,9 +5,6 @@ module.exports = {
     if (helpers.ensureAuthenticated(req)) {
       if (!helpers.getUser(req).isAdmin) {
         res.locals.isAuthenticated = req.isAuthenticated()
-        console.log('=============================')
-        console.log(res.locals)
-        console.log('=============================')
         return next()
       }
       req.flash('error_messages', '此帳號為管理員帳號，無法登入前台')
@@ -26,5 +23,5 @@ module.exports = {
     }
     req.flash('error_messages', '請登入！')
     res.redirect('/admin/signin')
-  },
+  }
 }
