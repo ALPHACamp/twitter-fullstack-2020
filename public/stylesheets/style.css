@@ -1800,7 +1800,7 @@ svg {
 .save-button {
   all: initial;
   position: absolute;
-  top: 15px;
+  top: -45px;
   right: 15px;
   width: 66px;
   height: 28px;
