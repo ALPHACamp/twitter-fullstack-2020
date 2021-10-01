@@ -6,8 +6,7 @@
         description.value = res.data.description
         avatar.setAttribute("src", res.data.avatar)
         cover.setAttribute("src", res.data.cover)
-      }
-      )
+      })
   }
 </script>
 
@@ -26,13 +25,16 @@
 <span class="avatar m-2">
   <img src="{{anotherUser.avatar}}" alt="" class="rounded-circle userProfileImg">
 </span>
+
 <div class="profileInformation mt-5 pt-2 ms-2">
   <div class="d-flex justify-content-end">
+
     {{#ifCond user.id anotherUser.id}}
     <div class="d-grid gap-2 col-2 round">
-      <button type="button" class="orange btn text-white round" data-bs-toggle="modal" data-bs-dismiss="backdrop"
+      <button type="submit" class="orange btn text-white round userProfileEdit" data-bs-toggle="modal" data-bs-dismiss="backdrop"
         onclick="getUserData()" data-bs-target="#userProfileEdit">編輯個人資料</button>
     </div>
+
     {{#if isFollowed}}
     <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="margin-left: 10px;" class="text-center">
       <button type="submit" class="btn btn-tomato rounded-pill" name="{{user.id}}">正在跟隨</button>
@@ -69,3 +71,30 @@
       位<span class="color-gray">跟隨者</span></a>
   </div>
 </div>
+
+<script>
+  var name = document.querySelector("#name")
+  var description = document.querySelector("#description")
+  var saveButton = document.querySelector("#save-button")
+  saveButton.addEventListener("click", function check(event) {
+    console.log(event)
+    if (name.value.length < 1) {
+      name.classList.add("is-invalid")
+      name.nextElementSibling.innerHTML = "名稱不得為空"
+      event.preventDefault()
+    }
+    if (description.value.length < 1) {
+      description.classList.add("is-invalid")
+      description.nextElementSibling.innerHTML = "名稱不得為空"
+      event.preventDefault()
+    }
+    if (name.value.length > 50) {
+      name.classList.add("is-invalid")
+      event.preventDefault()
+    }
+    if (description.value.length > 160) {
+      email.classList.add("is-invalid")
+      event.preventDefault()
+    }
+  })
+</script>
