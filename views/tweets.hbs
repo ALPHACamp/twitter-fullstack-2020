@@ -6,48 +6,54 @@
     </div>
     <a href="" data-bs-toggle="modal" data-bs-target="#tweetModal">
       <div class="input-block">
-          <img class="rounded-circle" src="{{user.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
-          <span class="input-word">有什麼新鮮事？</span>
+        <img class="rounded-circle" src="{{user.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
+        <span class="input-word">有什麼新鮮事？</span>
         <div class="input-btn">
           <button type="button" class="btn rounded-pill fw-bolder common-button">
-          推文
-           </button>
+            推文
+          </button>
         </div>
       </div>
     </a>
-    {{#each reorganizationTweets}}
-    <div class="tweets-article d-flex">
-      <div class="">
-        <a href="/users/{{this.UserId}}/tweets">
-          <img class="rounded-circle" src="{{this.userAvatar}}" alt="avatar" title="avatar" width="50px" height="50px">
-        </a>
-      </div>
-      <div class="d-flex flex-column tweet-article">
-        <div>
+    <div class="tweets-scroll">
+      {{#each reorganizationTweets}}
+      <div class="tweets-article d-flex">
+        <div class="">
           <a href="/users/{{this.UserId}}/tweets">
-            <span class="name">{{this.userName}}</span>
-            <span class="account">&nbsp;@{{this.userAccount}}</span>
+            <img class="rounded-circle" src="{{this.userAvatar}}" alt="avatar" title="avatar" width="50px"
+              height="50px">
           </a>
-          <span class="time"><b>•</b>&nbsp;{{moment this.createdAt}}</span>
-        </div >
-        <p class="content" style="word-wrap:break-word; word-break:normal; overflow: hidden; text-overflow:  ; display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical; width: 500px"><a href="/tweets/{{this.id}}/replies" class="content">{{this.description}}</a></p>
-        <div class="d-flex">
-          <div class="me-5">
-            <i class="reply-icon far fa-comment" data-bs-toggle="modal" data-bs-target="#tweetReplyModal"
-              data-id="{{this.id}}" data-url="{{baseURL}}">&nbsp;&nbsp;&nbsp;{{this.replyLength}}</i>
+        </div>
+        <div class="d-flex flex-column tweet-article">
+          <div>
+            <a href="/users/{{this.UserId}}/tweets">
+              <span class="name">{{this.userName}}</span>
+              <span class="account">&nbsp;@{{this.userAccount}}</span>
+            </a>
+            <span class="time"><b>•</b>&nbsp;{{moment this.createdAt}}</span>
           </div>
-          <div id="tweet-like">
-            {{#if this.isLiked}}
-            <i class="unlike-icon fas fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
-            {{else}}
-            <i class="like-icon far fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
-            {{/if}}
-            <span class="like-number ms-2">{{this.likeLength}}</span>
+          <p class="content"
+            style="word-wrap:break-word; word-break:normal; overflow: hidden; text-overflow:  ; display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical; width: 500px">
+            <a href="/tweets/{{this.id}}/replies" class="content">{{this.description}}</a></p>
+          <div class="d-flex">
+            <div class="me-5">
+              <i class="reply-icon far fa-comment" data-bs-toggle="modal" data-bs-target="#tweetReplyModal"
+                data-id="{{this.id}}" data-url="{{baseURL}}">&nbsp;&nbsp;&nbsp;{{this.replyLength}}</i>
+            </div>
+            <div id="tweet-like">
+              {{#if this.isLiked}}
+              <i class="unlike-icon fas fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
+              {{else}}
+              <i class="like-icon far fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
+              {{/if}}
+              <span class="like-number ms-2">{{this.likeLength}}</span>
+            </div>
           </div>
         </div>
       </div>
+      {{/each}}
     </div>
-    {{/each}}
+
   </div>
   {{> popular}}
 </div>
@@ -124,4 +130,3 @@
 
   })
 </script>
-

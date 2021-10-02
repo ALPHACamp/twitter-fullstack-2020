@@ -28,8 +28,8 @@
     </div>
 
     {{!-------------------- 追蹤者欄 --------------------}}
-    {{#each followingsUser}}
-
+    <div class="tweets-scroll">
+      {{#each followingsUser}}
     <div class="following d-flex">
       <div class="" style="display:flex;justify-content: center;">
 
@@ -72,6 +72,8 @@
       </div>
     </div>
     {{/each}}
+    </div>
+    
   </div>
 
   {{> popular}}

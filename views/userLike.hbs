@@ -64,7 +64,8 @@
         </li>
       </ul>
     </div>
-    {{#each likedTweets}}
+    <div class="tweets-scroll">
+      {{#each likedTweets}}
     <div class="tweets-article d-flex">
       <div class="">
         <a href="/users/{{this.Tweet.User.id}}/tweets">
@@ -108,7 +109,7 @@
       </div>
     </div>
     {{/each}}
-
+    </div>
   </div>
   {{> popular}}
 </div>
