@@ -149,8 +149,6 @@ const userController = {
       account: like.Tweet.User.account,
       createdAt: like.Tweet.createdAt,
       description: like.Tweet.description,
-      RepliesLength: like.Tweet.Replies.length,
-      LikedUsersLength: like.Tweet.LikedUsers.length,
       isLiked: like.Tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
     }))
 
