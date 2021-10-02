@@ -16,14 +16,16 @@
       </div>
 
       <div class='card-warp'>
-      <a href="/tweets/{{this.id}}/replies">
         <div class='card-header' style="flex-direction:row;">
-          <div class='card-name'>{{this.Tweet.User.name}}</div>
+          <a href="/users/{{../users.id}}/tweets">
+           <div class='card-name'>{{this.Tweet.User.name}}</div> 
+          </a>
           <div class='card-account'>{{this.Tweet.User.account}} • {{moment this.createdAt}}</div>
         </div>
-        <div class='card-content'>
-          {{this.Tweet.description}}
-        </div>
+        <a href="/tweets/{{this.Tweet.id}}/replies">
+          <div class='card-content'>
+            {{this.Tweet.description}}
+          </div>
         </a>
 
         <div class='card-footer'>
