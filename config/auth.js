@@ -23,5 +23,5 @@ module.exports = {
     }
     req.flash('error_messages', '請登入！')
     res.redirect('/admin/signin')
-  },
+  }
 }
