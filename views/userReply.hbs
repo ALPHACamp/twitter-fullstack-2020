@@ -22,16 +22,15 @@
             {{profileUser.introduction}}
           <p class="user-followship">
             <a href="/users/{{profileUser.id}}/followings"><strong>{{profileUser.followingLength}}個</strong>
-            跟隨中</a>&nbsp;&nbsp;&nbsp;&nbsp;
-            <a
-              href="/users/{{profileUser.id}}/followers"><strong>{{profileUser.followerLength}}位</strong>跟隨者</a>
+              跟隨中</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/users/{{profileUser.id}}/followers"><strong>{{profileUser.followerLength}}位</strong>跟隨者</a>
             <p />
         </div>
       </div>
       {{#ifEqual profileUser.id user.id}}
       <div class="edit-profile" id="edit-profile">
-        <button type="button" class="btn btn-outline-warning edit-profile-btn" id="edit-profile-btn" data-id="{{user.id}}"
-          data-url="{{baseURL}}" data-bs-toggle="modal" data-bs-target="#userModal">
+        <button type="button" class="btn btn-outline-warning edit-profile-btn" id="edit-profile-btn"
+          data-id="{{user.id}}" data-url="{{baseURL}}" data-bs-toggle="modal" data-bs-target="#userModal">
           編輯個人資料
         </button>
       </div>
@@ -65,30 +64,33 @@
         </li>
       </ul>
     </div>
-    {{#each replies}}
-    <div class="tweets-article d-flex">
-      <div>
-        <a href="/users/{{this.UserId}}/tweets">
-        <img class="rounded-circle" src="{{../profileUser.avatar}}" alt="avatar" title="avatar"
-          width="50px" height="50px">
-          </a>
-      </div>
-      <div class="d-flex flex-column tweet-article">
+    <div class="tweets-scroll">
+      {{#each replies}}
+      <div class="tweets-article d-flex">
         <div>
           <a href="/users/{{this.UserId}}/tweets">
-          <span class="name">{{../profileUser.name}}</span>
-          <span class="account">&nbsp;@{{../profileUser.account}}</span>
+            <img class="rounded-circle" src="{{../profileUser.avatar}}" alt="avatar" title="avatar" width="50px"
+              height="50px">
           </a>
-          <span class="time"><b>•</b>&nbsp;{{moment this.createdAt}}</span>
         </div>
-        <span class="reply-user">回覆<a href="/users/{{this.Tweet.User.id}}/tweets">&nbsp;@{{this.Tweet.User.account}}</a></span>
-        <p class="content">
-          <a href="/tweets/{{this.Tweet.id}}/replies">{{this.comment}}</a>
+        <div class="d-flex flex-column tweet-article">
+          <div>
+            <a href="/users/{{this.UserId}}/tweets">
+              <span class="name">{{../profileUser.name}}</span>
+              <span class="account">&nbsp;@{{../profileUser.account}}</span>
+            </a>
+            <span class="time"><b>•</b>&nbsp;{{moment this.createdAt}}</span>
+          </div>
+          <span class="reply-user">回覆<a
+              href="/users/{{this.Tweet.User.id}}/tweets">&nbsp;@{{this.Tweet.User.account}}</a></span>
+          <p class="content"
+            style="word-wrap:break-word; word-break:normal; overflow: hidden; text-overflow:  ; display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical; width: 500px">
+            <a href="/tweets/{{this.Tweet.id}}/replies">{{this.comment}}</a>
           </p>
+        </div>
       </div>
+      {{/each}}
     </div>
-    {{/each}}
-
   </div>
   {{> popular}}
 </div>

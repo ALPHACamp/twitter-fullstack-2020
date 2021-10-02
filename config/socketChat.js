@@ -28,6 +28,7 @@ module.exports = {
   connect() {
     io.on('connection', (socket) => {
       console.log('有人進入公開聊天室囉！')
+
       socket.on("userIn", async (userMsg) => {
         try {
           //運用socket儲存值
@@ -59,6 +60,9 @@ module.exports = {
           console.log(err)
         }
       })
+
+
+
       socket.on('disconnect', async () => {
         console.log('socket.currentUserId', socket.currentUserId)
         const offUser = await User.findByPk(socket.currentUserId)
@@ -89,9 +93,7 @@ module.exports = {
         } catch (err) {
           console.log(err)
         }
-        
       });
-
     });
   }
 }
