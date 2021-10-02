@@ -22,9 +22,12 @@
           <button type="submit" class="followed">正在跟隨</button>
         </form>
         {{else}}
-        <form action="/followships" method="POST">
-          <button class="tofollow-button" name="id" value="{{this.id}}">跟隨</button>
-        </form>
+          {{#ifCond UserId this.id}}
+          {{else}}
+          <form action="/followships" method="POST">
+            <button class="tofollow-button" name="id" value="{{this.id}}">跟隨</button>
+          </form>
+          {{/ifCond}}
         {{/if}}
       </div>
       {{/each}}
