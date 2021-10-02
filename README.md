@@ -89,21 +89,16 @@ npm start
 ____________________________________
 admin
 ____________________________________
-   email:  root@example.com
+ account:  root
 password:  12345678
 ____________________________________
 user
 ____________________________________
-   email:  user1@example.com
+ account:  user1
 password:  12345678
-   email:  user2@example.com
+ account:  user2
 password:  12345678
-   email:  user3@example.com
-password:  12345678
-   email:  user4@example.com
-password:  12345678
-   email:  user5@example.com
-password:  12345678
+
 ```
 
 ## 環境建置
