@@ -1,0 +1,132 @@
+<div class="row">
+  {{> homeNavBar}}
+  <div class="tweets col d-flex flex-column mx-4" id="tweets">
+    <div class="p-2">
+      <span class="home-word">首頁</span>
+    </div>
+    <a href="" data-bs-toggle="modal" data-bs-target="#tweetModal">
+      <div class="input-block">
+        <img class="rounded-circle" src="{{user.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
+        <span class="input-word">有什麼新鮮事？</span>
+        <div class="input-btn">
+          <button type="button" class="btn rounded-pill fw-bolder common-button">
+            推文
+          </button>
+        </div>
+      </div>
+    </a>
+    <div class="tweets-scroll">
+      {{#each reorganizationTweets}}
+      <div class="tweets-article d-flex">
+        <div class="">
+          <a href="/users/{{this.UserId}}/tweets">
+            <img class="rounded-circle" src="{{this.userAvatar}}" alt="avatar" title="avatar" width="50px"
+              height="50px">
+          </a>
+        </div>
+        <div class="d-flex flex-column tweet-article">
+          <div>
+            <a href="/users/{{this.UserId}}/tweets">
+              <span class="name">{{this.userName}}</span>
+              <span class="account">&nbsp;@{{this.userAccount}}</span>
+            </a>
+            <span class="time"><b>•</b>&nbsp;{{moment this.createdAt}}</span>
+          </div>
+          <p class="content"
+            style="word-wrap:break-word; word-break:normal; overflow: hidden; text-overflow:  ; display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical; width: 500px">
+            <a href="/tweets/{{this.id}}/replies" class="content">{{this.description}}</a></p>
+          <div class="d-flex">
+            <div class="me-5">
+              <i class="reply-icon far fa-comment" data-bs-toggle="modal" data-bs-target="#tweetReplyModal"
+                data-id="{{this.id}}" data-url="{{baseURL}}">&nbsp;&nbsp;&nbsp;{{this.replyLength}}</i>
+            </div>
+            <div id="tweet-like">
+              {{#if this.isLiked}}
+              <i class="unlike-icon fas fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
+              {{else}}
+              <i class="like-icon far fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
+              {{/if}}
+              <span class="like-number ms-2">{{this.likeLength}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+
+  </div>
+  {{> popular}}
+</div>
+
+<!-- tweet reply Modal -->
+{{> tweetReplyModal}}
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  const tweets = document.querySelector('#tweets')
+  const tweetReplyModalAvatar = document.querySelector('#tweet-reply-modal-avatar')
+  const tweetReplyModalDescription = document.querySelector('#tweet-reply-modal-description')
+  const tweetReplyModalName = document.querySelector('#tweet-reply-modal-name')
+  const tweetReplyModalAccount = document.querySelector('#tweet-reply-modal-account')
+  const replyValidForm = document.querySelector('.reply-valid-form')
+  const tweetLike = document.querySelector('#tweet-like')
+
+  tweets.addEventListener('click', function onIconClicked(event) {
+    const baseURL = event.target.dataset.url
+    const tweetId = event.target.dataset.id
+    if (event.target.matches('.reply-icon')) {
+      axios.get(`${baseURL}/api/tweets/${tweetId}/replies`)
+        .then(tweet => {
+          const tweetModal = tweet.data.tweetModal
+          tweetReplyModalAvatar.innerHTML = `
+              <a href="/users/${tweetModal.UserId}/tweets">
+            <img class="rounded-circle" src="${tweetModal.User.avatar}" alt="avatar" title="avatar" width="50px" height="50px">
+            </a>
+            `
+          tweetReplyModalName.innerHTML = `
+              <a href="/users/${tweetModal.UserId}/tweets">
+              <span class="name">${tweetModal.User.name}</span>
+              <span class="account">&nbsp;@${tweetModal.User.account}</span>
+              </a>
+              <span class="time"><b>•</b>&nbsp;${tweetModal.createdAt}</span>
+            `
+          tweetReplyModalDescription.innerText = tweetModal.description
+          tweetReplyModalAccount.innerHTML = `
+              <span class="reply-to">回覆給</span>
+              <span class="reply-account">&nbsp;${tweetModal.User.account}</span>
+            `
+          // 因先前用innerHTML整個FORM架構被置換，雖然ID CLASS內容沒改變，但監聽器卻失效，故改變想法只更換需要更換的內容嘗試
+          replyValidForm.action = `/tweets/${tweetModal.id}/replies`
+        })
+
+    }
+
+    if (event.target.matches('.like-icon')) {
+      axios.post(`${baseURL}/tweets/${tweetId}/like`)
+        .then(message => {
+          event.target.classList.toggle("like-icon")
+          event.target.classList.toggle("unlike-icon")
+          event.target.classList.toggle("fas")
+          event.target.classList.toggle("far")
+          let likePlus = Number(event.target.nextElementSibling.innerText)
+          likePlus += 1
+          event.target.nextElementSibling.innerText = likePlus
+        })
+    }
+
+    if (event.target.matches('.unlike-icon')) {
+      axios.post(`${baseURL}/tweets/${tweetId}/unlike`)
+        .then(message => {
+          event.target.classList.toggle("like-icon")
+          event.target.classList.toggle("unlike-icon")
+          event.target.classList.toggle("fas")
+          event.target.classList.toggle("far")
+          let likePlus = Number(event.target.nextElementSibling.innerText)
+          likePlus -= 1
+          event.target.nextElementSibling.innerText = likePlus
+        })
+    }
+
+
+  })
+</script>

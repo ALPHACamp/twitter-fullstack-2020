@@ -1,0 +1,169 @@
+<div class="row chat-room">
+  {{> homeNavBar}}
+  <div class="chat-users col d-flex flex-column ms-4">
+    <div class="home-word-box p-2">
+      <span class="home-word" id="online">上線使用者(0)</span>
+    </div>
+    {{!-- 下面靠dom操作 --}}
+  </div>
+  <div class="chats col-6 me-5">
+    <div class="home-word-box p-2">
+      <span class="home-word">公開聊天室</span>
+    </div>
+    <div class="chat-scroll" id="chat-scroll">
+      <div class="chat-messages d-flex flex-column justify-content-end p-2" id="chat-messages">
+        {{!-- 加入動態訊息 --}}
+      </div>
+    </div>
+    <form id="chat-form" action="">
+      <input id="input" autocomplete="off" />
+      <button class="send-btn" type="submit"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M21.13 11.358L3.614 2.10798C3.324 1.95598 2.974 2.00598 2.741 2.23398C2.511 2.45998 2.448 2.81098 2.591 3.10198L6.953 12.022L2.591 20.942C2.448 21.234 2.511 21.585 2.741 21.81C2.886 21.95 3.074 22.022 3.264 22.022C3.384 22.022 3.504 21.994 3.614 21.935L21.131 12.685C21.376 12.555 21.531 12.299 21.531 12.021C21.531 11.743 21.376 11.489 21.131 11.359L21.13 11.358ZM4.948 4.50998L17.752 11.272H8.255L4.948 4.51198V4.50998ZM8.255 12.77H17.753L4.948 19.535L8.255 12.772V12.77Z"
+            fill="#FF6600" />
+        </svg></button>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+
+    const socket = io();
+    const online = document.getElementById("online");
+    const messages = document.querySelector('.chat-messages');
+    const form = document.querySelector('#chat-form');
+    const input = document.getElementById('input');
+    const scrollable = document.querySelector('.chat-scroll')
+    const chatUsers = document.querySelector('.chat-users')
+
+    const userId = `{{ userData.id }}`
+    const userName = `{{ userData.name }}`
+    const userAccount = `{{ userData.account }}`
+    const userAvatar = `{{ userData.avatar }}`
+
+    // 知道connect上後
+    //online offline人數與名單顯示
+    socket.on('connect', function () {
+      let userMsg = {
+        senderId: userId,
+        senderName: userName,
+        senderAvatar: userAvatar,
+        behavior: 'enter-public',
+      }
+      // 通知server此id上線
+      socket.emit('userIn', userMsg )
+    })
+    
+    socket.on('publicRoomUsers', (publicRoomUsers) => {
+      chatUsers.innerHTML = `
+      <div class="home-word-box p-2">
+      <span class="home-word" id="online">上線使用者(${publicRoomUsers.length})</span>
+      </div>
+      `
+      publicRoomUsers.forEach(publicRoomUser => {
+        chatUsers.innerHTML += `
+        <div class="chat-user align-middle">
+        <a href="/users/${publicRoomUser.id}/tweets">
+        <img class="rounded-circle" src="${publicRoomUser.avatar}" alt="avatar" title="avatar" width="50px" height="50px">
+        <span class="name">${publicRoomUser.name}</span>
+        <span class="account">&nbsp;@${publicRoomUser.account}</span>
+        </a>
+        </div>
+        `
+      })
+    })
+    // ========================================
+
+    //發送前端使用者資料到後端
+    socket.emit('login', { userId, userName, userAccount, userAvatar })
+
+
+    // 收來自chat message的廣播
+    socket.on("chat message", addMsgToBox);
+    socket.on(`historyPublicChats-${userId}`, addHistoryMsgToBox);
+
+    function addHistoryMsgToBox(historyPublicChats) {
+      // 如果這則訊息的說話者是我
+      historyPublicChats.forEach(userMsg => {
+        if (userMsg.UserId.toString() === userId) {
+          messages.innerHTML += `<div class="my-chat d-flex justify-content-end mt-2 justify-content-end">
+          <div class="chat-content">
+            <p class="p-3">${userMsg.message}</p>
+          </div>
+        </div>
+        <p class="my-chat-time">${userMsg.createdAt}</p>`
+        } else {
+          // 如果這則訊息的說話者是別人
+           messages.innerHTML += `<div class="other-chat d-inline-flex align-items-end mt-2">
+          <img class="rounded-circle" src="${userMsg.User.avatar}"
+            alt="avatar" title="avatar" width="50px" height="50px">
+          <div class="chat-content ms-3">
+            <p class='p-3'>${userMsg.message}</p>
+          </div>
+        </div>
+        <p class="other-chat-time">${userMsg.createdAt}</p>`
+        }
+      })
+      scrollable.scrollTo(0, scrollable.scrollHeight)
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (input.value) {
+        const userMsg = {
+          senderId: userId,
+          senderName: userName,
+          senderAvatar: userAvatar,
+          senderMsg: input.value,
+          behavior: 'public-chat',
+          createdAt: new Date()
+        }
+        socket.emit('chat message', userMsg);
+        input.value = '';
+      }
+    });
+
+    function addMsgToBox(userMsg) {
+      // 使用者上線公開聊天室提示
+      if(userMsg.behavior === 'enter-public') {
+        messages.innerHTML += `<div class="user-name-status text-center my-2">
+          <div class="name-status d-inline-flex py-1 px-3">
+            <p>${userMsg.senderName}上線</p>
+          </div>
+        </div>`
+      }
+      // 使用者在公開聊天室說話
+      if (userMsg.behavior === 'public-chat') {
+        // 如果這則訊息的說話者是我
+        if (userMsg.senderId.toString() === userId) {
+          messages.innerHTML += `<div class="my-chat d-flex justify-content-end mt-2 justify-content-end">
+          <div class="chat-content">
+            <p class="p-3">${userMsg.senderMsg}</p>
+          </div>
+        </div>
+        <p class="my-chat-time">${userMsg.createdAt}</p>`
+        } else {
+        // 如果這則訊息的說話者是別人
+          messages.innerHTML +=`<div class="other-chat d-inline-flex align-items-end mt-2">
+          <img class="rounded-circle" src="${userMsg.senderAvatar}"
+            alt="avatar" title="avatar" width="50px" height="50px">
+          <div class="chat-content ms-3">
+            <p class='p-3'>${userMsg.senderMsg}</p>
+          </div>
+        </div>
+        <p class="other-chat-time">${userMsg.createdAt}</p>`
+        }
+      }
+      scrollable.scrollTo(0, scrollable.scrollHeight)
+    }
+  });
+
+</script>

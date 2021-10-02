@@ -1,0 +1,99 @@
+<div class="row">
+  {{> homeNavBar}}
+  <div class="tweets col d-flex flex-column mx-4 user-tweets">
+    <div class="p-2 d-flex flex-row">
+      <a href="/tweets">
+        <i class="fas fa-arrow-left fa-lg mx-3 my-3"></i></a>
+      <div class="ms-3">
+        <p class="home-word">{{profileUser.name}}</p>
+        <p class="twi-count"> {{profileUser.tweetLength}}推文</p>
+      </div>
+    </div>
+    <div class="cover-block">
+      <img src="{{profileUser.cover}}" alt="cover" height="100%" width="100%" onerror='this.style.display = "none"'>
+    </div>
+    <div class="user-info-block d-flex justify-content-between">
+      <div class="user-info ms-3">
+        <img class="user-img" src="{{profileUser.avatar}}" width="120" height="120" alt="Card image cap">
+        <div class="user-detail">
+          <h5 class="user-name mb-0">{{profileUser.name}}</h5>
+          <h6 class="user-acc-name mb-0">@{{profileUser.account}}</h6>
+          <p class="user-intro my-1">
+            {{profileUser.introduction}}
+          <p class="user-followship">
+            <a href="/users/{{profileUser.id}}/followings"><strong>{{profileUser.followingLength}}個</strong>
+              跟隨中</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/users/{{profileUser.id}}/followers"><strong>{{profileUser.followerLength}}位</strong>跟隨者</a>
+            <p />
+        </div>
+      </div>
+      {{#ifEqual profileUser.id user.id}}
+      <div class="edit-profile" id="edit-profile">
+        <button type="button" class="btn btn-outline-warning edit-profile-btn" id="edit-profile-btn"
+          data-id="{{user.id}}" data-url="{{baseURL}}" data-bs-toggle="modal" data-bs-target="#userModal">
+          編輯個人資料
+        </button>
+      </div>
+      {{else}}
+      {{#if profileUser.isFollowed }}
+      <div class="follow-feature">
+        <form action="/followships/{{profileUser.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn rounded-pill fw-bolder common-button">正在跟隨</button>
+        </form>
+      </div>
+      {{else}}
+      <div class="follow-feature">
+        <form action="/followships" method="POST">
+          <input type="hidden" name="id" value="{{profileUser.id}}">
+          <button type="submit" class="btn rounded-pill fw-bolder unfollow-button">跟隨</button>
+        </form>
+      </div>
+      {{/if}}
+      {{/ifEqual}}
+    </div>
+    <div class="px-2 pt-3 mt-0 d-flex flex-row user-nav">
+      <ul class="nav nav-tabs">
+        <li class="nav-item current-nav">
+          <a class="nav-link" aria-current="page" href="/users/{{profileUser.id}}/tweets">推文</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/users/{{profileUser.id}}/replies">推文與回覆</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/{{profileUser.id}}/likes">喜歡的內容</a>
+        </li>
+      </ul>
+    </div>
+    <div class="tweets-scroll">
+      {{#each replies}}
+      <div class="tweets-article d-flex">
+        <div>
+          <a href="/users/{{this.UserId}}/tweets">
+            <img class="rounded-circle" src="{{../profileUser.avatar}}" alt="avatar" title="avatar" width="50px"
+              height="50px">
+          </a>
+        </div>
+        <div class="d-flex flex-column tweet-article">
+          <div>
+            <a href="/users/{{this.UserId}}/tweets">
+              <span class="name">{{../profileUser.name}}</span>
+              <span class="account">&nbsp;@{{../profileUser.account}}</span>
+            </a>
+            <span class="time"><b>•</b>&nbsp;{{moment this.createdAt}}</span>
+          </div>
+          <span class="reply-user">回覆<a
+              href="/users/{{this.Tweet.User.id}}/tweets">&nbsp;@{{this.Tweet.User.account}}</a></span>
+          <p class="content"
+            style="word-wrap:break-word; word-break:normal; overflow: hidden; text-overflow:  ; display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical; width: 500px">
+            <a href="/tweets/{{this.Tweet.id}}/replies">{{this.comment}}</a>
+          </p>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{> popular}}
+</div>
+{{> userProfileModal}}
+
+<script src="/javascripts/userModal.js"></script>

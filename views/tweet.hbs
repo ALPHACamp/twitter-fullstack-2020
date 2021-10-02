@@ -1,0 +1,76 @@
+<div class="row">
+  {{> homeNavBar}}
+  <div class="tweets col d-flex flex-column mx-4" id="tweet">
+    <div class="p-2">
+      <a href="javascript:history.back()"><i class="fas fa-arrow-left me-4" style="color: #1C1C1C;"></i></a>
+      <span class="tweet-word">推文</span>
+    </div>
+    <div class="tweet-block d-flex flex-column">
+      <div class="d-flex">
+        <div>
+          <a href="/users/{{tweet.User.id}}/tweets">
+            <img class="rounded-circle" src="{{tweet.User.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
+          </a>
+        </div>
+        <div class="tweet-name-account">
+          <a href="/users/{{tweet.User.id}}/tweets">
+            <p class="tweet-name">&nbsp;&nbsp;{{tweet.User.name}}<br />&nbsp;&nbsp;<span class="tweet-account">@{{tweet.User.account}}</span></p>
+          </a>
+        </div>
+      </div>
+      <div class="tweet-description-block">
+        <p class="tweet-description" style=" word-wrap: break-word; word-break: normal;">{{tweet.description}}</p>
+      </div>
+      <div class="tweet-time">{{tweet.amPm}}&nbsp;{{tweet.hourMinute}}・{{tweet.year}}年{{tweet.month}}月{{tweet.day}}日</div>
+    </div>
+    <div class="tweet-reply-like-count">
+      <span class="tweet-reply-count">{{tweetReplies.length}}&nbsp;</span>
+      <span class="tweet-like-count ms-3" id="tweet-like-count">{{tweet.Likes.length}}&nbsp;</span>
+    </div>
+    <div class="d-flex tweet-icon">
+      <div class="">
+        <i class="reply-icon far fa-comment" data-bs-toggle="modal" data-bs-target="#tweetReplyModal"></i>
+      </div>
+      <div  class="tweet-like" id="tweet-like">
+        {{#if tweet.isLiked}}
+        <i class="unlike-icon fas fa-heart" data-id="{{tweet.id}}" data-url="{{baseURL}}"></i>
+        {{else}}
+        <i class="like-icon far fa-heart" data-id="{{tweet.id}}" data-url="{{baseURL}}"></i>
+        {{/if}}
+      </div>
+    </div>
+    {{#each tweetReplies}}
+    <div class="tweets-article d-flex">
+      <div class="">
+        <a href="/users/{{this.User.id}}/tweets">
+          <img class="rounded-circle" src="{{this.User.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
+        </a>
+      </div>
+      <div class="d-flex flex-column tweet-article">
+        <div>
+          <a href="/users/{{this.User.id}}/tweets">
+            <span class="name">{{this.User.name}}</span>
+            <span class="account">&nbsp;@{{this.User.account}}</span>
+          </a>
+          <span class="time"><b>•</b>&nbsp;{{moment this.createdAt}}</span>
+        </div>
+        <div>
+          <span class="reply-to">回覆</span>
+          <span class="reply-account">
+            <a href="/users/{{../tweet.User.id}}/tweets">&nbsp;@{{../tweet.User.account}}</a>
+            </span>
+        </div>
+        <p class="content">{{this.comment}}</p>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{> popular}}
+</div>
+
+
+<!-- tweet reply Modal -->
+{{> tweetReplyModal}}
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/javascripts/tweetLike.js"></script>
