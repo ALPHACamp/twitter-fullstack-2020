@@ -87,8 +87,7 @@ const userController = {
 
       return res.render('userTweets', {
         users: thisUser,
-        currentUserId: currentUserId,
-        UserId: UserId
+        UserId: currentUserId,
       })
     })
   },
