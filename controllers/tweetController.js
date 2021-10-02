@@ -8,51 +8,14 @@ const Followship = db.Followship
 
 const helpers = require('../_helpers')
 
+const tweetService = require('../services/tweetService')
+
 const tweetController = {
   // 首頁
   getTweets: (req, res) => {
-    return Promise.all([
-      Tweet.findAll({
-        include: [User, Reply,
-          { model: User, as: 'LikedUsers' }
-        ],
-        order: [
-          ['createdAt', 'DESC']
-        ]
-      }),
-      User.findAll({
-        include: [
-          Tweet,
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' }
-        ],
-        where: { role: "user" }
-      }),
-    ]).then(([tweets, users]) => {
-
-      const topUsers = users.map(user => ({
-        ...user.dataValues,
-        followerCount: user.Followers.length,
-        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
-      })).sort((a, b) => b.followerCount - a.followerCount)
-        .slice(0, 10)
-
-      const data = tweets.map(tweet => ({
-        ...tweet.dataValues,
-        id: tweet.id,  //拿到tweet的id
-        description: tweet.description,
-        createdAt: tweet.createdAt,
-        userName: tweet.User.name,
-        userAccount: tweet.User.account,
-        isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id),
-      }))
-
-      return res.render('index', {
-        tweets: data,
-        topUsers,
-        currentUser: helpers.getUser(req).id
-      })
-    }).catch(error => (console.log(error)))
+    tweetService.getTweets(req, res, data => {
+      return res.render('index', data)
+    })
   },
 
   postTweet: async (req, res) => {
