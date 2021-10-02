@@ -13,8 +13,6 @@ module.exports = {
       role: "admin",
       avatar: 'https://loremflickr.com/320/240/peoplerandom=100',
       cover: 'https://loremflickr.com/320/240/viewrandom=100',
-      followingCount: 0,
-      followerCount: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     }
@@ -29,8 +27,6 @@ module.exports = {
       avatar: `https://loremflickr.com/320/240/people?lock=${i}`,
       cover: `https://loremflickr.com/320/240/view?lock=${i}`,
       description: faker.lorem.text(),
-      followingCount: 0,
-      followerCount: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     }))
