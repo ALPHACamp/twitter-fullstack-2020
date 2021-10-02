@@ -22,10 +22,6 @@ function readAvatar(input) {
   }
 }
 
-let tweets = document.getElementById("#A")
-let A=true;
-
-
 window.setTimeout(function () {
   $('.flash').remove()
 }, 2000)
