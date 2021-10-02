@@ -521,7 +521,11 @@ body {
   fill: #1c1c1c;
 }
 
-#main-content .main-post .modal-header .post-close-button:hover .post-close-icon {
+#main-content
+  .main-post
+  .modal-header
+  .post-close-button:hover
+  .post-close-icon {
   fill: #ff6600;
 }
 
@@ -1076,8 +1080,8 @@ svg {
 
 /* settingPage */
 .setting-main-content {
-  width:74.3%;
-  border-left:1px solid #E6ECF0;
+  width: 74.3%;
+  border-left: 1px solid #e6ecf0;
   display: flex;
   flex-direction: column;
 }
@@ -1414,7 +1418,7 @@ svg {
 
 .message-box {
   margin-bottom: 30px;
-  min-width: 394px;
+  width: 100%;
   min-height: 96px;
   display: inline-block;
   background: #ffffff;
@@ -2012,4 +2016,12 @@ button:focus {
 
 button {
   cursor: pointer;
+}
+
+/* popular-message-box */
+.popular-message-box {
+  z-index: 99;
+  position: sticky;
+  margin: 15px 0px -300px 30px;
+  top: 15px;
 }
