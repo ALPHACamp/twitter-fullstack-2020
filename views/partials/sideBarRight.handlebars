@@ -9,17 +9,22 @@
     <div class='card-wrapper'>
       {{#each recommendedList}}
       <div class='card'>
-        <img
-          class='avatar'
-          src='{{this.avatar}}'
-          alt='avatar'
-          width='50'
-          height='50'
-        />
+        <a href="/users/{{this.id}}/tweets">
+          <img
+            class='avatar'
+            src='{{this.avatar}}'
+            alt='avatar'
+            width='50'
+            height='50'
+          />
+        </a>
         <div class='people'>
-          <span class='name'>{{this.name}}</span>
-          <span class='account'>@{{this.account}}</span>
+          <a href="/users/{{this.id}}/tweets">
+            <p class='name'>{{this.name}}</p>
+            <p class='account'>@{{this.account}}</span>
+          </a>
         </div>
+        
         {{#if this.isFollowed}}
         <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
           <button type="submit" class="followed">正在跟隨</button>
