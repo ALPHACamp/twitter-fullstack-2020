@@ -99,7 +99,7 @@
 
     {{>sideBarRight}}
 
-    <!-- Modal -->
+    <!--reply Modal trigger-->
     <div class='modal fade' id='replyTweet{{tweet.id}}' data-backdrop='static' data-keyboard='false' tabindex='-1'
           aria-labelledby='replyTweet{{tweet.id}}Label' aria-hidden='true'>
       <div class='modal-dialog'>
@@ -118,7 +118,9 @@
           </div>
           <div class='reply-modal-body'>
             <div class='reply-modal-avatar-item'>
+              <div>
               <img class='poster-avatar' src='{{user.avatar}}' alt='avatar' width='50' height='50' />
+              </div>
               <div class='vertical-line'></div>
             </div>
     
@@ -148,10 +150,8 @@
                   </div>
                   <div class='form-group'>
                     <label for='reply-tweets'></label>
-                    <textarea type='text' class='form-control' id='reply-tweets' name='comment' placeholder='推你的回覆'
-                              required></textarea>
+                    <textarea type='text' class='form-control' id='reply-tweets' name='comment' placeholder='推你的回覆' required></textarea>
                   </div>
-    
                 </div>
                 <div class='modal-footer'>
                   <button type='submit' class='post-submit-button'>

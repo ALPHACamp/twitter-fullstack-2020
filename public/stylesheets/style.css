@@ -310,7 +310,7 @@ body {
   fill: #657786;
 }
 
-#main-content .tweet-body .card-tweets .card-footer .icon-reply {
+.icon-reply {
   margin-right: 51px;
   display: flex;
   align-items: center;
@@ -809,11 +809,11 @@ svg {
   all: initial;
   padding: 18px 15px 0px 15px;
   display: flex;
-  height: 100%;
+  min-height: 120px;
 }
 
 .reply-modal-body .reply-modal-avatar-item {
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1016,56 +1016,6 @@ svg {
   line-height: 26px;
   color: #1c1c1c;
 }
-
-/* .setting-main-content .register form {
-  max-width: 540px;
-  display: flex;
-  flex-direction: column;
-}
-
-.setting-main-content .register .form-label-group {
-  position: relative;
-  width: 540px;
-  height: 52px;
-  margin-bottom: 30px;
-}
-
-.setting-main-content .register label {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-bottom: 2px solid #657786;
-  border-radius: 0px 0px 4px 4px;
-}
-
-.setting-main-content .register input {
-  position: absolute;
-  padding-left: 10px;
-  padding-top: 20px;
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: #f5f8fa;
-  border-radius: 4px 4px 0px 0px;
-  box-sizing: border-box;
-}
-
-.setting-main-content .register input::placeholder {
-  word-spacing: 50px;
-  opacity: 0;
-}
-
-.setting-main-content .register span {
-  position: absolute;
-  left: 10px;
-  top: 5px;
-  font-family: Noto Sans TC;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 15px;
-  color: #657786;
-} */
 
 .setting-main-content .register .setting-save-button {
   display: flex;
