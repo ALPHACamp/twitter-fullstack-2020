@@ -142,57 +142,6 @@ span {
   line-height: 33px;
 }
 
-.login form {
-  max-width: 540px;
-  display: flex;
-  flex-direction: column;
-}
-
-.login .signInForm {
-  position: relative;
-  width: 540px;
-  height: 52px;
-  margin-bottom: 30px;
-}
-
-.login label {
-  all: initial;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-bottom: 2px solid #657786;
-  border-radius: 0px 0px 4px 4px;
-}
-
-.login input {
-  position: absolute;
-  padding-left: 10px;
-  padding-top: 20px;
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: #f5f8fa;
-  border-radius: 4px 4px 0px 0px;
-  box-sizing: border-box;
-}
-
-.login input::placeholder {
-  word-spacing: 50px;
-  opacity: 0;
-}
-
-.login span {
-  position: absolute;
-  left: 10px;
-  top: 5px;
-  font-family: Noto Sans TC;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 15px;
-  color: #657786;
-}
-
 .login button {
   height: 46px;
   background: #ff6600;
@@ -1725,6 +1674,7 @@ svg {
 .input-form-group {
   position: relative;
   text-align: center;
+  width: 540px;
   margin: 0px auto 42px;
 }
 
@@ -1741,7 +1691,7 @@ svg {
 }
 
 .input-name {
-  width: 570px;
+  width: 100%;
   height: 54px;
   padding: 24px 0px 0px 15px;
   outline: none;
