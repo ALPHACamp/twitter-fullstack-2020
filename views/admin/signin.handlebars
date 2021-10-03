@@ -42,28 +42,13 @@
     <div class='text-center mb-4'>
       <h1 class='h3 mb-3 font-weight-normal'>後台登入</h1>
     </div>
-    <div class='signInForm'>
-      <label for='inputAccount'></label>
-      <input
-        type='text'
-        name='account'
-        class='form-control'
-        placeholder='Email'
-        required
-        autofocus
-      />
-      <span>帳號</span>
+    <div class='input-form-group'>
+      <label for='inputAccount' class='label-title'>帳號</label>
+      <input type='text' name='account' class='input-name' required autofocus />
     </div>
-    <div class='signInForm'>
-      <label for='inputPassword'></label>
-      <input
-        type='password'
-        name='password'
-        class='form-control'
-        placeholder='Password'
-        required
-      />
-      <span>密碼</span>
+    <div class='input-form-group'>
+      <label for='inputPassword' class='label-title'>密碼</label>
+      <input type='password' name='password' class='input-name' required />
     </div>
     <br />
     <button class='btn btn-lg btn-primary btn-block' type='submit'>登入</button>
