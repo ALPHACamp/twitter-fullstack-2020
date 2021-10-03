@@ -1,5 +1,6 @@
 'use strict'
 const bcrypt = require('bcryptjs')
+const faker = require('faker')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert(
@@ -13,9 +14,13 @@ module.exports = {
           account: 'root',
           createdAt: new Date(),
           updatedAt: new Date(),
-          avatar: `https://loremflickr.com/320/240/boy/?random=${
+          avatar: `https://loremflickr.com/320/240/boy/?lock=${
             Math.random() * 100
           }`,
+          cover: `https://loremflickr.com/600/200/cover/?lock=${
+            Math.random() * 100
+          }`,
+          introduction: faker.lorem.text().substring(0, 160),
         },
         {
           email: 'user1@example.com',
@@ -25,9 +30,13 @@ module.exports = {
           account: 'user1',
           createdAt: new Date(),
           updatedAt: new Date(),
-          avatar: `https://loremflickr.com/320/240/boy/?random=${
+          avatar: `https://loremflickr.com/320/240/boy/?lock=${
             Math.random() * 100
           }`,
+          cover: `https://loremflickr.com/600/200/cover/?lock=${
+            Math.random() * 100
+          }`,
+          introduction: faker.lorem.text().substring(0, 160),
         },
         {
           email: 'user2@example.com',
@@ -37,9 +46,13 @@ module.exports = {
           account: 'user2',
           createdAt: new Date(),
           updatedAt: new Date(),
-          avatar: `https://loremflickr.com/320/240/boy/?random=${
+          avatar: `https://loremflickr.com/320/240/boy/?lock=${
             Math.random() * 100
           }`,
+          cover: `https://loremflickr.com/600/200/cover/?lock=${
+            Math.random() * 100
+          }`,
+          introduction: faker.lorem.text().substring(0, 160),
         },
       ],
       {}
