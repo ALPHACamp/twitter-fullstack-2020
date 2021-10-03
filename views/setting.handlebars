@@ -1,0 +1,38 @@
+
+{{> sideBar}}
+<div class='setting-main-content'>
+  <div class='header'>
+    <div class='headerItem'><span>帳戶設定</span></div>
+  </div>
+  <div class='register'>
+
+    <form class='form-signin' action='/users/setting/{{user.id}}?_method=PUT' method='POST' style='width: 100%;'>
+      <div class='input-form-group'>
+        <label for='inputAccount' class="label-title">帳號</label>
+        <input type='text' id="inputAccount" name='account' class='input-name' placeholder="{{$user.account}}" value="{{user.account}}" required autofocus />
+      </div>
+      <div class='input-form-group'>
+        <label for='name' class="label-title">名稱</label>
+        <input id="name" type='text' name='name' class='input-name' placeholder="{{$user.name}}" value="{{user.name}}" maxlength="50" onfocus="getNameInputLength()" required autofocus />
+        <small id="nameHelp" class="form-text text-muted" style="margin-bottom:-18px;">0/50</small>
+      </div>
+      <div class='input-form-group'>
+        <label for='inputEmail' class="label-title">Email</label>
+        <input type='text' name='email' class='input-name' placeholder="{{$user.email}}" value="{{user.email}}" required autofocus />
+      </div>
+      <div class='input-form-group'>
+        <label for='inputPassword' class="label-title">密碼</label>
+        <input type='password' name='password' class='input-name' required />
+      </div>
+      <div class='input-form-group'>
+        <label for='inputPasswordCheck' class="label-title">密碼確認</label>
+        <input type='password' name='passwordCheck' class='input-name' required />
+      </div>
+      <br />
+      <div class='setting-save-button'>
+        <button type='submit' style="margin-right:6px;">儲存</button>
+      </div>
+
+    </form>
+  </div>
+</div>

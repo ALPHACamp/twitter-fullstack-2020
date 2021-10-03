@@ -1,0 +1,31 @@
+
+{{> sideBar}}
+
+<div id="main-content">
+      <div class="header" style="border:none;">
+        <div class="headerItem"><a href="javascript:history.back()">
+          <svg class="iconBack" width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18.9995 10.9999H6.4135L10.7065 6.70687C11.0965 6.31687 11.0965 5.68388 10.7065 5.29288C10.3165 4.90188 9.6835 4.90288 9.2925 5.29288L3.2925 11.2929C2.9025 11.6829 2.9025 12.3159 3.2925 12.7069L9.2925 18.7069C9.4875 18.9019 9.7425 18.9999 9.9995 18.9999C10.2565 18.9999 10.5115 18.9019 10.7065 18.7069C11.0965 18.3169 11.0965 17.6839 10.7065 17.2929L6.4135 12.9999H18.9995C19.5525 12.9999 19.9995 12.5529 19.9995 11.9999C19.9995 11.4469 19.5525 10.9999 18.9995 10.9999Z" />
+            </svg>
+          </a>
+        </div>
+        <div class="headerItem"><span>{{results.name}}</span><p class="tweet-count">{{results.Tweets.length}} 推文</p></div>
+      </div>
+      <div class="follower-tag list-group">
+        <div class="follower list-group-item active">
+          <span class="follower-word">
+            跟隨者
+          </span>
+        </div>
+        
+        <a class="following list-group-item" href="/users/{{user.id}}/followings">
+          <span class="following-word">
+            正在跟隨
+          </span>
+        </a>
+      </div>
+
+      {{>follower}}
+  </div>
+
+    {{> sideBarRight}}

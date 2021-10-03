@@ -1,6 +1,6 @@
-var chai = require('chai');
-var sinon = require('sinon');
-chai.use(require('sinon-chai'));
+var chai = require('chai')
+var sinon = require('sinon')
+chai.use(require('sinon-chai'))
 
 const { expect } = require('chai')
 const {
@@ -8,15 +8,14 @@ const {
   dataTypes,
   checkModelName,
   checkUniqueIndex,
-  checkPropertyExists
+  checkPropertyExists,
 } = require('sequelize-test-helpers')
 
 const db = require('../../models')
 const ReplyModel = require('../../models/reply')
 
 describe('# Reply Model', () => {
-  
-  before(done => {
+  before((done) => {
     done()
   })
 
@@ -25,8 +24,7 @@ describe('# Reply Model', () => {
   checkModelName(Reply)('Reply')
 
   context('properties', () => {
-    ;[
-    ].forEach(checkPropertyExists(like))
+    ;[].forEach(checkPropertyExists(like))
   })
 
   context('associations', () => {
@@ -48,37 +46,35 @@ describe('# Reply Model', () => {
   })
 
   context('action', () => {
-
     let data = null
 
     it('create', (done) => {
-      db.Reply.create({}).then((reply) => {   
+      db.Reply.create({}).then((reply) => {
         data = reply
         done()
       })
     })
     it('read', (done) => {
-      db.Reply.findByPk(data.id).then((reply) => {  
+      db.Reply.findByPk(data.id).then((reply) => {
         expect(data.id).to.be.equal(reply.id)
-          done()
-        })
+        done()
+      })
     })
     it('update', (done) => {
-      db.Reply.update({}, { where: { id: data.id }}).then(() => {
-        db.Reply.findByPk(data.id).then((reply) => { 
-          expect(data.updatedAt).to.be.not.equal(reply.updatedAt) 
+      db.Reply.update({}, { where: { id: data.id } }).then(() => {
+        db.Reply.findByPk(data.id).then((reply) => {
+          expect(data.updatedAt).to.be.not.equal(reply.updatedAt)
           done()
         })
       })
     })
     it('delete', (done) => {
-      db.Reply.destroy({ where: { id: data.id }}).then(() => {
-        db.Reply.findByPk(data.id).then((reply) => { 
-          expect(reply).to.be.equal(null) 
+      db.Reply.destroy({ where: { id: data.id } }).then(() => {
+        db.Reply.findByPk(data.id).then((reply) => {
+          expect(reply).to.be.equal(null)
           done()
         })
       })
     })
   })
-
 })
