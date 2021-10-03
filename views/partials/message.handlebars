@@ -1,6 +1,6 @@
 {{! message-box }}
 {{#if error_messages}}
-  <div class='message-box flash'>
+  <div class='message-box'>
     <div class='wrap'>
       <div class='content'>
         <span>{{error_messages}}</span>
@@ -33,7 +33,7 @@
 {{/if}}
 
 {{#if success_messages}}
-  <div class='message-box flash'>
+  <div class='message-box'>
     <div class='wrap'>
       <div class='content'>
         <span>{{success_messages}}</span>
@@ -66,7 +66,7 @@
 {{/if}}
 
 {{#if modal_error_messages}}
-<div class="modal_error_messages flash">
+<div class="modal_error_messages">
   {{modal_error_messages}}
 </div>
 {{/if}}
