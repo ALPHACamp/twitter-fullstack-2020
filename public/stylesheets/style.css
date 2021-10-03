@@ -1721,6 +1721,7 @@ svg {
   color: #ff6600;
 }
 
+/* AC輸入欄樣式 */
 .input-form-group {
   position: relative;
   text-align: center;
@@ -2024,4 +2025,8 @@ button {
   position: sticky;
   margin: 15px 0px -300px 30px;
   top: 15px;
+}
+
+small {
+  text-align: right;
 }

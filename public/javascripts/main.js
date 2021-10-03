@@ -25,3 +25,24 @@ function readAvatar(input) {
 window.setTimeout(function () {
   $('.flash').remove()
 }, 2000)
+
+// 抓取name字數
+
+function getNameInputLength() {
+  const input = document.getElementById('name')
+  const log = document.getElementById('nameHelp')
+  input.addEventListener('input', updateValue)
+  function updateValue(e) {
+    log.innerText = `${e.target.value.length}/50`
+  }
+}
+
+// 抓introduction字數
+function getIntroInputLength() {
+  const input = document.getElementById('introduction')
+  const log = document.getElementById('introHelp')
+  input.addEventListener('input', updateValue)
+  function updateValue(e) {
+    log.innerText = `${e.target.value.length}/160`
+  }
+}
