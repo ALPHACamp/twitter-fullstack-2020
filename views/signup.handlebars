@@ -38,67 +38,61 @@
       <h1 class='h3 mb-3 font-weight-normal'>建立你的帳號</h1>
       {{> message}}
     </div>
-    <div class='signupForm'>
-      <label for='inputAccount'>
+    <div class='input-form-group'>
+      <label for='inputAccount' class="label-title">帳號</label>
         <input
+          id="inputAccount"
           type='text'
           name='account'
-          class='form-control'
-          placeholder='帳號'
+          class='input-name'
           required
           autofocus
         />
-        <span>帳號</span>
-      </label>
     </div>
-    <div class='signupForm'>
-      <label for='inputName'></label>
+    <div class='input-form-group'>
+      <label for='name' class="label-title">名稱</label>
       <input
+        id="name"
         type='text'
         name='name'
-        class='form-control'
-        placeholder='名稱'
+        class='input-name'
+        maxlength="50"
+        onfocus="getNameInputLength()"
         required
         autofocus
       />
-      <span>名稱</span>
+      <small id="nameHelp" class="form-text text-muted" style="margin-bottom:-18px;">0/50</small>
     </div>
-    <div class='signupForm'>
-      <label for='inputEmail'></label>
+    <div class='input-form-group'>
+      <label for='inputEmail' class="label-title">Email</label>
       <input
+        id="inputEmail"
         type='text'
         name='email'
-        class='form-control'
-        placeholder='Email'
+        class='input-name'
         required
         autofocus
       />
-      <span>Email</span>
-
     </div>
-    <div class='signupForm'>
-      <label for='password'></label>
+    <div class='input-form-group'>
+      <label for='password' class="label-title">密碼</label>
       <input
+        id="password"
         type='password'
         name='password'
-        class='form-control'
-        placeholder='密碼'
+        class='input-name'
         required
       />
-      <span>密碼</span>
-
     </div>
-    <div class='signupForm'>
-      <label for='checkPassword'></label>
+    <div class='input-form-group'>
+      <label for='checkPassword' class="label-title">密碼確認</label>
       <input
+        id="checkPassword"
         type='password'
         name='checkPassword'
-        class='form-control'
-        placeholder='密碼確認'
+        class='input-name'
         required
       />
-      <span>密碼確認</span>
-
     </div>
     <br />
     <button class='btn btn-lg btn-primary btn-block' type='submit'>註冊</button>
