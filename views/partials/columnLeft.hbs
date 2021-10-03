@@ -1,0 +1,54 @@
+<div class="left_column">
+
+  <a class="logo" href="#">
+    <div class="icon">
+      <img src="https://i.imgur.com/KqqLlPU.png?1" alt="AlphaCamp Logo" />
+    </div>
+  </a>
+  <nav class="nav_items">
+    {{#ifCond isadmin admin }}
+    <div class="navigation">
+      <a class="nav_item" href="/admin/tweets">
+        <i class="fas fa-home icon_index"></i>推文清單
+      </a>
+      <a class="nav_item" href="/admin/users">
+        <i class="far fa-user icon_index"></i>使用者列表
+      </a>
+    </div>
+    {{else}}
+    <div class="navigation">
+      <a class="nav_item" href="/tweets">
+        <i class="fas fa-home icon_index"></i>首頁
+      </a>
+      <a class="nav_item" href="/users/{{profile.id}}/tweets">
+        <i class="far fa-user icon_index"></i>個人資料
+      </a>
+      <a class="nav_item" href="/users/{{profile.id}}/edit">
+        <i class="bi bi-gear icon_index"></i>
+        設定
+      </a>
+      <div class="tweet_item" href="#">
+        <button
+          class="btn_reply btn"
+          id="myInput"
+          data-bs-toggle="modal"
+          data-bs-target="#indexModel"
+        >
+          推文
+        </button>
+      </div>
+    </div>
+    {{/ifCond}}
+    <div class="logout_item">
+      {{#ifCond isadmin admin}}
+      <a class="nav_item" href="/admin/signout">
+        <i class="bi bi-box-arrow-in-left icon_index"></i>登出
+      </a>
+      {{else}}
+      <a class="nav_item" href="/users/signout">
+        <i class="bi bi-box-arrow-in-left icon_index"></i>登出
+      </a>
+      {{/ifCond}}
+    </div>
+  </nav>
+</div>

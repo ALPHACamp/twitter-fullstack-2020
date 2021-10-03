@@ -1,0 +1,30 @@
+<div class="flash-message">
+  {{#if success_messages}}
+  <div class="mx-auto col alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{success_messages}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {{/if}}
+  {{#if error_messages}}
+  <div class="mx-auto col alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>{{error_messages}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {{/if}}
+
+  {{#if errors}}
+  {{#each errors}}
+  <div class="mx-auto col-4 mb-4 alert alert-danger alert-dismissible fade show" role="alert" style="margin: 30px 0 ;">
+    <strong>{{ this.message }}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {{/each}}
+  {{/if}}
+  {{#if tweet_message}}
+  <div class="validate-text">{{tweet_message}}</div>
+  {{/if}}
+  {{#if tweet_success}}
+  <div class="validate-text d-flex justify-content-between">{{tweet_success}}<span style="color: rgb(187, 245, 187);"><i
+        class="fas fa-check-circle mx-3"></i></span></div>
+  {{/if}}
+</div>

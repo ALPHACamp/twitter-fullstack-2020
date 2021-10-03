@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="row justify-content-start">
+
+    {{>columnLeft}}
+    <div class="profile-container fluid">
+      <div class="profile-nav border-bottom-0">
+        <h3 class="profile-nav-header">推文清單</h3>
+      </div>
+
+      <div class="col flex-column">
+        <!--start::推文清單-->
+        {{#each tweet}}
+        <div class="post">
+          <div class="post-card1">
+            <div class="avatar profile-avatar"><img
+                src="{{this.User.avatar}}"
+                alt="avatar-img" /></div>
+          </div>
+          <div class="post-card2">
+            <h5 class="d-inline-block post-title">{{this.User.name}}&nbsp;<span class="post-sub-info">@{{this.User.account}}&#x2027;
+                {{moment this.createdAt}}</span></h5>
+            <div class="admin-comments text-truncate">
+              {{this.description}}
+            </div>
+          </div>
+          <div class="post-card3">
+            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn-close">
+              <i class="bi bi-x-lg"></i>
+            </button>
+            </form>
+          </div>
+        </div>
+        {{/each}}
+          <!--end::推文清單-->
+        </div>
+      </div>
+    </div>
+  </div>

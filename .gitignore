@@ -83,5 +83,14 @@ typings/
 # FuseBox cache
 .fusebox/
 
+# Personal note
+note.md
+
 # DynamoDB Local files
 .dynamodb/
+temp/
+upload/*
+
+# Image for default user avatar and cover
+!upload/noImage-banner.jpg 
+!upload/noImage-head.jpg
