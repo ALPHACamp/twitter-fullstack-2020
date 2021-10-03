@@ -1,0 +1,281 @@
+
+{{> sideBar}}
+
+<div id='main-content'>
+  <div class='header'>
+    <div class='headerItem'>
+      <a href='javascript:history.back()'>
+      <svg
+          class='iconBack'
+          width='23'
+          height='24'
+          viewBox='0 0 23 24'
+          fill='none'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path
+            d='M18.9995 10.9999H6.4135L10.7065 6.70687C11.0965 6.31687 11.0965 5.68388 10.7065 5.29288C10.3165 4.90188 9.6835 4.90288 9.2925 5.29288L3.2925 11.2929C2.9025 11.6829 2.9025 12.3159 3.2925 12.7069L9.2925 18.7069C9.4875 18.9019 9.7425 18.9999 9.9995 18.9999C10.2565 18.9999 10.5115 18.9019 10.7065 18.7069C11.0965 18.3169 11.0965 17.6839 10.7065 17.2929L6.4135 12.9999H18.9995C19.5525 12.9999 19.9995 12.5529 19.9995 11.9999C19.9995 11.4469 19.5525 10.9999 18.9995 10.9999Z'
+          ></path>
+      </svg>
+      </a>
+    </div>
+    <div class='headerItem'><span>{{users.name}}</span>
+      <p class='tweet-count'>{{users.Tweets.length}} 推文</p>
+    </div>
+  </div>
+  <div class='personal-info-wrap'>
+    <img
+      class='cover'
+      src={{user.cover}}
+      alt='cover'
+    />
+    <div class='personal-avatar'>
+      <img
+        src='{{user.avatar}}'
+        alt='avatar'
+        width='140px'
+        height='140px'
+      />
+    </div>
+    <!-- 編輯個人資料 modal trigger  -->
+    <div style='position:absolute; right:15px; top:210px;'>
+      {{#ifCond user.id users.id}}
+      <button
+        type='button'
+        class='button-white'
+        data-toggle='modal'
+        data-target='#editUserModal'
+      >編輯個人資料</button>
+      {{else}}
+        {{#if users.isFollowed}} 
+      <form action="/followships/{{users.id}}?_method=DELETE" method="POST"> 
+      <button class='followed'style="top:0px;  right:0px;">正在跟隨</button>
+      </form> 
+        {{else}}
+      <form action="/followships" method="POST">
+        <button class="tofollow-button" style="top:0px; right:0px;" name="id" value="{{users.id}}">跟隨</button>
+      </form> 
+        {{/if}}
+      {{/ifCond}}
+    </div>
+    {{!-- 編輯個人資料 modal --}}
+    <div
+      class='modal fade'
+      id='editUserModal'
+      tabindex='-1'
+      aria-labelledby='editUserModal'
+      aria-hidden='true'
+    >
+      <div class='modal-dialog'>
+        <div
+          class='modal-content'
+          style='width: 600px; border-radius: 14px; padding:1px 1px 30px 1px;'
+        >
+          <div
+            class='modal-header'
+            style='align-items:center; justify-content: flex-start; padding: 15px;'
+          >
+            <div class='icon-close' data-dismiss='modal' aria-label='Close' style="cursor: pointer;">
+              <svg
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  d='M13.4141 11.9999L19.2071 6.20687C19.5971 5.81687 19.5971 5.18388 19.2071 4.79288C18.8171 4.40188 18.1841 4.40288 17.7931 4.79288L12.0001 10.5859L6.20712 4.79288C5.81712 4.40288 5.18412 4.40288 4.79312 4.79288C4.40212 5.18288 4.40312 5.81587 4.79312 6.20687L10.5861 11.9999L4.79312 17.7929C4.40312 18.1829 4.40312 18.8159 4.79312 19.2069C4.98812 19.4019 5.24312 19.4999 5.50012 19.4999C5.75712 19.4999 6.01212 19.4019 6.20712 19.2069L12.0001 13.4139L17.7931 19.2069C17.9881 19.4019 18.2431 19.4999 18.5001 19.4999C18.7571 19.4999 19.0121 19.4019 19.2071 19.2069C19.5971 18.8169 19.5971 18.1839 19.2071 17.7929L13.4141 11.9999Z'
+                ></path>
+              </svg>
+            </div>
+            <div class='personal-info-title' id='exampleModalLabel'>
+              編輯個人資料
+            </div>
+          </div>
+
+          <div class='modal-body' style='padding: 0px; margin:0px auto 0px;'>
+            <form action='/api/users/{{user.id}}' method='POST' enctype='multipart/form-date'>
+            <div>
+              <button type='submit' class='save-button' style="cursor: pointer;">儲存</button>
+            </div>
+              <!--      cover form -->
+              <div class='form-group'>
+                <img
+                  id='cover-placeholder'
+                  src='{{users.cover}}'
+                  alt='cover'
+                />
+                <label class='cover-img-label' for='image'>
+                  <svg
+                    width='24'
+                    height='24'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path
+                      d='M19.708 22H4.292C3.028 22 2 20.972 2 19.708V7.375C2 6.11 3.028 5.083 4.292 5.083H6.438C7.633 3.17 9.722 2 12 2C14.277 2 16.367 3.17 17.562 5.083H19.708C20.972 5.083 22 6.11 22 7.375V19.708C22 20.972 20.972 22 19.708 22ZM4.292 6.583C3.855 6.583 3.5 6.938 3.5 7.375V19.708C3.5 20.145 3.855 20.5 4.292 20.5H19.708C20.145 20.5 20.5 20.145 20.5 19.708V7.375C20.5 6.938 20.145 6.583 19.708 6.583H17.258C16.941 6.633 16.626 6.488 16.476 6.201C15.596 4.536 13.882 3.501 12 3.501C10.117 3.501 8.402 4.536 7.524 6.203C7.364 6.505 7.022 6.663 6.691 6.583H4.293H4.292Z'
+                    ></path>
+                    <path
+                      d='M11.9999 8.16699C9.31989 8.16699 7.13989 10.347 7.13989 13.027C7.13989 15.707 9.31989 17.887 11.9999 17.887C14.6799 17.887 16.8599 15.707 16.8599 13.027C16.8599 10.347 14.6799 8.16699 11.9999 8.16699ZM13.9999 13.75H12.7499V15C12.7499 15.414 12.4139 15.75 11.9999 15.75C11.5859 15.75 11.2499 15.414 11.2499 15V13.75H9.99989C9.58589 13.75 9.24989 13.414 9.24989 13C9.24989 12.586 9.58589 12.25 9.99989 12.25H11.2499V11C11.2499 10.586 11.5859 10.25 11.9999 10.25C12.4139 10.25 12.7499 10.586 12.7499 11V12.25H13.9999C14.4139 12.25 14.7499 12.586 14.7499 13C14.7499 13.414 14.4139 13.75 13.9999 13.75Z'
+                    ></path>
+                  </svg>
+                </label>
+                <input
+                  class='img-input'
+                  onchange='readURL(this);'
+                  type='file'
+                  id='image'
+                  name='image'
+                />
+              </div>
+              <!--      avatar form -->
+              <div class='form-group'>
+                <img
+                  id='avatar-placeholder'
+                  src='{{users.avatar}}'
+                  alt='avatar'
+                />
+                <div class='avatar-background'></div>
+                <label class='avatar-img-label' for='image2'>
+                  <svg
+                    width='24'
+                    height='24'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path
+                      d='M19.708 22H4.292C3.028 22 2 20.972 2 19.708V7.375C2 6.11 3.028 5.083 4.292 5.083H6.438C7.633 3.17 9.722 2 12 2C14.277 2 16.367 3.17 17.562 5.083H19.708C20.972 5.083 22 6.11 22 7.375V19.708C22 20.972 20.972 22 19.708 22ZM4.292 6.583C3.855 6.583 3.5 6.938 3.5 7.375V19.708C3.5 20.145 3.855 20.5 4.292 20.5H19.708C20.145 20.5 20.5 20.145 20.5 19.708V7.375C20.5 6.938 20.145 6.583 19.708 6.583H17.258C16.941 6.633 16.626 6.488 16.476 6.201C15.596 4.536 13.882 3.501 12 3.501C10.117 3.501 8.402 4.536 7.524 6.203C7.364 6.505 7.022 6.663 6.691 6.583H4.293H4.292Z'
+                    ></path>
+                    <path
+                      d='M11.9999 8.16699C9.31989 8.16699 7.13989 10.347 7.13989 13.027C7.13989 15.707 9.31989 17.887 11.9999 17.887C14.6799 17.887 16.8599 15.707 16.8599 13.027C16.8599 10.347 14.6799 8.16699 11.9999 8.16699ZM13.9999 13.75H12.7499V15C12.7499 15.414 12.4139 15.75 11.9999 15.75C11.5859 15.75 11.2499 15.414 11.2499 15V13.75H9.99989C9.58589 13.75 9.24989 13.414 9.24989 13C9.24989 12.586 9.58589 12.25 9.99989 12.25H11.2499V11C11.2499 10.586 11.5859 10.25 11.9999 10.25C12.4139 10.25 12.7499 10.586 12.7499 11V12.25H13.9999C14.4139 12.25 14.7499 12.586 14.7499 13C14.7499 13.414 14.4139 13.75 13.9999 13.75Z'
+                    ></path>
+                  </svg>
+                </label>
+                <input
+                  class='img-input'
+                  onchange='readAvatar(this);'
+                  type='file'
+                  id='image2'
+                  name='image2'
+                />
+              </div>
+
+              <div class='input-form-group'>
+                <label for='name' class='label-title'>名稱</label>
+                <input type='text' class='input-name' id='name' name="name" />
+              </div>
+              <div class='input-form-group'>
+                <label for='intro' class='label-title'>自我介紹</label>
+                <textarea class='input-textarea' id='intro' name="intro"></textarea>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--編輯個人資料 modal end -->
+
+    <div class='personal-info'>
+      <div class='personal-name'>
+        <span>{{users.name}}</span>
+        <span
+          style='color:#657786; font-weight:500; font-size:15px;'
+        >@{{users.account}}</span>
+      </div>
+      <div class='personal-descript'>
+        {{users.introduction}}
+      </div>
+      <div class='follower-nav'>       
+        <div class='following-count' style='margin-right:20px;'>
+          <a href="/users/{{users.id}}/followers">
+            <span style='cursor:pointer;'>{{users.Followings.length}} 個</span>
+            <span style='color: #657786; cursor:pointer;'>跟隨中</span>
+          </a>
+        </div>
+        <div class='follower-count'>
+          <a href="/users/{{users.id}}/followings">
+            <span style='cursor:pointer;'>{{users.Followers.length}} 位</span>
+            <span style='color: #657786; cursor:pointer;'>跟隨者</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="list-group">
+      <a class="list-group-item" href="/users/{{users.id}}/tweets">推文</a>
+      <a class="list-group-item" href="/users/{{users.id}}/replies">推文與回覆</a>
+      <a class="list-group-item active" href="/users/{{users.id}}/likes">喜歡的內容 </a>
+    </div>
+      <div>{{>likes}}</div> 
+</div>
+
+{{> sideBarRight}}
+
+<!-- 左側推文 Modal -->
+  <div
+    class='modal fade'
+    id='staticBackdrop'
+    data-backdrop='static'
+    data-keyboard='false'
+    tabindex='-1'
+    aria-labelledby='staticBackdropLabel'
+    aria-hidden='true'
+  >
+    <div class='modal-dialog'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <div
+            type='button'
+            class='post-close-button'
+            data-dismiss='modal'
+            aria-label='Close'
+          >
+            <span>
+              <svg
+                class='post-close-icon'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  d='M13.4139 11.9999L19.2069 6.20687C19.5969 5.81687 19.5969 5.18388 19.2069 4.79288C18.8169 4.40188 18.1839 4.40288 17.7929 4.79288L11.9999 10.5859L6.20687 4.79288C5.81687 4.40288 5.18388 4.40288 4.79288 4.79288C4.40188 5.18288 4.40288 5.81587 4.79288 6.20687L10.5859 11.9999L4.79288 17.7929C4.40288 18.1829 4.40288 18.8159 4.79288 19.2069C4.98788 19.4019 5.24287 19.4999 5.49987 19.4999C5.75687 19.4999 6.01187 19.4019 6.20687 19.2069L11.9999 13.4139L17.7929 19.2069C17.9879 19.4019 18.2429 19.4999 18.4999 19.4999C18.7569 19.4999 19.0119 19.4019 19.2069 19.2069C19.5969 18.8169 19.5969 18.1839 19.2069 17.7929L13.4139 11.9999Z'
+                ></path>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <form action='/tweets' method='POST'>
+          <div class='modal-body' style="margin:15px auto 15px; ">
+            <img
+              src='{{user.avatar}}'
+              alt='avatar'
+              width='50'
+              height='50'
+              style="border-radius:50%;"
+            />
+            <div class='form-group'>
+              <label for=''
+              style="margin:10px 0px 0px 10px; padding-top:10px;"></label>
+              <textarea
+                type='text'
+                class='form-control col-xs-12'
+                id='userInput'
+                name='description'
+                placeholder='有什麼新鮮事?'
+                required
+              ></textarea>
+            </div>
+          </div>
+          <div class='modal-footer'>
+            <button type='submit' class='post-submit-button'><span>推文</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
