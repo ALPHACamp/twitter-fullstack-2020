@@ -36,28 +36,27 @@
   <form class='form-signin' action='/signin' method='POST' style='width: 100%;'>
     <h1>登入 Alphitter</h1>
     {{> message}}
-    <div class='signInForm'>
-      <label for='inputAccount'></label>
+    <div style="width:540px;">
+    <div class='input-form-group'>
+      <label for='inputAccount' class='label-title'>帳號</label>
       <input
         type='text'
         name='account'
-        class='form-control'
-        placeholder='Email'
+        class='input-name'
         required
         autofocus
       />
-      <span>帳號</span>
     </div>
-    <div class='signInForm'>
-      <label for='inputPassword'></label>
+    
+    <div class='input-form-group'>
+      <label for='inputPassword' class='label-title'>密碼</label>
       <input
         type='password'
         name='password'
-        class='form-control'
-        placeholder='Password'
+        class='input-name'
         required
       />
-      <span>密碼</span>
+    </div>
     </div>
     <br />
     <button class='btn btn-lg btn-primary btn-block' type='submit'>登入</button>
