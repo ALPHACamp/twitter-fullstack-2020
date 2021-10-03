@@ -1017,7 +1017,7 @@ svg {
   color: #1c1c1c;
 }
 
-.setting-main-content .register form {
+/* .setting-main-content .register form {
   max-width: 540px;
   display: flex;
   flex-direction: column;
@@ -1065,7 +1065,7 @@ svg {
   font-size: 15px;
   line-height: 15px;
   color: #657786;
-}
+} */
 
 .setting-main-content .register .setting-save-button {
   display: flex;

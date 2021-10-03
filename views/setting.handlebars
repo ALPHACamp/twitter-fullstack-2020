@@ -7,34 +7,26 @@
   <div class='register'>
 
     <form class='form-signin' action='/users/setting/{{user.id}}?_method=PUT' method='POST' style='width: 100%;'>
-      <div class='form-label-group'>
-        <label for='inputAccount'></label>
-        <input type='text' name='account' class='form-control' placeholder="{{$user.account}}" value="{{user.account}}" required autofocus />
-        <span>帳號</span>
+      <div class='input-form-group'>
+        <label for='inputAccount' class="label-title">帳號</label>
+        <input type='text' id="inputAccount" name='account' class='input-name' placeholder="{{$user.account}}" value="{{user.account}}" required autofocus />
       </div>
-      <div class='form-label-group'>
-        <label for='inputName'>
-          <input type='text' name='name' class='form-control' placeholder="{{$user.name}}" value="{{user.name}}"required autofocus />
-          <span>名稱</span>
-        </label>
+      <div class='input-form-group'>
+        <label for='name' class="label-title">名稱</label>
+        <input id="name" type='text' name='name' class='input-name' placeholder="{{$user.name}}" value="{{user.name}}" onfocus="getNameInputLength()" required autofocus />
+        <small id="nameHelp" class="form-text text-muted" style="margin-bottom:-18px;">0/50</small>
       </div>
-      <div class='form-label-group'>
-        <label for='inputEmail'></label>
-        <input type='text' name='email' class='form-control' placeholder="{{$user.email}}" value="{{user.email}}" required autofocus />
-        <span>Email</span>
-
+      <div class='input-form-group'>
+        <label for='inputEmail' class="label-title">Email</label>
+        <input type='text' name='email' class='input-name' placeholder="{{$user.email}}" value="{{user.email}}" required autofocus />
       </div>
-      <div class='form-label-group'>
-        <label for='inputPassword'></label>
-        <input type='password' name='password' class='form-control' placeholder='Password' required />
-        <span>密碼</span>
-
+      <div class='input-form-group'>
+        <label for='inputPassword' class="label-title">密碼</label>
+        <input type='password' name='password' class='input-name' required />
       </div>
-      <div class='form-label-group'>
-        <label for='inputPasswordCheck'></label>
-        <input type='password' name='passwordCheck' class='form-control' placeholder='Password Check' required />
-        <span>密碼確認</span>
-
+      <div class='input-form-group'>
+        <label for='inputPasswordCheck' class="label-title">密碼確認</label>
+        <input type='password' name='passwordCheck' class='input-name' required />
       </div>
       <br />
       <div class='setting-save-button'>
