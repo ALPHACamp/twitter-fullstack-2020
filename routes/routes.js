@@ -54,8 +54,8 @@ router.post('/tweets/:id/replies', authenticated, replyController.postReply)
 
 // User's Profile
 router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
-router.get('/users/:id/replies', authenticated, userController.getUserSelfReply)
-router.get('/users/:id/likes', authenticated, userController.getUserSelfLike)
+router.get('/users/:id/replies', authenticated, userController.getUserReplies)
+router.get('/users/:id/likes', authenticated, userController.getUserLikes)
 router.get('/users/:id/followers', authenticated, userController.getFollowers)
 router.get('/users/:id/followings', authenticated, userController.getFollowings)
 
