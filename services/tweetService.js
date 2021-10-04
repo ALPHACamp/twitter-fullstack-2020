@@ -13,7 +13,8 @@ const tweetService = {
   getTweets: async (req, res, callback) => {
     const tweets = await Tweet.findAll({
       include: [
-        { model: User,
+        {
+          model: User,
           attributes: ['id', 'name', 'avatar', 'account']
         },
         { model: Like },
@@ -21,45 +22,45 @@ const tweetService = {
       ],
       order: [['createdAt', 'DESC'],
       ]
-  })
+    })
 
-  // 在 followship 內新增 count 屬性 
-  // 利用 SQL 原生函式COUNT 以 followship 內的followingId欄位計算數量
-  const users = await Followship.findAll({
-    attributes: [
-      'followingId', [ sequelize.fn('COUNT', sequelize.col('followingId')), 'count']
-    ],
-    include: [
-      { model: User, as: 'FollowingLinks' },
-    ],
-    group: ['followingId'],
-    order: [[sequelize.col('count'), 'DESC']],
-    limit: 10
-  })
-  // name, account : 限制在popular中呈現的字數
+    // 在 followship 內新增 count 屬性 
+    // 利用 SQL 原生函式COUNT 以 followship 內的followingId欄位計算數量
+    const users = await Followship.findAll({
+      attributes: [
+        'followingId', [sequelize.fn('COUNT', sequelize.col('followingId')), 'count']
+      ],
+      include: [
+        { model: User, as: 'FollowingLinks' },
+      ],
+      group: ['followingId'],
+      order: [[sequelize.col('count'), 'DESC']],
+      limit: 10
+    })
+    // name, account : 限制在popular中呈現的字數
 
-  const currentUser = helpers.getUser(req)
-  const topUsers = users.map(user => ({
-    id: user.FollowingLinks.id,
-    name: user.FollowingLinks.name ? (user.FollowingLinks.name.length > 12 ? user.FollowingLinks.name.substring(0, 12) + '...': user.FollowingLinks.name) : 'noName',
-    account: user.FollowingLinks.account ? (user.FollowingLinks.account.length > 12 ? user.FollowingLinks.account.substring(0, 12) + '..' : user.FollowingLinks.account) :'noAccount',
-    avatar: user.FollowingLinks.avatar,
-    followersCount: user.count,
-    isFollowed: currentUser.Followings.map((d) =>d.id).includes(user.FollowingLinks.id),
-    isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
-  }))
+    const currentUser = helpers.getUser(req)
+    const topUsers = users.map(user => ({
+      id: user.FollowingLinks.id,
+      name: user.FollowingLinks.name ? (user.FollowingLinks.name.length > 12 ? user.FollowingLinks.name.substring(0, 12) + '...' : user.FollowingLinks.name) : 'noName',
+      account: user.FollowingLinks.account ? (user.FollowingLinks.account.length > 12 ? user.FollowingLinks.account.substring(0, 12) + '..' : user.FollowingLinks.account) : 'noAccount',
+      avatar: user.FollowingLinks.avatar,
+      followerCount: user.count,
+      isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
+      isSelf: Boolean(user.FollowingLinks.id === currentUser.id)
+    }))
 
-  const tweetsData = await tweets.map(tweet => ({
-    ...tweet.dataValues,
-    User: tweet.User.dataValues,
-    isLiked: tweet.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
-  }))
+    const tweetsData = await tweets.map(tweet => ({
+      ...tweet.dataValues,
+      User: tweet.User.dataValues,
+      isLiked: tweet.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
+    }))
 
-  return callback({
-    tweets: tweetsData,
-    topUsers,
-    currentUser
-  })
+    return callback({
+      tweets: tweetsData,
+      topUsers,
+      currentUser
+    })
   },
 
   postTweet: async (req, res) => {
