@@ -1,6 +1,3 @@
-<!-- Modal -->
-{{>newTweet}}
-
 <div class="row grid">
   {{>leftSidebar}}
 
@@ -11,13 +8,13 @@
 
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link text-secondary active" href="/users/{{anotherUser.id}}/tweets">推文</a>
+        <a class="nav-link text-secondary active" href="/users/{{currentUser.id}}/tweets">推文</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-secondary" href="/users/{{anotherUser.id}}/replies">推文與回覆</a>
+        <a class="nav-link text-secondary" href="/users/{{currentUser.id}}/replies">推文與回覆</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-secondary" href="/users/{{anotherUser.id}}/likes">喜歡的內容</a>
+        <a class="nav-link text-secondary" href="/users/{{currentUser.id}}/likes">喜歡的內容</a>
       </li>
     </ul>
 
@@ -59,7 +56,7 @@
                 </form>
                 {{/if}}
               </span>
-              <span class="likeAmount mt-1">{{this.LikedUsers.length}}</span>
+              <span class="likeAmount mt-1">{{this.Likes.length}}</span>
             </div>
           </div>
         </div>
@@ -73,6 +70,12 @@
 
 </div>
 
-<div class="modal fade" id="userProfileEdit" tabindex="-1" aria-labelledby="editProfileBtn" aria-hidden="true">
+<!-- Modal -->
+<div class="modal fade" id="newTwitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  {{>newTweet}}
+</div>
+
+<div class="modal fade" id="userProfileEdit" tabindex="-1" role="dialog" aria-labelledby="userProfileEdit"
+  aria-hidden="true">
   {{>editUserProfile}}
 </div>
