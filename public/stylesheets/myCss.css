@@ -70,7 +70,7 @@
    width: 100%;
 }
 
-.whathtNew{
+.addTweet{
   border: 0;  
   outline: none;   /*去掉有甚麼新鮮事的外框*/
   width: 400px;
@@ -91,6 +91,38 @@
    /* transform: translate(0,-50px); */
    margin-top: -50px;
    margin-bottom: 50px;
+}
+
+.follow-button {
+  position: relative; 
+  top: 50%;
+  transform: translate(0%,-50%);
+  border-radius: 50px;
+  background-color: #fF6600;
+  color: #ffffff;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 3vh;
+  border:1px #fF6600 solid;
+  padding:0 15px;
+}
+
+.un-follow-button {
+  position: relative; 
+  top: 50%;
+  transform: translate(0%,-50%);
+  border-radius: 50px;
+  background-color: #ffffff;
+  color: #fF6600;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 3vh;
+  border:1px #fF6600 solid;
+  padding:0 15px;
 }
 
 .userCardBody  {

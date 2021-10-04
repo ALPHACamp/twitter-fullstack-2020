@@ -33,7 +33,7 @@
             <a href="" class="avatar m-2">
               <img src="{{noImage user.image}}" alt="" class="rounded-circle userImage">
             </a>
-            <textarea class="whathtNew" id="comment" name="comment" placeholder="推你的回覆" maxlength="140"
+            <textarea class="addTweet" id="comment" name="comment" placeholder="推你的回覆" maxlength="140"
               required></textarea>
             <input type="hidden" name="TweetId" value="{{tweet.id}}" />
             <input type="hidden" name="UserId" value="{{user.id}}" />
@@ -87,7 +87,7 @@
           <div>回覆</div>
         </div>
         <div class="likes d-flex">
-          <div class="likesAmount fw-bolder me-2">{{tweet.LikedUsers.length}}</div>
+          <div class="likesAmount fw-bolder me-2">{{tweet.Likes.length}}</div>
           <div>喜歡次數</div>
         </div>
       </div>
