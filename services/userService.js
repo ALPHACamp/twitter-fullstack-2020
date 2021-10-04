@@ -2,6 +2,7 @@ const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const bcrypt = require('bcryptjs')
+const sequelize = require("sequelize")
 const { Op } = require("sequelize")
 const db = require('../models')
 const User = db.User
@@ -12,55 +13,57 @@ const Followship = db.Followship
 const helpers = require('../_helpers')
 
 const userService = {
-  getUserTweets: (req, res, callback) => {
+  getUserTweets: async (req, res, callback) => {
     const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
-    const currentUser = helpers.getUser(req).id
-    return Promise.all([
-      Tweet.findAll({
-        where: { UserId: req.params.id },
-        include: [User, Reply, { model: User, as: 'LikedUsers' }],
-        order: [['createdAt', 'DESC']]
-      }),
-      Followship.count({
-        where: { followingId: req.params.id }
-      }),
-      Followship.count({
-        where: { followerId: req.params.id }
-      }),
-      User.findByPk(
-        req.params.id
-      ),
-      User.findAll({
-        include: [
-          Tweet,
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' }
-        ],
-        where: { role: "user" }
-      })
-    ]).then(([tweets, followersCount, followingsCount, anotherUser, users]) => {
-      const data = tweets.map(tweet => ({
-        ...tweet.dataValues,
-        isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id),
-      }))
-      const topUsers = users.map(user => ({
-        ...user.dataValues,
-        followerCount: user.Followers.length,
-        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
-      }))
-        .sort((a, b) => b.followerCount - a.followerCount)
-        .slice(0, 10)
-      return callback({
-        tweets: data,
-        anotherUser: anotherUser.toJSON(),
-        followersCount,
-        followingsCount,
-        topUsers,
-        currentUser,
-        BASE_URL
-      })
+
+    const tweets = await Tweet.findAll({
+      where: { UserId: req.params.id },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'name', 'avatar', 'account']
+        },
+        { model: Like },
+        { model: Reply }
+      ],
+      order: [['createdAt', 'DESC'],
+      ]
     })
-      .catch(err => console.log(err))
+
+    const user = await User.findOne({
+      where: { id: req.params.id },
+      include: [
+        { model: Tweet },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    })
+
+    const users = await Followship.findAll({
+      attributes: [
+        'followingId', [sequelize.fn('COUNT', sequelize.col('followingId')), 'count']
+      ],
+      include: [
+        { model: User, as: 'FollowingLinks' },
+      ],
+      group: ['followingId'],
+      order: [[sequelize.col('count'), 'DESC']],
+      limit: 10
+    })
+
+    const currentUser = helpers.getUser(req)
+    const topUsers = users.map(user => ({
+      id: user.FollowingLinks.id,
+      name: user.FollowingLinks.name ? (user.FollowingLinks.name.length > 12 ? user.FollowingLinks.name.substring(0, 12) + '...' : user.FollowingLinks.name) : 'noName',
+      account: user.FollowingLinks.account ? (user.FollowingLinks.account.length > 12 ? user.FollowingLinks.account.substring(0, 12) + '..' : user.FollowingLinks.account) : 'noAccount',
+      avatar: user.FollowingLinks.avatar,
+      followerCount: user.count,
+      isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
+      isSelf: Boolean(user.FollowingLinks.id === currentUser.id)
+    }))
+    console.log(currentUser)
+
+    return callback({ tweets, user, currentUser, topUsers, BASE_URL })
   },
   renderUserProfileEdit: (req, res, callback) => {
     const currentUser = helpers.getUser(req)
