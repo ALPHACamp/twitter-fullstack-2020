@@ -39,7 +39,8 @@ passport.deserializeUser(async (id, cb) => {
       return cb(null, user)
     })
   } catch (error) {
-    res.render('new', {error})
+    // error: res is not defined
+    console.log(error)
   }
 })
 
