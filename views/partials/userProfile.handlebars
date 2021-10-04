@@ -15,86 +15,89 @@
     <i class="fas fa-arrow-left fs-4"></i>
   </a>
   <div>
-    <h4 class="fw-bolder m-0">{{currentUser.name}}</h4>
+    <h4 class="fw-bolder m-0">{{user.name}}</h4>
     <p class="m-0">{{tweets.length}}推文</p>
   </div>
 </div>
 <div class="cover">
-  <img src="{{currentUser.cover}}" alt="" class="userBackgroundImg">
+  <img src="{{user.cover}}" alt="" class="userBackgroundImg">
 </div>
 <span class="avatar m-2">
-  <img src="{{currentUser.avatar}}" alt="" class="rounded-circle userProfileImg">
+  <img src="{{user.avatar}}" alt="" class="rounded-circle userProfileImg">
 </span>
+
 
 <div class="profileInformation mt-5 pt-2 ms-2">
   <div class="d-flex justify-content-end">
-
     {{#ifCond user.id currentUser.id}}
     <div class="d-grid gap-2 col-2 round">
       <button type="submit" class="orange btn text-white round userProfileEdit" data-bs-toggle="modal"
         data-bs-dismiss="backdrop" onclick="getUserData()" data-bs-target="#userProfileEdit">編輯個人資料</button>
+
+      {{else}}
+      {{#if user.isFollowed}}
+      <div class="edit-button-other d-grid gap-2 col-2 round">
+        <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="margin-left: 10px;"
+          class="text-center">
+          <button type="submit" class="btn btn un-follow-button" name="{{user.id}}">正在跟隨</button>
+        </form>
+        {{else}}
+        <div class="edit-button-other d-grid gap-2 col-2 round">
+          <form action="/followships/{{user.id}}" method="POST">
+            <button type="submit" class="btn btn follow-button" name="{{user.id}}"
+              style="margin-left: 10px;">跟隨</button>
+          </form>
+
+
+          {{/if}}
+          {{/ifCond}}
+        </div>
+      </div>
+      <div class="name m-1 fw-bolder mt-2">
+        <h5>{{user.name}}</h5>
+      </div>
+      <div class="account m-1">@{{user.account}}</div>
+      <div class="m-2">
+        <p>{{user.description}}</p>
+      </div>
     </div>
 
-    {{#if isFollowed}}
-    <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="margin-left: 10px;" class="text-center">
-      <button type="submit" class="btn btn-tomato rounded-pill" name="{{user.id}}">正在跟隨</button>
-    </form>
-    {{else}}
-    {{#ifCondNot user.id currentUser.id}}
-    <form action="/followships/{{user.id}}" method="POST">
-      <button type="submit" class="btn btn-outline-tomato rounded-pill" name="{{user.id}}"
-        style="margin-left: 10px;">跟隨</button>
-    </form>
-    {{/ifCondNot}}
-    {{/if}}
-    {{/ifCond}}
-  </div>
-  <div class="name m-1 fw-bolder mt-2">
-    <h5> {{currentUser.name}}</h5>
-  </div>
-  <div class="account m-1">@{{currentUser.account}}</div>
-  <div class="m-2">
-    <p>{{currentUser.description}}</p>
-  </div>
-</div>
-<div class="d-flex">
-</div>
-<div class="d-flex m-3">
-  <div class="replies me-5 d-flex">
-    <a class="repliesAmount fw-bolder me-2" href="/users/{{currentUser.id}}/followings"
-      style="text-decoration: none; color:black">{{currentUser.Followings.length}}
-      個<span class="color-gray">跟隨中</span></a>
-  </div>
-  <div class="likes d-flex">
-    <a class="likesAmount fw-bolder me-2" href="/users/{{currentUser.id}}/followers"
-      style="text-decoration: none; color:black">{{currentUser.Followers.length}}
-      位<span class="color-gray">跟隨者</span></a>
-  </div>
-</div>
+    <div class="d-flex m-3">
+      <div class="replies me-5 d-flex">
+        <a class="repliesAmount fw-bolder me-2" href="/users/{{user.id}}/followings"
+          style="text-decoration: none; color:black">{{user.Followings.length}}
+          個<span class="color-gray">跟隨中</span></a>
+      </div>
+      <div class="likes d-flex">
+        <a class="likesAmount fw-bolder me-2" href="/users/{{user.id}}/followers"
+          style="text-decoration: none; color:black">{{user.Followers.length}}
+          位<span class="color-gray">跟隨者</span></a>
+      </div>
+    </div>
 
-<script>
-  var name = document.querySelector("#name")
-  var description = document.querySelector("#description")
-  var saveButton = document.querySelector("#save-button")
-  saveButton.addEventListener("click", function check(event) {
-    console.log(event)
-    if (name.value.length < 1) {
-      name.classList.add("is-invalid")
-      name.nextElementSibling.innerHTML = "名稱不得為空"
-      event.preventDefault()
-    }
-    if (description.value.length < 1) {
-      description.classList.add("is-invalid")
-      description.nextElementSibling.innerHTML = "名稱不得為空"
-      event.preventDefault()
-    }
-    if (name.value.length > 50) {
-      name.classList.add("is-invalid")
-      event.preventDefault()
-    }
-    if (description.value.length > 160) {
-      email.classList.add("is-invalid")
-      event.preventDefault()
-    }
-  })
-</script>
+    <script>
+      var name = document.querySelector("#name")
+      var description = document.querySelector("#description")
+      var saveButton = document.querySelector("#save-button")
+      saveButton.addEventListener("click", function check(event) {
+        console.log(event)
+        if (name.value.length < 1) {
+          name.classList.add("is-invalid")
+          name.nextElementSibling.innerHTML = "名稱不得為空"
+          event.preventDefault()
+        }
+        if (description.value.length < 1) {
+          description.classList.add("is-invalid")
+          description.nextElementSibling.innerHTML = "名稱不得為空"
+          event.preventDefault()
+        }
+        if (name.value.length > 50) {
+          name.classList.add("is-invalid")
+          event.preventDefault()
+        }
+        if (description.value.length > 160) {
+          email.classList.add("is-invalid")
+          event.preventDefault()
+        }
+      })
+    </script>

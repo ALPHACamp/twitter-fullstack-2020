@@ -14,8 +14,6 @@ const helpers = require('../_helpers')
 
 const userService = {
   getUserTweets: async (req, res, callback) => {
-    const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
-
     const tweets = await Tweet.findAll({
       where: { UserId: req.params.id },
       include: [
@@ -29,6 +27,12 @@ const userService = {
       order: [['createdAt', 'DESC'],
       ]
     })
+
+    const tweetsData = await tweets.map(tweet => ({
+      ...tweet.dataValues,
+      User: tweet.User.dataValues,
+      isLiked: tweet.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
+    }))
 
     const user = await User.findOne({
       where: { id: req.params.id },
@@ -61,9 +65,13 @@ const userService = {
       isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
       isSelf: Boolean(user.FollowingLinks.id === currentUser.id)
     }))
-    console.log(currentUser)
 
-    return callback({ tweets, user, currentUser, topUsers, BASE_URL })
+    return callback({ 
+      tweets: tweetsData,
+      user, 
+      currentUser, 
+      topUsers,
+    })
   },
   renderUserProfileEdit: (req, res, callback) => {
     const currentUser = helpers.getUser(req)
