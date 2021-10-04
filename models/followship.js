@@ -12,6 +12,15 @@ module.exports = (sequelize, DataTypes) => {
   }, {})
   Followship.associate = function (models) {
     // associations can be defined here
+    // self-referential
+    Followship.belongsTo(models.User, { 
+      foreignKey: 'followerId', 
+      as: 'FollowerLinks' 
+    })
+    Followship.belongsTo(models.User, { 
+      foreignKey: 'followingId', 
+      as: 'FollowingLinks' 
+    })
   }
   return Followship
 }

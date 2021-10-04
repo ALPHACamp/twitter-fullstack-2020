@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   Tweet.associate = function (models) {
     // associations can be defined here
     Tweet.belongsTo(models.User)
-    Tweet.hasMany(models.Reply)
+    Tweet.hasMany(models.Reply, { foreignKey: 'TweetId' });
     // 推文藉由使用者的Like產生多對多關聯
     Tweet.hasMany(models.Like)
     Tweet.belongsToMany(models.User, {
