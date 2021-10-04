@@ -333,25 +333,13 @@ const userController = {
   removeFollowing: (req, res) => {
     const followerId = helpers.getUser(req).id
     const followingId = req.params.userId
-    return Followship.findOne({
+    return Followship.destroy({
       where: {
         followerId,
         followingId
       }
-    }).then(followship => {
-      return Promise.all([
-        User.findByPk(followerId)
-          .then(user => {
-            user.decrement('followingCount', { by: 1 })
-          }),
-        User.findByPk(followingId)
-          .then(user => {
-            user.decrement('followerCount', { by: 1 })
-          }),
-        followship.destroy()
-      ]).then((followship) => {
-        return res.redirect('back')
-      })
+    }).then(() => {
+      return res.redirect('back')
     })
   },
 

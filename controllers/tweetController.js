@@ -46,7 +46,10 @@ const tweetController = {
         order: [['Replies', 'createdAt', 'DESC']]
       }).then(tweet => {
         const isLiked = tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
-        return res.render('tweet', { tweet: tweet.toJSON(), isLiked })
+        return res.render('tweet', { 
+          tweet: tweet.toJSON(), 
+          isLiked 
+        })
       })
     ])
   },
