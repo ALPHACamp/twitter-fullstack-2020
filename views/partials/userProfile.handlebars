@@ -15,24 +15,24 @@
     <i class="fas fa-arrow-left fs-4"></i>
   </a>
   <div>
-    <h4 class="fw-bolder m-0">{{anotherUser.name}}</h4>
+    <h4 class="fw-bolder m-0">{{currentUser.name}}</h4>
     <p class="m-0">{{tweets.length}}推文</p>
   </div>
 </div>
 <div class="cover">
-  <img src="{{anotherUser.cover}}" alt="" class="userBackgroundImg">
+  <img src="{{currentUser.cover}}" alt="" class="userBackgroundImg">
 </div>
 <span class="avatar m-2">
-  <img src="{{anotherUser.avatar}}" alt="" class="rounded-circle userProfileImg">
+  <img src="{{currentUser.avatar}}" alt="" class="rounded-circle userProfileImg">
 </span>
 
 <div class="profileInformation mt-5 pt-2 ms-2">
   <div class="d-flex justify-content-end">
 
-    {{#ifCond user.id anotherUser.id}}
+    {{#ifCond user.id currentUser.id}}
     <div class="d-grid gap-2 col-2 round">
-      <button type="submit" class="orange btn text-white round userProfileEdit" data-bs-toggle="modal" data-bs-dismiss="backdrop"
-        onclick="getUserData()" data-bs-target="#userProfileEdit">編輯個人資料</button>
+      <button type="submit" class="orange btn text-white round userProfileEdit" data-bs-toggle="modal"
+        data-bs-dismiss="backdrop" onclick="getUserData()" data-bs-target="#userProfileEdit">編輯個人資料</button>
     </div>
 
     {{#if isFollowed}}
@@ -40,7 +40,7 @@
       <button type="submit" class="btn btn-tomato rounded-pill" name="{{user.id}}">正在跟隨</button>
     </form>
     {{else}}
-    {{#ifCondNot user.id anotherUser.id}}
+    {{#ifCondNot user.id currentUser.id}}
     <form action="/followships/{{user.id}}" method="POST">
       <button type="submit" class="btn btn-outline-tomato rounded-pill" name="{{user.id}}"
         style="margin-left: 10px;">跟隨</button>
@@ -50,24 +50,24 @@
     {{/ifCond}}
   </div>
   <div class="name m-1 fw-bolder mt-2">
-    <h5> {{anotherUser.name}}</h5>
+    <h5> {{currentUser.name}}</h5>
   </div>
-  <div class="account m-1">@{{anotherUser.account}}</div>
+  <div class="account m-1">@{{currentUser.account}}</div>
   <div class="m-2">
-    <p>{{anotherUser.description}}</p>
+    <p>{{currentUser.description}}</p>
   </div>
 </div>
 <div class="d-flex">
 </div>
 <div class="d-flex m-3">
   <div class="replies me-5 d-flex">
-    <a class="repliesAmount fw-bolder me-2" href="/users/{{anotherUser.id}}/followings"
-      style="text-decoration: none; color:black">{{anotherUser.followingCount}}
+    <a class="repliesAmount fw-bolder me-2" href="/users/{{currentUser.id}}/followings"
+      style="text-decoration: none; color:black">{{currentUser.Followings.length}}
       個<span class="color-gray">跟隨中</span></a>
   </div>
   <div class="likes d-flex">
-    <a class="likesAmount fw-bolder me-2" href="/users/{{anotherUser.id}}/followers"
-      style="text-decoration: none; color:black">{{anotherUser.followerCount}}
+    <a class="likesAmount fw-bolder me-2" href="/users/{{currentUser.id}}/followers"
+      style="text-decoration: none; color:black">{{currentUser.Followers.length}}
       位<span class="color-gray">跟隨者</span></a>
   </div>
 </div>

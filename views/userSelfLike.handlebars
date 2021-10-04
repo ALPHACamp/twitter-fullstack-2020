@@ -8,6 +8,7 @@
     {{>message}}
 
     {{>userProfile}}
+    
     <ul class="nav nav-tabs">
       <li class="nav-item">
         <a class="nav-link text-secondary" href="/users/{{anotherUser.id}}/tweets">推文</a>
@@ -58,7 +59,7 @@
               </button>
             </form>
             {{/if}}
-            <span class="likeAmount">{{this.LikedUsersLength}}</span>
+            <span class="likeAmount">{{this.Likes.length}}</span>
           </a>
         </div>
       </div>
@@ -68,3 +69,15 @@
   </div>
 
   {{>popular}}
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="newTwitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  {{>newTweet}}
+</div>
+
+<div class="modal fade" id="userProfileEdit" tabindex="-1" role="dialog" aria-labelledby="userProfileEdit"
+  aria-hidden="true">
+  {{>editUserProfile}}
+</div>

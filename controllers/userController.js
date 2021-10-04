@@ -70,7 +70,7 @@ const userController = {
 
   getUserTweets: (req, res) => {
     userService.getUserTweets(req, res, data => {
-      return res.render('userSelf', data)
+      return res.render('userTweets', data)
     })
       .catch(err => console.log(err))
   },
@@ -98,7 +98,7 @@ const userController = {
       order: [['createdAt', 'DESC']]
     })
 
-    const anotherUser = await User.findByPk(req.params.id)
+    const currentUser = await User.findByPk(req.params.id)
 
     const topUsers = await users.map(user => ({
       ...user.dataValues,
@@ -108,14 +108,14 @@ const userController = {
       .sort((a, b) => b.followerCount - a.followerCount)
       .slice(0, 10)
 
-    const followersCount = await Followship.count({
+    const followerCount = await Followship.count({
       where: { followingId: req.params.id }
     })
     const followingsCount = await Followship.count({
       where: { followerId: req.params.id }
     })
 
-    return res.render('userSelfReply', { users, replies, tweets, anotherUser, followersCount, followingsCount, topUsers })
+    return res.render('userSelfReply', { users, replies, tweets, currentUser, followerCount, followingsCount, topUsers })
   },
 
   getUserSelfLike: async (req, res) => {
@@ -139,7 +139,7 @@ const userController = {
       include: [User, Reply],
       order: [['createdAt', 'DESC']]
     })
-    const anotherUser = await User.findByPk(
+    const currentUser = await User.findByPk(
       req.params.id
     )
     const data = likes.map(like => ({
@@ -161,14 +161,14 @@ const userController = {
         .sort((a, b) => b.followerCount - a.followerCount)
         .slice(0, 10)
 
-    const followersCount = await Followship.count({
+    const followerCount = await Followship.count({
       where: { followingId: req.params.id }
     })
     const followingsCount = await Followship.count({
       where: { followerId: req.params.id }
     })
 
-    return res.render('userSelfLike', { BASE_URL, data, tweets, anotherUser, followersCount, followingsCount, topUsers })
+    return res.render('userSelfLike', { BASE_URL, data, tweets, currentUser, followerCount, followingsCount, topUsers })
   },
 
   getUserSetting: (req, res) => {
@@ -369,7 +369,7 @@ const userController = {
       Tweet.count({
         where: { Userid: req.params.id }
       })
-    ]).then(([followers, userData, anotherUser, tweetCount]) => {
+    ]).then(([followers, userData, currentUser, tweetCount]) => {
 
       const users = userData.map(user => ({
         ...user.dataValues,
@@ -382,7 +382,7 @@ const userController = {
       }))
 
       const topUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
-      res.render('userFollowship', { data, topUsers, currentUser: helpers.getUser(req).id, anotherUser, tweetCount, renderType: "follower" })
+      res.render('userFollowship', { data, topUsers, currentUser: helpers.getUser(req).id, currentUser, tweetCount, renderType: "follower" })
     })
   },
 
@@ -412,7 +412,7 @@ const userController = {
       Tweet.count({
         where: { Userid: req.params.id }
       })
-    ]).then(([followings, userData, anotherUser, tweetCount]) => {
+    ]).then(([followings, userData, currentUser, tweetCount]) => {
 
       const users = userData.map(user => ({
         ...user.dataValues,
@@ -425,7 +425,7 @@ const userController = {
       }))
 
       const topUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
-      res.render('userFollowship', { data, topUsers, currentUser: helpers.getUser(req).id, anotherUser, tweetCount, renderType: "following" })
+      res.render('userFollowship', { data, topUsers, currentUser: helpers.getUser(req).id, currentUser, tweetCount, renderType: "following" })
     })
   }
 }
