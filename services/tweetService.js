@@ -62,7 +62,7 @@ const tweetService = {
       currentUser
     })
   },
-
+    
   postTweet: async (req, res) => {
     let { description } = req.body
     if (!description.trim()) {
