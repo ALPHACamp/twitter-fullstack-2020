@@ -61,7 +61,7 @@ const tweetService = {
       topUsers,
       currentUser
     })
-  },
+  }, // another testing
     
   postTweet: async (req, res) => {
     let { description } = req.body
