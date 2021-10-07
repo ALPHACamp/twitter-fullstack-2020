@@ -1,0 +1,73 @@
+const db = require('../models')
+const Op = db.Sequelize.Op
+const User = db.User
+const emailVerify = require('../public/javascripts/emailValidate')
+
+const loginController = {
+  signupPage: (req, res) => {
+    return res.status(200).render('signupForm', { layout: 'form' })
+  },
+
+  signupAccountCheck: async (req, res) => {
+    const userAccount = req.params.account
+    const user = await User.findOne({ raw: true, where: { account: userAccount } })
+    if (user) {
+      return res.json('false')
+    } else {
+      return res.json('true')
+    }
+  },
+
+  signUp: async (req, res) => {
+    const signupData = req.body
+    let errors = []
+    if (!signupData.account) {
+      errors.push({ msg: '帳號不可為空' })
+    }
+    if (!signupData.name) {
+      errors.push({ msg: '名字不可為空' })
+    }
+    if (!emailVerify(signupData.email)) {
+      errors.push({ msg: '郵件格式不符合' })
+    }
+    if (!(signupData.password === signupData.passwordCheck)) {
+      errors.push({ msg: '兩次密碼輸入不符合' })
+    }
+
+    if (errors.length) {
+      res.render('signupForm', { layout: 'form', errors, signupData })
+    } else {
+      const users = await User.findAll({ raw: true, 
+        where: { [Op.or]: [
+          { account: signupData.account },
+          { email: signupData.email }
+        ] }
+      })
+      const accountRepeatCheck = users.filter(item => item.account === signupData.account)
+      const emailRepeatCheck = users.filter(item => item.email === signupData.email)
+      if (accountRepeatCheck.length) {
+        errors.push({ msg: '此帳號已經有人使用' })
+      }
+      if (emailRepeatCheck.length) {
+        errors.push({ msg: '此電子郵箱已經有人使用' })
+      }
+      if (errors.length) {
+        res.render('signupForm', { layout: 'form', errors, signupData })
+      } else {
+        await User.create(signupData)
+        req.flash('success_messages', `Hi, ${signupData.account} 歡迎加入`)
+        res.redirect('/signin')
+      }
+    }
+  },
+
+  signinPage: (req, res) => {
+    return res.status(200).render('signinForm', { layout: 'form' })
+  },
+
+  signIn: (req, res) => {
+    res.redirect('/tweets')
+  }
+}
+
+module.exports = loginController

@@ -1,0 +1,134 @@
+.form {
+  width: 35%;
+  margin-top: 150px;
+  margin: auto;
+}
+
+.form-title {
+  text-align: center;
+}
+
+.form-input {
+  width: 100%;
+  margin: auto;
+  margin-top: 5px;
+  background-color: #dfe1e6;
+}
+
+.form-input p {
+  margin: 3px 0 0 0;
+  padding: 3px;
+  font-size: 12px;
+}
+
+.form-input input {
+  width: 100%;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding: 3px 0 3px 0;
+}
+
+.form-account-notice {
+  font-size: 4px;
+  margin-bottom: 10px;
+  display: none;
+}
+
+.form-email-notice {
+  font-size: 4px;
+  margin-bottom: 10px;
+  display: none;
+}
+
+.form-password-notice {
+  font-size: 4px;
+  margin-bottom: 10px;
+  display: none;
+}
+
+.form-account-notice-valid {
+  font-size: 4px;
+  margin-bottom: 10px;
+  color: green;
+}
+
+.form-account-notice-invalid {
+  font-size: 4px;
+  margin-bottom: 10px;
+  color: red;
+}
+
+.form-email-notice-validated {
+  font-size: 4px;
+  margin-bottom: 10px;
+  color: red;
+}
+
+.form-password-notice-validated {
+  font-size: 4px;
+  margin-bottom: 10px;
+  color: red;
+}
+
+.form-button, .form-login-button {
+  width: 100%;
+  height: 24px;
+  margin-top: 10px;
+  border-radius: 12px;
+  background-color: #ff6600;
+  text-align: center;
+  color: aliceblue;
+  font-weight: bolder;
+  border: none;
+}
+
+.form-buttom {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.form-cancel-link, .form-signup-link, .form-admin-link, .form-login-link {
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.form-admin-link {
+  margin-left: 5px;
+}
+
+.form-signin {
+  margin-top: 15px;
+  display: flex;
+  justify-content: end;
+}
+
+.warning {
+  width: 100%;
+  display: flex !important;
+  align-items: center !important;
+  margin-bottom: 2px !important;
+  padding: 6px !important;
+  height: 16px !important;
+  border: none !important;
+  background-color: rgba(241, 14, 14, 0.2) !important;
+  font-size: 8px !important;
+  color: red !important;
+}
+
+button.btn-close {
+  padding: 4px !important;
+}
+
+.signin-message {
+  width: 100%;
+  display: flex !important;
+  align-items: center !important;
+  margin-bottom: 2px !important;
+  padding: 6px !important;
+  height: 16px !important;
+  border: none !important;
+  background-color: rgba(14, 241, 40, 0.2) !important;
+  font-size: 8px !important;
+  color:green !important;
+}

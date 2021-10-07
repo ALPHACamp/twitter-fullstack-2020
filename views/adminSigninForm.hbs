@@ -1,0 +1,21 @@
+<h3 class="form-title">後台登入</h3>
+{{#if error_messages}}
+<div class="alert alert-success alert-dismissible fade show warning" role="alert">
+  {{error_messages}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{{/if}}
+<form action="/admin/signin" method="POST" class="form-frame">
+  <div class="form-input">
+    <p>帳號</p>
+    <input type="text" class="email-input" name="email" placeholder="請輸入Email" required>
+  </div>
+  <div class="form-input">
+    <p>密碼</p>
+    <input type="password" class="password-input" name="password" placeholder="請輸入密碼" required>
+  </div>
+  <button class="form-button">登入</button>
+  <div class="form-buttom">
+    <a class="form-login-link" href="/signin">前台登入</a>
+  </div>
+</form>

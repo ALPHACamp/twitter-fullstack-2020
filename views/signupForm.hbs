@@ -1,0 +1,36 @@
+<h3 class="form-title">建立你的帳號</h3>
+{{#each errors}}
+<div class="alert alert-warning alert-dismissible fade show warning" role="alert">
+  <strong>Note!</strong> {{this.msg}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{{/each}}
+<form action="/signup" method="POST" class="form-frame">
+  <div class="form-input">
+    <p>帳號</p>
+    <input type="text" name="account" class="account-input" {{#if signupData}} value='{{ signupData.account }}' {{/if}} placeholder="請輸入帳號" required>
+  </div>
+  <span class="form-account-notice"></span>
+  <div class="form-input">
+    <p>名稱</p>
+    <input type="text"  name="name" {{#if signupData}} value='{{ signupData.name }}' {{/if}} placeholder="請輸入名稱" required>
+  </div>
+  <div class="form-input">
+    <p>Email</p>
+    <input type="text" class="email-input" name="email" {{#if signupData}} value='{{ signupData.email }}' {{/if}} placeholder="請輸入Email" required>
+  </div>
+  <span class="form-email-notice">Email格式有誤</span>
+  <div class="form-input">
+    <p>密碼</p>
+    <input type="password" class="password-input" name="password" {{#if signupData}} value='{{ signupData.password }}' {{/if}} placeholder="請輸入密碼" required>
+  </div>
+  <div class="form-input">
+    <p>密碼確認</p>
+    <input type="password" class="passwordCheck-input" name="passwordCheck" {{#if signupData}} value='{{ signupData.passwordCheck }}' {{/if}} placeholder="請輸入密碼確認" required>
+  </div>
+  <span class="form-password-notice">輸入密碼不一致</span>
+  <button class="form-button">註冊</button>
+  <div class="form-buttom">
+    <a class="form-cancel-link" href="/signin">取消</a>
+  </div>
+</form>
