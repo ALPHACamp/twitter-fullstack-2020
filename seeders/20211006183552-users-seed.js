@@ -9,10 +9,10 @@ module.exports = {
       password: bcrypt.hashSync('11', bcrypt.genSaltSync(10), null),
       role: 'admin',
       name: 'root',
-      avatar: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      avatar: `https://loremflickr.com/320/240/paris,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       introduction: faker.lorem.text().slice(0, 100),
       account: faker.lorem.text().slice(0, 5),
-      cover: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      cover: `https://loremflickr.com/320/240/paris,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -20,10 +20,10 @@ module.exports = {
       password: bcrypt.hashSync('11', bcrypt.genSaltSync(10), null),
       role: 'user',
       name: 'user1',
-      avatar: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      avatar: `https://loremflickr.com/320/240/paris,boy/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       introduction: faker.lorem.text().slice(0, 100),
       account: faker.lorem.text().slice(0, 5),
-      cover: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      cover: `https://loremflickr.com/320/240/paris,boy/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -31,10 +31,10 @@ module.exports = {
       password: bcrypt.hashSync('11', bcrypt.genSaltSync(10), null),
       role: 'user',
       name: 'user2',
-      avatar: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      avatar: `https://loremflickr.com/320/240/tokyo,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       introduction: faker.lorem.text().slice(0, 100),
       account: faker.lorem.text().slice(0, 5),
-      cover: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      cover: `https://loremflickr.com/320/240/newyork,boy/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -42,10 +42,10 @@ module.exports = {
       password: bcrypt.hashSync('11', bcrypt.genSaltSync(10), null),
       role: 'user',
       name: 'user3',
-      avatar: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      avatar: `https://loremflickr.com/320/240/paris,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       introduction: faker.lorem.text().slice(0, 100),
       account: faker.lorem.text().slice(0, 5),
-      cover: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      cover: `https://loremflickr.com/320/240/tokyo,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -53,10 +53,10 @@ module.exports = {
       password: bcrypt.hashSync('11', bcrypt.genSaltSync(10), null),
       role: 'user',
       name: 'user4',
-      avatar: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      avatar: `https://loremflickr.com/320/240/tokyo,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       introduction: faker.lorem.text().slice(0, 100),
       account: faker.lorem.text().slice(0, 5),
-      cover: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      cover: `https://loremflickr.com/320/240/tokyo,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -64,10 +64,10 @@ module.exports = {
       password: bcrypt.hashSync('11', bcrypt.genSaltSync(10), null),
       role: 'user',
       name: 'user5',
-      avatar: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      avatar: `https://loremflickr.com/320/240/tokyo,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       introduction: faker.lorem.text().slice(0, 100),
       account: faker.lorem.text().slice(0, 5),
-      cover: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      cover: `https://loremflickr.com/320/240/tokyo,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -75,10 +75,10 @@ module.exports = {
       password: bcrypt.hashSync('11', bcrypt.genSaltSync(10), null),
       role: 'user',
       name: 'user6',
-      avatar: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      avatar: `https://loremflickr.com/320/240/tokyo,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       introduction: faker.lorem.text().slice(0, 100),
       account: faker.lorem.text().slice(0, 5),
-      cover: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      cover: `https://loremflickr.com/320/240/paris,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       createdAt: new Date(),
       updatedAt: new Date()
     }], {})

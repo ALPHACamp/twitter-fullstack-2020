@@ -59,11 +59,11 @@ module.exports = (sequelize, DataTypes) => {
     })
     User.hasMany(models.Followship, {
       foreignKey: 'followerId',
-      as: 'following'
+      as: 'follower'
     })
     User.hasMany(models.Followship, {
       foreignKey: 'followingId',
-      as: 'follower'
+      as: 'following'
     })
     User.hasMany(models.Like, {
       foreignKey: 'UserId',

@@ -1,0 +1,72 @@
+.user-homepage {
+  display: flex;
+  justify-content: space-between;
+}
+
+.central {
+  width: 50%;
+  background-color: lightgrey;
+  padding: 1px;
+}
+
+.central-title {
+  height: 40px;
+  margin: 0 0 1px 0;
+  background-color: white;
+  line-height: 40px;
+  padding-left: 10px;
+}
+
+.central-input {
+  background-color: white;
+  margin-bottom: 10px;
+  padding: 2px;
+}
+
+.central-input button {
+    width: 60px;
+    height: 24px;
+    margin-left: 80%;
+    border: none;
+    border-radius: 12px;
+    background-color: #ff6600;
+    font-weight: bolder;
+    color: aliceblue;
+
+}
+
+.central-input-upper {
+  display: flex;
+}
+
+.central-input-upper a {
+  text-decoration: none;
+  width: 40px;
+}
+
+.tweets-img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+.user-tweet-input {
+  width: 100%;
+  border: none;
+  margin-left: 3px;
+  font-weight: bolder;
+}
+
+/* 修改placeholder font-color */
+::-webkit-input-placeholder {
+  color: lightgrey;
+}
+:-moz-placeholder {
+  color: lightgrey;
+}
+::-moz-placeholder {
+ color: lightgrey;
+}
+:-ms-input-placeholder {
+  color: lightgrey;
+}

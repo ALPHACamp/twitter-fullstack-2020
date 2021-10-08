@@ -1,6 +1,6 @@
 .form {
   width: 35%;
-  margin-top: 150px;
+  margin-top: 100px !important;
   margin: auto;
 }
 
@@ -12,7 +12,7 @@
   width: 100%;
   margin: auto;
   margin-top: 5px;
-  background-color: #dfe1e6;
+  background-color: rgb(245, 248, 250);
 }
 
 .form-input p {
@@ -27,6 +27,7 @@
   border-left: none;
   border-right: none;
   padding: 3px 0 3px 0;
+  background-color: rgba(245, 248, 250, 0);
 }
 
 .form-account-notice {
@@ -131,4 +132,18 @@ button.btn-close {
   background-color: rgba(14, 241, 40, 0.2) !important;
   font-size: 8px !important;
   color:green !important;
+}
+
+/* 修改placeholder font-color */
+::-webkit-input-placeholder {
+  color: lightgrey;
+}
+:-moz-placeholder {
+  color: lightgrey;
+}
+::-moz-placeholder {
+ color: lightgrey;
+}
+:-ms-input-placeholder {
+  color: lightgrey;
 }

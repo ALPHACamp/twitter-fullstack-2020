@@ -1,0 +1,46 @@
+.left-bar {
+  width: 20%;
+  height: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 20px;
+}
+
+.left-bar a {
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: bolder;
+  color: darkgray;
+}
+
+.upper-region {
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.upper-region .links{
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.logout-region {
+  margin-top: 220px;
+}
+
+.left-side-span {
+  margin-left: 10px !important;
+}
+
+.publish-tweet {
+  border: none;
+  border-radius: 12px;
+  font-weight: bolder;
+  color: aliceblue;
+  background-color: #ff6600;
+  height: 24px;
+}

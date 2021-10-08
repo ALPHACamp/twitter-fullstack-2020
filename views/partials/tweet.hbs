@@ -1,0 +1,32 @@
+<div class="tweet">
+  <div class="twitter-avatar">
+    <a href="/users/{{this.UserId}}">
+      <img src="{{this.user.avatar}}" alt="twitter avatar" class="tweets-img">
+    </a>
+  </div>
+  <div class="tweet-content-box">
+    <div class="twitter-info">
+      <span>{{this.user.name}}</span>
+      <span class="twitter-account">{{this.user.account}}</span>
+      <span class="twitter-dot">。</span>
+      <span class="twitter-createdAt">{{moment this.createdAt}}</span>
+    </div>
+    <p class="tweet-content">{{this.description}}</p>
+    <div class="tweet-feedback">
+      <form action="/tweets/{{this.UserId}}/like" method="post">
+        <button type="button" class="goto-comment">
+          <i class="far fa-comment"></i>
+          <span class="reply-sum">{{this.replies}}</span>
+        </button>
+        <button type="submit" class="post-like">
+          {{#if this.likes}}
+          <i class="fas fa-heart like-heart"></i>
+          {{else}}
+          <i class="far fa-heart normal"></i>
+          {{/if}}
+          <span class="like-sum">{{this.likes}}</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
