@@ -1,42 +1,43 @@
 const db = require('../models')
 const Followship = db.Followship
 const Op = db.Sequelize.Op
+const helpers = require('../_helpers')
 
 const followshipsController = {
   follow: async (req, res) => {
+    const followerId = Number(helpers.getUser(req).id)
+    const followingId = Number(req.body.id)
     try {
-      if (req.user.id !== req.body.id) {
-        await Followship.findOrCreate({
-          where: { followerId: req.user.id, followingId: req.body.id }
+      if (followerId !== followingId) {
+        await Followship.create({
+            followerId,
+            followingId,
+            createdAt: new Date(),
+            updatedAt: new Date()
         })
-
-        // 針對即時訊息做處理
-        // const unread = {}
-        // unread.type = 'twitter-follow'
-        // unread.user = req.user
-        // const unreadContent = JSON.stringify(unread)
-        // await Unread.create({
-        //   sendId: req.user.id,
-        //   receiveId: req.body.id,
-        //   unread: unreadContent
-        // })
-
         return res.status(200).redirect('back')
       } else {
-        return res.status(404).json('operation not allowed')
+        req.flash('error_messages', '不可跟隨自己')
+        return res.redirect('back')
       }
     }
     catch (error) {
       console.log(error)
-      return res.status(404)
+      req.flash('error_messages', '操作失敗')
+      return res.redirect('back')
     }
   },
 
   unfollow: async (req, res) => {
+    const followingId = Number(req.params.id)
+    const followerId = Number(helpers.getUser(req).id)
     try {
-      const followingId = req.params.id
-      const followerId = req.user.id
-      const unfollow = await Followship.findOne({ where: { followingId: { [Op.eq]: followingId } } })
+      const unfollow = await Followship.findOne({ where: { 
+        [Op.and]: [
+          { followingId: { [Op.eq]: followingId } },
+          { followerId: { [Op.eq]: followerId } }
+        ] }
+      })
       if (unfollow) {
         await Followship.destroy({
           where: {
@@ -48,12 +49,14 @@ const followshipsController = {
         })
         return res.status(200).redirect('back')
       } else {
-        return res.status(404)
+        req.flash('error_messages', '操作失敗')
+        return res.redirect('back')
       }
     }
     catch (error) {
       console.log(error)
-      return res.status(404)
+      req.flash('error_messages', '操作失敗')
+      return res.redirect('back')
     }
   }
 }

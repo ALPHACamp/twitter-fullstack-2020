@@ -1,6 +1,7 @@
 const db = require('../models')
 const Op = db.Sequelize.Op
 const User = db.User
+const bcrypt = require('bcryptjs')
 const emailVerify = require('../public/javascripts/emailValidate')
 
 const loginController = {
@@ -19,7 +20,7 @@ const loginController = {
   },
 
   signUp: async (req, res) => {
-    const signupData = req.body
+    let signupData = req.body
     let errors = []
     if (!signupData.account) {
       errors.push({ msg: '帳號不可為空' })
@@ -54,9 +55,10 @@ const loginController = {
       if (errors.length) {
         res.render('signupForm', { layout: 'form', errors, signupData })
       } else {
+        signupData.password = bcrypt.hashSync(signupData.password, bcrypt.genSaltSync(10))
         await User.create(signupData)
         req.flash('success_messages', `Hi, ${signupData.account} 歡迎加入`)
-        res.redirect('/signin')
+        res.status(302).redirect('/signin')
       }
     }
   },
@@ -67,6 +69,12 @@ const loginController = {
 
   signIn: (req, res) => {
     res.redirect('/tweets')
+  },
+
+  logout: (req, res) => {
+    req.flash('success_messages', '登出成功！')
+    req.logout()
+    res.redirect('/signin')
   }
 }
 

@@ -11,7 +11,7 @@ module.exports = {
       name: 'root',
       avatar: `https://loremflickr.com/320/240/paris,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       introduction: faker.lorem.text().slice(0, 100),
-      account: faker.lorem.text().slice(0, 5),
+      account: 'root',
       cover: `https://loremflickr.com/320/240/paris,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -22,7 +22,7 @@ module.exports = {
       name: 'user1',
       avatar: `https://loremflickr.com/320/240/paris,boy/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       introduction: faker.lorem.text().slice(0, 100),
-      account: faker.lorem.text().slice(0, 5),
+      account: 'user1',
       cover: `https://loremflickr.com/320/240/paris,boy/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -33,7 +33,7 @@ module.exports = {
       name: 'user2',
       avatar: `https://loremflickr.com/320/240/tokyo,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       introduction: faker.lorem.text().slice(0, 100),
-      account: faker.lorem.text().slice(0, 5),
+      account: 'user2',
       cover: `https://loremflickr.com/320/240/newyork,boy/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -44,7 +44,7 @@ module.exports = {
       name: 'user3',
       avatar: `https://loremflickr.com/320/240/paris,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       introduction: faker.lorem.text().slice(0, 100),
-      account: faker.lorem.text().slice(0, 5),
+      account: 'user3',
       cover: `https://loremflickr.com/320/240/tokyo,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -55,7 +55,7 @@ module.exports = {
       name: 'user4',
       avatar: `https://loremflickr.com/320/240/tokyo,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       introduction: faker.lorem.text().slice(0, 100),
-      account: faker.lorem.text().slice(0, 5),
+      account: 'user4',
       cover: `https://loremflickr.com/320/240/tokyo,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -66,7 +66,7 @@ module.exports = {
       name: 'user5',
       avatar: `https://loremflickr.com/320/240/tokyo,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       introduction: faker.lorem.text().slice(0, 100),
-      account: faker.lorem.text().slice(0, 5),
+      account: 'user5',
       cover: `https://loremflickr.com/320/240/tokyo,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -77,7 +77,7 @@ module.exports = {
       name: 'user6',
       avatar: `https://loremflickr.com/320/240/tokyo,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       introduction: faker.lorem.text().slice(0, 100),
-      account: faker.lorem.text().slice(0, 5),
+      account: 'user6',
       cover: `https://loremflickr.com/320/240/paris,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       createdAt: new Date(),
       updatedAt: new Date()

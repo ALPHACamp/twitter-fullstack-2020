@@ -1,16 +1,32 @@
+{{!-- 獨立模組 通用所有使用者頁面 --}}
 <div class="left-bar">
   <div class="upper-region">
     <div class="logo">
 
     </div>
     <div class="links">
+      {{#ifCond to 'home'}}
+      <a href="/tweets" class="homepage-link"><i class="fas fa-house-user"></i><span class="left-side-span on">首頁</span></a>
+      {{else}}
       <a href="/tweets" class="homepage-link"><i class="fas fa-house-user"></i><span class="left-side-span">首頁</span></a>
-      <a href="/users/{{getId this}}" class="person-info"><i class="far fa-user"></i><span class="left-side-span">個人資料</span></a>
-      <a href="/users/{{getId this}}/edit" class="set-info"><i class="fas fa-cog"></i><span class="left-side-span">設定</span></a>
-      <button class="publish-tweet">推文</button>
+      {{/ifCond}}
+
+      {{#leftSdieBarCheck to}}
+      <a href="/users/{{getId user}}" class="person-info"><i class="far fa-user"></i><span class="left-side-span on">個人資料</span></a>
+      {{else}}
+      <a href="/users/{{getId user}}" class="person-info"><i class="far fa-user"></i><span class="left-side-span">個人資料</span></a>
+      {{/leftSdieBarCheck}}
+
+      {{#ifCond to 'edit'}}
+      <a href="/users/{{getId user}}/edit" class="set-info"><i class="fas fa-cog"></i><span class="left-side-span on">設定</span></a>
+      {{else}}
+      <a href="/users/{{getId user}}/edit" class="set-info"><i class="fas fa-cog"></i><span class="left-side-span">設定</span></a>
+      {{/ifCond}}
+
+      <button class="publish-tweet" data-avatar="{{getAvatar user}}">推文</button>
     </div>
   </div>
   <div class="logout-region">
-    <a href="/logout" class="logout"><i class="fas fa-sign-out-alt"></i><span class="left-side-span">登出</span></a>
+    <a href="/logout" class="logout"><i class="fas fa-sign-out-alt"></i><span class="left-side-span-logout">登出</span></a>
   </div>
 </div>

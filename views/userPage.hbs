@@ -1,24 +1,96 @@
+{{!-- 路由 /users/id --}}
+{{!-- 路由 /users/id/tweets --}}
+{{!-- 路由 /users/id/replies --}}
+{{!-- 路由 /users/id/likes --}}
 <div class="user-homepage">
-  {{>leftSideBar user}}
+  {{!-- 左邊欄位 --}}
+  {{>leftSideBar user = user to = to}}
+
+  {{!-- 中間欄位上方 --}}
   <div class="central">
-    <h4 class="central-title">首頁</h4>
-    <form action="/tweets" method="post" class="central-input">
-      <div class="central-input-upper">
-        <div>
-          <a href="/users/{{getId user}}">
-            <img src="{{getAvatar user}}" alt="user avatar" class="tweets-img">
-          </a>
+    {{#if error_messages}}
+    <div class="alert alert-success alert-dismissible fade show operate-fail" role="alert">
+      {{error_messages}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {{/if}}
+
+    <div class="user-page">
+      <h4 class="central-title"><a href="/tweets" class="back-to-home"><i class="fas fa-arrow-left"></i></a>&nbsp&nbsp推文</h4>
+      <div class="user-avatar-container">
+        <div class="user-cover-box">
+          <img src="{{userData.cover}}" alt="" srcset="" class="user-cover">
         </div>
-        <input type="text" maxlength="140" placeholder="有什麼新鮮事?" class="user-tweet-input">
+        <div class="user-avatar-box">
+          <img src="{{userData.avatar}}" alt="" srcset="" class="user-avatar">
+        </div>
       </div>
-      <button type="submit">推文</button>
-    </form>
+  {{#ifCheck user userData.id}}
+      <div class="user-edit-btn">
+        <button type="button" class="edit-person-info-btn" data-userid="{{userData.id}}" data-useravatar="{{userData.avatar}}" data-username="{{userData.name}}" data-usercover="{{userData.cover}}">編輯個人資料</button>
+      </div>
+  {{else}}
+      <div class="user-edit-btn">
+        <button type="button" class="edit-person-info-btn">編輯個人資料</button>
+      </div>
+  {{/ifCheck}}
+      <div class="user-details">
+        <h5 class="user-name">{{userData.name}}</h5>
+        <span class="user-account">{{userData.account}}</span>
+        <p class="user-introduction">{{userData.introduction}}</p>
+        <div class="user-followship">
+          <span class="user-following">{{countNum userData.Followings}}個<strong class="user-following-end">跟隨中</strong></span>
+          
+          <span class="user-follower">{{countNum userData.Followers}}位<strong class="user-follower-end">跟隨者</strong></span>
+        </div>
+      </div>
+      <div class="user-tweet-link">
+        {{#ifCond to 'userInfo'}}
+        <a href="/users/{{userData.id}}/tweets" class="user-tweets on">推文</a>
+        {{else}}
+          {{#ifCond to 'userTweets'}}
+          <a href="/users/{{userData.id}}/tweets" class="user-tweets on">推文</a>
+          {{else}}
+          <a href="/users/{{userData.id}}/tweets" class="user-tweets">推文</a>
+          {{/ifCond}}
+        {{/ifCond}}
+
+
+        {{#ifCond to 'userReplies'}}
+        <a href="/users/{{userData.id}}/replies" class="user-tweets on">推文與回覆</a>
+        {{else}}
+        <a href="/users/{{userData.id}}/replies" class="user-tweets">推文與回覆</a>
+        {{/ifCond}}
+
+        {{#ifCond to 'userLikes'}}
+        <a href="/users/{{userData.id}}/likes" class="user-tweets on">喜歡的內容</a>
+        {{else}}
+        <a href="/users/{{userData.id}}/likes" class="user-tweets">喜歡的內容</a>
+        {{/ifCond}}
+      </div>
+    </div>
+
+    {{!-- 中間欄位下方推文 --}}
     <div class="tweets">
-      {{#each sortTweets}}
-       {{>tweet this}}
-      {{/each}}
+      {{#ifCond render 'userInfo'}}
+      {{>userTweets userData = userData user = user}}
+      {{/ifCond}}
+
+      {{#ifCond render 'userTweets'}}
+      {{>userTweets userData = userData user = user}}
+      {{/ifCond}}
+
+      {{#ifCond render 'userReplies'}}
+      {{>userReplies userData = userData user = user}}
+      {{/ifCond}}
+
+      {{#ifCond render 'userLikes'}}
+      {{>userLikes userData = userData user = user}}
+      {{/ifCond}}
     </div>
   </div>
+
+  {{!-- 右邊欄位 --}}
   <div class="rightSideBar" data-userid="{{getId user}}">
     {{>top10Twitter}}
   </div>

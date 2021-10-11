@@ -1,0 +1,36 @@
+.comment {
+  padding: 6px 4px 4px 8px;
+  background-color: white;
+  display: flex;
+  margin-bottom: 1px;
+}
+
+.comment-user-block {
+  width: 80%;
+  margin-left: 5px;
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.commenter-info {
+  font-size: 8px;
+}
+
+.comment-target {
+  font-size: 12px;
+  font-weight: bolder;
+}
+
+.comment-target :first-child {
+  color: lightslategray;
+}
+
+.comment-target :nth-child(2) {
+  color: #ff6600;
+}
+
+.comment-content {
+  margin: 5px 0 0 0;
+}

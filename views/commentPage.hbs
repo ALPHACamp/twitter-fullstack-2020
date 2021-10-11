@@ -1,0 +1,80 @@
+{{!-- 路由 /tweets/id/replies --}}
+<div class="user-homepage">
+  {{>leftSideBar user = user}}
+  <div class="central">
+    {{#if error_messages}}
+    <div class="alert alert-success alert-dismissible fade show operate-fail" role="alert">
+      {{error_messages}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {{/if}}
+
+    <h4 class="central-title"><a href="/tweets" class="back-to-home"><i class="fas fa-arrow-left"></i></a>&nbsp&nbsp推文</h4>
+    <div class="comment-container">
+      <div class="comment-body">
+        <div class="comment-user-info">
+          <a href="/users/{{replies.UserId}}">
+            <img src="{{replies.user.avatar}}" alt="user avatar" class="tweets-img">
+          </a>
+          <div class="user-info">
+            <span class="username">{{replies.user.name}}</span>
+            <span class="useraccount">{{replies.user.account}}</span>
+          </div>
+        </div>
+        <p class="tweet-in-comment">{{replies.description}}</p>
+        <div class="comment-time">
+          <span>{{moment replies.createdAt }}</span>
+        </div>
+      </div>
+      <hr>
+      <div class="feedback-count">
+        <span>{{countNum replies.replies}}&nbsp回覆</span>
+        <span>{{countNum replies.likes}}&nbsp喜歡次數</span>
+      </div>
+      <hr>
+      <div class="feedback-action">
+        {{!-- 判斷是否like過 --}}
+        {{#checkLike user replies.likes}}
+        <form action="/tweets/{{replies.id}}/unlike" method="post">
+          <button type="button" class="goto-comment" data-tweetid="{{replies.id}}" data-avatar="{{replies.user.avatar}}"
+            data-name="{{replies.user.name}}" data-accountname="{{replies.user.account}}" data-createtime="{{moment replies.createAt}}"
+            data-tweetcontent="{{replies.description}}" data-useravatar="{{getAvatar user}}">
+            {{#checkCommentReply user replies.replies}}
+            <i class="fas fa-comment comment-icon comment-page-icon"></i>
+            {{else}}
+            <i class="far fa-comment comment-icon comment-page-icon"></i>
+            {{/checkCommentReply}}
+          </button>
+          <button type="submit" class="post-like">
+            <i class="fas fa-heart like-heart"></i>
+          </button>
+        </form>
+        {{else}}
+        <form action="/tweets/{{replies.id}}/like" method="post">
+          <button type="button" class="goto-comment" data-tweetid="{{replies.id}}" data-avatar="{{replies.user.avatar}}"
+            data-name="{{replies.user.name}}" data-accountname="{{replies.user.account}}"
+            data-createtime="{{moment replies.createAt}}" data-tweetcontent="{{replies.description}}"
+            data-useravatar="{{getAvatar user}}">
+            {{#checkCommentReply user replies.replies}}
+            <i class="fas fa-comment comment-icon comment-page-icon"></i>
+            {{else}}
+            <i class="far fa-comment comment-icon comment-page-icon"></i>
+            {{/checkCommentReply}}
+          </button>
+          <button type="submit" class="post-like">
+            <i class="far fa-heart normal"></i>
+          </button>
+        </form>
+        {{/checkLike}}
+      </div>
+    </div>
+
+    <div class="tweets">
+      {{>comment reply = replies.replies user = user}}
+    </div>
+
+  </div>
+  <div class="rightSideBar">
+    {{>top10Twitter}}
+  </div>
+</div>

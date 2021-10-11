@@ -1,0 +1,71 @@
+.modalContainerLeft {
+  position: fixed;
+  width: 100%;
+  height: 2000px;
+  z-index: 12;
+  background-color: rgba(10, 10, 10, 0.3);
+}
+
+.comment-modalBox-left {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 19;
+  width: 50%;
+  height: 240px;
+  background-color: lightgrey;
+  border-radius: 12px;
+}
+
+.modal-close-left {
+  margin-bottom: 1px;
+  padding: 12px;
+  height: 50px;
+  background-color: white;
+  border-radius: 12px 12px 0 0;
+}
+
+.modal-close-btn-left {
+  border: none;
+  background-color: white;
+  color: #ff6600;
+  font-size: 20px;
+}
+
+.modal-input-left {
+  height: 210px;
+  background-color: white;
+  border-radius: 0 0 12px 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.modal-input-left textarea {
+  margin-right: 10px;
+  border: none;
+  width: 80%;
+  max-width: 80%;
+  height: 150px;
+  max-height: 150px;
+  margin-left: 10px;
+}
+
+.modal-input-upper-left {
+  display: flex;
+  align-items: flex-start;
+}
+
+.modal-tweet-btn {
+  width: 20%;
+  height: 24px;
+  color: white;
+  font-size: 16px;
+  font-weight: bolder;
+  margin-left: 80%;
+  border: none;
+  border-radius: 12px;
+  background-color: #ff6600;
+}

@@ -1,0 +1,65 @@
+.comment-container {
+  background-color: white;
+}
+
+hr {
+  width: 96%;
+  margin: 3px 2% 3px 2%
+}
+
+.back-to-home {
+  color: lightgrey;
+}
+
+.comment-body {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.tweet-in-comment {
+  margin: 6px 0 6px 0;
+  height: 60px;
+}
+
+.comment-user-info {
+  display: flex;
+}
+
+.comment-time { 
+  font-size: 8px;
+  color: lightslategray;
+}
+
+.feedback-count {
+  margin: 8px 0 8px 0;
+  padding: 0 8px 0 8px;
+}
+
+.feedback-count span {
+  font-size: 16px;
+  font-weight: bolder;
+  color: lightgrey;
+  margin-right: 12px;
+}
+
+.feedback-action {
+  width: 100%;
+  margin: 0 0 1px 0;
+  padding: 0 8px 0 8px;
+  display: flex;
+  align-items: center;
+}
+
+.feedback-action form {
+  width: 100%;
+}
+
+.feedback-action button {
+  margin-bottom: 3px;
+  margin-right: 20%;
+  border: none;
+  font-size: 24px;
+  background-color: white;
+}

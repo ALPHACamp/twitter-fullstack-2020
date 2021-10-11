@@ -1,6 +1,6 @@
 .left-bar {
   width: 20%;
-  height: 800px;
+  height: 500px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -32,8 +32,12 @@
   margin-top: 220px;
 }
 
-.left-side-span {
+.left-side-span, .left-side-span-logout {
   margin-left: 10px !important;
+}
+
+.left-side-span.on {
+  color: #ff6600;
 }
 
 .publish-tweet {

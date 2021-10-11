@@ -18,8 +18,25 @@
   width: 100%;
 }
 
+.twitter-info span {
+  font-size: 8px;
+}
+
+.twitter-info a {
+  text-decoration: none;
+}
+
 .tweet-content {
+  max-height: 45%;
   margin: 3px 0 3px 0;
+  font-size: 12px;
+  overflow:hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
 }
 
 .twitter-account, .twitter-createdAt {
@@ -28,18 +45,35 @@
 
 .tweet-feedback {
   display: flex;
+  justify-content: flex-start;
 }
 
 .tweet-feedback button {
   border: none;
   background: none;
-  margin-left: 25px;
+  margin-left: 35px;
   padding: 0 0 0 0;
   height: 15px;
   font-size: 8px;
   color: lightslategray;
 }
 
+.goto-comment {
+  margin-left: 0 !important;
+}
+
 .like-heart {
+  color: #ff6600;
+}
+
+.replied-target {
+  font-weight: bolder;
+}
+
+.replied-target :first-child {
+  color: lightslategray;
+}
+
+.replied-target :nth-child(2) {
   color: #ff6600;
 }

@@ -8,6 +8,8 @@ router.get('/signup/:account', loginController.signupAccountCheck)
 
 router.get('/signin', loginController.signinPage)
 
+router.get('/logout', loginController.logout)
+
 router.post('/signup', loginController.signUp)
 
 router.post('/signin', passport.authenticate('local', {

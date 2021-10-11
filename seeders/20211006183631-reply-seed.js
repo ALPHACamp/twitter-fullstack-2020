@@ -33,7 +33,7 @@ function tweetReplies(userIds, tweetIds) {
   const allTweetReplies = []
   let eachUserId = 0
   tweetIds.forEach(tweetId => {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 5; i++) {
       const tweetReply = {
         UserId: userIds[eachUserId],
         TweetId: tweetId,
@@ -41,9 +41,9 @@ function tweetReplies(userIds, tweetIds) {
         createdAt: new Date(),
         updatedAt: new Date()
       }
-      if (eachUserId < (userIds.length - 4)) {
+      if (eachUserId < (userIds.length - 5)) {
         eachUserId = 1
-      } else if (eachUserId < 5) {
+      } else if (eachUserId < 4) {
         eachUserId += 1
       } else {
         eachUserId = eachUserId - 1

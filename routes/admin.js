@@ -5,8 +5,11 @@ const helpers = require('../_helpers')
 
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'admin') { return next() }
-    return res.redirect('/tweets')
+    if (helpers.getUser(req).role === 'admin') { 
+      return next() 
+    } else {
+      return res.redirect('/tweets')
+    }
   }
   return res.redirect('/signin')
 }
