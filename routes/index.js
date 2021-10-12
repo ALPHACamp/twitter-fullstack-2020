@@ -8,7 +8,7 @@ const helpers = require('../_helpers')
 module.exports = (app) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).role === 'user') {
+      if (helpers.getUser(req).role !== 'admin') {
         return next()
       } 
       return res.redirect('/admin/tweets')

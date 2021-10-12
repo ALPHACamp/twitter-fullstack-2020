@@ -26,6 +26,7 @@ const tweetsController = {
       sortTweets = sortTweets.map(item => {
         return { ...item, likesNum: item.likes.length, repliesNum: item.replies.length }
       })
+      // return res.json(sortTweets)
       return res.render('userHomePage', { layout: 'main', sortTweets, to:'home' })
     }
     catch (error) {
@@ -66,22 +67,25 @@ const tweetsController = {
 
   postTweet: async (req, res) => {
     try {
-      if (req.body.description.length > 140) return
+      if (req.body.description.length > 140) {
+        req.flash('error_messages', '不可超過140個字')
+        return res.redirect('/tweets')
+      }
       const data = {}
       data.UserId = helpers.getUser(req).id
       data.description = req.body.description
       if (!req.body.description) {
         req.flash('error_messages', '內容不可為空')
-        return res.redirect('back')
+        return res.redirect('/tweets')
       }
       await Tweet.create({ ...data })
 
-      return res.status(200).redirect('back')
+      return res.redirect('/tweets')
     }
     catch (error) {
       console.log(error)
       req.flash('error_messages', '操作失敗')
-      return res.redirect('back')
+      return res.redirect('/tweets')
     }
   },
 
@@ -91,7 +95,7 @@ const tweetsController = {
       const TweetId = Number(req.params.id)
       await Like.findOrCreate({ where: { UserId, TweetId } })
 
-      return res.status(302).redirect('back')
+      return res.redirect('back')
     }
     catch (error) {
       console.log(error)
@@ -121,7 +125,7 @@ const tweetsController = {
           }
         })
 
-        return res.status(302).redirect('back')
+        return res.redirect('back')
       } else {
         req.flash('error_messages', '操作失敗')
         return res.redirect('back')
@@ -141,11 +145,11 @@ const tweetsController = {
       data.comment = req.body.comment
       await Reply.create({ ...data })
 
-      return res.status(200).redirect('back')
+      return res.redirect(`/tweets/${req.params.id}/replies`)
     }
     catch (error) {
       req.flash('error_messages', '操作失敗')
-      return res.redirect('back')
+      return res.redirect(`/tweets/${req.params.id}/replies`)
     }
   },
 
@@ -162,7 +166,7 @@ const tweetsController = {
       })
       let replies = JSON.stringify(reply)
       replies = JSON.parse(replies)
-      res.status(200).render('commentPage', { layout: 'main', replies })
+      return res.render('commentPage', { layout: 'main', replies })
     }
     catch (error) {
       console.log(error)

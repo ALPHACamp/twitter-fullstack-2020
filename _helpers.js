@@ -6,8 +6,7 @@ function getUser(req) {
   return req.user;
 }
 
-function checkId(req) {
-  const userId = getUser(req).id
+function checkId(req, userId) {
   const requestId = Number(req.params.id)
   return (userId === requestId) ? userId : requestId
 }

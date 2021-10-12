@@ -31,25 +31,23 @@ const loginController = {
     if (!emailVerify(signupData.email)) {
       errors.push({ msg: '郵件格式不符合' })
     }
-    if (!(signupData.password === signupData.passwordCheck)) {
+    if (!(signupData.password === signupData.checkPassword)) {
       errors.push({ msg: '兩次密碼輸入不符合' })
     }
 
     if (errors.length) {
-      res.render('signupForm', { layout: 'form', errors, signupData })
+      return res.render('signupForm', { layout: 'form', errors, signupData })
     } else {
-      const users = await User.findAll({ raw: true, 
+      const user = await User.findOne({ raw: true, 
         where: { [Op.or]: [
           { account: signupData.account },
           { email: signupData.email }
         ] }
       })
-      const accountRepeatCheck = users.filter(item => item.account === signupData.account)
-      const emailRepeatCheck = users.filter(item => item.email === signupData.email)
-      if (accountRepeatCheck.length) {
+      if (user && user.account === signupData.account) {
         errors.push({ msg: '此帳號已經有人使用' })
       }
-      if (emailRepeatCheck.length) {
+      if (user && user.email === signupData.email) {
         errors.push({ msg: '此電子郵箱已經有人使用' })
       }
       if (errors.length) {
@@ -58,7 +56,7 @@ const loginController = {
         signupData.password = bcrypt.hashSync(signupData.password, bcrypt.genSaltSync(10))
         await User.create(signupData)
         req.flash('success_messages', `Hi, ${signupData.account} 歡迎加入`)
-        res.status(302).redirect('/signin')
+        res.redirect('/signin')
       }
     }
   },

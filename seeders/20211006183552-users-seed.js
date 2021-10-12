@@ -81,7 +81,52 @@ module.exports = {
       cover: `https://loremflickr.com/320/240/paris,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
       createdAt: new Date(),
       updatedAt: new Date()
-    }], {})
+    },{
+      email: 'user7@example.com',
+      password: bcrypt.hashSync('11', bcrypt.genSaltSync(10), null),
+      role: 'user',
+      name: 'user7',
+      avatar: `https://loremflickr.com/320/240/tokyo,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      introduction: faker.lorem.text().slice(0, 100),
+      account: 'user7',
+      cover: `https://loremflickr.com/320/240/india,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },{
+      email: 'user8@example.com',
+      password: bcrypt.hashSync('11', bcrypt.genSaltSync(10), null),
+      role: 'user',
+      name: 'user8',
+      avatar: `https://loremflickr.com/320/240/tokyo,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      introduction: faker.lorem.text().slice(0, 100),
+      account: 'user8',
+      cover: `https://loremflickr.com/320/240/shanhai,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },{
+      email: 'user9@example.com',
+      password: bcrypt.hashSync('11', bcrypt.genSaltSync(10), null),
+      role: 'user',
+      name: 'user9',
+      avatar: `https://loremflickr.com/320/240/beijing,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      introduction: faker.lorem.text().slice(0, 100),
+      account: 'user9',
+      cover: `https://loremflickr.com/320/240/paris,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      email: 'user10@example.com',
+      password: bcrypt.hashSync('11', bcrypt.genSaltSync(10), null),
+      role: 'user',
+      name: 'user10',
+      avatar: `https://loremflickr.com/320/240/beijing,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      introduction: faker.lorem.text().slice(0, 100),
+      account: 'user10',
+      cover: `https://loremflickr.com/320/240/paris,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+  ], {})
   },
 
   down: async (queryInterface, Sequelize) => {

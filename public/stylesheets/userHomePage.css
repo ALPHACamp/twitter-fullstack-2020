@@ -10,7 +10,8 @@
 }
 
 .central-title {
-  height: 40px;
+  display: flex;
+  height: 50px;
   font-size: 16px;
   font-weight: bolder;
   color: darkgray;
@@ -18,6 +19,25 @@
   background-color: white;
   line-height: 40px;
   padding-left: 10px;
+}
+
+.central-title .central-title-name {
+  display: flex;
+  flex-direction: column;
+  margin-left: 12px;
+}
+
+.central-title-name .user-name {
+  height: 30px;
+  line-height: 30px;
+  font-size: 24px;
+  color: black;
+}
+
+.central-title-name .tweet-num {
+  height: 20px;
+  line-height: 20px;
+  font-size: 12px;
 }
 
 .central-input {
@@ -83,7 +103,7 @@ button.btn-close {
   padding: 3px !important;
   height: 24px !important;
   border: none !important;
-  background-color: rgba(241, 14, 14, 1) !important;
+  background-color: rgba(241, 14, 14, 0.7) !important;
   font-size: 16px !important;
   color: white !important;
 }

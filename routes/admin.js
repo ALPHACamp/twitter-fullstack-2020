@@ -7,11 +7,10 @@ const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (helpers.getUser(req).role === 'admin') { 
       return next() 
-    } else {
-      return res.redirect('/tweets')
-    }
+    } 
   }
-  return res.redirect('/signin')
+  req.flash('error_messages', '請先登入')
+  return res.redirect('/admin/signin')
 }
 
 router.get('/signin', adminController.signinPage)

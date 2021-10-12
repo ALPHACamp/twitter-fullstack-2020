@@ -70,6 +70,7 @@
   position: absolute;
   left: -50%;
   transform: translateX(50%);
+  opacity: 0;
 }
 
 .modal-edit-avatar {
@@ -96,6 +97,7 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
+  opacity: 0;
 }
 
 .edit-account {

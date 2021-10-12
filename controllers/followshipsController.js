@@ -9,16 +9,13 @@ const followshipsController = {
     const followingId = Number(req.body.id)
     try {
       if (followerId !== followingId) {
-        await Followship.create({
-            followerId,
-            followingId,
-            createdAt: new Date(),
-            updatedAt: new Date()
+        await Followship.findOrCreate({
+          where: { followerId, followingId }
         })
-        return res.status(200).redirect('back')
+        return res.redirect('back')
       } else {
         req.flash('error_messages', '不可跟隨自己')
-        return res.redirect('back')
+        return res.redirect(200, 'back')
       }
     }
     catch (error) {
@@ -38,7 +35,7 @@ const followshipsController = {
           { followerId: { [Op.eq]: followerId } }
         ] }
       })
-      if (unfollow) {
+      if (Object.keys(unfollow).length) {
         await Followship.destroy({
           where: {
             [Op.and]: [
@@ -47,7 +44,7 @@ const followshipsController = {
             ]
           }
         })
-        return res.status(200).redirect('back')
+        return res.redirect('back')
       } else {
         req.flash('error_messages', '操作失敗')
         return res.redirect('back')

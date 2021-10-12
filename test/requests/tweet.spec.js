@@ -46,6 +46,7 @@ describe('# tweet request', () => {
           .set('Accept', 'application/json')
           .expect(200)
           .end(function(err, res) {
+            console.log("🚀 ~ file: tweet.spec.js ~ line 50 ~ .end ~ res", res)
             if (err) return done(err);
             res.text.should.include('User1 的 Tweet1')
             res.text.should.include('User1 的 Tweet2')

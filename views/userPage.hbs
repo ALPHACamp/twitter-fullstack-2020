@@ -16,7 +16,14 @@
     {{/if}}
 
     <div class="user-page">
-      <h4 class="central-title"><a href="/tweets" class="back-to-home"><i class="fas fa-arrow-left"></i></a>&nbsp&nbsp推文</h4>
+      <h4 class="central-title">
+        <a href="/tweets" class="back-to-home"><i class="fas fa-arrow-left"></i>
+        </a>
+        <div class="central-title-name">
+          <span class="user-name">{{userData.name}}</span>
+          <span class="tweet-num">{{countNum userData.userTweets}}推文</span>
+        </div>
+      </h4>
       <div class="user-avatar-container">
         <div class="user-cover-box">
           <img src="{{userData.cover}}" alt="" srcset="" class="user-cover">

@@ -33,7 +33,7 @@ const usersController = {
 
       let userData = JSON.stringify(userTweets)
       userData = JSON.parse(userData)
-      return res.status(200).render('userPage', { layout: 'main', userData, to: 'userInfo', render: 'userInfo' })
+      return res.render('userPage', { layout: 'main', userData, to: 'userInfo', render: 'userInfo' })
     }
     catch (error) {
       console.log(error)
@@ -43,7 +43,7 @@ const usersController = {
   },
 
   getUserTweets: async (req, res) => {
-    const UserId = helpers.checkId(req)
+    const UserId = helpers.checkId(req, helpers.getUser(req).id)
     // 取出user所有推文
     try {
       const userTweets = await User.findOne({
@@ -73,7 +73,7 @@ const usersController = {
   },
 
   getUserReplies: async (req, res) => {
-    const UserId = helpers.checkId(req)
+    const UserId = helpers.checkId(req, helpers.getUser(req).id)
     try {
       const userReplies = await User.findOne({
         where: { id: UserId },
@@ -101,7 +101,7 @@ const usersController = {
   },
 
   getUserLikes: async (req, res) => {
-    const UserId = helpers.checkId(req)
+    const UserId = helpers.checkId(req, helpers.getUser(req).id)
     try {
       // 取出user like的推文 並且包括推文作者
       const likedTweets = await User.findOne({
@@ -122,7 +122,6 @@ const usersController = {
       })
       let userData = JSON.stringify(likedTweets)
       userData = JSON.parse(userData)
-      // return res.json(likedTweets)
       return res.render('userPage', { layout: 'main', userData, to: 'userLikes', render: 'userLikes' })
     }
     catch (error) {
@@ -133,9 +132,7 @@ const usersController = {
   editUserData: (req, res) => {
     const userId = helpers.getUser(req).id
     const updateData = req.body
-    console.log("🚀 ~ file: usersController.js ~ line 136 ~ updateData", updateData)
     const files = req.files
-    console.log("🚀 ~ file: usersController.js ~ line 138 ~ files", files)
 
     if (updateData.password) {
       const password = updateData.password
@@ -162,15 +159,16 @@ const usersController = {
           )
         })
       }
-      res.status(200).json('Accept')
+      res.redirect('back')
     } else if (updateData.name) {
       User.update(
         updateData,
         { where: { id: { [Op.eq]: userId } } }
       )
-      res.status(200).json('Accept')
+      res.redirect('back')
     } else {
-      res.status(400).json('invalid data')
+      req.flash('error_messages', '操作失敗')
+      return res.redirect('back')
     }
   }
 }
