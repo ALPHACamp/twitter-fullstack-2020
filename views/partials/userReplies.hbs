@@ -21,36 +21,6 @@
     </div>
     <div class="tweet-content">{{this.tweet.description}}</div>
     <div class="tweet-feedback">
-      {{!-- 判斷是否like過 --}}
-      {{!-- {{#checkLike ../user this.likes}}
-      <form action="/tweets/{{this.id}}/unlike" method="post">
-        <button type="button" class="goto-comment" data-tweetid="{{this.id}}" data-avatar="{{../userData.avatar}}"
-          data-name="{{../userData.name}}" data-accountname="{{../userData.account}}"
-          data-createtime="{{moment this.createdAt}}" data-tweetcontent="{{this.description}}"
-          data-useravatar="{{getAvatar ../user}}">
-          <i class="fas fa-comment comment-icon"></i>
-          <span class="reply-sum comment-icon">{{countNum this.replies}}</span>
-        </button>
-        <button type="submit" class="post-like">
-          <i class="fas fa-heart like-heart"></i>
-          <span class="like-sum">{{countNum this.likes}}</span>
-        </button>
-      </form>
-      {{else}}
-      <form action="/tweets/{{this.id}}/like" method="post">
-        <button type="button" class="goto-comment" data-tweetid="{{this.id}}" data-avatar="{{../userData.avatar}}"
-          data-name="{{../userData.name}}" data-accountname="{{../userData.account}}"
-          data-createtime="{{moment this.createdAt}}" data-tweetcontent="{{this.description}}"
-          data-useravatar="{{getAvatar ../user}}">
-          <i class="fas fa-comment comment-icon"></i>
-          <span class="reply-sum comment-icon">{{countNum this.replies}}</span>
-        </button>
-        <button type="submit" class="post-like">
-          <i class="far fa-heart normal"></i>
-          <span class="like-sum">{{countNum this.likes}}</span>
-        </button>
-      </form>
-      {{/checkLike}} --}}
     </div>
   </div>
 </div>

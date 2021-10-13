@@ -39,6 +39,16 @@
   align-items: center;
 }
 
+.user-edit-btn form {
+  margin-right: 12px;
+}
+
+.user-edit-btn i {
+  margin-right: 12px;
+  font-size: 16px;
+  color: #ff6600;
+}
+
 .edit-person-info-btn {
   height: 30px;
   margin-right: 12px;
@@ -76,6 +86,14 @@ p.user-introduction {
 .user-followship {
   font-size: 14px;
   font-weight: bold;
+}
+
+.user-followship a {
+  text-decoration: none;
+}
+
+span.user-following, span.user-follower {
+  color: black;
 }
 
 .user-following-end, .user-follower-end {

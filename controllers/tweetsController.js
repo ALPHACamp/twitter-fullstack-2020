@@ -27,7 +27,26 @@ const tweetsController = {
         ],
         order: [['createdAt', 'DESC']]
       })
-      return res.render('userHomePage', { layout: 'main', tweets, userInfo: { ...helpers.getUser(req).dataValues }, to:'home' })
+      const userInfo = await User.findOne({
+        raw: true,
+        nest: true,
+        where: { id: { [Op.eq]: UserId } },
+        attributes: ['id', 'name', 'account', 'avatar', 'cover', 'introduction',
+          [sequelize.literal('(SELECT COUNT(*) FROM `followships` WHERE followships.followerId = User.id)'), 'followingNum'],
+          [sequelize.literal('(SELECT COUNT(*) FROM `followships` WHERE followships.followingId = User.id)'), 'followerNum'],
+          [sequelize.literal('(SELECT COUNT(*) FROM `tweets` WHERE tweets.UserId = User.id)'), 'tweetNum']
+        ]
+      })
+      const user = {
+        id: helpers.getUser(req).id,
+        name: helpers.getUser(req).name,
+        account: helpers.getUser(req).account,
+        avatar: helpers.getUser(req).avatar,
+        description: helpers.getUser(req).description,
+        createdAt: helpers.getUser(req).createdAt
+      }
+      
+      return res.render('userHomePage', { layout: 'main', tweets, userInfo, user, to:'home' })
     }
     catch (error) {
       console.log(error)
@@ -184,8 +203,16 @@ const tweetsController = {
           { model: User, as: 'user', attributes: ['id', 'name', 'account', 'avatar']},
         ]
       })
-      const user = helpers.getUser(req)
-      return res.render('commentPage', { layout: 'main', reply, tweet, userInfo: user.toJSON() })
+      const user = {
+        id: helpers.getUser(req).id,
+        name: helpers.getUser(req).name,
+        account: helpers.getUser(req).account,
+        avatar: helpers.getUser(req).avatar,
+        description: helpers.getUser(req).description,
+        createdAt: helpers.getUser(req).createdAt
+      }
+      
+      return res.render('commentPage', { layout: 'main', reply, tweet, userInfo: user })
     }
     catch (error) {
       console.log(error)

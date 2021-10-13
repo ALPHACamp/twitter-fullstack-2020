@@ -11,7 +11,6 @@ const authenticatedAdmin = async (req, res, next) => {
     if (user.dataValues.role === 'admin') { 
       return next() 
     }
-    return res.redirect('/tweets') 
   }
   req.flash('error_messages', '請先登入')
   return res.redirect('/admin/signin')

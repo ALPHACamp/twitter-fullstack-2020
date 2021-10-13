@@ -140,7 +140,7 @@ function buildHTMLEdit(userid, username, usercover, useravatar) {
       <span>/50</span>
     </div>
     <div class="edit-description">
-      <textarea type="text" name="description" maxlength="160"  class="self-introduction" placeholder="自我介紹"></textarea>
+      <textarea type="text" name="introduction" maxlength="160"  class="self-introduction" placeholder="自我介紹"></textarea>
       <span>/160</span>
     </div>
   </form>

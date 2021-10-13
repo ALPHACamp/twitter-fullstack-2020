@@ -4,7 +4,7 @@
 {{!-- 路由 /users/id/likes --}}
 <div class="user-homepage">
   {{!-- 左邊欄位 --}}
-  {{>leftSideBar user = userInfo to = to}}
+  {{>leftSideBar user = user to = to}}
 
   {{!-- 中間欄位上方 --}}
   <div class="central">
@@ -14,7 +14,6 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     {{/if}}
-
     <div class="user-page">
       <h4 class="central-title">
         <a href="/tweets" class="back-to-home"><i class="fas fa-arrow-left"></i>
@@ -32,23 +31,34 @@
           <img src="{{userInfo.avatar}}" alt="" srcset="" class="user-avatar">
         </div>
       </div>
-  {{#ifCheck user userInfo.id}}
+  {{#ifCond user.id userInfo.id}}
       <div class="user-edit-btn">
         <button type="button" class="edit-person-info-btn" data-userid="{{userInfo.id}}" data-useravatar="{{userInfo.avatar}}" data-username="{{userInfo.name}}" data-usercover="{{userInfo.cover}}">編輯個人資料</button>
       </div>
   {{else}}
       <div class="user-edit-btn">
-        <button type="button" class="edit-person-info-btn">編輯個人資料</button>
+        <i class="far fa-envelope-open"></i>
+        <i class="far fa-bell"></i>
+        {{#if userInfo.isFollowing}}
+        <form action="/followships/{{userInfo.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="following">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="POST">
+          <input type="text" class="top-twitter-id" name="id" value="{{userInfo.id}}">
+          <button type="submit" class="not-follow">跟隨</button>
+        </form>
+        {{/if}}
       </div>
-  {{/ifCheck}}
+  {{/ifCond}}
       <div class="user-details">
         <h5 class="user-name">{{userInfo.name}}</h5>
         <span class="user-account">{{userInfo.account}}</span>
         <p class="user-introduction">{{userInfo.introduction}}</p>
         <div class="user-followship">
-          <span class="user-following">{{userInfo.followingNum}}個<strong class="user-following-end">跟隨中</strong></span>
+          <a href="/users/{{userInfo}}/followings"><span class="user-following">{{userInfo.followingNum}}個<strong class="user-following-end">跟隨中</strong></span></a>
           
-          <span class="user-follower">{{userInfo.followerNum}}位<strong class="user-follower-end">跟隨者</strong></span>
+          <a href="/users/{{userInfo}}/followers"><span class="user-follower">{{userInfo.followerNum}}位<strong class="user-follower-end">跟隨者</strong></span></a>
         </div>
       </div>
       <div class="user-tweet-link">
@@ -92,13 +102,13 @@
       {{/ifCond}}
 
       {{#ifCond render 'userLikes'}}
-      {{>userLikes userData = tweet user = userInfo}}
+      {{>userLikes likedTweets = likedTweets userInfo = userInfo}}
       {{/ifCond}}
     </div>
   </div>
 
   {{!-- 右邊欄位 --}}
-  <div class="rightSideBar" data-userid="{{userInfo.id}}">
+  <div class="rightSideBar" data-userid="{{user.id}}">
     {{>top10Twitter}}
   </div>
 </div>
