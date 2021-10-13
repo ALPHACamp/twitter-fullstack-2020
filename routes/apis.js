@@ -19,11 +19,12 @@ const authenticated = (req, res, next) => {
     }
   }
   return res.redirect('/signin')
-}
+} // conflict1
 
 const multipleUpload = upload.fields([{ name: 'avatar' }, { name: 'cover' }])
 
 // Follow
+// conflict2
 router.post('/followships/:id', authenticated, userController.addFollowing)
 
 // 使用者新增推文
