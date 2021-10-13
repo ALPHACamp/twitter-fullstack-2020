@@ -1,6 +1,6 @@
-{{!-- 路由 /tweets/id/replies --}}
+{{!-- 路由 /tweets/id/reply --}}
 <div class="user-homepage">
-  {{>leftSideBar user = user}}
+  {{>leftSideBar user = userInfo}}
   <div class="central">
     {{#if error_messages}}
     <div class="alert alert-success alert-dismissible fade show operate-fail" role="alert">
@@ -8,73 +8,75 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     {{/if}}
-
+    {{ifCon tweet.UserId}}
     <h4 class="central-title"><a href="/tweets" class="back-to-home"><i class="fas fa-arrow-left"></i></a>&nbsp&nbsp推文</h4>
     <div class="comment-container">
       <div class="comment-body">
         <div class="comment-user-info">
-          <a href="/users/{{replies.UserId}}">
-            <img src="{{replies.user.avatar}}" alt="user avatar" class="tweets-img">
+          <a href="/users/{{tweet.UserId}}">
+            <img src="{{tweet.user.avatar}}" alt="user avatar" class="tweets-img">
           </a>
           <div class="user-info">
-            <span class="username">{{replies.user.name}}</span>
-            <span class="useraccount">{{replies.user.account}}</span>
+            <span class="username">{{tweet.user.name}}</span>
+            <span class="useraccount">{{tweet.user.account}}</span>
           </div>
         </div>
-        <p class="tweet-in-comment">{{replies.description}}</p>
+        <p class="tweet-in-comment">{{tweet.description}}</p>
         <div class="comment-time">
-          <span>{{moment replies.createdAt }}</span>
+          <span>{{moment tweet.createdAt }}</span>
         </div>
       </div>
       <hr>
       <div class="feedback-count">
-        <span>{{countNum replies.replies}}&nbsp回覆</span>
-        <span>{{countNum replies.likes}}&nbsp喜歡次數</span>
+        <span>{{checkReplyNumReplies reply}}&nbsp回覆</span>
+        <span>{{checkReplyNumLikes reply}}&nbsp喜歡次數</span>
       </div>
       <hr>
       <div class="feedback-action">
         {{!-- 判斷是否like過 --}}
-        {{#checkLike user replies.likes}}
-        <form action="/tweets/{{replies.id}}/unlike" method="post">
-          <button type="button" class="goto-comment" data-tweetid="{{replies.id}}" data-avatar="{{replies.user.avatar}}"
-            data-name="{{replies.user.name}}" data-accountname="{{replies.user.account}}" data-createtime="{{moment replies.createAt}}"
-            data-tweetcontent="{{replies.description}}" data-useravatar="{{getAvatar user}}">
-            {{#checkCommentReply user replies.replies}}
+        {{#if tweet.like}}
+        <form action="/tweets/{{tweet.id}}/unlike" method="post">
+          <button type="button" class="goto-comment" data-tweetid="{{tweet.id}}" data-avatar="{{#if tweet.user.avatar}}{{tweet.user.avatar}}{{else}}''{{/if}}"
+            data-name="{{#if tweet.user.name}}{{tweet.user.name}}{{else}}''{{/if}}" data-accountname="{{#if tweet.user.account}}{{tweet.user.account}}{{else}}''{{/if}}" data-createtime="{{moment tweet.createdAt}}"
+            data-tweetcontent="{{tweet.description}}" data-useravatar="{{userInfo.avatar}}">
+            {{#if tweet.reply}}
             <i class="fas fa-comment comment-icon comment-page-icon"></i>
             {{else}}
             <i class="far fa-comment comment-icon comment-page-icon"></i>
-            {{/checkCommentReply}}
+            {{/if}}
           </button>
           <button type="submit" class="post-like">
             <i class="fas fa-heart like-heart"></i>
           </button>
         </form>
         {{else}}
-        <form action="/tweets/{{replies.id}}/like" method="post">
-          <button type="button" class="goto-comment" data-tweetid="{{replies.id}}" data-avatar="{{replies.user.avatar}}"
-            data-name="{{replies.user.name}}" data-accountname="{{replies.user.account}}"
-            data-createtime="{{moment replies.createAt}}" data-tweetcontent="{{replies.description}}"
-            data-useravatar="{{getAvatar user}}">
-            {{#checkCommentReply user replies.replies}}
+        <form action="/tweets/{{tweet.id}}/like" method="post">
+          <button type="button" class="goto-comment" data-tweetid="{{tweet.id}}"
+            data-avatar="{{#if tweet.user.avatar}}{{tweet.user.avatar}}{{else}}''{{/if}}"
+            data-name="{{#if tweet.user.name}}{{tweet.user.name}}{{else}}''{{/if}}"
+            data-accountname="{{#if tweet.user.account}}{{tweet.user.account}}{{else}}''{{/if}}"
+            data-createtime="{{moment tweet.createdAt}}" data-tweetcontent="{{tweet.description}}"
+            data-useravatar="{{userInfo.avatar}}">
+            {{#if tweet.reply}}
             <i class="fas fa-comment comment-icon comment-page-icon"></i>
             {{else}}
             <i class="far fa-comment comment-icon comment-page-icon"></i>
-            {{/checkCommentReply}}
+            {{/if}}
           </button>
           <button type="submit" class="post-like">
             <i class="far fa-heart normal"></i>
           </button>
         </form>
-        {{/checkLike}}
+        {{/if}}
       </div>
     </div>
 
     <div class="tweets">
-      {{>comment reply = replies.replies user = user}}
+      {{>comment reply = reply user = userInfo}}
     </div>
 
   </div>
-  <div class="rightSideBar">
+  <div class="rightSideBar" data-userid="{{userInfo.id}}">
     {{>top10Twitter}}
   </div>
 </div>

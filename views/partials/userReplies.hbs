@@ -1,5 +1,5 @@
 {{!-- 路由/users/id/tweets模組 --}}
-{{#each userData.UserRepliedTweet}}
+{{#each userReplies}}
 <div class="tweet">
   <div class="twitter-avatar">
     <a href="/users/{{this.user.id}}">
@@ -8,21 +8,21 @@
   </div>
   <div class="tweet-content-box">
     <div class="twitter-info">
-      <a href="/tweets/{{../userData.id}}/replies" class="reply-link">
-        <span class="twitter-name">{{../userData.name}}</span>
-        <span class="twitter-account">{{../userData.account}}</span>
+      {{!-- <a href="/tweets/{{../userData.id}}/replies" class="reply-link"> --}}
+        <span class="twitter-name">{{this.user.name}}</span>
+        <span class="twitter-account">{{this.user.account}}</span>
         <span class="twitter-dot">。</span>
         <span class="twitter-createdAt">{{moment this.createdAt}}</span>
-      </a>
+      {{!-- </a> --}}
       <div class="replied-target">
         <span>回覆</span>
-        <span>{{this.user.account}}</span>
+        <span>{{this.tweet.user.account}}</span>
       </div>
     </div>
-    <div class="tweet-content">{{this.description}}</div>
+    <div class="tweet-content">{{this.tweet.description}}</div>
     <div class="tweet-feedback">
       {{!-- 判斷是否like過 --}}
-      {{#checkLike ../user this.likes}}
+      {{!-- {{#checkLike ../user this.likes}}
       <form action="/tweets/{{this.id}}/unlike" method="post">
         <button type="button" class="goto-comment" data-tweetid="{{this.id}}" data-avatar="{{../userData.avatar}}"
           data-name="{{../userData.name}}" data-accountname="{{../userData.account}}"
@@ -50,7 +50,7 @@
           <span class="like-sum">{{countNum this.likes}}</span>
         </button>
       </form>
-      {{/checkLike}}
+      {{/checkLike}} --}}
     </div>
   </div>
 </div>

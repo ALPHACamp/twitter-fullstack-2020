@@ -1,20 +1,20 @@
 {{#each reply}}
 <div class="comment">
-  <a href="/users/{{this.user.id}}">
-    <img src="{{this.user.avatar}}" alt="twitter avatar" class="tweets-img">
+  <a href="/users/{{this.replies.user.id}}">
+    <img src="{{this.replies.user.avatar}}" alt="twitter avatar" class="tweets-img">
   </a>
   <div class="comment-user-block">
     <div class="commenter-info">
-      <span>{{this.user.name}}</span>
-      <span class="twitter-account">{{this.user.account}}</span>
+      <span>{{this.replies.user.name}}</span>
+      <span class="twitter-account">{{this.replies.user.account}}</span>
       <span class="twitter-dot">。</span>
-      <span class="twitter-createdAt">{{moment this.createdAt}}</span>
+      <span class="twitter-createdAt">{{moment this.replies.createdAt}}</span>
     </div>
     <div class="comment-target">
       <span>回覆</span>
-      <span>{{../replies.user.account}}</span>
+      <span>{{../tweet.user.account}}</span>
     </div>
-    <p class="comment-content">{{this.comment}}</p>
+    <p class="comment-content">{{this.replies.comment}}</p>
   </div>
 </div>
 {{/each}}

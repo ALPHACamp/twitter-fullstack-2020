@@ -1,6 +1,6 @@
 {{!-- 路由 tweets/id --}}
 <div class="user-homepage">
-  {{>leftSideBar user = user to = to}}
+  {{>leftSideBar user = userInfo to = to}}
   <div class="central">
     {{#if error_messages}}
     <div class="alert alert-success alert-dismissible fade show operate-fail" role="alert">
@@ -13,8 +13,8 @@
     <form action="/tweets" method="post" class="central-input">
       <div class="central-input-upper">
         <div>
-          <a href="/users/{{getId user}}">
-            <img src="{{getAvatar user}}" alt="user avatar" class="tweets-img">
+          <a href="/users/{{userInfo.id}}">
+            <img src="{{userInfo.avatar}}" alt="user avatar" class="tweets-img">
           </a>
         </div>
         <textarea type="text" maxlength="140" name="description" placeholder="有什麼新鮮事?" class="user-tweet-input"></textarea>
@@ -22,10 +22,10 @@
       <button type="submit">推文</button>
     </form>
     <div class="tweets">
-       {{>tweet sortTweets = sortTweets user = user}}
+       {{>tweet tweets = tweets user = userInfo}}
     </div>
   </div>
-  <div class="rightSideBar" data-userid="{{getId user}}">
-    {{>top10Twitter}}
+  <div class="rightSideBar" data-userid="{{userInfo.id}}">
+    {{!-- {{>top10Twitter}} --}}
   </div>
 </div>

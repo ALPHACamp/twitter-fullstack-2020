@@ -12,18 +12,18 @@
       {{/ifCond}}
 
       {{#leftSdieBarCheck to}}
-      <a href="/users/{{getId user}}" class="person-info"><i class="far fa-user"></i><span class="left-side-span on">個人資料</span></a>
+      <a href="/users/{{user.id}}" class="person-info"><i class="far fa-user"></i><span class="left-side-span on">個人資料</span></a>
       {{else}}
-      <a href="/users/{{getId user}}" class="person-info"><i class="far fa-user"></i><span class="left-side-span">個人資料</span></a>
+      <a href="/users/{{user.id}}" class="person-info"><i class="far fa-user"></i><span class="left-side-span">個人資料</span></a>
       {{/leftSdieBarCheck}}
 
       {{#ifCond to 'edit'}}
-      <a href="/users/{{getId user}}/edit" class="set-info"><i class="fas fa-cog"></i><span class="left-side-span on">設定</span></a>
+      <a href="/users/{{user.id}}/edit" class="set-info"><i class="fas fa-cog"></i><span class="left-side-span on">設定</span></a>
       {{else}}
-      <a href="/users/{{getId user}}/edit" class="set-info"><i class="fas fa-cog"></i><span class="left-side-span">設定</span></a>
+      <a href="/users/{{user.id}}/edit" class="set-info"><i class="fas fa-cog"></i><span class="left-side-span">設定</span></a>
       {{/ifCond}}
 
-      <button class="publish-tweet" data-avatar="{{getAvatar user}}">推文</button>
+      <button class="publish-tweet" data-avatar="{{user.avatar}}">推文</button>
     </div>
   </div>
   <div class="logout-region">

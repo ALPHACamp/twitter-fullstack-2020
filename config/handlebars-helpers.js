@@ -10,11 +10,11 @@ module.exports = {
   },
 
   ifCon: function (a) {
-    console.log('============',a)
+    console.log('============',a.UserId)
   },
 
   ifCheck: function (a, b, options) {
-    if (a.dataValues.id === b) {
+    if (a.id === b) {
       return options.fn(this)
     } else {
       return options.inverse(this)
@@ -71,6 +71,21 @@ module.exports = {
     return arr.length
   },
 
+  // need
+  checkReplyNumReplies: function (arr) {
+    if (arr && arr.length) {
+      return arr[0].repliesNum
+    }
+    return 0
+  },
+// need
+  checkReplyNumLikes: function (arr) {
+    if (arr && arr.length) {
+      return arr[0].likesNum
+    }
+    return 0
+  },
+
   checkIfBeLiked: function (arr, options) {
     return arr.length ? options.fn(this) : options.inverse(this)
   },
@@ -81,5 +96,25 @@ module.exports = {
     } else {
       return options.inverse(this)
     }
-  }
+  }, 
+
+  // tweetLikeCheck: function (user, arr, options) {
+  //   arr = arr.map(item => item.likes.UserId)
+  //   const id = Number(user.id)
+  //   if (arr.includes(id)) {
+  //     return options.fn(this)
+  //   } else {
+  //     return options.inverse(this)
+  //   }
+  // },
+
+  // tweetReplyCheck: function (user, arr, options) {
+  //   arr = arr.map(item => item.replies.UserId)
+  //   const id = Number(user.id)
+  //   if (arr.includes(id)) {
+  //     return options.fn(this)
+  //   } else {
+  //     return options.inverse(this)
+  //   }
+  // }
 }

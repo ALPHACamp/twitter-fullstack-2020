@@ -15,7 +15,7 @@ const followshipsController = {
         return res.redirect('back')
       } else {
         req.flash('error_messages', '不可跟隨自己')
-        return res.redirect(200, 'back')
+        return res.redirect(`/tweets/${followerId}/replies`)
       }
     }
     catch (error) {

@@ -1,7 +1,7 @@
-{{#each sortTweets}}
+{{#each tweets}}
 <div class="tweet">
   <div class="twitter-avatar">
-    <a href="/users/{{this.UserId}}">
+    <a href="/users/{{this.user.id}}">
       <img src="{{this.user.avatar}}" alt="" class="tweets-img">
     </a>
   </div>
@@ -17,14 +17,14 @@
     <div class="tweet-content">{{this.description}}</div>
     <div class="tweet-feedback">
       {{!-- 判斷是否like過 --}}
-      {{#checkLike ../user this.likes}}
+      {{#if this.like}}
       <form action="/tweets/{{this.id}}/unlike" method="post">
-        <button type="button" class="goto-comment" data-tweetid="{{this.id}}" data-avatar="{{this.user.avatar}}" data-name="{{this.user.name}}" data-accountname="{{this.user.account}}" data-createtime="{{moment this.createdAt}}" data-tweetcontent="{{this.description}}" data-useravatar="{{getAvatar ../user}}">
-          {{#checkReply ../user this.replies}}
+        <button type="button" class="goto-comment" data-tweetid="{{this.id}}" data-avatar="{{#if this.user.avatar}}{{this.user.avatar}}{{else}}''{{/if}}" data-name="{{#if this.user.name}}{{this.user.name}}{{else}}''{{/if}}" data-accountname="{{#if this.user.account}}{{this.user.account}}{{else}}''{{/if}}" data-createtime="{{moment this.createdAt}}" data-tweetcontent="{{this.description}}" data-useravatar="{{#if ../user.avatar}}{{../user.avatar}}{{else}}''{{/if}}">
+          {{!-- {{#checkReply ../user this.replies}}
           <i class="fas fa-comment comment-icon"></i>
-          {{else}}
+          {{else}} --}}
           <i class="far fa-comment comment-icon"></i>
-          {{/checkReply}}
+          {{!-- {{/checkReply}} --}}
           <span class="reply-sum comment-icon">{{this.repliesNum}}</span>
         </button>
         <button type="submit" class="post-like">
@@ -34,12 +34,17 @@
       </form>
       {{else}}
       <form action="/tweets/{{this.id}}/like" method="post">
-        <button type="button" class="goto-comment" data-tweetid="{{this.id}}" data-avatar="{{this.user.avatar}}" data-name="{{this.user.name}}" data-accountname="{{this.user.account}}" data-createtime="{{moment this.createdAt}}" data-tweetcontent="{{this.description}}" data-useravatar="{{getAvatar ../user}}">
-          {{#checkReply ../user this.replies}}
+        <button type="button" class="goto-comment" data-tweetid="{{this.id}}"
+          data-avatar="{{#if this.user.avatar}}{{this.user.avatar}}{{else}}''{{/if}}"
+          data-name="{{#if this.user.name}}{{this.user.name}}{{else}}''{{/if}}"
+          data-accountname="{{#if this.user.account}}{{this.user.account}}{{else}}''{{/if}}"
+          data-createtime="{{moment this.createdAt}}" data-tweetcontent="{{this.description}}"
+          data-useravatar="{{#if ../user.avatar}}{{../user.avatar}}{{else}}''{{/if}}">
+          {{!-- {{#checkReply ../user this.replies}}
           <i class="fas fa-comment comment-icon"></i>
-          {{else}}
+          {{else}} --}}
           <i class="far fa-comment comment-icon"></i>
-          {{/checkReply}}
+          {{!-- {{/checkReply}} --}}
           <span class="reply-sum comment-icon">{{this.repliesNum}}</span>
         </button>
         <button type="submit" class="post-like">
@@ -47,7 +52,7 @@
           <span class="like-sum">{{this.likesNum}}</span>
         </button>
       </form>
-      {{/checkLike}}
+      {{/if}}
     </div>
   </div>
 </div>

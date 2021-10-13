@@ -12,22 +12,22 @@ const tweetsController = {
   allTweets: async (req, res) => {
     try {
       // 取出所有推文 按照時間排序 包含推文作者以及按讚數
+      const UserId = helpers.getUser(req).id
       const tweets = await Tweet.findAll({
+        raw: true,
+        nest: true,
+        attributes: [
+          'id', 'description', 'createdAt', 
+          [sequelize.literal('(SELECT COUNT(*) FROM `likes` WHERE likes.TweetId = Tweet.id)'), 'likesNum'],
+          [sequelize.literal('(SELECT COUNT(*) FROM `replies` WHERE replies.TweetId = Tweet.id)'), 'repliesNum'],
+          [sequelize.literal(`(SELECT likes.UserId FROM ${`likes`} WHERE likes.TweetId = Tweet.id AND likes.UserId = ${UserId})`), 'like'],
+        ],
         include: [
-          { model: Like, as: 'likes', attributes: ['UserId'] },
-          { model: Reply, as: 'replies', attributes: ['UserId'] },
           { model: User, as: 'user', attributes: ['id', 'avatar', 'account', 'name'] }
         ],
         order: [['createdAt', 'DESC']]
       })
-      // 這個sql query的結果，如果使用raw: true, nest: true會很難處理 直接處理也很困難 所以作了以下的轉換
-      let sortTweets = JSON.stringify(tweets)
-      sortTweets = JSON.parse(sortTweets)
-      sortTweets = sortTweets.map(item => {
-        return { ...item, likesNum: item.likes.length, repliesNum: item.replies.length }
-      })
-      // return res.json(sortTweets)
-      return res.render('userHomePage', { layout: 'main', sortTweets, to:'home' })
+      return res.render('userHomePage', { layout: 'main', tweets, userInfo: { ...helpers.getUser(req).dataValues }, to:'home' })
     }
     catch (error) {
       console.log(error)
@@ -155,18 +155,37 @@ const tweetsController = {
 
   getTweetReplies: async (req, res) => {
     try {
+      const UserId = helpers.getUser(req).id
       const tweetId = Number(req.params.id)
       const reply = await Tweet.findOne({
+        raw: true,
+        nest: true,
+        plain: false,
         where: { id: { [Op.eq]: tweetId } },
+        attributes: ['UserId',
+        [sequelize.literal('(SELECT COUNT(*) FROM `likes` WHERE likes.TweetId = Tweet.id)'), 'likesNum'],
+        [sequelize.literal('(SELECT COUNT(*) FROM `replies` WHERE replies.TweetId = Tweet.id)'), 'repliesNum']
+        ],
         include: [
-          { model: User, as: 'user', attributes: ['avatar', 'account', 'name'] },
-          { model: Reply, as: 'replies', attributes: ['comment', 'createdAt'], include: [{ model: User, as: 'user', attributes: ['id', 'avatar', 'account', 'name'] }] },
-          { model: Like, as: 'likes', attributes: ['UserId'] },
+          { model: Reply, as: 'replies', attributes: ['comment', 'createdAt'], 
+          include: [{ model: User, as: 'user', attributes: ['id', 'avatar', 'account',    'name'] }] },
         ]
       })
-      let replies = JSON.stringify(reply)
-      replies = JSON.parse(replies)
-      return res.render('commentPage', { layout: 'main', replies })
+      let tweet = await Tweet.findOne(
+      {
+        raw: true,
+        nest: true,
+        where: { id: { [Op.eq]: tweetId } },
+        attributes: ['id', 'UserId', 'description', 'createdAt',
+          [sequelize.literal(`(SELECT UserId FROM ${`replies`} WHERE replies.TweetId = ${tweetId} AND replies.UserId = ${UserId} limit 1)`), 'reply'],
+          [sequelize.literal(`(SELECT UserId FROM ${`likes`} WHERE likes.TweetId = ${tweetId} AND likes.UserId = ${UserId} limit 1)`), 'like']
+        ],
+        include: [
+          { model: User, as: 'user', attributes: ['id', 'name', 'account', 'avatar']},
+        ]
+      })
+      const user = helpers.getUser(req)
+      return res.render('commentPage', { layout: 'main', reply, tweet, userInfo: user.toJSON() })
     }
     catch (error) {
       console.log(error)

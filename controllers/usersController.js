@@ -16,24 +16,30 @@ const usersController = {
   getUser: async (req, res) => {
     const requestId = Number(req.params.id)
     try {
-      const userTweets = await User.findOne({
-        where: { id: requestId },
-        include: [
-          { model: Tweet, as: 'userTweets', 
-            include: [
-              { model: Like, as: 'likes', attributes: ['UserId'] },
-              { model: Reply, as: 'replies', attributes: ['UserId'] }
-            ],
-            order: [['createdAt', 'DESC']]
-          },
-          { model: User, as: 'Followings', attributes: ['id'] },
-          { model: User, as: 'Followers', attributes: ['id'] }
+      const userInfo = await User.findOne({
+        raw: true,
+        nest: true,
+        where: { id: { [Op.eq]: requestId } },
+        attributes: ['id', 'name', 'account', 'avatar', 'cover',
+          [sequelize.literal('(SELECT COUNT(*) FROM `followships` WHERE followships.followerId = User.id)'), 'followingNum'],
+          [sequelize.literal('(SELECT COUNT(*) FROM `followships` WHERE followships.followingId = User.id)'), 'followerNum'],
+          [sequelize.literal('(SELECT COUNT(*) FROM `tweets` WHERE tweets.UserId = User.id)'), 'tweetNum']
         ]
       })
 
-      let userData = JSON.stringify(userTweets)
-      userData = JSON.parse(userData)
-      return res.render('userPage', { layout: 'main', userData, to: 'userInfo', render: 'userInfo' })
+      const tweet = await Tweet.findAll({
+        raw: true,
+        nest: true,
+        plain: false,
+        where: { UserId: { [Op.eq]: requestId } },
+        attributes: ['id', 'description', 'createdAt',
+          [sequelize.literal('(SELECT COUNT(*) FROM `likes` WHERE likes.TweetId = Tweet.id)'), 'likesNum'],
+          [sequelize.literal('(SELECT COUNT(*) FROM `replies` WHERE replies.TweetId = Tweet.id)'), 'repliesNum'],
+          [sequelize.literal(`(SELECT UserId FROM ${`replies`} WHERE replies.TweetId = Tweet.id AND replies.UserId = ${requestId} limit 1)`), 'reply'],
+          [sequelize.literal(`(SELECT UserId FROM ${`likes`} WHERE likes.TweetId = Tweet.id AND likes.UserId = ${requestId} limit 1)`), 'like']
+        ]
+      })
+      return res.render('userPage', { layout: 'main', userInfo, tweet, user: helpers.getUser(req).toJSON(), to: 'userInfo', render: 'userInfo' })
     }
     catch (error) {
       console.log(error)
@@ -43,27 +49,34 @@ const usersController = {
   },
 
   getUserTweets: async (req, res) => {
-    const UserId = helpers.checkId(req, helpers.getUser(req).id)
+    const requestId = helpers.checkId(req, helpers.getUser(req).id)
     // 取出user所有推文
     try {
-      const userTweets = await User.findOne({
-        where: { id: UserId },
-        include: [
-          {
-            model: Tweet, as: 'userTweets',
-            include: [
-              { model: Like, as: 'likes', attributes: ['UserId'] },
-              { model: Reply, as: 'replies', attributes: ['UserId'] }
-            ],
-            order: [['createdAt', 'DESC']]
-          },
-          { model: User, as: 'Followings', attributes: ['id'] },
-          { model: User, as: 'Followers', attributes: ['id'] }
+      const userInfo = await User.findOne({
+        raw: true,
+        nest: true,
+        where: { id: { [Op.eq]: requestId } },
+        attributes: ['id', 'name', 'account', 'avatar', 'cover',
+          [sequelize.literal('(SELECT COUNT(*) FROM `followships` WHERE followships.followerId = User.id)'), 'followingNum'],
+          [sequelize.literal('(SELECT COUNT(*) FROM `followships` WHERE followships.followingId = User.id)'), 'followerNum'],
+          [sequelize.literal('(SELECT COUNT(*) FROM `tweets` WHERE tweets.UserId = User.id)'), 'tweetNum']
         ]
       })
-      let userData = JSON.stringify(userTweets)
-      userData = JSON.parse(userData)
-      return res.render('userPage', { layout: 'main', userData, to: 'userInfo', render: 'userTweets' })
+
+      const tweet = await Tweet.findAll({
+        raw: true,
+        nest: true,
+        plain: false,
+        where: { UserId: { [Op.eq]: requestId } },
+        attributes: ['id', 'description', 'createdAt',
+          [sequelize.literal('(SELECT COUNT(*) FROM `likes` WHERE likes.TweetId = Tweet.id)'), 'likesNum'],
+          [sequelize.literal('(SELECT COUNT(*) FROM `replies` WHERE replies.TweetId = Tweet.id)'), 'repliesNum'],
+          [sequelize.literal(`(SELECT UserId FROM ${`replies`} WHERE replies.TweetId = Tweet.id AND replies.UserId = ${requestId} limit 1)`), 'reply'],
+          [sequelize.literal(`(SELECT UserId FROM ${`likes`} WHERE likes.TweetId = Tweet.id AND likes.UserId = ${requestId} limit 1)`), 'like']
+        ]
+      })
+      // return res.json(tweet)
+      return res.render('userPage', { layout: 'main', userInfo, tweet, user: helpers.getUser(req).toJSON(), to: 'userInfo', render: 'userTweets' })
     }
     catch (error) {
       console.log(error)
@@ -73,25 +86,33 @@ const usersController = {
   },
 
   getUserReplies: async (req, res) => {
-    const UserId = helpers.checkId(req, helpers.getUser(req).id)
+    const requestId = helpers.checkId(req, helpers.getUser(req).id)
     try {
-      const userReplies = await User.findOne({
-        where: { id: UserId },
+      const userReplies = await Reply.findAll({
+        raw: true,
+        nest: true, 
+        plain: false,
+        where: { UserId: { [Op.eq]: requestId } },
+        attributes: ['comment', 'createdAt'],
         include: [
-          { model: Tweet, as: 'UserRepliedTweet', include: [
-            { model: User, as: 'user', attributes: ['id', 'avatar', 'name', 'account'] },
-            { model: Like, as: 'likes', attributes: ['UserId'] },
-            { model: Reply, as: 'replies', attributes: ['UserId'] }
-          ],
-          order: [['createdAt', 'DESC']]
-          },
-          { model: User, as: 'Followings', attributes: ['id'] },
-          { model: User, as: 'Followers', attributes: ['id'] }
+          { model: User, as: 'user', attributes: ['id', 'name', 'account', 'avatar'] },
+          { model: Tweet, as: 'tweet', include: [
+            {model: User, as: 'user', attributes: ['account']}
+          ]  }
         ]
       })
-      let userData = JSON.stringify(userReplies)
-      userData = JSON.parse(userData)
-      return res.render('userPage', { layout: 'main', userData, to: 'userReplies', render: 'userReplies' })
+
+      const userInfo = await User.findOne({
+        raw: true,
+        nest: true,
+        where: { id: { [Op.eq]: requestId } },
+        attributes: ['id', 'name', 'account', 'avatar', 'cover',
+          [sequelize.literal('(SELECT COUNT(*) FROM `followships` WHERE followships.followerId = User.id)'), 'followingNum'],
+          [sequelize.literal('(SELECT COUNT(*) FROM `followships` WHERE followships.followingId = User.id)'), 'followerNum'],
+          [sequelize.literal('(SELECT COUNT(*) FROM `tweets` WHERE tweets.UserId = User.id)'), 'tweetNum']
+        ]
+      })
+      return res.render('userPage', { layout: 'main', userReplies, userInfo, user: helpers.getUser(req).toJSON(), to: 'userReplies', render: 'userReplies' })
     }
     catch (error) {
       console.log(error)
