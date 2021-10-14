@@ -333,6 +333,23 @@ const usersController = {
       req.flash('error_messages', '操作失敗')
       return res.redirect('back')
     }
+  },
+
+  getUserInfoEdit: async (req, res) => {
+    const requestId = Number(req.params.id)
+    try {
+      const userInfo = await User.findByPk(requestId, { raw: true })
+      if (Object.keys(userInfo).length) {
+        return res.render('editForm', { layout: 'main', userInfo, to: 'edit' })
+      }
+      req.flash('error_messages', '查無相關資料')
+      return res.redirect('back')
+    }
+    catch (error) {
+      console.log(error)
+      req.flash('error_messages', '操作失敗')
+      return res.redirect('back')
+    }
   }
 }
 

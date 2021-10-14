@@ -36,6 +36,26 @@
   margin-left: 10px !important;
 }
 
+.left-side-span-btn {
+  border: none;
+  background-color: white;
+  font-size: 15px;
+  font-weight: bolder;
+  color: darkgray;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding: 0;
+}
+
+.left-side-span-btn span {
+  margin: 0 !important;
+}
+
+.fa-cog {
+  margin-right: 10px;
+}
+
 .left-side-span.on {
   color: #ff6600;
 }

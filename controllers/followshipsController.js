@@ -15,7 +15,7 @@ const followshipsController = {
         return res.redirect('back')
       } else {
         req.flash('error_messages', '不可跟隨自己')
-        return res.redirect(`back`)
+        return res.json({ status: 'error' })
       }
     }
     catch (error) {

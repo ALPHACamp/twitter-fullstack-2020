@@ -1,4 +1,6 @@
+{{!-- 路由 /tweets/id/replies --}}
 {{#each reply}}
+{{#if this.replies.user.id}}
 <div class="comment">
   <a href="/users/{{this.replies.user.id}}">
     <img src="{{this.replies.user.avatar}}" alt="twitter avatar" class="tweets-img">
@@ -17,4 +19,9 @@
     <p class="comment-content">{{this.replies.comment}}</p>
   </div>
 </div>
+{{else}}
+<div class="comment">
+  <h5>此推文目前無評論</h5>
+</div>
+{{/if}}
 {{/each}}

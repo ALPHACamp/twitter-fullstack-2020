@@ -18,9 +18,9 @@
       {{/leftSdieBarCheck}}
 
       {{#ifCond to 'edit'}}
-      <a href="/api/users/{{user.id}}" class="set-info"><i class="fas fa-cog"></i><span class="left-side-span on">設定</span></a>
+      <button data-id="{{user.id}}" class="set-info left-side-span-btn"><span data-id="{{user.id}}" class="left-side-span on left-side-span-btn"><i class="fas fa-cog" data-id="{{user.id}}"></i>設定</span></button>
       {{else}}
-      <a href="/api/users/{{user.id}}" class="set-info"><i class="fas fa-cog"></i><span class="left-side-span">設定</span></a>
+      <button data-id="{{user.id}}" class="set-info left-side-span-btn"><span class="left-side-span left-side-span-btn" data-id="{{user.id}}"><i class="fas fa-cog" data-id="{{user.id}}"></i>設定</span></button>
       {{/ifCond}}
 
       <button class="publish-tweet" data-avatar="{{user.avatar}}">推文</button>

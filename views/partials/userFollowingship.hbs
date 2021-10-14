@@ -20,7 +20,7 @@
       {{else}}
       <form action="/followships" method="POST">
         <input type="text" class="top-twitter-id" name="id" value="{{this.Followings.Followship.followingId}}">
-        <button type="submit" class="not-follow">跟隨</button>
+        <button type="submit" data-id="{{this.Followings.Followship.followingId}}" class="not-follow follow-btn">跟隨</button>
       </form>
       {{/ifCond}}
     </div>

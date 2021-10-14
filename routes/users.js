@@ -11,8 +11,6 @@ const checkRole = (req, res, next) => {
   return res.redirect('/admin/tweets')
 }
 
-router.get('/:id', checkRole, usersController.getUser)
-
 router.get('/:id/tweets', checkRole, usersController.getUserTweets)
 
 router.get('/:id/replies', checkRole, usersController.getUserReplies)
@@ -23,6 +21,11 @@ router.get('/:id/followings', checkRole, usersController.getUserFollowings)
 
 router.get('/:id/followers', checkRole, usersController.getUserFollowers)
 
+router.get('/:id/editInfo', checkRole, usersController.getUserInfoEdit)
+
+router.get('/:id', checkRole, usersController.getUser)
+
 router.put('/:id', checkRole, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), usersController.editUserData)
+
 
 module.exports = router

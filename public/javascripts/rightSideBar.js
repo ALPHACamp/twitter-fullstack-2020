@@ -38,13 +38,33 @@ if (rightSideBar) {
               <span class="useraccount">${item.following.account}</span>
             </div>
           </div>
-          <form action="/followships" method="POST">
-            <input type="text" class="top-twitter-id" name="id" value="${item.followingId}">
-            <button type="submit" class="not-follow">跟隨</button>
-          </form>
+        
+            <button type="submit" data-id="${item.followingId}" class="not-follow follow-btn">跟隨</button>
         </div>
       `
       )
     }, '<h4 class="right-side-title">跟隨誰</h4>')
+  })
+}
+
+if (rightSideBar) {
+  rightSideBar.addEventListener('click', event => {
+    const target = event.target
+    if (target.classList.contains('follow-btn')) {
+      const UserId = target.dataset.id
+      let param = new URLSearchParams()
+      param.append('id', UserId)
+      axios({
+        method: 'post',
+        url: '/followships',
+        data: param
+      })
+      .then(response => {
+        if (response.data.status && response.data.status === 'error') {
+          return location.reload(true)
+        }
+        return location.reload(true)
+      })
+    } 
   })
 }

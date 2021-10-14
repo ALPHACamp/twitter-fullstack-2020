@@ -211,7 +211,6 @@ const tweetsController = {
         description: helpers.getUser(req).description,
         createdAt: helpers.getUser(req).createdAt
       }
-      
       return res.render('commentPage', { layout: 'main', reply, tweet, userInfo: user })
     }
     catch (error) {
