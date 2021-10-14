@@ -2,17 +2,27 @@ const router = require('express').Router()
 const usersController = require('../controllers/usersController')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
+const helpers = require('../_helpers')
 
-router.get('/:id', usersController.getUser)
+const checkRole = (req, res, next) => {
+  if (helpers.getUser(req).role !== 'admin') {
+    return next()
+  }
+  return res.redirect('/admin/tweets')
+}
 
-router.get('/:id/tweets', usersController.getUserTweets)
+router.get('/:id', checkRole, usersController.getUser)
 
-router.get('/:id/replies', usersController.getUserReplies)
+router.get('/:id/tweets', checkRole, usersController.getUserTweets)
 
-router.get('/:id/likes', usersController.getUserLikes)
+router.get('/:id/replies', checkRole, usersController.getUserReplies)
 
-router.get('/:id/likes', usersController.getUserLikes)
+router.get('/:id/likes', checkRole, usersController.getUserLikes)
 
-router.put('/:id', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), usersController.editUserData)
+router.get('/:id/followings', checkRole, usersController.getUserFollowings)
+
+router.get('/:id/followers', checkRole, usersController.getUserFollowers)
+
+router.put('/:id', checkRole, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), usersController.editUserData)
 
 module.exports = router

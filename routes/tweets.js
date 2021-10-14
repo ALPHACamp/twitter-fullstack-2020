@@ -1,18 +1,26 @@
 const router = require('express').Router()
 const tweetsController = require('../controllers/tweetsController')
+const helpers = require('../_helpers')
 
-router.get('/', tweetsController.allTweets)
+const checkRole = (req, res, next) => {
+  if (helpers.getUser(req).role !== 'admin') {
+    return next()
+  }
+  return res.redirect('/admin/tweets')
+}
 
-router.get('/:id/top10', tweetsController.getTop10Twitters)
+router.get('/', checkRole,tweetsController.allTweets)
 
-router.get('/:id/replies', tweetsController.getTweetReplies)
+router.get('/:id/top10', checkRole, tweetsController.getTop10Twitters)
 
-router.post('/', tweetsController.postTweet)
+router.get('/:id/replies', checkRole, tweetsController.getTweetReplies)
 
-router.post('/:id/like', tweetsController.postLike)
+router.post('/', checkRole, tweetsController.postTweet)
 
-router.post('/:id/unlike', tweetsController.postUnlike)
+router.post('/:id/like', checkRole, tweetsController.postLike)
 
-router.post('/:id/replies', tweetsController.postTweetReply)
+router.post('/:id/unlike', checkRole, tweetsController.postUnlike)
+
+router.post('/:id/replies', checkRole, tweetsController.postTweetReply)
 
 module.exports = router

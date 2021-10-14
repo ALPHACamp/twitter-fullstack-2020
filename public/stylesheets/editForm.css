@@ -1,0 +1,25 @@
+.edit-userInfo-container {
+  width: 90%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.form-frame-edit {
+  width: 70%;
+  margin-top: 40px;
+}
+
+
+/* 修改placeholder font-color */
+::-webkit-input-placeholder {
+  color: lightgrey;
+}
+:-moz-placeholder {
+  color: lightgrey;
+}
+::-moz-placeholder {
+ color: lightgrey;
+}
+:-ms-input-placeholder {
+  color: lightgrey;
+}

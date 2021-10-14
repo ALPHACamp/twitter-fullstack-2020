@@ -1,0 +1,30 @@
+{{#each followData}}
+<div class="tweet">
+  <div class="twitter-avatar">
+    <a href="/users/{{this.Followings.id}}">
+      <img src="{{this.Followings.avatar}}" alt="" class="tweets-img">
+    </a>
+  </div>
+  <div class="tweet-content-box">
+    <div class="twitter-info-followship">
+      <div class="following-info">
+        <a href="/users/{{this.Followings.id}}" class="reply-link">
+          <span>{{this.Followings.name}}</span>
+          <span class="twitter-account">{{this.Followings.account}}</span>
+        </a>
+      </div>
+      {{#ifCond this.Followings.Followship.followerId ../userInfo.id}}
+      <form action="/followships/{{this.Followings.Followship.followingId}}?_method=DELETE" method="POST">
+        <button type="submit" class="following">正在跟隨</button>
+      </form>
+      {{else}}
+      <form action="/followships" method="POST">
+        <input type="text" class="top-twitter-id" name="id" value="{{this.Followings.Followship.followingId}}">
+        <button type="submit" class="not-follow">跟隨</button>
+      </form>
+      {{/ifCond}}
+    </div>
+    <div class="tweet-content-followship">{{this.Followings.introduction}}</div>
+  </div>
+</div>
+{{/each}}

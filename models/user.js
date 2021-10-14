@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     cover: DataTypes.STRING(189),
     role: {
       type: DataTypes.STRING(189),
-      defaultValue: 'user'
+      // defaultValue: 'user'
     }
   },
   // 為了通過測試 先mark掉

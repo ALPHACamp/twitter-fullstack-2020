@@ -1,0 +1,40 @@
+<div class="edit-userInfo-container">
+  {{>leftSideBar user = userInfo to = to}}
+
+  <form action="/api/users/{{userInfo.id}}" method="POST" class="form-frame-edit">
+    <h3 class="form-title">帳戶設定</h3>
+    {{#each errors}}
+    <div class="alert alert-warning alert-dismissible fade show warning" role="alert">
+      <strong>Note!</strong> {{this.msg}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {{/each}}
+    <div class="form-input">
+      <p>帳號</p>
+      <input type="text" name="account" class="account-input" {{#if userInfo.account}} value='{{ userInfo.account }}' {{/if}}
+        placeholder="請輸入帳號 ---- 必填" required>
+    </div>
+    <span class="form-account-notice"></span>
+    <div class="form-input">
+      <p>名稱</p>
+      <input type="text" name="name" {{#if userInfo.name}} value='{{ userInfo.name }}' {{/if}} placeholder="請輸入名稱 ---- 必填"
+        required>
+    </div>
+    <div class="form-input">
+      <p>Email</p>
+      <input type="text" class="email-input" name="email" {{#if userInfo.email}} value='{{ userInfo.email }}' {{/if}}
+        placeholder="請輸入Email ---- 必填" required>
+    </div>
+    <span class="form-email-notice">Email格式有誤</span>
+    <div class="form-input">
+      <p>密碼</p>
+      <input type="password" class="password-input" name="password" placeholder="請輸入密碼 ---- 必填" required>
+    </div>
+    <div class="form-input">
+      <p>密碼確認</p>
+      <input type="password" class="passwordCheck-input" name="checkPassword" placeholder="請輸入密碼確認 ---- 必填" required>
+    </div>
+    <span class="form-password-notice">輸入密碼不一致</span>
+    <button class="form-button">儲存</button>
+  </form>
+</div>

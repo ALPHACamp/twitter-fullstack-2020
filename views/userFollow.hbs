@@ -1,0 +1,57 @@
+{{!-- 路由 /users/id/followings --}}
+{{!-- 路由 /users/id/followers --}}
+
+<div class="user-homepage">
+  {{!-- 左邊欄位 --}}
+  {{>leftSideBar user = user to = to}}
+
+  {{!-- 中間欄位上方 --}}
+  <div class="central">
+    {{#if error_messages}}
+    <div class="alert alert-success alert-dismissible fade show operate-fail" role="alert">
+      {{error_messages}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {{/if}}
+    <div class="user-page">
+      <h4 class="central-title">
+        <a href="/tweets" class="back-to-home"><i class="fas fa-arrow-left"></i>
+        </a>
+        <div class="central-title-name">
+          <span class="user-name">{{userInfo.name}}</span>
+          <span class="tweet-num">{{userInfo.tweetNum}}推文</span>
+        </div>
+      </h4>
+      <div class="user-tweet-link">
+        {{#ifCond btn 'followers'}}
+        <a href="/users/{{userInfo.id}}/followers" class="user-tweets on">跟隨者</a>
+        {{else}}
+        <a href="/users/{{userInfo.id}}/followers" class="user-tweets">跟隨者</a>
+        {{/ifCond}}
+
+        {{#ifCond btn 'followings'}}
+        <a href="/users/{{userInfo.id}}/followings" class="user-tweets on">正在跟隨</a>
+        {{else}}
+        <a href="/users/{{userInfo.id}}/followings" class="user-tweets">正在跟隨</a>
+        {{/ifCond}}
+      </div>
+    </div>
+
+    {{!-- 中間欄位下方推文 --}}
+    <div class="tweets">
+      {{#ifCond render 'userFollowings'}}
+      {{>userFollowingship followData = userFollowings }}
+      {{/ifCond}}
+
+      {{#ifCond render 'userFollowers'}}
+      {{>userFollowership followData = userFollowers }}
+      {{/ifCond}}
+
+    </div>
+  </div>
+
+  {{!-- 右邊欄位 --}}
+  <div class="rightSideBar" data-userid="{{user.id}}">
+    {{>top10Twitter}}
+  </div>
+</div>

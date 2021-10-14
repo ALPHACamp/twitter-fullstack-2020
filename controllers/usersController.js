@@ -199,7 +199,6 @@ const usersController = {
           [sequelize.literal(`(SELECT id FROM ${`followships`} WHERE followships.followingId = ${requestId} AND followships.followerId = ${user.id} limit 1)`), 'isFollowing']
         ]
       })
-      // return res.json({ likedTweets })
       return res.render('userPage', { layout: 'main', likedTweets, userInfo, user, to: 'userLikes', render: 'userLikes' })
     }
     catch (error) {
@@ -209,7 +208,7 @@ const usersController = {
     }
   },
 
-  editUserData: (req, res) => {
+  editUserData: async (req, res) => {
     if (Number(req.params.id) !== helpers.getUser(req).id) {
       req.flash('error_messages', '不可修改他人資料')
       return res.redirect('back')
@@ -223,34 +222,114 @@ const usersController = {
       const salt = bcrypt.genSalt(10)
       updateData.password = bcrypt.hash(password, salt)
     }
-
-    if (files && Object.keys(files).length) {
-      if (files.cover) {
-        imgur.setClientID(IMGUR_CLIENT_ID);
-        imgur.upload(files['cover'][0].path, (err, img) => {
-          User.update(
-            { ...updateData, cover: img.data.link },
-            { where: { id: { [Op.eq]: userId } } }
-          )
-        })
+    try {
+      if (files && Object.keys(files).length) {
+        if (files.cover) {
+          imgur.setClientID(IMGUR_CLIENT_ID);
+          imgur.upload(files['cover'][0].path, async (err, img) => {
+            await User.update(
+              { ...updateData, cover: img.data.link },
+              { where: { id: { [Op.eq]: userId } } }
+            )
+          })
+        }
+        if (files.avatar) {
+          imgur.setClientID(IMGUR_CLIENT_ID);
+          imgur.upload(files['avatar'][0].path, async (err, img) => {
+            await User.update(
+              { ...updateData, avatar: img.data.link },
+              { where: { id: { [Op.eq]: userId } } }
+            )
+          })
+        }
+        return res.redirect('back')
+      } else if (updateData.account || updateData.introduction) {
+        await User.update(
+          updateData,
+          { where: { id: { [Op.eq]: userId } } }
+        )
+        res.redirect('back')
+      } else {
+        req.flash('error_messages', '操作失敗')
+        return res.redirect('back')
       }
-      if (files.avatar) {
-        imgur.setClientID(IMGUR_CLIENT_ID);
-        imgur.upload(files['avatar'][0].path, (err, img) => {
-          User.update(
-            { ...updateData, avatar: img.data.link },
-            { where: { id: { [Op.eq]: userId } } }
-          )
-        })
-      }
+    }
+    catch (error) {
+      console.log(error)
+      req.flash('error_messages', '操作失敗')
       return res.redirect('back')
-    } else if (updateData.account || updateData.introduction) {
-      User.update(
-        updateData,
-        { where: { id: { [Op.eq]: userId } } }
-      )
-      res.redirect('back')
-    } else {
+    }
+  },
+
+  getUserFollowings: async (req, res) => {
+    const requestId = helpers.checkId(req, helpers.getUser(req).id)
+    try {
+      const user = {
+        id: helpers.getUser(req).id,
+        name: helpers.getUser(req).name,
+        account: helpers.getUser(req).account,
+        avatar: helpers.getUser(req).avatar,
+        description: helpers.getUser(req).description,
+        createdAt: helpers.getUser(req).createdAt
+      }
+      // 取得當前user及其跟隨對象資料
+      const userFollowings = await User.findAll({
+        raw: true,
+        nest: true,
+        plain: false,
+        where: { id: { [Op.eq]: requestId } },
+        attributes: ['id', 'name', 'account', 'avatar', 'cover', 'introduction',
+          [sequelize.literal('(SELECT COUNT(*) FROM `tweets` WHERE tweets.UserId = User.id)'), 'tweetNum']
+        ],
+        include: [
+          { model: User, as: 'Followings', attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'role'] } }
+        ]
+      })
+      if (userFollowings.length) {
+        userInfo = userFollowings[0]
+      }
+      // return res.json(userFollowings)
+      return res.render('userFollow', { layout: 'main', user, userInfo, userFollowings, to: 'userInfo', render: 'userFollowings', btn: 'followings' })
+    }
+    catch (error) {
+      console.log(error)
+      req.flash('error_messages', '操作失敗')
+      return res.redirect('back')
+    }
+  },
+
+  getUserFollowers: async (req, res) => {
+    const requestId = helpers.checkId(req, helpers.getUser(req).id)
+    try {
+      const user = {
+        id: helpers.getUser(req).id,
+        name: helpers.getUser(req).name,
+        account: helpers.getUser(req).account,
+        avatar: helpers.getUser(req).avatar,
+        description: helpers.getUser(req).description,
+        createdAt: helpers.getUser(req).createdAt
+      }
+  
+      const userFollowers = await User.findAll({
+        raw: true,
+        nest: true,
+        plain: false,
+        where: { id: { [Op.eq]: requestId } },
+        attributes: ['id', 'name', 'account', 'avatar', 'cover', 'introduction',
+          [sequelize.literal('(SELECT COUNT(*) FROM `tweets` WHERE tweets.UserId = User.id)'), 'tweetNum']
+        ],
+        include: [
+          { model: User, as: 'Followers', attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'role'] } }
+        ]
+      })
+      if (userFollowers.length) {
+        userInfo = userFollowers[0]
+      }
+
+      return res.render('userFollow', { layout: 'main', user, userInfo, userFollowers, to: 'userInfo', render: 'userFollowers', btn: 'followers' })
+    }
+    catch (error) {
+      console.log(error)
       req.flash('error_messages', '操作失敗')
       return res.redirect('back')
     }

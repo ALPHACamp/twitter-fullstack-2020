@@ -1,0 +1,27 @@
+.twitter-info-followship {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 6px 0 6px;
+}
+
+.twitter-info-followship a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.following-info a {
+  display: flex;
+  flex-direction: column;
+}
+
+.following-info a :first-child {
+  color: black;
+}
+
+.following-info a span {
+  margin: 0;
+}
+
+.tweet-content-followship {
+  height: 60px;
+}

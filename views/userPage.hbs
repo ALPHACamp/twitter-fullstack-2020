@@ -56,9 +56,9 @@
         <span class="user-account">{{userInfo.account}}</span>
         <p class="user-introduction">{{userInfo.introduction}}</p>
         <div class="user-followship">
-          <a href="/users/{{userInfo}}/followings"><span class="user-following">{{userInfo.followingNum}}個<strong class="user-following-end">跟隨中</strong></span></a>
+          <a href="/users/{{userInfo.id}}/followings"><span class="user-following">{{userInfo.followingNum}}個<strong class="user-following-end">跟隨中</strong></span></a>
           
-          <a href="/users/{{userInfo}}/followers"><span class="user-follower">{{userInfo.followerNum}}位<strong class="user-follower-end">跟隨者</strong></span></a>
+          <a href="/users/{{userInfo.id}}/followers"><span class="user-follower">{{userInfo.followerNum}}位<strong class="user-follower-end">跟隨者</strong></span></a>
         </div>
       </div>
       <div class="user-tweet-link">

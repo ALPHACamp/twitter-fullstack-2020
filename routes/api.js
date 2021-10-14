@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const followshipsController = require('../controllers/followshipsController')
+const apiController = require('../controllers/apiController')
 const helpers = require('../_helpers')
 
 const checkRole = (req, res, next) => {
@@ -9,8 +9,8 @@ const checkRole = (req, res, next) => {
   return res.redirect('/admin/tweets')
 }
 
-router.post('/', checkRole, followshipsController.follow)
+router.get('/users/:id', checkRole, apiController.getUserInfoEdit)
 
-router.delete('/:id', checkRole, followshipsController.unfollow)
+router.post('/users/:id', checkRole, apiController.postUserInfoEdit)
 
 module.exports = router
