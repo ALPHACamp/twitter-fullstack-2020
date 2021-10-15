@@ -162,6 +162,14 @@ const tweetsController = {
       data.UserId = helpers.getUser(req).id
       data.TweetId = req.params.id
       data.comment = req.body.comment
+      if (req.body.comment.length > 140) {
+        req.flash('error_messages', '不可超過140個字')
+        return res.redirect('/tweets')
+      }
+      if (!req.body.comment) {
+        req.flash('error_messages', '內容不可為空')
+        return res.redirect('/tweets')
+      }
       await Reply.create({ ...data })
 
       return res.redirect(`/tweets/${req.params.id}/replies`)

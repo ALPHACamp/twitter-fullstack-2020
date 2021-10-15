@@ -242,13 +242,13 @@ const usersController = {
             )
           })
         }
-        return res.redirect('back')
+        return res.redirect(`/users/${userId}`)
       } else if (updateData.account || updateData.introduction) {
         await User.update(
           updateData,
           { where: { id: { [Op.eq]: userId } } }
         )
-        res.redirect('back')
+        res.redirect(`/users/${userId}`)
       } else {
         req.flash('error_messages', '操作失敗')
         return res.redirect('back')
@@ -288,7 +288,6 @@ const usersController = {
       if (userFollowings.length) {
         userInfo = userFollowings[0]
       }
-      // return res.json(userFollowings)
       return res.render('userFollow', { layout: 'main', user, userInfo, userFollowings, to: 'userInfo', render: 'userFollowings', btn: 'followings' })
     }
     catch (error) {

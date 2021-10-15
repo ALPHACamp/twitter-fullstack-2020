@@ -31,7 +31,7 @@ function buildHTML(useravatar) {
       <form action="/tweets" method="post" class="modal-input-left">
         <div class="modal-input-upper-left">
           <img src="${useravatar}" alt="" class="tweets-img">
-          <textarea type="text" name="description" maxlength="140" placeholder="推你的回覆"></textarea>
+          <textarea type="text" name="description" placeholder="推你的回覆"></textarea>
         </div>
         <button type="submit" class="modal-tweet-btn">回覆</button>
       </form>
