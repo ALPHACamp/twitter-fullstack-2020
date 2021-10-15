@@ -34,7 +34,7 @@ const usersController = {
         name: helpers.getUser(req).name,
         account: helpers.getUser(req).account,
         avatar: helpers.getUser(req).avatar,
-        description: helpers.getUser(req).description,
+        introduction: helpers.getUser(req).introduction,
         createdAt: helpers.getUser(req).createdAt
       }
       const userInfo = await User.findOne({
@@ -80,7 +80,7 @@ const usersController = {
         name: helpers.getUser(req).name,
         account: helpers.getUser(req).account,
         avatar: helpers.getUser(req).avatar,
-        description: helpers.getUser(req).description,
+        introduction: helpers.getUser(req).introduction,
         createdAt: helpers.getUser(req).createdAt
       }
 
@@ -128,7 +128,7 @@ const usersController = {
         name: helpers.getUser(req).name,
         account: helpers.getUser(req).account,
         avatar: helpers.getUser(req).avatar,
-        description: helpers.getUser(req).description,
+        introduction: helpers.getUser(req).introduction,
         createdAt: helpers.getUser(req).createdAt
       }
 
@@ -184,7 +184,7 @@ const usersController = {
         name: helpers.getUser(req).name,
         account: helpers.getUser(req).account,
         avatar: helpers.getUser(req).avatar,
-        description: helpers.getUser(req).description,
+        introduction: helpers.getUser(req).introduction,
         createdAt: helpers.getUser(req).createdAt
       }
 

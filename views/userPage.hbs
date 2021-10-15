@@ -33,7 +33,7 @@
       </div>
   {{#ifCond user.id userInfo.id}}
       <div class="user-edit-btn">
-        <button type="button" class="edit-person-info-btn" data-userid="{{userInfo.id}}" data-useravatar="{{userInfo.avatar}}" data-username="{{userInfo.name}}" data-usercover="{{userInfo.cover}}">編輯個人資料</button>
+        <button type="button" class="edit-person-info-btn" data-userid="{{userInfo.id}}" data-useravatar="{{userInfo.avatar}}" data-username="{{userInfo.name}}" data-usercover="{{userInfo.cover}}"  data-userintroduction="{{userInfo.introduction}}">編輯個人資料</button>
       </div>
   {{else}}
       <div class="user-edit-btn">

@@ -102,7 +102,7 @@
 
 .edit-account {
   position: relative;
-  top: -65px;
+  top: -50px;
   padding: 0 16px 0 16px;
   height: 60px;
   display: flex;
@@ -120,22 +120,32 @@
   background-color: #e5e5e5;
 }
 
-.edit-account :nth-child(2) {
+.modal-username-input {
   border: none;
   border-bottom: lightslategray 3px solid;
   background-color: #e5e5e5;
 }
 
-.edit-account :nth-child(3) {
+.modal-edit-name {
   align-self: flex-end;
+  display: flex;
+  background-color: white;
+}
+
+.modal-edit-name span {
   font-size: 16px;
-  font-weight: bolder;
   color: lightslategray;
+  font-weight: bolder;
+  background-color: white;
+}
+
+.edit-modal-user-name {
+  background-color: white !important;
 }
 
 .edit-description {
   position: relative;
-  top: -65px;
+  top: -25px;
   padding: 0 16px 0 16px;
   height: 160px;
   display: flex;

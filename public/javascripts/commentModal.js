@@ -31,12 +31,45 @@ if (comment) {
 if (userEditBTN) {
   userEditBTN.addEventListener('click', event => {
     const target = event.target
-    const { userid, username, usercover, useravatar } = target.dataset
+    const { userid, username, usercover, useravatar, userintroduction } = target.dataset
     const modalEdit = document.createElement("div")
     modalEdit.classList = 'modal-edit-user'
-    modalEdit.innerHTML = buildHTMLEdit(userid, username, usercover, useravatar)
+    modalEdit.innerHTML = buildHTMLEdit(userid, username, usercover, useravatar, userintroduction)
     body.insertBefore(modalEdit, main)
     const modalClose = document.querySelector('.close-edit')
+
+    const modalUsernameInput = document.querySelector('.modal-username-input')
+    const modalIntroductionInput = document.querySelector('.self-introduction')
+    const modalNameCount = document.querySelector('.edit-modal-user-name')
+    const modalIntroductionCount = document.querySelector('.edit-modal-user-introduction')
+
+    let nameLength = modalUsernameInput.value.length
+    let introductionLength = modalIntroductionInput.value.length
+
+    modalUsernameInput.addEventListener('keyup', event => {
+      if (event.keyCode === 8 || event.keyCode === 46){
+        if (nameLength >0) {
+          modalNameCount.innerHTML = nameLength -= 1
+        } else {
+          modalNameCount.innerHTML = 0
+        }
+      } else {
+        modalNameCount.innerHTML = nameLength += 1
+      }
+    })
+
+    modalIntroductionInput.addEventListener('keyup', event => {
+      if (event.keyCode === 8 || event.keyCode === 46) {
+        if (introductionLength > 0) {
+          modalIntroductionCount.innerHTML = introductionLength -= 1
+        } else {
+          modalIntroductionCount.innerHTML = 0
+        }
+      } else {
+        modalIntroductionCount.innerHTML = introductionLength += 1
+      }
+    })
+    
     modalClose.addEventListener('click', event => {
       modalEdit.remove()
     })
@@ -113,7 +146,8 @@ function removeModalTweet() {
   })
 }
 
-function buildHTMLEdit(userid, username, usercover, useravatar) {
+function buildHTMLEdit(userid, username, usercover, useravatar, userintroduction) {
+  const nameLength = username.length
   return (
   `
   <form action="/users/${userid}?_method=PUT" method="post" class="modal-edit-box" enctype="multipart/form-data">
@@ -136,12 +170,18 @@ function buildHTMLEdit(userid, username, usercover, useravatar) {
     </div>
     <div class="edit-account">
       <span>名稱</span>
-      <input type="text" name="account" value="${username}" maxlength="50">
-      <span>/50</span>
+      <input type="text" name="account" value="${username}" maxlength="50" class="modal-username-input">
+      <div class="modal-edit-name">
+        <span class="edit-modal-user-name">${nameLength}</span>
+        <span>/50</span>
+      </div>
     </div>
     <div class="edit-description">
-      <textarea type="text" name="introduction" maxlength="160"  class="self-introduction" placeholder="自我介紹"></textarea>
+      <textarea type="text" name="introduction" value=${userintroduction} maxlength="160" class="self-introduction" placeholder="自我介紹"></textarea>
+      <div class="modal-edit-name">
+      <span class="edit-modal-user-introduction"></span>
       <span>/160</span>
+      </div>
     </div>
   </form>
   `

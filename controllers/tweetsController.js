@@ -42,7 +42,7 @@ const tweetsController = {
         name: helpers.getUser(req).name,
         account: helpers.getUser(req).account,
         avatar: helpers.getUser(req).avatar,
-        description: helpers.getUser(req).description,
+        introduction: helpers.getUser(req).introduction,
         createdAt: helpers.getUser(req).createdAt
       }
       
@@ -208,7 +208,7 @@ const tweetsController = {
         name: helpers.getUser(req).name,
         account: helpers.getUser(req).account,
         avatar: helpers.getUser(req).avatar,
-        description: helpers.getUser(req).description,
+        introduction: helpers.getUser(req).introduction,
         createdAt: helpers.getUser(req).createdAt
       }
       return res.render('commentPage', { layout: 'main', reply, tweet, userInfo: user })
