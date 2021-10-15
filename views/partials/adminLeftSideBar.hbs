@@ -1,0 +1,30 @@
+{{!-- 獨立模組 通用所有管理者頁面 --}}
+{{!-- css來自 leftsidebar.css & adminTweets.css --}}
+<div class="left-bar">
+  <div class="upper-region">
+    {{!-- <div class="logo">
+
+    </div> --}}
+    <div class="admin-links">
+      {{#ifCond to 'adminTweet'}}
+      <a href="/admin/tweets" class="homepage-link"><i class="fas fa-house-user"></i><span
+          class="left-side-span on">推文清單</span></a>
+      {{else}}
+      <a href="/admin/tweets" class="homepage-link"><i class="fas fa-house-user"></i><span
+          class="left-side-span">推文清單</span></a>
+      {{/ifCond}}
+
+      {{#ifCond to 'adminUser'}}
+      <a href="/admin/users" class="person-info"><i class="far fa-user"></i><span
+          class="left-side-span on">使用者列表</span></a>
+      {{else}}
+      <a href="/admin/users" class="person-info"><i class="far fa-user"></i><span
+          class="left-side-span">使用者列表</span></a>
+      {{/ifCond}}
+    </div>
+  </div>
+  <div class="logout-region">
+    <a href="/logout" class="logout"><i class="fas fa-sign-out-alt"></i><span
+        class="left-side-span-logout">登出</span></a>
+  </div>
+</div>

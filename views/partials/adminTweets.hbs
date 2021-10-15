@@ -1,0 +1,21 @@
+{{!-- 路由/admin/tweets模組 --}}
+<h4 class="admin-tweets-title">推文清單</h4>
+{{#each adminTweets}}
+<div class="admin-tweet">
+  <div class="admin-twitter-avatar">
+    <img src="{{this.user.avatar}}" alt="" class="admin-tweets-img">
+  </div>
+  <div class="admin-tweet-content-box">
+    <div class="admin-twitter-info">
+      <span class="twitter-name">{{this.user.name}}</span>
+      <span class="twitter-account">{{this.user.account}}</span>
+      <span class="twitter-dot">。</span>
+      <span class="twitter-createdAt">{{moment this.createdAt}}</span>
+      <div class="tweet-content">{{this.description}}</div>
+    </div>
+    <form action="/admin/tweets/{{this.id}}?_method=Delete" class="admin-delete-form" method="post">
+      <button type="submit" class="admin-delete-btn"><i class="fas fa-times"></i></button>
+    </form>
+  </div>
+</div>
+{{/each}}

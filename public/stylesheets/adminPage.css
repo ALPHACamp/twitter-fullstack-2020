@@ -1,0 +1,13 @@
+.admin-homepage {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.admin-tweets-list {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  background-color: lightgray;
+  padding: 0 1px 0 1px;
+}

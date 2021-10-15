@@ -1,0 +1,92 @@
+.admin-users {
+  width: 75%;
+  border: lightgrey 0 1px 0 1px solid !important;
+  padding: 1px;
+}
+
+.admin-users-title {
+  margin: 0 0 1px 0;
+  padding: 12px 0 12px 12px;
+  font-size: 18px;
+  background-color: white;
+  border-bottom: lightgrey 1px solid;
+}
+
+.admin-user-list {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  border: lightgrey 0 1px 0 1px solid !important;
+}
+
+.admin-user-card {
+  position: relative;
+  width: 23%;
+  height: 220px;
+  border-radius: 8px;
+  margin: 10px 1% 10px 1%;
+}
+
+.admin-user-cover {
+  height: 80px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px 8px 0 0 ;
+}
+
+.admin-user-cover img {
+  width: 100%;
+}
+
+.admin-user-avatar {
+  position: absolute;
+  height: 60px;
+  width: 60px;
+  z-index: 6;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px white solid;
+}
+
+.admin-user-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  align-items: center;
+}
+
+.admin-user-info :nth-child(2) {
+  color: lightgrey;
+}
+
+.admin-user-feedback {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 8px;
+}
+
+.like-heart {
+  color: #f60;
+}
+
+.admin-user-followship {
+  width: 100%;
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.admin-user-followship span {
+  color: lightslategray;
+  font-weight: bold;
+}
+
+.admin-user-following-num, .admin-user-follower-num {
+  color: black !important;
+}

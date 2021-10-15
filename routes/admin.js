@@ -4,22 +4,14 @@ const passport = require('../config/passport')
 const helpers = require('../_helpers')
 
 const checkAdminRole = (req, res, next) => {
-  if (helpers.getUser(req).role === 'admin') {
+  if (helpers.ensureAuthenticated(req)) {
+    if (helpers.getUser(req).role !== 'admin') {
+      return res.redirect('/admin/signin')
+    }
     return next()
   }
-  return res.redirect('/admin/signin')
+  return res.redirect('/signin')
 }
-
-// const authenticatedAdmin = async (req, res, next) => {
-//   if (helpers.ensureAuthenticated(req)) {
-//     const user = await User.findByPk(helpers.getUser(req).id)
-//     if (user.dataValues.role === 'admin') { 
-//       return next() 
-//     }
-//   }
-//   req.flash('error_messages', '請先登入')
-//   return res.redirect('/admin/signin')
-// }
 
 router.get('/signin', adminController.signinPage)
 
@@ -28,6 +20,10 @@ router.post('/signin', passport.authenticate('local', {
   failureFlash: true
 }), adminController.signin)
 
-router.get('/tweets', checkAdminRole)
+router.get('/tweets', checkAdminRole, adminController.getTweets)
+
+router.get('/users', checkAdminRole, adminController.getUsers)
+
+router.delete('/tweets/:id', checkAdminRole, adminController.deleteTweet)
 
 module.exports = router

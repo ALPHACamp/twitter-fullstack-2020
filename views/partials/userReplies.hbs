@@ -1,4 +1,4 @@
-{{!-- 路由/users/id/tweets模組 --}}
+{{!-- 路由/users/id/replies模組 --}}
 {{#each userReplies}}
 <div class="tweet">
   <div class="twitter-avatar">
@@ -8,12 +8,10 @@
   </div>
   <div class="tweet-content-box">
     <div class="twitter-info">
-      {{!-- <a href="/tweets/{{../userData.id}}/replies" class="reply-link"> --}}
         <span class="twitter-name">{{this.user.name}}</span>
         <span class="twitter-account">{{this.user.account}}</span>
         <span class="twitter-dot">。</span>
         <span class="twitter-createdAt">{{moment this.createdAt}}</span>
-      {{!-- </a> --}}
       <div class="replied-target">
         <span>回覆</span>
         <span>{{this.tweet.user.account}}</span>

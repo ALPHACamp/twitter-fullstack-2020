@@ -1,0 +1,38 @@
+{{!-- 路由/admin/users模組 --}}
+<h4 class="admin-users-title">使用者列表</h4>
+<div class="admin-user-list">
+  {{#each adminUsersData}}
+  <div class="admin-user-card">
+    <div class="admin-user-cover">
+      <img src="{{this.cover}}" alt="">
+    </div>
+    <div class="admin-user-avatar">
+      <img src="{{this.avatar}}" alt="">
+    </div>
+    <div class="admin-user-info">
+      <span class="admin-user-name">{{this.name}}</span>
+      <span class="admin-user-account">{{this.account}}</span>
+    </div>
+
+    <div class="admin-user-feedback">
+      {{#if this.tweetsCount}}
+      <span class="admin-user-tweetNum"><i class="fas fa-comment comment-icon"></i>{{this.tweetsCount}}</span>
+      {{else}}
+      <span class="admin-user-tweetNum"><i class="far fa-comment comment-icon"></i>{{this.tweetsCount}}</span>
+      {{/if}}
+
+      {{#if this.likesCount}}
+      <span class="admin-user-likeNum"><i class="fas fa-heart like-heart"></i>{{this.likesCount}}</span>
+      {{else}}
+      <span class="admin-user-likeNum"><i class="fas fa-heart"></i>{{this.likesCount}}</span>
+      {{/if}}
+    </div>
+
+    <div class="admin-user-followship">
+      <span class="admin-user-following"><span class="admin-user-following-num">{{this.followingsCount}}個</span>跟隨中</span>
+      <span class="admin-user-follower"><span class="admin-user-follower-num">{{this.followersCount}}</span>跟隨者</span>
+    </div>
+  </div>
+  {{/each}}
+</div>
+

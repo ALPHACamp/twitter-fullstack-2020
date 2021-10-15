@@ -9,10 +9,6 @@ module.exports = {
     }
   },
 
-  ifCon: function (a) {
-    console.log('============',a.UserId)
-  },
-
   ifCheck: function (a, b, options) {
     if (a.id === b) {
       return options.fn(this)
@@ -27,14 +23,6 @@ module.exports = {
 
   getId: function (user) {
     return user.dataValues.id
-  },
-
-  getAvatar: function (user) {
-    return user.dataValues.avatar
-  },
-
-  getAccount: function (user) {
-    return user.dataValues.account
   },
 
   checkLike: function (user, arr, options) {
@@ -96,25 +84,5 @@ module.exports = {
     } else {
       return options.inverse(this)
     }
-  }, 
-
-  // tweetLikeCheck: function (user, arr, options) {
-  //   arr = arr.map(item => item.likes.UserId)
-  //   const id = Number(user.id)
-  //   if (arr.includes(id)) {
-  //     return options.fn(this)
-  //   } else {
-  //     return options.inverse(this)
-  //   }
-  // },
-
-  // tweetReplyCheck: function (user, arr, options) {
-  //   arr = arr.map(item => item.replies.UserId)
-  //   const id = Number(user.id)
-  //   if (arr.includes(id)) {
-  //     return options.fn(this)
-  //   } else {
-  //     return options.inverse(this)
-  //   }
-  // }
+  }
 }

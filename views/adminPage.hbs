@@ -1,0 +1,18 @@
+{{!-- 路由 /admin/tweets --}}
+{{!-- 路由 /admin/users --}}
+<div class="admin-homepage">
+  {{!-- 左邊欄位 --}}
+  {{>adminLeftSideBar to = to}}
+  
+  {{#ifCond to 'adminTweet'}}
+    <div class="admin-tweets-list">
+      {{>adminTweets adminTweets = adminTweets}}
+    </div>
+  {{/ifCond}}
+
+  {{#ifCond to 'adminUser'}}
+    <div class="admin-users">
+      {{>adminUsers adminUsersData = adminUsersData}}
+    </div>
+  {{/ifCond}}
+</div>
