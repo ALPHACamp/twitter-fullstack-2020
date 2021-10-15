@@ -34,11 +34,6 @@ app.use((req, res, next) => {
   next()
 })
 
-// const helpers = require('./_helpers');
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-
-// app.get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 require('./routes')(app, passport)

@@ -2,7 +2,7 @@ const rightSideBar = document.querySelector('.rightSideBar')
 
 if (rightSideBar) {
   const id = rightSideBar.dataset.userid
-  axios.get(`/tweets/${id}/top10`)
+  axios.get(`https://alphitter-turagon.herokuapp.com/tweets/${id}/top10`)
   .then(response => {
     let topTwitters = response.data.topTwitters
     const userFollowingList = response.data.userFollowingList
