@@ -16,7 +16,7 @@ if (accountInput) {
       accountNotice.innerHTML = '帳號不可以為空'
       return
     }
-    axios.get(`https://alphitter-turagon.herokuapp.com/signup/${account}`)
+    axios.get(`/signup/${account}`)
     .then(response => {
       if (response.data === 'true') {
         accountNotice.className = 'form-account-notice-valid'
