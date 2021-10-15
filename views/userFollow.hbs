@@ -44,7 +44,7 @@
       {{/ifCond}}
 
       {{#ifCond render 'userFollowers'}}
-      {{>userFollowership followData = userFollowers }}
+      {{>userFollowership followData = userFollowers userFollowingList = userFollowingList }}
       {{/ifCond}}
 
     </div>

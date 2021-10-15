@@ -9,16 +9,21 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: DataTypes.STRING(189),
     name: DataTypes.STRING(189),
-    avatar: DataTypes.STRING(189),
+    avatar: {
+      type: DataTypes.STRING(189),
+      defaultValue: `https://loremflickr.com/120/120/beijing,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`
+    },
     introduction: DataTypes.TEXT,
     account: {
       type: DataTypes.STRING(189),
       unique: true
     },
-    cover: DataTypes.STRING(189),
-    role: {
+    cover: {
       type: DataTypes.STRING(189),
-      // defaultValue: 'user'
+      defaultValue: `https://loremflickr.com/320/240/paris,girl/?random=${Math.random() * 100}&lock=${Number(Math.random() * 100)}`
+    },
+    role: {
+      type: DataTypes.STRING(189)
     }
   },
   // 為了通過測試 先mark掉

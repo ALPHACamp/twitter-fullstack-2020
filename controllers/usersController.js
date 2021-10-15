@@ -285,9 +285,14 @@ const usersController = {
           { model: User, as: 'Followings', attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'role'] } }
         ]
       })
+
+      let userInfo = ''
       if (userFollowings.length) {
         userInfo = userFollowings[0]
+      } else {
+        userInfo = await User.findByPk(requestId, { raw: true })
       }
+      
       return res.render('userFollow', { layout: 'main', user, userInfo, userFollowings, to: 'userInfo', render: 'userFollowings', btn: 'followings' })
     }
     catch (error) {
@@ -321,11 +326,25 @@ const usersController = {
           { model: User, as: 'Followers', attributes: { exclude: ['password', 'createdAt', 'updatedAt', 'role'] } }
         ]
       })
+
+      let userFollowingList = await Followship.findAll({
+        raw: true,
+        nest: true,
+        plain: false,
+        attributes: ['followingId'],
+        where: { followerId: requestId }
+      })
+
+      userFollowingList = await userFollowingList.map(item => item.followingId)
+
+      let userInfo = ''
       if (userFollowers.length) {
         userInfo = userFollowers[0]
+      } else {
+        userInfo = await User.findByPk(requestId, { raw: true })
       }
 
-      return res.render('userFollow', { layout: 'main', user, userInfo, userFollowers, to: 'userInfo', render: 'userFollowers', btn: 'followers' })
+      return res.render('userFollow', { layout: 'main', user, userInfo, userFollowers, userFollowingList, to: 'userInfo', render: 'userFollowers', btn: 'followers' })
     }
     catch (error) {
       console.log(error)

@@ -13,7 +13,7 @@
           <span class="twitter-account">{{this.Followers.account}}</span>
         </a>
       </div>
-      {{#ifCond this.Followers.Followship.followingId ../userInfo.id}}
+      {{#checkUserFollowing ../userFollowingList this.Followers.id}}
       <form action="/followships/{{this.Followers.Followship.followerId}}?_method=DELETE" method="POST">
         <button type="submit" class="following">正在跟隨</button>
       </form>
@@ -22,7 +22,7 @@
         <input type="text" class="top-twitter-id" name="id" value="{{this.Followers.Followship.followerId}}">
         <button type="submit" data-id="{{this.Followers.Followship.followerId}}" class="not-follow follow-btn">跟隨</button>
       </form>
-      {{/ifCond}}
+      {{/checkUserFollowing}}
     </div>
     <div class="tweet-content-followship">{{this.Followers.introduction}}</div>
   </div>

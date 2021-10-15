@@ -84,5 +84,13 @@ module.exports = {
     } else {
       return options.inverse(this)
     }
+  },
+
+  checkUserFollowing: function (arr, userId, options) {
+    if (arr.includes(userId)) {
+      return options.fn(this)
+    } else {
+      return options.inverse(this)
+    }
   }
 }
