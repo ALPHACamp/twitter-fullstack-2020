@@ -1,3 +1,5 @@
+// rebase 1
+// rebase 2
 const db = require('../models')
 const user = require('../models/user')
 const Tweet = db.Tweet

@@ -75,7 +75,7 @@ const userController = {
       .catch(err => console.log(err))
   },
 
-  getUserSelfReply: async (req, res) => {
+  getUserReplies: async (req, res) => {
     const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
     const users = await User.findAll({
       include: [
@@ -115,10 +115,10 @@ const userController = {
       where: { followerId: req.params.id }
     })
 
-    return res.render('userSelfReply', { users, replies, tweets, currentUser, followerCount, followingsCount, topUsers })
+    return res.render('userReplies', { users, replies, tweets, currentUser, followerCount, followingsCount, topUsers })
   },
 
-  getUserSelfLike: async (req, res) => {
+  getUserLikes: async (req, res) => {
     const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
 
     const users = await User.findAll({
@@ -168,7 +168,7 @@ const userController = {
       where: { followerId: req.params.id }
     })
 
-    return res.render('userSelfLike', { BASE_URL, data, tweets, currentUser, followerCount, followingsCount, topUsers })
+    return res.render('userLikes', { BASE_URL, data, tweets, currentUser, followerCount, followingsCount, topUsers })
   },
 
   getUserSetting: (req, res) => {
