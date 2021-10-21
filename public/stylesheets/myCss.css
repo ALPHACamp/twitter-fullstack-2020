@@ -40,6 +40,13 @@
   border-radius:50px;
 }
 
+.userSidebar{
+  width: 235px;
+  height: 1196px;
+  left: 113px;
+  top: 4px;
+}
+
 .popularArea{
   width: 350px;
   height: 710px;
