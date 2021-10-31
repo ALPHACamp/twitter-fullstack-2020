@@ -108,52 +108,52 @@
             </li>
           </ul>
         </div>
+        <div class='tab-content position-absolute' style="z-index: 5; left: 30px; top: 100px;">
+          <div class='tab-pane active' id='follower' role='tabpanel' aria-labelledby='home-tab'>
+            <ul class='list-group list-group-flush border-bottom'>
+        
+              {{#each followings}}
+              {{#if this.isFollowed}}
+              <li class='list-group-item'>
+                <div class='row justify-content-around align-items-start mb-1 p-2 bg-white'>
+                  <div class='col-1 d-flex justify-content-center align-items-center'>
+                    <a href='/users/{{this.id}}' class='p-1'>
+                      <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                        alt='A user' width='75' height='75' class='rounded-circle' />
+                    </a>
+                  </div>
+                  <div class='col-7 pt-3 d-flex flex-column align-items-start' style='padding-left: 2em;'>
+                    <a href='/users/{{this.id}}' class='h5 fw-bold text-decoration-none text-dark'>{{this.name}}</a>
+                    <p class='text-muted'>@{{this.account}}</p>
+                    <h6 class='card-text'>{{this.introduction}}</h6>
+                  </div>
+                  <div class='col-4 ps-3 d-flex justify-content-center align-items-center'>
+        
+                    {{#if this.isFollowed}}
+                    <form action='/followships/{{this.id}}?_method=DELETE' method='POST' style='display: contents;'>
+                      <button type='submit' class='btn btn-tomato fw-bold' name='{{user.id}}'
+                        style='font-size: 0.95em;border-radius: 30px 30px 30px 30px;'>正在跟隨</button>
+                    </form>
+                    {{else}}
+                    <form action='/followships/{{this.id}}' method='POST' style='display: contents;'>
+                      <button type='submit' class='btn btn-outline-tomato fw-bold' name='{{user.id}}'
+                        style='font-size: 0.95em; border-radius: 30px 30px 30px 30px;'>跟隨</button>
+                    </form>
+                    {{/if}}
+        
+                  </div>
+                </div>
+              </li>
+              {{/if}}
+              {{/each}}
+        
+            </ul>
+          </div>
+        </div>
       </div>
      
 
-      <div class='tab-content position-absolute' style="z-index: 5; left: 30px; top: 150px;">
-        <div class='tab-pane active' id='follower' role='tabpanel' aria-labelledby='home-tab'>
-          <ul class='list-group list-group-flush border-bottom'>
-
-            {{#each followings}}
-            {{#if this.isFollowed}}
-            <li class='list-group-item'>
-              <div class='row justify-content-around align-items-start mb-1 p-2 bg-white'>
-                <div class='col-1 d-flex justify-content-center align-items-center'>
-                  <a href='/users/{{this.id}}' class='p-1'>
-                    <img
-                      src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
-                      alt='A user' width='75' height='75' class='rounded-circle' />
-                  </a>
-                </div>
-                <div class='col-7 pt-3 d-flex flex-column align-items-start' style='padding-left: 2em;'>
-                  <a href='/users/{{this.id}}' class='h5 fw-bold text-decoration-none text-dark'>{{this.name}}</a>
-                  <p class='text-muted'>@{{this.account}}</p>
-                  <h6 class='card-text'>{{this.introduction}}</h6>
-                </div>
-                <div class='col-4 ps-3 d-flex justify-content-center align-items-center'>
-
-                  {{#if this.isFollowed}}
-                  <form action='/followships/{{this.id}}?_method=DELETE' method='POST' style='display: contents;'>
-                    <button type='submit' class='btn btn-tomato fw-bold' name='{{user.id}}'
-                      style='font-size: 0.95em;border-radius: 30px 30px 30px 30px;'>正在跟隨</button>
-                  </form>
-                  {{else}}
-                  <form action='/followships/{{this.id}}' method='POST' style='display: contents;'>
-                    <button type='submit' class='btn btn-outline-tomato fw-bold' name='{{user.id}}'
-                      style='font-size: 0.95em; border-radius: 30px 30px 30px 30px;'>跟隨</button>
-                  </form>
-                  {{/if}}
-
-                </div>
-              </div>
-            </li>
-            {{/if}}
-            {{/each}}
-
-          </ul>
-        </div>
-      </div>
+      
 
     </div>
     {{!-- follower bar --}}
