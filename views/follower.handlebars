@@ -1,7 +1,7 @@
 <div class="container-fluid" id="tweets">
     <div class="row flex-nowrap ps-xl-2 justify-content-around">
         {{!-- Home bar --}}
-        <div class="col-auto col-lg-3">
+        <div class="col-auto col-lg-3 d-none d-sm-block">
             <a class="d-flex ml-5 py-3 pl-4" href="/">
                 <i class="fab fa-twitter-square" style="font-size: 2.5em; color: #FF6600;"></i>
             </a>
@@ -44,74 +44,113 @@
 
         {{!-- Middle Main bar --}}
         <div class="row col-9 col-lg-6 col-md-7 col-sm-8 py-2">
-            <div class="card-header col-12 row m-0 align-items-start" style="max-height: 55px;">
-                <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
-                    class="col-auto d-flex align-items-center">
-                    <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
-                </a>
-                <a href="/users/{{user.id}}/tweets" class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
-                    style="text-decoration: none;">
-                    <span class="h5 text-dark"
-                        style="line-height: 15px; font-size: 19px; font-weight: 900;">{{user.name}}</span>
-                    <span class="text-dark" style="color: #657786; font-size: 13px; line-height: 15px">{{tweetCount}}
-                        推文數</span>
-                </a>
+            <!--navbar-->
+            <div class="pos-f-t d-block d-sm-none">
+                <div class="collapse" id="navbarToggleExternalContent">
+                    <div class="bg-white p-4">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link align-middle text-dark" href="/tweets">
+                                    <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
+            
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link align-middle text-dark h-tomato" href="/messages/public">
+                                    <i class="far fa-envelope" style="font-size: 1.2em;"></i>
+            
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}/tweets">
+                                    <i class="far fa-user" style="font-size: 1.2em;"></i>
+            
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link align-middle text-dark h-tomato" href="/setting">
+                                    <i class="fas fa-cog" style="font-size: 1.2em;"></i>
+            
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <nav class="navbar navbar-light bg-white">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+                        aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </nav>
             </div>
-            <div class='follower-head col-12 row mt-0 position-absolute' style="z-index: 5; left: 15px; top: 100px;">
-                <ul class='nav nav-tabs' id='myTab' role='tablist'>
-                    <li class='nav-item'>
-                        <a class='nav-link active' id='message-tab' href='/users/{{id}}/followers' role='tab'
-                            aria-controls='home' aria-selected='true'>跟隨者</a>
-                    </li>
-                    <li class='nav-item'>
-                        <a class='nav-link' id='profile-tab' href='/users/{{id}}/followings' role='tab'
-                            aria-controls='profile' aria-selected='false'>正在跟隨</a>
-                    </li>
-                </ul>
-            </div>
-            <div class='tab-content position-absolute' style="z-index: 5; left: 30px; top: 150px;">
-                <div class='tab-pane active' id='follower' role='tabpanel' aria-labelledby='home-tab'>
-                    <ul class='list-group list-group-flush border-bottom'>
-                        {{#each followers}}
-                        <li class='list-group-item'>
-                            <div class='row justify-content-around align-items-start mb-1 p-2 bg-white'>
-                                <div class='col-1 d-flex justify-content-center align-items-center'>
-                                    <a href='/users/{{this.id}}' class='p-1'>
-                                        <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
-                                            alt='A user' width='75' height='75' class='rounded-circle' />
-                                    </a>
-                                </div>
-                                <div class='col-7 pt-3 d-flex flex-column align-items-start' style='padding-left: 2em;'>
-                                    <a href='/users/{{this.id}}'
-                                        class='h5 fw-bold text-decoration-none text-dark'>{{this.name}}</a>
-                                    <p class='text-muted'>@{{this.account}}</p>
-                                    <h6 class='card-text'>{{this.introduction}}</h6>
-                                </div>
-                                <div class='col-4 ps-3 d-flex justify-content-center align-items-center'>
-
-                                    {{#if this.isFollowed}}
-                                    <form action='/followships/{{this.id}}?_method=DELETE' method='POST'
-                                        style='display: contents;'>
-                                        <button type='submit' class='btn btn-tomato fw-bold' name='{{user.id}}'
-                                            style='font-size: 0.95em;border-radius: 30px 30px 30px 30px;'>正在跟隨</button>
-                                    </form>
-                                    {{else}}
-                                    <form action='/followships/{{this.id}}' method='POST' style='display: contents;'>
-                                        <button type='submit' class='btn btn-outline-tomato fw-bold' name='{{user.id}}'
-                                            style='font-size: 0.95em;border-radius: 30px 30px 30px 30px;'>跟隨</button>
-                                    </form>
-                                    {{/if}}
-
-                                </div>
-                            </div>
+            <div class="card col-12" style="border: none;">
+                <div class="card-header col-12 row m-0 align-items-start" style="max-height: 55px;">
+                    <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
+                        class="col-auto d-flex align-items-center">
+                        <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
+                    </a>
+                    <a href="/users/{{user.id}}/tweets"
+                        class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
+                        style="text-decoration: none;">
+                        <span class="h5 text-dark" style="line-height: 15px; font-size: 19px; font-weight: 900;">{{user.name}}</span>
+                        <span class="text-dark" style="color: #657786; font-size: 13px; line-height: 15px">{{tweetCount}}
+                            推文數</span>
+                    </a>
+                </div>
+                <div class='follower-head col-12 row mt-0'>
+                    <ul class='nav nav-tabs' id='myTab' role='tablist'>
+                        <li class='nav-item'>
+                            <a class='nav-link active' id='message-tab' href='/users/{{id}}/followers' role='tab' aria-controls='home'
+                                aria-selected='true'>跟隨者</a>
                         </li>
-
-                        {{/each}}
-
+                        <li class='nav-item'>
+                            <a class='nav-link' id='profile-tab' href='/users/{{id}}/followings' role='tab' aria-controls='profile'
+                                aria-selected='false'>正在跟隨</a>
+                        </li>
                     </ul>
                 </div>
+                <div class='tab-content position-absolute' style="z-index: 5; left: 30px; top: 100px;">
+                    <div class='tab-pane active' id='follower' role='tabpanel' aria-labelledby='home-tab'>
+                        <ul class='list-group list-group-flush border-bottom'>
+                            {{#each followers}}
+                            <li class='list-group-item'>
+                                <div class='row justify-content-around align-items-start mb-1 p-2 bg-white'>
+                                    <div class='col-1 d-flex justify-content-center align-items-center'>
+                                        <a href='/users/{{this.id}}' class='p-1'>
+                                            <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                                                alt='A user' width='75' height='75' class='rounded-circle' />
+                                        </a>
+                                    </div>
+                                    <div class='col-7 pt-3 d-flex flex-column align-items-start' style='padding-left: 2em;'>
+                                        <a href='/users/{{this.id}}' class='h5 fw-bold text-decoration-none text-dark'>{{this.name}}</a>
+                                        <p class='text-muted'>@{{this.account}}</p>
+                                        <h6 class='card-text'>{{this.introduction}}</h6>
+                                    </div>
+                                    <div class='col-4 ps-3 d-flex justify-content-center align-items-center'>
+                
+                                        {{#if this.isFollowed}}
+                                        <form action='/followships/{{this.id}}?_method=DELETE' method='POST' style='display: contents;'>
+                                            <button type='submit' class='btn btn-tomato fw-bold' name='{{user.id}}'
+                                                style='font-size: 0.95em;border-radius: 30px 30px 30px 30px;'>正在跟隨</button>
+                                        </form>
+                                        {{else}}
+                                        <form action='/followships/{{this.id}}' method='POST' style='display: contents;'>
+                                            <button type='submit' class='btn btn-outline-tomato fw-bold' name='{{user.id}}'
+                                                style='font-size: 0.95em;border-radius: 30px 30px 30px 30px;'>跟隨</button>
+                                        </form>
+                                        {{/if}}
+                
+                                    </div>
+                                </div>
+                            </li>
+                
+                            {{/each}}
+                
+                        </ul>
+                    </div>
+                </div>
             </div>
-
+            
         </div>
         {{!-- follower bar --}}
         <div class="col-auto col-md-3 col-lg-3">
