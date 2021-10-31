@@ -1,11 +1,11 @@
 <div class="container-fluid " id="tweets">
     <div class="row flex-nowrap justify-content mr-3">
-        <div class="col-auto col-lg-3">
+        <div class="col-auto col-lg-3 d-none d-sm-block">
             <a class="d-flex ml-5 py-3 pl-4" href="/">
                 <i class="fab fa-twitter-square" style="font-size: 2.5em; color: #FF6600;"></i>
             </a>
             <div class="d-flex flex-column align-items-start ml-5 px-3 pt-2 min-vh-100">
-                <ul class="nav flex-column nav-pills pr-5" id="menu" style="width: 100%;">
+                <ul class="nav flex-column nav-pills" id="menu" style="width: 100%;">
                     <li class="nav-item py-1">
                         <a class="nav-link align-middle text-dark " href="/tweets">
                             <i class="fas fa-home" style="font-size: 1.2em;"></i>
@@ -40,8 +40,47 @@
                 </ul>
             </div>
         </div>
+        <div class="col-12 col-md-7 col-lg-6 py-2">
+            <!--navbar-->
+            <div class="pos-f-t d-block d-sm-none">
+                <div class="collapse" id="navbarToggleExternalContent">
+                    <div class="bg-white p-4">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link align-middle text-dark" href="/tweets">
+                                    <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
 
-        <div class="col-6">
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link align-middle text-dark h-tomato" href="/messages/public">
+                                    <i class="far fa-envelope" style="font-size: 1.2em;"></i>
+
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}/tweets">
+                                    <i class="far fa-user" style="font-size: 1.2em;"></i>
+
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link align-middle text-dark h-tomato" href="/setting">
+                                    <i class="fas fa-cog" style="font-size: 1.2em;"></i>
+
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <nav class="navbar navbar-light bg-white">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </nav>
+            </div>
             <div class="img mt-5 mb-2">
                 <strong>帳戶設定</strong>
             </div>
