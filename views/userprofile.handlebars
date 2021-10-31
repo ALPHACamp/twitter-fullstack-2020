@@ -1,7 +1,6 @@
 <div class="container-fluid" id="tweets">
   <div class="row flex-nowrap ps-xl-2 justify-content-around">
-    {{!-- Home bar --}}
-    <div class="col-auto col-lg-3">
+    <div class="col-auto col-lg-3 d-none d-sm-block">
       <a class="d-flex ml-5 py-3 pl-4" href="/">
         <i class="fab fa-twitter-square" style="font-size: 2.5em; color: #FF6600;"></i>
       </a>
@@ -44,13 +43,53 @@
     </div>
 
     {{!-- Middle Main bar --}}
-    <div class="row col-9 col-lg-6 col-md-7 col-sm-8 py-2">
+    <div class="row col-12 col-md-7 col-lg-6 py-2">
+      <!--navbar-->
+      <div class="pos-f-t d-block d-sm-none">
+        <div class="collapse" id="navbarToggleExternalContent">
+          <div class="bg-white p-4">
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link align-middle text-dark" href="/tweets">
+                  <i class="fas fa-home" style="font-size: 1.2em;"></i>
+
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link align-middle text-dark h-tomato" href="/messages/public">
+                  <i class="far fa-envelope" style="font-size: 1.2em;"></i>
+
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}/tweets">
+                  <i class="far fa-user a-tomato" style="font-size: 1.2em;"></i>
+
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link align-middle text-dark h-tomato" href="/setting">
+                  <i class="fas fa-cog" style="font-size: 1.2em;"></i>
+
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <nav class="navbar navbar-light bg-white">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+            aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </nav>
+      </div>
       <div class="card-header col-12 row m-0" style="max-height: 55px;">
         <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
           class="col-auto d-flex align-items-center">
           <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
         </a>
-        <a href="/users/{{users.id}}/tweets" class="col-auto d-flex flex-column align-items-start justify-content-center link-dark">
+        <a href="/users/{{users.id}}/tweets"
+          class="col-auto d-flex flex-column align-items-start justify-content-center link-dark">
           <span class="h5"
             style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{users.name}}</span>
           <span style="color: #657786; font-size: 0.95em; font-size: 13px; line-height: 15px">{{tweetCount}} 推文</span>
