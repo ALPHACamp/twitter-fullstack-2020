@@ -76,9 +76,9 @@ socket.on('chat message', (data) => {
     newMsg.innerHTML = 
     `
     <div class=" d-flex flex-row-reverse">
-                <div class="col-3 flex-column">
+                <div class="col-auto flex-column">
                   <div>
-                    <p class="d-inline msgblockright ">
+                    <p class="d-inline msgblockright" style="word-wrap: break-word;">
                       ${data.msg}</p>
                   </div>
                   <p class="text-muted mx-0 bd-highlight"
