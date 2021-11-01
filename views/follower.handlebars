@@ -1,41 +1,42 @@
 <div class="container-fluid" id="tweets">
     <div class="row flex-nowrap ps-xl-2 justify-content-around">
         {{!-- Home bar --}}
-        <div class="col-auto col-lg-3 d-none d-sm-block">
-            <a class="d-flex ml-5 py-3 pl-4" href="/">
+        <div class="col-3 col-lg-3">
+            <a class="d-flex py-3 pl-4" href="/">
                 <i class="fab fa-twitter-square" style="font-size: 2.5em; color: #FF6600;"></i>
             </a>
-            <div class="d-flex flex-column align-items-start ml-5 px-3 pt-2 min-vh-100">
-                <ul class="nav flex-column nav-pills pr-5" id="menu" style="width: 100%;">
+            <div class="d-flex flex-column align-items-start pl-3 px-3 pt-2 min-vh-100">
+                <ul class="nav flex-column nav-pills" id="menu" style="width: 100%;max-width:150px;">
                     <li class="nav-item py-1">
                         <a class="nav-link align-middle text-dark " href="/tweets">
                             <i class="fas fa-home" style="font-size: 1.2em;"></i>
-                            <span class="h5 menu-text home">首頁</span>
+                            <span class="h5 menu-text home d-none d-sm-inline">首頁</span>
                         </a>
                     </li>
                     <li class="nav-item py-1">
                         <a class="nav-link align-middle text-dark h-tomato" href="/messages/public">
                             <i class="far fa-envelope" style="font-size: 1.2em;"></i>
-                            <span class="h5 menu-text public">公開聊天室</span>
+                            <span class="h5 menu-text public d-none d-sm-inline">公開聊天室</span>
                         </a>
                     </li>
                     <li class="nav-item py-1">
                         <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}/tweets">
                             <i class="far fa-user" style="font-size: 1.2em;"></i>
-                            <span class="h5 menu-text user">個人資料</span>
+                            <span class="h5 menu-text user d-none d-sm-inline">個人資料</span>
                         </a>
                     </li>
                     <li class="nav-item py-1">
                         <a class="nav-link align-middle text-dark h-tomato" href="/setting">
                             <i class="fas fa-cog" style="font-size: 1.2em;"></i>
-                            <span class="h5 menu-text setting">設定</span>
+                            <span class="h5 menu-text setting d-none d-sm-inline">設定</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <button type="button" class="btn btn-tomato rounded-pill mt-3"
                             style="width: 100%; border-radius: 30px 30px 30px 30px;" data-toggle="modal"
                             data-target="#tweetModal" data-bs-toggle="modal">
-                            <span class='tweet-btn'>推文</span>
+                            <span class='tweet-btn d-none d-sm-inline'>推文</span>
+                            <i class='fas fa-feather-alt d-block d-sm-none'></i>
                         </button>
                     </li>
                 </ul>
@@ -43,46 +44,7 @@
         </div>
 
         {{!-- Middle Main bar --}}
-        <div class="row col-9 col-lg-6 col-md-7 col-sm-8 py-2">
-            <!--navbar-->
-            <div class="pos-f-t d-block d-sm-none">
-                <div class="collapse" id="navbarToggleExternalContent">
-                    <div class="bg-white p-4">
-                        <ul class="nav">
-                            <li class="nav-item">
-                                <a class="nav-link align-middle text-dark" href="/tweets">
-                                    <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
-            
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link align-middle text-dark h-tomato" href="/messages/public">
-                                    <i class="far fa-envelope" style="font-size: 1.2em;"></i>
-            
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}/tweets">
-                                    <i class="far fa-user" style="font-size: 1.2em;"></i>
-            
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link align-middle text-dark h-tomato" href="/setting">
-                                    <i class="fas fa-cog" style="font-size: 1.2em;"></i>
-            
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <nav class="navbar navbar-light bg-white">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
-                        aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                </nav>
-            </div>
+        <div class="row col-10 col-lg-6 col-md-7 py-2">
             <div class="card col-12" style="border: none;">
                 <div class="card-header col-12 row m-0 align-items-start" style="max-height: 55px;">
                     <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
