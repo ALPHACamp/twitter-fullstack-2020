@@ -193,3 +193,8 @@ body {
 .h-delete:hover {
   box-shadow: 0 0 1rem rgba(255, 104, 78, 0.15);
 }
+
+/* chat */
+#publicboard {
+  height: 430px;
+}
