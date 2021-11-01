@@ -1,29 +1,28 @@
 <div class="container-fluid" id="tweets">
-    <div class="row flex-nowrap justify-content-between mr-3">
-
-        <div class="col-auto col-lg-3">
-            <a class="d-flex ml-5 py-3 pl-4" href="/" style="text-decoration: none;">
+    <div class="row flex-nowrap justify-content-between">
+        <div class="col-3 col-lg-3">
+            <a class="d-flex py-3 pl-4" href="/" style="text-decoration: none;">
                 <i class="fab fa-twitter-square" style="font-size: 2.5em; color: #FF6600;"></i>
             </a>
-            <div class="d-flex flex-column align-items-start ml-5 px-3 pt-2 min-vh-100">
-                <ul class="nav flex-column nav-pills pr-5" id="menu" style="width: 100%;">
+            <div class="d-flex flex-column align-items-start pl-3 px-3 pt-2 min-vh-100">
+                <ul class="nav flex-column nav-pills" id="menu" style="max-width:150px;">
                     <li class="nav-item py-1">
                         <a class="nav-link align-middle text-dark " href="/admin/tweets">
                             <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
-                            <span class="h5 menu-text home a-tomato" style="color: #FF6600;">推文清單</span>
+                            <span class="h5 menu-text home a-tomato d-none d-sm-inline" style="color: #FF6600;">推文清單</span>
                         </a>
                     </li>
                     <li class="nav-item py-1">
                         <a class="nav-link align-middle text-dark h-tomato" href="/admin/users">
                             <i class="far fa-user" style="font-size: 1.2em;"></i>
-                            <span class="h5 menu-text user">使用者列表</span>
+                            <span class="h5 menu-text user d-none d-sm-inline">使用者列表</span>
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <div class="col-9 mt-2">
+        <div class="col-9 mt-2 col-lg-9">
             <div class="card-header" style="font-size: 18px; font-weight: 700;">
                 推文清單
             </div>
