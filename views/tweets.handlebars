@@ -1,48 +1,51 @@
 <div class="container-fluid" id="tweets">
-  <div class="row flex-nowrap justify-content-between mr-3">
-    <div class="col-auto col-lg-3">
-      <a class="d-flex ml-5 py-3 pl-4" href="/">
+  <div class="row flex-nowrap justify-content-between">
+    <div class="col-3 col-lg-3">
+      <a class="d-flex pl-4 py-3" href="/">
         <i class="fab fa-twitter-square" style="font-size: 2.5em; color: #FF6600;"></i>
       </a>
-      <div class="d-flex flex-column align-items-start ml-5 px-3 pt-2 min-vh-100">
-        <ul class="nav flex-column nav-pills pr-5" id="menu" style="width: 100%;">
+      <div class="d-flex flex-column align-items-start pl-3 px-3 pt-2 min-vh-100">
+        <ul class="nav flex-column nav-pills" id="menu" style="max-width:150px;">
           <li class="nav-item py-1">
             <a class="nav-link align-middle text-dark" href="/tweets">
               <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
-              <span class="h5 menu-text home a-tomato" style="color: #FF6600;">首頁</span>
+              <span class="h5 menu-text home a-tomato d-none d-sm-inline" style="color: #FF6600;">首頁</span>
             </a>
           </li>
 
           <li class="nav-item py-1">
             <a class="nav-link align-middle text-dark h-tomato" href="/messages/public">
               <i class="far fa-envelope" style="font-size: 1.2em;"></i>
-              <span class="h5 menu-text public">公開聊天室</span>
+              <span class="h5 menu-text public d-none d-sm-inline">公開聊天室</span>
             </a>
           </li>
 
           <li class="nav-item py-1">
             <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}/tweets">
               <i class="far fa-user" style="font-size: 1.2em;"></i>
-              <span class="h5 menu-text user">個人資料</span>
+              <span class="h5 menu-text user d-none d-sm-inline">個人資料</span>
             </a>
           </li>
           <li class="nav-item py-1">
             <a class="nav-link align-middle text-dark h-tomato" href="/setting">
               <i class="fas fa-cog" style="font-size: 1.2em;"></i>
-              <span class="h5 menu-text setting">設定</span>
+              <span class="h5 menu-text setting d-none d-sm-inline">設定</span>
             </a>
           </li>
           <li class="nav-item px-2">
             <button type="button" class="reply-btn btn btn-tomato rounded-pill mt-3"
-              style="width: 100%; border-radius: 30px 30px 30px 30px;" data-toggle="modal" data-target="#tweetModal">
-              <span class='tweet-btn'>推文</span>
+              style="width: 100%; border-radius: 30px 30px 30px 30px;max-width:150px;" data-toggle="modal"
+              data-target="#tweetModal">
+              <span class='tweet-btn d-none d-sm-inline'>推文</span>
+              <i class='fas fa-feather-alt d-block d-sm-none'></i>
             </button>
 
           </li>
         </ul>
       </div>
     </div>
-    <div class="row col-12 col-sm-5 col-md-7 col-lg-6 py-2">
+    <div class="row col-10 col-md-7 col-lg-6 py-2">
+      <!--tweets-->
       <div class="card col-12">
         <div class="col-12 pt-3 pl-3"
           style="border-width: 0px 0px 1px 0px; border-style: solid; border-color: #E6ECF0;">
@@ -99,9 +102,9 @@
                 <input type="hidden" name="TweetId" value="{{this.id}}">
                 <span style="display:inline-block;margin-left:20px;margin-right:33px;">{{this.replyCount}}</span>
 
-               
 
-              {{#ifCond this.likeCount 0 }}
+
+                {{#ifCond this.likeCount 0 }}
                 <form action="/tweets/{{this.id}}/like" method="POST">
                   <button type="submit" class="btn btn-outline-light">
                     <i class="far fa-heart" style="color: red;width:12px;height:12px;"></i>
@@ -215,12 +218,12 @@
                 {{else}}
                 {{#if this.isFollowed}}
                 <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                  <button type="submit" class="btn btn-tomato" name="id" value = {{this.id}}
+                  <button type="submit" class="btn btn-tomato" name="id" value={{this.id}}
                     style="font-size: 15px; border-radius: 30px 30px 30px 30px;font-weight: bold;">正在跟隨</button>
                 </form>
                 {{else}}
                 <form action="/followships" method="POST" style="display: contents;">
-                  <button type="submit" class="btn btn-outline-tomato" name="id" value = {{this.id}}
+                  <button type="submit" class="btn btn-outline-tomato" name="id" value={{this.id}}
                     style="font-size: 15px; border-radius: 30px 30px 30px 30px;font-weight: bold;">跟隨</button>
                 </form>
                 {{/if}}

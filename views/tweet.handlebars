@@ -1,6 +1,6 @@
 <div class="container-fluid" id="tweets">
   <div class="row flex-nowrap justify-content-between mr-3">
-    <div class="col-auto col-lg-3 bg-white">
+    <div class="col-auto col-lg-3 d-none d-sm-block bg-white">
       <a class="d-flex ml-5 py-3 pl-4" href="/">
         <i class="fab fa-twitter-square" style="font-size: 2.5em; color: #FF6600;"></i>
       </a>
@@ -39,105 +39,147 @@
         </ul>
       </div>
     </div>
-    <div class="row col-9 col-lg-6 col-md-7 col-sm-8 bg-white">
-      <div class="card-header col-12 row m-0 bg-white" style="max-height: 55px;">
-        <a href="javascript:history.back()" style="text-decoration:none; color: #000000; height: 30px;"
-          class="col-1 d-flex align-items-center">
-          <i class="fas fa-arrow-left" style="font-size: 18px;"></i>
-        </a>
-        <span class="col-auto" style="font-size: 18px; font-weight:bold; height: 30px;">推文</span>
-        </a>
-      </div>
-      <div class="card-body col-12 m-0 position-absolute" style="z-index: 5; left: 10px; top: 50px;">
-        <div class="row justify-content-around align-items-start mb-1 p-2 bg-white">
-          <div class="col-1 d-flex justify-content-center align-items-center">
-            <a href="/users/{{tweet.UserId}}">
-              <img
-                src="{{#if tweet.User.avatar}}{{tweet.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
-                class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
-            </a>
-          </div>
-          <div class="col-11 row px-0">
-            <div class="col-12 flex-column justify-content-center align-items-start">
-              <div style="height: 15px; line-height: 22px;">
-                <a href="/users/{{tweet.UserId}}" class="text-dark"
-                  style="font-size: 15px; font-weight:700;">{{tweet.User.name}}</a>
-              </div>
-              <span style="color: #657786; font-size: 15px;line-height: 22px;">@{{tweet.User.account}}</span>
-              <div>
-              </div>
-            </div>
+    <div class="row col-12 col-md-7 col-lg-6 py-2 bg-white">
+      <!--navbar-->
+      <div class="pos-f-t d-block d-sm-none">
+        <div class="collapse" id="navbarToggleExternalContent">
+          <div class="bg-white p-4">
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link align-middle text-dark" href="/tweets">
+                  <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
 
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link align-middle text-dark h-tomato" href="/messages/public">
+                  <i class="far fa-envelope" style="font-size: 1.2em;"></i>
+
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}/tweets">
+                  <i class="far fa-user" style="font-size: 1.2em;"></i>
+
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link align-middle text-dark h-tomato" href="/setting">
+                  <i class="fas fa-cog" style="font-size: 1.2em;"></i>
+
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
-        <div class="row col-12 mt-1">
-          <p class="mt-1" style="font-weight: 500; font-size: 23px; line-height: 34px;">{{tweet.description}}</p>
-        </div>
-        <div class="row col-12">
-          <span style="font-size: 15px; font-weight:500;color:#657786;">{{momentDetailTime
-            this.createdAt}}．{{momentDetailDate this.createdAt}}</span>
-        </div>
-        <hr>
-        <div class="row col-12">
-          <div class="" style="; line-height: 22px">
-            <span class="" style="font-size: 19px; font-weight: bold;">{{tweet.replyCount}}</span>
-            <span class="mr-2" style="color:#657786;">回覆</span>
-            <span class="" style="font-size: 19px; font-weight: bold;">{{tweet.likeCount}}</span>
-            <span style="color:#657786;">喜歡次數</span>
-          </div>
-        </div>
-        <hr>
-        <div class="row col-12" style="height:25px;">
-          <button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#replyModal"
-            style="margin-right: 85px;">
-            <i class="far fa-comment" style="color: navy;width:25px;height:18px;"></i>
+        <nav class="navbar navbar-light bg-white">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+            aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
           </button>
-          {{#if isLiked}}
-          <form action="/tweets/{{tweet.id}}/unlike" method="POST">
-            <button type="submit" class="btn btn-outline-light">
-              <i class="fas fa-heart" style="color: red;width:25px;height:18px;"></i>
-            </button>
-          </form>
-          {{else}}
-          <form action="/tweets/{{tweet.id}}/like" method="POST">
-            <button type="submit" class="btn btn-outline-light">
-              <i class="far fa-heart" style="color: red; width: 25px; height: 18px;"></i>
-            </button>
-          </form>
-          {{/if}}
+        </nav>
+      </div>
+      <div class="card col-12" style="border: none;">
+        <div class="card-header col-12 row m-0 bg-white" style="max-height: 55px;">
+          <a href="javascript:history.back()" style="text-decoration:none; color: #000000; height: 30px;"
+            class="col-1 d-flex align-items-center">
+            <i class="fas fa-arrow-left" style="font-size: 18px;"></i>
+          </a>
+          <span class="col-auto" style="font-size: 18px; font-weight:bold; height: 30px;">推文</span>
+          </a>
         </div>
-        <hr>
-        <div class="card-body p-0">
-          {{#each tweet.Replies}}
-          <div class="row justify-content-around align-items-start px-2"
-            style="margin-top: -10px; margin-bottom: -20px;">
+        <div class="card-body col-12 m-0">
+          <div class="row justify-content-around align-items-start mb-1 p-2 bg-white">
             <div class="col-1 d-flex justify-content-center align-items-center">
-              <img
-                src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
-                class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
+              <a href="/users/{{tweet.UserId}}">
+                <img
+                  src="{{#if tweet.User.avatar}}{{tweet.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                  class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
+              </a>
             </div>
-            <div class="col-11 row px-md-2 px-4 pt-1">
-              <div class="col-12 flex-column row">
-                <div class="" style="height: 22px; line-height: 22px">
-                  <a href="/users/{{this.UserId}}" class="text-dark"
-                    style="font-size: 15px; font-weight:700; text-decoration:none;">{{this.User.name}}</a>
-                  <span style="color: #657786; font-size: 15px;line-height: 22px;">@{{this.User.account}}．{{moment
-                    this.createdAt}}</span>
+            <div class="col-11 row px-0">
+              <div class="col-12 flex-column justify-content-center align-items-start">
+                <div style="height: 15px; line-height: 22px;">
+                  <a href="/users/{{tweet.UserId}}" class="text-dark"
+                    style="font-size: 15px; font-weight:700;">{{tweet.User.name}}</a>
                 </div>
-                <div class="" style="height: 22px; line-height: 22px;">
-                  <span style="color: #657786; font-size: 15px;line-height: 20px;">回覆</span>
-                  <span style="color: #FF6600; font-size: 15px;line-height: 20px;">@{{../tweet.User.account}}</span>
-                </div>
-                <div class="" style="font-size:15px;font-weight:400;">
-                  <p class="" style="max-width: 500px; overflow-wrap: break-word;">{{this.comment}}</p>
+                <span style="color: #657786; font-size: 15px;line-height: 22px;">@{{tweet.User.account}}</span>
+                <div>
                 </div>
               </div>
+
+            </div>
+          </div>
+          <div class="row col-12 mt-1">
+            <p class="mt-1" style="font-weight: 500; font-size: 23px; line-height: 34px;">{{tweet.description}}</p>
+          </div>
+          <div class="row col-12">
+            <span style="font-size: 15px; font-weight:500;color:#657786;">{{momentDetailTime
+              this.createdAt}}．{{momentDetailDate this.createdAt}}</span>
+          </div>
+          <hr>
+          <div class="row col-12">
+            <div class="" style="; line-height: 22px">
+              <span class="" style="font-size: 19px; font-weight: bold;">{{tweet.replyCount}}</span>
+              <span class="mr-2" style="color:#657786;">回覆</span>
+              <span class="" style="font-size: 19px; font-weight: bold;">{{tweet.likeCount}}</span>
+              <span style="color:#657786;">喜歡次數</span>
             </div>
           </div>
           <hr>
-          {{/each}}
+          <div class="row col-12" style="height:25px;">
+            <button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#replyModal"
+              style="margin-right: 85px;">
+              <i class="far fa-comment" style="color: navy;width:25px;height:18px;"></i>
+            </button>
+            {{#if isLiked}}
+            <form action="/tweets/{{tweet.id}}/unlike" method="POST">
+              <button type="submit" class="btn btn-outline-light">
+                <i class="fas fa-heart" style="color: red;width:25px;height:18px;"></i>
+              </button>
+            </form>
+            {{else}}
+            <form action="/tweets/{{tweet.id}}/like" method="POST">
+              <button type="submit" class="btn btn-outline-light">
+                <i class="far fa-heart" style="color: red; width: 25px; height: 18px;"></i>
+              </button>
+            </form>
+            {{/if}}
+          </div>
+          <hr>
+          <div class="card-body p-0">
+            {{#each tweet.Replies}}
+            <div class="row justify-content-around align-items-start px-2"
+              style="margin-top: -10px; margin-bottom: -20px;">
+              <div class="col-1 d-flex justify-content-center align-items-center">
+                <img
+                  src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                  class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
+              </div>
+              <div class="col-11 row px-md-2 px-4 pt-1">
+                <div class="col-12 flex-column row">
+                  <div class="" style="height: 22px; line-height: 22px">
+                    <a href="/users/{{this.UserId}}" class="text-dark"
+                      style="font-size: 15px; font-weight:700; text-decoration:none;">{{this.User.name}}</a>
+                    <span style="color: #657786; font-size: 15px;line-height: 22px;">@{{this.User.account}}．{{moment
+                      this.createdAt}}</span>
+                  </div>
+                  <div class="" style="height: 22px; line-height: 22px;">
+                    <span style="color: #657786; font-size: 15px;line-height: 20px;">回覆</span>
+                    <span style="color: #FF6600; font-size: 15px;line-height: 20px;">@{{../tweet.User.account}}</span>
+                  </div>
+                  <div class="" style="font-size:15px;font-weight:400;">
+                    <p class="" style="max-width: 500px; overflow-wrap: break-word;">{{this.comment}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            {{/each}}
+          </div>
         </div>
       </div>
+
     </div>
     {{!-- follower bar --}}
     <div class="col-auto col-md-3 col-lg-3">
