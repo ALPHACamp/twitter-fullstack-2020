@@ -198,3 +198,13 @@ body {
 #publicboard {
   height: 430px;
 }
+
+#tweets-scroll {
+  height: 700px;
+  overflow-y: auto; 
+}
+
+::-webkit-scrollbar {
+/*隱藏滾輪*/
+display: none;
+}
