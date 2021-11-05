@@ -1,0 +1,27 @@
+<div class="list-group rounded-0 sticky-top vh-100">
+  <div class="list-group-item mb-4 border-0">
+    <img src="/images/AC.png" alt="AC" width="35" height="35">
+  </div>
+  <a href="/"
+    class="list-group-item list-group-item-action border-0 {{#isEqual currentPath '/tweets'}}custom-link-active{{/isEqual}}">
+    <i class="fas fa-home"></i>
+    <span class="ml-2">首頁</span>
+  </a>
+  <a href="/users/{{user.id}}/tweets"
+    class="list-group-item list-group-item-action border-0 {{#isEqual currentPath userProfilePath}}custom-link-active{{/isEqual}}">
+    <i class="far fa-user"></i>
+    <span class="ml-2">個人資料</span>
+  </a>
+  <a href="/users/setting"
+    class="list-group-item list-group-item-action border-0 {{#isEqual currentPath '/users/setting'}}custom-link-active{{/isEqual}}">
+    <i class="fas fa-cog"></i>
+    <span class="ml-2">設定</span>
+  </a>
+  <button type="button" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#addTweetModal">
+    推文
+  </button>
+  <a href="/logout" class="list-group-item list-group-item-action border-0 mt-auto">
+    <i class="fas fa-sign-out-alt"></i>
+    <span class="ml-2">登出</span>
+  </a>
+</div>

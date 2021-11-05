@@ -1,0 +1,50 @@
+{{!-- Tweet --}}
+<div class="card rounded-0">
+  <div class="card-body">
+    <div class="d-flex align-items-center mb-3">
+      <div class="mr-3">
+        <img src="{{ tweet.User.avatar }}" class="rounded-circle" alt="..." width="50" height="50">
+      </div>
+      <div class="">
+        <h5 class="mb-0">{{tweet.User.name}}</h5>
+        <p class="text-secondary mb-0">@{{tweet.User.account}}</p>
+      </div>
+    </div>
+    <p class="font-weight-bold">
+      {{tweet.description}}
+    </p>
+    <p>{{time}}</p>
+    <div class="px-2 py-3 border-top border-bottom">
+      <span class="mr-3"><span class="font-weight-bold">{{replyAmount}}</span>回覆</span>
+      <span><span class="font-weight-bold">{{likeNumber}}</span>喜歡次數</span>
+    </div>
+    <div class="p-2 border-bottom d-flex">
+      <button class="reply btn btn-link text-decoration-none mr-5" data-toggle="modal" data-target="#addReplyModal"
+        data-tweetId="{{ tweet.id }}" style="font-size: 24px;">
+        <i class="far fa-comment" style="pointer-events: none;"></i>
+      </button>
+      {{!-- <button class="btn btn-link text-decoration-none" style="font-size: 24px;"><i
+          class="far fa-heart"></i></button> --}}
+      {{#if isLike}}
+      {{!-- 已按讚 --}}
+      <form action="/tweets/{{ tweet.id }}/like?_method=DELETE" method="post">
+        <button class="btn btn-link text-decoration-none" style="font-size: 24px;">
+          <i class="fas fa-heart"></i>
+          <span>{{ likeNumber }}</span>
+      </form>
+      {{else}}
+      {{!-- 未按讚 --}}
+      <form action="/tweets/{{ tweet.id }}/like" method="post">
+        <button class="btn btn-link text-decoration-none" style="font-size: 24px;">
+          <i class="far fa-heart"></i>
+          <span>{{ likeNumber }}</span>
+        </button>
+      </form>
+      {{/if}}
+    </div>
+  </div>
+</div>
+{{!-- Reply --}}
+{{#each tweet.Replies}}
+{{> replyList tweetUser= ../tweet.User.account}}
+{{/each}}

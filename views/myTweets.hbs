@@ -1,0 +1,45 @@
+<div class="container-fluid">
+  <div class="row justify-content-between">
+    <div class="col-2">
+      {{> navigationBar}}
+    </div>
+    <div class="col-6">
+      {{!-- 使用者資訊 --}}
+      <div class="">
+        {{> userInfo}}
+      </div>
+      {{!-- 分頁列 --}}
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link custom-tab {{#isEqual pathName 'tweets'}}custom-tab-active{{/isEqual}}"
+            href="/users/{{ userId }}/tweets">推文</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link custom-tab {{#isEqual pathName 'likemost'}}custom-tab-active{{/isEqual}}"
+            href="/users/{{ userId }}/likemost">最受喜愛</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link custom-tab {{#isEqual pathName 'replymost'}}custom-tab-active{{/isEqual}}"
+            href="/users/{{ userId }}/replymost">最多討論</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link custom-tab {{#isEqual pathName 'replies'}}custom-tab-active{{/isEqual}}"
+            href="/users/{{ userId }}/replies">推文與回覆</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link custom-tab {{#isEqual pathName 'likes'}}custom-tab-active{{/isEqual}}"
+            href="/users/{{ userId }}/likes">喜歡的內容</a>
+        </li>
+      </ul>
+      <div class="mt-3">
+        {{#each tweets}}
+        {{> tweetList isUserPage=../isUserPage withReply= ../withReply}}
+        {{/each}}
+      </div>
+
+    </div>
+    <div class="col-3">
+      {{> topUser}}
+    </div>
+  </div>
+</div>

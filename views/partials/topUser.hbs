@@ -1,0 +1,50 @@
+<div class="right-content text-monospace">
+  <div class="card follow-content">
+    <div class="card-header follow-title font-weight-bold text-grey" style="background-color: rgb(250, 250, 248);">
+      Popular Account
+    </div>
+    <form action="/users/search" class="input-group rounded">
+      <input type="search" class="form-control rounded" name="name" value="{{keyword}}" placeholder="Search Users"
+        aria-label="Search" aria-describedby="search-addon" />
+      <button class="input-group-text border-0 " type="submit" id="search-addon">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+    <br>
+    <div class="top-follow-list" style="background-color: rgb(255, 255, 255);">
+      {{#each topUsers}}
+      <div class="list-item py-2 follow-body d-flex flex-row align-items-center justify-content-between border-bottom">
+
+        <div class="user-info d-flex flex-row align-items-center">
+          <a href="/users/{{this.id}}/tweets" class="follow-avatar ml-2">
+            <img src="{{this.avatar}}" class=" rounded-circle" width="55" height="55">
+          </a>
+
+          <div class="list-item-name ml-2 d-flex flex-column" style="font-size: 0.9em;">
+            <a class=" text-decoration-none" href="/users/{{this.id}}/tweets" style="color: black;">{{subStr this.name
+              6}}
+            </a>
+            <div class="list-item-account" style="font-size: smaller;color:rgb(163, 186, 230);">@{{subStr this.account
+              6}}
+            </div>
+          </div>
+        </div>
+        {{#if this.isFollowed}}
+        <form action="/users/{{this.id}}/follow?_method=DELETE" method="POST">
+          <button class="btn btn-outline-warning btn-sm mr-2 text-white font-weight-bold active"
+            style="border-radius: 50px; font-size: 0.7em;" aria-pressed="true">正在追蹤</button>
+        </form>
+        {{else}}
+        {{#isEqual this.id ../loginUserId}}
+        {{else}}
+        <form action="/users/{{this.id}}/follow" method="POST">
+          <button class="btn btn-outline-warning btn-sm mr-2 font-weight-bold"
+            style="border-radius: 50px;font-size: 0.7em;">追蹤</button>
+        </form>
+        {{/isEqual}}
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

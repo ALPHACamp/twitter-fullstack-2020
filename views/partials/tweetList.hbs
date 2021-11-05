@@ -1,0 +1,60 @@
+<a href="/tweets/{{ this.id }}" class="d-block text-decoration-none text-dark p-0 m-0">
+  <div class="card position-relative">
+    <div class="card-body">
+      {{#if isAdminPage}}
+      <div class="position-absolute" style="top:10px; right:10px">
+        <form action="/admin/tweets/{{ this.id }}?_method=DELETE" method="post">
+          <button type="submit" class="btn btn-sm btn-link text-decoration-none text-danger">
+            <i class="fas fa-times fa-2x"></i>
+          </button>
+        </form>
+      </div>
+      {{/if}}
+      <div class="media">
+        <img src="{{ this.avatar }}" class="mr-3 rounded-circle" alt="..." width="50" height="50">
+        <div class="media-body">
+          <div class="d-flex">
+            <h5>{{ this.name }}</h5>
+            <p class="ml-2 text-secondary">@{{this.account}} &bull; {{moment this.createdAt}}</p>
+          </div>
+          <p>
+            {{this.description}}
+          </p>
+          {{!-- like and reply --}}
+          {{#if isUserPage}}
+          <div class="d-flex">
+            <a class="reply btn btn-link text-decoration-none mr-5" data-toggle="modal" data-target="#addReplyModal"
+              data-tweetId="{{ this.id }}">
+              <i class="far fa-comment" style="pointer-events: none;"></i>
+              {{ this.replyAmount }}
+            </a>
+            {{#if this.isLike}}
+            {{!-- 已按讚 --}}
+            <form action="/tweets/{{ this.id }}/like?_method=DELETE" method="post">
+              <button class="btn btn-link text-decoration-none">
+                <i class="fas fa-heart"></i>
+                <span>{{ this.likeNumber }}</span>
+            </form>
+            {{else}}
+            {{!-- 未按讚 --}}
+            <form action="/tweets/{{ this.id }}/like" method="post">
+              <button class="btn btn-link text-decoration-none">
+                <i class="far fa-heart"></i>
+                <span>{{ this.likeNumber }}</span>
+              </button>
+            </form>
+            {{/if}}
+          </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</a>
+{{#if withReply}}
+<div class="mb-3">
+  {{#each this.Replies}}
+  {{> replyList}}
+  {{/each}}
+</div>
+{{/if}}
