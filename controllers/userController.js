@@ -12,6 +12,15 @@ const userController = {
     },
 
     signUp: (req, res, next) => {
+        const { name, account, email, password, passwordConfirmed } = req.body
+        if (!name || !account || !email || !password || !passwordConfirmed) {
+            req.flash('error_messages', '全部欄位都必填')
+            return res.redirect('/signin')
+        }
+        if (name.trim().length === 0 || account.trim().length === 0 ) {
+            req.flash('error_messages', '不可空白')
+            return res.redirect('/signin')
+        }
         if (req.body.password !== req.body.passwordConfirmed) {
             req.flash('error_messages', '兩次密碼輸入不同！')
             return res.redirect('/signin')
@@ -150,7 +159,7 @@ const userController = {
                 ]
             })
         ])
-        
+
         // const isUser = users.some(i => i.id === Number(req.params.id))
         // if (!isUser) return res.redirect('back')
         const UserId = helpers.getUser(req).id
