@@ -209,6 +209,11 @@ body {
   overflow-y: auto; 
 }
 
+#userProfile-scroll {
+  height: 530px;
+  overflow-y: auto;
+}
+
 ::-webkit-scrollbar {
   display: none;
   overflow-y: hidden;
