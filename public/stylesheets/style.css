@@ -214,6 +214,7 @@ body {
   overflow-y: auto;
 }
 
+
 ::-webkit-scrollbar {
   display: none;
   overflow-y: hidden;
