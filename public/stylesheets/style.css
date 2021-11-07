@@ -200,11 +200,17 @@ body {
 }
 
 #tweets-scroll {
-  height: 700px;
+  height: 360px;
+  overflow-y: auto; 
+}
+
+#popular-scroll {
+  height: 480px;
   overflow-y: auto; 
 }
 
 ::-webkit-scrollbar {
-/*隱藏滾輪*/
-display: none;
+  display: none;
+  overflow-y: hidden;
 }
+
