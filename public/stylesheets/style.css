@@ -214,6 +214,10 @@ body {
   overflow-y: auto;
 }
 
+#adminTweet-scroll {
+  height: 490px;
+  overflow-y: auto;
+}
 
 ::-webkit-scrollbar {
   display: none;
