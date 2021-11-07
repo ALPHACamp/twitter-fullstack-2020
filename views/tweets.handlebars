@@ -221,12 +221,12 @@
                 {{else}}
                 {{#if this.isFollowed}}
                 <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                  <button type="submit" class="btn btn-tomato" name="id" value = {{this.id}}
+                  <button type="submit" class="btn btn-tomato" name="id" value={{this.id}}
                     style="font-size: 15px; border-radius: 30px 30px 30px 30px;font-weight: bold;">正在跟隨</button>
                 </form>
                 {{else}}
                 <form action="/followships" method="POST" style="display: contents;">
-                  <button type="submit" class="btn btn-outline-tomato" name="id" value = {{this.id}}
+                  <button type="submit" class="btn btn-outline-tomato" name="id" value={{this.id}}
                     style="font-size: 15px; border-radius: 30px 30px 30px 30px;font-weight: bold;">跟隨</button>
                 </form>
                 {{/if}}

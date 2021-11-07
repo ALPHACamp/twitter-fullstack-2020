@@ -31,7 +31,7 @@ socket.on('onlineUsers', (onlineUsers) => {
                   <img src="${data.avatar}"
                     width="50" height="50" class="rounded-circle">
                 </div>
-                <div class="col-6 d-flex" style="height: 60px;">
+                <div class="col-auto d-flex" style="height: 60px;">
                   <h5 style="line-height: 60px; font-size: 15px; font-weight: bold;">${data.name}</h5>
                   <p class="text-muted ps-2"
                     style="font-size: 15px; line-height: 60px; font-weight: 500; color:#657786;">
