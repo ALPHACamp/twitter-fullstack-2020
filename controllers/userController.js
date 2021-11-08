@@ -95,6 +95,7 @@ const userController = {
             followingId: req.body.id
         })
             .then((followship) => {
+                req.flash('error_messages', '已成功跟隨！')
                 return res.redirect('back')
             })
             .catch(next)
@@ -110,6 +111,7 @@ const userController = {
             .then((followship) => {
                 followship.destroy()
                     .then((followship) => {
+                        req.flash('error_messages', '已取消跟隨！')
                         return res.redirect('back')
                     })
             })

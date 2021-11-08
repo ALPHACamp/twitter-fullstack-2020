@@ -26,6 +26,7 @@ const adminController = {
                 tweet.destroy()
             })
             .then(() => {
+                req.flash('success_messages', '成功刪除推文')
                 res.redirect('/admin/tweets')
             })
             .catch(next)
