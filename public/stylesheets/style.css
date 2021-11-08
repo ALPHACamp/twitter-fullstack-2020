@@ -194,30 +194,89 @@ body {
   box-shadow: 0 0 1rem rgba(255, 104, 78, 0.15);
 }
 
-/* chat */
-#publicboard {
-  height: 430px;
+
+@media (max-height: 380px) {
+    /* chat */
+  #publicboard {
+    height: 300px;
+  }
+
+  #tweets-scroll {
+    height: 230px;
+    overflow-y: auto; 
+  }
+
+  #popular-scroll {
+    height: 300px;
+    overflow-y: auto; 
+  }
+
+  #userProfile-scroll {
+    height: 380px;
+    overflow-y: auto;
+  }
+
+  #adminTweet-scroll {
+    height: 380px;
+    overflow-y: auto;
+  }
 }
 
-#tweets-scroll {
-  height: 360px;
-  overflow-y: auto; 
+@media (min-height: 577px) {
+    /* chat */
+  #publicboard {
+    height: 430px;
+  }
+
+  #tweets-scroll {
+    height: 360px;
+    overflow-y: auto; 
+  }
+
+  #popular-scroll {
+    height: 480px;
+    overflow-y: auto; 
+  }
+
+  #userProfile-scroll {
+    height: 530px;
+    overflow-y: auto;
+  }
+
+  #adminTweet-scroll {
+    height: 490px;
+    overflow-y: auto;
+  }
 }
 
-#popular-scroll {
-  height: 480px;
-  overflow-y: auto; 
+@media (min-height: 660px) {
+    /* chat */
+  #publicboard {
+    height: 530px;
+  }
+
+  #tweets-scroll {
+    height: 450px;
+    overflow-y: auto; 
+  }
+
+  #popular-scroll {
+    height: 450px;
+    overflow-y: auto; 
+  }
+
+  #userProfile-scroll {
+    height: 630px;
+    overflow-y: auto;
+  }
+
+  #adminTweet-scroll {
+    height: 450px;
+    overflow-y: auto;
+  }
 }
 
-#userProfile-scroll {
-  height: 530px;
-  overflow-y: auto;
-}
 
-#adminTweet-scroll {
-  height: 490px;
-  overflow-y: auto;
-}
 
 ::-webkit-scrollbar {
   display: none;
