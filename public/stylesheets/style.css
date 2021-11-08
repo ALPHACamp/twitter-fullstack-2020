@@ -222,7 +222,7 @@ body {
   }
 }
 
-@media (min-height: 577px) {
+@media (min-height: 550px) {
     /* chat */
   #publicboard {
     height: 430px;
