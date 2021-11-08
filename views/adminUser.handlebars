@@ -39,9 +39,9 @@
             <div class="d-flex flex-row" id="adminTweet-scroll">
                 <div class="row">
                     {{#each users}}
-                    <div class="d-flex felx-column col-3">
+                    <div class="d-flex flex-column col-lg-3 col-md-4 col-sm-6">
                         <div>
-                            <div class="card my-3 rounded-4 shadow">
+                            <div class="card my-3 rounded-4 shadow" style="max-width: 200px;">
                                 <div class="position-relative">
                                     <img src="{{#if this.cover}}{{this.cover}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
                                         class="position-absolute rounded-3" style="width: 100%; z-index:0;"
@@ -50,7 +50,7 @@
                                         style="width: 70px; height: 70px; left: 33%; top: 60px; border: white 3px solid; z-index: 1"
                                         alt="face">
                                 </div>
-                                <div class="card-body bg-light" style="padding-top: 88%;">
+                                <div class="card-body bg-light" style="padding-top: 90%;">
                                     <h5 class="card-title text-center text-dark" style="font-weight: 900;">
                                     </h5>
                                     <h5 class="card-title text-center"
