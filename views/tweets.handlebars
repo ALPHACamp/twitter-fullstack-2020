@@ -94,14 +94,14 @@
                   </a>
                 </div>
                 <div class="col-11 row">
-                  <div class="col-12 d-inline-flex justify-content-between align-items-center">
-                    <div style="height: 22px; font-size: 15px;">
+                  <div class="col-12 justify-content-between align-items-center">
+                    <div style="font-size: 15px;"> 
                       <a href="/users/{{this.UserId}}/tweets" class="text-dark font-weight-bold">{{this.User.name}}</a>
                       <span style="color: #657786;">@{{this.User.account}}．{{moment this.createdAt}}</span>
                     </div>
                   </div>
-                  <div class="col-12 mt-1" onclick="javascript:location.href='/tweets/{{this.id}}'">
-                    <p class="fw-bold">{{this.description}}</p>
+                  <div class="col-12" onclick="javascript:location.href='/tweets/{{this.id}}'">
+                    <p class="fw-bold;">{{this.description}}</p>
                   </div>
                   <div class="col-12 d-flex align-items-center">
                     <button type="button" class="reply-btn btn btn-outline-light" data-toggle="modal"
