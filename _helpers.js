@@ -1,3 +1,4 @@
+
 function ensureAuthenticated(req) {
   return req.isAuthenticated();
 }
