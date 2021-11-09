@@ -111,7 +111,7 @@ const userController = {
             .then((followship) => {
                 followship.destroy()
                     .then((followship) => {
-                        req.flash('error_messages', '已取消跟隨！')
+                        req.flash('error_messages', '已取消追隨！')
                         return res.redirect('back')
                     })
             })
