@@ -109,7 +109,7 @@
               <div class="d-flex row">
                 <div class="col-1 d-flex justify-content-center">
                   <a href="/users/{{id}}" class="p-1">
-                    <img src='{{this.User.avatar}}' class="rounded-circle" style="width: 40px; height: 40px"
+                    <img src='{{#if this.User.avatar}}{{this.User.avatar}}{{else}}https://img.88icon.com/download/jpg/20200816/b56572e032f34a36aa96ace0f69a48e1_512_512.jpg!88con{{/if}}' class="rounded-circle" style="width: 40px; height: 40px"
                       alt="avatar" />
                   </a>
                 </div>

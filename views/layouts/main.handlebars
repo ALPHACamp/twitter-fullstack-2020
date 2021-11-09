@@ -34,7 +34,7 @@
       {{!--error Message開頭 --}}
       {{!--Flash Message開頭 --}}
       {{#if success_messages}}
-      <div class="alert show showAlert">
+      <div class="success show showAlert">
         <span class="fas fa-exclamation-circle"></span>
         <span class="msg">{{success_messages}}</span>
         <div class="close-btn">
@@ -152,6 +152,10 @@
     $('.close-btn').click(function () {
       $('.alert').removeClass("show");
       $('.alert').addClass("hide");
+    });
+    $('.close-btn').click(function () {
+      $('.success').removeClass("show");
+      $('.success').addClass("hide");
     });
   </script>
 </body>

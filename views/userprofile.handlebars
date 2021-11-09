@@ -70,7 +70,7 @@
             style="height:100%;width:100%;object-fit:cover">
         </div>
         <div class="avatar-holder">
-          <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+          <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://img.88icon.com/download/jpg/20200816/b56572e032f34a36aa96ace0f69a48e1_512_512.jpg!88con{{/if}}"
             class="rounded-circle" alt="user_Aavtor" height="130px" width="130px">
         </div>
       </div>
@@ -81,22 +81,11 @@
           style="border-radius: 30px 30px 30px 30px; height: 40px; font-weight: 700;" data-toggle="modal"
           data-target="#profileModal">編輯個人資料</button>
         {{else}}
-        <div class="NoticeAni">
-          <a href="" class="m-1" style="color:tomato;">
-            <i class="far fa-envelope fa-2x m-1"></i> </a>
-        </div>
+
         {{#if users.isNoticed}}
-        <div class="Noticed">
-          <a href="/users/noti/{{users.id}}" style="color:tomato;">
-            <i class="fas fa-bell fa-2x m-1"></i>
-          </a>
-        </div>
+
         {{else}}
-        <div class="NoticeAni">
-          <a href="/users/noti/{{users.id}}" class="m-1" id="noticeBell" style="color:tomato;">
-            <i class="far fa-bell fa-2x m-1"></i>
-          </a>
-        </div>
+ 
         {{/if}}
         {{#if isFollowed}}
         <form action="/followships/{{users.id}}?_method=DELETE" method="POST" style="margin-left: 10px;"
@@ -155,7 +144,7 @@
                 <div class="col-1 d-flex justify-content-center align-items-center">
                   <a href="/users/{{../users.id}}/tweets" class="p-1">
                     <img
-                      src="{{#if ../users.avatar}}{{../users.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                      src="{{#if ../users.avatar}}{{../users.avatar}}{{else}}https://img.88icon.com/download/jpg/20200816/b56572e032f34a36aa96ace0f69a48e1_512_512.jpg!88con{{/if}}"
                       alt="A user" width="60" height="60" class="rounded-circle" />
                   </a>
                 </div>
@@ -208,7 +197,7 @@
                 <div class="col-1 d-flex justify-content-center align-items-center">
                   <a href="/users/{{this.Tweet.User.id}}/tweets" class="p-1">
                     <img
-                      src="{{#if this.Tweet.User.avatar}}{{this.Tweet.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                      src="{{#if this.Tweet.User.avatar}}{{this.Tweet.User.avatar}}{{else}}https://img.88icon.com/download/jpg/20200816/b56572e032f34a36aa96ace0f69a48e1_512_512.jpg!88con{{/if}}"
                       alt="" width="60" height="60" class="rounded-circle" />
                   </a>
                 </div>
@@ -249,7 +238,7 @@
               <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard">
                 <div class="col-1 d-flex justify-content-center align-items-center">
                   <a href="/users/{{this.UserId}}/tweets" class="p-1">
-                    <img src="{{this.User.avatar}}" alt="" width="60" height="60" class="rounded-circle" />
+                    <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}https://img.88icon.com/download/jpg/20200816/b56572e032f34a36aa96ace0f69a48e1_512_512.jpg!88con{{/if}}" alt="" width="60" height="60" class="rounded-circle" />
                   </a>
                 </div>
                 <div class="col-11 row px-md-2 px-4">
@@ -297,7 +286,7 @@
               <div class="row justify-content-around align-items-center">
                 <div class="col-2 d-flex justify-content-center align-items-center" style="padding-left: 20px;">
                   <a href="/users/{{this.id}}/tweets">
-                    <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" alt=""
+                    <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://img.88icon.com/download/jpg/20200816/b56572e032f34a36aa96ace0f69a48e1_512_512.jpg!88con{{/if}}" alt=""
                       width="50" height="50" class="rounded-circle">
                   </a>
                 </div>
@@ -364,7 +353,7 @@
               <i class="fas fa-camera" style="font-size: 1.5em; color: white"></i>
             </label>
             <div class="avatar-holder">
-              <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/300/300/avator{{/if}}"
+              <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://img.88icon.com/download/jpg/20200816/b56572e032f34a36aa96ace0f69a48e1_512_512.jpg!88con{{/if}}"
                 class="rounded-circle" alt="user_Aavtor" height="80px" width="80px">
             </div>
             <label for="avatar" class="btn avator-uploader">
