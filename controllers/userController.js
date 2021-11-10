@@ -14,11 +14,13 @@ const userController = {
     signUp: (req, res, next) => {
         const { name, account, email, password, passwordConfirmed } = req.body
         if (name.length > 32 || account.length > 32) {
-            req.flash('error_messages', '不可大於32字元!')
+            req.flash('error_messages', '帳號及名稱不可大於32字元!')
             return res.redirect('/signin')
         }
-        if (password.length < 8 || checkPassword.length < 8 || password.length > 16 || checkPassword.length > 16 ) {
-            req.flash('error_messages', '密碼介於8~16碼!')
+        // 正規表達式檢查密碼
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,}$/
+        if (!regex.test(password)) {
+            req.flash('error_messages', '密碼至少8碼，至少1個大寫字母，1個小寫字母和1個數字！')
             return res.redirect('/signin')
         }
         if (req.body.password !== req.body.passwordConfirmed) {
@@ -277,6 +279,7 @@ const userController = {
                     name, account, email,
                     password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
                 })
+                req.flash('success_messages', '成功更新個人資料設定！')
                 return res.redirect(`users/${helpers.getUser(req).id}`)
             }
         } catch (error) {
