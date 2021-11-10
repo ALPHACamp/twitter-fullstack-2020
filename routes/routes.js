@@ -51,7 +51,6 @@ router.get('/signout', userController.logout)
 router.get('/setting', authenticated, userController.getSetting)
 router.put('/setting', authenticated, userController.putSetting)
 
-router.get('/users/noti/:id', authenticated, userController.toggleNotice)
 router.get('/users/:id/followers', authenticated, userController.getFollowers)
 router.get('/users/:id/followings', authenticated, userController.getFollowings)
 router.get('/users/:id/tweets', authenticated, userController.getProfile)

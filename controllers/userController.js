@@ -13,16 +13,16 @@ const userController = {
 
     signUp: (req, res, next) => {
         const { name, account, email, password, passwordConfirmed } = req.body
-        if (!name || !account || !email || !password || !passwordConfirmed) {
-            req.flash('error_messages', '全部欄位都必填')
+        if (name.length > 32 || account.length > 32) {
+            req.flash('error_messages', '不可大於32字元!')
             return res.redirect('/signin')
         }
-        if (name.trim().length === 0 || account.trim().length === 0 ) {
-            req.flash('error_messages', '不可空白')
+        if (password.length < 8 || checkPassword.length < 8 || password.length > 16 || checkPassword.length > 16 ) {
+            req.flash('error_messages', '密碼介於8~16碼!')
             return res.redirect('/signin')
         }
         if (req.body.password !== req.body.passwordConfirmed) {
-            req.flash('error_messages', '兩次密碼輸入不同！')
+            req.flash('error_messages', '密碼及確認密碼不一致！')
             return res.redirect('/signin')
         }
         // 正規表達式檢查密碼
@@ -102,6 +102,7 @@ const userController = {
             followingId: req.body.id
         })
             .then((followship) => {
+                req.flash('error_messages', '已成功跟隨！')
                 return res.redirect('back')
             })
             .catch(next)
@@ -117,28 +118,11 @@ const userController = {
             .then((followship) => {
                 followship.destroy()
                     .then((followship) => {
+                        req.flash('error_messages', '已取消追隨！')
                         return res.redirect('back')
                     })
             })
             .catch(next)
-    },
-
-    toggleNotice: (req, res) => {
-        if (helpers.getUser(req).id === Number(req.params.id)) return res.redirect('back')
-        return User.findByPk(req.params.id, {
-            where: { role: 'user' }
-        })
-            .then(user => {
-                user.update({ isNoticed: !user.isNoticed })
-                    .then(user => {
-                        if (user.isNoticed) {
-                            req.flash('success_messages', `你已成功訂閱${user.name}！`)
-                        } else {
-                            req.flash('success_messages', `已取消訂閱${user.name}！`)
-                        }
-                        return res.redirect('back')
-                    })
-            })
     },
 
     getProfile: async (req, res) => {
@@ -249,9 +233,16 @@ const userController = {
         if (!name || !account || !email) {
             errors.push({ msg: '帳號/名稱/Email 不可空白。' })
         }
+        if (name.length > 32 || account.length > 32) {
+            errors.push({ msg: '不可大於32字元。' })
+        }
+        if (password.length < 8 || checkPassword.length < 8 || password.length > 16 || checkPassword.length > 16 ) {
+            errors.push({ msg: '密碼介於8~16碼!' })
+        }
         if (password !== checkPassword) {
             errors.push({ msg: '密碼及確認密碼不一致！' })
         }
+
         if (errors.length) {
             return res.render('setting', {
                 errors, name, account, email, password, checkPassword

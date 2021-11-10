@@ -1,25 +1,33 @@
 <div class="container-fluid" id="tweets">
     <div class="row flex-nowrap justify-content-between">
 
-        <div class="col-3 col-lg-3">
-            <a class="d-flex py-3 pl-4" href="/" style="text-decoration: none;">
-                <i class="fab fa-twitter-square" style="font-size: 2.5em; color: #FF6600;"></i>
-            </a>
-            <div class="d-flex flex-column align-items-start pl-3 px-3 pt-2 min-vh-100">
-                <ul class="nav flex-column nav-pills" id="menu" style="max-width:150px;">
-                    <li class="nav-item py-1">
-                        <a class="nav-link align-middle text-dark " href="/admin/tweets">
-                            <i class="fas fa-home " style="font-size: 1.2em;"></i>
-                            <span class="h5 menu-text home a-tomato d-none d-sm-inline">推文清單</span>
-                        </a>
-                    </li>
-                    <li class="nav-item py-1">
-                        <a class="nav-link align-middle text-dark h-tomato" href="/admin/users">
-                            <i class="far fa-user a-tomato" style="font-size: 1.2em;"></i>
-                            <span class="h5 menu-text user d-none d-sm-inline" style="color: #FF6600;">使用者列表</span>
-                        </a>
-                    </li>
-                </ul>
+        <div class="col-3 col-lg-3 d-flex flex-column">
+            <div class="flex-grow-1">
+                <a class="d-flex py-3 pl-4" href="/" style="text-decoration: none;">
+                    <i class="fab fa-twitter-square" style="font-size: 2.5em; color: #FF6600;"></i>
+                </a>
+                <div class="d-flex flex-column align-items-start pl-3 px-3 pt-2 min-vh-100">
+                    <ul class="nav flex-column nav-pills" id="menu" style="max-width:150px;">
+                        <li class="nav-item py-1">
+                            <a class="nav-link align-middle text-dark " href="/admin/tweets">
+                                <i class="fas fa-home " style="font-size: 1.2em;"></i>
+                                <span class="h5 menu-text home a-tomato d-none d-sm-inline">推文清單</span>
+                            </a>
+                        </li>
+                        <li class="nav-item py-1">
+                            <a class="nav-link align-middle text-dark h-tomato" href="/admin/users">
+                                <i class="far fa-user a-tomato" style="font-size: 1.2em;"></i>
+                                <span class="h5 menu-text user d-none d-sm-inline" style="color: #FF6600;">使用者列表</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="d-flex">
+                <a href="/signout" class="d-flex ml-4 px-2 py-1 h-tomato" style="text-decoration:none;">
+                    <i class="fas fa-sign-out-alt" style="color: #1C1C1C; font-size: 1.2em;"></i>
+                    <span class="h5 logout-text d-none d-sm-inline">登出</span>
+                </a>
             </div>
         </div>
         <div class="col-9 mt-2 col-lg-9">
@@ -28,12 +36,12 @@
                 使用者列表
             </div>
 
-            <div class="d-flex flex-row">
+            <div class="d-flex flex-row" id="adminTweet-scroll">
                 <div class="row">
                     {{#each users}}
-                    <div class="d-flex felx-column col-3">
+                    <div class="d-flex flex-column col-lg-3 col-md-4 col-sm-6">
                         <div>
-                            <div class="card my-3 rounded-4 shadow">
+                            <div class="card my-3 rounded-4 shadow" style="max-width: 200px;">
                                 <div class="position-relative">
                                     <img src="{{#if this.cover}}{{this.cover}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
                                         class="position-absolute rounded-3" style="width: 100%; z-index:0;"
@@ -42,7 +50,7 @@
                                         style="width: 70px; height: 70px; left: 33%; top: 60px; border: white 3px solid; z-index: 1"
                                         alt="face">
                                 </div>
-                                <div class="card-body bg-light" style="padding-top: 88%;">
+                                <div class="card-body bg-light" style="padding-top: 90%;">
                                     <h5 class="card-title text-center text-dark" style="font-weight: 900;">
                                     </h5>
                                     <h5 class="card-title text-center"
@@ -71,10 +79,5 @@
         </div>
 
     </div>
-    <div class="d-flex fixed-bottom mb-3 ml-5 px-3">
-        <a href="/signout" class="d-flex" style="text-decoration: none;">
-            <i class="fas fa-sign-out-alt" style="color: #000000; font-size: 1.2em;"></i>
-            <span class="h5 logout-text">登出</span>
-        </a>
-    </div>
+    
 </div>

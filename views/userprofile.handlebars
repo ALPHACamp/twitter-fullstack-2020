@@ -1,48 +1,56 @@
 <div class="container-fluid" id="tweets">
   <div class="row flex-nowrap justify-content-between">
-    <div class="col-3 col-lg-3">
-      <a class="d-flex pl-4 py-3" href="/tweets">
-        <i class="fab fa-twitter-square" style="font-size: 2.5em; color: #FF6600;"></i>
-      </a>
-      <div class="d-flex flex-column align-items-start pl-3 px-3 pt-2 min-vh-100">
-        <ul class="nav flex-column nav-pills" id="menu" style="max-width:150px;">
-          <li class="nav-item py-1">
-            <a class="nav-link align-middle text-dark " href="/tweets">
-              <i class="fas fa-home" style="font-size: 1.2em;"></i>
-              <span class="h5 menu-text home d-none d-sm-inline">首頁</span>
-            </a>
-          </li>
-          <li class="nav-item py-1">
-            <a class="nav-link align-middle text-dark h-tomato" href="/messages/public">
-              <i class="far fa-envelope" style="font-size: 1.2em;"></i>
-              <span class="h5 menu-text public d-none d-sm-inline">公開聊天室</span>
-            </a>
-          </li>
-          <li class="nav-item py-1">
-            <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}/tweets">
-              <i class="far fa-user a-tomato" style="font-size: 1.2em;"></i>
-              <span class="h5 menu-text user a-tomato d-none d-sm-inline" style="color: #FF6600;">個人資料</span>
-            </a>
-          </li>
-          <li class="nav-item py-1">
-            <a class="nav-link align-middle text-dark h-tomato" href="/setting">
-              <i class="fas fa-cog" style="font-size: 1.2em;"></i>
-              <span class="h5 menu-text setting d-none d-sm-inline">設定</span>
-            </a>
-          </li>
-          <li class="nav-item px-2">
-            <button type="button" class="btn btn-tomato rounded-pill mt-3"
-              style="width: 100%; border-radius: 30px 30px 30px 30px; max-width:150px;" data-toggle="modal" data-target="#tweetModal"
-              data-toggle="modal">
-              <span class='tweet-btn d-none d-sm-inline'>推文</span>
-              <i class='fas fa-feather-alt d-block d-sm-none'></i>
-            </button>
-          </li>
-        </ul>
+    <div class="col-3 col-lg-3 d-flex flex-column">
+      <div class="flex-grow-1">
+        <a class="d-flex pl-4 py-3" href="/tweets">
+          <i class="fab fa-twitter-square" style="font-size: 2.5em; color: #FF6600;"></i>
+        </a>
+        <div class="d-flex flex-column align-items-start pl-3 px-3 pt-2 min-vh-100">
+          <ul class="nav flex-column nav-pills" id="menu" style="max-width:150px;">
+            <li class="nav-item py-1">
+              <a class="nav-link align-middle text-dark " href="/tweets">
+                <i class="fas fa-home" style="font-size: 1.2em;"></i>
+                <span class="h5 menu-text home d-none d-sm-inline">首頁</span>
+              </a>
+            </li>
+            <li class="nav-item py-1">
+              <a class="nav-link align-middle text-dark h-tomato" href="/messages/public">
+                <i class="far fa-envelope" style="font-size: 1.2em;"></i>
+                <span class="h5 menu-text public d-none d-sm-inline">公開聊天室</span>
+              </a>
+            </li>
+            <li class="nav-item py-1">
+              <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}/tweets">
+                <i class="far fa-user a-tomato" style="font-size: 1.2em;"></i>
+                <span class="h5 menu-text user a-tomato d-none d-sm-inline" style="color: #FF6600;">個人資料</span>
+              </a>
+            </li>
+            <li class="nav-item py-1">
+              <a class="nav-link align-middle text-dark h-tomato" href="/setting">
+                <i class="fas fa-cog" style="font-size: 1.2em;"></i>
+                <span class="h5 menu-text setting d-none d-sm-inline">設定</span>
+              </a>
+            </li>
+            <li class="nav-item px-2">
+              <button type="button" class="btn btn-tomato rounded-pill mt-3"
+                style="width: 100%; border-radius: 30px 30px 30px 30px; max-width:150px;" data-toggle="modal"
+                data-target="#tweetModal" data-toggle="modal">
+                <span class='tweet-btn d-none d-sm-inline'>推文</span>
+                <i class='fas fa-feather-alt d-block d-sm-none'></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="d-flex">
+        <a href="/signout" class="d-flex ml-4 px-2 py-1 h-tomato" style="text-decoration:none;">
+          <i class="fas fa-sign-out-alt" style="color: #1C1C1C; font-size: 1.2em;"></i>
+          <span class="h5 logout-text d-none d-sm-inline">登出</span>
+        </a>
       </div>
     </div>
     {{!-- Middle Main bar --}}
-    <div class="row col-10 col-md-7 col-lg-6 py-2">
+    <div class="row col-10 col-md-7 col-lg-6 py-2" id="userProfile-scroll">
       <div class="card-header col-12 row m-0" style="max-height: 55px;">
         <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
           class="col-auto d-flex align-items-center">
@@ -62,7 +70,7 @@
             style="height:100%;width:100%;object-fit:cover">
         </div>
         <div class="avatar-holder">
-          <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+          <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://img.88icon.com/download/jpg/20200816/b56572e032f34a36aa96ace0f69a48e1_512_512.jpg!88con{{/if}}"
             class="rounded-circle" alt="user_Aavtor" height="130px" width="130px">
         </div>
       </div>
@@ -73,22 +81,11 @@
           style="border-radius: 30px 30px 30px 30px; height: 40px; font-weight: 700;" data-toggle="modal"
           data-target="#profileModal">編輯個人資料</button>
         {{else}}
-        <div class="NoticeAni">
-          <a href="" class="m-1" style="color:tomato;">
-            <i class="far fa-envelope fa-2x m-1"></i> </a>
-        </div>
+
         {{#if users.isNoticed}}
-        <div class="Noticed">
-          <a href="/users/noti/{{users.id}}" style="color:tomato;">
-            <i class="fas fa-bell fa-2x m-1"></i>
-          </a>
-        </div>
+
         {{else}}
-        <div class="NoticeAni">
-          <a href="/users/noti/{{users.id}}" class="m-1" id="noticeBell" style="color:tomato;">
-            <i class="far fa-bell fa-2x m-1"></i>
-          </a>
-        </div>
+ 
         {{/if}}
         {{#if isFollowed}}
         <form action="/followships/{{users.id}}?_method=DELETE" method="POST" style="margin-left: 10px;"
@@ -147,7 +144,7 @@
                 <div class="col-1 d-flex justify-content-center align-items-center">
                   <a href="/users/{{../users.id}}/tweets" class="p-1">
                     <img
-                      src="{{#if ../users.avatar}}{{../users.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                      src="{{#if ../users.avatar}}{{../users.avatar}}{{else}}https://img.88icon.com/download/jpg/20200816/b56572e032f34a36aa96ace0f69a48e1_512_512.jpg!88con{{/if}}"
                       alt="A user" width="60" height="60" class="rounded-circle" />
                   </a>
                 </div>
@@ -200,7 +197,7 @@
                 <div class="col-1 d-flex justify-content-center align-items-center">
                   <a href="/users/{{this.Tweet.User.id}}/tweets" class="p-1">
                     <img
-                      src="{{#if this.Tweet.User.avatar}}{{this.Tweet.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                      src="{{#if this.Tweet.User.avatar}}{{this.Tweet.User.avatar}}{{else}}https://img.88icon.com/download/jpg/20200816/b56572e032f34a36aa96ace0f69a48e1_512_512.jpg!88con{{/if}}"
                       alt="" width="60" height="60" class="rounded-circle" />
                   </a>
                 </div>
@@ -241,7 +238,7 @@
               <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard">
                 <div class="col-1 d-flex justify-content-center align-items-center">
                   <a href="/users/{{this.UserId}}/tweets" class="p-1">
-                    <img src="{{this.User.avatar}}" alt="" width="60" height="60" class="rounded-circle" />
+                    <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}https://img.88icon.com/download/jpg/20200816/b56572e032f34a36aa96ace0f69a48e1_512_512.jpg!88con{{/if}}" alt="" width="60" height="60" class="rounded-circle" />
                   </a>
                 </div>
                 <div class="col-11 row px-md-2 px-4">
@@ -283,52 +280,50 @@
       <div class="card d-none d-md-flex flex-column mt-1" style="border: none;">
         <ul class="list-group-flush">
           <li class="list-group-item bg-light" style="font-size: 18px; font-weight: bold; border: none;">Popular</li>
-          {{#each followship}}
-          <li class="list-group-item bg-light" style="border-left: none;border-right: none">
-            <div class="row justify-content-around align-items-center">
-              <div class="col-2 d-flex justify-content-center align-items-center" style="padding-left: 20px;">
-                <a href="/users/{{this.id}}/tweets">
-                  <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
-                    alt="" width="50" height="50" class="rounded-circle">
-                </a>
+          <div class="" id="popular-scroll">
+            {{#each followship}}
+            <li class="list-group-item bg-light" style="border-left: none;border-right: none">
+              <div class="row justify-content-around align-items-center">
+                <div class="col-2 d-flex justify-content-center align-items-center" style="padding-left: 20px;">
+                  <a href="/users/{{this.id}}/tweets">
+                    <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://img.88icon.com/download/jpg/20200816/b56572e032f34a36aa96ace0f69a48e1_512_512.jpg!88con{{/if}}" alt=""
+                      width="50" height="50" class="rounded-circle">
+                  </a>
+                </div>
+            
+                <div class="col-6 pt-3 d-flex flex-column align-items-start">
+                  <h5 style="line-height: 18px; width:inherit;">{{this.name}}</h5>
+                  <p class="text-muted" style="line-height: 16px; width:inherit;">@{{this.account}}</p>
+                </div>
+            
+                <div class="col-4 d-flex justify-content-center">
+            
+                  {{#ifCond this.id ../user.id}}
+                  {{else}}
+                  {{#if this.isFollowed}}
+                  <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                    <button type="submit" class="btn btn-tomato" name="id" value={{this.id}}
+                      style="font-size: 15px; border-radius: 30px 30px 30px 30px;font-weight: bold;">正在跟隨</button>
+                  </form>
+                  {{else}}
+                  <form action="/followships" method="POST" style="display: contents;">
+                    <button type="submit" class="btn btn-outline-tomato" name="id" value={{this.id}}
+                      style="font-size: 15px; border-radius: 30px 30px 30px 30px;font-weight: bold;">跟隨</button>
+                  </form>
+                  {{/if}}
+                  {{/ifCond}}
+            
+                </div>
               </div>
-
-              <div class="col-6 pt-3 d-flex flex-column align-items-start">
-                <h5 style="line-height: 18px; width:inherit;">{{this.name}}</h5>
-                <p class="text-muted" style="line-height: 16px; width:inherit;">@{{this.account}}</p>
-              </div>
-
-              <div class="col-4 d-flex justify-content-center">
-
-                {{#ifCond this.id ../user.id}}
-                {{else}}
-                {{#if this.isFollowed}}
-                <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                  <button type="submit" class="btn btn-tomato" name="id" value={{this.id}}
-                    style="font-size: 15px; border-radius: 30px 30px 30px 30px;font-weight: bold;">正在跟隨</button>
-                </form>
-                {{else}}
-                <form action="/followships" method="POST" style="display: contents;">
-                  <button type="submit" class="btn btn-outline-tomato" name="id" value={{this.id}}
-                    style="font-size: 15px; border-radius: 30px 30px 30px 30px;font-weight: bold;">跟隨</button>
-                </form>
-                {{/if}}
-                {{/ifCond}}
-
-              </div>
-            </div>
-          </li>
-          {{/each}}
+            </li>
+            {{/each}}
+          </div>
+         
         </ul>
       </div>
     </div>
     {{!-- follower bar end--}}
-    <div class="d-flex fixed-bottom mb-3 ml-5 px-3">
-      <a href="/signout" class="d-flex" style="text-decoration:none;">
-        <i class="fas fa-sign-out-alt" style="color: #000000; font-size: 1.2em;"></i>
-        <span class="h5 logout-text d-none d-sm-inline">登出</span>
-      </a>
-    </div>
+    
   </div>
 </div>
 
@@ -358,7 +353,7 @@
               <i class="fas fa-camera" style="font-size: 1.5em; color: white"></i>
             </label>
             <div class="avatar-holder">
-              <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/300/300/avator{{/if}}"
+              <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://img.88icon.com/download/jpg/20200816/b56572e032f34a36aa96ace0f69a48e1_512_512.jpg!88con{{/if}}"
                 class="rounded-circle" alt="user_Aavtor" height="80px" width="80px">
             </div>
             <label for="avatar" class="btn avator-uploader">

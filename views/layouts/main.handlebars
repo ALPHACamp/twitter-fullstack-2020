@@ -11,6 +11,9 @@
   <script src="https://kit.fontawesome.com/b6c3d3cded.js" crossorigin="anonymous"></script>
   <link rel='stylesheet' href='/stylesheets/style.css'>
   <script src="/javascripts/index.js"></script>
+  {{!-- Custom Warning Alert Notification --}}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 
 <body>
@@ -19,21 +22,33 @@
       {{!--error Message開頭 --}}
       {{#if errors}}
       {{#each errors}}
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>{{this.msg}}</strong>
+      <div class="alert show showAlert">
+        <span class="fas fa-exclamation-circle"></span>
+        <span class="msg">{{this.msg}}</span>
+        <div class="close-btn">
+          <span class="fas fa-times"></span>
+        </div>
       </div>
       {{/each}}
       {{/if}}
       {{!--error Message開頭 --}}
       {{!--Flash Message開頭 --}}
       {{#if success_messages}}
-      <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
-        {{success_messages}}
+      <div class="success show showAlert">
+        <span class="fas fa-exclamation-circle"></span>
+        <span class="msg">{{success_messages}}</span>
+        <div class="close-btn">
+          <span class="fas fa-times"></span>
+        </div>
       </div>
       {{/if}}
       {{#if error_messages}}
-      <div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
-        {{error_messages}}
+      <div class="alert show showAlert">
+        <span class="fas fa-exclamation-circle"></span>
+        <span class="msg">{{error_messages}}</span>
+        <div class="close-btn">
+          <span class="fas fa-times"></span>
+        </div>
       </div>
       {{/if}}
 
@@ -132,10 +147,21 @@
       </div>
     </div>
   </div>
-
+  {{!-- Custom Warning Alert Notification --}}
+  <script>
+    $('.close-btn').click(function () {
+      $('.alert').removeClass("show");
+      $('.alert').addClass("hide");
+    });
+    $('.close-btn').click(function () {
+      $('.success').removeClass("show");
+      $('.success').addClass("hide");
+    });
+  </script>
 </body>
 <script src="/javascript/index.js"></script>
 <script src="/index.js"></script>
+<script src='/javascripts/alert.js'></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
