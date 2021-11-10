@@ -322,7 +322,7 @@ button{
 .alert{
   background: #ffdb9b;
   padding: 20px 40px;
-  min-width: 420px;
+  min-width: 300px;
   position: absolute;
   z-index: 6;
   right: 0;
@@ -406,7 +406,7 @@ button{
 .success{
   background: #e5ffe9;
   padding: 20px 40px;
-  min-width: 420px;
+  min-width: 300px;
   position: absolute;
   z-index: 6;
   right: 0;
