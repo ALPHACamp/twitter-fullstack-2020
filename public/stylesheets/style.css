@@ -233,6 +233,11 @@ body {
     overflow-y: auto; 
   }
 
+  #tweet-scroll {
+    height: 530px;
+    overflow-y: auto; 
+  }
+
   #popular-scroll {
     height: 480px;
     overflow-y: auto; 
@@ -257,6 +262,11 @@ body {
 
   #tweets-scroll {
     height: 450px;
+    overflow-y: auto; 
+  }
+
+  #tweet-scroll {
+    height: 630px;
     overflow-y: auto; 
   }
 
