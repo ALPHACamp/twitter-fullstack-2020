@@ -109,10 +109,9 @@
                                                 style='font-size: 0.95em;border-radius: 30px 30px 30px 30px;'>正在跟隨</button>
                                         </form>
                                         {{else}}
-                                        <form action='/followships/{{this.id}}' method='POST'
-                                            style='display: contents;'>
-                                            <button type='submit' class='btn btn-outline-tomato fw-bold'
-                                                name='{{user.id}}'
+                                        <form action='/followships' method='POST' style='display: contents;'>
+                                            <button type='submit' class='btn btn-outline-tomato fw-bold' name="id"
+                                                value={{this.id}}
                                                 style='font-size: 0.95em;border-radius: 30px 30px 30px 30px;'>跟隨</button>
                                         </form>
                                         {{/if}}
