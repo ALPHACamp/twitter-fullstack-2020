@@ -1,32 +1,53 @@
 var chai = require('chai');
 var sinon = require('sinon');
+var proxyquire = require('proxyquire');
 chai.use(require('sinon-chai'));
 
 const { expect } = require('chai')
 const {
   sequelize,
-  dataTypes,
-  checkModelName,
-  checkUniqueIndex,
-  checkPropertyExists
+  Sequelize
 } = require('sequelize-test-helpers')
 
 const db = require('../../models')
-const TweetModel = require('../../models/tweet')
 
 describe('# Tweet Model', () => {
-  // 使用寫好的 Tweet Model
-  const Tweet = TweetModel(sequelize, dataTypes)
-  // 創建 tweet instance 
-  const like = new Tweet()
-  // 檢查 Model name
-  checkModelName(Tweet)('Tweet')
+  // 取出 Sequelize 的 DataTypes
+  const { DataTypes } = Sequelize
+  // 將 models/tweet 中的 sequelize 取代成這裡的 Sequelize
+  const TweetFactory = proxyquire('../../models/tweet', {
+    sequelize: Sequelize
+  })
 
-  // 檢查 tweet 是否有 UserId, description 屬性
+  // 宣告 Tweet 變數
+  let Tweet
+
+  before(() => {
+    // 賦予 Tweet 值，成為 Tweet Model 的 instance
+    Tweet = TweetFactory(sequelize, DataTypes)
+  })
+
+  // 清除 init 過的資料
+  after(() => {
+    Tweet.init.resetHistory()
+  })
+
+  // 檢查 tweet 是否有 UserId, description, createdAt, updatedAt 屬性
   context('properties', () => {
-    ;[
-      'description', 'UserId'
-    ].forEach(checkPropertyExists(like))
+    it('called Tweet.init with the correct parameters', () => {
+      expect(Tweet.init).to.have.been.calledWith(
+        {
+          description: DataTypes.TEXT,
+          createdAt: DataTypes.DATE,
+          updatedAt: DataTypes.DATE,
+          UserId: DataTypes.INTEGER
+        },
+        {
+          sequelize,
+          modelName: 'Tweet'
+        }
+      )
+    })
   })
 
   // 檢查 tweet 的關聯是否正確
@@ -58,7 +79,7 @@ describe('# Tweet Model', () => {
     })
   })
 
-  // 檢查 model 的新增、修改、刪除、更新
+  // // 檢查 model 的新增、修改、刪除、更新
   context('action', () => {
 
     let data = null

@@ -25,7 +25,6 @@ describe('# Reply Model', () => {
   // 檢查 reply 是否有 UserId, TweetId 屬性
   context('properties', () => {
     ;[
-      'UserId', 'TweetId'
     ].forEach(checkPropertyExists(like))
   })
 
