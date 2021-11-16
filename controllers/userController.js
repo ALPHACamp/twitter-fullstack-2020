@@ -27,6 +27,13 @@ const userController = {
             req.flash('error_messages', '密碼及確認密碼不一致！')
             return res.redirect('/signin')
         }
+        // 正規表達式檢查密碼
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,}$/
+        if (!regex.test(req.body.password)) {
+            req.flash('error_messages', '密碼至少8碼，至少1個大寫字母，1個小寫字母和1個數字！')
+            return res.redirect('/signin')
+        }
+
         User.findOne({
             where: {
                 [Op.or]: [

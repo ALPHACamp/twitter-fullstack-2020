@@ -175,13 +175,13 @@ body {
 
 /* Public */
 .msgblockleft {
-  border-radius: 50rem 50rem 50rem 0;
+  border-radius: 0rem 2rem 2rem 2rem;
   background-color: #eee;
   padding: 0.4rem 0.6rem;
 }
 
 .msgblockright {
-  border-radius: 50rem 50rem 0 50rem;
+  border-radius: 2rem 2rem 0 2rem;
   background-color: tomato;
   color: white;
   padding: 0.4rem 0.6rem;
