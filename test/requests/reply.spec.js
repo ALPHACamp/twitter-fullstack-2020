@@ -17,7 +17,7 @@ describe('# reply request', () => {
     // 可否取得留言資料
     describe('GET /tweets/:id/replies', () => {
       before(async() => {
-        // 模擬驗證資料
+        // 模擬登入資料
         this.ensureAuthenticated = sinon.stub(
           helpers, 'ensureAuthenticated'
         ).returns(true);
@@ -64,7 +64,7 @@ describe('# reply request', () => {
     // 可以新增留言     
     describe('POST /tweets/1/replies successfully', () => {
       before(async() => {
-        // 模擬驗證資料  
+        // 模擬登入資料  
         this.ensureAuthenticated = sinon.stub(
           helpers, 'ensureAuthenticated'
         ).returns(true);

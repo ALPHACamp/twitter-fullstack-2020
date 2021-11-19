@@ -14,7 +14,7 @@ describe('# followship request', () => {
     // 可否讓 user1 追蹤 user 2
     describe('when user1 wants to follow user2', () => {
       before(async() => {
-        // 模擬驗證資料
+        // 模擬登入資料
         this.ensureAuthenticated = sinon.stub(
           helpers, 'ensureAuthenticated'
         ).returns(true);
