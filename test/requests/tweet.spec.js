@@ -164,7 +164,7 @@ describe('# tweet request', () => {
           });
       })
       it('cant create current users tweet', (done) => {
-        // 檢查 db 會發現沒有新增的 tweet，表示太常的貼文不會新增成功
+        // 檢查 db 會發現沒有新增的 tweet，表示太長的貼文不會新增成功
         db.Tweet.findAll({where: {userId: 1}}).then(tweets => {
           expect(tweets).to.be.an('array').that.is.empty;
           done()
@@ -244,8 +244,8 @@ describe('# tweet request', () => {
         await db.Like.create({UserId: 1, TweetId: 1})
       })
 
-      it('DELETE /tweets/1/unlike', (done) => {
-        // 送出 DELETE /tweets/1/unlike
+      it('POST /tweets/1/unlike', (done) => {
+        // 送出 POST /tweets/1/unlike
         request(app)
           .post('/tweets/1/unlike')
           .set('Accept', 'application/json')
