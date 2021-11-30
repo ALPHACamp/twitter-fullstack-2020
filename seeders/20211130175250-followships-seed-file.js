@@ -6,7 +6,6 @@ const randomPair = Array
     Math.ceil(Math.random() * 5) * 10 + 1,
     Math.ceil(Math.random() * 5) * 10 + 1
   ])).filter((pair) => pair[0] !== pair[1])
-console.log(randomPair)
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
