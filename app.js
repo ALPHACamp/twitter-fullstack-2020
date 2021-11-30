@@ -26,7 +26,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
+app.listen(PORT, () => console.log(`Example app listening on port http://localhost:${PORT}`))
 
 require('./routes')(app)
 
