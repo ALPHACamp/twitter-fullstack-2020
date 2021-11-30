@@ -10,7 +10,17 @@ module.exports = (sequelize, DataTypes) => {
     account: DataTypes.STRING,
     cover: DataTypes.STRING
   }, {});
-  User.associate = function(models) {
+  User.associate = function (models) {
+    User.belongsToMany(User, {
+      through: models.Followship,
+      foreignKey: 'followingId',
+      as: 'Followers'
+    })
+    User.belongsToMany(User, {
+      through: models.Followship,
+      foreignKey: 'followerId',
+      as: 'followings'
+    })
   };
   return User;
 };
