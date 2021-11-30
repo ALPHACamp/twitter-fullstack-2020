@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     })
     User.hasMany(models.Tweet)
     User.hasMany(models.Reply)
+    User.hasMany(models.Like)
   };
   return User;
 };
