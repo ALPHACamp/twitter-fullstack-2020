@@ -1,13 +1,38 @@
+const helpers = require('./_helpers')
 const express = require('express')
-const helpers = require('./_helpers');
+const exphbs = require('express-handlebars')
+const session = require('express-session')
+const passport = require('./config/passport')
+const flash = require('connect-flash')
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 const app = express()
-const port = 3000
+const PORT = process.env.PORT || 3000
 
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.set('view engine', 'hbs')
+app.use(express.urlencoded({ extended: true }))
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(flash())
 
-app.get('/', (req, res) => res.send('Hello World!'))
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.use((req, res, next) => {
+  res.locals.success_messages = req.flash('success_messages')
+  res.locals.error_messages = req.flash('error_messages')
+  res.locals.user = helpers.getUser(req)
+  next()
+})
+
+app.listen(PORT, () => console.log(`App listening on http://localhost:${PORT}`))
+
+require('./routes')(app, passport)
 
 module.exports = app
