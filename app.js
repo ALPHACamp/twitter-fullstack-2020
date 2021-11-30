@@ -29,7 +29,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.listen(PORT, () => console.log(`Example app listening on port http://localhost:${PORT}`))
+app.listen(PORT, () => console.log(`App listening on http://localhost:${PORT}`))
 
 require('./routes')(app, passport)
 
