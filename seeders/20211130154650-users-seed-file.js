@@ -16,8 +16,8 @@ const password = bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null)
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Users', [
-      ...userSeed.map((user, index) => ({
+    await queryInterface.bulkInsert('Users',
+      userSeed.map((user, index) => ({
         id: index * 10 + 1,
         email: user.email,
         password: password,
@@ -30,7 +30,7 @@ module.exports = {
         createdAt: new Date(new Date().setDate(new Date().getDate() - 240 + index)),
         updatedAt: new Date(new Date().setDate(new Date().getDate() - 240 + index))
       })
-      )], {})
+      ), {})
   },
 
   down: async (queryInterface, Sequelize) => {
