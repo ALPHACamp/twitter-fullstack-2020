@@ -27,8 +27,8 @@ module.exports = {
         role: user.name === 'Admin' ? 'Admin' : 'User',
         account: user.email,
         cover: null,
-        createdAt: new Date(new Date().setDate(new Date().getDate() - 10 + index / 5)),
-        updatedAt: new Date(new Date().setDate(new Date().getDate() - 10 + index / 5))
+        createdAt: new Date(new Date().setDate(new Date().getDate() - 100 + index)),
+        updatedAt: new Date(new Date().setDate(new Date().getDate() - 100 + index))
       })
       )], {})
   },
