@@ -1,3 +1,4 @@
+const helpers = require('./_helpers')
 const express = require('express')
 const exphbs = require('express-handlebars')
 const session = require('express-session')
@@ -26,6 +27,7 @@ app.use(flash())
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
+  res.locals.user = helpers.getUser(req)
   next()
 })
 
