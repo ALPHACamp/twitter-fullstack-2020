@@ -1,6 +1,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const session = require('express-session')
+const passport = require('./config/passport')
 const flash = require('connect-flash')
 
 if (process.env.NODE_ENV !== 'production') {
@@ -18,6 +19,8 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(flash())
 
 app.use((req, res, next) => {
@@ -28,6 +31,6 @@ app.use((req, res, next) => {
 
 app.listen(PORT, () => console.log(`Example app listening on port http://localhost:${PORT}`))
 
-require('./routes')(app)
+require('./routes')(app, passport)
 
 module.exports = app
