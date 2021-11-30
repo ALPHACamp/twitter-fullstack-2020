@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     UserId: DataTypes.INTEGER,
     description: DataTypes.TEXT
   }, {});
-  Tweet.associate = function(models) {
+  Tweet.associate = function (models) {
+    Tweet.belongsTo(models.User)
   };
   return Tweet;
 };
