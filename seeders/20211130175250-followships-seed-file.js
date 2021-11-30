@@ -1,14 +1,15 @@
 'use strict';
-// random pair of user id, then filter out same id pair
-const randomPair = Array
-  .from({ length: 14 })
-  .map((d) => ([
-    Math.ceil(Math.random() * 5) * 10 + 1,
-    Math.ceil(Math.random() * 5) * 10 + 1
-  ])).filter((pair) => pair[0] !== pair[1])
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    // random pair of user id, then filter out same id pair
+    const randomPair = Array
+      .from({ length: 14 })
+      .map((d) => ([
+        Math.ceil(Math.random() * 5) * 10 + 1,
+        Math.ceil(Math.random() * 5) * 10 + 1
+      ])).filter((pair) => pair[0] !== pair[1])
+
     await queryInterface.bulkInsert('Followships',
       randomPair.map((pair, index) => ({
         id: index * 10 + 1,
