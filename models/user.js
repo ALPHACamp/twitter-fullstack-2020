@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     introduction: DataTypes.TEXT,
     role: {
       type: DataTypes.BOOLEAN,
-      defaultValue: 0
+      defaultValue: false
     }
   }, {});
   User.associate = function (models) {
