@@ -5,14 +5,14 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-const routes = require('./routes')
-
 const app = express()
 const PORT = process.env.PORT || 3000
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
-app.use(routes)
+app.use(express.urlencoded({ extended: true }))
+
+require('./routes')(app)
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
 
