@@ -5,11 +5,14 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     avatar: DataTypes.STRING,
+    cover: DataTypes.STRING,
+    account: DataTypes.STRING,
     introduction: DataTypes.TEXT,
     role: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
-    }
+    },
+
   }, {});
   User.associate = function (models) {
     User.hasMany(models.Tweet)
