@@ -1,9 +1,13 @@
 const helpers = require('../_helpers')
+const passport = require('../config/passport')
+const db = require('../models')
+const User = db.User
 
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const replyController = require('../controllers/replyController')
+const { authenticate } = require('passport')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -22,6 +26,7 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
+  app.get('/', (req, res) => res.redirect('/tweets'))
   // ADMIN
   app.get('/admin/signin', adminController.signInPage)
   app.post('/admin/signin', adminController.signIn)
@@ -41,7 +46,7 @@ module.exports = (app, passport) => {
 
   // TWEET
   app.get('/', (req, res) => res.redirect('/tweets'))
-  app.get('/tweets', authenticated, tweetController.getTweets)
+  app.get('/tweets', tweetController.getTweets)
 
   // REPLY
 
