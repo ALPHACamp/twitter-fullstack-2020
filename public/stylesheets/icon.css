@@ -2,26 +2,19 @@ i {
   display: inline-block;
   background-repeat:no-repeat;
   background-size:cover;
-  transition: all .3s ease;
-  -webkit-transition: all .3s ease;
-}
-i:hover {
-  opacity: 0.5;
 }
 .ac-icon {
   background-image: url('../icons/ac-icon.svg');
-  transition: none !important;
   height: 30px;
   width: 30px;
 }
 .ac-icon.login {
-  transition: none !important;
   height: 50px;
   width: 50px;
 }
 .home {
   background-image: url('../icons/home.svg');
-  height: 22px;
+  height: 24px;
   width: 24px;
 }
 .home.active {
@@ -37,8 +30,8 @@ i:hover {
 }
 .setting {
   background-image: url('../icons/setting.svg');
-  height: 22px;
-  width: 22px;
+  height: 24px;
+  width: 24px;
 }
 .setting.active {
   background-image: url('../icons/setting-active.svg');
@@ -105,13 +98,11 @@ i:hover {
   width: 24px;
 }
 .success {
-  transition: none !important;
   background-image: url('../icons/success.svg');
   height: 56px;
   width: 56px;
 }
 .warning {
-  transition: none !important;
   background-image: url('../icons/warning.svg');
   height: 56px;
   width: 56px;
