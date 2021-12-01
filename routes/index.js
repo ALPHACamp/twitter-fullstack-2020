@@ -12,6 +12,8 @@ module.exports = (app, passport) => {
   // USER
 
   // TWEET
+  app.get('/', (req, res) => res.redirect('/tweets'))
+  app.get('/tweets', tweetController.getTweets)
 
   // REPLY
 

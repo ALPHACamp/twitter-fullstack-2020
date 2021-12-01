@@ -1,0 +1,64 @@
+<div class="center container position-relative">
+  <div class="left-bar">
+    {{> navbar}}
+  </div>
+
+  <div class="right-bar">
+    {{> topUser}}
+  </div>
+
+  <div class="header">
+    <p class="p-3 m-0 font-weight-bold light-border" style="font-size: 18px; line-height: 26px;">首頁</p>
+    <div class="post p-3 light-border" style="height: 120px;">
+      <form action="/tweets" method="POST">
+        <div class="d-flex align-items-center justify-content-start">
+          <a href="/users/{{user.id}}">
+            <img class="mr-2 thumbnail" src="{{user.avatar}}" alt="">
+          </a>
+          <input type="text" id="description" name="description" placeholder="有什麼新鮮事？"
+            style="border: 0; outline: none;">
+        </div>
+        <button class="button-submit mt-2" style="float: right;" type="submit">推文</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="list-tweet mt-2">
+    <ul class="list-group">
+      {{#each tweets}}
+      <li class="list-group-item px-3 d-flex align-items-start justify-content-start">
+        <a href="/users/{{this.User.id}}">
+          <img class="mr-3 thumbnail" src="{{this.User.avatar}}" alt="">
+        </a>
+        <div class="content-wrapper">
+          <div class="mb-2">
+            <p class="font-weight-bold d-inline">{{this.User.name}}</p>
+            <p class="light-color d-inline">@{{this.User.account}}．3小時</p>
+          </div>
+          <p>{{this.description}}</p>
+          <div class="d-flex justify-content-between" style="width: 150px;">
+            <!-- comment -->
+            <a class="light-color action-icon" href="#">
+              <i class="far fa-comment mr-3"></i>13
+            </a>
+            <!-- like -->
+            {{#if this.isLiked}}
+            <form class="action-icon" action="/tweets/{{this.id}}/unlike" method="POST">
+              <button class="light-color" type="submit" style="background: transparent; border: 0;">
+                <i class="far fa-heart mr-3"></i>6
+              </button>
+            </form>
+            {{else}}
+            <form action="/tweets/{{this.id}}/like" method="POST">
+              <button class="light-color action-icon" type="submit" style="background: transparent; border: 0;">
+                <i class="far fa-heart mr-3"></i>6
+              </button>
+            </form>
+            {{/if}}
+          </div>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
