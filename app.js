@@ -1,6 +1,7 @@
 const express = require("express")
 const handlebars = require("express-handlebars")
-const helpers = require("./_helpers")
+const flash = require("connect-flash")
+const session = require("express-session")
 
 const app = express()
 const port = 3000
@@ -9,9 +10,17 @@ app.engine("handlebars", handlebars({ defaultLayout: "main" }))
 app.set("view engine", "handlebars")
 
 app.use(express.urlencoded({ extended: true }))
-
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+app.use(session({ secret: "secret", resave: false, saveUninitialized: false }))
+app.use(flash())
+const helpers = require("./_helpers")
+app.use((req, res, next) => {
+  res.locals.success_messages = req.flash("success_messages")
+  res.locals.error_messages = req.flash("error_messages")
+  // use helpers.getUser(req) to replace req.user
+  // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+  //res.locals.user = helpers.getUser(req)
+  next()
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`)
