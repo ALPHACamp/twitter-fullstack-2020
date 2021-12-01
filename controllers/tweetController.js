@@ -17,7 +17,13 @@ const tweetController = {
       cover: `https://loremflickr.com/720/240/landscape/?random=${Math.random() * 100}`
     }
 
-    Tweet.findAll({ raw: true, nest: true, include: [User]}).then(tweets => {
+    Tweet.findAll({
+      raw: true, 
+      nest: true, 
+      include: [User], 
+      order: [
+        ['createdAt', 'DESC']
+      ]}).then(tweets => {
       // for popular users list on right bar
       User.findAll({ include: [{ model: User, as: 'Followers' }] }).then(users => {
         users = users.map(user => ({
@@ -32,6 +38,24 @@ const tweetController = {
         return res.render('tweets', { user, tweets, users })
       })
     })
+  },
+
+  postTweet: (req, res) => {
+    const description = req.body.description
+
+    if (description.trim() === '') {
+      return res.redirect('back')
+    }
+    if (description.length > 140) {
+      return res.redirect('back')
+    }
+    return Tweet.create({
+      UserId: helpers.getUser(req).id,
+      description: description
+    })
+      .then((tweet) => {
+        return res.redirect('back')
+      })
   }
 }
 
