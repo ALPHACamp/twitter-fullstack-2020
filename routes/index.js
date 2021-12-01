@@ -10,6 +10,7 @@ module.exports = (app, passport) => {
   // OTHERS
 
   // USER
+  app.get('/signup', userController.signUpPage)
 
   // TWEET
 
