@@ -1,0 +1,39 @@
+<div class="container">
+  {{#each data}}
+  <p>{{this.id}}</p>
+  <p>{{this.UserId}}</p>
+  <p>{{this.description}}</p>
+  <p>{{this.User.name}}</p>
+  {{#each this.Replies}}
+  <p>{{this.comment}}</p>
+  {{/each}}
+  {{#each this.Likes}}
+  <p>{{this.UserId}}</p>
+  {{/each}}
+  <hr>
+  {{/each}}
+
+  <i class='ac-icon'></i>
+  <i class='ac-icon login'></i>
+  <i class='home'></i>
+  <i class='home active'></i>
+  <i class='info'></i>
+  <i class='info active'></i>
+  <i class='setting'></i>
+  <i class='setting active'></i>
+  <i class='logout'></i>
+  <i class='btn-message'></i>
+  <i class='btn-noti'></i>
+  <i class='btn-noti active'></i>
+  <i class='comment'></i>
+  <i class='comment lg'></i>
+  <i class='like'></i>
+  <i class='like active'></i>
+  <i class='like lg'></i>
+  <i class='like lg active'></i>
+  <i class='back-arror'></i>
+  <i class='X-orange'></i>
+  <i class='X-gray'></i>
+  <i class='success'></i>
+  <i class='warning'></i>
+</div>

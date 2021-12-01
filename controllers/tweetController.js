@@ -10,8 +10,9 @@ const tweetController = {
         { model: Reply, nested: true, required: false },
         { model: Like, nested: true, required: false }
       ]
-    }).then((tweets) => {
-      return res.json(tweets)
+    }).then((result) => {
+      const data = result.map((r) => r.toJSON())
+      return res.render('user', { data })
     })
   }
 }
