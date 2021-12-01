@@ -37,7 +37,7 @@
     </div>
 
     {{!-- 使用者名單 --}}
-    {{#each userData}}
+    {{#each users}}
     <div
       style="border-radius: 10px; height: 314px; width: 245px; left: 260px; top: 0px; background-color: #F6F7F8; margin: 6px; display: inline-block;">
 
@@ -58,7 +58,7 @@
           {{/if}}
 
           <div class="h4" style="margin-bottom:0;">{{this.name}}</div>
-          <a style="font-size: 16 px;" href="#">@{{this.account}}</a>
+          <a style="font-size: 16 px;" href="#">{{this.account}}</a>
           <div class="mt-2">
             <div style="display: inline-block;"><i class="far fa-comment"></i> 1.5K</div>
             <div style="display: inline-block;"><i class="far fa-heart"></i> 20K</div>

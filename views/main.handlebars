@@ -89,7 +89,7 @@
 
     {{!-- 大頭貼區塊 --}}
     <div class=" mt-1 mb-2 ">
-      <form action="#" method="post">
+      <form action="/tweets" method="post">
         <div class="modal-body" style="height: 250px;">
           <div class="row" style="height: 100%;">
             <div class="col-md-2">
@@ -122,14 +122,14 @@
     {{!-- 導航欄 --}}
 
     {{!-- 留言區域 --}}
-    {{#each tweet}}
+    {{#each tweets}}
     <div class="row border userTweet"
       style="padding-top:8px; padding-bottom:10px; word-break:break-all; padding-bottom:10px;">
       <div class="col-md-2" style="padding-right: 0px; ">
         <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
-        <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{moment
+        <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{
             this.createdAt}}</span>
         </div>
         <div>{{this.description}}</div>
@@ -168,7 +168,7 @@
                 <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
               </div>
               <div class="col-md-10" style="padding-left: 0px;">
-                <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{moment
+                <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{
                     this.createdAt}}</span>
                 </div>
                 <div>
