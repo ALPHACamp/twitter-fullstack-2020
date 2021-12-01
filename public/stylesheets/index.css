@@ -1,0 +1,139 @@
+html, body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: #ffffff;
+}
+
+.light-border {
+  border: 1px solid #e6ecf0;
+}
+
+.light-color {
+  color: #657786;
+}
+
+.action-icon {
+  font-size: 13px;
+}
+
+.action-icon:hover {
+  text-decoration: none;
+  color: #576169
+}
+
+.thumbnail {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.button-submit {
+  padding: 5px 15px;
+  background: #ff6600;
+  color: #fff;
+  font-size: 1.125rem;
+  border: none;
+  border-radius: 100px;
+}
+
+.button-follow {
+  padding: 5px 15px;
+  background: transparent;
+  color: #ff6600;
+  font-size: 15px;
+  font-weight: bold;
+  border: 2px solid #ff6600;
+  border-radius: 100px;
+}
+
+.button-follow.following {
+  background: #ff6600;
+  color: #fff;
+  border: 0;
+}
+
+.center {
+  padding: 0;
+  width: 600px;
+  margin: 0 auto;
+  background: #e6ecf0;
+}
+
+.header {
+  background: #ffffff;
+}
+
+.list-tweet {
+  font-size: 15px;
+}
+
+.right-bar {
+  width: 350px;
+  position: absolute;
+  top: 10px;
+  right: -380px;
+}
+
+.list-topUser {
+  border-radius: 14px;
+  background: #f5f8fa;
+}
+
+.list-topUser > li {
+  padding: 12px;
+  font-size: 15px;
+  background: transparent;
+}
+
+.left-bar {
+  width: 235px;
+  position: absolute;
+  top: 10px;
+  left: -265px;
+}
+
+.navbar-wrapper {
+  margin: 45px 0 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.icon-wrapper {
+  margin-right: 12px;
+  width: 25px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-action {
+  width: 100%;
+  color: #1c1c1c;
+  font-weight: bold;
+  font-size: 18px;
+  margin: 16px 0;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-action img {
+  filter: invert(3%) sepia(17%) saturate(13%) hue-rotate(329deg) brightness(97%) contrast(82%);
+}
+
+.navbar-action:hover {
+  color: #657786;
+  text-decoration: none;
+}
+
+.navbar-action:hover img {
+  filter: invert(49%) sepia(14%) saturate(516%) hue-rotate(165deg) brightness(90%) contrast(93%);
+}
+
+.navbar-action.active {
+  color: #ff6600;
+}
+
+.navbar-action.active img {
+  filter: invert(51%) sepia(85%) saturate(3451%) hue-rotate(359deg) brightness(100%) contrast(106%);
+}
