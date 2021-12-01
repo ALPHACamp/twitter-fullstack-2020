@@ -1,6 +1,5 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
-
 const session = require('express-session')
 const flash = require('connect-flash')
 const methodOverride = require('method-override')
@@ -20,18 +19,31 @@ app.engine('hbs', exphbs({
   extname: '.hbs'
 }))
 app.set('view engine', 'hbs')
+
+// BODY PARSER
 app.use(express.urlencoded({ extended: true }))
+
+// SESSION
 app.use(session({
   secret: 'twitterSecret',
   resave: false,
   saveUninitialized: false
 }))
-app.use(flash())
+
+// PASSPORT
 app.use(passport.initialize())
 app.use(passport.session())
+
+// FLASH MESSAGE
+app.use(flash())
+
+// METHOD OVERRIDE
 app.use(methodOverride('_method'))
+
+// STATIC FILE
 app.use(express.static('public'))
 
+// LOCAL PARAMS
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg')
   res.locals.error_msg = req.flash('error_msg')

@@ -13,6 +13,8 @@ module.exports = (app, passport) => {
   app.get('/signup', userController.signUpPage)
 
   // TWEET
+  app.get('/', (req, res) => res.redirect('/tweets'))
+  app.get('/tweets', tweetController.getTweets)
 
   // REPLY
 
