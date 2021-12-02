@@ -9,15 +9,7 @@
     </div>
     {{!-- 展示icon用 --}}
     <div>
-      <i class='ac-icon'></i>
       <i class='ac-icon login'></i>
-      <i class='home'></i>
-      <i class='home active'></i>
-      <i class='info'></i>
-      <i class='info active'></i>
-      <i class='setting'></i>
-      <i class='setting active'></i>
-      <i class='logout'></i>
       <i class='btn-message'></i>
       <i class='btn-noti'></i>
       <i class='btn-noti active'></i>
@@ -40,7 +32,8 @@
   </div>
 
   <div class="main">
-    {{> tweets}}
+    {{!-- {{> tweets}} --}}
+    {{> profile}}
   </div>
 
   <div class="rightside">
@@ -194,17 +187,15 @@
           </a>
           <div class="tweetcontent">
             <a class="tweetuser">
-              <span class="name ellipsis">Apple</span>
-              <span class="at-name ellipsis">@apple</span>
-              <span class="timer ellipsis">1個月前</span>
+              <span class="name ellipsis">Loading...</span>
+              <span class="at-name ellipsis">@Loading...</span>
+              <span class="timer ellipsis">Loading...</span>
             </a>
             <span class="tweetdescription" id="modal-reply-content">
-              Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation
-              incididunt
-              aliquip deserunt reprehenderit elit laborum.
+              Loading . . .
             </span>
             <span class="replyto">回覆給
-              <span class="at-name">@apple</span>
+              <span class="at-name">@Loading...</span>
             </span>
           </div>
 
