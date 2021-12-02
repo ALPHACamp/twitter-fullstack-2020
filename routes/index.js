@@ -19,3 +19,4 @@ module.exports = (app, passport) => {
   // admin 相關
   app.get('/admin/tweets', adminController.getTweets)
   app.delete('/admin/tweets/:id', adminController.deleteTweet)
+}
