@@ -1,6 +1,7 @@
 const helpers = require('../_helpers')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
+const adminController = require('../controllers/adminController')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
