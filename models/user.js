@@ -31,6 +31,18 @@ module.exports = (sequelize, DataTypes) => {
     },
     cover: {
       type: DataTypes.STRING
+    },
+    followerCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    followingCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    tweetCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
     }
   }, {});
   User.associate = function(models) {

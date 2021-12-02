@@ -16,7 +16,8 @@ const port = 3000
 // TEMPLATE ENGINE
 app.engine('hbs', exphbs({
   defaultLayout: 'main',
-  extname: '.hbs'
+  extname: '.hbs',
+  helpers: require('./config/handlebars-helpers')
 }))
 app.set('view engine', 'hbs')
 

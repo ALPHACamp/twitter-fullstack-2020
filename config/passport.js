@@ -6,12 +6,12 @@ const User = db.User
 
 passport.use(new LocalStrategy(
   {
-    usernameField: 'email',
+    usernameField: 'account',
     passwordField: 'password',
     passReqToCallback: true 
   },
   (req, username, password, done) => {
-    User.findOne({ where: { email: username} }).then(user  => {
+    User.findOne({ where: { account: username} }).then(user  => {
       if (!user) return done(null, false, req.flash('error_msg', '還未註冊喔，請先註冊'))
       if (!bcrypt.compareSync(password, user.password)) return done(null, false, req.flash('error_msg', ' 帳號或密碼錯誤'))
       return done(null, user)
