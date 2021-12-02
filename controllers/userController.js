@@ -3,10 +3,23 @@ const db = require("../models")
 const User = db.User
 
 const userController = {
+  //使用者登入
   signInPage: (req, res) => {
     return res.render("signin")
   },
 
+  signIn: (req, res) => {
+    req.flash("success_messages", "成功登入！")
+    res.redirect("/tweets")
+  },
+
+  logout: (req, res) => {
+    req.flash("success_messages", "登出成功！")
+    req.logout()
+    res.redirect("/signin")
+  },
+
+  //使用者註冊
   signUpPage: (req, res) => {
     return res.render("signup")
   },
