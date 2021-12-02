@@ -396,7 +396,83 @@ html, body {
   margin: auto 15px auto 0;
 }
 
+/* modal */
+#modal-post {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vw;
+}
+
+#modal-post > .mask {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+#modal-post > .mask > .dialog {
+  background-color: #fff;
+  width: 600px;
+  height: 300px;
+  margin: 54px auto 0;
+  border-radius: 14px;
+}
+
+#modal-post > .mask > .dialog > a {
+  display: inline-block;
+  padding: 9.5px;
+  margin: 10px;
+}
+
+#modal-post > .mask > .dialog > .postarea {
+  width: 100%;
+  border-top: 1px solid #E6ECF0;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+#modal-post > .mask > .dialog > .postarea > a {
+  display: inline-block;
+  margin-top: 15px;
+}
+
+#modal-post > .mask > .dialog > .postarea > form {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+#modal-post > .mask > .dialog > .postarea > form > textarea {
+  display: inline-block;
+  width: 510px;
+  border: none;
+  resize: none;
+  margin-top: 27px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 26px;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#modal-post > .mask > .dialog > .postarea > form > button {
+  width: 66px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  align-self: flex-end;
+}
+
 /* general style */
+.d-none {
+  display: none !important;
+}
+
 .btn-fill {
   color: #fff !important;
   justify-content: center !important;
@@ -404,10 +480,12 @@ html, body {
   border-radius: 19px;
   font-weight: 500 !important;
   text-align: center;
+  font-size: 18px;
 }
 
 .btn-fill.sm {
   border-radius: 17px;
+  font-size: 15px;
 }
 
 .btn-outline.sm {
@@ -418,6 +496,7 @@ html, body {
   border-radius: 17px;
   font-weight: 500 !important;
   text-align: center;
+  font-size: 15px;
 }
 
 img.thumbnail {
