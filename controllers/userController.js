@@ -51,7 +51,8 @@ const userController = {
   },
 
   signInPage: (req, res) => {
-    return res.render('signin')
+    const isBackend = req.originalUrl.includes('admin')
+    return res.render('signin', { isBackend })
   },
 
   signIn: (req, res) => {
