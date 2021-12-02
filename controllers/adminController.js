@@ -11,26 +11,8 @@ const adminController = {
     return res.render('admin/signin')
   },
   signIn: (req, res) => {
-    const account = req.body.account
-    const password = req.body.password
-
-    if (!account || !password) {
-      return res.redirect('/admin/signin')
-    }
-
-    return User.findOne({ where: { account } })
-      .then((user) => {
-        if (!user) {
-          return res.redirect('/admin/signin')
-        }
-        if (user.role === 'user') {
-          return res.redirect('/admin/signin')
-        }
-        if (!bcrypt.compareSync(password, user.password)) {
-          return res.redirect('/admin/signin')
-        } 
-        return res.redirect('/admin/tweets')
-      })
+    req.flash('success_msg', '成功登入！')
+    res.redirect('/admin/tweets')
   },
 
   getTweets: (req, res) => {
