@@ -247,7 +247,7 @@ describe('# user request', () => {
       it('followers list ordered by desc', (done) => {
         // 送出 request GET /users/1/followers 
         request(app)
-          .get('/users/1/followings')
+          .get('/users/1/followers')
           .set('Accept', 'application/json')
           .expect(200)
           .end(function(err, res) {
