@@ -15,6 +15,7 @@ module.exports = {
      introduction: faker.lorem.text().substring(0, 160),
      account: 'root',
      cover: `https://loremflickr.com/720/240/landscape/?random=${Math.random() * 100}`,
+     tweetCount: 0,
      createdAt: new Date(),
      updatedAt: new Date()
    }, {
@@ -27,6 +28,7 @@ module.exports = {
      introduction: faker.lorem.text().substring(0, 160),
      account: 'user1',
      cover: `https://loremflickr.com/720/240/landscape/?random=${Math.random() * 100}`,
+     tweetCount: 10,
      createdAt: new Date(),
      updatedAt: new Date()
    }, {
@@ -39,6 +41,7 @@ module.exports = {
      introduction: faker.lorem.text().substring(0, 160),
      account: 'user2',
      cover: `https://loremflickr.com/720/240/landscape/?random=${Math.random() * 100}`,
+     tweetCount: 10,
      createdAt: new Date(),
      updatedAt: new Date()
    }, {
@@ -51,6 +54,7 @@ module.exports = {
      introduction: faker.lorem.text().substring(0, 160),
      account: 'user3',
      cover: `https://loremflickr.com/720/240/landscape/?random=${Math.random() * 100}`,
+     tweetCount: 10,
      createdAt: new Date(),
      updatedAt: new Date()
    }, {
@@ -63,6 +67,7 @@ module.exports = {
      introduction: faker.lorem.text().substring(0, 160),
      account: 'user4',
      cover: `https://loremflickr.com/720/240/landscape/?random=${Math.random() * 100}`,
+     tweetCount: 10,
      createdAt: new Date(),
      updatedAt: new Date()
    }, {
@@ -75,6 +80,7 @@ module.exports = {
      introduction: faker.lorem.text().substring(0, 160),
      account: 'user5',
      cover: `https://loremflickr.com/720/240/landscape/?random=${Math.random() * 100}`,
+     tweetCount: 10,
      createdAt: new Date(),
      updatedAt: new Date()
    }

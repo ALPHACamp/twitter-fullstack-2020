@@ -1,0 +1,57 @@
+<div class="container">
+  <divr class="row">
+    <div class="col-3">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a href="/admin/tweets">
+            <span>推文清單</span>
+          </a>
+        </li>
+        <li class="nav item">
+          <a href="/admin/users">
+            <span>使用者列表</span>
+          </a>
+        </li>
+      </ul>
+      <a href="/logout"><i class="far fa-sign-out"></i>登出</a>
+    </div>
+
+    
+    <div class="col-9">
+      <div>
+        <p>推文清單</p>
+      </div>
+      <hr>
+      <div class="d-flex">
+        <ul>
+        {{#each tweets}}
+        <li class="d-flex justify-content-between">
+          <div class="content d-flex ">
+            <div class="avatar mr-3">
+              <img src="{{User.avatar}}" class="rounded-circle" alt="" width="50 px" height="50 px">
+            </div>
+            <div class="details">
+              <div class="user-name">
+                <span class="mr-2">{{User.name}}</span>
+                <span><small><a href="">@{{User.account}}</a></small></span>
+                <span><small>• {{moment this.createdAt}}</small></span>
+              </div>
+              <div class="user-tweets">
+                <span>{{this.description}}</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="float: right;">
+              <button type="submit" class="btn"><i class="fas fa-times"></i></button>
+            </form>
+          </div>
+        </li>
+        <hr>
+        {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>

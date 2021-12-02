@@ -44,19 +44,16 @@
               <i class="far fa-comment mr-3"></i>13
             </a>
             <!-- like -->
-            {{#if this.isLiked}}
             <form class="action-icon" action="/tweets/{{this.id}}/unlike" method="POST">
               <button class="light-color" type="submit" style="background: transparent; border: 0;">
-                <i class="far fa-heart mr-3"></i>6
+                <i class="far fa-heart mr-3"></i>delete
               </button>
             </form>
-            {{else}}
             <form action="/tweets/{{this.id}}/like" method="POST">
               <button class="light-color action-icon" type="submit" style="background: transparent; border: 0;">
-                <i class="far fa-heart mr-3"></i>6
+                <i class="far fa-heart mr-3"></i>like
               </button>
             </form>
-            {{/if}}
           </div>
         </div>
       </li>

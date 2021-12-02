@@ -21,7 +21,7 @@ const user = {
 
 const tweetController = {
   getTweets: (req, res) => {
-    Tweet.findAll({ raw: true, nest: true, include: [User]}).then(tweets => {
+    Tweet.findAll({ raw: true, nest: true, include: [User], order: [['createdAt', 'DESC']]}).then(tweets => {
       userService.getTopUser(req, res, topUser => {
         return res.render('tweets', { user, tweets, topUser })
       })
@@ -38,6 +38,23 @@ const tweetController = {
         return res.render('tweet', { user, tweet: tweet.toJSON(), topUser })
       })
     })
+  },
+  postTweet: (req, res) => {
+    const description = req.body.description
+
+    if (description.trim() === '') {
+      return res.redirect('back')
+    }
+    if (description.length > 140) {
+      return res.redirect('back')
+    }
+    return Tweet.create({
+      UserId: helpers.getUser(req).id,
+      description: description
+    })
+      .then((tweet) => {
+        return res.redirect('back')
+      })
   }
 }
 
