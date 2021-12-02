@@ -29,7 +29,7 @@ module.exports = (app, passport) => {
     // 前台路由部分
     // ================================================================
 
-    
+
     // 註冊
     app.get('/signup', userController.getSignUpPage)
     app.post('/signup', userController.postSignUp)
@@ -45,8 +45,13 @@ module.exports = (app, passport) => {
     // 推文首頁
     app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
     app.get('/tweets', authenticated, tweetController.getTweets)
-    
-    app.post('/tweets',authenticated, tweetController.postTweets)
+
+    app.post('/tweets', authenticated, tweetController.postTweets)
+
+    // 追隨
+
+    app.post('/user/self/following/:id', authenticated, userController.addFollowing)
+
 
 
 

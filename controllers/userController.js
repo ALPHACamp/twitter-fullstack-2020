@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const Followship = db.Followship
 
 const userController = {
     getSignUpPage: (req, res) => {
@@ -44,7 +45,17 @@ const userController = {
         req.flash('success_messages', '登出成功！')
         req.logout()
         res.redirect('/signin')
+    },
+    addFollowing: (req, res) => {
+        return Followship.create({
+            followerId: req.user.id,
+            followingId: req.params.userId
+        }).then((followship) => {
+            return res.redirect('back')
+        })
     }
+
+
 }
 
 
