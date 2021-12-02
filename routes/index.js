@@ -43,6 +43,8 @@ module.exports = (app, passport) => {
 
 
     // 推文首頁
+    app.get('/tweets', authenticated, userController.getTopUser)
+
     app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
     app.get('/tweets', authenticated, tweetController.getTweets)
 
@@ -50,8 +52,8 @@ module.exports = (app, passport) => {
 
     // 追隨
 
-    app.post('/user/self/following/:id', authenticated, userController.addFollowing)
-
+    app.post('/user/self/following/:userId', authenticated, userController.addFollowing)
+    app.delete('/user/self/following/:userId', authenticated, userController.removeFollowing)
 
 
 
