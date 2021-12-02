@@ -17,6 +17,9 @@
     <div>
       {{#if user}}
       <span style="margin-right: 10px;">Hi, {{user.email}}</span>
+      <a href="/logout">登出</a>
+      {{else}}
+      <a href="/signin">登入</a>
       {{/if}}
     </div>
   </nav>
