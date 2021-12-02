@@ -1,0 +1,17 @@
+<h1> 推文清單 </h1>
+
+{{#each tweets}}
+<div>
+  <hr>
+  <h1> {{this.User.name}} </h1>
+  <p> {{this.User.account}} </p>
+  <p> {{moment this.createdAt}} </p>
+  <p> {{this.description}} </p>
+  {{!-- 刪除button --}}
+  <div>
+    <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+      <button type="submit" class="btn btn-link">X</button>
+    </form>
+  </div>
+</div>
+{{/each}}
