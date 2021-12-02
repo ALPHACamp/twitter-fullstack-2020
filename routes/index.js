@@ -8,6 +8,7 @@ const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const replyController = require('../controllers/replyController')
 const { authenticate } = require('passport')
+const likeController = require('../controllers/likeController')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -51,6 +52,7 @@ module.exports = (app, passport) => {
   // REPLY
 
   // LIKE
-
+  app.post('/tweets/:id/like', authenticated, likeController.postLike)
+  app.post('/tweets/:id/unlike', authenticated, likeController.deleteLike)
   // FOLLOWSHIP
 }
