@@ -67,6 +67,11 @@ const userController = {
 
   signOut: (req, res) => {
     req.flash('success_messages', '成功登出！')
+    
+    if (helpers.getUser(req).role === 'Admin') {
+      return res.redirect('/admin/signin')
+    }
+    
     req.logout()
     return res.redirect('/signin')
   }
