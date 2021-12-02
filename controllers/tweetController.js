@@ -2,6 +2,8 @@ const helpers = require('../_helpers')
 const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
+const Reply = db.Reply
+const Like = db.Like
 
 const userService = require('../services/userService')
 
@@ -26,8 +28,15 @@ const tweetController = {
     })
   },
   getTweet: (req, res) => {
-    Tweet.findByPk(req,params.id, { include: [User] }).then(tweet => {
-      
+    Tweet.findByPk(req.params.id, { include: [
+      User,
+      Like,
+      { model: Reply, include: [User] }
+    ] }).then(tweet => {
+      userService.getTopUser(req, res, topUser => {
+        console.log(tweet.toJSON())
+        return res.render('tweet', { user, tweet: tweet.toJSON(), topUser })
+      })
     })
   }
 }

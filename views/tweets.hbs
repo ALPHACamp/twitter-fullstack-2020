@@ -1,4 +1,4 @@
-<div class="center container position-relative">
+<div class="center container">
   <div class="left-bar">
     {{> navbar}}
   </div>
@@ -9,7 +9,7 @@
 
   <div class="header">
     <p class="p-3 m-0 font-weight-bold light-border" style="font-size: 18px; line-height: 26px;">首頁</p>
-    <div class="post p-3 light-border" style="height: 120px;">
+    <div class="p-3 light-border" style="height: 120px;">
       <form action="/tweets" method="POST">
         <div class="d-flex align-items-center justify-content-start">
           <a href="/users/{{user.id}}">
@@ -30,12 +30,14 @@
         <a href="/users/{{this.User.id}}">
           <img class="mr-3 thumbnail" src="{{this.User.avatar}}" alt="">
         </a>
-        <div class="content-wrapper">
+        <div class="content-wrapper w-100">
           <div class="mb-2">
             <p class="font-weight-bold d-inline">{{this.User.name}}</p>
             <p class="light-color d-inline">@{{this.User.account}}．3小時</p>
           </div>
-          <p>{{this.description}}</p>
+          <a class="link-description" href="/tweets/{{this.id}}">
+            <p>{{this.description}}</p>
+          </a>
           <div class="d-flex justify-content-between" style="width: 150px;">
             <!-- comment -->
             <a class="light-color action-icon" href="#">

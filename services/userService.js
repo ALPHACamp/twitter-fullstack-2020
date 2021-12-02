@@ -4,7 +4,7 @@ const User = db.User
 
 const userService = {
   getTopUser: (req, res, cb) => {
-    User.findAll({ include: [{ model: User, as: 'Followers' }] }).then(users => {
+    User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } }).then(users => {
       users = users.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length

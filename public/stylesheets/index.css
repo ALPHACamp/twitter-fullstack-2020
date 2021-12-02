@@ -52,6 +52,7 @@ html, body {
 }
 
 .center {
+  position: relative;
   padding: 0;
   width: 600px;
   margin: 0 auto;
@@ -60,6 +61,15 @@ html, body {
 
 .header {
   background: #ffffff;
+}
+
+.link-description {
+  color: #212529
+}
+
+.link-description:hover {
+  color: #212529;
+  text-decoration: none;
 }
 
 .list-tweet {
