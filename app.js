@@ -13,6 +13,7 @@ const port = 3000
 
 app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs'}))
 app.set('view engine', 'hbs')
+app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(flash())
