@@ -66,6 +66,10 @@ module.exports = (app, passport) => {
 
     app.get('/user/self', authenticated, userController.getUserSelf)
 
+    // 取得特定推文留言資料
+    app.post('/tweets/:id/replies', authenticated, tweetController.postReplies)
+    app.get('/tweets/:id/replies', authenticated, tweetController.getReplies)
+
 
 
 
