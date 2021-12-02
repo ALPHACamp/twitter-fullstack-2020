@@ -34,4 +34,8 @@ module.exports = (app, passport) => {
   app.get('/admin/signin', userController.signInPage)
   app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), userController.signIn)
   app.get('/admin/signout', userController.signOut)
+
+  // admin 相關
+  app.get('/admin/tweets', adminController.getTweets)
+  app.delete('/admin/tweets/:id', adminController.deleteTweet)
 }
