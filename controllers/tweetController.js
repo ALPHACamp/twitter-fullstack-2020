@@ -4,19 +4,46 @@ const User = db.User
 
 const tweetController = {
     getTweets: (req, res) => {
-        Tweet.findAll({
+
+        const tweetFindAll = Tweet.findAll({
             raw: true,
             nest: true,
             order: [['createdAt', 'DESC']],
             include: [
                 User
             ]
-        }).then(tweets => {
-            console.log(tweets)
-            return res.render('main', { tweets })
-        }).catch(error => {
-            console.log(error)
         })
+
+        const userFindAll = User.findAll({
+            raw: true,
+            nest: true
+        })
+
+        Promise.all([tweetFindAll, userFindAll])
+            .then(responses => {
+                console.log(responses[0])
+                const tweets = responses[0]
+                console.log('1111111111111111111111111111111111')
+                const users = responses[1]
+                console.log(responses[1])
+                return res.render('main', { tweets, users })
+            }).catch(error => {
+                console.log(error)
+            })
+
+        // Tweet.findAll({
+        //     raw: true,
+        //     nest: true,
+        //     order: [['createdAt', 'DESC']],
+        //     include: [
+        //         User
+        //     ]
+        // }).then(tweets => {
+        //     // console.log(tweets)
+        //     return res.render('main', { tweets })
+        // }).catch(error => {
+        //     console.log(error)
+        // })
 
     },
 
