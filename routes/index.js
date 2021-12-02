@@ -47,6 +47,7 @@ module.exports = (app, passport) => {
   // TWEET
   app.get('/', (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetController.getTweets)
+  app.get('/tweets/:id', authenticated, tweetController.getTweet)
   app.post('/tweets', authenticated, tweetController.postTweet)
 
   // REPLY

@@ -1,0 +1,74 @@
+<div class="center container">
+  <div class="left-bar">
+    {{> navbar}}
+  </div>
+
+  <div class="right-bar">
+    {{> topUser}}
+  </div>
+
+  <div class="header">
+    <p class="p-3 m-0 font-weight-bold light-border" style="font-size: 18px; line-height: 26px;">
+      <a class="mr-5" href=""><img class="mb-1" src="../images/pre.svg" alt=""></a>
+      推文
+    </p>
+    <div class="px-3 pt-3 light-border">
+      <div class="d-flex mb-2">
+        <a href="/users/{{tweet.User.id}}">
+          <img class="mr-3 thumbnail" src="{{tweet.User.avatar}}" alt="">
+        </a>
+        <div class="mb-2">
+          <p class="font-weight-bold m-0">{{tweet.User.name}}</p>
+          <p class="light-color m-0">@{{tweet.User.account}}</p>
+        </div>
+      </div>
+      <p style="font-size: 23px; font-weight: 500;">{{tweet.description}}</p>
+      <p class="light-color" style="font-size: 15px; font-weight: 500;">上午 10:05．2020年6月10日</p>
+      <hr>
+      <p class="light-color mr-3 d-inline"><b style="color: #000;">{{tweet.Replies.length}}</b> 回覆</p>
+      <p class="light-color d-inline"><b style="color: #000;">{{tweet.Likes.length}}</b> 喜歡次數</p>
+      <hr>
+      <div class="d-flex align-items-center mb-3">
+        <!-- comment -->
+        <a class="light-color action-icon5" href="#" style="margin-right: 120px;">
+          <img src="../images/reply.svg" alt="">
+        </a>
+        <!-- like -->
+        {{#if tweet.isLiked}}
+        <form class="action-icon" action="/tweets/{{tweet.id}}/unlike" method="POST">
+          <button class="light-color" type="submit" style="background: transparent; border: 0;">
+            <img src="../images/like.svg" alt="">
+          </button>
+        </form>
+        {{else}}
+        <form action="/tweets/{{tweet.id}}/like" method="POST">
+          <button class="light-color action-icon" type="submit" style="background: transparent; border: 0;">
+            <img src="../images/like.svg" alt="">
+          </button>
+        </form>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+
+  <div class="list-tweet">
+    <ul class="list-group">
+      {{#each tweet.Replies}}
+      <li class="list-group-item px-3 d-flex align-items-start justify-content-start">
+        <a href="/users/{{this.UserId}}">
+          <img class="mr-3 thumbnail" src="{{this.User.avatar}}" alt="">
+        </a>
+        <div class="content-wrapper w-100">
+          <div class="mb-2">
+            <p class="font-weight-bold d-inline">{{this.User.name}}</p>
+            <p class="light-color d-inline">@{{this.User.account}}．3小時</p>
+          </div>
+          <p class="light-color d-inline" style="font-weight: 500;">回覆</p>
+          <p class="d-inline" style="font-weight: 500; color: #ff6600">@{{../tweet.User.account}}</p>
+          <p class="mt-2">{{this.comment}}</p>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
