@@ -5,7 +5,6 @@ const tweetController = {
   getTweets: (req, res) => {
     Tweet.findAll({
       order: [['createdAt', 'DESC']],
-      limit: 2,
       include: [User,
         { model: Reply, nested: true, required: false },
         { model: Like, nested: true, required: false }
