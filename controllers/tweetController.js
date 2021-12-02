@@ -21,7 +21,19 @@ const user = {
 
 const tweetController = {
   getTweets: (req, res) => {
-    Tweet.findAll({ raw: true, nest: true, include: [User], order: [['createdAt', 'DESC']]}).then(tweets => {
+    Tweet.findAll({ order: [['createdAt', 'DESC']], include: [
+      User,
+      Reply,
+      { model: User, as: 'LikedUsers' }
+    ]}).then(tweets => {
+      tweets = tweets.map(tweet => ({
+        ...tweet.dataValues,
+        replyCount: tweet.Replies.length,
+        isReplied: tweet.Replies.map(item => item.UserId).includes(helpers.getUser(req).id),
+        likeCount: tweet.LikedUsers.length,
+        isLiked: helpers.getUser(req).LikedTweets.map(item => item.id).includes(tweet.id)
+      }))
+
       userService.getTopUser(req, res, topUser => {
         return res.render('tweets', { user, tweets, topUser })
       })
@@ -30,12 +42,19 @@ const tweetController = {
   getTweet: (req, res) => {
     Tweet.findByPk(req.params.id, { include: [
       User,
-      Like,
+      { model: User, as: 'LikedUsers'},
       { model: Reply, include: [User] }
     ] }).then(tweet => {
+      tweet = {
+        ...tweet.toJSON(),
+        replyCount: tweet.Replies.length,
+        isReplied: tweet.Replies.map(item => item.UserId).includes(helpers.getUser(req).id),
+        likeCount: tweet.LikedUsers.length,
+        isLiked: helpers.getUser(req).LikedTweets.map(item => item.id).includes(tweet.id)
+      }
+
       userService.getTopUser(req, res, topUser => {
-        console.log(tweet.toJSON())
-        return res.render('tweet', { user, tweet: tweet.toJSON(), topUser })
+        return res.render('tweet', { user, tweet, topUser })
       })
     })
   },

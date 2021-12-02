@@ -40,20 +40,23 @@
           </a>
           <div class="d-flex justify-content-between" style="width: 150px;">
             <!-- comment -->
-            <a class="light-color action-icon" href="#">
-              <i class="far fa-comment mr-3"></i>13
+            <a class="light-color action-icon {{#if this.isReplied}}isReplied{{/if}}" href="#">
+              <i class="far fa-comment mr-3"></i>{{this.replyCount}}
             </a>
             <!-- like -->
+            {{#if this.isLiked}}
             <form class="action-icon" action="/tweets/{{this.id}}/unlike" method="POST">
+              <button class="light-color isLiked" type="submit" style="background: transparent; border: 0;">
+                <i class="far fa-heart mr-3"></i>{{this.likeCount}}
+              </button>
+            </form>
+            {{else}}
+            <form class="action-icon" action="/tweets/{{this.id}}/like" method="POST">
               <button class="light-color" type="submit" style="background: transparent; border: 0;">
-                <i class="far fa-heart mr-3"></i>delete
+                <i class="far fa-heart mr-3"></i>{{this.likeCount}}
               </button>
             </form>
-            <form action="/tweets/{{this.id}}/like" method="POST">
-              <button class="light-color action-icon" type="submit" style="background: transparent; border: 0;">
-                <i class="far fa-heart mr-3"></i>like
-              </button>
-            </form>
+            {{/if}}
           </div>
         </div>
       </li>

@@ -17,7 +17,17 @@ html, body {
 
 .action-icon:hover {
   text-decoration: none;
-  color: #576169
+  color: #3786c7
+}
+
+.isLiked {
+  color: rgb(218, 68, 93);
+  filter: invert(47%) sepia(96%) saturate(2922%) hue-rotate(322deg) brightness(103%) contrast(101%);
+}
+
+.isReplied {
+  color: rgb(27, 129, 247);
+  filter: invert(51%) sepia(46%) saturate(6570%) hue-rotate(197deg) brightness(96%) contrast(103%);
 }
 
 .thumbnail {
