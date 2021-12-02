@@ -11,8 +11,11 @@ const port = 3000
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.engine('handlebars', handlebars({ defaultLayout: 'main'}))
-app.set('view engine', 'handlebars')
+app.engine('hbs', handlebars({ 
+  defaultLayout: 'main',
+  extname: '.hbs'
+}))
+app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(flash())
