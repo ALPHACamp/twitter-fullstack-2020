@@ -208,6 +208,7 @@
         跟隨誰
       </div>
       {{#each users}}
+      {{#if this.isUser}}
       <div
         style="display: flex; justify-content:space-between; border-top:#E6ECF0 1px solid; border-bottom:#E6ECF0 1px solid;"
         class="p-2">
@@ -232,6 +233,7 @@
           {{/if}}
         </div>
       </div>
+      {{/if}}
       {{/each}}
     </div>
   </div>

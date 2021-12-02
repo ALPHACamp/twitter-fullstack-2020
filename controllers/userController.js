@@ -47,26 +47,7 @@ const userController = {
         res.redirect('/signin')
     },
 
-    getTopUser: (req, res) => {
-        // 撈出所有 User 與 followers 資料
-        return User.findAll({
-            include: [
-                { model: User, as: 'Followers' }
-            ]
-        }).then(users => {
-            // 整理 users 資料
-            users = users.map(user => ({
-                ...user.dataValues,
-                // 計算追蹤者人數
-                FollowerCount: user.Followers.length,
-                // 判斷目前登入使用者是否已追蹤該 User 物件
-                isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
-            }))
-            // 依追蹤者人數排序清單
-            users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-            return res.render('main', { users: users })
-        })
-    },
+
 
 
     addFollowing: (req, res) => {
@@ -90,7 +71,32 @@ const userController = {
                     return res.redirect('back')
                 })
         })
+    },
+
+    getSetting: (req, res) => {
+        return User.findByPk(req.user.id).then(user => {
+
+            return res.render('setting', { user: user.toJSON() })
+        })
+    },
+
+    postSetting: (req, res) => {
+        // console.log(req.body)
+        // console.log(req.user)
+        return User.findByPk(req.user.id).then(user => {
+            console.log(user)
+            user.update({
+                name: req.body.name,
+                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+            }).then(user => {
+                return res.redirect('back')
+            })
+
+        })
+
     }
+
+
 
 
 

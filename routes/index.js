@@ -43,17 +43,25 @@ module.exports = (app, passport) => {
 
 
     // 推文首頁
-    app.get('/tweets', authenticated, userController.getTopUser)
 
     app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+
     app.get('/tweets', authenticated, tweetController.getTweets)
 
     app.post('/tweets', authenticated, tweetController.postTweets)
+
+
 
     // 追隨
 
     app.post('/user/self/following/:userId', authenticated, userController.addFollowing)
     app.delete('/user/self/following/:userId', authenticated, userController.removeFollowing)
+
+    // 個人資料
+
+    app.get('/setting', authenticated, userController.getSetting)
+    app.put('/setting', authenticated, userController.postSetting)
+
 
 
 

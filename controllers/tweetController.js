@@ -15,17 +15,34 @@ const tweetController = {
         })
 
         const userFindAll = User.findAll({
-            raw: true,
-            nest: true
+
+            include: [
+                { model: User, as: 'Followers' }
+            ]
         })
 
         Promise.all([tweetFindAll, userFindAll])
             .then(responses => {
-                console.log(responses[0])
+                // console.log(responses[0])
                 const tweets = responses[0]
                 console.log('1111111111111111111111111111111111')
-                const users = responses[1]
-                console.log(responses[1])
+                let users = responses[1]
+                // console.log(users)
+                // console.log(responses[1])
+                users = users.map(user => ({
+
+                    ...user.dataValues,
+                    isUser: !user.Followers.map(d => d.id).includes(user.id),
+                    // 計算追蹤者人數
+                    FollowerCount: user.Followers.length,
+                    // 判斷目前登入使用者是否已追蹤該 User 物件
+                    isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+                }))
+                // 依追蹤者人數排序清單
+                console.log(users)
+
+                users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+
                 return res.render('main', { tweets, users })
             }).catch(error => {
                 console.log(error)
