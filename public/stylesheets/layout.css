@@ -90,8 +90,10 @@ input:invalid {
 html, body {
   font-size: 14px;
   min-width: 1245px;
+  min-height: 520px;
   width: 100vw;
   height: 100vh;
+  font-family: "Noto Sans TC","Microsoft JhengHei",sans-serif !important;
 }
 
 .user-template {
@@ -282,7 +284,9 @@ html, body {
 }
 
 .main > .tweets > .tweet > .postcontent > .postuser > .timer::before {
-  content: " • "
+  content: "•";
+  margin-left: 3px;
+  margin-right: 3px;
 }
 
 .main > .tweets > .tweet > .postcontent > .content {
@@ -397,7 +401,8 @@ html, body {
 }
 
 /* modal */
-#modal-post {
+#modal-post,
+#modal-reply {
   position: fixed;
   top: 0;
   left: 0;
@@ -405,7 +410,8 @@ html, body {
   height: 100vw;
 }
 
-#modal-post > .mask {
+#modal-post > .mask,
+#modal-reply > .mask {
   position: fixed;
   top: 0px;
   left: 0px;
@@ -416,38 +422,47 @@ html, body {
   background: rgba(0, 0, 0, 0.4);
 }
 
-#modal-post > .mask > .dialog {
+#modal-post > .mask > .dialog,
+#modal-reply > .mask > .dialog {
   background-color: #fff;
   width: 600px;
-  height: 300px;
+  min-height: 300px;
   margin: 54px auto 0;
   border-radius: 14px;
 }
 
-#modal-post > .mask > .dialog > a {
+#modal-post > .mask > .dialog > a,
+#modal-reply > .mask > .dialog > a {
   display: inline-block;
   padding: 9.5px;
   margin: 10px;
 }
 
-#modal-post > .mask > .dialog > .postarea {
+#modal-post > .mask > .dialog > .postarea,
+#modal-reply > .mask > .dialog > .replyarea,
+#modal-reply > .mask > .dialog > .postarea {
   width: 100%;
   border-top: 1px solid #E6ECF0;
   display: flex;
   flex-flow: row wrap;
 }
 
-#modal-post > .mask > .dialog > .postarea > a {
+#modal-post > .mask > .dialog > .postarea > a,
+#modal-reply > .mask > .dialog > .replyarea > a {
   display: inline-block;
   margin-top: 15px;
 }
 
-#modal-post > .mask > .dialog > .postarea > form {
+#modal-post > .mask > .dialog > .postarea > form,
+#modal-reply > .mask > .dialog > form,
+#modal-reply > .mask > .dialog > .postarea > form {
   display: flex;
   flex-flow: column wrap;
 }
 
-#modal-post > .mask > .dialog > .postarea > form > textarea {
+#modal-post > .mask > .dialog > .postarea > form > textarea,
+#modal-reply > .mask > .dialog > form > textarea,
+#modal-reply > .mask > .dialog > .postarea > form > textarea {
   display: inline-block;
   width: 510px;
   border: none;
@@ -461,11 +476,111 @@ html, body {
   overflow-y: auto;
 }
 
-#modal-post > .mask > .dialog > .postarea > form > button {
+#modal-post > .mask > .dialog > .postarea > form > button,
+#modal-reply > .mask > .dialog > .postarea > form > button {
   width: 66px;
   margin-right: 15px;
   margin-bottom: 15px;
   align-self: flex-end;
+}
+
+/* modal for replying replyarea*/
+#modal-reply > .mask > .dialog > .replyarea > .tweet {
+  width: 100%;
+  height: 136px;
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 18px;
+}
+
+#modal-reply > .mask > .dialog > .replyarea > .tweet > a {
+  display: inline;
+  margin-bottom: 5px;
+  position: relative;
+}
+
+#modal-reply > .mask > .dialog > .replyarea > .tweet > a::after {
+  content: "";
+  position: absolute;
+  top: 55px;
+  left: 39px;
+  width: 2px;
+  height: 80px;
+  background: #CCD6DD;
+}
+
+#modal-reply > .mask > .dialog > .replyarea > .tweet > .tweetcontent {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+}
+
+#modal-reply > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .tweetuser {
+  display: flex;
+  flex-flow: row wrap;
+  margin-bottom: 5px;
+  line-height: 22px;
+}
+
+#modal-reply > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .tweetuser > span {
+  font-size: 15px;
+  line-height: 22px;
+  max-width: 140px;
+}
+
+#modal-reply > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .tweetuser > .name {
+  color: #1c1c1c;
+  font-weight: 700;
+  margin-right: 5px;
+}
+
+#modal-reply > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .tweetuser > .at-name,
+#modal-reply > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .tweetuser > .timer
+ {
+  color: #657786;
+  font-weight: 500;
+}
+
+#modal-reply > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .tweetuser > .timer::before {
+  content: "•";
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+#modal-reply > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .tweetdescription {
+  color: #1c1c1c;
+  width: 510px;
+  height: 66px;
+  text-align: start;
+  padding: 0;
+  font-size: 15px;
+}
+
+#modal-reply > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .replyto {
+  margin-top: 19px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 13px;
+  color: #657786;
+}
+
+#modal-reply > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .replyto > .at-name {
+  color:#F60;
+}
+
+/* modal for replying postarea */
+#modal-reply > .mask > .dialog > .postarea > a {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+#modal-reply > .mask > .dialog > .postarea > form > textarea {
+  height: 169px;
+  margin-top: 22px;
+}
+
+#modal-reply > .mask > .dialog > .postarea {
+  border-top: 0;
 }
 
 /* general style */

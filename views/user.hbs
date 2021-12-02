@@ -165,7 +165,7 @@
 {{!-- posting modal --}}
 <div class="modal d-none" id="modal-post">
   <div class="mask" id="modal-post-mask">
-    <div class="dialog" id="modal-post-dialog">
+    <div class="dialog">
       <a><i class='X-orange' id="modal-post-close"></i></a>
       <div class="postarea">
         <a>
@@ -179,4 +179,50 @@
       </div>
     </div>
   </div>
+</div>
+
+{{!-- replying modal --}}
+<div class="modal d-none" id="modal-reply">
+  <div class="mask" id="modal-reply-mask">
+    <div class="dialog">
+      <a><i class='X-orange' id="modal-reply-close"></i></a>
+      <div class="replyarea">
+
+        <div class="tweet">
+          <a>
+            <img class="thumbnail" src="/icons/avatar.svg" alt="">
+          </a>
+          <div class="tweetcontent">
+            <a class="tweetuser">
+              <span class="name ellipsis">Apple</span>
+              <span class="at-name ellipsis">@apple</span>
+              <span class="timer ellipsis">1個月前</span>
+            </a>
+            <span class="tweetdescription" id="modal-reply-content">
+              Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation
+              incididunt
+              aliquip deserunt reprehenderit elit laborum.
+            </span>
+            <span class="replyto">回覆給
+              <span class="at-name">@apple</span>
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="postarea">
+        <a>
+          <img class="thumbnail" src="/icons/avatar.svg" alt="">
+        </a>
+        <form action="/notyet" method="post">
+          <input type="hidden" name="userId" value="{{user.id}}">
+          <textarea name="description" maxlength="140" cols="48" rows="2" placeholder="推你的回覆" required></textarea>
+          <button type="summit" class="btn-fill" id="posting">回覆</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
 </div>
