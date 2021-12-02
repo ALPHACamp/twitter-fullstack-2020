@@ -1,5 +1,6 @@
 const helpers = require('../_helpers')
 const userController = require('../controllers/userController')
+const adminController = require('../controllers/adminController')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -17,4 +18,7 @@ module.exports = (app, passport) => {
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   app.get('/logout', userController.logout)
+
+  // admin
+  app.get('/admin/signin', adminController.signInPage)
 }
