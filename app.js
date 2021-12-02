@@ -34,6 +34,9 @@ app.use((req, res, next) => {
   next()
 })
 
+// setting static file
+app.use(express.static('public'))
+
 app.listen(PORT, () => console.log(`App listening on http://localhost:${PORT}`))
 
 require('./routes')(app, passport)

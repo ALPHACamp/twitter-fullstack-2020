@@ -6,8 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="/stylesheets/stylesheet.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+  <link rel="stylesheet" href="/stylesheets/stylesheet.css">
 </head>
 
 <body>
@@ -17,6 +17,9 @@
     <div>
       {{#if user}}
       <span style="margin-right: 10px;">Hi, {{user.email}}</span>
+      <a href="/signout">登出</a>
+      {{else}}
+      <a href="/signin">登入</a>
       {{/if}}
     </div>
   </nav>
@@ -31,6 +34,16 @@
     <div class="alert alert-danger" role="alert" style="margin: 30px 0;">
       {{error_messages}}
     </div>
+    {{/if}}
+    {{#if errors}}
+    {{#each errors}}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{this.message}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×
+      </button>
+    </div>
+    {{/each}}
     {{/if}}
     {{!-- Content --}}
     {{{body}}}

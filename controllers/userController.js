@@ -9,20 +9,35 @@ const userController = {
 
   signUp: async (req, res) => {
     try {
-      const { name, email, password, passwordCheck } = req.body
+      const { account, name, email, password, checkPassword } = req.body
+      const errors = []
 
-      if (passwordCheck !== password) {
-        req.flash('error_messages', '兩次密碼輸入不同！')
-        return res.redirect('/signup')
+      if (!account || !name || !email || !password || !checkPassword) {
+        errors.push({ message: '所有欄位都是必填！' })
       }
 
-      const user = await User.findOne({ where: { email } })
-      if (user) {
-        req.flash('error_messages', '電子信箱重複！')
-        return res.redirect('/signup')
+      if (checkPassword !== password) {
+        errors.push({ message: '兩次密碼輸入不同！' })
+      }
+
+      const user1Promise = User.findOne({ where: { account } })
+      const user2Promise = User.findOne({ where: { email } })
+      const [user1, user2] = await Promise.all([user1Promise, user2Promise])
+
+      if (user1) {
+        errors.push({ message: '帳號已重複註冊！' })
+      }
+
+      if (user2) {
+        errors.push({ message: 'Email 已重複重複！' })
+      }
+
+      if (errors.length) {
+        return res.render('signup', { errors, ...req.body })
       }
 
       await User.create({
+        account,
         name,
         email,
         password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
@@ -44,7 +59,7 @@ const userController = {
     return res.redirect('/')
   },
 
-  logout: (req, res) => {
+  signOut: (req, res) => {
     req.flash('success_messages', '成功登出！')
     req.logout()
     return res.redirect('/signin')
