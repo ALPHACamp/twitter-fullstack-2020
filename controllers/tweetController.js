@@ -25,7 +25,6 @@ const tweetController = {
             .then(responses => {
                 // console.log(responses[0])
                 const tweets = responses[0]
-                console.log('1111111111111111111111111111111111')
                 let users = responses[1]
                 // console.log(users)
                 // console.log(responses[1])

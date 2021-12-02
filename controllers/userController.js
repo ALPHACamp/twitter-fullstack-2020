@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
 const Followship = db.Followship
+const Tweet = db.Tweet
 
 const userController = {
     getSignUpPage: (req, res) => {
@@ -93,6 +94,52 @@ const userController = {
             })
 
         })
+
+    },
+
+    getUserSelf: (req, res) => {
+        const tweetFindAll = Tweet.findAll({
+            raw: true,
+            nest: true,
+            order: [['createdAt', 'DESC']],
+            where: { UserId: req.user.id }
+
+        })
+
+        const userFindAll = User.findAll({
+
+            include: [
+
+                { model: User, as: 'Followers' }
+            ]
+        })
+
+        Promise.all([tweetFindAll, userFindAll])
+            .then(responses => {
+                // console.log(responses[0])
+                let tweets = responses[0]
+                let users = responses[1]
+                // console.log(users)
+                // console.log(responses[1])
+
+                users = users.map(user => ({
+
+                    ...user.dataValues,
+                    isUser: !user.Followers.map(d => d.id).includes(user.id),
+                    // 計算追蹤者人數
+                    FollowerCount: user.Followers.length,
+                    // 判斷目前登入使用者是否已追蹤該 User 物件
+                    isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+                }))
+                // 依追蹤者人數排序清單
+                // console.log(users)
+
+                users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+
+                return res.render('user', { tweets, users })
+            }).catch(error => {
+                console.log(error)
+            })
 
     }
 

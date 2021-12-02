@@ -57,10 +57,14 @@ module.exports = (app, passport) => {
     app.post('/user/self/following/:userId', authenticated, userController.addFollowing)
     app.delete('/user/self/following/:userId', authenticated, userController.removeFollowing)
 
-    // 個人資料
+    // 帳戶設定
 
     app.get('/setting', authenticated, userController.getSetting)
     app.put('/setting', authenticated, userController.postSetting)
+
+    //  前台個人資料
+
+    app.get('/user/self', authenticated, userController.getUserSelf)
 
 
 
