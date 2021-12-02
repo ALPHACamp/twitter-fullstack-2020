@@ -1,0 +1,38 @@
+<div class="card m-2" style=" border-radius:10px; background-color:rgb(238, 237, 237)">
+    <div class="card-body py-0 px-0 mt-1 ml-2" style="font-weight:bold;">
+        Popular
+    </div>
+
+    {{#each popularUser}}
+    <hr class="m-2">
+    <div class="card-body py-1">
+        <div class="row ml-2">
+
+            <div class="row cols" style="width:70%">
+                <div class="cols text-center" style=" width:30%">
+                    <img src="{{this.avatar}}}" style=" width:60PX;height:60px; border-radius:100%;"></img>
+                </div>
+
+                <div class="cols " style=" width:70%">
+                    <p class="m-0" style="font-size:18px">{{this.name}}</p>
+                    <p class="m-0" style="font-size:18px">@{{this.account}}</p>
+                </div>
+            </div>
+            {{#if isFollowed}}
+            <form action="/followships/{{user.id}}??_method=DELETE" method="POST" style="display: contents;">
+                <div class="cols my-1 " style="text-align:right;">
+                    <button class="btn" style="width:100px; background-color: orangered;border-radius:40px; color:white; font-weight:bold; ">正在追蹤</button>
+                </div>
+            </form>
+            {{else}}
+            <form action="/followships" method="POST" style="display: contents;">
+                <div class="cols my-1 " style="text-align:right;">
+                    <button class="btn" style="width:100px; background-color: orangered;border-radius:40px; color:white; font-weight:bold; ">追蹤</button>
+                </div>
+            </form>
+            {{/if}}
+        </div>
+    </div>
+    {{/each}}
+</div>
+
