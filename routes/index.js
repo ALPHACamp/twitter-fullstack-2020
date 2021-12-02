@@ -1,8 +1,9 @@
+const helpers = require('../_helpers')
 const userController = require('../controllers/userController')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
+    if (helpers.ensureAuthenticated(req)) {
       return next()
     }
     res.redirect('/signin')

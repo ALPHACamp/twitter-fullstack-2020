@@ -17,7 +17,6 @@ const userController = {
             req.flash('error_messages', '這個Email已經註冊過！')
             res.redirect('/signup')
           } else {
-            console.log(req.body.account)
             req.flash('success_messages', '註冊成功!')
             return User.create({
               account: req.body.account,
