@@ -1,3 +1,4 @@
+const helpers = require('../_helpers')
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const { User } = db
@@ -57,6 +58,10 @@ const userController = {
 
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
+
+    if (helpers.getUser(req).role === 'Admin') {
+      return res.redirect('/admin')
+    }
     return res.redirect('/')
   },
 
