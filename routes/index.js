@@ -24,12 +24,13 @@ module.exports = (app, passport) => {
     res.redirect("/admin/signin")
   }
 
-  //首頁
-  app.get("/", authenticated, (req, res) => res.redirect("/tweets"))
+  //admin首頁
   app.get("/admin", authenticatedAdmin, (req, res) => res.redirect("/admin/tweets"))
 
   //admin登入
   app.get("/admin/signin", adminController.signInPage)
+  app.post("/admin/signin", passport.authenticate("local", { failureRedirect: "/admin/signin", failureFlash: true }), adminController.signIn)
+  app.get("/admin/logout", adminController.logout)
 
   //admin管理推文
   app.get("/admin/tweets", authenticatedAdmin, adminController.getTweets)
@@ -37,15 +38,18 @@ module.exports = (app, passport) => {
   //admin管理使用者
   app.get("/admin/users", authenticatedAdmin, adminController.getUsers)
 
-  //使用者登入
+  //user首頁
+  app.get("/", authenticated, (req, res) => res.redirect("/tweets"))
+
+  //user登入
   app.get("/signin", userController.signInPage)
   app.post("/signin", passport.authenticate("local", { failureRedirect: "/signin", failureFlash: true }), userController.signIn)
   app.get("/logout", userController.logout)
 
-  //使用者註冊
+  //user註冊
   app.get("/signup", userController.signUpPage)
   app.post("/signup", userController.signUp)
 
-  //使用者推文
+  //user推文
   app.get("/tweets", authenticated, tweetController.getTweets)
 }

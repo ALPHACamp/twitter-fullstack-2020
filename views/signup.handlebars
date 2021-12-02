@@ -3,7 +3,11 @@
     <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
   </div>
   <div class="form-label-group">
-    <label for="inputName">Name</label>
+    <label for="inputAccount">帳號</label>
+    <input type="text" name="account" class="form-control" placeholder="Account" required autofocus />
+  </div>
+  <div class="form-label-group">
+    <label for="inputName">名稱</label>
     <input type="text" name="name" class="form-control" placeholder="Name" required autofocus />
   </div>
   <div class="form-label-group">
@@ -11,17 +15,16 @@
     <input type="text" name="email" class="form-control" placeholder="Email" required autofocus />
   </div>
   <div class="form-label-group">
-    <label for="inputPassword">Password</label>
+    <label for="inputPassword">密碼</label>
     <input type="password" name="password" class="form-control" placeholder="Password" required />
   </div>
   <div class="form-label-group">
-    <label for="inputPasswordCheck">Password Check</label>
+    <label for="inputPasswordCheck">密碼確認</label>
     <input type="password" name="passwordCheck" class="form-control" placeholder="Password Check" required />
   </div>
   <br />
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">註冊</button>
   <div class="text-center mb-4">
-    <p><a href="/signin">Sign In</a></p>
+    <p><a href="/signin">取消</a></p>
   </div>
-  <p class="mt-5 mb-3 text-muted text-center">© 2017-2018</p>
 </form>

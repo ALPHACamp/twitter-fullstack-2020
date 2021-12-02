@@ -16,6 +16,8 @@ passport.use(
     // authenticate user
     (req, username, password, cb) => {
       User.findOne({ where: { email: username } }).then((user) => {
+        if (req.path === "/signin" && user.role !== "user") return cb(null, false, req.flash("error_messages", "帳號或密碼輸入錯誤"))
+        if (req.path === "/admin/signin" && user.role !== "admin") return cb(null, false, req.flash("error_messages", "帳號或密碼輸入錯誤"))
         if (!user) return cb(null, false, req.flash("error_messages", "帳號或密碼輸入錯誤"))
         if (!bcrypt.compareSync(password, user.password)) return cb(null, false, req.flash("error_messages", "帳號或密碼輸入錯誤！"))
         return cb(null, user)
