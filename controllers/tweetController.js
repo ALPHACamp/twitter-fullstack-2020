@@ -8,7 +8,7 @@ const Like = db.Like
 const userService = require('../services/userService')
 
 // for testing(helpers.getUser(req))
-const user = {
+/*const user = {
   id: 11,
   email: 'user1@example.com',
   role: 'user',
@@ -17,7 +17,7 @@ const user = {
   introduction: 'adkoer mknmfdl pwroeioros mdlmvlk',
   account: 'user1',
   cover: `https://loremflickr.com/720/240/landscape/?random=${Math.random() * 100}`
-}
+}*/
 
 const tweetController = {
   getTweets: (req, res) => {
@@ -26,16 +26,21 @@ const tweetController = {
       Reply,
       { model: User, as: 'LikedUsers' }
     ]}).then(tweets => {
-      tweets = tweets.map(tweet => ({
-        ...tweet.dataValues,
-        replyCount: tweet.Replies.length,
-        isReplied: tweet.Replies.map(item => item.UserId).includes(helpers.getUser(req).id),
-        likeCount: tweet.LikedUsers.length,
-        isLiked: helpers.getUser(req).LikedTweets.map(item => item.id).includes(tweet.id)
-      }))
+      console.log(tweets)
+      tweets = tweets.map(tweet => {
+        if (tweet.dataValues !== undefined) {
+          return {
+            ...tweet.dataValues,
+            replyCount: tweet.Replies.length,
+            isReplied: tweet.Replies.map(item => item.UserId).includes(helpers.getUser(req).id),
+            likeCount: tweet.LikedUsers.length,
+            isLiked: tweet.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id)
+          }
+        }
+      })
 
       userService.getTopUser(req, res, topUser => {
-        return res.render('tweets', { user, tweets, topUser })
+        return res.render('tweets', { tweets, topUser })
       })
     })
   },
@@ -54,7 +59,7 @@ const tweetController = {
       }
 
       userService.getTopUser(req, res, topUser => {
-        return res.render('tweet', { user, tweet, topUser })
+        return res.render('tweet', { tweet, topUser })
       })
     })
   },
