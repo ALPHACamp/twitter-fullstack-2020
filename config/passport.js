@@ -7,18 +7,18 @@ const { User } = db
 
 passport.use(new LocalStrategy(
   {
-    usernameField: 'email',
+    usernameField: 'account',
     passwordField: 'password',
     passReqToCallback: true
   },
-  async (req, email, password, done) => {
+  async (req, account, password, done) => {
     try {
-      const user = await User.findOne({ where: { email } })
+      const user = await User.findOne({ where: { account } })
 
       if (!user
         || user.role === 'admin' && !req.url.includes('admin')
         || user.role === 'user' && req.url.includes('admin')) {
-        return done(null, false, req.flash('error_messages', '該電子郵件未註冊！'))
+        return done(null, false, req.flash('error_messages', '該帳號未註冊！'))
       }
 
       if (!bcrypt.compareSync(password, user.password)) {
