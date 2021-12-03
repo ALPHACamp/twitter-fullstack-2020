@@ -7,7 +7,6 @@ const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const replyController = require('../controllers/replyController')
-const { authenticate } = require('passport')
 const likeController = require('../controllers/likeController')
 
 module.exports = (app, passport) => {
@@ -22,17 +21,22 @@ module.exports = (app, passport) => {
       if (helpers.getUser(req).role === 'admin') {
         return next()
       }
-      return res.redirect('/')
     }
-    res.redirect('/signin')
+    res.redirect('/')
+  }
+
+  //如果登入的人是管理者，並且只用在管理者登入的路由
+  const isAdmin = (req, res, next) => {
+    res.locals.isAdmin = helpers.getUser(req).role === 'admin'
+    return next()
   }
 
   // ADMIN
   app.get('/admin/signin', adminController.signInPage)
-  app.post('/admin/signin', adminController.signIn)
-  app.get('/admin/tweets', adminController.getTweets)
-  app.get('/admin/users', adminController.getUsers)
-  app.delete('/admin/tweets/:id', adminController.deleteTweets)
+  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), isAdmin, adminController.signIn)
+  app.get('/admin/tweets', authenticatedAdmin, isAdmin, adminController.getTweets)
+  app.get('/admin/users', authenticatedAdmin, isAdmin, adminController.getUsers)
+  app.delete('/admin/tweets/:id', authenticatedAdmin, isAdmin, adminController.deleteTweets)
   // OTHERS
 
   // USER
@@ -46,7 +50,7 @@ module.exports = (app, passport) => {
   app.get('/users/:id', authenticated, userController.getUser)
 
   // TWEET
-  app.get('/', (req, res) => res.redirect('/tweets'))
+  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetController.getTweets)
   app.get('/tweets/:id', authenticated, tweetController.getTweet)
   app.post('/tweets', authenticated, tweetController.postTweet)
@@ -57,4 +61,15 @@ module.exports = (app, passport) => {
   app.post('/tweets/:id/like', authenticated, likeController.postLike)
   app.post('/tweets/:id/unlike', authenticated, likeController.deleteLike)
   // FOLLOWSHIP
+
+  // USER
+  app.get('/signin', userController.signInPage)
+  app.post('/signin', passport.authenticate('local', {
+    failureRedirect: '/signin', failureFlash: true
+  }), userController.signIn)
+  app.get('/signup', userController.signUpPage)
+  app.post('/signup', userController.signUp)
+  app.get('/setting', authenticated, userController.editPage)
+  app.post('/setting', authenticated, userController.editData)
+  app.get('/logout', userController.logout)
 }
