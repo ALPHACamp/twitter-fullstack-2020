@@ -24,7 +24,7 @@ module.exports = {
         name: user.name,
         avatar: null,
         introduction: faker.lorem.text().substring(0, 160),
-        role: user.name === 'Admin' ? 'Admin' : 'User',
+        role: user.name === 'Admin' ? 'admin' : 'user',
         account: user.email,
         cover: null,
         createdAt: new Date(new Date().setDate(new Date().getDate() - 240 + index)),

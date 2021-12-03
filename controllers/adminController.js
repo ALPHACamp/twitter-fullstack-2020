@@ -1,7 +1,5 @@
 const db = require('../models')
-const user = require('../models/user')
 const { Tweet, User, Like } = db
-
 
 const adminController = {
   getTweets: async (req, res) => { 

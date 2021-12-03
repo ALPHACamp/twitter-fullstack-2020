@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Simple Twitter</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
   <link rel="stylesheet" href="/stylesheets/stylesheet.css">
 </head>
@@ -13,13 +13,15 @@
 <body>
   {{!-- Navbar --}}
   <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="/">Navbar</a>
     <div>
-      {{#if user}}
+      {{#if isAuthenticated}}
       <span style="margin-right: 10px;">Hi, {{user.email}}</span>
-      <a href="/signout">登出</a>
+      <a href="/signout">前台登出</a>
+      <a href="/admin/signout">後台登出</a>
       {{else}}
-      <a href="/signin">登入</a>
+      <a href="/signin">前台登入</a>
+      <a href="/admin/signin">後台登入</a>
       {{/if}}
     </div>
   </nav>

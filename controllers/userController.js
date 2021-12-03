@@ -1,3 +1,4 @@
+const helpers = require('../_helpers')
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const { User } = db
@@ -12,10 +13,6 @@ const userController = {
       const { account, name, email, password, checkPassword } = req.body
       const errors = []
 
-      if (!account || !name || !email || !password || !checkPassword) {
-        errors.push({ message: '所有欄位都是必填！' })
-      }
-
       if (checkPassword !== password) {
         errors.push({ message: '兩次密碼輸入不同！' })
       }
@@ -25,7 +22,7 @@ const userController = {
       const [user1, user2] = await Promise.all([user1Promise, user2Promise])
 
       if (user1) {
-        errors.push({ message: '帳號已重複註冊！' })
+        errors.push({ message: '帳號已重複！' })
       }
 
       if (user2) {
@@ -51,16 +48,26 @@ const userController = {
   },
 
   signInPage: (req, res) => {
-    return res.render('signin')
+    const isBackend = req.originalUrl.includes('admin')
+    return res.render('signin', { isBackend })
   },
 
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
+
+    if (helpers.getUser(req).role === 'admin') {
+      return res.redirect('/admin/tweets')
+    }
     return res.redirect('/tweets')
   },
 
   signOut: (req, res) => {
     req.flash('success_messages', '成功登出！')
+    
+    if (helpers.getUser(req).role === 'admin') {
+      req.logout()
+      return res.redirect('/admin/signin')
+    }
     req.logout()
     return res.redirect('/signin')
   }
