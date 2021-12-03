@@ -34,7 +34,7 @@
           <div class="content-wrapper w-100">
             <div class="mb-2">
               <p class="font-weight-bold d-inline">{{this.User.name}}</p>
-              <p class="light-color d-inline">@{{this.User.account}}．3小時</p>
+              <p class="light-color d-inline">@{{this.User.account}}．{{moment this.createdAt}}</p>
             </div>
               <p>{{this.description}}</p>
           </div>
