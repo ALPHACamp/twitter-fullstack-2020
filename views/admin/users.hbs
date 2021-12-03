@@ -1,53 +1,59 @@
-<div class="container">
-  <divr class="row">
-    <div class="col-3">
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a href="/admin/tweets">
-            <span>推文清單</span>
-          </a>
-        </li>
-        <li class="nav item">
-          <a href="/admin/users">
-            <span>使用者列表</span>
-          </a>
-        </li>
-      </ul>
-      <a href="/logout"><i class="far fa-sign-out"></i>登出</a>
-    </div>
-
-
-    <div class="col-9">
-      <div>
-        <p>使用者列表</p>
+<div class="center container">
+  <div class="left-bar">
+    <nav class="container">
+      <div class="logo-wrapper">
+        <img src="../images/logo.svg" alt="">
       </div>
-      <hr>
-      <div class="d-flex">
-          <div class="row row-cols-1 row-cols-md-3 g-4">
-            {{#each users}}
-            <div class="col">
-              <div class="card">
-                <img src="{{this.cover}}" class="card-img-top" alt="..." width="245 px" height="140 px">
-                <div class="card-body">
-                  <img src="{{this.avatar}}" alt="" class="rounded-circle" width="100 px" height="100 px">
-                  <h5 class="card-title">{{this.name}}</h5>
-                  <p class="text-muted">@{{this.account}}</p>
-                  <div>
-                    <span><i class="far fa-comment"></i>{{this.tweetCount}}</span>
-                    <span><i class="far fa-heart"></i>0</span>
-                  </div>
-                  <div>
-                    <span>{{this.followingCount}} 個跟隨中</span>
-                    <span>{{this.followerCount}} 個跟隨者</span>
-                  </div>
-                  
-                </div>
-              </div>
-            </div>
-            {{/each}}
+      <div class="navbar-wrapper">
+        <a class="navbar-action active" href="/admin/tweets">
+          <div class="icon-wrapper">
+            <img src="../images/home.svg" alt="">
           </div>
+          推文清單
+        </a>
+        <a class="navbar-action" href="/admin/users">
+          <div class="icon-wrapper">
+            <img src="../images/profile.svg" alt="">
+          </div>
+          使用者列表
+        </a>
+      </div>
+      <a href="/logout" class="button-submit" style="width: 210px;"><i class="far fa-sign-out"></i>登出</a>
+    </nav>
+  </div>
+
+  <div class="list-tweet mt-2">
+    <div class="list-group-item px-3 d-flex align-items-start justify-content-start">
+      <p class="font-weight-bold d-inline">使用者列表</p>
+    </div>
+    <div class="d-flex">
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        {{#each users}}
+        <div class="col">
+          <div class="card">
+            <div style="border-radius: 10px 10px 0 0; height: 140px">
+              <img src="{{this.cover}}" class="card-img-top" alt="..." width="245 px" height="140 px">
+            </div>
+            <div class="card-body">
+              <img src="{{this.avatar}}" alt="" class="rounded-circle" width="100 px" height="100 px">
+              <h5 class="card-title">{{this.name}}</h5>
+              <p class="text-muted">@{{this.account}}</p>
+              <div>
+                <span><i class="far fa-comment"></i>{{this.replyCount}}</span>
+                <span><i class="far fa-heart"></i>{{this.likeCount}}</span>
+              </div>
+              <div>
+                <span>{{this.followingCount}} 個跟隨中</span>
+                <span>{{this.followerCount}} 個跟隨者</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        {{/each}}
       </div>
     </div>
+  </div>
 </div>
 
 </div>

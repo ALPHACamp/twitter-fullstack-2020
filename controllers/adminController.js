@@ -2,12 +2,12 @@ const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
-const Like = db.Like
-
-const bcrypt = require('bcryptjs')
 
 const adminController = {
   signInPage: (req, res) => {
+    if (res.locals.user) {
+      delete res.locals.user
+    }
     return res.render('admin/signin')
   },
   signIn: (req, res) => {
@@ -35,23 +35,29 @@ const adminController = {
 
   getUsers: (req, res) => {
     return User.findAll({
-      raw: true,
-      nest: true,
       where: { role: 'user' },
-      include: [ Like ],
-      order: [
-        ['tweetCount', 'DESC']
-      ]
+      include: [
+        Reply,
+        { model: Tweet, as: 'LikedTweets', raw: true, nest: true },
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' }
+      ],
     })
       .then(users => {
-        Like.findAll({
-          raw: true,
-          nest: true
+        
+        users = users.map(user => {
+          if (user.dataValues !== undefined) {
+            return {
+              ...user.dataValues,
+              replyCount: user.Replies.length,
+              likeCount: user.LikedTweets.length,
+              followingCount: user.Followings.length,
+              followerCount: user.Followers.length
+            }
+          }
         })
-        .then(likes => {
-           console.log(likes)
+        console.log(users)
         return res.render('admin/users', { users })
-        })
       })
   },
 
