@@ -70,6 +70,20 @@ const userController = {
     }
     req.logout()
     return res.redirect('/signin')
+  },
+
+  editUserPage: async (req, res) => {
+    try {
+      if (helpers.getUser(req).id !== Number(req.params.userId)) {
+        req.flash('error_messages', '你無權查看此頁面')
+        return res.redirect('/tweets')
+      }
+
+      const user = await User.findByPk(req.params.id)
+      return res.render('edit', { user: user.toJSON() })
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 
