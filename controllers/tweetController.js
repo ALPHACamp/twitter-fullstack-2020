@@ -1,3 +1,4 @@
+const helpers = require('../_helpers')
 const db = require('../models')
 const { User, Tweet, Reply, Like } = db
 
@@ -18,9 +19,10 @@ const tweetController = {
 
   addLike: async (req, res) => {
     try {
+      // 前端要檔已 like
       await Like.create({
         UserId: helpers.getUser(req).id,
-        TweetId: req.params.restaurantId
+        TweetId: req.params.tweetId
       })
       return res.redirect('back')
     } catch (err) {
@@ -33,7 +35,7 @@ const tweetController = {
       await Like.destroy({
         where: {
           UserId: helpers.getUser(req).id,
-          TweetId: req.params.restaurantId
+          TweetId: req.params.tweetId
         }
       })
       return res.redirect('back')

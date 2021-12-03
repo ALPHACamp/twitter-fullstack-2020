@@ -50,6 +50,12 @@
     {{/each}}
     {{#each this.Likes}}
     <p>{{this.UserId}}</p>
+    <form action="/tweets/{{this.id}}/like" method="POST">
+      <button type="submit" class="btn btn-primary">Like</button>
+    </form>
+    <form action="/tweets/{{this.id}}/unlike" method="POST">
+      <button type="submit" class="btn btn-danger">Unlike</button>
+    </form>
     {{/each}}
     <hr>
     {{/each}}
