@@ -15,7 +15,7 @@ const userController = {
         where: { UserId: queryId },
         attributes: [
           'id',
-          'userId',
+          'UserId',
           'description',
           'createdAt',
           [sequelize.literal('(SELECT COUNT(*) FROM `replies` WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
@@ -71,7 +71,31 @@ const userController = {
     }
   },
 
-  
+  getUserLikes: async (req, res) => {
+    try {
+      const queryId = Number(req.params.userId)
+
+      const tweets = await Tweet.findAll({
+        where: { UserId: queryId },
+        attributes: [
+          'id',
+          'UserId',
+          'description',
+          'createdAt',
+          [sequelize.literal('(SELECT COUNT(*) FROM `replies` WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
+          [sequelize.literal('(SELECT COUNT(*) FROM `likes` WHERE likes.TweetId = Tweet.id)'), 'likeCount'],
+          // [sequelize.literal(`(SELECT UserId FROM likes WHERE likes.TweetId = Tweet.id AND likes.UserId = ${queryId})`), 'isLike']
+        ],
+        include: [{ model: Like }],
+        order: [['createdAt', 'DESC']]
+      })
+
+      return res.json({ tweets })
+
+    } catch (err) {
+      console.error(err)
+    }
+  },
 
   signUpPage: (req, res) => {
     return res.render('signup')
