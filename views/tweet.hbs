@@ -9,7 +9,7 @@
 
   <div class="header">
     <p class="p-3 m-0 font-weight-bold light-border" style="font-size: 18px; line-height: 26px;">
-      <a class="mr-5" href=""><img class="mb-1" src="../images/pre.svg" alt=""></a>
+      <a class="mr-5" href="/tweets"><img class="mb-1" src="../images/pre.svg" alt=""></a>
       推文
     </p>
     <div class="px-3 pt-3 light-border">
@@ -25,24 +25,24 @@
       <p style="font-size: 23px; font-weight: 500;">{{tweet.description}}</p>
       <p class="light-color" style="font-size: 15px; font-weight: 500;">上午 10:05．2020年6月10日</p>
       <hr>
-      <p class="light-color mr-3 d-inline"><b style="color: #000;">{{tweet.Replies.length}}</b> 回覆</p>
-      <p class="light-color d-inline"><b style="color: #000;">{{tweet.Likes.length}}</b> 喜歡次數</p>
+      <p class="light-color mr-3 d-inline"><b style="color: #000;">{{tweet.replyCount}}</b> 回覆</p>
+      <p class="light-color d-inline"><b style="color: #000;">{{tweet.likeCount}}</b> 喜歡次數</p>
       <hr>
       <div class="d-flex align-items-center mb-3">
         <!-- comment -->
-        <a class="light-color action-icon5" href="#" style="margin-right: 120px;">
+        <a class="light-color action-icon {{#if tweet.isReplied}}isReplied{{/if}}" href="#" style="margin-right: 120px;">
           <img src="../images/reply.svg" alt="">
         </a>
         <!-- like -->
         {{#if tweet.isLiked}}
         <form class="action-icon" action="/tweets/{{tweet.id}}/unlike" method="POST">
-          <button class="light-color" type="submit" style="background: transparent; border: 0;">
-            <img src="../images/like.svg" alt="">
+          <button class="light-color isLiked" type="submit" style="background: transparent; border: 0;">
+            <img src="../images/like.svg" alt=""> Liked
           </button>
         </form>
         {{else}}
-        <form action="/tweets/{{tweet.id}}/like" method="POST">
-          <button class="light-color action-icon" type="submit" style="background: transparent; border: 0;">
+        <form class="action-icon" action="/tweets/{{tweet.id}}/like" method="POST">
+          <button class="light-color" type="submit" style="background: transparent; border: 0;">
             <img src="../images/like.svg" alt="">
           </button>
         </form>
@@ -61,7 +61,7 @@
         <div class="content-wrapper w-100">
           <div class="mb-2">
             <p class="font-weight-bold d-inline">{{this.User.name}}</p>
-            <p class="light-color d-inline">@{{this.User.account}}．3小時</p>
+            <p class="light-color d-inline">@{{this.User.account}}．{{moment this.createdAt}}</p>
           </div>
           <p class="light-color d-inline" style="font-weight: 500;">回覆</p>
           <p class="d-inline" style="font-weight: 500; color: #ff6600">@{{../tweet.User.account}}</p>

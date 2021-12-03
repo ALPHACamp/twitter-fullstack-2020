@@ -31,24 +31,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     cover: {
       type: DataTypes.STRING
-    },
-    followerCount: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
-    },
-    followingCount: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
-    },
-    tweetCount: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
     }
   }, {});
   User.associate = function(models) {
     User.hasMany(models.Tweet)
     User.hasMany(models.Reply)
     User.hasMany(models.Like)
+    User.belongsToMany(models.Tweet, {
+      through: models.Like,
+      foreignKey: 'UserId',
+      as: 'LikedTweets'
+    })
     User.belongsToMany(models.User, {
       through: models.Followship,
       foreignKey: 'followingId',
