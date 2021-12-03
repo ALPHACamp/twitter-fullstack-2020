@@ -8,35 +8,35 @@ module.exports = (app, passport) => {
     if (helpers.ensureAuthenticated(req)) {
       return next()
     }
-    res.redirect('/signin')
+    return res.redirect('/signin')
   }
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === 'Admin') {
         return next()
       }
-      return res.redirect('/admin/signin')
+      return res.redirect('/tweets')
     }
     return res.redirect('/admin/signin')
   }
 
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
-  app.get('/tweets', authenticated , tweetController.getTweets)
+  app.get('/tweets', authenticated, tweetController.getTweets)
 
+  // user 登入、登出、註冊
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   app.get('/signout', userController.signOut)
 
-  app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
-  app.get('/admin/tweets', authenticatedAdmin, (req, res) => res.render('adminTweets'))
-
-  app.get('/admin/signin', userController.signInPage)
-  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), userController.signIn)
-  app.get('/admin/signout', userController.signOut)
+  // admin 登入、登出
+  app.get('/admin/signin', adminController.signInPage)
+  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
+  app.get('/admin/signout', adminController.signOut)
 
   // admin 相關
+  app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
   app.get('/admin/tweets', adminController.getTweets)
   app.delete('/admin/tweets/:id', adminController.deleteTweet)
 }
