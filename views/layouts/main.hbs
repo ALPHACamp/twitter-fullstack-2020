@@ -16,7 +16,7 @@
     <a class="navbar-brand" href="/">Navbar</a>
     <div>
       {{#if isAuthenticated}}
-      <span style="margin-right: 10px;">Hi, {{user.email}}</span>
+      <a href="/users/{{user.id}}/edit">{{user.email}}</a>
       <a href="/signout">前台登出</a>
       <a href="/admin/signout">後台登出</a>
       {{else}}

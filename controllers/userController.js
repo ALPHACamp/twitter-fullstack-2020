@@ -1,5 +1,6 @@
 const helpers = require('../_helpers')
 const bcrypt = require('bcryptjs')
+const { Op } = require('sequelize')
 const db = require('../models')
 const { User } = db
 
@@ -74,12 +75,60 @@ const userController = {
 
   editUserPage: async (req, res) => {
     try {
-      if (helpers.getUser(req).id !== Number(req.params.userId)) {
+      const userId = req.params.userId
+
+      if (req.user.id !== Number(userId)) {
         req.flash('error_messages', '你無權查看此頁面')
         return res.redirect('/tweets')
       }
 
-      const user = await User.findByPk(req.params.userId)
+      return res.render('edit')
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  putUser: async (req, res) => {
+    try {
+      const userId = req.params.userId
+
+      if (req.user.id !== Number(userId)) {
+        req.flash('error_messages', '你無權查看此頁面')
+        return res.redirect('/tweets')
+      }
+
+      let user = await User.findByPk(userId)
+      const { account, name, email, password, checkPassword } = req.body
+      const errors = []
+
+      if (checkPassword !== password) {
+        errors.push({ message: '兩次密碼輸入不同！' })
+      }
+
+      const user1Promise = User.findOne({ where: { account, [Op.not]: { id: userId } } })
+      const user2Promise = User.findOne({ where: { email, [Op.not]: { id: userId } } })
+      const [user1, user2] = await Promise.all([user1Promise, user2Promise])
+
+      if (user1) {
+        errors.push({ message: '帳號已重複！' })
+      }
+
+      if (user2) {
+        errors.push({ message: 'Email 已重複重複！' })
+      }
+
+      if (errors.length) {
+        return res.render('signup', { errors, ...req.body })
+      }
+
+      user = await user.update({
+        account,
+        name,
+        email,
+        password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+      })
+
+      req.flash('success_messages', '成功編輯帳號！')
       return res.render('edit', { user: user.toJSON() })
     } catch (err) {
       console.error(err)

@@ -25,6 +25,8 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticated, tweetController.getTweets)
 
   app.get('/users/:userId/edit', authenticated, userController.editUserPage)
+  app.put('/users/:userId', authenticated, userController.putUser)
+
 
   // user 登入、登出、註冊
   app.get('/signup', userController.signUpPage)
