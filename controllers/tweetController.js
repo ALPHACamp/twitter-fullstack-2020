@@ -11,7 +11,8 @@ const tweetController = {
       ]
     }).then((result) => {
       const data = result.map((r) => r.toJSON())
-      return res.render('user', { data })
+      // return res.json(data)
+      return res.render('user', { data, tweet: data[0] })
     })
   }
 }

@@ -246,7 +246,7 @@ html, body {
   margin-top: 10px;
 }
 
-.main > .tweets > .tweet.profileRweet {
+.main > .tweets > .tweet.profileTweet {
   height: 121px;
 }
 
@@ -492,6 +492,175 @@ html, body {
 .main > .paginator > a.active {
   border-bottom: 2px solid #f60;
   color: #f60;
+}
+
+/* center content for single tweet page */
+.main > .back-arror-header > .header-text > .tweet {
+  color: #1c1c1c;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 55px;
+}
+
+.main > .tweet {
+  height: 400px;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  border: 1px solid #E6ECF0;
+  border-right: 0px;
+  border-left: 0px;
+}
+
+.main > .tweet > .tweetuser {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 15px 0;
+}
+
+.main > .tweet > .tweetuser > span:nth-child(2) {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+}
+
+.main > .tweet > .tweetuser > span:nth-child(2) > .name {
+  color:#1C1C1C;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 22px;
+}
+
+.main > .tweet > .tweetuser > span:nth-child(2) > .at-name {
+  color:#657786;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+}
+
+.main > .tweet > .tweetcontent {
+  height: 100%;
+  width: 570px;
+  margin: auto;
+}
+
+.main > .tweet > .tweetcontent > .content {
+  width: 100%;
+  height: 136px;
+  color:#1c1c1c;
+  font-size: 23px;
+  font-weight: 500;
+  line-height: 34px;
+  text-align: left;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.main > .tweet > .tweetcontent > .datetime {
+  color: #657786;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+  padding: 14px 0;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.main > .tweet > .tweetcontent > .datetime > .time::after {
+  content: "•";
+  margin-left: 6px;
+  margin-right: 3px;
+}
+
+.main > .tweet > .tweetcontent > .stat {
+  color: #000;
+  font-size: 19px;
+  font-weight: 700px;
+  line-height: 28px;
+  padding: 20px 0;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.main > .tweet > .tweetcontent > .stat a {
+  color: #567786;
+  font-weight: 500;
+}
+
+.main > .tweet > .tweetcontent > .stat > span:first-child {
+  margin-right: 20px;
+}
+
+.main > .tweet > .tweetcontent > .action {
+  height: 57px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.main > .tweet > .tweetcontent > .action > button:first-child {
+  margin-right: 146px;
+}
+
+.main > .replies > .reply {
+  width: 100%;
+  height: 105px;
+  border-bottom: 1px solid #E6ECF0;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.main > .replies > .reply > a {
+  margin-top: 18px;
+}
+
+.main > .replies > .reply > .comment {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+.main > .replies > .reply > .comment > .commentuser > span {
+  max-width: 170px;
+  font-size: 15px;
+  line-height: 22px;
+  margin-bottom: 4px;
+}
+
+.main > .replies > .reply > .comment > .commentuser > .name {
+  color: #1C1C1C;
+  font-weight: 700;
+}
+
+.main > .replies > .reply > .comment > .commentuser > .at-name,
+.main > .replies > .reply > .comment > .commentuser > .timer {
+  color: #657786;
+  font-weight: 500;
+}
+
+.main > .replies > .reply > .comment > .commentuser > .timer::before {
+  content: "•";
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.main > .replies > .reply > .comment > .replyto {
+  color: #657786;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+  margin-bottom: 5px;
+}
+
+.main > .replies > .reply > .comment > .replyto > .at-name {
+  color: #f60;
+}
+
+.main > .replies > .reply > .comment > .commentcomment {
+  color: #1c1c1c;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 22px;
+  width: 100%;
 }
 
 /* right side */
