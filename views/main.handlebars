@@ -182,10 +182,14 @@
               <div class="col-md-2 mt-2" style="padding-right: 0px; ">
                 <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
               </div>
-              <div class="col-md-10" style="padding:0 15px 0 0;">
-                <textarea name="description" id="" style="min-height:225px; max-height:225px; width:100%; border:none; "
-                  placeholder="推你的回覆" maxlength="140"></textarea>
-              </div>
+
+              <form action='/tweets/{{this.id}}/replies' method="post">
+
+                <div class="col-md-10" style="padding:0 15px 0 0;">
+                  <textarea name="description" id=""
+                    style="min-height:225px; max-height:225px; width:100%; border:none; " placeholder="推你的回覆"
+                    maxlength="140"></textarea>
+                </div>
             </div>
 
           </div>
@@ -193,7 +197,10 @@
             <button type="submit" class="btn btn-secondary"
               style="border-radius: 40px; background-color:#FF6600; padding:0 6px; border:honeydew 1px solid;">回覆
             </button>
+
           </div>
+          </form>
+
         </div>
       </div>
     </div>
@@ -208,6 +215,7 @@
         跟隨誰
       </div>
       {{#each users}}
+      {{#if this.isUser}}
       <div
         style="display: flex; justify-content:space-between; border-top:#E6ECF0 1px solid; border-bottom:#E6ECF0 1px solid;"
         class="p-2">
@@ -232,6 +240,7 @@
           {{/if}}
         </div>
       </div>
+      {{/if}}
       {{/each}}
     </div>
   </div>

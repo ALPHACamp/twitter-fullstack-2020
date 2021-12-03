@@ -1,0 +1,177 @@
+<div class="row mt-5">
+
+  {{!-- 左邊區域 --}}
+  <div class="col-md-3">
+    <img class="" style="position: relative; top: 8px; margin-left:15px; margin-bottom:20px" width="40px"
+      src="https://static.accupass.com/org/2008250550226683301600.jpg">
+    <ul class="nav flex-column">
+      <li class="nav-item ">
+        <a class="nav-link active font-weight-bold" style="color: #FF6600;" href="/"><i class="fas fa-home"></i> 首頁</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark font-weight-bold" href="/user/self"><i class="fas fa-user"></i> 個人資料</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark font-weight-bold" href="/setting"><i class="far fa-sun"></i> 設定</a>
+      </li>
+    </ul>
+
+
+    <button class="btn btn-block text-light" style="border-radius: 40px; background-color:#FF6600" href="#"
+      data-toggle="modal" data-target="#exampleModal">推文</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" style="color:#FF6600;">&times;</span>
+            </button>
+          </div>
+          <form action="#" method="post">
+            <div class="modal-body" style="height: 250px;">
+              <div class="row" style="height: 100%;">
+                <div class="col-md-2">
+                  <img src="https://static.newmobilelife.com/wp-content/uploads/2018/11/oppa1.jpg"
+                    class="rounded-circle" style="width: 60px; height:60px;">
+                </div>
+                <div class="col-md-10">
+                  <textarea name="" id="" style="min-height:225px; max-height:225px; width:100%; border:none;"
+                    placeholder="有甚麼新鮮事?"></textarea>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" style="border-radius: 40px; background-color:#FF6600 ">推文
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+  </div>
+
+  <div class="ml-3" style="position:fixed; bottom:0px; left: 20px;">
+    <a class="text-dark font-weight-bold" style="border-radius: 40px; width:150px;" href="/logout"><i class="fas
+        fa-sign-out-alt"></i> 登出</a>
+  </div>
+  {{!-- 中間區域 --}}
+  <div class="col-md-6" style="position: relative; border:1px #DEE2E6  solid; word-break:break-all ">
+    <div class="row align-items-center mb-3 mt-2" style="border-bottom:#dee2e6 1px solid;">
+      <div class="col-md-2">
+        <a href="/"><i class="fas fa-arrow-left"></i></a>
+      </div>
+      <div class="col-md-10">
+        <div class="row">
+          <div class="h5">推文</div>
+        </div>
+      </div>
+    </div>
+
+    {{!-- 背景圖區域 --}}
+
+
+    {{!-- 大頭貼區塊 --}}
+
+    <div class=" mt-1 mb-2" style="display: flex; justify-content:flex-start;">
+      <div class="mr-2">
+        <img src="{{tweets.User.avatar}}" alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+
+      </div>
+      <div>
+        <div class="h4" style="margin-bottom:0">{{tweets.User.name}}</div>
+        <div><small>{{tweets.User.account}}</small></div>
+      </div>
+
+    </div>
+
+    {{!-- 個人介紹區域 --}}
+
+    <div class="row d-block">
+
+      <div class="mt-2 ml-3">{{tweets.description}}
+      </div>
+      <div class="ml-3">
+        <small>{{tweet.createdAt}}</small>
+      </div>
+      <div class="mt-2" style="border:1px #DEE2E6  solid; padding: 5px;">
+        <div class="font-weight-bold mt-2 ml-3">{{replies.length}} <span class="text-secondary mr-3">回覆</span>59 <span
+            class="text-secondary">喜歡次數</span></div>
+      </div>
+    </div>
+
+    <div class="row " style="border: 1px #DEE2E6 solid; padding: 5px;">
+      <span class="mr-5 ml-4"><i class="far fa-comment"></i> </span>
+      <span><i class="far fa-heart ml-5"> </i>
+      </span>
+    </div>
+
+
+    {{!-- 導航欄 --}}
+    {{!-- 留言區域 --}}
+    {{#each replies}}
+    <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
+      <div class="col-md-2" style="padding-right: 0px; ">
+        <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+      </div>
+      <div class="col-md-10" style="padding-left: 0px;">
+        <div class="h6">{{this.User.name}}<a href="" class="text-secondary">{{this.User.account}} </a> ・ {{
+          this.createdAt}}</div>
+        <div>
+          <span>回覆 {{this.Tweet.User.account}}</span>
+        </div>
+        <div>{{this.comment}}</div>
+      </div>
+    </div>
+    {{/each}}
+
+
+
+  </div>
+
+  {{!-- 右邊區域 --}}
+  <div class="col-md-3">
+    <div class='rounded' style="background-color: #F5F8FA ;">
+
+      <div class="p-2">
+        跟隨誰
+      </div>
+      {{#each users}}
+      <div
+        style="display: flex; justify-content:space-between; border-top:#E6ECF0 1px solid; border-bottom:#E6ECF0 1px solid;"
+        class="p-2">
+        <div style="display: flex;">
+          <img
+            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
+            style="width: 50px; height:50px; border-radius:50%;">
+          <div>
+            <div>{{this.name}}</div>
+            <div>{{this.User.account}}</div>
+          </div>
+        </div>
+
+        <div>
+          {{#if this.isFollowed }}
+          <form action="/user/self/following/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
+              class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
+          </form>
+          {{else}}
+          <form action="/user/self/following/{{this.id}}" method="POST"><button type="submit"
+              class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">跟隨</button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+</div>

@@ -78,7 +78,7 @@
           <div class="h5">{{user.name}}</div>
         </div>
         <div class="row">
-          <small>{{tweetLength}} 則貼文</small>
+          <small>{{tweets.length}} 則貼文</small>
         </div>
       </div>
     </div>
@@ -200,13 +200,13 @@
     </div>
 
     {{!-- 留言區域 --}}
-    {{#each tweet}}
+    {{#each tweets}}
     <div class="row  border" style="padding-top:8px; padding-bottom:10px; word-break:break-all; padding-bottom:10px;">
       <div class="col-md-2" style="padding-right: 0px; ">
         <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
-        <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{moment
+        <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{
             this.createdAt}}</span>
         </div>
         <div>{{this.description}}</div>
