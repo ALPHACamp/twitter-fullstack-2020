@@ -2,7 +2,6 @@ const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
 const tweetController = require('../controllers/tweetController')
 
-
 module.exports = (app, passport) => {
   app.get('/', (req, res) => res.render('index'))
 
@@ -19,5 +18,6 @@ module.exports = (app, passport) => {
   // admin 相關
   app.get('/admin/tweets', adminController.getTweets)
   app.delete('/admin/tweets/:id', adminController.deleteTweet)
+  app.get('/admin/users', adminController.adminUsers)
 }
   
