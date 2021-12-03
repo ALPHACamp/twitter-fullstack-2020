@@ -15,8 +15,9 @@
           <a href="/users/{{user.id}}">
             <img class="mr-2 thumbnail" src="{{user.avatar}}" alt="">
           </a>
-          <input type="text" id="description" name="description" placeholder="有什麼新鮮事？"
-            style="border: 0; outline: none;">
+          <textarea class="textarea-tweet w-100" id="description" name="description"
+                    rows="1" placeholder="有什麼新鮮事？"maxlength="140"
+          ></textarea>
         </div>
         <button class="button-submit mt-2" style="float: right;" type="submit">推文</button>
       </form>

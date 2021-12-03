@@ -39,6 +39,16 @@ module.exports = (app, passport) => {
   app.delete('/admin/tweets/:id', authenticatedAdmin, isAdmin, adminController.deleteTweets)
   // OTHERS
 
+  // USER
+  app.get('/signin', userController.signInPage)
+  app.post('/signin', passport.authenticate('local', {
+    failureRedirect: '/signin', failureFlash: true
+  }), userController.signIn)
+  app.get('/signup', userController.signUpPage)
+  app.post('/signup', userController.signUp)
+  app.get('/logout', userController.logout)
+  app.get('/users/:id', authenticated, userController.getUser)
+
   // TWEET
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetController.getTweets)
