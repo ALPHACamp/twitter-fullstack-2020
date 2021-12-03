@@ -7,7 +7,7 @@ const userController = {
     res.render('signup')
   },
   signUp: (req, res) => {
-    if (req.body.password !== req.body.passwordCheck) {
+    if (req.body.password !== req.body.checkPassword) {
       req.flash('error_messages', '密碼與檢查密碼不一致！')
       res.redirect('/signup')
     } else {
