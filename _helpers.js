@@ -1,5 +1,7 @@
 const User = require('./models').User
 
+const topUsersCount = 10
+
 function ensureAuthenticated(req) {
   return req.isAuthenticated();
 }
@@ -10,13 +12,14 @@ function getUser(req) {
 const getTopuser = (currentUser) => {
   return User.findAll({
     include: [
-      { model: User, as: 'Followers' }
-    ]
+      { model: User, as: 'Followers' },
+    ],
+    limit: topUsersCount
   })
   .then(users => {
     //去除admin
     users = users.filter((user) => {
-      console.log(user.role)
+      // console.log(user.role)
       return user.role === 'user'
     })
     // 整理 users 資料
