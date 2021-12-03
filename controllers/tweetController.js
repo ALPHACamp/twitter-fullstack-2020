@@ -20,7 +20,21 @@ const tweetController = {
     try {
       await Like.create({
         UserId: helpers.getUser(req).id,
-        TweetId: req.params.restaurantId,
+        TweetId: req.params.restaurantId
+      })
+      return res.redirect('back')
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  removeLike: async (req, res) => {
+    try {
+      await Like.destroy({
+        where: {
+          UserId: helpers.getUser(req).id,
+          TweetId: req.params.restaurantId
+        }
       })
       return res.redirect('back')
     } catch (err) {

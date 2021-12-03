@@ -33,6 +33,7 @@ module.exports = (app, passport) => {
 
   // tweet 相關
   app.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
+  app.post('/tweets/:tweetId/unlink', authenticated, tweetController.removeLike)
 
 
   // user 登入、登出、註冊
