@@ -37,6 +37,10 @@ const userController = {
   },
 
   signInPage: (req, res) => {
+    if (res.locals.user) {
+      delete res.locals.user
+    }
+
     return res.render('signin')
   },
 
