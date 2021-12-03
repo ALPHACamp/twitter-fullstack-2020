@@ -79,7 +79,7 @@ const userController = {
         return res.redirect('/tweets')
       }
 
-      const user = await User.findByPk(req.params.id)
+      const user = await User.findByPk(req.params.userId)
       return res.render('edit', { user: user.toJSON() })
     } catch (err) {
       console.error(err)
