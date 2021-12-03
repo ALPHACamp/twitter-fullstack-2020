@@ -19,10 +19,11 @@ const tweetController = {
 
   addLike: async (req, res) => {
     try {
-      // 前端要檔已 like
-      await Like.create({
-        UserId: helpers.getUser(req).id,
-        TweetId: req.params.tweetId
+      await Like.findOrCreate({
+        where: {
+          UserId: helpers.getUser(req).id,
+          TweetId: req.params.tweetId
+        }
       })
       return res.redirect('back')
     } catch (err) {
