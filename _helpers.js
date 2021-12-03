@@ -14,9 +14,13 @@ const getTopuser = (currentUser) => {
     ]
   })
   .then(users => {
-    // console.log(users)
+    //去除admin
+    users = users.filter((user) => {
+      console.log(user.role)
+      return user.role === 'user'
+    })
     // 整理 users 資料
-    users = users.map(user => ({
+    users = users.map((user) => ({
       ...user.dataValues,
       // 計算追蹤者人數
       FollowerCount: user.Followers.length,
@@ -25,6 +29,7 @@ const getTopuser = (currentUser) => {
     }))
     // 依追蹤者人數排序清單
     users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+    // console.log(users)
     return users
   })
 }

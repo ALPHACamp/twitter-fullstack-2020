@@ -27,7 +27,7 @@ const tweetController = {
       }))
       // 取得右邊欄位的Top users
       const topUsers = await helpers.getTopuser(req.user)
-      console.log(topUsers)
+      // console.log(topUsers)
       return res.render('tweets', {
         tweets : tweets,
         users : topUsers
