@@ -1,10 +1,44 @@
 const helpers = require('../_helpers')
 const bcrypt = require('bcryptjs')
-const { Op } = require('sequelize')
+
 const db = require('../models')
-const { User } = db
+const { sequelize } = db
+const { Op } = db.Sequelize
+const { User, Tweet, Reply, Like, Followship } = db
 
 const userController = {
+  getUserTweets: async (req, res) => {
+    try {
+      const userId = Number(req.params.userId)
+
+      const tweets = await Tweet.findAll({
+        where: { UserId: userId },
+        attributes: [
+          'id',
+          'userId',
+          'description',
+          'createdAt',
+          [sequelize.literal('(SELECT COUNT(*) FROM `replies` WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
+          [sequelize.literal('(SELECT COUNT(*) FROM `likes` WHERE likes.TweetId = Tweet.id)'), 'likeCount'],
+        ],
+        order: [['createdAt', 'DESC']]
+      })
+
+      const user = await User.findByPk(userId, {
+        attributes: [
+          'id',
+          'name',
+          'account',
+          'avatar'
+        ]
+      })
+
+      return res.json({ tweets, user })
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
   signUpPage: (req, res) => {
     return res.render('signup')
   },
