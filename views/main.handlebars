@@ -133,16 +133,32 @@
             this.createdAt}}</span>
         </div>
         <div>{{this.description}}</div>
-        <span class="mr-4 "><button type="submit" data-toggle="modal" data-target="#tweetModel"
-            style="border: 0; background-color: #ffffff; ">
-            <i class="far fa-comment" data-id={{this.id}}></i>
-          </button> {{ this.replyCount }} </span>
-        {{#if likeBoolean}}
-        <span><span>{{ this.likeCount }}</span> <i class="fas fa-heart likeHeart" data-id={{this.id}}
-            style="color: red;"></i></span>
-        {{else}}
-        <span><span>{{ this.likeCount }}</span> <i class="far fa-heart likeHeart" data-id={{this.id}}></i></span>
-        {{/if}}
+        <div class="row align-items-center">
+          <div class="col-md-2">
+            <span class="mr-4"><button type="submit" data-toggle="modal" data-target="#tweetModel"
+                style="border: 0; background-color: #ffffff; ">
+                <i class="far fa-comment" data-id={{this.id}}></i>
+              </button> {{ this.replyCount }} </span>
+          </div>
+          <div class="col-md-2">
+            {{#if likeBoolean}}
+            <form action="/tweets/{{this.id}}/unlike" method="post">
+              <span><span>{{ this.likeCount }}</span><button type="submit" class="btn btn-link"
+                  style="color: red; display:inline">
+                  <i class="fas fa-heart " data-id={{this.id}}></i></button></span>
+            </form>
+            {{else}}
+            <form action="/tweets/{{this.id}}/like" method="post" class="form-inline">
+              <span><span>{{ this.likeCount }}</span><button type="submit" class="btn btn-link text-dark"
+                  style="display:context;">
+                  <i class="far fa-heart" data-id={{this.id}}></i></button></span>
+            </form>
+
+            {{/if}}
+          </div>
+        </div>
+
+
 
 
 

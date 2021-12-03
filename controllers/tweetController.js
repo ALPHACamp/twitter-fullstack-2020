@@ -3,6 +3,7 @@ const user = require('../models/user')
 const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
+const Like = db.Like
 
 const tweetController = {
     getTweets: (req, res) => {
@@ -12,7 +13,8 @@ const tweetController = {
             nest: true,
             order: [['createdAt', 'DESC']],
             include: [
-                User
+                User,
+                { model: User, as: 'LikedUsers' }
             ]
         })
 
@@ -24,12 +26,11 @@ const tweetController = {
 
         Promise.all([tweetFindAll, userFindAll])
             .then(responses => {
-                // console.log(responses[0])
                 const tweets = responses[0]
-
                 let users = responses[1]
-                // console.log(users)
-                // console.log(responses[1])
+                console.log('+++++++++++++++++++++++++++++++++++++')
+                console.log(tweets)
+                console.log('+++++++++++++++++++++++++++++++++++++')
                 users = users.map(user => ({
 
                     ...user.dataValues,
@@ -49,20 +50,6 @@ const tweetController = {
             }).catch(error => {
                 console.log(error)
             })
-
-        // Tweet.findAll({
-        //     raw: true,
-        //     nest: true,
-        //     order: [['createdAt', 'DESC']],
-        //     include: [
-        //         User
-        //     ]
-        // }).then(tweets => {
-        //     // console.log(tweets)
-        //     return res.render('main', { tweets })
-        // }).catch(error => {
-        //     console.log(error)
-        // })
 
     },
 
@@ -148,7 +135,33 @@ const tweetController = {
             }).catch(error => {
                 console.log(error)
             })
+    },
 
+    postLike: (req, res) => {
+        Like.create({
+            UserId: req.user.id,
+            TweetId: req.params.id
+        }).then(like => {
+            return res.redirect('/tweets')
+        }).catch(error => {
+            console.log(error)
+        })
+    },
+
+    postUnLike: (req, res) => {
+        Like.findOne({
+            where: {
+                UserId: req.user.id,
+                TweetId: req.params.id
+            }
+        }).then(like => {
+            console.log(like.toJSON())
+            like.destroy()
+        }).then(unlike => {
+            return res.redirect('/tweets')
+        }).catch(error => {
+            console.log(error)
+        })
 
     }
 }

@@ -71,7 +71,9 @@ module.exports = (app, passport) => {
     app.get('/tweets/:id/replies', authenticated, tweetController.getReplies)
 
 
-
+    // 前台 like 特定 Tweet
+    app.post('/tweets/:id/like', authenticated, tweetController.postLike)
+    app.post('/tweets/:id/unlike',authenticated, tweetController.postUnLike)
 
 
 
