@@ -4,6 +4,10 @@
 {{#each users}}
 <div>
   <hr>
+  <div style="display: flex;">
+    <img src="{{this.avatar}}" style="width:100px; height:100px;">
+    <img src="{{this.cover}}" style="width:200px; height:200px;">
+  </div>
   <h1> 名字: {{this.name}} </h1>
   <p> 帳號: {{this.account}} </p>
   <p> 推文數: {{this.tweetsCount}} </p>
