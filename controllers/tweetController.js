@@ -1,4 +1,5 @@
 const db = require('../models')
+const user = require('../models/user')
 const Tweet = db.Tweet
 const User = db.User
 
@@ -15,17 +16,25 @@ const tweetController = {
         })
 
         const userFindAll = User.findAll({
-            raw: true,
-            nest: true
+            include: [
+                { model: User, as: 'Followers' }
+            ]
         })
 
         Promise.all([tweetFindAll, userFindAll])
             .then(responses => {
-                console.log(responses[0])
+                // console.log(responses[0])
                 const tweets = responses[0]
                 console.log('1111111111111111111111111111111111')
-                const users = responses[1]
-                console.log(responses[1])
+                let users = responses[1]
+                console.log(req.user)
+                console.log('1111111111111111111111111111111111')
+                users = users.map(user => ({
+                    ...user.dataValues,
+                    FollowerCount: '1234',
+                    isFollowed: '5678'
+                }))
+                console.log(users)
                 return res.render('main', { tweets, users })
             }).catch(error => {
                 console.log(error)
