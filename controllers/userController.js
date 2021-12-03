@@ -1,6 +1,12 @@
 const bcrypt = require('bcryptjs')
+const helpers = require('../_helpers')
 const db = require('../models')
 const User = db.User
+const Tweet = db.Tweet
+const Reply = db.Reply
+const Like = db.Like
+
+const userService = require('../services/userService')
 
 const userController = {
   //註冊頁面
@@ -48,9 +54,46 @@ const userController = {
     req.flash('success_msg', '登出成功！')
     req.logout()
     res.redirect('/signin')
-  }
+  },
 
-  
+  getUser: (req, res) => {
+    User.findByPk(req.params.id, { include: [
+      { model: Tweet, include: [ Reply, { model: User, as: 'LikedUsers'}] },
+      { model: Reply, include: [{ model: Tweet, include: [User] }] },
+      { model: Like, include: [{ model: Tweet, include: [User, Reply, { model: User, as: 'LikedUsers' }]}]}
+    ] }).then(user => {
+      // to avoid conflicting with res.locals.user
+      userData = {
+        ...user.toJSON(),
+        tweetCount: user.Tweets.length,
+        followingCount: helpers.getUser(req).Followings.length,
+        followerCount: helpers.getUser(req).Followers.length,
+        isFollowed: helpers.getUser(req).Followings.map(item => item.id).includes(req.params.id)
+      }
+
+      userData.Tweets = userData.Tweets.map(tweet => ({
+        ...tweet,
+        replyCount: tweet.Replies.length,
+        isReplied: tweet.Replies.map(item => item.UserId).includes(helpers.getUser(req).id),
+        likeCount: tweet.LikedUsers.length,
+        isLiked: tweet.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id)
+      }))
+
+      userData.Likes = userData.Likes.map(like => {
+        return {
+          Tweet: like.Tweet,
+          replyCount: like.Tweet.Replies.length,
+          isReplied: like.Tweet.Replies.map(item => item.UserId).includes(helpers.getUser(req).id),
+          likeCount: like.Tweet.LikedUsers.length,
+          isLiked: like.Tweet.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id)
+        }
+      })
+
+      userService.getTopUser(req, res, topUser => {
+        return res.render('user', { userData, topUser })
+      })
+    })
+  }
 }
 
 module.exports = userController
