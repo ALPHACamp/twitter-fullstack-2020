@@ -16,7 +16,10 @@
     <a class="navbar-brand" href="/">Navbar</a>
     <div>
       {{#if isAuthenticated}}
-      <span style="margin-right: 10px;">Hi, {{user.email}}</span>
+      <a href="/users/{{user.id}}/likes">喜歡的內容</a>
+      <a href="/users/{{user.id}}/replies">推文與回覆</a>
+      <a href="/users/{{user.id}}/tweets">推文</a>
+      <a href="/users/{{user.id}}/edit">{{user.email}}</a>
       <a href="/signout">前台登出</a>
       <a href="/admin/signout">後台登出</a>
       {{else}}

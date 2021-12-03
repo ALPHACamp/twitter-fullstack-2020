@@ -20,8 +20,17 @@ module.exports = (app, passport) => {
     return res.redirect('/admin/signin')
   }
 
+  // user 相關
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetController.getTweets)
+
+  app.get('/users/:userId/tweets', authenticated, userController.getUserTweets)
+  app.get('/users/:userId/replies', authenticated, userController.getUserReplies)
+  app.get('/users/:userId/likes', authenticated, userController.getUserLikes)
+
+  app.get('/users/:userId/edit', authenticated, userController.editUserPage)
+  app.put('/users/:userId', authenticated, userController.putUser)
+
 
   // user 登入、登出、註冊
   app.get('/signup', userController.signUpPage)
