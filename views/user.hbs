@@ -2,26 +2,14 @@
   <div class="leftside">
     <div class="navigation" id="navigation">
       <i class='ac-icon'></i>
-      <a class="active" herf='/tweets'><i class='home active'></i>首頁</a>
-      <a class="" herf='/user/id/tweets'><i class='info'></i>個人資料</a>
-      <a class="" herf='/api/user/id'><i class='setting'></i>設定</a>
-      <button type="button" class="btn-fill" id="post">推文</button>
+      <a class="active" herf='/tweets' id="homing"><i class='home active'></i>首頁</a>
+      <a class="" id="editing"><i class='info'></i>個人資料</a>
+      <a class="" herf='/tweets' id="setting"><i class='setting'></i>設定</a>
+      <button type="button" class="btn-fill" id="posting">推文</button>
     </div>
     {{!-- 展示icon用 --}}
     <div>
       <i class='ac-icon login'></i>
-      <i class='btn-message'></i>
-      <i class='btn-noti'></i>
-      <i class='btn-noti active'></i>
-      <i class='comment'></i>
-      <i class='comment lg'></i>
-      <i class='like'></i>
-      <i class='like active'></i>
-      <i class='like lg'></i>
-      <i class='like lg active'></i>
-      <i class='back-arror'></i>
-      <i class='X-orange'></i>
-      <i class='X-gray'></i>
       <i class='success'></i>
       <i class='warning'></i>
     </div>
@@ -33,7 +21,7 @@
 
   <div class="main">
     {{!-- USER PARTIALS --}}
-    {{!-- {{> tweets}} --}}
+    {{> tweets}}
     {{!-- {{> profileTweets}} --}}
     {{!-- {{> profileReplies}} --}}
     {{!-- {{> profileLikes}} --}}
@@ -42,7 +30,7 @@
     {{!-- {{> tweet}} --}}
 
     {{!-- ADMIN PARTIALS --}}
-    
+
   </div>
 
   <div class="rightside">
@@ -168,7 +156,9 @@
 <div class="modal d-none" id="modal-post">
   <div class="mask" id="modal-post-mask">
     <div class="dialog">
-      <a><i class='X-orange' id="modal-post-close"></i></a>
+      <div class="dialog-header">
+        <a class='close'><i class='X-orange close'></i></a>
+      </div>
       <div class="postarea">
         <a>
           <img class="thumbnail" src="/icons/avatar.svg" alt="">
@@ -187,7 +177,9 @@
 <div class="modal d-none" id="modal-reply">
   <div class="mask" id="modal-reply-mask">
     <div class="dialog">
-      <a><i class='X-orange' id="modal-reply-close"></i></a>
+      <div class="dialog-header">
+        <a class="close"><i class='X-orange close'></i></a>
+      </div>
       <div class="replyarea">
 
         <div class="tweet">
@@ -223,6 +215,73 @@
       </div>
 
     </div>
+  </div>
+</div>
+
+{{!-- editing modal --}}
+<div class="modal d-none" id="modal-edit">
+  <div class="mask" id="modal-edit-mask">
+    <div class="dialog">
+      <div class="dialog-header">
+        <a class="close"><i class='X-orange close'></i></a>
+        <span>編輯個人資料</span>
+      </div>
+
+      <form method="POST" action="/???" enctype="multipart/form-data">
+        <div class="edit-cover">
+          <img src="/icons/cover.svg" alt="" id="modal-edit-cover">
+          <input type="file" class="d-none" id="cover" name="cover"
+            value="{{#if User.cover}}{{User.cover}}{{else}}/icons/cover.svg{{/if}}"
+            onchange="document.querySelector('#modal-edit-cover').src=this.value">
+          <a>
+            <input type="button" class="camera" onclick="document.querySelector('#cover').click();">
+          </a>
+          <a>
+            <input type="button" class="X-white"
+              onclick="document.querySelector('#modal-edit-cover').src='/icons/cover.svg'">
+          </a>
+        </div>
+
+        <div class="edit-avatar">
+          <img src="/icons/avatar-lg.svg" alt="" id="modal-edit-avatar">
+          <input type="file" class="d-none" id="avatar" name="avatar"
+            value="{{#if User.avatar}}{{User.avatar}}{{else}}/icons/avatar-lg.svg{{/if}}"
+            onchange="document.querySelector('#modal-edit-avatar').src=this.value">
+          <a>
+            <input type="button" class="camera" onclick="document.querySelector('#avatar').click();">
+          </a>
+        </div>
+
+        <div class="for-name edit-text">
+          <div class="text-label">
+            <label for="name">
+              名稱
+            </label>
+          </div>
+          <div class="edit-form">
+            <input type="text" name="name" class="edit-name" id="name" maxlength="50" required value="{{User.name}}">
+          </div>
+          <div class="counter" id="name-counter">5/50</div>
+        </div>
+
+        <div class="for-intro edit-text">
+          <div class="text-label">
+            <label for="introduction" class="text-label">
+              自我介紹
+            </label>
+          </div>
+          <div class="edit-form">
+            <textarea name="introduction" class="edit-introduction" id="introduction"
+              maxlength="160">{{User.introduction}}</textarea>
+          </div>
+          <div class="counter" id="introduction-counter">56/160</div>
+        </div>
+
+
+        <button class="btn-fill form" type="submit">儲存</button>
+      </form>
+    </div>
+
   </div>
 </div>
 </div>

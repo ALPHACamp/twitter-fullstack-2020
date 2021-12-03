@@ -12,7 +12,7 @@
 <hr>
 <div class="tweets">
 
-  {{#each data}}
+  {{#each Tweets}}
   <div class="tweet">
     <a>
       <img class="thumbnail" src="/icons/avatar.svg" alt="">
@@ -27,7 +27,7 @@
         {{this.description}}
       </button>
       <div class="action">
-        <button type="button" class="commenting" data-userId="{{user.id}}">
+        <button type="button" class="commenting" data-userId="{{User.id}}">
           <i class='comment'></i>
           13
         </button>
