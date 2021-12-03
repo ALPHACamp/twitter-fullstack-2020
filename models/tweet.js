@@ -11,8 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     description: {
-      type: DataTypes.TEXT,
-      allowNull: false
+      type: DataTypes.TEXT
     }
   }, {});
   Tweet.associate = function(models) {
