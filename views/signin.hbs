@@ -1,7 +1,18 @@
-    <div id="column1" style="float:left; width:25%; position: fixed;">{{> left}}</div>
-
-    <div class="d-flex justify-content-center">
-      <div id="column2" class="mx-auto my-auto" style="float:left;width:50%;">{{> center}}</div>
-    </div>
-
-    <div id="column3" class="float-right" style="float:left;width:25%; position: fixed; top:0%; right:0%">{{> right}}</div>
+<form class="form-signin" action="/signin" method="POST" style="width: 100%;">
+  <div class="text-center mb-4">
+    <h1 class="h3 mb-3 font-weight-normal">User Sign In</h1>
+  </div>
+  <div class="form-label-group">
+    <label for="inputEmail">Email</label>
+    <input type="text" name="email" class="form-control" placeholder="Email" required autofocus />
+  </div>
+  <div class="form-label-group">
+    <label for="inputPassword">Password</label>
+    <input type="password" name="password" class="form-control" placeholder="Password" required />
+  </div>
+  <br />
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+  <div class="text-center mb-4">
+    <p><a href="/signup">Sign Up</a></p>
+  </div>
+</form>
