@@ -26,7 +26,6 @@ const tweetController = {
       Reply,
       { model: User, as: 'LikedUsers' }
     ]}).then(tweets => {
-      console.log(tweets)
       tweets = tweets.map(tweet => {
         if (tweet.dataValues !== undefined) {
           return {

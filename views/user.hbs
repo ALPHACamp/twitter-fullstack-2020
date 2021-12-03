@@ -1,0 +1,149 @@
+<div class="center container">
+  <div class="left-bar">
+    {{> navbar}}
+  </div>
+
+  <div class="right-bar">
+    {{> topUser}}
+  </div>
+
+  <div class="header light-border">
+    <div class="py-1 px-3 m-0 font-weight-bold light-border d-flex align-items-center">
+      <a class="mr-5" href="/tweets"><img class="mb-1" src="../images/pre.svg" alt=""></a>
+      <div class="d-inline-block">
+        <p class="m-0" style="font-size: 19px;">{{userData.name}}</p>
+        <p class="light-color m-0" style="font-size: 13px; font-weight: 500;">{{userData.tweetCount}} 推文</p>
+      </div>
+    </div>
+    <div class="position-relative" style="height: 200px; margin-bottom: 75px;">
+      <img class="h-100" src="{{userData.cover}}" alt="" style="object-fit: cover;">
+      <div class="avatar-container">
+        <img class="" src="{{userData.avatar}}" alt="">
+      </div>
+    </div>
+    <div class="profile ml-3">
+      <div class="font-weight-bold">
+        <p class="m-0" style="font-size: 19px;">{{userData.name}}</p>
+        <p class="light-color m-0" style="font-size: 15px;">@{{userData.account}}</p>
+      </div>
+      <p class="mt-3 mb-0">{{userData.introduction}}</p>
+      <div class="mt-3 d-flex justify-content-between" style="width: 170px; font-size: 14px;">
+        <span>
+          <b>{{userData.followingCount}} 個</b>
+          <p class="light-color m-0 d-inline">跟隨中</p>
+        </span>
+        <span>
+          <b>{{userData.followerCount}} 位</b>
+          <p class="light-color m-0 d-inline">跟隨者</p>
+        </span>
+      </div>
+    </div>
+    <ul class="list-group list-group-horizontal mt-4" id="profile-buttons">
+      <li class="list-group-item list-item-profile item-active" id="tweets">推文</li>
+      <li class="list-group-item list-item-profile" id="replies">推文與回覆</li>
+      <li class="list-group-item list-item-profile" id="likes">喜歡的內容</li>
+    </ul>
+  </div>
+
+  <div class="list-tweet">
+    <!-- USER TWEETS-->
+    <ul class="list-group" id="userTweets">
+      {{#each userData.Tweets}}
+      <li class="list-group-item px-3 d-flex align-items-start justify-content-start">
+        <a href="/users/{{../user.id}}">
+          <img class="mr-3 thumbnail" src="{{../user.avatar}}" alt="">
+        </a>
+        <div class="content-wrapper w-100">
+          <div class="mb-2">
+            <p class="font-weight-bold d-inline">{{../user.name}}</p>
+            <p class="light-color d-inline">@{{../user.account}}．{{moment this.createdAt}}</p>
+          </div>
+          <a class="link-description" href="/tweets/{{this.id}}">
+            <p>{{this.description}}</p>
+          </a>
+          <div class="d-flex justify-content-between" style="width: 150px;">
+            <!-- comment -->
+            <a class="light-color action-icon {{#if this.isReplied}}isReplied{{/if}}" href="#">
+              <i class="far fa-comment mr-3"></i>{{this.replyCount}}
+            </a>
+            <!-- like -->
+            {{#if this.isLiked}}
+            <form class="action-icon" action="/tweets/{{this.id}}/unlike" method="POST">
+              <button class="light-color isLiked" type="submit" style="background: transparent; border: 0;">
+                <i class="far fa-heart mr-3"></i>{{this.likeCount}}
+              </button>
+            </form>
+            {{else}}
+            <form class="action-icon" action="/tweets/{{this.id}}/like" method="POST">
+              <button class="light-color" type="submit" style="background: transparent; border: 0;">
+                <i class="far fa-heart mr-3"></i>{{this.likeCount}}
+              </button>
+            </form>
+            {{/if}}
+          </div>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+
+    <!-- USER REPLIES -->
+    <ul class="list-group d-none">
+      {{#each userData.Replies}}
+      <li class="list-group-item px-3 d-flex align-items-start justify-content-start">
+        <a href="/users/{{this.UserId}}">
+          <img class="mr-3 thumbnail" src="{{../user.avatar}}" alt="">
+        </a>
+        <div class="content-wrapper w-100">
+          <div class="mb-2">
+            <p class="font-weight-bold d-inline">{{../user.name}}</p>
+            <p class="light-color d-inline">@{{../user.account}}．{{moment this.createdAt}}</p>
+          </div>
+          <p class="light-color d-inline" style="font-weight: 500;">回覆</p>
+          <p class="d-inline" style="font-weight: 500; color: #ff6600">@{{this.Tweet.User.account}}</p>
+          <p class="mt-2">{{this.comment}}</p>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+
+    <!-- USER LIKES -->
+    <ul class="list-group d-none" id="userTweets">
+      {{#each userData.Likes}}
+      <li class="list-group-item px-3 d-flex align-items-start justify-content-start">
+        <a href="/users/{{this.Tweet.User.id}}">
+          <img class="mr-3 thumbnail" src="{{this.Tweet.User.avatar}}" alt="">
+        </a>
+        <div class="content-wrapper w-100">
+          <div class="mb-2">
+            <p class="font-weight-bold d-inline">{{this.Tweet.User.name}}</p>
+            <p class="light-color d-inline">@{{this.Tweet.User.account}}．{{moment this.Tweet.createdAt}}</p>
+          </div>
+          <a class="link-description" href="/tweets/{{this.Tweet.id}}">
+            <p>{{this.Tweet.description}}</p>
+          </a>
+          <div class="d-flex justify-content-between" style="width: 150px;">
+            <!-- comment -->
+            <a class="light-color action-icon {{#if this.isReplied}}isReplied{{/if}}" href="#">
+              <i class="far fa-comment mr-3"></i>{{this.replyCount}}
+            </a>
+            <!-- like -->
+            {{#if this.isLiked}}
+            <form class="action-icon" action="/tweets/{{this.Tweet.id}}/unlike" method="POST">
+              <button class="light-color isLiked" type="submit" style="background: transparent; border: 0;">
+                <i class="far fa-heart mr-3"></i>{{this.likeCount}}
+              </button>
+            </form>
+            {{else}}
+            <form class="action-icon" action="/tweets/{{this.Tweet.id}}/like" method="POST">
+              <button class="light-color" type="submit" style="background: transparent; border: 0;">
+                <i class="far fa-heart mr-3"></i>{{this.likeCount}}
+              </button>
+            </form>
+            {{/if}}
+          </div>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
