@@ -246,7 +246,16 @@ html, body {
   margin-top: 10px;
 }
 
+.main > .tweets > .tweet.profileRweet {
+  height: 121px;
+}
+
 .main > .tweets > .tweet > a {
+  margin-top: 3px;
+  display: inline;
+}
+
+.main > .tweets > .tweet > div:first-child {
   margin-top: 3px;
   display: inline;
 }
@@ -323,6 +332,19 @@ html, body {
   padding: 0;
 }
 
+.main > .tweets > .tweet > .postcontent > .replyto {
+  color: #657786;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 16px;
+  margin-top: -1px;
+  margin-bottom: -8px;
+}
+
+.main > .tweets > .tweet > .postcontent > .replyto > .at-name {
+  color: #f60;
+}
+
 /* center content for profile */
 .main > .back-arror-header {
   height: 55px;
@@ -395,6 +417,8 @@ html, body {
   height: 35px;
   margin-top: 10px;
   font-weight: 700 !important;
+  padding-left: 14px;
+  padding-right: 14px;
 }
 
 .main > .information {

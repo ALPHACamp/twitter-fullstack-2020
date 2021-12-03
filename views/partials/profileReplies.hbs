@@ -1,0 +1,63 @@
+<div class="back-arror-header">
+  <a><i class='back-arror'></i></a>
+  <div class="header-text">
+    <span class="name">Mary Jane</span>
+    <span class="post-count">1.4萬 推文</span>
+  </div>
+</div>
+<div class="banner">
+  <img src="/icons/cover.svg" alt="" class="cover">
+  <img src="/icons/avatar-lg.svg" alt="" class="avatar">
+  <div class="buttons">
+    {{!-- #if user.id === /:userId -> 自己的頁面 --}}
+    <button type="button" class="btn-outline sm">編輯個人資料</button>
+    {{!-- else 他人的頁面 --}}
+    {{!-- <a><i class='btn-message'></i></a>
+    <a><i class='btn-noti'></i></a>
+    <button type="button" class="btn-fill sm">正在跟隨</button> --}}
+    {{!-- /if --}}
+  </div>
+</div>
+<div class="information">
+  <span class="name">Mary Jane</span>
+  <span class="at-name">@mjjane</span>
+  <span class="introduction">WHat a cool demo views here</span>
+  <div class="followship">
+    <span class="following">1,174 個
+      <a>跟隨中</a>
+    </span>
+    <span class="follower">6.3萬 位
+      <a>跟隨者</a>
+    </span>
+  </div>
+</div>
+<div class="paginator">
+  <a class="">推文</a>
+  <a class="active">推文與回覆</a>
+  <a class="">喜歡的內容</a>
+</div>
+<div class="tweets">
+
+  {{#each data}}
+  <div class="tweet profileRweet">
+    <div>
+      <img class="thumbnail" src="/icons/avatar.svg" alt="">
+    </div>
+    <div class="postcontent">
+      <div class="postuser">
+        <span class="name ellipsis">{{this.User.name}}</span>
+        <span class="at-name ellipsis">@{{this.User.account}}jfalksdflka</span>
+        <span class="timer ellipsis">{{this.User.createdAt}}</span>
+      </div>
+      <div class="replyto">回覆
+        <span class="at-name">@{{this.User.account}}</span>
+      </div>
+      <button type="button" class="content" id="content">
+        {{this.description}}
+      </button>
+
+    </div>
+  </div>
+  {{/each}}
+
+</div>

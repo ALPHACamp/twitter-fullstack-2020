@@ -9,9 +9,13 @@
   <img src="/icons/cover.svg" alt="" class="cover">
   <img src="/icons/avatar-lg.svg" alt="" class="avatar">
   <div class="buttons">
+    {{!-- #if user.id === /:userId -> 自己的頁面 --}}
+    {{!-- <button type="button" class="btn-outline sm">編輯個人資料</button> --}}
+    {{!-- else 他人的頁面 --}}
     <a><i class='btn-message'></i></a>
     <a><i class='btn-noti'></i></a>
     <button type="button" class="btn-fill sm">正在跟隨</button>
+    {{!-- /if --}}
   </div>
 </div>
 <div class="information">
