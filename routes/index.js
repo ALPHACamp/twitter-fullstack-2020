@@ -29,7 +29,7 @@ module.exports = (app, passport) => {
     // 前台路由部分
     // ================================================================
 
-    
+
     // 註冊
     app.get('/signup', userController.getSignUpPage)
     app.post('/signup', userController.postSignUp)
@@ -43,10 +43,33 @@ module.exports = (app, passport) => {
 
 
     // 推文首頁
+
     app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+
     app.get('/tweets', authenticated, tweetController.getTweets)
-    
-    app.post('/tweets',authenticated, tweetController.postTweets)
+
+    app.post('/tweets', authenticated, tweetController.postTweets)
+
+
+
+    // 追隨
+
+    app.post('/user/self/following/:userId', authenticated, userController.addFollowing)
+    app.delete('/user/self/following/:userId', authenticated, userController.removeFollowing)
+
+    // 帳戶設定
+
+    app.get('/setting', authenticated, userController.getSetting)
+    app.put('/setting', authenticated, userController.postSetting)
+
+    //  前台個人資料
+
+    app.get('/user/self', authenticated, userController.getUserSelf)
+
+    // 取得特定推文留言資料
+    app.post('/tweets/:id/replies', authenticated, tweetController.postReplies)
+    app.get('/tweets/:id/replies', authenticated, tweetController.getReplies)
+
 
 
 

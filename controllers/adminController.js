@@ -1,19 +1,46 @@
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
+const pageLimit = 10
 
 const adminController = {
     getTweets: (req, res) => {
-        Tweet.findAll({
-            raw: true,
-            nest: true,
+        console.log(req.query)
+        let offset = 0
+
+        if (req.query.page) {
+            offset = (req.query.page - 1) * pageLimit
+        }
+        Tweet.findAndCountAll({
+
             order: [['createdAt', 'DESC']],
             include: [
                 User
-            ]
-        }).then(tweets => {
+            ],
+            offset: offset,
+            limit: pageLimit
+        }).then(result => {
+            // data for pagination
+            const page = Number(req.query.page) || 1
+            const pages = Math.ceil(result.count / pageLimit)
+            const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
+            const prev = page - 1 < 1 ? 1 : page - 1
+            const next = page + 1 > pages ? pages : page + 1
+            const data = result.rows.map(r => ({
+                ...r.dataValues,
+                description: r.dataValues.description.substring(0, 50),
 
-            return res.render('admin/tweetsAdmin', { tweets })
+            }))
+            return res.render('admin/tweetsAdmin', {
+                tweets: data,
+                page: page,
+                totalPage: totalPage,
+                prev: prev,
+                next: next
+            })
+
+
+
         }).catch(error => {
             console.log(error)
         })
