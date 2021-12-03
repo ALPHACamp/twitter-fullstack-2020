@@ -1,42 +1,82 @@
-<div class="center container">
-  <div class="left-bar">
-    <nav class="container">
-      <div class="logo-wrapper">
-        <img src="../images/logo.svg" alt="">
+<div id="AdminMain">
+  <div class="adminSidebar">
+    <div class="admin-logo">
+      <img src="../images/logo.svg" alt="">
+    </div>
+    <div class="buttonList">
+      <div class="navItem index">
+        <div class="admin-list-icon">
+          <img src="../images/home.svg" alt="">
+        </div>
+        <button class="btn admin-list-btn">
+          <a href="/admin/tweets" class="navbar-action active">
+            <p>推文清單</p>
+          </a>
+        </button>
       </div>
-      <div class="navbar-wrapper">
-        <a class="navbar-action active" href="/admin/tweets">
-          <div class="icon-wrapper">
-            <img src="../images/home.svg" alt="">
-          </div>
-          推文清單
-        </a>
-        <a class="navbar-action" href="/admin/users">
-          <div class="icon-wrapper">
-            <img src="../images/profile.svg" alt="">
-          </div>
-          使用者列表
-        </a>
+      <div class="navItem userProfile">
+        <div class="admin-list-icon">
+          <img src="../images/profile.svg" alt="">
+        </div>
+        <button class="btn admin-list-btn">
+          <a href="/admin/users" class="navbar-action">
+            <p>使用者列表</p>
+          </a>
+        </button>
       </div>
-      <a href="/logout" class="button-submit" style="width: 210px;"><i class="far fa-sign-out"></i>登出</a>
-    </nav>
+      <div class="navItem logout">
+        <div class="admin-list-icon">
+          <img src="../images/logout.svg" alt="">
+        </div>
+        <button class="btn admin-list-btn">
+          <a href="/logout" class="navbar-action">
+            <p>登出</p>
+          </a>
+        </button>
+      </div>
+    </div>
   </div>
 
-  <div class="list-tweet mt-2">
-    <div class="list-group-item px-3 d-flex align-items-start justify-content-start list-top">
-      <p class="font-weight-bold d-inline">推文清單</p>
+  <div class="AdminTweetsPanel">
+    <div class="admin-tweet-title" style="width: 100%;">
+      <h1>推文清單</h1>
     </div>
     <div>
+      <div class="tweet-container">
+        <div class="tweetlist-group">
+          {{#each tweets}}
+          <div class="tweetlist-grounp-item d-flex align-items-start justify-content-start">
+            <div class="admin-avatar">
+              <img src="{{this.User.avatar}}" alt="">
+            </div>
+            <div class="tweet-info">
+              <div class="title">
+                <span>{{this.User.name}}</span> @{{this.User.account}}．{{moment this.createdAt}}
+              </div>
+              <p>{{this.description}}</p>
+            </div>
+            <div class="delete">
+              <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="float: right;">
+                <button type="submit" class="btn"><i class="fas fa-times"></i></button>
+              </form>
+            </div>
+          </div>
+          <br>
+        {{/each}}
+        </div>
+      </div>
+    </div>
+    {{!-- <div class="list-tweet mt-2">
       <ul class="list-group">
         {{#each tweets}}
         <li class="list-group-item px-3 d-flex align-items-start justify-content-start">
-            <img class="mr-3 thumbnail" src="{{this.User.avatar}}" alt="">
+          <img class="mr-3 thumbnail" src="{{this.User.avatar}}" alt="">
           <div class="content-wrapper w-100">
             <div class="mb-2">
               <p class="font-weight-bold d-inline">{{this.User.name}}</p>
               <p class="light-color d-inline">@{{this.User.account}}．{{moment this.createdAt}}</p>
             </div>
-              <p>{{this.description}}</p>
+            <p>{{this.description}}</p>
           </div>
           <div>
             <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="float: right;">
@@ -46,6 +86,7 @@
         </li>
         {{/each}}
       </ul>
-    </div>
+    </div> --}}
   </div>
 </div>
+

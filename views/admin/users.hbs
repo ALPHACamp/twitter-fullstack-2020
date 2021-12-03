@@ -1,59 +1,80 @@
-<div class="center container">
-  <div class="left-bar">
-    <nav class="container">
-      <div class="logo-wrapper">
-        <img src="../images/logo.svg" alt="">
+<div id="AdminMain">
+  <div class="adminSidebar">
+    <div class="admin-logo">
+      <img src="../images/logo.svg" alt="">
+    </div>
+    <div class="buttonList">
+      <div class="navItem index">
+        <div class="admin-list-icon">
+          <img src="../images/home.svg" alt="">
+        </div>
+        <button class="btn admin-list-btn">
+          <a href="/admin/tweets" class="navbar-action">
+            <p>推文清單</p>
+          </a>
+        </button>
       </div>
-      <div class="navbar-wrapper">
-        <a class="navbar-action active" href="/admin/tweets">
-          <div class="icon-wrapper">
-            <img src="../images/home.svg" alt="">
-          </div>
-          推文清單
-        </a>
-        <a class="navbar-action" href="/admin/users">
-          <div class="icon-wrapper">
-            <img src="../images/profile.svg" alt="">
-          </div>
-          使用者列表
-        </a>
+      <div class="navItem userProfile">
+        <div class="admin-list-icon">
+          <img src="../images/profile.svg" alt="">
+        </div>
+        <button class="btn admin-list-btn">
+          <a href="/admin/users" class="navbar-action active">
+            <p>使用者列表</p>
+          </a>
+        </button>
       </div>
-      <a href="/logout" class="button-submit" style="width: 210px;"><i class="far fa-sign-out"></i>登出</a>
-    </nav>
+      <div class="navItem logout">
+        <div class="admin-list-icon">
+          <img src="../images/logout.svg" alt="">
+        </div>
+        <button class="btn admin-list-btn">
+          <a href="/logout" class="navbar-action">
+            <p>登出</p>
+          </a>
+        </button>
+      </div>
+    </div>
   </div>
 
-  <div class="list-tweet mt-2">
-    <div class="list-group-item px-3 d-flex align-items-start justify-content-start">
-      <p class="font-weight-bold d-inline">使用者列表</p>
+  <div class="AdminTweetsPanel">
+    <div class="admin-user-title" style="width: 100%;">
+      <h1>使用者列表</h1>
     </div>
-    <div class="d-flex">
-      <div class="row row-cols-1 row-cols-md-3 g-4">
-        {{#each users}}
-        <div class="col">
-          <div class="card">
-            <div style="border-radius: 10px 10px 0 0; height: 140px">
-              <img src="{{this.cover}}" class="card-img-top" alt="..." width="245 px" height="140 px">
+    <div class="user-card-container">
+      <div class="admin-user-card">
+      {{#each users}}
+        <div class="col-12 col-md-4 col-lg-3 mx-3 my-3 user-card">
+          <div class="background-img">
+            <img src="{{this.cover}}" class="card-img-top" alt="...">
+          </div>
+          <div class="avatar">
+            <img src="{{this.avatar}}" alt="" class="card-img-top">
+          </div>
+          <div class="user-card-body">
+            <h5 class="card-title">{{this.name}}</h5>
+            <p class="card-text">@{{this.account}}</p>
+            <div class="click-on-condition">
+              <div class="reply-count">
+                <i class="far fa-comment"></i>{{this.replyCount}}
+              </div>
+              <div class="like-count">
+                <i class="far fa-heart"></i>{{this.likeCount}}
+              </div>
             </div>
-            <div class="card-body">
-              <img src="{{this.avatar}}" alt="" class="rounded-circle" width="100 px" height="100 px">
-              <h5 class="card-title">{{this.name}}</h5>
-              <p class="text-muted">@{{this.account}}</p>
-              <div>
-                <span><i class="far fa-comment"></i>{{this.replyCount}}</span>
-                <span><i class="far fa-heart"></i>{{this.likeCount}}</span>
+            <div class="follow-condition">
+              <div class="following-count">
+                <span>{{this.followingCount}}個</span>跟隨中
               </div>
-              <div>
-                <span>{{this.followingCount}} 個跟隨中</span>
-                <span>{{this.followerCount}} 個跟隨者</span>
+              <div class="followers-count">
+                <span>{{this.followerCount}}個</span>跟隨者
               </div>
-              
             </div>
           </div>
         </div>
-        {{/each}}
+      {{/each}}
       </div>
     </div>
+    
   </div>
-</div>
-
 </div>
