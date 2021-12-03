@@ -13,10 +13,6 @@ const userController = {
       const { account, name, email, password, checkPassword } = req.body
       const errors = []
 
-      if (!account || !name || !email || !password || !checkPassword) {
-        errors.push({ message: '所有欄位都是必填！' })
-      }
-
       if (checkPassword !== password) {
         errors.push({ message: '兩次密碼輸入不同！' })
       }
@@ -26,7 +22,7 @@ const userController = {
       const [user1, user2] = await Promise.all([user1Promise, user2Promise])
 
       if (user1) {
-        errors.push({ message: '帳號已重複註冊！' })
+        errors.push({ message: '帳號已重複！' })
       }
 
       if (user2) {
