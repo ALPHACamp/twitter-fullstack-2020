@@ -9,10 +9,10 @@ const { User, Tweet, Reply, Like, Followship } = db
 const userController = {
   getUserTweets: async (req, res) => {
     try {
-      const userId = Number(req.params.userId)
+      const queryId = Number(req.params.userId)
 
       const tweets = await Tweet.findAll({
-        where: { UserId: userId },
+        where: { UserId: queryId },
         attributes: [
           'id',
           'userId',
@@ -24,7 +24,7 @@ const userController = {
         order: [['createdAt', 'DESC']]
       })
 
-      const user = await User.findByPk(userId, {
+      const user = await User.findByPk(queryId, {
         attributes: [
           'id',
           'name',
@@ -38,6 +38,40 @@ const userController = {
       console.error(err)
     }
   },
+
+  getUserReplies: async (req, res) => {
+    try {
+      const queryId = Number(req.params.userId)
+
+      const replies = await Reply.findAll({
+        where: { UserId: queryId },
+        attributes: [
+          'comment',
+          'createdAt'
+        ],
+        // 不熟 sequelize 待優化
+        include: [
+          { model: Tweet, attributes: ['UserId'], include: [{ model: User, attributes: ['account'] }] }
+        ],
+        order: [['createdAt', 'DESC']]
+      })
+
+      const user = await User.findByPk(queryId, {
+        attributes: [
+          'id',
+          'name',
+          'account',
+          'avatar'
+        ]
+      })
+
+      return res.json({ replies, user })
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  
 
   signUpPage: (req, res) => {
     return res.render('signup')

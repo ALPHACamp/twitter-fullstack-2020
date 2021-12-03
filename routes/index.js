@@ -25,6 +25,7 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticated, tweetController.getTweets)
 
   app.get('/users/:userId/tweets', authenticated, userController.getUserTweets)
+  app.get('/users/:userId/replies', authenticated, userController.getUserReplies)
 
   app.get('/users/:userId/edit', authenticated, userController.editUserPage)
   app.put('/users/:userId', authenticated, userController.putUser)
