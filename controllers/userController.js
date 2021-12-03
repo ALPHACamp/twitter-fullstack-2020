@@ -8,13 +8,14 @@ const userController = {
     res.render('signup')
   },
   signUp: (req, res) => {
-    if (req.body.password !== req.body.checkPassword) {
+    const { account, name, email, password, checkPassword } = req.body
+    if (password !== checkPassword) {
       req.flash('error_messages', '密碼與檢查密碼不一致！')
       res.redirect('/signup')
     } else {
       return User.findOne({ 
         where: {
-          [Op.or]: [{ account: req.body.account }, { email: req.body.email }]
+          [Op.or]: [{ account }, { email }]
         }
       })
         .then((user) => {
@@ -24,9 +25,9 @@ const userController = {
           } else {
             req.flash('success_messages', '註冊成功!')
             return User.create({
-              account: req.body.account,
-              name: req.body.name,
-              email: req.body.email,
+              account,
+              name,
+              email,
               password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
             })
               .then(user => { res.redirect('/signin') })
