@@ -51,6 +51,10 @@ module.exports = (app, passport) => {
   app.get("/signup", userController.signUpPage)
   app.post("/signup", userController.signUp)
 
+  //user編輯帳號
+  app.get("/users/:id/edit", authenticated, userController.editUser)
+  app.put("/users/:id/", authenticated, userController.putUser)
+
   //user推文
   app.get("/tweets", authenticated, tweetController.getTweets)
 }

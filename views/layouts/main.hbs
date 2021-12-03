@@ -11,11 +11,17 @@
         {{#if success_messages}}
           <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
             {{success_messages}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
         {{/if}}
         {{#if error_messages}}
           <div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
             {{error_messages}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
         {{/if}}
         {{{body}}}
