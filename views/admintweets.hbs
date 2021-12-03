@@ -3,6 +3,9 @@
 {{#each tweets}}
 <div>
   <hr>
+  <div style="display: flex;">
+    <img src="{{this.User.avatar}}" style="width:100px; height:100px;">
+  </div>
   <h1> {{this.User.name}} </h1>
   <p> {{this.User.account}} </p>
   <p> {{moment this.createdAt}} </p>
