@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs')
+const { Op } =require('sequelize')
 const db = require('../models')
 const User = db.User
 
@@ -11,10 +12,14 @@ const userController = {
       req.flash('error_messages', '密碼與檢查密碼不一致！')
       res.redirect('/signup')
     } else {
-      return User.findOne({ where: { email: req.body.email } })
+      return User.findOne({ 
+        where: {
+          [Op.or]: [{ account: req.body.account }, { email: req.body.email }]
+        }
+      })
         .then((user) => {
           if (user) {
-            req.flash('error_messages', '這個Email已經註冊過！')
+            req.flash('error_messages', '重複註冊Email或帳號！')
             res.redirect('/signup')
           } else {
             req.flash('success_messages', '註冊成功!')
