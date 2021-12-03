@@ -14,6 +14,18 @@ const tweetController = {
       const data = result.map((r) => r.toJSON())
       return res.render('user', { data })
     })
+  },
+
+  addLike: async (req, res) => {
+    try {
+      await Like.create({
+        UserId: helpers.getUser(req).id,
+        TweetId: req.params.restaurantId,
+      })
+      return res.redirect('back')
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 

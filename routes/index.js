@@ -31,6 +31,9 @@ module.exports = (app, passport) => {
   app.get('/users/:userId/edit', authenticated, userController.editUserPage)
   app.put('/users/:userId', authenticated, userController.putUser)
 
+  // tweet 相關
+  app.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
+
 
   // user 登入、登出、註冊
   app.get('/signup', userController.signUpPage)
