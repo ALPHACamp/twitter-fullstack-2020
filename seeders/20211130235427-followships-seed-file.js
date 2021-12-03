@@ -17,8 +17,8 @@ module.exports = {
       (
         {
           id: i + 1,
-          followerId: Math.floor(Math.random()*(7-2+1)+1),
-          followingId: Math.floor(Math.random()*(7-2+1)+1),
+          followerId: Math.floor(Math.random()*(6-2+1)+1),
+          followingId: Math.floor(Math.random()*(6-2+1)+1),
           createdAt: faker.date.recent(),
           updatedAt: new Date()
         }
