@@ -7,13 +7,13 @@
 </div>
 
 <div class="paginator">
-  <a class="">跟隨者</a>
-  <a class="active">正在跟隨</a>
+  <a class="active">跟隨者</a>
+  <a class="">正在跟隨</a>
 </div>
 
 <div class="followship">
 
-  {{#each User.Followings}}
+  {{#each User.Followers}}
   <div class="follower">
     <a>
       <img class="thumbnail" src="/icons/avatar.svg" alt="">
@@ -27,7 +27,7 @@
         {{this.introduction}}
       </div>
     </div>
-    <button type="button" class="btn-fill xs">正在跟隨</button>
+    <button type="button" class="btn-outline xs">跟隨</button>
   </div>
   {{/each}}
 

@@ -553,6 +553,7 @@ html, body {
   position: absolute;
   right: 15px;
   top: 10px;
+  padding: .1px 15px;
 }
 
 /* center content for single tweet page */
@@ -1012,14 +1013,24 @@ html, body {
   font-size: 15px;
 }
 
-.btn-outline.sm {
+.btn-outline {
   color: #f60 !important;
   justify-content: center !important;
   background-color: transparent;
   border: 1px solid #f60;
-  border-radius: 17px;
+  border-radius: 19px;
   font-weight: 500 !important;
   text-align: center;
+  font-size: 18px;
+}
+
+.btn-outline.sm {
+  border-radius: 17.5px;
+  font-size: 15px;
+}
+
+.btn-outline.xs {
+  border-radius: 12.5px;
   font-size: 15px;
 }
 
