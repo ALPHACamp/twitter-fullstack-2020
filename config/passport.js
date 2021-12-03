@@ -15,7 +15,9 @@ passport.use(new LocalStrategy(
     try {
       const user = await User.findOne({ where: { email } })
 
-      if (!user) {
+      if (!user
+        || user.role === 'admin' && !req.url.includes('admin')
+        || user.role === 'user' && req.url.includes('admin')) {
         return done(null, false, req.flash('error_messages', '該電子郵件未註冊！'))
       }
 

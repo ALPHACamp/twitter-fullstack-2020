@@ -12,7 +12,7 @@ module.exports = (app, passport) => {
   }
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).role === 'Admin') {
+      if (helpers.getUser(req).role === 'admin') {
         return next()
       }
       return res.redirect('/tweets')
@@ -31,12 +31,12 @@ module.exports = (app, passport) => {
   app.get('/signout', userController.signOut)
 
   // admin 登入、登出
-  app.get('/admin/signin', adminController.signInPage)
-  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
-  app.get('/admin/signout', adminController.signOut)
+  app.get('/admin/signin', userController.signInPage)
+  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), userController.signIn)
+  app.get('/admin/signout', userController.signOut)
 
   // admin 相關
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
-  app.get('/admin/tweets', adminController.getTweets)
-  app.delete('/admin/tweets/:id', adminController.deleteTweet)
+  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+  app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 }

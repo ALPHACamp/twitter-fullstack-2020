@@ -59,7 +59,7 @@ const userController = {
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
 
-    if (helpers.getUser(req).role === 'Admin') {
+    if (helpers.getUser(req).role === 'admin') {
       return res.redirect('/admin/tweets')
     }
     return res.redirect('/tweets')
@@ -68,10 +68,10 @@ const userController = {
   signOut: (req, res) => {
     req.flash('success_messages', '成功登出！')
     
-    if (helpers.getUser(req).role === 'Admin') {
+    if (helpers.getUser(req).role === 'admin') {
+      req.logout()
       return res.redirect('/admin/signin')
     }
-    
     req.logout()
     return res.redirect('/signin')
   }
