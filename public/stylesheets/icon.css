@@ -3,6 +3,9 @@ i, button {
   background-repeat:no-repeat;
   background-size:cover;
 }
+button.active {
+  color: #E0245E !important;
+}
 .ac-icon {
   background-image: url('../icons/ac-icon.svg');
   height: 30px;
@@ -74,13 +77,13 @@ i, button {
   width: 15px;
 }
 .like.lg {
-  height: 30px;
-  width: 30px;
+  height: 24px;
+  width: 24px;
 }
 .like.lg.active {
   background-image: url('../icons/like-active.svg');
-  height: 30px;
-  width: 30px;
+  height: 24px;
+  width: 24px;
 }
 .X-orange {
   background-image: url('../icons/X-orange.svg');

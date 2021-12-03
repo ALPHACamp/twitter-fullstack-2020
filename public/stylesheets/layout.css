@@ -321,6 +321,10 @@ html, body {
   margin: -3px 0;
 }
 
+.main > .tweets > .tweet > .postcontent > .action > button .lg {
+  margin: -7px 0;
+}
+
 .main > .tweets > .tweet > .postcontent > .action > .commenting,
 .main > .tweets > .tweet > .postcontent > .action > .liking
  {
