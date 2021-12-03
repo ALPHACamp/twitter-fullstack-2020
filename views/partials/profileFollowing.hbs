@@ -1,0 +1,34 @@
+<div class="back-arror-header">
+  <a><i class='back-arror'></i></a>
+  <div class="header-text">
+    <span class="name">{{User.name}}</span>
+    <span class="post-count">25 推文</span>
+  </div>
+</div>
+
+<div class="paginator">
+  <a class="active">跟隨者</a>
+  <a class="">正在跟隨</a>
+</div>
+
+<div class="followship">
+
+  {{#each User.Followings}}
+  <div class="follower">
+    <a>
+      <img class="thumbnail" src="/icons/avatar.svg" alt="">
+    </a>
+    <div class="followerinfo">
+      <a class="followeruser">
+        <span class="name ellipsis">{{this.name}}</span>
+        <span class="at-name ellipsis">@{{this.account}}</span>
+      </a>
+      <div class="followerintro">
+        {{this.introduction}}
+      </div>
+    </div>
+    <button type="button" class="btn-fill xs">正在追蹤</button>
+  </div>
+  {{/each}}
+
+</div>

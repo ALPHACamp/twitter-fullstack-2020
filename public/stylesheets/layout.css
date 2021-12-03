@@ -349,7 +349,7 @@ html, body {
   color: #f60;
 }
 
-/* center content for profile */
+/* center content for profile (Likes, Replies, Tweets) */
 .main > .back-arror-header {
   height: 55px;
   width: 100%;
@@ -492,6 +492,67 @@ html, body {
 .main > .paginator > a.active {
   border-bottom: 2px solid #f60;
   color: #f60;
+}
+
+/* center content for profile (followship) */
+.main > .followship {
+  width: 100%;
+}
+
+.main > .followship > .follower {
+  padding: 10px 15px 10px 0;
+  height: 105px;
+  display: flex;
+  flex-flow: row nowrap;
+  border-bottom: 1px solid #e6ecf0;
+  position: relative;
+}
+
+.main > .followship > .follower > a {
+  margin-top: 3px;
+}
+
+.main > .followship > .follower > .followerinfo {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+}
+
+.main > .followship > .follower > .followerinfo > .followeruser {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.main > .followship > .follower > .followerinfo > .followeruser > span {
+  font-size: 15px;
+  line-height: 15px;
+  margin-bottom: 5px;
+}
+
+.main > .followship > .follower > .followerinfo > .followeruser > .name {
+  color: #1c1c1c;
+  font-weight: 700;
+}
+
+.main > .followship > .follower > .followerinfo > .followeruser > .at-name {
+  color:#657786;
+  font-weight: 500;
+}
+
+.main > .followship > .follower > .followerinfo > .followerintro {
+  color: #1c1c1c;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.main > .followship > .follower > button {
+  position: absolute;
+  right: 15px;
+  top: 10px;
 }
 
 /* center content for single tweet page */
@@ -942,7 +1003,12 @@ html, body {
 }
 
 .btn-fill.sm {
-  border-radius: 17px;
+  border-radius: 17.5px;
+  font-size: 15px;
+}
+
+.btn-fill.xs {
+  border-radius: 12.5px;
   font-size: 15px;
 }
 
