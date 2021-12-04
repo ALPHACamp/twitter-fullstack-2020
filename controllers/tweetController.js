@@ -24,9 +24,13 @@ const tweetController = {
             ]
         })
 
+
+
         Promise.all([tweetFindAll, userFindAll])
             .then(responses => {
-                const tweets = responses[0]
+                let tweets = responses[0]
+
+
                 let users = responses[1]
                 console.log('+++++++++++++++++++++++++++++++++++++')
                 console.log(tweets)
@@ -142,20 +146,19 @@ const tweetController = {
             UserId: req.user.id,
             TweetId: req.params.id
         }).then(like => {
-            return res.redirect('/tweets')
+            return res.redirect('back')
         }).catch(error => {
             console.log(error)
         })
     },
 
     postUnLike: (req, res) => {
-        Like.findOne({
+        return Like.findOne({
             where: {
                 UserId: req.user.id,
                 TweetId: req.params.id
             }
         }).then(like => {
-            console.log(like.toJSON())
             like.destroy()
         }).then(unlike => {
             return res.redirect('/tweets')

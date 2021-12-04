@@ -141,7 +141,7 @@
               </button> {{ this.replyCount }} </span>
           </div>
           <div class="col-md-2">
-            {{#if likeBoolean}}
+            {{#if this.isLiked}}
             <form action="/tweets/{{this.id}}/unlike" method="post">
               <span><span>{{ this.likeCount }}</span><button type="submit" class="btn btn-link"
                   style="color: red; display:inline">
