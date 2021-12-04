@@ -1,59 +1,37 @@
 <div class="user-template">
   <div class="leftside">
-    <div class="navigation">
-      <i class='ac-icon ml-2 mt-4 mb-6'></i>
-      <a class="active" herf='/tweets'><i class='home active ml-2 mr-4 my-3'></i>首頁</a>
-      <a class="" herf='/user/id/tweets'><i class='info ml-2 mr-4 my-3'></i>個人資料</a>
-      <a class="" herf='/api/user/id'><i class='setting ml-2 mr-4 my-3'></i>設定</a>
-      <a class="btn-fill mt-3" herf="#">推文</a>
+    <div class="navigation" id="navigation">
+      <i class='ac-icon'></i>
+      <a class="active" herf='/tweets' id="homing"><i class='home active'></i>首頁</a>
+      <a class="" id="editing"><i class='info'></i>個人資料</a>
+      <a class="" herf='/tweets' id="setting"><i class='setting'></i>設定</a>
+      <button type="button" class="btn-fill" id="posting">推文</button>
     </div>
     {{!-- 展示icon用 --}}
     <div>
-      <i class='ac-icon'></i>
       <i class='ac-icon login'></i>
-      <i class='home'></i>
-      <i class='home active'></i>
-      <i class='info'></i>
-      <i class='info active'></i>
-      <i class='setting'></i>
-      <i class='setting active'></i>
-      <i class='logout'></i>
-      <i class='btn-message'></i>
-      <i class='btn-noti'></i>
-      <i class='btn-noti active'></i>
-      <i class='comment'></i>
-      <i class='comment lg'></i>
-      <i class='like'></i>
-      <i class='like active'></i>
-      <i class='like lg'></i>
-      <i class='like lg active'></i>
-      <i class='back-arror'></i>
-      <i class='X-orange'></i>
-      <i class='X-gray'></i>
       <i class='success'></i>
       <i class='warning'></i>
     </div>
 
-    <div class="footer mb-6">
-      <a class="/logout" herf=""><i class='logout ml-2 mr-4'></i>登出</a>
+    <div class="footer">
+      <a herf="/logout"><i class='logout'></i>登出</a>
     </div>
   </div>
 
   <div class="main">
-    {{#each data}}
-    <p>{{this.id}}</p>
-    <p>{{this.UserId}}</p>
-    <p>{{this.description}}</p>
-    <p>{{this.User.name}}</p>
-    {{#each this.Replies}}
-    <p>{{this.comment}}</p>
-    {{/each}}
-    {{#each this.Likes}}
-    <p>{{this.UserId}}</p>
-    {{/each}}
-    <hr>
-    {{/each}}
+    {{!-- USER PARTIALS --}}
+    {{> tweets}}
+    {{!-- {{> profileTweets}} --}}
+    {{!-- {{> profileReplies}} --}}
+    {{!-- {{> profileLikes}} --}}
+    {{!-- {{> profileFollowing}} --}}
+    {{!-- {{> profileFollower}} --}}
+    {{!-- {{> tweet}} --}}
+
+    {{!-- ADMIN PARTIALS --}}
   </div>
+
   <div class="rightside">
 
     <div class="popular">
@@ -63,7 +41,7 @@
         <a href="#"><img class="thumbnail" src="/icons/avatar.svg" alt="#">
           <span>
             <span class="name">Pizza Hut</span>
-            <span class="at-name">@pizzahut</span>
+            <span class="at-name ellipsis">@pizzahutasdkfjwaofjojoawefpajwefawejn</span>
           </span>
         </a>
         <a class="btn-fill sm" href="#followship">正在追蹤</a>
@@ -74,7 +52,7 @@
           <img class="thumbnail" src="/icons/avatar.svg" alt="">
           <span>
             <span class="name">McDonald's</span>
-            <span class="at-name">@McDonalds</span>
+            <span class="at-name ellipsis">@McDonalds</span>
           </span>
         </a>
         <a class="btn-outline sm" href="#followship">跟隨</a>
@@ -85,7 +63,7 @@
           <img class="thumbnail" src="/icons/avatar.svg" alt="">
           <span>
             <span class="name">McDonald's</span>
-            <span class="at-name">@McDonalds</span>
+            <span class="at-name ellipsis">@McDonaldserfnoeanfonwaoenowne</span>
           </span>
         </a>
         <a class="btn-outline sm" href="#followship">跟隨</a>
@@ -96,7 +74,7 @@
           <img class="thumbnail" src="/icons/avatar.svg" alt="">
           <span>
             <span class="name">McDonald's</span>
-            <span class="at-name">@McDonalds</span>
+            <span class="at-name ellipsis">@McDonalds</span>
           </span>
         </a>
         <a class="btn-outline sm" href="#followship">跟隨</a>
@@ -107,7 +85,7 @@
           <img class="thumbnail" src="/icons/avatar.svg" alt="">
           <span>
             <span class="name">McDonald's</span>
-            <span class="at-name">@McDonalds</span>
+            <span class="at-name ellipsis">@McDonalds</span>
           </span>
         </a>
         <a class="btn-outline sm" href="#followship">跟隨</a>
@@ -118,7 +96,7 @@
           <img class="thumbnail" src="/icons/avatar.svg" alt="">
           <span>
             <span class="name">McDonald's</span>
-            <span class="at-name">@McDonalds</span>
+            <span class="at-name ellipsis">@McDonalds</span>
           </span>
         </a>
         <a class="btn-outline sm" href="#followship">跟隨</a>
@@ -129,7 +107,7 @@
           <img class="thumbnail" src="/icons/avatar.svg" alt="">
           <span>
             <span class="name">McDonald's</span>
-            <span class="at-name">@McDonalds</span>
+            <span class="at-name ellipsis">@McDonalds</span>
           </span>
         </a>
         <a class="btn-outline sm" href="#followship">跟隨</a>
@@ -140,7 +118,7 @@
           <img class="thumbnail" src="/icons/avatar.svg" alt="">
           <span>
             <span class="name">McDonald's</span>
-            <span class="at-name">@McDonalds</span>
+            <span class="at-name ellipsis">@McDonalds</span>
           </span>
         </a>
         <a class="btn-outline sm" href="#followship">跟隨</a>
@@ -151,7 +129,7 @@
           <img class="thumbnail" src="/icons/avatar.svg" alt="">
           <span>
             <span class="name">McDonald's</span>
-            <span class="at-name">@McDonalds</span>
+            <span class="at-name ellipsis">@McDonalds</span>
           </span>
         </a>
         <a class="btn-outline sm" href="#followship">跟隨</a>
@@ -162,7 +140,7 @@
           <img class="thumbnail" src="/icons/avatar.svg" alt="">
           <span>
             <span class="name">McDonald's</span>
-            <span class="at-name">@McDonalds</span>
+            <span class="at-name ellipsis">@McDonalds</span>
           </span>
         </a>
         <a class="btn-outline sm" href="#followship">跟隨</a>
@@ -171,4 +149,138 @@
     </div>
 
   </div>
+</div>
+
+{{!-- posting modal --}}
+<div class="modal d-none" id="modal-post">
+  <div class="mask" id="modal-post-mask">
+    <div class="dialog">
+      <div class="dialog-header">
+        <a class='close'><i class='X-orange close'></i></a>
+      </div>
+      <div class="postarea">
+        <a>
+          <img class="thumbnail" src="/icons/avatar.svg" alt="">
+        </a>
+        <form action="/tweets" method="post">
+          <input type="hidden" name="userId" value="{{user.id}}">
+          <textarea name="description" maxlength="140" cols="48" rows="6" placeholder="有什麼新鮮事？" required></textarea>
+          <button type="summit" class="btn-fill" id="posting">推文</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- replying modal --}}
+<div class="modal d-none" id="modal-reply">
+  <div class="mask" id="modal-reply-mask">
+    <div class="dialog">
+      <div class="dialog-header">
+        <a class="close"><i class='X-orange close'></i></a>
+      </div>
+      <div class="replyarea">
+
+        <div class="tweet">
+          <a>
+            <img class="thumbnail" src="/icons/avatar.svg" alt="">
+          </a>
+          <div class="tweetcontent">
+            <a class="tweetuser">
+              <span class="name ellipsis">Loading...</span>
+              <span class="at-name ellipsis">@Loading...</span>
+              <span class="timer ellipsis">Loading...</span>
+            </a>
+            <span class="tweetdescription" id="modal-reply-content">
+              Loading . . .
+            </span>
+            <span class="replyto">回覆給
+              <span class="at-name">@Loading...</span>
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="postarea">
+        <a>
+          <img class="thumbnail" src="/icons/avatar.svg" alt="">
+        </a>
+        <form action="/notyet" method="post">
+          <input type="hidden" name="userId" value="{{user.id}}">
+          <textarea name="description" maxlength="140" cols="48" rows="2" placeholder="推你的回覆" required></textarea>
+          <button type="summit" class="btn-fill" id="posting">回覆</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{{!-- editing modal --}}
+<div class="modal d-none" id="modal-edit">
+  <div class="mask" id="modal-edit-mask">
+    <div class="dialog">
+      <div class="dialog-header">
+        <a class="close"><i class='X-orange close'></i></a>
+        <span>編輯個人資料</span>
+      </div>
+
+      <form method="POST" action="/???" enctype="multipart/form-data">
+        <div class="edit-cover">
+          <img src="/icons/cover.svg" alt="" id="modal-edit-cover">
+          <input type="file" class="d-none" id="cover" name="cover"
+            value="{{#if User.cover}}{{User.cover}}{{else}}/icons/cover.svg{{/if}}"
+            onchange="document.querySelector('#modal-edit-cover').src=this.value">
+          <a>
+            <input type="button" class="camera" onclick="document.querySelector('#cover').click();">
+          </a>
+          <a>
+            <input type="button" class="X-white"
+              onclick="document.querySelector('#modal-edit-cover').src='/icons/cover.svg'">
+          </a>
+        </div>
+
+        <div class="edit-avatar">
+          <img src="/icons/avatar-lg.svg" alt="" id="modal-edit-avatar">
+          <input type="file" class="d-none" id="avatar" name="avatar"
+            value="{{#if User.avatar}}{{User.avatar}}{{else}}/icons/avatar-lg.svg{{/if}}"
+            onchange="document.querySelector('#modal-edit-avatar').src=this.value">
+          <a>
+            <input type="button" class="camera" onclick="document.querySelector('#avatar').click();">
+          </a>
+        </div>
+
+        <div class="for-name edit-text">
+          <div class="text-label">
+            <label for="name">
+              名稱
+            </label>
+          </div>
+          <div class="edit-form">
+            <input type="text" name="name" class="edit-name" id="name" maxlength="50" required value="{{User.name}}">
+          </div>
+          <div class="counter" id="name-counter">5/50</div>
+        </div>
+
+        <div class="for-intro edit-text">
+          <div class="text-label">
+            <label for="introduction" class="text-label">
+              自我介紹
+            </label>
+          </div>
+          <div class="edit-form">
+            <textarea name="introduction" class="edit-introduction" id="introduction"
+              maxlength="160">{{User.introduction}}</textarea>
+          </div>
+          <div class="counter" id="introduction-counter">56/160</div>
+        </div>
+
+
+        <button class="btn-fill form" type="submit">儲存</button>
+      </form>
+    </div>
+
+  </div>
+</div>
 </div>

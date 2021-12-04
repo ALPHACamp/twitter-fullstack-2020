@@ -1,5 +1,7 @@
 const db = require('../models')
-const { Tweet, User, Like } = db
+const { sequelize } = db
+const { Op } = db.Sequelize
+const { User, Tweet, Reply, Like, Followship } = db
 
 const adminController = {
   getTweets: async (req, res) => { 
