@@ -22,7 +22,7 @@ const userController = {
       attributes: [
         'id',
         'name',
-        'account',
+        'avatar',
         'introduction',
         'account',
         'cover',
@@ -47,7 +47,12 @@ const userController = {
           [sequelize.literal('(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
           [sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'), 'likeCount'],
         ],
-        order: [['createdAt', 'DESC']]
+        include: [
+          { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
+        ],
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
       })
       return tweets
     } catch (err) {
