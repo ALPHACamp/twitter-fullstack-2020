@@ -68,4 +68,7 @@ module.exports = (app, passport) => {
   app.post('/tweets/:id/like', authenticated, userController.addLike)
   //user移除喜歡推文
   app.post('/tweets/:id/unlike', authenticated, userController.removeLike)
+
+  //user追隨
+  app.post('/followships', authenticated, userController.addFollowships)
 }

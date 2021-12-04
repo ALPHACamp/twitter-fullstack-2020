@@ -4,6 +4,7 @@ const helpers = require('../_helpers')
 const User = db.User
 const Tweet = db.Tweet
 const Like = db.Like
+const Followship = db.Followship
 
 const userController = {
   //user登入
@@ -112,6 +113,18 @@ const userController = {
         TweetId: req.params.id,
       },
     }).then((like) => {
+      return res.redirect('back')
+    })
+  },
+
+  addFollowships: (req, res) => {
+    const UserId = helpers.getUser(req).id ? helpers.getUser(req).id : req.user.id
+    console.log('req params: ' + UserId)
+    console.log('req body: ' + req.body.id)
+    return Followship.create({
+      followerId: UserId,
+      followingId: req.body.id,
+    }).then((followship) => {
       return res.redirect('back')
     })
   },
