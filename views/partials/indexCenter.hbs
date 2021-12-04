@@ -2,30 +2,30 @@
     <a class="navbar-brand" href="/" style="font-weight:bold; color:black;">首頁</a>
     <hr>
     {{!-- ================新增推文區域================================================= --}}
-<div class="row row-cols-2 border p-2" style="">
-    <div class="cols text-center" style=" width:15%">
-        <form class="">
-            <a href="/users/{{user.id}}/tweets">
-                <img src="{{user.avatar}}" style=" width:60PX;height:60px; border-radius:100%;"></img>
-            </a>
-        </form>
-    </div>
-    <div class="cols " style=" width:85%;">
-        <form action="/tweets" method="POST">
-            <textarea class="wishContent" placeholder="有什麼新鮮事?"
-                style=" min-height:60px; width:100%; border:0px; resize : none; outline : 0; overflow:hidden;"></textarea>
-            <div class="" style=" text-align:right;">
-                <button class="btn " type="submit"
-                    style="background-color: orangered;border-radius:40px; color:white; font-weight:bold; ">推文</button>
-            </div>
-        </form>
-    </div>
-</div>
-{{!-- =====================推文列表============================================ --}}
-{{#each tweets}}
     <div class="row row-cols-2 border p-2" style="">
         <div class="cols text-center" style=" width:15%">
-            <a href="/users/{{this.User.dataValues.id}}/tweets">
+            <form class="">
+                <a href="/users/{{user.id}}/tweets">
+                    <img src="{{user.avatar}}" style=" width:60PX;height:60px; border-radius:100%;"></img>
+                </a>
+            </form>
+        </div>
+        <div class="cols " style=" width:85%;">
+            <form action="/tweets" method="POST">
+                <textarea class="wishContent" placeholder="有什麼新鮮事?"
+                    style=" min-height:60px; width:100%; border:0px; resize : none; outline : 0; overflow:hidden;"></textarea>
+                <div class="" style=" text-align:right;">
+                    <button class="btn " type="submit"
+                        style="background-color: orangered;border-radius:40px; color:white; font-weight:bold; ">推文</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{{!-- =====================推文列表============================================ --}}
+    {{#each tweets}}
+    <div class="row row-cols-2 border p-2" style="">
+        <div class="cols text-center" style=" width:15%">
+            <a  href="/users/{{this.User.dataValues.id}}/tweets">
                 <img class="" src="{{this.User.dataValues.avatar}}"
                     style=" width:60PX;height:60px; border-radius:100%;"></img>
             </a>
@@ -33,8 +33,10 @@
 
         <div class="cols" style=" width:85%">
             <div class="row ml-1">
-                <div class="cols" style="">
-                    <p>{{this.User.dataValues.name}}</p>
+                <div class="cols " style="">
+                    <a class="text-muted" href="/users/{{this.User.dataValues.id}}/tweets">
+                        <p>{{this.User.dataValues.name}}</p>
+                    </a>
                 </div>
                 <div class="cols ml-1" style="color:gray">
                     <p>@{{this.User.dataValues.account}}</p>
@@ -49,9 +51,9 @@
                     <p>...</p>
                 </div>
             </div>
-
-            <p>{{this.description}}</p>
-
+            <a class="text-muted" href="/tweets/{{this.id}}/replies">
+                <p>{{this.description}}</p>
+            </a>
             <div class="">
 
                 {{#if isReplied}}
@@ -82,8 +84,8 @@
 
         </div>
     </div>
-{{/each}}
+    {{/each}}
 {{!-- ================================================================= --}}
 </div>
-</div>
 <a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">登出</button></a>
+</div>
