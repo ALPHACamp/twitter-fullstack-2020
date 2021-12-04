@@ -16,6 +16,7 @@ app.engine(
   handlebars({
     defaultLayout: 'main',
     extname: '.hbs',
+    helpers: require('./config/handlebars-helpers'),
   })
 )
 app.set('view engine', 'hbs')
