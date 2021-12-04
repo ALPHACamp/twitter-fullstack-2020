@@ -164,6 +164,291 @@ html, body {
   filter: invert(51%) sepia(85%) saturate(3451%) hue-rotate(359deg) brightness(100%) contrast(106%);
 }
 
+/* admin/users/cards */
+.admin-user-title {
+  height: 55px;
+  background-color: #fff;
+  border-bottom: 1px solid #e6ecf0;
+  border-left: 1px solid #e6ecf0;
+  position: relative;
+  left: 337px;
+}
+.admin-user-title h1 {
+  font-size: 19px;
+  font-weight: 700;
+  padding: 13px 0 14px 23px;
+  margin: 0;
+}
+.admin-user-card {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5px;
+  position: absolute;
+  left: 337px;
+  top: 65px;
+}
+.user-card {
+  width: 16rem;
+  border-radius: 10px;
+  background-color: #f6f7f8;
+  padding: 0;
+}
+
+.background-img img {
+  height: 140px;
+  border-radius: 10px 10px 0 0;
+}
+.avatar img {
+  position: absolute;
+  left: calc(50% - 50px);
+  top: 70px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-size: cover;
+  object-fit: cover;
+  border: 5px solid white;
+}
+.user-card-body {
+  margin-top: 30px;
+}
+.user-card-body h5,
+.user-card-body p {
+  text-align: center;
+  margin-bottom: 0;
+}
+.user-card-body h5 {
+  font-weight: 900;
+}
+.user-card-body p {
+  color: #657786;
+}
+.click-on-condition {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+  padding: 10px;
+}
+.follow-condition{
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+.reply-count {
+  margin-right: 20px;
+}
+.follow-condition a {
+  color: black;
+  font-size: 3px;
+}
+.following-count {
+  margin-right: 8px;
+}
+.follow-condition span {
+  font-weight: 900;
+}
+
+/* admin/sidebar */
+.adminSidebar {
+  margin-left: 103px;
+  width: 235px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #e6ecf0;
+  position: fixed;
+  left: 0;
+}
+.admin-logo {
+  margin-top: 20px;
+  margin-bottom: 24px;
+}
+.admin-logo img {
+  width: 30px;
+  height: 30px;
+}
+.buttonList {
+  flex: 1;
+  position: relative;
+}
+.buttonList .navItem {
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+.navItem .admin-list-btn .active p {
+  color: #ff6600;
+}
+.admin-list-icon {
+  height: 26px;
+}
+.admin-list-btn {
+  padding: 0;
+}
+.admin-list-btn a {
+  text-decoration: none;
+}
+.admin-list-btn p {
+  height: 26px;
+  margin: 0;
+  font-weight: 700;
+  font-size: 18px;
+  color: #1c1c1c;
+}
+.newTweet p {
+  font-weight: 500;
+}
+.admin-list-icon img {
+  margin: 17px 0;
+  width: 16px;
+  height: 20px;
+  margin: 0 25px 0 10px;
+}
+.newTweet button {
+  width: 210px;
+  height: 45px;
+  border-radius: 100px;
+  background-color: #ff6600;
+}
+.newTweet button p {
+  color: #fff;
+}
+.logout {
+  position: absolute;
+  bottom: 0;
+}
+
+.admin-center {
+  position: relative;
+  padding: 0;
+  width: 600px;
+  margin: 0 auto;
+  background: #e6ecf0;
+}
+
+/* admin/signin & /sign/in */
+.sign-logo {
+  margin: 15px 0 30px 0;
+}
+.sign-logo img {
+  width: 50px;
+  height: 50px;
+}
+.signin-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.form-label-group {
+  position: relative;
+  bottom: 30px;
+  width: 540px;
+  margin: 10px;
+}
+.form-password {
+  margin-top: 12px;
+}
+#password {
+  margin-top: 1px;
+}
+.form-label-group label {
+  color: #657786;
+  font-weight: 700;
+}
+.admin-text h1 {
+  font-size: 23px;
+  font-weight: 900;
+}
+.signin-input {
+  height: 24px;
+  border: none;
+  border-radius: 0;
+  background-color: #f5f8fa;
+  border-bottom: 2px solid #657786;
+  outline: none;
+}
+.signin-btn {
+  position: relative;
+  bottom: 13px;
+  margin-top: 0;
+  width: 540px;
+  height: 50px;
+  color: #fff;
+  background-color: #ff6600;
+  border-radius: 50px;
+  border: orangered;
+  font-size: 18px;
+  font-weight: 700;
+}
+form .sign-in {
+  position: relative;
+  font-weight: 900;
+  text-decoration: underline;
+  margin-top: 20px;
+}
+
+/* /admin/main */
+#AdminMain {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+.AdminTweetsPanel {
+  flex: 1;
+}
+.admin-tweet-title {
+  height: 55px;
+  background-color: #fff;
+  border-bottom: 1px solid #e6ecf0;
+  border-left: 1px solid #e6ecf0;
+  position: fixed;
+  left: 337px;
+}
+.admin-tweet-title h1 {
+  font-size: 19px;
+  font-weight: 700;
+  padding: 13px 0 14px 23px;
+  margin: 0;
+}
+
+/* admin/tweets */
+.tweetlist-group {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-height: 120px;
+  padding: 15px 15px 25px;
+  border-bottom: 1px solid #e6ecf0;
+  margin: 70px 0px 5px 338px;
+}
+.tweet-info {
+  width: 100%;
+}
+.tweet-info span {
+  font-weight: 900;
+  height: auto;
+}
+.admin-avatar {
+  min-width: 50px;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+.admin-avatar img {
+  min-width: 50px;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-size: cover;
+  object-fit: cover;
+}
+.title {
+  color: gray;
+}
+.delete {
+  cursor: pointer;
+}
+
 .modal-tweet {
   max-width: 600px;
   height: 300px;

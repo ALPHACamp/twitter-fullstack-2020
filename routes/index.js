@@ -48,6 +48,8 @@ module.exports = (app, passport) => {
   app.post('/signup', userController.signUp)
   app.get('/logout', userController.logout)
   app.get('/users/:id', authenticated, userController.getUser)
+  app.get('/setting', authenticated, userController.editPage)
+  app.post('/setting', authenticated, userController.editData)
 
   // TWEET
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
@@ -61,15 +63,6 @@ module.exports = (app, passport) => {
   app.post('/tweets/:id/like', authenticated, likeController.postLike)
   app.post('/tweets/:id/unlike', authenticated, likeController.deleteLike)
   // FOLLOWSHIP
-
-  // USER
-  app.get('/signin', userController.signInPage)
-  app.post('/signin', passport.authenticate('local', {
-    failureRedirect: '/signin', failureFlash: true
-  }), userController.signIn)
-  app.get('/signup', userController.signUpPage)
-  app.post('/signup', userController.signUp)
-  app.get('/setting', authenticated, userController.editPage)
-  app.post('/setting', authenticated, userController.editData)
-  app.get('/logout', userController.logout)
+  app.post('/followships/:id', authenticated, userController.addFollowing)
+  app.delete('/followships/:id', authenticated, userController.removeFollowing)
 }
