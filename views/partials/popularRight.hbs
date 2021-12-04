@@ -10,27 +10,27 @@
             <div class="row cols" style="width:70%">
                 <div class="cols text-center" style=" width:30%">
                     <a href="/users/{{user.id}}/tweets">
-                        <img src="{{this.avatar}}" style=" width:60PX;height:60px; border-radius:100%;"></img>
+                        <img src="{{this.avatar}}" style=" width:50PX;height:50px; border-radius:100%;"></img>
                     </a>
                 </div>
 
                 <div class="cols " style=" width:70%">
                     <a href="/users/{{user.id}}/tweets">
-                        <p class="m-0" style="font-size:18px">{{this.name}}</p>
+                        <p class="m-0" style="font-size:18px;color: black; font-weight:bold;">{{this.name}}</p>
                     </a>
-                    <p class="m-0" style="font-size:18px">@{{this.account}}</p>
+                    <p class="m-0" style="font-size:18px;font-weight:500;color:gray;">@{{this.account}}</p>
                 </div>
             </div>
             {{#if isFollowed}}
             <form action="/followships/{{user.id}}??_method=DELETE" method="POST" style="display: contents;">
                 <div class="cols my-1 " style="text-align:right;">
-                    <button class="btn" style="width:100px; background-color: orangered;border-radius:40px; color:white; font-weight:bold; ">正在追蹤</button>
+                    <button class="btn" style="width:100px; background-color: orangered;border-radius:40px; color:white; font-weight:bold; ">正在跟隨</button>
                 </div>
             </form>
             {{else}}
             <form action="/followships" method="POST" style="display: contents;">
                 <div class="cols my-1 " style="text-align:right;">
-                    <button class="btn" style="width:100px; background-color: orangered;border-radius:40px; color:white; font-weight:bold; ">追蹤</button>
+                    <button class="btn" style="width:100px; border:0.5px;  border:solid;  border-radius:40px; color:orangered; font-weight:bold; ">跟隨</button>
                 </div>
             </form>
             {{/if}}
