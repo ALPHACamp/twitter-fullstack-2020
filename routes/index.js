@@ -12,7 +12,9 @@ const likeController = require('../controllers/likeController')
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      return next()
+      if (helpers.getUser(req).role === 'user') {
+        return next()
+      }
     }
     res.redirect('/signin')
   }
@@ -22,7 +24,7 @@ module.exports = (app, passport) => {
         return next()
       }
     }
-    res.redirect('/')
+    res.redirect('/admin/signin')
   }
 
   // ADMIN
