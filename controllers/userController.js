@@ -5,6 +5,7 @@ const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const Followship = db.Followship
 
 const userService = require('../services/userService')
 
@@ -147,6 +148,36 @@ const userController = {
         return res.render('user', { userData, topUser })
       })
     })
+  },
+
+  addFollowing: (req, res) => {
+    if (helpers.getUser(req).id === Number(req.params.id)) {
+      req.flash('error_msg', '不能自己追蹤自己')
+      return res.redirect('back')
+    }
+    return Followship.create({
+      followerId: helpers.getUser(req).id,
+      followingId: req.params.id
+    })
+      .then((followship) => {
+        req.flash('success_msg', '追蹤成功')
+        return res.redirect('back')
+      })
+  },
+
+  removeFollowing: (req, res) => {
+    return Followship.findOne({
+      where: {
+        followerId: helpers.getUser(req).id,
+        followingId: req.params.id
+      } })
+      .then((followship) => {
+        followship.destroy()
+          .then((followship) => {
+            req.flash('success_msg', '取消追蹤')
+            return res.redirect('back')
+          })
+      })
   }
 }
 
