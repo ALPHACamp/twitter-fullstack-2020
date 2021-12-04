@@ -49,6 +49,28 @@ const tweetController = {
   //   })
   // },
 
+  putTweet: async (req, res) => {
+    try {
+      const UserId = helpers.getUser(req)
+      const { description } = req.body
+      
+      if (description.length > 140) {
+        req.flash('error_messages', '不可超過 140 字')
+        return res.redirect('/tweets')
+      }
+
+      if (!description.length) {
+        req.flash('error_messages', '不可空白')
+        return res.redirect('/tweets')
+      }
+
+      await Tweet.create({ UserId, description })
+      return res.redirect('/tweets')
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
   addLike: async (req, res) => {
     try {
       await Like.findOrCreate({

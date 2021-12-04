@@ -32,6 +32,7 @@ module.exports = (app, passport) => {
   app.put('/users/:userId', authenticated, userController.putUser)
 
   // tweet 相關
+  app.post('/tweets', authenticated, tweetController.putTweet)
   app.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
   app.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
 
