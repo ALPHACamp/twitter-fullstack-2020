@@ -141,7 +141,31 @@ const userController = {
                 console.log(error)
             })
 
-    }
+    },
+
+    getFollowers: (req, res) => {
+        const userId = req.params.id
+        console.log(req.user)
+        User.findAll({
+            raw: true,
+            nest: true
+        }).then(users => {
+            return res.render('follower', { users })
+        }).catch(error => {
+            console.log(error)
+        })
+
+    },
+
+
+    getFollowings: (req, res) => {
+        const userId = req.params.id
+        return res.render('following', {})
+    },
+
+
+
+
 
 
 

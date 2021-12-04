@@ -8,6 +8,7 @@ const Like = db.Like
 const tweetController = {
     getTweets: (req, res) => {
 
+        console.log(req.user)
         const tweetFindAll = Tweet.findAll({
             raw: true,
             nest: true,
@@ -36,7 +37,7 @@ const tweetController = {
                 let tweets = responses[0]
                 let users = responses[1]
                 let likes = responses[2]
-                
+
                 tweets = tweets.filter(tweet => {
                     tweet.isLiked = likes.filter(like => {
                         if (like.TweetId === tweet.id && like.UserId === req.user.id) {
@@ -45,7 +46,6 @@ const tweetController = {
                     })
                     return tweet
                 })
-                console.log(tweets)
                 users = users.map(user => ({
                     ...user.dataValues,
                     isUser: !user.Followers.map(d => d.id).includes(user.id),
