@@ -15,6 +15,9 @@ module.exports = (app, passport) => {
   //設定前台流覽總推文路由
   app.get('/tweets', authenticated, tweetController.getTweets)
 
+  //設定前台瀏覽個別推文路由
+  app.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
+
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
   app.get('/signin', userController.signInPage)
