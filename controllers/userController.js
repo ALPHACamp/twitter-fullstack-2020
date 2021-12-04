@@ -144,23 +144,48 @@ const userController = {
     },
 
     getFollowers: (req, res) => {
-        const userId = req.params.id
-        console.log(req.user)
-        User.findAll({
-            raw: true,
-            nest: true
-        }).then(users => {
-            return res.render('follower', { users })
-        }).catch(error => {
-            console.log(error)
+        const usersFindAll = User.findAll({
+            include: [
+                { model: User, as: 'Followers' },
+                { model: User, as: 'Followings' }
+            ]
         })
+        Promise.all([usersFindAll])
+            .then(responses => {
+                let users = responses[0]
 
+                users = users.map(user => ({
+                    ...user.dataValues,
+                    isFollowed: req.user.Followers.map(d => d.id).includes(user.id)
+                }))
+
+                console.log(users)
+                return res.render('follower', { users })
+            }).catch(error => {
+                console.log(error)
+            })
     },
 
 
     getFollowings: (req, res) => {
-        const userId = req.params.id
-        return res.render('following', {})
+        let usersFindAll = User.findAll({
+            include: [
+                { model: User, as: 'Followings' }
+            ]
+        })
+        Promise.all([usersFindAll])
+            .then(responses => {
+                let users = responses[0]
+                users = users.map(user => ({
+                    ...user.dataValues,
+                    isFollowings: req.user.Followings.map(d => d.id).includes(user.id)
+                }))
+                console.log(users)
+                return res.render('following', { users })
+            }).catch(error => {
+                console.log(error)
+            })
+
     },
 
 
