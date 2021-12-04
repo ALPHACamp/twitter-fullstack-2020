@@ -12,12 +12,7 @@ const userController = {
     if (password !== checkPassword) {
       req.flash('error_messages', '密碼與檢查密碼不一致！')
       res.redirect('/signup')
-    } else {
-      // 例外處理: 使用預設要給測試檔（test/requests/user/spec.js #90行）替換的account註冊
-      if (account === 'accountToBeReplacedByTestFile') {
-        req.flash('error_messages', '不可使用該帳號！')
-        res.redirect('/signup')
-      } else { 
+    } else { 
         return User.findOne({
           where: {
             [Op.or]: [{ account }, { email }]
@@ -39,7 +34,6 @@ const userController = {
                 .then(user => { res.redirect('/signin') })
             }
           })
-      }
     }
   },
   signInPage: (req, res) => {
