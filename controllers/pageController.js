@@ -13,7 +13,7 @@ const pageController = {
         userController.getUser(req, res),
         tweetController.getTweets(req, res)
       ])
-      return res.json({ user, tweets })
+      return res.render('user', { user, tweets })
     } catch (err) {
       console.error(err)
     }

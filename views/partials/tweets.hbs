@@ -1,7 +1,7 @@
 <div class="header">首頁</div>
 <div class="postarea">
-  <a>
-    <img class="thumbnail" src="/icons/avatar.svg" alt="">
+  <a href="/users/{{user.id}}/tweets">
+    <img class="thumbnail" src="{{user.avatar}}" alt="thumbnail">
   </a>
   <form action="/tweets" method="post">
     <input type="hidden" name="userId" value="{{user.id}}">
@@ -11,16 +11,15 @@
 </div>
 <hr>
 <div class="tweets">
-
-  {{#each Tweets}}
+  {{#each tweets}}
   <div class="tweet">
-    <a>
-      <img class="thumbnail" src="/icons/avatar.svg" alt="">
+    <a href="/users/{{this.User.id}}/tweets">
+      <img class="thumbnail" src="{{this.User.avatar}}" alt="thumbnail">
     </a>
     <div class="postcontent">
       <a class="postuser">
         <span class="name ellipsis">{{this.User.name}}</span>
-        <span class="at-name ellipsis">@{{this.User.account}}jfalksdflka</span>
+        <span class="at-name ellipsis">@{{this.User.account}}</span>
         <span class="timer ellipsis">{{this.User.createdAt}}</span>
       </a>
       <button type="button" class="content" id="content">
@@ -29,15 +28,29 @@
       <div class="action">
         <button type="button" class="commenting" data-userId="{{User.id}}">
           <i class='comment'></i>
-          13
+          {{this.replyCount}}
         </button>
-        <button type="button" class="liking">
+        {{!-- 原本的 like --}}
+        {{!-- <button type="button" class="liking">
           <i class='like'></i>
           76
-        </button>
+        </button> --}}
+        {{#if this.isLiked}}
+        <form action="/tweets/{{this.id}}/unlike" method="post" style="display: inline;">
+          <button type="submit" class="liking">
+            {{!-- 待補上unlike的icon --}}
+            <i class='like'></i>{{this.likeCount}}
+          </button>
+        </form>
+        {{else}}
+        <form action="/tweets/{{this.id}}/like" method="post" style="display: inline;">
+          <button type="submit" class="liking">
+            <i class='like'></i>{{this.likeCount}}
+          </button>
+        </form>
+        {{/if}}
       </div>
     </div>
   </div>
   {{/each}}
-
 </div>
