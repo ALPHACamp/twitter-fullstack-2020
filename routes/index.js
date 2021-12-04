@@ -25,24 +25,22 @@ module.exports = (app, passport) => {
     res.redirect('/')
   }
 
-  //如果登入的人是管理者，並且只用在管理者登入的路由
-  const isAdmin = (req, res, next) => {
-    res.locals.isAdmin = helpers.getUser(req).role === 'admin'
-    return next()
-  }
-
   // ADMIN
   app.get('/admin/signin', adminController.signInPage)
-  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), isAdmin, adminController.signIn)
-  app.get('/admin/tweets', authenticatedAdmin, isAdmin, adminController.getTweets)
-  app.get('/admin/users', authenticatedAdmin, isAdmin, adminController.getUsers)
-  app.delete('/admin/tweets/:id', authenticatedAdmin, isAdmin, adminController.deleteTweets)
+  app.post('/admin/signin', passport.authenticate('admin-local', {
+    failureRedirect: '/admin/signin',
+    failureFlash: true
+  }), adminController.signIn)
+  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+  app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweets)
   // OTHERS
 
   // USER
   app.get('/signin', userController.signInPage)
-  app.post('/signin', passport.authenticate('local', {
-    failureRedirect: '/signin', failureFlash: true
+  app.post('/signin', passport.authenticate('user-local', {
+    failureRedirect: '/signin',
+    failureFlash: true
   }), userController.signIn)
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
