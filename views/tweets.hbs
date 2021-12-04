@@ -1,0 +1,23 @@
+<div class="row">
+  {{#each tweets}}
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Tweet Id: {{this.id}}</h5>
+      <ul class="list-group">
+        <li class="list-group-item">description: {{this.description}}</li>
+        <li class="list-group-item">createdAt: {{this.createdAt}}</li>
+        <li class="list-group-item">reply: {{this.replyCount}}</li>
+        <li class="list-group-item">likeCount: {{this.likeCount}}</li>
+        <li class="list-group-item">isLiked: {{this.isLiked}}</li>
+      </ul>
+      <a href="/tweets/{{this.id}}/replies">回覆</a>
+      <form action="/tweets/{{this.id}}/like" method="POST" style="display: inline;">
+        <button type="submit" class="btn btn-primary">Like</button>
+      </form>
+      <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: inline;">
+        <button type="submit" class="btn btn-danger">Unlike</button>
+      </form>
+    </div>
+  </div>
+  {{/each}}
+</div>

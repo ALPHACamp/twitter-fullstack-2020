@@ -28,8 +28,8 @@ const tweetController = {
         nest: true,
         limit: 4
       })
-      // return res.render('tweets', { tweets })
-      return res.json({ tweets })
+      return res.render('tweets', { tweets })
+      // return res.json({ tweets })
     } catch (err) {
       console.error(err)
     }
@@ -53,7 +53,7 @@ const tweetController = {
     try {
       const UserId = helpers.getUser(req)
       const { description } = req.body
-      
+
       if (description.length > 140) {
         req.flash('error_messages', '不可超過 140 字')
         return res.redirect('/tweets')
