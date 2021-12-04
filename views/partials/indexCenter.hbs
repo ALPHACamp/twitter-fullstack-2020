@@ -2,56 +2,58 @@
     <a class="navbar-brand" href="/" style="font-weight:bold; color:black;">首頁</a>
     <hr>
     {{!-- ================新增推文區域================================================= --}}
-<div class="row row-cols-2 border p-2" style="">
-    <div class="cols text-center" style=" width:15%">
-        <form class="">
-            <a href="/users/{{user.id}}/tweets">
-                <img src="{{user.avatar}}" style=" width:60PX;height:60px; border-radius:100%;"></img>
-            </a>
-        </form>
-    </div>
-    <div class="cols " style=" width:85%;">
-        <form action="/tweets" method="POST">
-            <textarea class="wishContent" placeholder="有什麼新鮮事?"
-                style=" min-height:60px; width:100%; border:0px; resize : none; outline : 0; overflow:hidden;"></textarea>
-            <div class="" style=" text-align:right;">
-                <button class="btn " type="submit"
-                    style="background-color: orangered;border-radius:40px; color:white; font-weight:bold; ">推文</button>
-            </div>
-        </form>
-    </div>
-</div>
-{{!-- =====================推文列表============================================ --}}
-{{#each tweets}}
     <div class="row row-cols-2 border p-2" style="">
         <div class="cols text-center" style=" width:15%">
-            <a href="/users/{{this.User.dataValues.id}}/tweets">
+            <form class="">
+                <a href="/users/{{user.id}}/tweets" >
+                    <img src="{{user.avatar}}" class="mx-auto" style=" width:50PX;height:50px; border-radius:100%; border:0px;"></img>
+                </a>
+            </form>
+        </div>
+        <div class="cols " style=" width:85%;">
+            <form action="/tweets" method="POST">
+                <textarea class="wishContent" placeholder="有什麼新鮮事?"
+                    style=" min-height:60px; width:100%; border:0px; resize : none; outline : 0; overflow:hidden;"></textarea>
+                <div class="" style=" text-align:right;">
+                    <button class="btn " type="submit"
+                        style="background-color: orangered;border-radius:40px; color:white; font-weight:bold; ">推文</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{{!-- =====================推文列表============================================ --}}
+    {{#each tweets}}
+    <div class="row row-cols-2 border p-2" style="">
+        <div class="cols text-center" style=" width:15%">
+            <a  href="/users/{{this.User.dataValues.id}}/tweets">
                 <img class="" src="{{this.User.dataValues.avatar}}"
-                    style=" width:60PX;height:60px; border-radius:100%;"></img>
+                    style=" width:50PX;height:50px; border-radius:100%;"></img>
             </a>
         </div>
 
         <div class="cols" style=" width:85%">
             <div class="row ml-1">
-                <div class="cols" style="">
-                    <p>{{this.User.dataValues.name}}</p>
+                <div class="cols ">
+                    <a class="text-muted" href="/users/{{this.User.dataValues.id}}/tweets">
+                        <p style="color: black; font-weight:bold;">{{this.User.dataValues.name}}</p>
+                    </a>
                 </div>
                 <div class="cols ml-1" style="color:gray">
-                    <p>@{{this.User.dataValues.account}}</p>
+                    <p style="font-weight:500;">@{{this.User.dataValues.account}}</p>
                 </div>
                 <div class="cols mx-1" style="color:gray">
-                    <p>•</p>
+                    <p style="font-weight:500;">•</p>
                 </div>
                 <div class="cols" style="color:gray">
-                    <p>{{moment this.createdAt}}</p>
+                    <p style="font-weight:500;">{{moment this.createdAt}}</p>
                 </div>
                 <div class="cols" style="">
                     <p>...</p>
                 </div>
             </div>
-
-            <p>{{this.description}}</p>
-
+            <a class="text-muted" href="/tweets/{{this.id}}/replies" style="text-decoration:none;">
+                <p>{{this.description}}</p>
+            </a>
             <div class="">
 
                 {{#if isReplied}}
@@ -67,23 +69,20 @@
                 {{/if}}
                 <p style="float:left;">{{this.repliesCount}}</p>
                 {{#if isLiked}}
-                    <form id="likeButton" action="/tweets/{{user.id}}/unlike" method="post" style="float:left;">
+                    <form id="likeButton" action="/tweets/{{user.id}}/unlike" method="post" style="float:left;" class="ml-3 ">
                         <button type="submit" style="border:0px; background:inherit;"><i
                                 class="fas fa-heart"></i></button>
                     </form>
                 {{else}}
-                    <form id="likeButton" action="/tweets/{{user.id}}/like" method="post" style="float:left;">
+                    <form id="likeButton" action="/tweets/{{user.id}}/like" method="post" style="float:left;" class="ml-3">
                         <button type="submit" style="border:0px; background:inherit;"><i
                                 class="far fa-heart"></i></button>
                     </form>
                 {{/if}}
-                <p style="float:left;">{{this.likesCount}}</p>
+                <p class="my-auto" style="float:left;">{{this.likesCount}}</p>
             </div>
 
         </div>
     </div>
-{{/each}}
+    {{/each}}
 {{!-- ================================================================= --}}
-</div>
-</div>
-<a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">登出</button></a>
