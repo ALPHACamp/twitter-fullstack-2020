@@ -8,8 +8,28 @@ const { User, Tweet, Reply, Like, Followship } = db
 
 const userController = {
   getUser: async (req, res) => {
-    const user = await User.findByPk(helpers.getUser(req).id, {
+    const userId = Number(helpers.getUser(req).id)
+    const user = await User.findByPk(userId, {
       attributes: { exclude: ['password'] },
+      raw: true
+    })
+    return user
+  },
+
+  getUserProfile: async (req, res) => {
+    const userId = Number(req.params.userId)
+    const user = await User.findByPk(userId, {
+      attributes: [
+        'id',
+        'name',
+        'account',
+        'introduction',
+        'account',
+        'cover',
+        [sequelize.literal(`(SELECT COUNT(*) FROM tweets WHERE tweets.UserId = ${userId})`), 'tweetCount'],
+        [sequelize.literal(`(SELECT COUNT(*) FROM followships WHERE followships.followerId = ${userId})`), 'followingCount'],
+        [sequelize.literal(`(SELECT COUNT(*) FROM followships WHERE followships.followingId = ${userId})`), 'followerCount']
+      ],
       raw: true
     })
     return user
@@ -17,10 +37,9 @@ const userController = {
 
   getUserTweets: async (req, res) => {
     try {
-      const queryId = Number(req.params.userId)
-
+      const userId = Number(req.params.userId)
       const tweets = await Tweet.findAll({
-        where: { UserId: queryId },
+        where: { UserId: userId },
         attributes: [
           'id',
           'UserId',
@@ -31,17 +50,7 @@ const userController = {
         ],
         order: [['createdAt', 'DESC']]
       })
-
-      const user = await User.findByPk(queryId, {
-        attributes: [
-          'id',
-          'name',
-          'account',
-          'avatar'
-        ]
-      })
-
-      return res.json({ tweets, user })
+      return tweets
     } catch (err) {
       console.error(err)
     }

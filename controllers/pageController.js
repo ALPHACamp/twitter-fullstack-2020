@@ -9,8 +9,22 @@ const tweetController = require('./tweetController')
 const pageController = {
   getIndex: async (req, res) => {
     try {
-      const user = await userController.getUser(req, res)
-      const tweets = await tweetController.getTweets(req, res)
+      const [user, tweets] = await Promise.all([
+        userController.getUser(req, res),
+        tweetController.getTweets(req, res)
+      ])
+      return res.json({ user, tweets })
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  getUserTweets: async (req, res) => {
+    try {
+      const [user, tweets] = await Promise.all([
+        userController.getUserProfile(req, res),
+        userController.getUserTweets(req, res)
+      ])
       return res.json({ user, tweets })
     } catch (err) {
       console.error(err)
