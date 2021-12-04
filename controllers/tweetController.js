@@ -14,9 +14,9 @@ const tweetController = {
           'UserId',
           'description',
           'createdAt',
-          [sequelize.literal('(SELECT COUNT(*) FROM `replies` WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
-          [sequelize.literal('(SELECT COUNT(*) FROM `likes` WHERE likes.TweetId = Tweet.id)'), 'likeCount'],
-          [sequelize.literal(`(SELECT likes.UserId FROM \`likes\` WHERE likes.TweetId = Tweet.id AND likes.UserId = ${userId})`), 'isLiked']
+          [sequelize.literal('(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
+          [sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'), 'likeCount'],
+          [sequelize.literal(`(SELECT likes.UserId FROM likes WHERE likes.TweetId = Tweet.id AND likes.UserId = ${userId})`), 'isLiked']
         ],
         include: [
           { model: User, attributes: ['id', 'name', 'account', 'avatar'] },

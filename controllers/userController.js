@@ -18,8 +18,8 @@ const userController = {
           'UserId',
           'description',
           'createdAt',
-          [sequelize.literal('(SELECT COUNT(*) FROM `replies` WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
-          [sequelize.literal('(SELECT COUNT(*) FROM `likes` WHERE likes.TweetId = Tweet.id)'), 'likeCount'],
+          [sequelize.literal('(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
+          [sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'), 'likeCount'],
         ],
         order: [['createdAt', 'DESC']]
       })
@@ -82,8 +82,8 @@ const userController = {
           'UserId',
           'description',
           'createdAt',
-          [sequelize.literal('(SELECT COUNT(*) FROM `replies` WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
-          [sequelize.literal('(SELECT COUNT(*) FROM `likes` WHERE likes.TweetId = Tweet.id)'), 'likeCount'],
+          [sequelize.literal('(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
+          [sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'), 'likeCount'],
           // [sequelize.literal(`(SELECT UserId FROM likes WHERE likes.TweetId = Tweet.id AND likes.UserId = ${queryId})`), 'isLike']
         ],
         include: [{ model: Like }],
