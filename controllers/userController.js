@@ -25,7 +25,8 @@ const userController = {
         })
           .then((user) => {
             if (user) {
-              req.flash('error_messages', '重複註冊Email或帳號！')
+              if (user.account === account) { req.flash('error_messages', 'account 已重覆註冊！') }
+              else { req.flash('error_messages', 'email 已重覆註冊！') }
               res.redirect('/signup')
             } else {
               req.flash('success_messages', '註冊成功!')
