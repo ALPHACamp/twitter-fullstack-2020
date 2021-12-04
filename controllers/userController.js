@@ -42,7 +42,6 @@ const userController = {
         where: { UserId: userId },
         attributes: [
           'id',
-          'UserId',
           'description',
           'createdAt',
           [sequelize.literal('(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
@@ -58,31 +57,21 @@ const userController = {
 
   getUserReplies: async (req, res) => {
     try {
-      const queryId = Number(req.params.userId)
-
+      const userId = Number(req.params.userId)
       const replies = await Reply.findAll({
-        where: { UserId: queryId },
+        where: { UserId: userId },
         attributes: [
+          'id',
           'comment',
           'createdAt'
         ],
-        // 不熟 sequelize 待優化
+        // 不熟 sequelize 待優化，邏輯：reply -> tweet -> user -> account(field)
         include: [
-          { model: Tweet, attributes: ['UserId'], include: [{ model: User, attributes: ['account'] }] }
+          { model: Tweet, attributes: [], include: [{ model: User, attributes: ['account'] }] }
         ],
         order: [['createdAt', 'DESC']]
       })
-
-      const user = await User.findByPk(queryId, {
-        attributes: [
-          'id',
-          'name',
-          'account',
-          'avatar'
-        ]
-      })
-
-      return res.json({ replies, user })
+      return replies
     } catch (err) {
       console.error(err)
     }

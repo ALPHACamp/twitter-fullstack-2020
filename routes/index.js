@@ -31,7 +31,7 @@ module.exports = (app, passport) => {
   // app.post('/api/users/:userId')  // 更新使用者的資訊
 
   app.get('/users/:userId/tweets', authenticated, pageController.getUserTweets)
-  // app.get('/users/:userId/replies', authenticated, userController.getUserReplies)
+  app.get('/users/:userId/replies', authenticated, pageController.getUserReplies)
   // app.get('/users/:userId/likes', authenticated, userController.getUserLikes)
   // app.get('/users/:userId/followers', authenticated, userController.getUserFollowers)
   // app.get('/users/:userId/followings', authenticated, userController.getUserFollowings)
