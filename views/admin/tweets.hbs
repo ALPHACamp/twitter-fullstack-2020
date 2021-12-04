@@ -1,2 +1,54 @@
-<h1>it will be admin index</h1>
-<a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">LogOut</button></a>
+<div class="row" style="width:100%;">
+  {{!-- 左邊選項欄位 --}}
+  <div class="col-3">
+    <img class="mb-4 pl-2" src="/images/logo.png">
+    <div class="nav-ul-wrapper">
+      <ul class="nav flex-column">
+        <li class="nav-item py-2">
+          <a class="nav-link active" href="/admin/tweets">
+            <i class="fas fa-home"></i>
+            <span class="ml-3">推文清單</span>
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="nav-link" href="/admin/users">
+            <i class="far fa-user"></i>
+            <span class="ml-3">使用者列表</span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="ml-3">登出</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  {{!-- 右邊清單欄位 --}}
+  {{!-- 會用到 avatar,name,account,createdAt,description --}}
+  <div class="col-9 content-container">
+    <p style="font-size: 18px;">推文清單</p>
+    {{!-- 這裡待會要加each --}}
+    <div class="card">
+      <div class="card-body d-flex">
+        <img class="avatar small mr-3" src="https://www.thedogandfriends.com/assets/img/index/img-hero_dog.png">
+        <div>
+          <p class="card-title">sin <span class="atAccount">@sin1201•10分鐘前</span></p>
+          <p class="card-text">alskdfklsdjfklsdjfklsdjfklsjdlkfj</p>
+        </div>
+        <div class="">
+          <form action="/admin/tweets/:tweetId?_method=DELETE" method="POST" onclick="return confirm('確定要刪除「{{this.name}}」？')">
+            <button class="btn btn-danger ml-2" type="submit">X</button>
+          </form>
+        </div>
+      </div>
+      
+    </div>
+
+  </div>
+</div>
