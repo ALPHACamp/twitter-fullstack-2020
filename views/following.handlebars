@@ -71,10 +71,10 @@
       </div>
       <div class="col-md-10">
         <div class="row">
-          <div class="h5">John Does</div>
+          <div class="h5">{{user.name}}</div>
         </div>
         <div class="row">
-          <small>25則貼文</small>
+          <small>xxx 則貼文</small>
         </div>
       </div>
     </div>
@@ -135,7 +135,7 @@
       <div class="p-2">
         跟隨誰
       </div>
-      {{#each users}}
+      {{#each users2}}
       <div
         style="display: flex; justify-content:space-between; border-top:#E6ECF0 1px solid; border-bottom:#E6ECF0 1px solid;"
         class="p-2">
@@ -151,12 +151,12 @@
 
         <div>
           {{#if this.isFollowed }}
-          <form action="/user/self/following/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
               class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
           </form>
           {{else}}
-          <form action="/user/self/following/{{this.id}}" method="POST"><button type="submit"
-              class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">跟隨</button>
+          <form action="/followships/{{this.id}}" method="POST"><button type="submit" class="btn btn-block mt-1"
+              style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>
           </form>
           {{/if}}
         </div>
