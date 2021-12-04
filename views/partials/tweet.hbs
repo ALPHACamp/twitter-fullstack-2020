@@ -1,0 +1,80 @@
+<div class="back-arror-header">
+  <a><i class='back-arror'></i></a>
+  <div class="header-text">
+    <span class="tweet">推文</span>
+  </div>
+</div>
+
+<div class="tweet">
+
+  <a class="tweetuser">
+    <span>
+      <img class="thumbnail" src="/icons/avatar.svg" alt="">
+    </span>
+    <span>
+      <span class="name ellipsis">{{tweet.User.name}}</span>
+      <span class="at-name ellipsis">@{{tweet.User.account}}</span>
+    </span>
+  </a>
+
+  <div class="tweetcontent">
+
+    <div class="content" id="content">
+      {{tweet.description}}
+    </div>
+
+    <div class="datetime">
+      <span class="time">上午 10:05</span>
+      <span class="date">2020年6月10日</span>
+    </div>
+
+    <div class="stat">
+      <span class="replied">
+        34
+        <a>回覆</a>
+      </span>
+      <span class="liked">
+        808
+        <a>喜歡次數</a>
+      </span>
+    </div>
+
+    <div class="action">
+      <button type="button" class="commenting" data-userId="{{user.id}}">
+        <i class='comment lg'></i>
+      </button>
+      <button type="button" class="liking">
+        <i class='like lg'></i>
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="replies">
+
+  {{#each tweet.Replies}}
+  <div class="reply">
+    <a>
+      <img class="thumbnail" src="/icons/avatar.svg" alt="">
+    </a>
+    <div class="comment">
+      <a class="commentuser">
+        <span class="name ellipsis">{{this.TweetId}}</span>
+        <span class="at-name ellipsis">@{{this.UserId}}jfalksdflka</span>
+        <span class="timer ellipsis">{{this.createdAt}}</span>
+      </a>
+      <a class="replyto">回覆
+        <span class="at-name">@{{../tweet.User.account}}</span>
+      </a>
+      <div class="commentcomment">
+        {{this.comment}}
+      </div>
+
+    </div>
+
+  </div>
+  {{/each}}
+
+</div>

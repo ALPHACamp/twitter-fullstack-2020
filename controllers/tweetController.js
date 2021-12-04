@@ -5,49 +5,75 @@ const { Op } = db.Sequelize
 const { User, Tweet, Reply, Like, Followship } = db
 
 const tweetController = {
-  getTweets: async (req, res) => {
-    try {
-      const userId = helpers.getUser(req).id
-      const tweets = await Tweet.findAll({
-        attributes: [
-          'id',
-          'UserId',
-          'description',
-          'createdAt',
-          [sequelize.literal('(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
-          [sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'), 'likeCount'],
-          [sequelize.literal(`(SELECT likes.UserId FROM likes WHERE likes.TweetId = Tweet.id AND likes.UserId = ${userId})`), 'isLiked']
-        ],
-        include: [
-          { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
-        ],
-        order: [
-          ['createdAt', 'DESC']
-        ],
+  // getTweets: async (req, res) => {
+  //   try {
+  //     const userId = helpers.getUser(req).id
+  //     const tweets = await Tweet.findAll({
+  //       attributes: [
+  //         'id',
+  //         'UserId',
+  //         'description',
+  //         'createdAt',
+  //         [sequelize.literal('(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
+  //         [sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'), 'likeCount'],
+  //         [sequelize.literal(`(SELECT likes.UserId FROM likes WHERE likes.TweetId = Tweet.id AND likes.UserId = ${userId})`), 'isLiked']
+  //       ],
+  //       include: [
+  //         { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
+  //       ],
+  //       order: [
+  //         ['createdAt', 'DESC']
+  //       ],
+  //       raw: true,
+  //       nest: true,
+  //       limit: 4
+  //     })
+  //     return res.render('tweets', { tweets })
+  //     // return res.json({ tweets })
+  //   } catch (err) {
+  //     console.error(err)
+  //   }
+  // },
+
+  getTweets: (req, res) => {
+    Promise.all([
+      Tweet.findAll({
+        limit: 10,
+        order: [['createdAt', 'DESC']],
+        include: [User,
+          { model: Reply, nested: true, required: false },
+          { model: Like, nested: true, required: false }
+        ]
+      }),
+      User.findByPk(21, {
         raw: true,
         nest: true,
-        limit: 4
+        include: [
+          { model: User, as: 'Followings', required: false, order: [['createdAt', 'DESC']] },
+          { model: User, as: 'Followers', required: false, order: [['createdAt', 'DESC']] },
+          Tweet, Reply, Like
+        ]
       })
-      return res.render('tweets', { tweets })
-      // return res.json({ tweets })
-    } catch (err) {
-      console.error(err)
-    }
-  },
+    ]).then((result) => {
+      const Tweets = result[0].map((r) => r.toJSON())
+      const Tweet = Tweets[0]
+      result[1].Followers = Array(13).fill(result[1].Followers)
+      result[1].Followings = Array(11).fill(result[1].Followings)
+      result[1].Tweets = Array(10).fill(result[1].Tweets)
+      result[1].Replies = Array(12).fill(result[1].Replies)
+      result[1].Likes = Array(15).fill({
+        "id": 1,
+        "UserId": 2,
+        "TweetId": 3,
+        "createdAt": '10:06 2010年10月19日',
+        "updatedAt": '10:06 2010年10月19日'
+      })
+      const User = result[1]
 
-  // getTweets: (req, res) => {
-  //   Tweet.findAll({
-  //     order: [['createdAt', 'DESC']],
-  //     limit: 2,
-  //     include: [User,
-  //       { model: Reply, nested: true, required: false },
-  //       { model: Like, nested: true, required: false }
-  //     ]
-  //   }).then((result) => {
-  //     const data = result.map((r) => r.toJSON())
-  //     return res.render('user', { data })
-  //   })
-  // },
+      // return res.json({ Tweets, Tweet, User })
+      return res.render('user', { Tweets, Tweet, User })
+    })
+  },
 
   putTweet: async (req, res) => {
     try {
