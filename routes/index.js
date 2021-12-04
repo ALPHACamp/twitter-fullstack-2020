@@ -10,7 +10,12 @@ module.exports = (app, passport) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === 'normal') {
         return next()
+      } 
+      if (helpers.getUser(req).role === 'admin') {
+        req.flash('error_messages', '無法進入此頁面')
+        return res.redirect('/admin/tweets')
       }
+
     }
     res.redirect('/signin')
   }
@@ -38,8 +43,8 @@ module.exports = (app, passport) => {
 
   // admin
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
-
   app.get('/admin/signin', adminController.signInPage)
   app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signin)
+  app.delete('/admin/tweets/:tweetId', authenticatedAdmin, adminController.deleteTweet)
   app.get('/admin/logout', adminController.logout)
 }

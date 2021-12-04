@@ -40,8 +40,17 @@ const adminController = {
 
   // admin delete tweet
   deleteTweet: (req, res) => {
-    
-  }
+    // 去Tweet資料庫findPkBy(設定好的動態id)
+    // 找到後刪除
+    // 導回admin/tweets
+    Tweet.findByPk(req.params.tweetId)
+      .then( tweet => {
+        tweet.destroy()
+      })
+      .then(()=>{
+        res.redirect('back')
+      })
+  },
 
   //admin signIn
   signin: (req, res) => {
