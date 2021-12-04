@@ -13,7 +13,7 @@ module.exports = {
      name: 'root',
      avatar: `https://loremflickr.com/240/240/selfie,boy,girl/?random=${Math.random() * 100}`,
      introduction: faker.lorem.text().substring(0, 160),
-     account: 'root@example.com',
+     account: 'root',
      cover: `https://loremflickr.com/720/240/landscape/?random=${Math.random() * 100}`,
      createdAt: new Date(),
      updatedAt: new Date()
@@ -25,7 +25,7 @@ module.exports = {
      name: 'user1',
      avatar: `https://loremflickr.com/240/240/selfie,boy,girl/?random=${Math.random() * 100}`,
      introduction: faker.lorem.text().substring(0, 160),
-     account: 'user1@example.com',
+     account: 'user1',
      cover: `https://loremflickr.com/720/240/landscape/?random=${Math.random() * 100}`,
      createdAt: new Date(),
      updatedAt: new Date()
@@ -37,7 +37,7 @@ module.exports = {
      name: 'user2',
      avatar: `https://loremflickr.com/240/240/selfie,boy,girl/?random=${Math.random() * 100}`,
      introduction: faker.lorem.text().substring(0, 160),
-     account: 'user2@example.com',
+     account: 'user2',
      cover: `https://loremflickr.com/720/240/landscape/?random=${Math.random() * 100}`,
      createdAt: new Date(),
      updatedAt: new Date()
@@ -49,7 +49,7 @@ module.exports = {
      name: 'user3',
      avatar: `https://loremflickr.com/240/240/selfie,boy,girl/?random=${Math.random() * 100}`,
      introduction: faker.lorem.text().substring(0, 160),
-     account: 'user3@example.com',
+     account: 'user3',
      cover: `https://loremflickr.com/720/240/landscape/?random=${Math.random() * 100}`,
      createdAt: new Date(),
      updatedAt: new Date()
@@ -61,7 +61,7 @@ module.exports = {
      name: 'user4',
      avatar: `https://loremflickr.com/240/240/selfie,boy,girl/?random=${Math.random() * 100}`,
      introduction: faker.lorem.text().substring(0, 160),
-     account: 'user4@example.com',
+     account: 'user4',
      cover: `https://loremflickr.com/720/240/landscape/?random=${Math.random() * 100}`,
      createdAt: new Date(),
      updatedAt: new Date()
@@ -73,7 +73,7 @@ module.exports = {
      name: 'user5',
      avatar: `https://loremflickr.com/240/240/selfie,boy,girl/?random=${Math.random() * 100}`,
      introduction: faker.lorem.text().substring(0, 160),
-     account: 'user5@example.com',
+     account: 'user5',
      cover: `https://loremflickr.com/720/240/landscape/?random=${Math.random() * 100}`,
      createdAt: new Date(),
      updatedAt: new Date()
