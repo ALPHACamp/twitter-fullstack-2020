@@ -17,7 +17,7 @@ module.exports = {
         (
           {
             id: i + 1,
-            UserId: Math.floor(Math.random()*(7-2+1)+1),
+            UserId: Math.floor(Math.random()*(6-2+1)+1),
             TweetId: Math.floor(Math.random()*(51-1)+1),
             createdAt: faker.date.recent(),
             updatedAt: new Date()

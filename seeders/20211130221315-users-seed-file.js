@@ -31,7 +31,7 @@ module.exports = {
         ({
           id: i + 2,
           name: `user${i + 1}`,
-          email: `user${i + 1}@user${i + 1}.com`,
+          email: `user${i + 1}@example.com`,
           password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
           account: `user${i + 1}`,
           cover: `https://loremflickr.com/320/240/personal,cover/?random=${Math.random() * 100}`,

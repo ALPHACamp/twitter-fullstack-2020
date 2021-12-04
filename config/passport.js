@@ -31,7 +31,15 @@ passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
 passport.deserializeUser((id, cb) => {
-  User.findByPk(id).then((user) => {
+  User.findByPk(id, {
+    include: [
+      //以id as followingId 來固定 User table 的 followingId, 所以可以找出所有在追蹤*id*的users
+      { model: User, as: 'Followers' }, 
+      //以id as followerId 來固定 User table 的 followerId, 所以可以找出*id*在追蹤的所有users
+      { model: User, as: 'Followings' }
+    ]
+  })
+  .then((user) => {
     user = user.toJSON()
     return cb(null, user)
   })

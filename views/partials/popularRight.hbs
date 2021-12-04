@@ -3,18 +3,21 @@
         Popular
     </div>
 
-    {{#each popularUser}}
+    {{#each users}}
     <hr class="m-2">
     <div class="card-body py-1">
         <div class="row ml-2">
-
             <div class="row cols" style="width:70%">
                 <div class="cols text-center" style=" width:30%">
-                    <img src="{{this.avatar}}}" style=" width:60PX;height:60px; border-radius:100%;"></img>
+                    <a href="/users/{{user.id}}/tweets">
+                        <img src="{{this.avatar}}" style=" width:60PX;height:60px; border-radius:100%;"></img>
+                    </a>
                 </div>
 
                 <div class="cols " style=" width:70%">
-                    <p class="m-0" style="font-size:18px">{{this.name}}</p>
+                    <a href="/users/{{user.id}}/tweets">
+                        <p class="m-0" style="font-size:18px">{{this.name}}</p>
+                    </a>
                     <p class="m-0" style="font-size:18px">@{{this.account}}</p>
                 </div>
             </div>
