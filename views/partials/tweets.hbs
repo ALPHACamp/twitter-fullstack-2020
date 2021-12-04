@@ -1,0 +1,43 @@
+<div class="header">首頁</div>
+<div class="postarea">
+  <a>
+    <img class="thumbnail" src="/icons/avatar.svg" alt="">
+  </a>
+  <form action="/tweets" method="post">
+    <input type="hidden" name="userId" value="{{user.id}}">
+    <textarea name="description" maxlength="140" cols="48" rows="2" placeholder="有什麼新鮮事？" required></textarea>
+    <button type="summit" class="btn-fill" id="posting">推文</button>
+  </form>
+</div>
+<hr>
+<div class="tweets">
+
+  {{#each Tweets}}
+  <div class="tweet">
+    <a>
+      <img class="thumbnail" src="/icons/avatar.svg" alt="">
+    </a>
+    <div class="postcontent">
+      <a class="postuser">
+        <span class="name ellipsis">{{this.User.name}}</span>
+        <span class="at-name ellipsis">@{{this.User.account}}jfalksdflka</span>
+        <span class="timer ellipsis">{{this.User.createdAt}}</span>
+      </a>
+      <button type="button" class="content" id="content">
+        {{this.description}}
+      </button>
+      <div class="action">
+        <button type="button" class="commenting" data-userId="{{User.id}}">
+          <i class='comment'></i>
+          13
+        </button>
+        <button type="button" class="liking">
+          <i class='like'></i>
+          76
+        </button>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+
+</div>
