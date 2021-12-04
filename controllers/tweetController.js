@@ -14,6 +14,10 @@ const tweetController = {
       const data = result.map((r) => r.toJSON())
       return res.render('user', { data })
     })
+  },
+
+  getTweet: (req, res) => {
+    res.send('Andrew Wu')
   }
 }
 
