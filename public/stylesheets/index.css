@@ -69,8 +69,14 @@ html, body {
   background: #e6ecf0;
 }
 
+.center-wide {
+  width: 69.5%;
+  margin: 0 0 0 30.5%;
+}
+
 .header {
   background: #ffffff;
+  overflow: hidden;
 }
 
 .textarea-tweet {
@@ -220,4 +226,40 @@ html, body {
   color: #ff6600;
   cursor: default;
   border-bottom: 3px solid #ff6600;
+}
+
+.input-setting {
+  position: relative;
+}
+
+.input-setting > input {
+  height: 52px;
+  padding-top: 24px;
+  font-size: 19px;
+  font-weight: 500;
+  color: #1c1c1c;
+  border: 0;
+  border-bottom: 3px solid #657786;
+  border-radius: 4px 4px 0px 0px;
+}
+
+.input-setting > label {
+  font-size: 15px;
+  color: #657786;
+  position: absolute;
+  top: 0;
+  left: 28px;
+}
+
+.input-setting > .input-prepend {
+  position: absolute;
+  color: #1c1c1c;
+  font-size: 19px;
+  font-weight: 500;
+  top: 18px;
+  left: 28px;
+}
+
+.input-prepend + input {
+  padding-left: 32px;
 }
