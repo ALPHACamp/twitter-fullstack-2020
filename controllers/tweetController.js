@@ -1,3 +1,4 @@
+const helpers = require('../_helpers')
 const db = require('../models')
 const { User, Tweet, Reply, Like } = db
 
@@ -40,6 +41,34 @@ const tweetController = {
       // return res.json({ Tweets, Tweet, User })
       return res.render('user', { Tweets, Tweet, User })
     })
+  },
+
+  addLike: async (req, res) => {
+    try {
+      await Like.findOrCreate({
+        where: {
+          UserId: helpers.getUser(req).id,
+          TweetId: req.params.tweetId
+        }
+      })
+      return res.redirect('back')
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  removeLike: async (req, res) => {
+    try {
+      await Like.destroy({
+        where: {
+          UserId: helpers.getUser(req).id,
+          TweetId: req.params.tweetId
+        }
+      })
+      return res.redirect('back')
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 

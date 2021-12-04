@@ -4,9 +4,15 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     name: DataTypes.STRING,
-    avatar: DataTypes.STRING,
+    avatar: {
+      type: DataTypes.STRING ,
+      defaultValue: 'https://image.flaticon.com/icons/png/512/847/847969.png'
+    },
     introduction: DataTypes.TEXT,
-    role: DataTypes.STRING,
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: 'user'
+    },
     account: DataTypes.STRING,
     cover: DataTypes.STRING
   }, {});
