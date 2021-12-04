@@ -1,7 +1,5 @@
 const helpers = require('../_helpers')
 const db = require('../models')
-const { sequelize } = db
-const { Op } = db.Sequelize
 const { User, Tweet, Reply, Like, Followship } = db
 
 const followshipController = {
@@ -16,6 +14,18 @@ const followshipController = {
       }
 
       await Followship.findOrCreate({ where: { followerId, followingId } })
+      return res.redirect('back')
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  removeFollow: async (req, res) => {
+    try {
+      const followerId = Number(helpers.getUser(req).id)
+      const followingId = Number(req.params.userId)
+
+      await Followship.destroy({ where: { followerId, followingId } })
       return res.redirect('back')
     } catch (err) {
       console.error(err)

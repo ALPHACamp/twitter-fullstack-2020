@@ -34,6 +34,7 @@ module.exports = (app, passport) => {
 
   // followship 相關
   app.post('/followships', authenticated, followshipController.addFollow)
+  app.delete('/followships/:userId', authenticated, followshipController.removeFollow)
 
   // tweet 相關
   app.post('/tweets', authenticated, tweetController.putTweet)
