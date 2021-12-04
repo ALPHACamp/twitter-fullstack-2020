@@ -15,14 +15,14 @@
                 </div>
 
                 <div class="cols " style=" width:70%">
-                    <a href="/users/{{user.id}}/tweets">
+                    <a href="/users/{{this.id}}/tweets">
                         <p class="m-0" style="font-size:18px;color: black; font-weight:bold;">{{this.name}}</p>
                     </a>
                     <p class="m-0" style="font-size:18px;font-weight:500;color:gray;">@{{this.account}}</p>
                 </div>
             </div>
             {{#if isFollowed}}
-            <form action="/followships/{{user.id}}??_method=DELETE" method="POST" style="display: contents;">
+            <form action="/followships/{{this.id}}??_method=DELETE" method="POST" style="display: contents;">
                 <div class="cols my-1 " style="text-align:right;">
                     <button class="btn" style="width:100px; background-color: orangered;border-radius:40px; color:white; font-weight:bold; ">正在跟隨</button>
                 </div>
