@@ -12,7 +12,7 @@ const likeController = require('../controllers/likeController')
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).role === 'user') {
+      if (helpers.getUser(req).role !== 'admin') {
         return next()
       }
     }
@@ -63,6 +63,6 @@ module.exports = (app, passport) => {
   app.post('/tweets/:id/like', authenticated, likeController.postLike)
   app.post('/tweets/:id/unlike', authenticated, likeController.deleteLike)
   // FOLLOWSHIP
-  app.post('/followships/:id', authenticated, userController.addFollowing)
+  app.post('/followships', authenticated, userController.addFollowing)
   app.delete('/followships/:id', authenticated, userController.removeFollowing)
 }
