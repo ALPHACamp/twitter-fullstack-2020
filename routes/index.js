@@ -2,6 +2,7 @@ const helpers = require('../_helpers')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
+const followshipController = require('../controllers/followshipController')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -30,6 +31,9 @@ module.exports = (app, passport) => {
 
   app.get('/users/:userId/edit', authenticated, userController.editUserPage)
   app.put('/users/:userId', authenticated, userController.putUser)
+
+  // followship 相關
+  app.post('/followships', authenticated, followshipController.addFollow)
 
   // tweet 相關
   app.post('/tweets', authenticated, tweetController.putTweet)
