@@ -8,13 +8,13 @@ const Like = db.Like
 const tweetController = {
     getTweets: (req, res) => {
 
+        console.log(req.user)
         const tweetFindAll = Tweet.findAll({
             raw: true,
             nest: true,
             order: [['createdAt', 'DESC']],
             include: [
                 User,
-                { model: User, as: 'LikedUsers' }
             ]
         })
 
@@ -24,19 +24,29 @@ const tweetController = {
             ]
         })
 
+        const likeFindAll = Like.findAll({
+            raw: true,
+            nest: true,
+            include: [
+                User, Tweet
+            ]
+        })
 
-
-        Promise.all([tweetFindAll, userFindAll])
+        Promise.all([tweetFindAll, userFindAll, likeFindAll])
             .then(responses => {
                 let tweets = responses[0]
-
-
                 let users = responses[1]
-                console.log('+++++++++++++++++++++++++++++++++++++')
-                console.log(tweets)
-                console.log('+++++++++++++++++++++++++++++++++++++')
-                users = users.map(user => ({
+                let likes = responses[2]
 
+                tweets = tweets.filter(tweet => {
+                    tweet.isLiked = likes.filter(like => {
+                        if (like.TweetId === tweet.id && like.UserId === req.user.id) {
+                            return true
+                        }
+                    })
+                    return tweet
+                })
+                users = users.map(user => ({
                     ...user.dataValues,
                     isUser: !user.Followers.map(d => d.id).includes(user.id),
                     // 計算追蹤者人數
@@ -45,11 +55,7 @@ const tweetController = {
                     isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
                 }))
                 // 依追蹤者人數排序清單
-                console.log(users)
-
                 users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-
-
                 return res.render('main', { tweets, users })
             }).catch(error => {
                 console.log(error)
@@ -120,7 +126,6 @@ const tweetController = {
                 // console.log(tweets.toJSON())
                 // console.log(users)
                 // console.log(responses[1])
-                console.log(replies)
                 users = users.map(user => ({
 
                     ...user.dataValues,

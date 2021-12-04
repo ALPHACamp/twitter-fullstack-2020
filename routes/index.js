@@ -54,8 +54,8 @@ module.exports = (app, passport) => {
 
     // 追隨
 
-    app.post('/user/self/following/:userId', authenticated, userController.addFollowing)
-    app.delete('/user/self/following/:userId', authenticated, userController.removeFollowing)
+    app.post('/followships/:userId', authenticated, userController.addFollowing)
+    app.delete('/followships/:userId', authenticated, userController.removeFollowing)
 
     // 帳戶設定
 
@@ -73,11 +73,14 @@ module.exports = (app, passport) => {
 
     // 前台 like 特定 Tweet
     app.post('/tweets/:id/like', authenticated, tweetController.postLike)
-    app.post('/tweets/:id/unlike',authenticated, tweetController.postUnLike)
+    app.post('/tweets/:id/unlike', authenticated, tweetController.postUnLike)
 
 
+    // 前台查看跟隨了那些人
+    app.get('/user/:id/followings', authenticated, userController.getFollowings)
 
-
+    // 前台查看被那些人跟隨
+    app.get('/user/:id/followers', authenticated, userController.getFollowers)
 
 
 
