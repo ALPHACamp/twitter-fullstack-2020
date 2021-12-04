@@ -1,6 +1,7 @@
 const helpers = require('../_helpers')
 const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
+const tweetController = require('../controllers/tweetController')
 
 module.exports = (app, passport) => {
 
@@ -23,7 +24,9 @@ module.exports = (app, passport) => {
   }
 
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
-  app.get('/tweets', authenticated, (req, res) => res.render('tweets'))
+  //設定前台流覽總推文路由
+  
+  app.get('/tweets', authenticated, tweetController.getTweets)
 
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)

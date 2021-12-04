@@ -1,0 +1,73 @@
+html, body {
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+.nav-ul-wrapper {
+  display:flex;
+  flex-direction:column;
+  justify-content: space-between;
+  height:70vw; 
+  max-height: 700px;
+}
+
+.nav-link {
+  font-weight: bold;
+  font-size: 18px;
+  color: #1C1C1C;
+}
+
+.nav-link.active {
+  color:#FF6600;
+}
+
+.btn {
+  display: flex; 
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: #FF6600;
+  border-radius: 100px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 18px;
+  color:#FFFFFF;
+}
+
+.btn-outline {
+  background: #FFFFFF;
+  color: #FF6600;
+  border-color: #FF6600;;
+}
+
+.card.popular {
+  background: #F5F8FA;
+}
+
+.card.popular .list-group-item {
+  background: #F5F8FA;
+}
+
+img.avatar {
+  border-radius: 50%;
+}
+
+img.avatar.small {
+  width: 50px;
+  height: 50px;
+}
+
+.atAccount {
+  font-size: 15px;
+  color: #657786;
+}
+
+.content-container {
+  background: #F5F8FA;
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+.header1 {
+  font-weight: 500;
+  font-size: 18px;
+} 
