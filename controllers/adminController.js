@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs')
 
 const db = require('../models')
 const User = db.User
+const Tweet = db.Tweet
+
 
 const adminController = {
 
@@ -12,6 +14,10 @@ const adminController = {
 
   // admin index page
   getTweets: (req, res) => {
+    // 去user資料庫撈出所有user
+    // 在撈出所有user的tweets
+    // 依序日期排列後
+    // 將user的 avatar , name , account , createAt(time) ,  description 傳給前端樣板去渲染
     res.render('admin/tweets')
   },
 
