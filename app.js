@@ -4,6 +4,7 @@ const handlebars = require('express-handlebars')
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('./config/passport')
+const db = require('./models')
 
 const app = express()
 const port = 3000
