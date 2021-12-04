@@ -1,6 +1,9 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
+const helpers = require('../_helpers')
 const User = db.User
+const Tweet = db.Tweet
+const Like = db.Like
 
 const userController = {
   //user登入
@@ -83,6 +86,33 @@ const userController = {
           req.flash('success_messages', '帳號修改成功')
           res.redirect('back')
         })
+    })
+  },
+
+  addLike: (req, res) => {
+    // console.log('req params: ' + req.params.id)
+    // console.log('req body: ' + req.body.id)
+    Tweet.findByPk(req.params.id)
+      .then((tweet) => {
+        return Like.create({
+          UserId: req.user.id,
+          TweetId: req.params.id,
+        })
+      })
+      .then((user) => {
+        return res.redirect('back')
+      })
+  },
+
+  removeLike: (req, res) => {
+    const UserId = helpers.getUser(req).id ? helpers.getUser(req).id : req.user.id
+    return Like.destroy({
+      where: {
+        UserId: UserId,
+        TweetId: req.params.id,
+      },
+    }).then((like) => {
+      return res.redirect('back')
     })
   },
 }
