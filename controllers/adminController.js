@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-
+const helpers = require('../_helpers')
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
@@ -14,12 +14,34 @@ const adminController = {
 
   // admin index page
   getTweets: (req, res) => {
-    // 去user資料庫撈出所有user
-    // 在撈出所有user的tweets
+    // 撈出所有tweet , include user
     // 依序日期排列後
-    // 將user的 avatar , name , account , createAt(time) ,  description 傳給前端樣板去渲染
-    res.render('admin/tweets')
+    // 用data去map要用的資料
+    // 資料: user的 avatar , name , account , createAt(time) , description
+    // 傳給admin/tweets去render
+    Tweet.findAll({
+      row: true,
+      nest: true,
+      order: [['createdAt', 'DESC']],
+      include: User
+    }).then( tweets => {
+      const data = tweets.map(t => ({
+        ...t.dataValues,
+        userAvatar: t.dataValues.User.avatar,
+        userName: t.dataValues.User.name,
+        userAccount: t.dataValues.User.account,
+        tweetDescription: t.dataValues.description,
+        tweetId: t.dataValues.id,
+      }))
+      // console.log(data[0])
+      return res.render('admin/tweets', { tweets: data })
+    })
   },
+
+  // admin delete tweet
+  deleteTweet: (req, res) => {
+    
+  }
 
   //admin signIn
   signin: (req, res) => {

@@ -33,22 +33,22 @@
   {{!-- 會用到 avatar,name,account,createdAt,description --}}
   <div class="col-9 content-container">
     <p style="font-size: 18px;">推文清單</p>
-    {{!-- 這裡待會要加each --}}
+    {{#each tweets}}
     <div class="card">
       <div class="card-body d-flex">
-        <img class="avatar small mr-3" src="https://www.thedogandfriends.com/assets/img/index/img-hero_dog.png">
+        <img class="avatar small mr-3" src="{{this.userAvatar}}">
         <div>
-          <p class="card-title">sin <span class="atAccount">@sin1201•10分鐘前</span></p>
-          <p class="card-text">alskdfklsdjfklsdjfklsdjfklsjdlkfj</p>
+          <p class="card-title">{{this.userName}} <span class="atAccount">@{{this.userAccount}}•{{moment this.createdAt}}</span></p>
+          <p class="card-text">{{this.tweetDescription}}</p>
         </div>
         <div class="">
-          <form action="/admin/tweets/:tweetId?_method=DELETE" method="POST" onclick="return confirm('確定要刪除「{{this.name}}」？')">
+          <form action="/admin/tweets/{{this.tweetId}}?_method=DELETE" method="POST" onclick="return confirm('確定要刪除這則貼文？')">
             <button class="btn btn-danger ml-2" type="submit">X</button>
           </form>
         </div>
       </div>
       
     </div>
-
+  {{/each}}
   </div>
 </div>
