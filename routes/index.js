@@ -24,10 +24,16 @@ module.exports = (app, passport) => {
   // user 相關
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetController.getTweets)
+  // app.post('/tweets', authenticated)  // 發文
+
+  // app.get('/api/users/:userId')  // 瀏覽編輯使用者頁面
+  // app.post('/api/users/:userId')  // 更新使用者的資訊
 
   app.get('/users/:userId/tweets', authenticated, userController.getUserTweets)
   app.get('/users/:userId/replies', authenticated, userController.getUserReplies)
   app.get('/users/:userId/likes', authenticated, userController.getUserLikes)
+  // app.get('/users/:userId/followers', authenticated, userController.getUserFollowers)
+  // app.get('/users/:userId/followings', authenticated, userController.getUserFollowings)
 
   app.get('/users/:userId/edit', authenticated, userController.editUserPage)
   app.put('/users/:userId', authenticated, userController.putUser)
@@ -41,6 +47,9 @@ module.exports = (app, passport) => {
   app.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
   app.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
 
+  // reply 相關
+  // app.get('/tweets/:tweetId/replies', authenticated)  // 取得留言資料
+  // app.post('/tweets/:tweetId/replies')  // 新增留言
 
   // user 登入、登出、註冊
   app.get('/signup', userController.signUpPage)
