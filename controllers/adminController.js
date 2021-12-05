@@ -21,13 +21,16 @@ const adminController = {
 
   //admin管理推文
   getTweets: (req, res) => {
-    return Tweet.findAll({ raw: true, nest: true, include: [User] }).then((tweets) => {
-      tweets = tweets.map((r) => {
-        return {
-          ...r,
-          description: r.description.length > 50 ? r.description.substring(0, 50) + '...' : r.description,
-        }
-      })
+    return Tweet.findAll({
+      raw: true,
+      nest: true,
+      include: [User],
+      order: [['createdAt', 'DESC']],
+    }).then((tweets) => {
+      tweets = tweets.map((r) => ({
+        ...r,
+        description: r.description.length > 50 ? `${r.description.substring(0, 50)}...` : r.description,
+      }))
       return res.render('admin/tweets', { tweets })
     })
   },
