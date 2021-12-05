@@ -259,25 +259,44 @@ const userController = {
     },
 
     getLike: (req, res) => {
-        const likeTweeets = Tweet.findAll({
+        const tweetFindAll = Tweet.findAll({
+            raw: true,
+            nest: true,
             include: [
+                User,
                 { model: User, as: 'LikedUsers' }
             ]
         })
-        console.log('===================')
-        console.log(req.user)
-        console.log('===================')
-        Promise.all([likeTweeets])
+        let userFindAll2 = User.findAll({
+            include: [
+                { model: User, as: 'Followers' }
+            ]
+        })
+        Promise.all([tweetFindAll, userFindAll2])
             .then(responses => {
-                let tweets = responses[0]
-                tweets = tweets.map(tweet => ({
-                    ...tweet.dataValues,
-                    isLiked: req.user.LikedTweets.map(d => d.id).includes(req.user.id)
+                let liked = responses[0]
+                let users2 = responses[1]
+                // console.log(likedTweets)
+                liked = liked.map(likedTweet => ({
+                    ...likedTweet,
+                    isLikedTweet: req.user.LikedTweets.map(d => d.id).includes(likedTweet.id)
                 }))
-                console.log(tweets)
-                return res.render('userLike', { tweets })
-            })
-            .catch(error => {
+
+                users2 = users2.map(user => ({
+                    ...user.dataValues,
+                    isUser: !user.Followers.map(d => d.id).includes(user.id),
+                    // 計算追蹤者人數
+                    FollowerCount: user.Followers.length,
+                    // 判斷目前登入使用者是否已追蹤該 User 物件
+                    isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+                }))
+                // 依追蹤者人數排序清單
+                users2 = users2.sort((a, b) => b.FollowerCount - a.FollowerCount)
+
+
+                console.log(liked)
+                return res.render('userLike', { likedTweets: liked, users2 })
+            }).catch(error => {
                 console.log(error)
             })
 
