@@ -74,7 +74,7 @@ const tweetController = {
   //   })
   // },
 
-  putTweet: async (req, res) => {
+  addTweet: async (req, res) => {
     try {
       const UserId = helpers.getUser(req)
       const { description } = req.body

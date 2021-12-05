@@ -26,7 +26,7 @@ const adminController = {
 
   deleteTweet: async (req, res) => {
     try {
-      await Tweet.destroy({ where: { id: req.params.id } })
+      await Tweet.destroy({ where: { id: req.params.tweetId } })
       return res.redirect('/admin/tweets')
     } catch (err) {
       console.error(err)

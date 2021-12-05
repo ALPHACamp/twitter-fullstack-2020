@@ -150,10 +150,6 @@ const userController = {
     }
   },
 
-  signUpPage: (req, res) => {
-    return res.render('signup')
-  },
-
   signUp: async (req, res) => {
     try {
       const { account, name, email, password, checkPassword } = req.body
@@ -193,11 +189,6 @@ const userController = {
     }
   },
 
-  signInPage: (req, res) => {
-    const isBackend = req.originalUrl.includes('admin')
-    return res.render('signin', { isBackend })
-  },
-
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
 
@@ -216,21 +207,6 @@ const userController = {
     }
     req.logout()
     return res.redirect('/signin')
-  },
-
-  getSettings: async (req, res) => {
-    try {
-      const userId = req.params.userId
-
-      if (req.user.id !== Number(userId)) {
-        req.flash('error_messages', '你無權查看此頁面')
-        return res.redirect('/tweets')
-      }
-
-      return res.render('edit')
-    } catch (err) {
-      console.error(err)
-    }
   },
 
   updateSettings: async (req, res) => {

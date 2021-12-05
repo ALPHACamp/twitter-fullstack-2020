@@ -7,6 +7,30 @@ const userController = require('./userController')
 const tweetController = require('./tweetController')
 
 const pageController = {
+  getSignUp: (req, res) => {
+    return res.render('signup')
+  },
+
+  getSignIn: (req, res) => {
+    const isBackend = req.url.includes('admin')
+    return res.render('signin', { isBackend })
+  },
+
+  getSettings: async (req, res) => {
+    try {
+      const UserId = Number(req.params.userId)
+
+      if (helpers.getUser(req) !== UserId) {
+        req.flash('error_messages', '你無權查看此頁面')
+        return res.redirect('/tweets')
+      }
+
+      return res.render('settings')
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
   getIndex: async (req, res) => {
     try {
       if (helpers.getUser(req).role === 'admin') {
@@ -14,10 +38,7 @@ const pageController = {
         return res.redirect('/admin/tweets')
       }
 
-      const [user, tweets] = await Promise.all([
-        userController.getUser(req, res),
-        tweetController.getTweets(req, res)
-      ])
+      const [user, tweets] = await Promise.all([userController.getUser(req, res), tweetController.getTweets(req, res)])
       return res.render('user', { user, tweets, indexPage: true })
     } catch (err) {
       console.error(err)
@@ -69,7 +90,7 @@ const pageController = {
         userController.getUserProfile(req, res),
         userController.getUserFollowers(req, res)
       ])
-      return res.json({ user, followers, userFollowerPage: true})
+      return res.json({ user, followers, userFollowerPage: true })
     } catch (err) {
       console.error(err)
     }
