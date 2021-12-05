@@ -39,6 +39,7 @@ module.exports = (app, passport) => {
 
   //admin管理推文
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+  app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 
   //admin管理使用者
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)

@@ -1,3 +1,19 @@
 <div>
   admin tweets
 </div>
+
+{{#each tweets}}
+  <div>
+    <div>
+      <span>{{this.User.name}}</span>
+      @<span>{{this.User.account}}</span>
+    </div>
+    <div>
+      <span>{{this.description}}</span>
+    </div>
+    <form action='/admin/tweets/{{this.id}}?_method=DELETE' method='POST' style='display: inline;'>
+      <button type='submit' class='btn btn-link'>Delete</button>
+    </form>
+  </div>
+  <br />
+{{/each}}
