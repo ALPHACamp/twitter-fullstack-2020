@@ -2,9 +2,9 @@
   <div class="leftside">
     <div class="navigation" id="navigation">
       <i class='ac-icon'></i>
-      <a class="active" herf='/tweets' id="homing"><i class='home active'></i>首頁</a>
-      <a class="" id="editing"><i class='info'></i>個人資料</a>
-      <a class="" herf='/tweets' id="setting"><i class='setting'></i>設定</a>
+      <a class="active" href='/tweets' id="homing"><i class='home active'></i>首頁</a>
+      <a class="" href="/users/{{user.id}}/tweets" id="editing"><i class='info'></i>個人資料</a>
+      <a class="" href='/users/{{user.id}}/settings' id="setting"><i class='setting'></i>設定</a>
       <button type="button" class="btn-fill" id="posting">推文</button>
     </div>
     {{!-- 展示icon用 --}}
@@ -15,7 +15,7 @@
     </div>
 
     <div class="footer">
-      <a herf="/logout"><i class='logout'></i>登出</a>
+      <a href="/signout"><i class='logout'></i>登出</a>
     </div>
   </div>
 

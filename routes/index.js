@@ -36,7 +36,7 @@ module.exports = (app, passport) => {
   app.get('/users/:userId/followers', pageController.getUserFollowers)
   app.get('/users/:userId/followings', pageController.getUserFollowings)
 
-  app.get('/users/:userId/edit', authenticated, userController.editUserPage)
+  app.get('/users/:userId/settings', authenticated, userController.editUserPage)
   app.put('/users/:userId', authenticated, userController.putUser)
 
   // followship 相關
