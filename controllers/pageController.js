@@ -54,6 +54,18 @@ const pageController = {
     } catch (err) {
       console.error(err)
     }
+  },
+
+  getUserFollowers: async (req, res) => {
+    try {
+      const [user, followers] = await Promise.all([
+        userController.getUserProfile(req, res),
+        userController.getUserFollowers(req, res)
+      ])
+      return res.json({ user, followers, userFollowerPage: true})
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 

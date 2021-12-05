@@ -91,10 +91,31 @@ const userController = {
         include: [
           { model: Tweet }
         ],
-        order: [['createdAt', 'DESC']],
+        order: [['createdAt', 'DESC']]
       })
       const tweets = likes.map(like => (like.toJSON()))
       return tweets
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  getUserFollowers: async (req, res) => {
+    try {
+      const userId = Number(req.params.userId)
+      let followers = await User.findAll({
+        where: { id: userId },
+        attributes: [],
+        include: [
+          { model: User, as: 'Followers', attributes: ['id', 'name', 'avatar', 'introduction', 'account'] }
+        ]
+      })
+
+      followers = followers[0].dataValues.Followers.map(follower => ({
+        ...follower.dataValues,
+        isLiked: follower.Followship.followerId === userId
+      }))
+      return followers
     } catch (err) {
       console.error(err)
     }
