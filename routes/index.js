@@ -1,7 +1,8 @@
 const helpers = require('../_helpers')
+const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
-const adminController = require('../controllers/adminController')
+const replyController = require('../controllers/replyController')
 const followshipController = require('../controllers/followshipController')
 const pageController = require('../controllers/pageController')
 
@@ -49,7 +50,7 @@ module.exports = (app, passport) => {
   app.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
 
   // reply 相關
-  // app.get('/tweets/:tweetId/replies', authenticated)  // 取得留言資料
+  app.get('/tweets/:tweetId/replies', replyController.getReplies)  // 取得留言資料
   // app.post('/tweets/:tweetId/replies')  // 新增留言
 
   // user 登入、登出、註冊
