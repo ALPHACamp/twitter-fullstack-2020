@@ -1,0 +1,276 @@
+<div class="row mt-5">
+
+  {{!-- 左邊區域 --}}
+  <div class="col-md-3">
+    <img class="" style="margin-left:15px" width="40px"
+      src="https://static.accupass.com/org/2008250550226683301600.jpg">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active text-dark font-weight-bold" href="/"><i class="fas fa-home"></i> 首頁</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link font-weight-bold" style="color: #FF6600;" href="/user/self"><i class="fas fa-user"></i>
+          個人資料</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark font-weight-bold" href="/setting"><i class="far fa-sun"></i> 設定</a>
+      </li>
+    </ul>
+
+
+    <button class="btn btn-block text-light" style="border-radius: 40px; background-color:#FF6600" href="#"
+      data-toggle="modal" data-target="#exampleModal">推文</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" style="color:#FF6600;">&times;</span>
+            </button>
+          </div>
+          <form action="/" method="post">
+            <div class="modal-body" style="height: 250px;">
+              <div class="row" style="height: 100%;">
+                <div class="col-md-2">
+                  <img src="https://static.newmobilelife.com/wp-content/uploads/2018/11/oppa1.jpg"
+                    class="rounded-circle" style="width: 60px; height:60px;">
+                </div>
+                <div class="col-md-10">
+                  <textarea name="description" id=""
+                    style="min-height:225px; max-height:225px; width:100%; border:none;"
+                    placeholder="有甚麼新鮮事?"></textarea>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" style="border-radius: 40px; background-color:#FF6600 ">推文
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+  </div>
+
+  <div class="ml-3" style="position:fixed; bottom:0px; left: 20px;">
+    <a class="text-dark font-weight-bold" style="border-radius: 40px; width:150px;" href="/logout"><i class="fas
+        fa-sign-out-alt"></i> 登出</a>
+  </div>
+  {{!-- 中間區域 --}}
+  <div class="col-md-6" style="position: relative;">
+    <div class="row align-items-center mb-3 mt-3">
+      <div class="col-md-2">
+        <i class="fas fa-arrow-left"></i>
+      </div>
+      <div class="col-md-10">
+        <div class="row">
+          <div class="h5">{{user.name}}</div>
+        </div>
+        <div class="row">
+          <small>25則貼文</small>
+        </div>
+      </div>
+    </div>
+
+    {{!-- 背景圖區域 --}}
+    <div class="row bg bg-info">
+      <img class="img-fluid"
+        src="https://content.skyscnr.com/m/59807c662e7952e2/original/GettyImages-478367609.jpg?resize=800px:600px&quality=100"
+        alt="..." style="width:100%; height:180px;">
+
+    </div>
+
+    {{!-- 大頭貼區塊 --}}
+    <div class="row mt-1 mb-2" style="position: relative; top:-50px;">
+      <div class="col-md-8">
+        <img src="{{user.avatar}}" alt="..." class="rounded-circle" style="width: 100px; height:100px;">
+
+      </div>
+      <div class="col-md-4" style=" text-align:center; margin-top:60px;">
+        <a class="btn" style="border-radius: 40px; color:#FF6600; border:1px #FFAC55 solid;" href="#"
+          data-toggle="modal" data-target="#userData">編輯個人資料</a>
+      </div>
+    </div>
+    <!-- userData Modal -->
+    <div class="modal fade" id="userData" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form action="/user/self?_method=PUT" method="post" enctype="multipart/form-data">
+
+            <div style="display: flex; justify-content:space-between;" class="p-3">
+              <div style="display: flex; justify-content:flex-start">
+                <span data-dismiss="modal" style="color:#FF6600; margin-right: 30px;">X</span>
+                <div class="font-weight-bold">編輯個人資料</div>
+              </div>
+
+
+              <button type="submit" class="btn btn-secondary"
+                style="border-radius: 40px; background-color:#FF6600; padding:0 6px; border:honeydew 1px solid;">儲存
+              </button>
+            </div>
+
+            {{!-- 編輯個人資料圖片 --}}
+
+            <img class="image-fluid"
+              src="https://content.skyscnr.com/m/59807c662e7952e2/original/GettyImages-478367609.jpg?resize=800px:600px&quality=100"
+              style="width:100%; height:160px;">
+            {{!-- <input type="file" name="image">
+            <i class="fas fa-camera-retro" style="position:relative; left:-62.5px; top: 10px"></i> --}}
+            {{!-- 編輯個人資料大頭貼圖片 --}}
+            <div class="row mt-1 mb-2">
+              <div class=" col-md-8">
+                <img src="{{user.avatar}}" alt="..." id="avatarImage" class="rounded-circle"
+                  style="position:relative; width: 100px; height:100px;">
+
+                <input type="file" id="avatar" name="avatar">
+                <i class="fas fa-camera-retro" style="position:relative; left:-62.5px; top: 10px"></i>
+
+
+              </div>
+            </div>
+            <div class="p-3">
+              <div style="background-color: #F5F8FA;">
+                <small for="exampleInputEmail1" style="color:#657786">名稱1</small>
+                <input type="text" id="exampleInputEmail1" name="name"
+                  style="border:0px; width:100%; border-bottom:2px solid grey; background-color:#F5F8FA;"
+                  value="{{user.name}}">
+
+              </div>
+
+
+              <div style="background-color: #F5F8FA; margin-top:40px;">
+                <small for="exampleInputEmail1" style="color:#657786">自我介紹</small>
+                <textarea id="exampleInputEmail1" name="introduction"
+                  style="border:0px; width:100%; border-bottom:2px solid grey; background-color:#F5F8FA; height:150px;"
+                  value="">{{user.introduction}}</textarea>
+
+              </div>
+
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+    {{!-- 個人介紹區域 --}}
+
+    <div class="row d-block p-2">
+      <div class="h4" style="margin-bottom:0">{{user.name}}</div>
+      <div><small>{{user.account}}</small></div>
+      <div class="mt-2">{{user.introduction}}</div>
+      <div class="mt-2">
+        <div class="font-weight-bold">{{users.FollowerCount}} 個<span class="text-secondary mr-3">跟隨中</span>59 位<span
+            class="text-secondary">跟隨者</span></div>
+      </div>
+    </div>
+
+    {{!-- 導航欄 --}}
+    <div class="row mt-3 border">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link   text-secondary font-weight-bold" href="
+            /user/self">推文</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  text-secondary font-weight-bold" href="/user/self/replies">推文與回覆</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active font-weight-bold" style="color:#FF6600; border-bottom:3px solid #FF6600;"
+            href="/user/self/like">喜歡的內容</a>
+        </li>
+      </ul>
+    </div>
+
+    {{!-- 留言區域 --}}
+    {{#each tweets}}
+    <div class="row  border" style="padding-top:8px; padding-bottom:10px; word-break:break-all; padding-bottom:10px;">
+      <div class="col-md-2" style="padding-right: 0px; ">
+        <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+      </div>
+      <div class="col-md-10" style="padding-left: 0px;">
+        <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{moment
+            this.createdAt}}</span>
+        </div>
+        <div>{{this.description}}</div>
+        <span class="mr-4 "><i class="far fa-comment"></i> 55</span>
+        <span><i class="fas fa-heart" style="color:#E64D7D"> </i> 479</span>
+        </span>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+
+  {{!-- 右邊區域 --}}
+  <div class="col-md-3">
+    <div class='rounded' style="background-color: #F5F8FA ;">
+
+      <div class="p-2">
+        跟隨誰
+      </div>
+      {{#each users}}
+      <div
+        style="display: flex; justify-content:space-between; border-top:#E6ECF0 1px solid; border-bottom:#E6ECF0 1px solid;"
+        class="p-2">
+        <div style="display: flex;">
+          <img src={{this.avatar}} style="width: 50px; height:50px; border-radius:50%;">
+          <div>
+            <div>{{this.name}}</div>
+            <div>{{this.account}}</div>
+          </div>
+        </div>
+
+        <div>
+          {{#if this.isFollowed }}
+          <form action="/user/self/following/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
+              class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
+          </form>
+          {{else}}
+          <form action="/user/self/following/{{this.id}}" method="POST"><button type="submit" class="btn btn-block mt-1"
+              style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+  const avatar = document.querySelector('#avatar')
+  console.log(avatar)
+  const avatarImage = document.querySelector('#avatarImage')
+  console.log(avatarImage)
+
+  avatar.addEventListener("change", handleFiles, false);
+
+  function handleFiles() {
+    const file = this.files[0];//將上傳檔案轉換為base64字串
+
+    const fr = new FileReader();//建立FileReader物件
+    fr.onload = function (e) {
+      console.log(e.target.result)
+      avatarImage.src = e.target.result
+    };
+
+    // 使用 readAsDataURL 將圖片轉成 Base64
+    fr.readAsDataURL(file);    /* now you can work with the file list */
+  }
+</script>

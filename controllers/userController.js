@@ -5,6 +5,7 @@ const user = require('../models/user')
 const User = db.User
 const Followship = db.Followship
 const Tweet = db.Tweet
+const Like = db.Like
 const moment = require('moment')
 
 
@@ -257,7 +258,30 @@ const userController = {
 
     },
 
+    getLike: (req, res) => {
+        const likeTweeets = Tweet.findAll({
+            include: [
+                { model: User, as: 'LikedUsers' }
+            ]
+        })
+        console.log('===================')
+        console.log(req.user)
+        console.log('===================')
+        Promise.all([likeTweeets])
+            .then(responses => {
+                let tweets = responses[0]
+                tweets = tweets.map(tweet => ({
+                    ...tweet.dataValues,
+                    isLiked: req.user.LikedTweets.map(d => d.id).includes(req.user.id)
+                }))
+                console.log(tweets)
+                return res.render('userLike', { tweets })
+            })
+            .catch(error => {
+                console.log(error)
+            })
 
+    },
 
 
 

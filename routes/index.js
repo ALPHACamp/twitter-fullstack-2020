@@ -82,7 +82,8 @@ module.exports = (app, passport) => {
     // 前台查看被那些人跟隨
     app.get('/user/:id/followers', authenticated, userController.getFollowers)
 
-
+    // 前台查看喜歡那些推文
+    app.get('/user/self/like', authenticated, userController.getLike)
 
 
 
