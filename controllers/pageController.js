@@ -9,6 +9,11 @@ const tweetController = require('./tweetController')
 const pageController = {
   getIndex: async (req, res) => {
     try {
+      if (helpers.getUser(req).role === 'admin') {
+        req.flash('error_messages', '無法瀏覽此頁面')
+        return res.redirect('/admin/tweets')
+      }
+
       const [user, tweets] = await Promise.all([
         userController.getUser(req, res),
         tweetController.getTweets(req, res)
