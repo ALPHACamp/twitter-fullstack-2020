@@ -71,10 +71,10 @@
       </div>
       <div class="col-md-10">
         <div class="row">
-          <div class="h5">John Does</div>
+          <div class="h5">{{user.name}}</div>
         </div>
         <div class="row">
-          <small>25則貼文</small>
+          <small>xxx 則貼文</small>
         </div>
       </div>
     </div>
@@ -95,30 +95,36 @@
     </div>
 
     {{!-- 留言區域 --}}
-    {{#each users}}
-    {{#if this.isFollowed }}
+    {{#each users }}
     <div class="row  border " style="padding-top:8px; padding-bottom:10px;">
       <div class="col-md-2" style="padding-right: 0px; ">
-        <img src={{this.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+        <img
+          src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
+          alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
         <div style="display: flex; justify-content:space-between">
           <div>
-            <div class="font-weight-bold">{{this.name}}</div>
+            <div class="font-weight-bold">{{this.name}} </div>
             <div class="text-secondary">{{this.account}}</div>
+            <div class="text-secondary">{{this.introduction}}</div>
           </div>
-          <div>
-            <form action="/user/self/following/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
-                class="btn btn-block text-light mt-1"
-                style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
-            </form>
-          </div>
-        </div>
-        <div>{{this.introduction}}</div>
 
+          {{#if this.isFollowings }}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
+              class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
+          </form>
+
+          {{else}}
+          <form action="/followships/{{this.id}}" method="POST"><button type="submit" class="btn btn-block mt-1"
+              style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>
+          </form>
+          {{/if}}
+        </div>
+
+        <div>{{this.introduction}}</div>
       </div>
     </div>
-    {{/if}}
     {{/each}}
   </div>
 
@@ -129,7 +135,7 @@
       <div class="p-2">
         跟隨誰
       </div>
-      {{#each users}}
+      {{#each users2}}
       <div
         style="display: flex; justify-content:space-between; border-top:#E6ECF0 1px solid; border-bottom:#E6ECF0 1px solid;"
         class="p-2">
@@ -145,12 +151,12 @@
 
         <div>
           {{#if this.isFollowed }}
-          <form action="/user/self/following/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
               class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
           </form>
           {{else}}
-          <form action="/user/self/following/{{this.id}}" method="POST"><button type="submit"
-              class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">跟隨</button>
+          <form action="/followships/{{this.id}}" method="POST"><button type="submit" class="btn btn-block mt-1"
+              style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>
           </form>
           {{/if}}
         </div>
