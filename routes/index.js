@@ -34,7 +34,7 @@ module.exports = (app, passport) => {
   app.get('/users/:userId/replies', authenticated, pageController.getUserReplies)
   app.get('/users/:userId/likes', authenticated, pageController.getUserLikes)
   app.get('/users/:userId/followers', pageController.getUserFollowers)
-  // app.get('/users/:userId/followings', authenticated, userController.getUserFollowings)
+  app.get('/users/:userId/followings', pageController.getUserFollowings)
 
   app.get('/users/:userId/edit', authenticated, userController.editUserPage)
   app.put('/users/:userId', authenticated, userController.putUser)

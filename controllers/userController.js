@@ -121,6 +121,23 @@ const userController = {
     }
   },
 
+  getUserFollowings: async (req, res) => {
+    try {
+      const userId = Number(req.params.userId)
+      let followings = await User.findAll({
+        where: { id: userId },
+        attributes: [],
+        include: [
+          { model: User, as: 'Followings', attributes: ['id', 'name', 'avatar', 'introduction', 'account'] }
+        ]
+      })
+      followings = followings[0].dataValues.Followings.map(following => (following.dataValues))
+      return followings
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
   signUpPage: (req, res) => {
     return res.render('signup')
   },
