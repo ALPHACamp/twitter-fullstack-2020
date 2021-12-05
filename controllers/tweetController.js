@@ -27,7 +27,7 @@ const tweetController = {
     return Tweet.findByPk(req.params.id, {
       include: [
         User,
-        { model: Reply, include: [User, Tweet] }
+        { model: Reply, include: [User] }
       ]
     }).then(tweet => {
       return res.render('tweet', {
