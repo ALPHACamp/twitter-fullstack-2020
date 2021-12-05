@@ -24,7 +24,6 @@ module.exports = (app, passport) => {
     }
     res.redirect('/admin/signin')
   }
-
   //admin首頁
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
 
@@ -68,4 +67,9 @@ module.exports = (app, passport) => {
   app.post('/tweets/:id/like', authenticated, userController.addLike)
   //user移除喜歡推文
   app.post('/tweets/:id/unlike', authenticated, userController.removeLike)
+
+  //user追隨
+  app.post('/followships', authenticated, userController.addFollowships)
+  //user取消追隨
+  app.delete('/followships/:id', authenticated, userController.removeFollowing)
 }

@@ -4,6 +4,7 @@ const helpers = require('../_helpers')
 const User = db.User
 const Tweet = db.Tweet
 const Like = db.Like
+const Followship = db.Followship
 
 const userController = {
   //user登入
@@ -90,12 +91,13 @@ const userController = {
   },
 
   addLike: (req, res) => {
+    const UserId = helpers.getUser(req).id ? helpers.getUser(req).id : req.user.id
     // console.log('req params: ' + req.params.id)
     // console.log('req body: ' + req.body.id)
     Tweet.findByPk(req.params.id)
       .then((tweet) => {
         return Like.create({
-          UserId: req.user.id,
+          UserId: UserId,
           TweetId: req.params.id,
         })
       })
@@ -112,6 +114,37 @@ const userController = {
         TweetId: req.params.id,
       },
     }).then((like) => {
+      return res.redirect('back')
+    })
+  },
+
+  addFollowships: (req, res) => {
+    const UserId = helpers.getUser(req).id ? helpers.getUser(req).id : req.user.id
+
+    if (req.body.id === UserId.toString()) {
+      return res.send({ error: 'can not follow self' })
+      // return res.redirect('back')
+    } else {
+      console.log('add 2')
+      return Followship.create({
+        followerId: UserId,
+        followingId: req.body.id,
+      }).then((followship) => {
+        return res.redirect('back')
+      })
+    }
+  },
+
+  removeFollowing: (req, res) => {
+    const UserId = helpers.getUser(req).id ? helpers.getUser(req).id : req.user.id
+    console.log('req params: ' + UserId)
+    console.log('req body: ' + req.params.id)
+    return Followship.destroy({
+      where: {
+        followerId: UserId,
+        followingId: req.params.id,
+      },
+    }).then((followship) => {
       return res.redirect('back')
     })
   },
