@@ -38,7 +38,19 @@ const pageController = {
         userController.getUserReplies(req, res)
       ])
       // 不熟 sequelize 待優化，邏輯：reply -> tweet -> user -> account(field)
-      return res.json({ user, replies })
+      return res.json({ user, replies, userRepliesPage: true })
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  getUserLikes: async (req, res) => {
+    try {
+      const [user, tweets] = await Promise.all([
+        userController.getUserProfile(req, res),
+        userController.getUserLikes(req, res)
+      ])
+      return res.json({ user, tweets, userLikesPage: true })
     } catch (err) {
       console.error(err)
     }
