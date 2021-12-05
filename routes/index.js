@@ -25,7 +25,7 @@ module.exports = (app, passport) => {
   // user 相關
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, pageController.getIndex)
-  // app.post('/tweets', authenticated)  // 發文
+  app.post('/tweets', authenticated, tweetController.putTweet)  // 發文
 
   // app.get('/api/users/:userId')  // 瀏覽編輯使用者頁面
   // app.post('/api/users/:userId')  // 更新使用者的資訊
