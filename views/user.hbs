@@ -23,10 +23,10 @@
     {{!-- USER PARTIALS --}}
     {{#if indexPage}}{{> tweets}}{{/if}}
     {{#if userTweetsPage}}{{> profileTweets}}{{/if}}
-    {{!-- {{> profileReplies}} --}}
-    {{!-- {{> profileLikes}} --}}
-    {{!-- {{> profileFollowing}} --}}
-    {{!-- {{> profileFollower}} --}}
+    {{#if userRepliesPage}}{{> profileReplies}}{{/if}}
+    {{#if userLikesPage}}{{> profileLikes}}{{/if}}
+    {{#if userFollowerPage}}{{> profileFollower}}{{/if}}
+    {{#if userFollowingPage}}{{> profileFollowing}}{{/if}}
     {{!-- {{> tweet}} --}}
 
     {{!-- ADMIN PARTIALS --}}
