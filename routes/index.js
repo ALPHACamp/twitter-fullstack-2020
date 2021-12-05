@@ -5,7 +5,7 @@ const helpers = require('../_helpers')
 
 module.exports = (app, passport) => {
   //驗証使用者已登入
-  const authenticated = (req, res, next) => {
+  /* const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (req.user.role === 'user') {
         return next()
@@ -23,8 +23,23 @@ module.exports = (app, passport) => {
       return res.redirect('/')
     }
     res.redirect('/admin/signin')
+  }*/
+  const authenticated = (req, res, next) => {
+    if (helpers.ensureAuthenticated(req)) {
+      return next()
+    }
+    res.redirect('/signin')
   }
-
+  // 系統管理員認證
+  const authenticatedAdmin = (req, res, next) => {
+    if (helpers.ensureAuthenticated(req)) {
+      if (helpers.getUser(req).isAdmin) {
+        return next()
+      }
+      return res.redirect('/')
+    }
+    res.redirect('/signin')
+  }
   //admin首頁
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
 
@@ -71,4 +86,6 @@ module.exports = (app, passport) => {
 
   //user追隨
   app.post('/followships', authenticated, userController.addFollowships)
+  //user取消追隨
+  app.delete('/followships/:id', authenticated, userController.removeFollowing)
 }
