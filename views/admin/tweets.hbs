@@ -1,19 +1,27 @@
-<div>
-  admin tweets
+<div id="column1" style="float:left; width:20%; position: fixed; top:0%; left:5%">{{> adminNavigation}}</div>
+
+<div class="d-flex justify-content-center">
+  <div id="column2" class="mx-auto my-auto" style="float:left;width:50%;">
+    <h3>推文列表</h3>
+    {{#each tweets}}
+      <div>
+        <div>
+          <div>
+            <img src='{{this.User.avatar}}' style= "width:50PX;height:50px; border-radius:100%;"></img>
+          </div>
+          <span>{{this.User.name}}</span>
+          @<span>{{this.User.account}}</span>
+          <span>{{moment this.createdAt}}</span>
+        </div>
+        <div>
+          <span>{{this.description}}</span>
+        </div>
+        <form action='/admin/tweets/{{this.id}}?_method=DELETE' method='POST' style='display: inline;'>
+          <button type='submit' class='btn btn-link'>Delete</button>
+        </form>
+      </div>
+      <br />
+    {{/each}}
+  </div>
 </div>
 
-{{#each tweets}}
-  <div>
-    <div>
-      <span>{{this.User.name}}</span>
-      @<span>{{this.User.account}}</span>
-    </div>
-    <div>
-      <span>{{this.description}}</span>
-    </div>
-    <form action='/admin/tweets/{{this.id}}?_method=DELETE' method='POST' style='display: inline;'>
-      <button type='submit' class='btn btn-link'>Delete</button>
-    </form>
-  </div>
-  <br />
-{{/each}}
