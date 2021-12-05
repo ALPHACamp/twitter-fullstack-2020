@@ -30,9 +30,9 @@ module.exports = (app, passport) => {
   // app.get('/api/users/:userId')  // 瀏覽編輯使用者頁面
   // app.post('/api/users/:userId')  // 更新使用者的資訊
 
-  app.get('/users/:userId/tweets', authenticated, pageController.getUserTweets)
-  app.get('/users/:userId/replies', authenticated, pageController.getUserReplies)
-  app.get('/users/:userId/likes', authenticated, pageController.getUserLikes)
+  app.get('/users/:userId/tweets', pageController.getUserTweets)
+  app.get('/users/:userId/replies', pageController.getUserReplies)
+  app.get('/users/:userId/likes', pageController.getUserLikes)
   app.get('/users/:userId/followers', pageController.getUserFollowers)
   app.get('/users/:userId/followings', pageController.getUserFollowings)
 

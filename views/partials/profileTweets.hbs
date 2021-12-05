@@ -23,7 +23,7 @@
   <span class="at-name">{{user.account}}</span>
   <span class="introduction">{{user.introduction}}</span>
   <div class="followship">
-    <span class="following">{{user.followingCount}}個
+    <span class="following">{{user.followingCount}} 個
       <a href="/users/{{user.id}}/followings">跟隨中</a>
     </span>
     <span class="follower">{{user.followerCount}}萬 位
@@ -46,7 +46,7 @@
     <div class="postcontent">
       <a class="postuser">
         <span class="name ellipsis">{{../user.name}}</span>
-        <span class="at-name ellipsis">@{{../user.account}}jfalksdflka</span>
+        <span class="at-name ellipsis">{{../user.account}}</span>
         <span class="timer ellipsis">{{../user.createdAt}}</span>
       </a>
       <button type="button" class="content" id="content">

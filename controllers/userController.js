@@ -72,10 +72,13 @@ const userController = {
         ],
         // 不熟 sequelize 待優化，邏輯：reply -> tweet -> user -> account(field)
         include: [
-          { model: Tweet, attributes: [], include: [{ model: User, attributes: ['account'] }] }
+          { model: Tweet, attributes: ['id'], include: [{ model: User, attributes: ['account'] }] }
         ],
-        order: [['createdAt', 'DESC']]
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
       })
+      console.log(replies)
       return replies
     } catch (err) {
       console.error(err)

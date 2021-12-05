@@ -38,7 +38,8 @@ const pageController = {
         userController.getUserReplies(req, res)
       ])
       // 不熟 sequelize 待優化，邏輯：reply -> tweet -> user -> account(field)
-      return res.json({ user, replies, userRepliesPage: true })
+      // return res.json({ user, replies, userRepliesPage: true })
+      return res.render('user', { user, replies, userRepliesPage: true })
     } catch (err) {
       console.error(err)
     }
