@@ -24,10 +24,10 @@
   <span class="introduction">{{user.introduction}}</span>
   <div class="followship">
     <span class="following">{{user.followingCount}}個
-      <a>跟隨中</a>
+      <a href="/users/{{user.id}}/followings">跟隨中</a>
     </span>
     <span class="follower">{{user.followerCount}}萬 位
-      <a>跟隨者</a>
+      <a href="/users/{{user.id}}/followers">跟隨者</a>
     </span>
   </div>
 </div>
