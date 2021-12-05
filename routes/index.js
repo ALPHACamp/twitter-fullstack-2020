@@ -63,4 +63,9 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticated, tweetController.getTweets)
   //user推文
   app.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
+
+  //user喜歡推文
+  app.post('/tweets/:id/like', authenticated, userController.addLike)
+  //user移除喜歡推文
+  app.post('/tweets/:id/unlike', authenticated, userController.removeLike)
 }

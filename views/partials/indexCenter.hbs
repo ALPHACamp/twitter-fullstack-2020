@@ -69,12 +69,12 @@
                 {{/if}}
                 <p style="float:left;">{{this.repliesCount}}</p>
                 {{#if isLiked}}
-                    <form id="likeButton" action="/tweets/{{user.id}}/unlike" method="post" style="float:left;" class="ml-3 ">
+                    <form id="likeButton" action="/tweets/{{this.id}}/unlike" method="post" style="float:left;" class="ml-3 ">
                         <button type="submit" style="border:0px; background:inherit;"><i
                                 class="fas fa-heart"></i></button>
                     </form>
                 {{else}}
-                    <form id="likeButton" action="/tweets/{{user.id}}/like" method="post" style="float:left;" class="ml-3">
+                    <form id="likeButton" action="/tweets/{{this.id}}/like" method="post" style="float:left;" class="ml-3">
                         <button type="submit" style="border:0px; background:inherit;"><i
                                 class="far fa-heart"></i></button>
                     </form>
