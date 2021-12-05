@@ -7,17 +7,17 @@ module.exports = (app, passport) => {
   //驗証使用者已登入
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (req.user.role === 'user') {
+      if (helpers.getUser(req).role === 'user') {
         return next()
       }
-      return res.redirect('/admin')
+      return res.redirect('/admin/tweets')
     }
     res.redirect('/signin')
   }
   //驗証Admin已登入
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (req.user.role === 'admin') {
+      if (helpers.getUser(req).role === 'admin') {
         return next()
       }
       return res.redirect('/')

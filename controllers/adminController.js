@@ -1,3 +1,4 @@
+const sequelize = require('sequelize')
 const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
@@ -45,10 +46,33 @@ const adminController = {
 
   //admin管理使用者
   getUsers: (req, res) => {
-    //return User.findAll({ raw: true, nest: true, include: [User] }).then((users) => {
-    return User.findAll({ raw: true, nest: true }).then((users) => {
-      console.log(users)
+    return User.findAll({
+      attributes: [
+        'id',
+        'account',
+        'name',
+        'cover',
+        'avatar',
+        'role',
+        [
+          //likeCount reference from https://github.com/Emily81926/twitter-api-2020 小鹿Kerwin, Vince, Ya Chu, Yang, Chaco
+          sequelize.literal(
+            `(select count(Tweets.UserId) from Tweets inner join Likes on Tweets.id = Likes.TweetId where Tweets.UserId = User.id)`
+          ),
+          'likeCount',
+        ],
+      ],
+      include: [Tweet, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }],
+    }).then((users) => {
       users = users.filter((user) => user.role === 'user')
+      users = users.map((r) => {
+        return {
+          ...r.dataValues,
+          tweetCount: r.Tweets.length,
+          followerCount: r.Followers.length,
+          followingCount: r.Followings.length,
+        }
+      })
       return res.render('admin/users', { users })
     })
   },

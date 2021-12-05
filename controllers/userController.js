@@ -28,7 +28,7 @@ const userController = {
     // confirm password
     if (req.body.passwordCheck !== req.body.password) {
       req.flash('error_messages', '兩次密碼輸入不同！')
-      return res.redirect('/signup')
+      return res.redirect('/signin')
     } else {
       // confirm unique user
 

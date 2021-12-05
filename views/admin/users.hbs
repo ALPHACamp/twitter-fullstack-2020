@@ -6,8 +6,16 @@
     {{#each users}}
       <div>
         <div>
+          <div>
+            <img src='{{this.avatar}}' style= "width:50PX;height:50px; border-radius:100%;"></img>
+            <img src='{{this.cover}}' style= "width:50PX;height:50px;"></img>
+          </div>
           <span>{{this.name}}</span>
           @<span>{{this.account}}</span>
+          <span>tweet{{this.tweetCount}}</span>
+          <span>被追蹤{{this.followerCount}}</span>
+          <span>追蹤{{this.followingCount}}</span>
+          <span>like{{this.likeCount}}</span>
         </div>
       </div>
       <br />

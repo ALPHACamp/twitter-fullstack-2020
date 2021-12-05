@@ -1,7 +1,7 @@
-"use strict"
+'use strict'
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    "User",
+    'User',
     {
       name: DataTypes.STRING,
       email: DataTypes.STRING,
@@ -20,13 +20,13 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Like)
     User.belongsToMany(User, {
       through: models.Followship,
-      foreignKey: "followingId",
-      as: "Followers",
+      foreignKey: 'followingId',
+      as: 'Followers',
     })
     User.belongsToMany(User, {
       through: models.Followship,
-      foreignKey: "followerId",
-      as: "Followings",
+      foreignKey: 'followerId',
+      as: 'Followings',
     })
   }
   return User
