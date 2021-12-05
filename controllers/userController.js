@@ -151,15 +151,16 @@ const userController = {
   },
 
   addFollowing: (req, res) => {
-    if (helpers.getUser(req).id === Number(req.params.id)) {
+    if (helpers.getUser(req).id === Number(req.body.id)) {
       req.flash('error_msg', '不能自己追蹤自己')
       return res.redirect('back')
     }
     return Followship.create({
       followerId: helpers.getUser(req).id,
-      followingId: req.params.id
+      followingId: req.body.id
     })
       .then((followship) => {
+        console.log(helpers.getUser(req))
         req.flash('success_msg', '追蹤成功')
         return res.redirect('back')
       })

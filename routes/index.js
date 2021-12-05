@@ -16,7 +16,7 @@ module.exports = (app, passport) => {
         return next()
       }
     }
-    res.redirect('/signin')
+    res.redirect('/admin/tweets')
   }
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
@@ -58,11 +58,12 @@ module.exports = (app, passport) => {
   app.post('/tweets', authenticated, tweetController.postTweet)
 
   // REPLY
-
+  app.post('/tweets/:id/replies', authenticated, replyController.postReply)
+  app.get('/tweets/:id/replies' ,authenticated, replyController.getReply)
   // LIKE
   app.post('/tweets/:id/like', authenticated, likeController.postLike)
   app.post('/tweets/:id/unlike', authenticated, likeController.deleteLike)
   // FOLLOWSHIP
-  app.post('/followships/:id', authenticated, userController.addFollowing)
+  app.post('/followships', authenticated, userController.addFollowing)
   app.delete('/followships/:id', authenticated, userController.removeFollowing)
 }
