@@ -218,7 +218,7 @@ const userController = {
     return res.redirect('/signin')
   },
 
-  editUserPage: async (req, res) => {
+  getSettings: async (req, res) => {
     try {
       const userId = req.params.userId
 
@@ -233,7 +233,7 @@ const userController = {
     }
   },
 
-  putUser: async (req, res) => {
+  updateSettings: async (req, res) => {
     try {
       const userId = req.params.userId
 
