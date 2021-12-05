@@ -1,8 +1,11 @@
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
 const db = require('../models')
+const followship = require('../models/followship')
 const User = db.User
 const Tweet = db.Tweet
+const Like = db.Like
+const Followship = db.Followship
 
 
 const adminController = {
@@ -23,7 +26,7 @@ const adminController = {
       row: true,
       nest: true,
       order: [['createdAt', 'DESC']],
-      include: User
+      include: [User]
     }).then( tweets => {
       const data = tweets.map(t => ({
         ...t.dataValues,
@@ -49,6 +52,21 @@ const adminController = {
       })
       .then(()=>{
         res.redirect('back')
+      })
+  },
+
+  // admin get all users
+  getUsers: (req, res) => {
+    // 撈出所有Tweet , include reply、like、followship
+    // 依使用者推文數量排序
+    // 將需要渲染的資料傳去admin/users
+      User.findAll({
+      raw: true,
+      nest: true,
+    })
+      .then( users => {
+        console.log(users[0])
+        return res.render('admin/users', {users})
       })
   },
 
