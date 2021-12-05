@@ -51,7 +51,8 @@ const pageController = {
         userController.getUserProfile(req, res),
         userController.getUserLikes(req, res)
       ])
-      return res.json({ user, tweets, userLikesPage: true })
+      // return res.json({ user, tweets, userLikesPage: true })
+      return res.render('user', { user, tweets, userLikesPage: true })
     } catch (err) {
       console.error(err)
     }

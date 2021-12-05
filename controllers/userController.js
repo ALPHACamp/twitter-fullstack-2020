@@ -78,7 +78,6 @@ const userController = {
         raw: true,
         nest: true
       })
-      console.log(replies)
       return replies
     } catch (err) {
       console.error(err)
@@ -91,12 +90,22 @@ const userController = {
       const likes = await Like.findAll({
         where: { UserId: userId },
         attributes: [],
-        include: [
-          { model: Tweet }
+        include: [{
+          model: Tweet,
+          attributes: [
+            'id',
+            'description',
+            'createdAt',
+            [sequelize.literal('(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
+            [sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'), 'likeCount']
+          ]
+        }
         ],
-        order: [['createdAt', 'DESC']]
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
       })
-      const tweets = likes.map(like => (like.toJSON()))
+      const tweets = likes.map(like => (like.Tweet))
       return tweets
     } catch (err) {
       console.error(err)

@@ -1,13 +1,13 @@
 <div class="back-arror-header">
   <a><i class='back-arror'></i></a>
   <div class="header-text">
-    <span class="name">Mary Jane</span>
-    <span class="post-count">1.4萬 推文</span>
+    <span class="name">{{user.name}}</span>
+    <span class="post-count">{{user.tweetCount}}萬 推文</span>
   </div>
 </div>
 <div class="banner">
-  <img src="/icons/cover.svg" alt="" class="cover">
-  <img src="/icons/avatar-lg.svg" alt="" class="avatar">
+  <img src="{{user.cover}}" alt="" class="cover">
+  <img src="{{user.avatar}}" alt="" class="avatar">
   <div class="buttons">
     {{!-- #if user.id === /:userId -> 自己的頁面 --}}
     <button type="button" class="btn-outline sm">編輯個人資料</button>
@@ -19,48 +19,47 @@
   </div>
 </div>
 <div class="information">
-  <span class="name">Mary Jane</span>
-  <span class="at-name">@mjjane</span>
-  <span class="introduction">WHat a cool demo views here</span>
+  <span class="name">{{user.name}}</span>
+  <span class="at-name">{{user.account}}</span>
+  <span class="introduction">{{user.introduction}}</span>
   <div class="followship">
-    <span class="following">1,174 個
-      <a>跟隨中</a>
+    <span class="following">{{user.followingCount}} 個
+      <a href="/users/{{user.id}}/followings">跟隨中</a>
     </span>
-    <span class="follower">6.3萬 位
-      <a>跟隨者</a>
+    <span class="follower">{{user.followerCount}}萬 位
+      <a href="/users/{{user.id}}/followers">跟隨者</a>
     </span>
   </div>
 </div>
 <div class="paginator">
-  <a class="">推文</a>
-  <a class="">推文與回覆</a>
-  <a class="active">喜歡的內容</a>
+  <a class="" href="/users/{{user.id}}/tweets">推文</a>
+  <a class="" href="/users/{{user.id}}/replies">推文與回覆</a>
+  <a class="active" href="/users/{{user.id}}/likes">喜歡的內容</a>
 </div>
 <div class="tweets">
 
-
-  {{#each data}}
+  {{#each tweets}}
   <div class="tweet">
     <a>
       <img class="thumbnail" src="/icons/avatar.svg" alt="">
     </a>
     <div class="postcontent">
       <a class="postuser">
-        <span class="name ellipsis">{{this.User.name}}</span>
-        <span class="at-name ellipsis">@{{this.User.account}}jfalksdflka</span>
-        <span class="timer ellipsis">{{this.User.createdAt}}</span>
+        <span class="name ellipsis">{{../user.name}}</span>
+        <span class="at-name ellipsis">{{../user.account}}</span>
+        <span class="timer ellipsis">{{../user.createdAt}}</span>
       </a>
       <button type="button" class="content" id="content">
         {{this.description}}
       </button>
       <div class="action">
-        <button type="button" class="commenting" data-userId="{{user.id}}">
+        <button type="button" class="commenting" data-userId="{{../user.id}}">
           <i class='comment'></i>
-          13
+          {{this.replyCount}}
         </button>
         <button type="button" class="liking active">
           <i class='like lg active'></i>
-          76
+          {{this.likeCount}}
         </button>
       </div>
     </div>
