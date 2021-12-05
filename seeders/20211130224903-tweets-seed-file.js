@@ -1,5 +1,6 @@
-'use strict';
+'use strict'
 const faker = require('faker')
+const { USER_ID_BEGIN, TWEETS_PER_USER, TWEET_COUNT } = require('../config/seeder.js')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     /*
@@ -12,19 +13,18 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    await queryInterface.bulkInsert('Tweets', 
+    await queryInterface.bulkInsert(
+      'Tweets',
       // 讓tweet Po文時間更分散, 到時候不會按時間排結果都是某人的 tweets
-      Array.from({ length: 50 }).map((d, i) =>
-        (
-          {
-            id: i + 1,
-            description: faker.lorem.text(),
-            UserId: (i % 5) + 2,    // 從id:2 user1 開始
-            createdAt: faker.date.recent(),
-            updatedAt: new Date()
-          }
-        )
-      ), {})
+      Array.from({ length: TWEET_COUNT }).map((_, i) => ({
+        id: i + 1,
+        UserId: Math.floor(i / TWEETS_PER_USER) + USER_ID_BEGIN,
+        description: faker.lorem.text(),
+        createdAt: faker.date.recent(),
+        updatedAt: new Date(),
+      })),
+      {}
+    )
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -36,5 +36,5 @@ module.exports = {
       return queryInterface.bulkDelete('People', null, {});
     */
     await queryInterface.bulkDelete('Tweets', null, {})
-  }
-};
+  },
+}
