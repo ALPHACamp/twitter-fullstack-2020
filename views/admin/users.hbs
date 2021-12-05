@@ -1,3 +1,13 @@
 <div>
   admin users
 </div>
+
+{{#each users}}
+  <div>
+    <div>
+      <span>{{this.name}}</span>
+      @<span>{{this.account}}</span>
+    </div>
+  </div>
+  <br />
+{{/each}}

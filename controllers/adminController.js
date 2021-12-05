@@ -22,7 +22,12 @@ const adminController = {
   //admin管理推文
   getTweets: (req, res) => {
     return Tweet.findAll({ raw: true, nest: true, include: [User] }).then((tweets) => {
-      //console.log(tweets)
+      tweets = tweets.map((r) => {
+        return {
+          ...r,
+          description: r.description.length > 50 ? r.description.substring(0, 50) + '...' : r.description,
+        }
+      })
       return res.render('admin/tweets', { tweets })
     })
   },
@@ -37,11 +42,12 @@ const adminController = {
 
   //admin管理使用者
   getUsers: (req, res) => {
-    return Tweet.findAll({ raw: true, nest: true, include: [User] }).then((tweets) => {
-      //console.log(tweets)
-      return res.render('admin/tweets', { tweets })
+    //return User.findAll({ raw: true, nest: true, include: [User] }).then((users) => {
+    return User.findAll({ raw: true, nest: true }).then((users) => {
+      console.log(users)
+      users = users.filter((user) => user.role === 'user')
+      return res.render('admin/users', { users })
     })
-    return res.render('admin/users')
   },
 }
 module.exports = adminController
