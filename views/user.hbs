@@ -21,7 +21,8 @@
 
   <div class="main">
     {{!-- USER PARTIALS --}}
-    {{> tweets}}
+    {{#if tweetPage}} {{>tweet}} {{/if}}
+    {{!-- {{> tweets}} --}}
     {{!-- {{> profileTweets}} --}}
     {{!-- {{> profileReplies}} --}}
     {{!-- {{> profileLikes}} --}}
@@ -37,7 +38,23 @@
     <div class="popular">
       <span>Popular</span>
 
+      {{#each pops}}
       <div class="wrap">
+        <a href="/users/{{this.id}}/tweets"><img class="thumbnail" src="{{this.avatar}}" alt="#">
+          <span>
+            <span class="name">{{this.name}}</span>
+            <span class="at-name ellipsis">{{this.account}}</span>
+          </span>
+        </a>
+        {{#if this.isFollowing}}
+        <a class="btn-fill sm" href="#followship">正在追蹤</a>
+        {{else}}
+        <a class="btn-outline sm" href="#followship">跟隨</a>
+        {{/if}}
+      </div>
+      {{/each}}
+
+      {{!-- <div class="wrap">
         <a href="#"><img class="thumbnail" src="/icons/avatar.svg" alt="#">
           <span>
             <span class="name">Pizza Hut</span>
@@ -144,7 +161,7 @@
           </span>
         </a>
         <a class="btn-outline sm" href="#followship">跟隨</a>
-      </div>
+      </div> --}}
 
     </div>
 

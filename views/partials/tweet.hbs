@@ -7,9 +7,9 @@
 
 <div class="tweet">
 
-  <a class="tweetuser">
+  <a class="tweetuser" href="/users/{{tweet.User.id}}/tweets">
     <span>
-      <img class="thumbnail" src="/icons/avatar.svg" alt="">
+      <img class="thumbnail" src="{{tweet.User.avatar}}" alt="">
     </span>
     <span>
       <span class="name ellipsis">{{tweet.User.name}}</span>
@@ -24,17 +24,17 @@
     </div>
 
     <div class="datetime">
-      <span class="time">上午 10:05</span>
-      <span class="date">2020年6月10日</span>
+      <span class="time">{{tweet.time}}</span>
+      <span class="date">{{tweet.date}}</span>
     </div>
 
     <div class="stat">
       <span class="replied">
-        34
+        {{replies.length}}
         <a>回覆</a>
       </span>
       <span class="liked">
-        808
+        {{tweet.Likes.length}}
         <a>喜歡次數</a>
       </span>
     </div>
@@ -43,9 +43,21 @@
       <button type="button" class="commenting" data-userId="{{user.id}}">
         <i class='comment lg'></i>
       </button>
-      <button type="button" class="liking">
-        <i class='like lg'></i>
-      </button>
+
+      {{#if isLiked}}
+      <form action="/tweets/{{tweet.id}}/unlike" method="POST" style="display: inline;">
+        <button type="submit" class="btn btn-danger">
+          <i class='like lg active'></i>
+        </button>
+      </form>
+      {{else}}
+      <form action="/tweets/{{tweet.id}}/like" method="POST" style="display: inline;">
+        <button type="submit" class="btn btn-primary">
+          <i class='like lg'></i>
+        </button>
+      </form>
+      {{/if}}
+
     </div>
 
   </div>
@@ -54,18 +66,18 @@
 
 <div class="replies">
 
-  {{#each tweet.Replies}}
+  {{#each replies}}
   <div class="reply">
-    <a>
-      <img class="thumbnail" src="/icons/avatar.svg" alt="">
+    <a href="/users/{{this.User.id}}/tweets">
+      <img class="thumbnail" src="{{this.User.avatar}}" alt="">
     </a>
     <div class="comment">
-      <a class="commentuser">
-        <span class="name ellipsis">{{this.TweetId}}</span>
-        <span class="at-name ellipsis">@{{this.UserId}}jfalksdflka</span>
-        <span class="timer ellipsis">{{this.createdAt}}</span>
+      <a class="commentuser" href="/users/{{this.User.id}}/tweets">
+        <span class="name ellipsis">{{this.User.name}}</span>
+        <span class="at-name ellipsis">@{{this.User.account}}jfalksdflka</span>
+        <span class="timer ellipsis">{{moment this.createdAt}}</span>
       </a>
-      <a class="replyto">回覆
+      <a class="replyto" href="/users/{{../tweet.User.id}}/tweets">回覆
         <span class="at-name">@{{../tweet.User.account}}</span>
       </a>
       <div class="commentcomment">

@@ -54,7 +54,6 @@ const adminController = {
       
 
       return res.render('adminusers', { users })
-      // return res.json(users)
     } catch (err) { console.error(err) }
   },
 

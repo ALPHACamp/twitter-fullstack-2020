@@ -3,6 +3,7 @@ const db = require('../models')
 const { sequelize } = db
 const { Op } = db.Sequelize
 const { User, Tweet, Reply, Like, Followship } = db
+const tweetTime = require('../config/tweetTime')
 
 const tweetController = {
   // getTweets: async (req, res) => {
@@ -125,8 +126,71 @@ const tweetController = {
     }
   },
 
-  getTweet: (req, res) => {
-    res.send('Andrew Wu')
+  getTweet: async (req, res) => {
+    try {
+      let tweet =  await Tweet.findByPk(req.params.tweetId, {include: [
+        User,
+        Like
+      ]})
+      tweet.dataValues.time = tweetTime.time(tweet.dataValues.createdAt)
+      tweet.dataValues.date = tweetTime.date(tweet.dataValues.createdAt)
+      
+      let replies = await Reply.findAll({
+        where: { TweetId: tweet.id },
+        include: [{ model: User, attributes: { exclude: ['password'] }} ],
+        order: [['createdAt', 'DESC']]
+      })
+
+      const userId = helpers.getUser(req).id
+      let isLiked = !!await Like.findOne({ where: { UserId: userId, TweetId: req.params.tweetId } })
+
+      const pops = await tweetController.getPopular(req, res)
+      
+      return res.render('user', { 
+        tweet: tweet.toJSON(),
+        replies: replies.map(reply => reply.toJSON()),
+        isLiked,
+        tweetPage: true,
+        pops,
+      })
+      
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  getPopular: async (req, res) => {
+    try {
+      let pops = await User.findAll({
+        attributes: [
+          'id',
+          'email',
+          'name',
+          'avatar',
+          'account',
+          'role',
+          'createdAt',
+          [sequelize.literal(
+            '(SELECT COUNT(*) FROM followships WHERE followships.followingId = User.id)'
+          ), 'followerCount'],
+        ],
+      })
+
+      let followings = await Followship.findAll({ where: { followerId: helpers.getUser(req).id } })
+      followings = followings.map(following => following.dataValues.followingId)
+
+      pops = pops.filter(pop => pop.dataValues.role !== 'admin')
+      pops = pops.filter(pop => pop.dataValues.id !== helpers.getUser(req).id)
+      pops = pops.map(pop => ({
+        ...pop.dataValues,
+        isFollowing: followings.includes(pop.dataValues.id)
+      })).sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
+
+      // return res.json(pops)
+      return pops // 返回前10 populars array
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 

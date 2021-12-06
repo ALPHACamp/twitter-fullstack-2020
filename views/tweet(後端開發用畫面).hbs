@@ -1,0 +1,37 @@
+<h1>single tweet</h1>
+{{!-- {{>tweet}} --}}
+
+<div style="display: flex;">
+  <a href="/users/{{tweet.User.id}}/tweets">
+    <img src="{{tweet.User.avatar}}" style="width:100px; height:100px;">
+  </a>
+</div>
+<h1> 名字: {{tweet.User.name}} </h1>
+<a href="/users/{{tweet.User.id}}/tweets">
+  <h1> 帳號: {{tweet.User.account}} </h1>
+</a>
+<h3> tweet內文: {{tweet.description}} </h3>
+<h3> 時間: {{tweet.showTime}} </h3>
+<h3> 回覆次數: {{replies.length}} </h3>
+<h3> 喜歡次數: {{tweet.Likes.length}} </h3>
+
+{{#if isLiked}}
+<h1>取消按讚</h1>
+{{else}}
+<h1>幫他按讚</h1>
+{{/if}}
+
+{{#each replies}}
+<div>
+  <hr>
+  <a href="/users/{{this.User.id}}/tweets">
+    <img src="{{this.User.avatar}}" style="width:100px; height:100px;">
+  </a>
+  <p> 回覆者名稱: {{this.User.name}} </p>
+  <a href="/users/{{this.User.id}}/tweets">
+    <p> 回覆者帳號: {{this.User.account}} </p>
+  </a>
+  <p> 回覆時間: {{moment this.createdAt}} </p>
+  <p> 回覆內容: {{this.comment}} </p>
+</div>
+{{/each}}
