@@ -1,8 +1,5 @@
 const helpers = require('../_helpers')
 const db = require('../models')
-const { sequelize } = db
-const { Op } = db.Sequelize
-const { User, Tweet, Reply, Like, Followship } = db
 const userController = require('./userController')
 const tweetController = require('./tweetController')
 
@@ -16,25 +13,10 @@ const pageController = {
     return res.render('signin', { isBackend })
   },
 
-  getSettings: async (req, res) => {
-    try {
-      const UserId = Number(req.params.userId)
-
-      if (helpers.getUser(req).id !== UserId) {
-        req.flash('error_messages', '你無權查看此頁面')
-        return res.redirect('/tweets')
-      }
-
-      return res.render('settings')
-    } catch (err) {
-      console.error(err)
-    }
-  },
-
   getIndex: async (req, res) => {
     try {
       if (helpers.getUser(req).role === 'admin') {
-        req.flash('error_messages', '無法瀏覽此頁面')
+        req.flash('error_messages', '你無法瀏覽此頁面')
         return res.redirect('/admin/tweets')
       }
 
@@ -49,6 +31,19 @@ const pageController = {
     }
   },
 
+  getSettings: async (req, res) => {
+    try {
+      if (helpers.getUser(req).id !== Number(req.params.userId)) {
+        req.flash('error_messages', '你無法瀏覽此頁面')
+        return res.redirect('/tweets')
+      }
+
+      return res.render('settings')
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
   getUserTweets: async (req, res) => {
     try {
       const [loginUser, user, tweets] = await Promise.all([
@@ -56,24 +51,30 @@ const pageController = {
         userController.getUserProfile(req, res),
         userController.getUserTweets(req, res)
       ])
-
-      // return res.json({ loginUser, user, tweets, userTweetsPage: true })
-      return res.render('user', { loginUser, user, tweets, userTweetsPage: true })
+      return res.render('user', {
+        loginUser,
+        user,
+        tweets,
+        userTweetsPage: true
+      })
     } catch (err) {
       console.error(err)
     }
   },
 
   getUserReplies: async (req, res) => {
-    // 不熟 sequelize 待優化，邏輯：reply -> tweet -> user -> account(field)
     try {
       const [loginUser, user, replies] = await Promise.all([
         userController.getLoginUser(req, res),
         userController.getUserProfile(req, res),
         userController.getUserReplies(req, res)
       ])
-      // return res.json({ loginUser, user, replies, userRepliesPage: true })
-      return res.render('user', { loginUser, user, replies, userRepliesPage: true })
+      return res.render('user', {
+        loginUser,
+        user,
+        replies,
+        userRepliesPage: true
+      })
     } catch (err) {
       console.error(err)
     }
@@ -86,8 +87,12 @@ const pageController = {
         userController.getUserProfile(req, res),
         userController.getUserLikes(req, res)
       ])
-      return res.render('user', { loginUser, user, tweets, userLikesPage: true })
-      // return res.json({ loginUser, user, tweets, userLikesPage: true })
+      return res.render('user', {
+        loginUser,
+        user,
+        tweets,
+        userLikesPage: true
+      })
     } catch (err) {
       console.error(err)
     }
@@ -95,12 +100,17 @@ const pageController = {
 
   getUserFollowers: async (req, res) => {
     try {
-      const [user, followers] = await Promise.all([
+      const [loginUser, user, followers] = await Promise.all([
+        userController.getLoginUser(req, res),
         userController.getUserProfile(req, res),
         userController.getUserFollowers(req, res)
       ])
-      return res.render('user', { user, followers, userFollowersPage: true })
-      // return res.json({ user, followers, userFollowersPage: true })
+      return res.render('user', {
+        loginUser,
+        user,
+        followers,
+        userFollowersPage: true
+      })
     } catch (err) {
       console.error(err)
     }
@@ -108,16 +118,29 @@ const pageController = {
 
   getUserFollowings: async (req, res) => {
     try {
-      const [user, followings] = await Promise.all([
+      const [loginUser, user, followings] = await Promise.all([
+        userController.getLoginUser(req, res),
         userController.getUserProfile(req, res),
         userController.getUserFollowings(req, res)
       ])
-      // return res.render('user', { user, followings, userFollowingsPage: true })
-      return res.json({ user, followings, userFollowingsPage: true })
+      return res.render('user', {
+        loginUser,
+        user,
+        followings,
+        userFollowingsPage: true
+      })
     } catch (err) {
       console.error(err)
     }
   }
+
+  // getAdminTweets: async (req, res) => {
+
+  // },
+
+  // getAdminUsers: async (req, res) => {
+
+  // }
 }
 
 module.exports = pageController

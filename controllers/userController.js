@@ -165,7 +165,7 @@ const userController = {
         id: follower.id,
         name: follower.name,
         avatar: follower.avatar,
-        introduction: follower.avatar,
+        introduction: follower.introduction,
         account: follower.account,
         followshipCreatedAt: follower.Followship.createdAt,
         isFollowed: follower.Followship.followerId === UserId
@@ -200,9 +200,9 @@ const userController = {
         id: following.id,
         name: following.name,
         avatar: following.avatar,
-        introduction: following.avatar,
+        introduction: following.introduction,
         account: following.account,
-        followshipCreatedAt: following.Followship.createdAt,
+        followshipCreatedAt: following.Followship.createdAt
       }))
       return followings
     } catch (err) {
@@ -273,7 +273,7 @@ const userController = {
     try {
       const userId = Number(req.params.userId)
 
-      if (req.user.id !== userId) {
+      if (helpers.getUser(req).id !== userId) {
         req.flash('error_messages', '你無權查看此頁面')
         return res.redirect('/tweets')
       }
