@@ -44,6 +44,11 @@ module.exports = (app, passport) => {
   //設定前台瀏覽個別推文路由
   app.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
 
+  // like tweet
+  app.post('/tweets/:tweetId/like', authenticated, userController.addLike )
+  // unlike tweet
+  app.post('/tweets/:tweetId/unlike', authenticated, userController.removeLike)
+
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
 

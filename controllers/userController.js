@@ -1,6 +1,9 @@
 const bcrypt = require('bcryptjs')
+const helpers = require('../_helpers')
 const db = require('../models')
 const User = db.User
+const Tweet = db.Tweet
+const Like = db.Like
 
 const userController = {
   signUpPage: (req, res) => {
@@ -40,6 +43,28 @@ const userController = {
     req.flash('success_messages', '登出成功！')
     req.logout()
     res.redirect('/signin')
+  },
+  // like tweet
+  addLike: (req,res) => {
+    return Like.create({
+      UserId: helpers.getUser(req).id ,
+      TweetId: req.params.tweetId
+    })
+      .then(tweet => {
+        return res.redirect('back')
+      })
+  },
+  // unlike tweet
+  removeLike: (req, res) => {
+    return Like.destroy({
+      where: {
+        UserId: helpers.getUser(req).id,
+        TweetId: req.params.tweetId
+      }
+    })
+      .then(tweet => {
+        return res.redirect('back')
+      })
   }
 }
 

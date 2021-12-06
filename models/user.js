@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function (models) {
     User.hasMany(models.Reply)
     User.hasMany(models.Tweet)
+    /* User.belongsToMany(models.Tweet , {
+      through: models.Like,
+      foreignKey: 'UserId',
+      as: 'likedTweet'
+    }) */
     User.hasMany(models.Like)
     User.hasMany(models.User)
     User.belongsToMany(User, {
@@ -27,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'followerId',
       as: 'Followings'
     })
+    
   };
   return User;
 };
