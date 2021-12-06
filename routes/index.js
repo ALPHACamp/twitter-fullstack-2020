@@ -105,4 +105,6 @@ module.exports = (app, passport) => {
     app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 
 
+    // api 部分
+    app.get('/api/users/:id', userController.getUserApi)
 }

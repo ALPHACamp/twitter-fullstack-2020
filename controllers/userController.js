@@ -30,6 +30,7 @@ const userController = {
                         name: req.body.name,
                         email: req.body.email,
                         password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+                        avatar: 'https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg',
                         account: '@' + req.body.name
                     }).then(user => {
                         req.flash('success_messages', '成功註冊帳號！')
@@ -355,6 +356,18 @@ const userController = {
                 console.log(error)
             })
 
+    },
+
+    getUserApi: (req, res) => {
+        const userId = req.params.id
+        User.findByPk(userId)
+            .then(user => {
+                console.log(user)
+                return res.json({ status: 'success', data: user })
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
 
