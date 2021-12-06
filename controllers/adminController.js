@@ -18,7 +18,7 @@ const adminController = {
         description: tweet.description.slice(0, 50),
       }))
 
-      return res.render('admintweets', { tweets })
+      return res.render('admin', { tweets, partial: 'adminTweets' })
     } catch (err) {
       console.error(err)
     }
@@ -56,7 +56,7 @@ const adminController = {
         }))
         .sort((a, b) => b.tweetCount - a.tweetCount) // 根據tweet數排序
 
-      return res.render('adminusers', { users })
+      return res.render('admin', { users, partial: 'adminUsers' })
       // return res.json(users)
     } catch (err) {
       console.error(err)

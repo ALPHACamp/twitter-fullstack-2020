@@ -20,12 +20,12 @@ const pageController = {
     try {
       const UserId = Number(req.params.userId)
 
-      if (helpers.getUser(req) !== UserId) {
-        req.flash('error_messages', '你無權查看此頁面')
-        return res.redirect('/tweets')
-      }
+      // if (helpers.getUser(req) !== UserId) {
+      //   req.flash('error_messages', '你無權查看此頁面')
+      //   return res.redirect('/tweets')
+      // }
 
-      return res.render('settings')
+      return res.render('user', { userSettingsPage: true })
     } catch (err) {
       console.error(err)
     }

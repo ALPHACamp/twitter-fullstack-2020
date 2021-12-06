@@ -14,6 +14,29 @@
   {{!-- Content --}}
   {{{body}}}
 
+  {{#if success_messages}}
+  <div class="flash">
+    <span class="text">{{success_messages}}</span>
+    <i class="success"></i>
+  </div>
+  <script type="text/javascript">
+    document.querySelector('.flash').classList.add('cb');
+    setTimeout(() => document.querySelector('.flash').classList.remove('cb'), 2800);
+  </script>
+  {{/if}}
+
+  {{#if error_messages}}
+  <div class="flash">
+    <span class="text">{{error_messages}}</span>
+    <i class="warning"></i>
+  </div>
+  <script type="text/javascript">
+    document.querySelector('.flash').classList.add('cb');
+    setTimeout(() => document.querySelector('.flash').classList.remove('cb'), 2800);
+  </script>
+  {{/if}}
+
   <script src="/javascripts/layout.js"></script>
 </body>
+
 </html>
