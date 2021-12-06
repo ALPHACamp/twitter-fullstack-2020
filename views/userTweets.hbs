@@ -1,0 +1,141 @@
+<div class="row" style="width:100%;">
+  {{!-- navbar --}}
+  <div class="col-3">
+    <img class="mb-4 pl-2" src="/images/logo.png">
+    <div class="nav-ul-wrapper">
+      <ul class="nav flex-column">
+        <li class="nav-item py-2">
+          <a class="nav-link" href="#">
+            <i class="fas fa-home"></i>
+            <span class="ml-3">首頁</span>
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="nav-link active" href="#">
+            <i class="far fa-user"></i>
+            <span class="ml-3">個人資料</span>
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="nav-link" href="#">
+            <i class="fas fa-cog"></i>
+            <span class="ml-3">設定</span>
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="btn py-2" href="#">推文</a>
+        </li>
+      </ul>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="ml-3">登出</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  {{!-- content --}}
+  <div class="col-5 content-container">
+    <div>
+        {{!-- Button-trigger-Edit-User-Info-Modal --}}
+        <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+          編輯個人資料
+        </button>
+    </div>
+  </div>
+
+  {{!-- popular --}}
+  <div class="col-4">
+    <div class="card border-light popular">
+      <div class="card-header">
+        Popular
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item d-flex">
+          <div class="mr-2">
+            <img class="avatar small" src="/images/exampleAvatar1.png">
+          </div>
+          <div class="mr-5">
+            <p class="mb-0">Pizza Hut</p>
+            <p class="atAccount">@pizzahut</p>
+          </div>
+          <div class="pt-2">
+            <a class="btn py-2" href="#">正在追蹤</a>
+          </div>
+        </li>
+        <li class="list-group-item d-flex">
+          <div class="mr-2">
+            <img class="avatar small" src="/images/exampleAvatar2.png">
+          </div>
+          <div class="mr-5">
+            <p class="mb-0">MacDonald</p>
+            <p class="atAccount">@macdonald</p>
+          </div>
+          <div class="pt-2">
+            <a class="btn btn-outline py-2" href="#">追蹤</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+{{!-- Edit-User-Info-Modal --}}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/api/users/{{ user.id }}?_method=PUT" method="POST" enctype="multipart/form-data">
+      <div class="modal-header">
+        <div class="d-flex">
+          <button type="button" class="btn-dismiss close mr-3" data-dismiss="modal">X</button>
+          <h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
+        </div>
+        <button type="submit" class="btn">儲存</button>
+      </div>
+      <div class="modal-body">
+        {{!-- Edit Cover --}}
+        <div>
+          {{#if user.cover}}
+          <img id="file-cover-preview">
+          <img class="cover"src="{{ user.cover }}" alt="">
+          {{ else }}
+          <img class="cover" id="file-cover-preview">
+          <div class="cover none"></div>
+          {{/if}}
+          <div class="form-group" style="display:inline;">
+            <label for="cover"><i class="fas fa-camera"></i>
+            <input type="file" class="form-control-file" id="cover-input" name="cover" onchange="showPreview(event);">
+            </label>
+          </div>
+          <button type="button" class="btn btn-delete py-0" style="display:inline;">X</button>
+        </div>
+        {{!-- Edit Avatar --}}
+        <div>
+            {{#if user.avatar }}
+            <img class="avatar large" src="{{ user.avatar }}">
+            {{else}}
+            <div class="avatar-none-large"></div>
+            {{/if}}
+            <div class="form-group" style="display:inline;">
+              <label for="avatar"><i class="fas fa-camera"></i>
+                <input type="file" class="form-control-file" id="avatar-input" name="avatar">
+              </label>
+            </div>
+        </div>
+        {{!-- Edit-Name & Introduction --}}
+        <div class="form-group">
+          <label for="name">名稱</label>
+          <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{ user.name }}" required>
+        </div>
+        <div class="form-group">
+          <label for="introduction">自我介紹</label>
+          <textarea class="form-control" id="introduction" name="introduction" rows="3">{{ user.introduction }}</textarea>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>

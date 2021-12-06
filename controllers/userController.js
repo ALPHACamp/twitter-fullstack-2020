@@ -1,7 +1,22 @@
 const bcrypt = require('bcryptjs')
 const { Op } =require('sequelize')
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = 'd97de9c03bf7519'
+const helpers = require('../_helpers')
 const db = require('../models')
 const User = db.User
+
+const getLink = (filePath) => {
+  return new Promise((resolve, reject) => {
+    imgur.setClientID(IMGUR_CLIENT_ID)
+    imgur.upload(filePath, (err, img) => {
+      if (err) {
+        return reject(err)
+      }
+      return resolve(img.data.link)
+    })
+  })
+}
 
 const userController = {
   signUpPage: (req, res) => {
@@ -47,6 +62,40 @@ const userController = {
     req.flash('success_messages', '登出成功！')
     req.logout()
     res.redirect('/signin')
+  },
+  getUserTweets: (req, res) => {
+    User.findByPk(req.params.userId)
+    .then((user) => {
+      return res.render('userTweets', { user })
+    })
+  },
+  putUser: async (req, res) => {
+    const { name, introduction } = req.body
+    const { files } = req
+    let coverLink
+    let avatarLink
+
+    if (files.cover) {
+      coverLink = await getLink(files.cover[0].path)
+    }
+    
+    if (files.avatar) {
+      avatarLink = await getLink(files.avatar[0].path)
+    }
+
+    return User.findByPk(req.params.userId)
+    .then((user) => {
+      user.update({
+        name,
+        introduction,
+        cover: files.cover ? coverLink : user.cover,
+        avatar: files.avatar ? avatarLink : user.avatar
+      })
+    })
+    .then((user) => {
+      req.flash('success_messages', '更新個人資料頁成功！')
+      return res.redirect(`/users/${req.params.userId}/tweets`)
+    })
   }
 }
 

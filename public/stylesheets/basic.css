@@ -39,6 +39,18 @@ html, body {
   border-color: #FF6600;;
 }
 
+.btn-dismiss {
+  border: none;
+  background: none;
+  color: #FF6600;
+}
+
+.btn.btn-delete {
+  border: none;
+  background: none;
+  color: #657786;
+}
+
 .card.popular {
   background: #F5F8FA;
 }
@@ -56,6 +68,7 @@ img.avatar.small {
   height: 50px;
 }
 
+
 .atAccount {
   font-size: 15px;
   color: #657786;
@@ -70,4 +83,39 @@ img.avatar.small {
 .header1 {
   font-weight: 500;
   font-size: 18px;
-} 
+}
+
+.cover {
+  object-fit: cover;
+  width:100%;
+  height:25vh;
+}
+
+.cover.none {
+  background: #F5F8FA;
+}
+
+.fa-camera {
+  color: #657786;
+}
+
+.fa-camera:hover {
+  cursor: pointer; 
+}
+
+img.avatar.large {
+  width: 80px;
+  height: 80px;
+}
+
+.avatar-none-large {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  background:#F5F8FA;
+}
+
+/* .form-control-file {
+  display: none;
+} */
+
