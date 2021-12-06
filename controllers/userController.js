@@ -309,7 +309,7 @@ const userController = {
             nest: true,
             include: [
                 User,
-                { model: Tweet, nested: true }
+                { model: Tweet, include: [User] }
             ]
         })
         const tweetFindAll = Tweet.findAll({

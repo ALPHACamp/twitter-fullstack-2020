@@ -207,8 +207,9 @@
         <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{moment
             this.createdAt}}</span>
         </div>
-        <div>回覆 @xxx</div>
+        <div>回覆 {{this.Tweet.User.account}}</div>
         <div>{{this.Tweet.description}}</div>
+        <div class="text-primary">{{this.comment}}</div>
 
       </div>
     </div>
