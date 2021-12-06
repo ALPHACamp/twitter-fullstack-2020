@@ -72,8 +72,8 @@ const pageController = {
         userController.getUserProfile(req, res),
         userController.getUserReplies(req, res)
       ])
-      return res.json({ loginUser, user, replies, userRepliesPage: true })
-      // return res.render('user', { loginUser, user, replies, userRepliesPage: true })
+      // return res.json({ loginUser, user, replies, userRepliesPage: true })
+      return res.render('user', { loginUser, user, replies, userRepliesPage: true })
     } catch (err) {
       console.error(err)
     }

@@ -84,23 +84,23 @@ const userController = {
 
   getUserReplies: async (req, res) => {
     try {
-      const userId = Number(req.params.userId)
+      const UserId = Number(req.params.userId)
       const replies = await Reply.findAll({
-        where: { UserId: userId },
+        where: { UserId },
         attributes: ['id', 'comment', 'createdAt'],
         // 不熟 sequelize 待優化，邏輯：reply -> tweet -> user -> account(field)
         include: [
           {
             model: Tweet,
             attributes: [],
-            include: [{ model: User, attributes: ['account'] }]
+            include: [{ model: User, attributes: ['id', 'account'] }]
           }
         ],
         order: [['createdAt', 'DESC']],
         raw: true,
         nest: true
       })
-      return res.json(replies)
+      return replies
     } catch (err) {
       console.error(err)
     }
