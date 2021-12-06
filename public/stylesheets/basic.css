@@ -96,11 +96,17 @@ img.avatar.small {
 }
 
 .fa-camera {
-  color: #657786;
+  color: #F5F8FA;
+  opacity: 90%;
 }
 
 .fa-camera:hover {
   cursor: pointer; 
+}
+
+.btn-delete {
+  color: #F5F8FA;
+  opacity: 90%;
 }
 
 img.avatar.large {
@@ -119,3 +125,10 @@ img.avatar.large {
   display: none;
 }
 
+.image-wrapper {
+  position:relative;
+}
+
+.cover-input-wrapper {
+  position:absolute; right:50%; top:12vh;
+}

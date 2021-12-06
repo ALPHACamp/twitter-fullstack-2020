@@ -40,10 +40,10 @@
   {{!-- content --}}
   <div class="col-5 content-container">
     <div>
-        {{!-- Button-trigger-Edit-User-Info-Modal --}}
-        <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
-          編輯個人資料
-        </button>
+      {{!-- Button-trigger-Edit-User-Info-Modal --}}
+      <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+        編輯個人資料
+      </button>
     </div>
   </div>
 
@@ -88,55 +88,57 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <form action="/api/users/{{ user.id }}?_method=PUT" method="POST" enctype="multipart/form-data">
-      <div class="modal-header">
-        <div class="d-flex">
-          <button type="button" class="btn-dismiss close mr-3" data-dismiss="modal">X</button>
-          <h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
-        </div>
-        <button type="submit" class="btn">儲存</button>
-      </div>
-      <div class="modal-body">
-        {{!-- Edit Cover --}}
-        <div>
-          <div id="cover-wrapper">
-            {{#if user.cover}}
-            <img class="cover" id="current-cover" src="{{ user.cover }}" alt="">
-            {{ else }}
-            <div class="cover none" id="current-cover"></div>
-            {{/if}}
+        <div class="modal-header">
+          <div class="d-flex">
+            <button type="button" class="btn-dismiss close mr-3" data-dismiss="modal">X</button>
+            <h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
           </div>
-          <div class="d-flex" id="cover-input-wrapper">
-            <div class="form-group mb-0 mt-2">
-              <label for="cover-input"><i class="fas fa-camera"></i>
-                <input type="file" class="form-control-file hide" id="cover-input" name="cover">
-              </label>
+          <button type="submit" class="btn">儲存</button>
+        </div>
+        <div class="modal-body">
+          <div class="image-wrapper">
+            {{!-- Edit Cover --}}
+            <div class="cover-wrapper" id="cover-wrapper">
+              {{#if user.cover}}
+              <img class="cover" id="current-cover" src="{{ user.cover }}" alt="">
+              {{ else }}
+              <div class="cover none" id="current-cover"></div>
+              {{/if}}
             </div>
-            <button type="button" class="btn btn-delete py-0 hide" id="delete-cover-btn" >X</button>
+            <div class="cover-input-wrapper d-flex" id="cover-input-wrapper">
+              <div class="form-group mb-0 mt-2">
+                <label for="cover-input"><i class="fas fa-camera"></i>
+                  <input type="file" class="form-control-file hide" id="cover-input" name="cover">
+                </label>
+              </div>
+              <button type="button" class="btn btn-delete py-0 hide" id="delete-cover-btn">X</button>
+            </div>
+            {{!-- Edit Avatar --}}
+            <div class="avatar-wrapper">
+              {{#if user.avatar }}
+              <img class="avatar large" src="{{ user.avatar }}">
+              {{else}}
+              <div class="avatar-none-large"></div>
+              {{/if}}
+              <div class="form-group" style="display:inline;">
+                <label for="avatar"><i class="fas fa-camera"></i>
+                  <input type="file" class="form-control-file" id="avatar-input" name="avatar">
+                </label>
+              </div>
+            </div>
+          </div>
+          {{!-- Edit-Name & Introduction --}}
+          <div class="form-group">
+            <label for="name">名稱</label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Enter name"
+              value="{{ user.name }}" required>
+          </div>
+          <div class="form-group">
+            <label for="introduction">自我介紹</label>
+            <textarea class="form-control" id="introduction" name="introduction"
+              rows="3">{{ user.introduction }}</textarea>
           </div>
         </div>
-        {{!-- Edit Avatar --}}
-        <div>
-            {{#if user.avatar }}
-            <img class="avatar large" src="{{ user.avatar }}">
-            {{else}}
-            <div class="avatar-none-large"></div>
-            {{/if}}
-            <div class="form-group" style="display:inline;">
-              <label for="avatar"><i class="fas fa-camera"></i>
-                <input type="file" class="form-control-file" id="avatar-input" name="avatar">
-              </label>
-            </div>
-        </div>
-        {{!-- Edit-Name & Introduction --}}
-        <div class="form-group">
-          <label for="name">名稱</label>
-          <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{ user.name }}" required>
-        </div>
-        <div class="form-group">
-          <label for="introduction">自我介紹</label>
-          <textarea class="form-control" id="introduction" name="introduction" rows="3">{{ user.introduction }}</textarea>
-        </div>
-      </div>
       </form>
     </div>
   </div>
