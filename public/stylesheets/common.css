@@ -1,0 +1,14 @@
+::placeholder {
+  /* CSS 3 標準 */
+  position: absolute;
+  margin-top: -3px;
+  margin-left: 2px;
+  font-size: 15px !important;
+}
+
+::placeholder {
+  position: absolute;
+  margin-top: -3px !important;
+  margin-left: 2px;
+  font-size: 15px !important;
+}

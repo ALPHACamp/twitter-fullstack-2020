@@ -24,13 +24,13 @@
             {{#if isFollowed}}
             <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
                 <div class="cols my-1 " style="text-align:right;">
-                    <button class="btn" style="width:100px; background-color: orangered;border-radius:40px; color:white; font-weight:bold; ">正在跟隨</button>
+                    <button class="btn" style="width:100px; background-color: #FF6600;border-radius:40px; color:white; font-weight:bold; ">正在跟隨</button>
                 </div>
             </form>
             {{else}}
             <form action="/followships" method="POST"  style="display: contents;">
                 <div class="cols my-1 " style="text-align:right;">
-                    <button type="submit" class="btn" name="id" value="{{this.id}}" style="width:100px; border:0.5px;  border:solid;  border-radius:40px; color:orangered; font-weight:bold; ">跟隨</button>
+                    <button type="submit" class="btn" name="id" value="{{this.id}}" style="width:100px; border:0.5px;  border:solid;  border-radius:40px; color:#FF6600; font-weight:bold; ">跟隨</button>
                 </div>
             </form>
             {{/if}}
