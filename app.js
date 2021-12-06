@@ -4,12 +4,14 @@ const handlebars = require('express-handlebars')
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('./config/passport')
+const db = require('./models')
 
 const app = express()
 const port = 3000
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+
 
 app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/handlebars-helpers') }))
 app.set('view engine', 'hbs')
