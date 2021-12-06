@@ -1,17 +1,49 @@
-<h1> 推文清單 </h1>
+<div class="admin-template">
+  <div class="leftside">
+    <div class="navigation" id="navigation">
+      <i class='ac-icon'></i>
+      <a class="active" href='/admin/tweets' id="homing"><i class='home active'></i>推文清單</a>
+      <a class="" href="/admin/{{user.id}}/users" id="editing"><i class='info'></i>使用者列表</a>
+    </div>
 
-{{#each tweets}}
-<div>
-  <hr>
-  <h1> {{this.User.name}} </h1>
-  <p> {{this.User.account}} </p>
-  <p> {{moment this.createdAt}} </p>
-  <p> {{this.description}} </p>
-  {{!-- 刪除button --}}
-  <div>
-    <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-      <button type="submit" class="btn btn-link">X</button>
-    </form>
+    <div class="footer">
+      <a href="/signout"><i class='logout'></i>登出</a>
+    </div>
   </div>
+
+  <div class="admin-main">
+    <div class="title">
+      <span>推文清單</span>
+    </div>
+    <div class="tweets">
+      {{#each tweets}}
+      <div class="tweet">
+
+        <img class="thumbnail" {{#if this.User.avatar}} src="{{this.User.avatar}}" alt="{{this.User.name}} avatar"
+          {{/if}}>
+
+        <div class="postcontent">
+          <div class="postuser">
+            <span class="name">{{this.User.name}}</span>
+            <span class="at-name">@{{this.User.account}}</span>
+            <span class="timer">{{moment this.createdAt}}</span>
+          </div>
+          <div class="content">
+            {{this.description}}...
+          </div>
+        </div>
+
+        {{!-- 刪除button --}}
+        <span class="del-btn">
+          <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit"><i class="X-gray"></i></button>
+          </form>
+        </span>
+
+      </div>
+      {{/each}}
+
+    </div>
+  </div>
+
 </div>
-{{/each}}
