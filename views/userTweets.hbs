@@ -95,7 +95,7 @@
           </div>
           <button type="submit" class="btn">儲存</button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body px-0">
           <div class="image-wrapper">
             {{!-- Edit Cover --}}
             <div class="cover-wrapper" id="cover-wrapper">
@@ -114,26 +114,27 @@
               <button type="button" class="btn btn-delete py-0 hide" id="delete-cover-btn">X</button>
             </div>
             {{!-- Edit Avatar --}}
-            <div class="avatar-wrapper">
+            <div class="avatar-wrapper" id="avatar-wrapper">
               {{#if user.avatar }}
-              <img class="avatar large" src="{{ user.avatar }}">
+              <img class="avatar large" id="current-avatar" src="{{ user.avatar }}">
               {{else}}
-              <div class="avatar-none-large"></div>
+              <div class="avatar-none-large" id="current-avatar"></div>
               {{/if}}
-              <div class="form-group" style="display:inline;">
-                <label for="avatar"><i class="fas fa-camera"></i>
-                  <input type="file" class="form-control-file" id="avatar-input" name="avatar">
+            </div>
+              <div class="form-group avatar-input-wrapper">
+                <label for="avatar-input"><i class="fas fa-camera"></i>
+                  <input type="file" class="form-control-file hide" id="avatar-input" name="avatar">
                 </label>
               </div>
             </div>
           </div>
           {{!-- Edit-Name & Introduction --}}
-          <div class="form-group">
+          <div class="form-group px-3">
             <label for="name">名稱</label>
             <input type="text" class="form-control" name="name" id="name" placeholder="Enter name"
               value="{{ user.name }}" required>
           </div>
-          <div class="form-group">
+          <div class="form-group px-3">
             <label for="introduction">自我介紹</label>
             <textarea class="form-control" id="introduction" name="introduction"
               rows="3">{{ user.introduction }}</textarea>

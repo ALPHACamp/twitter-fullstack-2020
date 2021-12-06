@@ -110,14 +110,16 @@ img.avatar.small {
 }
 
 img.avatar.large {
-  width: 80px;
-  height: 80px;
+  width: 105px;
+  height: 105px;
+  padding: 5px;
+  background:#FFFFFF;
 }
 
 .avatar-none-large {
   border-radius: 50%;
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   background:#F5F8FA;
 }
 
@@ -127,8 +129,24 @@ img.avatar.large {
 
 .image-wrapper {
   position:relative;
+  margin-bottom: 70px;
 }
 
 .cover-input-wrapper {
-  position:absolute; right:50%; top:12vh;
+  position:absolute; 
+  right:50%;
+  top:10vh;
 }
+
+.avatar-wrapper {
+  position:absolute;
+  left:5%;
+  top:18vh;
+}
+
+.avatar-input-wrapper {
+  position:absolute;
+  left:13.5%;
+  top:25vh;
+}
+
