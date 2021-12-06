@@ -271,11 +271,10 @@ const userController = {
 
   updateSettings: async (req, res) => {
     try {
-      const userId = req.params.userId
-
-      if (req.user.id !== Number(userId)) {
+      const userId = Number(req.params.userId)
+      if (helpers.getUser(req).id !== userId) {
         req.flash('error_messages', '你無權查看此頁面')
-        return res.redirect('/tweets')
+        return res.redirect('back')
       }
 
       let user = await User.findByPk(userId)
@@ -314,7 +313,7 @@ const userController = {
       })
 
       req.flash('success_messages', '成功編輯帳號！')
-      return res.render('edit', { user: user.toJSON() })
+      return res.render('back')
     } catch (err) {
       console.error(err)
     }
