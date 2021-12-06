@@ -18,7 +18,7 @@ const adminController = {
         description: tweet.description.slice(0, 50),
       }))
 
-      return res.render('admintweets', { tweets })
+      return res.render('admin', { tweets })
     } catch (err) {
       console.error(err)
     }
@@ -37,9 +37,9 @@ const adminController = {
     try {
       let users = await User.findAll({
         include: [
-          { model: Tweet, include: [Like] },
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' },
+          { model: Tweet, include: [Like], required: false },
+          { model: User, as: 'Followings', required: false },
+          { model: User, as: 'Followers', required: false },
         ],
         order: [[Tweet, 'createdAt', 'ASC']],
       })
@@ -50,14 +50,14 @@ const adminController = {
           tweetCount: user.Tweets.length,
           likeCount: adminController.sumLikes(
             user.Tweets.map((tweet) => tweet.Likes.length)
-          ), // 有寫工具function adminController.sumLikes(arr) 計算加總
+          ), // 有寫工具function adminController.sumLikes(arr)計算加總
           followingCount: user.Followings.length,
           followerCount: user.Followers.length,
         }))
         .sort((a, b) => b.tweetCount - a.tweetCount) // 根據tweet數排序
 
-      return res.render('adminusers', { users })
-      // return res.json(users)
+      
+      return res.render('admin', { users, adminUers: true })
     } catch (err) {
       console.error(err)
     }
