@@ -1,5 +1,5 @@
-'use strict';
-const faker = require('faker')
+'use strict'
+const seeder = require('../config/seeder.js')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     /*
@@ -12,18 +12,18 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    await queryInterface.bulkInsert('Followships', 
-      Array.from({ length: 5 }).map((d, i) =>
-      (
-        {
-          id: i + 1,
-          followerId: Math.floor(Math.random()*(6-2+1)+1),
-          followingId: Math.floor(Math.random()*(6-2+1)+1),
-          createdAt: faker.date.recent(),
-          updatedAt: new Date()
-        }
-      )
-    ), {})
+    // await queryInterface.bulkInsert(
+    //   'Followships',
+    //   Array.from({ length: 5 }).map((d, i) => ({
+    //     id: i + 1,
+    //     followerId: Math.floor(Math.random() * (6 - 2 + 1) + 1),
+    //     followingId: Math.floor(Math.random() * (6 - 2 + 1) + 1),
+    //     createdAt: faker.date.recent(),
+    //     updatedAt: new Date(),
+    //   })),
+    //   {}
+    // )
+    await queryInterface.bulkInsert('Followships', seeder.getFollowships(), {})
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -35,5 +35,5 @@ module.exports = {
       return queryInterface.bulkDelete('People', null, {});
     */
     await queryInterface.bulkDelete('Followships', null, {})
-  }
-};
+  },
+}
