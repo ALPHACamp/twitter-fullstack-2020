@@ -18,13 +18,16 @@
 
         <div class="edit-text">
           <label for="account">帳號</label>
-          <input type="account" class="form-control" name="account" id="account" required value="user1@example.com">
+          <input type="account" name="account" id="account" required value="user1@example.com">
         </div>
+
         <div class="edit-text">
           <label for="password">密碼</label>
-          <input type="password" class="form-control" name="password" id="password" required value="12345678">
+          <input type="password" name="password" id="password" required value="12345678">
         </div>
+
         <button type="submit" class="btn-fill">登入</button>
+
         <div class="buttons">
           {{#if isBackend}}
           <a href="/signin" class="btn-text">前台登入</a>
@@ -34,6 +37,7 @@
           <a href="/admin/signin" class="btn-text">後台登入</a>
           {{/if}}
         </div>
+
       </form>
   </div>
 </div>

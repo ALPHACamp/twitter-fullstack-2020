@@ -114,7 +114,7 @@ html, body {
   height: 100%;
 }
 
-.leftside, .main, .rightside {
+.leftside, .main, .rightside, .sign-main {
   overflow: scroll;
   overflow-x: hidden;
   overflow-y: auto;
@@ -1149,6 +1149,7 @@ html, body {
 
 .sign-template > .sign-main > .header > i {
   margin-top: 65px;
+  margin-bottom: 25px;
 }
 
 .sign-template > .sign-main > .header > .title {
@@ -1204,12 +1205,20 @@ html, body {
   display: flex;
   flex-flow: row nowrap;
   justify-content: end;
+  margin-bottom: 20px;
 }
 
 .sign-template > .sign-main > form > .buttons > span {
   color: #0099FF;
-  margin: 0 3px;
+  margin: 0 5px;
   line-height: 26px;
+}
+
+.sign-template > .sign-main > form > a {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 /* general style */
