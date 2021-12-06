@@ -24,7 +24,7 @@ module.exports = {
         name: user.name,
         avatar: `https://loremflickr.com/320/240/dog/?random=${Math.random() * 100}`,
         introduction: faker.lorem.text().substring(0, 160),
-        role: user.name === 'Admin' ? 'Admin' : 'user',
+        role: user.name === 'Admin' ? 'admin' : 'user',
         account: user.email,
         cover: `https://loremflickr.com/320/240/city/?random=${Math.random() * 100}`,
         createdAt: new Date(new Date().setDate(new Date().getDate() - 240 + index)),
