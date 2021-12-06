@@ -20,7 +20,7 @@ const pageController = {
     try {
       const UserId = Number(req.params.userId)
 
-      if (helpers.getUser(req) !== UserId) {
+      if (helpers.getUser(req).id !== UserId) {
         req.flash('error_messages', '你無權查看此頁面')
         return res.redirect('/tweets')
       }
