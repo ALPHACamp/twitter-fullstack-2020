@@ -98,19 +98,21 @@
       <div class="modal-body">
         {{!-- Edit Cover --}}
         <div>
-          {{#if user.cover}}
-          <img id="file-cover-preview">
-          <img class="cover"src="{{ user.cover }}" alt="">
-          {{ else }}
-          <img class="cover" id="file-cover-preview">
-          <div class="cover none"></div>
-          {{/if}}
-          <div class="form-group" style="display:inline;">
-            <label for="cover"><i class="fas fa-camera"></i>
-            <input type="file" class="form-control-file" id="cover-input" name="cover" onchange="showPreview(event);">
-            </label>
+          <div id="cover-wrapper">
+            {{#if user.cover}}
+            <img class="cover" id="current-cover" src="{{ user.cover }}" alt="">
+            {{ else }}
+            <div class="cover none" id="current-cover"></div>
+            {{/if}}
           </div>
-          <button type="button" class="btn btn-delete py-0" style="display:inline;">X</button>
+          <div class="d-flex" id="cover-input-wrapper">
+            <div class="form-group mb-0 mt-2">
+              <label for="cover-input"><i class="fas fa-camera"></i>
+                <input type="file" class="form-control-file hide" id="cover-input" name="cover">
+              </label>
+            </div>
+            <button type="button" class="btn btn-delete py-0 hide" id="delete-cover-btn" >X</button>
+          </div>
         </div>
         {{!-- Edit Avatar --}}
         <div>
