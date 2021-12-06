@@ -76,7 +76,7 @@ const tweetController = {
 
   addTweet: async (req, res) => {
     try {
-      const UserId = helpers.getUser(req)
+      const UserId = helpers.getUser(req).id
       const { description } = req.body
 
       if (description.length > 140) {
