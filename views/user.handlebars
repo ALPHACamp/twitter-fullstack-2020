@@ -248,11 +248,10 @@
         </div>
 
         <div>
-          {{#if this.isFollowings }}
+          {{#if this.isFollowed }}
           <form action="/followships/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
               class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
           </form>
-
           {{else}}
           <form action="/followships/{{this.id}}" method="POST"><button type="submit" class="btn btn-block mt-1"
               style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>
