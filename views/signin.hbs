@@ -1,40 +1,39 @@
-<div class="row">
-  <div class="mx-auto">
-    {{#if isBackend}}
-    <form class="form-signin" action="/admin/signin" method="POST" style="width: 540px;">
-    {{else}}
-    <form class="form-signin" action="/signin" method="POST" style="width: 540px;">
-    {{/if}}
-      <div class="text-center">
-        <img src="/images/logo.png" alt="logo" style="width: 50px; height: 50px;">
-      </div>
-      <div class="text-center">
-        <h1>
-          {{#if isBackend}}
-          後台登入
-          {{else}}
-          登入 Alphitter
-          {{/if}}
-        </h1>
-      </div>
-      <div class="form-group">
-        <label for="account">帳號</label>
-        <input type="account" class="form-control" name="account" id="account" required value="user1@example.com">
-      </div>
-      <div class="form-group">
-        <label for="password">密碼</label>
-        <input type="password" class="form-control" name="password" id="password" required value="12345678">
-      </div>
-      <button type="submit" class="btn btn-primary btn-block">登入</button>
-      <div class="text-right">
+<div class="sign-template">
+  <div class="sign-main">
+    <div class="header">
+      <i class='ac-icon login'></i>
+      <div class="title">
         {{#if isBackend}}
-        <a href="/signin">前台登入</a>
+        後台登入
         {{else}}
-        <a href="/signup">註冊 Alphitter</a>
-        ·
-        <a href="/admin/signin">後台登入</a>
+        登入 Alphitter
         {{/if}}
       </div>
-    </form>
+    </div>
+    {{#if isBackend}}
+    <form action="/admin/signin" method="POST">
+      {{else}}
+      <form action="/signin" method="POST">
+        {{/if}}
+
+        <div class="edit-text">
+          <label for="account">帳號</label>
+          <input type="account" class="form-control" name="account" id="account" required value="user1@example.com">
+        </div>
+        <div class="edit-text">
+          <label for="password">密碼</label>
+          <input type="password" class="form-control" name="password" id="password" required value="12345678">
+        </div>
+        <button type="submit" class="btn-fill">登入</button>
+        <div class="buttons">
+          {{#if isBackend}}
+          <a href="/signin" class="btn-text">前台登入</a>
+          {{else}}
+          <a href="/signup" class="btn-text">註冊 Alphitter</a>
+          <span>•</span>
+          <a href="/admin/signin" class="btn-text">後台登入</a>
+          {{/if}}
+        </div>
+      </form>
   </div>
 </div>

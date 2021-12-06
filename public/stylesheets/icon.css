@@ -12,8 +12,8 @@ i.ac-icon {
   width: 30px;
 }
 i.ac-icon.login {
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
 }
 i.home {
   background-image: url('../icons/home.svg');

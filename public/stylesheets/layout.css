@@ -105,13 +105,22 @@ html, body {
   height: 100%;
 }
 
+.sign-template {
+  display: grid;
+  grid-template-columns: 1fr 540px 1fr;
+  grid-template-rows: 100%;
+  grid-template-areas: "i main j";
+  width: 100%;
+  height: 100%;
+}
+
 .leftside, .main, .rightside {
   overflow: scroll;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
-/* left side */
+/* user-template left side */
 .leftside {
   display: flex;
   flex-wrap: wrap;
@@ -174,7 +183,7 @@ html, body {
   margin-right: 20px;
 }
 
-/* center content for tweets */
+/* user-template center content for tweets */
 .main {
   grid-area: main;
   border: 1px solid #E6ECF0;
@@ -349,7 +358,7 @@ html, body {
   color: #f60;
 }
 
-/* center content for profile (Likes, Replies, Tweets) */
+/* user-template center content for profile (Likes, Replies, Tweets) */
 .main > .back-arror-header {
   height: 55px;
   width: 100%;
@@ -494,7 +503,7 @@ html, body {
   color: #f60;
 }
 
-/* center content for profile (followship) */
+/* user-template center content for profile (followship) */
 .main > .followship {
   width: 100%;
 }
@@ -556,7 +565,7 @@ html, body {
   padding: .1px 15px;
 }
 
-/* center content for single tweet page */
+/* user-template center content for single tweet page */
 .main > .back-arror-header > .header-text > .tweet {
   color: #1c1c1c;
   font-size: 18px;
@@ -725,7 +734,7 @@ html, body {
   width: 100%;
 }
 
-/* right side */
+/* user-template right side */
 .rightside {
   grid-area: rightside;
 }
@@ -1128,6 +1137,81 @@ html, body {
   border-top: 0;
 }
 
+/* sign-template  main */
+
+.sign-template > .sign-main {
+  grid-area: main;
+}
+
+.sign-template > .sign-main > .header {
+  text-align: center;
+}
+
+.sign-template > .sign-main > .header > i {
+  margin-top: 65px;
+}
+
+.sign-template > .sign-main > .header > .title {
+  color: #1C1C1C;
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 33px;
+  margin-bottom: 40px;
+}
+
+.sign-template > .sign-main > form {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.sign-template > .sign-main > form > .edit-text {
+  background-color: #F5F8FA;
+  height: 52px;
+  border-bottom: 2px solid #657786;
+  border-radius: 0 0 4px 4px;
+  margin-bottom: 30px;
+}
+
+.sign-template > .sign-main > form > .edit-text > label {
+  color: #657786;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 15px;
+  margin: 5px 0 0 10px;
+  border: none;
+}
+
+.sign-template > .sign-main > form > .edit-text > input {
+  color: #1C1C1C;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 28px;
+  vertical-align: top;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  padding: 0 10px
+}
+
+.sign-template > .sign-main > form > button {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 50px;
+  height: 46px;
+}
+
+.sign-template > .sign-main > form > .buttons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: end;
+}
+
+.sign-template > .sign-main > form > .buttons > span {
+  color: #0099FF;
+  margin: 0 3px;
+  line-height: 26px;
+}
+
 /* general style */
 .d-none {
   display: none !important;
@@ -1137,27 +1221,32 @@ html, body {
   color: #fff !important;
   justify-content: center !important;
   background-color: #F60;
-  border-radius: 19px;
+  border-radius: 50px;
   font-weight: 500 !important;
   text-align: center;
   font-size: 18px;
 }
 
-.btn-fill.sm {
-  border-radius: 17.5px;
-  font-size: 15px;
-}
-
-.btn-fill.xs {
-  border-radius: 12.5px;
+.btn-fill.sm, .btn-fill.xs {
   font-size: 15px;
 }
 
 .btn-fill.form {
-  border-radius: 14px;
   font-size: 18px;
   line-height: 28px;
   width: 66px;
+}
+
+.btn-text {
+  color: #0099FF;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 26px;
+  text-decoration: underline #0099FF;
+}
+
+.btn-text:hover {
+  text-decoration: underline #0099FF;
 }
 
 .btn-outline {
@@ -1165,19 +1254,13 @@ html, body {
   justify-content: center !important;
   background-color: transparent;
   border: 1px solid #f60;
-  border-radius: 19px;
+  border-radius: 50px;
   font-weight: 500 !important;
   text-align: center;
   font-size: 18px;
 }
 
-.btn-outline.sm {
-  border-radius: 17.5px;
-  font-size: 15px;
-}
-
-.btn-outline.xs {
-  border-radius: 12.5px;
+.btn-outline.sm, .btn-outline.xs {
   font-size: 15px;
 }
 
