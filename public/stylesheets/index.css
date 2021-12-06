@@ -206,6 +206,12 @@ html, body {
   object-fit: cover;
 }
 
+.profile-action {
+  position: absolute;
+  top: -65px;
+  right: 12px;
+}
+
 .list-item-profile {
   box-sizing: border-box;
   padding: 15px 0;
