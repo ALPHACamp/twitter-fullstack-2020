@@ -1,0 +1,59 @@
+<div class="center container">
+  <div class="left-bar">
+    {{> navbar}}
+  </div>
+
+  <div class="right-bar">
+    {{> topUser}}
+  </div>
+
+  <div class="header light-border">
+    <div class="py-1 px-3 m-0 font-weight-bold light-border d-flex align-items-center">
+      <a class="mr-5" href="/tweets"><img class="mb-1" src="images/pre.svg" alt=""></a>
+      <div class="d-inline-block">
+        <p class="m-0" style="font-size: 19px;">{{userData.name}}</p>
+        <p class="light-color m-0" style="font-size: 13px; font-weight: 500;">{{userData.tweetCount}} 推文</p>
+      </div>
+    </div>
+    <ul class="list-group list-group-horizontal mt-4" id="profile-buttons">
+      <li class="list-group-item list-item-profile" id="follows">
+        <a href="/users/{{user.id}}/followers">跟隨者</a>
+      </li>
+      <li class="list-group-item list-item-profile item-active" id="follows">
+        <a href="/users/{{user.id}}/followings">正在跟隨</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="list-tweet">
+    {{!-- followings --}}
+    <ul class="list-group">
+      {{#each userData.Followings}}
+      <li class="list-group-item px-3 d-flex align-items-start justify-content-start">
+        <a href="/users/{{this.id}}">
+          <img class="mr-3 thumbnail" src="{{this.avatar}}" alt="">
+        </a>
+        <div class="content-wrapper w-100">
+          <div class="mb-2">
+            <p class="font-weight-bold d-inline">{{this.name}}</p>
+            <p class="light-color">@{{this.account}}</p>
+          </div>
+          <p class="mt-2">{{this.introduction}}</p>
+        </div>
+        <div>
+          {{#if isFollowed}}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST" class="position-absolute" style="right: 12px;">
+            <button class="button-follow following" type="submit">正在跟隨</button>
+          </form>
+          {{else}}
+          <form action="/followships/" method="POST" class="position-absolute" style="right: 12px;">
+            <input type="text" value="{{this.id}}" name="id" hidden>
+            <button class="button-follow" type="submit">跟隨</button>
+          </form>
+          {{/if}}
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
