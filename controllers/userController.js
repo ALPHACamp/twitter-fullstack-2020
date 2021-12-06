@@ -6,6 +6,7 @@ const User = db.User
 const Followship = db.Followship
 const Tweet = db.Tweet
 const Like = db.Like
+const Reply = db.Reply
 const moment = require('moment')
 
 
@@ -302,6 +303,44 @@ const userController = {
 
     },
 
+    getReplies: (req, res) => {
+        const replyFindAll = Reply.findAll({
+            raw: true,
+            nest: true,
+            include: [
+                User,
+                { model: Tweet, nested: true }
+            ]
+        })
+        const tweetFindAll = Tweet.findAll({
+            raw: true,
+            nest: true,
+        })
+        const userFindAll = User.findAll({
+            raw: true,
+            nest: true
+        })
+
+        Promise.all([replyFindAll, tweetFindAll, userFindAll])
+            .then(responses => {
+                let replies = responses[0]
+                let tweets = responses[1]
+                let users = responses[2]
+                console.log('== replies ==')
+                console.log(replies)
+                console.log('== tweets ==')
+                // console.log(tweets)
+                console.log('== users ==')
+                // console.log(users)
+
+
+                return res.render('userReplies', { replies })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+    }
 
 
 
