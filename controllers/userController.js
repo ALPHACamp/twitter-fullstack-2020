@@ -7,13 +7,13 @@ const { Op } = db.Sequelize
 const { User, Tweet, Reply, Like, Followship } = db
 
 const userController = {
-  getUser: async (req, res) => {
+  getLoginUser: async (req, res) => {
     const userId = Number(helpers.getUser(req).id)
-    const user = await User.findByPk(userId, {
+    const loginUser = await User.findByPk(userId, {
       attributes: { exclude: ['password'] },
       raw: true
     })
-    return user
+    return loginUser
   },
 
   getUserProfile: async (req, res) => {

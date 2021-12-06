@@ -3,8 +3,8 @@
     <div class="navigation" id="navigation">
       <i class='ac-icon'></i>
       <a class="active" href='/tweets' id="homing"><i class='home active'></i>首頁</a>
-      <a class="" href="/users/{{user.id}}/tweets" id="editing"><i class='info'></i>個人資料</a>
-      <a class="" href='/users/{{user.id}}/settings' id="setting"><i class='setting'></i>設定</a>
+      <a class="" href="/users/{{loginUser.id}}/tweets" id="editing"><i class='info'></i>個人資料</a>
+      <a class="" href='/users/{{loginUser.id}}/settings' id="setting"><i class='setting'></i>設定</a>
       <button type="button" class="btn-fill" id="posting">推文</button>
     </div>
     {{!-- 展示icon用 --}}
@@ -163,7 +163,7 @@
           <img class="thumbnail" src="/icons/avatar.svg" alt="">
         </a>
         <form action="/tweets" method="post">
-          <input type="hidden" name="userId" value="{{user.id}}">
+          <input type="hidden" name="userId" value="{{loginUser.id}}">
           <textarea name="description" maxlength="140" cols="48" rows="6" placeholder="有什麼新鮮事？" required></textarea>
           <button type="summit" class="btn-fill" id="posting">推文</button>
         </form>
