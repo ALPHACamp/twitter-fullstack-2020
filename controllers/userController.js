@@ -22,20 +22,37 @@ const userController = {
             req.flash('error_messages', '兩次密碼輸入不同！')
             return res.redirect('/signup')
         } else {
-            User.findOne({ where: { email: req.body.email } }).then(user => {
+            User.findOne({
+                where: {
+                    email: req.body.email,
+                }
+            }).then(user => {
+
                 if (user) {
                     req.flash('error_messages', '信箱重複！')
                     return res.redirect('/signup')
                 } else {
-                    User.create({
-                        name: req.body.name,
-                        email: req.body.email,
-                        password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
-                        account: '@' + req.body.name
+                    User.findOne({
+                        where: {
+                            account: '@' + req.body.account
+                        }
                     }).then(user => {
-                        req.flash('success_messages', '成功註冊帳號！')
-                        return res.redirect('/signin')
+                        if (user) {
+                            req.flash('error_messages', '帳號重複！')
+                            return res.redirect('/signup')
+                        } else {
+                            User.create({
+                                name: req.body.name,
+                                email: req.body.email,
+                                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+                                account: '@' + req.body.account
+                            }).then(user => {
+                                req.flash('success_messages', '成功註冊帳號！')
+                                return res.redirect('/signin')
+                            })
+                        }
                     })
+
                 }
             })
         }
@@ -269,19 +286,12 @@ const userController = {
                 { model: User, as: 'LikedUsers' }
             ]
         })
-<<<<<<< HEAD
-        // console.log('===================')
-        // console.log(req.user)
-        // console.log('===================')
-        Promise.all([likeTweeets])
-=======
         let userFindAll2 = User.findAll({
             include: [
                 { model: User, as: 'Followers' }
             ]
         })
         Promise.all([tweetFindAll, userFindAll2])
->>>>>>> upstream/master
             .then(responses => {
                 let liked = responses[0]
                 let users2 = responses[1]
@@ -290,12 +300,6 @@ const userController = {
                     ...likedTweet,
                     isLikedTweet: req.user.LikedTweets.map(d => d.id).includes(likedTweet.id)
                 }))
-<<<<<<< HEAD
-                // console.log(tweets)
-                return res.render('userLike', { tweets })
-            })
-            .catch(error => {
-=======
 
                 users2 = users2.map(user => ({
                     ...user.dataValues,
@@ -312,7 +316,6 @@ const userController = {
                 console.log(liked)
                 return res.render('userLike', { likedTweets: liked, users2 })
             }).catch(error => {
->>>>>>> upstream/master
                 console.log(error)
             })
 
