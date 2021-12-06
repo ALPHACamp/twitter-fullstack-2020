@@ -47,7 +47,7 @@ module.exports = (app, passport) => {
   app.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
   app.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
   app.get('/tweets/:tweetId', authenticated, tweetController.getTweet)
-  app.get('/popular', authenticated, tweetController.getPopular)
+  // app.get('/popular', authenticated, tweetController.getPopular)
 
   // reply 相關
   // app.get('/tweets/:tweetId/replies', authenticated)  // 取得留言資料

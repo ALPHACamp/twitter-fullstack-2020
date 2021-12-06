@@ -186,7 +186,7 @@ const tweetController = {
         isFollowing: followings.includes(pop.dataValues.id)
       })).sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
 
-      // return res.json(pops)
+      
       return pops // 返回前10 populars array
     } catch (err) {
       console.error(err)
