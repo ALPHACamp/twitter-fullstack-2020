@@ -308,6 +308,7 @@ const userController = {
         const replyFindAll = Reply.findAll({
             raw: true,
             nest: true,
+            where: { UserId: req.user.id },
             include: [
                 User,
                 { model: Tweet, include: [User] }
