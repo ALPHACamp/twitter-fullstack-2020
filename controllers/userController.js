@@ -123,11 +123,11 @@ const userController = {
 
     getUserSelf: (req, res) => {
         const tweetFindAll = Tweet.findAll({
-            raw: true,
-            nest: true,
             order: [['createdAt', 'DESC']],
-            where: { UserId: req.user.id }
-
+            where: { UserId: req.user.id },
+            include: [User,
+                { model: Reply, include: [Tweet] },
+            ]
         })
 
         const userFindAll = User.findAll({
@@ -135,11 +135,18 @@ const userController = {
                 { model: User, as: 'Followers' }
             ]
         })
+        const repliesFindAll = Reply.findAll({
+            include: [
+                { model: Tweet, include: [Reply] }
+            ]
 
-        Promise.all([tweetFindAll, userFindAll])
+        })
+
+        Promise.all([tweetFindAll, userFindAll, repliesFindAll])
             .then(responses => {
                 let tweets = responses[0]
                 let users = responses[1]
+                let replies = responses[2]
                 users = users.map(user => ({
 
                     ...user.dataValues,
@@ -154,7 +161,16 @@ const userController = {
 
                 users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-                // console.log(users)
+                tweets = tweets.map(tweet => ({
+                    ...tweet.dataValues,
+                    reliesCount: tweet.Replies.length
+                }))
+
+
+
+                console.log(tweets)
+                // console.log('==============================')
+                // console.log(replies)
                 return res.render('user', { tweets, users })
             }).catch(error => {
                 console.log(error)

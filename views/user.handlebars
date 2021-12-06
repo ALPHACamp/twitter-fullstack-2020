@@ -208,14 +208,15 @@
         <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
-        <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{
+        <div class="h6">{{this.User.dataValues.name}} <span class="text-secondary">{{this.User.dataValues.account}}
+            ．{{moment
             this.createdAt}}</span>
         </div>
         <div>{{this.description}}</div>
         <span class="mr-4 "><button type="submit" data-toggle="modal" data-target="#exampleModalCenter"
             style="border: 0; background-color: #ffffff; ">
             <i class="far fa-comment"></i>
-          </button> {{tweets.replyCount}}</span>
+          </button> {{this.reliesCount}}</span>
         <span><i class="far fa-heart"> 479</i>
         </span>
       </div>
