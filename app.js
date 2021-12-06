@@ -43,6 +43,6 @@ app.use(express.static('public'))
 
 app.listen(PORT, () => console.log(`App listening on http://localhost:${PORT}`))
 
-require('./routes')(app, passport)
+require('./routes')(app)
 
 module.exports = app

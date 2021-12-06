@@ -1,19 +1,19 @@
 <div class="back-arror-header">
   <a><i class='back-arror'></i></a>
   <div class="header-text">
-    <span class="name">{{User.name}}</span>
-    <span class="post-count">25 推文</span>
+    <span class="name">{{user.name}}</span>
+    <span class="post-count">{{user.tweetCount}} 推文</span>
   </div>
 </div>
 
 <div class="paginator">
-  <a class="active">跟隨者</a>
-  <a class="">正在跟隨</a>
+  <a class="active" href="/users/{{user.id}}/followers">跟隨者</a>
+  <a class="" href="/users/{{user.id}}/followings">正在跟隨</a>
 </div>
 
 <div class="followship">
 
-  {{#each User.Followers}}
+  {{#each followers}}
   <div class="follower">
     <a>
       <img class="thumbnail" src="/icons/avatar.svg" alt="">

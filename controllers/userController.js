@@ -7,33 +7,76 @@ const { Op } = db.Sequelize
 const { User, Tweet, Reply, Like, Followship } = db
 
 const userController = {
+  getLoginUser: async (req, res) => {
+    const userId = Number(helpers.getUser(req).id)
+    const loginUser = await User.findByPk(userId, {
+      attributes: { exclude: ['password'] },
+      raw: true
+    })
+    return loginUser
+  },
+
+  getUserProfile: async (req, res) => {
+    const userId = Number(req.params.userId)
+    const user = await User.findByPk(userId, {
+      attributes: [
+        'id',
+        'name',
+        'avatar',
+        'introduction',
+        'account',
+        'cover',
+        [
+          sequelize.literal(
+            `(SELECT COUNT(*) FROM tweets WHERE tweets.UserId = user.id)`
+          ),
+          'tweetCount'
+        ],
+        [
+          sequelize.literal(
+            `(SELECT COUNT(*) FROM followships WHERE followships.followerId = user.id)`
+          ),
+          'followingCount'
+        ],
+        [
+          sequelize.literal(
+            `(SELECT COUNT(*) FROM followships WHERE followships.followingId = user.id)`
+          ),
+          'followerCount'
+        ]
+      ],
+      raw: true
+    })
+    return user
+  },
+
   getUserTweets: async (req, res) => {
     try {
-      const queryId = Number(req.params.userId)
-
+      const UserId = Number(req.params.userId)
       const tweets = await Tweet.findAll({
-        where: { UserId: queryId },
+        where: { UserId },
         attributes: [
           'id',
-          'UserId',
           'description',
           'createdAt',
-          [sequelize.literal('(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
-          [sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'), 'likeCount'],
+          [
+            sequelize.literal(
+              '(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'
+            ),
+            'replyCount'
+          ],
+          [
+            sequelize.literal(
+              '(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'
+            ),
+            'likeCount'
+          ]
         ],
-        order: [['createdAt', 'DESC']]
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
       })
-
-      const user = await User.findByPk(queryId, {
-        attributes: [
-          'id',
-          'name',
-          'account',
-          'avatar'
-        ]
-      })
-
-      return res.json({ tweets, user })
+      return tweets
     } catch (err) {
       console.error(err)
     }
@@ -41,31 +84,23 @@ const userController = {
 
   getUserReplies: async (req, res) => {
     try {
-      const queryId = Number(req.params.userId)
-
+      const UserId = Number(req.params.userId)
       const replies = await Reply.findAll({
-        where: { UserId: queryId },
-        attributes: [
-          'comment',
-          'createdAt'
-        ],
-        // 不熟 sequelize 待優化
+        where: { UserId },
+        attributes: ['id', 'comment', 'createdAt'],
+        // 不熟 sequelize 待優化，邏輯：reply -> tweet -> user -> account(field)
         include: [
-          { model: Tweet, attributes: ['UserId'], include: [{ model: User, attributes: ['account'] }] }
+          {
+            model: Tweet,
+            attributes: [],
+            include: [{ model: User, attributes: ['id', 'account'] }]
+          }
         ],
-        order: [['createdAt', 'DESC']]
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
       })
-
-      const user = await User.findByPk(queryId, {
-        attributes: [
-          'id',
-          'name',
-          'account',
-          'avatar'
-        ]
-      })
-
-      return res.json({ replies, user })
+      return replies
     } catch (err) {
       console.error(err)
     }
@@ -73,32 +108,106 @@ const userController = {
 
   getUserLikes: async (req, res) => {
     try {
-      const queryId = Number(req.params.userId)
-
-      const tweets = await Tweet.findAll({
-        where: { UserId: queryId },
-        attributes: [
-          'id',
-          'UserId',
-          'description',
-          'createdAt',
-          [sequelize.literal('(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
-          [sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'), 'likeCount'],
-          // [sequelize.literal(`(SELECT UserId FROM likes WHERE likes.TweetId = Tweet.id AND likes.UserId = ${queryId})`), 'isLike']
+      const userId = Number(req.params.userId)
+      const likes = await Like.findAll({
+        where: { UserId: userId },
+        attributes: [],
+        include: [
+          {
+            model: Tweet,
+            attributes: [
+              'id',
+              'description',
+              'createdAt',
+              [
+                sequelize.literal(
+                  '(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'
+                ),
+                'replyCount'
+              ],
+              [
+                sequelize.literal(
+                  '(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'
+                ),
+                'likeCount'
+              ]
+            ]
+          }
         ],
-        include: [{ model: Like }],
-        order: [['createdAt', 'DESC']]
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
       })
-
-      return res.json({ tweets })
-
+      const tweets = likes.map((like) => like.Tweet)
+      return tweets
     } catch (err) {
       console.error(err)
     }
   },
 
-  signUpPage: (req, res) => {
-    return res.render('signup')
+  getUserFollowers: async (req, res) => {
+    try {
+      const UserId = Number(req.params.userId)
+      let followers = await User.findAll({
+        where: { id: UserId },
+        attributes: [],
+        include: [
+          {
+            model: User,
+            as: 'Followers',
+            attributes: ['id', 'name', 'avatar', 'introduction', 'account']
+          }
+        ]
+      })
+      console.log(followers)
+
+      followers = followers[0].dataValues.Followers.map((follower) => ({
+        id: follower.id,
+        name: follower.name,
+        avatar: follower.avatar,
+        introduction: follower.avatar,
+        account: follower.account,
+        followshipCreatedAt: follower.Followship.createdAt,
+        isFollowed: follower.Followship.followerId === UserId
+      }))
+
+      followers = followers.sort(
+        (a, b) => b.followshipCreatedAt - a.followshipCreatedAt
+      )
+
+      return followers
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  getUserFollowings: async (req, res) => {
+    try {
+      const UserId = Number(req.params.userId)
+      let followings = await User.findAll({
+        where: { id: UserId },
+        attributes: [],
+        include: [
+          {
+            model: User,
+            as: 'Followings',
+            attributes: ['id', 'name', 'avatar', 'introduction', 'account']
+          }
+        ]
+      })
+
+      followings = followings[0].dataValues.Followings.map((following) => ({
+        id: following.id,
+        name: following.name,
+        avatar: following.avatar,
+        introduction: following.avatar,
+        account: following.account,
+        followshipCreatedAt: following.Followship.createdAt,
+      }))
+      return followings
+    } catch (err) {
+      console.error(err)
+    }
   },
 
   signUp: async (req, res) => {
@@ -140,11 +249,6 @@ const userController = {
     }
   },
 
-  signInPage: (req, res) => {
-    const isBackend = req.originalUrl.includes('admin')
-    return res.render('signin', { isBackend })
-  },
-
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
 
@@ -156,7 +260,7 @@ const userController = {
 
   signOut: (req, res) => {
     req.flash('success_messages', '成功登出！')
-    
+
     if (helpers.getUser(req).role === 'admin') {
       req.logout()
       return res.redirect('/admin/signin')
@@ -165,22 +269,7 @@ const userController = {
     return res.redirect('/signin')
   },
 
-  editUserPage: async (req, res) => {
-    try {
-      const userId = req.params.userId
-
-      if (req.user.id !== Number(userId)) {
-        req.flash('error_messages', '你無權查看此頁面')
-        return res.redirect('/tweets')
-      }
-
-      return res.render('edit')
-    } catch (err) {
-      console.error(err)
-    }
-  },
-
-  putUser: async (req, res) => {
+  updateSettings: async (req, res) => {
     try {
       const userId = req.params.userId
 
@@ -197,8 +286,12 @@ const userController = {
         errors.push({ message: '兩次密碼輸入不同！' })
       }
 
-      const user1Promise = User.findOne({ where: { account, [Op.not]: { id: userId } } })
-      const user2Promise = User.findOne({ where: { email, [Op.not]: { id: userId } } })
+      const user1Promise = User.findOne({
+        where: { account, [Op.not]: { id: userId } }
+      })
+      const user2Promise = User.findOne({
+        where: { email, [Op.not]: { id: userId } }
+      })
       const [user1, user2] = await Promise.all([user1Promise, user2Promise])
 
       if (user1) {
