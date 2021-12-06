@@ -320,12 +320,17 @@ const userController = {
             raw: true,
             nest: true
         })
-
-        Promise.all([replyFindAll, tweetFindAll, userFindAll])
+        let userFindAll2 = User.findAll({
+            include: [
+                { model: User, as: 'Followers' }
+            ]
+        })
+        Promise.all([replyFindAll, tweetFindAll, userFindAll, userFindAll2])
             .then(responses => {
                 let replies = responses[0]
                 let tweets = responses[1]
                 let users = responses[2]
+                let users2 = responses[3]
                 console.log('== replies ==')
                 console.log(replies)
                 console.log('== tweets ==')
@@ -333,8 +338,18 @@ const userController = {
                 console.log('== users ==')
                 // console.log(users)
 
+                users2 = users2.map(user => ({
+                    ...user.dataValues,
+                    isUser: !user.Followers.map(d => d.id).includes(user.id),
+                    // 計算追蹤者人數
+                    FollowerCount: user.Followers.length,
+                    // 判斷目前登入使用者是否已追蹤該 User 物件
+                    isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+                }))
+                // 依追蹤者人數排序清單
+                users2 = users2.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-                return res.render('userReplies', { replies })
+                return res.render('userReplies', { replies, users2 })
             })
             .catch(error => {
                 console.log(error)

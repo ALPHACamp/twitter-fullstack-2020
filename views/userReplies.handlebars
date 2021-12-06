@@ -174,9 +174,13 @@
       <div class="h4" style="margin-bottom:0">{{user.name}}</div>
       <div><small>{{user.account}}</small></div>
       <div class="mt-2">{{user.introduction}}</div>
-      <div class="mt-2">
-        <div class="font-weight-bold">{{users.FollowerCount}} 個<span class="text-secondary mr-3">跟隨中</span>59 位<span
-            class="text-secondary">跟隨者</span></div>
+      <div style="display: inline-block">
+        <p><strong>{{user.Followings.length}}</strong> <a href="/user/{{user.id}}/followings"
+            class="text-secondary">followings</a></p>
+      </div>
+      <div style="display: inline-block">
+        <p><strong>{{user.Followers.length}}</strong> <a href="/user/{{user.id}}/followers"
+            class="text-secondary">followers</a></p>
       </div>
     </div>
 
@@ -223,10 +227,12 @@
       <div class="p-2">
         跟隨誰
       </div>
-      {{#each users}}
+      {{#each users2}}
+      {{#if this.isUser}}
       <div
         style="display: flex; justify-content:space-between; border-top:#E6ECF0 1px solid; border-bottom:#E6ECF0 1px solid;"
         class="p-2">
+
         <div style="display: flex;">
           <img src={{this.avatar}} style="width: 50px; height:50px; border-radius:50%;">
           <div>
@@ -237,16 +243,17 @@
 
         <div>
           {{#if this.isFollowed }}
-          <form action="/user/self/following/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
               class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
           </form>
           {{else}}
-          <form action="/user/self/following/{{this.id}}" method="POST"><button type="submit" class="btn btn-block mt-1"
+          <form action="/followships/{{this.id}}" method="POST"><button type="submit" class="btn btn-block mt-1"
               style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>
           </form>
           {{/if}}
         </div>
       </div>
+      {{/if}}
       {{/each}}
     </div>
   </div>
