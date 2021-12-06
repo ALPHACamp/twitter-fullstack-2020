@@ -9,13 +9,15 @@
       <p class="m-0">{{this.name}}</p>
       <p class="light-color m-0">@{{this.account}}</p>
     </div>
+    {{#if this.isFollowed}}
     <form action="/followships/{{this.id}}?_method=DELETE" method="POST" class="position-absolute" style="right: 12px;">
       <button class="button-follow following" type="submit">正在跟隨</button>
     </form>
-    <form action="/followships/" method="POST" class="position-absolute" style="right: 12px;">
-      <input type="text" value="{{this.id}}" name="id" hidden>
+    {{else}}
+    <form action="/followships/{{this.id}}" method="POST" class="position-absolute" style="right: 12px;">
       <button class="button-follow" type="submit">跟隨</button>
     </form>
+    {{/if}}
   </li>
   {{/each}}
 </ul>
