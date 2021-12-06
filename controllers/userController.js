@@ -159,6 +159,7 @@ const userController = {
           }
         ]
       })
+      console.log(followers)
 
       followers = followers[0].dataValues.Followers.map((follower) => ({
         id: follower.id,
@@ -182,9 +183,9 @@ const userController = {
 
   getUserFollowings: async (req, res) => {
     try {
-      const userId = Number(req.params.userId)
+      const UserId = Number(req.params.userId)
       let followings = await User.findAll({
-        where: { id: userId },
+        where: { id: UserId },
         attributes: [],
         include: [
           {
@@ -194,9 +195,15 @@ const userController = {
           }
         ]
       })
-      followings = followings[0].dataValues.Followings.map(
-        (following) => following.dataValues
-      )
+
+      followings = followings[0].dataValues.Followings.map((following) => ({
+        id: following.id,
+        name: following.name,
+        avatar: following.avatar,
+        introduction: following.avatar,
+        account: following.account,
+        followshipCreatedAt: following.Followship.createdAt,
+      }))
       return followings
     } catch (err) {
       console.error(err)
