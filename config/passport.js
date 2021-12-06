@@ -5,15 +5,32 @@ const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
 
-passport.use(new LocalStrategy(
+passport.use('user-local', new LocalStrategy(
   {
     usernameField: 'account',
     passwordField: 'password',
     passReqToCallback: true 
   },
   (req, username, password, done) => {
-    User.findOne({ where: { account: username} }).then(user  => {
-      if (!user) return done(null, false, req.flash('error_msg', '還未註冊喔，請先註冊'))
+    User.findOne({ where: { account: username, role: 'user'} }).then(user  => {
+      console.log(user)
+      if (!user) return done(null, false, req.flash('error_msg', '帳號或密碼錯誤'))
+      if (!bcrypt.compareSync(password, user.password)) return done(null, false, req.flash('error_msg', ' 帳號或密碼錯誤'))
+      return done(null, user)
+    })
+  }
+))
+
+passport.use('admin-local', new LocalStrategy(
+  {
+    usernameField: 'account',
+    passwordField: 'password',
+    passReqToCallback: true
+  },
+  (req, username, password, done) => {
+    User.findOne({ where: { account: username, role: 'admin' } }).then(user => {
+      console.log(user)
+      if (!user) return done(null, false, req.flash('error_msg', '帳號或密碼錯誤'))
       if (!bcrypt.compareSync(password, user.password)) return done(null, false, req.flash('error_msg', ' 帳號或密碼錯誤'))
       return done(null, user)
     })

@@ -1,31 +1,30 @@
-<form class="form-login mt-5" action="/admin/signin" method="POST" style="width: 100%;" novalidate>
-  <div class="text-center my-4">
-    <h1 class="h3 mb-3 font-weight-normal">後台登入</h1>
-  </div>
+<div class="container py-5 ">
+  <form action="/admin/signin" method="POST" style="width: 100%;" class="signin-form">
+    <div class="adminForm-container">
+      <div class="sign-logo text-center">
+        <img src="../images/logo.svg" alt="" />
+      </div>
+      <div class="admin-text text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">後台登入</h1>
+      </div>
 
-  <div class="row justify-content-center">
-    <div class="form-floating col-4 mb-4">
-      <input type="text" class="form-control" id="floatingAccount" placeholder="@Will" name="account"
-        style="background-color: #F5F8FA;" required autofocus />
-      <label for="floatingAccount">帳號</label>
-      <div class="invalid-feedback">請輸入帳號</div>
+      <div class="form-account form-label-group mb-2">
+        <label for="account">帳號</label>
+        <input id="account" name="account" type="text" class="form-control signin-input" required>
+      </div>
+
+      <div class="form-password form-label-group mb-3">
+        <label for="password">密碼</label>
+        <input id="password" name="password" type="password" class="form-control signin-input" required>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block mb-3 w-100 signin-btn" type="submit" :disabled="isProcessing">
+        登入
+      </button>
+      <div class="sign-in text-center mb-3 w-100">
+        <p class="text-right">
+          <a href="/signin">前台登入</a>
+        </p>
+      </div>
     </div>
-  </div>
-
-  <div class="row justify-content-center">
-    <div class="form-floating col-4 mb-4">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="******" name="password"
-        style="background-color: #F5F8FA;" required />
-      <label for="floatingPassword">密碼</label>
-      <div class="invalid-feedback">請輸入密碼</div>
-    </div>
-  </div>
-
-
-  <div class="d-grid gap-2 col-4 mx-auto text-center">
-    <button class="btn rounded-pill" type="submit" style="color:white; background-color:#FF6600">登入</button>
-    <p style="color: #0099FF;font-size: 14px">
-      <a href="/signin">前台登入</a>
-    </p>
-  </div>
-</form>
+  </form>
+</div>
