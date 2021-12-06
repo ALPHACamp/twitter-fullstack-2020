@@ -11,10 +11,10 @@
     </div>
   </div>
 
-  {{#ifCond partial "adminUers"}}
-  {{> admintsUers}}
-  {{else partial "adminTweets"}}
+  {{#if adminUers}}
+  {{> adminUers}}
+  {{else}}
   {{> adminTweets}}
-  {{/ifCond}}
+  {{/if}}
 
 </div>
