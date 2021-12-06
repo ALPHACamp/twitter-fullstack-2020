@@ -72,4 +72,7 @@ module.exports = (app, passport) => {
   app.post('/followships', authenticated, userController.addFollowships)
   //user取消追隨
   app.delete('/followships/:id', authenticated, userController.removeFollowing)
+
+  //user Profile頁面
+  app.get('/users/:id/tweets', authenticated, userController.getProfile)
 }
