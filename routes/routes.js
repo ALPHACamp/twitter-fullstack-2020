@@ -37,8 +37,6 @@ router.get('/tweets/:tweetId/replies', authenticated, replyController.getReplies
 router.post('/tweets/:tweetId/replies', authenticated, replyController.addReply)  // 新增留言
 
 // user 相關
-// router.get('/api/users/:userId')  // 瀏覽編輯使用者頁面
-// router.post('/api/users/:userId', userController.updateData)  // 更新使用者的資訊
 router.get('/users/:userId/settings', authenticated, pageController.getSettings)
 router.put('/users/:userId/settings', authenticated, userController.updateSettings)
 router.get('/users/:userId/tweets', authenticated, pageController.getUserTweets)
