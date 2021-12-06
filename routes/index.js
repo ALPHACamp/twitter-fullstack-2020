@@ -3,7 +3,6 @@ const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
 const tweetController = require('../controllers/tweetController')
 
-
 module.exports = (app, passport) => {
 
   // authenticated 與 authenticatedAdmin 
@@ -39,7 +38,11 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 
   //設定前台流覽總推文路由
+  
   app.get('/tweets', authenticated, tweetController.getTweets)
+
+  //設定前台瀏覽個別推文路由
+  app.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
 
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
