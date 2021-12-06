@@ -147,9 +147,9 @@ const userController = {
 
   getUserFollowers: async (req, res) => {
     try {
-      const userId = Number(req.params.userId)
+      const UserId = Number(req.params.userId)
       let followers = await User.findAll({
-        where: { id: userId },
+        where: { id: UserId },
         attributes: [],
         include: [
           {
@@ -161,9 +161,19 @@ const userController = {
       })
 
       followers = followers[0].dataValues.Followers.map((follower) => ({
-        ...follower.dataValues,
-        isLiked: follower.Followship.followerId === userId
+        id: follower.id,
+        name: follower.name,
+        avatar: follower.avatar,
+        introduction: follower.avatar,
+        account: follower.account,
+        followshipCreatedAt: follower.Followship.createdAt,
+        isFollowed: follower.Followship.followerId === UserId
       }))
+
+      followers = followers.sort(
+        (a, b) => b.followshipCreatedAt - a.followshipCreatedAt
+      )
+
       return followers
     } catch (err) {
       console.error(err)

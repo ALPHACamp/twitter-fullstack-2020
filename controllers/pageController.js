@@ -99,8 +99,8 @@ const pageController = {
         userController.getUserProfile(req, res),
         userController.getUserFollowers(req, res)
       ])
-      return res.render('user', { user, followers, userFollowersPage: true })
-      // return res.json({ user, followers, userFollowersPage: true })
+      // return res.render('user', { user, followers, userFollowersPage: true })
+      return res.json({ user, followers, userFollowersPage: true })
     } catch (err) {
       console.error(err)
     }
