@@ -75,7 +75,9 @@
 }
 
 .admin-user-container {
-  border: 1px solid #e6ecf0;
+  border-left: 1px solid #e6ecf0;
+  border-right: 1px solid #e6ecf0;
+  border-bottom: 1px solid #e6ecf0;
   min-height: 100vh;
 }
 
