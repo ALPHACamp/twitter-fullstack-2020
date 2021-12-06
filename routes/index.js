@@ -48,6 +48,8 @@ module.exports = (app, passport) => {
   app.post('/signup', userController.signUp)
   app.get('/logout', userController.logout)
   app.get('/users/:id', authenticated, userController.getUser)
+  app.get('/users/:id/tweets', authenticated, userController.getUserTweets)
+  app.get('/users/:id/likes', authenticated, userController.getLikes)
 
   // TWEET
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))

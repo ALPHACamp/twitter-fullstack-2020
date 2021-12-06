@@ -9,7 +9,7 @@
 
   <div class="header">
     <div class="p-3 m-0 font-weight-bold light-border" style="font-size: 18px; line-height: 26px;">
-      <a class="mr-5" href="/tweets"><img class="mb-1" src="../images/pre.svg" alt=""></a>
+      <a class="mr-5" href="/tweets"><img class="mb-1" src="/images/pre.svg" alt=""></a>
       推文
     </div>
     <div class="px-3 pt-3 light-border">
@@ -31,19 +31,19 @@
       <div class="d-flex align-items-center mb-3">
         <!-- comment -->
         <a class="light-color action-icon {{#if tweet.isReplied}}isReplied{{/if}}" href="#" style="margin-right: 120px;">
-          <img src="../images/reply.svg" alt="">
+          <img src="/images/reply.svg" alt="">
         </a>
         <!-- like -->
         {{#if tweet.isLiked}}
         <form class="action-icon" action="/tweets/{{tweet.id}}/unlike" method="POST">
           <button class="light-color isLiked" type="submit" style="background: transparent; border: 0;">
-            <img src="../images/like.svg" alt=""> Liked
+            <img src="/images/like.svg" alt=""> Liked
           </button>
         </form>
         {{else}}
         <form class="action-icon" action="/tweets/{{tweet.id}}/like" method="POST">
           <button class="light-color" type="submit" style="background: transparent; border: 0;">
-            <img src="../images/like.svg" alt="">
+            <img src="/images/like.svg" alt="">
           </button>
         </form>
         {{/if}}

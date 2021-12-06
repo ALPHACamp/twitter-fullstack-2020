@@ -113,7 +113,7 @@ const userController = {
       { model: Like, include: [{ model: Tweet, include: [User, Reply, { model: User, as: 'LikedUsers' }]}]}
     ] }).then(user => {
       // to avoid conflicting with res.locals.user
-      userData = {
+      const userData = {
         ...user.toJSON(),
         tweetCount: user.Tweets.length,
         followingCount: helpers.getUser(req).Followings.length,
@@ -141,6 +141,53 @@ const userController = {
 
       userService.getTopUser(req, res, topUser => {
         return res.render('user', { userData, topUser })
+      })
+    })
+  },
+  getUserTweets: (req, res) => {
+    User.findByPk(req.params.id, { include: { model: Tweet, include: [
+      { model: User, as: 'LikedUsers' },
+      { model: Reply, include: [User] }
+    ] } }).then(user => {
+      // to avoid conflicting with res.locals.user
+      const userData = {
+        ...user.toJSON()
+      }
+
+      userData.Tweets = userData.Tweets.map(tweet => ({
+        ...tweet,
+        replyCount: tweet.Replies.length,
+        isReplied: tweet.Replies.map(item => item.UserId).includes(helpers.getUser(req).id),
+        likeCount: tweet.LikedUsers.length,
+        isLiked: tweet.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id)
+      }))
+
+      userService.getTopUser(req, res, topUser => {
+        return res.render('userTweets', { userData, topUser })
+      })
+    })
+  },
+  getLikes: (req, res) => {
+    User.findByPk(req.params.id, { include: { model: Tweet, as: 'LikedTweets', include: [
+      User,
+      { model: User, as: 'LikedUsers'},
+      { model: Reply, include: [ User ]}
+    ]} }).then(user => {
+      // to avoid conflicting with res.locals.user
+      const userData = {
+        ...user.toJSON()
+      }
+
+      userData.LikedTweets = userData.LikedTweets.map(tweet => ({
+        ...tweet,
+        replyCount: tweet.Replies.length,
+        isReplied: tweet.Replies.map(item => item.UserId).includes(helpers.getUser(req).id),
+        likeCount: tweet.LikedUsers.length,
+        isLiked: tweet.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id)
+      }))
+
+      userService.getTopUser(req, res, topUser => {
+        return res.render('likes', { userData, topUser })
       })
     })
   }

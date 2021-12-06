@@ -9,7 +9,7 @@
 
   <div class="header light-border">
     <div class="py-1 px-3 m-0 font-weight-bold light-border d-flex align-items-center">
-      <a class="mr-5" href="/tweets"><img class="mb-1" src="../images/pre.svg" alt=""></a>
+      <a class="mr-5" href="/tweets"><img class="mb-1" src="/images/pre.svg" alt=""></a>
       <div class="d-inline-block">
         <p class="m-0" style="font-size: 19px;">{{userData.name}}</p>
         <p class="light-color m-0" style="font-size: 13px; font-weight: 500;">{{userData.tweetCount}} 推文</p>
@@ -50,13 +50,13 @@
     <ul class="list-group" id="userTweets">
       {{#each userData.Tweets}}
       <li class="list-group-item px-3 d-flex align-items-start justify-content-start">
-        <a href="/users/{{../user.id}}">
-          <img class="mr-3 thumbnail" src="{{../user.avatar}}" alt="">
+        <a href="/users/{{../userData.id}}">
+          <img class="mr-3 thumbnail" src="{{../userData.avatar}}" alt="">
         </a>
         <div class="content-wrapper w-100">
           <div class="mb-2">
-            <p class="font-weight-bold d-inline">{{../user.name}}</p>
-            <p class="light-color d-inline">@{{../user.account}}．{{moment this.createdAt}}</p>
+            <p class="font-weight-bold d-inline">{{../userData.name}}</p>
+            <p class="light-color d-inline">@{{../userData.account}}．{{moment this.createdAt}}</p>
           </div>
           <a class="link-description" href="/tweets/{{this.id}}">
             <p>{{this.description}}</p>
@@ -91,12 +91,12 @@
       {{#each userData.Replies}}
       <li class="list-group-item px-3 d-flex align-items-start justify-content-start">
         <a href="/users/{{this.UserId}}">
-          <img class="mr-3 thumbnail" src="{{../user.avatar}}" alt="">
+          <img class="mr-3 thumbnail" src="{{../userData.avatar}}" alt="">
         </a>
         <div class="content-wrapper w-100">
           <div class="mb-2">
-            <p class="font-weight-bold d-inline">{{../user.name}}</p>
-            <p class="light-color d-inline">@{{../user.account}}．{{moment this.createdAt}}</p>
+            <p class="font-weight-bold d-inline">{{../userData.name}}</p>
+            <p class="light-color d-inline">@{{../userData.account}}．{{moment this.createdAt}}</p>
           </div>
           <p class="light-color d-inline" style="font-weight: 500;">回覆</p>
           <p class="d-inline" style="font-weight: 500; color: #ff6600">@{{this.Tweet.User.account}}</p>
