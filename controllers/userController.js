@@ -127,6 +127,7 @@ const userController = {
             where: { UserId: req.user.id },
             include: [User,
                 { model: Reply, include: [Tweet] },
+                { model: User, as: 'LikedUsers' }
             ]
         })
 
@@ -135,18 +136,12 @@ const userController = {
                 { model: User, as: 'Followers' }
             ]
         })
-        const repliesFindAll = Reply.findAll({
-            include: [
-                { model: Tweet, include: [Reply] }
-            ]
 
-        })
 
-        Promise.all([tweetFindAll, userFindAll, repliesFindAll])
+        Promise.all([tweetFindAll, userFindAll])
             .then(responses => {
                 let tweets = responses[0]
                 let users = responses[1]
-                let replies = responses[2]
                 users = users.map(user => ({
 
                     ...user.dataValues,
@@ -163,7 +158,8 @@ const userController = {
 
                 tweets = tweets.map(tweet => ({
                     ...tweet.dataValues,
-                    reliesCount: tweet.Replies.length
+                    reliesCount: tweet.Replies.length,
+                    likeCount: tweet.LikedUsers.length
                 }))
 
 
