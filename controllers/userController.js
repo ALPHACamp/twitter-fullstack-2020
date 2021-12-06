@@ -26,9 +26,24 @@ const userController = {
         'introduction',
         'account',
         'cover',
-        [sequelize.literal(`(SELECT COUNT(*) FROM tweets WHERE tweets.UserId = ${userId})`), 'tweetCount'],
-        [sequelize.literal(`(SELECT COUNT(*) FROM followships WHERE followships.followerId = ${userId})`), 'followingCount'],
-        [sequelize.literal(`(SELECT COUNT(*) FROM followships WHERE followships.followingId = ${userId})`), 'followerCount']
+        [
+          sequelize.literal(
+            `(SELECT COUNT(*) FROM tweets WHERE tweets.UserId = user.id)`
+          ),
+          'tweetCount'
+        ],
+        [
+          sequelize.literal(
+            `(SELECT COUNT(*) FROM followships WHERE followships.followerId = user.id)`
+          ),
+          'followingCount'
+        ],
+        [
+          sequelize.literal(
+            `(SELECT COUNT(*) FROM followships WHERE followships.followingId = user.id)`
+          ),
+          'followerCount'
+        ]
       ],
       raw: true
     })
@@ -37,18 +52,25 @@ const userController = {
 
   getUserTweets: async (req, res) => {
     try {
-      const userId = Number(req.params.userId)
+      const UserId = Number(req.params.userId)
       const tweets = await Tweet.findAll({
-        where: { UserId: userId },
+        where: { UserId },
         attributes: [
           'id',
           'description',
           'createdAt',
-          [sequelize.literal('(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
-          [sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'), 'likeCount'],
-        ],
-        include: [
-          { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
+          [
+            sequelize.literal(
+              '(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'
+            ),
+            'replyCount'
+          ],
+          [
+            sequelize.literal(
+              '(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'
+            ),
+            'likeCount'
+          ]
         ],
         order: [['createdAt', 'DESC']],
         raw: true,
@@ -65,20 +87,20 @@ const userController = {
       const userId = Number(req.params.userId)
       const replies = await Reply.findAll({
         where: { UserId: userId },
-        attributes: [
-          'id',
-          'comment',
-          'createdAt'
-        ],
+        attributes: ['id', 'comment', 'createdAt'],
         // 不熟 sequelize 待優化，邏輯：reply -> tweet -> user -> account(field)
         include: [
-          { model: Tweet, attributes: ['id'], include: [{ model: User, attributes: ['account'] }] }
+          {
+            model: Tweet,
+            attributes: [],
+            include: [{ model: User, attributes: ['account'] }]
+          }
         ],
         order: [['createdAt', 'DESC']],
         raw: true,
         nest: true
       })
-      return replies
+      return res.json(replies)
     } catch (err) {
       console.error(err)
     }
@@ -90,22 +112,33 @@ const userController = {
       const likes = await Like.findAll({
         where: { UserId: userId },
         attributes: [],
-        include: [{
-          model: Tweet,
-          attributes: [
-            'id',
-            'description',
-            'createdAt',
-            [sequelize.literal('(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'), 'replyCount'],
-            [sequelize.literal('(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'), 'likeCount']
-          ]
-        }
+        include: [
+          {
+            model: Tweet,
+            attributes: [
+              'id',
+              'description',
+              'createdAt',
+              [
+                sequelize.literal(
+                  '(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'
+                ),
+                'replyCount'
+              ],
+              [
+                sequelize.literal(
+                  '(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'
+                ),
+                'likeCount'
+              ]
+            ]
+          }
         ],
         order: [['createdAt', 'DESC']],
         raw: true,
         nest: true
       })
-      const tweets = likes.map(like => (like.Tweet))
+      const tweets = likes.map((like) => like.Tweet)
       return tweets
     } catch (err) {
       console.error(err)
@@ -119,11 +152,15 @@ const userController = {
         where: { id: userId },
         attributes: [],
         include: [
-          { model: User, as: 'Followers', attributes: ['id', 'name', 'avatar', 'introduction', 'account'] }
+          {
+            model: User,
+            as: 'Followers',
+            attributes: ['id', 'name', 'avatar', 'introduction', 'account']
+          }
         ]
       })
 
-      followers = followers[0].dataValues.Followers.map(follower => ({
+      followers = followers[0].dataValues.Followers.map((follower) => ({
         ...follower.dataValues,
         isLiked: follower.Followship.followerId === userId
       }))
@@ -140,10 +177,16 @@ const userController = {
         where: { id: userId },
         attributes: [],
         include: [
-          { model: User, as: 'Followings', attributes: ['id', 'name', 'avatar', 'introduction', 'account'] }
+          {
+            model: User,
+            as: 'Followings',
+            attributes: ['id', 'name', 'avatar', 'introduction', 'account']
+          }
         ]
       })
-      followings = followings[0].dataValues.Followings.map(following => (following.dataValues))
+      followings = followings[0].dataValues.Followings.map(
+        (following) => following.dataValues
+      )
       return followings
     } catch (err) {
       console.error(err)
@@ -200,7 +243,7 @@ const userController = {
 
   signOut: (req, res) => {
     req.flash('success_messages', '成功登出！')
-    
+
     if (helpers.getUser(req).role === 'admin') {
       req.logout()
       return res.redirect('/admin/signin')
@@ -226,8 +269,12 @@ const userController = {
         errors.push({ message: '兩次密碼輸入不同！' })
       }
 
-      const user1Promise = User.findOne({ where: { account, [Op.not]: { id: userId } } })
-      const user2Promise = User.findOne({ where: { email, [Op.not]: { id: userId } } })
+      const user1Promise = User.findOne({
+        where: { account, [Op.not]: { id: userId } }
+      })
+      const user2Promise = User.findOne({
+        where: { email, [Op.not]: { id: userId } }
+      })
       const [user1, user2] = await Promise.all([user1Promise, user2Promise])
 
       if (user1) {
