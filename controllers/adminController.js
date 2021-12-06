@@ -50,7 +50,7 @@ const adminController = {
           tweetCount: user.Tweets.length,
           likeCount: adminController.sumLikes(
             user.Tweets.map((tweet) => tweet.Likes.length)
-          ), // 有寫工具function adminController.sumLikes(arr) 計算加總
+          ), // 有寫工具function adminController.sumLikes(arr)計算加總
           followingCount: user.Followings.length,
           followerCount: user.Followers.length,
         }))
