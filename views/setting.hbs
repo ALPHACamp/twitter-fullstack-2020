@@ -1,28 +1,33 @@
-{{!-- <div id="column1" style="float:left; width:25%; position: fixed;">{{> settingLeft}}</div> --}}
-<form class="form-setting" action="/users/{{user.id}}?_method=PUT" method="POST" style="width: 100%;">
-  <div class="text-center mb-4">
-    <h1 class="h3 mb-3 font-weight-normal">帳戶設定</h1>
+
+<div id="column1" style="float:left; width:20%; position: fixed; top:0%; left:5%">{{> settingLeft}}</div>
+
+<div class="d-flex justify-content-center">
+  <div id="column2" class="mx-auto my-auto" style="float:left;width:50%;">
+  {{!-- <div id="column3" class="float-right" style="float:left;width:80%; position: fixed; left:20%;"> --}}
+    <div class="page-header">
+      帳戶設定
+    </div>
+    <div class='container text-center login-container'>
+      <form class='' action='/users/{{user.id}}?_method=PUT' method='POST' style='width: 100%;'>
+        <div class='form-label-group' style='margin-top: 32px;'>
+          <input type='text' name='account' class='form-control login-input' placeholder='帳號' value="{{user.account}}" required autofocus />
+        </div>
+        <div class='form-label-group' style='margin-top: 32px;'>
+          <input type='text' name='name' class='form-control login-input' placeholder='名稱' value="{{user.name}}" required autofocus />
+        </div>
+        <div class='form-label-group' style='margin-top: 32px;'>
+          <input type='text' name='email' class='form-control login-input' placeholder='Email' value="{{user.email}}" required autofocus />
+        </div>
+        <div class='form-label-group' style='margin-top: 32px;'>
+          <input type='password' name='password' class='form-control login-input' placeholder='密碼' required />
+        </div>
+        <div class='form-label-group' style='margin-top: 32px;'>
+          <input type='password' name='passwordCheck' class='form-control login-input' placeholder='密碼確認' required autofocus />
+        </div>
+        <div class="d-flex justify-content-end">
+          <button class='btn btn-lg btn-block login-button' style='margin-top: 42px; width: 116px' type='submit'>儲存</button>
+        </div>
+      </form>
+    </div>
   </div>
-  <div class="form-label-group">
-    <label for="inputAccount">帳號</label>
-    <input type="text" name="account" class="form-control" placeholder="Account" value="{{user.account}}" required autofocus />
-  </div>
-  <div class="form-label-group">
-    <label for="inputName">名稱</label>
-    <input type="text" name="name" class="form-control" placeholder="Name" value="{{user.name}}" required autofocus />
-  </div>
-  <div class="form-label-group">
-    <label for="inputEmail">Email</label>
-    <input type="text" name="email" class="form-control" placeholder="Email" value="{{user.email}}" required autofocus />
-  </div>
-  <div class="form-label-group">
-    <label for="inputPassword">密碼</label>
-    <input type="password" name="password" class="form-control" placeholder="Password" required />
-  </div>
-  <div class="form-label-group">
-    <label for="inputPasswordCheck">密碼確認</label>
-    <input type="password" name="passwordCheck" class="form-control" placeholder="Password Check" required />
-  </div>
-  <br />
-  <button class="btn btn-lg btn-primary btn-block" type="submit">儲存</button>
-</form>
+</div>
