@@ -34,7 +34,7 @@ router.post('/tweets', authenticated, tweetController.addTweet) // 發文
 router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
 router.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
 router.get('/tweets/:tweetId/replies', authenticated, replyController.getReplies) // 取得留言資料
-// router.post('/tweets/:tweetId/replies')  // 新增留言
+router.post('/tweets/:tweetId/replies', authenticated, replyController.addReply)  // 新增留言
 
 // user 相關
 // router.get('/api/users/:userId')  // 瀏覽編輯使用者頁面

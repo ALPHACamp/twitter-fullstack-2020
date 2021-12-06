@@ -13,9 +13,25 @@ const replyController = {
       const replies = await Reply.findAll({
         where: { TweetId },
         attributes: ['id', 'comment', 'createdAt'],
-        include: { model: User, attributes: ['id', 'name', 'avatar', 'account'] }
+        include: {
+          model: User,
+          attributes: ['id', 'name', 'avatar', 'account']
+        }
       })
       return res.json({ replies })
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  addReply: async (req, res) => {
+    try {
+      await Reply.create({
+        UserId: helpers.getUser(req).id,
+        TweetId: req.params.tweetId,
+        comment: req.body.comment
+      })
+      return res.redirect('back')
     } catch (err) {
       console.error(err)
     }
