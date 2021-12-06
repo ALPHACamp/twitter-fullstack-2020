@@ -1,6 +1,7 @@
 const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
+const Reply = db.Reply
 const helpers = require('../_helpers')
 
 const tweetController = {
@@ -18,6 +19,19 @@ const tweetController = {
       }))
       return res.render('Tweets', {
         tweets: data,
+      })
+    })
+  },
+  //前台瀏覽個別推文
+  getTweet: (req, res) => {
+    return Tweet.findByPk(req.params.id, {
+      include: [
+        User,
+        { model: Reply, include: [User] }
+      ]
+    }).then(tweet => {
+      return res.render('tweet', {
+        tweet: tweet.toJSON()
       })
     })
   }
