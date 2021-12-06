@@ -380,16 +380,16 @@ html, body {
   height: 40px;
   color: #657786
 }
-.main > .tweets > .tweet > .postcontent > .action > button > i {
+.main > .tweets > .tweet > .postcontent > .action button i {
   margin: -3px 0;
 }
 
-.main > .tweets > .tweet > .postcontent > .action > button .lg {
+.main > .tweets > .tweet > .postcontent > .action button .lg {
   margin: -7px 0;
 }
 
-.main > .tweets > .tweet > .postcontent > .action > .commenting,
-.main > .tweets > .tweet > .postcontent > .action > .liking
+.main > .tweets > .tweet > .postcontent > .action .commenting,
+.main > .tweets > .tweet > .postcontent > .action .liking
  {
   width: 90px;
   line-height: 40px;
@@ -722,7 +722,7 @@ html, body {
   align-items: center;
 }
 
-.main > .tweet > .tweetcontent > .action > button:first-child {
+.main > .tweet > .tweetcontent > .action button:first-child {
   margin-right: 146px;
 }
 

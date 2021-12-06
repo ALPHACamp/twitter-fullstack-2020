@@ -6,16 +6,25 @@
   </div>
 </div>
 <div class="banner">
-  <img src="{{user.cover}}" alt="" class="cover">
-  <img src="{{user.avatar}}" alt="" class="avatar">
+  {{#if user.cover}}
+  <img src="{{user.cover}}" alt="{{user.cover}} cover" class="cover">
+  {{else}}
+  <img src="/icons/cover.svg" class="cover">
+  {{/if}}
+  {{#if user.avatar}}
+  <img src="{{user.avatar}}" alt="{{user.avatar}} avatar" class="avatar">
+  {{else}}
+  <img src="/icons/avatar-lg.svg" class="avatar">
+  {{/if}}
   <div class="buttons">
-    {{!-- #if user.id === /:userId -> 自己的頁面 --}}
-    {{!-- <button type="button" class="btn-outline sm">編輯個人資料</button> --}}
-    {{!-- else 他人的頁面 --}}
+    {{#ifCond loginUser.id user.id}}
+    <button type="button" class="btn-outline sm"
+      onclick="document.querySelector('#modal-edit').classList.remove('d-none');">編輯個人資料</button>
+    {{else}}
     <a><i class='btn-message'></i></a>
     <a><i class='btn-noti'></i></a>
     <button type="button" class="btn-fill sm">正在跟隨</button>
-    {{!-- /if --}}
+    {{/ifCond}}
   </div>
 </div>
 <div class="information">

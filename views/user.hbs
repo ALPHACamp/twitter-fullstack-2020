@@ -9,7 +9,8 @@
         <a class="active" href='/tweets'><i class='home active'></i>首頁</a>
         <a class="" href="/users/{{loginUser.id}}/tweets"><i class='info'></i>個人資料</a>
         <a class="" href='/users/{{loginUser.id}}/settings'><i class='setting'></i>設定</a>
-        <button type="button" class="btn-fill" id="posting">推文</button>
+        <button type="button" class="btn-fill" id="posting"
+          onclick="document.querySelector('#modal-post').classList.remove('d-none');">推文</button>
       </div>
 
       <div class="footer">
@@ -26,9 +27,7 @@
       {{#if userFollowersPage}}{{> profileFollower}}{{/if}}
       {{#if userFollowingsPage}}{{> profileFollowing}}{{/if}}
       {{#if userSettingsPage}}{{> profileSettings}}{{/if}}
-      {{!-- {{> tweet}} --}}
 
-      {{!-- ADMIN PARTIALS --}}
     </div>
     {{#unless userSettingsPage}}
     <div class="rightside">
@@ -62,7 +61,7 @@
 
   {{!-- posting modal --}}
   <div class="modal d-none" id="modal-post">
-    <div class="mask" id="modal-post-mask">
+    <div class="mask">
       <div class="dialog">
         <div class="dialog-header">
           <a class='close'><i class='X-orange close'></i></a>
@@ -83,7 +82,7 @@
 
   {{!-- replying modal --}}
   <div class="modal d-none" id="modal-reply">
-    <div class="mask" id="modal-reply-mask">
+    <div class="mask">
       <div class="dialog">
         <div class="dialog-header">
           <a class="close"><i class='X-orange close'></i></a>
@@ -127,8 +126,9 @@
   </div>
 
   {{!-- editing modal --}}
+  {{#ifCond loginUser.id user.id}}
   <div class="modal d-none" id="modal-edit">
-    <div class="mask" id="modal-edit-mask">
+    <div class="mask">
       <div class="dialog">
         <div class="dialog-header">
           <a class="close"><i class='X-orange close'></i></a>
@@ -167,7 +167,9 @@
               </label>
             </div>
             <div class="edit-form">
-              <input type="text" name="name" class="edit-name" id="name" maxlength="50" required value="{{User.name}}">
+              <input type="text" name="name" class="edit-name" id="name" maxlength="50" required
+                onkeyup="document.querySelector('#name-counter').textContent=`${document.querySelector('#edit-name').value.length}/50`;"
+                value="{{User.name}}">
             </div>
             <div class="counter" id="name-counter">5/50</div>
           </div>
@@ -179,8 +181,8 @@
               </label>
             </div>
             <div class="edit-form">
-              <textarea name="introduction" class="edit-introduction" id="introduction"
-                maxlength="160">{{User.introduction}}</textarea>
+              <textarea name="introduction" class="edit-introduction" id="introduction" maxlength="160"
+                onkeyup="document.querySelector('#introduction-counter').textContent=`${document.querySelector('#introduction').value.length}/160`;">{{User.introduction}}</textarea>
             </div>
             <div class="counter" id="introduction-counter">56/160</div>
           </div>
@@ -192,4 +194,6 @@
 
     </div>
   </div>
+  {{/ifCond}}
+
 </div>

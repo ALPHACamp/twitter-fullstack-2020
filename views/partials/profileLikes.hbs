@@ -9,13 +9,14 @@
   <img src="{{user.cover}}" alt="" class="cover">
   <img src="{{user.avatar}}" alt="" class="avatar">
   <div class="buttons">
-    {{!-- #if user.id === /:userId -> 自己的頁面 --}}
-    <button type="button" class="btn-outline sm">編輯個人資料</button>
-    {{!-- else 他人的頁面 --}}
-    {{!-- <a><i class='btn-message'></i></a>
+    {{#ifCond loginUser.id user.id}}
+    <button type="button" class="btn-outline sm"
+      onclick="document.querySelector('#modal-edit').classList.remove('d-none');">編輯個人資料</button>
+    {{else}}
+    <a><i class='btn-message'></i></a>
     <a><i class='btn-noti'></i></a>
-    <button type="button" class="btn-fill sm">正在跟隨</button> --}}
-    {{!-- /if --}}
+    <button type="button" class="btn-fill sm">正在跟隨</button>
+    {{/ifCond}}
   </div>
 </div>
 <div class="information">
