@@ -1,0 +1,20 @@
+<div class="admin-template">
+  <div class="leftside">
+    <div class="navigation" id="navigation">
+      <i class='ac-icon'></i>
+      <a class="" href='/admin/tweets'><i class='home'></i>推文清單</a>
+      <a class="active" href="/admin/users"><i class='info active'></i>使用者列表</a>
+    </div>
+
+    <div class="footer">
+      <a href="/signout"><i class='logout'></i>登出</a>
+    </div>
+  </div>
+
+  {{#ifCond partial "adminUers"}}
+  {{> admintsUers}}
+  {{else partial "adminTweets"}}
+  {{> adminTweets}}
+  {{/ifCond}}
+
+</div>
