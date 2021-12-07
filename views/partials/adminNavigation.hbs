@@ -33,13 +33,13 @@
     <br />
     <div class='d-flex align-items-start flex-column bd-highlight mb-3' style=''>
       <div style='color: black; font-weight:bold;'>
-        <a href='/admin/tweets' style='text-decoration: none'><p style='color: black;'><i
+        <a href='/admin/tweets' style='text-decoration: none; color:black;'><p class='navCol-btn {{#ifCond page 'tweets'}}navCol-btn-active{{/ifCond}}'><i
               class='fas fa-home pr-3 mb-3'
               style='font-size: large;'
             ></i>推文清單</p></a>
       </div>
       <div style='font-weight:bold;'>
-        <a href='/admin/users' style='text-decoration: none; color:black;'><p style='color: black;'><i
+        <a href='/admin/users' style='text-decoration: none; color:black;'><p class='navCol-btn {{#ifCond page 'users'}}navCol-btn-active{{/ifCond}}'><i
               class='far fa-user pr-3 mb-3'
               style='font-size: large;'
             ></i>使用者列表</p></a>

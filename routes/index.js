@@ -59,6 +59,9 @@ module.exports = (app, passport) => {
   app.get('/users/:id/edit', authenticated, userController.editUser)
   app.put('/users/:id/', authenticated, userController.putUser)
 
+  //user個人資料頁
+  app.get('/users/:id/tweets', authenticated, userController.getProfile)
+
   //user推文
   app.get('/tweets', authenticated, tweetController.getTweets)
   //user推文

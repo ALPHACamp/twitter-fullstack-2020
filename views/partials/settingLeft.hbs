@@ -33,19 +33,19 @@
     <br />
     <div class='d-flex align-items-start flex-column bd-highlight mb-3' style=''>
       <div style='color: black; font-weight:bold;'>
-        <a href='/tweets' style='text-decoration: none'><p style='color: black;'><i
+        <a href='/tweets' style='text-decoration: none'><p class='navCol-btn {{#ifCond page 'tweets'}}navCol-btn-active{{/ifCond}}'><i
               class='fas fa-home pr-3 mb-3'
               style='font-size: large;'
             ></i>首頁</p></a>
       </div>
       <div style='font-weight:bold;'>
-        <a href='/users/{{user.id}}/tweets' style='text-decoration: none; color:black;'><p style='color: black;'><i
+        <a href='/users/{{user.id}}/tweets' style='text-decoration: none; color:black;'><p class='navCol-btn {{#ifCond page 'profile'}}navCol-btn-active{{/ifCond}}'><i
               class='far fa-user pr-3 mb-3'
               style='font-size: large;'
             ></i>個人資料</p></a>
       </div>
       <div style=' font-weight:bold;'>
-        <a href='/users/{{user.id}}/edit' style='text-decoration: none'><p style='color: black;'><i
+        <a href='/users/{{user.id}}/edit' style='text-decoration: none'><p class='navCol-btn {{#ifCond page 'setting'}}navCol-btn-active{{/ifCond}}'><i
               class='fas fa-cog pr-3 mb-3'
               style='font-size: large;'
             ></i>設定</p></a>

@@ -66,6 +66,7 @@ const userController = {
     User.findByPk(req.params.id).then((user) => {
       return res.render('setting', {
         user: user.toJSON(),
+        page: 'setting',
       })
     })
   },
@@ -88,6 +89,10 @@ const userController = {
           res.redirect('back')
         })
     })
+  },
+
+  getProfile: (req, res) => {
+    return res.render('profile', { page: 'profile' })
   },
 
   addLike: (req, res) => {
