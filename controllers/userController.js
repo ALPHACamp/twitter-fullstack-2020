@@ -172,6 +172,7 @@ const userController = {
 
                 tweets = tweets.map(tweet => ({
                     ...tweet.dataValues,
+                    isLikedTweet: req.user.LikedTweets.map(d => d.id).includes(tweet.id),
                     reliesCount: tweet.Replies.length,
                     likeCount: tweet.LikedUsers.length
                 }))
@@ -305,11 +306,10 @@ const userController = {
 
     getLike: (req, res) => {
         const tweetFindAll = Tweet.findAll({
-            raw: true,
-            nest: true,
             include: [
                 User,
-                { model: User, as: 'LikedUsers' }
+                { model: User, as: 'LikedUsers' },
+                { model: Reply }
             ]
         })
         let userFindAll2 = User.findAll({
@@ -317,13 +317,14 @@ const userController = {
                 { model: User, as: 'Followers' }
             ]
         })
+
         Promise.all([tweetFindAll, userFindAll2])
             .then(responses => {
                 let liked = responses[0]
                 let users2 = responses[1]
                 // console.log(likedTweets)
                 liked = liked.map(likedTweet => ({
-                    ...likedTweet,
+                    ...likedTweet.dataValues,
                     isLikedTweet: req.user.LikedTweets.map(d => d.id).includes(likedTweet.id)
                 }))
 

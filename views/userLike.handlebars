@@ -209,29 +209,31 @@
         <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
-        <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{moment
+        <div class="h6">{{this.User.dataValues.name}} <span class="text-secondary">{{this.User.dataValues.account}}
+            ．{{moment
             this.createdAt}}</span>
         </div>
         <div>{{this.description}}</div>
         <div class="row align-items-center">
-          <div class="col-md-2">
-            <span class="mr-4"><button type="submit" data-toggle="modal" data-target="#tweetModel"
-                style="border: 0; background-color: #ffffff; ">
-                <i class="far fa-comment" data-id={{this.id}}></i>
-              </button> {{ this.replyCount }} </span>
+          <div class="col-md-3">
+            <span class="mr-2">
+              <button type="submit" data-toggle="modal" data-target="#tweetModel"
+                style="border: 0; background-color: #ffffff; "><i class="far fa-comment" data-id={{this.id}}></i>
+              </button>{{ this.Replies.length }}
+            </span>
           </div>
-          <div class="col-md-2">
+
+
+          <div class="col-md-3">
             {{#if this.isLikedTweet}}
             <form action="/tweets/{{this.id}}/unlike" method="post">
-              <span><span>{{ this.likeCount }}</span><button type="submit" class="btn btn-link"
-                  style="color: red; display:inline">
-                  <i class="fas fa-heart " data-id={{this.id}}></i></button></span>
+              <span><button type="submit" class="btn btn-link" style="color: red; display:inline">
+                  <i class="fas fa-heart " data-id={{this.id}}></i></button>{{ this.LikedUsers.length }}</span>
             </form>
             {{else}}
             <form action="/tweets/{{this.id}}/like" method="post" class="form-inline">
-              <span><span>{{ this.likeCount }}</span><button type="submit" class="btn btn-link text-dark"
-                  style="display:context;">
-                  <i class="far fa-heart" data-id={{this.id}}></i></button></span>
+              <span><button type="submit" class="btn btn-link text-dark" style="display:context;">
+                  <i class="far fa-heart" data-id={{this.id}}></i></button>{{ this.likeCount }}</span>
             </form>
 
             {{/if}}

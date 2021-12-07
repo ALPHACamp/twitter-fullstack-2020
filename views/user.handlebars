@@ -213,12 +213,31 @@
             this.createdAt}}</span>
         </div>
         <div>{{this.description}}</div>
-        <span class="mr-4 "><button type="submit" data-toggle="modal" data-target="#exampleModalCenter"
-            style="border: 0; background-color: #ffffff; ">
-            <i class="far fa-comment"></i>
-          </button> {{this.reliesCount}}</span>
-        <span><i class="far fa-heart"> {{this.likeCount}}</i>
-        </span>
+        <div class="row align-items-center">
+          <div class="col-md-3">
+            <span class="mr-2">
+              <button type="submit" data-toggle="modal" data-target="#tweetModel"
+                style="border: 0; background-color: #ffffff; "><i class="far fa-comment" data-id={{this.id}}></i>
+              </button>{{ this.Replies.length }}
+            </span>
+          </div>
+
+
+          <div class="col-md-3">
+            {{#if this.isLikedTweet}}
+            <form action="/tweets/{{this.id}}/unlike" method="post">
+              <span><button type="submit" class="btn btn-link" style="color: red; display:inline">
+                  <i class="fas fa-heart " data-id={{this.id}}></i></button>{{ this.reliesCount }}</span>
+            </form>
+            {{else}}
+            <form action="/tweets/{{this.id}}/like" method="post" class="form-inline">
+              <span><button type="submit" class="btn btn-link text-dark" style="display:context;">
+                  <i class="far fa-heart" data-id={{this.id}}></i></button>{{ this.likeCount }}</span>
+            </form>
+
+            {{/if}}
+          </div>
+        </div>
       </div>
     </div>
     {{/each}}
