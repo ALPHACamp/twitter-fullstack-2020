@@ -18,7 +18,7 @@
 
         <div class="edit-text">
           <label for="account">帳號</label>
-          <input type="account" name="account" id="account" required value="user1@example.com">
+          <input type="account" name="account" id="account" required value={{#if isBackend}}"root"{{else}}"user1"{{/if}}>
         </div>
 
         <div class="edit-text">
