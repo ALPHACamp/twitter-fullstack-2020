@@ -32,7 +32,7 @@ const adminController = {
         ...r,
         description: r.description.length > 50 ? `${r.description.substring(0, 50)}...` : r.description,
       }))
-      return res.render('admin/tweets', { tweets })
+      return res.render('admin/tweets', { tweets, page: 'tweets' })
     })
   },
 
@@ -73,7 +73,7 @@ const adminController = {
           followingCount: r.Followings.length,
         }
       })
-      return res.render('admin/users', { users })
+      return res.render('admin/users', { users, page: 'users' })
     })
   },
 }

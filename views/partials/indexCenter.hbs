@@ -3,14 +3,14 @@
     <hr>
     {{!-- ================新增推文區域================================================= --}}
     <div class="row row-cols-2 border p-2" style="">
-        <div class="cols text-center" style=" width:15%">
+        <div class="col-1 text-center" style=" width:15%">
             <form class="">
                 <a href="/users/{{user.id}}/tweets" >
                     <img src="{{user.avatar}}" class="mx-auto" style=" width:50PX;height:50px; border-radius:100%; border:0px;"></img>
                 </a>
             </form>
         </div>
-        <div class="cols " style=" width:85%;">
+        <div class="col-11 " style=" width:85%;">
             <form action="/tweets" method="POST">
                 <textarea class="wishContent" placeholder="有什麼新鮮事?"
                     style=" min-height:60px; width:100%; border:0px; resize : none; outline : 0; overflow:hidden;"></textarea>
@@ -24,14 +24,14 @@
 {{!-- =====================推文列表============================================ --}}
     {{#each tweets}}
     <div class="row row-cols-2 border p-2" style="">
-        <div class="cols text-center" style=" width:15%">
+        <div class="col-1 text-center" style=" width:15%">
             <a  href="/users/{{this.User.dataValues.id}}/tweets">
                 <img class="" src="{{this.User.dataValues.avatar}}"
                     style=" width:50PX;height:50px; border-radius:100%;"></img>
             </a>
         </div>
 
-        <div class="cols" style=" width:85%">
+        <div class="col-11" style=" width:85%">
             <div class="row ml-1">
                 <div class="cols ">
                     <a class="text-muted" href="/users/{{this.User.dataValues.id}}/tweets">
@@ -51,7 +51,7 @@
                     <p>...</p>
                 </div>
             </div>
-            <a class="text-muted" href="/tweets/{{this.id}}/replies" style="text-decoration:none;">
+            <a class="tweet-text" href="/tweets/{{this.id}}/replies" style="text-decoration:none;">
                 <p>{{this.description}}</p>
             </a>
             <div class="">

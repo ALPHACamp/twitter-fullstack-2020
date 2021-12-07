@@ -27,6 +27,7 @@ const tweetController = {
       return res.render('tweets', {
         tweets: tweets,
         users: topUsers,
+        page: 'tweets',
       })
     })
   },
