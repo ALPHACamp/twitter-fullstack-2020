@@ -7,7 +7,9 @@
     "start": "set \"NODE_ENV=development\" && node app.js",
     "dev": "set \"NODE_ENV=development\" && nodemon app.js",
     "test": "set \"NODE_ENV=test\" && mocha test --exit --recursive --timeout 5000 --color",
-    "seed": "set \"NODE_ENV=development\" && npx sequelize db:seed:undo:all && npx sequelize db:seed:all"
+    "seed": "set \"NODE_ENV=development\" && npx sequelize db:seed:undo:all && npx sequelize db:seed:all",
+    "reset": "set \"NODE_ENV=development\" && npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all",
+    "test-reset": "set \"NODE_ENV=test\" && npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate"
   },
   "author": "",
   "license": "ISC",
