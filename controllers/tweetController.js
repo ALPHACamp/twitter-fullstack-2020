@@ -21,9 +21,6 @@ const userService = require('../services/userService')
 
 const tweetController = {
   getTweets: (req, res) => {
-    if (helpers.getUser(req).role === 'admin') {
-      return res.redirect('/admin/tweets')
-    }
     Tweet.findAll({ order: [['createdAt', 'DESC']], include: [
       User,
       Reply,
