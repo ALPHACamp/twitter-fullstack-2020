@@ -92,7 +92,7 @@ img.avatar.small {
 }
 
 .cover.none {
-  background: #F5F8FA;
+  background: #999999;
 }
 
 .fa-camera {
@@ -113,17 +113,20 @@ img.avatar.small {
 }
 
 img.avatar.large {
-  width: 105px;
-  height: 105px;
-  padding: 5px;
-  background:#FFFFFF;
+  width: 100px;
+  height: 100px;
+  border-style:solid;
+  border-color: #FFFFFF;
 }
 
 .avatar-none-large {
   border-radius: 50%;
   width: 100px;
   height: 100px;
-  background:#F5F8FA;
+  border-width: 5px;
+  border-style:solid;
+  border-color: #FFFFFF;
+  background: #999999;
 }
 
 .hide {
