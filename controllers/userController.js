@@ -1,6 +1,10 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
+const tweet = require('../models/tweet')
 const User = db.User
+const Tweet = db.Tweet
+const Reply = db.Reply
+const helpers = require('../_helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -26,8 +30,8 @@ const userController = {
             })
               .then(user => { res.redirect('/signin') })
           }
-        })  
-        }
+        })
+    }
   },
   signInPage: (req, res) => {
     return res.render('signin')
@@ -40,6 +44,28 @@ const userController = {
     req.flash('success_messages', '登出成功！')
     req.logout()
     res.redirect('/signin')
+  },
+  //使用者個人資料頁面
+  getUserTweets: (req, res) => {
+    return User.findByPk(req.params.userId, {
+      include: Tweet
+    })
+      .then(user => {
+        return res.render('userTweets', {
+          user: user.toJSON(),
+        })
+      })
+  },
+  //設定使用者個人資料頁面推文與回覆頁面
+  getUserReplies: (req, res) => {
+    return User.findByPk(req.params.userId, {
+      include: [Reply, Tweet]
+    })
+      .then(user => {
+        return res.render('userReplies', {
+          user: user.toJSON()
+        })
+      })
   }
 }
 
