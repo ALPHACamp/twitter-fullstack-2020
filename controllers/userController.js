@@ -41,19 +41,16 @@ const userController = {
                             req.flash('error_messages', '帳號重複！')
                             return res.redirect('/signup')
                         } else {
-                            if (req.body.name.length > 50) {
-                                req.flash('error_messages', '名稱不能大於50個字')
-                                return res.redirect('/signup')
-                            } else
-                                User.create({
-                                    name: req.body.name,
-                                    email: req.body.email,
-                                    password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
-                                    account: '@' + req.body.account
-                                }).then(user => {
-                                    req.flash('success_messages', '成功註冊帳號！')
-                                    return res.redirect('/signin')
-                                })
+                            User.create({
+                                name: req.body.name,
+                                email: req.body.email,
+                                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+                                account: '@' + req.body.account,
+                                avatar: 'https://www.nicepng.com/png/full/136-1366211_group-of-10-guys-login-user-icon-png.png'
+                            }).then(user => {
+                                req.flash('success_messages', '成功註冊帳號！')
+                                return res.redirect('/signin')
+                            })
                         }
                     })
 
@@ -338,9 +335,52 @@ const userController = {
     },
 
     getTweetReply: (req, res) => {
+        const replyFindAll = Reply.findAll({
+            raw: true,
+            nest: true,
+            where: { userId: req.user.id },
+            include: [
+                User,
+                { model: Tweet, include: [User] }
+            ]
+        })
+        const userFindAll2 = User.findAll({
+            include: [
+                { model: User, as: 'Followers' }
+            ]
+        })
 
-        return res.render('userReplies')
+        Promise.all([replyFindAll, userFindAll2])
+            .then(responses => {
 
+                const replies = responses[0]
+                let user2 = responses[1]
+                user2 = user2.map(user => ({
+                    ...user.dataValues,
+                    isUser: !user.Followers.length,
+                    isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+                }))
+                user2 = user2.sort((a, b) => b.FollowerCount - a.FollowerCount)
+                return res.render('userReplies', { replies, user2 })
+            }).catch(error => {
+                console.log(error)
+            })
+
+
+
+
+    },
+
+    getUserApi: (req, res) => {
+        const userId = req.params.id
+        User.findByPk(userId)
+            .then(user => {
+                console.log(user)
+                return res.json({ status: 'success', data: user })
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
 
