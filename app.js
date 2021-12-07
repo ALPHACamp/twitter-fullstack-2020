@@ -7,6 +7,10 @@ const methodOverride = require('method-override')
 const passport = require('./config/passport')
 const helpers = require('./_helpers')
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const app = express()
 const port = 3000
 
@@ -23,6 +27,7 @@ app.set('view engine', 'hbs')
 
 // BODY PARSER
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 // SESSION
 app.use(session({

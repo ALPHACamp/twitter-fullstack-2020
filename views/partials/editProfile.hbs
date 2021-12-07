@@ -1,0 +1,34 @@
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data" id="profileForm">
+        <label id="coverFile">
+          <img class="mb-3" src="{{ user.cover }}">
+          <i class="fas fa-camera h1"></i>
+          <input id="uploadCover" name="cover" type="file">
+        </label>
+        <div class="modal-body">
+          <div class="d-flex justify-content-between">
+            <div class="d-flex flex-column">
+              <label id="avatarFile">
+                <img class="mb-3" src="{{ user.avatar }}">
+                <i class="fas fa-camera h1"></i>
+                <input id="uploadAvatar" name="avatar" style="display:none;" type="file">
+              </label>
+              <button type="submit" class="btn" onclick="submitButtonClick(event)">儲存</button>
+            </div>
+
+            <div>
+              <div>
+                <textarea class="p-3" name="name" id="profileName" maxlength="50" placeholder="Enter Name" required>{{user.name}}</textarea>
+              </div>
+
+              <div>
+                <textarea class="p-3" name="introduction" id="profileIntro" rows="3" maxlength="140" placeholder="Your Introduction">{{user.introduction}}</textarea>
+              </div>
+            </div>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>

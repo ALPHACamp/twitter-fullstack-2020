@@ -8,6 +8,10 @@ const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const replyController = require('../controllers/replyController')
 const likeController = require('../controllers/likeController')
+const apiController = require('../controllers/apiController')
+
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -70,4 +74,7 @@ module.exports = (app, passport) => {
   // FOLLOWSHIP
   app.post('/followships', authenticated, userController.addFollowing)
   app.delete('/followships/:id', authenticated, userController.removeFollowing)
+  //API
+  app.get('/api/users/:userId', authenticated, apiController.getUser)
+  app.post('/api/users/:userId', authenticated, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), userController.updateProfile)
 }

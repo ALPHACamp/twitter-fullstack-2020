@@ -272,6 +272,17 @@ const userController = {
           return res.render('followers', { userData, topUser })
         })
       })
+  },
+
+  updateProfile: (req, res) => {
+    apiController.postUser(req, res, (data) => {
+      if (data['status'] === 'error') {
+        req.flash('error_msg', data['message'])
+        return res.redirect('back')
+      }
+      req.flash('success_msg', data['message'])
+      return res.status(200)
+    })
   }
 }
 
