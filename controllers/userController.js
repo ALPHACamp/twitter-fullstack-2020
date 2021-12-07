@@ -185,6 +185,7 @@ const userController = {
         tweetCount,
         followerCount,
         followingCount,
+        page: 'profile',
       })
     })
   },

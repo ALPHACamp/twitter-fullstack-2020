@@ -22,11 +22,7 @@
         <div class="row">
 
             <div class="cols text-center" style=" width:15%">
-                {{!-- <form class=""> --}}
-                    {{!-- <a href="/users/{{user.id}}/tweets" > --}}
-                        <img src="{{user.avatar}}" class="mx-auto" style=" width:100PX;height:100px; border-radius:100%; border:0px;"></img>
-                    {{!-- </a> --}}
-                {{!-- </form> --}}
+                <img src="{{user.avatar}}" class="mx-auto" style=" width:100PX;height:100px; border-radius:100%; border:0px;"></img>
             </div>
             <div class=" cols" style=" width:85%;">
                 <form action="/api/users/:id" method="POST">
@@ -63,6 +59,17 @@
 
     </div>
 
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link  {{#ifCond page 'profile'}}active{{/ifCond}}"  href="/users/:id/tweets">推文</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{#ifCond page 'profile_replay'}}active{{/ifCond}}" href="/users/:id/replies">推文與回覆</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{#ifCond page 'profile_like'}}active{{/ifCond}}" href="/users/:id/likes">喜歡的內容</a>
+        </li>
+    </ul>
 {{!-- =====================推文列表============================================ --}}
 {{#each tweets}}
     <div class="row row-cols-2 border p-2" style="">
