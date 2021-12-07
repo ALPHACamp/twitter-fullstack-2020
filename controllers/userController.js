@@ -6,8 +6,9 @@ const User = db.User
 const Followship = db.Followship
 const Tweet = db.Tweet
 const Like = db.Like
-const Reply = db.Reply
 const moment = require('moment')
+const Reply = db.Reply
+
 
 
 const userController = {
@@ -21,21 +22,37 @@ const userController = {
             req.flash('error_messages', '兩次密碼輸入不同！')
             return res.redirect('/signup')
         } else {
-            User.findOne({ where: { email: req.body.email } }).then(user => {
+            User.findOne({
+                where: {
+                    email: req.body.email,
+                }
+            }).then(user => {
+
                 if (user) {
                     req.flash('error_messages', '信箱重複！')
                     return res.redirect('/signup')
                 } else {
-                    User.create({
-                        name: req.body.name,
-                        email: req.body.email,
-                        password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
-                        avatar: 'https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg',
-                        account: '@' + req.body.name
+                    User.findOne({
+                        where: {
+                            account: '@' + req.body.account
+                        }
                     }).then(user => {
-                        req.flash('success_messages', '成功註冊帳號！')
-                        return res.redirect('/signin')
+                        if (user) {
+                            req.flash('error_messages', '帳號重複！')
+                            return res.redirect('/signup')
+                        } else {
+                            User.create({
+                                name: req.body.name,
+                                email: req.body.email,
+                                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+                                account: '@' + req.body.account
+                            }).then(user => {
+                                req.flash('success_messages', '成功註冊帳號！')
+                                return res.redirect('/signin')
+                            })
+                        }
                     })
+
                 }
             })
         }
@@ -106,11 +123,12 @@ const userController = {
 
     getUserSelf: (req, res) => {
         const tweetFindAll = Tweet.findAll({
-            raw: true,
-            nest: true,
             order: [['createdAt', 'DESC']],
-            where: { UserId: req.user.id }
-
+            where: { UserId: req.user.id },
+            include: [User,
+                { model: Reply, include: [Tweet] },
+                { model: User, as: 'LikedUsers' }
+            ]
         })
 
         const userFindAll = User.findAll({
@@ -118,6 +136,7 @@ const userController = {
                 { model: User, as: 'Followers' }
             ]
         })
+
 
         Promise.all([tweetFindAll, userFindAll])
             .then(responses => {
@@ -137,7 +156,17 @@ const userController = {
 
                 users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-                // console.log(users)
+                tweets = tweets.map(tweet => ({
+                    ...tweet.dataValues,
+                    reliesCount: tweet.Replies.length,
+                    likeCount: tweet.LikedUsers.length
+                }))
+
+
+
+                console.log(tweets)
+                // console.log('==============================')
+                // console.log(replies)
                 return res.render('user', { tweets, users })
             }).catch(error => {
                 console.log(error)
@@ -304,72 +333,12 @@ const userController = {
 
     },
 
-    getReplies: (req, res) => {
-        const replyFindAll = Reply.findAll({
-            raw: true,
-            nest: true,
-            where: { UserId: req.user.id },
-            include: [
-                User,
-                { model: Tweet, include: [User] }
-            ]
-        })
-        const tweetFindAll = Tweet.findAll({
-            raw: true,
-            nest: true,
-        })
-        const userFindAll = User.findAll({
-            raw: true,
-            nest: true
-        })
-        let userFindAll2 = User.findAll({
-            include: [
-                { model: User, as: 'Followers' }
-            ]
-        })
-        Promise.all([replyFindAll, tweetFindAll, userFindAll, userFindAll2])
-            .then(responses => {
-                let replies = responses[0]
-                let tweets = responses[1]
-                let users = responses[2]
-                let users2 = responses[3]
-                console.log('== replies ==')
-                console.log(replies)
-                console.log('== tweets ==')
-                // console.log(tweets)
-                console.log('== users ==')
-                // console.log(users)
+    getTweetReply: (req, res) => {
 
-                users2 = users2.map(user => ({
-                    ...user.dataValues,
-                    isUser: !user.Followers.map(d => d.id).includes(user.id),
-                    // 計算追蹤者人數
-                    FollowerCount: user.Followers.length,
-                    // 判斷目前登入使用者是否已追蹤該 User 物件
-                    isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
-                }))
-                // 依追蹤者人數排序清單
-                users2 = users2.sort((a, b) => b.FollowerCount - a.FollowerCount)
+        return res.render('userReplies')
 
-                return res.render('userReplies', { replies, users2 })
-            })
-            .catch(error => {
-                console.log(error)
-            })
-
-    },
-
-    getUserApi: (req, res) => {
-        const userId = req.params.id
-        User.findByPk(userId)
-            .then(user => {
-                console.log(user)
-                return res.json({ status: 'success', data: user })
-            })
-            .catch(error => {
-                console.log(error)
-            })
     }
+
 
 
 

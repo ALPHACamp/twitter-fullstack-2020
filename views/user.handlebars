@@ -208,15 +208,16 @@
         <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
-        <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{
+        <div class="h6">{{this.User.dataValues.name}} <span class="text-secondary">{{this.User.dataValues.account}}
+            ．{{moment
             this.createdAt}}</span>
         </div>
         <div>{{this.description}}</div>
         <span class="mr-4 "><button type="submit" data-toggle="modal" data-target="#exampleModalCenter"
             style="border: 0; background-color: #ffffff; ">
             <i class="far fa-comment"></i>
-          </button> {{tweets.replyCount}}</span>
-        <span><i class="far fa-heart"> 479</i>
+          </button> {{this.reliesCount}}</span>
+        <span><i class="far fa-heart"> {{this.likeCount}}</i>
         </span>
       </div>
     </div>
@@ -247,11 +248,10 @@
         </div>
 
         <div>
-          {{#if this.isFollowings }}
+          {{#if this.isFollowed }}
           <form action="/followships/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
               class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
           </form>
-
           {{else}}
           <form action="/followships/{{this.id}}" method="POST"><button type="submit" class="btn btn-block mt-1"
               style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>

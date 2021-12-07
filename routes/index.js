@@ -84,9 +84,9 @@ module.exports = (app, passport) => {
 
     // 前台查看喜歡那些推文
     app.get('/user/self/like', authenticated, userController.getLike)
+    // 前台查看推文與回覆
+    app.get('/user/self/replies', authenticated, userController.getTweetReply)
 
-    // 前台查看有回應那些推文
-    app.get('/user/self/replies', authenticated, userController.getReplies)
 
 
     // 後台路由部分
@@ -103,8 +103,4 @@ module.exports = (app, passport) => {
     app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
     app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
-
-
-    // api 部分
-    app.get('/api/users/:id', userController.getUserApi)
 }

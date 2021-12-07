@@ -8,7 +8,7 @@ const Like = db.Like
 const tweetController = {
     getTweets: (req, res) => {
 
-        console.log(req.user)
+        // console.log(req.user)
         const tweetFindAll = Tweet.findAll({
             raw: true,
             nest: true,
@@ -70,7 +70,7 @@ const tweetController = {
             description: description,
             UserId: userId
         }).then(tweet => {
-            console.log(tweet)
+            // console.log(tweet)
             req.flash('success_messages', '成功新增推文!')
             return res.redirect('/tweets')
         }).catch(error => {
@@ -151,14 +151,14 @@ const tweetController = {
             UserId: req.user.id,
             TweetId: req.params.id
         }).then(like => {
-            return res.redirect('/tweets')
+            return res.redirect('back')
         }).catch(error => {
             console.log(error)
         })
     },
 
     postUnLike: (req, res) => {
-        Like.findOne({
+        return Like.findOne({
             where: {
                 UserId: req.user.id,
                 TweetId: req.params.id
