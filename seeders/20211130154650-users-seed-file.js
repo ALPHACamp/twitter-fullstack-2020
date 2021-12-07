@@ -6,7 +6,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     // all the email and name of users/admin list here
     const userSeed = [
-      { email: 'root@example.com', name: 'Admin', account: 'admin' },
+      { email: 'root@example.com', name: 'Admin', account: 'root' },
       { email: 'user1@example.com', name: 'User1', account: 'user1' },
       { email: 'user2@example.com', name: 'User2', account: 'user2' },
       { email: 'user3@example.com', name: 'User3', account: 'user3' },
