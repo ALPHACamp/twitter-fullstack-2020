@@ -53,11 +53,9 @@
     <hr />
     <div class="cover"><img src=""></div>
     <div class="user-info d-flex justify-content-between">
-      <div class="user-avatar"><img src="{{user.avatar}}" class="rounded-circle"></div>
-      <div>
-        <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
-          編輯個人資料
-        </button>
+      <div class="avatar"><img src="{{user.avatar}}" class="rounded-circle"></div>
+      <div class="edit-button mt-4">
+        <button type="submit" class="btn">編輯個人資料</button>
       </div>
     </div>
     <div class="text-info-users">
@@ -82,17 +80,17 @@
       <br>
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link active" href="#">推文</a>
+          <a class="nav-link" href="/users/{{user.id}}/tweets">推文</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/users/{{user.id}}/replies">推文與回覆</a>
+          <a class="nav-link active" href="#">推文與回覆</a>
         </li>
         <li class="nav-item">
           <a class="nav-link " href="#">喜歡的內容</a>
         </li>
       </ul>
       <div class="user-tweet">
-        {{#each user.Tweets}}
+        {{#each user.Replies}}
         <div class="tweet col-md-12">
           <div class="d-flex">
             <div class="mt-2 mr-2 col-md-2" style="padding: 0%;"><a href="/users/{{../user.id}}/tweets"
@@ -106,23 +104,16 @@
                 <div class="atAccount mb-2 ml-2">@{{../this.user.account}}•{{moment
                   this.createdAt}}</div>
               </div>
-              <a href="/tweets/{{this.id}}/replies" class="text-muted">
-                <div class="post-text d-flex" style="flex-auto">{{this.description}}</div>
-              </a>
-              <div class="reply-like d-flex mt-2">
-                <div>
-                  <i class="far fa-comment mr-2"></i>
-                  3
-                </div>
-                <form action="like" method="POST">
-                  <div class="ml-4">
-                    <button type="submit" class="like-btn">
-                      <i class="far fa-heart"></i>
-                    </button>
-                    3
-                  </div>
-                </form>
+              <div class="reply d-flex">
+                <div class="reply-text">回覆</div>
+                <a href="/users/{{../tweet.UserId}}/tweets" class="text-muted">
+                  <div class="reply-account ml-3">@{{user.account}}</div>
+                </a>
               </div>
+              <a href="/tweets/{{this.TweetId}}/replies" class="text-muted">
+                <div class="post-text d-flex" style="flex-auto">{{this.comment}}</div>
+              </a>
+
             </div>
           </div>
         </div>
@@ -165,68 +156,6 @@
           </div>
         </li>
       </ul>
-    </div>
-  </div>
-</div>
-
-{{!-- Edit-User-Info-Modal --}}
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form action="/api/users/{{ user.id }}" method="POST" enctype="multipart/form-data">
-        <div class="modal-header">
-          <div class="d-flex">
-            <button type="button" class="btn-dismiss close mr-3" data-dismiss="modal">X</button>
-            <h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
-          </div>
-          <button type="submit" class="btn">儲存</button>
-        </div>
-        <div class="modal-body px-0">
-          <div class="image-wrapper">
-            {{!-- Edit Cover --}}
-            <div class="cover-wrapper" id="cover-wrapper">
-              {{#if user.cover}}
-              <img class="cover" id="current-cover" src="{{ user.cover }}" alt="">
-              {{ else }}
-              <div class="cover none" id="current-cover"></div>
-              {{/if}}
-            </div>
-            <div class="cover-input-wrapper d-flex" id="cover-input-wrapper">
-              <div class="form-group mb-0 mt-2">
-                <label for="cover-input"><i class="fas fa-camera"></i>
-                  <input type="file" class="form-control-file hide" id="cover-input" name="cover">
-                </label>
-              </div>
-              <button type="button" class="btn btn-delete py-0 hide" id="delete-cover-btn">X</button>
-            </div>
-            {{!-- Edit Avatar --}}
-            <div class="avatar-wrapper" id="avatar-wrapper">
-              {{#if user.avatar }}
-              <img class="avatar large" id="current-avatar" src="{{ user.avatar }}">
-              {{else}}
-              <div class="avatar-none-large" id="current-avatar"></div>
-              {{/if}}
-            </div>
-              <div class="form-group avatar-input-wrapper">
-                <label for="avatar-input"><i class="fas fa-camera"></i>
-                  <input type="file" class="form-control-file hide" id="avatar-input" name="avatar">
-                </label>
-              </div>
-            </div>
-          </div>
-          {{!-- Edit-Name & Introduction --}}
-          <div class="form-group px-3">
-            <label for="name">名稱</label>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Enter name"
-              value="{{ user.name }}" required>
-          </div>
-          <div class="form-group px-3">
-            <label for="introduction">自我介紹</label>
-            <textarea class="form-control" id="introduction" name="introduction"
-              rows="3">{{ user.introduction }}</textarea>
-          </div>
-        </div>
-      </form>
     </div>
   </div>
 </div>

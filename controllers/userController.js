@@ -4,7 +4,11 @@ const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = 'd97de9c03bf7519'
 const helpers = require('../_helpers')
 const db = require('../models')
+const tweet = require('../models/tweet')
 const User = db.User
+const Tweet = db.Tweet
+const Reply = db.Reply
+const helpers = require('../_helpers')
 
 const getLink = (filePath) => {
   return new Promise((resolve, reject) => {
@@ -63,12 +67,6 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  getUserTweets: (req, res) => {
-    User.findByPk(req.params.userId)
-      .then((user) => {
-        return res.render('userTweets', { user })
-      })
-  },
   postUser: async (req, res) => {
     const { name, introduction } = req.body
     const { files } = req
@@ -109,6 +107,28 @@ const userController = {
           return res.end()
         })
     }
+  },
+  //使用者個人資料頁面
+  getUserTweets: (req, res) => {
+    return User.findByPk(req.params.userId, {
+      include: Tweet
+    })
+      .then(user => {
+        return res.render('userTweets', {
+          user: user.toJSON(),
+        })
+      })
+  },
+  //設定使用者個人資料頁面推文與回覆頁面
+  getUserReplies: (req, res) => {
+    return User.findByPk(req.params.userId, {
+      include: [Reply, Tweet]
+    })
+      .then(user => {
+        return res.render('userReplies', {
+          user: user.toJSON()
+        })
+      })
   }
 }
 
