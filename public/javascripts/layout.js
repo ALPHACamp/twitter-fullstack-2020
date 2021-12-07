@@ -15,6 +15,8 @@ body.addEventListener('click', (event) => {
     // 如果按下個別"回覆"icon，開啟 replying modal
     // axios here to get tweet info
     modalReply.classList.remove('d-none')
+  } else if (target.classList.contains('back-arror')) {
+    history.back()
   }
 })
 
@@ -84,7 +86,7 @@ if (inputs) {
         el.parentElement.setAttribute('err_msg', '格式錯誤')
       }
 
-      if (el.validity.rangeOverflow) {
+      if (el.validity.tooLong) {
         el.parentElement.setAttribute('err_msg', '字數超出上限！')
       }
 
