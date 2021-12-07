@@ -27,6 +27,9 @@ describe('# Admin::Tweet request', () => {
           helpers, 'getUser'
         ).returns({id: 1, Followings: []});
         // 在測試資料庫中，新增 mock 資料
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+        await db.User.destroy({where: {},truncate: true, force: true})
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
         await db.User.create({})
       })
 
@@ -45,7 +48,9 @@ describe('# Admin::Tweet request', () => {
         // 清除登入及測試資料庫資料
         this.ensureAuthenticated.restore();
         this.getUser.restore();
-        await db.User.destroy({where: {},truncate: true})
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+        await db.User.destroy({where: {},truncate: true, force: true})
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
       })
     })
 
@@ -59,8 +64,10 @@ describe('# Admin::Tweet request', () => {
           helpers, 'getUser'
         ).returns({id: 1, Followings: [], role: 'admin'});
         // 在測試資料庫中，新增 mock 資料
-        await db.User.destroy({where: {},truncate: true})
-        await db.Tweet.destroy({where: {},truncate: true})
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+        await db.User.destroy({where: {},truncate: true, force: true})
+        await db.Tweet.destroy({where: {},truncate: true, force: true})
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
         await db.User.create({})
         await db.User.create({})
         await db.Tweet.create({UserId: 2, description: 'Tweet1'})
@@ -110,9 +117,12 @@ describe('# Admin::Tweet request', () => {
         // 清除登入及測試資料庫資料
         this.ensureAuthenticated.restore();
         this.getUser.restore();
-        await db.User.destroy({where: {},truncate: true})
-        await db.Tweet.destroy({where: {},truncate: true})
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+        await db.User.destroy({where: {},truncate: true, force: true})
+        await db.Tweet.destroy({where: {},truncate: true, force: true})
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
       })
+
     })
 
   })
