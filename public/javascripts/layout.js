@@ -18,17 +18,79 @@ body.addEventListener('click', (event) => {
   }
 })
 
-// const inputs = document.querySelectorAll('input')
-// console.log(inputs)
-// if (inputs.length) {
-//   inputs.map((input) => {
-//     input.addEventListener('input', (event) => {
-//       if (!input.checkValidity()) {
-//         input.classList.add('invalid')
-//         if (input.validity.valueMissing) {
-//           input.setCumstomValidity("內容不可為空白")
-//         }
-//       }
-//     })
-//   })
-// }
+const tweetsPostForm = document.querySelector('#tweets-post-form')
+const tweetsPostFormTextarea = document.querySelector('#tweets-post-form-textarea')
+const modalPostForm = document.querySelector('#modal-post-form')
+const modalPostFormTextarea = document.querySelector('#modal-post-form-textarea')
+const modalReplyForm = document.querySelector('#modal-reply-form')
+const modalReplyFormTextarea = document.querySelector('#modal-reply-form-textarea')
+const inputs = document.querySelectorAll('input')
+
+function isEmpty(nodeElement) {
+  // 無文字回傳true，文字長度大於0，回傳false
+  return nodeElement.value.replace(/\s/g, '').length ? false : true
+}
+
+function validityEmpty(form, inputarea) {
+  // 驗證inputarea是否為空白
+  form.addEventListener('submit', function onFormSubmitted(event) {
+    if (!form.checkValidity() || isEmpty(inputarea)) {
+      // 停止type=submit預設動作
+      event.stopPropagation()
+      event.preventDefault()
+      //驗證不通過，顯示alert message (移除d-none class)
+      form.lastElementChild.firstElementChild.classList = ''
+    }
+  })
+
+  inputarea.addEventListener('keyup', function onFormKeyup(event) {
+    if (!isEmpty(inputarea)) {
+      //使用者開始輸入，隱藏alert message (加上d-none class)
+      form.lastElementChild.firstElementChild.classList = 'd-none'
+    }
+  })
+}
+
+if (tweetsPostForm) {
+  validityEmpty(tweetsPostForm, tweetsPostFormTextarea)
+}
+
+if (modalPostForm) {
+  validityEmpty(modalPostForm, modalPostFormTextarea)
+}
+
+if (modalReplyForm) {
+  validityEmpty(modalReplyForm, modalReplyFormTextarea)
+}
+
+if (inputs) {
+  inputs.forEach((el) => {
+    el.addEventListener('focus', function onInputFocus(event) {
+      el.parentElement.classList.add('focus')
+    })
+    el.addEventListener('blur', function onInputBlur(event) {
+      el.parentElement.classList.remove('focus')
+    })
+    el.addEventListener('invalid', function onInputInvalid(event) {
+      if (el.validity.valueMissing) {
+        if (el.name === 'account') {
+          el.parentElement.setAttribute('err_msg', '帳號不存在！')
+        } else {
+          el.parentElement.setAttribute('err_msg', '內容不可為空白')
+        }
+      }
+
+      if (el.validity.typeMismatch) {
+        el.parentElement.setAttribute('err_msg', '格式錯誤')
+      }
+
+      if (el.validity.rangeOverflow) {
+        el.parentElement.setAttribute('err_msg', '字數超出上限！')
+      }
+
+      event.stopPropagation()
+      event.preventDefault()
+      el.parentElement.classList.add('invalid')
+    })
+  });
+}

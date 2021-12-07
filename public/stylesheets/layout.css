@@ -284,13 +284,26 @@ html, body {
   overflow-y: auto;
 }
 
-.main > .postarea > form > button {
+.main > .postarea > form > .foot {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: end;
+  align-items: center;
+}
+
+.main > .postarea > form > .foot > span {
+  color:#FC5A5A;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 15px;
+  margin: auto 20px auto 0;
+}
+
+.main > .postarea > form > .foot > button {
   width: 66px;
   height: 38px;
   margin-right: 15px;
-  margin-bottom: 10px;
-  align-self: flex-end;
-  justify-self: flex-end;
+  margin-top: 2px;
 }
 
 .main > hr {
@@ -388,7 +401,7 @@ html, body {
   margin: -7px 0;
 }
 
-.main > .tweets > .tweet > .postcontent > .action .commenting,
+.main > .tweets > .tweet > .postcontent > .action > .commenting,
 .main > .tweets > .tweet > .postcontent > .action .liking
  {
   width: 90px;
@@ -952,10 +965,26 @@ html, body {
   overflow-y: auto;
 }
 
-.modal > .mask > .dialog > .postarea > form > button {
+.modal > .mask > .dialog > .postarea > form > .foot {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: end;
+  align-items: center;
+}
+
+.modal > .mask > .dialog > .postarea > form > .foot > span {
+  color:#FC5A5A;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 15px;
+  margin-bottom: 15px;
+  margin-right: 20px;
+}
+
+.modal > .mask > .dialog > .postarea > form button {
   width: 66px;
   margin-right: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 15px;  
   align-self: flex-end;
 }
 
@@ -1237,6 +1266,7 @@ html, body {
 
 .sign-template > .sign-main > form > .edit-text,
 .user-template-setting > .main > form > .edit-text {
+  position: relative;
   background-color: #F5F8FA;
   height: 49px;
   border-bottom: 2px solid #657786;
@@ -1522,4 +1552,23 @@ img.thumbnail {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+div.focus {
+  border-color: #50B5FF !important;
+}
+
+div.invalid {
+  border-color: #FC5A5A !important;
+}
+
+div.invalid::after {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  color: #FC5A5A;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 15px;
+  content: attr(err_msg)
 }

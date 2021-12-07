@@ -78,10 +78,14 @@
           <a>
             <img class="thumbnail" src="/icons/avatar.svg" alt="">
           </a>
-          <form action="/tweets" method="post">
+          <form action="/tweets" method="post" novalidate id="modal-post-form">
             <input type="hidden" name="userId" value="{{loginUser.id}}">
-            <textarea name="description" maxlength="140" cols="48" rows="6" placeholder="有什麼新鮮事？" required></textarea>
-            <button type="summit" class="btn-fill">推文</button>
+            <textarea name="description" maxlength="140" cols="48" rows="6" placeholder="有什麼新鮮事？" required
+              id="modal-post-form-textarea"></textarea>
+            <div class="foot">
+              <span class="d-none">內容不可空白</span>
+              <button type="summit" class="btn-fill">推文</button>
+            </div>
           </form>
         </div>
       </div>
@@ -122,10 +126,14 @@
           <a>
             <img class="thumbnail" src="/icons/avatar.svg" alt="">
           </a>
-          <form action="/notyet" method="post">
+          <form action="/notyet" method="post" id="modal-reply-form" novalidate>
             <input type="hidden" name="userId" value="{{user.id}}">
-            <textarea name="description" maxlength="140" cols="48" rows="2" placeholder="推你的回覆" required></textarea>
-            <button type="summit" class="btn-fill">回覆</button>
+            <textarea name="description" maxlength="140" cols="48" rows="2" placeholder="推你的回覆"
+              id="modal-reply-form-textarea" required></textarea>
+            <div class="foot">
+              <span class="d-none">內容不可空白</span>
+              <button type="summit" class="btn-fill">回覆</button>
+            </div>
           </form>
         </div>
 
@@ -175,11 +183,11 @@
               </label>
             </div>
             <div class="edit-form">
-              <input type="text" name="name" class="edit-name" id="name" maxlength="50" required
-                onkeyup="document.querySelector('#name-counter').textContent=`${document.querySelector('#edit-name').value.length}/50`;"
+              <input type="text" name="name" class="edit-name" maxlength="50" required
+                onkeyup=";document.querySelector('#name-counter').textContent=`${this.value.length}/50`;"
                 value="{{User.name}}">
             </div>
-            <div class="counter" id="name-counter">5/50</div>
+            <div class="counter" id="name-counter">{{#if User.name}}{{User.name.length}}{{else}}0{{/if}}/50</div>
           </div>
 
           <div class="for-intro edit-text">
@@ -189,10 +197,11 @@
               </label>
             </div>
             <div class="edit-form">
-              <textarea name="introduction" class="edit-introduction" id="introduction" maxlength="160"
-                onkeyup="document.querySelector('#introduction-counter').textContent=`${document.querySelector('#introduction').value.length}/160`;">{{User.introduction}}</textarea>
+              <textarea name="introduction" class="edit-introduction" maxlength="160"
+                onkeyup="document.querySelector('#introduction-counter').textContent=`${this.value.length}/160`;">{{User.introduction}}</textarea>
             </div>
-            <div class="counter" id="introduction-counter">56/160</div>
+            <div class="counter" id="introduction-counter">{{#if
+              User.introduction}}{{User.introduction.length}}{{else}}0{{/if}}/160</div>
           </div>
 
 
