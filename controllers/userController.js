@@ -41,15 +41,19 @@ const userController = {
                             req.flash('error_messages', '帳號重複！')
                             return res.redirect('/signup')
                         } else {
-                            User.create({
-                                name: req.body.name,
-                                email: req.body.email,
-                                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
-                                account: '@' + req.body.account
-                            }).then(user => {
-                                req.flash('success_messages', '成功註冊帳號！')
-                                return res.redirect('/signin')
-                            })
+                            if (req.body.name.length > 50) {
+                                req.flash('error_messages', '名稱不能大於50個字')
+                                return res.redirect('/signup')
+                            } else
+                                User.create({
+                                    name: req.body.name,
+                                    email: req.body.email,
+                                    password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+                                    account: '@' + req.body.account
+                                }).then(user => {
+                                    req.flash('success_messages', '成功註冊帳號！')
+                                    return res.redirect('/signin')
+                                })
                         }
                     })
 
