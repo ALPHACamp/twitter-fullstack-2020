@@ -3,6 +3,7 @@ const db = require('../models')
 const { sequelize } = db
 const { User, Tweet, Reply, Like, Followship } = db
 const tweetTime = require('../config/tweetTime')
+const userController = require('./userController')
 
 const tweetController = {
   getTweets: async (req, res) => {
@@ -108,7 +109,7 @@ const tweetController = {
         where: { UserId: userId, TweetId: req.params.tweetId }
       }))
 
-      const pops = await tweetController.getPopular(req, res)
+      const pops = await userController.getPopular(req, res)
 
       return res.render('user', {
         tweet: tweet.toJSON(),
