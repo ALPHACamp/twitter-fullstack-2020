@@ -38,7 +38,9 @@ const pageController = {
         return res.redirect('/tweets')
       }
 
-      return res.render('settings')
+      const loginUser = await userController.getLoginUser(req, res)
+
+      return res.render('user', { loginUser, userSettingsPage: true })
     } catch (err) {
       console.error(err)
     }
