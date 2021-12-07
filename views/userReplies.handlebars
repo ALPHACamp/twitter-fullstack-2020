@@ -175,8 +175,17 @@
       <div><small>{{user.account}}</small></div>
       <div class="mt-2">{{user.introduction}}</div>
       <div class="mt-2">
-        <div class="font-weight-bold">{{users.FollowerCount}} 個<span class="text-secondary mr-3">跟隨中</span>59 位<span
-            class="text-secondary">跟隨者</span></div>
+        <div style="display: inline-block;">
+          <p><strong>{{user.Followings.length}}</strong><a href="/user/{{user.id}}/followings" class="text-secondary">
+              followings</a>
+          </p>
+        </div>
+
+        <div style="display: inline-block;">
+          <p><strong>{{user.Followers.length}}</strong><a href="/user/{{user.id}}/followers" class="text-secondary">
+              followers</a>
+          </p>
+        </div>
       </div>
     </div>
 
@@ -198,7 +207,7 @@
     </div>
 
     {{!-- 留言區域 --}}
-    {{#each tweet}}
+    {{#each replies}}
     <div class="row  border" style="padding-top:8px; padding-bottom:10px; word-break:break-all; padding-bottom:10px;">
       <div class="col-md-2" style="padding-right: 0px; ">
         <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
@@ -208,9 +217,9 @@
             this.createdAt}}</span>
         </div>
         <div>{{this.description}}</div>
-        <span class="mr-4 "><i class="far fa-comment"></i> 55</span>
-        <span><i class="far fa-heart"> 479</i>
-        </span>
+        <div> 回覆 {{ this.Tweet.User.account}}</div>
+        <div>{{this.Tweet.description}}</div>
+        <div class="text-primary">{{this.comment}}</div>
       </div>
     </div>
     {{/each}}

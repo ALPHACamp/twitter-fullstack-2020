@@ -334,8 +334,39 @@ const userController = {
     },
 
     getTweetReply: (req, res) => {
+        const replyFindAll = Reply.findAll({
+            raw: true,
+            nest: true,
+            where: { userId: req.user.id },
+            include: [
+                User,
+                { model: Tweet, include: [User] }
+            ]
+        })
+        const userFindAll2 = User.findAll({
+            include: [
+                { model: User, as: 'Followers' }
+            ]
+        })
 
-        return res.render('userReplies')
+        Promise.all([replyFindAll, userFindAll2])
+            .then(responses => {
+
+                const replies = responses[0]
+                let user2 = responses[1]
+                user2 = user2.map(user => ({
+                    ...user.dataValues,
+                    isUser: !user.Followers.length,
+                    isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+                }))
+                user2 = user2.sort((a, b) => b.FollowerCount - a.FollowerCount)
+                return res.render('userReplies', { replies, user2 })
+            }).catch(error => {
+                console.log(error)
+            })
+
+
+
 
     }
 
