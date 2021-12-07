@@ -27,7 +27,17 @@
         {{this.introduction}}
       </div>
     </div>
-    <button type="button" class="btn-outline xs">跟隨</button>
+    {{#if this.isFollowed}}
+    <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+      <button type="submit">正在追蹤</button>
+    </form>
+    {{else}}
+    <form action="/followships" method="POST">
+      <input type="hidden" name="id" value="{{this.id}}">
+      <button type="submit">跟隨</button>
+    </form>
+    {{/if}}
+    {{!-- <button type="button" class="btn-outline xs">跟隨</button> --}}
   </div>
   {{/each}}
 

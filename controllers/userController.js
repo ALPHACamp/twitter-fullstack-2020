@@ -163,7 +163,6 @@ const userController = {
           }
         ]
       })
-      console.log(followers)
 
       followers = followers[0].dataValues.Followers.map((follower) => ({
         id: follower.id,

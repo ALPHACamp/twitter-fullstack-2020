@@ -48,15 +48,17 @@ const pageController = {
 
   getUserTweets: async (req, res) => {
     try {
-      const [loginUser, user, tweets] = await Promise.all([
+      const [loginUser, user, tweets, pops] = await Promise.all([
         userController.getLoginUser(req, res),
         userController.getUserProfile(req, res),
-        userController.getUserTweets(req, res)
+        userController.getUserTweets(req, res),
+        userController.getPopular(req, res)
       ])
       return res.render('user', {
         loginUser,
         user,
         tweets,
+        pops,
         userTweetsPage: true
       })
     } catch (err) {
@@ -66,15 +68,17 @@ const pageController = {
 
   getUserReplies: async (req, res) => {
     try {
-      const [loginUser, user, replies] = await Promise.all([
+      const [loginUser, user, replies, pops] = await Promise.all([
         userController.getLoginUser(req, res),
         userController.getUserProfile(req, res),
-        userController.getUserReplies(req, res)
+        userController.getUserReplies(req, res),
+        userController.getPopular(req, res)
       ])
       return res.render('user', {
         loginUser,
         user,
         replies,
+        pops,
         userRepliesPage: true
       })
     } catch (err) {
@@ -84,15 +88,17 @@ const pageController = {
 
   getUserLikes: async (req, res) => {
     try {
-      const [loginUser, user, tweets] = await Promise.all([
+      const [loginUser, user, tweets, pops] = await Promise.all([
         userController.getLoginUser(req, res),
         userController.getUserProfile(req, res),
-        userController.getUserLikes(req, res)
+        userController.getUserLikes(req, res),
+        userController.getPopular(req, res)
       ])
       return res.render('user', {
         loginUser,
         user,
         tweets,
+        pops,
         userLikesPage: true
       })
     } catch (err) {

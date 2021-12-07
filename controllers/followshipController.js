@@ -6,7 +6,7 @@ const followshipController = {
   addFollow: async (req, res) => {
     try {
       const followerId = Number(helpers.getUser(req).id)
-      const followingId = Number(req.params.userId)
+      const followingId = Number(req.body.id)
 
       if (followerId === followingId) {
         req.flash('error_messages', '不可跟隨自己')
