@@ -24,10 +24,8 @@ module.exports = {
         type: Sequelize.TEXT
       },
       role: {
-        type: Sequelize.STRING
-      },
-      UserId: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: 'normal'
       },
       createdAt: {
         allowNull: false,
