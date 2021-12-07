@@ -3,7 +3,7 @@ const modal = document.querySelectorAll('.modal')
 const modalReply = document.querySelector('#modal-reply')
 
 // // 全畫面監聽器
-body.addEventListener('click', (event) => {
+body.addEventListener('click', async (event) => {
   let target = event.target
 
   if (target.classList.contains('close') || target.classList.contains('mask')) {
@@ -14,6 +14,61 @@ body.addEventListener('click', (event) => {
   } else if (target.classList.contains('commenting')) {
     // 如果按下個別"回覆"icon，開啟 replying modal
     // axios here to get tweet info
+    let tweetId = target.dataset.tweetid
+    if (!tweetId) tweetId = target.parentElement.dataset.tweetid
+    
+    let response = await axios.get(`http://localhost:3000/api/tweets/${tweetId}`)
+    const {tweet, loginUser} = response.data
+
+    let modalHtml = `
+    <div class="mask">
+      <div class="dialog">
+        <div class="dialog-header">
+          <a class="close"><i class='X-orange close'></i></a>
+        </div>
+        <div class="replyarea">
+
+          <div class="tweet">
+            <a>
+              <img class="thumbnail" src="${tweet.User.avatar}" alt="">
+            </a>
+            <div class="tweetcontent">
+              <a class="tweetuser">
+                <span class="name ellipsis">${tweet.User.name}</span>
+                <span class="at-name ellipsis">${tweet.User.account}</span>
+                <span class="timer ellipsis">${tweet.createdAt}</span>
+              </a>
+              <span class="tweetdescription" id="modal-reply-content">
+              ${tweet.description}
+              </span>
+              <span class="replyto">回覆給
+                <span class="at-name">@${tweet.User.account}</span>
+              </span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="postarea">
+          <a>
+            <img class="thumbnail" src="${loginUser.avatar}" alt="">
+          </a>
+          <form action="/tweets/${tweet.id}/replies" method="post" id="modal-reply-form" novalidate>
+            <input type="hidden" name="userId" value="${loginUser.id}">
+            <textarea name="comment" maxlength="140" cols="48" rows="2" placeholder="推你的回覆"
+              id="modal-reply-form-textarea" required></textarea>
+            <div class="foot">
+              <span class="d-none">內容不可空白</span>
+              <button type="summit" class="btn-fill">回覆</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+    `
+    modalReply.innerHTML = modalHtml
+    
     modalReply.classList.remove('d-none')
   }
 })

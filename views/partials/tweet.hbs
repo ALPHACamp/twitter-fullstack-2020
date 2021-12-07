@@ -9,7 +9,7 @@
 
   <a class="tweetuser" href="/users/{{tweet.User.id}}/tweets">
     <span>
-      <img class="thumbnail" {{#if tweet.User.acatar}} src="{{tweet.User.avatar}}" alt="{{tweet.User.avatar}} avatar"
+      <img class="thumbnail" {{#if tweet.User.avatar}} src="{{tweet.User.avatar}}" alt="{{tweet.User.avatar}} avatar"
         {{/if}}>
     </span>
     <span>
@@ -41,7 +41,7 @@
     </div>
 
     <div class="action">
-      <button type="button" class="commenting" data-userId="{{user.id}}">
+      <button type="button" class="commenting" data-tweetid="{{tweet.id}}">
         <i class='comment lg commenting'></i>
       </button>
 

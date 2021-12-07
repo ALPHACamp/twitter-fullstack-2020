@@ -7,6 +7,7 @@ module.exports = {
     }
     return options.inverse(this)
   },
+  
   moment: function (a) {
     moment.updateLocale('zh-tw', { meridiem: a })
     return moment(a).fromNow()

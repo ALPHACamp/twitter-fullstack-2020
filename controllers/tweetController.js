@@ -111,12 +111,15 @@ const tweetController = {
 
       const pops = await userController.getPopular(req, res)
 
+      const loginUser = await userController.getLoginUser(req, res)
+
       return res.render('user', {
         tweet: tweet.toJSON(),
         replies: replies.map((reply) => reply.toJSON()),
         isLiked,
+        pops,
+        loginUser,
         tweetPage: true,
-        pops
       })
     } catch (err) {
       console.error(err)

@@ -140,7 +140,7 @@ const pageController = {
     } catch (err) {
       console.error(err)
     }
-  }
+  },
 
   // getAdminTweets: async (req, res) => {
 
