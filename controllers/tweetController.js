@@ -8,6 +8,9 @@ const tweetController = {
   //前台推文清單
   getTweets: (req, res) => {
     Tweet.findAll({
+      row: true,
+      nest: true,
+      order: [['createdAt', 'DESC']],
       include: User
     }).then(tweets => {
       const data = tweets.map(r => ({
@@ -15,10 +18,11 @@ const tweetController = {
         description: r.dataValues.description,
         userName: r.dataValues.User.name,
         accountName: r.dataValues.User.account,
-        avatarImg: r.dataValues.User.avatar
+        avatarImg: r.dataValues.User.avatar,
       }))
-      return res.render('Tweets', {
+      return res.render('tweets', {
         tweets: data,
+        user: req.user
       })
     })
   },
