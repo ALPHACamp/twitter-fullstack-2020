@@ -352,12 +352,20 @@ const userController = {
         return res.render('signup', { errors, ...req.body })
       }
 
-      user = await user.update({
-        account,
-        name,
-        email,
-        password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
-      })
+      if (password === '') {
+        await user.update({
+          account,
+          name,
+          email
+        })
+      } else {
+        await user.update({
+          account,
+          name,
+          email,
+          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+        })
+      }
 
       req.flash('success_messages', '成功編輯帳號！')
       return res.redirect('back')

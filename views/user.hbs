@@ -21,6 +21,7 @@
     <div class="main">
       {{!-- USER PARTIALS --}}
       {{#if indexPage}}{{> tweets}}{{/if}}
+      {{#if tweetPage}}{{> tweet}}{{/if}}
       {{#if userTweetsPage}}{{> profileTweets}}{{/if}}
       {{#if userRepliesPage}}{{> profileReplies}}{{/if}}
       {{#if userLikesPage}}{{> profileLikes}}{{/if}}

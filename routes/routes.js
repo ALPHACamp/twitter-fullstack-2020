@@ -27,39 +27,38 @@ const authenticatedAdmin = (req, res, next) => {
   return res.redirect('/admin/signin')
 }
 
-// tweet 相關
+// 首頁
 router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 router.get('/tweets', authenticated, pageController.getIndex)
-router.post('/tweets', authenticated, tweetController.addTweet) // 發文
+// tweet 動作
+router.post('/tweets', authenticated, tweetController.addTweet)
 router.get('/tweets/:tweetId', authenticated, tweetController.getTweet)
 router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
 router.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
-router.get('/tweets/:tweetId/replies', authenticated, replyController.getReplies) // 取得留言資料
-router.post('/tweets/:tweetId/replies', authenticated, replyController.addReply)  // 新增留言
-
-// user 相關
-router.put('/users/:userId/settings', authenticated, userController.updateSettings)
+router.get('/tweets/:tweetId/replies', authenticated, replyController.getReplies)
+router.post('/tweets/:tweetId/replies', authenticated, replyController.addReply)
+// user 頁面
 router.get('/users/:userId/settings', authenticated, pageController.getSettings)
-router.put('/users/:userId/settings', authenticated, userController.updateSettings)
 router.get('/users/:userId/tweets', authenticated, pageController.getUserTweets)
 router.get('/users/:userId/replies', authenticated, pageController.getUserReplies)
 router.get('/users/:userId/likes', authenticated, pageController.getUserLikes)
 router.get('/users/:userId/followers', authenticated, pageController.getUserFollowers)
 router.get('/users/:userId/followings', authenticated, pageController.getUserFollowings)
+// user 動作
+router.put('/users/:userId/settings', authenticated, userController.updateSettings)
+router.put('/users/:userId/settings', authenticated, userController.updateSettings)
 router.post('/followships', authenticated, followshipController.addFollow)
 router.delete('/followships/:userId', authenticated, followshipController.removeFollow)
-
-// admin 相關
+// admin 相關不另外寫在 pageController
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 router.delete('/admin/tweets/:tweetId', authenticatedAdmin, adminController.deleteTweet)
 router.get('/admin/users', authenticatedAdmin, adminController.adminUsers)
-
-// 登入、登出、註冊
+// authentication 頁面
 router.get('/signup', pageController.getSignUp)
 router.get('/signin', pageController.getSignIn)
 router.get('/admin/signin', pageController.getSignIn)
-
+// authentication 動作
 router.post('/signup', userController.signUp)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 router.get('/signout', userController.signOut)
