@@ -165,7 +165,7 @@ const userController = {
         id: follower.id,
         name: follower.name,
         avatar: follower.avatar,
-        introduction: follower.avatar,
+        introduction: follower.introduction,
         account: follower.account,
         followshipCreatedAt: follower.Followship.createdAt,
         isFollowed: follower.Followship.followerId === UserId
@@ -200,9 +200,9 @@ const userController = {
         id: following.id,
         name: following.name,
         avatar: following.avatar,
-        introduction: following.avatar,
+        introduction: following.introduction,
         account: following.account,
-        followshipCreatedAt: following.Followship.createdAt,
+        followshipCreatedAt: following.Followship.createdAt
       }))
       return followings
     } catch (err) {
@@ -224,11 +224,11 @@ const userController = {
       const [user1, user2] = await Promise.all([user1Promise, user2Promise])
 
       if (user1) {
-        errors.push({ message: '帳號已重複！' })
+        errors.push({ message: 'account 已重覆註冊！' })
       }
 
       if (user2) {
-        errors.push({ message: 'Email 已重複重複！' })
+        errors.push({ message: 'email 已重複重複！' })
       }
 
       if (errors.length) {
@@ -294,11 +294,11 @@ const userController = {
       const [user1, user2] = await Promise.all([user1Promise, user2Promise])
 
       if (user1) {
-        errors.push({ message: '帳號已重複！' })
+        errors.push({ message: 'account 已重覆註冊！' })
       }
 
       if (user2) {
-        errors.push({ message: 'Email 已重複重複！' })
+        errors.push({ message: 'email 已重複重複！' })
       }
 
       if (errors.length) {
@@ -313,7 +313,7 @@ const userController = {
       })
 
       req.flash('success_messages', '成功編輯帳號！')
-      return res.render('back')
+      return res.redirect('back')
     } catch (err) {
       console.error(err)
     }
