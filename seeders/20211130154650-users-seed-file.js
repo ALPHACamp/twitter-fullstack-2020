@@ -13,6 +13,14 @@ module.exports = {
       { email: 'user4@example.com', name: 'User4', account: 'user4' },
       { email: 'user5@example.com', name: 'User5', account: 'user5' }
     ]
+    const coverSeed = [
+      'https://images.unsplash.com/photo-1533551268962-824e232f7ee1?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400',
+      'https://images.unsplash.com/photo-1504384764586-bb4cdc1707b0?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400',
+      'https://images.unsplash.com/photo-1498464619740-386503e7e7f5?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400',
+      'https://images.unsplash.com/photo-1505832018823-50331d70d237?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400',
+      'https://images.unsplash.com/photo-1547891654-e66ed7ebb968?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400',
+      'https://images.unsplash.com/photo-1581044777550-4cfa60707c03?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400'
+    ]
     // all users/admin use same password, do it once here
     const password = bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null)
 
@@ -27,9 +35,7 @@ module.exports = {
         introduction: faker.lorem.text().substring(0, 160),
         role: user.name === 'Admin' ? 'admin' : 'user',
         account: user.account,
-        cover: `https://loremflickr.com/320/240/city/?random=${
-          Math.random() * 100
-        }`,
+        cover: coverSeed[index],
         createdAt: new Date(
           new Date().setDate(new Date().getDate() - 240 + index)
         ),

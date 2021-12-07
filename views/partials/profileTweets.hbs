@@ -32,12 +32,8 @@
   <span class="at-name">{{user.account}}</span>
   <span class="introduction">{{user.introduction}}</span>
   <div class="followship">
-    <span class="following">{{user.followingCount}} 個
-      <a href="/users/{{user.id}}/followings">跟隨中</a>
-    </span>
-    <span class="follower">{{user.followerCount}}萬 位
-      <a href="/users/{{user.id}}/followers">跟隨者</a>
-    </span>
+    <span class="following">{{user.followingCount}} 個<a href="/users/{{user.id}}/followings">跟隨中</a></span>
+    <span class="follower">{{user.followerCount}} 位<a href="/users/{{user.id}}/followers">跟隨者</a></span>
   </div>
 </div>
 <div class="paginator">
@@ -66,10 +62,12 @@
           <i class='comment commenting'></i>
           {{this.replyCount}}
         </button>
-        <button type="button" class="liking">
-          <i class='like'></i>
-          {{this.likeCount}}
-        </button>
+        <form action="">
+          <button type="button" class="liking">
+            <i class='like lg active'></i>
+            {{this.likeCount}}
+          </button>
+        </form>
       </div>
     </div>
   </div>
