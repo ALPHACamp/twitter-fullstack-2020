@@ -11,7 +11,6 @@ const userService = {
         isFollowed: helpers.getUser(req).Followings.map(item => item.id).includes(user.id)
       }))
       users = users.sort((a, b) => b.followerCount - a.followerCount)
-
       cb(users)
     })
   }

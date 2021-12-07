@@ -1,0 +1,47 @@
+<div class="center container">
+  <div class="left-bar">
+    {{> navbar}}
+  </div>
+
+  <div class="right-bar">
+    {{> topUser}}
+  </div>
+
+  <div class="header light-border">
+    <div class="py-1 px-3 m-0 font-weight-bold light-border d-flex align-items-center">
+      <a class="mr-5" href="/tweets"><img class="mb-1" src="/images/pre.svg" alt=""></a>
+      <div class="d-inline-block">
+        <p class="m-0" style="font-size: 19px;">{{user.name}}</p>
+        <p class="light-color m-0" style="font-size: 13px; font-weight: 500;">{{user.tweetCount}} 推文</p>
+      </div>
+    </div>
+    <ul class="list-group list-group-horizontal mt-4" id="profile-buttons">
+      <li class="list-group-item list-item-profile item-active" id="followers">
+        <a href="/users/{{user.id}}/followers">跟隨者</a>
+      </li>
+      <li class="list-group-item list-item-profile" id="followings">
+        <a href="/users/{{user.id}}/followings">正在跟隨</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="list-tweet">
+    {{!-- followers --}}
+    <ul class="list-group">
+      {{#each users}}
+      <li class="list-group-item px-3 d-flex align-items-start justify-content-start">
+        <a href="/users/{{this.id}}">
+          <img class="mr-3 thumbnail" src="{{this.avatar}}" alt="">
+        </a>
+        <div class="content-wrapper w-100">
+          <div class="mb-2">
+            <p class="font-weight-bold d-inline">{{this.name}}</p>
+            <p class="light-color d-inline">@{{this.account}}</p>
+          </div>
+          <p class="mt-2">{{this.introduction}}</p>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>

@@ -201,7 +201,7 @@ const userController = {
   addFollowing: (req, res) => {
     if (helpers.getUser(req).id === Number(req.body.id)) {
       req.flash('error_msg', '不能自己追蹤自己')
-      return res.redirect('back')
+      return res.redirect(200, 'back')
     }
     return Followship.create({
       followerId: helpers.getUser(req).id,
@@ -225,6 +225,46 @@ const userController = {
             req.flash('success_msg', '取消追蹤')
             return res.redirect('back')
           })
+      })
+  },
+
+  getFollowings: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followings' }
+      ]
+    })
+      .then(user => {
+        userData = {
+          ...user.toJSON(),
+          tweetCount: user.Tweets.length,
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+        }
+        console.log(userData)
+        userService.getTopUser(req, res, topUser => {
+          return res.render('followings', { userData, topUser })
+        })
+      })
+  },
+
+  getFollowers: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followers' }
+      ]
+    })
+      .then(user => {
+        userData = {
+          ...user.toJSON(),
+          tweetCount: user.Tweets.length,
+          isFollowed: req.user.Followers.map(d => d.id).includes(user.id)
+        }
+        console.log(userData)
+        userService.getTopUser(req, res, topUser => {
+          return res.render('followings', { userData, topUser })
+        })
       })
   }
 }
