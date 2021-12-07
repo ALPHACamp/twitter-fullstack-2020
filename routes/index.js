@@ -16,17 +16,19 @@ const upload = multer({ dest: 'temp/' })
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).role !== 'admin') {
-        return next()
+      if (helpers.getUser(req).role === 'admin') {
+        return res.redirect('/admin/tweets')
       }
+      return next()
     }
-    res.redirect('/admin/tweets')
+    res.redirect('/signin')
   }
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === 'admin') {
         return next()
       }
+      return res.redirect('back')
     }
     res.redirect('/admin/signin')
   }
