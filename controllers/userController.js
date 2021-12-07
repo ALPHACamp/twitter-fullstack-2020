@@ -41,16 +41,23 @@ const userController = {
                             req.flash('error_messages', '帳號重複！')
                             return res.redirect('/signup')
                         } else {
-                            User.create({
-                                name: req.body.name,
-                                email: req.body.email,
-                                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
-                                account: '@' + req.body.account,
-                                avatar: 'https://www.nicepng.com/png/full/136-1366211_group-of-10-guys-login-user-icon-png.png'
-                            }).then(user => {
-                                req.flash('success_messages', '成功註冊帳號！')
-                                return res.redirect('/signin')
-                            })
+                            if (req.body.name.length > 50) {
+                                req.flash('error_messages', '名稱不能大於50個字')
+                                return res.redirect('/signup')
+                            } else {
+                                User.create({
+                                    name: req.body.name,
+                                    email: req.body.email,
+                                    password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+                                    account: '@' + req.body.account,
+                                    avatar: 'https://www.nicepng.com/png/full/136-1366211_group-of-10-guys-login-user-icon-png.png'
+                                }).then(user => {
+                                    req.flash('success_messages', '成功註冊帳號！')
+                                    return res.redirect('/signin')
+                                })
+                            }
+
+
                         }
                     })
 
@@ -111,12 +118,18 @@ const userController = {
         // console.log(req.user)
         return User.findByPk(req.user.id).then(user => {
             console.log(user)
-            user.update({
-                name: req.body.name,
-                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-            }).then(user => {
+            if (req.body.name.length > 50) {
+                req.flash('error_messages', '名稱不能大於50個字')
                 return res.redirect('back')
-            })
+            } else {
+                user.update({
+                    name: req.body.name,
+                    password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+                }).then(user => {
+                    return res.redirect('back')
+                })
+            }
+
 
         })
 
