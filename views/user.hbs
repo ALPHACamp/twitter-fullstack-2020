@@ -24,7 +24,7 @@
     <div class="profile ml-3 position-relative">
       <div class="profile-action">
         {{#ifCond userData.id user.id}}
-        <button type="submit" data-bs-toggle="modal" data-bs-target="#profileModal" data-id="{{user.id}}" class="button-follow">編輯個人資料</button>
+        <button type="submit" data-toggle="modal" data-target="#profileModal" data-id="{{user.id}}" class="button-follow">編輯個人資料</button>
         {{else}}
         {{#if ../userData.isFollowed}}
         <form action="/followships/{{../userData.id}}?_method=DELETE" method="POST">
@@ -165,5 +165,43 @@
       </li>
       {{/each}}
     </ul>
+  </div>
+</div>
+
+{{!-- modal --}}
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data" id="profileForm">
+        <label id="coverFile">
+          <img class="mb-3" src="{{ user.cover }}">
+          <i class="fas fa-camera h1"></i>
+          <input id="uploadCover" name="cover" type="file">
+        </label>
+        <div class="modal-body">
+          <div class="d-flex justify-content-between">
+            <div class="d-flex flex-column">
+              <label id="avatarFile">
+                <img class="mb-3" src="{{ user.avatar }}">
+                <i class="fas fa-camera h1"></i>
+                <input id="uploadAvatar" name="avatar" style="display:none;" type="file">
+              </label>
+              <button type="submit" class="btn" onclick="submitButtonClick(event)">儲存</button>
+            </div>
+
+            <div>
+              <div>
+                <textarea class="p-3" name="name" id="profileName" maxlength="50" placeholder="Enter Name"
+                  required>{{user.name}}</textarea>
+              </div>
+
+              <div>
+                <textarea class="p-3" name="introduction" id="profileIntro" rows="3" maxlength="140"
+                  placeholder="Your Introduction">{{user.introduction}}</textarea>
+              </div>
+            </div>
+          </div>
+      </form>
+    </div>
   </div>
 </div>
