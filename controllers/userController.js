@@ -153,11 +153,12 @@ const userController = {
             require: false
           }
         ],
-        order: [['createdAt', 'DESC']],
         raw: true,
         nest: true
       })
-      const tweets = likes.map((like) => like.Tweet)
+      const tweets = likes
+        .map((like) => like.Tweet)
+        .sort((a, b) => b.createdAt - a.createdAt)
       return tweets
     } catch (err) {
       console.error(err)
