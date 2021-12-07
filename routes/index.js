@@ -48,6 +48,10 @@ module.exports = (app, passport) => {
   app.post('/tweets/:tweetId/like', authenticated, userController.addLike )
   // unlike tweet
   app.post('/tweets/:tweetId/unlike', authenticated, userController.removeLike)
+  // following
+  app.post('/followships/:followingId', authenticated, userController.addFollowing)
+  // removeFollowing
+  app.delete('/followships/:followingId', authenticated, userController.removeFollowing)
 
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)

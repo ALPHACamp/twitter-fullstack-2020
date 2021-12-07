@@ -5,7 +5,7 @@
     <div class="nav-ul-wrapper">
       <ul class="nav flex-column">
         <li class="nav-item py-2">
-          <a class="nav-link active" href="#">
+          <a class="nav-link active" href="/">
             <i class="fas fa-home"></i>
             <span class="ml-3">首頁</span>
           </a>
@@ -77,7 +77,7 @@
           {{!-- Like tweet --}}
             <div class="likeBtn">
               <form action='/tweets/{{this.id}}/like' method="POST">
-                <button type="submit">
+                <button class="btn" type="submit">
                   <i class="far fa-heart"></i>
                   <span class="ml-2">16</span>
                  </button>
@@ -107,30 +107,28 @@
         Popular
       </div>
       <ul class="list-group list-group-flush">
+        {{#each users}}
         <li class="list-group-item d-flex">
           <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar1.png">
+            <img class="avatar small" src="{{this.avatar}}">
           </div>
           <div class="mr-5">
-            <p class="mb-0">Pizza Hut</p>
-            <p class="atAccount">@pizzahut</p>
+            <p class="mb-0">{{this.name}}</p>
+            <p class="atAccount">@{{this.account}}</p>
           </div>
           <div class="pt-2">
-            <a class="btn py-2" href="#">正在追蹤</a>
+            {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn py-2">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/followships/{{this.id}}" method="POST">
+              <button type="submit" class="btn py-2">跟隨</button>
+            </form>
+            {{/if}}
           </div>
         </li>
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar2.png">
-          </div>
-          <div class="mr-5">
-            <p class="mb-0">MacDonald</p>
-            <p class="atAccount">@macdonald</p>
-          </div>
-          <div class="pt-2">
-            <a class="btn btn-outline py-2" href="#">追蹤</a>
-          </div>
-        </li>
+        {{/each}}
       </ul>
     </div>
   </div>
