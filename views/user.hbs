@@ -24,7 +24,7 @@
     <div class="profile ml-3 position-relative">
       <div class="profile-action">
         {{#ifCond userData.id user.id}}
-        <button class="button-follow">編輯個人資料</button>
+        <button type="submit" data-bs-toggle="modal" data-bs-target="#profileModal" data-id="{{user.id}}" class="button-follow">編輯個人資料</button>
         {{else}}
         {{#if ../userData.isFollowed}}
         <form action="/followships/{{../userData.id}}?_method=DELETE" method="POST">
