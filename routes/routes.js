@@ -38,7 +38,8 @@ router.get('/tweets/:tweetId/replies', authenticated, replyController.getReplies
 router.post('/tweets/:tweetId/replies', authenticated, replyController.addReply)  // 新增留言
 
 // user 相關
-router.get('/users/:userId/settings', pageController.getSettings)
+router.put('/users/:userId/settings', authenticated, userController.updateSettings)
+router.get('/users/:userId/settings', authenticated, pageController.getSettings)
 router.put('/users/:userId/settings', authenticated, userController.updateSettings)
 router.get('/users/:userId/tweets', authenticated, pageController.getUserTweets)
 router.get('/users/:userId/replies', authenticated, pageController.getUserReplies)
