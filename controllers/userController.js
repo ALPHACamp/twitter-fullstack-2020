@@ -45,7 +45,8 @@ const userController = {
                                 name: req.body.name,
                                 email: req.body.email,
                                 password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
-                                account: '@' + req.body.account
+                                account: '@' + req.body.account,
+                                avatar: 'https://www.nicepng.com/png/full/136-1366211_group-of-10-guys-login-user-icon-png.png'
                             }).then(user => {
                                 req.flash('success_messages', '成功註冊帳號！')
                                 return res.redirect('/signin')
