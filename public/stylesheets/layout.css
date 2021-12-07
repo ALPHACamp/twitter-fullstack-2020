@@ -852,9 +852,11 @@ html, body {
   border-top: 1px solid #e6ecf0;
 }
 
-.rightside > .popular > .wrap > a {
+.rightside > .popular > .wrap > a,
+.rightside > .popular > .wrap > form {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
+  align-items: center;
 }
 
 .rightside > .popular > .wrap > a > span {
@@ -878,7 +880,7 @@ html, body {
   margin-bottom: 20px;
 }
 
-.rightside > .popular > .wrap > a.btn-fill {
+.rightside > .popular > .wrap > form > .btn-fill {
   display: inline-block;
   width: 90px;
   height: 35px;
@@ -887,7 +889,7 @@ html, body {
   margin: auto 15px;
 }
 
-.rightside > .popular > .wrap > a.btn-outline {
+.rightside > .popular > .wrap > form > .btn-outline {
   display: inline-block;
   width: 60px;
   height: 35px;

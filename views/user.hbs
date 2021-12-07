@@ -28,6 +28,7 @@
       {{#if userFollowersPage}}{{> profileFollower}}{{/if}}
       {{#if userFollowingsPage}}{{> profileFollowing}}{{/if}}
       {{#if userSettingsPage}}{{> profileSettings}}{{/if}}
+      {{#if tweetPage}}{{> tweet}}{{/if}}
 
     </div>
     {{#unless userSettingsPage}}
@@ -47,13 +48,13 @@
           </a>
           {{#if this.isFollowing}}
           <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-            <button type="submit">正在追蹤</button>
+            <button type="submit" class="btn-fill sm">正在追蹤</button>
           </form>
           {{!-- <a class="btn-fill sm" href="#followship">正在追蹤</a> --}}
           {{else}}
           <form action="/followships" method="POST">
             <input type="hidden" name="id" value="{{this.id}}">
-            <button type="submit">跟隨</button>
+            <button type="submit" class="btn-outline sm">跟隨</button>
           </form>
           {{!-- <a class="btn-outline sm" href="/followships/{{this.id}}">跟隨</a> --}}
           {{/if}}
@@ -156,7 +157,7 @@
             <img src="/icons/cover.svg" alt="" id="modal-edit-cover">
             <input type="file" class="d-none" id="cover" name="cover"
               value="{{#if User.cover}}{{User.cover}}{{else}}/icons/cover.svg{{/if}}"
-              onchange="document.querySelector('#modal-edit-cover').src=this.value">
+              onchange="document.querySelector('#modal-edit-cover').src=window.URL.createObjectURL(this.files[0]);">
             <a>
               <input type="button" class="camera" onclick="document.querySelector('#cover').click();">
             </a>
@@ -170,7 +171,7 @@
             <img src="/icons/avatar-lg.svg" alt="" id="modal-edit-avatar">
             <input type="file" class="d-none" id="avatar" name="avatar"
               value="{{#if User.avatar}}{{User.avatar}}{{else}}/icons/avatar-lg.svg{{/if}}"
-              onchange="document.querySelector('#modal-edit-avatar').src=this.value">
+              onchange="document.querySelector('#modal-edit-avatar').src=window.URL.createObjectURL(this.files[0]);">
             <a>
               <input type="button" class="camera" onclick="document.querySelector('#avatar').click();">
             </a>
