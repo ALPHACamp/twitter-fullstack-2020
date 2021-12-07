@@ -106,6 +106,6 @@ module.exports = (app, passport) => {
 
     app.get('/api/users/:id', userController.getUserApi)
 
-
+    app.put('/api/users/:id', userController.putUserApi)
 
 }

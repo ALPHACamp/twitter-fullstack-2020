@@ -179,7 +179,7 @@ const userController = {
 
 
 
-                console.log(tweets)
+                // console.log(tweets)
                 // console.log('==============================')
                 // console.log(replies)
                 return res.render('user', { tweets, users })
@@ -368,14 +368,19 @@ const userController = {
             .then(responses => {
 
                 const replies = responses[0]
-                let user2 = responses[1]
-                user2 = user2.map(user => ({
+                let users2 = responses[1]
+
+                users2 = users2.map(user => ({
                     ...user.dataValues,
-                    isUser: !user.Followers.length,
+                    isUser: !user.Followers.map(d => d.id).includes(user.id),
+                    // 計算追蹤者人數
+                    FollowerCount: user.Followers.length,
+                    // 判斷目前登入使用者是否已追蹤該 User 物件
                     isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
                 }))
-                user2 = user2.sort((a, b) => b.FollowerCount - a.FollowerCount)
-                return res.render('userReplies', { replies, user2 })
+                users2 = users2.sort((a, b) => b.FollowerCount - a.FollowerCount)
+
+                return res.render('userReplies', { replies, users2 })
             }).catch(error => {
                 console.log(error)
             })
@@ -391,6 +396,32 @@ const userController = {
             .then(user => {
                 console.log(user)
                 return res.json({ status: 'success', data: user })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    },
+
+    putUserApi: (req, res) => {
+        console.log('==============================')
+        const userId = req.params.id
+        console.log(userId)
+        console.log(req.body)
+        console.log('==============================')
+        User.findByPk(userId)
+            .then(user => {
+                console.log(user)
+                user.update({
+                    name: req.body.name,
+                    avatar: req.body.avatar,
+                    cover: req.body.cover,
+                    introduction: req.body.introduction
+                }).then(user => {
+                    return res.json({ status: 'success', data: user })
+                }).catch(error => {
+                    console.log(error)
+                })
+
             })
             .catch(error => {
                 console.log(error)
