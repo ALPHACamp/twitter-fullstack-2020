@@ -6,7 +6,7 @@ const userController = {
   getEditModal: async (req, res) => {
     try {
       if (helpers.getUser(req).id !== Number(req.params.userId)) {
-        return res.redirect('back')
+        return res.json({ status: 'error', message: '你無權查看此頁面' })
       }
       const loginUser = await User.findByPk(req.params.userId)
       return res.json(loginUser)
@@ -18,7 +18,7 @@ const userController = {
   updateUser: async (req, res) => {
     try {
       if (helpers.getUser(req).id !== Number(req.params.userId)) {
-        return res.redirect('back')
+        return res.json({ status: 'error', message: '你無權查看此頁面' })
       }
       const user = await User.findByPk(req.params.userId)
       const { name, avatar, introduction, cover } = req.body
