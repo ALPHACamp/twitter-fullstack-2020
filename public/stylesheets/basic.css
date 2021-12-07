@@ -104,9 +104,12 @@ img.avatar.small {
   cursor: pointer; 
 }
 
-.btn-delete {
+.btn.btn-delete {
   color: #F5F8FA;
   opacity: 90%;
+  position: absolute;
+  top:10px;
+  left:15px;
 }
 
 img.avatar.large {

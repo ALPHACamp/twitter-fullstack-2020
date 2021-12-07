@@ -16,7 +16,7 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticated, (req, res) => res.render('tweets', { user: helpers.getUser(req) }))
 
   app.get('/users/:userId/tweets', authenticated, userController.getUserTweets)
-  app.put('/api/users/:userId', cpUpload, userController.putUser)
+  app.post('/api/users/:userId', cpUpload, userController.putUser)
 
   app.get('/signup', userController.signUpPage )
   app.post('/signup', userController.signUp)
