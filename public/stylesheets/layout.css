@@ -401,7 +401,7 @@ html, body {
   margin: -7px 0;
 }
 
-.main > .tweets > .tweet > .postcontent > .action .commenting,
+.main > .tweets > .tweet > .postcontent > .action > .commenting,
 .main > .tweets > .tweet > .postcontent > .action .liking
  {
   width: 90px;
