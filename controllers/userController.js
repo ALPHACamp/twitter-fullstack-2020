@@ -369,6 +369,18 @@ const userController = {
 
 
 
+    },
+
+    getUserApi: (req, res) => {
+        const userId = req.params.id
+        User.findByPk(userId)
+            .then(user => {
+                console.log(user)
+                return res.json({ status: 'success', data: user })
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
 

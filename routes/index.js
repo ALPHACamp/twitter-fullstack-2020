@@ -104,5 +104,8 @@ module.exports = (app, passport) => {
 
     app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 
-    
+    app.get('/api/users/:id', userController.getUserApi)
+
+
+
 }
