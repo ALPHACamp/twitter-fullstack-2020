@@ -43,8 +43,11 @@ passport.serializeUser((user, done) => {
 })
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findByPk(id)
-    return done(null, user.toJSON())
+    const user = await User.findByPk(id, {
+      attributes: { exclude: ['password'] },
+      raw: true
+    })
+    return done(null, user)
   } catch (err) {
     console.error(err)
   }
