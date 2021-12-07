@@ -31,6 +31,7 @@ const authenticatedAdmin = (req, res, next) => {
 router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 router.get('/tweets', authenticated, pageController.getIndex)
 router.post('/tweets', authenticated, tweetController.addTweet) // 發文
+router.get('/tweets/:tweetId', authenticated, tweetController.getTweet)
 router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
 router.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
 router.get('/tweets/:tweetId/replies', authenticated, replyController.getReplies) // 取得留言資料
@@ -42,8 +43,8 @@ router.put('/users/:userId/settings', authenticated, userController.updateSettin
 router.get('/users/:userId/tweets', authenticated, pageController.getUserTweets)
 router.get('/users/:userId/replies', authenticated, pageController.getUserReplies)
 router.get('/users/:userId/likes', authenticated, pageController.getUserLikes)
-router.get('/users/:userId/followers', pageController.getUserFollowers)
-router.get('/users/:userId/followings', pageController.getUserFollowings)
+router.get('/users/:userId/followers', authenticated, pageController.getUserFollowers)
+router.get('/users/:userId/followings', authenticated, pageController.getUserFollowings)
 router.post('/followships', authenticated, followshipController.addFollow)
 router.delete('/followships/:userId', authenticated, followshipController.removeFollow)
 

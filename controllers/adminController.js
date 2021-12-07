@@ -37,11 +37,11 @@ const adminController = {
     try {
       let users = await User.findAll({
         include: [
-          { model: Tweet, include: [Like] },
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' },
+          { model: Tweet, include: [Like], required: false },
+          { model: User, as: 'Followings', required: false },
+          { model: User, as: 'Followers', required: false }
         ],
-        order: [[Tweet, 'createdAt', 'ASC']],
+        order: [[Tweet, 'createdAt', 'ASC']]
       })
 
       users = users
