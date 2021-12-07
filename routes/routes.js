@@ -46,7 +46,7 @@ router.get('/users/:userId/replies', authenticated, pageController.getUserReplie
 router.get('/users/:userId/likes', authenticated, pageController.getUserLikes)
 router.get('/users/:userId/followers', authenticated, pageController.getUserFollowers)
 router.get('/users/:userId/followings', authenticated, pageController.getUserFollowings)
-router.post('/followships', authenticated, followshipController.addFollow)
+router.post('/followships/:userId', authenticated, followshipController.addFollow)
 router.delete('/followships/:userId', authenticated, followshipController.removeFollow)
 
 // admin 相關

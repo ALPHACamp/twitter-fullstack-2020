@@ -45,9 +45,15 @@
             </span>
           </a>
           {{#if this.isFollowing}}
-          <a class="btn-fill sm" href="#followship">正在追蹤</a>
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit">正在追蹤</button>
+          </form>
+          {{!-- <a class="btn-fill sm" href="#followship">正在追蹤</a> --}}
           {{else}}
-          <a class="btn-outline sm" href="#followship">跟隨</a>
+          <form action="/followships/{{this.id}}" method="POST">
+            <button type="submit">跟隨</button>
+          </form>
+          {{!-- <a class="btn-outline sm" href="/followships/{{this.id}}">跟隨</a> --}}
           {{/if}}
         </div>
         {{/each}}
