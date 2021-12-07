@@ -16,28 +16,39 @@ const userController = {
   },
 
   signUp: (req, res) => {
+    if (!req.body.email || !req.body.name || !req.body.account || !req.body.password) {
+      res.flash('error_msg', '所有欄位皆為必填')
+      res.redirect('signup')
+    }
     if (req.body.checkPassword !== req.body.password) {
-      req.flash('error_messages', '兩次密碼輸入不同！')
+      req.flash('error_msg', '兩次密碼輸入不同！')
       return res.redirect('/signup')
     } else {
       User.findOne({ where: { email: req.body.email } })
         .then(user => {
           if (user) {
-            req.flash('error_messages', '信箱重複！')
+            req.flash('error_msg', '信箱已重複註冊！')
             return res.redirect('/signup')
           } else {
-            User.create({
-              account: req.body.account,
-              name: req.body.name,
-              email: req.body.email,
-              password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
-              role: 'user'
-            })
+            User.findOne({ where: { account: req.body.account } })
               .then(user => {
-                req.flash('success_messages', '成功註冊帳號！')
-                return res.redirect('/signin')
+                if (user) {
+                  req.flash('error_msg', '帳號已重複註冊！')
+                  return res.redirect('/signup')
+                } else {
+                  User.create({
+                    account: req.body.account,
+                    name: req.body.name,
+                    email: req.body.email,
+                    password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+                  })
+                    .then(user => {
+                      req.flash('success_msg', '成功註冊帳號！')
+                      return res.redirect('/signin')
+                    })
+                }      
               })
-          }
+            }
         })
     }
   },
@@ -63,7 +74,7 @@ const userController = {
   },
 
   editData: (req, res) => {
-    const { name, email, password, checkPassword } = req.body
+    const { name, email, password, checkPassword, account } = req.body
     const currentUser = helpers.getUser(req)
     if (!email || !name || !password || !checkPassword) {
       req.flash('error_msg', '所有欄位皆為必填')
@@ -127,9 +138,7 @@ const userController = {
         followerCount: user.Followers.length,
         isFollowed: helpers.getUser(req).Followings.map(item => item.id).includes(user.dataValues.id)
       }
-
-      console.log(userData)
-
+      
       userData.Tweets = userData.Tweets.map(tweet => ({
         ...tweet,
         replyCount: tweet.Replies.length,
@@ -147,7 +156,6 @@ const userController = {
           isLiked: like.Tweet.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id)
         }
       })
-
       userService.getTopUser(req, res, topUser => {
         return res.render('user', { userData, topUser })
       })
@@ -210,7 +218,6 @@ const userController = {
       followingId: req.body.id
     })
       .then((followship) => {
-        console.log(helpers.getUser(req))
         req.flash('success_msg', '追蹤成功')
         return res.redirect('back')
       })
@@ -245,7 +252,6 @@ const userController = {
         }))
         userData.tweetCount = user.Tweets.length
         userData.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        console.log(userData)
         userService.getTopUser(req, res, topUser => {
           return res.render('followings', { userData, topUser })
         })
@@ -267,7 +273,6 @@ const userController = {
         }))
         userData.tweetCount = user.Tweets.length
         userData.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        console.log(userData)
         userService.getTopUser(req, res, topUser => {
           return res.render('followers', { userData, topUser })
         })
