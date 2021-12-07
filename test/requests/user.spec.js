@@ -29,8 +29,10 @@ describe('# user request', () => {
       ).returns({id: 1, Followings: []});
 
       // 確保清除了測試資料庫中的 User, Tweet 資料
-      await db.User.destroy({where: {},truncate: true})
-      await db.Tweet.destroy({where: {},truncate: true})
+      await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+      await db.User.destroy({where: {},truncate: true, force: true})
+      await db.Tweet.destroy({where: {},truncate: true, force: true})
+      await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
       // 在測試資料庫中，新增 mock 資料
       await db.User.create({})
       await db.User.create({})
@@ -75,9 +77,11 @@ describe('# user request', () => {
       // 清除登入及測試資料庫資料
       this.ensureAuthenticated.restore();
       this.getUser.restore();
-
-      await db.User.destroy({where: {},truncate: true})
-      await db.Tweet.destroy({where: {},truncate: true})
+      await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+      await db.User.destroy({where: {},truncate: true, force: true})
+      await db.Tweet.destroy({where: {},truncate: true, force: true})
+      await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
+      
     })
   })
 
@@ -131,7 +135,10 @@ describe('# user request', () => {
       // 清除登入及測試資料庫資料 
       this.ensureAuthenticated.restore();
       this.getUser.restore();
-      await db.User.destroy({where: {},truncate: true})
+      await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+      await db.User.destroy({where: {},truncate: true, force: true})
+      await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
+      
     })
   })
 
@@ -172,7 +179,9 @@ describe('# user request', () => {
       // 清除登入及測試資料庫資料 
       this.ensureAuthenticated.restore();
       this.getUser.restore();
-      await db.User.destroy({where: {},truncate: true})
+      await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+      await db.User.destroy({where: {},truncate: true, force: true})
+      await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
     })
   })
 
@@ -263,8 +272,10 @@ describe('# user request', () => {
       // 清除登入及測試資料庫資料 
       this.ensureAuthenticated.restore();
       this.getUser.restore();
-      await db.User.destroy({where: {},truncate: true})
-      await db.Followship.destroy({where: {},truncate: true})
+      await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+      await db.User.destroy({where: {},truncate: true, force: true})
+      await db.Followship.destroy({where: {},truncate: true, force: true})
+      await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
 
     })
   })
@@ -305,9 +316,11 @@ describe('# user request', () => {
       // 清除登入及測試資料庫資料 
       this.ensureAuthenticated.restore();
       this.getUser.restore();
-      await db.User.destroy({where: {},truncate: true})
-      await db.Tweet.destroy({where: {},truncate: true})
-      await db.Like.destroy({where: {},truncate: true})
+      await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+      await db.User.destroy({where: {},truncate: true, force: true})
+      await db.Tweet.destroy({where: {},truncate: true, force: true})
+      await db.Like.destroy({where: {},truncate: true, force: true})
+      await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
     })
   })
 });

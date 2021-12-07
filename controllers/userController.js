@@ -238,11 +238,13 @@ const userController = {
       ]
     })
       .then(user => {
-        userData = {
-          ...user.toJSON(),
-          tweetCount: user.Tweets.length,
-          isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
-        }
+        const userData = user.toJSON()
+        userData.Followings = user.Followings.map((Followings) => ({
+          ...Followings.dataValues,
+          isFollowed: helpers.getUser(req).Followings.map((er) => er.id).includes(Followings.id)
+        }))
+        userData.tweetCount = user.Tweets.length
+        userData.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
         console.log(userData)
         userService.getTopUser(req, res, topUser => {
           return res.render('followings', { userData, topUser })
@@ -258,14 +260,16 @@ const userController = {
       ]
     })
       .then(user => {
-        userData = {
-          ...user.toJSON(),
-          tweetCount: user.Tweets.length,
-          isFollowed: req.user.Followers.map(d => d.id).includes(user.id)
-        }
+        const userData = user.toJSON()
+        userData.Followers = user.Followers.map((Followers) => ({
+          ...Followers.dataValues,
+          isFollowed: helpers.getUser(req).Followings.map((er) => er.id).includes(Followers.id)
+        }))
+        userData.tweetCount = user.Tweets.length
+        userData.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
         console.log(userData)
         userService.getTopUser(req, res, topUser => {
-          return res.render('followings', { userData, topUser })
+          return res.render('followers', { userData, topUser })
         })
       })
   }

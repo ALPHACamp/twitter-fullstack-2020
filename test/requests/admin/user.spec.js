@@ -42,7 +42,9 @@ describe('# Admin::User request', () => {
         // 清除登入及測試資料庫資料 
         this.ensureAuthenticated.restore();
         this.getUser.restore();
-        await db.User.destroy({where: {},truncate: true})
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+        await db.User.destroy({where: {},truncate: true, force: true})
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
       })
     })
     
@@ -76,8 +78,10 @@ describe('# Admin::User request', () => {
         // 清除登入及測試資料庫資料
         this.ensureAuthenticated.restore();
         this.getUser.restore();
-        await db.User.destroy({where: {},truncate: true})
-        await db.Tweet.destroy({where: {},truncate: true})
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+        await db.User.destroy({where: {},truncate: true, force: true})
+        await db.Tweet.destroy({where: {},truncate: true, force: true})
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
       })
     })
   })
