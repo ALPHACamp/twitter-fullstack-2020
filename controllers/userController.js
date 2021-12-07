@@ -123,8 +123,10 @@ const userController = {
         tweetCount: user.Tweets.length,
         followingCount: helpers.getUser(req).Followings.length,
         followerCount: helpers.getUser(req).Followers.length,
-        isFollowed: helpers.getUser(req).Followings.map(item => item.id).includes(req.params.id)
+        isFollowed: helpers.getUser(req).Followings.map(item => item.id).includes(user.dataValues.id)
       }
+
+      console.log(userData)
 
       userData.Tweets = userData.Tweets.map(tweet => ({
         ...tweet,

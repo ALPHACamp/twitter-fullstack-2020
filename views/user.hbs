@@ -26,12 +26,13 @@
         {{#ifCond userData.id user.id}}
         <button class="button-follow">編輯個人資料</button>
         {{else}}
-        {{#if userData.isFollowed}}
+        {{#if ../userData.isFollowed}}
         <form action="/followships/{{../userData.id}}?_method=DELETE" method="POST">
           <button class="button-follow following" type="submit">正在跟隨</button>
         </form>
         {{else}}
-        <form action="/followships/{{../userData.id}}" method="POST">
+        <form action="/followships/" method="POST">
+          <input type="text" value="{{../userData.id}}" name="id" hidden>
           <button class="button-follow" type="submit">跟隨</button>
         </form>
         {{/if}}
