@@ -189,5 +189,55 @@ const userController = {
       })
     })
   },
+
+  getProfile_replies: (req, res) => {
+    const userid = helpers.getUser(req).id ? helpers.getUser(req).id : req.user.id
+    // console.log('req params: ' + userid)
+    // console.log('req body: ' + req.params.id)
+
+    Tweet.findAll({
+      where: { UserId: userid },
+      include: [User, Like, Reply],
+      order: [['createdAt', 'DESC']],
+    }).then(async (tweets) => {
+      //計算 該則 tweet 被其他使用者喜歡或 有留言的次數
+      //決定 tweets.handlebar 上的 留言跟喜歡按鈕是要實心或空心
+      replies = tweets.map((reply) => ({
+        ...reply.dataValues,
+      }))
+      tweets = tweets.map((tweet) => ({
+        ...tweet.dataValues,
+        likesCount: tweet.dataValues.Likes ? tweet.dataValues.Likes.length : 0,
+        repliesCount: tweet.dataValues.Replies ? tweet.dataValues.Replies.length : 0,
+        followerCount: req.user.Followers.length,
+        followingCount: req.user.Followings.length,
+        isLiked: tweet.dataValues.Likes.map((d) => d.dataValues.UserId).includes(req.user.id),
+        isReplied: tweet.dataValues.Replies.map((d) => d.dataValues.UserId).includes(req.user.id),
+      }))
+      // 取得右邊欄位的Top users
+      const topUsers = await helpers.getTopuser(req.user)
+      //推文數&追蹤&追隨數量
+      const tweetCount = tweets.length
+      const followerCount = tweets[0].followerCount
+      const followingCount = tweets[0].followingCount
+      // console.log(replies)
+      // console.log(tweets[0])
+      return res.render('profile', {
+        tweets: tweets,
+        users: topUsers,
+        tweetCount,
+        followerCount,
+        followingCount,
+        page: 'profile_replies',
+        replies: replies,
+      })
+    })
+  },
+
+  getProfile_likes: (req, res) => {
+    return res.render('profile', {
+      page: 'profile_likes',
+    })
+  },
 }
 module.exports = userController
