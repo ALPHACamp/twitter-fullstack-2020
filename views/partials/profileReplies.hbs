@@ -48,7 +48,7 @@
       <div class="postuser">
         <span class="name ellipsis">{{../user.name}}</span>
         <span class="at-name ellipsis">{{../user.account}}</span>
-        <span class="timer ellipsis">{{../user.createdAt}}</span>
+        <span class="timer ellipsis">{{moment this.createdAt}}</span>
       </div>
       <div class="replyto">回覆
         <span class="at-name">@{{this.Tweet.User.account}}</span>

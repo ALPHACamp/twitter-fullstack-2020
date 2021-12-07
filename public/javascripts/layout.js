@@ -70,6 +70,8 @@ body.addEventListener('click', async (event) => {
     modalReply.innerHTML = modalHtml
     
     modalReply.classList.remove('d-none')
+  } else if (target.classList.contains('back-arror')) {
+    history.back()
   }
 })
 
@@ -139,7 +141,7 @@ if (inputs) {
         el.parentElement.setAttribute('err_msg', '格式錯誤')
       }
 
-      if (el.validity.rangeOverflow) {
+      if (el.validity.tooLong) {
         el.parentElement.setAttribute('err_msg', '字數超出上限！')
       }
 
