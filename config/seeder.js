@@ -38,7 +38,7 @@ function getUsers() {
     const account = `user${i + 1}`
     return {
       id: USER_ID_BEGIN + i,
-      name: faker.name.findName(),
+      name: faker.name.firstName(),
       email: `${account}@example.com`,
       password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
       account: account,
