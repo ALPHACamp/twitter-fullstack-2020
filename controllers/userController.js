@@ -118,12 +118,18 @@ const userController = {
         // console.log(req.user)
         return User.findByPk(req.user.id).then(user => {
             console.log(user)
-            user.update({
-                name: req.body.name,
-                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-            }).then(user => {
+            if (req.body.name.length > 50) {
+                req.flash('error_messages', '名稱不能大於50個字')
                 return res.redirect('back')
-            })
+            } else {
+                user.update({
+                    name: req.body.name,
+                    password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+                }).then(user => {
+                    return res.redirect('back')
+                })
+            }
+
 
         })
 
