@@ -50,8 +50,8 @@ const tweetController = {
     try {
       const { description } = req.body
 
-      if (description.length > 130 || !description.length) {
-        return res.end()
+      if (description.length > 140 || !description.length) {
+        return res.redirect('back')
       }
 
       await Tweet.create({ UserId: helpers.getUser(req).id, description })
