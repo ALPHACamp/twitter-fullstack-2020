@@ -69,7 +69,7 @@ const userController = {
       return res.render('userTweets', { user })
     })
   },
-  putUser: async (req, res) => {
+  postUser: async (req, res) => {
     const { name, introduction } = req.body
     const { files } = req
     let coverLink
@@ -83,9 +83,10 @@ const userController = {
       avatarLink = await getLink(files.avatar[0].path)
     }
 
+    
     return User.findByPk(req.params.userId)
     .then((user) => {
-      user.update({
+      return user.update({
         name,
         introduction,
         cover: files.cover ? coverLink : user.cover,
