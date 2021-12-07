@@ -44,13 +44,13 @@
       </div>
       <p class="mt-3 mb-0">{{userData.introduction}}</p>
       <div class="mt-3 d-flex justify-content-between" style="width: 170px; font-size: 14px;">
-        <a href="/users/{{user.id}}/followings">
+        <a href="/users/{{userData.id}}/followings">
           <span>
             <b style="color: #212529;">{{userData.followingCount}} 個</b>
             <p class="light-color m-0 d-inline">跟隨中</p>
           </span>
         </a>
-        <a href="/users/{{user.id}}/followers">
+        <a href="/users/{{userData.id}}/followers">
           <span>
             <b style="color: #212529;">{{userData.followerCount}} 位</b>
             <p class="light-color m-0 d-inline">跟隨者</p>
