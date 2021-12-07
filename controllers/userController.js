@@ -10,7 +10,7 @@ const userController = {
   getLoginUser: async (req, res) => {
     const userId = Number(helpers.getUser(req).id)
     const loginUser = await User.findByPk(userId, {
-      attributes: { exclude: ['password'] },
+      attributes: { exclude: 'password' },
       raw: true
     })
     return loginUser
@@ -34,6 +34,18 @@ const userController = {
         ],
         [
           sequelize.literal(
+            `(SELECT COUNT(*) FROM replies WHERE replies.UserId = user.id)`
+          ),
+          'replyCount'
+        ],
+        [
+          sequelize.literal(
+            `(SELECT COUNT(*) FROM likes WHERE likes.UserId = user.id)`
+          ),
+          'likeCount'
+        ],
+        [
+          sequelize.literal(
             `(SELECT COUNT(*) FROM followships WHERE followships.followerId = user.id)`
           ),
           'followingCount'
@@ -52,9 +64,9 @@ const userController = {
 
   getUserTweets: async (req, res) => {
     try {
-      const UserId = Number(req.params.userId)
+      const userId = Number(req.params.userId)
       const tweets = await Tweet.findAll({
-        where: { UserId },
+        where: { UserId: userId },
         attributes: [
           'id',
           'description',
@@ -70,11 +82,16 @@ const userController = {
               '(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'
             ),
             'likeCount'
+          ],
+          [
+            sequelize.literal(
+              `(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id AND likes.UserId = ${userId} LIMIT 1)`
+            ),
+            'isLiked'
           ]
         ],
         order: [['createdAt', 'DESC']],
-        raw: true,
-        nest: true
+        raw: true
       })
       return tweets
     } catch (err) {
