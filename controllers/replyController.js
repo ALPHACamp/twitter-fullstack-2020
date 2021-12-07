@@ -15,7 +15,8 @@ const replyController = {
         attributes: ['id', 'comment', 'createdAt'],
         include: {
           model: User,
-          attributes: ['id', 'name', 'avatar', 'account']
+          attributes: ['id', 'name', 'avatar', 'account'],
+          require: false
         }
       })
       return res.json({ replies })

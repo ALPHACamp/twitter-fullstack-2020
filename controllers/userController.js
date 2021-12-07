@@ -93,7 +93,7 @@ const userController = {
           {
             model: Tweet,
             attributes: [],
-            include: [{ model: User, attributes: ['id', 'account'] }]
+            include: [{ model: User, attributes: ['id', 'account'], require: false }]
           }
         ],
         order: [['createdAt', 'DESC']],
@@ -131,7 +131,8 @@ const userController = {
                 ),
                 'likeCount'
               ]
-            ]
+            ],
+            require: false
           }
         ],
         order: [['createdAt', 'DESC']],
@@ -155,7 +156,8 @@ const userController = {
           {
             model: User,
             as: 'Followers',
-            attributes: ['id', 'name', 'avatar', 'introduction', 'account']
+            attributes: ['id', 'name', 'avatar', 'introduction', 'account'],
+            require: false
           }
         ]
       })
@@ -191,7 +193,8 @@ const userController = {
           {
             model: User,
             as: 'Followings',
-            attributes: ['id', 'name', 'avatar', 'introduction', 'account']
+            attributes: ['id', 'name', 'avatar', 'introduction', 'account'],
+            require: false
           }
         ]
       })
