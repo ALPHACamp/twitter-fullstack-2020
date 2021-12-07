@@ -113,6 +113,8 @@ const userController = {
 
   getUser: (req, res) => {
     User.findByPk(req.params.id, { include: [
+      { model: User, as: 'Followings' },
+      { model: User, as: 'Followers' },
       { model: Tweet, include: [ Reply, { model: User, as: 'LikedUsers'}] },
       { model: Reply, include: [{ model: Tweet, include: [User] }] },
       { model: Like, include: [{ model: Tweet, include: [User, Reply, { model: User, as: 'LikedUsers' }]}]}
@@ -121,8 +123,8 @@ const userController = {
       const userData = {
         ...user.toJSON(),
         tweetCount: user.Tweets.length,
-        followingCount: helpers.getUser(req).Followings.length,
-        followerCount: helpers.getUser(req).Followers.length,
+        followingCount: user.Followings.length,
+        followerCount: user.Followers.length,
         isFollowed: helpers.getUser(req).Followings.map(item => item.id).includes(user.dataValues.id)
       }
 
