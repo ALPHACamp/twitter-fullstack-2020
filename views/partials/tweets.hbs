@@ -20,35 +20,33 @@
       <a class="postuser">
         <span class="name ellipsis">{{this.User.name}}</span>
         <span class="at-name ellipsis">@{{this.User.account}}</span>
-        <span class="timer ellipsis">{{this.User.createdAt}}</span>
+        <span class="timer ellipsis">{{moment this.User.createdAt}}</span>
       </a>
-      <button type="button" class="content" id="content">
+      <a href="/tweets/{{this.id}}" class="content">
         {{this.description}}
-      </button>
+      </a>
       <div class="action">
         <button type="button" class="commenting" data-userId="{{loginUser.id}}">
           <i class='comment'></i>
           {{this.replyCount}}
         </button>
-        {{!-- 原本的 like --}}
-        {{!-- <button type="button" class="liking">
-          <i class='like'></i>
-          76
-        </button> --}}
+
         {{#if this.isLiked}}
-        <form action="/tweets/{{this.id}}/unlike" method="post" style="display: inline;">
+        <form action="/tweets/{{this.id}}/unlike" method="post">
           <button type="submit" class="liking">
-            {{!-- 待補上unlike的icon --}}
-            <i class='like'></i>{{this.likeCount}}
+            <i class='like active'></i>
+            {{this.likeCount}}
           </button>
         </form>
         {{else}}
-        <form action="/tweets/{{this.id}}/like" method="post" style="display: inline;">
+        <form action="/tweets/{{this.id}}/like" method="post">
           <button type="submit" class="liking">
-            <i class='like'></i>{{this.likeCount}}
+            <i class='like'></i>
+            {{this.likeCount}}
           </button>
         </form>
         {{/if}}
+
       </div>
     </div>
   </div>

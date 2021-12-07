@@ -2,19 +2,27 @@
   <div class="leftside">
     <div class="navigation" id="navigation">
       <i class='ac-icon'></i>
-      <a class="" href='/admin/tweets'><i class='home'></i>推文清單</a>
-      <a class="active" href="/admin/users"><i class='info active'></i>使用者列表</a>
+      {{#ifCond partial "adminTweets"}}
+      <a class="active">
+        <i class='home active'></i>推文清單</a>
+      <a class="" href="/admin/users">
+        <i class='info'></i>使用者列表</a>
+      {{else}}
+      <a class="" href='/admin/tweets'>
+        <i class='home'></i>推文清單</a>
+      <a class="active">
+        <i class='info active'></i>使用者列表</a>
+      {{/ifCond}}
     </div>
-
     <div class="footer">
       <a href="/signout"><i class='logout'></i>登出</a>
     </div>
   </div>
 
-  {{#if adminUers}}
-  {{> adminUers}}
-  {{else}}
+  {{#ifCond partial "adminTweets"}}
   {{> adminTweets}}
-  {{/if}}
+  {{else}}
+  {{> adminUsers}}
+  {{/ifCond}}
 
 </div>

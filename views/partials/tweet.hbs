@@ -9,7 +9,8 @@
 
   <a class="tweetuser" href="/users/{{tweet.User.id}}/tweets">
     <span>
-      <img class="thumbnail" src="{{tweet.User.avatar}}" alt="">
+      <img class="thumbnail" {{#if tweet.User.acatar}} src="{{tweet.User.avatar}}" alt="{{tweet.User.avatar}} avatar"
+        {{/if}}>
     </span>
     <span>
       <span class="name ellipsis">{{tweet.User.name}}</span>
@@ -69,7 +70,7 @@
   {{#each replies}}
   <div class="reply">
     <a href="/users/{{this.User.id}}/tweets">
-      <img class="thumbnail" src="{{this.User.avatar}}" alt="">
+      <img class="thumbnail" {{#if this.User.avatar}}src="{{this.User.avatar}}" alt="{{this.User.avatar}}" {{/if}}>
     </a>
     <div class="comment">
       <a class="commentuser" href="/users/{{this.User.id}}/tweets">

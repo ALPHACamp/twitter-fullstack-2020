@@ -18,7 +18,7 @@ const adminController = {
         description: tweet.description.slice(0, 50),
       }))
 
-      return res.render('admin', { tweets })
+      return res.render('admin', { tweets, partial: 'adminTweets' })
     } catch (err) {
       console.error(err)
     }
@@ -39,9 +39,9 @@ const adminController = {
         include: [
           { model: Tweet, include: [Like], required: false },
           { model: User, as: 'Followings', required: false },
-          { model: User, as: 'Followers', required: false },
+          { model: User, as: 'Followers', required: false }
         ],
-        order: [[Tweet, 'createdAt', 'ASC']],
+        order: [[Tweet, 'createdAt', 'ASC']]
       })
 
       users = users
@@ -50,14 +50,14 @@ const adminController = {
           tweetCount: user.Tweets.length,
           likeCount: adminController.sumLikes(
             user.Tweets.map((tweet) => tweet.Likes.length)
-          ), // 有寫工具function adminController.sumLikes(arr)計算加總
+          ), // 有寫工具function adminController.sumLikes(arr) 計算加總
           followingCount: user.Followings.length,
           followerCount: user.Followers.length,
         }))
         .sort((a, b) => b.tweetCount - a.tweetCount) // 根據tweet數排序
 
-      
-      return res.render('admin', { users, adminUers: true })
+      return res.render('admin', { users, partial: 'adminUsers' })
+      // return res.json(users)
     } catch (err) {
       console.error(err)
     }
