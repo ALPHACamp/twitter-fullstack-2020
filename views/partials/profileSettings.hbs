@@ -1,0 +1,27 @@
+<div class="title">
+  <span>帳戶設定</span>
+</div>
+
+<form action="/users/{{user.id}}?_method=PUT" method="POST">
+  <div class="edit-text">
+    <label for="account">帳號</label>
+    <input type="text" name="account" id="account" value="{{user.account}}" required>
+  </div>
+  <div class="edit-text">
+    <label for="name">名稱</label>
+    <input type="text" name="name" id="name" maxlength="50" value="{{user.name}}" required>
+  </div>
+  <div class="edit-text">
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" value="{{user.email}}" required>
+  </div>
+  <div class="edit-text">
+    <label for="password">密碼</label>
+    <input type="password" name="password" id="password" required>
+  </div>
+  <div class="edit-text">
+    <label for="checkPassword">密碼確認</label>
+    <input type="password" name="checkPassword" id="checkPassword" required>
+  </div>
+  <button type="submit" class="btn-fill form">儲存</button>
+</form>
