@@ -120,49 +120,6 @@ const tweetController = {
     } catch (err) {
       console.error(err)
     }
-  },
-
-  getPopular: async (req, res) => {
-    try {
-      let pops = await User.findAll({
-        attributes: [
-          'id',
-          'email',
-          'name',
-          'avatar',
-          'account',
-          'role',
-          'createdAt',
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM followships WHERE followships.followingId = User.id)'
-            ),
-            'followerCount'
-          ]
-        ]
-      })
-
-      let followings = await Followship.findAll({
-        where: { followerId: helpers.getUser(req).id }
-      })
-      followings = followings.map(
-        (following) => following.dataValues.followingId
-      )
-
-      pops = pops.filter((pop) => pop.dataValues.role !== 'admin')
-      pops = pops.filter((pop) => pop.dataValues.id !== helpers.getUser(req).id)
-      pops = pops
-        .map((pop) => ({
-          ...pop.dataValues,
-          isFollowing: followings.includes(pop.dataValues.id)
-        }))
-        .sort((a, b) => b.followerCount - a.followerCount)
-        .slice(0, 10)
-
-      return pops // 返回前10 populars array
-    } catch (err) {
-      console.error(err)
-    }
   }
 }
 

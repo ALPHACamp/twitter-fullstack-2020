@@ -1,5 +1,4 @@
 const helpers = require('../_helpers')
-const db = require('../models')
 const userController = require('./userController')
 const tweetController = require('./tweetController')
 
@@ -20,12 +19,13 @@ const pageController = {
         return res.redirect('/admin/tweets')
       }
 
-      const [loginUser, tweets] = await Promise.all([
+      const [loginUser, tweets, pops] = await Promise.all([
         userController.getLoginUser(req, res),
-        tweetController.getTweets(req, res)
+        tweetController.getTweets(req, res),
+        userController.getPopular(req, res)
       ])
 
-      return res.render('user', { loginUser, tweets, indexPage: true })
+      return res.render('user', { loginUser, tweets, pops, indexPage: true })
     } catch (err) {
       console.error(err)
     }
