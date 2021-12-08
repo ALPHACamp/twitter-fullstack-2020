@@ -1,7 +1,7 @@
 <div class="header">首頁</div>
 <div class="postarea">
   <a href="/users/{{loginUser.id}}/tweets">
-    <img class="thumbnail" src="{{loginUser.avatar}}" alt="thumbnail">
+    <img class="thumbnail" src="{{loginUser.avatar}}" alt="{{loginUser.name}} avatar">
   </a>
   <form action="/tweets" method="post" id="tweets-post-form" novalidate>
     <input type="hidden" name="userId" value="{{loginUser.id}}">
@@ -17,19 +17,19 @@
   {{#each tweets}}
   <div class="tweet">
     <a href="/users/{{this.User.id}}/tweets">
-      <img class="thumbnail" src="{{this.User.avatar}}" alt="thumbnail">
+      <img class="thumbnail" src="{{this.User.avatar}}" alt="{{this.User.name}} avatar">
     </a>
     <div class="postcontent">
       <a class="postuser">
         <span class="name ellipsis">{{this.User.name}}</span>
         <span class="at-name ellipsis">@{{this.User.account}}</span>
-        <span class="timer ellipsis">{{moment this.User.createdAt}}</span>
+        <span class="timer ellipsis">{{moment this.createdAt}}</span>
       </a>
       <a href="/tweets/{{this.id}}" class="content">
         {{this.description}}
       </a>
       <div class="action">
-        <button type="button" class="commenting" data-tweetid="{{this.id}}">
+        <button type="button" class="commenting" data-userid="{{loginUser.id}}" data-tweetid="{{this.id}}">
           <i class='comment commenting'></i>
           {{this.replyCount}}
         </button>

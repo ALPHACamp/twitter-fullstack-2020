@@ -19,13 +19,16 @@ const pageController = {
         return res.redirect('/admin/tweets')
       }
 
-      const [loginUser, tweets, pops] = await Promise.all([
-        userController.getLoginUser(req, res),
+      const [tweets, pops] = await Promise.all([
         tweetController.getTweets(req, res),
         userController.getPopular(req, res)
       ])
 
-      return res.render('user', { loginUser, tweets, pops, indexPage: true })
+      return res.render('user', {
+        tweets,
+        pops,
+        partial: 'tweets'
+      })
     } catch (err) {
       console.error(err)
     }
@@ -38,9 +41,9 @@ const pageController = {
         return res.redirect('/tweets')
       }
 
-      const loginUser = await userController.getLoginUser(req, res)
-
-      return res.render('user', { loginUser, userSettingsPage: true })
+      return res.render('user', {
+        partial: 'profileSettings'
+      })
     } catch (err) {
       console.error(err)
     }
@@ -48,18 +51,16 @@ const pageController = {
 
   getUserTweets: async (req, res) => {
     try {
-      const [loginUser, user, tweets, pops] = await Promise.all([
-        userController.getLoginUser(req, res),
+      const [user, tweets, pops] = await Promise.all([
         userController.getUserProfile(req, res),
         userController.getUserTweets(req, res),
         userController.getPopular(req, res)
       ])
       return res.render('user', {
-        loginUser,
         user,
         tweets,
         pops,
-        userTweetsPage: true
+        partial: 'profileTweets'
       })
     } catch (err) {
       console.error(err)
@@ -68,18 +69,16 @@ const pageController = {
 
   getUserReplies: async (req, res) => {
     try {
-      const [loginUser, user, replies, pops] = await Promise.all([
-        userController.getLoginUser(req, res),
+      const [user, replies, pops] = await Promise.all([
         userController.getUserProfile(req, res),
         userController.getUserReplies(req, res),
         userController.getPopular(req, res)
       ])
       return res.render('user', {
-        loginUser,
         user,
         replies,
         pops,
-        userRepliesPage: true
+        partial: 'profileReplies'
       })
     } catch (err) {
       console.error(err)
@@ -88,18 +87,16 @@ const pageController = {
 
   getUserLikes: async (req, res) => {
     try {
-      const [loginUser, user, tweets, pops] = await Promise.all([
-        userController.getLoginUser(req, res),
+      const [user, tweets, pops] = await Promise.all([
         userController.getUserProfile(req, res),
         userController.getUserLikes(req, res),
         userController.getPopular(req, res)
       ])
       return res.render('user', {
-        loginUser,
         user,
         tweets,
         pops,
-        userLikesPage: true
+        partial: 'profileLikes'
       })
     } catch (err) {
       console.error(err)
@@ -108,16 +105,14 @@ const pageController = {
 
   getUserFollowers: async (req, res) => {
     try {
-      const [loginUser, user, followers] = await Promise.all([
-        userController.getLoginUser(req, res),
+      const [user, followers] = await Promise.all([
         userController.getUserProfile(req, res),
         userController.getUserFollowers(req, res)
       ])
       return res.render('user', {
-        loginUser,
         user,
         followers,
-        userFollowersPage: true
+        partial: 'profileFollower'
       })
     } catch (err) {
       console.error(err)
@@ -126,16 +121,14 @@ const pageController = {
 
   getUserFollowings: async (req, res) => {
     try {
-      const [loginUser, user, followings] = await Promise.all([
-        userController.getLoginUser(req, res),
+      const [user, followings] = await Promise.all([
         userController.getUserProfile(req, res),
         userController.getUserFollowings(req, res)
       ])
       return res.render('user', {
-        loginUser,
         user,
         followings,
-        userFollowingsPage: true
+        partial: 'profileFollowing'
       })
     } catch (err) {
       console.error(err)

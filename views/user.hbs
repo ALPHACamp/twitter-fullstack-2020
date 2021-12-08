@@ -1,14 +1,35 @@
-{{#if userSettingsPage}}
+{{#ifCond partial "profileSettings"}}
 <div class="user-template-setting">
   {{else}}
   <div class="user-template">
-    {{/if}}
+    {{/ifCond}}
     <div class="leftside">
       <div class="navigation">
         <i class='ac-icon'></i>
+
+        {{#ifCond partial "tweets"}}
         <a class="active" href='/tweets'><i class='home active'></i>首頁</a>
+        {{else}}
+        {{#ifCond partial "tweet"}}
+        <a class="active" href='/tweets'><i class='home active'></i>首頁</a>
+        {{else}}
+        <a class="" href='/tweets'><i class='home'></i>首頁</a>
+        {{/ifCond}}
+        {{/ifCond}}
+
+
+        {{#ifCond loginUser.id user.id}}
+        <a class="active" href="/users/{{loginUser.id}}/tweets"><i class='info active'></i>個人資料</a>
+        {{else}}
         <a class="" href="/users/{{loginUser.id}}/tweets"><i class='info'></i>個人資料</a>
+        {{/ifCond}}
+
+        {{#ifCond partial "profileSettings"}}
+        <a class="active" href='/users/{{loginUser.id}}/settings'><i class='setting active'></i>設定</a>
+        {{else}}
         <a class="" href='/users/{{loginUser.id}}/settings'><i class='setting'></i>設定</a>
+        {{/ifCond}}
+
         <button type="button" class="btn-fill" id="posting"
           onclick="document.querySelector('#modal-post').classList.remove('d-none');">推文</button>
       </div>
@@ -20,18 +41,10 @@
 
     <div class="main">
       {{!-- USER PARTIALS --}}
-      {{#if indexPage}}{{> tweets}}{{/if}}
-      {{#if tweetPage}}{{> tweet}}{{/if}}
-      {{#if userTweetsPage}}{{> profileTweets}}{{/if}}
-      {{#if userRepliesPage}}{{> profileReplies}}{{/if}}
-      {{#if userLikesPage}}{{> profileLikes}}{{/if}}
-      {{#if userFollowersPage}}{{> profileFollower}}{{/if}}
-      {{#if userFollowingsPage}}{{> profileFollowing}}{{/if}}
-      {{#if userSettingsPage}}{{> profileSettings}}{{/if}}
-      {{#if tweetPage}}{{> tweet}}{{/if}}
-
+      {{> (lookup . "partial") }}
     </div>
-    {{#unless userSettingsPage}}
+
+    {{#ifCond partial "userSettingsPage"}}{{else}}
     <div class="rightside">
 
       <div class="popular">
@@ -39,24 +52,21 @@
 
         {{#each pops}}
         <div class="wrap">
-          <a href="/users/{{this.id}}/tweets"><img class="thumbnail" {{#if this.avatar}} src="{{this.avatar}}"
-              alt="{{this.avatar}} avatar" {{/if}}>
+          <a href="/users/{{this.id}}/tweets"><img class="thumbnail" src="{{this.avatar}}" alt="{{this.name}} avatar">
             <span>
               <span class="name">{{this.name}}</span>
-              <span class="at-name ellipsis">{{this.account}}</span>
+              <span class="at-name ellipsis">@{{this.account}}</span>
             </span>
           </a>
           {{#if this.isFollowing}}
           <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
             <button type="submit" class="btn-fill sm">正在追蹤</button>
           </form>
-          {{!-- <a class="btn-fill sm" href="#followship">正在追蹤</a> --}}
           {{else}}
           <form action="/followships" method="POST">
             <input type="hidden" name="id" value="{{this.id}}">
             <button type="submit" class="btn-outline sm">跟隨</button>
           </form>
-          {{!-- <a class="btn-outline sm" href="/followships/{{this.id}}">跟隨</a> --}}
           {{/if}}
         </div>
         {{/each}}
@@ -64,7 +74,7 @@
       </div>
 
     </div>
-    {{/unless}}
+    {{/ifCond}}
 
   </div>
 
@@ -95,7 +105,7 @@
 
   {{!-- replying modal --}}
   <div class="modal d-none" id="modal-reply">
-    {{!-- modal innerHTML 由layout.js 一併帶入  --}}
+    {{!-- layout.js --}}
   </div>
 
   {{!-- editing modal --}}

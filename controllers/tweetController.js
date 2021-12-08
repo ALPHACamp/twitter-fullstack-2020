@@ -117,9 +117,8 @@ const tweetController = {
         tweet: tweet.toJSON(),
         replies: replies.map((reply) => reply.toJSON()),
         isLiked,
-        pops,
-        loginUser,
-        tweetPage: true,
+        partial: 'tweet',
+        pops
       })
     } catch (err) {
       console.error(err)
