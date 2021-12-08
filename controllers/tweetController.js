@@ -1,5 +1,4 @@
 const db = require('../models')
-const tweet = require('../models/tweet')
 const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
@@ -17,14 +16,14 @@ const tweetController = {
   // 追蹤人數最多的user前10名單
 
   getTweets: (req, res) => {
-
+    //return res.send('what the fuck')
     return Tweet.findAll({
       raw: true,
       nest: true,
       order: [['createdAt', 'DESC']],
       include: [
-        Reply ,
-        {model: User, include: [Like]},
+        Reply,
+        { model: User, include: [Like] },
         { model: Like, include: [Tweet] }
       ]
     })
@@ -33,7 +32,7 @@ const tweetController = {
           raw: true,
           nest: true,
           include: [
-            {model: User, as: 'Followers'}
+            { model: User, as: 'Followers' }
           ]
         })
           .then(users => {
@@ -46,10 +45,10 @@ const tweetController = {
               tweetsId: tweet.id,
               tweetsContent: tweet.description,
               // user的貼文回覆總數量
-              repliesTotal: tweet.Replies.length ,
+              repliesTotal: tweet.Replies.length,
               // 判斷是否liked
               // if tweet.like.UserId 有 req.user.id = true
-              isLiked: helpers.isMatch(tweet.Likes.UserId , req.user.id) ,
+              isLiked: helpers.isMatch(tweet.Likes.UserId, req.user.id),
               //likeTotal: tweet.Likes.length
             }))
             users = users.map(user => ({
@@ -60,15 +59,15 @@ const tweetController = {
               FollowerCount: user.Followers.length,
               isFollowed: req.user.Followings.map(f => f.id).includes(user.id)
             }))
-            // console.log('*********')
-            // console.log('tweets.Likes:' ,tweets[0].User.Likes)
+            console.log('*********')
+            console.log('tweets:', tweets[0])
             console.log('*********')
             // console.log('tweet.Likes: ', tweets[0].Likes)
-            console.log('tweets.Replies: ', tweets[1].Replies)
+            console.log('users: ', users[0])
             console.log('*********')
             //console.log('users: ', users[0])
             users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-            return res.render('tweets', {tweets, users})
+            return res.render('tweets', { tweets, users, user: helpers.getUser(req) })
           })
       })
   },

@@ -4,7 +4,7 @@ const helpers = require('../_helpers')
 
 const replyController = {
   //設定新增留言
-  postRelpy: (req, res) => {
+  postReply: (req, res) => {
     return Reply.create({
       comment: req.body.comment,
       TweetId: req.params.tweetId,
