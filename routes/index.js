@@ -54,6 +54,16 @@ module.exports = (app, passport) => {
   //設定前台瀏覽個別推文路由
   app.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
 
+
+  // like tweet
+  app.post('/tweets/:tweetId/like', authenticated, userController.addLike )
+  // unlike tweet
+  app.post('/tweets/:tweetId/unlike', authenticated, userController.removeLike)
+  // following
+  app.post('/followships/:followingId', authenticated, userController.addFollowing)
+  // removeFollowing
+  app.delete('/followships/:followingId', authenticated, userController.removeFollowing)
+  
   //設定使用者個人資料路由
   app.get('/users/:userId/tweets', authenticated, userController.getUserTweets)
 
@@ -67,6 +77,7 @@ module.exports = (app, passport) => {
   app.put('/users/:userId/setting', authenticated, userController.putSetting)
 
   // login
+
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
 
