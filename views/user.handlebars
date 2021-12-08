@@ -85,9 +85,7 @@
 
     {{!-- 背景圖區域 --}}
     <div class="row bg bg-info">
-      <img class="img-fluid"
-        src="https://content.skyscnr.com/m/59807c662e7952e2/original/GettyImages-478367609.jpg?resize=800px:600px&quality=100"
-        alt="..." style="width:100%; height:180px;">
+      <img class="img-fluid" src="{{user.cover}}" alt="..." style="width:100%; height:180px;">
 
     </div>
 
@@ -121,19 +119,29 @@
 
             {{!-- 編輯個人資料圖片 --}}
 
-            <img class="image-fluid"
-              src="https://content.skyscnr.com/m/59807c662e7952e2/original/GettyImages-478367609.jpg?resize=800px:600px&quality=100"
-              style="width:100%; height:160px;">
-            {{!-- <input type="file" name="image">
-            <i class="fas fa-camera-retro" style="position:relative; left:-62.5px; top: 10px"></i> --}}
+            <img class="image-fluid" src="{{user.cover}}" style="position:relative; width:100%; height:160px;">
+            {{!-- 更換背景圖相機 icon --}}
+            <input type="file" id="cover" name="avatar" hidden>
+            <label for="cover">
+              <i class="fas fa-camera-retro text-light fa-lg" style="position:relative; left:250px; top: -100px"></i>
+            </label>
+
+
             {{!-- 編輯個人資料大頭貼圖片 --}}
             <div class="row mt-1 mb-2">
               <div class=" col-md-8">
                 <img src="{{user.avatar}}" alt="..." id="avatarImage" class="rounded-circle"
                   style="position:relative; width: 100px; height:100px;">
 
-                <input type="file" id="avatar" name="avatar">
-                <i class="fas fa-camera-retro" style="position:relative; left:-62.5px; top: 10px"></i>
+                {{!-- 更換大頭貼相機 icon --}}
+                <input type="file" id="avatar" name="avatar" hidden>
+                <label for="avatar">
+                  <i class="fas fa-camera-retro text-light fa-lg" style="position:relative; left:-62.5px; top: 5px"></i>
+                </label>
+
+
+
+
 
 
               </div>
