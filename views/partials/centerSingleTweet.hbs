@@ -26,7 +26,7 @@
         </div>
     </div>
     {{!-- 此則推文 --}}
-    <div class="content tweet-description">
+    <div class="content tweet-description heavy-tweet-text">
       <p>{{tweet.description}}</p>
     </div>
     <div class="time">
@@ -72,7 +72,7 @@
       <div class="d-flex">
         <div class="mt-2 ml-2 col-md-1" style="padding:0">
           <a href="/users/{{this.User.dataValues.id}}/tweets" class="text-muted">
-            <img class="user-pic mr-2" src="{{this.User.dataValues.avatar}}" style=" width:60PX;height:60px; border-radius:100%;">
+            <img class="user-pic mr-2" src="{{this.User.dataValues.avatar}}" style=" width:50px;height:50px; border-radius:100%;">
           </a>
         </div>
         <div class="col-md-11">
@@ -88,14 +88,14 @@
               <div class="reply-text ml-3" style="color: gray;"><p style="font-weight:500; ">回覆</p></div>
                 <div class="reply-account">
                   <a href="/users/{{this.User.dataValues.id}}/tweets" class="text-muted" style="">
-                    <p style="color: orange; font-weight:500;">
+                    <p style="color: #FF6600; font-weight:500;">
                       @{{../tweet.User.dataValues.name}}
                     </p>
                   </a>
                 </div>
             </div>
           </div>
-          <div class="post-text d-flex" style="flex:auto"> {{this.dataValues.comment}} </div>
+          <div class="reply-text d-flex" style="flex:auto"> {{this.dataValues.comment}} </div>
         </div>
       </div>
     </div>

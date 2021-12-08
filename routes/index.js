@@ -7,17 +7,17 @@ module.exports = (app, passport) => {
   //驗証使用者已登入
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (req.user.role === 'user') {
+      if (helpers.getUser(req).role === 'user') {
         return next()
       }
-      return res.redirect('/admin')
+      return res.redirect('/admin/tweets')
     }
     res.redirect('/signin')
   }
   //驗証Admin已登入
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (req.user.role === 'admin') {
+      if (helpers.getUser(req).role === 'admin') {
         return next()
       }
       return res.redirect('/')
@@ -38,6 +38,7 @@ module.exports = (app, passport) => {
 
   //admin管理推文
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+  app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 
   //admin管理使用者
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
@@ -57,6 +58,9 @@ module.exports = (app, passport) => {
   //user編輯帳號
   app.get('/users/:id/edit', authenticated, userController.editUser)
   app.put('/users/:id/', authenticated, userController.putUser)
+
+  //user個人資料頁
+  app.get('/users/:id/tweets', authenticated, userController.getProfile)
 
   //user推文
   app.get('/tweets', authenticated, tweetController.getTweets)

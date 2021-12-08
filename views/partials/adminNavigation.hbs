@@ -33,29 +33,20 @@
     <br />
     <div class='d-flex align-items-start flex-column bd-highlight mb-3' style=''>
       <div style='color: black; font-weight:bold;'>
-        <a href='/tweets' style='text-decoration: none'><p class='navCol-btn {{#ifCond page 'tweets'}}navCol-btn-active{{/ifCond}}'><i
+        <a href='/admin/tweets' style='text-decoration: none; color:black;'><p class='navCol-btn {{#ifCond page 'tweets'}}navCol-btn-active{{/ifCond}}'><i
               class='fas fa-home pr-3 mb-3'
               style='font-size: large;'
-            ></i>首頁</p></a>
+            ></i>推文清單</p></a>
       </div>
       <div style='font-weight:bold;'>
-        <a href='/users/{{user.id}}/tweets' style='text-decoration: none; color:black;'><p class='navCol-btn {{#ifCond page 'profile'}}navCol-btn-active{{/ifCond}}'><i
+        <a href='/admin/users' style='text-decoration: none; color:black;'><p class='navCol-btn {{#ifCond page 'users'}}navCol-btn-active{{/ifCond}}'><i
               class='far fa-user pr-3 mb-3'
               style='font-size: large;'
-            ></i>個人資料</p></a>
+            ></i>使用者列表</p></a>
       </div>
-      <div style=' font-weight:bold;'>
-        <a href='/users/{{user.id}}/edit' style='text-decoration: none'><p class='navCol-btn {{#ifCond page 'setting'}}navCol-btn-active{{/ifCond}}'><i
-              class='fas fa-cog pr-3 mb-3'
-              style='font-size: large;'
-            ></i>設定</p></a>
-      </div>
-
-      <button class='btn' style='background-color: #FF6600;border-radius:40px; color:white; font-weight:bold; width:90%; max-width:160px'>推文</button>
     </div>
   </div>
-<div>
-  <div class='pl-5' style='font-weight:bold; position: fixed; top:90%'>
+  <div class='p-3' style='font-weight:bold; position: fixed; top:90%'>
     <a href='/logout' style='text-decoration: none; color:black;'><p style='color: black;'><svg
           width='20'
           height='18'
@@ -73,5 +64,4 @@
         </svg>
         <span class='pl-2'>登出</span></p></a>
   </div>
-</div>
 </div>

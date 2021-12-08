@@ -33,7 +33,7 @@ const userController = {
     // confirm password
     if (req.body.passwordCheck !== req.body.password) {
       req.flash('error_messages', '兩次密碼輸入不同！')
-      return res.redirect('/signup')
+      return res.redirect('/signin')
     } else {
       // confirm unique user
 
@@ -67,6 +67,7 @@ const userController = {
     User.findByPk(req.params.id).then((user) => {
       return res.render('setting', {
         user: user.toJSON(),
+        page: 'setting',
       })
     })
   },
@@ -89,6 +90,10 @@ const userController = {
           res.redirect('back')
         })
     })
+  },
+
+  getProfile: (req, res) => {
+    return res.render('profile', { page: 'profile' })
   },
 
   addLike: (req, res) => {
