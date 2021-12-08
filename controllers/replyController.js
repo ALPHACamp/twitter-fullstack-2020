@@ -4,6 +4,8 @@ const Reply = db.Reply
 const Tweet = db.Tweet
 const User = db.User
 
+const userService = require('../services/userService')
+
 const replyController = {
   postReply: (req, res) => {
     const comment = req.body.comment
@@ -37,7 +39,10 @@ const replyController = {
       ]
     })
      .then(replies => {
-       return res.render('reply', { replies })
+       console.log(replies)
+       userService.getTopUser(req, res, topUser => {
+         return res.render('replies', { replies, topUser })
+       })
      })
   }
 }
