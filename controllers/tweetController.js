@@ -104,7 +104,7 @@ const tweetController = {
       ],
     }).then(async (tweet) => {
       // console.log(req.user)
-      console.log(tweet.dataValues.Likes)
+      // console.log(tweet.dataValues.Likes)
       tweet = {
         ...tweet.dataValues,
         likesCount: tweet.dataValues.Likes ? tweet.dataValues.Likes.length : 0,
