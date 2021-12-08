@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 const userController = require('../controllers/api/userController')
+const tweetServer = require('../controllers/api/tweetServer')
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -13,5 +14,6 @@ const authenticated = (req, res, next) => {
 
 router.get('/users/:userId', authenticated, userController.getEditModal)
 router.post('/users/:userId', authenticated, userController.updateUser)
+router.get('/tweets/:tweetId', authenticated, tweetServer.getTweet) // reply modal api
 
 module.exports = router
