@@ -9,9 +9,9 @@ module.exports = (app, passport) => {
   //驗証使用者已登入
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      //if (helpers.getUser(req).role === 'user') {
-      return next()
-      //}
+      if (helpers.getUser(req).role === 'user' || !req.user) {
+        return next()
+      }
       return res.redirect('/admin/tweets')
     }
     res.redirect('/signin')
@@ -19,9 +19,9 @@ module.exports = (app, passport) => {
   //驗証Admin已登入
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      //if (helpers.getUser(req).role === 'admin') {
-      return next()
-      //}
+      if (helpers.getUser(req).role === 'admin') {
+        return next()
+      }
       return res.redirect('/')
     }
     res.redirect('/admin/signin')
@@ -72,9 +72,13 @@ module.exports = (app, passport) => {
   app.post('/api/users/:id/deleteCover', authenticated, userController.deleteCover)
 
   //user推文
-  app.get('/tweets', authenticated, tweetController.getTweets)
+  // app.get('/tweets', authenticated, tweetController.getTweets)
+  app.get('/tweets', authenticated,tweetController.getTweets)
+  app.post('/tweets', authenticated,tweetController.postTweet)
+
   //user推文
   app.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
+  app.post('/tweets/:id/replies', authenticated, tweetController.postTweetReply)
 
   //user喜歡推文
   app.post('/tweets/:id/like', authenticated, userController.addLike)
@@ -85,4 +89,11 @@ module.exports = (app, passport) => {
   app.post('/followships', authenticated, userController.addFollowships)
   //user取消追隨
   app.delete('/followships/:id', authenticated, userController.removeFollowing)
+
+  //user Profile頁面
+  app.get('/users/:id/tweets', authenticated, userController.getProfile)
+  //user Profile頁面Profile_replies
+  app.get('/users/:id/profile_replies', authenticated, userController.getProfile_replies)
+  //user Profile頁面Profile_likes
+  app.get('/users/:id/profile_likes', authenticated, userController.getProfile_likes)
 }

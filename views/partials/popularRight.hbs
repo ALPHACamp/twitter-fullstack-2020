@@ -29,7 +29,7 @@
             </div>
             {{else}}
             <div class="col-4 my-1 d-flex flex-row-reverse align-items-center" style="text-align:right; margin:0px; padding:0px;">
-                <form action="/followships" method="POST" style="display: contents;"></form>
+                <form action="/followships" method="POST" style="display: contents;">
                     <button type="submit" class="btn" name="id" value="{{this.id}}" style="width:60px; border-radius:40px; border-color:#FF6600; color:#FF6600;font-weight:bold;">跟隨</button>
                 </form>
             </div>
@@ -38,4 +38,3 @@
     </div>
     {{/each}}
 </div>
-
