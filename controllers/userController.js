@@ -125,7 +125,8 @@ const userController = {
 
   addFollowships: (req, res) => {
     const UserId = helpers.getUser(req).id ? helpers.getUser(req).id : req.user.id
-
+    console.log('req params: ' + req.params.id)
+    console.log('req body: ' + req.body.id)
     if (req.body.id === UserId.toString()) {
       return res.send({ error: 'can not follow self' })
       // return res.redirect('back')
