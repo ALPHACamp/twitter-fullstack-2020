@@ -1,3 +1,6 @@
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
+const cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }])
 const helpers = require('../_helpers')
 const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
@@ -36,9 +39,16 @@ module.exports = (app, passport) => {
   }
 
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+  app.get('/tweets', authenticated, (req, res) => res.render('tweets', { user: helpers.getUser(req) }))
+
+  app.get('/users/:userId/tweets', authenticated, userController.getUserTweets)
+  
+  //瀏覽編輯使用者頁面
+  app.get('/api/users/:userId', userController.getUser)
+  //更新使用者資訊
+  app.post('/api/users/:userId', cpUpload, userController.postUser)
 
   //設定前台流覽總推文路由
-  
   app.get('/tweets', authenticated, tweetController.getTweets)
 
   //設定前台瀏覽個別推文路由
