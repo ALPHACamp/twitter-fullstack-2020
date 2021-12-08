@@ -263,7 +263,7 @@ const userController = {
           'createdAt',
           [
             sequelize.literal(
-              '(SELECT COUNT(*) FROM followships WHERE followships.followingId = User.id)'
+              '(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id)'
             ),
             'followerCount'
           ]
