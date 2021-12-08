@@ -21,6 +21,7 @@
   </div>
 </div>
 
+{{! editProfile dialog }}
 <div class='modal fade' id='editProfile' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
   <div class='modal-dialog'>
     <div class='modal-content' style='width:600px; height:675px; border-radius: 14px'>
@@ -53,7 +54,11 @@
         >儲存</button>
       </div>
       <div class='modal-body' style='position:relative'>
-        <img class='editProfile-cover' src='https://loremflickr.com/320/240/personal,cover/?random=32.84091887448724' />
+        <img
+          class='editProfile-cover'
+          src='https://loremflickr.com/320/240/personal,cover/?random=26.334381010529583'
+          style='background-color:darkgrey'
+        />
         <img class='editProfile-avatar' src='https://loremflickr.com/320/240/avatar/?random=70.38643359863906' />
         <div class='image-upload' style='position: absolute; left:65px; top:191px; z-index:3'>
           <label for='avatar'>
@@ -86,7 +91,7 @@
           <input id='cover' type='file' />
         </div>
 
-        <a href='/tweets' style='position: absolute; left:319px; top:83px; z-index:3'><svg
+        <a id='deleteCover' style='position: absolute; left:319px; top:83px; z-index:3'><svg
             width='16'
             height='16'
             viewBox='0 0 16 16'

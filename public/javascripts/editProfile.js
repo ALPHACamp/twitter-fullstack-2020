@@ -65,3 +65,14 @@ document.querySelector('#cover').addEventListener(
   },
   true
 )
+
+document.querySelector('#deleteCover').addEventListener('click', function (e) {
+  axios
+    .post(`/api/users/${userId}/deleteCover`)
+    .then((response) => {
+      if (response.data.status === 'success') {
+        document.querySelector('.editProfile-cover').src = ''
+      }
+    })
+    .catch((error) => console.log(error))
+})

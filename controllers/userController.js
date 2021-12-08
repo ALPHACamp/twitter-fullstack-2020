@@ -113,8 +113,6 @@ const userController = {
       user
         .update({
           name: req.body.name,
-          //cover: req.body.cover,
-          //avatar: req.body.avatar,
           introduction: req.body.introduction,
         })
         .then(() => {
@@ -163,6 +161,18 @@ const userController = {
         })
       })
     }
+  },
+
+  deleteCover: (req, res) => {
+    return User.findByPk(req.params.id).then((user) => {
+      user
+        .update({
+          cover: '',
+        })
+        .then(() => {
+          res.json({ status: 'success', message: '' })
+        })
+    })
   },
 
   addLike: (req, res) => {

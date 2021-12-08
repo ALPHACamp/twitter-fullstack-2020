@@ -69,6 +69,7 @@ module.exports = (app, passport) => {
   app.post('/api/users/:id', authenticated, userController.updateIntroduction)
   app.post('/api/users/:id/avatar', authenticated, upload.single('avatar'), userController.updateAvatar)
   app.post('/api/users/:id/cover', authenticated, upload.single('cover'), userController.updateCover)
+  app.post('/api/users/:id/deleteCover', authenticated, userController.deleteCover)
 
   //user推文
   app.get('/tweets', authenticated, tweetController.getTweets)
