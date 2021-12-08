@@ -22,33 +22,41 @@ const userController = {
           'cover',
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM tweets WHERE tweets.UserId = user.id)`
+              `(SELECT COUNT(*) FROM Tweets WHERE Tweets.UserId = User.id)`
             ),
             'tweetCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM replies WHERE replies.UserId = user.id)`
+              `(SELECT COUNT(*) FROM Replies WHERE Replies.UserId = User.id)`
             ),
             'replyCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM likes WHERE likes.UserId = user.id)`
+              `(SELECT COUNT(*) FROM Likes WHERE Likes.UserId = User.id)`
             ),
             'likeCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM followships WHERE followships.followerId = user.id)`
+              `(SELECT COUNT(*) FROM Followships WHERE Followships.followerId = User.id)`
             ),
             'followingCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM followships WHERE followships.followingId = user.id)`
+              `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id)`
             ),
             'followerCount'
+          ],
+          [
+            sequelize.literal(
+              `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id AND Followships.followerId = ${
+                helpers.getUser(req).id
+              } LIMIT 1)`
+            ),
+            'isFollowed'
           ]
         ],
         raw: true
@@ -70,19 +78,19 @@ const userController = {
           'createdAt',
           [
             sequelize.literal(
-              '(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'
+              '(SELECT COUNT(*) FROM Replies WHERE Replies.TweetId = Tweet.id)'
             ),
             'replyCount'
           ],
           [
             sequelize.literal(
-              '(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'
+              '(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id)'
             ),
             'likeCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id AND likes.UserId = ${userId} LIMIT 1)`
+              `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${userId} LIMIT 1)`
             ),
             'isLiked'
           ]
@@ -99,22 +107,29 @@ const userController = {
   getUserReplies: async (req, res) => {
     try {
       const userId = Number(req.params.userId)
-      const replies = await Reply.findAll({
+      let replies = await Reply.findAll({
         where: { UserId: userId },
-        attributes: [
-          'id',
-          'comment',
-          'createdAt',
-          [
-            sequelize.literal(
-              `(SELECT account FROM users WHERE users.id = reply.UserId)`
-            ),
-            'account'
-          ]
+        attributes: ['id', 'comment', 'createdAt'],
+        include: [
+          {
+            model: Tweet,
+            attributes: ['id'],
+            include: [{ model: User, attributes: ['id', 'account'] }]
+          }
         ],
         order: [['createdAt', 'DESC']],
-        raw: true
+        raw: true,
+        nest: true
       })
+
+      replies = replies.map((reply) => ({
+        id: reply.id,
+        comment: reply.comment,
+        createdAt: reply.createdAt,
+        toAccount: reply.Tweet.User.account,
+        toId: reply.Tweet.User.id
+      }))
+
       return replies
     } catch (err) {
       console.error(err)
@@ -136,19 +151,19 @@ const userController = {
               'createdAt',
               [
                 sequelize.literal(
-                  '(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'
+                  '(SELECT COUNT(*) FROM Replies WHERE Replies.TweetId = Tweet.id)'
                 ),
                 'replyCount'
               ],
               [
                 sequelize.literal(
-                  '(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'
+                  '(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id)'
                 ),
                 'likeCount'
               ],
               [
                 sequelize.literal(
-                  `(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id AND likes.UserId = ${userId} LIMIT 1)`
+                  `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${helpers.getUser(req).id} LIMIT 1)`
                 ),
                 'isLiked'
               ]
@@ -185,7 +200,7 @@ const userController = {
               'account',
               [
                 sequelize.literal(
-                  `(SELECT COUNT(*) FROM followships WHERE followships.followingId = Followers.id AND followships.followerId = ${userId} LIMIT 1)`
+                  `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = Followers.id AND Followships.followerId = ${userId} LIMIT 1)`
                 ),
                 'isFollowed'
               ]
@@ -265,7 +280,7 @@ const userController = {
           'createdAt',
           [
             sequelize.literal(
-              '(SELECT COUNT(*) FROM followships WHERE followships.followingId = User.id)'
+              '(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id)'
             ),
             'followerCount'
           ]
@@ -313,11 +328,15 @@ const userController = {
       }
 
       if (user2) {
-        errors.push({ message: 'email 已重複重複！' })
+        errors.push({ message: 'email 已重複註冊！' })
       }
 
       if (errors.length) {
-        return res.render('signup', { errors, ...req.body })
+        return res.render('signup', { errors, account, name, email })
+      }
+
+      if (account.length < 4 || password.length < 4 || name.length > 50) {
+        return res.end()
       }
 
       await User.create({
@@ -383,11 +402,15 @@ const userController = {
       }
 
       if (user2) {
-        errors.push({ message: 'email 已重複重複！' })
+        errors.push({ message: 'email 已重複註冊！' })
       }
 
       if (errors.length) {
         return res.render('signup', { errors, ...req.body })
+      }
+
+      if (account.length < 4 || password.length < 4 || name.length > 50) {
+        return res.end()
       }
 
       if (password === '') {

@@ -16,9 +16,9 @@ body.addEventListener('click', async (event) => {
     // axios here to get tweet info
     let tweetId = target.dataset.tweetid
     if (!tweetId) tweetId = target.parentElement.dataset.tweetid
-    
-    let response = await axios.get(`http://localhost:3000/api/tweets/${tweetId}`)
-    const {tweet, loginUser} = response.data
+
+    let response = await axios.get(`${window.location.origin}/api/tweets/${tweetId}`)
+    const { tweet, loginUser } = response.data
 
     let modalHtml = `
     <div class="mask">
@@ -68,7 +68,7 @@ body.addEventListener('click', async (event) => {
     </div>
     `
     modalReply.innerHTML = modalHtml
-    
+
     modalReply.classList.remove('d-none')
   } else if (target.classList.contains('back-arror')) {
     history.back()
@@ -129,25 +129,41 @@ if (inputs) {
       el.parentElement.classList.remove('focus')
     })
     el.addEventListener('invalid', function onInputInvalid(event) {
-      if (el.validity.valueMissing) {
-        if (el.name === 'account') {
-          el.parentElement.setAttribute('err_msg', '帳號不存在！')
+      let target = event.target
+
+      if (target.validity.valueMissing) {
+        if (target.name === 'account') {
+          target.parentElement.setAttribute('err_msg', '帳號不存在！')
         } else {
-          el.parentElement.setAttribute('err_msg', '內容不可為空白')
+          target.parentElement.setAttribute('err_msg', '內容不可為空白')
         }
       }
 
-      if (el.validity.typeMismatch) {
-        el.parentElement.setAttribute('err_msg', '格式錯誤')
+      if (target.validity.typeMismatch) {
+        target.parentElement.setAttribute('err_msg', '格式錯誤')
       }
 
-      if (el.validity.tooLong) {
-        el.parentElement.setAttribute('err_msg', '字數超出上限！')
+      if (target.validity.tooLong) {
+        target.parentElement.setAttribute('err_msg', '字數超出上限！')
+      }
+
+      if (target.validity.tooShort) {
+        target.parentElement.setAttribute('err_msg', '最少4個英文或數字組合！')
       }
 
       event.stopPropagation()
       event.preventDefault()
-      el.parentElement.classList.add('invalid')
+      target.parentElement.classList.add('invalid')
     })
+
+    el.addEventListener('keyup', function onInputKeyup(event) {
+      let target = event.target
+
+      target.parentElement.classList.remove('invalid')
+      if (event.target.name === 'account') {
+        target.value = target.value.replace(/[\W]/g, '')
+      }
+    })
+
   });
 }

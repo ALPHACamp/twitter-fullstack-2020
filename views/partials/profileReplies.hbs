@@ -6,8 +6,8 @@
   </div>
 </div>
 <div class="banner">
-  <img src="{{user.cover}}" alt="" class="cover">
-  <img src="{{user.avatar}}" alt="" class="avatar">
+  <img src="{{user.cover}}" alt="cover" class="cover">
+  <img src="{{user.avatar}}" alt="avatar" class="avatar">
   <div class="buttons">
     {{#ifCond loginUser.id user.id}}
     <button type="button" class="btn-outline sm"
@@ -15,7 +15,16 @@
     {{else}}
     <a><i class='btn-message'></i></a>
     <a><i class='btn-noti'></i></a>
-    <button type="button" class="btn-fill sm">正在跟隨</button>
+    {{#if this.user.isFollowed}}
+    <form action="/followships/{{this.user.id}}?_method=DELETE" method="POST">
+      <button type="submit" class="btn-fill sm">正在追蹤</button>
+    </form>
+    {{else}}
+    <form action="/followships" method="POST">
+      <input type="hidden" name="id" value="{{this.user.id}}">
+      <button type="submit" class="btn-outline sm">跟隨</button>
+    </form>
+    {{/if}}
     {{/ifCond}}
   </div>
 </div>
@@ -37,17 +46,19 @@
 
   {{#each replies}}
   <div class="tweet profileTweet">
-    <div>
+    <a href="/users/{{../user.id}}/tweets">
       <img class="thumbnail" src="{{../user.avatar}}" alt="">
-    </div>
+    </a>
     <div class="postcontent">
-      <div class="postuser">
+      <a class="postuser" href="/users/{{../user.id}}/tweets">
         <span class="name ellipsis">{{../user.name}}</span>
         <span class="at-name ellipsis">@{{../user.account}}</span>
         <span class="timer ellipsis">{{moment this.createdAt}}</span>
-      </div>
+      </a>
       <div class="replyto">回覆
-        <span class="at-name">@{{this.account}}</span>
+        <a href="/users/{{this.toId}}/tweets">
+          <span class="at-name">@{{this.toAccount}}</span>
+        </a>
       </div>
       <button type="button" class="content" id="content">
         {{this.comment}}

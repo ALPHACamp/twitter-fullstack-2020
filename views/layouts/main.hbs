@@ -20,8 +20,7 @@
     <i class="success"></i>
   </div>
   <script type="text/javascript">
-    document.querySelector('.flash').classList.add('cb');
-    setTimeout(() => document.querySelector('.flash').classList.remove('cb'), 2800);
+    setTimeout(() => { document.querySelector('.flash').classList.add('cb'); setTimeout(() => { document.querySelector('.flash').classList.remove('cb') }, 2800) }, 500);
   </script>
   {{/if}}
 
@@ -31,8 +30,21 @@
     <i class="warning"></i>
   </div>
   <script type="text/javascript">
-    document.querySelector('.flash').classList.add('cb');
-    setTimeout(() => document.querySelector('.flash').classList.remove('cb'), 2800);
+    setTimeout(() => { document.querySelector('.flash').classList.add('cb'); setTimeout(() => { document.querySelector('.flash').classList.remove('cb') }, 2800) }, 500);
+  </script>
+  {{/if}}
+
+  {{#if errors.length}}
+  <div class="flash cb">
+    <div>
+      {{#each errors}}
+      <div class="text">{{this.message}}</div>
+      {{/each}}
+    </div>
+    <i class="warning"></i>
+  </div>
+  <script type="text/javascript">
+    setTimeout(() => { document.querySelector('.flash').classList.add('cb'); setTimeout(() => { document.querySelector('.flash').classList.remove('cb') }, 2800) }, 500);
   </script>
   {{/if}}
 
