@@ -14,8 +14,8 @@ passport.use('user-local', new LocalStrategy(
   (req, username, password, done) => {
     User.findOne({ where: { account: username, role: 'user'} }).then(user  => {
       console.log(user)
-      if (!user) return done(null, false, req.flash('error_msg', '帳號或密碼錯誤'))
-      if (!bcrypt.compareSync(password, user.password)) return done(null, false, req.flash('error_msg', ' 帳號或密碼錯誤'))
+      if (!user) return done(null, false, req.flash('error_msg', '帳號不存在'))
+      if (!bcrypt.compareSync(password, user.password)) return done(null, false, req.flash('error_msg', ' 密碼錯誤'))
       return done(null, user)
     })
   }
@@ -30,8 +30,8 @@ passport.use('admin-local', new LocalStrategy(
   (req, username, password, done) => {
     User.findOne({ where: { account: username, role: 'admin' } }).then(user => {
       console.log(user)
-      if (!user) return done(null, false, req.flash('error_msg', '帳號或密碼錯誤'))
-      if (!bcrypt.compareSync(password, user.password)) return done(null, false, req.flash('error_msg', ' 帳號或密碼錯誤'))
+      if (!user) return done(null, false, req.flash('error_msg', '帳號不存在'))
+      if (!bcrypt.compareSync(password, user.password)) return done(null, false, req.flash('error_msg', ' 密碼錯誤'))
       return done(null, user)
     })
   }
