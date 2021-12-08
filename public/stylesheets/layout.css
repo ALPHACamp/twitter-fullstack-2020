@@ -340,6 +340,7 @@ html, body {
   display: flex;
   flex-flow: column nowrap;
   align-items: flex-start;
+  justify-content: center;
 }
 
 .main > .tweets > .tweet > .postcontent > .postuser {
@@ -378,10 +379,9 @@ html, body {
   color: #1c1c1c;
   font-size: 15px;
   font-weight: 500;
-  line-height: 22px;
   width: 510px;
   height: 66px;
-  text-align: start;
+  text-align: left;
   padding: 0;
 }
 
@@ -408,8 +408,17 @@ html, body {
   line-height: 40px;
   text-align: left;
   display: inline-block;
+  vertical-align:middle;
   justify-self: center;
   padding: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.main > .tweets > .tweet > .postcontent > .action > .commenting i,
+.main > .tweets > .tweet > .postcontent > .action .liking i {
+  margin-right: 4px;
 }
 
 .main > .tweets > .tweet > .postcontent > .replyto {
@@ -418,11 +427,16 @@ html, body {
   font-weight: 500;
   line-height: 16px;
   margin-top: -1px;
-  margin-bottom: -8px;
 }
 
 .main > .tweets > .tweet > .postcontent > .replyto > .at-name {
   color: #f60;
+}
+
+.main > .tweets > .tweet > .postcontent > button {
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* user-template center content for profile (Likes, Replies, Tweets) */
@@ -492,7 +506,7 @@ html, body {
   margin-right: 10px;
 }
 
-.main > .banner > .buttons > button {
+.main > .banner > .buttons button {
   margin-right: 15px;
   height: 35px;
   margin-top: 10px;
@@ -625,7 +639,7 @@ html, body {
   overflow-y: auto;
 }
 
-.main > .followship > .follower > button {
+.main > .followship > .follower button {
   position: absolute;
   right: 15px;
   top: 10px;
