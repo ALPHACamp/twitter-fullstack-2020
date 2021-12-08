@@ -56,7 +56,9 @@
         <span class="timer ellipsis">{{moment this.createdAt}}</span>
       </a>
       <div class="replyto">回覆
-        <span class="at-name">@{{this.account}}</span>
+        <a href="/users/{{this.toId}}/tweets">
+          <span class="at-name">@{{this.toAccount}}</span>
+        </a>
       </div>
       <button type="button" class="content" id="content">
         {{this.comment}}
