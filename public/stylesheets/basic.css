@@ -81,6 +81,11 @@ img.avatar.small {
 }
 
 .header1 {
+  font-weight: 900;
+  font-size: 19px;
+}
+
+.header2 {
   font-weight: 500;
   font-size: 18px;
 }
@@ -156,3 +161,22 @@ img.avatar.large {
   top:25vh;
 }
 
+.fa-arrow-left {
+  color:black;
+}
+
+.introduction {
+  font-size: 14px;
+}
+
+.introduction.follow-title {
+  color:black;
+}
+
+.introduction.following-body {
+  color: #657786;
+}
+
+.introduction.follower-body {
+  color: #657786;
+}
