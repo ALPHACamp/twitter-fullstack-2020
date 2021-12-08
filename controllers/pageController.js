@@ -109,7 +109,7 @@ const pageController = {
         userController.getUserProfile(req, res),
         userController.getUserFollowers(req, res)
       ])
-      return res.json({
+      return res.render('user', {
         user,
         followers,
         partial: 'profileFollower'
