@@ -57,7 +57,6 @@ const userController = {
         ],
         raw: true
       })
-      console.log(user)
       return user
     } catch (err) {
       console.error(err)
