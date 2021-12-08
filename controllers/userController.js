@@ -333,7 +333,7 @@ const userController = {
         return res.render('signup', { errors, ...req.body })
       }
 
-      if (account.length < 4 || password.length < 4) {
+      if (account.length < 4 || password.length < 4 || name.length > 50) {
         return res.end()
       }
 
@@ -407,7 +407,7 @@ const userController = {
         return res.render('signup', { errors, ...req.body })
       }
 
-      if (account.length < 4 || password.length < 4) {
+      if (account.length < 4 || password.length < 4 || name.length > 50) {
         return res.end()
       }
 
