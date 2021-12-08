@@ -8,49 +8,53 @@ const { User, Tweet, Reply, Like, Followship } = db
 
 const userController = {
   getUserProfile: async (req, res) => {
-    const userId = Number(req.params.userId)
-    const user = await User.findByPk(userId, {
-      attributes: [
-        'id',
-        'name',
-        'avatar',
-        'introduction',
-        'account',
-        'cover',
-        [
-          sequelize.literal(
-            `(SELECT COUNT(*) FROM tweets WHERE tweets.UserId = user.id)`
-          ),
-          'tweetCount'
+    try {
+      const userId = Number(req.params.userId)
+      const user = await User.findByPk(userId, {
+        attributes: [
+          'id',
+          'name',
+          'avatar',
+          'introduction',
+          'account',
+          'cover',
+          [
+            sequelize.literal(
+              `(SELECT COUNT(*) FROM tweets WHERE tweets.UserId = user.id)`
+            ),
+            'tweetCount'
+          ],
+          [
+            sequelize.literal(
+              `(SELECT COUNT(*) FROM replies WHERE replies.UserId = user.id)`
+            ),
+            'replyCount'
+          ],
+          [
+            sequelize.literal(
+              `(SELECT COUNT(*) FROM likes WHERE likes.UserId = user.id)`
+            ),
+            'likeCount'
+          ],
+          [
+            sequelize.literal(
+              `(SELECT COUNT(*) FROM followships WHERE followships.followerId = user.id)`
+            ),
+            'followingCount'
+          ],
+          [
+            sequelize.literal(
+              `(SELECT COUNT(*) FROM followships WHERE followships.followingId = user.id)`
+            ),
+            'followerCount'
+          ]
         ],
-        [
-          sequelize.literal(
-            `(SELECT COUNT(*) FROM replies WHERE replies.UserId = user.id)`
-          ),
-          'replyCount'
-        ],
-        [
-          sequelize.literal(
-            `(SELECT COUNT(*) FROM likes WHERE likes.UserId = user.id)`
-          ),
-          'likeCount'
-        ],
-        [
-          sequelize.literal(
-            `(SELECT COUNT(*) FROM followships WHERE followships.followerId = user.id)`
-          ),
-          'followingCount'
-        ],
-        [
-          sequelize.literal(
-            `(SELECT COUNT(*) FROM followships WHERE followships.followingId = user.id)`
-          ),
-          'followerCount'
-        ]
-      ],
-      raw: true
-    })
+        raw: true
+      })
     return user
+    } catch (err) {
+      console.error(err)
+    }
   },
 
   getUserTweets: async (req, res) => {
@@ -81,7 +85,7 @@ const userController = {
             'isLiked'
           ]
         ],
-        order: [['createdAt', 'DESC']],
+        order: ['createdAt', 'DESC'],
         raw: true
       })
       return tweets
@@ -139,6 +143,12 @@ const userController = {
                   '(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'
                 ),
                 'likeCount'
+              ],
+              [
+                sequelize.literal(
+                  `(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id AND likes.UserId = ${userId} LIMIT 1)`
+                ),
+                'isLiked'
               ]
             ],
             require: false
