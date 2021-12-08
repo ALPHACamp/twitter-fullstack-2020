@@ -5,7 +5,7 @@
 <form action="/users/{{loginUser.id}}/settings?_method=PUT" method="POST">
   <div class="edit-text">
     <label for="account">帳號</label>
-    <input type="text" name="account" id="account" value="{{loginUser.account}}" required>
+    <input type="text" name="account" id="account" minlength="4" value="{{loginUser.account}}" required>
   </div>
   <div class="edit-text">
     <label for="name">名稱</label>
@@ -17,11 +17,11 @@
   </div>
   <div class="edit-text">
     <label for="password">密碼</label>
-    <input type="password" name="password" id="password">
+    <input type="password" name="password" id="password" minlength="4">
   </div>
   <div class="edit-text">
     <label for="checkPassword">密碼確認</label>
-    <input type="password" name="checkPassword" id="checkPassword">
+    <input type="password" name="checkPassword" id="checkPassword" minlength="4">
   </div>
   <button type="submit" class="btn-fill form">儲存</button>
 </form>

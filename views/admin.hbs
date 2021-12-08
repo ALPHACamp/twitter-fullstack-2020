@@ -19,10 +19,9 @@
     </div>
   </div>
 
-  {{#ifCond partial "adminTweets"}}
-  {{> adminTweets}}
-  {{else}}
-  {{> adminUsers}}
-  {{/ifCond}}
+  <div class="admin-main">
+    {{!-- ADMIN PARTIALS --}}
+    {{> (lookup . "partial") }}
+  </div>
 
 </div>
