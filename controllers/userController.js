@@ -66,6 +66,15 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
+  getUser: (req, res) => {
+    if (helpers.getUser(req).id !== Number(req.params.userId)) {
+      return res.json({ status: 'error', message:'' })
+    }
+    return User.findByPk(req.params.userId)
+      .then(user => {
+        return res.json(user.toJSON())
+    })
+  },
   postUser: async (req, res) => {
     const { name, introduction } = req.body
     const { files } = req
