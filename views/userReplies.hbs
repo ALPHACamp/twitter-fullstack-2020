@@ -1,0 +1,161 @@
+<div class="row" style="width:100%;">
+  {{!-- navbar --}}
+  <div class="col-3">
+    <img class="mb-4 pl-2" src="/images/logo.png">
+    <div class="nav-ul-wrapper">
+      <ul class="nav flex-column">
+        <li class="nav-item py-2">
+          <a class="nav-link" href="/tweets">
+            <i class="fas fa-home"></i>
+            <span class="ml-3">首頁</span>
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="nav-link active" href="/users/{{user.id}}/tweets">
+            <i class="far fa-user"></i>
+            <span class="ml-3">個人資料</span>
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="nav-link" href="#">
+            <i class="fas fa-cog"></i>
+            <span class="ml-3">設定</span>
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="btn py-2" href="#">推文</a>
+        </li>
+      </ul>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="ml-3">登出</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  {{!-- user profile --}}
+  <div class="middle-side col-md-5">
+    <div class="text-title d-flex align-items-center">
+      <a href="javascript:history.back()">
+        <div class="back-icon">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+      </a>
+      <div class="name-info">
+        <h5 class="title-name ml-3">{{user.name}}</h5>
+        <div class="title-info ml-3">3推文</div>
+      </div>
+    </div>
+    <hr />
+    <div class="cover"><img src=""></div>
+    <div class="user-info d-flex justify-content-between">
+      <div class="avatar"><img src="{{user.avatar}}" class="rounded-circle"></div>
+      <div class="edit-button mt-4">
+        <button type="submit" class="btn">編輯個人資料</button>
+      </div>
+    </div>
+    <div class="text-info-users">
+      <div class="info-text">
+        <h5 class="name">{{user.name}}</h5>
+        <h6 class="atAccount">@{{user.account}}</h6>
+        <div class="introduction mt-2">hi</div>
+        <div class="follow d-flex">
+          <div class="followship d-flex m-0 mt-2">
+            <a href="followings" class="d-flex">
+              <div class="follow-title">1個</div>
+              <div class="following-body">跟隨中</div>
+            </a>
+            <a href="followers" class="d-flex ml-3">
+              <div class="follow-title">1個</div>
+              <div class="follower-body">跟隨者</div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <br>
+      <br>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" href="/users/{{user.id}}/tweets">推文</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">推文與回覆</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="#">喜歡的內容</a>
+        </li>
+      </ul>
+      <div class="user-tweet">
+        {{#each user.Replies}}
+        <div class="tweet col-md-12">
+          <div class="d-flex">
+            <div class="mt-2 mr-2 col-md-2" style="padding: 0%;"><a href="/users/{{../user.id}}/tweets"
+                class="text-muted">
+                <img class="avatar small" src="{{../this.user.avatar}}">
+              </a>
+            </div>
+            <div class="col-md-10 mt-2">
+              <div class="account-info d-flex" style="flex-auto">
+                <div class="user-name">{{../this.user.name}}</div>
+                <div class="atAccount mb-2 ml-2">@{{../this.user.account}}•{{moment
+                  this.createdAt}}</div>
+              </div>
+              <div class="reply d-flex">
+                <div class="reply-text">回覆</div>
+                <a href="/users/{{../tweet.UserId}}/tweets" class="text-muted">
+                  <div class="reply-account ml-3">@{{user.account}}</div>
+                </a>
+              </div>
+              <a href="/tweets/{{this.TweetId}}/replies" class="text-muted">
+                <div class="post-text d-flex" style="flex-auto">{{this.comment}}</div>
+              </a>
+
+            </div>
+          </div>
+        </div>
+        <hr />
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+
+  {{!-- popular --}}
+  <div class="col-4">
+    <div class="card border-light popular">
+      <div class="card-header">
+        Popular
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item d-flex">
+          <div class="mr-2">
+            <img class="avatar small" src="/images/exampleAvatar1.png">
+          </div>
+          <div class="mr-5">
+            <p class="mb-0">Pizza Hut</p>
+            <p class="atAccount">@pizzahut</p>
+          </div>
+          <div class="pt-2">
+            <a class="btn py-2" href="#">正在追蹤</a>
+          </div>
+        </li>
+        <li class="list-group-item d-flex">
+          <div class="mr-2">
+            <img class="avatar small" src="/images/exampleAvatar2.png">
+          </div>
+          <div class="mr-5">
+            <p class="mb-0">MacDonald</p>
+            <p class="atAccount">@macdonald</p>
+          </div>
+          <div class="pt-2">
+            <a class="btn btn-outline py-2" href="#">追蹤</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
