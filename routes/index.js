@@ -76,4 +76,11 @@ module.exports = (app, passport) => {
   app.post('/followships', authenticated, userController.addFollowships)
   //user取消追隨
   app.delete('/followships/:id', authenticated, userController.removeFollowing)
+
+  //user Profile頁面
+  app.get('/users/:id/tweets', authenticated, userController.getProfile)
+  //user Profile頁面Profile_replies
+  app.get('/users/:id/profile_replies', authenticated, userController.getProfile_replies)
+  //user Profile頁面Profile_likes
+  app.get('/users/:id/profile_likes', authenticated, userController.getProfile_likes)
 }
