@@ -209,7 +209,7 @@ const userController = {
               'account',
               [
                 sequelize.literal(
-                  `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = Followers.id AND Followships.followerId = ${userId} LIMIT 1)`
+                  `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = Followers.id AND Followships.followerId = ${helpers.getUser(req).id} LIMIT 1)`
                 ),
                 'isFollowed'
               ]
