@@ -50,7 +50,9 @@ const userController = {
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id AND Followships.followerId = ${helpers.getUser(req).id} LIMIT 1)`
+              `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id AND Followships.followerId = ${
+                helpers.getUser(req).id
+              } LIMIT 1)`
             ),
             'isFollowed'
           ]
@@ -103,22 +105,29 @@ const userController = {
   getUserReplies: async (req, res) => {
     try {
       const userId = Number(req.params.userId)
-      const replies = await Reply.findAll({
+      let replies = await Reply.findAll({
         where: { UserId: userId },
-        attributes: [
-          'id',
-          'comment',
-          'createdAt',
-          [
-            sequelize.literal(
-              `(SELECT account FROM Users WHERE Users.id = Reply.UserId)`
-            ),
-            'account'
-          ]
+        attributes: ['id', 'comment', 'createdAt'],
+        include: [
+          {
+            model: Tweet,
+            attributes: ['id'],
+            include: [{ model: User, attributes: ['id', 'account'] }]
+          }
         ],
         order: [['createdAt', 'DESC']],
-        raw: true
+        raw: true,
+        nest: true
       })
+
+      replies = replies.map((reply) => ({
+        id: reply.id,
+        comment: reply.comment,
+        createdAt: reply.createdAt,
+        toAccount: reply.Tweet.User.account,
+        toId: reply.Tweet.User.id
+      }))
+
       return replies
     } catch (err) {
       console.error(err)
