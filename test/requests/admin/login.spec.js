@@ -69,7 +69,9 @@ describe('# Admin::User login request', () => {
       
       after(async () => {
         // 清除測試資料庫資料
-        await db.User.destroy({where: {},truncate: true})
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+        await db.User.destroy({where: {},truncate: true, force: true})
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
       })
 
     });
