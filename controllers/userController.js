@@ -400,7 +400,7 @@ const userController = {
       }
 
       if (user2) {
-        errors.push({ message: 'email 已重複重複！' })
+        errors.push({ message: 'email 已重複註冊！' })
       }
 
       if (errors.length) {
