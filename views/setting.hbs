@@ -5,7 +5,7 @@
     <div class="nav-ul-wrapper">
       <ul class="nav flex-column">
         <li class="nav-item py-2">
-          <a class="nav-link active" href="#">
+          <a class="nav-link" href="#">
             <i class="fas fa-home"></i>
             <span class="ml-3">首頁</span>
           </a>
@@ -17,7 +17,7 @@
           </a>
         </li>
         <li class="nav-item py-2">
-          <a class="nav-link" href="/users/{{user.id}}/setting/edit">
+          <a class="nav-link active" href="/users/{{user.id}}/setting/edit">
             <i class="fas fa-cog"></i>
             <span class="ml-3">設定</span>
           </a>
@@ -39,49 +39,40 @@
 
   {{!-- content --}}
   <div class="col-5 content-container">
-    <div class="card border-light mb-3 ">
-      <div class="card-header"><span class="header1">首頁</span></div>
-      <div class="card-body d-flex">
-        <a href="/users/{{user.id}}/tweets">
-          <img class="avatar small mr-3" src="{{user.avatar}}">
-        </a>
-
-        <form action="/tweets" method="POST" style="width:100%;">
-          <div class="form-group">
-            <label for="tweet"></label>
-            <textarea class="form-control" id="tweet" name="tweet" rows="3">有什麼新鮮事？</textarea>
-          </div>
-          <button type="submit" class="btn">推文</button>
-        </form>
+    <form class="form-signin" action="/users/{{ user.id }}/setting?_method=PUT" method="POST" style="width: 100%;">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">帳戶設定</h1>
       </div>
-    </div>
-    {{#each tweets}}
-    <div class="card">
-      <div class="card-body d-flex">
-        <a href="/users/{{this.UserId}}/tweets">
-          <img class="avatar small mr-3" src="{{this.avatarImg}}">
-        </a>
-        <div>
-          <p class="card-title">{{this.userName}}
-            <span class="atAccount">@{{this.accountName}}•{{moment
-              this.createdAt}}</span>
-          </p>
-          <a href="/tweets/{{this.id}}/replies" class="text-muted">
-            <p class="post-text">{{this.description}}</p>
-          </a>
-          <a class="atAccount" href="#" style="text-decoration:none;">
-            <i class="far fa-comment"></i>
-            <span class="ml-2">30</span>
-          </a>
-          <a class="atAccount ml-5" href="#" style="text-decoration:none;">
-            <i class="far fa-heart"></i>
-            <span class="ml-2">16</span>
-          </a>
-        </div>
-
+      
+      <div class="form-label-group mb-2">
+        <label for="inputAccount">帳號<span style="color: red;">*</span></label>
+        <input type="text" name="account" class="form-control" placeholder="請輸入帳號" value="{{ user.account }}" required autofocus>
       </div>
-    </div>
-    {{/each}}
+      
+      <div class="form-label-group mb-2">
+        <label for="inputName">名稱<span style="color: red;">*</span></label>
+        <input type="text" name="name" class="form-control" placeholder="請輸入名稱" value="{{ user.name }}" required autofocus>
+      </div>
+      
+      <div class="form-label-group mb-2">
+        <label for="inputEmail">Email<span style="color: red;">*</span></label>
+        <input type="text" name="email" class="form-control" placeholder="請輸入Email" value="{{ user.email }}" required autofocus>
+      </div>
+      
+      <div class="form-label-group mb-2">
+        <label for="inputPassword">密碼</label>
+        <input type="password" name="password" class="form-control" placeholder="請輸入密碼">
+      </div>
+      
+      <div class="form-label-group mb-2">
+        <label for="inputPasswordCheck">確認密碼</label>
+        <input type="password" name="passwordCheck" class="form-control" placeholder="請再次輸入密碼" >
+      </div>
+      <br />
+      <div class="d-flex justify-content-end pr-1">
+        <button class="btn" type="submit">修改</button>
+      </div>
+    </form>
   </div>
 
   {{!-- popular --}}
