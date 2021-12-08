@@ -109,7 +109,7 @@
   </div>
 
   {{!-- editing modal --}}
-  {{#ifCond loginUser.id user.id}}
+  {{#if loginUser.id}}
   <div class="modal d-none" id="modal-edit">
     <div class="mask">
       <div class="dialog">
@@ -118,11 +118,11 @@
           <span>編輯個人資料</span>
         </div>
 
-        <form method="POST" action="/???" enctype="multipart/form-data">
+        <form method="POST" action="/users/{{loginUser.id}}/update?_method=PUT" enctype="multipart/form-data">
           <div class="edit-cover">
-            <img src="/icons/cover.svg" alt="" id="modal-edit-cover">
+            <img src="{{#if loginUser.cover}}{{loginUser.cover}}{{else}}/icons/cover.svg{{/if}}" alt="" id="modal-edit-cover">
             <input type="file" class="d-none" id="cover" name="cover"
-              value="{{#if User.cover}}{{User.cover}}{{else}}/icons/cover.svg{{/if}}"
+              value="{{#if loginUser.cover}}{{loginUser.cover}}{{else}}/icons/cover.svg{{/if}}"
               onchange="document.querySelector('#modal-edit-cover').src=window.URL.createObjectURL(this.files[0]);">
             <a>
               <input type="button" class="camera" onclick="document.querySelector('#cover').click();">
@@ -134,9 +134,9 @@
           </div>
 
           <div class="edit-avatar">
-            <img src="/icons/avatar-lg.svg" alt="" id="modal-edit-avatar">
+            <img src="{{#if loginUser.avatar}}{{loginUser.avatar}}{{else}}/icons/avatar-lg.svg{{/if}}" alt="" id="modal-edit-avatar">
             <input type="file" class="d-none" id="avatar" name="avatar"
-              value="{{#if User.avatar}}{{User.avatar}}{{else}}/icons/avatar-lg.svg{{/if}}"
+              value="{{#if loginUser.avatar}}{{loginUser.avatar}}{{else}}/icons/avatar-lg.svg{{/if}}"
               onchange="document.querySelector('#modal-edit-avatar').src=window.URL.createObjectURL(this.files[0]);">
             <a>
               <input type="button" class="camera" onclick="document.querySelector('#avatar').click();">
@@ -152,9 +152,9 @@
             <div class="edit-form">
               <input type="text" name="name" class="edit-name" maxlength="50" required
                 onkeyup=";document.querySelector('#name-counter').textContent=`${this.value.length}/50`;"
-                value="{{User.name}}">
+                value="{{loginUser.name}}">
             </div>
-            <div class="counter" id="name-counter">{{#if User.name}}{{User.name.length}}{{else}}0{{/if}}/50</div>
+            <div class="counter" id="name-counter">{{#if loginUser.name}}{{loginUser.name.length}}{{else}}0{{/if}}/50</div>
           </div>
 
           <div class="for-intro edit-text">
@@ -165,10 +165,10 @@
             </div>
             <div class="edit-form">
               <textarea name="introduction" class="edit-introduction" maxlength="160"
-                onkeyup="document.querySelector('#introduction-counter').textContent=`${this.value.length}/160`;">{{User.introduction}}</textarea>
+                onkeyup="document.querySelector('#introduction-counter').textContent=`${this.value.length}/160`;">{{loginUser.introduction}}</textarea>
             </div>
             <div class="counter" id="introduction-counter">{{#if
-              User.introduction}}{{User.introduction.length}}{{else}}0{{/if}}/160</div>
+              loginUser.introduction}}{{loginUser.introduction.length}}{{else}}0{{/if}}/160</div>
           </div>
 
 
@@ -178,6 +178,6 @@
 
     </div>
   </div>
-  {{/ifCond}}
+  {{/if}}
 
 </div>
