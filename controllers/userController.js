@@ -1,5 +1,7 @@
 const helpers = require('../_helpers')
 const bcrypt = require('bcryptjs')
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const db = require('../models')
 const { sequelize } = db
@@ -404,6 +406,59 @@ const userController = {
       }
 
       req.flash('success_messages', '成功編輯帳號！')
+      return res.redirect('back')
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  updateProfile: async (req, res) => {
+    try {
+      const userId = Number(req.params.userId)
+      if (helpers.getUser(req).id !== userId) {
+        req.flash('error_messages', '無權更動此頁面資料')
+        return res.redirect('back')
+      }
+      
+      const { name, introduction } = req.body
+      if (!name.length) {
+        req.flash('error_messages', '名稱長度不能為零')
+        return res.redirect('back')
+      }
+      if (name.length > 50) {
+        req.flash('error_messages', '名稱長度不能超過50字')
+        return res.redirect('back')
+      } 
+      
+      const { files } = req
+      let avatarPath = (files.avatar) ? files.avatar[0].path : false
+      let coverPath = (files.cover) ? files.cover[0].path: false
+      let user = await User.findByPk(userId)
+
+      if (avatarPath) {
+        imgur.setClientID(IMGUR_CLIENT_ID)
+        await imgur.upload(avatarPath, (err, img) => 
+          user.update({
+            avatar: avatarPath ? img.data.link : user.avatar
+          })
+        )
+      }
+
+      if (coverPath) {
+        imgur.setClientID(IMGUR_CLIENT_ID)
+        await imgur.upload(coverPath, (err, img) => 
+          user.update({
+            cover: coverPath ? img.data.link : user.cover
+          })
+        )
+      }
+            
+      await user.update({
+        name,
+        introduction,
+      })
+
+      req.flash('success_messages', '成功更新個人資料！')
       return res.redirect('back')
     } catch (err) {
       console.error(err)
