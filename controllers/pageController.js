@@ -105,13 +105,15 @@ const pageController = {
 
   getUserFollowers: async (req, res) => {
     try {
-      const [user, followers] = await Promise.all([
+      const [user, followers, pops] = await Promise.all([
         userController.getUserProfile(req, res),
-        userController.getUserFollowers(req, res)
+        userController.getUserFollowers(req, res),
+        userController.getPopular(req, res)
       ])
-      return res.json({
+      return res.render('user', {
         user,
         followers,
+        pops,
         partial: 'profileFollower'
       })
     } catch (err) {
@@ -121,13 +123,15 @@ const pageController = {
 
   getUserFollowings: async (req, res) => {
     try {
-      const [user, followings] = await Promise.all([
+      const [user, followings, pops] = await Promise.all([
         userController.getUserProfile(req, res),
-        userController.getUserFollowings(req, res)
+        userController.getUserFollowings(req, res),
+        userController.getPopular(req, res)
       ])
       return res.render('user', {
         user,
         followings,
+        pops,
         partial: 'profileFollowing'
       })
     } catch (err) {
