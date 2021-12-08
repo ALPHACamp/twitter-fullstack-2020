@@ -1,0 +1,31 @@
+<div class="d-flex flex-column mt-2" style="margin-left:76vw;position: fixed;">
+  <p class="h4 mb-4" style="color: #313c4b;">Welcome</p>
+
+  <div class="d-flex align-items-center p-1 pt-2 ps-2"
+    style="margin-bottom:1.3em;background-color:white;text-decoration:none;border-radius: 1em;width:22vw;height:25vh;box-shadow:0 0 8px 3px #ccccccb3;">
+    {{!-- avatar --}}
+    <div>
+      {{#if user.avatar }}
+      <img src="{{ user.avatar }}" style="border-radius: 0.7em;height: 21vh;margin-left:0.4em">
+      {{else}}
+      <img src="https://i.pinimg.com/564x/84/9b/50/849b50b189859a59ba38eed018cbfc1d.jpg"
+        style="border-radius: 0.7em;height: 9vh;margin-left:0.1em">
+      {{/if}}
+    </div>
+    {{!-- account --}}
+    <div style="color:#313c4b;width:9vw" class="d-flex align-items-center justify-content-center ms-3">
+      <div class="d-flex flex-column" style="height: 10vh;">
+        <p class="h2 m-0 fw-bolder">{{ user.name }}</p>
+        <p class="h5 m-0" style="color: #313c4b6b;">{{ user.account }}</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="d-flex flex-column align-items-center"
+    style="margin-right: 2vw;background-color:white;height: 22vw;border-radius:1em;box-shadow:0 0 8px 3px #ccccccb3;">
+    <img style="width: 22vw;height: 16.5vw;border-radius:1em;object-fit: cover;"
+      src="https://i.pinimg.com/564x/fc/81/a7/fc81a71d129928802b1e1d3150836288.jpg" alt="shareYourPet">
+    <p class="h5 mt-4" style="color: #313c4b;">Wish You Have Nice Day</p>
+  </div>
+</div>

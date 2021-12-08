@@ -1,0 +1,75 @@
+<div class="d-flex mt-2" style="margin-left: 20vw;">
+
+  <div style="width: 56vw;">
+    {{!-- 標題 --}}
+    <div class="d-flex mb-4 flex-wrap">
+
+      {{#each data }}
+      <div class="d-flex flex-column ">
+
+        {{!-- cover --}}
+        <img class="d-flex flex-column align-items-center"
+          style=";width: 26vw;height: 10vw;border-radius:1em;object-fit: cover;box-shadow:0 0 8px 3px #ccccccb3;"
+          onerror="javascript:this.src='https://i.pinimg.com/564x/c2/79/71/c27971221b721283988c3be1975a4901.jpg';"
+          src="{{ this.cover }}" alt="shareYourPet">
+
+        {{!-- user --}}
+        <div class="d-flex align-items-center p-1 pt-2 ps-2 mt-3"
+          style="margin-bottom:1em;background-color:white;text-decoration:none;border-radius: 1em;width:26vw;height:18vh;box-shadow:0 0 8px 3px #ccccccb3;">
+          {{!-- avatar --}}
+          <div>
+            <img
+              onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
+              src="{{ this.avatar }}" style="border-radius: 0.7em;height: 14vh;margin-left:0.4em">
+
+          </div>
+          {{!-- account --}}
+          <div style="color:#313c4b;width:18vw" class="d-flex align-items-center justify-content-center">
+            <div class="d-flex flex-column" style="height: 10vh;">
+              <p class="h4 m-0 fw-bolder">{{ this.name }}</p>
+              <p class="m-0" style="color: #313c4b6b;">{{ this.account }}</p>
+            </div>
+          </div>
+        </div>
+
+        {{!-- data --}}
+        <div class="d-flex">
+          <div class="d-flex flex-column me-3 justify-content-center align-items-center"
+            style="color: #313c4b;background-color:white;;border-radius: 1em;width:7.2vw;height:14vh;box-shadow:0 0 8px 3px #ccccccb3;">
+            {{!-- tweet --}}
+            <div class="d-flex mt-1">
+              <i class="fas fa-umbrella-beach h5" style="color: #ffd472;"></i>
+              <p class="h5" style="margin-left:0.8em;color: #313c4b;">{{ this.userTweet.count }}</p>
+            </div>
+            {{!-- like --}}
+            <div class="d-flex mt-1">
+              <i class="fab fa-gratipay h4" style="color: #ffd472;margin-right:0.1em"></i>
+              <p class="h5 " style="margin-left:0.78em;color: #313c4b;">{{ this.like }}</p>
+            </div>
+
+          </div>
+
+          {{!-- followins --}}
+          <div class="d-flex flex-column align-items-center justify-content-center mb-4 pt-2 me-3"
+            style="color: #313c4b;background-color:white;text-decoration:none;border-radius: 1em;width:8.2vw;height:14vh;box-shadow:0 0 8px 3px #ccccccb3;">
+            <p class="h2 mb-0">{{ this.following.count }}</p>
+            <p class="fw-bolder" style="color: #313c4bb3;">Followings</p>
+          </div>
+
+          {{!-- followers --}}
+          <div class="d-flex flex-column align-items-center justify-content-center mb-4 pt-2"
+            style="color: #313c4b;background-color:white;text-decoration:none;border-radius: 1em;width:8.2vw;height:14vh;box-shadow:0 0 8px 3px #ccccccb3;">
+            <p class="h2 mb-0">{{ this.follower.count }}</p>
+            <p class="fw-bolder" style="color: #313c4bb3;">Followers</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      {{!-- space --}}
+      <div style="width: 2vw;"></div>
+      {{/each}}
+    </div>
+  </div>
+</div>

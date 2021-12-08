@@ -1,0 +1,161 @@
+<div class="d-flex mt-2 flex-column" style="margin-left: 20vw;">
+
+  <div style="width: 54vw;">
+    {{!-- 標題 --}}
+    <div class="d-flex mb-4" style="height: auto;">
+
+      {{!-- 大頭貼 --}}
+      <div class="d-flex flex-column align-items-center"
+        style="margin-right: 2vw;background-color:white;border-radius:1em;box-shadow:0 0 8px 3px #ccccccb3;">
+        <img
+          onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
+          style="width: 16.7vw;height: 16.5vw;border-radius:1em;object-fit: cover;" src="{{ thisUser.avatar }}"
+          alt="user avatar">
+        <p class="h4 pt-4" style="color: #313c4b;">{{ thisUser.name }}</p>
+        <p class="" style="color: #313c4b;">{{ thisUser.account }}</p>
+        {{#if allowEdit}}
+        {{#if isFollowed}}
+        <form action="/followships/{{ thisUser.id }}?_method=DELETE" method="post">
+          <button type="submit" class="btn mb-3"
+            style="background-color: #ffd472;color: #313c4bc2;width: 13vw;height:7vh;border-radius:0.5em">unFollow</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="post">
+          <label>
+            <input type="text" id="id" name="id" value="{{ thisUser.id }}" style="display:none">
+          </label>
+          <button type="submit" class="btn mb-3"
+            style="background-color: #ffd472;color: #313c4bc2;width: 13vw;height:7vh;border-radius:0.5em">Follow</button>
+        </form>
+        {{/if}}
+        {{else}}
+        <div class="d-flex flex-column align-items-end p-2"><button type="submit" class="btn post-a-tweet mb-3"
+            style="background-color: #ffd472;color: #313c4bc2;width: 13vw;height:7vh;border-radius:0.5em"
+            data-bs-toggle="modal" data-bs-target="#profileModal" data-id="{{user.id}}">編輯個人頁面</button></div>
+        {{/if}}
+      </div>
+
+      {{!-- 簡介 --}}
+      <div class="d-flex flex-column align-items-center"
+        style="margin-right: 2vw;background-color:white;border-radius:1em;box-shadow:0 0 8px 3px #ccccccb3;">
+        <img onerror="javascript:this.src='https://i.pinimg.com/564x/c2/79/71/c27971221b721283988c3be1975a4901.jpg';"
+          style="width: 35.4vw;height: 16.5vw;border-radius:1em;object-fit: cover;" src="{{ thisUser.cover }}"
+          alt="user cover">
+        {{#if thisUser.introduction}}
+        <p class="px-5 py-4" style="color: #313c4b;">{{ thisUser.introduction }}</p>
+        {{else}}
+        <p class="px-5 py-4" style="color: #313c4b;">No Introduction</p>
+        {{/if}}
+      </div>
+
+    </div>
+
+    <div class="d-flex" style="height:15vh;">
+      {{!-- followings --}}
+      <a href="/users/{{ thisUser.id }}/followings" class="d-flex align-items-center justify-content-center mb-4 pt-1"
+        style="color: #313c4b;margin-right:1.5vw;background-color:white;text-decoration:none;border-radius: 1em;width:10vw;box-shadow:0 0 8px 3px #ccccccb3;">
+        <p class="h2 me-2">{{ followingCount }}</p>
+        <p class="mt-2">Followings</p>
+      </a>
+
+      {{!-- followers --}}
+      <a href="/users/{{ thisUser.id }}/followers" class="d-flex align-items-center justify-content-center mb-4 pt-1"
+        style="color: #313c4b;margin-right:1.5vw;background-color:white;text-decoration:none;border-radius: 1em;width:10vw;box-shadow:0 0 8px 3px #ccccccb3;">
+        <p class="h2 me-2">{{ followerCount }}</p>
+        <p class="mt-2">Followers</p>
+      </a>
+      {{!-- btn --}}
+      <div class="d-flex align-items-center justify-content-between mb-4"
+        style="background-color:white;border-radius: 1em;width:32vw;box-shadow:0 0 8px 3px #ccccccb3;">
+
+        <a href="/users/{{ thisUser.id }}/tweets" class="d-flex px-4"
+          style="padding-top:1.3em;color: #313c4b38;text-decoration:none;width: 10.6vw;height:11.6vh;">
+          <i class="fas fa-rocket h3 me-2 mt-1"></i>
+          <p class="h3">Post</p>
+        </a>
+        <a href="/users/{{ thisUser.id }}/replies" class="d-flex px-4"
+          style="background-color:#ffd572b5;padding-top:1.3em;color: #313c4b;text-decoration:none;width: 10.6vw;height:11.6vh;">
+          <i class="fas fa-mountain h4 me-1 mt-1"></i>
+          <p class="h3">Reply</p>
+        </a>
+        <a href="/users/{{ thisUser.id }}/likes" class="d-flex px-4"
+          style="padding-top:1.3em;color: #313c4b38;text-decoration:none;width: 10.6vw;height:11.6vh;">
+          <i class="fas fa-pizza-slice h3 me-2 mt-1"></i>
+          <p class="h3">Like</p>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  {{#if data }}
+  <p class="h4 ms-1 mt-2 mb-4" style="color: #313c4b;">{{ replyCount }} Reply</p>
+  {{else}}
+  <p class="h4 mt-2 mb-4" style="color: #313c4b;">No Reply</p>
+  {{/if}}
+
+  {{!-- 推文區 --}}
+  {{#each data }}
+  <div class="d-flex align-items-center p-1 pt-2 ps-2"
+    style="background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:20vh;box-shadow:0 0 8px 3px #ccccccb3;z-index: 2;">
+    {{!-- avatar --}}
+    <a href="/users/{{ this.tweetUserId }}/tweets" style="margin-top: -0.2em;">
+      <img src="{{ this.tweetUserAvatar }}"
+        onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
+        style="border-radius: 0.7em;height: 15vh;width: 15vh;margin-left:0.7em;object-fit: cover;">
+    </a>
+    {{!-- account --}}
+    <div style="color:#313c4b;width:25vw" class="m-4">
+      <div class="d-flex">
+        <p class="fs-5 me-3 mb-0"><strong>{{ this.tweetUserName }}</strong></p>
+        <p class="mb-0" style="color: #313c4b84;margin-top:0.1em;">{{ this.tweetUserAccount }}・{{momentCH
+          this.tweetCreatedAt}}</p>
+      </div>
+      <p class="mt-1" style="font-size: small;">
+        {{ this.tweetDescription }}
+      </p>
+    </div>
+    {{!-- Reply and Like --}}
+    <div class="d-flex flex-column ms-3">
+      <div class="d-flex">
+        <i class="fas fa-comment-dots h4" style="color: #ffd472;"></i>
+        <p class="ms-3" style="color: #313c4bc2;">{{this.replyCount}}</p>
+      </div>
+      <div class="d-flex">
+        <i class="fab fa-gratipay h4" style="color: #ffd472;margin-right:0.1em"></i>
+        <p class="ms-3" style="color: #313c4bc2;">{{this.likeCount}}</p>
+      </div>
+    </div>
+    {{!-- view tweet btn --}}
+    <form action="/tweets/{{this.TweetId}}" method="get" style="margin-left: 2.6em;">
+      <button type="submit" class="btn"
+        style="background-color: #ffd472;color: #313c4bc2;width: 8.5v;height:7vh;border-radius:0.5em">Read
+        More</button>
+    </form>
+  </div>
+
+  {{!-- reply --}}
+  <div class="d-flex align-items-center p-1 pt-2 ps-2 mb-5"
+    style="background-color:rgba(225, 225, 225, 0.947);text-decoration:none;border-radius:0 0 1em 1em;width:54.1vw;height:24vh;z-index: 1;margin-top:-1em;">
+    {{!-- avatar --}}
+    <a href="/users/{{ ...thisUser.id }}/tweets" style="margin-top: 1em;">
+      <img
+        onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
+        src="{{ ...thisUser.avatar }}"
+        style="border-radius: 0.7em;height: 15vh;width: 15vh;margin-left:0.7em;object-fit: cover;">
+
+    </a>
+    {{!-- account --}}
+    <div style="color:#313c4b;width:40vw;margin-top: 1em;" class="mx-4">
+      <div class="d-flex">
+        <p class="fs-5 me-3 mb-0"><strong>{{ ...thisUser.name }}</strong></p>
+        <p class="mb-0" style="color: #313c4b84;margin-top:0.1em;">{{ ...thisUser.account }}・{{ momentCH
+          this.createdAt }}</p>
+      </div>
+      <p class="mt-1" style="font-size: small;">
+        {{ this.comment }}
+      </p>
+    </div>
+  </div>
+  {{/each}}
+</div>

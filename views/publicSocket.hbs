@@ -1,0 +1,60 @@
+<div class="d-flex" style="margin-left: 20vw;margin-top:21vh;position: fixed;">
+  <div style="width: 54vw;">
+    <div id="messages" class="d-flex flex-column mb-4"
+      style="overflow: scroll;padding:2em;background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:72vh;box-shadow:0 0 8px 3px #ccccccb3;">
+      {{!-- 留言的人 --}}
+      {{#each dataMsg}}
+      {{#if this.isCurrent }}
+
+      {{!-- 自己 --}}
+      <div class="d-flex mb-3">
+        {{!-- avatar --}}
+        <a href="/users/{{ this.User.id }}/tweets" style="">
+          <img src="{{ this.User.avatar }}"
+            onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
+            style="border-radius: 0.7em;height: 10vh;width: 10vh;object-fit: cover;">
+        </a>
+        {{!-- account --}}
+        <div style="color:#313c4b;width:25vw" class="ms-4">
+          <div class="d-flex ">
+            <p class="fs-5 me-3 mb-0"><strong>{{ this.User.name }}</strong></p>
+            <p class="mb-0" style="color: #313c4b84;margin-top:0.1em;">{{ this.User.account }}</p>
+            <p class="mb-0" style="color: #313c4b84;margin:0.42em 0 0 0.5em;font-size:smaller">{{momentCH
+              this.createdAt}}</p>
+          </div>
+          <p class="mt-1 me-4"
+            style="word-wrap:break-word;font-size: small;background-color: #ffd5724a;color: #313c4b;height:auto;border-radius: 0.7em;padding:1em;">
+            {{ this.message }}
+          </p>
+        </div>
+      </div>
+      {{else}}
+
+      {{!-- 別人 --}}
+      <div class="d-flex flex-row-reverse mb-3">
+        {{!-- avatar --}}
+        <a href="/users/{{ this.User.id }}/tweets" style="">
+          <img src="{{ this.User.avatar }}"
+            onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
+            style="border-radius: 0.7em;height: 10vh;width: 10vh;object-fit: cover;">
+        </a>
+        {{!-- account --}}
+        <div style="color:#313c4b;width:25vw" class="ms-4">
+          <div class="d-flex ">
+            <p class="fs-5 me-3 mb-0"><strong>{{ this.User.name }}</strong></p>
+            <p class="mb-0" style="color: #313c4b84;margin-top:0.1em;">{{ this.User.account }}</p>
+            <p class="mb-0" style="color: #313c4b84;margin:0.42em 0 0 0.5em;font-size:smaller">{{momentCH
+              this.createdAt}}</p>
+          </div>
+          <p class="mt-1"
+            style="word-wrap:break-word; font-size: small;color:white;background-color: #484848c6;height:auto;border-radius: 0.7em;padding:1em;">
+            {{ this.message }}
+          </p>
+        </div>
+      </div>
+      {{/if}}
+      {{/each}}
+
+    </div>
+  </div>
+</div>
