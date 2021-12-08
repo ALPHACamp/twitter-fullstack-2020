@@ -109,6 +109,7 @@ module.exports = (app, passport) => {
     app.get('/api/users/:id', userController.getUserApi)
 
     // app.put('/api/users/:id', upload.single('avatar'), userController.putUserApi)
-    app.put('/api/users/:id', upload.array('avatar', 12), userController.putUserApi)
+    const imageData = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }])
+    app.put('/api/users/:id', imageData, userController.putUserApi)
 
 }

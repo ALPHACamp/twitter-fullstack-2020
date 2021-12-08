@@ -119,9 +119,10 @@
 
             {{!-- 編輯個人資料圖片 --}}
 
-            <img class="image-fluid" src="{{user.cover}}" style="position:relative; width:100%; height:160px;">
+            <img class="image-fluid" src="{{user.cover}}" id="coverImage"
+              style="position:relative; width:100%; height:160px;">
             {{!-- 更換背景圖相機 icon --}}
-            <input type="file" id="cover" name="avatar" hidden>
+            <input type="file" id="cover" name="cover" hidden>
             <label for="cover">
               <i class="fas fa-camera-retro text-light fa-lg" style="position:relative; left:250px; top: -100px"></i>
             </label>
@@ -297,11 +298,14 @@
 
 <script>
   const avatar = document.querySelector('#avatar')
+  const cover = document.querySelector('#cover')
   console.log(avatar)
   const avatarImage = document.querySelector('#avatarImage')
+  const coverImage = document.querySelector('#coverImage')
   console.log(avatarImage)
 
   avatar.addEventListener("change", handleFiles, false);
+  cover.addEventListener("change", handleFiles2, false);
 
   function handleFiles() {
     const file = this.files[0];//將上傳檔案轉換為base64字串
@@ -315,5 +319,19 @@
     // 使用 readAsDataURL 將圖片轉成 Base64
     fr.readAsDataURL(file);    /* now you can work with the file list */
   }
+
+  function handleFiles2() {
+    const file = this.files[0];//將上傳檔案轉換為base64字串
+
+    const fr = new FileReader();//建立FileReader物件
+    fr.onload = function (e) {
+      console.log(e.target.result)
+      coverImage.src = e.target.result
+    };
+
+    // 使用 readAsDataURL 將圖片轉成 Base64
+    fr.readAsDataURL(file);    /* now you can work with the file list */
+  }
+
 
 </script>

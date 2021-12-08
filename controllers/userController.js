@@ -9,7 +9,8 @@ const Like = db.Like
 const moment = require('moment')
 const Reply = db.Reply
 const fs = require('fs')
-
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = '244d29ed093c092'
 
 const userController = {
     getSignUpPage: (req, res) => {
@@ -403,71 +404,75 @@ const userController = {
     },
 
     putUserApi: (req, res) => {
-        console.log('==============================')
-        // const userId = req.params.id
-        // console.log(userId)
-        // console.log(req.body)
-        // console.log(req.file)
-        // console.log(req.files)
-        console.log('==============================')
         const { files } = req
-        console.log(files)
-        if (files.length > 0) {
-            const avatar = files[1]
-            const cover = files[0]
-            if (avatar) {
-                fs.readFile(avatar.path, (err, data) => {
-                    if (err) console.log('Error: ', err)
-                    fs.writeFile(`upload/${avatar.originalname}`, data, () => {
-                        return User.findByPk(req.params.id)
-                            .then(user => {
-                                user.update({
-                                    name: req.body.name,
-                                    avatar: avatar ? `/upload/${avatar.originalname}` : user.avatar,
-                                    cover: req.body.cover,
-                                    introduction: req.body.introduction
-                                }).then(user => {
-                                    // return res.json({ status: 'success', data: user })
-                                    console.log('成功寫入 avatar')
-                                    // return res.redirect('back')
-                                }).catch(error => {
-                                    console.log(error)
-                                })
-                            })
+        const userId = user.id
+        console.log(req.user.id)
+        let cover = ''
+        let avatar = ''
+        if (files) {
+            cover = files.cover
+            avatar = files.avatar
+        }
+        if (cover && avatar) {
+            console.log('封面跟頭貼都有檔案')
+            imgur.setClientID(IMGUR_CLIENT_ID)
+            imgur.upload(cover[0].path, (err, imgCover) => {
+                if (avatar) {
+                    imgur.upload(avatar[0].path, async (err, imgAvr) => {
+                        const user = await User.findByPk(req.params.id)
+                        await user.update({
+                            cover: cover[0] ? imgCover.data.link : user.cover,
+                            avatar: avatar[0] ? imgAvr.data.link : user.avatar,
+                            name: user.name,
+                            introduction: user.introduction ? user.introduction : ''
+                        })
+                        return res.redirect('back')
                     })
+                }
+            })
+        } else if (cover) { // 載入 cover
+            console.log('封面有檔案')
+            imgur.setClientID(IMGUR_CLIENT_ID)
+            imgur.upload(cover[0].path, async (err, imgCover) => {
+                const user = await User.findByPk(req.params.id)
+                await user.update({
+                    cover: cover[0] ? imgCover.data.link : user.cover,
+                    avatar: user.avatar,
+                    name: user.name,
+                    introduction: user.introduction ? user.introduction : ''
+                }).then(user => {
+                    console.log(user)
+                }).catch(error => {
+                    console.log(error)
                 })
-            }
-
-            if (cover) {
-                fs.readFile(cover.path, (err, data) => {
-                    if (err) console.log('Error: ', err)
-                    fs.writeFile(`upload/${cover.originalname}`, data, () => {
-                        return User.findByPk(req.params.id)
-                            .then(user => {
-                                user.update({
-                                    name: req.body.name,
-                                    avatar: req.body.avatar,
-                                    cover: cover ? `/upload/${cover.originalname}` : user.cover,
-                                    introduction: req.body.introduction
-                                }).then(user => {
-                                    // return res.json({ status: 'success', data: user })
-                                    console.log('成功寫入 cover')
-                                    return res.redirect('back')
-                                }).catch(error => {
-                                    console.log(error)
-                                })
-                            })
-                    })
+                return res.redirect('back')
+            })
+        } else if (avatar) { // 載入 avatar
+            console.log('頭貼都有檔案')
+            imgur.setClientID(IMGUR_CLIENT_ID)
+            imgur.upload(avatar[0].path, async (err, imgAvr) => {
+                const user = await User.findByPk(req.params.id)
+                console.log(imgAvr)
+                await user.update({
+                    cover: user.cover,
+                    avatar: avatar[0] ? imgAvr.data.link : user.avatar,
+                    name: user.name,
+                    introduction: user.introduction ? user.introduction : ''
+                }).then(user => {
+                    console.log(user)
+                }).catch(error => {
+                    console.log(error)
                 })
-            }
-
+                return res.redirect('back')
+            })
         } else {
+            console.log('完全沒有檔案')
             return User.findByPk(req.params.id)
                 .then(user => {
                     user.update({
                         name: req.body.name,
                         avatar: user.avatar,
-                        cover: req.body.cover,
+                        cover: user.cover,
                         introduction: req.body.introduction
                     }).then(user => {
                         // return res.json({ status: 'success', data: user })
@@ -476,8 +481,10 @@ const userController = {
                         console.log(error)
                     })
                 })
+
         }
-    }
+    },
+
 
 
 
