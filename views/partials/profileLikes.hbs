@@ -2,7 +2,7 @@
   <a><i class='back-arror'></i></a>
   <div class="header-text">
     <span class="name">{{user.name}}</span>
-    <span class="post-count">{{user.tweetCount}}萬 推文</span>
+    <span class="post-count">{{user.likeCount}} 喜歡</span>
   </div>
 </div>
 <div class="banner">
@@ -24,12 +24,8 @@
   <span class="at-name">@{{user.account}}</span>
   <span class="introduction">{{user.introduction}}</span>
   <div class="followship">
-    <span class="following">{{user.followingCount}} 個
-      <a href="/users/{{user.id}}/followings">跟隨中</a>
-    </span>
-    <span class="follower">{{user.followerCount}}萬 位
-      <a href="/users/{{user.id}}/followers">跟隨者</a>
-    </span>
+    <span class="following">{{user.followingCount}} 個<a href="/users/{{user.id}}/followings">跟隨中</a></span>
+    <span class="follower">{{user.followerCount}} 位<a href="/users/{{user.id}}/followers">跟隨者</a></span>
   </div>
 </div>
 <div class="paginator">
@@ -50,9 +46,9 @@
         <span class="at-name ellipsis">@{{../user.account}}</span>
         <span class="timer ellipsis">{{moment ../user.createdAt}}</span>
       </a>
-      <button type="button" class="content" id="content">
+      <a href="/tweets/{{this.id}}" class="content" id="content">
         {{this.description}}
-      </button>
+      </a>
       <div class="action">
         <button type="button" class="commenting" data-tweetId="{{this.id}}">
           <i class='comment commenting'></i>

@@ -2,7 +2,7 @@
   <a><i class='back-arror'></i></a>
   <div class="header-text">
     <span class="name">{{user.name}}</span>
-    <span class="post-count">{{user.tweetCount}} 推文</span>
+    <span class="post-count">{{user.followingCount}} 正在跟隨</span>
   </div>
 </div>
 
@@ -16,7 +16,7 @@
   {{#each followings}}
   <div class="follower">
     <a>
-      <img class="thumbnail" src="/icons/avatar.svg" alt="">
+      <img class="thumbnail" src="{{this.avatar}}" alt="">
     </a>
     <div class="followerinfo">
       <a class="followeruser">

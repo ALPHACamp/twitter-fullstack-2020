@@ -51,7 +51,7 @@ const userController = {
         ],
         raw: true
       })
-    return user
+      return user
     } catch (err) {
       console.error(err)
     }
@@ -168,28 +168,40 @@ const userController = {
 
   getUserFollowers: async (req, res) => {
     try {
-      const UserId = Number(req.params.userId)
-      let followers = await User.findAll({
-        where: { id: UserId },
+      const userId = Number(req.params.userId)
+      const followship = await User.findByPk(userId, {
         attributes: [],
         include: [
           {
             model: User,
             as: 'Followers',
-            attributes: ['id', 'name', 'avatar', 'introduction', 'account'],
+            attributes: [
+              'id',
+              'name',
+              'avatar',
+              'introduction',
+              'account',
+              [
+                sequelize.literal(
+                  `(SELECT COUNT(*) FROM followships WHERE followships.followingId = Followers.id AND followships.followerId = ${userId} LIMIT 1)`
+                ),
+                'isFollowed'
+              ]
+            ],
             require: false
           }
         ]
       })
+      let followers = followship.toJSON().Followers
 
-      followers = followers[0].dataValues.Followers.map((follower) => ({
+      followers = followers.map((follower) => ({
         id: follower.id,
         name: follower.name,
         avatar: follower.avatar,
         introduction: follower.introduction,
         account: follower.account,
         followshipCreatedAt: follower.Followship.createdAt,
-        isFollowed: follower.Followship.followerId === UserId
+        isFollowed: follower.isFollowed
       }))
 
       followers = followers.sort(
