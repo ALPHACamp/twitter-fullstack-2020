@@ -134,9 +134,9 @@
           </div>
 
           <div class="edit-avatar">
-            <img src="/icons/avatar-lg.svg" alt="" id="modal-edit-avatar">
+            <img src="/icons/avatar.svg" alt="" id="modal-edit-avatar">
             <input type="file" class="d-none" id="avatar" name="avatar"
-              value="{{#if User.avatar}}{{User.avatar}}{{else}}/icons/avatar-lg.svg{{/if}}"
+              value="{{#if User.avatar}}{{User.avatar}}{{else}}/icons/avatar.svg{{/if}}"
               onchange="document.querySelector('#modal-edit-avatar').src=window.URL.createObjectURL(this.files[0]);">
             <a>
               <input type="button" class="camera" onclick="document.querySelector('#avatar').click();">
