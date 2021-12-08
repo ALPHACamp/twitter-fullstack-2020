@@ -4,31 +4,31 @@
       <i class='ac-icon login'></i>
       <div class="title">建立你的帳號</div>
     </div>
-    <form action="/signup" method="POST" style="width: 540px;">
+    <form action="/signup" method="POST">
 
       <div class="edit-text">
         <label for="account">帳號</label>
-        <input type="text" name="account" id="account" required value="test">
+        <input type="text" name="account" id="account" minlength="4" required value="{{account}}">
       </div>
 
       <div class="edit-text">
         <label for="name">名稱</label>
-        <input type="text" name="name" id="name" maxlength="50" required value="test">
+        <input type="text" name="name" id="name" maxlength="50" required value="{{name}}">
       </div>
 
       <div class="edit-text">
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" required value="test@example.com">
+        <input type="email" name="email" id="email" required value="{{email}}">
       </div>
 
       <div class="edit-text">
         <label for="password">密碼</label>
-        <input type="password" name="password" id="password" required value="test">
+        <input type="password" name="password" id="password" minlength="4" required>
       </div>
 
       <div class="edit-text">
         <label for="checkPassword">密碼確認</label>
-        <input type="password" name="checkPassword" id="checkPassword" required>
+        <input type="password" name="checkPassword" id="checkPassword" minlength="4" required>
       </div>
 
       <button type="submit" class="btn-fill">註冊</button>
