@@ -52,7 +52,7 @@
     <div class="postcontent">
       <a class="postuser" href="/users/{{../user.id}}/tweets">
         <span class="name ellipsis">{{../user.name}}</span>
-        <span class="at-name ellipsis">@{{this.account}}</span>
+        <span class="at-name ellipsis">@{{../user.account}}</span>
         <span class="timer ellipsis">{{moment this.createdAt}}</span>
       </a>
       <a href="/tweets/{{this.id}}" class="content" id="content">
