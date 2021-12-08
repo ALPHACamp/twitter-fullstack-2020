@@ -180,3 +180,19 @@ img.avatar.large {
 .introduction.follower-body {
   color: #657786;
 }
+
+.icon-outline {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #FF6600;
+  background: #FFFFFF;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.fa-envelope {
+  color:#FF6600;
+}

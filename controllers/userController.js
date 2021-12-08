@@ -117,12 +117,14 @@ const userController = {
   },
   //使用者個人資料頁面
   getUserTweets: (req, res) => {
+    const loginUser = helpers.getUser(req)
     return User.findByPk(req.params.userId, {
       include: Tweet
     })
       .then(user => {
         return res.render('userTweets', {
           user: user.toJSON(),
+          loginUser
         })
       })
   },

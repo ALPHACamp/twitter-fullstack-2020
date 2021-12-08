@@ -11,7 +11,7 @@
           </a>
         </li>
         <li class="nav-item py-2">
-          <a class="nav-link active" href="/users/{{user.id}}/tweets">
+          <a class="nav-link active" href="/users/{{loginUser.id}}/tweets">
             <i class="far fa-user"></i>
             <span class="ml-3">個人資料</span>
           </a>
@@ -53,24 +53,30 @@
     {{!-- user-photos --}}
     <div class="image-wrapper mb-4">
       {{!-- cover --}}
-      <div class="cover-wrapper" id="cover-wrapper">
+      <div class="cover-wrapper">
         {{#if user.cover}}
-        <img class="cover" id="current-cover" src="{{ user.cover }}" alt="">
+        <img class="cover" src="{{ user.cover }}" alt="">
         {{ else }}
-        <div class="cover none" id="current-cover"></div>
+        <div class="cover none"></div>
         {{/if}}
       </div>
       {{!-- avatar --}}
-      <div class="avatar-wrapper" id="avatar-wrapper">
+      <div class="avatar-wrapper">
         {{#if user.avatar }}
-        <img class="avatar large" id="current-avatar" src="{{ user.avatar }}">
+        <img class="avatar large" src="{{ user.avatar }}">
         {{else}}
-        <div class="avatar-none-large" id="current-avatar"></div>
+        <div class="avatar-none-large"></div>
         {{/if}}
       </div>
       {{!-- edit-user-button --}}
       <div class="d-flex justify-content-end mt-1 pr-1">
-        <button type="button" class="btn btn-outline" data-toggle="modal" data-target="#exampleModal">
+        {{#ifCond loginUser.id user.id }}
+        {{else}}
+        <div class="icon-outline pt-1">
+          <a href="{{ user.email }}"><i class="far fa-envelope"></i></a>
+        </div>
+        {{/ifCond}}
+        <button type="button" class="btn btn-outline ml-2" data-toggle="modal" data-target="#exampleModal">
           編輯個人資料
         </button>
       </div>
