@@ -71,27 +71,6 @@ const tweetController = {
       })
   },
 
-  // test: 一般使用者首頁只渲染人氣user
-  // getTweets: (req, res) => {
-  //   // 渲染首頁右邊人氣user畫面
-  //   return User.findAll({
-  //     include: [
-  //       {model: User, as: 'Followers'}
-  //     ]
-  //   })
-  //     .then( users => {
-  //       console.log(users[0])
-  //       users = users.map( user => ({
-  //         ...user.dataValues,
-  //         FollowerCount: user.Followers.length,
-  //         isFollowed: req.user.Followings.map(f => f.id).includes(user.id)
-  //       }))
-  //       // console.log(users[2])
-  //       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-  //       return res.render('tweets', { users })
-  //   })
-  // },
-
   //前台瀏覽個別推文
   getTweet: (req, res) => {
     return Tweet.findByPk(req.params.id, {
