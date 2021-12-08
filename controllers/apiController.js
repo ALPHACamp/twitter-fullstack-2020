@@ -22,8 +22,7 @@ const apiController = {
       return res.json({ status: 'error', message: err })
     }
   },
-
-  postUser: async (req, res, callback) => {
+  postUser: async (req, res) => {
     try {
       const { userId } = req.params
       
@@ -44,12 +43,12 @@ const apiController = {
       }
      
       if (name.length > 50) {
-        return callback({ status: 'error', message: 'larger length' })
+        return callback({ status: 'error', message: 'exceed length limit' })
       }
      
       if (introduction) {
         if (introduction.length > 140) {
-          return callback({ status: 'error', message: 'larger length' })
+          return callback({ status: 'error', message: 'exceed length limit' })
         }
       }
       

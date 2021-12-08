@@ -45,6 +45,10 @@ html, body {
   border-radius: 100px;
 }
 
+.button-save {
+  line-height: 1.125rem;
+}
+
 .button-follow {
   padding: 5px 15px;
   background: transparent;
@@ -523,7 +527,7 @@ form .sign-in {
   position: relative;
 }
 
-.input-setting > input {
+.input-setting > input, .input-setting > textarea {
   height: 52px;
   padding-top: 24px;
   font-size: 19px;
@@ -532,6 +536,11 @@ form .sign-in {
   border: 0;
   border-bottom: 3px solid #657786;
   border-radius: 4px 4px 0px 0px;
+}
+
+.input-setting > textarea {
+  height: auto;
+  resize: none;
 }
 
 .input-setting > label {
@@ -553,4 +562,33 @@ form .sign-in {
 
 .input-prepend + input {
   padding-left: 32px;
+}
+
+#profileModal .modal-content {
+  border-radius: 14px;
+}
+
+.tooltip-length {
+  font-size: 15px;
+  font-weight: 500;
+  color: #657786;
+  text-align: right;
+}
+
+#coverFile {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#avatarFile {
+  position: absolute;
+  bottom: 0;
+  left: 82px;
+  transform: translate(-50%, 70%);
+}
+
+#coverFile:hover, #avatarFile:hover {
+  cursor: pointer;
 }
