@@ -17,7 +17,7 @@ const userController = {
 
   signUp: (req, res) => {
     if (!req.body.email || !req.body.name || !req.body.account || !req.body.password) {
-      res.flash('error_msg', '所有欄位皆為必填')
+      req.flash('error_msg', '所有欄位皆為必填')
       res.redirect('signup')
     }
     if (req.body.checkPassword !== req.body.password) {
