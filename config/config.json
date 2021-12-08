@@ -4,7 +4,8 @@
     "password": "rootpass",
     "database": "ac_twitter_workspace",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "operatorsAliases": false
   },
   "test": {
     "username": "root",
@@ -12,12 +13,14 @@
     "database": "ac_twitter_workspace_test",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "logging": false
+    "logging": false,
+    "operatorsAliases": false
   },
   "production": {
     "use_env_variable": "CLEARDB_DATABASE_URL",
     "dialect": "postgres",
     "protocol": "postgres",
+    "operatorsAliases": false,
     "dialectOptions": {
       "ssl": {
         "rejectUnauthorized": false
@@ -29,6 +32,7 @@
     "database": "ac_twitter_workspace_test",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "logging": false
+    "logging": false,
+    "operatorsAliases": false
   }
 }
