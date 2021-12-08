@@ -90,7 +90,8 @@ const userController = {
         })
         .then((user) => {
           req.flash('success_messages', '更新個人資料頁成功！')
-          return res.redirect(`/users/${req.params.userId}/tweets`)
+          res.redirect(`/users/${req.params.userId}/tweets`)
+          return res.end()
         })
     } else {
       return User.findByPk(req.params.userId)
@@ -102,7 +103,6 @@ const userController = {
         })
         .then((user) => {
           req.flash('success_messages', '更新個人資料頁成功！')
-          // res.redirect(`/users/${req.params.userId}/tweets`)
           return res.end()
         })
     }
