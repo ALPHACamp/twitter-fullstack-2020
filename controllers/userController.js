@@ -20,31 +20,31 @@ const userController = {
           'cover',
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM tweets WHERE tweets.UserId = user.id)`
+              `(SELECT COUNT(*) FROM Tweets WHERE Tweets.UserId = user.id)`
             ),
             'tweetCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM replies WHERE replies.UserId = user.id)`
+              `(SELECT COUNT(*) FROM Replies WHERE Replies.UserId = user.id)`
             ),
             'replyCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM likes WHERE likes.UserId = user.id)`
+              `(SELECT COUNT(*) FROM Likes WHERE Likes.UserId = user.id)`
             ),
             'likeCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM followships WHERE followships.followerId = user.id)`
+              `(SELECT COUNT(*) FROM Followships WHERE Followships.followerId = user.id)`
             ),
             'followingCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM followships WHERE followships.followingId = user.id)`
+              `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = user.id)`
             ),
             'followerCount'
           ]
@@ -68,19 +68,19 @@ const userController = {
           'createdAt',
           [
             sequelize.literal(
-              '(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'
+              '(SELECT COUNT(*) FROM Replies WHERE Replies.TweetId = Tweet.id)'
             ),
             'replyCount'
           ],
           [
             sequelize.literal(
-              '(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'
+              '(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id)'
             ),
             'likeCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id AND likes.UserId = ${userId} LIMIT 1)`
+              `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${userId} LIMIT 1)`
             ),
             'isLiked'
           ]
@@ -105,7 +105,7 @@ const userController = {
           'createdAt',
           [
             sequelize.literal(
-              `(SELECT account FROM users WHERE users.id = reply.UserId)`
+              `(SELECT account FROM Users WHERE Users.id = Reply.UserId)`
             ),
             'account'
           ]
@@ -134,19 +134,19 @@ const userController = {
               'createdAt',
               [
                 sequelize.literal(
-                  '(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'
+                  '(SELECT COUNT(*) FROM Replies WHERE Replies.TweetId = Tweet.id)'
                 ),
                 'replyCount'
               ],
               [
                 sequelize.literal(
-                  '(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'
+                  '(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id)'
                 ),
                 'likeCount'
               ],
               [
                 sequelize.literal(
-                  `(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id AND likes.UserId = ${userId} LIMIT 1)`
+                  `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${userId} LIMIT 1)`
                 ),
                 'isLiked'
               ]
@@ -183,7 +183,7 @@ const userController = {
               'account',
               [
                 sequelize.literal(
-                  `(SELECT COUNT(*) FROM followships WHERE followships.followingId = Followers.id AND followships.followerId = ${userId} LIMIT 1)`
+                  `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = Followers.id AND Followships.followerId = ${userId} LIMIT 1)`
                 ),
                 'isFollowed'
               ]

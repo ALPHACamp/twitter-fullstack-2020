@@ -17,19 +17,19 @@ const tweetController = {
           'createdAt',
           [
             sequelize.literal(
-              '(SELECT COUNT(*) FROM replies WHERE replies.TweetId = Tweet.id)'
+              '(SELECT COUNT(*) FROM Replies WHERE Replies.TweetId = Tweet.id)'
             ),
             'replyCount'
           ],
           [
             sequelize.literal(
-              '(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'
+              '(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id)'
             ),
             'likeCount'
           ],
           [
             sequelize.literal(
-              `(SELECT likes.UserId FROM likes WHERE likes.TweetId = Tweet.id AND likes.UserId = ${userId})`
+              `(SELECT likes.UserId FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${userId})`
             ),
             'isLiked'
           ]
