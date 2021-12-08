@@ -141,7 +141,7 @@ const userController = {
       const userId = Number(req.params.userId)
       const likes = await Like.findAll({
         where: { UserId: userId },
-        attributes: [],
+        attributes: ['createdAt'],
         include: [
           {
             model: Tweet,
@@ -175,8 +175,15 @@ const userController = {
         nest: true
       })
       const tweets = likes
-        .map((like) => like.Tweet)
-        .sort((a, b) => b.createdAt - a.createdAt)
+        .map((like) => ({
+          id: like.Tweet.id,
+          description: like.Tweet.description,
+          replyCount: like.Tweet.replyCount,
+          likeCount: like.Tweet.likeCount,
+          isLiked: like.Tweet.isLiked,
+          likeCreatedAt: like.createdAt
+        }))
+        .sort((a, b) => b.likeCreatedAt - a.likeCreatedAt)
       return tweets
     } catch (err) {
       console.error(err)
