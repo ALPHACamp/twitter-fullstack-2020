@@ -27,7 +27,7 @@ const apiController = {
       const { userId } = req.params
       
       if (Number(userId) !== helpers.getUser(req).id) {
-        return callback({ status: 'error', message: 'invalid user' })
+        return res.redirect('back')
       }
       const { name, introduction } = req.body
       const { files } = req
@@ -36,22 +36,22 @@ const apiController = {
       if (files) {
         cover = files.cover
         avatar = files.avatar
-      }
+      }   
       
-      if (!name) {
-        return callback({ status: 'error', message: 'empty value' })
+        if (!name) {
+        return res.redirect('back')
       }
      
       if (name.length > 50) {
-        return callback({ status: 'error', message: 'exceed length limit' })
+        return  res.redirect('back')
       }
      
       if (introduction) {
-        if (introduction.length > 140) {
-          return callback({ status: 'error', message: 'exceed length limit' })
+        if (introduction.length > 160) {
+          return  res.redirect('back')
         }
       }
-      
+
       if (cover && avatar) {
         imgur.setClientID(IMGUR_CLIENT_ID)
         imgur.upload(cover[0].path, (err, imgCover) => {
@@ -64,7 +64,8 @@ const apiController = {
                 name: name,
                 introduction: introduction ? introduction : ''
               })
-              return callback({ status: 'success' })
+             res.redirect(200, `/users/${userId}`)
+            
             })
           }
         })
@@ -78,7 +79,7 @@ const apiController = {
             name: name,
             introduction: introduction ? introduction : ''
           })
-          return callback({ status: 'success' })
+           res.redirect(200, `/users/${userId}`)
         })
       } else if (avatar) { 
         imgur.setClientID(IMGUR_CLIENT_ID)
@@ -90,7 +91,7 @@ const apiController = {
             name: name,
             introduction: introduction ? introduction : ''
           })
-          return callback({ status: 'success' })
+            res.redirect(200, `/users/${userId}`)
         })
       } else { 
         const user = await User.findByPk(userId)
@@ -100,10 +101,10 @@ const apiController = {
           name: name,
           introduction: introduction ? introduction : ''
         })
-        return callback({ status: 'success' })
+         res.redirect(200, `/users/${userId}`)
       }
     } catch (err) {
-      return callback({ status: 'error', message: err })
+      return res.redirect('back')
     }
   }
 }

@@ -50,7 +50,7 @@ const profileForm = document.getElementById('profileForm')
 if (profileModal !== null) {
   const profileName = document.getElementById('profileName')
   const nameLength = document.getElementById('nameLength')
-
+  
   const profileIntro = document.getElementById('profileIntro')
   const introLength = document.getElementById('introLength')
 
@@ -89,8 +89,8 @@ if (profileModal !== null) {
   })
   profileIntro.addEventListener('input', e => {
     const introStrLen = profileIntro.value.length
-    introLength.textContent = `${introStrLen}/140`
-    if (introStrLen >= 140) {
+    introLength.textContent = `${introStrLen}/160`
+    if (introStrLen >= 160) {
       introLength.style.color = "red"
       introLength.classList.add('is-invalid')
     } else {
@@ -112,9 +112,4 @@ if (profileModal !== null) {
       avatarFile.style.color = "#40E0D0"
     }
   })
-}
-
-function profileSubmitButtonClick(event) {
-  profileForm.submit()
-  profileModal.hide()
 }
