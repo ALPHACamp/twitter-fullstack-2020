@@ -1,3 +1,6 @@
+
+{{!-- 我是分隔線 , 信測試檔案 --}}
+
 <div class="row" style="width:100%;">
   {{!-- navbar --}}
   <div class="col-3">
@@ -5,13 +8,13 @@
     <div class="nav-ul-wrapper">
       <ul class="nav flex-column">
         <li class="nav-item py-2">
-          <a class="nav-link active" href="#">
+          <a class="nav-link active" href="/">
             <i class="fas fa-home"></i>
             <span class="ml-3">首頁</span>
           </a>
         </li>
         <li class="nav-item py-2">
-          <a class="nav-link" href="/users/{{user.id}}/tweets">
+          <a class="nav-link" href="/users/{{ user.id }}/tweets"> 
             <i class="far fa-user"></i>
             <span class="ml-3">個人資料</span>
           </a>
@@ -56,17 +59,18 @@
         </form>
       </div>
     </div>
-    {{#each tweets}}
+
+{{!-- tweets --}}
     <div class="card">
+      {{#each tweets}}
       <div class="card-body d-flex">
-        <a href="/users/{{this.UserId}}/tweets">
-          <img class="avatar small mr-3" src="{{this.avatarImg}}">
-        </a>
+        <img class="avatar small mr-3" src="{{this.tweetsUserAvatar}}">
         <div>
-          <p class="card-title">{{this.userName}}
-            <span class="atAccount">@{{this.accountName}}•{{moment
-              this.createdAt}}</span>
+          <p class="card-title">{{this.tweetsUserName}}
+            <span class="atAccount">@{{this.tweetsUserAccount}}•{{moment
+              this.tweetsCreatedAt}}</span>
           </p>
+
           <a href="/tweets/{{this.id}}/replies" class="text-muted">
             <p class="post-text">{{this.description}}</p>
           </a>
@@ -83,9 +87,43 @@
 
         </div>
 
+          <a href="/tweets/{{this.tweetsId}}/replies" class="text-muted">
+            <p class="post-text">{{this.tweetsContent}}</p>
+          </a>
+          <div class="iconBtn d-flex">
+            <div class="commentBtn mr-3">
+              <a class="atAccount" href="#" style="text-decoration:none;">
+                <i class="far fa-comment"></i>
+                <span class="ml-2">30</span>
+              </a>
+            </div>
+
+            <div class="likeBtn">
+              {{!-- unlike tweet --}}
+              {{#if this.isLiked}}
+              <form action='/tweets/{{this.tweetsId}}/unlike' method="POST">
+                <button class="" type="submit">
+                  <i class="far fa-heart"></i>
+                  <span class="ml-2">{{this.likeTotal}}</span>
+                </button>
+              </form>
+              {{else}}
+              {{!-- Like tweet --}}
+              <form action='/tweets/{{this.tweetsId}}/like' method="POST">
+                <button class="btn" type="submit">
+                  <i class="far fa-heart"></i>
+                  <span class="ml-2">{{this.likeTotal}}</span>
+                </button>
+              </form>
+              {{/if}}
+            </div>
+          </div>
+        </div>
       </div>
+      {{/each}}
     </div>
-    {{/each}}
+    
+
   </div>
 
   {{!-- popular --}}
@@ -95,30 +133,28 @@
         Popular
       </div>
       <ul class="list-group list-group-flush">
+{{#each users}}
         <li class="list-group-item d-flex">
           <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar1.png">
+            <img class="avatar small" src="{{this.topUserAvatar}}">
           </div>
           <div class="mr-5">
-            <p class="mb-0">Pizza Hut</p>
-            <p class="atAccount">@pizzahut</p>
+            <p class="mb-0">{{this.topUserName}}</p>
+            <p class="atAccount">@{{this.topUserAccount}}</p>
           </div>
           <div class="pt-2">
-            <a class="btn py-2" href="#">正在追蹤</a>
+            {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn py-2">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/followships/{{this.id}}" method="POST">
+              <button type="submit" class="btn py-2">跟隨</button>
+            </form>
+            {{/if}}
           </div>
         </li>
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar2.png">
-          </div>
-          <div class="mr-5">
-            <p class="mb-0">MacDonald</p>
-            <p class="atAccount">@macdonald</p>
-          </div>
-          <div class="pt-2">
-            <a class="btn btn-outline py-2" href="#">追蹤</a>
-          </div>
-        </li>
+{{/each}}
       </ul>
     </div>
   </div>
