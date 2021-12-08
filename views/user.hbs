@@ -172,13 +172,13 @@
 <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content" style="width: 600px; height: 657px;">
-      <form action="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data" id="profileForm">
+      <form action="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data" id="profileForm" novalidate>
         <div class="modal-header d-flex justify-content-start">
           <button type="button" class="button-close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
           <p class="p-0 mb-0 mr-auto font-weight-bold" style="font-size: 18px; margin-left: 35px;">編輯個人資料</p>
-          <button class="button-submit button-save" type="submit">儲存</button>
+          <button class="button-submit button-save" type="submit" onclick="profileSubmitButtonClick(event)">儲存</button>
         </div>
         <div class="position-relative" style="height: 200px; margin-bottom: 75px;">
           <img class="w-100 h-100" src="{{user.cover}}" alt="" style="object-fit: cover;">

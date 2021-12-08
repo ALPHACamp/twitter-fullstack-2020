@@ -81,10 +81,10 @@ if (profileModal !== null) {
     nameLength.textContent = `${nameStrLen}/50`
     if (nameStrLen >= 50) {
       nameLength.style.color = "red"
-      profileModal.setCustomValidity('超過50字囉')
+      profileName.classList.add('is-invalid')
     } else {
       nameLength.style.color = "#657786"
-      profileModal.setCustomValidity('')
+      profileName.classList.remove('is-invalid')
     }
   })
   profileIntro.addEventListener('input', e => {
@@ -92,10 +92,10 @@ if (profileModal !== null) {
     introLength.textContent = `${introStrLen}/140`
     if (introStrLen >= 140) {
       introLength.style.color = "red"
-      profileIntro.setCustomValidity('超過140字囉')
+      introLength.classList.add('is-invalid')
     } else {
       introLength.style.color = "#657786"
-      profileIntro.setCustomValidity('')
+      introLength.classList.remove('is-invalid')
     }
   })
   coverInput.addEventListener('change', e => {

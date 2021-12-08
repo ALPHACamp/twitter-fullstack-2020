@@ -592,3 +592,9 @@ form .sign-in {
 #coverFile:hover, #avatarFile:hover {
   cursor: pointer;
 }
+
+.invalid-feedback {
+  font-size: 15px;
+  font-weight: 500;
+  text-align: right;
+}
