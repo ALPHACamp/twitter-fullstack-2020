@@ -15,7 +15,16 @@
     {{else}}
     <a><i class='btn-message'></i></a>
     <a><i class='btn-noti'></i></a>
-    <button type="button" class="btn-fill sm">正在跟隨</button>
+    {{#if this.user.isFollowed}}
+    <form action="/followships/{{this.user.id}}?_method=DELETE" method="POST">
+      <button type="submit" class="btn-fill sm">正在追蹤</button>
+    </form>
+    {{else}}
+    <form action="/followships" method="POST">
+      <input type="hidden" name="id" value="{{this.user.id}}">
+      <button type="submit" class="btn-outline sm">跟隨</button>
+    </form>
+    {{/if}}
     {{/ifCond}}
   </div>
 </div>

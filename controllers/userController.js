@@ -47,10 +47,17 @@ const userController = {
               `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id)`
             ),
             'followerCount'
+          ],
+          [
+            sequelize.literal(
+              `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id AND Followships.followerId = ${helpers.getUser(req).id} LIMIT 1)`
+            ),
+            'isFollowed'
           ]
         ],
         raw: true
       })
+      console.log(user)
       return user
     } catch (err) {
       console.error(err)
