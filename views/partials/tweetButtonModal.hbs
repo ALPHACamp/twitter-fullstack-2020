@@ -1,0 +1,60 @@
+<div class="modal fade" id="tweet-button" tabindex="-1" role="dialog" aria-labelledby="tweet-btton "
+  data-backdrop="false" style="display: none;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <hr>
+      <div class="modal-body">
+        <form action="/tweets" method="POST">
+          <div class="type-area">
+            <div class="user-pic">
+              <a href="/users/{{user.id}}/tweets">
+                <img src="{{user.avatar}}" style="width:60PX;height:60px; border-radius:100%;">
+              </a>
+            </div>
+            <div class="type-text">
+              <textarea type="text" class="form-control new-post-content" name="description" id="description-modal"
+                placeholder="有什麼新鮮事？" rows="5" maxlength="140"></textarea>
+              <div class="feedback" id="add-tweet-info"> 內容不可空白 </div>
+            </div>
+            <div class="add-button">
+              <button type="submit" class="btn button" id="add-tweet-btn">推文</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    let addTwwetButton = document.querySelector('#add-tweet-btn')
+    let descriptionModal = document.querySelector('#description-modal')
+    let infomation = document.querySelector('#add-tweet-info')
+    descriptionModal.addEventListener('input', function check(event) {
+      console.log(descriptionModal.value)
+      //console.log(descriptionModal.classList)
+      if (descriptionModal.value.length < 1) {
+        descriptionModal.classList.add("is-invalid")
+        infomation.innerText = '內容不可空白'
+      }
+      if (descriptionModal.value.length > 0) {
+        descriptionModal.classList.remove("is-invalid")
+        infomation.innerText = `${descriptionModal.value.length} / 140`
+      }
+    })
+
+    addTwwetButton.addEventListener('click', function check(event) {
+      console.log('***event.target***', event.target)
+      if (descriptionModal.value.length < 1) {
+        descriptionModal.classList.add("is-invalid")
+      }
+      if (descriptionModal.value.length > 1) {
+        descriptionModal.classList.remove("is-invalid")
+      }
+    })
+  </script>
+</div>

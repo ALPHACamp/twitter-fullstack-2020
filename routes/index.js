@@ -7,7 +7,7 @@ module.exports = (app, passport) => {
   //驗証使用者已登入
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).role === 'user') {
+      if (helpers.getUser(req).role === 'user' || !req.user) {
         return next()
       }
       return res.redirect('/admin/tweets')
@@ -63,9 +63,13 @@ module.exports = (app, passport) => {
   app.get('/users/:id/tweets', authenticated, userController.getProfile)
 
   //user推文
-  app.get('/tweets', authenticated, tweetController.getTweets)
+  // app.get('/tweets', authenticated, tweetController.getTweets)
+  app.get('/tweets', authenticated,tweetController.getTweets)
+  app.post('/tweets', authenticated,tweetController.postTweet)
+
   //user推文
   app.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
+  app.post('/tweets/:id/replies', authenticated, tweetController.postTweetReply)
 
   //user喜歡推文
   app.post('/tweets/:id/like', authenticated, userController.addLike)
