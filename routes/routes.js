@@ -48,7 +48,6 @@ router.get('/users/:userId/followers', authenticated, pageController.getUserFoll
 router.get('/users/:userId/followings', authenticated, pageController.getUserFollowings)
 // user 動作
 router.put('/users/:userId/settings', authenticated, userController.updateSettings)
-// router.put('/users/:userId/settings', authenticated, userController.updateSettings) / 重複?
 router.put('/users/:userId/update', authenticated, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.updateProfile)
 router.post('/followships', authenticated, followshipController.addFollow)
 router.delete('/followships/:userId', authenticated, followshipController.removeFollow)
