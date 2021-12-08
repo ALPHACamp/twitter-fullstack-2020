@@ -50,6 +50,7 @@ replyButton.addEventListener('click', function check(event) {
     comment.nextElementSibling.innerHTML = "內容不可為空白"
     event.preventDefault()
   }
+})
 
 const coverInput = document.querySelector('#cover-input')
 const coverWrapper = document.querySelector('#cover-wrapper')
@@ -61,8 +62,8 @@ const avatarWrapper = document.querySelector('#avatar-wrapper')
 
 
 coverInput.addEventListener('change', function showCoverPreview(event) {
-  
-  if (event.target.files.length !== 0) { 
+
+  if (event.target.files.length !== 0) {
     const src = URL.createObjectURL(event.target.files[0])
     let previewArea = document.createElement('div')
     previewArea.innerHTML = `
@@ -83,14 +84,14 @@ coverInput.addEventListener('change', function showCoverPreview(event) {
 
 
 deleteCoverBtn.addEventListener('click', function deleteCoverPreview() {
-  coverInput.value =""
+  coverInput.value = ""
   coverWrapper.lastElementChild.remove()
   currentCover.classList.remove('hide')
   deleteCoverBtn.classList.add('hide')
 })
 
 avatarInput.addEventListener('change', function showAvatarPreview(event) {
-  
+
   if (event.target.files.length !== 0) {
     const src = URL.createObjectURL(event.target.files[0])
     let previewArea = document.createElement('div')
