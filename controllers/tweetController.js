@@ -15,47 +15,82 @@ const tweetController = {
   // 登入的user是否已like過特定tweet
   // 追蹤人數最多的user前10名單
 
-  // getTweets: (req, res) => {
-  //   Tweet.findAll({
-  //     //raw: true,
-  //     //nest: true,
-  //     include: [
-  //       User
-  //     ]
-  //   }).then(tweets => {
-  //     const data = tweets.map(r => ({
-  //       ...r.dataValues,
-  //       description: r.dataValues.description,
-  //       userName: r.dataValues.User.name,
-  //       accountName: r.dataValues.User.account,
-  //       avatarImg: r.dataValues.User.avatar,
-  //     }))
-  //     console.log(data[0])
-  //     return res.render('Tweets', {
-  //       tweets: data,
-  //     })
-  //   })
-  // },
-
-  // test: 一般使用者首頁
   getTweets: (req, res) => {
-    // 渲染首頁右邊人氣user畫面
-    return User.findAll({
+    return Tweet.findAll({
+      raw: true,
+      nest: true,
+      order: [['createdAt', 'DESC']],
       include: [
-        {model: User, as: 'Followers'}
+        Reply ,
+        {model: User, include: [Like]},
+        { model: Like, include: [Tweet] }
       ]
     })
-      .then( users => {
-        users = users.map( user => ({
-          ...user.dataValues,
-          FollowerCount: user.Followers.length,
-          isFollowed: req.user.Followings.map(f => f.id).includes(user.id)
-        }))
-        // console.log(users[2])
-        users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-        return res.render('tweets', { users })
-    })
+      .then(tweets => {
+        User.findAll({
+          raw: true,
+          nest: true,
+          include: [
+            {model: User, as: 'Followers'}
+          ]
+        })
+          .then(users => {
+            tweets = tweets.map(tweet => ({
+              ...tweet,
+              tweetsUserAvatar: tweet.User.avatar,
+              tweetsUserName: tweet.User.name,
+              tweetsUserAccount: tweet.User.account,
+              tweetsCreatedAt: tweet.createdAt,
+              tweetsId: tweet.id,
+              tweetsContent: tweet.description,
+              // user的貼文回覆總數量
+              repliesTotal: tweet.Replies.length ,
+              // 判斷是否liked
+              // if tweet.like.UserId 有 req.user.id = true
+              isLiked: helpers.isMatch(tweet.Likes.UserId , req.user.id) ,
+              //likeTotal: tweet.Likes.length
+            }))
+            users = users.map(user => ({
+              ...user,
+              topUserAvatar: user.avatar,
+              topUserName: user.name,
+              topUserAccount: user.account,
+              FollowerCount: user.Followers.length,
+              isFollowed: req.user.Followings.map(f => f.id).includes(user.id)
+            }))
+            // console.log('*********')
+            // console.log('tweets.Likes:' ,tweets[0].User.Likes)
+            console.log('*********')
+            // console.log('tweet.Likes: ', tweets[0].Likes)
+            console.log('tweets.Replies: ', tweets[1].Replies)
+            console.log('*********')
+            //console.log('users: ', users[0])
+            users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+            return res.render('tweets', {tweets, users})
+          })
+      })
   },
+
+  // test: 一般使用者首頁只渲染人氣user
+  // getTweets: (req, res) => {
+  //   // 渲染首頁右邊人氣user畫面
+  //   return User.findAll({
+  //     include: [
+  //       {model: User, as: 'Followers'}
+  //     ]
+  //   })
+  //     .then( users => {
+  //       console.log(users[0])
+  //       users = users.map( user => ({
+  //         ...user.dataValues,
+  //         FollowerCount: user.Followers.length,
+  //         isFollowed: req.user.Followings.map(f => f.id).includes(user.id)
+  //       }))
+  //       // console.log(users[2])
+  //       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+  //       return res.render('tweets', { users })
+  //   })
+  // },
 
   //前台瀏覽個別推文
   getTweet: (req, res) => {
