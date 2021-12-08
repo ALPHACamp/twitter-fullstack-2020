@@ -50,6 +50,9 @@ module.exports = (app, passport) => {
   //設定使用者個人資料頁面推文與回覆路由
   app.get('/users/:userId/replies', authenticated, userController.getUserReplies)
 
+  //設定瀏覽前台帳號設定路由
+  app.get('/users/:userId/setting/edit', authenticated, userController.editSetting)
+
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
 

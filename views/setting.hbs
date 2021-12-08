@@ -5,7 +5,7 @@
     <div class="nav-ul-wrapper">
       <ul class="nav flex-column">
         <li class="nav-item py-2">
-          <a class="nav-link active" href="#">
+          <a class="nav-link" href="#">
             <i class="fas fa-home"></i>
             <span class="ml-3">首頁</span>
           </a>
@@ -17,7 +17,7 @@
           </a>
         </li>
         <li class="nav-item py-2">
-          <a class="nav-link" href="/users/{{user.id}}/setting/edit">
+          <a class="nav-link active" href="#">
             <i class="fas fa-cog"></i>
             <span class="ml-3">設定</span>
           </a>
@@ -39,49 +39,7 @@
 
   {{!-- content --}}
   <div class="col-5 content-container">
-    <div class="card border-light mb-3 ">
-      <div class="card-header"><span class="header1">首頁</span></div>
-      <div class="card-body d-flex">
-        <a href="/users/{{user.id}}/tweets">
-          <img class="avatar small mr-3" src="{{user.avatar}}">
-        </a>
-
-        <form action="/tweets" method="POST" style="width:100%;">
-          <div class="form-group">
-            <label for="tweet"></label>
-            <textarea class="form-control" id="tweet" name="tweet" rows="3">有什麼新鮮事？</textarea>
-          </div>
-          <button type="submit" class="btn">推文</button>
-        </form>
-      </div>
-    </div>
-    {{#each tweets}}
-    <div class="card">
-      <div class="card-body d-flex">
-        <a href="/users/{{this.UserId}}/tweets">
-          <img class="avatar small mr-3" src="{{this.avatarImg}}">
-        </a>
-        <div>
-          <p class="card-title">{{this.userName}}
-            <span class="atAccount">@{{this.accountName}}•{{moment
-              this.createdAt}}</span>
-          </p>
-          <a href="/tweets/{{this.id}}/replies" class="text-muted">
-            <p class="post-text">{{this.description}}</p>
-          </a>
-          <a class="atAccount" href="#" style="text-decoration:none;">
-            <i class="far fa-comment"></i>
-            <span class="ml-2">30</span>
-          </a>
-          <a class="atAccount ml-5" href="#" style="text-decoration:none;">
-            <i class="far fa-heart"></i>
-            <span class="ml-2">16</span>
-          </a>
-        </div>
-
-      </div>
-    </div>
-    {{/each}}
+    abc
   </div>
 
   {{!-- popular --}}

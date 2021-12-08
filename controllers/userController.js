@@ -66,7 +66,17 @@ const userController = {
           user: user.toJSON()
         })
       })
-  }
+  },
+  // 瀏覽帳戶設定頁面
+  editSetting: (req, res) => {
+    if (helpers.getUser(req).id !== Number(req.params.userId)) {
+      req.flash('error_messages', '你沒有檢視此頁面的權限')
+      res.redirect('back')
+    }
+    return User.findByPk(req.params.userId).then((user) => {
+      return res.render('setting', { user: user.toJSON() })
+    })
+  },
 }
 
 module.exports = userController
