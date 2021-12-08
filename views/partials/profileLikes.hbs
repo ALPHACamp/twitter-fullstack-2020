@@ -46,9 +46,9 @@
         <span class="at-name ellipsis">@{{../user.account}}</span>
         <span class="timer ellipsis">{{moment ../user.createdAt}}</span>
       </a>
-      <button type="button" class="content" id="content">
+      <a href="/tweets/{{this.id}}" class="content" id="content">
         {{this.description}}
-      </button>
+      </a>
       <div class="action">
         <button type="button" class="commenting" data-tweetId="{{this.id}}">
           <i class='comment commenting'></i>
