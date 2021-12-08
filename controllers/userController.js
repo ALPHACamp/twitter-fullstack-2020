@@ -333,6 +333,10 @@ const userController = {
         return res.render('signup', { errors, ...req.body })
       }
 
+      if (account.length < 4 || password.length < 4) {
+        return res.end()
+      }
+
       await User.create({
         account,
         name,
@@ -401,6 +405,10 @@ const userController = {
 
       if (errors.length) {
         return res.render('signup', { errors, ...req.body })
+      }
+
+      if (account.length < 4 || password.length < 4) {
+        return res.end()
       }
 
       if (password === '') {
