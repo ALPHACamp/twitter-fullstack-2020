@@ -83,7 +83,7 @@
           </a>
           <div class="d-flex justify-content-between" style="width: 150px;">
             <!-- comment -->
-            <a class="light-color action-icon {{#if this.isReplied}}isReplied{{/if}}" href="#">
+            <a class="light-color action-icon {{#if this.isReplied}}isReplied{{/if}}" data-toggle="modal" data-target="#replyModal{{this.id}}">
               <i class="far fa-comment mr-3"></i>{{this.replyCount}}
             </a>
             <!-- like -->
@@ -103,6 +103,57 @@
           </div>
         </div>
       </li>
+
+      {{!-- modal --}}
+      <div class="modal fade" id="replyModal{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-tweet">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="button-close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-title">
+              <div class="list-tweet mt-2">
+                <ul>
+                  <li class="px-3 d-flex align-items-start justify-content-start">
+                    <a>
+                      <img class="mr-3 thumbnail" src="{{../userData.avatar}}" alt="">
+                      <div class="diver ml-4 mt-2" style="width: 2px;height: 60px;background: #CCD6DD;"></div>
+                    </a>
+                    <div class="content-wrapper w-100">
+                      <div class="mb-2">
+                        <p class="font-weight-bold d-inline">{{../userData.name}}</p>
+                        <p class="light-color d-inline">@{{../userData.account}}．{{moment this.createdAt}}</p>
+                      </div>
+                      <a class="link-description">
+                        <p>{{this.description}}</p>
+                      </a>
+                      <div class="reply-target"><span class="mr-1"
+                          style="font-weight: 500; font-size: 15px;color: #657786;">回覆給</span><span
+                          class="reply-target-account"
+                          style="font-weight: 500; font-size: 15px;color: #FF6600;">@{{../userData.account}}</span>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal-body">
+              <form action="/tweets/{{this.id}}/replies" method="POST">
+                <div class="d-flex align-items-start justify-content-start mb-3">
+                  <a>
+                    <img class="mr-2 thumbnail" src="{{../user.avatar}}" alt="">
+                  </a>
+                  <textarea class="textarea-tweet w-100" id="description" name="comment" rows="6" placeholder="推你的文"
+                    maxlength="140"></textarea>
+                </div>
+                <button class="button-submit mt-2" style="float: right;" type="submit">回覆</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
       {{/each}}
     </ul>
 

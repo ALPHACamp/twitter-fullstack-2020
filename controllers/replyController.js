@@ -8,8 +8,12 @@ const replyController = {
   postReply: (req, res) => {
     const comment = req.body.comment
 
-    if (comment.trim() === '') {
+    if (!comment.length) {
       req.flash('error_msg', '回覆不可以空白')
+      return res.redirect('back')
+    }
+    if (comment.length > 140) {
+      req.flash('error_msg', '回覆不可超過140字!')
       return res.redirect('back')
     }
     return Reply.create({
@@ -33,7 +37,6 @@ const replyController = {
       ]
     })
      .then(replies => {
-       console.log(replies)
        return res.render('reply', { replies })
      })
   }
