@@ -85,7 +85,7 @@ const userController = {
             'isLiked'
           ]
         ],
-        order: ['createdAt', 'DESC'],
+        order: [['createdAt', 'DESC']],
         raw: true
       })
       return tweets

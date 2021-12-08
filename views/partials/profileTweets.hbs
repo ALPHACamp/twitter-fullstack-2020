@@ -2,20 +2,12 @@
   <a><i class='back-arror'></i></a>
   <div class="header-text">
     <span class="name">{{user.name}}</span>
-    <span class="post-count">{{user.tweetCount}}萬 推文</span>
+    <span class="post-count">{{user.tweetCount}} 推文</span>
   </div>
 </div>
 <div class="banner">
-  {{#if user.cover}}
   <img src="{{user.cover}}" alt="{{user.cover}} cover" class="cover">
-  {{else}}
-  <img src="/icons/cover.svg" class="cover">
-  {{/if}}
-  {{#if user.avatar}}
   <img src="{{user.avatar}}" alt="{{user.avatar}} avatar" class="avatar">
-  {{else}}
-  <img src="/icons/avatar-lg.svg" class="avatar">
-  {{/if}}
   <div class="buttons">
     {{#ifCond loginUser.id user.id}}
     <button type="button" class="btn-outline sm"
@@ -29,7 +21,7 @@
 </div>
 <div class="information">
   <span class="name">{{user.name}}</span>
-  <span class="at-name">{{user.account}}</span>
+  <span class="at-name">@{{user.account}}</span>
   <span class="introduction">{{user.introduction}}</span>
   <div class="followship">
     <span class="following">{{user.followingCount}} 個<a href="/users/{{user.id}}/followings">跟隨中</a></span>
@@ -51,7 +43,7 @@
     <div class="postcontent">
       <a class="postuser">
         <span class="name ellipsis">{{../user.name}}</span>
-        <span class="at-name ellipsis">{{../user.account}}</span>
+        <span class="at-name ellipsis">@{{../user.account}}</span>
         <span class="timer ellipsis">{{moment this.createdAt}}</span>
       </a>
       <button type="button" class="content" id="content">
@@ -62,12 +54,21 @@
           <i class='comment commenting'></i>
           {{this.replyCount}}
         </button>
-        <form action="">
-          <button type="button" class="liking">
+        {{#if this.isLiked}}
+        <form action="/tweets/{{this.id}}/unlike" method="POST">
+          <button type="submit" class="liking">
             <i class='like lg active'></i>
             {{this.likeCount}}
           </button>
         </form>
+        {{else}}
+        <form action="/tweets/{{this.id}}/like" method="POST">
+          <button type="submit" class="liking">
+            <i class='like'></i>
+            {{this.likeCount}}
+          </button>
+        </form>
+        {{/if}}
       </div>
     </div>
   </div>

@@ -125,7 +125,7 @@ const pageController = {
         userController.getUserProfile(req, res),
         userController.getUserFollowings(req, res)
       ])
-      return res.json({
+      return res.render('user', {
         user,
         followings,
         partial: 'profileFollowing'
@@ -133,15 +133,7 @@ const pageController = {
     } catch (err) {
       console.error(err)
     }
-  },
-
-  // getAdminTweets: async (req, res) => {
-
-  // },
-
-  // getAdminUsers: async (req, res) => {
-
-  // }
+  }
 }
 
 module.exports = pageController

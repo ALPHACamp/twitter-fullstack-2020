@@ -21,7 +21,7 @@
 </div>
 <div class="information">
   <span class="name">{{user.name}}</span>
-  <span class="at-name">{{user.account}}</span>
+  <span class="at-name">@{{user.account}}</span>
   <span class="introduction">{{user.introduction}}</span>
   <div class="followship">
     <span class="following">{{user.followingCount}} 個
@@ -42,12 +42,12 @@
   {{#each tweets}}
   <div class="tweet">
     <a>
-      <img class="thumbnail" src="/icons/avatar.svg" alt="">
+      <img class="thumbnail" src="{{../user.avatar}}" alt="">
     </a>
     <div class="postcontent">
       <a class="postuser">
         <span class="name ellipsis">{{../user.name}}</span>
-        <span class="at-name ellipsis">{{../user.account}}</span>
+        <span class="at-name ellipsis">@{{../user.account}}</span>
         <span class="timer ellipsis">{{moment ../user.createdAt}}</span>
       </a>
       <button type="button" class="content" id="content">
@@ -58,10 +58,21 @@
           <i class='comment commenting'></i>
           {{this.replyCount}}
         </button>
-        <button type="button" class="liking active">
-          <i class='like lg active'></i>
-          {{this.likeCount}}
-        </button>
+        {{#if this.isLiked}}
+        <form action="/tweets/{{this.id}}/unlike" method="POST">
+          <button type="submit" class="liking">
+            <i class='like lg active'></i>
+            {{this.likeCount}}
+          </button>
+        </form>
+        {{else}}
+        <form action="/tweets/{{this.id}}/like" method="POST">
+          <button type="submit" class="liking">
+            <i class='like'></i>
+            {{this.likeCount}}
+          </button>
+        </form>
+        {{/if}}
       </div>
     </div>
   </div>

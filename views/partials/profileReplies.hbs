@@ -21,15 +21,11 @@
 </div>
 <div class="information">
   <span class="name">{{user.name}}</span>
-  <span class="at-name">{{user.account}}</span>
+  <span class="at-name">@{{user.account}}</span>
   <span class="introduction">{{user.introduction}}</span>
   <div class="followship">
-    <span class="following">{{user.followingCount}} 個
-      <a href="/users/{{user.id}}/followings">跟隨中</a>
-    </span>
-    <span class="follower">{{user.followerCount}}萬 位
-      <a href="/users/{{user.id}}/followers">跟隨者</a>
-    </span>
+    <span class="following">{{user.followingCount}} 個<a href="/users/{{user.id}}/followings">跟隨中</a></span>
+    <span class="follower">{{user.followerCount}} 位<a href="/users/{{user.id}}/followers">跟隨者</a></span>
   </div>
 </div>
 <div class="paginator">
@@ -42,16 +38,16 @@
   {{#each replies}}
   <div class="tweet profileTweet">
     <div>
-      <img class="thumbnail" src="/icons/avatar.svg" alt="">
+      <img class="thumbnail" src="{{../user.avatar}}" alt="">
     </div>
     <div class="postcontent">
       <div class="postuser">
         <span class="name ellipsis">{{../user.name}}</span>
-        <span class="at-name ellipsis">{{../user.account}}</span>
+        <span class="at-name ellipsis">@{{../user.account}}</span>
         <span class="timer ellipsis">{{moment this.createdAt}}</span>
       </div>
       <div class="replyto">回覆
-        <span class="at-name">@{{this.Tweet.User.account}}</span>
+        <span class="at-name">@{{this.account}}</span>
       </div>
       <button type="button" class="content" id="content">
         {{this.comment}}
