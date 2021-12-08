@@ -125,7 +125,7 @@ const pageController = {
         userController.getUserProfile(req, res),
         userController.getUserFollowings(req, res)
       ])
-      return res.render('user', {
+      return res.json({
         user,
         followings,
         partial: 'profileFollowing'

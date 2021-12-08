@@ -224,8 +224,14 @@ const userController = {
         avatar: following.avatar,
         introduction: following.introduction,
         account: following.account,
-        followshipCreatedAt: following.Followship.createdAt
+        followshipCreatedAt: following.Followship.createdAt,
+        isFollowed: following.Followship.followerId === UserId
       }))
+
+      followings = followings.sort(
+        (a, b) => b.followshipCreatedAt - a.followshipCreatedAt
+      )
+
       return followings
     } catch (err) {
       console.error(err)
