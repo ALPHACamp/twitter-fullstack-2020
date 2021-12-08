@@ -179,10 +179,11 @@ const userController = {
 
 
 
-                // console.log(tweets)
+                console.log(tweets)
                 // console.log('==============================')
                 // console.log(replies)
                 return res.render('user', { tweets, users })
+
             }).catch(error => {
                 console.log(error)
             })
