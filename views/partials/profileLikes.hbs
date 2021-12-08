@@ -46,11 +46,11 @@
 
   {{#each tweets}}
   <div class="tweet">
-    <a>
+    <a href="/users/{{../user.id}}/tweets">
       <img class="thumbnail" src="{{../user.avatar}}" alt="">
     </a>
     <div class="postcontent">
-      <a class="postuser">
+      <a class="postuser" href="/users/{{../user.id}}/tweets">
         <span class="name ellipsis">{{../user.name}}</span>
         <span class="at-name ellipsis">@{{../user.account}}</span>
         <span class="timer ellipsis">{{moment ../user.createdAt}}</span>

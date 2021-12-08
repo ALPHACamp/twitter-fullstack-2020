@@ -6,8 +6,8 @@
   </div>
 </div>
 <div class="banner">
-  <img src="{{user.cover}}" alt="{{user.cover}} cover" class="cover">
-  <img src="{{user.avatar}}" alt="{{user.avatar}} avatar" class="avatar">
+  <img src="{{user.cover}}" alt="cover" class="cover">
+  <img src="{{user.avatar}}" alt="avatar" class="avatar">
   <div class="buttons">
     {{#ifCond loginUser.id user.id}}
     <button type="button" class="btn-outline sm"
@@ -46,11 +46,11 @@
 
   {{#each tweets}}
   <div class="tweet">
-    <a>
+    <a href="/users/{{../user.id}}/tweets">
       <img class="thumbnail" src="{{../user.avatar}}" alt="">
     </a>
     <div class="postcontent">
-      <a class="postuser">
+      <a class="postuser" href="/users/{{../user.id}}/tweets">
         <span class="name ellipsis">{{../user.name}}</span>
         <span class="at-name ellipsis">@{{../user.account}}</span>
         <span class="timer ellipsis">{{moment this.createdAt}}</span>
