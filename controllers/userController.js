@@ -25,6 +25,18 @@ const userController = {
         ],
         [
           sequelize.literal(
+            `(SELECT COUNT(*) FROM replies WHERE replies.UserId = user.id)`
+          ),
+          'replyCount'
+        ],
+        [
+          sequelize.literal(
+            `(SELECT COUNT(*) FROM likes WHERE likes.UserId = user.id)`
+          ),
+          'likeCount'
+        ],
+        [
+          sequelize.literal(
             `(SELECT COUNT(*) FROM followships WHERE followships.followerId = user.id)`
           ),
           'followingCount'
@@ -43,9 +55,9 @@ const userController = {
 
   getUserTweets: async (req, res) => {
     try {
-      const UserId = Number(req.params.userId)
+      const userId = Number(req.params.userId)
       const tweets = await Tweet.findAll({
-        where: { UserId },
+        where: { UserId: userId },
         attributes: [
           'id',
           'description',
@@ -61,11 +73,16 @@ const userController = {
               '(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id)'
             ),
             'likeCount'
+          ],
+          [
+            sequelize.literal(
+              `(SELECT COUNT(*) FROM likes WHERE likes.TweetId = Tweet.id AND likes.UserId = ${userId} LIMIT 1)`
+            ),
+            'isLiked'
           ]
         ],
         order: [['createdAt', 'DESC']],
-        raw: true,
-        nest: true
+        raw: true
       })
       return tweets
     } catch (err) {
@@ -75,23 +92,22 @@ const userController = {
 
   getUserReplies: async (req, res) => {
     try {
-      const UserId = Number(req.params.userId)
+      const userId = Number(req.params.userId)
       const replies = await Reply.findAll({
-        where: { UserId },
-        attributes: ['id', 'comment', 'createdAt'],
-        // 不熟 sequelize 待優化，邏輯：reply -> tweet -> user -> account(field)
-        include: [
-          {
-            model: Tweet,
-            attributes: [],
-            include: [
-              { model: User, attributes: ['id', 'account'], require: false }
-            ]
-          }
+        where: { UserId: userId },
+        attributes: [
+          'id',
+          'comment',
+          'createdAt',
+          [
+            sequelize.literal(
+              `(SELECT account FROM users WHERE users.id = reply.UserId)`
+            ),
+            'account'
+          ]
         ],
         order: [['createdAt', 'DESC']],
-        raw: true,
-        nest: true
+        raw: true
       })
       return replies
     } catch (err) {
@@ -128,11 +144,12 @@ const userController = {
             require: false
           }
         ],
-        order: [['createdAt', 'DESC']],
         raw: true,
         nest: true
       })
-      const tweets = likes.map((like) => like.Tweet)
+      const tweets = likes
+        .map((like) => like.Tweet)
+        .sort((a, b) => b.createdAt - a.createdAt)
       return tweets
     } catch (err) {
       console.error(err)
