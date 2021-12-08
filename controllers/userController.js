@@ -20,31 +20,31 @@ const userController = {
           'cover',
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM Tweets WHERE Tweets.UserId = user.id)`
+              `(SELECT COUNT(*) FROM Tweets WHERE Tweets.UserId = User.id)`
             ),
             'tweetCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM Replies WHERE Replies.UserId = user.id)`
+              `(SELECT COUNT(*) FROM Replies WHERE Replies.UserId = User.id)`
             ),
             'replyCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM Likes WHERE Likes.UserId = user.id)`
+              `(SELECT COUNT(*) FROM Likes WHERE Likes.UserId = User.id)`
             ),
             'likeCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM Followships WHERE Followships.followerId = user.id)`
+              `(SELECT COUNT(*) FROM Followships WHERE Followships.followerId = User.id)`
             ),
             'followingCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = user.id)`
+              `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id)`
             ),
             'followerCount'
           ]
