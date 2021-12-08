@@ -2,6 +2,8 @@ const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const passport = require('passport')
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 
 module.exports = (app, passport) => {
 
@@ -106,6 +108,7 @@ module.exports = (app, passport) => {
 
     app.get('/api/users/:id', userController.getUserApi)
 
-    app.put('/api/users/:id', userController.putUserApi)
+    // app.put('/api/users/:id', upload.single('avatar'), userController.putUserApi)
+    app.put('/api/users/:id', upload.array('avatar', 12), userController.putUserApi)
 
 }

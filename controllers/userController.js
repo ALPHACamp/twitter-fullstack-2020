@@ -8,7 +8,7 @@ const Tweet = db.Tweet
 const Like = db.Like
 const moment = require('moment')
 const Reply = db.Reply
-
+const fs = require('fs')
 
 
 const userController = {
@@ -405,28 +405,79 @@ const userController = {
 
     putUserApi: (req, res) => {
         console.log('==============================')
-        const userId = req.params.id
-        console.log(userId)
-        console.log(req.body)
+        // const userId = req.params.id
+        // console.log(userId)
+        // console.log(req.body)
+        // console.log(req.file)
+        // console.log(req.files)
         console.log('==============================')
-        User.findByPk(userId)
-            .then(user => {
-                console.log(user)
-                user.update({
-                    name: req.body.name,
-                    avatar: req.body.avatar,
-                    cover: req.body.cover,
-                    introduction: req.body.introduction
-                }).then(user => {
-                    return res.json({ status: 'success', data: user })
-                }).catch(error => {
-                    console.log(error)
+        const { files } = req
+        console.log(files)
+        if (files.length > 0) {
+            const avatar = files[1]
+            const cover = files[0]
+            if (avatar) {
+                fs.readFile(avatar.path, (err, data) => {
+                    if (err) console.log('Error: ', err)
+                    fs.writeFile(`upload/${avatar.originalname}`, data, () => {
+                        return User.findByPk(req.params.id)
+                            .then(user => {
+                                user.update({
+                                    name: req.body.name,
+                                    avatar: avatar ? `/upload/${avatar.originalname}` : user.avatar,
+                                    cover: req.body.cover,
+                                    introduction: req.body.introduction
+                                }).then(user => {
+                                    // return res.json({ status: 'success', data: user })
+                                    console.log('成功寫入 avatar')
+                                    // return res.redirect('back')
+                                }).catch(error => {
+                                    console.log(error)
+                                })
+                            })
+                    })
                 })
+            }
 
-            })
-            .catch(error => {
-                console.log(error)
-            })
+            if (cover) {
+                fs.readFile(cover.path, (err, data) => {
+                    if (err) console.log('Error: ', err)
+                    fs.writeFile(`upload/${cover.originalname}`, data, () => {
+                        return User.findByPk(req.params.id)
+                            .then(user => {
+                                user.update({
+                                    name: req.body.name,
+                                    avatar: req.body.avatar,
+                                    cover: cover ? `/upload/${cover.originalname}` : user.cover,
+                                    introduction: req.body.introduction
+                                }).then(user => {
+                                    // return res.json({ status: 'success', data: user })
+                                    console.log('成功寫入 cover')
+                                    return res.redirect('back')
+                                }).catch(error => {
+                                    console.log(error)
+                                })
+                            })
+                    })
+                })
+            }
+
+        } else {
+            return User.findByPk(req.params.id)
+                .then(user => {
+                    user.update({
+                        name: req.body.name,
+                        avatar: user.avatar,
+                        cover: req.body.cover,
+                        introduction: req.body.introduction
+                    }).then(user => {
+                        // return res.json({ status: 'success', data: user })
+                        return res.redirect('back')
+                    }).catch(error => {
+                        console.log(error)
+                    })
+                })
+        }
     }
 
 
