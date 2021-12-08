@@ -72,7 +72,7 @@ const userController = {
   editSetting: (req, res) => {
     if (helpers.getUser(req).id !== Number(req.params.userId)) {
       req.flash('error_messages', '你沒有檢視此頁面的權限')
-      res.redirect('back')
+      return res.redirect(`/users/${helpers.getUser(req).id}/setting/edit`)
     }
     return User.findByPk(req.params.userId).then((user) => {
       return res.render('setting', { user: user.toJSON() })
@@ -85,8 +85,8 @@ const userController = {
 
     // 檢查使用者是否有編輯權限
     if (helpers.getUser(req).id !== Number(req.params.userId)) {
-      req.flash('error_messages', '你沒有編輯權限')
-      res.redirect('back')
+      req.flash('error_messages', '你沒有檢視此頁面的權限')
+      return res.redirect(`/users/${helpers.getUser(req).id}/setting/edit`)
     }
 
     // 如使用者有輸入密碼或確認密碼，檢查是否一致
