@@ -11,6 +11,8 @@ const USER_COUNT = 5 //edit for more users...
 const TWEETS_PER_USER = 10 //edit for more tweets...
 const REPLIES_PER_TWEET = 3 //edit for more replies...
 const LIKES_PER_TWEET = 3 //edit for more likes...
+const NAME_lENGTH = 50
+const INTRODUCTION_lENGTH = 160
 
 const TWEET_COUNT = TWEETS_PER_USER * USER_COUNT
 const REPLY_COUNT = REPLIES_PER_TWEET * TWEET_COUNT
@@ -22,11 +24,11 @@ function getAdmins() {
   return admins.map((admin, i) => ({
     ...admin,
     id: i + 1,
-    name: admin.account,
+    name: admin.account.substring(0, NAME_lENGTH),
     password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
     cover: `https://loremflickr.com/320/240/personal,cover/?random=${Math.random() * 100}`,
     avatar: `https://loremflickr.com/320/240/avatar/?random=${Math.random() * 100}`,
-    introduction: faker.lorem.text(),
+    introduction: faker.lorem.text().substring(0, INTRODUCTION_lENGTH),
     role: 'admin',
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -38,13 +40,13 @@ function getUsers() {
     const account = `user${i + 1}`
     return {
       id: USER_ID_BEGIN + i,
-      name: faker.name.firstName(),
+      name: faker.name.firstName().substring(0, NAME_lENGTH),
       email: `${account}@example.com`,
       password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
       account: account,
       cover: `https://loremflickr.com/320/240/personal,cover/?random=${Math.random() * 100}`,
       avatar: `https://loremflickr.com/320/240/avatar/?random=${Math.random() * 100}`,
-      introduction: faker.lorem.text(),
+      introduction: faker.lorem.text().substring(0, INTRODUCTION_lENGTH),
       role: 'user',
       createdAt: new Date(),
       updatedAt: new Date(),

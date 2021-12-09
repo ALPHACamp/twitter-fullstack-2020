@@ -25,13 +25,16 @@
                 <img src="{{user.avatar}}" class="mx-auto" style=" width:100PX;height:100px; border-radius:100%; border:0px;"></img>
             </div>
             <div class=" cols" style=" width:85%;">
-                <form action="/api/users/:id" method="POST">
-                    
-                    <div class="" style=" text-align:right;">
-                        <button class="btn " type="submit"
-                            style="background-color: orangered;border-radius:40px; color:white; font-weight:bold; width:150px; height:50px;">編輯個人資料</button>
-                    </div>
-                </form>
+                <div class='text-center login-container' data-toggle='modal' data-target='#editProfile'>
+                    <button
+                    id='editProfile-btn'
+                    type='submit'
+                    class='btn'
+                    name='id'
+                    {{!-- value='{{this.id}}' --}}
+                    style='width:120px; border-radius:40px; border-color:#FF6600; color:#FF6600;font-weight:bold;font-size:15px'
+                    >編輯個人資料</button>
+                </div>
             </div>
         </div>
 

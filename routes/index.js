@@ -1,6 +1,8 @@
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
 const tweetController = require('../controllers/tweetController.js')
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 const helpers = require('../_helpers')
 
 module.exports = (app, passport) => {
@@ -61,6 +63,13 @@ module.exports = (app, passport) => {
 
   //user個人資料頁
   app.get('/users/:id/tweets', authenticated, userController.getProfile)
+
+  //user編輯自介
+  app.get('/api/users/:id', authenticated, userController.getIntroduction)
+  app.post('/api/users/:id', authenticated, userController.updateIntroduction)
+  app.post('/api/users/:id/avatar', authenticated, upload.single('avatar'), userController.updateAvatar)
+  app.post('/api/users/:id/cover', authenticated, upload.single('cover'), userController.updateCover)
+  app.post('/api/users/:id/deleteCover', authenticated, userController.deleteCover)
 
   //user推文
   // app.get('/tweets', authenticated, tweetController.getTweets)

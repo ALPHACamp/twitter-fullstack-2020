@@ -37,7 +37,7 @@
   color: #1c1c1c;
 }
 
-.modal-content {
+.tweet-modal-content {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -50,15 +50,7 @@
   outline: 0;
 }
 
-.modal-backdrop {
-  z-index: 1020;
-}
-
-.modal-backdrop.in {
-  z-index: auto;
-}
-
-.modal {
+.tweet-modal {
   background-color: rgba(230, 215, 215, 1);
   opacity: 0.9;
   min-height: 1000000px;
