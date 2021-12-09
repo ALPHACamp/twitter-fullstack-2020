@@ -40,12 +40,11 @@
               <span aria-hidden="true" style="color:#FF6600;">&times;</span>
             </button>
           </div>
-          <form action="/" method="post">
+          <form action="/tweets" method="post">
             <div class="modal-body" style="height: 250px;">
               <div class="row" style="height: 100%;">
                 <div class="col-md-2">
-                  <img src="https://static.newmobilelife.com/wp-content/uploads/2018/11/oppa1.jpg"
-                    class="rounded-circle" style="width: 60px; height:60px;">
+                  <img src={{user.avatar}} class="rounded-circle" style="width: 60px; height:60px;">
                 </div>
                 <div class="col-md-10">
                   <textarea name="description" id=""
@@ -187,7 +186,8 @@
                 <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
               </div>
               <div class="col-md-10" style="padding-left: 0px;">
-                <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{
+                <div class="h6">{{this.User.dataValues.name}} <span
+                    class="text-secondary">{{this.User.dataValues.account}} ．{{moment
                     this.createdAt}}</span>
                 </div>
                 <div>
@@ -197,19 +197,19 @@
               </div>
             </div>
             {{!-- 當前使用者回覆區 --}}
-            <div class="row mt-3">
-              <div class="col-md-2 mt-2" style="padding-right: 0px; ">
-                <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-              </div>
+            <form action='/tweets/{{this.id}}/replies' method="post">
+              <div class="row mt-3">
+                <div class="col-md-2 mt-2" style="padding-right: 0px; ">
+                  <img src={{../user.avatar}} class="rounded-circle" style="width: 50px; height:50px;">
+                </div>
 
-              <form action='/tweets/{{this.id}}/replies' method="post">
+
 
                 <div class="col-md-10" style="padding:0 15px 0 0;">
-                  <textarea name="description" id=""
-                    style="min-height:225px; max-height:225px; width:100%; border:none; " placeholder="推你的回覆"
-                    maxlength="140"></textarea>
+                  <textarea name="description" id="" style="width:100%; min-height:220px;max-height:220px; border:none;"
+                    placeholder="推你的回覆"></textarea>
                 </div>
-            </div>
+              </div>
 
           </div>
           <div class="modal-footer" style="border-top: #E6ECF0;">
