@@ -1,0 +1,137 @@
+<div class="row" style="width:100%;">
+  {{!-- navbar --}}
+  <div class="col-3">
+    <img class="mb-4 pl-2" src="/images/logo.png">
+    <div class="nav-ul-wrapper">
+      <ul class="nav flex-column">
+        <li class="nav-item py-2">
+          <a class="nav-link" href="/tweets">
+            <i class="fas fa-home"></i>
+            <span class="ml-3">首頁</span>
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="nav-link active" href="/users/{{user.id}}/tweets">
+            <i class="far fa-user"></i>
+            <span class="ml-3">個人資料</span>
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="nav-link" href="#">
+            <i class="fas fa-cog"></i>
+            <span class="ml-3">設定</span>
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="btn py-2" href="#">推文</a>
+        </li>
+      </ul>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="ml-3">登出</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  {{!-- Followings --}}
+  <div class="middle-side col-md-5">
+    <div class="text-title d-flex align-items-center">
+      <a href="javascript:history.back()">
+        <div class="back-icon">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+      </a>
+      <div class="name-info">
+        <h5 class="title-name ml-3">{{user.name}}</h5>
+        <div class="title-info ml-3">3推文</div>
+      </div>
+    </div>
+    <br>
+    <div class="follow-tweet">
+      <ul class="nav nav-tabs d-flex">
+        <li class="nav-item">
+          <a href="/users/{{user.id}}/followers" class="nav-link" id="followers">追隨者</a>
+        </li>
+        <li class="nav-item">
+          <a href="" class="nav-link active" id="followings">正在跟隨</a>
+        </li>
+      </ul>
+      <br>
+      <div class="user-tweet">
+        {{#each user.Followings}}
+        <div class="tweet col-md-12">
+          <div class="d-flex">
+            <div class="col-md-2" style="padding: 0%;">
+              <a href="/users/{{this.id}}/tweets">
+                <img class="avatar small" src="{{this.avatar}}">
+              </a>
+            </div>
+            <div class="col-md-10">
+              <div class="followship-account d-flex">
+                <div class="account-info mb-2" style="flex:auto">
+                  <a href="/users/{{this.id}}/tweets">
+                    <div class="user-name">{{this.name}}</div>
+                  </a>
+                  <div class="atAccount">@{{this.account}}</div>
+                </div>
+                <div class="followship-button">
+                  {{#if this.isFollowed}}
+                  <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+                    <button type="submit" class="btn py-2">正在跟隨</button>
+                  </form>
+                  {{else}}
+                  <form action="/followships/{{this.id}}" method="POST">
+                    <button type="submit" class="btn py-2">跟隨</button>
+                  </form>
+                  {{/if}}
+                </div>
+              </div>
+              <div class="post-text d-flex mt-2">{{this.introduction}}</div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+
+
+  {{!-- popular --}}
+  <div class="col-4">
+    <div class="card border-light popular">
+      <div class="card-header">
+        Popular
+      </div>
+      <ul class="list-group list-group-flush">
+        {{#each users}}
+        <li class="list-group-item d-flex">
+          <div class="mr-2">
+            <img class="avatar small" src="{{this.avatar}}">
+          </div>
+          <div class="mr-5">
+            <p class="mb-0">{{this.name}}</p>
+            <p class="atAccount">@{{this.account}}</p>
+          </div>
+          <div class="pt-2">
+            {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn py-2">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/followships/{{this.id}}" method="POST">
+              <button type="submit" class="btn py-2">跟隨</button>
+            </form>
+            {{/if}}
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</div>

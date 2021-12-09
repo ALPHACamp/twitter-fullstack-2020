@@ -200,6 +200,47 @@ const userController = {
         })
       })
   },
+
+  //設定追隨中頁面
+  getUserFollowing: (req, res) => {
+    return User.findAll({
+      raw: true,
+      nest: true,
+      include: [
+        { model: User, as: 'Followings' }
+      ]
+    }).then(users => {
+      users = users.map(user => ({
+        ...user,
+        isFollowed: req.user.Followings.map(f => f.id).includes(user.id)
+      }))
+      return res.render('userFollowings', {
+        users: users,
+        user: req.user
+
+      })
+    })
+  },
+  //設定跟隨者頁面
+  getUserFollower: (req, res) => {
+    return User.findAll({
+      raw: true,
+      nest: true,
+      include: [
+        { model: User, as: 'Followers' }
+      ]
+    }).then(users => {
+      users = users.map(user => ({
+        ...user,
+        isFollowed: req.user.Followings.map(f => f.id).includes(user.id)
+      }))
+      return res.render('userFollowers', {
+        users: users,
+        user: req.user
+
+      })
+    })
+  },
   // 瀏覽帳號設定頁面
   editSetting: (req, res) => {
     if (helpers.getUser(req).id !== Number(req.params.userId)) {

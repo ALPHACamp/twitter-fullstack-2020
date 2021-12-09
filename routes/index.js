@@ -58,6 +58,10 @@ module.exports = (app, passport) => {
   app.get('/api/users/:userId', userController.getUser)
   // 更新編輯使用者
   app.post('/api/users/:userId', cpUpload, userController.postUser)
+  // user followings頁面
+  app.get('/users/:userId/followings', authenticated, userController.getUserFollowing)
+  //user followers頁面
+  app.get('/users/:userId/followers', authenticated, userController.getUserFollower)
   // user對貼文按喜歡
   app.post('/tweets/:tweetId/like', authenticated, userController.addLike)
   // user對貼文收回喜歡
