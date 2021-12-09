@@ -89,7 +89,7 @@
 
 3. 快速設置（包含：建立資料庫、建立資料表、建立種子資料）
    ```bash
-   npm setup
+   npm run setup
    ```
 
 4. 在根目錄新增 .env（執行下列或參照 .env.example 進行修改）
