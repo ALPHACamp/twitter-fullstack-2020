@@ -11,7 +11,7 @@
           </a>
         </li>
         <li class="nav-item py-2">
-          <a class="nav-link active" href="/users/{{user.id}}/tweets">
+          <a class="nav-link active" href="/users/{{loginUser.id}}/tweets">
             <i class="far fa-user"></i>
             <span class="ml-3">個人資料</span>
           </a>
@@ -45,40 +45,66 @@
           <i class="fas fa-arrow-left"></i>
         </div>
       </a>
-      <div class="name-info">
-        <h5 class="title-name ml-3">{{user.name}}</h5>
-        <div class="title-info ml-3">3推文</div>
+      <div class="name-info ">
+        <h5 class="header1 ml-3 mb-0">{{user.name}}</h5>
+        <div class="atAccount ml-3 mb-1">3推文</div>
       </div>
     </div>
-    <hr />
-    <div class="cover"><img src=""></div>
-    <div class="user-info d-flex justify-content-between">
-      <div class="user-avatar"><img src="{{user.avatar}}" class="rounded-circle"></div>
-      <div>
-        <button type="button" class="btn" data-toggle="modal" data-target="#editUserModal">
+    {{!-- user-photos --}}
+    <div class="image-wrapper mb-4">
+      {{!-- cover --}}
+      <div class="cover-wrapper">
+        {{#if user.cover}}
+        <img class="cover" src="{{ user.cover }}" alt="">
+        {{ else }}
+        <div class="cover none"></div>
+        {{/if}}
+      </div>
+      {{!-- avatar --}}
+      <div class="avatar-wrapper">
+        {{#if user.avatar }}
+        <img class="avatar large" src="{{ user.avatar }}">
+        {{else}}
+        <div class="avatar-none-large"></div>
+        {{/if}}
+      </div>
+      {{!-- edit-user-button --}}
+      <div class="d-flex justify-content-end mt-1 pr-1">
+        {{#ifCond loginUser.id user.id }}
+        {{else}}
+        <div class="icon-outline pt-1">
+          <a href="{{ user.email }}"><i class="far fa-envelope"></i></a>
+        </div>
+        {{/ifCond}}
+        <button type="button" class="btn btn-outline ml-2" data-toggle="modal" data-target="#editUserModal">
           編輯個人資料
         </button>
       </div>
     </div>
+    {{!-- user-intro --}}
     <div class="text-info-users">
       <div class="info-text">
-        <h5 class="name">{{user.name}}</h5>
+        <h5 class="name header1">{{user.name}}</h5>
         <h6 class="atAccount">@{{user.account}}</h6>
-        <div class="introduction mt-2">hi</div>
+        {{#if user.introduction}}
+        <div class="introduction mt-2">{{ user.introduction }}</div>
+        {{else}}
+        <div class="introduction mt-2">目前沒有自我介紹!</div>
+        {{/if}}
         <div class="follow d-flex">
           <div class="followship d-flex m-0 mt-2">
             <a href="followings" class="d-flex">
-              <div class="follow-title">1個</div>
-              <div class="following-body">跟隨中</div>
+              <div class="introduction follow-title">1個</div>
+              <div class="introduction following-body">跟隨中</div>
             </a>
             <a href="followers" class="d-flex ml-3">
-              <div class="follow-title">1個</div>
-              <div class="follower-body">跟隨者</div>
+              <div class="introduction follow-title">1個</div>
+              <div class="introduction follower-body">跟隨者</div>
             </a>
           </div>
         </div>
       </div>
-      <br>
+      {{!-- tab-area --}}
       <br>
       <ul class="nav nav-tabs">
         <li class="nav-item">
