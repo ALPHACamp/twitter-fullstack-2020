@@ -129,17 +129,17 @@
             <div class="col-md-10 mt-2">
               <div class="account-info d-flex" style="flex-auto">
                 <div class="user-name">{{../this.user.name}}</div>
-                <div class="atAccount mb-2 ml-2">@{{../this.user.account}}•{{moment
+                <div class="atAccount mb-2 ml-2">@{{user.account}}•{{moment
                   this.createdAt}}</div>
               </div>
               <div class="reply d-flex">
                 <div class="reply-text">回覆</div>
-                <a href="/users/{{../tweet.UserId}}/tweets" class="text-muted">
-                  <div class="reply-account ml-3">@{{user.account}}</div>
+                <a href="/users/{{../user.id}}/tweets" class="text-muted">
+                  <div class="reply-account ml-3">@{{../user.account}}</div>
                 </a>
               </div>
               <a href="/tweets/{{this.TweetId}}/replies" class="text-muted">
-                <div class="post-text d-flex" style="flex-auto">{{this.comment}}</div>
+                <div class="post-text d-flex mt-2" style="flex-auto">{{this.comment}}</div>
               </a>
 
             </div>

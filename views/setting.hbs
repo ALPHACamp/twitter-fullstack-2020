@@ -41,8 +41,9 @@
   <div class="col-6 content-container">
     <form class="form-signin" action="/users/{{ user.id }}/setting?_method=PUT" method="POST" style="width: 100%;">
       <div class="text-center mb-4">
-        <h1 class="h3 mb-3 font-weight-normal">帳戶設定</h1>
+        <div class="setting-title">帳戶設定</div>
       </div>
+      <hr>
 
       <div class="form-label-group mb-2">
         <label for="inputAccount">帳號<span style="color: red;">*</span></label>
@@ -56,24 +57,24 @@
           autofocus>
       </div>
 
-      <div class="form-label-group mb-2">
+      <div class="form-label-group mb-2 mr-1">
         <label for="inputEmail">Email<span style="color: red;">*</span></label>
         <input type="text" name="email" class="form-control" placeholder="請輸入Email" value="{{ user.email }}" required
           autofocus>
       </div>
 
-      <div class="form-label-group mb-2">
+      <div class="form-label-group mb-2 ml-2">
         <label for="inputPassword">密碼</label>
         <input type="password" name="password" class="form-control" placeholder="請輸入密碼">
       </div>
 
-      <div class="form-label-group mb-2">
+      <div class="form-label-group mb-2 mr-3">
         <label for="inputPasswordCheck">確認密碼</label>
         <input type="password" name="passwordCheck" class="form-control" placeholder="請再次輸入密碼">
       </div>
       <br />
       <div class="d-flex justify-content-end pr-1">
-        <button class="btn" type="submit">修改</button>
+        <button class="btn setting-button mr-3" type="submit">儲存</button>
       </div>
     </form>
   </div>

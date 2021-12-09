@@ -183,13 +183,12 @@ const userController = {
     const loginUser = helpers.getUser(req)
     return User.findByPk(req.params.userId, {
       include: Tweet
-    })
-      .then(user => {
-        return res.render('userTweets', {
-          user: user.toJSON(),
-          loginUser
-        })
+    }).then(user => {
+      return res.render('userTweets', {
+        user: user.toJSON(),
+        loginUser
       })
+    })
   },
   //設定使用者個人資料頁面推文與回覆頁面
   getUserReplies: (req, res) => {
@@ -207,21 +206,22 @@ const userController = {
 
   //設定追隨中頁面
   getUserFollowing: (req, res) => {
-    return User.findAll({
-      raw: true,
-      nest: true,
+    return User.findByPk(req.params.userId, {
       include: [
         { model: User, as: 'Followings' }
-      ]
-    }).then(users => {
-      users = users.map(user => ({
-        ...user,
-        isFollowed: req.user.Followings.map(f => f.id).includes(user.id)
-      }))
+      ],
+      where: { role: 'normal' }
+    }).then(user => {
+      console.log(user.toJSON())
+      const userData = user.toJSON()
+      userData = user.map((followings => ({
+        ...followings.dataValues,
+        isFollowed: helpers.getUser(req).Followings.map(item => item.id).includes(Followings.id)
+      })))
+      console.log(userData)
       return res.render('userFollowings', {
-        users: users,
-        user: req.user
-
+        user: userData,
+        user: helpers.getUser(req)
       })
     })
   },
@@ -230,6 +230,7 @@ const userController = {
     return User.findAll({
       raw: true,
       nest: true,
+      order: [['createdAt', 'DESC']],
       include: [
         { model: User, as: 'Followers' }
       ]
