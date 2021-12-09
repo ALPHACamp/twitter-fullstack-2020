@@ -1,10 +1,10 @@
 # Simple Twitter
 
-![page_1](./indexv1.png)
+![page_1](./loginv1.png)
 
-![page_2](./screenshots/page_2.jpg)
+![page_2](./indexv1.png)
 
-![page_3](./screenshots/page_3.jpg)
+![page_3](./adminUserv1.png)
 
 
 ## 功能
