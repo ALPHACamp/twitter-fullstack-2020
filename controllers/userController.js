@@ -74,8 +74,12 @@ const userController = {
       UserId: helpers.getUser(req).id,
       TweetId: req.params.tweetId
     })
-      .then(tweet => {
-        return res.redirect('back')
+      .then(like => {
+        return Tweet.findOne({where: {id: like.TweetId}}).then(tweet => {
+          return tweet.increment('likeCounts')
+        }).then(tweet => {
+          return res.redirect('back')
+        })
       })
   },
   // unlike tweet
