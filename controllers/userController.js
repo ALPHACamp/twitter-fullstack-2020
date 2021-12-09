@@ -90,9 +90,14 @@ const userController = {
         TweetId: req.params.tweetId
       }
     })
-      .then(tweet => {
-        return res.redirect('back')
-      })
+      .then(like => {
+        return Tweet.findOne({ where: { id: req.params.tweetId } })
+        .then(tweet => {
+          return tweet.decrement('likeCounts')
+        }).then(tweet => {
+            return res.redirect('back')
+          })
+        })
   },
   // following
   addFollowing: (req, res) => {
@@ -189,6 +194,7 @@ const userController = {
       include: Tweet
     })
       .then(user => {
+        console.log(user)
         return res.render('userTweets', {
           user: user.toJSON(),
           loginUser
@@ -210,7 +216,24 @@ const userController = {
   },
   //使用者喜歡的內容頁面
   getUserLikes: (req, res) => {
-    res.render('userlikes')
+    return User.findByPk(req.params.userId, {
+      include: [{ model: Tweet, as: 'LikedTweets', include: [User]}]
+    }).then(user => {
+      const data = user.LikedTweets.map(tweet => ({
+        userId: tweet.User.id,
+        userAvatar: tweet.User.avatar,
+        userName: tweet.User.name,
+        userAccount: tweet.User.account,
+        id: tweet.id,
+        createdAt: tweet.createdAt,
+        description: tweet.description,
+        likedCounts: tweet.likedCounts
+      }))
+      console.log(data)
+      return res.render('userlikes', { likedTweets: data })
+      
+    })
+      
     // return Like.findAll({
     //   raw: true,
     //   nest: true,
@@ -219,7 +242,7 @@ const userController = {
     // }).then(likes => {
     //   console.log(likes)
     //   likes.forEach(like => {console.log(like.Tweet.Replies)})
-    //   res.redirect('back')
+    //   res.render('userlikes', { user,  })
     // })
   },
   // 瀏覽帳號設定頁面
