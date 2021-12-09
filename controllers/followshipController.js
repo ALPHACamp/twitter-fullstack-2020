@@ -10,7 +10,7 @@ const followshipController = {
 
       if (followerId === followingId) {
         req.flash('error_messages', '不可跟隨自己')
-        return res.redirect(200, '/')
+        return res.redirect(200, 'back')
       }
 
       await Followship.findOrCreate({ where: { followerId, followingId } })
