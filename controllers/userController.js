@@ -6,6 +6,7 @@ const Tweet = db.Tweet
 const Like = db.Like
 const Reply = db.Reply
 const Followship = db.Followship
+const fs = require('fs')
 
 const userController = {
   //user登入
@@ -94,6 +95,85 @@ const userController = {
 
   getProfile: (req, res) => {
     return res.render('profile', { page: 'profile' })
+  },
+
+  getIntroduction: (req, res) => {
+    User.findByPk(req.params.id).then((user) => {
+      const { name, cover, avatar, introduction } = user.toJSON()
+      return res.json({
+        name,
+        cover,
+        avatar,
+        introduction,
+      })
+    })
+  },
+
+  updateIntroduction: (req, res) => {
+    return User.findByPk(req.params.id).then((user) => {
+      user
+        .update({
+          name: req.body.name,
+          introduction: req.body.introduction,
+        })
+        .then(() => {
+          res.json({ status: 'success', message: '個人資料修改成功' })
+        })
+    })
+  },
+
+  updateAvatar: (req, res) => {
+    const { file } = req
+    const filePath = `/upload/${file.originalname}`
+    if (file) {
+      fs.readFile(file.path, (err, data) => {
+        if (err) console.log('Error: ', err)
+        fs.writeFile(`upload/${file.originalname}`, data, () => {
+          return User.findByPk(req.params.id).then((user) => {
+            user
+              .update({
+                avatar: filePath,
+              })
+              .then(() => {
+                res.json({ status: 'success', message: filePath })
+              })
+          })
+        })
+      })
+    }
+  },
+
+  updateCover: (req, res) => {
+    const { file } = req
+    const filePath = `/upload/${file.originalname}`
+    if (file) {
+      fs.readFile(file.path, (err, data) => {
+        if (err) console.log('Error: ', err)
+        fs.writeFile(`upload/${file.originalname}`, data, () => {
+          return User.findByPk(req.params.id).then((user) => {
+            user
+              .update({
+                cover: filePath,
+              })
+              .then(() => {
+                res.json({ status: 'success', message: filePath })
+              })
+          })
+        })
+      })
+    }
+  },
+
+  deleteCover: (req, res) => {
+    return User.findByPk(req.params.id).then((user) => {
+      user
+        .update({
+          cover: '',
+        })
+        .then(() => {
+          res.json({ status: 'success', message: '' })
+        })
+    })
   },
 
   addLike: (req, res) => {
