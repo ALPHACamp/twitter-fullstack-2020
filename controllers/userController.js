@@ -335,28 +335,32 @@ const userController = {
       const { account, name, email, password, checkPassword } = req.body
       const errors = []
 
+      const [user1, user2] = await Promise.all([
+        User.findOne({ where: { account } }),
+        User.findOne({ where: { email } })
+      ])
+
       if (checkPassword !== password) {
         errors.push({ message: '兩次密碼輸入不同！' })
       }
-
-      const user1Promise = User.findOne({ where: { account } })
-      const user2Promise = User.findOne({ where: { email } })
-      const [user1, user2] = await Promise.all([user1Promise, user2Promise])
-
       if (user1) {
         errors.push({ message: 'account 已重覆註冊！' })
       }
-
       if (user2) {
         errors.push({ message: 'email 已重複註冊！' })
+      }
+      if (account.length < 4) {
+        errors.push({ message: 'account 長度不可小於 4 字元！' })
+      }
+      if (password.length < 4) {
+        errors.push({ message: 'password 長度不可小於 4 字元！' })
+      }
+      if (name.length > 50) {
+        errors.push({ message: 'name 長度不可超過 50 字元' })
       }
 
       if (errors.length) {
         return res.render('signup', { errors, account, name, email })
-      }
-
-      if (account.length < 4 || password.length < 4 || name.length > 50) {
-        return res.end()
       }
 
       await User.create({
@@ -396,11 +400,6 @@ const userController = {
   updateSettings: async (req, res) => {
     try {
       const userId = Number(req.params.userId)
-      if (helpers.getUser(req).id !== userId) {
-        req.flash('error_messages', '你無權查看此頁面')
-        return res.redirect('back')
-      }
-
       const user = await User.findByPk(userId)
       const { account, name, email, password, checkPassword } = req.body
       const errors = []
@@ -409,28 +408,47 @@ const userController = {
         errors.push({ message: '兩次密碼輸入不同！' })
       }
 
-      const user1Promise = User.findOne({
-        where: { account, [Op.not]: { id: userId } }
-      })
-      const user2Promise = User.findOne({
-        where: { email, [Op.not]: { id: userId } }
-      })
-      const [user1, user2] = await Promise.all([user1Promise, user2Promise])
+      const [user1, user2] = await Promise.all([
+        User.findOne({
+          where: {
+            account,
+            [Op.not]: { account: helpers.getUser(req).account }
+          }
+        }),
+        User.findOne({
+          where: { email, [Op.not]: { email: helpers.getUser(req).email } }
+        })
+      ])
 
+      if (helpers.getUser(req).id !== userId) {
+        req.flash('error_messages', '你無權查看此頁面')
+        return res.redirect('back')
+      }
       if (user1) {
         errors.push({ message: 'account 已重覆註冊！' })
       }
-
       if (user2) {
         errors.push({ message: 'email 已重複註冊！' })
       }
-
-      if (errors.length) {
-        return res.render('signup', { errors, ...req.body })
+      if (account.length < 4) {
+        errors.push({ message: 'account 長度不可小於 4 字元！' })
+      }
+      // 使用者沒有更改密碼，即密碼為空，需要用 password 確定是否有輸入
+      if (password && password.length < 4) {
+        errors.push({ message: 'password 長度不可小於 4 字元！' })
+      }
+      if (name.length > 50) {
+        errors.push({ message: 'name 長度不可超過 50 字元' })
       }
 
-      if (account.length < 4 || password.length < 4 || name.length > 50) {
-        return res.end()
+      if (errors.length) {
+        return res.render('user', {
+          errors,
+          account,
+          name,
+          email,
+          partial: 'profileSettings'
+        })
       }
 
       if (password === '') {
