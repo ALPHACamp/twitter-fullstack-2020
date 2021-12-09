@@ -38,7 +38,7 @@
     {{#each tweets}}
     <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
       <div class="col-md-2" style="padding-right: 0px; ">
-        <img src="{{this.avatar}}" alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+        <img src="{{this.User.avatar}}" alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
         <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="float: right;">
