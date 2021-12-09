@@ -142,7 +142,7 @@ const userController = {
             where: { UserId: req.user.id },
             include: [User,
                 { model: Reply, include: [Tweet] },
-                { model: User, as: 'LikedUsers' }
+                { model: User, as: 'LikedUsers' },
             ]
         })
 
@@ -173,15 +173,17 @@ const userController = {
 
                 tweets = tweets.map(tweet => ({
                     ...tweet.dataValues,
-                    isLikedTweet: req.user.LikedTweets.map(d => d.id).includes(tweet.id),
                     reliesCount: tweet.Replies.length,
-                    likeCount: tweet.LikedUsers.length
+                    likeCount: tweet.LikedUsers.length,
+                    isLikedTweet: req.user.LikedTweets.map(d => d.id).includes(tweet.id)
+
                 }))
 
 
 
-                console.log(tweets)
-                // console.log('==============================')
+                console.log(tweets[0].isLikedTweet)
+                console.log('==============================')
+                console.log(req.user.LikedTweets)
                 // console.log(replies)
                 return res.render('user', { tweets, users })
 

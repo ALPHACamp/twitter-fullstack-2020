@@ -238,7 +238,7 @@
             {{#if this.isLikedTweet}}
             <form action="/tweets/{{this.id}}/unlike" method="post">
               <span><button type="submit" class="btn btn-link" style="color: red; display:inline">
-                  <i class="fas fa-heart " data-id={{this.id}}></i></button>{{ this.reliesCount }}</span>
+                  <i class="fas fa-heart " data-id={{this.id}}></i></button>{{this.likeCount }}</span>
             </form>
             {{else}}
             <form action="/tweets/{{this.id}}/like" method="post" class="form-inline">
