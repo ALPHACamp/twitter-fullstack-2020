@@ -20,6 +20,10 @@ html, body {
   color:#FF6600;
 }
 
+.nav-btn-modal {
+  color: white;
+}
+
 .btn {
   display: flex; 
   flex-direction: row;
@@ -32,6 +36,7 @@ html, body {
   line-height: 18px;
   color:#FFFFFF;
 }
+
 
 .btn-outline {
   background: #FFFFFF;

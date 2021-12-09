@@ -22,8 +22,8 @@
             <span class="ml-3">設定</span>
           </a>
         </li>
-        <li class="nav-item py-2">
-          <a class="btn py-2" href="#">推文</a>
+        <li class="nav-item nav-btn-modal py-2">
+          <a class="btn btn-modal py-2" data-toggle="modal" data-target="#tweetModal">推文</a>
         </li>
       </ul>
       <ul class="nav flex-column">
@@ -55,7 +55,7 @@
     <div class="user-info d-flex justify-content-between">
       <div class="user-avatar"><img src="{{user.avatar}}" class="rounded-circle"></div>
       <div>
-        <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+        <button type="button" class="btn" data-toggle="modal" data-target="#editUserModal">
           編輯個人資料
         </button>
       </div>
@@ -169,8 +169,8 @@
   </div>
 </div>
 
-{{!-- Edit-User-Info-Modal --}}
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{{!-- Edit-User-Modal --}}
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="edituserModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <form action="/api/users/{{ user.id }}" method="POST" enctype="multipart/form-data">
@@ -225,6 +225,35 @@
             <textarea class="form-control" id="introduction" name="introduction"
               rows="3">{{ user.introduction }}</textarea>
           </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{{!-- tweetModal --}}
+<div class="modal fade" id="tweetModal" tabindex="-1" role="dialog" aria-labelledby="reply-tweet"
+  style="display: none;" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content d-flex">
+      <button type="button" class="btn-dismiss close d-flex justify-content-start ml-3 mt-2"
+        data-dismiss="modal">x</button>
+      <hr />
+      <form action="/tweets" method="POST">
+        <div class="type-area d-flex">
+          <div class="avatar">
+            <a href="/users/{{user.id}}/tweets">
+              <img src="{{user.avatar}}" class="avatar small ml-1">
+            </a>
+          </div>
+          <div class="type-text">
+            <textarea type="text" class="post-content form-control mb-2 ml-2" id="description-modal" name="description"
+              placeholder="有什麼新鮮事?" rows="5" cols="47"></textarea>
+            <div class="invalid-feedback" id="add-tweet"></div>
+          </div>
+        </div>
+        <div class="add-button d-flex justify-content-end mr-2">
+          <button type="submit" class="btn mb-2" id="modal-post-button">推文</button>
         </div>
       </form>
     </div>
