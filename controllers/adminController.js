@@ -64,7 +64,7 @@ const adminController = {
       ],
       include: [Tweet, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }],
     }).then((users) => {
-      users = users.filter((user) => user.role === 'user')
+      users = users.filter((user) => user.role !== 'admin')
       users = users.map((r) => {
         return {
           ...r.dataValues,

@@ -9,10 +9,11 @@ module.exports = (app, passport) => {
   //驗証使用者已登入
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).role === 'user' || !req.user) {
-        return next()
+      const user = helpers.getUser(req)
+      if (user && user.role && user.role === 'admin') {
+        return res.redirect('/admin/tweets')
       }
-      return res.redirect('/admin/tweets')
+      return next()
     }
     res.redirect('/signin')
   }
@@ -73,8 +74,8 @@ module.exports = (app, passport) => {
 
   //user推文
   // app.get('/tweets', authenticated, tweetController.getTweets)
-  app.get('/tweets', authenticated,tweetController.getTweets)
-  app.post('/tweets', authenticated,tweetController.postTweet)
+  app.get('/tweets', authenticated, tweetController.getTweets)
+  app.post('/tweets', authenticated, tweetController.postTweet)
 
   //user推文
   app.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
