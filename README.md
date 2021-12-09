@@ -64,6 +64,9 @@ npm run dev
 
 展示網址: https://safe-cliffs-40569.herokuapp.com/signin
 
+admin:登入帳號 root@example.com，密碼 12345678
+一般使用者:登入帳號 user1@example.com，密碼 12345678
+
 
 ## Built with
  * bcrypt-nodejs: 0.0.3
