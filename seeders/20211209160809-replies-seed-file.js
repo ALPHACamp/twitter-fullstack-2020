@@ -15,14 +15,13 @@ module.exports = {
           replies.push({
             UserId: userIdArray[Math.floor(Math.random() * 5)],
             TweetId: userId + i,
-            Comment: faker.lorem.text(),
+            comment: faker.lorem.text(),
             createdAt: new Date(),
             updatedAt: new Date()
           })
         }
       }
     })
-    console.log(replies)
 
     await queryInterface.bulkInsert('Replies', replies, {})
   },
