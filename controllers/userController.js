@@ -507,9 +507,9 @@ const userController = {
 
       if (avatarPath) {
         imgur.setClientID(IMGUR_CLIENT_ID)
-        await imgur.upload(avatarPath, async (err, img) => {
+        await imgur.upload(avatarPath, (err, img) => {
           if (err) return console.error(err)
-          await user.update({
+          user.update({
             avatar: avatarPath ? img.data.link : user.avatar
           })
         })
