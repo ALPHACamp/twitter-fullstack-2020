@@ -30,7 +30,7 @@
       <hr>
       <div class="d-flex align-items-center mb-3">
         <!-- comment -->
-        <a class="light-color action-icon {{#if tweet.isReplied}}isReplied{{/if}}" href="#" style="margin-right: 120px;">
+        <a class="light-color action-icon {{#if tweet.isReplied}}isReplied{{/if}}" style="margin-right: 120px;" data-toggle="modal" data-target="#replyModal">
           <img src="/images/reply.svg" alt="">
         </a>
         <!-- like -->
@@ -70,5 +70,56 @@
       </li>
       {{/each}}
     </ul>
+  </div>
+</div>
+
+{{!-- modal --}}
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-tweet">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="button-close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-title">
+        <div class="list-tweet mt-2">
+          <ul>
+            <li class="px-3 d-flex align-items-start justify-content-start">
+              <a>
+                <img class="mr-3 thumbnail" src="{{tweet.User.avatar}}" alt="">
+                <div class="diver ml-4 mt-2" style="width: 2px;height: 60px;background: #CCD6DD;"></div>
+              </a>
+              <div class="content-wrapper w-100">
+                <div class="mb-2">
+                  <p class="font-weight-bold d-inline">{{tweet.User.name}}</p>
+                  <p class="light-color d-inline">@{{tweet.User.account}}．{{moment tweet.createdAt}}</p>
+                </div>
+                <a class="link-description">
+                  <p>{{tweet.description}}</p>
+                </a>
+                <div class="reply-target"><span class="mr-1"
+                    style="font-weight: 500; font-size: 15px;color: #657786;">回覆給</span><span
+                    class="reply-target-account"
+                    style="font-weight: 500; font-size: 15px;color: #FF6600;">@{{tweet.User.account}}</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-body">
+        <form action="/tweets/{{tweet.id}}/replies" method="POST">
+          <div class="d-flex align-items-start justify-content-start mb-3">
+            <a>
+              <img class="mr-2 thumbnail" src="{{user.avatar}}" alt="">
+            </a>
+            <textarea class="textarea-tweet w-100" id="description" name="comment" rows="6" placeholder="推你的回覆"
+              maxlength="140"></textarea>
+          </div>
+          <button class="button-submit mt-2" style="float: right;" type="submit">回覆</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>

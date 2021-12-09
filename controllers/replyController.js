@@ -4,12 +4,18 @@ const Reply = db.Reply
 const Tweet = db.Tweet
 const User = db.User
 
+const userService = require('../services/userService')
+
 const replyController = {
   postReply: (req, res) => {
     const comment = req.body.comment
 
-    if (comment.trim() === '') {
+    if (!comment.length) {
       req.flash('error_msg', '回覆不可以空白')
+      return res.redirect('back')
+    }
+    if (comment.length > 140) {
+      req.flash('error_msg', '回覆不可超過140字!')
       return res.redirect('back')
     }
     return Reply.create({
@@ -33,7 +39,13 @@ const replyController = {
       ]
     })
      .then(replies => {
-       return res.render('reply', { replies })
+
+
+       console.log(replies)
+       userService.getTopUser(req, res, topUser => {
+         return res.render('replies', { replies, topUser })
+       })
+
      })
   }
 }

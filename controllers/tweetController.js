@@ -65,7 +65,8 @@ const tweetController = {
   postTweet: (req, res) => {
     const description = req.body.description
 
-    if (description.trim() === '') {
+    if (!description.length) {
+      req.flash('error_msg', '推文不可為空白')
       return res.redirect('back')
     }
     if (description.length > 140) {
@@ -76,6 +77,7 @@ const tweetController = {
       description: description
     })
       .then((tweet) => {
+        req.flash('success_msg', '成功推文！')
         return res.redirect('back')
       })
   }

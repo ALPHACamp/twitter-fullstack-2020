@@ -56,7 +56,9 @@ const adminController = {
             }
           }
         })
-        
+
+
+
         return res.render('admin/users', { users })
       })
   },
