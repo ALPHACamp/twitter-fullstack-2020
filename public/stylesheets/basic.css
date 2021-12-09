@@ -372,6 +372,7 @@ img.avatar.large {
   color:#FF6600;
 }
 
+
 .follow-title {
   font-style: normal;
   font-weight: 500;
@@ -411,4 +412,7 @@ img.avatar.large {
   width: 116px;
   height: 46px;
   left: 914px;
+}
+.like-icon {
+  color: #E0245E;
 }
