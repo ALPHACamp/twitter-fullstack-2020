@@ -88,4 +88,8 @@ module.exports = (app, passport) => {
     { name: 'cover', maxCount: 1 },
     { name: 'avatar', maxCount: 1 }
   ]), apiController.postUser,userController.getUser)
+
+  // SETTING
+  app.get('/setting', authenticated, userController.editPage)
+  app.post('/setting', authenticated, userController.editData)
 }
