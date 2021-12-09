@@ -349,6 +349,9 @@ const userController = {
       if (checkPassword !== password) {
         errors.push({ message: '兩次密碼輸入不同！' })
       }
+      if (account.length > 30) {
+        errors.push({ message: 'account 長度不可大於 30 字元！' })
+      }
       if (account.length < 4) {
         errors.push({ message: 'account 長度不可小於 4 字元！' })
       }
@@ -430,6 +433,9 @@ const userController = {
       if (user2) {
         errors.push({ message: 'email 已重複註冊！' })
       }
+      if (account.length < 30) {
+        errors.push({ message: 'account 長度不可大於 30 字元！' })
+      }
       if (account.length < 4) {
         errors.push({ message: 'account 長度不可小於 4 字元！' })
       }
@@ -501,9 +507,9 @@ const userController = {
 
       if (avatarPath) {
         imgur.setClientID(IMGUR_CLIENT_ID)
-        await imgur.upload(avatarPath, (err, img) => {
+        await imgur.upload(avatarPath, async (err, img) => {
           if (err) return console.error(err)
-          user.update({
+          await user.update({
             avatar: avatarPath ? img.data.link : user.avatar
           })
         })

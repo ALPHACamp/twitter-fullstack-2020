@@ -20,7 +20,7 @@
       <img class="thumbnail" src="{{this.User.avatar}}" alt="{{this.User.name}} avatar">
     </a>
     <div class="postcontent">
-      <a class="postuser">
+      <a class="postuser" href="/users/{{this.User.id}}/tweets">
         <span class="name ellipsis">{{this.User.name}}</span>
         <span class="at-name ellipsis">@{{this.User.account}}</span>
         <span class="timer ellipsis">{{moment this.createdAt}}</span>
