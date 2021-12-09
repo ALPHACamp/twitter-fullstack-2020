@@ -18,7 +18,7 @@
           <img src='{{tweet.User.dataValues.avatar}}' style= "width:50PX;height:50px; border-radius:100%;"></img>
         </a>
       </div>
-        <div class="name-account cols ml-2" style=" width:70%">
+        <div class="name-account col-ml-2" style=" width:70%">
           <a href="/users/{{tweet.User.dataValues.id}}/tweets">
             <p class="m-0" style="font-size:18px;color: black; font-weight:bold;">{{tweet.User.dataValues.name}}</p>
           </a>
@@ -27,7 +27,7 @@
     </div>
     {{!-- 此則推文 --}}
     <div class="content tweet-description heavy-tweet-text">
-      <p>{{tweet.description}}</p>
+      <p class="tweet-description ">{{tweet.description}}</p>
     </div>
     <div class="time">
       {{moment tweet.createdAt}}

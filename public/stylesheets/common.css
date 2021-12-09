@@ -64,6 +64,12 @@
   min-height: 1000000px;
 }
 
+.tweet-description {
+  /* width: 500px; */
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
 * {
-  //outline: 1px dotted red;
+  /* outline: 1px dotted red; */
 }
