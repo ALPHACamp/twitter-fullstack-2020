@@ -31,7 +31,7 @@ app.use(express.json())
 
 // SESSION
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: 'twitterSecret',
   resave: false,
   saveUninitialized: false
 }))
