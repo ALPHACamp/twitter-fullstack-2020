@@ -92,20 +92,20 @@ const tweetController = {
 
   getTweet: async (req, res) => {
     try {
-      let tweet = await Tweet.findByPk(req.params.tweetId, {
+      const tweet = await Tweet.findByPk(req.params.tweetId, {
         include: [User, Like]
       })
       tweet.dataValues.time = tweetTime.time(tweet.dataValues.createdAt)
       tweet.dataValues.date = tweetTime.date(tweet.dataValues.createdAt)
 
-      let replies = await Reply.findAll({
+      const replies = await Reply.findAll({
         where: { TweetId: tweet.id },
         include: [{ model: User, attributes: { exclude: ['password'] } }],
         order: [['createdAt', 'DESC']]
       })
 
       const userId = helpers.getUser(req).id
-      let isLiked = !!(await Like.findOne({
+      const isLiked = !!(await Like.findOne({
         where: { UserId: userId, TweetId: req.params.tweetId }
       }))
 

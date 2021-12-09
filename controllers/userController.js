@@ -22,31 +22,31 @@ const userController = {
           'cover',
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM Tweets WHERE Tweets.UserId = User.id)`
+              '(SELECT COUNT(*) FROM Tweets WHERE Tweets.UserId = User.id)'
             ),
             'tweetCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM Replies WHERE Replies.UserId = User.id)`
+              '(SELECT COUNT(*) FROM Replies WHERE Replies.UserId = User.id)'
             ),
             'replyCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM Likes WHERE Likes.UserId = User.id)`
+              '(SELECT COUNT(*) FROM Likes WHERE Likes.UserId = User.id)'
             ),
             'likeCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM Followships WHERE Followships.followerId = User.id)`
+              '(SELECT COUNT(*) FROM Followships WHERE Followships.followerId = User.id)'
             ),
             'followingCount'
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id)`
+              '(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id)'
             ),
             'followerCount'
           ],
@@ -401,7 +401,7 @@ const userController = {
         return res.redirect('back')
       }
 
-      let user = await User.findByPk(userId)
+      const user = await User.findByPk(userId)
       const { account, name, email, password, checkPassword } = req.body
       const errors = []
 
@@ -474,26 +474,28 @@ const userController = {
       }
 
       const { files } = req
-      let avatarPath = files.avatar ? files.avatar[0].path : false
-      let coverPath = files.cover ? files.cover[0].path : false
-      let user = await User.findByPk(userId)
+      const avatarPath = files.avatar ? files.avatar[0].path : false
+      const coverPath = files.cover ? files.cover[0].path : false
+      const user = await User.findByPk(userId)
 
       if (avatarPath) {
         imgur.setClientID(IMGUR_CLIENT_ID)
-        await imgur.upload(avatarPath, (err, img) =>
+        await imgur.upload(avatarPath, (err, img) => {
+          if (err) return console.error(err)
           user.update({
             avatar: avatarPath ? img.data.link : user.avatar
           })
-        )
+        })
       }
 
       if (coverPath) {
         imgur.setClientID(IMGUR_CLIENT_ID)
-        await imgur.upload(coverPath, (err, img) =>
+        await imgur.upload(coverPath, (err, img) => {
+          if (err) return console.error(err)
           user.update({
             cover: coverPath ? img.data.link : user.cover
           })
-        )
+        })
       }
 
       await user.update({

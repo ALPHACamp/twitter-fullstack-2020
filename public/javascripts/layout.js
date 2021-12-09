@@ -4,7 +4,7 @@ const modalReply = document.querySelector('#modal-reply')
 
 // // 全畫面監聽器
 body.addEventListener('click', async (event) => {
-  let target = event.target
+  const target = event.target
 
   if (target.classList.contains('close') || target.classList.contains('mask')) {
     // 點擊X icon關閉，另可點擊modal對話框以外地方關閉
@@ -17,10 +17,12 @@ body.addEventListener('click', async (event) => {
     let tweetId = target.dataset.tweetid
     if (!tweetId) tweetId = target.parentElement.dataset.tweetid
 
-    let response = await axios.get(`${window.location.origin}/api/tweets/${tweetId}`)
+    const response = await axios.get(
+      `${window.location.origin}/api/tweets/${tweetId}`
+    )
     const { tweet, loginUser } = response.data
 
-    let modalHtml = `
+    const modalHtml = `
     <div class="mask">
       <div class="dialog">
         <div class="dialog-header">
@@ -76,33 +78,39 @@ body.addEventListener('click', async (event) => {
 })
 
 const tweetsPostForm = document.querySelector('#tweets-post-form')
-const tweetsPostFormTextarea = document.querySelector('#tweets-post-form-textarea')
+const tweetsPostFormTextarea = document.querySelector(
+  '#tweets-post-form-textarea'
+)
 const modalPostForm = document.querySelector('#modal-post-form')
-const modalPostFormTextarea = document.querySelector('#modal-post-form-textarea')
+const modalPostFormTextarea = document.querySelector(
+  '#modal-post-form-textarea'
+)
 const modalReplyForm = document.querySelector('#modal-reply-form')
-const modalReplyFormTextarea = document.querySelector('#modal-reply-form-textarea')
+const modalReplyFormTextarea = document.querySelector(
+  '#modal-reply-form-textarea'
+)
 const inputs = document.querySelectorAll('input')
 
-function isEmpty(nodeElement) {
+function isEmpty (nodeElement) {
   // 無文字回傳true，文字長度大於0，回傳false
   return nodeElement.value.replace(/\s/g, '').length ? false : true
 }
 
-function validityEmpty(form, inputarea) {
+function validityEmpty (form, inputarea) {
   // 驗證inputarea是否為空白
-  form.addEventListener('submit', function onFormSubmitted(event) {
+  form.addEventListener('submit', function onFormSubmitted (event) {
     if (!form.checkValidity() || isEmpty(inputarea)) {
       // 停止type=submit預設動作
       event.stopPropagation()
       event.preventDefault()
-      //驗證不通過，顯示alert message (移除d-none class)
+      //  驗證不通過，顯示alert message (移除d-none class)
       form.lastElementChild.firstElementChild.classList = ''
     }
   })
 
-  inputarea.addEventListener('keyup', function onFormKeyup(event) {
+  inputarea.addEventListener('keyup', function onFormKeyup (event) {
     if (!isEmpty(inputarea)) {
-      //使用者開始輸入，隱藏alert message (加上d-none class)
+      //  使用者開始輸入，隱藏alert message (加上d-none class)
       form.lastElementChild.firstElementChild.classList = 'd-none'
     }
   })
@@ -122,14 +130,14 @@ if (modalReplyForm) {
 
 if (inputs) {
   inputs.forEach((el) => {
-    el.addEventListener('focus', function onInputFocus(event) {
+    el.addEventListener('focus', function onInputFocus (event) {
       el.parentElement.classList.add('focus')
     })
-    el.addEventListener('blur', function onInputBlur(event) {
+    el.addEventListener('blur', function onInputBlur (event) {
       el.parentElement.classList.remove('focus')
     })
-    el.addEventListener('invalid', function onInputInvalid(event) {
-      let target = event.target
+    el.addEventListener('invalid', function onInputInvalid (event) {
+      const target = event.target
 
       if (target.validity.valueMissing) {
         if (target.name === 'account') {
@@ -156,14 +164,13 @@ if (inputs) {
       target.parentElement.classList.add('invalid')
     })
 
-    el.addEventListener('keyup', function onInputKeyup(event) {
-      let target = event.target
+    el.addEventListener('keyup', function onInputKeyup (event) {
+      const target = event.target
 
       target.parentElement.classList.remove('invalid')
       if (event.target.name === 'account') {
         target.value = target.value.replace(/[\W]/g, '')
       }
     })
-
-  });
+  })
 }

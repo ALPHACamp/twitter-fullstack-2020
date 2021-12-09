@@ -6,7 +6,7 @@ const moment = require('moment')
 const tweetController = {
   getTweet: async (req, res) => {
     try {
-      let tweet = await Tweet.findByPk(req.params.tweetId, {
+      const tweet = await Tweet.findByPk(req.params.tweetId, {
         include: [User]
       })
       tweet.dataValues.createdAt = moment.updateLocale('zh-tw', {
@@ -14,11 +14,11 @@ const tweetController = {
       })
       tweet.dataValues.createdAt = moment(tweet.dataValues.createdAt).fromNow()
 
-      let loginUser = await User.findByPk(helpers.getUser(req).id, {
+      const loginUser = await User.findByPk(helpers.getUser(req).id, {
         attributes: ['id', 'avatar']
       })
 
-      let data = {
+      const data = {
         tweet,
         loginUser
       }
