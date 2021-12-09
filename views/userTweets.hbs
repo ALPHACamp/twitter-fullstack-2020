@@ -67,11 +67,11 @@
         <div class="introduction mt-2">hi</div>
         <div class="follow d-flex">
           <div class="followship d-flex m-0 mt-2">
-            <a href="followings" class="d-flex">
+            <a href="/users/{{user.id}}/followings" class="d-flex">
               <div class="follow-title">1個</div>
               <div class="following-body">跟隨中</div>
             </a>
-            <a href="followers" class="d-flex ml-3">
+            <a href="/users/{{user.id}}/followers" class="d-flex ml-3">
               <div class="follow-title">1個</div>
               <div class="follower-body">跟隨者</div>
             </a>
@@ -170,7 +170,7 @@
 </div>
 
 {{!-- Edit-User-Info-Modal --}}
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <form action="/api/users/{{ user.id }}" method="POST" enctype="multipart/form-data">
@@ -207,26 +207,26 @@
               <div class="avatar-none-large" id="current-avatar"></div>
               {{/if}}
             </div>
-              <div class="form-group avatar-input-wrapper">
-                <label for="avatar-input"><i class="fas fa-camera"></i>
-                  <input type="file" class="form-control-file hide" id="avatar-input" name="avatar">
-                </label>
-              </div>
+            <div class="form-group avatar-input-wrapper">
+              <label for="avatar-input"><i class="fas fa-camera"></i>
+                <input type="file" class="form-control-file hide" id="avatar-input" name="avatar">
+              </label>
             </div>
           </div>
-          {{!-- Edit-Name & Introduction --}}
-          <div class="form-group px-3">
-            <label for="name">名稱</label>
-            <input type="text" class="form-control" name="name" id="name" placeholder="Enter name"
-              value="{{ user.name }}" required>
-          </div>
-          <div class="form-group px-3">
-            <label for="introduction">自我介紹</label>
-            <textarea class="form-control" id="introduction" name="introduction"
-              rows="3">{{ user.introduction }}</textarea>
-          </div>
         </div>
-      </form>
+        {{!-- Edit-Name & Introduction --}}
+        <div class="form-group px-3">
+          <label for="name">名稱</label>
+          <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{ user.name }}"
+            required>
+        </div>
+        <div class="form-group px-3">
+          <label for="introduction">自我介紹</label>
+          <textarea class="form-control" id="introduction" name="introduction"
+            rows="3">{{ user.introduction }}</textarea>
+        </div>
     </div>
+    </form>
   </div>
+</div>
 </div>
