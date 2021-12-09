@@ -204,6 +204,20 @@ const userController = {
         })
       })
   },
+  //使用者喜歡的內容頁面
+  getUserLikes: (req, res) => {
+    res.render('userlikes')
+    // return Like.findAll({
+    //   raw: true,
+    //   nest: true,
+    //   where: {UserId: req.params.userId},
+    //   include: [{model: Tweet, include: [User, Reply, Like]}]
+    // }).then(likes => {
+    //   console.log(likes)
+    //   likes.forEach(like => {console.log(like.Tweet.Replies)})
+    //   res.redirect('back')
+    // })
+  },
   // 瀏覽帳號設定頁面
   editSetting: (req, res) => {
     if (helpers.getUser(req).id !== Number(req.params.userId)) {
