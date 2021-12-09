@@ -1,10 +1,10 @@
     <div class='text-title d-flex flex-row align-items-center mt-3'>
-      <div class='back-icon '>
+      <div class='back-icon'style="margin-left:19px">
         <a href='javascript:history.back()'>
           <i class='fas fa-arrow-left' style="color: black;"></i>
         </a>
       </div>
-      <div class='name-info ml-5 mb-0'>
+      <div class='name-info'style="margin-left:43px">
         <div class='title-name' style="font-size:18px;color: black; font-weight:bold;">{{user.name}}</div>
         <p style="color:gray; font-size:14px; font-weight:bold; margin-bottom:7px"> {{tweetCount}} 推文</p>
       </div>
@@ -13,7 +13,7 @@
 {{!-- ================個人資料區域================================================= --}}
 <div class="container col" style="padding:0px;">
 
-    <div class="" style="width:100%; position: relative;border-left:1px solid #dee2e6;border-right:1px solid #dee2e6;">
+    <div class="" style="width:100%; position: relative;">
         <div class="" >
             <img src="{{user.cover}}" class="mx-0" style="background-size: cover; width:100%;height:200px;object-fit: cover;">
         </div>
@@ -55,7 +55,7 @@
 
     </div>
 
-    <ul class="nav nav-tabs" style="padding-left: 34px;border-left:1px solid #dee2e6;border-right:1px solid #dee2e6">
+    <ul class="nav nav-tabs" style="padding-left: 34px;">
         <li class="nav-item">
             <a class="nav-link  {{#ifCond page 'profile'}}active{{/ifCond}}"  href="/users/{{user.id}}/tweets">推文</a>
         </li>
@@ -69,7 +69,7 @@
 {{!-- =====================推文列表============================================ --}}
 {{#ifCond page 'profile'}}
     {{#each tweets}}
-        <div class="row" style="padding-top:15px;margin-left:0px; margin-right:0px; border-left:1px solid #dee2e6;border-right:1px solid #dee2e6;border-bottom:1px solid #dee2e6;">
+        <div class="row" style="padding-top:15px;margin-left:0px; margin-right:0px; border-bottom:1px solid #dee2e6;">
             <div class="col-1 text-center" style=" width:15%">
                 <a  href="/users/{{this.User.dataValues.id}}/tweets">
                     <img class="" src="{{this.User.dataValues.avatar}}"
