@@ -50,9 +50,6 @@ img {
   width: 100%;
   height: 100%;
   display: block;
-  font-size: 5px;
-  line-height: 6px;
-  word-break: break-all;
 }
 
 .btn,
@@ -76,17 +73,16 @@ button[disabled] {
   pointer-events: none;
 }
 
-input,
-input:required,
-input:invalid,
-input:valid,
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
+input {
   padding: 0;
+}
+
+input:required {
   box-shadow: none;
-  background-color: transparent !important;
+}
+
+input:invalid {
+  box-shadow: none;
 }
 
 ::-webkit-scrollbar {
@@ -560,8 +556,6 @@ html, body {
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
-  height: 23px;
-  border: 1px solid #f60;
 }
 
 .main > .information > .followship > .following {
@@ -768,7 +762,6 @@ html, body {
   border-bottom: 1px solid #E6ECF0;
   display: flex;
   flex-flow: row nowrap;
-  padding-right: 15px;
 }
 
 .main > .replies > .reply > a {
@@ -821,9 +814,10 @@ html, body {
   font-weight: 400;
   line-height: 22px;
   max-height: 44px;
-  max-width: 510px;
+  width: 510px;
+  padding-right: 10px;
   overflow: scroll;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
