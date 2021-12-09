@@ -91,14 +91,14 @@ const modalReplyFormTextarea = document.querySelector(
 )
 const inputs = document.querySelectorAll('input')
 
-function isEmpty (nodeElement) {
+function isEmpty(nodeElement) {
   // 無文字回傳true，文字長度大於0，回傳false
   return !nodeElement.value.replace(/\s/g, '').length
 }
 
-function validityEmpty (form, inputarea) {
+function validityEmpty(form, inputarea) {
   // 驗證inputarea是否為空白
-  form.addEventListener('submit', function onFormSubmitted (event) {
+  form.addEventListener('submit', function onFormSubmitted(event) {
     if (!form.checkValidity() || isEmpty(inputarea)) {
       // 停止type=submit預設動作
       event.stopPropagation()
@@ -108,7 +108,7 @@ function validityEmpty (form, inputarea) {
     }
   })
 
-  inputarea.addEventListener('keyup', function onFormKeyup (event) {
+  inputarea.addEventListener('keyup', function onFormKeyup(event) {
     if (!isEmpty(inputarea)) {
       //  使用者開始輸入，隱藏alert message (加上d-none class)
       form.lastElementChild.firstElementChild.classList = 'd-none'
@@ -130,13 +130,13 @@ if (modalReplyForm) {
 
 if (inputs) {
   inputs.forEach((el) => {
-    el.addEventListener('focus', function onInputFocus (event) {
+    el.addEventListener('focus', function onInputFocus(event) {
       el.parentElement.classList.add('focus')
     })
-    el.addEventListener('blur', function onInputBlur (event) {
+    el.addEventListener('blur', function onInputBlur(event) {
       el.parentElement.classList.remove('focus')
     })
-    el.addEventListener('invalid', function onInputInvalid (event) {
+    el.addEventListener('invalid', function onInputInvalid(event) {
       const target = event.target
 
       if (target.validity.valueMissing) {
@@ -164,7 +164,7 @@ if (inputs) {
       target.parentElement.classList.add('invalid')
     })
 
-    el.addEventListener('keyup', function onInputKeyup (event) {
+    el.addEventListener('keyup', function onInputKeyup(event) {
       const target = event.target
 
       target.parentElement.classList.remove('invalid')

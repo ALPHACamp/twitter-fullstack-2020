@@ -5,7 +5,9 @@
 <form action="/users/{{loginUser.id}}/settings?_method=PUT" method="POST">
   <div class="edit-text">
     <label for="account">帳號</label>
-    <input type="text" name="account" id="account" minlength="4" value="{{loginUser.account}}" required>
+    <span class="at-sign">@</span>
+    <input type="text" name="account" id="account" minlength="4" maxlength="30" value="{{loginUser.account}}"
+      style="padding-left:20px;" required>
   </div>
   <div class="edit-text">
     <label for="name">名稱</label>
