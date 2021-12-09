@@ -93,26 +93,18 @@ const userController = {
   // following
   addFollowing:  (req, res) => {
     // 目前的登入者不行追蹤自己
-    if (helpers.getUser(req).id === Number(req.body.userId)) {
-      console.log('===========')
-      console.log('helpers.getUser(req).id: ', helpers.getUser(req).id)
-      console.log('req.body.userId: ', Number(req.body.userId))
-      console.log('===========')
-      req.flash('error_messages', '幹嘛? 不要給我追蹤自己喔')
-      return res.redirect('back')
+    if (helpers.getUser(req).id === Number(req.body.id)) {
+      req.flash('error_messages', '請你不要追蹤自己')
+      return res.redirect(200,'back')
     }
     return  Followship.create({
       // 目前登入的使用者id
       followerId: helpers.getUser(req).id,
       // 我要追蹤的使用者id
-      followingId: Number(req.body.userId)
+      followingId: req.body.id
     })
       .then( (followship) => {
-        console.log('===========')
-        console.log('followerId: ', followship.followerId)
-        console.log('followingId: ', followship.followingId)
-        console.log(followship.toJSON())
-        console.log('===========')
+        req.flash('success_messages', '跟隨成功')
         return  res.redirect('back')
       })
   },
@@ -127,6 +119,7 @@ const userController = {
       .then(followship => {
         followship.destroy()
           .then(followship => {
+            req.flash('error_messages', '取消跟隨')
             return res.redirect('back')
           })
       })
