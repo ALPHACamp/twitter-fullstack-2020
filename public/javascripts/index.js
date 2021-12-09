@@ -50,7 +50,7 @@ const profileForm = document.getElementById('profileForm')
 if (profileModal !== null) {
   const profileName = document.getElementById('profileName')
   const nameLength = document.getElementById('nameLength')
-
+  
   const profileIntro = document.getElementById('profileIntro')
   const introLength = document.getElementById('introLength')
 
@@ -81,21 +81,21 @@ if (profileModal !== null) {
     nameLength.textContent = `${nameStrLen}/50`
     if (nameStrLen >= 50) {
       nameLength.style.color = "red"
-      profileModal.setCustomValidity('超過50字囉')
+      profileName.classList.add('is-invalid')
     } else {
       nameLength.style.color = "#657786"
-      profileModal.setCustomValidity('')
+      profileName.classList.remove('is-invalid')
     }
   })
   profileIntro.addEventListener('input', e => {
     const introStrLen = profileIntro.value.length
-    introLength.textContent = `${introStrLen}/140`
-    if (introStrLen >= 140) {
+    introLength.textContent = `${introStrLen}/160`
+    if (introStrLen >= 160) {
       introLength.style.color = "red"
-      profileIntro.setCustomValidity('超過140字囉')
+      introLength.classList.add('is-invalid')
     } else {
       introLength.style.color = "#657786"
-      profileIntro.setCustomValidity('')
+      introLength.classList.remove('is-invalid')
     }
   })
   coverInput.addEventListener('change', e => {
@@ -112,9 +112,4 @@ if (profileModal !== null) {
       avatarFile.style.color = "#40E0D0"
     }
   })
-}
-
-function profileSubmitButtonClick(event) {
-  profileForm.submit()
-  profileModal.hide()
 }

@@ -39,10 +39,13 @@ const replyController = {
       ]
     })
      .then(replies => {
+
+
        console.log(replies)
        userService.getTopUser(req, res, topUser => {
          return res.render('replies', { replies, topUser })
        })
+
      })
   }
 }
