@@ -47,9 +47,9 @@ const userController = {
                       req.flash('success_msg', '成功註冊帳號！')
                       return res.redirect('/signin')
                     })
-                }
+                }      
               })
-          }
+            }
         })
     }
   },
@@ -83,7 +83,7 @@ const userController = {
       return res.redirect('back')
     }
     if (email !== currentUser.email) {
-      return User.findOne({ where: { email: email } })
+      return User.findOne({ where: { email: email }})
         .then((user) => {
           if (user) {
             req.flash('error_msg', '信箱已存在')
@@ -117,100 +117,74 @@ const userController = {
     res.redirect('/signin')
   },
   getUser: (req, res) => {
-    User.findByPk(req.params.id, {
+    User.findByPk(req.params.id, { 
       include: [
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' },
-        { model: Tweet, include: [Reply, { model: User, as: 'LikedUsers' }], order: [['createdAt', 'DESC']] },
-        { model: Reply, include: [{ model: Tweet, include: [User] }], order: [['createdAt', 'DESC']] },
-        { model: Like, include: [{ model: Tweet, include: [User, Reply, { model: User, as: 'LikedUsers' }] }], order: [['createdAt', 'DESC']] }
-      ]
+        { model: Tweet, include: [Like, Reply] },
+      ], order: [[Tweet, 'createdAt', 'DESC']]
     }).then(user => {
       // to avoid conflicting with res.locals.user
-      const userData = {
-        ...user.toJSON(),
-        tweetCount: user.Tweets.length,
-        followingCount: user.Followings.length,
-        followerCount: user.Followers.length,
-        isFollowed: helpers.getUser(req).Followings.map(item => item.id).includes(user.dataValues.id)
-      }
+        return Like.findAll({ where: { UserId: helpers.getUser(req).id }, raw: true, nest: true })
+          .then((likes) => {
 
-      userData.Tweets = userData.Tweets.map(tweet => ({
-        ...tweet,
-        replyCount: tweet.Replies.length,
-        isReplied: tweet.Replies.map(item => item.UserId).includes(helpers.getUser(req).id),
-        likeCount: tweet.LikedUsers.length,
-        isLiked: tweet.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id)
-      }))
-
-      userData.Likes = userData.Likes.map(like => {
-        return {
-          Tweet: like.Tweet,
-          replyCount: like.Tweet.Replies.length,
-          isReplied: like.Tweet.Replies.map(item => item.UserId).includes(helpers.getUser(req).id),
-          likeCount: like.Tweet.LikedUsers.length,
-          isLiked: like.Tweet.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id)
-        }
+          const userData = user.toJSON()
+          likes = likes.map(like => like.TweetId)
+          userData.Tweets.forEach(tweet => {
+            tweet.isLiked = likes.includes(tweet.id)
+          })
+          userData.tweetCount = userData.Tweets.length
+          userData.isFollowed = userData.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
+          
+          userService.getTopUser(req, res, topUser => {
+            return res.render('userTweets', { userData, topUser })
+          })
+        })
       })
-      userService.getTopUser(req, res, topUser => {
-        return res.render('user', { userData, topUser })
-      })
-    })
   },
-  getUserTweets: (req, res) => {
-    User.findByPk(req.params.id, {
-      include: {
-        model: Tweet, include: [
-          { model: User, as: 'LikedUsers' },
-          { model: Reply, include: [User] }
-        ]
-      }
-    }).then(user => {
-      // to avoid conflicting with res.locals.user
-      const userData = {
-        ...user.toJSON()
-      }
-
-      userData.Tweets = userData.Tweets.map(tweet => ({
-        ...tweet,
-        replyCount: tweet.Replies.length,
-        isReplied: tweet.Replies.map(item => item.UserId).includes(helpers.getUser(req).id),
-        likeCount: tweet.LikedUsers.length,
-        isLiked: tweet.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id)
-      }))
-
-      userService.getTopUser(req, res, topUser => {
-        return res.render('userTweets', { userData, topUser })
-      })
+  getUserReplies: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        { model: Reply, include: [{ model: Tweet, include: [Reply, User] }] }
+      ], order: [[Reply, 'createdAt', 'DESC']]
     })
+      .then(user => {
+        const userData = user.toJSON()
+        userData.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
+
+        userService.getTopUser(req, res, topUser => {
+          return res.render('userReplies', { userData, topUser })
+        })
+      })
   },
   getLikes: (req, res) => {
-    User.findByPk(req.params.id, {
-      include: {
-        model: Tweet, as: 'LikedTweets', include: [
-          User,
-          { model: User, as: 'LikedUsers' },
-          { model: Reply, include: [User] }
-        ]
-      }
-    }).then(user => {
-      // to avoid conflicting with res.locals.user
-      const userData = {
-        ...user.toJSON()
-      }
-
-      userData.LikedTweets = userData.LikedTweets.map(tweet => ({
-        ...tweet,
-        replyCount: tweet.Replies.length,
-        isReplied: tweet.Replies.map(item => item.UserId).includes(helpers.getUser(req).id),
-        likeCount: tweet.LikedUsers.length,
-        isLiked: tweet.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id)
-      }))
-
-      userService.getTopUser(req, res, topUser => {
-        return res.render('likes', { userData, topUser })
-      })
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        { model: Like, include: [{ model: Tweet, include: [Reply, Like, User] }] },
+      ], order: [[Like, 'createdAt', 'DESC']]
     })
+      .then(user => {
+        return Like.findAll({ where: { UserId: helpers.getUser(req).id }, raw: true, nest: true })
+          .then((likes) => {
+            const userData = user.toJSON()
+            likes = likes.map(like => like.TweetId)
+            userData.Tweets.forEach(tweet => {
+              tweet.isLiked = likes.includes(tweet.id)
+            })
+            userData.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
+
+            userService.getTopUser(req, res, topUser => {
+              console.log(userData)
+              return res.render('userLikes', { userData, topUser })
+            })
+          })
+      })
+
   },
   addFollowing: (req, res) => {
     if (helpers.getUser(req).id === Number(req.body.id)) {
@@ -231,8 +205,7 @@ const userController = {
       where: {
         followerId: helpers.getUser(req).id,
         followingId: req.params.id
-      }
-    })
+      } })
       .then((followship) => {
         followship.destroy()
           .then((followship) => {

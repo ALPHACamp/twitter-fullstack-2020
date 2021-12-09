@@ -1,13 +1,13 @@
 <script>
-function submit() {
-  axios.get('/api/users/{{user.id}}')
-    .then(res => {
-  name.value = res.data.name
-  description.value = res.data.description
-  avatar.setAttribute("src", res.data.avatar)
-  cover.setAttribute("src", res.data.cover)
-})
-}
+  function submit() {
+    axios.get('/api/users/{{user.id}}')
+      .then(res => {
+        name.value = res.data.name
+        description.value = res.data.description
+        avatar.setAttribute("src", res.data.avatar)
+        cover.setAttribute("src", res.data.cover)
+      })
+  }
 </script>
 <div class="center container">
   <div class="left-bar">
@@ -23,7 +23,7 @@ function submit() {
       <a class="mr-5" href="/tweets"><img class="mb-1" src="/images/pre.svg" alt=""></a>
       <div class="d-inline-block">
         <p class="m-0" style="font-size: 19px;">{{userData.name}}</p>
-        <p class="light-color m-0" style="font-size: 13px; font-weight: 500;">{{userData.tweetCount}} 推文</p>
+        <p class="light-color m-0" style="font-size: 13px; font-weight: 500;">{{userData.Tweets.length}} 推文</p>
       </div>
     </div>
     <div class="position-relative" style="height: 200px; margin-bottom: 75px;">
@@ -57,139 +57,34 @@ function submit() {
       <div class="mt-3 d-flex justify-content-between" style="width: 170px; font-size: 14px;">
         <a href="/users/{{userData.id}}/followings">
           <span>
-            <b style="color: #212529;">{{userData.followingCount}} 個</b>
+            <b style="color: #212529;">{{userData.Followings.length}} 個</b>
             <p class="light-color m-0 d-inline">跟隨中</p>
           </span>
         </a>
         <a href="/users/{{userData.id}}/followers">
           <span>
-            <b style="color: #212529;">{{userData.followerCount}} 位</b>
+            <b style="color: #212529;">{{userData.Followers.length}} 位</b>
             <p class="light-color m-0 d-inline">跟隨者</p>
           </span>
         </a>
       </div>
     </div>
     <ul class="list-group list-group-horizontal mt-4" id="profile-buttons">
-      <li class="list-group-item list-item-profile item-active" id="tweets">推文</li>
-      <li class="list-group-item list-item-profile" id="replies">推文與回覆</li>
-      <li class="list-group-item list-item-profile" id="likes">喜歡的內容</li>
+      <li class="list-group-item list-item-profile" id="tweets">
+        <a href="/users/{{userData.id}}/tweets" class="text-decoration-none list-item-profile">推文</a>
+      </li>
+      <li class="list-group-item list-item-profile" id="replies">
+        <a href="/users/{{userData.id}}/replies" class="text-decoration-none list-item-profile">推文與回覆</a>
+      </li>
+      <li class="list-group-item list-item-profile item-active" id="likes">
+        <a href="/users/{{userData.id}}/likes" class="text-decoration-none list-item-profile" style="color: #ff6600;">喜歡的內容</a>
+      </li>
     </ul>
   </div>
 
   <div class="list-tweet">
-    <!-- USER TWEETS-->
-    <ul class="list-group" id="userTweets">
-      {{#each userData.Tweets}}
-      <li class="list-group-item px-3 d-flex align-items-start justify-content-start">
-        <a href="/users/{{../userData.id}}">
-          <img class="mr-3 thumbnail" src="{{../userData.avatar}}" alt="">
-        </a>
-        <div class="content-wrapper w-100">
-          <div class="mb-2">
-            <p class="font-weight-bold d-inline">{{../userData.name}}</p>
-            <p class="light-color d-inline">@{{../userData.account}}．{{moment this.createdAt}}</p>
-          </div>
-          <a class="link-description" href="/tweets/{{this.id}}">
-            <p>{{this.description}}</p>
-          </a>
-          <div class="d-flex justify-content-between" style="width: 150px;">
-            <!-- comment -->
-            <a class="light-color action-icon {{#if this.isReplied}}isReplied{{/if}}" data-toggle="modal" data-target="#replyModal{{this.id}}">
-              <i class="far fa-comment mr-3"></i>{{this.replyCount}}
-            </a>
-            <!-- like -->
-            {{#if this.isLiked}}
-            <form class="action-icon" action="/tweets/{{this.id}}/unlike" method="POST">
-              <button class="light-color isLiked" type="submit" style="background: transparent; border: 0;">
-                <i class="far fa-heart mr-3"></i>{{this.likeCount}}
-              </button>
-            </form>
-            {{else}}
-            <form class="action-icon" action="/tweets/{{this.id}}/like" method="POST">
-              <button class="light-color" type="submit" style="background: transparent; border: 0;">
-                <i class="far fa-heart mr-3"></i>{{this.likeCount}}
-              </button>
-            </form>
-            {{/if}}
-          </div>
-        </div>
-      </li>
-
-      {{!-- modal --}}
-      <div class="modal fade" id="replyModal{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-tweet">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="button-close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-title">
-              <div class="list-tweet mt-2">
-                <ul>
-                  <li class="px-3 d-flex align-items-start justify-content-start">
-                    <a>
-                      <img class="mr-3 thumbnail" src="{{../userData.avatar}}" alt="">
-                      <div class="diver ml-4 mt-2" style="width: 2px;height: 60px;background: #CCD6DD;"></div>
-                    </a>
-                    <div class="content-wrapper w-100">
-                      <div class="mb-2">
-                        <p class="font-weight-bold d-inline">{{../userData.name}}</p>
-                        <p class="light-color d-inline">@{{../userData.account}}．{{moment this.createdAt}}</p>
-                      </div>
-                      <a class="link-description">
-                        <p>{{this.description}}</p>
-                      </a>
-                      <div class="reply-target"><span class="mr-1"
-                          style="font-weight: 500; font-size: 15px;color: #657786;">回覆給</span><span
-                          class="reply-target-account"
-                          style="font-weight: 500; font-size: 15px;color: #FF6600;">@{{../userData.account}}</span>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="modal-body">
-              <form action="/tweets/{{this.id}}/replies" method="POST">
-                <div class="d-flex align-items-start justify-content-start mb-3">
-                  <a>
-                    <img class="mr-2 thumbnail" src="{{../user.avatar}}" alt="">
-                  </a>
-                  <textarea class="textarea-tweet w-100" id="description" name="comment" rows="6" placeholder="推你的回覆"
-                    maxlength="140"></textarea>
-                </div>
-                <button class="button-submit mt-2" style="float: right;" type="submit">回覆</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-      {{/each}}
-    </ul>
-
-    <!-- USER REPLIES -->
-    <ul class="list-group d-none">
-      {{#each userData.Replies}}
-      <li class="list-group-item px-3 d-flex align-items-start justify-content-start">
-        <a href="/users/{{this.UserId}}">
-          <img class="mr-3 thumbnail" src="{{../userData.avatar}}" alt="">
-        </a>
-        <div class="content-wrapper w-100">
-          <div class="mb-2">
-            <p class="font-weight-bold d-inline">{{../userData.name}}</p>
-            <p class="light-color d-inline">@{{../userData.account}}．{{moment this.createdAt}}</p>
-          </div>
-          <p class="light-color d-inline" style="font-weight: 500;">回覆</p>
-          <p class="d-inline" style="font-weight: 500; color: #ff6600">@{{this.Tweet.User.account}}</p>
-          <p class="mt-2">{{this.comment}}</p>
-        </div>
-      </li>
-      {{/each}}
-    </ul>
-
     <!-- USER LIKES -->
-    <ul class="list-group d-none" id="userTweets">
+    <ul class="list-group" id="userTweets">
       {{#each userData.Likes}}
       <li class="list-group-item px-3 d-flex align-items-start justify-content-start">
         <a href="/users/{{this.Tweet.User.id}}">
@@ -205,26 +100,77 @@ function submit() {
           </a>
           <div class="d-flex justify-content-between" style="width: 150px;">
             <!-- comment -->
-            <a class="light-color action-icon {{#if this.isReplied}}isReplied{{/if}}" href="#">
-              <i class="far fa-comment mr-3"></i>{{this.replyCount}}
+            <a class="light-color action-icon" data-toggle="modal" data-target="#replyModal{{this.Tweet.id}}">
+              <i class="far fa-comment mr-3"></i>{{this.Tweet.Replies.length}}
             </a>
             <!-- like -->
-            {{#if this.isLiked}}
+            {{#if this.Tweet.isLiked}}
             <form class="action-icon" action="/tweets/{{this.Tweet.id}}/unlike" method="POST">
               <button class="light-color isLiked" type="submit" style="background: transparent; border: 0;">
-                <i class="far fa-heart mr-3"></i>{{this.likeCount}}
+                <i class="far fa-heart mr-3"></i>{{this.Tweet.Likes.length}}
               </button>
             </form>
             {{else}}
             <form class="action-icon" action="/tweets/{{this.Tweet.id}}/like" method="POST">
               <button class="light-color" type="submit" style="background: transparent; border: 0;">
-                <i class="far fa-heart mr-3"></i>{{this.likeCount}}
+                <i class="far fa-heart mr-3"></i>{{this.Tweet.Likes.length}}
               </button>
             </form>
             {{/if}}
           </div>
         </div>
       </li>
+
+      {{!-- modal --}}
+      <div class="modal fade" id="replyModal{{this.Tweet.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-tweet">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="button-close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-title">
+              <div class="list-tweet mt-2">
+                <ul>
+                  <li class="px-3 d-flex align-items-start justify-content-start">
+                    <a>
+                      <img class="mr-3 thumbnail" src="{{this.Tweet.User.avatar}}" alt="">
+                      <div class="diver ml-4 mt-2" style="width: 2px;height: 60px;background: #CCD6DD;"></div>
+                    </a>
+                    <div class="content-wrapper w-100">
+                      <div class="mb-2">
+                        <p class="font-weight-bold d-inline">{{this.Tweet.User.name}}</p>
+                        <p class="light-color d-inline">@{{this.Tweet.User.account}}．{{moment this.Tweet.createdAt}}</p>
+                      </div>
+                      <a class="link-description">
+                        <p>{{this.Tweet.description}}</p>
+                      </a>
+                      <div class="reply-target"><span class="mr-1"
+                          style="font-weight: 500; font-size: 15px;color: #657786;">回覆給</span><span
+                          class="reply-target-account"
+                          style="font-weight: 500; font-size: 15px;color: #FF6600;">@{{this.Tweet.User.account}}</span>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal-body">
+              <form action="/tweets/{{this.Tweet.id}}/replies" method="POST">
+                <div class="d-flex align-items-start justify-content-start mb-3">
+                  <a>
+                    <img class="mr-2 thumbnail" src="{{../user.avatar}}" alt="">
+                  </a>
+                  <textarea class="textarea-tweet w-100" id="description" name="comment" rows="6" placeholder="推你的回覆"
+                    maxlength="140"></textarea>
+                </div>
+                <button class="button-submit mt-2" style="float: right;" type="submit">回覆</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
       {{/each}}
     </ul>
   </div>
@@ -234,7 +180,8 @@ function submit() {
 <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content" style="width: 600px; height: 657px;">
-      <form action="/users/{{user.id}}/edit?_method=PUT" method="POST"  enctype="multipart/form-data" id="profileForm" novalidate>
+      <form action="/users/{{user.id}}/edit?_method=PUT" method="POST" enctype="multipart/form-data" id="profileForm"
+        novalidate>
         <div class="modal-header d-flex justify-content-start">
           <button type="button" class="button-close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>

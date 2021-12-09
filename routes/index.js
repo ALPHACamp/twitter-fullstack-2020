@@ -56,8 +56,8 @@ module.exports = (app, passport) => {
   app.get('/logout', userController.logout)
   app.get('/users/:id/followings', authenticated, userController.getFollowings)
   app.get('/users/:id/followers', authenticated, userController.getFollowers)
-  app.get('/users/:id', authenticated, userController.getUser)
-  app.get('/users/:id/tweets', authenticated, userController.getUserTweets)
+  app.get('/users/:id/tweets', authenticated, userController.getUser)
+  app.get('/users/:id/replies', authenticated, userController.getUserReplies)
   app.get('/users/:id/likes', authenticated, userController.getLikes)
   app.put('/users/:id/edit', authenticated, upload.fields([
     { name: 'cover', maxCount: 1 },
