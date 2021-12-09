@@ -14,7 +14,6 @@ const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
   },
-
   signUp: (req, res) => {
     if (!req.body.email || !req.body.name || !req.body.account || !req.body.password) {
       req.flash('error_msg', '所有欄位皆為必填')
@@ -52,7 +51,6 @@ const userController = {
         })
     }
   },
-
   signInPage: (req, res) => {
     if (res.locals.user) {
       delete res.locals.user
@@ -60,19 +58,16 @@ const userController = {
 
     return res.render('signin')
   },
-
   signIn: (req, res) => {
     req.flash('success_msg', '成功登入！')
     res.redirect('/tweets')
   },
-
   editPage: (req, res) => {
     return User.findByPk(helpers.getUser(req).id)
       .then((user) => {
         res.render('edit', { user: user.toJSON() })
       })
   },
-
   editData: (req, res) => {
     const { name, email, password, checkPassword, account } = req.body
     const currentUser = helpers.getUser(req)
@@ -114,14 +109,11 @@ const userController = {
         return res.redirect('/tweets')
       })
   },
-
-
   logout: (req, res) => {
     req.flash('success_msg', '登出成功！')
     req.logout()
     res.redirect('/signin')
   },
-
   getUser: (req, res) => {
     User.findByPk(req.params.id, { include: [
       { model: User, as: 'Followings' },
@@ -236,7 +228,6 @@ const userController = {
           })
       })
   },
-
   getFollowings: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
@@ -257,7 +248,6 @@ const userController = {
         })
       })
   },
-
   getFollowers: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
@@ -277,17 +267,6 @@ const userController = {
           return res.render('followers', { userData, topUser })
         })
       })
-  },
-
-  updateProfile: (req, res) => {
-    apiController.postUser(req, res, (data) => {
-      if (data['status'] === 'error') {
-        req.flash('error_msg', data['message'])
-        return res.redirect('back')
-      }
-      req.flash('success_msg', data['message'])
-      return res.status(200)
-    })
   }
 }
 

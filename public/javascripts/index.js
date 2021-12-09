@@ -43,12 +43,17 @@ profileBtn.addEventListener('click', event => {
     return
   }
 })
+
 const profileModal = document.getElementById('profileModal')
 const profileForm = document.getElementById('profileForm')
 
-if (profileModal != null) {
+if (profileModal !== null) {
   const profileName = document.getElementById('profileName')
+  const nameLength = document.getElementById('nameLength')
+
   const profileIntro = document.getElementById('profileIntro')
+  const introLength = document.getElementById('introLength')
+
   const coverFile = document.getElementById('coverFile')
   const avatarFile = document.getElementById('avatarFile')
   const coverInput = document.getElementById('uploadCover')
@@ -56,8 +61,6 @@ if (profileModal != null) {
 
   // Modal show init
   profileModal.addEventListener('shown.bs.modal', e => {
-    nameLength.textContent = `${profileName.value.length}/50`
-    introLength.textContent = `${profileIntro.value.length}/140`
     coverFile.style.color = "#FFFFFF"
     avatarFile.style.color = "#FFFFFF"
   })
@@ -80,7 +83,7 @@ if (profileModal != null) {
       nameLength.style.color = "red"
       profileModal.setCustomValidity('超過50字囉')
     } else {
-      nameLength.style.color = "black"
+      nameLength.style.color = "#657786"
       profileModal.setCustomValidity('')
     }
   })
@@ -91,7 +94,7 @@ if (profileModal != null) {
       introLength.style.color = "red"
       profileIntro.setCustomValidity('超過140字囉')
     } else {
-      introLength.style.color = "black"
+      introLength.style.color = "#657786"
       profileIntro.setCustomValidity('')
     }
   })

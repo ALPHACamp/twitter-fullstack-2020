@@ -14,6 +14,7 @@ const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
 module.exports = (app, passport) => {
+  // AUTHENTICATION
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === 'admin') {
@@ -58,8 +59,6 @@ module.exports = (app, passport) => {
   app.get('/users/:id', authenticated, userController.getUser)
   app.get('/users/:id/tweets', authenticated, userController.getUserTweets)
   app.get('/users/:id/likes', authenticated, userController.getLikes)
-  app.get('/setting', authenticated, userController.editPage)
-  app.post('/setting', authenticated, userController.editData)
 
   // TWEET
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
@@ -70,13 +69,19 @@ module.exports = (app, passport) => {
   // REPLY
   app.post('/tweets/:id/replies', authenticated, replyController.postReply)
   app.get('/tweets/:id/replies' ,authenticated, replyController.getReply)
+
   // LIKE
   app.post('/tweets/:id/like', authenticated, likeController.postLike)
   app.post('/tweets/:id/unlike', authenticated, likeController.deleteLike)
+
   // FOLLOWSHIP
   app.post('/followships', authenticated, userController.addFollowing)
   app.delete('/followships/:id', authenticated, userController.removeFollowing)
+
   //API
   app.get('/api/users/:userId', authenticated, apiController.getUser)
-  app.post('/api/users/:userId', authenticated, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), userController.updateProfile)
+  app.post('/api/users/:userId', authenticated, upload.fields([
+    { name: 'cover', maxCount: 1 },
+    { name: 'avatar', maxCount: 1 }
+  ]), apiController.postUser)
 }
