@@ -6,8 +6,8 @@
   {{#each users}}
   <div class="usercard">
     <div class="imgs">
-      <img class="thumbnail-card" {{#if this.avatar}} src="{{this.avatar}}" alt="{{this.avatar}} avatar" {{/if}}>
-      <img class="img-card" {{#if this.cover}} src="{{this.cover}}" alt="{{this.cover}} cover" {{/if}}>
+      <img class="thumbnail-card" src="{{this.avatar}}" alt="{{this.name}} avatar">
+      <img class="img-card" src="{{this.cover}}" alt="{{this.name}} cover">
     </div>
     <div class="texts">
       <div class="name">{{this.name}}</div>

@@ -1,4 +1,6 @@
-i {
+i,
+input[type="button"].camera,
+input[type="button"].X-white {
   display: inline-block;
   background: url('../icons/css_sprites.png');
 }

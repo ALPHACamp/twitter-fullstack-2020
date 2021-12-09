@@ -87,7 +87,7 @@
         </div>
         <div class="postarea">
           <a>
-            <img class="thumbnail" src="{{loginUser.avatar}}" alt="">
+            <img class="thumbnail" src="{{loginUser.avatar}}" alt="{{loginUser.name}} avatar">
           </a>
           <form action="/tweets" method="post" novalidate id="modal-post-form">
             <input type="hidden" name="userId" value="{{loginUser.id}}">
@@ -120,23 +120,21 @@
 
         <form method="POST" action="/users/{{loginUser.id}}/update?_method=PUT" enctype="multipart/form-data">
           <div class="edit-cover">
-            <img src="{{#if loginUser.cover}}{{loginUser.cover}}{{else}}/icons/cover.svg{{/if}}" alt="" id="modal-edit-cover">
-            <input type="file" class="d-none" id="cover" name="cover"
-              value="{{#if loginUser.cover}}{{loginUser.cover}}{{else}}/icons/cover.svg{{/if}}"
+            <img src="{{loginUser.cover}}" alt="" id="modal-edit-cover">
+            <input type="file" class="d-none" id="cover" name="cover" value="{{loginUser.cover}}"
               onchange="document.querySelector('#modal-edit-cover').src=window.URL.createObjectURL(this.files[0]);">
             <a>
               <input type="button" class="camera" onclick="document.querySelector('#cover').click();">
             </a>
             <a>
               <input type="button" class="X-white"
-                onclick="document.querySelector('#modal-edit-cover').src='/icons/cover.svg'">
+                onclick="document.querySelector('#modal-edit-cover').src='https://cdn.discordapp.com/attachments/918417533680361505/918418130169131028/cover.svg'">
             </a>
           </div>
 
           <div class="edit-avatar">
-            <img src="{{#if loginUser.avatar}}{{loginUser.avatar}}{{else}}/icons/avatar-lg.svg{{/if}}" alt="" id="modal-edit-avatar">
-            <input type="file" class="d-none" id="avatar" name="avatar"
-              value="{{#if loginUser.avatar}}{{loginUser.avatar}}{{else}}/icons/avatar-lg.svg{{/if}}"
+            <img src="{{loginUser.avatar}}" alt="{{loginUser.name}} avatar" id="modal-edit-avatar">
+            <input type="file" class="d-none" id="avatar" name="avatar" value="{{loginUser.avatar}}"
               onchange="document.querySelector('#modal-edit-avatar').src=window.URL.createObjectURL(this.files[0]);">
             <a>
               <input type="button" class="camera" onclick="document.querySelector('#avatar').click();">
@@ -154,7 +152,8 @@
                 onkeyup=";document.querySelector('#name-counter').textContent=`${this.value.length}/50`;"
                 value="{{loginUser.name}}">
             </div>
-            <div class="counter" id="name-counter">{{#if loginUser.name}}{{loginUser.name.length}}{{else}}0{{/if}}/50</div>
+            <div class="counter" id="name-counter">{{#if loginUser.name}}{{loginUser.name.length}}{{else}}0{{/if}}/50
+            </div>
           </div>
 
           <div class="for-intro edit-text">
