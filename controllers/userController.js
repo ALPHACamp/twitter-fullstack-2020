@@ -47,9 +47,9 @@ const userController = {
                       req.flash('success_msg', '成功註冊帳號！')
                       return res.redirect('/signin')
                     })
-                }      
+                }
               })
-            }
+          }
         })
     }
   },
@@ -83,7 +83,7 @@ const userController = {
       return res.redirect('back')
     }
     if (email !== currentUser.email) {
-      return User.findOne({ where: { email: email }})
+      return User.findOne({ where: { email: email } })
         .then((user) => {
           if (user) {
             req.flash('error_msg', '信箱已存在')
@@ -117,13 +117,15 @@ const userController = {
     res.redirect('/signin')
   },
   getUser: (req, res) => {
-    User.findByPk(req.params.id, { include: [
-      { model: User, as: 'Followings' },
-      { model: User, as: 'Followers' },
-      { model: Tweet, include: [ Reply, { model: User, as: 'LikedUsers'}] },
-      { model: Reply, include: [{ model: Tweet, include: [User] }] },
-      { model: Like, include: [{ model: Tweet, include: [User, Reply, { model: User, as: 'LikedUsers' }]}]}
-    ] }).then(user => {
+    User.findByPk(req.params.id, {
+      include: [
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+        { model: Tweet, include: [Reply, { model: User, as: 'LikedUsers' }], order: [['createdAt', 'DESC']] },
+        { model: Reply, include: [{ model: Tweet, include: [User] }], order: [['createdAt', 'DESC']] },
+        { model: Like, include: [{ model: Tweet, include: [User, Reply, { model: User, as: 'LikedUsers' }] }], order: [['createdAt', 'DESC']] }
+      ]
+    }).then(user => {
       // to avoid conflicting with res.locals.user
       const userData = {
         ...user.toJSON(),
@@ -132,7 +134,7 @@ const userController = {
         followerCount: user.Followers.length,
         isFollowed: helpers.getUser(req).Followings.map(item => item.id).includes(user.dataValues.id)
       }
-      
+
       userData.Tweets = userData.Tweets.map(tweet => ({
         ...tweet,
         replyCount: tweet.Replies.length,
@@ -156,10 +158,14 @@ const userController = {
     })
   },
   getUserTweets: (req, res) => {
-    User.findByPk(req.params.id, { include: { model: Tweet, include: [
-      { model: User, as: 'LikedUsers' },
-      { model: Reply, include: [User] }
-    ] } }).then(user => {
+    User.findByPk(req.params.id, {
+      include: {
+        model: Tweet, include: [
+          { model: User, as: 'LikedUsers' },
+          { model: Reply, include: [User] }
+        ]
+      }
+    }).then(user => {
       // to avoid conflicting with res.locals.user
       const userData = {
         ...user.toJSON()
@@ -179,11 +185,15 @@ const userController = {
     })
   },
   getLikes: (req, res) => {
-    User.findByPk(req.params.id, { include: { model: Tweet, as: 'LikedTweets', include: [
-      User,
-      { model: User, as: 'LikedUsers'},
-      { model: Reply, include: [ User ]}
-    ]} }).then(user => {
+    User.findByPk(req.params.id, {
+      include: {
+        model: Tweet, as: 'LikedTweets', include: [
+          User,
+          { model: User, as: 'LikedUsers' },
+          { model: Reply, include: [User] }
+        ]
+      }
+    }).then(user => {
       // to avoid conflicting with res.locals.user
       const userData = {
         ...user.toJSON()
@@ -221,7 +231,8 @@ const userController = {
       where: {
         followerId: helpers.getUser(req).id,
         followingId: req.params.id
-      } })
+      }
+    })
       .then((followship) => {
         followship.destroy()
           .then((followship) => {
