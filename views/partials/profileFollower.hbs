@@ -16,7 +16,7 @@
   {{#each followers}}
   <div class="follower">
     <a>
-      <img class="thumbnail" src="{{this.avatar}}" alt="">
+      <img class="thumbnail" src="{{this.avatar}}" alt="{{this.name}} avatar">
     </a>
     <div class="followerinfo">
       <a class="followeruser">
@@ -31,7 +31,7 @@
     {{else}}
     {{#if this.isFollowed}}
     <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-      <button type="submit" class="btn-fill xs">正在追蹤</button>
+      <button type="submit" class="btn-fill xs">正在跟隨</button>
     </form>
     {{else}}
     <form action="/followships" method="POST">
