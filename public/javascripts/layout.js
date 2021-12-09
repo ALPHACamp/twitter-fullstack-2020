@@ -8,7 +8,7 @@ body.addEventListener('click', async (event) => {
 
   if (target.classList.contains('close') || target.classList.contains('mask')) {
     // 點擊X icon關閉，另可點擊modal對話框以外地方關閉
-    Array.from(modal).map((el) => {
+    Array.from(modal).forEach((el) => {
       el.classList = 'modal d-none'
     })
   } else if (target.classList.contains('commenting')) {
@@ -93,7 +93,7 @@ const inputs = document.querySelectorAll('input')
 
 function isEmpty (nodeElement) {
   // 無文字回傳true，文字長度大於0，回傳false
-  return nodeElement.value.replace(/\s/g, '').length ? false : true
+  return !nodeElement.value.replace(/\s/g, '').length
 }
 
 function validityEmpty (form, inputarea) {
