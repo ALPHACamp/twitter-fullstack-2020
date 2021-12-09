@@ -136,18 +136,14 @@
                 <div class="post-text d-flex" style="flex-auto">{{this.description}}</div>
               </a>
               <div class="reply-like d-flex mt-2">
-                <div>
+                <div class="mr-2">
                   <i class="far fa-comment mr-2"></i>
-                  3
+                  {{ this.replyCounts }}
                 </div>
-                <form action="like" method="POST">
-                  <div class="ml-4">
-                    <button type="submit" class="like-btn">
-                      <i class="far fa-heart"></i>
-                    </button>
-                    3
-                  </div>
-                </form>
+                <div class="ml-4 like-icon">
+                  <i class="fas fa-heart"></i>
+                  {{ this.likeCounts }}
+                </div>
               </div>
             </div>
           </div>

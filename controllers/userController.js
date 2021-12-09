@@ -216,6 +216,7 @@ const userController = {
   },
   //使用者喜歡的內容頁面
   getUserLikes: (req, res) => {
+    const loginUser = helpers.getUser(req)
     return User.findByPk(req.params.userId, {
       include: [{ model: Tweet, as: 'LikedTweets', include: [User]}]
     }).then(user => {
@@ -227,10 +228,11 @@ const userController = {
         id: tweet.id,
         createdAt: tweet.createdAt,
         description: tweet.description,
-        likedCounts: tweet.likedCounts
+        replyCounts: tweet.replyCounts,
+        likeCounts: tweet.likeCounts
       }))
       console.log(data)
-      return res.render('userlikes', { likedTweets: data })
+      return res.render('userlikes', { loginUser, user, likedTweets: data })
       
     })
       
