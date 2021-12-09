@@ -59,6 +59,10 @@ module.exports = (app, passport) => {
   app.get('/users/:id', authenticated, userController.getUser)
   app.get('/users/:id/tweets', authenticated, userController.getUserTweets)
   app.get('/users/:id/likes', authenticated, userController.getLikes)
+  app.put('/users/:id/edit', authenticated, upload.fields([
+    { name: 'cover', maxCount: 1 },
+    { name: 'avatar', maxCount: 1 }
+  ]), userController.putUserProfile)
 
   // TWEET
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
@@ -83,5 +87,5 @@ module.exports = (app, passport) => {
   app.post('/api/users/:userId', authenticated, upload.fields([
     { name: 'cover', maxCount: 1 },
     { name: 'avatar', maxCount: 1 }
-  ]), apiController.postUser)
+  ]), apiController.postUser,userController.getUser)
 }

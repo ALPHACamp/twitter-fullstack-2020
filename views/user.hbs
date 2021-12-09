@@ -1,3 +1,14 @@
+<script>
+function submit() {
+  axios.get('/api/users/{{user.id}}')
+    .then(res => {
+  name.value = res.data.name
+  description.value = res.data.description
+  avatar.setAttribute("src", res.data.avatar)
+  cover.setAttribute("src", res.data.cover)
+})
+}
+</script>
 <div class="center container">
   <div class="left-bar">
     {{> navbar}}
@@ -24,7 +35,7 @@
     <div class="profile ml-3 position-relative">
       <div class="profile-action">
         {{#ifCond userData.id user.id}}
-        <button data-toggle="modal" data-target="#profileModal" data-id="{{user.id}}" class="button-follow">編輯個人資料</button>
+        <button data-toggle="modal" data-target="#profileModal" onclick="submit()" class="button-follow">編輯個人資料</button>
         {{else}}
         {{#if ../userData.isFollowed}}
         <form action="/followships/{{../userData.id}}?_method=DELETE" method="POST">
@@ -172,7 +183,7 @@
 <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content" style="width: 600px; height: 657px;">
-      <form action="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data" id="profileForm" novalidate>
+      <form action="/users/{{user.id}}/edit?_method=PUT" method="POST"  enctype="multipart/form-data" id="profileForm" novalidate>
         <div class="modal-header d-flex justify-content-start">
           <button type="button" class="button-close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>

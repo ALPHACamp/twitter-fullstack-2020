@@ -33,7 +33,6 @@ const replyController = {
       ]
     })
      .then(replies => {
-       console.log(replies)
        return res.render('reply', { replies })
      })
   }

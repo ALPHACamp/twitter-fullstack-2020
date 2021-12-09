@@ -56,7 +56,7 @@ const adminController = {
             }
           }
         })
-        console.log(users)
+        
         return res.render('admin/users', { users })
       })
   },
