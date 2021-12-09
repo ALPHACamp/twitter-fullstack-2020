@@ -60,7 +60,7 @@
           </a>
           {{#if this.isFollowing}}
           <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-            <button type="submit" class="btn-fill sm">正在追蹤</button>
+            <button type="submit" class="btn-fill sm">正在跟隨</button>
           </form>
           {{else}}
           <form action="/followships" method="POST">

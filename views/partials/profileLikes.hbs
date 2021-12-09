@@ -17,7 +17,7 @@
     <a><i class='btn-noti'></i></a>
     {{#if this.user.isFollowed}}
     <form action="/followships/{{this.user.id}}?_method=DELETE" method="POST">
-      <button type="submit" class="btn-fill sm">正在追蹤</button>
+      <button type="submit" class="btn-fill sm">正在跟隨</button>
     </form>
     {{else}}
     <form action="/followships" method="POST">
