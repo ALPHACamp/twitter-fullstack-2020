@@ -179,7 +179,6 @@ const userController = {
 
                 }))
 
-
                 return res.render('user', { tweets, users })
 
             }).catch(error => {

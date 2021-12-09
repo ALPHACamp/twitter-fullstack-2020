@@ -167,7 +167,7 @@ const tweetController = {
         }).then(like => {
             like.destroy()
         }).then(unlike => {
-            return res.redirect('/tweets')
+            return res.redirect('back')
         }).catch(error => {
             console.log(error)
         })
