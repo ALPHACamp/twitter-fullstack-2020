@@ -52,8 +52,7 @@ const userController = {
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id AND Followships.followerId = ${
-                helpers.getUser(req).id
+              `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id AND Followships.followerId = ${helpers.getUser(req).id
               } LIMIT 1)`
             ),
             'isFollowed'
@@ -90,8 +89,7 @@ const userController = {
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${
-                helpers.getUser(req).id
+              `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${helpers.getUser(req).id
               } LIMIT 1)`
             ),
             'isLiked'
@@ -165,8 +163,7 @@ const userController = {
               ],
               [
                 sequelize.literal(
-                  `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${
-                    helpers.getUser(req).id
+                  `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${helpers.getUser(req).id
                   } LIMIT 1)`
                 ),
                 'isLiked'
@@ -211,8 +208,7 @@ const userController = {
               'account',
               [
                 sequelize.literal(
-                  `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = Followers.id AND Followships.followerId = ${
-                    helpers.getUser(req).id
+                  `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = Followers.id AND Followships.followerId = ${helpers.getUser(req).id
                   } LIMIT 1)`
                 ),
                 'isFollowed'
@@ -433,7 +429,7 @@ const userController = {
       if (user2) {
         errors.push({ message: 'email 已重複註冊！' })
       }
-      if (account.length < 30) {
+      if (account.length > 30) {
         errors.push({ message: 'account 長度不可大於 30 字元！' })
       }
       if (account.length < 4) {

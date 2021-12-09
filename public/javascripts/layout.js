@@ -1,6 +1,7 @@
 const body = document.querySelector('body')
 const modal = document.querySelectorAll('.modal')
 const modalReply = document.querySelector('#modal-reply')
+const modalConfirm = document.querySelector('#modal-confirm-del')
 
 const tweetsPostForm = document.querySelector('#tweets-post-form')
 const tweetsPostFormTextarea = document.querySelector(
@@ -93,6 +94,30 @@ body.addEventListener('click', async (event) => {
     validityEmpty(modalReplyForm, modalReplyFormTextarea)
   } else if (target.classList.contains('back-arror')) {
     history.back()
+  } else if (target.classList.contains('confirm-del')) {
+    const tweetId = target.dataset.tweetid
+
+    modalConfirm.innerHTML = `
+    <div class="mask">
+      <div class="dialog sm">
+        <div class="warning-title">
+          <div class="warning-msg">
+            <h2 class="text">你刪除推文 !</h2>
+            <h4 class="text">此操作不可回復</h4>
+          </div>
+          <i class="warning"></i>
+        </div>
+        <div class="buttons">
+          <button class="btn-outline sm close">取消</button>
+          <form action="/admin/tweets/${tweetId}?_method=DELETE" method="POST">
+            <button type="submit" class="btn-fill sm">確認刪除</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    `
+
+    modalConfirm.classList.remove('d-none')
   }
 })
 
@@ -106,10 +131,10 @@ if (modalPostForm) {
 
 if (inputs) {
   inputs.forEach((el) => {
-    el.addEventListener('focus', function onInputFocus (event) {
+    el.addEventListener('focus', function onInputFocus(event) {
       el.parentElement.classList.add('focus')
     })
-    el.addEventListener('blur', function onInputBlur (event) {
+    el.addEventListener('blur', function onInputBlur(event) {
       el.parentElement.classList.remove('focus')
     })
     el.addEventListener('invalid', onInputInvalid)
@@ -118,14 +143,14 @@ if (inputs) {
   })
 }
 
-function isEmpty (nodeElement) {
+function isEmpty(nodeElement) {
   // 無文字回傳true，文字長度大於0，回傳false
   return !nodeElement.value.replace(/\s/g, '').length
 }
 
-function validityEmpty (form, inputarea) {
+function validityEmpty(form, inputarea) {
   // 驗證inputarea是否為空白
-  form.addEventListener('submit', function onFormSubmitted (event) {
+  form.addEventListener('submit', function onFormSubmitted(event) {
     if (!form.checkValidity() || isEmpty(inputarea)) {
       // 停止type=submit預設動作
       event.stopPropagation()
@@ -135,7 +160,7 @@ function validityEmpty (form, inputarea) {
     }
   })
 
-  inputarea.addEventListener('keyup', function onFormKeyup (event) {
+  inputarea.addEventListener('keyup', function onFormKeyup(event) {
     if (!isEmpty(inputarea)) {
       //  使用者開始輸入，隱藏alert message (加上d-none class)
       form.lastElementChild.firstElementChild.classList = 'd-none'
@@ -143,7 +168,7 @@ function validityEmpty (form, inputarea) {
   })
 }
 
-function onInputInvalid (event) {
+function onInputInvalid(event) {
   // submit 驗證客製功能
   const target = event.target
 
@@ -172,7 +197,7 @@ function onInputInvalid (event) {
   target.parentElement.classList.add('invalid')
 }
 
-function onInputKeyup (event) {
+function onInputKeyup(event) {
   // 使用者開始輸入，取消invalid樣式
   const target = event.target
   target.parentElement.classList.remove('invalid')

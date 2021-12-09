@@ -20,12 +20,15 @@
 
     {{!-- 刪除button --}}
     <span class="del-btn">
-      <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
-        <button type="submit"><i class="X-gray"></i></button>
-      </form>
+      <button type="button" class="confirm-del" data-tweetid="{{this.id}}"><i class="X-gray confirm-del"
+          data-tweetid="{{this.id}}"></i></button>
     </span>
 
   </div>
   {{/each}}
 
+</div>
+
+<div class="modal modal-confirm-del d-none" id="modal-confirm-del">
+  {{!-- layout.js --}}
 </div>
