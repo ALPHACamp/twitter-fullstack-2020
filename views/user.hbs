@@ -121,14 +121,15 @@
         <form method="POST" action="/users/{{loginUser.id}}/update?_method=PUT" enctype="multipart/form-data">
           <div class="edit-cover">
             <img src="{{loginUser.cover}}" alt="" id="modal-edit-cover">
-            <input type="file" class="d-none" id="cover" name="cover" value="{{loginUser.cover}}"
+            <input type="file" class="d-none" id="cover" name="cover"
               onchange="document.querySelector('#modal-edit-cover').src=window.URL.createObjectURL(this.files[0]);">
             <a>
               <input type="button" class="camera" onclick="document.querySelector('#cover').click();">
             </a>
             <a>
+              <input type="hidden" id="coverDefault" name="coverDefault" value="{{loginUser.cover}}">
               <input type="button" class="X-white"
-                onclick="document.querySelector('#modal-edit-cover').src='https://cdn.discordapp.com/attachments/918417533680361505/918418130169131028/cover.svg'">
+                onclick="document.querySelector('#modal-edit-cover').src='https://cdn.discordapp.com/attachments/918417533680361505/918418130169131028/cover.svg';document.querySelector('#coverDefault').value='';">
             </a>
           </div>
 
