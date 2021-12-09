@@ -2,13 +2,23 @@ const body = document.querySelector('body')
 const modal = document.querySelectorAll('.modal')
 const modalReply = document.querySelector('#modal-reply')
 
+const tweetsPostForm = document.querySelector('#tweets-post-form')
+const tweetsPostFormTextarea = document.querySelector(
+  '#tweets-post-form-textarea'
+)
+const modalPostForm = document.querySelector('#modal-post-form')
+const modalPostFormTextarea = document.querySelector(
+  '#modal-post-form-textarea'
+)
+const inputs = document.querySelectorAll('input,textarea')
+
 // // 全畫面監聽器
 body.addEventListener('click', async (event) => {
   const target = event.target
 
   if (target.classList.contains('close') || target.classList.contains('mask')) {
     // 點擊X icon關閉，另可點擊modal對話框以外地方關閉
-    Array.from(modal).map((el) => {
+    Array.from(modal).forEach((el) => {
       el.classList = 'modal d-none'
     })
   } else if (target.classList.contains('commenting')) {
@@ -72,28 +82,44 @@ body.addEventListener('click', async (event) => {
     modalReply.innerHTML = modalHtml
 
     modalReply.classList.remove('d-none')
+
+    const modalReplyForm = document.querySelector('#modal-reply-form')
+    const modalReplyFormTextarea = document.querySelector(
+      '#modal-reply-form-textarea'
+    )
+
+    validityEmpty(modalReplyForm, modalReplyFormTextarea)
+
   } else if (target.classList.contains('back-arror')) {
     history.back()
   }
 })
 
-const tweetsPostForm = document.querySelector('#tweets-post-form')
-const tweetsPostFormTextarea = document.querySelector(
-  '#tweets-post-form-textarea'
-)
-const modalPostForm = document.querySelector('#modal-post-form')
-const modalPostFormTextarea = document.querySelector(
-  '#modal-post-form-textarea'
-)
-const modalReplyForm = document.querySelector('#modal-reply-form')
-const modalReplyFormTextarea = document.querySelector(
-  '#modal-reply-form-textarea'
-)
-const inputs = document.querySelectorAll('input')
+if (tweetsPostForm) {
+  validityEmpty(tweetsPostForm, tweetsPostFormTextarea)
+}
+
+if (modalPostForm) {
+  validityEmpty(modalPostForm, modalPostFormTextarea)
+}
+
+if (inputs) {
+  inputs.forEach((el) => {
+    el.addEventListener('focus', function onInputFocus(event) {
+      el.parentElement.classList.add('focus')
+    })
+    el.addEventListener('blur', function onInputBlur(event) {
+      el.parentElement.classList.remove('focus')
+    })
+    el.addEventListener('invalid', onInputInvalid)
+
+    el.addEventListener('keyup', onInputKeyup)
+  })
+}
 
 function isEmpty(nodeElement) {
   // 無文字回傳true，文字長度大於0，回傳false
-  return nodeElement.value.replace(/\s/g, '').length ? false : true
+  return !nodeElement.value.replace(/\s/g, '').length
 }
 
 function validityEmpty(form, inputarea) {
@@ -116,61 +142,42 @@ function validityEmpty(form, inputarea) {
   })
 }
 
-if (tweetsPostForm) {
-  validityEmpty(tweetsPostForm, tweetsPostFormTextarea)
+function onInputInvalid(event) {
+  // submit 驗證客製功能
+  const target = event.target
+
+  if (target.validity.valueMissing) {
+    if (target.name === 'account') {
+      target.parentElement.setAttribute('err_msg', '帳號不存在！')
+    } else {
+      target.parentElement.setAttribute('err_msg', '內容不可為空白')
+    }
+  }
+
+  if (target.validity.typeMismatch) {
+    target.parentElement.setAttribute('err_msg', '格式錯誤')
+  }
+
+  if (target.validity.tooLong) {
+    target.parentElement.setAttribute('err_msg', '字數超出上限！')
+  }
+
+  if (target.validity.tooShort) {
+    target.parentElement.setAttribute('err_msg', '最少4個英文或數字組合！')
+  }
+
+  event.stopPropagation()
+  event.preventDefault()
+  target.parentElement.classList.add('invalid')
 }
 
-if (modalPostForm) {
-  validityEmpty(modalPostForm, modalPostFormTextarea)
-}
+function onInputKeyup(event) {
+  // 使用者開始輸入，取消invalid樣式
+  const target = event.target
+  target.parentElement.classList.remove('invalid')
 
-if (modalReplyForm) {
-  validityEmpty(modalReplyForm, modalReplyFormTextarea)
-}
-
-if (inputs) {
-  inputs.forEach((el) => {
-    el.addEventListener('focus', function onInputFocus(event) {
-      el.parentElement.classList.add('focus')
-    })
-    el.addEventListener('blur', function onInputBlur(event) {
-      el.parentElement.classList.remove('focus')
-    })
-    el.addEventListener('invalid', function onInputInvalid(event) {
-      const target = event.target
-
-      if (target.validity.valueMissing) {
-        if (target.name === 'account') {
-          target.parentElement.setAttribute('err_msg', '帳號不存在！')
-        } else {
-          target.parentElement.setAttribute('err_msg', '內容不可為空白')
-        }
-      }
-
-      if (target.validity.typeMismatch) {
-        target.parentElement.setAttribute('err_msg', '格式錯誤')
-      }
-
-      if (target.validity.tooLong) {
-        target.parentElement.setAttribute('err_msg', '字數超出上限！')
-      }
-
-      if (target.validity.tooShort) {
-        target.parentElement.setAttribute('err_msg', '最少4個英文或數字組合！')
-      }
-
-      event.stopPropagation()
-      event.preventDefault()
-      target.parentElement.classList.add('invalid')
-    })
-
-    el.addEventListener('keyup', function onInputKeyup(event) {
-      const target = event.target
-
-      target.parentElement.classList.remove('invalid')
-      if (event.target.name === 'account') {
-        target.value = target.value.replace(/[\W]/g, '')
-      }
-    })
-  })
+  if (event.target.name === 'account') {
+    // 避免非英文數字輸入account
+    target.value = target.value.replace(/[\W]/g, '')
+  }
 }
