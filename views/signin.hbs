@@ -18,13 +18,14 @@
 
         <div class="edit-text">
           <label for="account">帳號</label>
-          <input type="account" name="account" id="account" required minlength="4" maxlength="30" value={{#if
+          <input type="account" name="account" id="account" required autofocus autocomplete="username" value={{#if
             isBackend}}"root"{{else}}"user1"{{/if}}>
         </div>
 
         <div class="edit-text">
           <label for="password">密碼</label>
-          <input type="password" name="password" id="password" required value="12345678">
+          <input type="password" name="password" id="password" required autocomplete="current-password"
+            value="12345678">
         </div>
 
         <button type="submit" class="btn-fill">登入</button>

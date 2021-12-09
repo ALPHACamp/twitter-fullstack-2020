@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       cover: {
         type: DataTypes.STRING,
         defaultValue:
-          'https://images.unsplash.com/photo-1551817958-20204d6ab212?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400'
+          'https://cdn.discordapp.com/attachments/918417533680361505/918418130169131028/cover.svg'
       }
     },
     {}

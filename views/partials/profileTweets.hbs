@@ -6,8 +6,8 @@
   </div>
 </div>
 <div class="banner">
-  <img src="{{user.cover}}" alt="cover" class="cover">
-  <img src="{{user.avatar}}" alt="avatar" class="avatar">
+  <img src="{{user.cover}}" alt="{{user.name}} cover" class="cover">
+  <img src="{{user.avatar}}" alt="{{user.name}} avatar" class="avatar">
   <div class="buttons">
     {{#ifCond loginUser.id user.id}}
     <button type="button" class="btn-outline sm"
@@ -17,7 +17,7 @@
     <a><i class='btn-noti'></i></a>
     {{#if this.user.isFollowed}}
     <form action="/followships/{{this.user.id}}?_method=DELETE" method="POST">
-      <button type="submit" class="btn-fill sm">正在追蹤</button>
+      <button type="submit" class="btn-fill sm">正在跟隨</button>
     </form>
     {{else}}
     <form action="/followships" method="POST">
@@ -47,7 +47,7 @@
   {{#each tweets}}
   <div class="tweet">
     <a href="/users/{{../user.id}}/tweets">
-      <img class="thumbnail" src="{{../user.avatar}}" alt="">
+      <img class="thumbnail" src="{{../user.avatar}}" alt="{{../user.name}} avatar">
     </a>
     <div class="postcontent">
       <a class="postuser" href="/users/{{../user.id}}/tweets">
@@ -55,7 +55,7 @@
         <span class="at-name ellipsis">@{{../user.account}}</span>
         <span class="timer ellipsis">{{moment this.createdAt}}</span>
       </a>
-      <a href="/tweets/{{this.id}}" class="content" id="content">
+      <a href="/tweets/{{this.id}}" class="content">
         {{this.description}}
       </a>
       <div class="action">
