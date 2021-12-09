@@ -8,5 +8,12 @@ module.exports = {
 
   momentDay: function (b) {
     return moment(b).format('a h:mm•LL')
-  }
+  },
+
+  ifCond: function (a, b, options) {
+    if (a === b) {
+      return options.fn(this)
+    }
+    return options.inverse(this)
+  },
 }
