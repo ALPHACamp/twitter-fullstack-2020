@@ -62,7 +62,7 @@ npx sequelize db:seed:all
 npm run dev
 ```
 
-本地網址: http://localhost:8000/
+本地網址: https://safe-cliffs-40569.herokuapp.com/signin
 
 
 ## Built with
