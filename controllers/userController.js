@@ -108,11 +108,11 @@ const userController = {
       followingId: Number(req.body.userId)
     })
       .then( (followship) => {
-        // console.log('===========')
-        // console.log('followerId: ', followship.followerId)
-        // console.log('followingId: ', followship.followingId)
-        // console.log(followship.toJSON())
-        // console.log('===========')
+        console.log('===========')
+        console.log('followerId: ', followship.followerId)
+        console.log('followingId: ', followship.followingId)
+        console.log(followship.toJSON())
+        console.log('===========')
         return  res.redirect('back')
       })
   },
