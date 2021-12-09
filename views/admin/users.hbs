@@ -1,80 +1,46 @@
-<div id="AdminMain">
-  <div class="adminSidebar">
-    <div class="admin-logo">
-      <img src="../images/logo.svg" alt="">
-    </div>
-    <div class="buttonList">
-      <div class="navItem index">
-        <div class="admin-list-icon">
-          <img src="../images/home.svg" alt="">
+<div class="center-admin container">
+  
+  <div class="left-bar">
+    {{> navbar}}
+  </div>
+
+  <div class="header-admin">
+    <p class="p-3 m-0 font-weight-bold light-border" style="font-size: 18px; line-height: 26px;">使用者清單</p>
+  </div>
+
+  <div class="list-tweet list-admin light-border">
+    <div class="admin-user-card">
+    {{#each users}}
+      <div class="col-12 col-md-4 col-lg-3 mx-3 my-3 user-card">
+        <div class="background-img">
+          <img src="{{this.cover}}" class="card-img-top" alt="...">
         </div>
-        <button class="btn admin-list-btn">
-          <a href="/admin/tweets" class="navbar-action">
-            <p>推文清單</p>
-          </a>
-        </button>
-      </div>
-      <div class="navItem userProfile">
-        <div class="admin-list-icon">
-          <img src="../images/profile.svg" alt="">
+        <div class="avatar">
+          <img src="{{this.avatar}}" alt="" class="card-img-top">
         </div>
-        <button class="btn admin-list-btn">
-          <a href="/admin/users" class="navbar-action active">
-            <p>使用者列表</p>
-          </a>
-        </button>
-      </div>
-      <div class="navItem logout">
-        <div class="admin-list-icon">
-          <img src="../images/logout.svg" alt="">
+        <div class="user-card-body">
+          <h5 class="card-title">{{this.name}}</h5>
+          <p class="card-text">@{{this.account}}</p>
+          <div class="click-on-condition">
+            <div class="reply-count">
+              <i class="far fa-comment"></i>{{this.replyCount}}
+            </div>
+            <div class="like-count">
+              <i class="far fa-heart"></i>{{this.likeCount}}
+            </div>
+          </div>
+          <div class="follow-condition">
+            <div class="following-count">
+              <span>{{this.followingCount}}個</span>跟隨中
+            </div>
+            <div class="followers-count">
+              <span>{{this.followerCount}}個</span>跟隨者
+            </div>
+          </div>
         </div>
-        <button class="btn admin-list-btn">
-          <a href="/logout" class="navbar-action">
-            <p>登出</p>
-          </a>
-        </button>
       </div>
+    {{/each}}
     </div>
   </div>
 
-  <div class="AdminTweetsPanel">
-    <div class="admin-user-title" style="width: 100%;">
-      <h1>使用者列表</h1>
-    </div>
-    <div class="user-card-container">
-      <div class="admin-user-card">
-      {{#each users}}
-        <div class="col-12 col-md-4 col-lg-3 mx-3 my-3 user-card">
-          <div class="background-img">
-            <img src="{{this.cover}}" class="card-img-top" alt="...">
-          </div>
-          <div class="avatar">
-            <img src="{{this.avatar}}" alt="" class="card-img-top">
-          </div>
-          <div class="user-card-body">
-            <h5 class="card-title">{{this.name}}</h5>
-            <p class="card-text">@{{this.account}}</p>
-            <div class="click-on-condition">
-              <div class="reply-count">
-                <i class="far fa-comment"></i>{{this.replyCount}}
-              </div>
-              <div class="like-count">
-                <i class="far fa-heart"></i>{{this.likeCount}}
-              </div>
-            </div>
-            <div class="follow-condition">
-              <div class="following-count">
-                <span>{{this.followingCount}}個</span>跟隨中
-              </div>
-              <div class="followers-count">
-                <span>{{this.followerCount}}個</span>跟隨者
-              </div>
-            </div>
-          </div>
-        </div>
-      {{/each}}
-      </div>
-    </div>
-    
-  </div>
 </div>

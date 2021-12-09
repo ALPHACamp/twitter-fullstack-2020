@@ -3,13 +3,27 @@
     <img src="/images/logo.svg" alt="">
   </div>
   <div class="navbar-wrapper">
+    {{#ifCond user.role 'admin'}}
+    <a class="navbar-action active" href="/admin/tweets">
+      <div class="icon-wrapper">
+        <img src="/images/home.svg" alt="">
+      </div>
+      推文清單
+    </a>
+    <a class="navbar-action" href="/admin/users">
+      <div class="icon-wrapper">
+        <img src="/images/profile.svg" alt="">
+      </div>
+      使用者清單
+    </a>
+    {{else}}
     <a class="navbar-action active" href="/">
       <div class="icon-wrapper">
         <img src="/images/home.svg" alt="">
       </div>
       首頁
     </a>
-    <a class="navbar-action" href="/users/{{user.id}}">
+    <a class="navbar-action" href="/users/{{../user.id}}">
       <div class="icon-wrapper">
         <img src="/images/profile.svg" alt="">
       </div>
@@ -21,8 +35,11 @@
       </div>
       設定
     </a>
+    {{/ifCond}}
   </div>
+  {{#ifCond user.role 'user'}}
   <button class="button-submit" style="width: 210px;" data-toggle="modal" data-target="#tweetModal">推文</button>
+  {{/ifCond}}
   <a class="navbar-action position-absolute" href="/logout" style="bottom: 15px;">
     <div class="icon-wrapper">
       <img src="/images/logout.svg" alt="">

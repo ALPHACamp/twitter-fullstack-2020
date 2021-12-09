@@ -16,7 +16,7 @@ const userController = {
   },
   signUp: (req, res) => {
     if (!req.body.email || !req.body.name || !req.body.account || !req.body.password) {
-      res.flash('error_msg', '所有欄位皆為必填')
+      req.flash('error_msg', '所有欄位皆為必填')
       res.redirect('signup')
     }
     if (req.body.checkPassword !== req.body.password) {
@@ -71,7 +71,7 @@ const userController = {
   editData: (req, res) => {
     const { name, email, password, checkPassword, account } = req.body
     const currentUser = helpers.getUser(req)
-    if (!email || !name || !password || !checkPassword) {
+    if (!email || !name || !password || !account) {
       req.flash('error_msg', '所有欄位皆為必填')
       return res.redirect('back')
     }

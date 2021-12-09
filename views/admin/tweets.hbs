@@ -1,92 +1,33 @@
-<div id="AdminMain">
-  <div class="adminSidebar">
-    <div class="admin-logo">
-      <img src="../images/logo.svg" alt="">
-    </div>
-    <div class="buttonList">
-      <div class="navItem index">
-        <div class="admin-list-icon">
-          <img src="../images/home.svg" alt="">
-        </div>
-        <button class="btn admin-list-btn">
-          <a href="/admin/tweets" class="navbar-action active">
-            <p>推文清單</p>
-          </a>
-        </button>
-      </div>
-      <div class="navItem userProfile">
-        <div class="admin-list-icon">
-          <img src="../images/profile.svg" alt="">
-        </div>
-        <button class="btn admin-list-btn">
-          <a href="/admin/users" class="navbar-action">
-            <p>使用者列表</p>
-          </a>
-        </button>
-      </div>
-      <div class="navItem logout">
-        <div class="admin-list-icon">
-          <img src="../images/logout.svg" alt="">
-        </div>
-        <button class="btn admin-list-btn">
-          <a href="/logout" class="navbar-action">
-            <p>登出</p>
-          </a>
-        </button>
-      </div>
-    </div>
+<div class="center-admin container">
+
+  <div class="left-bar">
+    {{> navbar}}
   </div>
 
-  <div class="AdminTweetsPanel">
-    <div class="admin-tweet-title" style="width: 100%;">
-      <h1>推文清單</h1>
-    </div>
-    <div>
-      <div class="tweet-container">
-        <div class="tweetlist-group">
-          {{#each tweets}}
-          <div class="tweetlist-grounp-item d-flex align-items-start justify-content-start">
-            <div class="admin-avatar">
-              <img src="{{this.User.avatar}}" alt="">
-            </div>
-            <div class="tweet-info">
-              <div class="title">
-                <span>{{this.User.name}}</span> @{{this.User.account}}．{{moment this.createdAt}}
-              </div>
-              <p>{{this.description}}</p>
-            </div>
-            <div class="delete">
-              <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="float: right;">
-                <button type="submit" class="btn"><i class="fas fa-times"></i></button>
-              </form>
-            </div>
+  <div class="header-admin">
+    <p class="p-3 m-0 font-weight-bold light-border" style="font-size: 18px; line-height: 26px;">推文清單</p>
+  </div>
+
+  <div class="list-tweet list-admin">
+    <ul class="list-group">
+      {{#each tweets}}
+      <li class="list-group-item px-3 d-flex align-items-start justify-content-start">
+        <img class="mr-3 thumbnail" src="{{this.User.avatar}}" alt="">
+        <div class="content-wrapper w-100">
+          <div class="mb-2">
+            <p class="font-weight-bold d-inline">{{this.User.name}}</p>
+            <p class="light-color d-inline">@{{this.User.account}}．{{moment this.createdAt}}</p>
           </div>
-          <br>
-        {{/each}}
-        </div>
-      </div>
-    </div>
-    {{!-- <div class="list-tweet mt-2">
-      <ul class="list-group">
-        {{#each tweets}}
-        <li class="list-group-item px-3 d-flex align-items-start justify-content-start">
-          <img class="mr-3 thumbnail" src="{{this.User.avatar}}" alt="">
-          <div class="content-wrapper w-100">
-            <div class="mb-2">
-              <p class="font-weight-bold d-inline">{{this.User.name}}</p>
-              <p class="light-color d-inline">@{{this.User.account}}．{{moment this.createdAt}}</p>
-            </div>
             <p>{{this.description}}</p>
-          </div>
-          <div>
-            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="float: right;">
-              <button type="submit" class="btn"><i class="fas fa-times"></i></button>
-            </form>
-          </div>
-        </li>
-        {{/each}}
-      </ul>
-    </div> --}}
+        </div>
+        <div class="delete">
+          <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="float: right;">
+            <button type="submit" class="btn"><i class="fas fa-times"></i></button>
+          </form>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
   </div>
+  
 </div>
-
