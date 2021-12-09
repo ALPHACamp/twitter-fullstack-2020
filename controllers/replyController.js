@@ -27,7 +27,7 @@ const replyController = {
       if (req.body.comment === '') {
         req.flash('error_messages', '內容不可空白')
         return res.redirect('back')
-      } 
+      }
 
       await Reply.create({
         UserId: helpers.getUser(req).id,

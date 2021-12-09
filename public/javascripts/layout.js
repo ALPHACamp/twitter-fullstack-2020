@@ -89,7 +89,6 @@ body.addEventListener('click', async (event) => {
     )
 
     validityEmpty(modalReplyForm, modalReplyFormTextarea)
-
   } else if (target.classList.contains('back-arror')) {
     history.back()
   }
@@ -105,10 +104,10 @@ if (modalPostForm) {
 
 if (inputs) {
   inputs.forEach((el) => {
-    el.addEventListener('focus', function onInputFocus(event) {
+    el.addEventListener('focus', function onInputFocus (event) {
       el.parentElement.classList.add('focus')
     })
-    el.addEventListener('blur', function onInputBlur(event) {
+    el.addEventListener('blur', function onInputBlur (event) {
       el.parentElement.classList.remove('focus')
     })
     el.addEventListener('invalid', onInputInvalid)
@@ -117,14 +116,14 @@ if (inputs) {
   })
 }
 
-function isEmpty(nodeElement) {
+function isEmpty (nodeElement) {
   // 無文字回傳true，文字長度大於0，回傳false
   return !nodeElement.value.replace(/\s/g, '').length
 }
 
-function validityEmpty(form, inputarea) {
+function validityEmpty (form, inputarea) {
   // 驗證inputarea是否為空白
-  form.addEventListener('submit', function onFormSubmitted(event) {
+  form.addEventListener('submit', function onFormSubmitted (event) {
     if (!form.checkValidity() || isEmpty(inputarea)) {
       // 停止type=submit預設動作
       event.stopPropagation()
@@ -134,7 +133,7 @@ function validityEmpty(form, inputarea) {
     }
   })
 
-  inputarea.addEventListener('keyup', function onFormKeyup(event) {
+  inputarea.addEventListener('keyup', function onFormKeyup (event) {
     if (!isEmpty(inputarea)) {
       //  使用者開始輸入，隱藏alert message (加上d-none class)
       form.lastElementChild.firstElementChild.classList = 'd-none'
@@ -142,7 +141,7 @@ function validityEmpty(form, inputarea) {
   })
 }
 
-function onInputInvalid(event) {
+function onInputInvalid (event) {
   // submit 驗證客製功能
   const target = event.target
 
@@ -171,7 +170,7 @@ function onInputInvalid(event) {
   target.parentElement.classList.add('invalid')
 }
 
-function onInputKeyup(event) {
+function onInputKeyup (event) {
   // 使用者開始輸入，取消invalid樣式
   const target = event.target
   target.parentElement.classList.remove('invalid')
