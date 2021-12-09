@@ -1,155 +1,157 @@
-<div class="row col-md-12" style="width:100%;">
+<div class="wrap d-flex">
   {{!-- navbar --}}
-  <div class="col-3">
-    <img class="mb-4 pl-2" src="/images/logo.png">
-    <div class="nav-ul-wrapper">
-      <ul class="nav flex-column">
-        <li class="nav-item py-2">
-          <a class="nav-link active" href="/tweets">
-            <i class="fas fa-home"></i>
-            <span class="ml-3">首頁</span>
-          </a>
-        </li>
-        <li class="nav-item py-2">
-          <a class="nav-link" href="/users/{{user.id}}/tweets">
-            <i class="far fa-user"></i>
-            <span class="ml-3">個人資料</span>
-          </a>
-        </li>
-        <li class="nav-item py-2">
-          <a class="nav-link" href="#">
-            <i class="fas fa-cog"></i>
-            <span class="ml-3">設定</span>
-          </a>
-        </li>
-        <li class="nav-item py-2">
-          <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal-tweet">推文</button>
-        </li>
-      </ul>
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link" href="/logout">
-            <i class="fas fa-sign-out-alt"></i>
-            <span class="ml-3">登出</span>
-          </a>
-        </li>
-      </ul>
+  <div class="row col-12">
+    <div class="tweets-left col-2">
+      <img class="mb-4 pl-2" src="/images/logo.png">
+      <div class="nav-ul-wrapper">
+        <ul class="nav flex-column">
+          <li class="nav-item py-2">
+            <a class="nav-link active" href="/">
+              <i class="fas fa-home"></i>
+              <span class="ml-3">首頁</span>
+            </a>
+          </li>
+          <li class="nav-item py-2">
+            <a class="nav-link" href="/users/{{ user.id }}/tweets">
+              <i class="far fa-user"></i>
+              <span class="ml-3">個人資料</span>
+            </a>
+          </li>
+          <li class="nav-item py-2">
+            <a class="nav-link" href="/users/{{ user.id}}/setting/edit">
+              <i class="fas fa-cog"></i>
+              <span class="ml-3">設定</span>
+            </a>
+          </li>
+          <li class="nav-item py-2">
+            <button type="button" class="btn tweet-button" data-toggle="modal" data-target="#exampleModal">推文</button>
+          </li>
+        </ul>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">
+              <i class="fas fa-sign-out-alt"></i>
+              <span class="ml-3">登出</span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
 
-  {{!-- tweets and reply --}}
-  <div class="middle-side col-md-5">
-    <div class="text-title d-flex align-items-center">
-      <a href="javascript:history.back()">
-        <div class="back-icon">
-          <i class="fas fa-arrow-left"></i>
-        </div>
-      </a>
-      <div class="name-info">
-        <div class="title-name ml-3">推文</div>
-      </div>
-    </div>
-    <hr />
-    <div class="tweet-reply">
-      <div class="account-info d-flex">
-        <div>
-          <a href="/users/{{tweet.User.id}}/tweets">
-            <img class="avatar small" src="{{tweet.User.avatar}}">
-          </a>
-        </div>
-        <div class="name-account ml-3">
-          <div class="name">{{tweet.User.name}}</div>
-          <div class="atAccount">@{{tweet.User.account}}</div>
-        </div>
-      </div>
-      <p class="post-text mt-3">{{tweet.description}}</p>
-      <div class="time">
-        <p>{{momentDay tweet.createdAt}}</p>
-      </div>
-      <hr />
-      <div class="reply-like-count d-flex">
-        <div class="reply d-flex">
-          <div class="number">2</div>
-          <div class="text">回覆</div>
-        </div>
-        <div class="like d-flex ml-2">
-          <div class="number">1</div>
-          <div class="text">喜歡次數</div>
+    {{!-- tweets and reply --}}
+    <div class="tweet-center col-md-6">
+      <div class="text-title d-flex align-items-center">
+        <a href="javascript:history.back()" style="color: black;">
+          <div class="back-icon">
+            <i class="fas fa-arrow-left"></i>
+          </div>
+        </a>
+        <div class="name-info">
+          <div class="title-name ml-3">推文</div>
         </div>
       </div>
       <hr />
-      <div class="icon-reply d-flex">
-        <div class="reply" id="reply" data-toggle="modal" data-target="#exampleModal">
-          <i class="far fa-comment"></i>
-        </div>
-        <form action="#" method="POST">
-          <button class="btn ml-5" type="submit">
-            <i class="far fa-heart"></i>
-          </button>
-        </form>
-      </div>
-      <hr />
-      {{#each tweet.Replies}}
-      <div class="tweet col-md-12">
-        <div class="d-flex">
-          <div class="col-md-2 mt-2 mr-2" style="padding: 0%;">
-            <a href="/users/{{this.UserId}}/tweets" class="text-muted">
-              <img class="avatar small" src="{{this.User.avatar}}">
+      <div class="tweet-reply">
+        <div class="account-info d-flex">
+          <div>
+            <a href="/users/{{tweet.User.id}}/tweets">
+              <img class="avatar small" src="{{tweet.User.avatar}}">
             </a>
           </div>
-          <div class="col-md-10">
-            <div class="account-info d-flex" style="flex-auto">
-              <div class="user-name">{{this.User.name}}</div>
-              <div class="atAccount mb-2 ml-2">@{{this.User.account}}•{{moment
-                this.createdAt}}</div>
-            </div>
-            <div class="reply d-flex">
-              <div class="reply-comment">回覆</div>
-              <a href="#" class="text-muted">
-                <div class="reply-account ml-2">@{{../tweet.User.account}}</div>
-              </a>
-            </div>
-            <div class="post-text d-flex" style="flex-auto">{{this.comment}}</div>
+          <div class="name-account ml-3">
+            <div class="user-name">{{tweet.User.name}}</div>
+            <div class="atAccount">@{{tweet.User.account}}</div>
           </div>
         </div>
+        <p class="tweet-post-text mt-3">{{tweet.description}}</p>
+        <div class="time">
+          <p>{{momentDay tweet.createdAt}}</p>
+        </div>
+        <hr />
+        <div class="reply-like-count d-flex">
+          <div class="reply d-flex">
+            <div class="number">2</div>
+            <div class="text">回覆</div>
+          </div>
+          <div class="like d-flex ml-2">
+            <div class="number">1</div>
+            <div class="text">喜歡次數</div>
+          </div>
+        </div>
+        <hr />
+        <div class="icon-reply d-flex">
+          <div class="reply" id="reply" data-toggle="modal" data-target="#exampleModal">
+            <i class="far fa-comment"></i>
+          </div>
+          <form action="#" method="POST">
+            <button class="like-button ml-5" type="submit">
+              <i class="far fa-heart"></i>
+            </button>
+          </form>
+        </div>
+        <hr />
+        {{#each tweet.Replies}}
+        <div class="tweet col-md-12">
+          <div class="d-flex">
+            <div class="col-md-2 mt-2 mr-2" style="padding: 0%;">
+              <a href="/users/{{this.UserId}}/tweets" class="text-muted">
+                <img class="avatar small" src="{{this.User.avatar}}">
+              </a>
+            </div>
+            <div class="col-md-10">
+              <div class="account-info d-flex" style="flex-auto">
+                <div class="user-name">{{this.User.name}}</div>
+                <div class="atAccount mb-2 ml-2">@{{this.User.account}}•{{moment
+                  this.createdAt}}</div>
+              </div>
+              <div class="reply d-flex">
+                <div class="reply-comment">回覆</div>
+                <a href="#" class="text-muted">
+                  <div class="atAccount ml-2">@{{../tweet.User.account}}</div>
+                </a>
+              </div>
+              <div class="post-text d-flex mt-3" style="flex-auto">{{this.comment}}</div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        {{/each}}
       </div>
-      <hr />
-      {{/each}}
     </div>
-  </div>
 
-  {{!-- popular --}}
-  <div class="col-4">
-    <div class="card border-light popular">
-      <div class="card-header">
-        Popular
+    {{!-- popular --}}
+    <div class="col-3">
+      <div class="card border-light popular">
+        <div class="card-header">
+          Popular
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex">
+            <div class="mr-2">
+              <img class="avatar small" src="/images/exampleAvatar1.png">
+            </div>
+            <div class="mr-5">
+              <p class="mb-0">Pizza Hut</p>
+              <p class="atAccount">@pizzahut</p>
+            </div>
+            <div class="pt-2">
+              <a class="btn py-2" href="#">正在追蹤</a>
+            </div>
+          </li>
+          <li class="list-group-item d-flex">
+            <div class="mr-2">
+              <img class="avatar small" src="/images/exampleAvatar2.png">
+            </div>
+            <div class="mr-5">
+              <p class="mb-0">MacDonald</p>
+              <p class="atAccount">@macdonald</p>
+            </div>
+            <div class="pt-2">
+              <a class="btn btn-outline py-2" href="#">追蹤</a>
+            </div>
+          </li>
+        </ul>
       </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar1.png">
-          </div>
-          <div class="mr-5">
-            <p class="mb-0">Pizza Hut</p>
-            <p class="atAccount">@pizzahut</p>
-          </div>
-          <div class="pt-2">
-            <a class="btn py-2" href="#">正在追蹤</a>
-          </div>
-        </li>
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar2.png">
-          </div>
-          <div class="mr-5">
-            <p class="mb-0">MacDonald</p>
-            <p class="atAccount">@macdonald</p>
-          </div>
-          <div class="pt-2">
-            <a class="btn btn-outline py-2" href="#">追蹤</a>
-          </div>
-        </li>
-      </ul>
     </div>
   </div>
 </div>

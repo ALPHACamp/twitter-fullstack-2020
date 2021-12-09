@@ -1,6 +1,63 @@
 html, body {
   font-family: 'Noto Sans TC', sans-serif;
 }
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1350px;
+}
+
+.form-signin{
+  margin: auto;
+}
+.logo {
+  display: flex;
+  justify-content: center;
+}
+.sign-title {
+  margin-top: 2%;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 23px;
+  line-height: 33px;
+}
+.form-label-group {
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+}
+.form-label-groups {
+  margin-top: 3%;
+  display: flex;
+  justify-content: center;
+}
+.form-control {
+  max-width: 540px;
+  height: 52px;
+  left: 450px;
+  background: #F5F8FA;
+  border-radius: 0px 0px 4px 4px;
+  border: none;
+  border-bottom: solid 2px #657786;
+}
+.text-center-signup {
+  display: flex;
+  justify-content: right;
+  margin-right: 10%;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+}
+.text-center-back {
+  display: flex;
+  justify-content: center;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+}
 
 .nav-ul-wrapper {
   display:flex;
@@ -31,6 +88,22 @@ html, body {
   font-size: 18px;
   line-height: 18px;
   color:#FFFFFF;
+}
+
+.siginin-button {
+  margin-left:15.5%;
+  width: 540px;
+  height: 46px;
+  left: 450px;
+  top: 381px;
+}
+
+.signup-button {
+  margin-left: 29.5%;
+  width: 540px;
+  height: 46px;
+  left: 450px;
+  top: 633px;
 }
 
 .btn-outline {
@@ -70,12 +143,14 @@ img.avatar.small {
 
 
 .atAccount {
+  font-style: normal;
+  font-weight: bold;
   font-size: 15px;
   color: #657786;
 }
 
-.content-container {
-  background: #F5F8FA;
+.tweets-center {
+  background: #f5f8fa;
   padding-right: 0px;
   padding-left: 0px;
 }
@@ -161,4 +236,94 @@ img.avatar.large {
   position:absolute;
   left:13.5%;
   top:25vh;
+}
+
+.tweets-left {
+  padding-right: 2%;
+  margin-right: 3%;
+}
+
+.post-content {
+  background-color: white;
+  border-bottom: none;
+}
+
+.post-tweet {
+  margin-left: 89.5%;
+  width: 66px;
+  height: 38px;
+  top: 125px;
+}
+
+.tweet-button {
+  width: 210px;
+  height: 38px;
+}
+
+.post-text {
+  font-size: 15px;
+}
+
+.card-body {
+  padding: auto;
+}
+
+.like-button {
+  background: transparent;
+  color: #657786;
+  border: none;
+}
+
+.push-button {
+  background: transparent;
+  color: red;
+  border: none;
+}
+
+.tweet-right {
+  margin-right: 5%;
+}
+
+.followings-button {
+  width: 90px;
+  height: 35px;
+  left: 245px;
+  top: 7px;
+  border-radius: 100px;
+  margin-left:17%;
+}
+
+.followers-button {
+  width: 90px;
+  height: 35px;
+  left: 245px;
+  top: 7px;
+  border-radius: 100px;
+  background: white;
+  color: #FF6600;
+  border-color: #FF6600;
+  margin-left:18%;
+}
+.post-text {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  color: #1C1C1C;
+}
+
+.tweet-post-text {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 23px;
+}
+.time {
+  font-weight: 500;
+  font-size: 15px;
+  color: #657786;
+}
+.user-name {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  color: #1C1C1C;
 }

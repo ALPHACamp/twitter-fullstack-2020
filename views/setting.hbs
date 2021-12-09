@@ -1,6 +1,6 @@
 <div class="row" style="width:100%;">
   {{!-- navbar --}}
-  <div class="col-3">
+  <div class="col-2">
     <img class="mb-4 pl-2" src="/images/logo.png">
     <div class="nav-ul-wrapper">
       <ul class="nav flex-column">
@@ -38,35 +38,38 @@
   </div>
 
   {{!-- content --}}
-  <div class="col-5 content-container">
+  <div class="col-6 content-container">
     <form class="form-signin" action="/users/{{ user.id }}/setting?_method=PUT" method="POST" style="width: 100%;">
       <div class="text-center mb-4">
         <h1 class="h3 mb-3 font-weight-normal">帳戶設定</h1>
       </div>
-      
+
       <div class="form-label-group mb-2">
         <label for="inputAccount">帳號<span style="color: red;">*</span></label>
-        <input type="text" name="account" class="form-control" placeholder="請輸入帳號" value="{{ user.account }}" required autofocus>
+        <input type="text" name="account" class="form-control" placeholder="請輸入帳號" value="{{ user.account }}" required
+          autofocus>
       </div>
-      
+
       <div class="form-label-group mb-2">
         <label for="inputName">名稱<span style="color: red;">*</span></label>
-        <input type="text" name="name" class="form-control" placeholder="請輸入名稱" value="{{ user.name }}" required autofocus>
+        <input type="text" name="name" class="form-control" placeholder="請輸入名稱" value="{{ user.name }}" required
+          autofocus>
       </div>
-      
+
       <div class="form-label-group mb-2">
         <label for="inputEmail">Email<span style="color: red;">*</span></label>
-        <input type="text" name="email" class="form-control" placeholder="請輸入Email" value="{{ user.email }}" required autofocus>
+        <input type="text" name="email" class="form-control" placeholder="請輸入Email" value="{{ user.email }}" required
+          autofocus>
       </div>
-      
+
       <div class="form-label-group mb-2">
         <label for="inputPassword">密碼</label>
         <input type="password" name="password" class="form-control" placeholder="請輸入密碼">
       </div>
-      
+
       <div class="form-label-group mb-2">
         <label for="inputPasswordCheck">確認密碼</label>
-        <input type="password" name="passwordCheck" class="form-control" placeholder="請再次輸入密碼" >
+        <input type="password" name="passwordCheck" class="form-control" placeholder="請再次輸入密碼">
       </div>
       <br />
       <div class="d-flex justify-content-end pr-1">

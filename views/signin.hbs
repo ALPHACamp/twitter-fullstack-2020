@@ -1,19 +1,22 @@
-<form class="form-signin" action="/signin" method="POST" style="width: 100%;">
-  <div class="text-center mb-4">
-    <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
+<form class="form-signin" action="/signin" method="POST" style="width: 60%;">
+  <div class="logo">
+    <img src="/images/logo.png">
+  </div>
+  <div class="text-center ">
+    <div class="sign-title">登入Alphitter</div>
   </div>
   <div class="form-label-group">
-    <label for="inputAccount">Account</label>
-    <input type="text" name="account" class="form-control" placeholder="Account" required autofocus>
+    <input type="text" name="account" id="account" class="form-control" placeholder="帳號" required autofocus>
+    <div class="invalid-feedback"></div>
   </div>
-  <div class="form-label-group">
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" class="form-control" placeholder="Password" required>
+  <div class="form-label-groups">
+    <input type="password" name="password" id="password" class="form-control" placeholder="密碼" required>
+    <div class="invalid-feedback"></div>
   </div>
-  <br />
-  <button class="btn btn-lg btn-primary btn-block" type="submit">登入</button>
-  <div class="text-center mb-4">
-    <p><a href="/signup">註冊</a></p>
-    <p><a href="/admin/signin">後台登入</a></p>
+  <br>
+  <button class="btn siginin-button" type="submit">登入</button>
+  <div class="text-center-signup mt-4">
+    <a href="/signup">註冊Alphitter</a>•
+    <a href="/admin/signin">後台登入</a>
   </div>
 </form>
