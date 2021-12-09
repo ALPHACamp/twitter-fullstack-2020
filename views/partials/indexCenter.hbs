@@ -58,11 +58,11 @@
                 <p>{{this.description}}</p>
             </a>
             <div class="icon-reply" style="padding-left:15px">
-                <div class=" row reply" id="reply" data-toggle="modal" data-target="#reply-tweet-{{this.id}}">
+                <div class=" row reply" id="reply" >
                     {{#if this.isReplied}}
-                        <i class="fas fa-comment" id="reply"></i>
+                        <i class="fas fa-comment" id="reply" data-toggle="modal" data-target="#reply-tweet-{{this.id}}"></i>
                     {{else}}
-                        <i class="far fa-comment" id="reply"></i>
+                        <i class="far fa-comment" id="reply" data-toggle="modal" data-target="#reply-tweet-{{this.id}}"></i>
                     {{/if}}
                     <p class="ml-2 mr-2">{{this.repliesCount}}</p>
                     {{#if isLiked}}
