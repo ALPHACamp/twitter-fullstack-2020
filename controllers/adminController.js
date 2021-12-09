@@ -1,7 +1,5 @@
 const db = require('../models')
-const { sequelize } = db
-const { Op } = db.Sequelize
-const { User, Tweet, Reply, Like, Followship } = db
+const { User, Tweet, Like } = db
 
 const adminController = {
   getTweets: async (req, res) => {
@@ -10,12 +8,12 @@ const adminController = {
         raw: true,
         nest: true,
         order: [['createdAt', 'DESC']],
-        include: [{ model: User }],
+        include: [{ model: User }]
       })
 
       tweets = tweets.map((tweet) => ({
         ...tweet,
-        description: tweet.description.slice(0, 50),
+        description: tweet.description.slice(0, 50)
       }))
 
       return res.render('admin', { tweets, partial: 'adminTweets' })
@@ -52,7 +50,7 @@ const adminController = {
             user.Tweets.map((tweet) => tweet.Likes.length)
           ), // 有寫工具function adminController.sumLikes(arr) 計算加總
           followingCount: user.Followings.length,
-          followerCount: user.Followers.length,
+          followerCount: user.Followers.length
         }))
         .sort((a, b) => b.tweetCount - a.tweetCount) // 根據tweet數排序
 
@@ -67,7 +65,7 @@ const adminController = {
     let likes = 0
     arr.forEach((i) => (likes += i))
     return likes
-  },
+  }
 }
 
 module.exports = adminController

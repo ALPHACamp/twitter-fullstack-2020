@@ -1,7 +1,6 @@
 const helpers = require('../../_helpers')
 const db = require('../../models')
-const { sequelize } = db
-const { User, Tweet, Reply, Like, Followship } = db
+const { User, Tweet } = db
 const moment = require('moment')
 
 const tweetController = {
@@ -10,16 +9,18 @@ const tweetController = {
       let tweet = await Tweet.findByPk(req.params.tweetId, {
         include: [User]
       })
-      tweet.dataValues.createdAt =  moment.updateLocale('zh-tw', { meridiem: tweet.dataValues.createdAt })
-      tweet.dataValues.createdAt =  moment(tweet.dataValues.createdAt).fromNow()
+      tweet.dataValues.createdAt = moment.updateLocale('zh-tw', {
+        meridiem: tweet.dataValues.createdAt
+      })
+      tweet.dataValues.createdAt = moment(tweet.dataValues.createdAt).fromNow()
 
       let loginUser = await User.findByPk(helpers.getUser(req).id, {
-        attributes: [ 'id', 'avatar']
+        attributes: ['id', 'avatar']
       })
 
       let data = {
         tweet,
-        loginUser,
+        loginUser
       }
 
       return res.json(data)

@@ -1,10 +1,7 @@
 const helpers = require('../_helpers')
-const bcrypt = require('bcryptjs')
 
 const db = require('../models')
-const { sequelize } = db
-const { Op } = db.Sequelize
-const { User, Tweet, Reply, Like, Followship } = db
+const { User, Reply } = db
 
 const replyController = {
   getReplies: async (req, res) => {

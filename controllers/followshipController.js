@@ -1,6 +1,6 @@
 const helpers = require('../_helpers')
 const db = require('../models')
-const { User, Tweet, Reply, Like, Followship } = db
+const { Followship } = db
 
 const followshipController = {
   addFollow: async (req, res) => {

@@ -165,7 +165,9 @@ const userController = {
               ],
               [
                 sequelize.literal(
-                  `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${helpers.getUser(req).id} LIMIT 1)`
+                  `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${
+                    helpers.getUser(req).id
+                  } LIMIT 1)`
                 ),
                 'isLiked'
               ]
@@ -209,7 +211,9 @@ const userController = {
               'account',
               [
                 sequelize.literal(
-                  `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = Followers.id AND Followships.followerId = ${helpers.getUser(req).id} LIMIT 1)`
+                  `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = Followers.id AND Followships.followerId = ${
+                    helpers.getUser(req).id
+                  } LIMIT 1)`
                 ),
                 'isFollowed'
               ]
@@ -256,8 +260,10 @@ const userController = {
         ]
       })
 
-      let followingsList =  await Followship.findAll({ where: { followerId: helpers.getUser(req).id}})
-      followingsList = followingsList.map(data => data.dataValues.followingId)
+      let followingsList = await Followship.findAll({
+        where: { followerId: helpers.getUser(req).id }
+      })
+      followingsList = followingsList.map((data) => data.dataValues.followingId)
 
       followings = followings[0].dataValues.Followings.map((following) => ({
         id: following.id,
@@ -266,12 +272,14 @@ const userController = {
         introduction: following.introduction,
         account: following.account,
         followshipCreatedAt: following.Followship.createdAt,
-        isFollowed: followingsList.includes(Number(following.Followship.followingId))
+        isFollowed: followingsList.includes(
+          Number(following.Followship.followingId)
+        )
       }))
-      
+
       followings = followings.sort(
         (a, b) => b.followshipCreatedAt - a.followshipCreatedAt
-        )
+      )
 
       return followings
     } catch (err) {
@@ -454,7 +462,7 @@ const userController = {
         req.flash('error_messages', '無權更動此頁面資料')
         return res.redirect('back')
       }
-      
+
       const { name, introduction } = req.body
       if (!name.length) {
         req.flash('error_messages', '名稱長度不能為零')
@@ -463,16 +471,16 @@ const userController = {
       if (name.length > 50) {
         req.flash('error_messages', '名稱長度不能超過50字')
         return res.redirect('back')
-      } 
-      
+      }
+
       const { files } = req
-      let avatarPath = (files.avatar) ? files.avatar[0].path : false
-      let coverPath = (files.cover) ? files.cover[0].path: false
+      let avatarPath = files.avatar ? files.avatar[0].path : false
+      let coverPath = files.cover ? files.cover[0].path : false
       let user = await User.findByPk(userId)
 
       if (avatarPath) {
         imgur.setClientID(IMGUR_CLIENT_ID)
-        await imgur.upload(avatarPath, (err, img) => 
+        await imgur.upload(avatarPath, (err, img) =>
           user.update({
             avatar: avatarPath ? img.data.link : user.avatar
           })
@@ -481,16 +489,16 @@ const userController = {
 
       if (coverPath) {
         imgur.setClientID(IMGUR_CLIENT_ID)
-        await imgur.upload(coverPath, (err, img) => 
+        await imgur.upload(coverPath, (err, img) =>
           user.update({
             cover: coverPath ? img.data.link : user.cover
           })
         )
       }
-            
+
       await user.update({
         name,
-        introduction,
+        introduction
       })
 
       req.flash('success_messages', '成功更新個人資料！')
