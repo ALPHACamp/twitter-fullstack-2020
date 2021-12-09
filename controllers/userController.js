@@ -180,11 +180,6 @@ const userController = {
                 }))
 
 
-
-                console.log(tweets[0].isLikedTweet)
-                console.log('==============================')
-                console.log(req.user.LikedTweets)
-                // console.log(replies)
                 return res.render('user', { tweets, users })
 
             }).catch(error => {
@@ -367,13 +362,21 @@ const userController = {
                 { model: User, as: 'Followers' }
             ]
         })
+        const tweetFindAll = Tweet.findAll({
+            order: [['createdAt', 'DESC']],
+            where: { UserId: req.user.id },
+            include: [User,
+                { model: Reply, include: [Tweet] },
+                { model: User, as: 'LikedUsers' },
+            ]
+        })
 
-        Promise.all([replyFindAll, userFindAll2])
+        Promise.all([replyFindAll, userFindAll2, tweetFindAll])
             .then(responses => {
 
                 const replies = responses[0]
                 let users2 = responses[1]
-
+                let tweets = responses[2]
                 users2 = users2.map(user => ({
                     ...user.dataValues,
                     isUser: !user.Followers.map(d => d.id).includes(user.id),
@@ -384,7 +387,7 @@ const userController = {
                 }))
                 users2 = users2.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-                return res.render('userReplies', { replies, users2 })
+                return res.render('userReplies', { replies, users2, tweets })
             }).catch(error => {
                 console.log(error)
             })
