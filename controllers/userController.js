@@ -340,14 +340,14 @@ const userController = {
         User.findOne({ where: { email } })
       ])
 
-      if (checkPassword !== password) {
-        errors.push({ message: '兩次密碼輸入不同！' })
-      }
       if (user1) {
         errors.push({ message: 'account 已重覆註冊！' })
       }
       if (user2) {
         errors.push({ message: 'email 已重複註冊！' })
+      }
+      if (checkPassword !== password) {
+        errors.push({ message: '兩次密碼輸入不同！' })
       }
       if (account.length < 4) {
         errors.push({ message: 'account 長度不可小於 4 字元！' })
@@ -399,14 +399,15 @@ const userController = {
 
   updateSettings: async (req, res) => {
     try {
+      if (helpers.getUser(req).id !== userId) {
+        req.flash('error_messages', '你無權查看此頁面')
+        return res.redirect('back')
+      }
+      
       const userId = Number(req.params.userId)
       const user = await User.findByPk(userId)
       const { account, name, email, password, checkPassword } = req.body
       const errors = []
-
-      if (checkPassword !== password) {
-        errors.push({ message: '兩次密碼輸入不同！' })
-      }
 
       const [user1, user2] = await Promise.all([
         User.findOne({
@@ -420,9 +421,8 @@ const userController = {
         })
       ])
 
-      if (helpers.getUser(req).id !== userId) {
-        req.flash('error_messages', '你無權查看此頁面')
-        return res.redirect('back')
+      if (checkPassword !== password) {
+        errors.push({ message: '兩次密碼輸入不同！' })
       }
       if (user1) {
         errors.push({ message: 'account 已重覆註冊！' })

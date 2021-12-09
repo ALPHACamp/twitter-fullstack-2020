@@ -15,15 +15,12 @@ passport.use(
       try {
         const user = await User.findOne({ where: { account } })
 
-        if (!user) {
-          return done(null, false, req.flash('error_messages', '帳號不存在！'))
-        }
-
         if (
+          !user ||
           (user.role === 'admin' && !req.url.includes('admin')) ||
           (user.role === 'user' && req.url.includes('admin'))
         ) {
-          return done(null, false, req.flash('error_messages', '該帳號未註冊！'))
+          return done(null, false, req.flash('error_messages', '帳號不存在！'))
         }
 
         if (!bcrypt.compareSync(password, user.password)) {
