@@ -33,6 +33,7 @@ const adminController = {
                 }
                 return row
             })
+            console.log(data)
             return res.render('admin/tweetsAdmin', {
                 tweets: data,
                 page: page,
