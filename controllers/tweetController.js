@@ -1,5 +1,4 @@
 const db = require('../models')
-const tweet = require('../models/tweet')
 const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
@@ -17,7 +16,7 @@ const tweetController = {
   // 追蹤人數最多的user前10名單
 
   getTweets: (req, res) => {
-
+    //return res.send('what the fuck')
     return Tweet.findAll({
       raw: true,
       nest: true,
@@ -61,14 +60,14 @@ const tweetController = {
               isFollowed: req.user.Followings.map(f => f.id).includes(user.id)
             }))
             // console.log('*********')
-            // console.log('tweets.Likes:' ,tweets[0].User.Likes)
-            console.log('*********')
+            // console.log('tweets:' , tweets[0])
+            // console.log('*********')
             // console.log('tweet.Likes: ', tweets[0].Likes)
-            console.log('tweets.Replies: ', tweets[1].Replies)
-            console.log('*********')
+            // console.log('users: ', users[0])
+            // console.log('*********')
             //console.log('users: ', users[0])
             users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-            return res.render('tweets', {tweets, users})
+            return res.render('tweets', { tweets, users, user: helpers.getUser(req)})
           })
       })
   },

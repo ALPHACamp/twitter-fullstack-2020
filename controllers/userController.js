@@ -3,11 +3,11 @@ const { Op } = require('sequelize')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = 'd97de9c03bf7519'
 const db = require('../models')
-const tweet = require('../models/tweet')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const Followship = db.Followship
 const helpers = require('../_helpers')
 
 const getLink = (filePath) => {
@@ -21,7 +21,6 @@ const getLink = (filePath) => {
     })
   })
 }
-
 
 const userController = {
   signUpPage: (req, res) => {
@@ -92,26 +91,29 @@ const userController = {
       })
   },
   // following
-  addFollowing: (req, res) => {
+  addFollowing:  (req, res) => {
     // 目前的登入者不行追蹤自己
-    console.log('********')
-    console.log('req.params.followingId:' ,req.params.followingId)
-    console.log('********')
-    console.log('req.user.id:', req.user.id)
-    console.log('********')
-    const myId = Number(req.params.followingId)
-    if (helpers.getUser(req).id === myId) {
+    if (helpers.getUser(req).id === Number(req.body.userId)) {
+      console.log('===========')
+      console.log('helpers.getUser(req).id: ', helpers.getUser(req).id)
+      console.log('req.body.userId: ', Number(req.body.userId))
+      console.log('===========')
       req.flash('error_messages', '幹嘛? 不要給我追蹤自己喔')
       return res.redirect('back')
     }
-    return Followship.create({
+    return  Followship.create({
       // 目前登入的使用者id
       followerId: helpers.getUser(req).id,
       // 我要追蹤的使用者id
-      followingId: req.params.followingId
+      followingId: Number(req.body.userId)
     })
-      .then( followship => {
-        return res.redirect('back')
+      .then( (followship) => {
+        // console.log('===========')
+        // console.log('followerId: ', followship.followerId)
+        // console.log('followingId: ', followship.followingId)
+        // console.log(followship.toJSON())
+        // console.log('===========')
+        return  res.redirect('back')
       })
   },
   // removeFollowing
