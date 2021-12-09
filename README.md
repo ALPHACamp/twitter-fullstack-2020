@@ -1,6 +1,6 @@
 # Simple Twitter
 
-![page_1](./screenshots/page_1.jpg)
+![page_1](./indexv1.png)
 
 ![page_2](./screenshots/page_2.jpg)
 
