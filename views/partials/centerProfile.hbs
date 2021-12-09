@@ -4,42 +4,35 @@
           <i class='fas fa-arrow-left' style="color: black;"></i>
         </a>
       </div>
-      <div class='name-info ml-5 cols'>
+      <div class='name-info ml-5 mb-0'>
         <div class='title-name' style="font-size:18px;color: black; font-weight:bold;">{{user.name}}</div>
-        <p style="color:gray; font-size:14px; font-weight:bold;"> {{tweetCount}} 推文</p>
+        <p style="color:gray; font-size:14px; font-weight:bold; margin-bottom:7px"> {{tweetCount}} 推文</p>
       </div>
-    
-  </div>
+    </div>
 
 {{!-- ================個人資料區域================================================= --}}
-<div class="container col" style="">
+<div class="container col" style="padding:0px;">
 
-    <div class=" border" style="width:100%;">
+    <div class="" style="width:100%; position: relative;border-left:1px solid #dee2e6;border-right:1px solid #dee2e6;">
         <div class="" >
-            <img src="{{user.cover}}" class="mx-0" style="background-size: cover; width:100%;">
+            <img src="{{user.cover}}" class="mx-0" style="background-size: cover; width:100%;height:200px;object-fit: cover;">
+        </div>
+        <div class="text-center" style=" width:140px;position:absolute;left:15px;top:124px;padding:0px;">
+            <img src="{{user.avatar}}" class="mx-auto" style=" width:140px;height:140px; border-radius:100%; border:0px;border:4px solid #ffffff;object-fit: cover;"></img>
         </div>
 
-        <div class="row">
-
-            <div class="cols text-center" style=" width:15%">
-                <img src="{{user.avatar}}" class="mx-auto" style=" width:100PX;height:100px; border-radius:100%; border:0px;"></img>
-            </div>
-            <div class=" cols" style=" width:85%;">
-                <div class='text-center login-container' data-toggle='modal' data-target='#editProfile'>
-                    <button
-                    id='editProfile-btn'
-                    type='submit'
-                    class='btn'
-                    name='id'
-                    {{!-- value='{{this.id}}' --}}
-                    style='width:120px; border-radius:40px; border-color:#FF6600; color:#FF6600;font-weight:bold;font-size:15px'
-                    >編輯個人資料</button>
-                </div>
-            </div>
+        <div class='text-right' data-toggle='modal' data-target='#editProfile' style='padding-top:10px;padding-right:15px;'>
+            <button
+            id='editProfile-btn'
+            type='submit'
+            class='btn'
+            name='id'
+            {{!-- value='{{this.id}}' --}}
+            style='width:120px; border-radius:40px; border-color:#FF6600; color:#FF6600;font-weight:bold;font-size:15px'
+            >編輯個人資料</button>
         </div>
-
-
-        <div class="cols " style=" width:100%">
+        
+        <div class="" style=" width:100%; padding-top:24px;padding-left:15px;">
             <a href="/users/{{this.id}}/tweets">
                 <p class="m-0" style="font-size:18px;color: black; font-weight:bold;">{{user.name}}</p>
             </a>
@@ -47,7 +40,7 @@
             <p>{{user.introduction}}</p>
         </div>
 
-        <div class="number-followers d-flex ">
+        <div class="number-followers d-flex" style="padding-left:15px">
             <div class="reply d-flex">
                 <div class="number" style="color:black; font-weight:500;">{{followerCount}}</div>
                 <p style="color:black; font-weight:500">個</p>
@@ -62,7 +55,7 @@
 
     </div>
 
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs" style="padding-left: 34px;border-left:1px solid #dee2e6;border-right:1px solid #dee2e6">
         <li class="nav-item">
             <a class="nav-link  {{#ifCond page 'profile'}}active{{/ifCond}}"  href="/users/{{user.id}}/tweets">推文</a>
         </li>
@@ -76,15 +69,15 @@
 {{!-- =====================推文列表============================================ --}}
 {{#ifCond page 'profile'}}
     {{#each tweets}}
-        <div class="row row-cols-2 border p-2" style="">
-            <div class="cols text-center" style=" width:15%">
+        <div class="row" style="padding-top:15px;margin-left:0px; margin-right:0px; border-left:1px solid #dee2e6;border-right:1px solid #dee2e6;border-bottom:1px solid #dee2e6;">
+            <div class="col-1 text-center" style=" width:15%">
                 <a  href="/users/{{this.User.dataValues.id}}/tweets">
                     <img class="" src="{{this.User.dataValues.avatar}}"
                         style=" width:50PX;height:50px; border-radius:100%;"></img>
                 </a>
             </div>
 
-            <div class="cols" style=" width:85%">
+            <div class="col-11" style=" width:85%">
                 <div class="row ml-1">
                     <div class="cols ">
                         <a class="text-muted" href="/users/{{this.User.dataValues.id}}/tweets">
@@ -95,7 +88,7 @@
                         <p style="font-weight:500;">@{{this.User.dataValues.account}}</p>
                     </div>
                     <div class="cols mx-1" style="color:gray">
-                        <p style="font-weight:500;">•</p>
+                        <p s    tyle="font-weight:500;">•</p>
                     </div>
                     <div class="cols" style="color:gray">
                         <p style="font-weight:500;">{{moment this.createdAt}}</p>
@@ -141,9 +134,8 @@
 {{/ifCond}}
 {{!-- =====================回覆列表============================================ --}}
 {{#ifCond page 'profile_replies'}}
-<p>profile replies</p>
     {{#each replies}}
-    <div class="tweet col-md-12">
+    <div class="tweet col-md-12" style="padding:15px">
       <div class="d-flex">
         <div class="mt-2 ml-2 col-md-1" style="padding:0">
           <a href="/users/{{this.User.dataValues.id}}/tweets" class="text-muted">
