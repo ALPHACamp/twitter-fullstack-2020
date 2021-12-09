@@ -7,6 +7,7 @@ module.exports = {
     Array.from([11, 21, 31, 41, 51]).map(function (userId, index) {
       for (let i = 0; i < 10; i++) {
         tweets.push({
+          id: Number(userId) + i,
           UserId: userId,
           description: faker.lorem.text(),
           createdAt: new Date(),
@@ -14,6 +15,7 @@ module.exports = {
         })
       }
     })
+    console.log(tweets)
     await queryInterface.bulkInsert('Tweets', tweets)
   },
 
