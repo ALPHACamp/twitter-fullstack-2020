@@ -50,6 +50,8 @@ replyButton.addEventListener('click', function check(event) {
     comment.nextElementSibling.innerHTML = "內容不可為空白"
     event.preventDefault()
   }
+})
+
 
 const coverInput = document.querySelector('#cover-input')
 const coverWrapper = document.querySelector('#cover-wrapper')
