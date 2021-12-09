@@ -181,9 +181,9 @@ const userController = {
 
 
 
-                console.log(tweets[0].isLikedTweet)
-                console.log('==============================')
-                console.log(req.user.LikedTweets)
+                // console.log(tweets[0].isLikedTweet)
+                // console.log('==============================')
+                // console.log(req.user.LikedTweets)
                 // console.log(replies)
                 return res.render('user', { tweets, users })
 
