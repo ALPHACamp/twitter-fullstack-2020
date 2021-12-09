@@ -68,7 +68,7 @@ describe('# followship request', () => {
                 { model: db.User, as: 'Followers' },
                 { model: db.User, as: 'Followings' } 
               ]}).then(user => {
-              // 檢查是否有多一筆資料
+              // 檢查是否有多一筆資料 
               user.Followings.length.should.equal(1)
               return done();
             })

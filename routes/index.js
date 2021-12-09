@@ -10,19 +10,18 @@ const replyController = require('../controllers/replyController')
 module.exports = (app, passport) => {
   // authenticated 與 authenticatedAdmin 
   // 未來可嘗試refactor
-  const authenticated = (req, res, next) => {
+  const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      // if (helpers.getUser(req).role === 'normal') {
-      //   return next()
-      // }
       if (helpers.getUser(req).role === 'admin') {
-        req.flash('error_messages', '無法進入此頁面')
-        return res.redirect('/admin/tweets')
-      } else {
         return next()
       }
+
+      if (helpers.getUser(req).role === 'normal') {
+        req.flash('error_messages', '無此權限')
+        return res.redirect('back')
+      }
+      res.redirect('/admin/signin')
     }
-    res.redirect('/signin')
   }
 
   const authenticatedAdmin = (req, res, next) => {
@@ -66,7 +65,7 @@ module.exports = (app, passport) => {
   // user對貼文收回喜歡
   app.post('/tweets/:tweetId/unlike', authenticated, userController.removeLike)
   // 跟隨user
-  app.post('/followships/:followingId', authenticated, userController.addFollowing)
+  app.post('/followships', authenticated, userController.addFollowing)
   // 取消跟隨user
   app.delete('/followships/:followingId', authenticated, userController.removeFollowing)
   // 瀏覽user帳號設定頁面
