@@ -12,14 +12,15 @@ module.exports = (app, passport) => {
   // 未來可嘗試refactor
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).role === 'normal') {
-        return next()
-      }
+      // if (helpers.getUser(req).role === 'normal') {
+      //   return next()
+      // }
       if (helpers.getUser(req).role === 'admin') {
         req.flash('error_messages', '無法進入此頁面')
         return res.redirect('/admin/tweets')
+      } else {
+        return next()
       }
-
     }
     res.redirect('/signin')
   }
@@ -54,6 +55,8 @@ module.exports = (app, passport) => {
   app.get('/users/:userId/tweets', authenticated, userController.getUserTweets)
   // 瀏覽特定user的個人資料 - 回覆頁面
   app.get('/users/:userId/replies', authenticated, userController.getUserReplies)
+  // 瀏覽特定user的個人資料 - 喜歡頁面
+  app.get('/users/:userId/likes', authenticated, userController.getUserLikes)
   // 瀏覽編輯使用者頁面
   app.get('/api/users/:userId', userController.getUser)
   // 更新編輯使用者

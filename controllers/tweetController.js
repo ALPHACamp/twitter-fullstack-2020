@@ -48,7 +48,7 @@ const tweetController = {
               repliesTotal: tweet.Replies.length,
               // 判斷是否liked
               // if tweet.like.UserId 有 req.user.id = true
-              isLiked: helpers.isMatch(tweet.Likes.UserId, req.user.id),
+              isLiked: helpers.isMatch(tweet.Likes.UserId, helpers.getUser(req).id),
               //likeTotal: tweet.Likes.length
             }))
             users = users.map(user => ({
@@ -57,7 +57,7 @@ const tweetController = {
               topUserName: user.name,
               topUserAccount: user.account,
               FollowerCount: user.Followers.length,
-              isFollowed: req.user.Followings.map(f => f.id).includes(user.id)
+              isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
             }))
             console.log('*********')
             console.log('tweets:', tweets[0])
@@ -82,7 +82,7 @@ const tweetController = {
     }).then(tweet => {
       return res.render('tweet', {
         tweet: tweet.toJSON(),
-        user: req.user
+        user: helpers.getUser(req)
       })
     })
   },
