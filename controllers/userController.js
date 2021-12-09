@@ -74,8 +74,12 @@ const userController = {
       UserId: helpers.getUser(req).id ,
       TweetId: req.params.tweetId
     })
-      .then(tweet => {
-        return res.redirect('back')
+      .then(like => {
+        return Tweet.findOne({where: {id: like.TweetId}}).then(tweet => {
+          return tweet.increment('likeCounts')
+        }).then(tweet => {
+          return res.redirect('back')
+        })
       })
   },
   // unlike tweet
@@ -86,9 +90,14 @@ const userController = {
         TweetId: req.params.tweetId
       }
     })
-      .then(tweet => {
-        return res.redirect('back')
-      })
+      .then(like => {
+        return Tweet.findOne({ where: { id: req.params.tweetId } })
+        .then(tweet => {
+          return tweet.decrement('likeCounts')
+        }).then(tweet => {
+            return res.redirect('back')
+          })
+        })
   },
   // following
   addFollowing:  (req, res) => {
@@ -180,6 +189,7 @@ const userController = {
       include: Tweet
     })
       .then(user => {
+        console.log(user)
         return res.render('userTweets', {
           user: user.toJSON(),
         })
@@ -195,6 +205,39 @@ const userController = {
           user: user.toJSON()
         })
       })
+  },
+  //使用者喜歡的內容頁面
+  getUserLikes: (req, res) => {
+    const loginUser = helpers.getUser(req)
+    return User.findByPk(req.params.userId, {
+      include: [{ model: Tweet, as: 'LikedTweets', include: [User]}]
+    }).then(user => {
+      const data = user.LikedTweets.map(tweet => ({
+        userId: tweet.User.id,
+        userAvatar: tweet.User.avatar,
+        userName: tweet.User.name,
+        userAccount: tweet.User.account,
+        id: tweet.id,
+        createdAt: tweet.createdAt,
+        description: tweet.description,
+        replyCounts: tweet.replyCounts,
+        likeCounts: tweet.likeCounts
+      }))
+      console.log(data)
+      return res.render('userlikes', { loginUser, user, likedTweets: data })
+      
+    })
+      
+    // return Like.findAll({
+    //   raw: true,
+    //   nest: true,
+    //   where: {UserId: req.params.userId},
+    //   include: [{model: Tweet, include: [User, Reply, Like]}]
+    // }).then(likes => {
+    //   console.log(likes)
+    //   likes.forEach(like => {console.log(like.Tweet.Replies)})
+    //   res.render('userlikes', { user,  })
+    // })
   },
   // 瀏覽帳號設定頁面
   editSetting: (req, res) => {

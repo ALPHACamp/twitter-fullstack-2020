@@ -108,46 +108,42 @@
       <br>
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link active" href="#">推文</a>
+          <a class="nav-link active" href="/users/{{user.id}}/tweets">推文</a>
         </li>
         <li class="nav-item">
           <a class="nav-link " href="/users/{{user.id}}/replies">推文與回覆</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/users/{{user.id}}/likes">喜歡的內容</a>
+          <a class="nav-link " href="#">喜歡的內容</a>
         </li>
       </ul>
       <div class="user-tweet">
-        {{#each user.Tweets}}
+        {{#each likedTweets}}
         <div class="tweet col-md-12">
           <div class="d-flex">
-            <div class="mt-2 mr-2 col-md-2" style="padding: 0%;"><a href="/users/{{../user.id}}/tweets"
+            <div class="mt-2 mr-2 col-md-2" style="padding: 0%;"><a href="/users/{{this.userId}}/tweets"
                 class="text-muted">
-                <img class="avatar small" src="{{../this.user.avatar}}">
+                <img class="avatar small" src="{{ this.userAvatar }}">
               </a>
             </div>
             <div class="col-md-10 mt-2">
               <div class="account-info d-flex" style="flex-auto">
-                <div class="user-name">{{../this.user.name}}</div>
-                <div class="atAccount mb-2 ml-2">@{{../this.user.account}}•{{moment
+                <div class="user-name">{{ this.userName }}</div>
+                <div class="atAccount mb-2 ml-2">@{{ this.userAccount}}•{{moment
                   this.createdAt}}</div>
               </div>
               <a href="/tweets/{{this.id}}/replies" class="text-muted">
                 <div class="post-text d-flex" style="flex-auto">{{this.description}}</div>
               </a>
               <div class="reply-like d-flex mt-2">
-                <div>
+                <div class="mr-2">
                   <i class="far fa-comment mr-2"></i>
-                  3
+                  {{ this.replyCounts }}
                 </div>
-                <form action="like" method="POST">
-                  <div class="ml-4">
-                    <button type="submit" class="like-btn">
-                      <i class="far fa-heart"></i>
-                    </button>
-                    3
-                  </div>
-                </form>
+                <div class="ml-4 like-icon">
+                  <i class="fas fa-heart"></i>
+                  {{ this.likeCounts }}
+                </div>
               </div>
             </div>
           </div>

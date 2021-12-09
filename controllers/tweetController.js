@@ -42,12 +42,14 @@ const tweetController = {
                 }
               }
             })
+
             users = users.map(user => ({
               ...user.dataValues,
               topUserAvatar: user.avatar,
               topUserName: user.name,
               topUserAccount: user.account,
-              isFollowed: helpers.getUser(req).Followings.map(item => item.id).includes(user.id)
+              FollowerCount: user.Followers.length,
+              isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
             }))
             users = users.sort((a, b) => b.followerCount - a.followerCount)
             return res.render('tweets', { tweets, users, user: helpers.getUser(req) })
@@ -65,7 +67,7 @@ const tweetController = {
     }).then(tweet => {
       return res.render('tweet', {
         tweet: tweet.toJSON(),
-        user: req.user
+        user: helpers.getUser(req)
       })
     })
   },
