@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     UserId: DataTypes.INTEGER,
     likeCounts: DataTypes.INTEGER,
+    replyCounts: DataTypes.INTEGER,
   }, {});
   Tweet.associate = function (models) {
     Tweet.hasMany(models.Reply)
