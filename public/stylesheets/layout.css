@@ -76,16 +76,17 @@ button[disabled] {
   pointer-events: none;
 }
 
-input {
+input,
+input:required,
+input:invalid,
+input:valid,
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
   padding: 0;
-}
-
-input:required {
   box-shadow: none;
-}
-
-input:invalid {
-  box-shadow: none;
+  background-color: transparent !important;
 }
 
 ::-webkit-scrollbar {
