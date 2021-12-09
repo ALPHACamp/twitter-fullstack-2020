@@ -379,6 +379,7 @@ html, body {
   color: #1c1c1c;
   font-size: 15px;
   font-weight: 500;
+  line-height: 17px;
   width: 510px;
   height: 66px;
   text-align: left;
@@ -432,7 +433,7 @@ html, body {
   margin-top: -1px;
 }
 
-.main > .tweets > .tweet > .postcontent > .replyto > .at-name {
+.main > .tweets > .tweet > .postcontent > .replyto .at-name {
   color: #f60;
 }
 
@@ -1252,6 +1253,12 @@ html, body {
 
 #modal-reply > .mask > .dialog > .postarea {
   border-top: 0;
+}
+
+#modal-reply > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .tweetdescription {
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* sign-template main */
