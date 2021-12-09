@@ -7,6 +7,8 @@ const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
 
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const userService = require('../services/userService')
 
 const userController = {
@@ -268,97 +270,94 @@ const userController = {
         })
       })
   },
-  putUserProfile: (req, res) => {
-    if (helpers.getUser(req).id !== Number(req.params.id)) {
-      req.flash('error_messages', "you can't enter other's profile!")
+  putUserProfile: async (req, res) => {
+    if (!req.body.name) {
+      req.flash('error_msg', "請輸入名稱")
       return res.redirect('back')
-    }
-
-    const { files } = req
-    const fileCountsArr = files ? Object.keys(files) : false
-    const fileCounts = fileCountsArr.length
-
-    const getUploadLink = (link) => {
-      return new Promise((resolve, reject) => {
-        imgur.setClientID(IMGUR_CLIENT_ID)
-        imgur.upload(link, (err, img) => {
-          return resolve(img.data.link)
-        })
-      })
-    }
-
-    if (fileCounts > 0) {
-      const tempLink = []
-      let image = ''
-      if (files.avatar) {
-        tempLink.push(files.avatar[0].path)
-        image = 'avatar'
-        editedUploadLink(tempLink, image)
-      } else if (files.cover) {
-        tempLink.push(files.cover[0].path)
-        image = 'cover'
-        editedUploadLink(tempLink, image)
+    } else {
+      if (!req.body.introduction) {
+        req.flash('error_msg', "請輸入自我介紹")
+        return res.redirect('back')
       } else {
-        tempLink.push(files.avatar[0].path, files.cover[0].path)
-        image = 'both'
-        editedUploadLink(tempLink, image)
-      }
 
-      async function editedUploadLink(tempLink, image) {
-
-        try {
-          const uploadImgs = await Promise.all(tempLink.map(async (link) => {
-            const result = await getUploadLink(link)
-            return result
-          }))
-
-          let avatar
-          let cover
-
-          if (image === 'both') {
-            avatar = uploadImgs[0]
-            cover = uploadImgs[1]
-          } else if (image === 'avatar') {
-            avatar = uploadImgs[0]
-          } else if (image === 'cover') {
-            cover = uploadImgs[0]
-          }
-
-          User.findByPk(req.params.id)
-            .then(user => {
-
+        const { files } = req
+        if (files.avatar !== undefined & files.cover === undefined) {
+          imgur.setClientID(IMGUR_CLIENT_ID);
+          await imgur.upload(files.avatar[0].path, (err, img) => {
+            return User.findByPk(req.params.id)
+              .then((user) => {
+                user.update({
+                  name: req.body.name,
+                  introduction: req.body.introduction,
+                  avatar: files ? img.data.link : user.avatar,
+                }).then((user) => {
+                  req.flash('success_msg', '更新成功!')
+                  return res.redirect('back')
+                })
+              })
+          })
+        }
+        if (files.avatar === undefined & files.cover !== undefined) {
+          imgur.setClientID(IMGUR_CLIENT_ID);
+          await imgur.upload(files.cover[0].path, (err, img) => {
+            return User.findByPk(req.params.id)
+              .then((user) => {
+                user.update({
+                  name: req.body.name,
+                  introduction: req.body.introduction,
+                  cover: files ? img.data.link : user.cover,
+                }).then((user) => {
+                  req.flash('success_msg', '更新成功!')
+                  return res.redirect('back')
+                })
+              })
+          })
+        }
+        if (files.avatar !== undefined & files.cover !== undefined) {
+          imgur.setClientID(IMGUR_CLIENT_ID);
+          await imgur.upload(files.avatar[0].path, (err, img) => {
+            return User.findByPk(req.params.id)
+              .then((user) => {
+                user.update({
+                  name: req.body.name,
+                  introduction: req.body.introduction,
+                  avatar: files ? img.data.link : user.avatar,
+                })
+                  .then(() => {
+                    imgur.setClientID(IMGUR_CLIENT_ID);
+                    imgur.upload(files.cover[0].path, (err, img) => {
+                      return User.findByPk(req.params.id)
+                        .then((user) => {
+                          user.update({
+                            name: req.body.name,
+                            introduction: req.body.introduction,
+                            cover: files ? img.data.link : user.cover,
+                          }).then((user) => {
+                            req.flash('success_msg', '更新成功!')
+                            return res.redirect('back')
+                          })
+                        })
+                    })
+                  })
+              })
+          })
+        }
+        else {
+          await User.findByPk(req.params.id)
+            .then((user) => {
               user.update({
                 name: req.body.name,
                 introduction: req.body.introduction,
-                avatar,
-                cover
-              }).then(user => {
-                const userId = req.params.id
-                req.flash('success_messages', 'profile was successfully to update')
-                return res.redirect(`/users/${userId}`)
+                avatar: user.avatar,
+                cover: user.cover,
               })
+                .then((user) => {
+                  req.flash('success_msg', '更新成功!')
+                  return res.redirect('back')
+                })
             })
-
-        } catch (err) {
-          req.flash('error_messages', '更新失敗！')
-          res.status(302)
-          return res.redirect('back')
         }
       }
-    } else {
-      User.findByPk(req.params.id)
-        .then(user => {
-          user.update({
-            name: req.body.name,
-            introduction: req.body.introduction,
-            cover: user.cover,
-            avatar: user.avatar
-          }).then(user => {
-            const userId = req.params.id
-            req.flash('success_messages', 'profile was successfully to update')
-            return res.redirect(`/users/${userId}`)
-          })
-        })
     }
   }
 }

@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const app = express()
-const port = 3000
+const PORT = process.env.PORT || 3000
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
@@ -31,7 +31,7 @@ app.use(express.json())
 
 // SESSION
 app.use(session({
-  secret: 'twitterSecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }))
@@ -61,7 +61,7 @@ app.use((req, res, next) => {
 require('./routes')(app, passport)
 
 // listening
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
 
 // for test automation
 module.exports = app
