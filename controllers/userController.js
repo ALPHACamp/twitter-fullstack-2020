@@ -187,13 +187,12 @@ const userController = {
   getUserTweets: (req, res) => {
     return User.findByPk(req.params.userId, {
       include: Tweet
-    })
-      .then(user => {
-        console.log(user)
-        return res.render('userTweets', {
-          user: user.toJSON(),
-        })
+    }).then(user => {
+      return res.render('userTweets', {
+        user: user.toJSON(),
+        loginUser
       })
+    })
   },
   //設定使用者個人資料頁面推文與回覆頁面
   getUserReplies: (req, res) => {
@@ -206,6 +205,50 @@ const userController = {
         })
       })
   },
+
+
+  //設定追隨中頁面
+  getUserFollowing: (req, res) => {
+    return User.findByPk(req.params.userId, {
+      include: [
+        { model: User, as: 'Followings' }
+      ],
+      where: { role: 'normal' }
+    }).then(user => {
+      console.log(user.toJSON())
+      const userData = user.toJSON()
+      userData = user.map((followings => ({
+        ...followings.dataValues,
+        isFollowed: helpers.getUser(req).Followings.map(item => item.id).includes(Followings.id)
+      })))
+      console.log(userData)
+      return res.render('userFollowings', {
+        user: userData,
+        user: helpers.getUser(req)
+      })
+    })
+  },
+  //設定跟隨者頁面
+  getUserFollower: (req, res) => {
+    return User.findAll({
+      raw: true,
+      nest: true,
+      order: [['createdAt', 'DESC']],
+      include: [
+        { model: User, as: 'Followers' }
+      ]
+    }).then(users => {
+      users = users.map(user => ({
+        ...user,
+        isFollowed: req.user.Followings.map(f => f.id).includes(user.id)
+      }))
+      return res.render('userFollowers', {
+        users: users,
+        user: req.user
+
+      })
+    })
+
   //使用者喜歡的內容頁面
   getUserLikes: (req, res) => {
     const loginUser = helpers.getUser(req)
@@ -238,6 +281,7 @@ const userController = {
     //   likes.forEach(like => {console.log(like.Tweet.Replies)})
     //   res.render('userlikes', { user,  })
     // })
+
   },
   // 瀏覽帳號設定頁面
   editSetting: (req, res) => {
