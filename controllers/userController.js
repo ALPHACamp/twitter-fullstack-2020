@@ -256,6 +256,9 @@ const userController = {
         ]
       })
 
+      let followingsList =  await Followship.findAll({ where: { followerId: helpers.getUser(req).id}})
+      followingsList = followingsList.map(data => data.dataValues.followingId)
+
       followings = followings[0].dataValues.Followings.map((following) => ({
         id: following.id,
         name: following.name,
@@ -263,12 +266,12 @@ const userController = {
         introduction: following.introduction,
         account: following.account,
         followshipCreatedAt: following.Followship.createdAt,
-        isFollowed: following.Followship.followerId === UserId
+        isFollowed: followingsList.includes(Number(following.Followship.followingId))
       }))
-
+      
       followings = followings.sort(
         (a, b) => b.followshipCreatedAt - a.followshipCreatedAt
-      )
+        )
 
       return followings
     } catch (err) {
