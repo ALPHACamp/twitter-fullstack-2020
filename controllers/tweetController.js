@@ -1,4 +1,5 @@
 const db = require('../models')
+const tweet = require('../models/tweet')
 const user = require('../models/user')
 const Tweet = db.Tweet
 const User = db.User
@@ -10,11 +11,10 @@ const tweetController = {
 
         // console.log(req.user)
         const tweetFindAll = Tweet.findAll({
-            raw: true,
-            nest: true,
             order: [['createdAt', 'DESC']],
-            include: [
-                User,
+            include: [User,
+                { model: Reply, include: [Tweet] },
+                { model: User, as: 'LikedUsers' },
             ]
         })
 
@@ -38,14 +38,15 @@ const tweetController = {
                 let users = responses[1]
                 let likes = responses[2]
 
-                tweets = tweets.filter(tweet => {
-                    tweet.isLiked = likes.filter(like => {
-                        if (like.TweetId === tweet.id && like.UserId === req.user.id) {
-                            return true
-                        }
-                    })
-                    return tweet
-                })
+
+                tweets = tweets.map(tweet => ({
+                    ...tweet.dataValues,
+                    reliesCount: tweet.Replies.length,
+                    likeCount: tweet.LikedUsers.length,
+                    isLikedTweet: req.user.LikedTweets.map(d => d.id).includes(tweet.id)
+
+                }))
+                console.log(tweets)
                 users = users.map(user => ({
                     ...user.dataValues,
                     isUser: !user.Followers.map(d => d.id).includes(user.id),
