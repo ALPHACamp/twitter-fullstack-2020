@@ -4,6 +4,7 @@ const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const db = require('../models')
+const { defaultFormat } = require('moment')
 const { sequelize } = db
 const { Op } = db.Sequelize
 const { User, Tweet, Reply, Like, Followship } = db
@@ -481,7 +482,9 @@ const userController = {
         return res.redirect('back')
       }
 
-      const { name, introduction } = req.body
+      const { name, introduction, coverDefault } = req.body
+      const defaultCoverPath = "https://cdn.discordapp.com/attachments/918417533680361505/918418130169131028/cover.svg"
+
       if (!name.length) {
         req.flash('error_messages', '名稱長度不能為零')
         return res.redirect('back')
@@ -514,6 +517,12 @@ const userController = {
             cover: coverPath ? img.data.link : user.cover
           })
         })
+      } else { // 若按叉叉後沒有上傳圖片才會進到這，更新預設圖的 svg 連結進資料庫
+        if (coverDefault === '') {
+          await user.update({
+            cover: defaultCoverPath
+          })
+        }
       }
 
       await user.update({
