@@ -3,11 +3,11 @@ const { Op } = require('sequelize')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = 'd97de9c03bf7519'
 const db = require('../models')
-const tweet = require('../models/tweet')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const Followship = db.Followship
 const helpers = require('../_helpers')
 
 const getLink = (filePath) => {
@@ -21,7 +21,6 @@ const getLink = (filePath) => {
     })
   })
 }
-
 
 const userController = {
   signUpPage: (req, res) => {
@@ -70,9 +69,9 @@ const userController = {
   },
 
   // like tweet
-  addLike: (req,res) => {
+  addLike: (req, res) => {
     return Like.create({
-      UserId: helpers.getUser(req).id ,
+      UserId: helpers.getUser(req).id,
       TweetId: req.params.tweetId
     })
       .then(tweet => {
@@ -95,7 +94,7 @@ const userController = {
   addFollowing: (req, res) => {
     // 目前的登入者不行追蹤自己
     console.log('********')
-    console.log('req.params.followingId:' ,req.params.followingId)
+    console.log('req.params.followingId:', req.params.followingId)
     console.log('********')
     console.log('req.user.id:', req.user.id)
     console.log('********')
@@ -110,7 +109,7 @@ const userController = {
       // 我要追蹤的使用者id
       followingId: req.params.followingId
     })
-      .then( followship => {
+      .then(followship => {
         return res.redirect('back')
       })
   },
@@ -132,12 +131,12 @@ const userController = {
 
   getUser: (req, res) => {
     if (helpers.getUser(req).id !== Number(req.params.userId)) {
-      return res.json({ status: 'error', message:'' })
+      return res.json({ status: 'error', message: '' })
     }
     return User.findByPk(req.params.userId)
       .then(user => {
         return res.json(user.toJSON())
-    })
+      })
   },
   postUser: async (req, res) => {
     const { name, introduction } = req.body
@@ -181,23 +180,27 @@ const userController = {
   },
   //使用者個人資料頁面
   getUserTweets: (req, res) => {
+    const loginUser = helpers.getUser(req)
     return User.findByPk(req.params.userId, {
       include: Tweet
     })
       .then(user => {
         return res.render('userTweets', {
           user: user.toJSON(),
+          loginUser
         })
       })
   },
   //設定使用者個人資料頁面推文與回覆頁面
   getUserReplies: (req, res) => {
+    const loginUser = helpers.getUser(req)
     return User.findByPk(req.params.userId, {
       include: [Reply, Tweet]
     })
       .then(user => {
         return res.render('userReplies', {
-          user: user.toJSON()
+          user: user.toJSON(),
+          loginUser
         })
       })
   },
@@ -240,7 +243,7 @@ const userController = {
         if (user.account === account) { req.flash('error_messages', 'account 已重覆註冊！') }
         else { req.flash('error_messages', 'email 已重覆註冊！') }
         return res.redirect('back')
-      } else {        
+      } else {
         return User.findByPk(req.params.userId).then((user) => {
           return user.update({
             account,
