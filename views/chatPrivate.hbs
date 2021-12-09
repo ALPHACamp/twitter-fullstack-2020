@@ -1,0 +1,44 @@
+<h5 id="chat-user-name" style="display: none;">{{user.name}}</h5>
+<h5 id="chat-user-id" style="display: none;">{{user.id}}</h5>
+<h5 id="chat-user-avatar" style="display: none;">{{user.avatar}}</h5>
+<h5 id="chat-receiver-id" style="display: none;">{{receiver.id}}</h5>
+
+
+<div class="col-4   sticky-top">
+  <div id="private-user-list" class="sticky-top">
+    <p class="fw-bolder border-bottom p-1 m-0">使用者名單</p>
+    {{#each privateUsers}}
+    <a href="/users/chatPrivate/{{this.id}}">
+      <div class="d-flex align-items-center border-bottom p-2" id="online-user">
+        <img src="{{this.avatar}}" style="width: 50px;height:50px;" class="rounded-circle m-1">
+        <p class="m-0">{{this.name}}</p>
+        <p class="m-0 user-link">&nbsp;@{{this.account}}</p>
+      </div>
+    </a>
+    {{/each}}
+  </div>
+</div>
+<div class="col-8 border-start border-end d-flex flex-column">
+  <p class="fw-bolder border-bottom p-1 m-0 sticky-top" style="background-color:white">公開聊天室</p>
+  <div id="messages">
+    <div id="record" class="flex-fill d-flex flex-column justify-content-end">
+      {{!-- 歷史對話記錄 --}}
+    </div>
+    <div id="broadcast">
+      {{!-- 即時對話紀錄 --}}
+    </div>
+  </div>
+  <div id="message-box" class="border-top">
+    <form id="form" action="">
+      <input id="input" type="text" autocomplete="off">
+      <button type="submit">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+          <path
+            d="M4.01 6.03l7.51 3.22-7.52-1 .01-2.22m7.5 8.72L4 17.97v-2.22l7.51-1M2.01 3L2 10l15 2-15 2 .01 7L23 12 2.01 3z" />
+        </svg>
+      </button>
+    </form>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/chatPrivate.js"></script>

@@ -1,0 +1,256 @@
+.btn {
+  padding:3px 12px 3px 12px;
+}
+
+.btn-regular {
+  color: white;
+  background-color: #FF6600;
+}
+
+.btn-regular:hover {
+  color: white;
+  background-color: coral;
+}
+
+.orange-button{
+  color: #FF6600;
+}
+
+.orange-button:hover{
+  color: coral;
+}
+
+.btn-outline-regular {
+  color: #FF6600;
+  background:none;
+  border: 1px solid #FF6600;
+}
+
+.btn-outline-regular:hover {
+  color: white;
+  background-color: coral;
+}
+
+.list-group-item {
+  border: none;
+  background-color:#F5F8FA;
+}
+
+#navbarUpper > a {
+  color: black;
+  font-weight: bolder;
+}
+
+#navbarUpper > a:hover {
+    color: #FF6600;
+}
+
+#navbarUpper > a:hover > svg > path {
+  fill: #FF6600;
+}
+
+#signout {
+color: black;
+  font-weight: bolder;
+}
+
+#signout:hover{
+  color: #FF6600;
+}
+
+#signout:hover > svg > path {
+  stroke: #FF6600;
+}
+
+.inThesePages > p {
+  color: #FF6600;
+}
+
+.inThesePages > svg > path  {
+  fill: #FF6600;
+}
+
+.user-link {
+  color: #657786;
+}
+
+.user-link:hover {
+  color:black;
+}
+
+#titleText > p {
+  line-height: 1.1;
+}
+
+a {
+    text-decoration: none;
+}
+
+.nav > a {
+  width: 130px;
+  text-align: center;
+  color: black;
+}
+
+.nav > a:hover {
+  color: #FF6600;
+}
+
+.nav > a.active{
+  color:#FF6600;
+  border-bottom: 2px solid #FF6600;
+}
+
+.orange-close {
+  background: none;
+  opacity: 1;
+}
+
+.orange-close > svg > path {
+  fill:#FF6600;
+}
+
+#edit-image{
+background-repeat: no-repeat;
+background-size: cover;
+opacity: 0.8;
+height: 200px;
+margin-bottom: 80px;
+}
+
+#edit-image > div > div > label{
+  padding: 0;
+}
+
+#edit-image > div > div > label > svg:hover > path {
+  fill: #FF6600;
+}
+
+#avatar-label {
+  height: 120px;
+  width: 120px;
+  background-size: cover;
+  margin-top: 140px;
+  margin-left: 15px;
+}
+
+#others-message > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items:flex-end;
+}
+
+#others-message > div > p {
+  background-color: rgb(230, 236, 240);
+  padding:6px;
+  margin: 3px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  max-width: 60%;
+  word-break: break-all;
+}
+
+#others-message > p {
+  margin: 0px;
+  font-size: 8px;
+  margin-left: 53px;
+  color: rgb(115, 126, 141);
+  word-break: break-all;
+}
+
+#access-record {
+  display: flex;
+  justify-content: center;
+}
+
+#access-record > p {
+  margin:7px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: rgb(229, 229, 229);
+  color: rgb(102, 119, 133);
+  border-radius: 14px;
+}
+
+#my-message {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#my-message > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items:flex-end;
+  justify-content: flex-end;
+}
+
+#my-message > div > p {
+  background-color: #FF6600;
+  color: white;
+  padding:6px;
+  margin: 3px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  max-width: 60%;
+  word-break:break-all;
+}
+
+#my-message > p {
+  margin: 0px;
+  font-size: 8px;
+  margin-right: 53px;
+  color: rgb(115, 126, 141);
+}
+
+#message-box {
+  padding:5px;
+  position: sticky;
+  bottom: 0px;
+  background-color: white;
+}
+
+#message-box > form {
+  display: flex;
+}
+
+#message-box > form > input {
+  width:fit-content;
+  flex-grow: 1;
+  border: none;
+  background-color: rgb(229, 229, 229);
+  margin-right: 5px;
+  border-radius: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#message-box > form > input:focus {
+outline: none;
+}
+
+#message-box > form > button {
+  border: none;
+  background-color: white;
+}
+
+#message-box > form > button > svg > path {
+  fill: #FF6600;
+}
+
+#message-box > form > button:hover > svg > path {
+  fill: coral;
+}
+
+#messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  overflow-y: scroll;
+  padding: 0px;
+  flex-grow: 1;
+}
