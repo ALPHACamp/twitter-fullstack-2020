@@ -20,6 +20,10 @@ html, body {
   color:#FF6600;
 }
 
+.nav-btn-modal {
+  color: white;
+}
+
 .btn {
   display: flex; 
   flex-direction: row;
@@ -32,6 +36,7 @@ html, body {
   line-height: 18px;
   color:#FFFFFF;
 }
+
 
 .btn-outline {
   background: #FFFFFF;
@@ -88,12 +93,19 @@ img.avatar.small {
 .header2 {
   font-weight: 500;
   font-size: 18px;
+} 
+
+.btn-dismiss {
+  border: none;
+  background: none;
+  color: #FF6600;
 }
 
 .cover {
   object-fit: cover;
   width:100%;
   height:25vh;
+  background-color: #999999;
 }
 
 .cover.none {

@@ -17,13 +17,13 @@
           </a>
         </li>
         <li class="nav-item py-2">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="/users/{{user.id}}/setting/edit">
             <i class="fas fa-cog"></i>
             <span class="ml-3">設定</span>
           </a>
         </li>
-        <li class="nav-item py-2">
-          <a class="btn py-2" href="#">推文</a>
+        <li class="nav-item nav-btn-modal py-2">
+          <a class="btn btn-modal py-2" data-toggle="modal" data-target="#tweetModal">推文</a>
         </li>
       </ul>
       <ul class="nav flex-column">
@@ -76,7 +76,7 @@
           <a href="{{ user.email }}"><i class="far fa-envelope"></i></a>
         </div>
         {{/ifCond}}
-        <button type="button" class="btn btn-outline ml-2" data-toggle="modal" data-target="#exampleModal">
+        <button type="button" class="btn btn-outline ml-2" data-toggle="modal" data-target="#editUserModal">
           編輯個人資料
         </button>
       </div>
@@ -196,7 +196,7 @@
 </div>
 
 {{!-- Edit-User-Modal --}}
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="edituserModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <form action="/api/users/{{ user.id }}" method="POST" enctype="multipart/form-data">
@@ -251,6 +251,95 @@
             <textarea class="form-control" id="introduction" name="introduction"
               rows="3">{{ user.introduction }}</textarea>
           </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{{!-- tweetModal --}}
+<div class="modal fade" id="tweetModal" tabindex="-1" role="dialog" aria-labelledby="reply-tweet"
+  style="display: none;" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content d-flex">
+      <button type="button" class="btn-dismiss close d-flex justify-content-start ml-3 mt-2"
+        data-dismiss="modal">x</button>
+      <hr />
+      <form action="/tweets" method="POST">
+        <div class="type-area d-flex">
+          <div class="avatar">
+            <a href="/users/{{user.id}}/tweets">
+              <img src="{{user.avatar}}" class="avatar small ml-1">
+            </a>
+          </div>
+          <div class="type-text">
+            <textarea type="text" class="post-content form-control mb-2 ml-2" id="description-modal" name="description"
+              placeholder="有什麼新鮮事?" rows="5" cols="47"></textarea>
+            <div class="invalid-feedback" id="add-tweet"></div>
+          </div>
+        </div>
+        <div class="add-button d-flex justify-content-end mr-2">
+          <button type="submit" class="btn mb-2" id="modal-post-button">推文</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{{!-- replyModal --}}
+<div class="modal fade" id="exampleModal-reply" tabindex="-1" role="dialog" aria-labelledby="reply-tweet"
+  style="display: none;" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content d-flex">
+      <button type="button" class="btn-dismiss close d-flex justify-content-start ml-3 mt-2"
+        data-dismiss="modal">x</button>
+      <hr />
+      <div class="reply-tweet">
+        <div class="reply-modal-tweet d-flex">
+          <div class="mt-2" style="padding: 0%;">
+            <div>
+              <a href="/users/{{tweet.User.id}}/tweets">
+                <img src="{{tweet.User.avatar}}" class="avatar small ml-1">
+              </a>
+            </div>
+            <div class="headerDivider"></div>
+          </div>
+          <div class="mt-2" style="flex-grow: 1; position:relative">
+            <div class="account-info d-flex" style="flex:auto">
+              <a href="/users/{{tweet.User.id}}/tweets">
+                <div class="modal-name ml-3">{{tweet.User.name}}</div>
+              </a>
+              <div class="atAccount modal-info ml-2">@{{tweet.User.account}}•{{moment
+                this.createdAt}}</div>
+            </div>
+            <p class="modal-description d-flex ml-3" style="flex: auto">
+              {{tweet.description}}
+            </p>
+            <div class="reply d-flex" style="margin-left">
+              <div class="reply-text ml-3 mb-2">回覆給</div>
+              <a href="/users/{{user.id}}/tweets">
+                <div class="reply-account ml-2">@{{user.account}}</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form action="/tweets/{{this.TweetId}}/replies" method="POST">
+        <div class="type-area d-flex">
+          <div>
+            <a href="/users/{{user.id}}/tweets">
+              <img src="{{user.avatar}}" class="avatar small ml-1">
+            </a>
+          </div>
+          <div class="type-text form-group">
+            <input type="hidden" name="TweetId" value="{{tweet.id}}">
+            <textarea class="form-control new-post-content is-invalid ml-2" name="comment" id="comment-modal"
+              placeholder="推你的回覆" rows="5" cols="47" maxlength="140"></textarea>
+            <div class="invalid-feedback" id="reply-tweet"></div>
+          </div>
+        </div>
+        <div class="add-button  d-flex justify-content-end mr-2">
+          <button type="submit" class="btn mb-2" id="replybtn">回覆</button>
         </div>
       </form>
     </div>

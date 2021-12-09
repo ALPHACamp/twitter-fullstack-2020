@@ -1,4 +1,3 @@
-
 <div class="row" style="width:100%;">
   {{!-- navbar --}}
   <div class="col-3">
@@ -6,19 +5,19 @@
     <div class="nav-ul-wrapper">
       <ul class="nav flex-column">
         <li class="nav-item py-2">
-          <a class="nav-link active" href="/">
+          <a class="nav-link" href="/">
             <i class="fas fa-home"></i>
             <span class="ml-3">首頁</span>
           </a>
         </li>
         <li class="nav-item py-2">
-          <a class="nav-link" href="/users/{{ user.id }}/tweets">
+          <a class="nav-link" href="/users/{{user.id}}/tweets">
             <i class="far fa-user"></i>
             <span class="ml-3">個人資料</span>
           </a>
         </li>
         <li class="nav-item py-2">
-          <a class="nav-link" href="/users/{{ user.id}}/setting/edit">
+          <a class="nav-link active" href="/users/{{user.id}}/setting/edit">
             <i class="fas fa-cog"></i>
             <span class="ml-3">設定</span>
           </a>
@@ -40,66 +39,42 @@
 
   {{!-- content --}}
   <div class="col-5 content-container">
-    <div class="card border-light mb-3 ">
-      <div class="card-header"><span class="header2">首頁</span></div>
-      <div class="card-body d-flex">
-        <a href="/users/{{user.id}}/tweets">
-          <img class="avatar small mr-3" src="{{user.avatar}}">
-        </a>
-        <form action="/tweets" method="POST" style="width:100%;">
-          <div class="form-group">
-            <label for="tweet"></label>
-            <textarea type="text" class="post-content form-control " id="description" name="description"
-              placeholder="有什麼新鮮事?" rows="5" cols="47"></textarea>
-          </div>
-          <button type="submit" class="btn" id="btn">推文</button>
-        </form>
+    <form class="form-signin" action="/users/{{ user.id }}/setting?_method=PUT" method="POST" style="width: 100%;">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">帳戶設定</h1>
       </div>
-    </div>
-
-    {{!-- tweets --}}
-    <div class="card">
-      {{#each tweets}}
-      <div class="card-body d-flex">
-        <img class="avatar small mr-3" src="{{this.tweetsUserAvatar}}">
-        <div>
-          <p class="card-title">{{this.tweetsUserName}}
-            <span class="atAccount">@{{this.tweetsUserAccount}}•{{moment
-              this.tweetsCreatedAt}}</span>
-          </p>
-          <a href="/tweets/{{this.tweetsId}}/replies" class="text-muted">
-            <p class="post-text">{{this.tweetsContent}}</p>
-          </a>
-          <div class="d-flex">
-            <div class="reply" id="reply" data-toggle="modal" data-target="#exampleModal-reply">
-              <i class="far fa-comment"></i>
-              <span class="ml-2">30</span>
-            </div>
-            <div class="likeBtn">
-              {{!-- unlike tweet --}}
-              {{#if this.isLiked}}
-              <form action='/tweets/{{this.tweetsId}}/unlike' method="POST">
-                <button class="" type="submit">
-                  <i class="far fa-heart"></i>
-                  <span class="ml-2">{{this.likeTotal}}</span>
-                </button>
-              </form>
-              {{else}}
-              {{!-- Like tweet --}}
-              <form action='/tweets/{{this.tweetsId}}/like' method="POST">
-                <button class="btn" type="submit">
-                  <i class="far fa-heart"></i>
-                  <span class="ml-2">{{this.likeTotal}}</span>
-                </button>
-              </form>
-              {{/if}}
-            </div>
-          </div>
-        </div>
+      
+      <div class="form-label-group mb-2">
+        <label for="inputAccount">帳號<span style="color: red;">*</span></label>
+        <input type="text" name="account" class="form-control" placeholder="請輸入帳號" value="{{ user.account }}" required autofocus>
       </div>
-      {{/each}}
-    </div>
+      
+      <div class="form-label-group mb-2">
+        <label for="inputName">名稱<span style="color: red;">*</span></label>
+        <input type="text" name="name" class="form-control" placeholder="請輸入名稱" value="{{ user.name }}" required autofocus>
+      </div>
+      
+      <div class="form-label-group mb-2">
+        <label for="inputEmail">Email<span style="color: red;">*</span></label>
+        <input type="text" name="email" class="form-control" placeholder="請輸入Email" value="{{ user.email }}" required autofocus>
+      </div>
+      
+      <div class="form-label-group mb-2">
+        <label for="inputPassword">密碼</label>
+        <input type="password" name="password" class="form-control" placeholder="請輸入密碼">
+      </div>
+      
+      <div class="form-label-group mb-2">
+        <label for="inputPasswordCheck">確認密碼</label>
+        <input type="password" name="passwordCheck" class="form-control" placeholder="請再次輸入密碼" >
+      </div>
+      <br />
+      <div class="d-flex justify-content-end pr-1">
+        <button class="btn" type="submit">修改</button>
+      </div>
+    </form>
   </div>
+
   {{!-- popular --}}
   <div class="col-4">
     <div class="card border-light popular">
@@ -107,28 +82,30 @@
         Popular
       </div>
       <ul class="list-group list-group-flush">
-        {{#each users}}
         <li class="list-group-item d-flex">
           <div class="mr-2">
-            <img class="avatar small" src="{{this.topUserAvatar}}">
+            <img class="avatar small" src="/images/exampleAvatar1.png">
           </div>
           <div class="mr-5">
-            <p class="mb-0">{{this.topUserName}}</p>
-            <p class="atAccount">@{{this.topUserAccount}}</p>
+            <p class="mb-0">Pizza Hut</p>
+            <p class="atAccount">@pizzahut</p>
           </div>
           <div class="pt-2">
-            {{#if this.isFollowed}}
-            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-              <button type="submit" class="btn py-2">正在跟隨</button>
-            </form>
-            {{else}}
-            <form action="/followships/{{this.id}}" method="POST">
-              <button type="submit" class="btn py-2">跟隨</button>
-            </form>
-            {{/if}}
+            <a class="btn py-2" href="#">正在追蹤</a>
           </div>
         </li>
-        {{/each}}
+        <li class="list-group-item d-flex">
+          <div class="mr-2">
+            <img class="avatar small" src="/images/exampleAvatar2.png">
+          </div>
+          <div class="mr-5">
+            <p class="mb-0">MacDonald</p>
+            <p class="atAccount">@macdonald</p>
+          </div>
+          <div class="pt-2">
+            <a class="btn btn-outline py-2" href="#">追蹤</a>
+          </div>
+        </li>
       </ul>
     </div>
   </div>

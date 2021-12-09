@@ -33,7 +33,7 @@ const adminController = {
         userAvatar: t.dataValues.User.avatar,
         userName: t.dataValues.User.name,
         userAccount: t.dataValues.User.account,
-        tweetDescription: t.dataValues.description,
+        tweetDescription: t.dataValues.description.substring(0, 50),
         tweetId: t.dataValues.id,
       }))
       // console.log(data[0])

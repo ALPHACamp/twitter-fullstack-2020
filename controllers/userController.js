@@ -3,10 +3,11 @@ const { Op } = require('sequelize')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = 'd97de9c03bf7519'
 const db = require('../models')
-const tweet = require('../models/tweet')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
+const Like = db.Like
+const Followship = db.Followship
 const helpers = require('../_helpers')
 
 const getLink = (filePath) => {
@@ -66,14 +67,76 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
+
+  // like tweet
+  addLike: (req, res) => {
+    return Like.create({
+      UserId: helpers.getUser(req).id,
+      TweetId: req.params.tweetId
+    })
+      .then(tweet => {
+        return res.redirect('back')
+      })
+  },
+  // unlike tweet
+  removeLike: (req, res) => {
+    return Like.destroy({
+      where: {
+        UserId: helpers.getUser(req).id,
+        TweetId: req.params.tweetId
+      }
+    })
+      .then(tweet => {
+        return res.redirect('back')
+      })
+  },
+  // following
+  addFollowing: (req, res) => {
+    // 目前的登入者不行追蹤自己
+    console.log('********')
+    console.log('req.params.followingId:', req.params.followingId)
+    console.log('********')
+    console.log('req.user.id:', req.user.id)
+    console.log('********')
+    const myId = Number(req.params.followingId)
+    if (helpers.getUser(req).id === myId) {
+      req.flash('error_messages', '幹嘛? 不要給我追蹤自己喔')
+      return res.redirect('back')
+    }
+    return Followship.create({
+      // 目前登入的使用者id
+      followerId: helpers.getUser(req).id,
+      // 我要追蹤的使用者id
+      followingId: req.params.followingId
+    })
+      .then(followship => {
+        return res.redirect('back')
+      })
+  },
+  // removeFollowing
+  removeFollowing: (req, res) => {
+    return Followship.findOne({
+      where: {
+        followerId: helpers.getUser(req).id,
+        followingId: req.params.followingId
+      }
+    })
+      .then(followship => {
+        followship.destroy()
+          .then(followship => {
+            return res.redirect('back')
+          })
+      })
+  },
+
   getUser: (req, res) => {
     if (helpers.getUser(req).id !== Number(req.params.userId)) {
-      return res.json({ status: 'error', message:'' })
+      return res.json({ status: 'error', message: '' })
     }
     return User.findByPk(req.params.userId)
       .then(user => {
         return res.json(user.toJSON())
-    })
+      })
   },
   postUser: async (req, res) => {
     const { name, introduction } = req.body
@@ -138,7 +201,63 @@ const userController = {
           user: user.toJSON()
         })
       })
+  },
+  // 瀏覽帳號設定頁面
+  editSetting: (req, res) => {
+    if (helpers.getUser(req).id !== Number(req.params.userId)) {
+      req.flash('error_messages', '你沒有檢視此頁面的權限')
+      return res.redirect(`/users/${helpers.getUser(req).id}/setting/edit`)
+    }
+    return User.findByPk(req.params.userId).then((user) => {
+      return res.render('setting', { user: user.toJSON() })
+    })
+  },
+
+  // 更新帳號設定
+  putSetting: (req, res) => {
+    const { account, name, email, password, passwordCheck } = req.body
+
+    // 檢查使用者是否有編輯權限
+    if (helpers.getUser(req).id !== Number(req.params.userId)) {
+      req.flash('error_messages', '你沒有檢視此頁面的權限')
+      return res.redirect(`/users/${helpers.getUser(req).id}/setting/edit`)
+    }
+
+    // 如使用者有輸入密碼或確認密碼，檢查是否一致
+    if (password.trim() || passwordCheck.trim()) {
+      if (password !== passwordCheck) {
+        req.flash('error_messages', '密碼與確認密碼不一致！')
+        return res.redirect('back')
+      }
+    }
+    // 檢查是否有其他使用者重複使用表單的帳號或Email
+    return User.findOne({
+      where: {
+        id: { [Op.ne]: helpers.getUser(req).id },
+        [Op.or]: [{ account }, { email }]
+      }
+    }).then((user) => {
+      if (user) {　// 如其他使用者存在，區分是重複帳號還是Email
+        if (user.account === account) { req.flash('error_messages', 'account 已重覆註冊！') }
+        else { req.flash('error_messages', 'email 已重覆註冊！') }
+        return res.redirect('back')
+      } else {
+        return User.findByPk(req.params.userId).then((user) => {
+          return user.update({
+            account,
+            name,
+            email,
+            password: password ? bcrypt.hashSync(password, bcrypt.genSaltSync(10), null) : user.password
+          })
+            .then(user => {
+              req.flash('success_messages', '帳號資料更新成功!')
+              return res.redirect(`/users/${req.params.userId}/setting/edit`)
+            })
+        })
+      }
+    })
   }
+
 }
 
 module.exports = userController
