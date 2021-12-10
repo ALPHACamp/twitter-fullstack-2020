@@ -1,14 +1,3 @@
-<script>
-function submit() {
-  axios.get('/api/users/{{user.id}}')
-    .then(res => {
-  name.value = res.data.name
-  description.value = res.data.description
-  avatar.setAttribute("src", res.data.avatar)
-  cover.setAttribute("src", res.data.cover)
-})
-}
-</script>
 <div class="center container">
   <div class="left-bar">
     {{> navbar}}
@@ -191,11 +180,11 @@ function submit() {
         <div class="position-relative" style="height: 200px; margin-bottom: 75px;">
           <img class="w-100 h-100" src="{{user.cover}}" alt="" style="object-fit: cover;">
           <label id="coverFile">
-            <img src="/images/uploadImg.svg" alt="">
+            <img src="/images/uploadImg.svg" alt="" id="coverImage">
             <input id="uploadCover" name="cover" type="file" hidden>
           </label>
           <div class="avatar-container">
-            <img class="" src="{{user.avatar}}" alt="">
+            <img class="" src="{{user.avatar}}" alt="" id="avatarImage">
           </div>
           <label id="avatarFile">
             <img src="/images/uploadImg.svg" alt="">
@@ -228,3 +217,15 @@ function submit() {
   </div>
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+  function submit() {
+    axios.get('/api/users/{{user.id}}')
+      .then(res => {
+        name.value = res.data.name
+        description.value = res.data.description
+        avatar.setAttribute("src", res.data.avatar)
+        cover.setAttribute("src", res.data.cover)
+      })
+  }
+</script>

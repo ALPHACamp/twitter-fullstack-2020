@@ -7,8 +7,9 @@ const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
 
+const fs = require('fs')
 const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+const IMGUR_CLIENT_ID = '3bdeb4f2cae8587'
 const userService = require('../services/userService')
 
 const userController = {
@@ -254,94 +255,91 @@ const userController = {
         })
       })
   },
-  putUserProfile: async (req, res) => {
+  putUserProfile: (req, res) => {
     if (!req.body.name) {
       req.flash('error_msg', "請輸入名稱")
       return res.redirect('back')
-    } else {
-      if (!req.body.introduction) {
-        req.flash('error_msg', "請輸入自我介紹")
-        return res.redirect('back')
-      } else {
-
-        const { files } = req
-        if (files.avatar !== undefined & files.cover === undefined) {
-          imgur.setClientID(IMGUR_CLIENT_ID);
-          await imgur.upload(files.avatar[0].path, (err, img) => {
-            return User.findByPk(req.params.id)
-              .then((user) => {
-                user.update({
-                  name: req.body.name,
-                  introduction: req.body.introduction,
-                  avatar: files ? img.data.link : user.avatar,
-                }).then((user) => {
-                  req.flash('success_msg', '更新成功!')
-                  return res.redirect('back')
-                })
-              })
-          })
-        }
-        if (files.avatar === undefined & files.cover !== undefined) {
-          imgur.setClientID(IMGUR_CLIENT_ID);
-          await imgur.upload(files.cover[0].path, (err, img) => {
-            return User.findByPk(req.params.id)
-              .then((user) => {
-                user.update({
-                  name: req.body.name,
-                  introduction: req.body.introduction,
-                  cover: files ? img.data.link : user.cover,
-                }).then((user) => {
-                  req.flash('success_msg', '更新成功!')
-                  return res.redirect('back')
-                })
-              })
-          })
-        }
-        if (files.avatar !== undefined & files.cover !== undefined) {
-          imgur.setClientID(IMGUR_CLIENT_ID);
-          await imgur.upload(files.avatar[0].path, (err, img) => {
-            return User.findByPk(req.params.id)
-              .then((user) => {
-                user.update({
-                  name: req.body.name,
-                  introduction: req.body.introduction,
-                  avatar: files ? img.data.link : user.avatar,
-                })
-                  .then(() => {
-                    imgur.setClientID(IMGUR_CLIENT_ID);
-                    imgur.upload(files.cover[0].path, (err, img) => {
-                      return User.findByPk(req.params.id)
-                        .then((user) => {
-                          user.update({
-                            name: req.body.name,
-                            introduction: req.body.introduction,
-                            cover: files ? img.data.link : user.cover,
-                          }).then((user) => {
-                            req.flash('success_msg', '更新成功!')
-                            return res.redirect('back')
-                          })
-                        })
-                    })
-                  })
-              })
-          })
-        }
-        else {
-          await User.findByPk(req.params.id)
-            .then((user) => {
-              user.update({
-                name: req.body.name,
-                introduction: req.body.introduction,
-                avatar: user.avatar,
-                cover: user.cover,
-              })
-                .then((user) => {
-                  req.flash('success_msg', '更新成功!')
-                  return res.redirect('back')
-                })
+    } 
+    if (!req.body.introduction) {
+      req.flash('error_msg', "請輸入自我介紹")
+      return res.redirect('back')
+    }
+    const { files } = req
+    let cover = ''
+    let avatar = ''
+    if (files) {
+      cover = files.cover
+      avatar = files.avatar
+    }
+    if (cover && avatar) {
+      console.log('封面跟頭貼都有檔案')
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(cover[0].path, (err, imgCover) => {
+        if (avatar) {
+          imgur.upload(avatar[0].path, async (err, imgAvr) => {
+            const user = await User.findByPk(req.params.id)
+            await user.update({
+              cover: cover[0] ? imgCover.data.link : user.cover,
+              avatar: avatar[0] ? imgAvr.data.link : user.avatar,
+              name: user.name,
+              introduction: user.introduction ? user.introduction : ''
             })
+            return res.redirect('back')
+          })
         }
-      }
+      })
+    } else if (cover) { // 載入 cover
+      console.log('封面有檔案')
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(cover[0].path, async (err, imgCover) => {
+        const user = await User.findByPk(req.params.id)
+        await user.update({
+          cover: cover[0] ? imgCover.data.link : user.cover,
+          avatar: user.avatar,
+          name: user.name,
+          introduction: user.introduction ? user.introduction : ''
+        }).then(user => {
+          console.log(user)
+        }).catch(error => {
+          console.log(error)
+        })
+        return res.redirect('back')
+      })
+    } else if (avatar) { // 載入 avatar
+      console.log('頭貼都有檔案')
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(avatar[0].path, async (err, imgAvr) => {
+        const user = await User.findByPk(req.params.id)
+        console.log(imgAvr)
+        await user.update({
+          cover: user.cover,
+          avatar: avatar[0] ? imgAvr.data.link : user.avatar,
+          name: user.name,
+          introduction: user.introduction ? user.introduction : ''
+        }).then(user => {
+          console.log(user)
+        }).catch(error => {
+          console.log(error)
+        })
+        return res.redirect('back')
+      })
+    } else {
+      console.log('完全沒有檔案')
+      return User.findByPk(req.params.id)
+        .then(user => {
+          user.update({
+            name: req.body.name,
+            avatar: user.avatar,
+            cover: user.cover,
+            introduction: req.body.introduction
+          }).then(user => {
+            // return res.json({ status: 'success', data: user })
+            return res.redirect('back')
+          }).catch(error => {
+            console.log(error)
+          })
+        })
+
     }
   }
 }
