@@ -10,18 +10,16 @@ const replyController = require('../controllers/replyController')
 module.exports = (app, passport) => {
   // authenticated 與 authenticatedAdmin 
   // 未來可嘗試refactor
-  const authenticatedAdmin = (req, res, next) => {
+  const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
+      
       if (helpers.getUser(req).role === 'admin') {
-        return next()
+        req.flash('error_messages', '無法進入此頁面')
+        return res.redirect('/admin/tweets')
       }
-
-      if (helpers.getUser(req).role === 'normal') {
-        req.flash('error_messages', '無此權限')
-        return res.redirect('back')
-      }
-      res.redirect('/admin/signin')
+      return next()
     }
+    res.redirect('/signin')
   }
 
   const authenticatedAdmin = (req, res, next) => {

@@ -248,6 +248,7 @@ const userController = {
 
       })
     })
+  },
 
   //使用者喜歡的內容頁面
   getUserLikes: (req, res) => {
