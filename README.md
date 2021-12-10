@@ -4,18 +4,16 @@
 
 使用 Node.js 及 express framework 展示簡易 Twitter 功能
 
-[Live Demo](https://frozen-dusk-97283.herokuapp.com/)
-
-## About The Rroject
-
-** 專案展示 **
-
-![image](https://github.com/yulaie1012/twitter-fullstack-2020/blob/master/public/images/sample.gif)
-
 * MySQL 資料庫規劃建立
 * 資料庫 CRUD 操作及進階關聯 
 * RESTful 路由及 API 設計
 * MVC 架構
+
+[Live Demo](https://frozen-dusk-97283.herokuapp.com/)
+
+## Showcase
+
+![image](https://github.com/yulaie1012/twitter-fullstack-2020/blob/master/public/images/sample.gif)
 
 ## Features
 
