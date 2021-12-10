@@ -178,17 +178,17 @@
           <button class="button-submit button-save" type="submit">儲存</button>
         </div>
         <div class="position-relative" style="height: 200px; margin-bottom: 75px;">
-          <img class="w-100 h-100" src="{{user.cover}}" alt="" style="object-fit: cover;">
+          <img class="w-100 h-100" src="{{user.cover}}" alt="" style="object-fit: cover;" id="cover-placeholder">
           <label id="coverFile">
             <img src="/images/uploadImg.svg" alt="" id="coverImage">
-            <input id="uploadCover" name="cover" type="file" hidden>
+            <input id="uploadCover" name="cover" type="file" onchange="readURL(this);" hidden>
           </label>
           <div class="avatar-container">
-            <img class="" src="{{user.avatar}}" alt="" id="avatarImage">
+            <img class="" src="{{user.avatar}}" alt="" id="avatar-placeholder">
           </div>
           <label id="avatarFile">
             <img src="/images/uploadImg.svg" alt="">
-            <input id="uploadAvatar" name="avatar" style="display:none;" type="file" hidden>
+            <input id="uploadAvatar" name="avatar" style="display:none;" type="file" onchange="readAvatar(this)" hidden>
           </label>
         </div>
         <div class="modal-body">
@@ -227,5 +227,29 @@
         avatar.setAttribute("src", res.data.avatar)
         cover.setAttribute("src", res.data.cover)
       })
+  }
+</script>
+<script>
+function readURL(input) {
+    if (input.files && input.files[0]) {
+      let reader = new FileReader()
+
+      reader.onload = function (e) {
+        $('#cover-placeholder').attr('src', e.target.result)
+      }
+      reader.readAsDataURL(input.files[0])
+    }
+  }
+
+  // avatar圖片預覽效果
+  function readAvatar(input) {
+    if (input.files && input.files[0]) {
+      let reader = new FileReader()
+
+      reader.onload = function (e) {
+        $('#avatar-placeholder').attr('src', e.target.result)
+      }
+      reader.readAsDataURL(input.files[0])
+    }
   }
 </script>
