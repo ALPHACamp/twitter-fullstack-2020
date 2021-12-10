@@ -270,11 +270,12 @@ const userController = {
   },
 
   getProfile: (req, res) => {
-    const userId = req.params.id
+    const loginUserId = helpers.getUser(req).id
+    const requestUserId = req.params.id
     Promise.all([
       // 取得 Followship, 測試檔不跑deserializeUser
       (function getFollowship() {
-        return User.findByPk(userId, {
+        return User.findByPk(requestUserId, {
           include: [
             { model: User, as: 'Followers' },
             { model: User, as: 'Followings' },
@@ -283,7 +284,7 @@ const userController = {
       })(),
       (function getTweets() {
         return Tweet.findAll({
-          where: { UserId: userId },
+          where: { UserId: requestUserId },
           include: [User, Like, Reply],
           order: [['createdAt', 'DESC']],
         })
@@ -297,8 +298,8 @@ const userController = {
           ...tweet.dataValues,
           likesCount: tweet.dataValues.Likes ? tweet.dataValues.Likes.length : 0,
           repliesCount: tweet.dataValues.Replies ? tweet.dataValues.Replies.length : 0,
-          isLiked: tweet.dataValues.Likes.map((d) => d.dataValues.UserId).includes(userId),
-          isReplied: tweet.dataValues.Replies.map((d) => d.dataValues.UserId).includes(userId),
+          isLiked: tweet.dataValues.Likes.map((d) => d.dataValues.UserId).includes(loginUserId),
+          isReplied: tweet.dataValues.Replies.map((d) => d.dataValues.UserId).includes(loginUserId),
         }))
         // 取得右邊欄位的Top users
         const topUsers = await helpers.getTopuser(req.user)
@@ -363,32 +364,55 @@ const userController = {
   getProfile_likes: (req, res) => {
     const loginUserId = helpers.getUser(req).id
     const requestUserId = req.params.id
-    //query reference from https://github.com/Emily81926/twitter-api-2020 小鹿Kerwin, Vince, Ya Chu, Yang, Chaco
-    Like.findAll({
-      where: { UserId: requestUserId },
-      raw: true,
-      nest: true,
-      attributes: ['id', 'createdAt', 'TweetId'],
-      include: [
-        {
-          model: Tweet,
-          attributes: [
-            'id',
-            'description',
-            [sequelize.literal(`(select count(TweetId) from Replies where TweetId = Tweet.id)`), 'commentCounts'],
-            [sequelize.literal(`(select count(TweetId) from Likes where TweetId = Tweet.id)`), 'likeCounts'],
-            [sequelize.literal(`exists(select 1 from Replies where UserId = ${loginUserId} and TweetId = Tweet.id)`), 'isReplied'],
-            [sequelize.literal(`exists(select 1 from Likes where UserId = ${loginUserId} and TweetId = Tweet.id)`), 'isLiked'],
+    Promise.all([
+      // 取得 Followship, 測試檔不跑deserializeUser
+      (function getFollowship() {
+        return User.findByPk(requestUserId, {
+          include: [
+            { model: User, as: 'Followers' },
+            { model: User, as: 'Followings' },
           ],
-          include: [{ model: User, attributes: ['id', 'name', 'account', 'avatar'] }],
-        },
-      ],
-      order: [['createdAt', 'DESC']],
-    }).then((likes) => {
-      console.log(likes)
-      console.log(likes[0].Tweet.User)
-      return res.render('profile', { likes, page: 'profile_likes' })
-    })
+        })
+      })(),
+      (function getLikes() {
+        //query reference from https://github.com/Emily81926/twitter-api-2020 小鹿Kerwin, Vince, Ya Chu, Yang, Chaco
+        return Like.findAll({
+          where: { UserId: requestUserId },
+          raw: true,
+          nest: true,
+          attributes: ['id', 'createdAt', 'TweetId'],
+          include: [
+            {
+              model: Tweet,
+              attributes: [
+                'id',
+                'description',
+                [sequelize.literal(`(select count(TweetId) from Replies where TweetId = Tweet.id)`), 'commentCounts'],
+                [sequelize.literal(`(select count(TweetId) from Likes where TweetId = Tweet.id)`), 'likeCounts'],
+                [sequelize.literal(`exists(select 1 from Replies where UserId = ${loginUserId} and TweetId = Tweet.id)`), 'isReplied'],
+                [sequelize.literal(`exists(select 1 from Likes where UserId = ${loginUserId} and TweetId = Tweet.id)`), 'isLiked'],
+              ],
+              include: [{ model: User, attributes: ['id', 'name', 'account', 'avatar'] }],
+            },
+          ],
+          order: [['createdAt', 'DESC']],
+        })
+      })(),
+    ])
+      .then(async (results) => {
+        const likes = results[1]
+        // console.log(likes)
+        // console.log(likes[0].Tweet.User)
+        const users = await helpers.getTopuser(req.user)
+        return res.render('profile', {
+          likes,
+          users,
+          followerCount: results[0].toJSON().Followers.length,
+          followingCount: results[0].toJSON().Followings.length,
+          page: 'profile_likes',
+        })
+      })
+      .catch((error) => console.error(error))
   },
 }
 module.exports = userController
