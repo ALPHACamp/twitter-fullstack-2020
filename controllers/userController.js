@@ -411,7 +411,6 @@ const userController = {
     putUserApi: (req, res) => {
         const { files } = req
         const userId = user.id
-        console.log(req.user.id)
         let cover = ''
         let avatar = ''
         if (files) {
@@ -427,6 +426,9 @@ const userController = {
                         const user = await User.findByPk(req.params.id)
                         if (req.body.introduction.trim().length > 160) {
                             req.flash('error_messages', '字數超出上限!')
+                            return res.redirect('back')
+                        } if (req.body.name.trim().length > 50) {
+                            req.flash('error_messages', '字數超出上限50個字!')
                             return res.redirect('back')
                         } else {
                             await user.update({
@@ -448,6 +450,9 @@ const userController = {
                 const user = await User.findByPk(req.params.id)
                 if (req.body.introduction.trim().length > 160) {
                     req.flash('error_messages', '字數超出上限!')
+                    return res.redirect('back')
+                } if (req.body.name.trim().length > 50) {
+                    req.flash('error_messages', '字數超出上限50個字!')
                     return res.redirect('back')
                 } else {
                     await user.update({
@@ -473,6 +478,9 @@ const userController = {
                 if (req.body.introduction.trim().length > 160) {
                     req.flash('error_messages', '字數超出上限!')
                     return res.redirect('back')
+                } if (req.body.name.trim().length > 50) {
+                    req.flash('error_messages', '字數超出上限50個字!')
+                    return res.redirect('back')
                 } else {
                     await user.update({
                         cover: user.cover,
@@ -490,6 +498,9 @@ const userController = {
             console.log('完全沒有檔案')
             if (req.body.introduction.trim().length > 160) {
                 req.flash('error_messages', '字數超出上限!')
+                return res.redirect('back')
+            } if (req.body.name.trim().length > 50) {
+                req.flash('error_messages', '字數超出上限50個字!')
                 return res.redirect('back')
             } else {
                 return User.findByPk(req.params.id)
