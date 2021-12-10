@@ -1,4 +1,4 @@
-    <div class='text-title d-flex flex-row align-items-center'style="margin-top: 6px">
+    <div class='text-title d-flex flex-row align-items-center'style="margin-top: 6px; height:55px;">
       <div class='back-icon'style="margin-left:19px">
         <a href='javascript:history.back()'>
           <i class='fas fa-arrow-left' style="color: black;"></i>
@@ -6,7 +6,11 @@
       </div>
       <div class='name-info'style="margin-left:43px">
         <div class='title-name' style="font-size:18px;color: black; font-weight:bold;">{{user.name}}</div>
-        <p style="color:gray; font-size:14px; font-weight:bold; margin-bottom:7px"> {{tweetCount}} 推文</p>
+        {{#if tweetCount}}
+            <p style='color:gray; font-size:14px; font-weight:bold; margin-bottom:7px'> {{tweetCount}} 推文</p>
+        {{else}}
+            {{!-- <p style='color:gray; font-size:14px; font-weight:bold; margin-bottom:7px'> 　</p> --}}
+        {{/if}}
       </div>
     </div>
 

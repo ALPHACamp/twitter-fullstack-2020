@@ -208,14 +208,20 @@ const userController = {
   },
 
   getFollowers: (req, res) => {
-    const userId = req.params.id
-    User.findByPk(userId, {
+    const requestUserId = req.params.id
+    User.findByPk(requestUserId, {
       nest: true,
       include: [{ model: User, as: 'Followers' }],
     })
       .then(async (user) => {
         const topUsers = await helpers.getTopuser(req.user)
-        return res.render('followers', { followers: user.Followers, users: topUsers, page: 'profile' })
+        return res.render('followers', {
+          requestUserId,
+          followers: user.Followers,
+          users: topUsers,
+          page: 'profile',
+          subPage: 'followers',
+        })
       })
       .catch((err) => {
         console.log(err)
@@ -223,14 +229,21 @@ const userController = {
   },
 
   getFollowings: (req, res) => {
-    const userId = req.params.id
-    User.findByPk(userId, {
+    const requestUserId = req.params.id
+    User.findByPk(requestUserId, {
       nest: true,
       include: [{ model: User, as: 'Followings' }],
     })
       .then(async (user) => {
         const topUsers = await helpers.getTopuser(req.user)
-        return res.render('followings', { followings: user.Followings, users: topUsers, page: 'profile' })
+        console.log(user.Followings[0])
+        return res.render('followings', {
+          requestUserId,
+          followings: user.Followings,
+          users: topUsers,
+          page: 'profile',
+          subPage: 'followings',
+        })
       })
       .catch((err) => {
         console.log(err)

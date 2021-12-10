@@ -1,4 +1,42 @@
-followings
+<div class='text-title d-flex flex-row align-items-center' style='margin-top: 6px; height:55px;'>
+  <div class='back-icon' style='margin-left:19px'>
+    <a href='javascript:history.back()'>
+      <i class='fas fa-arrow-left' style='color: black;'></i>
+    </a>
+  </div>
+  <div class='name-info' style='margin-left:43px'>
+    <div class='title-name' style='font-size:18px;color: black; font-weight:bold;'>{{user.name}}</div>
+    {{#if tweetCount}}
+      <p style='color:gray; font-size:14px; font-weight:bold; margin-bottom:7px'> {{tweetCount}} 推文</p>
+    {{/if}}
+  </div>
+</div>
+<ul class="nav nav-tabs" style="padding-left: 34px;">
+    <li class="nav-item">
+        <a class="nav-link  {{#ifCond subPage 'followers'}}active{{/ifCond}}"  href="/users/{{requestUserId}}/followers">追隨者</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{#ifCond subPage 'followings'}}active{{/ifCond}}" href="/users/{{requestUserId}}/followings">正在追隨</a>
+    </li>
+</ul>
 {{#each followings}}
-  <h5>{{this.dataValues.name}}</h5>
+  <div class="tweet" style="border-bottom:1px solid #dee2e6; padding: 10px 0px;">
+    <div class="d-flex">
+      <div class="" style="margin-left:15px; margin-top:13px; margin-right:10px">
+        <a href="/users/{{this.dataValues.id}}/tweets" class="text-muted">
+          <img class="user-pic mr-2" src="{{this.dataValues.avatar}}" style=" width:50PX;height:50px; border-radius:100%;">
+        </a>
+      </div>
+      <div class="">
+        <div class="account-info" style="flex:auto">
+          <a href="/users/{{this.dataValues.id}}/tweets" class="text-muted">
+            <div class="user-name" style="color: black; font-weight:bold;">{{this.dataValues.name}}</div>
+          </a>
+          <div class="account-time" style="font-weight:500; color: gray;">@{{this.dataValues.account}}</div>
+        </div>
+
+        <div class="post-text d-flex" style="flex:auto"> {{this.dataValues.introduction}} </div>
+      </div>
+    </div>
+  </div>
 {{/each}}
