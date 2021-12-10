@@ -48,8 +48,8 @@
                 </div>
                 <div class="col-md-10">
                   <textarea name="description" id=""
-                    style="min-height:225px; max-height:225px; width:100%; border:none;"
-                    placeholder="有甚麼新鮮事?"></textarea>
+                    style="min-height:225px; max-height:225px; width:100%; border:none;" placeholder="有甚麼新鮮事?"
+                    required></textarea>
                 </div>
               </div>
 
@@ -136,7 +136,7 @@
         <div class="row align-items-center">
           <div class="col-md-3">
             <span class="mr-2">
-              <button type="submit" data-toggle="modal" data-target="#tweetModel-{{this.id}}"
+              <button type="submit" data-toggle="modal" data-target="#tweetModel"
                 style="border: 0; background-color: #ffffff; "><i class="far fa-comment" data-id={{this.id}}></i>
               </button>{{ this.Replies.length }}
             </span>
@@ -170,8 +170,8 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="tweetModel-{{this.id}}" tabindex="-1" role="dialog"
-      aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="word-break:break-all;">
+    <div class="modal fade" id="tweetModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true" style="word-break:break-all;">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -266,8 +266,3 @@
   </div>
 </div>
 </div>
-
-<script>
-  const user = {{ user }}
-  console.log(user)
-</script>
