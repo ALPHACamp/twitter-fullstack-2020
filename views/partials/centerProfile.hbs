@@ -143,31 +143,31 @@
     <div class="tweet col-md-12" style="padding:15px">
       <div class="d-flex">
         <div class="mt-2 ml-2 col-md-1" style="padding:0">
-          <a href="/users/{{this.User.dataValues.id}}/tweets" class="text-muted">
-            <img class="user-pic mr-2" src="{{this.User.dataValues.avatar}}" style=" width:60PX;height:60px; border-radius:100%;">
+          <a href="/users/{{this.User.id}}/tweets" class="text-muted">
+            <img class="user-pic mr-2" src="{{this.User.avatar}}" style=" width:60PX;height:60px; border-radius:100%;">
           </a>
         </div>
         <div class="col-md-11">
           <div class="account-info d-flex" style="flex:auto">
-            <a href="/users/{{this.User.dataValues.id}}/tweets" class="text-muted">
-              <div class="user-name" style="color: black; font-weight:bold;">{{this.User.dataValues.name}}</div>
+            <a href="/users/{{this.User.id}}/tweets" class="text-muted">
+              <div class="user-name" style="color: black; font-weight:bold;">{{this.User.name}}</div>
             </a>
-            <div class="account-time ml-2" style="font-weight:500; color: gray;">@{{this.User.dataValues.account}} • {{moment this.dataValues.createdAt}}</div>
+            <div class="account-time ml-2" style="font-weight:500; color: gray;">@{{this.User.account}} • {{moment this.createdAt}}</div>
           </div>
 
           <div class="reply">
             <div class="row">
               <div class="reply-text ml-3" style="color: gray;"><p style="font-weight:500; ">回覆</p></div>
                 <div class="reply-account">
-                  <a href="/users/{{this.User.dataValues.id}}/tweets" class="text-muted" style="">
+                  <a href="/users/{{this.User.id}}/tweets" class="text-muted" style="">
                     <p style="color: orange; font-weight:500;">
-                      @{{../tweet.User.dataValues.name}}
+                      @{{this.Tweet.User.account}}
                     </p>
                   </a>
                 </div>
             </div>
           </div>
-          <div class="post-text d-flex" style="flex:auto"> {{this.dataValues.comment}} </div>
+          <div class="post-text d-flex" style="flex:auto"> {{this.comment}} </div>
         </div>
       </div>
     </div>

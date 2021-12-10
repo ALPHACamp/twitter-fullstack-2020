@@ -320,45 +320,48 @@ const userController = {
   },
 
   getProfile_replies: (req, res) => {
-    const userId = req.params.id
+    const loginUserId = helpers.getUser(req).id
+    const requestUserId = req.params.id
 
-    Tweet.findAll({
-      where: { UserId: userId },
-      include: [User, Like, Reply],
-      order: [['createdAt', 'DESC']],
-    }).then(async (tweets) => {
-      //計算 該則 tweet 被其他使用者喜歡或 有留言的次數
-      //決定 tweets.handlebar 上的 留言跟喜歡按鈕是要實心或空心
-      replies = tweets.map((reply) => ({
-        ...reply.dataValues,
-      }))
-      tweets = tweets.map((tweet) => ({
-        ...tweet.dataValues,
-        likesCount: tweet.dataValues.Likes ? tweet.dataValues.Likes.length : 0,
-        repliesCount: tweet.dataValues.Replies ? tweet.dataValues.Replies.length : 0,
-        followerCount: req.user.Followers.length,
-        followingCount: req.user.Followings.length,
-        isLiked: tweet.dataValues.Likes.map((d) => d.dataValues.UserId).includes(req.user.id),
-        isReplied: tweet.dataValues.Replies.map((d) => d.dataValues.UserId).includes(req.user.id),
-      }))
-      // 取得右邊欄位的Top users
-      const topUsers = await helpers.getTopuser(req.user)
-      //推文數&追蹤&追隨數量
-      const tweetCount = tweets.length
-      const followerCount = tweets[0].followerCount
-      const followingCount = tweets[0].followingCount
-      console.log(replies)
-      // console.log(tweets[0])
-      return res.render('profile', {
-        tweets: tweets,
-        users: topUsers,
-        tweetCount,
-        followerCount,
-        followingCount,
-        page: 'profile_replies',
-        replies: replies,
+    Promise.all([
+      // 取得 Followship, 測試檔不跑deserializeUser
+      (function getFollowship() {
+        return User.findByPk(requestUserId, {
+          include: [
+            { model: User, as: 'Followers' },
+            { model: User, as: 'Followings' },
+          ],
+        })
+      })(),
+      (function getReply() {
+        //query reference from https://github.com/Emily81926/twitter-api-2020 小鹿Kerwin, Vince, Ya Chu, Yang, Chaco
+        return Reply.findAll({
+          where: { UserId: req.params.id },
+          raw: true,
+          nest: true,
+          attributes: ['id', 'comment', 'createdAt'],
+          include: [
+            { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
+            { model: Tweet, attributes: ['id'], include: [{ model: User, attributes: ['account'] }] },
+          ],
+          order: [['createdAt', 'DESC']],
+        })
+      })(),
+    ])
+      .then(async (results) => {
+        const replies = results[1]
+        // console.log(replies)
+        // console.log(replies[0].Tweet.User)
+        const users = await helpers.getTopuser(req.user)
+        return res.render('profile', {
+          replies,
+          users,
+          followerCount: results[0].toJSON().Followers.length,
+          followingCount: results[0].toJSON().Followings.length,
+          page: 'profile_replies',
+        })
       })
-    })
+      .catch((error) => console.error(error))
   },
 
   getProfile_likes: (req, res) => {
@@ -401,8 +404,6 @@ const userController = {
     ])
       .then(async (results) => {
         const likes = results[1]
-        // console.log(likes)
-        // console.log(likes[0].Tweet.User)
         const users = await helpers.getTopuser(req.user)
         return res.render('profile', {
           likes,
