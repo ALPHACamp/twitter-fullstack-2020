@@ -236,7 +236,6 @@ const userController = {
     })
       .then(async (user) => {
         const topUsers = await helpers.getTopuser(req.user)
-        console.log(user.Followings[0])
         return res.render('followings', {
           requestUserId,
           followings: user.Followings,
