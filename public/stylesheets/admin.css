@@ -1,10 +1,9 @@
 .page-header {
   height: 55px;
   line-height: 55px;
-  border: 1px solid #e6ecf0;
+  border-bottom: 1px solid #e6ecf0;
   padding-left: 26.5px;
 
-  font-family: Noto Sans TC;
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
@@ -12,7 +11,6 @@
 
 .admin-tweet {
   height: 75px;
-  border-left: 1px solid #e6ecf0;
   border-right: 1px solid #e6ecf0;
   border-bottom: 1px solid #e6ecf0;
   padding-left: 15px;
@@ -72,9 +70,6 @@
 }
 
 .admin-user-container {
-  border-left: 1px solid #e6ecf0;
-  border-right: 1px solid #e6ecf0;
-  border-bottom: 1px solid #e6ecf0;
   min-height: 100vh;
 }
 

@@ -65,7 +65,8 @@ const userController = {
 
   //user編輯帳號
   editUser: (req, res) => {
-    User.findByPk(req.params.id).then((user) => {
+    const user = helpers.getUser(req)
+    User.findByPk(user.id).then((user) => {
       return res.render('setting', {
         user: user.toJSON(),
         page: 'setting',

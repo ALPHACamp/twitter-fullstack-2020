@@ -1,6 +1,5 @@
-const userId = 2
-
 document.querySelector('#editProfile-btn').addEventListener('click', function (e) {
+  const userId = e.target.dataset['userId']
   axios
     .get(`/api/users/${userId}`)
     .then((response) => {
@@ -13,6 +12,7 @@ document.querySelector('#editProfile-btn').addEventListener('click', function (e
 })
 
 document.querySelector('#editProfile-button-save').addEventListener('click', function (e) {
+  const userId = e.target.dataset['userId']
   axios
     .post(`/api/users/${userId}`, {
       name: document.querySelector('#editProfile-input-name').value,
@@ -29,6 +29,7 @@ document.querySelector('#editProfile-button-save').addEventListener('click', fun
 document.querySelector('#avatar').addEventListener(
   'change',
   function (e) {
+    const userId = e.target.dataset['userId']
     var file = this.files[0]
     var xhr = new XMLHttpRequest()
     xhr.onreadystatechange = function () {
@@ -49,6 +50,7 @@ document.querySelector('#avatar').addEventListener(
 document.querySelector('#cover').addEventListener(
   'change',
   function (e) {
+    const userId = e.target.dataset['userId']
     var file = this.files[0]
     var xhr = new XMLHttpRequest()
     xhr.onreadystatechange = function () {
@@ -67,6 +69,7 @@ document.querySelector('#cover').addEventListener(
 )
 
 document.querySelector('#deleteCover').addEventListener('click', function (e) {
+  const userId = e.target.dataset['userId']
   axios
     .post(`/api/users/${userId}/deleteCover`)
     .then((response) => {

@@ -39,15 +39,16 @@
           class='btn'
           id='editProfile-button-save'
           style='width:70px; background-color: #FF6600;border-radius:100px; color:white; font-weight:bold; font-size:18px;'
+          data-user-id='{{user.id}}'
         >儲存</button>
       </div>
       <div class='modal-body' style='position:relative'>
         <img
           class='editProfile-cover'
-          src='https://loremflickr.com/320/240/personal,cover/?random=26.334381010529583'
-          style='background-color:darkgrey'
+          src='{{user.cover}}'
+          style='background-color:rgb(150, 120, 120)'
         />
-        <img class='editProfile-avatar' src='https://loremflickr.com/320/240/avatar/?random=70.38643359863906' />
+        <img class='editProfile-avatar' src='{{user.avatar}}' />
         <div class='image-upload' style='position: absolute; left:65px; top:191px; z-index:3'>
           <label for='avatar'>
             <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -61,7 +62,7 @@
               ></path>
             </svg>
           </label>
-          <input id='avatar' type='file' />
+          <input id='avatar' type='file' data-user-id='{{user.id}}'/>
         </div>
         <div class='image-upload' style='position: absolute; left:262px; top:80px; z-index:3'>
           <label for='cover'>
@@ -76,10 +77,10 @@
               ></path>
             </svg>
           </label>
-          <input id='cover' type='file' />
+          <input id='cover' type='file' data-user-id='{{user.id}}'/>
         </div>
 
-        <a id='deleteCover' style='position: absolute; left:319px; top:83px; z-index:3'><svg
+        <a id='deleteCover' style='position: absolute; left:319px; top:83px; z-index:3' data-user-id='{{user.id}}'><svg
             width='16'
             height='16'
             viewBox='0 0 16 16'
@@ -122,3 +123,4 @@
     </div>
   </div>
 </div>
+<script src='/javascripts/editProfile.js'></script>
