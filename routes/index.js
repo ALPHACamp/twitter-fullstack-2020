@@ -62,9 +62,6 @@ module.exports = (app, passport) => {
   app.get('/users/:id/edit', authenticated, userController.editUser)
   app.put('/users/:id/', authenticated, userController.putUser)
 
-  //user個人資料頁
-  app.get('/users/:id/tweets', authenticated, userController.getProfile)
-
   //user編輯自介
   app.get('/api/users/:id', authenticated, userController.getIntroduction)
   app.post('/api/users/:id', authenticated, userController.updateIntroduction)
@@ -96,5 +93,5 @@ module.exports = (app, passport) => {
   //user Profile頁面Profile_replies
   app.get('/users/:id/profile_replies', authenticated, userController.getProfile_replies)
   //user Profile頁面Profile_likes
-  app.get('/users/:id/profile_likes', authenticated, userController.getProfile_likes)
+  app.get('/users/:id/likes', authenticated, userController.getProfile_likes)
 }
