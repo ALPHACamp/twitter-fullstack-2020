@@ -177,15 +177,15 @@
 {{!-- =====================喜歡列表============================================ --}}
 {{#ifCond page 'profile_likes'}}
     {{#each likes}}
-        <div class="row row-cols-2 border p-2" style="">
-            <div class="cols text-center" style=" width:15%">
+        <div class="row" style="padding-top:15px;margin-left:0px; margin-right:0px; border-bottom:1px solid #dee2e6;">
+            <div class="col-1 text-center" style=" width:15%">
                 <a  href="/users/{{this.Tweet.User.id}}/tweets">
                     <img class="" src="{{this.Tweet.User.avatar}}"
                         style=" width:50PX;height:50px; border-radius:100%;"></img>
                 </a>
             </div>
 
-            <div class="cols" style=" width:85%">
+            <div class="col-11" style=" width:85%">
                 <div class="row ml-1">
                     <div class="cols ">
                         <a class="text-muted" href="/users/{{this.Tweet.User.id}}/tweets">
@@ -233,7 +233,7 @@
                                     class="far fa-heart"></i></button>
                         </form>
                     {{/if}}
-                    <p class="my-auto" style="float:left;">{{this.Tweet.likeCounts:}}</p>
+                    <p class="my-auto" style="float:left;">{{this.Tweet.likeCounts}}</p>
                 </div>
 
             </div>
