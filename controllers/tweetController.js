@@ -58,7 +58,6 @@ const tweetController = {
                 users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
 
-                console.log(tweets[0])
                 return res.render('main', { tweets, users })
             }).catch(error => {
                 console.log(error)
@@ -93,17 +92,19 @@ const tweetController = {
     },
 
     postReplies: (req, res) => {
-        console.log(req.user.id)
-        console.log(req.params.id)
-        console.log(req.body)
-        return Reply.create({
-            UserId: req.user.id,
-            TweetId: req.params.id,
-            comment: req.body.description
-        }).then(reply => {
-            return res.redirect(`/tweets/${req.params.id}/replies`)
-        }).catch(error => console.log(error))
-
+        const { description } = req.body
+        if (description.trim().length === 0) {
+            req.flash('error_messages', '回覆輸入不能為空白'),
+                res.redirect('back')
+        } else {
+            return Reply.create({
+                UserId: req.user.id,
+                TweetId: req.params.id,
+                comment: req.body.description
+            }).then(reply => {
+                return res.redirect(`/tweets/${req.params.id}/replies`)
+            }).catch(error => console.log(error))
+        }
 
     },
 
@@ -113,9 +114,7 @@ const tweetController = {
         })
 
         const userFindAll = User.findAll({
-
             include: [
-
                 { model: User, as: 'Followers' }
             ]
         })
