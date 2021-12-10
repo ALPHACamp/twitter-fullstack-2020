@@ -9,7 +9,8 @@
         <a class="nav-link active text-dark font-weight-bold" href="/tweets"><i class="fas fa-home"></i> 首頁</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-dark font-weight-bold" href="/user/self"><i class="fas fa-user"></i> 個人資料</a>
+        <a class="nav-link text-dark font-weight-bold" href="/users/{{requestUser.id}}/tweets"><i
+            class="fas fa-user"></i> 個人資料</a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-dark font-weight-bold" href="/setting"><i class="far fa-sun"></i> 設定</a>
@@ -72,10 +73,10 @@
       </div>
       <div class="col-md-10">
         <div class="row">
-          <div class="h5">{{user.name}}</div>
+          <div class="h5">{{requestUser.name}}</div>
         </div>
         <div class="row">
-          <small> xxx 則貼文</small>
+          <small> {{requestUser.Tweets.length}} 則貼文</small>
         </div>
       </div>
     </div>
@@ -101,9 +102,7 @@
     {{#each users }}
     <div class="row  border " style="padding-top:8px; padding-bottom:10px;">
       <div class="col-md-2" style="padding-right: 0px; ">
-        <img
-          src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-          alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+        <img src={{this.avatar}} class="rounded-circle" style="width: 50px; height:50px;">
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
         <div style="display: flex; justify-content:space-between">
@@ -114,17 +113,16 @@
           </div>
 
           {{#if this.isFollowed }}
-          <button type="submit" class="btn  text-light mt-1"
-            style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
+          <button type="submit" class="btn text-light mt-1"
+            style="border-radius: 40px; background-color:#FF6600; width:90px; height:38px;">正在跟隨</button>
 
           {{else}}
-          <button type="submit" class="btn  mt-1"
-            style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>
+          <button type="submit" class="btn mt-1"
+            style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600; width:58px; height:38px;">跟隨</button>
 
           {{/if}}
         </div>
 
-        <div>{{this.introduction}}</div>
       </div>
     </div>
     {{/each}}

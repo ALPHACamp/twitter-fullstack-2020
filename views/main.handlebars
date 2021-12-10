@@ -18,7 +18,8 @@
         <a class="nav-link text-dark font-weight-bold" href="/chatroomPrivate"><i class="far fa-envelope"></i> 私人訊息</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-dark font-weight-bold" href="/user/self"><i class="fas fa-user"></i> 個人資料</a>
+        <a class="nav-link text-dark font-weight-bold" href="/users/{{user.id}}/tweets"><i class="fas fa-user"></i>
+          個人資料</a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-dark font-weight-bold" href="/setting"><i class="far fa-sun"></i> 設定</a>
@@ -125,10 +126,11 @@
     <div class="row border userTweet"
       style="padding-top:8px; padding-bottom:10px; word-break:break-all; padding-bottom:10px;">
       <div class="col-md-2" style="padding-right: 0px; ">
-        <img src={{this.User.dataValues.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+        <a href="/users/{{this.User.dataValues.id}}/tweets"><img src={{this.User.dataValues.avatar}}
+            class="rounded-circle" style="width: 50px; height:50px;"></a>
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
-        <div class="h6">{{this.User.dataValues.name}} <span class="text-secondary">{{this.User.dataValues.account}}
+        <div class="h6">{{this.User.dataValues.name}}</a> <span class="text-secondary">{{this.User.dataValues.account}}
             ．{{moment
             this.createdAt}}</span>
         </div>

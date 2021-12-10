@@ -139,7 +139,7 @@ const userController = {
     getUserSelf: (req, res) => {
         const tweetFindAll = Tweet.findAll({
             order: [['createdAt', 'DESC']],
-            where: { UserId: req.user.id },
+            where: { UserId: req.params.id },
             include: [User,
                 { model: Reply, include: [Tweet] },
                 { model: User, as: 'LikedUsers' },
@@ -152,11 +152,20 @@ const userController = {
             ]
         })
 
+        const requestUser = User.findByPk(req.params.id, {
+            include: [
+                { model: Tweet, as: 'LikedTweets' },
+                { model: User, as: 'Followers' },
+                { model: User, as: 'Followings' }
+            ]
+        })
 
-        Promise.all([tweetFindAll, userFindAll])
+
+        Promise.all([tweetFindAll, userFindAll, requestUser])
             .then(responses => {
                 let tweets = responses[0]
                 let users = responses[1]
+                let requestUser = responses[2]
                 users = users.map(user => ({
 
                     ...user.dataValues,
@@ -178,8 +187,8 @@ const userController = {
                     isLikedTweet: req.user.LikedTweets.map(d => d.id).includes(tweet.id)
 
                 }))
-
-                return res.render('user', { tweets, users })
+                console.log(requestUser.toJSON())
+                return res.render('user', { tweets, users, requestUser: requestUser.toJSON() })
 
             }).catch(error => {
                 console.log(error)
@@ -199,12 +208,20 @@ const userController = {
                 { model: User, as: 'Followers' }
             ]
         })
+        const requestUser = User.findByPk(req.params.id, {
+            include: [
+                Tweet,
+                { model: Tweet, as: 'LikedTweets' },
+                { model: User, as: 'Followers' },
+                { model: User, as: 'Followings' }
+            ]
+        })
 
-
-        Promise.all([usersFindAll, userFindAll2])
+        Promise.all([usersFindAll, userFindAll2, requestUser])
             .then(responses => {
                 let users = responses[0]
                 let users2 = responses[1]
+                let requestUser = responses[2]
                 users = users.map(user => ({
                     ...user.dataValues,
                     isFollowed: req.user.Followers.map(d => d.id).includes(user.id),
@@ -238,7 +255,7 @@ const userController = {
 
                 users = sortCreatedAt.concat(noCreatedAt)
 
-                return res.render('follower', { users, users2 })
+                return res.render('follower', { users, users2, requestUser: requestUser.toJSON() })
             }).catch(error => {
                 console.log(error)
             })
@@ -256,11 +273,20 @@ const userController = {
                 { model: User, as: 'Followers' }
             ]
         })
+        const requestUser = User.findByPk(req.params.id, {
+            include: [
+                Tweet,
+                { model: Tweet, as: 'LikedTweets' },
+                { model: User, as: 'Followers' },
+                { model: User, as: 'Followings' }
+            ]
+        })
 
-        Promise.all([usersFindAll, userFindAll2])
+        Promise.all([usersFindAll, userFindAll2, requestUser])
             .then(responses => {
                 let users = responses[0]
                 let users2 = responses[1]
+                let requestUser = responses[2]
                 users = users.map(user => ({
                     ...user.dataValues,
                     isFollowings: req.user.Followings.map(d => d.id).includes(user.id),
@@ -295,7 +321,7 @@ const userController = {
 
                 users = sortCreatedAt.concat(noCreatedAt)
 
-                return res.render('following', { users, users2 })
+                return res.render('following', { users, users2, requestUser: requestUser.toJSON() })
             }).catch(error => {
                 console.log(error)
             })
@@ -315,17 +341,25 @@ const userController = {
                 { model: User, as: 'Followers' }
             ]
         })
+        const requestUser = User.findByPk(req.params.id, {
+            include: [
+                Tweet,
+                { model: Tweet, as: 'LikedTweets' },
+                { model: User, as: 'Followers' },
+                { model: User, as: 'Followings' }
+            ]
+        })
 
-        Promise.all([tweetFindAll, userFindAll2])
+        Promise.all([tweetFindAll, userFindAll2, requestUser])
             .then(responses => {
                 let liked = responses[0]
                 let users2 = responses[1]
-                // console.log(likedTweets)
+                let requestUser = responses[2]
                 liked = liked.map(likedTweet => ({
                     ...likedTweet.dataValues,
-                    isLikedTweet: req.user.LikedTweets.map(d => d.id).includes(likedTweet.id)
-                }))
+                    isLikedTweet: requestUser.dataValues.LikedTweets.map(d => d.id).includes(likedTweet.id),
 
+                }))
                 users2 = users2.map(user => ({
                     ...user.dataValues,
                     isUser: !user.Followers.map(d => d.id).includes(user.id),
@@ -337,9 +371,7 @@ const userController = {
                 // 依追蹤者人數排序清單
                 users2 = users2.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-
-                console.log(liked)
-                return res.render('userLike', { likedTweets: liked, users2 })
+                return res.render('userLike', { likedTweets: liked, users2, requestUser: requestUser.toJSON() })
             }).catch(error => {
                 console.log(error)
             })
@@ -350,7 +382,7 @@ const userController = {
         const replyFindAll = Reply.findAll({
             raw: true,
             nest: true,
-            where: { userId: req.user.id },
+            where: { userId: req.params.id },
             include: [
                 User,
                 { model: Tweet, include: [User] }
@@ -369,13 +401,21 @@ const userController = {
                 { model: User, as: 'LikedUsers' },
             ]
         })
+        const requestUser = User.findByPk(req.params.id, {
+            include: [
+                { model: Tweet, as: 'LikedTweets' },
+                { model: User, as: 'Followers' },
+                { model: User, as: 'Followings' }
+            ]
+        })
 
-        Promise.all([replyFindAll, userFindAll2, tweetFindAll])
+        Promise.all([replyFindAll, userFindAll2, tweetFindAll, requestUser])
             .then(responses => {
 
                 const replies = responses[0]
                 let users2 = responses[1]
                 let tweets = responses[2]
+                let requestUser = responses[3]
                 users2 = users2.map(user => ({
                     ...user.dataValues,
                     isUser: !user.Followers.map(d => d.id).includes(user.id),
@@ -386,7 +426,7 @@ const userController = {
                 }))
                 users2 = users2.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-                return res.render('userReplies', { replies, users2, tweets })
+                return res.render('userReplies', { replies, users2, tweets, requestUser: requestUser.toJSON() })
             }).catch(error => {
                 console.log(error)
             })

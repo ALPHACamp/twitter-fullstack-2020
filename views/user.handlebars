@@ -9,7 +9,8 @@
         <a class="nav-link active text-dark font-weight-bold" href="/"><i class="fas fa-home"></i> 首頁</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link font-weight-bold" style="color: #FF6600;" href="/user/self"><i class="fas fa-user"></i>
+        <a class="nav-link font-weight-bold" style="color: #FF6600;" href="/users/{{user.id}}/tweets"><i
+            class="fas fa-user"></i>
           個人資料</a>
       </li>
       <li class="nav-item">
@@ -75,7 +76,7 @@
       </div>
       <div class="col-md-10">
         <div class="row">
-          <div class="h5">{{user.name}}</div>
+          <div class="h5">{{requestUser.name}}</div>
         </div>
         <div class="row">
           <small>{{tweets.length}} 則貼文</small>
@@ -85,14 +86,14 @@
 
     {{!-- 背景圖區域 --}}
     <div class="row bg bg-info">
-      <img class="img-fluid" src="{{user.cover}}" alt="..." style="width:100%; height:180px;">
+      <img class="img-fluid" src="{{requestUser.cover}}" alt="..." style="width:100%; height:180px;">
 
     </div>
 
     {{!-- 大頭貼區塊 --}}
     <div class="row mt-1 mb-2" style="position: relative; top:-50px;">
       <div class="col-md-8">
-        <img src="{{user.avatar}}" alt="..." class="rounded-circle" style="width: 100px; height:100px;">
+        <img src="{{requestUser.avatar}}" alt="..." class="rounded-circle" style="width: 100px; height:100px;">
 
       </div>
       {{!-- 這是在個人資料頁面上的編輯個人資料按鈕 --}}
@@ -105,7 +106,7 @@
     <div class="modal fade" id="userData" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <form action="/api/users/{{user.id}}?_method=PUT" method="post" enctype="multipart/form-data">
+          <form action="/api/users/{{requestUser.id}}?_method=PUT" method="post" enctype="multipart/form-data">
 
             <div style="display: flex; justify-content:space-between;" class="p-3">
               <div style="display: flex; justify-content:flex-start">
@@ -119,7 +120,7 @@
 
             {{!-- 編輯個人資料圖片 --}}
 
-            <img class="image-fluid" src="{{user.cover}}" id="coverImage"
+            <img class="image-fluid" src="{{requestUser.cover}}" id="coverImage"
               style="position:relative; width:100%; height:160px;">
             {{!-- 更換背景圖相機 icon --}}
             <input type="file" id="cover" name="cover" hidden>
@@ -131,7 +132,7 @@
             {{!-- 編輯個人資料大頭貼圖片 --}}
             <div class="row mt-1 mb-2">
               <div class=" col-md-8">
-                <img src="{{user.avatar}}" alt="..." id="avatarImage" class="rounded-circle"
+                <img src="{{requestUser.avatar}}" alt="..." id="avatarImage" class="rounded-circle"
                   style="position:relative; width: 100px; height:100px;">
 
                 {{!-- 更換大頭貼相機 icon --}}
@@ -152,7 +153,7 @@
                 <small for="exampleInputEmail1" style="color:#657786">名稱1</small>
                 <input type="text" id="exampleInputEmail1" name="name"
                   style="border:0px; width:100%; border-bottom:2px solid grey; background-color:#F5F8FA;"
-                  value="{{user.name}}">
+                  value="{{requestUser.name}}">
 
               </div>
 
@@ -161,7 +162,7 @@
                 <small for="exampleInputEmail1" style="color:#657786">自我介紹</small>
                 <textarea id="exampleInputEmail1" name="introduction"
                   style="border:0px; width:100%; border-bottom:2px solid grey; background-color:#F5F8FA; height:150px;"
-                  value="">{{user.introduction}}</textarea>
+                  value="">{{requestUser.introduction}}</textarea>
 
               </div>
 
@@ -183,15 +184,15 @@
     {{!-- 個人介紹區域 --}}
 
     <div class="row d-block p-2">
-      <div class="h4" style="margin-bottom:0">{{user.name}}</div>
-      <div><small>{{user.account}}</small></div>
-      <div class="mt-2">{{user.introduction}}</div>
+      <div class="h4" style="margin-bottom:0">{{requestUser.name}}</div>
+      <div><small>{{requestUser.account}}</small></div>
+      <div class="mt-2">{{requestUser.introduction}}</div>
       <div style="display: inline-block">
-        <p><strong>{{user.Followings.length}}</strong> <a href="/user/{{user.id}}/followings"
+        <p><strong>{{requestUser.Followings.length}}</strong> <a href="/user/{{user.id}}/followings"
             class="text-secondary">followings</a></p>
       </div>
       <div style="display: inline-block">
-        <p><strong>{{user.Followers.length}}</strong> <a href="/user/{{user.id}}/followers"
+        <p><strong>{{requestUser.Followers.length}}</strong> <a href="/user/{{user.id}}/followers"
             class="text-secondary">followers</a></p>
       </div>
     </div>
@@ -204,10 +205,10 @@
             #">推文</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-secondary font-weight-bold" href="/user/self/replies">推文與回覆</a>
+          <a class="nav-link text-secondary font-weight-bold" href="/users/{{requestUser.id}}/replies">推文與回覆</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-secondary font-weight-bold" href="/user/self/like">喜歡的內容</a>
+          <a class="nav-link text-secondary font-weight-bold" href="/users/{{requestUser.id}}/likes">喜歡的內容</a>
         </li>
       </ul>
     </div>

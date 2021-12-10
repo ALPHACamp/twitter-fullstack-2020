@@ -66,7 +66,7 @@ module.exports = (app, passport) => {
 
     //  前台個人資料
 
-    app.get('/user/self', authenticated, userController.getUserSelf)
+    app.get('/users/:id/tweets', authenticated, userController.getUserSelf)
 
     // 取得特定推文留言資料
     app.post('/tweets/:id/replies', authenticated, tweetController.postReplies)
@@ -85,9 +85,9 @@ module.exports = (app, passport) => {
     app.get('/user/:id/followers', authenticated, userController.getFollowers)
 
     // 前台查看喜歡那些推文
-    app.get('/user/self/like', authenticated, userController.getLike)
+    app.get('/users/:id/likes', authenticated, userController.getLike)
     // 前台查看推文與回覆
-    app.get('/user/self/replies', authenticated, userController.getTweetReply)
+    app.get('/users/:id/replies', authenticated, userController.getTweetReply)
 
     app.get('/chatroomPublic', authenticated, userController.getChatroomPublic)
 
