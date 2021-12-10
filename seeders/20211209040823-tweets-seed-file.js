@@ -15,7 +15,7 @@ module.exports = {
         })
       }
     })
-    console.log(tweets)
+    // console.log(tweets)
     await queryInterface.bulkInsert('Tweets', tweets)
   },
 

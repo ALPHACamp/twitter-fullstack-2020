@@ -48,8 +48,8 @@
                 </div>
                 <div class="col-md-10">
                   <textarea name="description" id=""
-                    style="min-height:225px; max-height:225px; width:100%; border:none;"
-                    placeholder="有甚麼新鮮事?"></textarea>
+                    style="min-height:225px; max-height:225px; width:100%; border:none;" placeholder="有甚麼新鮮事?"
+                    required></textarea>
                 </div>
               </div>
 
@@ -183,7 +183,8 @@
           <div class="modal-body" name="description">
             <div class="row">
               <div class="col-md-2 mt-2" style="padding-right: 0px; ">
-                <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+                <img src={{this.User.dataValues.avatar}} alt="..." class="rounded-circle"
+                  style="width: 50px; height:50px;">
               </div>
               <div class="col-md-10" style="padding-left: 0px;">
                 <div class="h6">{{this.User.dataValues.name}} <span

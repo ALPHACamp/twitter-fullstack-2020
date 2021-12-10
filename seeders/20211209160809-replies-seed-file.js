@@ -22,7 +22,7 @@ module.exports = {
         }
       }
     })
-    console.log(replies)
+    // console.log(replies)
 
     await queryInterface.bulkInsert('Replies', replies, {})
   },

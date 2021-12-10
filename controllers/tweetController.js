@@ -46,7 +46,6 @@ const tweetController = {
                     isLikedTweet: req.user.LikedTweets.map(d => d.id).includes(tweet.id)
 
                 }))
-                console.log(tweets)
                 users = users.map(user => ({
                     ...user.dataValues,
                     isUser: !user.Followers.map(d => d.id).includes(user.id),
@@ -58,7 +57,8 @@ const tweetController = {
                 // 依追蹤者人數排序清單
                 users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-                console.log(tweets)
+
+                console.log(tweets[0])
                 return res.render('main', { tweets, users })
             }).catch(error => {
                 console.log(error)
@@ -69,16 +69,22 @@ const tweetController = {
     postTweets: (req, res) => {
         const description = req.body.description
         const userId = req.user.id
-        Tweet.create({
-            description: description,
-            UserId: userId
-        }).then(tweet => {
-            // console.log(tweet)
-            req.flash('success_messages', '成功新增推文!')
-            return res.redirect('/tweets')
-        }).catch(error => {
-            console.log(error)
-        })
+        if (description.trim().length === 0) {
+            req.flash('error_messages', '輸入不能為空白'),
+                res.redirect('back')
+        } else {
+            Tweet.create({
+                description: description,
+                UserId: userId
+            }).then(tweet => {
+                // console.log(tweet)
+                req.flash('success_messages', '成功新增推文!')
+                return res.redirect('/tweets')
+            }).catch(error => {
+                console.log(error)
+            })
+        }
+
         // 收到post信息, 寫入tweets表, 完成後跳轉推文首頁
 
     },
