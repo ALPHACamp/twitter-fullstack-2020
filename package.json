@@ -13,6 +13,7 @@
     "test-unseed": "set \"NODE_ENV=test\" && npx sequelize db:seed:undo:all",
     "test-models": "set \"NODE_ENV=test\" && mocha test/models/*.spec.js --exit",
     "test-admin": "set \"NODE_ENV=test\" && npx mocha test/requests/admin/*.js --exit",
+    "test-requests": "set \"NODE_ENV=test\" && mocha test/requests/*.spec.js --exit",
     "test-adminlogin": "set \"NODE_ENV=test\" && npx mocha test/requests/admin/login.spec.js --exit",
     "test-admintweets": "set \"NODE_ENV=test\" && npx mocha test/requests/admin/tweets.spec.js --exit",
     "test-adminuser": "set \"NODE_ENV=test\" && npx mocha test/requests/admin/user.spec.js --exit",

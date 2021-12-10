@@ -42,16 +42,20 @@
         </div>
 
         <div class="number-followers d-flex" style="padding-left:15px">
-            <div class="reply d-flex">
-                <div class="number" style="color:black; font-weight:500;">{{followerCount}}</div>
-                <p style="color:black; font-weight:500">個</p>
-                <div class="text ml-1" style="color:gray; font-weight:500;">跟隨中</div>
-            </div>
-            <div class="reply d-flex ml-3 ">
-                <div class="number" style="color:black; font-weight:500;">{{followingCount}}</div>
-                <p style="color:black; font-weight:500">位</p>
-                <div class="text ml-1" style="color:gray; font-weight:500;">跟隨者</div>
-            </div> 
+            <a href='/users/{{user.id}}/followings' style='text-decoration-line: none;'>
+                <div class="reply d-flex">
+                    <div class="number" style="color:black; font-weight:500;">{{followingCount}}</div>
+                    <p style="color:black; font-weight:500">個</p>
+                    <div class="text ml-1" style="color:gray; font-weight:500;">跟隨中</div>
+                </div>
+            </a>
+            <a href='/users/{{user.id}}/followers' style='text-decoration-line: none;'>
+                <div class="reply d-flex ml-3 ">
+                    <div class="number" style="color:black; font-weight:500;">{{followerCount}}</div>
+                    <p style="color:black; font-weight:500">位</p>
+                    <div class="text ml-1" style="color:gray; font-weight:500;">跟隨者</div>
+                </div> 
+            </a>
         </div>
 
     </div>
@@ -64,7 +68,7 @@
             <a class="nav-link {{#ifCond page 'profile_replies'}}active{{/ifCond}}" href="/users/{{user.id}}/profile_replies">推文與回覆</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{#ifCond page 'profile_likes'}}active{{/ifCond}}" href="/users/{{user.id}}/profile_likes">喜歡的內容</a>
+            <a class="nav-link {{#ifCond page 'profile_likes'}}active{{/ifCond}}" href="/users/{{user.id}}/likes">喜歡的內容</a>
         </li>
     </ul>
 {{!-- =====================推文列表============================================ --}}
@@ -175,8 +179,8 @@
     {{#each likes}}
         <div class="row row-cols-2 border p-2" style="">
             <div class="cols text-center" style=" width:15%">
-                <a  href="/users/{{this.User.dataValues.id}}/tweets">
-                    <img class="" src="{{this.User.dataValues.avatar}}"
+                <a  href="/users/{{this.Tweet.User.id}}/tweets">
+                    <img class="" src="{{this.Tweet.User.avatar}}"
                         style=" width:50PX;height:50px; border-radius:100%;"></img>
                 </a>
             </div>
@@ -184,12 +188,12 @@
             <div class="cols" style=" width:85%">
                 <div class="row ml-1">
                     <div class="cols ">
-                        <a class="text-muted" href="/users/{{this.User.dataValues.id}}/tweets">
-                            <p style="color: black; font-weight:bold;">{{this.User.dataValues.name}}</p>
+                        <a class="text-muted" href="/users/{{this.Tweet.User.id}}/tweets">
+                            <p style="color: black; font-weight:bold;">{{this.Tweet.User.name}}</p>
                         </a>
                     </div>
                     <div class="cols ml-1" style="color:gray">
-                        <p style="font-weight:500;">@{{this.User.dataValues.account}}</p>
+                        <p style="font-weight:500;">@{{this.Tweet.User.account}}</p>
                     </div>
                     <div class="cols mx-1" style="color:gray">
                         <p style="font-weight:500;">•</p>
@@ -201,12 +205,12 @@
                         <p>...</p>
                     </div>
                 </div>
-                <a class="text-muted" href="/tweets/{{this.id}}/replies" style="text-decoration:none;">
-                    <p>{{this.description}}</p>
+                <a class="text-muted" href="/tweets/{{this.Tweet.id}}/replies" style="text-decoration:none;">
+                    <p>{{this.Tweet.description}}</p>
                 </a>
                 <div class="">
 
-                    {{#if isReplied}}
+                    {{#if this.Tweet.isReplied}}
                         <form id="replyButton" action="" method="post" style="float:left;">
                             <button type="submit" style="border:0px; background:inherit;"><i
                                     class="fas fa-comment"></i></button>
@@ -217,19 +221,19 @@
                                     class="far fa-comment"></i></button>
                         </form>
                     {{/if}}
-                    <p style="float:left;">{{this.repliesCount}}</p>
-                    {{#if isLiked}}
-                        <form id="likeButton" action="/tweets/{{this.id}}/unlike" method="post" style="float:left;" class="ml-3 ">
+                    <p style="float:left;">{{this.Tweet.commentCounts}}</p>
+                    {{#if this.Tweet.isLiked}}
+                        <form id="likeButton" action="/tweets/{{this.Tweet.id}}/unlike" method="post" style="float:left;" class="ml-3 ">
                             <button type="submit" style="border:0px; background:inherit;"><i
                                     class="fas fa-heart"></i></button>
                         </form>
                     {{else}}
-                        <form id="likeButton" action="/tweets/{{this.id}}/like" method="post" style="float:left;" class="ml-3">
+                        <form id="likeButton" action="/tweets/{{this.Tweet.id}}/like" method="post" style="float:left;" class="ml-3">
                             <button type="submit" style="border:0px; background:inherit;"><i
                                     class="far fa-heart"></i></button>
                         </form>
                     {{/if}}
-                    <p class="my-auto" style="float:left;">{{this.likesCount}}</p>
+                    <p class="my-auto" style="float:left;">{{this.Tweet.likeCounts:}}</p>
                 </div>
 
             </div>

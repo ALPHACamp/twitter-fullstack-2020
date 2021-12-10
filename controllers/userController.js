@@ -7,6 +7,7 @@ const Like = db.Like
 const Reply = db.Reply
 const Followship = db.Followship
 const fs = require('fs')
+const sequelize = require('sequelize')
 
 const userController = {
   //user登入
@@ -206,6 +207,36 @@ const userController = {
     })
   },
 
+  getFollowers: (req, res) => {
+    const userId = req.params.id
+    User.findByPk(userId, {
+      nest: true,
+      include: [{ model: User, as: 'Followers' }],
+    })
+      .then(async (user) => {
+        const topUsers = await helpers.getTopuser(req.user)
+        return res.render('followers', { followers: user.Followers, users: topUsers, page: 'profile' })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
+
+  getFollowings: (req, res) => {
+    const userId = req.params.id
+    User.findByPk(userId, {
+      nest: true,
+      include: [{ model: User, as: 'Followings' }],
+    })
+      .then(async (user) => {
+        const topUsers = await helpers.getTopuser(req.user)
+        return res.render('followings', { followings: user.Followings, users: topUsers, page: 'profile' })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
+
   addFollowships: (req, res) => {
     const UserId = helpers.getUser(req).id ? helpers.getUser(req).id : req.user.id
     console.log('req params: ' + req.params.id)
@@ -315,7 +346,7 @@ const userController = {
       const tweetCount = tweets.length
       const followerCount = tweets[0].followerCount
       const followingCount = tweets[0].followingCount
-      // console.log(replies)
+      console.log(replies)
       // console.log(tweets[0])
       return res.render('profile', {
         tweets: tweets,
@@ -330,8 +361,33 @@ const userController = {
   },
 
   getProfile_likes: (req, res) => {
-    return res.render('profile', {
-      page: 'profile_likes',
+    const loginUserId = helpers.getUser(req).id
+    const requestUserId = req.params.id
+    //query reference from https://github.com/Emily81926/twitter-api-2020 小鹿Kerwin, Vince, Ya Chu, Yang, Chaco
+    Like.findAll({
+      where: { UserId: requestUserId },
+      raw: true,
+      nest: true,
+      attributes: ['id', 'createdAt', 'TweetId'],
+      include: [
+        {
+          model: Tweet,
+          attributes: [
+            'id',
+            'description',
+            [sequelize.literal(`(select count(TweetId) from Replies where TweetId = Tweet.id)`), 'commentCounts'],
+            [sequelize.literal(`(select count(TweetId) from Likes where TweetId = Tweet.id)`), 'likeCounts'],
+            [sequelize.literal(`exists(select 1 from Replies where UserId = ${loginUserId} and TweetId = Tweet.id)`), 'isReplied'],
+            [sequelize.literal(`exists(select 1 from Likes where UserId = ${loginUserId} and TweetId = Tweet.id)`), 'isLiked'],
+          ],
+          include: [{ model: User, attributes: ['id', 'name', 'account', 'avatar'] }],
+        },
+      ],
+      order: [['createdAt', 'DESC']],
+    }).then((likes) => {
+      console.log(likes)
+      console.log(likes[0].Tweet.User)
+      return res.render('profile', { likes, page: 'profile_likes' })
     })
   },
 }

@@ -83,6 +83,10 @@ module.exports = (app, passport) => {
   //user移除喜歡推文
   app.post('/tweets/:id/unlike', authenticated, userController.removeLike)
 
+  //被別人追蹤列表
+  app.get('/users/:id/followings', authenticated, userController.getFollowings)
+  //追蹤別人列表
+  app.get('/users/:id/followers', authenticated, userController.getFollowers)
   //user追隨
   app.post('/followships', authenticated, userController.addFollowships)
   //user取消追隨
