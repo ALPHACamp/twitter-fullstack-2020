@@ -1,8 +1,12 @@
+<div id="top"></div>
+
 # Aphitter
+
+![image](https://github.com/yulaie1012/twitter-fullstack-2020/blob/master/public/images/overview.png)
 
 本專案為 Alpha Camp 全端開發結業作品
 
-使用 Node.js 及 express framework 展示簡易 Twitter 功能
+使用 Node.js、express framework、MySQL 等展示簡易的 Twitter 功能
 
 * MySQL 資料庫規劃建立
 * 資料庫 CRUD 操作及進階關聯 
@@ -11,9 +15,25 @@
 
 [Live Demo](https://frozen-dusk-97283.herokuapp.com/)
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Table of Contents
+
+  - [Showcase](#showcase)
+  - [Features](#features)
+  - [Environment Setup](#environment-setup)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Contact](#contact)
+  - [Acknowledgments](#acknowledgments)
+
 ## Showcase
 
 ![image](https://github.com/yulaie1012/twitter-fullstack-2020/blob/master/public/images/sample.gif)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Features
 
@@ -26,17 +46,7 @@
      * 錯誤提示「account 已重覆註冊！」或「email 已重覆註冊！」，頁面重新整理後顯示錯誤提示
    * 使用者能編輯自己的暱稱、自我介紹、個人頭像與封面
 
-1.  **種子資料**
-    * 管理者（後台）
-      * account: root
-      * email: root@example.com
-      * password: 12345678
-    * 使用者（前台）
-      * account: user1 ~ user5
-      * email: user1@example.com ~ user5@example.com
-      * password: 12345678
-
-3. **推文留言**
+2. **推文留言**
    * 使用者能在首頁瀏覽所有的推文，所有推文依建立的時間排序，最新的在前
    * 點擊推文方塊時，能查看推文與回覆串
    * 使用者能回覆別人的推文
@@ -47,12 +57,12 @@
      * 推文字數限制在 140 以內
      * 推文不能為空白
 
-4. **使用者互動**
-* 使用者可以追蹤／取消追蹤其他使用者（不能追蹤自己）
-* 使用者能對別人的推文按 Like/Unlike
-* 使用者能編輯自己的名稱、介紹、大頭照和個人頁橫幅背景
+3. **使用者互動**
+   * 使用者可以追蹤／取消追蹤其他使用者（不能追蹤自己）
+   * 使用者能對別人的推文按 Like/Unlike
+   * 使用者能編輯自己的名稱、介紹、大頭照和個人頁橫幅背景
 
-5. **數據摘要**
+4. **數據摘要**
    * 任何登入使用者都可以瀏覽特定使用者的以下資料：
      * 推文（Tweet）：排序依日期，最新的在前
      * 推文與回覆（Reply）：使用者回覆過的內容，排序依日期，最新的在前
@@ -61,7 +71,7 @@
      * 喜歡的內容（Like）：該使用者 like 過的推文清單，排序依 like 紀錄成立的時間，愈新的在愈前面
    * 使用者能在首頁的側邊欄，看見跟隨者數量排列前 10 的使用者推薦名單
 
-6. **後台**
+5. **後台**
    * 管理者可從專門的後台登入頁面進入網站後台
      * 管理者帳號不可登入前台
      * 若使用管理帳號登入前台，或使用一般使用者帳號登入後台，等同於「帳號不存在」
@@ -72,10 +82,14 @@
      * 使用者社群活躍數據，包括推文數量、關注人數、跟隨者人數、推文被 like 的數量 （Sprint #2 討論註記：「推文數量」指使用者的推文累積總量；「推文被 like 的數量」指使用者的推文獲得 like 的累積總量）
      * 清單預設按推文數排序
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ## Environment Setup
 
 * 使用 Node.js v10.15.0 或以上版本
 * 其他套件請參閱 package.json
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Installation
 
@@ -101,6 +115,8 @@
    echo IMGUR_CLIENT_ID=ENTER_YOUR_IMGUR_CLIENT_ID >> .env
    ```
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ## Usage
 
 * 啟動（於本地端運行 http://localhost:3000）
@@ -118,7 +134,6 @@
   npm run seed
   ```
 
-
 * 資料庫重置（正式和測試的資料庫）
   ```bash
   npm run reset
@@ -129,15 +144,25 @@
   npm run test
   ```
 
+* 種子資料
+    * 管理者（後台）
+      * account: root
+      * email: root@example.com
+      * password: 12345678
+    * 使用者（前台）
+      * account: user1 ~ user5
+      * email: user1@example.com ~ user5@example.com
+      * password: 12345678
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ## Contributing
 
 歡迎 pull request，如有重大改變，請先開啟 issue 討論您將執行的更新／升級。
 
 請確保根據需要更新測試。
 
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Contact
 
@@ -147,6 +172,16 @@ CY Liao - [GitHub](https://github.com/liaochungyid)
 
 Jason Luo - [GitHub](https://github.com/yulaie1012)
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ## Acknowledgments
 
 * [Alpha Camp](https://tw.alphacamp.co/)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## License
+
+[MIT](https://github.com/yulaie1012/twitter-fullstack-2020/blob/master/LICENSE.text)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
