@@ -72,6 +72,9 @@ const tweetController = {
         if (description.trim().length === 0) {
             req.flash('error_messages', '輸入不能為空白'),
                 res.redirect('back')
+        } else if (description.length > 140) {
+            req.flash('error_messages', '輸入不能多於140個字'),
+                res.redirect('back')
         } else {
             Tweet.create({
                 description: description,
