@@ -57,7 +57,6 @@ const tweetController = {
                 // 依追蹤者人數排序清單
                 users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-
                 return res.render('main', { tweets, users })
             }).catch(error => {
                 console.log(error)
