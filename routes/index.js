@@ -89,6 +89,7 @@ module.exports = (app, passport) => {
     // 前台查看推文與回覆
     app.get('/user/self/replies', authenticated, userController.getTweetReply)
 
+    app.get('/chatroomPublic', authenticated, userController.getChatroomPublic)
 
 
     // 後台路由部分

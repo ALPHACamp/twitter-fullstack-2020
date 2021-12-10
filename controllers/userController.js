@@ -490,7 +490,9 @@ const userController = {
         }
     },
 
-
+    getChatroomPublic: (req, res) => {
+        res.render('chatroom', {})
+    }
 
 
 
