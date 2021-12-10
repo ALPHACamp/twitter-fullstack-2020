@@ -62,14 +62,14 @@
           {{/if}}
 
           <div class="h4" style="margin-bottom:0;">{{this.name}}</div>
-          <a style="font-size: 16 px;" href="#">{{this.account}}</a>
+          <div class="">{{this.account}}</div>
           <div class="mt-2">
-            <div style="display: inline-block;"><i class="far fa-comment"></i> 1.5K</div>
-            <div style="display: inline-block;"><i class="far fa-heart"></i> 20K</div>
+            <div style="display: inline-block;"><i class="far fa-comment"></i> {{this.Tweets.length}}</div>
+            <div style="display: inline-block;"><i class="far fa-heart"></i> {{this.LikedTweets.length}}</div>
           </div>
           <div class="mt-2">
-            <p style="text-align:left; display: inline-block; font-size: 14px;"> 34個跟隨中</p>
-            <p style="text-align:right; display: inline-block; font-size: 14px;"> 59位追隨者</p>
+            <p style="text-align:left; display: inline-block; font-size: 14px;"> {{this.Followings.length}} 個跟隨中</p>
+            <p style="text-align:right; display: inline-block; font-size: 14px;"> {{this.Followers.length}} 位追隨者</p>
           </div>
         </div>
       </div>
