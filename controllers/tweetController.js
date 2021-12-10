@@ -7,66 +7,51 @@ const helpers = require('../_helpers')
 
 const tweetController = {
 
-  // 前台推文清單
-  // 此頁面需要render的資料有
-  // 所有tweets
-  // 所有tweets的user的相關資料
-  // 所有tweets的總like數 
-  // 登入的user是否已like過特定tweet
-  // 追蹤人數最多的user前10名單
-
   getTweets: (req, res) => {
-    //return res.send('what the fuck')
+    // 撈 user , tweets view 的資料
     return Tweet.findAll({
-      raw: true,
-      nest: true,
       order: [['createdAt', 'DESC']],
       include: [
+        User,
         Reply,
-        { model: User, include: [Like] },
-        { model: Like, include: [Tweet] }
+        { model: User, as: 'LikedUsers' }
       ]
     })
       .then(tweets => {
+        // 撈 popular user view 的資料
         User.findAll({
-          raw: true,
-          nest: true,
-          include: [
-            { model: User, as: 'Followers' }
-          ]
+          include: [{ model: User, as: 'Followers' }],
+          where: { role: 'normal' }
         })
           .then(users => {
-            tweets = tweets.map(tweet => ({
-              ...tweet,
-              tweetsUserAvatar: tweet.User.avatar,
-              tweetsUserName: tweet.User.name,
-              tweetsUserAccount: tweet.User.account,
-              tweetsCreatedAt: tweet.createdAt,
-              tweetsId: tweet.id,
-              tweetsContent: tweet.description,
-              // user的貼文回覆總數量
-              repliesTotal: tweet.Replies.length,
-              // 判斷是否liked
-              // if tweet.like.UserId 有 req.user.id = true
-              isLiked: helpers.isMatch(tweet.Likes.UserId, req.user.id),
-              //likeTotal: tweet.Likes.length
-            }))
+            tweets = tweets.map(tweet => {
+              if (tweet.dataValues !== undefined) {
+                return {
+                  ...tweet.dataValues,
+                  loginUser: helpers.getUser(req),
+                  tweetsUserAvatar: tweet.dataValues.User.avatar,
+                  tweetsUserName: tweet.User.name,
+                  tweetsUserAccount: tweet.User.account,
+                  tweetsCreatedAt: tweet.createdAt,
+                  tweetUserId: tweet.User.id,
+                  tweetsId: tweet.id,
+                  tweetsContent: tweet.description,
+                  isLiked: tweet.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id),
+                  replyTotal: tweet.Replies.length,
+                  likeTotal: tweet.LikedUsers.length
+                }
+              }
+            })
+
             users = users.map(user => ({
-              ...user,
+              ...user.dataValues,
               topUserAvatar: user.avatar,
               topUserName: user.name,
               topUserAccount: user.account,
               FollowerCount: user.Followers.length,
-              isFollowed: req.user.Followings.map(f => f.id).includes(user.id)
+              isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
             }))
-            console.log('*********')
-            console.log('tweets:', tweets[0])
-            console.log('*********')
-            // console.log('tweet.Likes: ', tweets[0].Likes)
-            console.log('users: ', users[0])
-            console.log('*********')
-            //console.log('users: ', users[0])
-            users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+            users = users.sort((a, b) => b.followerCount - a.followerCount)
             return res.render('tweets', { tweets, users, user: helpers.getUser(req) })
           })
       })
@@ -82,7 +67,7 @@ const tweetController = {
     }).then(tweet => {
       return res.render('tweet', {
         tweet: tweet.toJSON(),
-        user: req.user
+        user: helpers.getUser(req)
       })
     })
   },

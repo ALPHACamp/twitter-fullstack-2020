@@ -11,19 +11,19 @@
           </a>
         </li>
         <li class="nav-item py-2">
-          <a class="nav-link active" href="/users/{{user.id}}/tweets">
+          <a class="nav-link active" href="/users/{{loginUser.id}}/tweets">
             <i class="far fa-user"></i>
             <span class="ml-3">個人資料</span>
           </a>
         </li>
         <li class="nav-item py-2">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="/users/{{ loginUser.id }}/setting/edit">
             <i class="fas fa-cog"></i>
             <span class="ml-3">設定</span>
           </a>
         </li>
-        <li class="nav-item py-2">
-          <a class="btn py-2" href="#">推文</a>
+        <li class="nav-item nav-btn-modal py-2">
+          <a class="btn btn-modal py-2" data-toggle="modal" data-target="#tweetModal">推文</a>
         </li>
       </ul>
       <ul class="nav flex-column">
@@ -45,26 +45,52 @@
           <i class="fas fa-arrow-left"></i>
         </div>
       </a>
-      <div class="name-info">
-        <h5 class="title-name ml-3">{{user.name}}</h5>
-        <div class="title-info ml-3">3推文</div>
+      <div class="name-info ">
+        <h5 class="header1 ml-3 mb-0">{{user.name}}</h5>
+        <div class="atAccount ml-3 mb-1">3推文</div>
       </div>
     </div>
-    <hr />
-    <div class="cover"><img src=""></div>
-    <div class="user-info d-flex justify-content-between">
-      <div class="user-avatar"><img src="{{user.avatar}}" class="rounded-circle"></div>
-      <div>
-        <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+    {{!-- user-photos --}}
+    <div class="image-wrapper mb-4">
+      {{!-- cover --}}
+      <div class="cover-wrapper">
+        {{#if user.cover}}
+        <img class="cover" src="{{ user.cover }}" alt="">
+        {{ else }}
+        <div class="cover none"></div>
+        {{/if}}
+      </div>
+      {{!-- avatar --}}
+      <div class="avatar-wrapper">
+        {{#if user.avatar }}
+        <img class="avatar large" src="{{ user.avatar }}">
+        {{else}}
+        <div class="avatar-none-large"></div>
+        {{/if}}
+      </div>
+      {{!-- edit-user-button --}}
+      <div class="d-flex justify-content-end mt-1 pr-1">
+        {{#ifCond loginUser.id user.id }}
+        {{else}}
+        <div class="icon-outline pt-1">
+          <a href="{{ user.email }}"><i class="far fa-envelope"></i></a>
+        </div>
+        {{/ifCond}}
+        <button type="button" class="btn btn-outline ml-2" data-toggle="modal" data-target="#editUserModal">
           編輯個人資料
         </button>
       </div>
     </div>
+    {{!-- user-intro --}}
     <div class="text-info-users">
       <div class="info-text">
-        <h5 class="name">{{user.name}}</h5>
+        <h5 class="name header1">{{user.name}}</h5>
         <h6 class="atAccount">@{{user.account}}</h6>
-        <div class="introduction mt-2">hi</div>
+        {{#if user.introduction}}
+        <div class="introduction mt-2">{{ user.introduction }}</div>
+        {{else}}
+        <div class="introduction mt-2">目前沒有自我介紹!</div>
+        {{/if}}
         <div class="follow d-flex">
           <div class="followship d-flex m-0 mt-2">
             <a href="/users/{{user.id}}/followings" class="d-flex">
@@ -78,7 +104,7 @@
           </div>
         </div>
       </div>
-      <br>
+      {{!-- tab-area --}}
       <br>
       <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -88,7 +114,7 @@
           <a class="nav-link " href="/users/{{user.id}}/replies">推文與回覆</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="#">喜歡的內容</a>
+          <a class="nav-link " href="/users/{{user.id}}/likes">喜歡的內容</a>
         </li>
       </ul>
       <div class="user-tweet">
@@ -107,7 +133,7 @@
                   this.createdAt}}</div>
               </div>
               <a href="/tweets/{{this.id}}/replies" class="text-muted">
-                <div class="post-text d-flex" style="flex-auto">{{this.description}}</div>
+                <div class="post-text d-flex mt-1" style="flex-auto">{{this.description}}</div>
               </a>
               <div class="reply-like d-flex mt-2">
                 <div>
@@ -115,8 +141,8 @@
                   3
                 </div>
                 <form action="like" method="POST">
-                  <div class="ml-4">
-                    <button type="submit" class="like-btn">
+                  <div class="like-button ml-4">
+                    <button type="submit" class="like-button">
                       <i class="far fa-heart"></i>
                     </button>
                     3
@@ -134,99 +160,35 @@
 
 
   {{!-- popular --}}
-  <div class="col-4">
+  <div class="col-3 tweet-right">
     <div class="card border-light popular">
-      <div class="card-header">
+      <div class="card-header" style="font-weight: bold;">
         Popular
       </div>
       <ul class="list-group list-group-flush">
+        {{#each users}}
         <li class="list-group-item d-flex">
           <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar1.png">
+            <img class="avatar small" src="{{this.topUserAvatar}}">
           </div>
           <div class="mr-5">
-            <p class="mb-0">Pizza Hut</p>
-            <p class="atAccount">@pizzahut</p>
+            <p class="user-name mb-0">{{this.topUserName}}</p>
+            <p class="atAccount">@{{this.topUserAccount}}</p>
           </div>
           <div class="pt-2">
-            <a class="btn py-2" href="#">正在追蹤</a>
+            {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn followings-button">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/followships/{{this.id}}" method="POST">
+              <button type="submit" class="btn followers-button">跟隨</button>
+            </form>
+            {{/if}}
           </div>
         </li>
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar2.png">
-          </div>
-          <div class="mr-5">
-            <p class="mb-0">MacDonald</p>
-            <p class="atAccount">@macdonald</p>
-          </div>
-          <div class="pt-2">
-            <a class="btn btn-outline py-2" href="#">追蹤</a>
-          </div>
-        </li>
+        {{/each}}
       </ul>
     </div>
   </div>
-</div>
-
-{{!-- Edit-User-Info-Modal --}}
-<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form action="/api/users/{{ user.id }}" method="POST" enctype="multipart/form-data">
-        <div class="modal-header">
-          <div class="d-flex">
-            <button type="button" class="btn-dismiss close mr-3" data-dismiss="modal">X</button>
-            <h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
-          </div>
-          <button type="submit" class="btn">儲存</button>
-        </div>
-        <div class="modal-body px-0">
-          <div class="image-wrapper">
-            {{!-- Edit Cover --}}
-            <div class="cover-wrapper" id="cover-wrapper">
-              {{#if user.cover}}
-              <img class="cover" id="current-cover" src="{{ user.cover }}" alt="">
-              {{ else }}
-              <div class="cover none" id="current-cover"></div>
-              {{/if}}
-            </div>
-            <div class="cover-input-wrapper d-flex" id="cover-input-wrapper">
-              <div class="form-group mb-0 mt-2">
-                <label for="cover-input"><i class="fas fa-camera"></i>
-                  <input type="file" class="form-control-file hide" id="cover-input" name="cover">
-                </label>
-              </div>
-              <button type="button" class="btn btn-delete py-0 hide" id="delete-cover-btn">X</button>
-            </div>
-            {{!-- Edit Avatar --}}
-            <div class="avatar-wrapper" id="avatar-wrapper">
-              {{#if user.avatar }}
-              <img class="avatar large" id="current-avatar" src="{{ user.avatar }}">
-              {{else}}
-              <div class="avatar-none-large" id="current-avatar"></div>
-              {{/if}}
-            </div>
-            <div class="form-group avatar-input-wrapper">
-              <label for="avatar-input"><i class="fas fa-camera"></i>
-                <input type="file" class="form-control-file hide" id="avatar-input" name="avatar">
-              </label>
-            </div>
-          </div>
-        </div>
-        {{!-- Edit-Name & Introduction --}}
-        <div class="form-group px-3">
-          <label for="name">名稱</label>
-          <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{ user.name }}"
-            required>
-        </div>
-        <div class="form-group px-3">
-          <label for="introduction">自我介紹</label>
-          <textarea class="form-control" id="introduction" name="introduction"
-            rows="3">{{ user.introduction }}</textarea>
-        </div>
-    </div>
-    </form>
-  </div>
-</div>
 </div>
