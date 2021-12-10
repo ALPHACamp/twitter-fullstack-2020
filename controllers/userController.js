@@ -425,13 +425,19 @@ const userController = {
                 if (avatar) {
                     imgur.upload(avatar[0].path, async (err, imgAvr) => {
                         const user = await User.findByPk(req.params.id)
-                        await user.update({
-                            cover: cover[0] ? imgCover.data.link : user.cover,
-                            avatar: avatar[0] ? imgAvr.data.link : user.avatar,
-                            name: user.name,
-                            introduction: user.introduction ? user.introduction : ''
-                        })
-                        return res.redirect('back')
+                        if (req.body.introduction.trim().length > 160) {
+                            req.flash('error_messages', '字數超出上限!')
+                            return res.redirect('back')
+                        } else {
+                            await user.update({
+                                cover: cover[0] ? imgCover.data.link : user.cover,
+                                avatar: avatar[0] ? imgAvr.data.link : user.avatar,
+                                name: user.name,
+                                introduction: req.body.introduction ? req.body.introduction : user.introduction
+                            })
+                            return res.redirect('back')
+                        }
+
                     })
                 }
             })
@@ -440,17 +446,23 @@ const userController = {
             imgur.setClientID(IMGUR_CLIENT_ID)
             imgur.upload(cover[0].path, async (err, imgCover) => {
                 const user = await User.findByPk(req.params.id)
-                await user.update({
-                    cover: cover[0] ? imgCover.data.link : user.cover,
-                    avatar: user.avatar,
-                    name: user.name,
-                    introduction: user.introduction ? user.introduction : ''
-                }).then(user => {
-                    console.log(user)
-                }).catch(error => {
-                    console.log(error)
-                })
-                return res.redirect('back')
+                if (req.body.introduction.trim().length > 160) {
+                    req.flash('error_messages', '字數超出上限!')
+                    return res.redirect('back')
+                } else {
+                    await user.update({
+                        cover: cover[0] ? imgCover.data.link : user.cover,
+                        avatar: user.avatar,
+                        name: user.name,
+                        introduction: req.body.introduction ? req.body.introduction : user.introduction
+                    }).then(user => {
+                        console.log(user)
+                    }).catch(error => {
+                        console.log(error)
+                    })
+                    return res.redirect('back')
+                }
+
             })
         } else if (avatar) { // 載入 avatar
             console.log('頭貼都有檔案')
@@ -458,34 +470,44 @@ const userController = {
             imgur.upload(avatar[0].path, async (err, imgAvr) => {
                 const user = await User.findByPk(req.params.id)
                 console.log(imgAvr)
-                await user.update({
-                    cover: user.cover,
-                    avatar: avatar[0] ? imgAvr.data.link : user.avatar,
-                    name: user.name,
-                    introduction: user.introduction ? user.introduction : ''
-                }).then(user => {
-                    console.log(user)
-                }).catch(error => {
-                    console.log(error)
-                })
-                return res.redirect('back')
-            })
-        } else {
-            console.log('完全沒有檔案')
-            return User.findByPk(req.params.id)
-                .then(user => {
-                    user.update({
-                        name: req.body.name,
-                        avatar: user.avatar,
+                if (req.body.introduction.trim().length > 160) {
+                    req.flash('error_messages', '字數超出上限!')
+                    return res.redirect('back')
+                } else {
+                    await user.update({
                         cover: user.cover,
-                        introduction: req.body.introduction
-                    }).then(user => {
-                        // return res.json({ status: 'success', data: user })
-                        return res.redirect('back')
+                        avatar: avatar[0] ? imgAvr.data.link : user.avatar,
+                        name: user.name,
+                        introduction: req.body.introduction ? req.body.introduction : user.introduction
                     }).catch(error => {
                         console.log(error)
                     })
-                })
+                    return res.redirect('back')
+                }
+
+            })
+        } else {
+            console.log('完全沒有檔案')
+            if (req.body.introduction.trim().length > 160) {
+                req.flash('error_messages', '字數超出上限!')
+                return res.redirect('back')
+            } else {
+                return User.findByPk(req.params.id)
+                    .then(user => {
+                        user.update({
+                            name: req.body.name,
+                            avatar: user.avatar,
+                            cover: user.cover,
+                            introduction: req.body.introduction
+                        }).then(user => {
+                            // return res.json({ status: 'success', data: user })
+                            return res.redirect('back')
+                        }).catch(error => {
+                            console.log(error)
+                        })
+                    })
+            }
+
 
         }
     },

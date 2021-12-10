@@ -69,13 +69,13 @@ const tweetController = {
         const description = req.body.description
         const userId = req.user.id
         if (description.trim().length === 0) {
-            req.flash('error_messages', '輸入不能為空白'),
-                res.redirect('back')
+            req.flash('error_messages', '輸入不能為空白')
+            return res.redirect('back')
         } else if (description.length > 140) {
-            req.flash('error_messages', '輸入不能多於140個字'),
-                res.redirect('back')
+            req.flash('error_messages', '輸入不能多於140個字')
+            return res.redirect('back')
         } else {
-            Tweet.create({
+            return Tweet.create({
                 description: description,
                 UserId: userId
             }).then(tweet => {
