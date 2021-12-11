@@ -6,11 +6,7 @@ const pageLimit = 10
 const adminController = {
     getTweets: (req, res) => {
         console.log(req.query)
-        let offset = 0
 
-        if (req.query.page) {
-            offset = (req.query.page - 1) * pageLimit
-        }
         Tweet.findAndCountAll({
             order: [['createdAt', 'DESC']],
             raw: true,
@@ -18,31 +14,16 @@ const adminController = {
             include: [
                 User
             ],
-            offset: offset,
-            limit: pageLimit
+
         }).then(result => {
-            // data for pagination
-            const page = Number(req.query.page) || 1
-            const pages = Math.ceil(result.count / pageLimit)
-            const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
-            const prev = page - 1 < 1 ? 1 : page - 1
-            const next = page + 1 > pages ? pages : page + 1
+
             const data = result.rows.filter(row => {
                 if (row.description.length > 50) {
                     row.description = row.description.substring(0, 50) + '...'
                 }
                 return row
             })
-            console.log(data)
-            return res.render('admin/tweetsAdmin', {
-                tweets: data,
-                page: page,
-                totalPage: totalPage,
-                prev: prev,
-                next: next
-            })
-
-
+            return res.render('admin/tweetsAdmin', { tweets: data })
 
         }).catch(error => {
             console.log(error)

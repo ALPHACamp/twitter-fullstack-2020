@@ -13,6 +13,9 @@ module.exports = (app, passport) => {
                 return next()
             }
         }
+
+
+
         req.flash('error_messages', '帳號錯誤!')
         return res.redirect('/signin')
     }
