@@ -187,7 +187,15 @@ const userController = {
                     isLikedTweet: req.user.LikedTweets.map(d => d.id).includes(tweet.id)
 
                 }))
-                console.log(requestUser.toJSON())
+
+                if (req.user.id === requestUser.toJSON().id) {
+                    requestUser.dataValues.isUser = true
+                } else {
+                    requestUser.dataValues.isUser = false
+                }
+
+                requestUser.dataValues.isFollowing = requestUser.toJSON().Followers.map(d => d.id).includes(req.user.id)
+
                 return res.render('user', { tweets, users, requestUser: requestUser.toJSON() })
 
             }).catch(error => {

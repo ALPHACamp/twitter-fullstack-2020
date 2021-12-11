@@ -113,39 +113,43 @@
     {{!-- 留言區域 --}}
     <div id="tweetsArea">
       {{#each tweets}}
-      <div class="row border" style="padding-top:8px; padding-bottom:10px; word-break:break-all; padding-bottom:10px;"
-        id="tweetArea-{{this.id}}">
+      <div class="row border" style="padding-top:8px; padding-bottom:10px; word-break:break-all; padding-bottom:10px; "
+        id="tweetArea-{{this.id}}" onclick="location.href='/tweets/{{this.id}}/replies'">
+
+
 
         {{!-- 留言區域單則留言大頭貼區域 --}}
-        <div class="col-md-2" style="padding-right: 0px; ">
-          <a href="/users/{{this.User.dataValues.id}}/tweets"><img src={{this.User.dataValues.avatar}}
-              class="rounded-circle" style="width: 50px; height:50px;"></a>
+        <div class="col-md-2" style="padding-right: 0px;">
+          <a href="/users/{{this.User.dataValues.id}}/tweets">
+            <img src={{this.User.dataValues.avatar}} class="rounded-circle" style="width: 50px; height:50px;">
+          </a>
         </div>
 
         {{!-- 留言區域單則留言區域 --}}
-        <div class="col-md-10" style="padding-left: 0px;">
-          <div class="h6"><a href="/users/{{this.User.dataValues.id}}/tweets">{{this.User.dataValues.name}}</a> <span
-              class="text-secondary">@{{this.User.dataValues.account}}
-              ．{{moment
-              this.createdAt}}</span>
+        <div class="col-md-10 " style="padding-left: 0px;">
+          <div class="h6 ">
+            <a href="/users/{{this.User.dataValues.id}}/tweets">{{this.User.dataValues.name}}</a>
+            <span class="text-secondary">@{{this.User.dataValues.account}}．{{moment this.createdAt}}</span>
           </div>
+
           <div>{{this.description}}</div>
-          <div class="row align-items-center">
-            <div class="col-md-3">
-              <span class="mr-2">
+          <div class="row align-items-center ">
+            <div class="col-md-3 ">
+              <span class="mr-2 ">
                 <button type="submit" data-toggle="modal" data-target="#tweetModel"
-                  style="border: 0; background-color: #ffffff; "><i class="far fa-comment" data-id={{this.id}}></i>
+                  style="border: 0; background-color: #ffffff; ">
+                  <i class="far fa-comment" data-id={{this.id}} style=""></i>
                 </button>{{ this.Replies.length }}
               </span>
             </div>
             <div class="col-md-3">
               {{#if this.isLikedTweet}}
-              <form action="/tweets/{{this.id}}/unlike" method="post">
+              <form action="/tweets/{{this.id}}/unlike" method="post" class="form-inline toTweet">
                 <span><button type="submit" class="btn btn-link" style="color: red; display:inline">
                     <i class="fas fa-heart " data-id={{this.id}}></i></button>{{this.likeCount }}</span>
               </form>
               {{else}}
-              <form action="/tweets/{{this.id}}/like" method="post" class="form-inline">
+              <form action="/tweets/{{this.id}}/like" method="post" class="form-inline toTweet">
                 <span><button type="submit" class="btn btn-link text-dark" style="display:context;">
                     <i class="far fa-heart" data-id={{this.id}}></i></button>{{ this.likeCount }}</span>
               </form>
@@ -212,6 +216,7 @@
       </div>
       {{/each}}
     </div>
+
   </div>
 
   {{!-- 右邊區域 --}}
