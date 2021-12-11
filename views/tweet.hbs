@@ -98,7 +98,6 @@
                 <img class="avatar small" src="{{this.User.avatar}}">
               </a>
             </div>
-            <div class="post-text d-flex" style="flex-auto">{{this.comment}}</div>
             <div class="col-md-10">
               <div class="account-info d-flex" style="flex-auto">
                 <div class="user-name">{{this.User.name}}</div>
@@ -118,16 +117,8 @@
         <hr />
         {{/each}}
       </div>
-      <hr />
-      {{/each}}
     </div>
-  </div>
 
-  {{!-- popular --}}
-  <div class="col-4">
-    <div class="card border-light popular">
-      <div class="card-header">
-        Popular
     {{!-- popular --}}
     <div class="col-3 tweet-right">
       <div class="card border-light popular">
@@ -159,33 +150,5 @@
           {{/each}}
         </ul>
       </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar1.png">
-          </div>
-          <div class="mr-5">
-            <p class="mb-0">Pizza Hut</p>
-            <p class="atAccount">@pizzahut</p>
-          </div>
-          <div class="pt-2">
-            <a class="btn py-2" href="#">正在追蹤</a>
-          </div>
-        </li>
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar2.png">
-          </div>
-          <div class="mr-5">
-            <p class="mb-0">MacDonald</p>
-            <p class="atAccount">@macdonald</p>
-          </div>
-          <div class="pt-2">
-            <a class="btn btn-outline py-2" href="#">追蹤</a>
-          </div>
-        </li>
-      </ul>
     </div>
   </div>
-  </div>
-</div>
