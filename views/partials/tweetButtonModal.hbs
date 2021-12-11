@@ -1,0 +1,105 @@
+{{!-- <div
+  class='modal fade tweet-modal'
+  id='tweet-button'
+  tabindex='-1'
+  role='dialog'
+  aria-labelledby='tweet-btton '
+  data-backdrop='false'
+  style='display: none;'
+>
+  <div class='modal-dialog' role='document'>
+    <div class='modal-content tweet-modal-content'>
+      <div class='modal-header'>
+        <h5 class='modal-title'></h5>
+        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+          <span aria-hidden='true'>&times;</span>
+        </button>
+      </div>
+      <hr />
+      <div class='modal-body'>
+        <form action='/tweets' method='POST'>
+          <div class='type-area'>
+            <div class='user-pic'>
+              <a href='/users/{{user.id}}/tweets'>
+                <img src='{{user.avatar}}' style='width:60PX;height:60px; border-radius:100%;' />
+              </a>
+            </div>
+            <div class='type-text'>
+              <textarea
+                type='text'
+                class='form-control new-post-content'
+                name='description'
+                id='description-modal'
+                placeholder='有什麼新鮮事？'
+                rows='5'
+                maxlength='140'
+              ></textarea>
+              <div class='feedback' id='add-tweet-info'> 內容不可空白 </div>
+            </div>
+            <div class='add-button'>
+              <button type='submit' class='btn button' id='add-tweet-btn'>推文</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div> --}}
+
+{{! tweet dialog }}
+<div class='modal fade' id='tweetDialog' tabindex='-1' aria-labelledby='tweetDialog' aria-hidden='true'>
+  <div class='modal-dialog'>
+    <div class='modal-content' style='width:600px; height:300px; border-radius: 14px'>
+      <div class='modal-header align-items-center'>
+        <button
+          type='button'
+          class='close'
+          data-dismiss='modal'
+          aria-label='Close'
+          style='color:#FF6600; padding:15px; margin-left: -10px; margin-top: -16px;font-size:36px'
+        >
+          <span aria-hidden='true'><svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+              <path
+                d='M13.4141 11.9999L19.2071 6.20687C19.5971 5.81687 19.5971 5.18388 19.2071 4.79288C18.8171 4.40188 18.1841 4.40288 17.7931 4.79288L12.0001 10.5859L6.20712 4.79288C5.81712 4.40288 5.18412 4.40288 4.79312 4.79288C4.40212 5.18288 4.40312 5.81587 4.79312 6.20687L10.5861 11.9999L4.79312 17.7929C4.40312 18.1829 4.40312 18.8159 4.79312 19.2069C4.98812 19.4019 5.24312 19.4999 5.50012 19.4999C5.75712 19.4999 6.01212 19.4019 6.20712 19.2069L12.0001 13.4139L17.7931 19.2069C17.9881 19.4019 18.2431 19.4999 18.5001 19.4999C18.7571 19.4999 19.0121 19.4019 19.2071 19.2069C19.5971 18.8169 19.5971 18.1839 19.2071 17.7929L13.4141 11.9999Z'
+                fill='#FF6600'
+              ></path>
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div class='modal-body' style='position:relative'>
+        <a href='/users/{{user.id}}/tweets'>
+          <img class='tweet-avatar' src='{{user.avatar}}' />
+        </a>
+        <form action='/tweets' method='POST'>
+
+          <textarea
+            id='description-modal'
+            type='text'
+            name='description'
+            maxlength='140'
+            class='form-control tweet-input'
+            style='position:absolute; top:27px; bottom:68px;font-style: normal; font-weight:normal; font-size:19px; line-height:20px; color:#000000;'
+            placeholder='有什麼新鮮事?'
+            required
+            autofocus
+          ></textarea>
+
+          <div id='add-tweet-info' class='tweet-error-message'>
+            內容不可空白
+          </div>
+
+          <button
+            type='submit'
+            class='btn'
+            id='add-tweet-btn'
+            style='width:70px; background-color: #FF6600;border-radius:100px; color:white; font-weight:bold; font-size:18px;position: absolute; right: 15px; bottom:15px;'
+            data-user-id='{{user.id}}'
+          >推文</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script src='/javascripts/tweetDialog.js'></script>

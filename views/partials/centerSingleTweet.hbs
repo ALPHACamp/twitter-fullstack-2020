@@ -1,0 +1,261 @@
+<div class='container col-md-12 m-auto' style='padding:0; height:100%;'>
+  <div class='text-title d-flex flex-row align-items-center mt-3'>
+      <div class='back-icon '>
+        <a href='javascript:history.back()'>
+          <i class='fas fa-arrow-left' style="color: black;"></i>
+        </a>
+      </div>
+      <div class='name-info ml-5'>
+        <div class='title-name' style="font-size:18px;color: black; font-weight:bold;">推文</div>
+      </div>
+    
+  </div>
+  <hr>
+  <div class='main-reply-tweet '>
+    <div class='account-info d-flex'>
+      <div>
+        <a href='/users/{{tweet.User.dataValues.id}}/tweets'>
+          <img src='{{tweet.User.dataValues.avatar}}' style= "width:50PX;height:50px; border-radius:100%;"></img>
+        </a>
+      </div>
+        <div class="name-account col-ml-2" style=" width:70%">
+          <a href="/users/{{tweet.User.dataValues.id}}/tweets">
+            <p class="m-0" style="font-size:18px;color: black; font-weight:bold;">{{tweet.User.dataValues.name}}</p>
+          </a>
+          <p class="m-0" style="font-size:18px;font-weight:500;color:gray;">@{{tweet.User.dataValues.account}}</p>
+        </div>
+    </div>
+    {{!-- 此則推文 --}}
+    <div class="content tweet-description heavy-tweet-text">
+      <p class="tweet-description ">{{tweet.description}}</p>
+    </div>
+    <div class="time">
+      {{moment tweet.createdAt}}
+    </div>
+    <hr>
+    <div class="number-followers d-flex ">
+      <div class="reply d-flex">
+        <div class="number" style="color:black; font-weight:500;">{{tweet.repliesCount}}</div>
+        <div class="text ml-1" style="color:gray; font-weight:500;">回覆</div>
+      </div>
+      <div class="reply d-flex ml-3 ">
+        <div class="number" style="color:black; font-weight:500;">{{tweet.likesCount}}</div>
+        <div class="text ml-1" style="color:gray; font-weight:500;">喜歡次數</div>
+      </div> 
+    </div>
+    <hr>
+    <div class="icon-reply d-flex">
+      <div class="reply" id="reply" data-toggle="modal" data-target="#reply-tweet-{{tweet.id}}">
+        {{#if tweet.isReplied}}
+        <i class="fas fa-comment"></i>
+        {{else}}
+        <i class="far fa-comment"></i>
+        {{/if}}
+      </div>
+      {{#if tweet.isLiked}}
+      <form action="/tweets/{{tweet.id}}/unlike" method="POST" class="ml-5">
+        <button style="border:0px; background:inherit;" type="submit">
+          <i class="fas fa-heart"></i>
+        </button>
+      </form>
+      {{else}}
+      <form action="/tweets/{{tweet.id}}/like" method="POST" class="ml-5">
+        <button style="border:0px; background:inherit;" type="submit">
+          <i class="far fa-heart"></i>
+        </button>
+      </form>
+      {{/if}}
+    </div>
+    <hr class="mt-0">
+    {{#each tweet.Replies}}
+    <div class="tweet col-md-12">
+      <div class="d-flex">
+        <div class="mt-2 ml-2 col-md-1" style="padding:0">
+          <a href="/users/{{this.User.dataValues.id}}/tweets" class="text-muted">
+            <img class="user-pic mr-2" src="{{this.User.dataValues.avatar}}" style=" width:50px;height:50px; border-radius:100%;">
+          </a>
+        </div>
+        <div class="col-md-11">
+          <div class="account-info d-flex" style="flex:auto">
+            <a href="/users/{{this.User.dataValues.id}}/tweets" class="text-muted">
+              <div class="user-name" style="color: black; font-weight:bold;">{{this.User.dataValues.name}}</div>
+            </a>
+            <div class="account-time ml-2" style="font-weight:500; color: gray;">@{{this.User.dataValues.account}} • {{moment this.dataValues.createdAt}}</div>
+          </div>
+
+          <div class="reply">
+            <div class="row">
+              <div class="reply-text ml-3" style="color: gray;"><p style="font-weight:500; ">回覆</p></div>
+                <div class="reply-account">
+                  <a href="/users/{{this.User.dataValues.id}}/tweets" class="text-muted" style="">
+                    <p style="color: #FF6600; font-weight:500;">
+                      @{{../tweet.User.dataValues.name}}
+                    </p>
+                  </a>
+                </div>
+            </div>
+          </div>
+          <div class="reply-text d-flex" style="flex:auto"> {{this.dataValues.comment}} </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    {{/each}}
+    
+  </div>
+  
+</div>
+<div  
+  class="modal fade tweet-modal" 
+  id="reply-tweet-{{tweet.id}}" 
+  tabindex="-1" role="dialog" 
+  aria-labelledby="reply-tweet"
+  style="display: none;"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content tweet-modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <hr>
+
+      <div class="reply-tweet">
+        <div class="modal-body" id="reply-tweet-modal-body">
+          
+          <div class="mt-2 ml-2" style="padding:0">
+            <div>
+              <a href='/users/{{tweet.User.dataValues.id}}/tweets'>
+                <img src='{{tweet.User.dataValues.avatar}}' style= "width:60PX;height:60px; border-radius:100%;">
+              </a>
+            </div>
+            <div class="tweet-owner"></div>
+          </div>
+
+          <div class="mt-2 ml-2" style="flex-grow: 1; position:relative">
+            
+            <div class="account-info d-flex modal-account-info" style="flex:auto">
+              <a href="/users/{{tweet.User.dataValues.id}}/tweets" class="text-muted">
+                <div class="user-name modal-name">
+                  {{tweet.User.dataValues.name}}
+                </div>
+              </a>
+              <div class="account-time ml-2 modal-account">
+                @{{tweet.User.dataValues.account}} • {{moment tweet.dataValues.createdAt}}
+              </div>
+            </div> 
+            <div class="modal-description post-text d-flex" style="flex:auto">
+              <p>{{tweet.description}}</p>
+            </div>
+            <div class="reply" style="margin-left:10px;">
+              <div class="reply-text">回覆給</div>
+              <a href='/users/{{tweet.User.dataValues.id}}/tweets'>
+                <div class="reply-account">@{{tweet.User.dataValues.account}}</div>
+              </a>
+            </div>
+
+          </div>
+
+        </div>  
+      </div>
+
+      <form action="/tweets/{{tweet.id}}/replies" method="POST">
+        <div class="type-area">
+          <div class="user-pic ml-2">
+            <a href="/users/{{user.id}}/tweets">
+              <img src="{{user.avatar}}" style= "width:60PX;height:60px; border-radius:100%;">
+            </a>
+          </div >
+          <div class="type-text form-group">
+            <input type="hidden" name="TweetId" value="{{tweet.id}}">
+            <textarea
+              type = "text" 
+              class="form-control new-post-content is-invalid" 
+              name="user_reply" 
+              id="user_reply"
+              placeholder="推你的回覆" 
+              rows="5"
+              maxlength="140"></textarea>
+            <div class="feedback" id="reply-info"> 內容不可空白 </div>
+          </div>
+          <div class="add-button">
+            <button type="submit" class="btn button" id="reply-btn">回覆</button>
+          </div>
+          
+        </div>
+      </form>
+
+    </div>
+  </div>
+  <script>
+    let replyButton = document.querySelector('#reply-btn')
+    let reply = document.querySelector('#user_reply')
+    let replyInformation = document.querySelector('#reply-info')
+    reply.addEventListener('input', function check(event) {
+      console.log(reply.value)
+      console.log(reply.classList)
+      if (reply.value.length < 1) {
+        reply.classList.add("is-invalid")
+        replyInformation.innerText = '內容不可空白'
+      }
+      if (reply.value.length > 0) {
+        reply.classList.remove("is-invalid")
+        replyInformation.innerText = `${reply.value.length} / 140`
+      }
+    })
+
+    replyButton.addEventListener('click', function check(event) {
+      console.log('***event.target***',event.target)
+      if (reply.value.length < 1) {
+        reply.classList.add("is-invalid")
+      }
+      if (reply.value.length > 1) {
+        reply.classList.remove("is-invalid")
+      }
+    })
+  </script>
+</div>
+
+{{!-- <div class="modal fade tweet-modal" 
+  id="reply-{{tweet.id}}" 
+  tabindex="-1" 
+  role="dialog" 
+  aria-labelledby="exampleModalLabel" 
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content tweet-modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <hr>
+
+      <div class="modal-body" id="reply-modal-body">
+        <div class="row">
+          <div class="col-sm-3" id="user-modal-image">
+            <img src="https://randomuser.me/api/portraits/men/88.jpg" alt="user-avatar" >
+          </div>
+          <div class="col-sm-9">
+            <p id="user-modal-id">601</p>
+            <p id="user-modal-name">Guillaume</p>
+            <p id="user-modal-surname">Vincent</p>
+            <p><em id="user-modal-email">guillaume.vincent@example.com</em></p>
+            <p id="user-modal-gender">male</p>
+            <p id="user-modal-age">25</p>
+            <p id="user-modal-birthday">1995-05-05</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div> --}}

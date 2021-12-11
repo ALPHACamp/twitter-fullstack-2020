@@ -1,0 +1,127 @@
+
+<div id="column1" style="float:left; width:20%; position: fixed; top:15px; left:5%">{{> settingLeft}}</div>
+
+<div class="d-flex justify-content-center">
+  <div id="column2" class="mx-auto my-auto" style="float:left;width:100%;border-left:1px solid #dee2e6;border-right:1px solid #dee2e6;">
+    {{> centerFollowers}}
+  </div>
+</div>
+
+<div id="column3" class="float-right" style="float:left;width:23%; position: fixed; top:15px; right:1%">
+  {{> popularRight}}
+</div>
+{{! editProfile dialog }}
+<div class='modal fade' id='editProfile' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+  <div class='modal-dialog'>
+    <div class='modal-content' style='width:600px; height:675px; border-radius: 14px'>
+      <div class='modal-header align-items-center'>
+        <button
+          type='button'
+          class='close'
+          data-dismiss='modal'
+          aria-label='Close'
+          style='color:#FF6600; padding:15px; margin-left: -10px; margin-top: -16px;font-size:36px'
+        >
+          <span aria-hidden='true'><svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+              <path
+                d='M13.4141 11.9999L19.2071 6.20687C19.5971 5.81687 19.5971 5.18388 19.2071 4.79288C18.8171 4.40188 18.1841 4.40288 17.7931 4.79288L12.0001 10.5859L6.20712 4.79288C5.81712 4.40288 5.18412 4.40288 4.79312 4.79288C4.40212 5.18288 4.40312 5.81587 4.79312 6.20687L10.5861 11.9999L4.79312 17.7929C4.40312 18.1829 4.40312 18.8159 4.79312 19.2069C4.98812 19.4019 5.24312 19.4999 5.50012 19.4999C5.75712 19.4999 6.01212 19.4019 6.20712 19.2069L12.0001 13.4139L17.7931 19.2069C17.9881 19.4019 18.2431 19.4999 18.5001 19.4999C18.7571 19.4999 19.0121 19.4019 19.2071 19.2069C19.5971 18.8169 19.5971 18.1839 19.2071 17.7929L13.4141 11.9999Z'
+                fill='#FF6600'
+              ></path>
+            </svg>
+          </span>
+        </button>
+        <div
+          class='modal-title'
+          id='exampleModalLabel'
+          style='font-weight: bold;font-size: 19px;color: #1C1C1C;position:absolute; left:60px;'
+        >編輯個人資料</div>
+
+        <button
+          class='btn'
+          id='editProfile-button-save'
+          style='width:70px; background-color: #FF6600;border-radius:100px; color:white; font-weight:bold; font-size:18px;'
+          data-user-id='{{user.id}}'
+        >儲存</button>
+      </div>
+      <div class='modal-body' style='position:relative'>
+        <img
+          class='editProfile-cover'
+          src='{{user.cover}}'
+          style='background-color:rgb(150, 120, 120)'
+        />
+        <img class='editProfile-avatar' src='{{user.avatar}}' />
+        <div class='image-upload' style='position: absolute; left:65px; top:191px; z-index:3'>
+          <label for='avatar'>
+            <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
+              <path
+                d='M17.708 20H2.292C1.028 20 0 18.972 0 17.708V5.375C0 4.11 1.028 3.083 2.292 3.083H4.438C5.633 1.17 7.722 0 10 0C12.277 0 14.367 1.17 15.562 3.083H17.708C18.972 3.083 20 4.11 20 5.375V17.708C20 18.972 18.972 20 17.708 20ZM2.292 4.583C1.855 4.583 1.5 4.938 1.5 5.375V17.708C1.5 18.145 1.855 18.5 2.292 18.5H17.708C18.145 18.5 18.5 18.145 18.5 17.708V5.375C18.5 4.938 18.145 4.583 17.708 4.583H15.258C14.941 4.633 14.626 4.488 14.476 4.201C13.596 2.536 11.882 1.501 10 1.501C8.117 1.501 6.402 2.536 5.524 4.203C5.364 4.505 5.022 4.663 4.691 4.583H2.293H2.292Z'
+                fill='white'
+              ></path>
+              <path
+                d='M9.99989 6.16699C7.31989 6.16699 5.13989 8.34699 5.13989 11.027C5.13989 13.707 7.31989 15.887 9.99989 15.887C12.6799 15.887 14.8599 13.707 14.8599 11.027C14.8599 8.34699 12.6799 6.16699 9.99989 6.16699ZM11.9999 11.75H10.7499V13C10.7499 13.414 10.4139 13.75 9.99989 13.75C9.58589 13.75 9.24989 13.414 9.24989 13V11.75H7.99989C7.58589 11.75 7.24989 11.414 7.24989 11C7.24989 10.586 7.58589 10.25 7.99989 10.25H9.24989V8.99999C9.24989 8.58599 9.58589 8.24999 9.99989 8.24999C10.4139 8.24999 10.7499 8.58599 10.7499 8.99999V10.25H11.9999C12.4139 10.25 12.7499 10.586 12.7499 11C12.7499 11.414 12.4139 11.75 11.9999 11.75Z'
+                fill='white'
+              ></path>
+            </svg>
+          </label>
+          <input id='avatar' type='file' data-user-id='{{user.id}}'/>
+        </div>
+        <div class='image-upload' style='position: absolute; left:262px; top:80px; z-index:3'>
+          <label for='cover'>
+            <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
+              <path
+                d='M17.708 20H2.292C1.028 20 0 18.972 0 17.708V5.375C0 4.11 1.028 3.083 2.292 3.083H4.438C5.633 1.17 7.722 0 10 0C12.277 0 14.367 1.17 15.562 3.083H17.708C18.972 3.083 20 4.11 20 5.375V17.708C20 18.972 18.972 20 17.708 20ZM2.292 4.583C1.855 4.583 1.5 4.938 1.5 5.375V17.708C1.5 18.145 1.855 18.5 2.292 18.5H17.708C18.145 18.5 18.5 18.145 18.5 17.708V5.375C18.5 4.938 18.145 4.583 17.708 4.583H15.258C14.941 4.633 14.626 4.488 14.476 4.201C13.596 2.536 11.882 1.501 10 1.501C8.117 1.501 6.402 2.536 5.524 4.203C5.364 4.505 5.022 4.663 4.691 4.583H2.293H2.292Z'
+                fill='white'
+              ></path>
+              <path
+                d='M9.99989 6.16699C7.31989 6.16699 5.13989 8.34699 5.13989 11.027C5.13989 13.707 7.31989 15.887 9.99989 15.887C12.6799 15.887 14.8599 13.707 14.8599 11.027C14.8599 8.34699 12.6799 6.16699 9.99989 6.16699ZM11.9999 11.75H10.7499V13C10.7499 13.414 10.4139 13.75 9.99989 13.75C9.58589 13.75 9.24989 13.414 9.24989 13V11.75H7.99989C7.58589 11.75 7.24989 11.414 7.24989 11C7.24989 10.586 7.58589 10.25 7.99989 10.25H9.24989V8.99999C9.24989 8.58599 9.58589 8.24999 9.99989 8.24999C10.4139 8.24999 10.7499 8.58599 10.7499 8.99999V10.25H11.9999C12.4139 10.25 12.7499 10.586 12.7499 11C12.7499 11.414 12.4139 11.75 11.9999 11.75Z'
+                fill='white'
+              ></path>
+            </svg>
+          </label>
+          <input id='cover' type='file' data-user-id='{{user.id}}'/>
+        </div>
+
+        <a id='deleteCover' style='position: absolute; left:319px; top:83px; z-index:3' data-user-id='{{user.id}}'><svg
+            width='16'
+            height='16'
+            viewBox='0 0 16 16'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <path
+              d='M9.41412 7.99988L15.2071 2.20687C15.5971 1.81687 15.5971 1.18388 15.2071 0.792875C14.8171 0.401875 14.1841 0.402875 13.7931 0.792875L8.00012 6.58588L2.20712 0.792875C1.81712 0.402875 1.18412 0.402875 0.793119 0.792875C0.402119 1.18288 0.403119 1.81587 0.793119 2.20687L6.58612 7.99988L0.793119 13.7929C0.403119 14.1829 0.403119 14.8159 0.793119 15.2069C0.988119 15.4019 1.24312 15.4999 1.50012 15.4999C1.75712 15.4999 2.01212 15.4019 2.20712 15.2069L8.00012 9.41387L13.7931 15.2069C13.9881 15.4019 14.2431 15.4999 14.5001 15.4999C14.7571 15.4999 15.0121 15.4019 15.2071 15.2069C15.5971 14.8169 15.5971 14.1839 15.2071 13.7929L9.41412 7.99988Z'
+              fill='white'
+            ></path>
+          </svg>
+        </a>
+        <div class='form-label-group' style='position:absolute; margin-top: 32px; bottom:264px; width:570px;'>
+          <input
+            id='editProfile-input-name'
+            type='text'
+            name='name'
+            maxlength='50'
+            class='form-control login-input'
+            style='height:54px; font-size:19px; font-weight:500; color:#1C1C1C;'
+            placeholder='名稱'
+            required
+            autofocus
+          />
+        </div>
+        <div class='form-label-group' style='position:absolute; margin-top: 32px; bottom:72px; width:570px;'>
+          <textarea
+            id='editProfile-textarea-introduction'
+            type='text'
+            name='introduction'
+            maxlength='160'
+            class='form-control login-input'
+            style='height:150px;resize: none; font-size:19px; font-weight:500; color:#1C1C1C;'
+            placeholder='自我介紹'
+            required
+            autofocus
+          ></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src='/javascripts/editProfile.js'></script>
