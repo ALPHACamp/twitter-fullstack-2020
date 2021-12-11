@@ -62,9 +62,6 @@ module.exports = (app, passport) => {
   app.get('/users/:id/edit', authenticated, userController.editUser)
   app.put('/users/:id/', authenticated, userController.putUser)
 
-  //user個人資料頁
-  app.get('/users/:id/tweets', authenticated, userController.getProfile)
-
   //user編輯自介
   app.get('/api/users/:id', authenticated, userController.getIntroduction)
   app.post('/api/users/:id', authenticated, userController.updateIntroduction)
@@ -86,6 +83,10 @@ module.exports = (app, passport) => {
   //user移除喜歡推文
   app.post('/tweets/:id/unlike', authenticated, userController.removeLike)
 
+  //被別人追蹤列表
+  app.get('/users/:id/followings', authenticated, userController.getFollowings)
+  //追蹤別人列表
+  app.get('/users/:id/followers', authenticated, userController.getFollowers)
   //user追隨
   app.post('/followships', authenticated, userController.addFollowships)
   //user取消追隨
@@ -96,5 +97,5 @@ module.exports = (app, passport) => {
   //user Profile頁面Profile_replies
   app.get('/users/:id/profile_replies', authenticated, userController.getProfile_replies)
   //user Profile頁面Profile_likes
-  app.get('/users/:id/profile_likes', authenticated, userController.getProfile_likes)
+  app.get('/users/:id/likes', authenticated, userController.getProfile_likes)
 }

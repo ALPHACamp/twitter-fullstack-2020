@@ -1,4 +1,4 @@
-    <div class='text-title d-flex flex-row align-items-center'style="margin-top: 6px">
+    <div class='text-title d-flex flex-row align-items-center'style="margin-top: 6px; height:55px;">
       <div class='back-icon'style="margin-left:19px">
         <a href='javascript:history.back()'>
           <i class='fas fa-arrow-left' style="color: black;"></i>
@@ -6,7 +6,11 @@
       </div>
       <div class='name-info'style="margin-left:43px">
         <div class='title-name' style="font-size:18px;color: black; font-weight:bold;">{{user.name}}</div>
-        <p style="color:gray; font-size:14px; font-weight:bold; margin-bottom:7px"> {{tweetCount}} 推文</p>
+        {{#if tweetCount}}
+            <p style='color:gray; font-size:14px; font-weight:bold; margin-bottom:7px'> {{tweetCount}} 推文</p>
+        {{else}}
+            {{!-- <p style='color:gray; font-size:14px; font-weight:bold; margin-bottom:7px'> 　</p> --}}
+        {{/if}}
       </div>
     </div>
 
@@ -42,16 +46,20 @@
         </div>
 
         <div class="number-followers d-flex" style="padding-left:15px">
-            <div class="reply d-flex">
-                <div class="number" style="color:black; font-weight:500;">{{followerCount}}</div>
-                <p style="color:black; font-weight:500">個</p>
-                <div class="text ml-1" style="color:gray; font-weight:500;">跟隨中</div>
-            </div>
-            <div class="reply d-flex ml-3 ">
-                <div class="number" style="color:black; font-weight:500;">{{followingCount}}</div>
-                <p style="color:black; font-weight:500">位</p>
-                <div class="text ml-1" style="color:gray; font-weight:500;">跟隨者</div>
-            </div> 
+            <a href='/users/{{user.id}}/followings' style='text-decoration-line: none;'>
+                <div class="reply d-flex">
+                    <div class="number" style="color:black; font-weight:500;">{{followingCount}}</div>
+                    <p style="color:black; font-weight:500">個</p>
+                    <div class="text ml-1" style="color:gray; font-weight:500;">跟隨中</div>
+                </div>
+            </a>
+            <a href='/users/{{user.id}}/followers' style='text-decoration-line: none;'>
+                <div class="reply d-flex ml-3 ">
+                    <div class="number" style="color:black; font-weight:500;">{{followerCount}}</div>
+                    <p style="color:black; font-weight:500">位</p>
+                    <div class="text ml-1" style="color:gray; font-weight:500;">跟隨者</div>
+                </div> 
+            </a>
         </div>
 
     </div>
@@ -64,7 +72,7 @@
             <a class="nav-link {{#ifCond page 'profile_replies'}}active{{/ifCond}}" href="/users/{{user.id}}/profile_replies">推文與回覆</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{#ifCond page 'profile_likes'}}active{{/ifCond}}" href="/users/{{user.id}}/profile_likes">喜歡的內容</a>
+            <a class="nav-link {{#ifCond page 'profile_likes'}}active{{/ifCond}}" href="/users/{{user.id}}/likes">喜歡的內容</a>
         </li>
     </ul>
 {{!-- =====================推文列表============================================ --}}
@@ -139,31 +147,31 @@
     <div class="tweet col-md-12" style="padding:15px">
       <div class="d-flex">
         <div class="mt-2 ml-2 col-md-1" style="padding:0">
-          <a href="/users/{{this.User.dataValues.id}}/tweets" class="text-muted">
-            <img class="user-pic mr-2" src="{{this.User.dataValues.avatar}}" style=" width:60PX;height:60px; border-radius:100%;">
+          <a href="/users/{{this.User.id}}/tweets" class="text-muted">
+            <img class="user-pic mr-2" src="{{this.User.avatar}}" style=" width:60PX;height:60px; border-radius:100%;">
           </a>
         </div>
         <div class="col-md-11">
           <div class="account-info d-flex" style="flex:auto">
-            <a href="/users/{{this.User.dataValues.id}}/tweets" class="text-muted">
-              <div class="user-name" style="color: black; font-weight:bold;">{{this.User.dataValues.name}}</div>
+            <a href="/users/{{this.User.id}}/tweets" class="text-muted">
+              <div class="user-name" style="color: black; font-weight:bold;">{{this.User.name}}</div>
             </a>
-            <div class="account-time ml-2" style="font-weight:500; color: gray;">@{{this.User.dataValues.account}} • {{moment this.dataValues.createdAt}}</div>
+            <div class="account-time ml-2" style="font-weight:500; color: gray;">@{{this.User.account}} • {{moment this.createdAt}}</div>
           </div>
 
           <div class="reply">
             <div class="row">
               <div class="reply-text ml-3" style="color: gray;"><p style="font-weight:500; ">回覆</p></div>
                 <div class="reply-account">
-                  <a href="/users/{{this.User.dataValues.id}}/tweets" class="text-muted" style="">
+                  <a href="/users/{{this.User.id}}/tweets" class="text-muted" style="">
                     <p style="color: orange; font-weight:500;">
-                      @{{../tweet.User.dataValues.name}}
+                      @{{this.Tweet.User.account}}
                     </p>
                   </a>
                 </div>
             </div>
           </div>
-          <div class="post-text d-flex" style="flex:auto"> {{this.dataValues.comment}} </div>
+          <div class="post-text d-flex" style="flex:auto"> {{this.comment}} </div>
         </div>
       </div>
     </div>
@@ -173,23 +181,23 @@
 {{!-- =====================喜歡列表============================================ --}}
 {{#ifCond page 'profile_likes'}}
     {{#each likes}}
-        <div class="row row-cols-2 border p-2" style="">
-            <div class="cols text-center" style=" width:15%">
-                <a  href="/users/{{this.User.dataValues.id}}/tweets">
-                    <img class="" src="{{this.User.dataValues.avatar}}"
+        <div class="row" style="padding-top:15px;margin-left:0px; margin-right:0px; border-bottom:1px solid #dee2e6;">
+            <div class="col-1 text-center" style=" width:15%">
+                <a  href="/users/{{this.Tweet.User.id}}/tweets">
+                    <img class="" src="{{this.Tweet.User.avatar}}"
                         style=" width:50PX;height:50px; border-radius:100%;"></img>
                 </a>
             </div>
 
-            <div class="cols" style=" width:85%">
+            <div class="col-11" style=" width:85%">
                 <div class="row ml-1">
                     <div class="cols ">
-                        <a class="text-muted" href="/users/{{this.User.dataValues.id}}/tweets">
-                            <p style="color: black; font-weight:bold;">{{this.User.dataValues.name}}</p>
+                        <a class="text-muted" href="/users/{{this.Tweet.User.id}}/tweets">
+                            <p style="color: black; font-weight:bold;">{{this.Tweet.User.name}}</p>
                         </a>
                     </div>
                     <div class="cols ml-1" style="color:gray">
-                        <p style="font-weight:500;">@{{this.User.dataValues.account}}</p>
+                        <p style="font-weight:500;">@{{this.Tweet.User.account}}</p>
                     </div>
                     <div class="cols mx-1" style="color:gray">
                         <p style="font-weight:500;">•</p>
@@ -201,12 +209,12 @@
                         <p>...</p>
                     </div>
                 </div>
-                <a class="text-muted" href="/tweets/{{this.id}}/replies" style="text-decoration:none;">
-                    <p>{{this.description}}</p>
+                <a class="text-muted" href="/tweets/{{this.Tweet.id}}/replies" style="text-decoration:none;">
+                    <p>{{this.Tweet.description}}</p>
                 </a>
                 <div class="">
 
-                    {{#if isReplied}}
+                    {{#if this.Tweet.isReplied}}
                         <form id="replyButton" action="" method="post" style="float:left;">
                             <button type="submit" style="border:0px; background:inherit;"><i
                                     class="fas fa-comment"></i></button>
@@ -217,19 +225,19 @@
                                     class="far fa-comment"></i></button>
                         </form>
                     {{/if}}
-                    <p style="float:left;">{{this.repliesCount}}</p>
-                    {{#if isLiked}}
-                        <form id="likeButton" action="/tweets/{{this.id}}/unlike" method="post" style="float:left;" class="ml-3 ">
+                    <p style="float:left;">{{this.Tweet.commentCounts}}</p>
+                    {{#if this.Tweet.isLiked}}
+                        <form id="likeButton" action="/tweets/{{this.Tweet.id}}/unlike" method="post" style="float:left;" class="ml-3 ">
                             <button type="submit" style="border:0px; background:inherit;"><i
                                     class="fas fa-heart"></i></button>
                         </form>
                     {{else}}
-                        <form id="likeButton" action="/tweets/{{this.id}}/like" method="post" style="float:left;" class="ml-3">
+                        <form id="likeButton" action="/tweets/{{this.Tweet.id}}/like" method="post" style="float:left;" class="ml-3">
                             <button type="submit" style="border:0px; background:inherit;"><i
                                     class="far fa-heart"></i></button>
                         </form>
                     {{/if}}
-                    <p class="my-auto" style="float:left;">{{this.likesCount}}</p>
+                    <p class="my-auto" style="float:left;">{{this.Tweet.likeCounts}}</p>
                 </div>
 
             </div>
