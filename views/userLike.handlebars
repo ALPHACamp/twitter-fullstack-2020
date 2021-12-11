@@ -171,7 +171,7 @@
 
     <div class="row d-block p-2">
       <div class="h4" style="margin-bottom:0">{{requestUser.name}}</div>
-      <div><small>{{requestUser.account}}</small></div>
+      <div><small>@{{requestUser.account}}</small></div>
       <div class="mt-2">{{requestUser.introduction}}</div>
       <div style="display: inline-block">
         <p><strong>{{requestUser.Followings.length}}</strong> <a href="/user/{{requestUser.id}}/followings"
@@ -208,7 +208,7 @@
         <img src={{this.User.dataValues.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
-        <div class="h6">{{this.User.dataValues.name}} <span class="text-secondary">{{this.User.dataValues.account}}
+        <div class="h6">{{this.User.dataValues.name}} <span class="text-secondary">@{{this.User.dataValues.account}}
             ．{{moment
             this.createdAt}}</span>
         </div>
@@ -261,7 +261,7 @@
           <img src={{this.avatar}} style="width: 50px; height:50px; border-radius:50%;">
           <div>
             <div>{{this.name}}</div>
-            <div>{{this.account}}</div>
+            <div>@{{this.account}}</div>
           </div>
         </div>
 

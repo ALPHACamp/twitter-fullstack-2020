@@ -88,7 +88,7 @@
       </div>
       <div>
         <div class="h4" style="margin-bottom:0">{{tweets.User.name}}</div>
-        <div><small>{{tweets.User.account}}</small></div>
+        <div><small>@{{tweets.User.account}}</small></div>
       </div>
 
     </div>
@@ -123,10 +123,10 @@
         <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
-        <div class="h6">{{this.User.name}}<a href="" class="text-secondary">{{this.User.account}} </a> ・ {{moment
+        <div class="h6">{{this.User.name}}<a href="" class="text-secondary">@{{this.User.account}} </a> ・ {{moment
           this.createdAt}}</div>
         <div>
-          <span>回覆 {{this.Tweet.User.account}}</span>
+          <span>回覆 @{{this.Tweet.User.account}}</span>
         </div>
         <div>{{this.comment}}</div>
       </div>
@@ -154,7 +154,7 @@
             style="width: 50px; height:50px; border-radius:50%;">
           <div>
             <div>{{this.name}}</div>
-            <div>{{this.User.account}}</div>
+            <div>@{{this.User.account}}</div>
           </div>
         </div>
 

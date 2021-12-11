@@ -12,7 +12,7 @@ module.exports = {
       role: true,
       introduction: faker.lorem.text(),
       avatar: `https://loremflickr.com/320/240/human/?random=${Math.random() * 100}`,
-      account: '@root',
+      account: 'root',
       cover: `https://loremflickr.com/g/500/200/landmark?random=${Math.random() * 100}`,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -25,7 +25,7 @@ module.exports = {
       role: false,
       introduction: faker.lorem.text(),
       avatar: `https://loremflickr.com/320/240/human/?random=${Math.random() * 100}`,
-      account: '@user1',
+      account: 'user1',
       cover: `https://loremflickr.com/g/500/200/landmark?random=${Math.random() * 100}`,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -38,7 +38,7 @@ module.exports = {
       role: false,
       introduction: faker.lorem.text(),
       avatar: `https://loremflickr.com/320/240/human/?random=${Math.random() * 100}`,
-      account: '@user2',
+      account: 'user2',
       cover: `https://loremflickr.com/g/500/200/landmark?random=${Math.random() * 100}`,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -51,7 +51,7 @@ module.exports = {
       role: false,
       introduction: faker.lorem.text(),
       avatar: `https://loremflickr.com/320/240/human/?random=${Math.random() * 100}`,
-      account: '@user3',
+      account: 'user3',
       cover: `https://loremflickr.com/g/500/200/landmark?random=${Math.random() * 100}`,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -64,7 +64,7 @@ module.exports = {
       role: false,
       introduction: faker.lorem.text(),
       avatar: `https://loremflickr.com/320/240/human/?random=${Math.random() * 100}`,
-      account: '@user4',
+      account: 'user4',
       cover: `https://loremflickr.com/g/500/200/landmark?random=${Math.random() * 100}`,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -77,7 +77,7 @@ module.exports = {
       role: false,
       introduction: faker.lorem.text(),
       avatar: `https://loremflickr.com/320/240/human/?random=${Math.random() * 100}`,
-      account: '@user5',
+      account: 'user5',
       cover: `https://loremflickr.com/g/500/200/landmark?random=${Math.random() * 100}`,
       createdAt: new Date(),
       updatedAt: new Date()
