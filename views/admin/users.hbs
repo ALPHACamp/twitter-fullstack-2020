@@ -36,20 +36,20 @@
     {{#each users}}
     <div class="d-flex flex-column align-items-center mr-3">
         <div class="coverAndAvatar d-flex flex-column align-items-center" style="max-width: 200px;">
-          <img class="cover" style="max-width: 200px;" src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*">
-          <img class="avatar" style="max-width: 100px;" src="{{this.avatar}}">
+          <img class="cover" style="max-width: 200px;" src="{{this.userCover}}">
+          <img class="avatar" style="max-width: 100px;" src="{{this.userAvatar}}">
         </div>
         <div class='userNameAndAccount d-flex flex-column align-items-center'>
-          <p class="userName">{{this.name}}</p>
-          <p class="account">@{{this.account}}</p>
+          <p class="userName">{{this.userName}}</p>
+          <p class="account">@{{this.userAccount}}</p>
         </div>
         <div class='tweetsAndLikeIcon d-flex flex-row justify-content-around'>
-          <p class='tweetsTotal'><i class="far fa-comment-alt"></i> 15K</p>
-          <p class='LikesTotal'><i class="far fa-heart"></i> 20K</p>
+          <p class='tweetsTotal'><i class="far fa-comment-alt"></i> {{this.userTweetTotal}}</p>
+          <p class='LikesTotal'><i class="far fa-heart"></i> {{this.userTweetLikedTotal}}</p>
         </div>
         <div class='followShip d-flex flex-row justify-content-around'>
-          <p class='followings'><strong>34個</strong>跟隨中</p>
-          <p class='followers'><strong>34個</strong>跟隨者</p>
+          <p class='followings'><strong>{{this.userFollowingsTotal}}</strong> 個跟隨中</p>
+          <p class='followers'><strong>{{this.userFollowersTotal}}</strong> 位跟隨者</p>
         </div>
       </div>
       {{/each}}

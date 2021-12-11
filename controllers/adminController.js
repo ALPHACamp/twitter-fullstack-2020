@@ -27,7 +27,7 @@ const adminController = {
       nest: true,
       order: [['createdAt', 'DESC']],
       include: [User]
-    }).then( tweets => {
+    }).then(tweets => {
       const data = tweets.map(t => ({
         ...t.dataValues,
         userAvatar: t.dataValues.User.avatar,
@@ -47,28 +47,96 @@ const adminController = {
     // 找到後刪除
     // 導回admin/tweets
     Tweet.findByPk(req.params.tweetId)
-      .then( tweet => {
+      .then(tweet => {
         tweet.destroy()
       })
-      .then(()=>{
+      .then(() => {
         res.redirect('back')
       })
   },
 
   // admin get all users
-  getUsers: (req, res) => {
-    // 撈出所有Tweet , include reply、like、followship
-    // 依使用者推文數量排序
-    // 將需要渲染的資料傳去admin/users
-      User.findAll({
-      raw: true,
-      nest: true,
+  getUsers:  (req, res) => {
+    // user.cover, user.avatar, user.name, user.account
+    // user.tweetTotal, 貼文被喜歡的total, 
+    // 追蹤人數 , 被追蹤人數
+    return  User.findAll({
+      where: {role: 'normal'},
+      include: [
+        Tweet,
+        // { model: User, as: 'LikedUsers' ,raw: true, nest: true},
+        { model: Tweet, as: 'LikedTweets', raw: true ,nest: true } ,
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers'}
+      ]
     })
-      .then( users => {
+      .then(users => {
         console.log(users[0])
+        users = users.map(user => {
+          if (user.dataValues !== undefined) {
+            return {
+              ...user.dataValues,
+              userCover: user.cover,
+              userAvatar: user.avatar,
+              userName: user.name,
+              userAccount: user.account,
+              userTweetTotal: user.Tweets.length,
+              userTweetLikedTotal: user.LikedUsers.length,
+              userFollowingsTotal: user.Followings.length,
+              userFollowersTotal: user.Followers.length
+            }
+          }
+        })
+        users = users.sort((a, b) => b.userTweetLikedTotal - a.userTweetLikedTotal)
         return res.render('admin/users', {users})
       })
   },
+
+  // getUsers: (req, res) => {
+  //   // user.cover, user.avatar, user.name, user.account
+  //   // user.tweetTotal, 貼文被喜歡的total, 
+  //   // 追蹤人數 , 被追蹤人數
+  //   return User.findAll({
+  //     where: { role: 'normal' },
+  //     include: [
+  //       Tweet,
+  //       { model: User, as: 'Followings' },
+  //       { model: User, as: 'Followers' }
+  //     ]
+  //   })
+  //     .then(users => {
+  //       Tweet.findAll({
+  //         include: [
+  //           { model: User, as: 'likedUsers', raw: true, nest: true }
+  //         ]
+  //       })
+  //         .then(items => {
+  //           users = users.map(user => {
+  //             if (user.dataValues !== undefined) {
+  //               return {
+  //                 ...user.dataValues,
+  //                 userCover: user.cover,
+  //                 userAvatar: user.avatar,
+  //                 userName: user.name,
+  //                 userAccount: user.account,
+  //                 userTweetTotal: user.Tweets.length,
+  //                 userFollowingsTotal: user.Followings.length,
+  //                 userFollowersTotal: user.Followers.length
+  //               }
+  //             }
+  //           })
+  //           items = items.map(item => {
+  //             if (item.dataValues !== undefined) {
+  //               return {
+  //                 ...item.dataValues,
+  //                 userTweetLikedTotal: item.LikedTweets.length,
+  //               }
+  //             }
+  //           })
+  //           return res.render('admin/users', { users, items })
+  //         })
+  //     })
+  // },
 
   //admin signIn
   signin: (req, res) => {
