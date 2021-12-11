@@ -1,0 +1,30 @@
+{{!-- 新增推文 --}}
+<div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close mr-2" style="color : #FF6600;" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="body-avatar row">
+          <div class="col-2">
+            <a href="/users/{{user.id}}/tweets">
+              <img src="{{user.avatar}}" class="rounded-circle" style="width: 50px;height: 50px;background: #C4C4C4;">
+            </a>
+          </div>
+          <form method="POST" action="/tweets">
+            <div class="col-10">
+              <textarea name="description" cols="40" rows="10"
+                style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;"
+                placeholder="有什麼新鮮事"></textarea>
+            </div>
+            <button type="submit" class="btn " style="background: #FF6600;border-radius: 100px;; float:right;"><span
+                style="color: #FFFFFF;">推文</span></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+<!-- edit user profile -->
+<div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="editUser" aria-hidden="true"
+  data-backdrop="true">
+  <form action="/users/{{user.id}}/edit?_method=PUT" method="post" enctype="multipart/form-data">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header m-2 p-2">
+          <div class="row" style="width: 100%;">
+            <div class="col-1 text-left">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span style="color: #FF6600;" aria-hidden="true">x</span>
+              </button>
+            </div>
+            <div class="col-8">
+              <h5 class="modal-title "><strong>編輯個人資料</strong></h5>
+            </div>
+            <div class="col-3 text-right">
+              <button type="submit" class="btn rounded-pill" style="background-color: #FF6600; color:white">
+                儲存
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body m-1 p-1">
+          {{!-- cover&avatar --}}
+          <div class="img-wrapper d-flex flex-column flex-nowrap" style="position:relative;">
+            <label for="cover" class="btn btn-light">
+              <input type="file" id="cover" name="cover" class="form-control-file" style="display: none;"
+                onchange="preview(this)">
+              <i class="fa fa-camera-retro" aria-hidden="true"></i>上傳背景圖
+              <img id="cover-modal" src="{{users.cover}}" class="card-img-top" alt="background" width="100%"
+                height="200px" style="object-fit: cover;">
+            </label>
+            <label for="avatar" class="btn btn-light">
+              <input type="file" id="avatar" name="avatar" class="form-control-file" style="display: none;"
+                onchange="preview(this)">
+              <i class="fa fa-camera-retro" aria-hidden="true"></i>上傳頭貼
+              <img id="avatar-modal" src="{{users.avatar}}" class="rounded-circle mb-5" alt="avatar" width="140"
+                height="140" style="border: 4px solid #FFFFFF; position:absolute; top:60%; left:14px;">
+            </label>
+          </div>
+          <div class="d-flex flex-column">
+            <div class="p-2 mt-3 mx-3">
+              <span class="mt-3">名稱</span><br>
+              <textarea type="text" name="name" id="name" cols="55" rows="1" class="border-bottom form-control"
+                style="resize:none;outline:none;wrap:off;overflow:auto;border-color:transparent">{{users.name}}</textarea>
+            </div>
+            <div class="p-2 mt-3 mx-3">
+              <span class="mt-3">自我介紹</span><br>
+              <textarea type="text" name="introduction" id="introduction" cols="55" rows="4"
+                class="border-bottom form-control"
+                style="resize:none;outline:none;wrap:off;overflow:auto;border-color:transparent">{{users.introduction}}</textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

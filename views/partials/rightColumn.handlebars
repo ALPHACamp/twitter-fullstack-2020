@@ -1,0 +1,54 @@
+<div class="right-column">
+  <ul class="list-group" style="height: 500px;">
+    <li class="list-group-item right-zone-header" style="background-color:	#F5F5F5 ;
+  border-top: 1px solid #F5F5F5;
+  border-right: 1px solid #F5F5F5;
+  border-left: 1px solid #F5F5F5;
+  border-radius: 20px 20px 0 0;color: #000000;
+  font-weight: bold">
+      跟隨誰
+    </li>
+    <div class="user-list">
+      {{#each recommendedList}}
+        <li class="list-group-item right-zone-body" style="border-right: 1px solid #F5F5F5;
+  border-left: 1px solid #F5F5F5;
+  background-color:	#F5F5F5;">
+          <div class="row justify-content-between align-items-center">
+            <div class="row">
+              <a href="/users/{{this.id}}/tweets" class="col">
+                <img src="{{this.avatar}}" alt="avatar" style="width:50px;height:50px;border-radius:999em">
+              </a>
+              <div class="right-zone-center">
+                <a href="/users/{{this.id}}/tweets" class="right-zone-name" style="color: #000000;
+  font-weight: bold">{{this.name}}</a>
+                <p class="right-zone-account m-0" style="color: #989393;
+  font-weight: bold;font-size:small">@{{this.account}}</p>
+              </div>
+              {{#if this.isFollowed}}
+                <div class="col ml-3">
+                  <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+                    <button type="submit" class="btn px-3 py-1"
+                      style="border-radius: 23px;background:#ff6600; color:white; font-weight:bold; font-size:15px; width:100px; height: 50px;">正在跟隨</button>
+                  </form>
+                </div>
+              {{else}}
+                <div class="col ml-3">
+                  <form action="/followships?" method="POST">
+                    <input type="hidden" name="id" value="{{this.id}}">
+                    <button class="btn px-3 py-1 "
+                      style="border-radius: 23px;background:#F5F8FA; color:#ff6600; border:1px solid #ff6600; font-weight:bold; font-size:15px; width:100px; height: 50px;">跟隨</button>
+                  </form>
+                </div>
+              {{/if}}
+            </div>
+          </div>
+        </li>
+      {{/each}}
+    </div>
+    <button class="list-group-item right-zone-footer text-left display-more"
+      style="background-color:	#F5F5F5;
+     border-bottom: 1px solid #F5F5F5; border-right: 1px solid #F5F5F5; border-left: 1px solid #F5F5F5;border-radius: 0 0 20px 20px;color:#ff6600;font-size:small">
+      顯示更多...
+    </button>
+  </ul>
+</div>
