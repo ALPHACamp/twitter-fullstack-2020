@@ -20,20 +20,16 @@ describe('# Admin::Tweet request', () => {
     describe('if normal user log in', () => {
       before(async () => {
         // 模擬登入資料
-        this.ensureAuthenticated = sinon
-          .stub(helpers, 'ensureAuthenticated')
-          .returns(true)
-        this.getUser = sinon
-          .stub(helpers, 'getUser')
-          .returns({ id: 1, Followings: [] })
+        this.ensureAuthenticated = sinon.stub(
+          helpers, 'ensureAuthenticated'
+        ).returns(true);
+        this.getUser = sinon.stub(
+          helpers, 'getUser'
+        ).returns({ id: 1, Followings: [] });
         // 在測試資料庫中，新增 mock 資料
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, {
-          raw: true
-        })
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
         await db.User.destroy({ where: {}, truncate: true, force: true })
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, {
-          raw: true
-        })
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
         await db.User.create({})
       })
 
@@ -43,43 +39,35 @@ describe('# Admin::Tweet request', () => {
           .get('/admin/tweets')
           .expect(302)
           .end(function (err, res) {
-            if (err) return done(err)
-            done()
-          })
+            if (err) return done(err);
+            done();
+          });
       })
 
       after(async () => {
         // 清除登入及測試資料庫資料
-        this.ensureAuthenticated.restore()
-        this.getUser.restore()
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, {
-          raw: true
-        })
+        this.ensureAuthenticated.restore();
+        this.getUser.restore();
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
         await db.User.destroy({ where: {}, truncate: true, force: true })
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, {
-          raw: true
-        })
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
       })
     })
 
     describe('if admin user log in', () => {
       before(async () => {
-        // 模擬登入資料
-        this.ensureAuthenticated = sinon
-          .stub(helpers, 'ensureAuthenticated')
-          .returns(true)
-        this.getUser = sinon
-          .stub(helpers, 'getUser')
-          .returns({ id: 1, Followings: [], role: 'admin' })
+        // 模擬登入資料 
+        this.ensureAuthenticated = sinon.stub(
+          helpers, 'ensureAuthenticated'
+        ).returns(true);
+        this.getUser = sinon.stub(
+          helpers, 'getUser'
+        ).returns({ id: 1, Followings: [], role: 'admin' });
         // 在測試資料庫中，新增 mock 資料
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, {
-          raw: true
-        })
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
         await db.User.destroy({ where: {}, truncate: true, force: true })
         await db.Tweet.destroy({ where: {}, truncate: true, force: true })
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, {
-          raw: true
-        })
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
         await db.User.create({})
         await db.User.create({})
         await db.Tweet.create({ UserId: 2, description: 'Tweet1' })
@@ -91,7 +79,7 @@ describe('# Admin::Tweet request', () => {
           .get('/admin/tweets')
           .expect(200)
           .end(function (err, res) {
-            if (err) return done(err)
+            if (err) return done(err);
             // 檢查是否看到 Tweet1 資訊
             res.text.should.include('Tweet1')
             done()
@@ -104,8 +92,8 @@ describe('# Admin::Tweet request', () => {
           .delete('/admin/tweets/1')
           .expect(302)
           .end(function (err, res) {
-            if (err) return done(err)
-            db.Tweet.findAll().then((tweets) => {
+            if (err) return done(err);
+            db.Tweet.findAll().then(tweets => {
               // 檢查是否沒有 Tweet 資料，表示被刪除了
               expect(tweets).to.be.an('array').that.is.empty
               done()
@@ -120,24 +108,21 @@ describe('# Admin::Tweet request', () => {
           .expect(302)
           .expect('Location', '/admin/tweets') // 會回到 /admin/tweets
           .end(function (err, res) {
-            if (err) return done(err)
-            done()
-          })
+            if (err) return done(err);
+            done();
+          });
       })
 
       after(async () => {
         // 清除登入及測試資料庫資料
-        this.ensureAuthenticated.restore()
-        this.getUser.restore()
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, {
-          raw: true
-        })
+        this.ensureAuthenticated.restore();
+        this.getUser.restore();
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
         await db.User.destroy({ where: {}, truncate: true, force: true })
         await db.Tweet.destroy({ where: {}, truncate: true, force: true })
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, {
-          raw: true
-        })
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
       })
+
     })
   })
 })
