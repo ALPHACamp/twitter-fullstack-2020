@@ -132,8 +132,10 @@
             <span class="text-secondary">@{{this.User.dataValues.account}}．{{moment this.createdAt}}</span>
           </div>
 
-          <div><a class="text-dark" style="text-decoration:none;"
-              href="/users/{{this.User.dataValues.id}}/tweets">{{this.description}}</a>
+          <div>
+            <a class="text-dark" style="text-decoration:none;" href="/tweets/{{this.id}}/replies">
+              {{this.description}}
+            </a>
           </div>
           <div class="row align-items-center ">
             <div class="col-md-3 ">
