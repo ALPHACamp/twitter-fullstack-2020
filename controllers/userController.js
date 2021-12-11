@@ -379,6 +379,15 @@ const userController = {
                 // 依追蹤者人數排序清單
                 users2 = users2.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
+                if (req.user.id === requestUser.toJSON().id) {
+                    requestUser.dataValues.isUser = true
+                } else {
+                    requestUser.dataValues.isUser = false
+                }
+
+                requestUser.dataValues.isFollowing = requestUser.toJSON().Followers.map(d => d.id).includes(req.user.id)
+
+
                 return res.render('userLike', { likedTweets: liked, users2, requestUser: requestUser.toJSON() })
             }).catch(error => {
                 console.log(error)
@@ -433,6 +442,14 @@ const userController = {
                     isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
                 }))
                 users2 = users2.sort((a, b) => b.FollowerCount - a.FollowerCount)
+
+                if (req.user.id === requestUser.toJSON().id) {
+                    requestUser.dataValues.isUser = true
+                } else {
+                    requestUser.dataValues.isUser = false
+                }
+
+                requestUser.dataValues.isFollowing = requestUser.toJSON().Followers.map(d => d.id).includes(req.user.id)
 
                 return res.render('userReplies', { replies, users2, tweets, requestUser: requestUser.toJSON() })
             }).catch(error => {

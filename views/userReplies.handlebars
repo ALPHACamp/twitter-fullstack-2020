@@ -91,20 +91,50 @@
 
     {{!-- 大頭貼區塊 --}}
     <div class="row mt-1 mb-2" style="position: relative; top:-50px;">
-      <div class="col-md-8">
+      <div class="col-md-4">
         <img src="{{requestUser.avatar}}" alt="..." class="rounded-circle" style="width: 100px; height:100px;">
 
       </div>
-      <div class="col-md-4" style=" text-align:center; margin-top:60px;">
+
+      {{#if requestUser.isUser}}
+      <div class="col-md-8" style="text-align:end; margin-top:60px;">
         <a class="btn" style="border-radius: 40px; color:#FF6600; border:1px #FFAC55 solid;" href="#"
           data-toggle="modal" data-target="#userData">編輯個人資料</a>
       </div>
+      {{else}}
+      <div class="col-md-8 " style=" text-align:end; margin-top:60px;">
+        <a class="btn" style="border-radius: 50%; color:#FF6600; border:1px #FFAC55 solid; width:38px;height:38px;">
+          <i class="far fa-envelope"></i>
+        </a>
+        <a class="btn" style="border-radius: 50%; color:#FF6600; border:1px #FFAC55 solid; width:38px;height:38px;">
+          <i class="fas fa-bell"></i>
+        </a>
+        {{#if requestUser.isFollowing}}
+
+        <form action="/followships/{{requestUser.id}}?_method=DELETE" method="POST" style="display: inline;">
+          <button type="submit" class="btn  text-light mt-1"
+            style="border-radius: 40px; background-color:#FF6600; display:inline;">正在跟隨
+          </button>
+        </form>
+
+        {{else}}
+
+        <form action="/followships/{{requestUser.id}}" method="POST" style="display: inline;">
+          <button type="submit" class="btn  mt-1"
+            style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨
+          </button>
+        </form>
+
+        {{/if}}
+      </div>
+      {{/if}}
+
     </div>
     <!-- userData Modal -->
     <div class="modal fade" id="userData" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <form action="/user/self?_method=PUT" method="post" enctype="multipart/form-data">
+          <form action="/api/users/{{requestUser.id}}?_method=PUT" method="post" enctype="multipart/form-data">
 
             <div style="display: flex; justify-content:space-between;" class="p-3">
               <div style="display: flex; justify-content:flex-start">
@@ -113,25 +143,35 @@
               </div>
 
 
-              <button type="submit" class="btn btn-secondary"
-                style="border-radius: 40px; background-color:#FF6600; padding:0 6px; border:honeydew 1px solid;">儲存
-              </button>
+
             </div>
 
             {{!-- 編輯個人資料圖片 --}}
 
             <img class="image-fluid" src="{{requestUser.cover}}" id="coverImage"
               style="position:relative; width:100%; height:160px;">
-            {{!-- <input type="file" name="image">
-            <i class="fas fa-camera-retro" style="position:relative; left:-62.5px; top: 10px"></i> --}}
+            {{!-- 更換背景圖相機 icon --}}
+            <input type="file" id="cover" name="cover" hidden>
+            <label for="cover">
+              <i class="fas fa-camera-retro text-light fa-lg" style="position:relative; left:250px; top: -100px"></i>
+            </label>
+
+
             {{!-- 編輯個人資料大頭貼圖片 --}}
             <div class="row mt-1 mb-2">
               <div class=" col-md-8">
                 <img src="{{requestUser.avatar}}" alt="..." id="avatarImage" class="rounded-circle"
                   style="position:relative; width: 100px; height:100px;">
 
-                <input type="file" id="avatar" name="avatar">
-                <i class="fas fa-camera-retro" style="position:relative; left:-62.5px; top: 10px"></i>
+                {{!-- 更換大頭貼相機 icon --}}
+                <input type="file" id="avatar" name="avatar" hidden>
+                <label for="avatar">
+                  <i class="fas fa-camera-retro text-light fa-lg" style="position:relative; left:-62.5px; top: 5px"></i>
+                </label>
+
+
+
+
 
 
               </div>
@@ -155,8 +195,11 @@
               </div>
 
             </div>
-
+            <button type="submit" class="btn btn-secondary"
+              style="border-radius: 40px; background-color:#FF6600; padding:0 6px; border:honeydew 1px solid;">儲存
+            </button>
           </form>
+
         </div>
       </div>
     </div>
