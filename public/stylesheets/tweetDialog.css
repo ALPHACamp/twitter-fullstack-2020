@@ -1,0 +1,45 @@
+.tweet-dialog {
+  width: 600px !important;
+  height: 300px !important;
+  border-radius: 50px !important;
+}
+
+.tweet-avatar {
+  position: absolute;
+  z-index: 2;
+  left: 15px;
+  top: 15px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.tweet-input {
+  background: #ffffff;
+  border-radius: 0px 0px 4px 4px;
+  border: 0px solid #657786;
+  margin-left: 59px;
+  width: 510px;
+  height: 150px;
+  resize: none;
+  font-size: 19px;
+  font-weight: 500;
+  color: #9197a3;
+}
+
+.tweet-error-message {
+  position: absolute;
+  text-align: right;
+  width: 300px;
+  height: 15px;
+  right: 101px;
+  bottom: 27px;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 15px;
+
+  color: #fc5a5a;
+}

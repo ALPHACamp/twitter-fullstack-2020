@@ -1,0 +1,35 @@
+
+<div id="column1" style="float:left; width:20%; position: fixed; top:15px; left:5%">{{> settingLeft}}</div>
+
+<div class="d-flex justify-content-center">
+  {{!-- <div id="column2" class="mx-auto my-auto" style="float:left;width:50%;"> --}}
+  <div id="column2" class="mx-auto my-auto" style="float:left;width:100%;border-left:1px solid #dee2e6;border-right:1px solid #dee2e6;">
+    <div class="page-header">
+      帳戶設定
+    </div>
+    <div class="d-flex justify-content-start align-content-start flex-wrap admin-user-container" style="padding-left: 26.5px">
+      <div class=' text-center login-container'>
+        <form class='' action='/users/{{user.id}}?_method=PUT' method='POST' style='width: 100%;'>
+          <div class='form-label-group' style='margin-top: 32px;'>
+            <input type='text' name='account' class='form-control login-input' placeholder='帳號' value="{{user.account}}" required autofocus />
+          </div>
+          <div class='form-label-group' style='margin-top: 32px;'>
+            <input type='text' name='name' class='form-control login-input' placeholder='名稱' value="{{user.name}}" required autofocus />
+          </div>
+          <div class='form-label-group' style='margin-top: 32px;'>
+            <input type='text' name='email' class='form-control login-input' placeholder='Email' value="{{user.email}}" required autofocus />
+          </div>
+          <div class='form-label-group' style='margin-top: 32px;'>
+            <input type='password' name='password' class='form-control login-input' placeholder='密碼' required />
+          </div>
+          <div class='form-label-group' style='margin-top: 32px;'>
+            <input type='password' name='passwordCheck' class='form-control login-input' placeholder='密碼確認' required autofocus />
+          </div>
+          <div class="d-flex justify-content-end">
+            <button class='btn btn-lg btn-block login-button' style='margin-top: 42px; width: 116px' type='submit'>儲存</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

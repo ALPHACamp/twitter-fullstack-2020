@@ -1,0 +1,77 @@
+<div class='px-3 pt-2'>
+  <div class='pl-2 pt-1'>
+    <a href='/admin/tweets'>
+      <svg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <path
+          fill-rule='evenodd'
+          clip-rule='evenodd'
+          d='M19.2746 13.8533C19.2746 13.8533 13.6745 22.9337 9.08312 22.9337C1.05226 22.9337 8.53645 5.63501 14.3936 5.63501C18.4807 5.63501 19.2746 13.8533 19.2746 13.8533V13.8533Z'
+          fill='#FF6600'
+        ></path>
+        <path
+          fill-rule='evenodd'
+          clip-rule='evenodd'
+          d='M25.9293 25.273C24.3339 26.9706 22.3649 28.2733 20.1784 29.0777C17.9918 29.8821 15.648 30.1661 13.3326 29.9072C11.0172 29.6483 8.79393 28.8536 6.83917 27.5861C4.8844 26.3186 3.25186 24.6133 2.07098 22.6052C3.39861 24.4109 5.65038 25.6146 8.85231 25.6146C16.74 25.6146 21.2175 19.4851 21.2175 19.4851C21.2175 19.4851 21.6047 24.3295 25.9195 25.273H25.9293Z'
+          fill='#FF6600'
+        ></path>
+        <path
+          fill-rule='evenodd'
+          clip-rule='evenodd'
+          d='M28.2917 8.05884C29.4723 10.3145 30.0586 12.8337 29.9954 15.3787C29.9322 17.9238 29.2215 20.4108 27.9305 22.6051C26.9094 22.0323 26.1544 21.0811 25.8284 19.9568L24.1168 14.8293L28.2917 8.05884V8.05884Z'
+          fill='#FF6600'
+        ></path>
+        <path
+          fill-rule='evenodd'
+          clip-rule='evenodd'
+          d='M15.0024 0.0130266C18.7639 0.0105251 22.3885 1.42411 25.1548 3.97249L22.3141 8.55661C21.2858 5.88226 19.1968 3.20468 15.1325 3.20468C6.80881 3.20468 0.63923 12.2916 0.63923 17.9884C0.637396 18.7252 0.731462 19.459 0.919069 20.1715C0.0866864 17.9044 -0.185961 15.4699 0.124289 13.0748C0.434539 10.6798 1.31852 8.39507 2.7011 6.41479C4.08368 4.43452 5.92399 2.81726 8.06563 1.70044C10.2073 0.583634 12.5869 0.00029138 15.0024 0V0.0130266Z'
+          fill='#FF6600'
+        ></path>
+      </svg>
+    </a>
+  </div>
+  <div class='p-3'>
+    <br />
+    <div class='d-flex align-items-start flex-column bd-highlight mb-3' style=''>
+      <div style='color: black; font-weight:bold;'>
+        <a href='/tweets' style='text-decoration: none'><p class='navCol-btn {{#ifCond page 'tweets'}}navCol-btn-active{{/ifCond}}'><i
+              class='fas fa-home pr-3 mb-3'
+              style='font-size: large;'
+            ></i>首頁</p></a>
+      </div>
+      <div style='font-weight:bold;'>
+        <a href='/users/{{user.id}}/tweets' style='text-decoration: none; color:black;'><p class='navCol-btn {{#ifCond page 'profile'}}navCol-btn-active{{/ifCond}}'><i
+              class='far fa-user pr-3 mb-3'
+              style='font-size: large;'
+            ></i>個人資料</p></a>
+      </div>
+      <div style=' font-weight:bold;'>
+        <a href='/users/{{user.id}}/edit' style='text-decoration: none'><p class='navCol-btn {{#ifCond page 'setting'}}navCol-btn-active{{/ifCond}}'><i
+              class='fas fa-cog pr-3 mb-3'
+              style='font-size: large;'
+            ></i>設定</p></a>
+      </div>
+      <button class='btn' data-toggle="modal" data-target="#tweetDialog" style='background-color: #FF6600;border-radius:40px; color:white; font-weight:bold; width:90%; max-width:160px;'>推文</button>
+      
+    </div>
+  </div>
+  <div>
+    <div class='pl-5' style='font-weight:bold; position: fixed; top:90%'>
+      <a href='/logout' style='text-decoration: none; color:black;'><p style='color: black;'><svg
+            width='20'
+            height='18'
+            viewBox='0 0 20 18'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <path
+              d='M9 13L5 9M5 9L9 5M5 9H19M14 13V14C14 14.7956 13.6839 15.5587 13.1213 16.1213C12.5587 16.6839 11.7956 17 11 17H4C3.20435 17 2.44129 16.6839 1.87868 16.1213C1.31607 15.5587 1 14.7956 1 14V4C1 3.20435 1.31607 2.44129 1.87868 1.87868C2.44129 1.31607 3.20435 1 4 1H11C11.7956 1 12.5587 1.31607 13.1213 1.87868C13.6839 2.44129 14 3.20435 14 4V5'
+              stroke='black'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            ></path>
+          </svg>
+          <span class='pl-2'>登出</span></p></a>
+    </div>
+  </div>
+</div>

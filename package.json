@@ -1,30 +1,66 @@
 {
   "name": "test",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development node app.js",
-    "dev": "NODE_ENV=development nodemon app.js",
-    "test": "mocha test --exit --recursive --timeout 5000"
+    "start": "set \"NODE_ENV=development\" && node app.js",
+    "dev": "set \"NODE_ENV=development\" && nodemon app.js",
+    "test": "set \"NODE_ENV=test\" && mocha test --exit --recursive --timeout 5000",
+    "seed": "set \"NODE_ENV=development\" && sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
+    "test-resetdb": "set \"NODE_ENV=test\" && sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
+    "test-migrate": "set \"NODE_ENV=test\" && sequelize db:migrate",
+    "test-unmigrate": "set \"NODE_ENV=test\" && npx sequelize db:migrate:undo:all",
+    "test-seed": "set \"NODE_ENV=test\" && npx sequelize db:seed:all",
+    "test-unseed": "set \"NODE_ENV=test\" && npx sequelize db:seed:undo:all",
+    "test-models": "set \"NODE_ENV=test\" && mocha test/models/*.spec.js --exit",
+    "test-admin": "set \"NODE_ENV=test\" && npx mocha test/requests/admin/*.js --exit",
+    "test-requests": "set \"NODE_ENV=test\" && mocha test/requests/*.spec.js --exit",
+    "test-adminlogin": "set \"NODE_ENV=test\" && npx mocha test/requests/admin/login.spec.js --exit",
+    "test-admintweets": "set \"NODE_ENV=test\" && npx mocha test/requests/admin/tweets.spec.js --exit",
+    "test-adminuser": "set \"NODE_ENV=test\" && npx mocha test/requests/admin/user.spec.js --exit",
+    "test-login": "set \"NODE_ENV=test\" && npx mocha test/requests/login.spec.js --exit",
+    "test-user": "set \"NODE_ENV=test\" && npx mocha test/requests/user.spec.js --exit",
+    "test-followship": "set \"NODE_ENV=test\" && npx mocha test/requests/followship.spec.js --exit",
+    "test-reply": "set \"NODE_ENV=test\" && npx mocha test/requests/reply.spec.js --exit",
+    "test-tweet": "set \"NODE_ENV=test\" && npx mocha test/requests/tweet.spec.js --exit",
+    "dev-resetdb": "set \"NODE_ENV=development\" && sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
+    "dev-migrate": "set \"NODE_ENV=development\" && sequelize db:migrate",
+    "dev-unmigrate": "set \"NODE_ENV=development\" && npx sequelize db:migrate:undo:all",
+    "dev-seed": "set \"NODE_ENV=development\" && npx sequelize db:seed:all",
+    "dev-unseed": "set \"NODE_ENV=development\" && npx sequelize db:seed:undo:all",
+    "dev-models": "set \"NODE_ENV=development\" && mocha test/models/*.spec.js --exit",
+    "dev-admin": "set \"NODE_ENV=development\" && npx mocha test/requests/admin/*.js --exit",
+    "dev-adminlogin": "set \"NODE_ENV=development\" && npx mocha test/requests/admin/login.spec.js --exit",
+    "dev-admintweets": "set \"NODE_ENV=development\" && npx mocha test/requests/admin/tweets.spec.js --exit",
+    "dev-adminuser": "set \"NODE_ENV=development\" && npx mocha test/requests/admin/user.spec.js --exit",
+    "dev-login": "set \"NODE_ENV=development\" && npx mocha test/requests/login.spec.js --exit",
+    "dev-user": "set \"NODE_ENV=development\" && npx mocha test/requests/user.spec.js --exit",
+    "dev-followship": "set \"NODE_ENV=development\" && npx mocha test/requests/followship.spec.js --exit",
+    "dev-reply": "set \"NODE_ENV=development\" && npx mocha test/requests/reply.spec.js --exit",
+    "dev-tweet": "set \"NODE_ENV=development\" && npx mocha test/requests/tweet.spec.js --exit"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.24.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "connect-flash": "^0.1.1",
     "express": "^4.16.4",
-    "express-handlebars": "^3.0.0",
+    "express-handlebars": "^5.2.0",
     "express-session": "^1.15.6",
     "faker": "^4.1.0",
     "method-override": "^3.0.0",
     "mocha": "^6.0.2",
+    "moment": "^2.29.1",
+    "multer": "^1.4.4",
     "mysql2": "^1.6.4",
+    "nodemon": "^2.0.15",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "sequelize": "^4.42.0",
+    "pg": "^8.7.1",
+    "sequelize": "^4.44.4",
     "sequelize-cli": "^5.5.0",
     "sinon": "^7.2.3",
     "sinon-chai": "^3.3.0"
@@ -32,5 +68,18 @@
   "devDependencies": {
     "sequelize-test-helpers": "^1.0.7",
     "supertest": "^3.3.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsaohs/twitter-fullstack-2020.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/tsaohs/twitter-fullstack-2020/issues"
+  },
+  "homepage": "https://github.com/tsaohs/twitter-fullstack-2020#readme",
+  "description": ""
 }
