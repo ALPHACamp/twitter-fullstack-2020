@@ -99,7 +99,7 @@ module.exports = (app, passport) => {
 
     // 後台登入
     app.get('/admin/signin', adminController.getSignInPage)
-    app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), authenticatedAdmin, adminController.postSignInPage)
+    app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.postSignInPage)
 
     app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 
