@@ -10,7 +10,7 @@
 ## 功能
 * 使用者在首頁看到所有人的 tweet
 * 使用者可以點擊側邊的按鈕或直接在首頁上方的空白區輸入內容發佈屬於自己的推文
-* 點擊任何一個 tweet 方塊，可以查看該 tweet 詳情及回覆串
+* 點擊任何一個 tweet 上的頭貼，可以查看該 tweet 詳情及回覆串
 * 點擊任何一個 tweet 方塊中的 reply 圖示，可以對該 tweet 進行回覆
 * 可在首頁看到每一則 tweet 被喜歡的數量，以及被回覆的數量
 * 使用者可以編輯自己的：帳號/名稱/email/密碼/大頭像/封面/自我介紹
@@ -20,20 +20,20 @@
 Clone repository to your local computer
 
 ```bash
-$ git clone https://github.com/LettuceLu751103/twitter-fullstack-2020.git
+git clone https://github.com/LettuceLu751103/twitter-fullstack-2020.git
 ```
 
 Into the project folder
 
 ```bash
-$ cd twitter-fullstack-2020
+cd twitter-fullstack-2020
 ```
 
 Install by npm
 
 ```bash
-$ npm install
-$ npm i nodemon
+npm install
+npm i nodemon
 ```
 
 建立 MySQL 連線 (帳號: root / 密碼: password)
