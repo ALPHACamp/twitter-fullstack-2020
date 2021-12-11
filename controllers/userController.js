@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { Op } = require('sequelize')
 const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID = 'd97de9c03bf7519'
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet

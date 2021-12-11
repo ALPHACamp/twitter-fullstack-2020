@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const express = require('express')
 const helpers = require('./_helpers');
 const handlebars = require('express-handlebars')
@@ -8,7 +12,7 @@ const methodOverride = require('method-override')
 const db = require('./models')
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
