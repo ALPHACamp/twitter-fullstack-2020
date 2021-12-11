@@ -54,43 +54,46 @@
     <div class="follow-tweet">
       <ul class="nav nav-tabs d-flex">
         <li class="nav-item">
-          <a href="" class="nav-link active" id="followers">追隨者</a>
+          
+          <a href="/users/{{users.userId}}/followers" class="nav-link active" id="followers">追隨者</a>
         </li>
         <li class="nav-item">
-          <a href="/users/{{user.id}}/followings" class="nav-link" id="followings">正在跟隨</a>
+          <a href="/users/{{users.userId}}/followings" class="nav-link " id="followings">正在跟隨</a>
+
         </li>
       </ul>
       <br>
       <div class="user-tweet">
-        {{#each user.Followers}}
+        {{#each users}}
         <div class="tweet col-md-12">
           <div class="d-flex">
             <div class="col-md-2" style="padding: 0%;">
-              <a href="/users/{{this.id}}/tweets">
-                <img class="avatar small" src="{{this.avatar}}">
+              <a href="/users/{{this.userId}}/tweets">
+                <img class="avatar small" src="{{this.userAvatar}}">
               </a>
             </div>
             <div class="col-md-10">
               <div class="followship-account d-flex">
                 <div class="account-info mb-2" style="flex:auto">
-                  <a href="/users/{{this.id}}/tweets">
-                    <div class="user-name">{{this.name}}</div>
+                  <a href="/users/{{this.userId}}/tweets">
+                    <div class="user-name">{{this.userName}}</div>
                   </a>
-                  <div class="atAccount">@{{this.account}}</div>
+                  <div class="atAccount">@{{this.userAccount}}</div>
                 </div>
                 <div class="followship-button">
                   {{#if this.isFollowed}}
-                  <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+                  <form action="/followships/{{this.userId}}?_method=DELETE" method="POST">
                     <button type="submit" class="btn py-2">正在跟隨</button>
                   </form>
                   {{else}}
-                  <form action="/followships/{{this.id}}" method="POST">
+                  <form action="/followships" method="POST">
                     <button type="submit" class="btn py-2">跟隨</button>
+                    <input type="hidden" name="id" value="{{this.userId}}">
                   </form>
                   {{/if}}
                 </div>
               </div>
-              <div class="post-text d-flex mt-2">{{this.introduction}}</div>
+              <div class="post-text d-flex mt-2">{{this.userIntroduction}}</div>
             </div>
           </div>
         </div>
@@ -110,23 +113,24 @@
         Popular
       </div>
       <ul class="list-group list-group-flush">
-        {{#each users}}
+        {{#each topUsers}}
         <li class="list-group-item d-flex">
           <div class="mr-2">
-            <img class="avatar small" src="{{this.avatar}}">
+            <img class="avatar small" src="{{this.topUserAvatar}}">
           </div>
           <div class="mr-5">
-            <p class="mb-0">{{this.name}}</p>
-            <p class="atAccount">@{{this.account}}</p>
+            <p class="mb-0">{{this.topUserName}}</p>
+            <p class="atAccount">@{{this.topUserAccount}}</p>
           </div>
           <div class="pt-2">
-            {{#if this.isFollowed}}
+            {{#if this.topUserIsFollowed}}
             <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
               <button type="submit" class="btn py-2">正在跟隨</button>
             </form>
             {{else}}
-            <form action="/followships/{{this.id}}" method="POST">
+            <form action="/followships" method="POST">
               <button type="submit" class="btn py-2">跟隨</button>
+              <input type="hidden" name="id" value="{{this.id}}">
             </form>
             {{/if}}
           </div>

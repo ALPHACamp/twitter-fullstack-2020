@@ -9,6 +9,7 @@ const tweetController = {
 
   getTweets: (req, res) => {
     // 撈 user , tweets view 的資料
+    // return res.send('是在怎樣')
     return Tweet.findAll({
       order: [['createdAt', 'DESC']],
       include: [
@@ -48,7 +49,7 @@ const tweetController = {
               topUserAvatar: user.avatar,
               topUserName: user.name,
               topUserAccount: user.account,
-              FollowerCount: user.Followers.length,
+              followerCount: user.Followers.length,
               isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
             }))
             users = users.sort((a, b) => b.followerCount - a.followerCount)
