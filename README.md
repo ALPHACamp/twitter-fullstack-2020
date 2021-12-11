@@ -86,3 +86,23 @@ npm run seed
 ```
 npm run test
 ```
+
+## 種子資料說明
+
+- 前台測試帳號
+  - account：user1
+  - email：user1@example.com
+  - password：12345678
+- 後台測試帳號
+  - account：root
+  - email：root@example.com
+  - password：12345678
+- 每個使用者有 10 則 POST
+- 每篇 POST 有 3 個留言者，每個人有 1 則留言
+- 每篇 POST 有 3 個 Like
+- 前面序號 user 有後面序號 user 的 follow
+  - user1 有 user2, user3, user4, user5 follow
+  - user2 有 user3, user4, user5 follow
+  - user3 有 user4, user5 follow
+  - user4 有 user5 follow
+  - user5 沒有 follow
