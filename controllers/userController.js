@@ -211,27 +211,29 @@ const userController = {
 
   // 瀏覽 user 的 followings
   getUserFollowing: (req, res) => {
-    return User.findByPk(req.params.userId, { include: [
-      { model: User, as: 'Followings' }
-    ]})
-      .then( users => {
+    return User.findByPk(req.params.userId, {
+      include: [
+        { model: User, as: 'Followings' }
+      ]
+    })
+      .then(users => {
         User.findAll({
           include: [{ model: User, as: 'Followers' }],
           where: { role: 'normal' }
         })
-          .then( topUsers => {
+          .then(topUsers => {
             // users.Followings 可以拿到此user的所有他在追蹤的人
             // console.log('===========')
             // console.log('users: ', users.Followings)
             // console.log('topUsers: ', topUsers)
             // console.log('===========')
             users.Followings = users.Followings.map(user => ({
-                  ...user.dataValues,
-                  userName: user.name ,
-                  userId: user.id,
-                  userAccount: user.account,
-                  userAvatar: user.avatar,
-                  userIntroduction: user.introduction,
+              ...user.dataValues,
+              userName: user.name,
+              userId: user.id,
+              userAccount: user.account,
+              userAvatar: user.avatar,
+              userIntroduction: user.introduction,
               isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
             }))
             topUsers = topUsers.map(topUser => ({
@@ -244,14 +246,12 @@ const userController = {
             }))
             users.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
             topUsers.sort((a, b) => b.followerCount - a.followerCount)
-            return res.render('userFollowings', { users: users.Followings, topUsers, loginUser: helpers.getUser(req)} )
+            return res.render('userFollowings', { users: users.Followings, topUsers, loginUser: helpers.getUser(req) })
           })
       })
   },
-
   // 瀏覽 user 的 followers
   getUserFollower: (req, res) => {
-
     return User.findByPk(req.params.userId, {
       include: [
         { model: User, as: 'Followers' }
@@ -295,7 +295,6 @@ const userController = {
           })
       })
   },
-
   //使用者喜歡的內容頁面
   getUserLikes: (req, res) => {
     const loginUser = helpers.getUser(req)
@@ -317,8 +316,19 @@ const userController = {
       return res.render('userlikes', { loginUser, user, likedTweets: data })
 
     })
-  },
 
+    // return Like.findAll({
+    //   raw: true,
+    //   nest: true,
+    //   where: {UserId: req.params.userId},
+    //   include: [{model: Tweet, include: [User, Reply, Like]}]
+    // }).then(likes => {
+    //   console.log(likes)
+    //   likes.forEach(like => {console.log(like.Tweet.Replies)})
+    //   res.render('userlikes', { user,  })
+    // })
+
+  },
   // 瀏覽帳號設定頁面
   editSetting: (req, res) => {
     if (helpers.getUser(req).id !== Number(req.params.userId)) {
