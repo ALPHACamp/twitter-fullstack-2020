@@ -98,18 +98,16 @@
       </div>
       {{!-- 這是在個人資料頁面上的編輯個人資料按鈕 --}}
       {{#if requestUser.isUser}}
-      <div class="col-md-8" style=" text-align:end; margin-top:60px;">
+      <div class="col-md-8" style="text-align:end; margin-top:60px;">
         <a class="btn" style="border-radius: 40px; color:#FF6600; border:1px #FFAC55 solid;" href="#"
           data-toggle="modal" data-target="#userData">編輯個人資料</a>
       </div>
       {{else}}
       <div class="col-md-8 " style=" text-align:end; margin-top:60px;">
-        <a class="btn" style="border-radius: 50%; color:#FF6600; border:1px #FFAC55 solid; width:38px;height:38px;"
-          href="#" data-toggle="modal" data-target="#userData">
+        <a class="btn" style="border-radius: 50%; color:#FF6600; border:1px #FFAC55 solid; width:38px;height:38px;">
           <i class="far fa-envelope"></i>
         </a>
-        <a class="btn" style="border-radius: 50%; color:#FF6600; border:1px #FFAC55 solid; width:38px;height:38px;"
-          href="#" data-toggle="modal" data-target="#userData">
+        <a class="btn" style="border-radius: 50%; color:#FF6600; border:1px #FFAC55 solid; width:38px;height:38px;">
           <i class="fas fa-bell"></i>
         </a>
         {{#if requestUser.isFollowing}}
