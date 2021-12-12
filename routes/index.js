@@ -9,9 +9,15 @@ const _helpers = require('../_helpers')
 module.exports = (app, passport) => {
 
     const authenticated = (req, res, next) => {
+
         if (_helpers.ensureAuthenticated(req)) {
+
             if (_helpers.getUser(req).role === '0') {
                 return next()
+            }
+
+            if (_helpers.getUser(req).role === '1') {
+                _helpers.getUser(req).role = 'admin'
             }
 
             if (_helpers.getUser(req).role === 'admin') {
@@ -19,6 +25,7 @@ module.exports = (app, passport) => {
             }
 
         }
+
         req.flash('error_messages', '帳號錯誤!')
         return res.redirect('/signin')
     }
