@@ -41,6 +41,7 @@ const adminController = {
     },
 
     getUsers: (req, res) => {
+        console.log("進入 getUsers...")
         User.findAll({
             include: [
                 { model: Tweet, order: [['createdAt', 'DESC']] },
@@ -54,7 +55,7 @@ const adminController = {
             users = users.map(user => ({
                 ...user.dataValues,
             }))
-            console.log(users)
+
             return res.render('admin/users', { users })
         }).catch(error => {
             console.log(error)
