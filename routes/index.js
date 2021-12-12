@@ -11,9 +11,13 @@ module.exports = (app, passport) => {
     const authenticated = (req, res, next) => {
         if (_helpers.ensureAuthenticated(req)) {
             if (_helpers.getUser(req).role === '0') {
-                console.log('使用者為normal user....')
                 return next()
             }
+
+            if (_helpers.getUser(req).role === 'admin') {
+                return res.redirect('/admin/tweets')
+            }
+
         }
         req.flash('error_messages', '帳號錯誤!')
         return res.redirect('/signin')
