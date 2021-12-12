@@ -9,18 +9,12 @@ const _helpers = require('../_helpers')
 module.exports = (app, passport) => {
 
     const authenticated = (req, res, next) => {
-        console.log('== req.isAuthenticated ==')
-        console.log(req.isAuthenticated())
-        if (req.isAuthenticated()) {
-            if (req.user.role === '0') {
+        if (_helpers.ensureAuthenticated(req)) {
+            if (_helpers.getUser(req).role === '0') {
                 console.log('使用者為normal user....')
                 return next()
-            } else {
-                console.log('使用者為admin....')
             }
         }
-
-        console.log('使用者沒通過認證....')
         req.flash('error_messages', '帳號錯誤!')
         return res.redirect('/signin')
     }
