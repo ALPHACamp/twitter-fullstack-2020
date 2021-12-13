@@ -1,7 +1,7 @@
 <div class="row" style="width:100%;">
   {{!-- 左邊選項欄位 --}}
   <div class="col-3">
-    <img class="mb-4 pl-2" src="/images/logo.png">
+    <img class="mb-4 pl-2" src="https://imgur.com/8DjhHxL">
     <div class="nav-ul-wrapper">
       <ul class="nav flex-column">
         <li class="nav-item py-2">
@@ -32,27 +32,27 @@
   {{!-- 右邊清單欄位 --}}
   {{!-- 會用到 cover, avatar,name,account, 留言數量 , 喜歡數量, 正在追蹤數量 , 正在被追蹤數量 --}}
   <div class="col-9 d-flex flex-row justify-content-around">
-    
+
     {{#each users}}
     <div class="d-flex flex-column align-items-center mr-3">
-        <div class="coverAndAvatar d-flex flex-column align-items-center" style="max-width: 200px;">
-          <img class="cover" style="max-width: 200px;" src="{{this.userCover}}">
-          <img class="avatar" style="max-width: 100px;" src="{{this.userAvatar}}">
-        </div>
-        <div class='userNameAndAccount d-flex flex-column align-items-center'>
-          <p class="userName">{{this.userName}}</p>
-          <p class="account">@{{this.userAccount}}</p>
-        </div>
-        <div class='tweetsAndLikeIcon d-flex flex-row justify-content-around'>
-          <p class='tweetsTotal'><i class="far fa-comment-alt"></i> {{this.userTweetTotal}}</p>
-          <p class='LikesTotal'><i class="far fa-heart"></i> {{this.userTweetLikedTotal}}</p>
-        </div>
-        <div class='followShip d-flex flex-row justify-content-around'>
-          <p class='followings'><strong>{{this.userFollowingsTotal}}</strong> 個跟隨中</p>
-          <p class='followers'><strong>{{this.userFollowersTotal}}</strong> 位跟隨者</p>
-        </div>
+      <div class="coverAndAvatar d-flex flex-column align-items-center" style="max-width: 200px;">
+        <img class="cover" style="max-width: 200px;" src="{{this.userCover}}">
+        <img class="avatar" style="max-width: 100px;" src="{{this.userAvatar}}">
       </div>
-      {{/each}}
-
+      <div class='userNameAndAccount d-flex flex-column align-items-center'>
+        <p class="userName">{{this.userName}}</p>
+        <p class="account">@{{this.userAccount}}</p>
+      </div>
+      <div class='tweetsAndLikeIcon d-flex flex-row justify-content-around'>
+        <p class='tweetsTotal'><i class="far fa-comment-alt"></i> {{this.userTweetTotal}}</p>
+        <p class='LikesTotal'><i class="far fa-heart"></i> {{this.userTweetLikedTotal}}</p>
+      </div>
+      <div class='followShip d-flex flex-row justify-content-around'>
+        <p class='followings'><strong>{{this.userFollowingsTotal}}</strong> 個跟隨中</p>
+        <p class='followers'><strong>{{this.userFollowersTotal}}</strong> 位跟隨者</p>
+      </div>
     </div>
+    {{/each}}
+
   </div>
+</div>

@@ -1,7 +1,7 @@
 <div class="row" style="width:100%;">
   {{!-- 左邊選項欄位 --}}
   <div class="col-3">
-    <img class="mb-4 pl-2" src="/images/logo.png">
+    <img class="mb-4 pl-2" src="https://imgur.com/8DjhHxL">
     <div class="nav-ul-wrapper">
       <ul class="nav flex-column">
         <li class="nav-item py-2">
@@ -38,17 +38,19 @@
       <div class="card-body d-flex">
         <img class="avatar small mr-3" src="{{this.userAvatar}}">
         <div>
-          <p class="card-title">{{this.userName}} <span class="atAccount">@{{this.userAccount}}•{{moment this.createdAt}}</span></p>
+          <p class="card-title">{{this.userName}} <span class="atAccount">@{{this.userAccount}}•{{moment
+              this.createdAt}}</span></p>
           <p class="card-text">{{this.tweetDescription}}</p>
         </div>
         <div class="">
-          <form action="/admin/tweets/{{this.tweetId}}?_method=DELETE" method="POST" onclick="return confirm('確定要刪除這則貼文？')">
+          <form action="/admin/tweets/{{this.tweetId}}?_method=DELETE" method="POST"
+            onclick="return confirm('確定要刪除這則貼文？')">
             <button class="btn btn-danger ml-2" type="submit">X</button>
           </form>
         </div>
       </div>
-      
+
     </div>
-  {{/each}}
+    {{/each}}
   </div>
 </div>
