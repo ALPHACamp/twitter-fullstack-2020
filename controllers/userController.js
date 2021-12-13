@@ -250,10 +250,11 @@ const userController = {
                 let users = responses[0]
                 let users2 = responses[1]
                 let requestUser = responses[2]
+
                 users = users.map(user => ({
                     ...user.dataValues,
-                    isFollowed: _helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
-                    followersTime: _helpers.getUser(req).Followers.filter(d => { return (d.id === user.id) })
+                    isFollowed: user.dataValues.Followers.map(d => d.id).includes(_helpers.getUser(req).id),
+                    followersTime: user.dataValues.Followers.filter(d => { return (d.id === _helpers.getUser(req).id) })
                 }))
 
                 users2 = users2.map(user => ({
@@ -283,7 +284,9 @@ const userController = {
 
                 users = sortCreatedAt.concat(noCreatedAt)
 
+
                 return res.render('follower', { users, users2, requestUser: requestUser.toJSON() })
+                // return res.json({ text: requrestUser.toJSON() })
             }).catch(error => {
                 console.log(error)
             })
@@ -483,9 +486,18 @@ const userController = {
 
     getUserApi: (req, res) => {
         const userId = req.params.id
+        // console.log('================================================')
+        // console.log(userId)
+        // console.log('================================================')
         User.findByPk(userId)
             .then(user => {
-                return res.json({ status: 'success', data: user })
+                // console.log(user)
+                if (_helpers.getUser(req).id !== user.id) {
+                    return res.json({ status: 'error' })
+                } else {
+                    return res.json({ status: 'success', data: user.toJSON(), name: user.toJSON().name })
+                }
+
             })
             .catch(error => {
                 console.log(error)
@@ -497,6 +509,10 @@ const userController = {
         const userId = user.id
         let cover = ''
         let avatar = ''
+        console.log('======  files ======')
+        console.log(files)
+        console.log('======  userId ======')
+        console.log(userId)
         if (files) {
             cover = files.cover
             avatar = files.avatar
@@ -580,10 +596,14 @@ const userController = {
             })
         } else {
             console.log('完全沒有檔案')
-            if (req.body.introduction.trim().length > 160) {
-                req.flash('error_messages', '字數超出上限!')
-                return res.redirect('back')
-            } if (req.body.name.trim().length > 50) {
+            console.log(req.body)
+            if (req.body.introduction) {
+                if (req.body.introduction.trim().length > 160) {
+                    req.flash('error_messages', '字數超出上限!')
+                    return res.redirect('back')
+                }
+            }
+            if (req.body.name.trim().length > 50) {
                 req.flash('error_messages', '字數超出上限50個字!')
                 return res.redirect('back')
             } else {
@@ -595,8 +615,9 @@ const userController = {
                             cover: user.cover,
                             introduction: req.body.introduction
                         }).then(user => {
-                            // return res.json({ status: 'success', data: user })
-                            return res.redirect('back')
+                            console.log('送回API呼叫的資料')
+                            return res.json({ status: 'success', data: user })
+                            // return res.redirect('back')
                         }).catch(error => {
                             console.log(error)
                         })

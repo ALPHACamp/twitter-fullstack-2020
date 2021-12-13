@@ -97,10 +97,10 @@ module.exports = (app, passport) => {
 
 
     // 前台查看跟隨了那些人
-    app.get('/user/:id/followings', authenticated, userController.getFollowings)
+    app.get('/users/:id/followings', authenticated, userController.getFollowings)
 
     // 前台查看被那些人跟隨
-    app.get('/user/:id/followers', authenticated, userController.getFollowers)
+    app.get('/users/:id/followers', authenticated, userController.getFollowers)
 
     // 前台查看喜歡那些推文
     app.get('/users/:id/likes', authenticated, userController.getLike)
@@ -129,6 +129,6 @@ module.exports = (app, passport) => {
 
     // app.put('/api/users/:id', upload.single('avatar'), userController.putUserApi)
     const imageData = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }])
-    app.put('/api/users/:id', imageData, userController.putUserApi)
+    app.post('/api/users/:id', imageData, userController.putUserApi)
 
 }
