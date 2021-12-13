@@ -485,7 +485,7 @@ const userController = {
         const userId = req.params.id
         User.findByPk(userId)
             .then(user => {
-                return res.json({ status: 'success', data: user })
+                return res.json({ status: 'success', user: user })
             })
             .catch(error => {
                 console.log(error)
