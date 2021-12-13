@@ -23,9 +23,8 @@ module.exports = (app, passport) => {
             if (_helpers.getUser(req).role === 'admin') {
                 return res.redirect('/admin/tweets')
             }
-
+            return next()
         }
-
         req.flash('error_messages', '帳號錯誤!')
         return res.redirect('/signin')
     }
@@ -64,7 +63,7 @@ module.exports = (app, passport) => {
 
     // 推文首頁
 
-    app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+    // app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 
     app.get('/tweets', authenticated, tweetController.getTweets)
 

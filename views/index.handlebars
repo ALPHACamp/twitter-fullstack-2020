@@ -143,14 +143,14 @@
                 <button type="submit" data-toggle="modal" data-target="#tweetModel"
                   style="border: 0; background-color: #ffffff; ">
                   <i class="far fa-comment" data-id={{this.id}} style=""></i>
-                </button>{{ this.Replies.length }}
+                </button>{{ this.replyCount }}
               </span>
             </div>
             <div class="col-md-3">
-              {{#if this.isLikedTweet}}
+              {{#if this.isLike}}
               <form action="/tweets/{{this.id}}/unlike" method="post" class="form-inline toTweet">
                 <span><button type="submit" class="btn btn-link" style="color: red; display:inline">
-                    <i class="fas fa-heart " data-id={{this.id}}></i></button>{{this.likeCount }}</span>
+                    <i class="fas fa-heart " data-id={{this.id}}></i></button>{{ this.likeCount }}</span>
               </form>
               {{else}}
               <form action="/tweets/{{this.id}}/like" method="post" class="form-inline toTweet">
@@ -231,7 +231,7 @@
         跟隨誰
       </div>
       {{#each users}}
-      {{#if this.isUser}}
+      {{#if this.isNotCurrentUser}}
       <div
         style="display: flex; justify-content:space-between; border-top:#E6ECF0 1px solid; border-bottom:#E6ECF0 1px solid;"
         class="p-2">

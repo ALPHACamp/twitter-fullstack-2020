@@ -5,68 +5,58 @@ const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
 const Like = db.Like
-
+const Followship = db.Followship
+const _helpers = require('../_helpers')
 const tweetController = {
-    getTweets: (req, res) => {
+    getTweets: async (req, res) => {
+        const tweetsFindAll = await Tweet.findAll({
 
-        // console.log(req.user)
-        const tweetFindAll = Tweet.findAll({
-            order: [['createdAt', 'DESC']],
-            include: [User,
-                { model: Reply, include: [Tweet] },
-                { model: User, as: 'LikedUsers' },
-            ]
-        })
-
-        const userFindAll = User.findAll({
             include: [
-                { model: User, as: 'Followers' }
+                // attributes => 可以從資料庫裡抓出的欄位進行過濾, 只抓取自己想要的欄位
+                { model: User, attributes: ['id', 'name', 'avatar', 'account', 'createdAt'] },
+                { model: Reply, },
+                { model: Like, },
+                { model: User, as: 'LikedUsers' }
             ]
         })
-
-        const likeFindAll = Like.findAll({
-            raw: true,
-            nest: true,
+        const usersFindAll = await User.findAll({
+            attributes: ['id', 'name', 'account', 'avatar'],
             include: [
-                User, Tweet
-            ]
+                { model: User, as: 'Followers' },
+            ],
+            // 只抓取一般使用者帳號
+            where: { role: '0' }
         })
-
-        Promise.all([tweetFindAll, userFindAll, likeFindAll])
+        Promise.all([tweetsFindAll, usersFindAll])
             .then(responses => {
-                let tweets = responses[0]
-                let users = responses[1]
-                let likes = responses[2]
-
-
+                let [tweets, users] = responses
                 tweets = tweets.map(tweet => ({
                     ...tweet.dataValues,
-                    reliesCount: tweet.Replies.length,
-                    likeCount: tweet.LikedUsers.length,
-                    isLikedTweet: req.user.LikedTweets.map(d => d.id).includes(tweet.id)
-
+                    likeCount: tweet.Likes.length,
+                    isLike: tweet.LikedUsers.map(d => d.id).includes(_helpers.getUser(req).id),
+                    replyCount: tweet.Replies.length,
                 }))
+
                 users = users.map(user => ({
                     ...user.dataValues,
-                    isUser: !user.Followers.map(d => d.id).includes(user.id),
-                    // 計算追蹤者人數
-                    FollowerCount: user.Followers.length,
-                    // 判斷目前登入使用者是否已追蹤該 User 物件
-                    isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+                    FollowersCount: user.Followers.length,
+                    isFollowed: _helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+                    isNotCurrentUser: !(user.id === _helpers.getUser(req).id)
                 }))
-                // 依追蹤者人數排序清單
-                users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-
-                return res.render('main', { tweets, users })
+                users = users.sort((a, b) => b.FollowersCount - a.FollowersCount)
+                return res.render('index', { tweets: tweets, users: users })
             }).catch(error => {
                 console.log(error)
             })
+
 
     },
 
     postTweets: (req, res) => {
         const description = req.body.description
-        const userId = req.user.id
+        const userId = _helpers.getUser(req).id
+
+
         if (description.trim().length === 0) {
             req.flash('error_messages', '輸入不能為空白')
             return res.redirect('back')
@@ -157,8 +147,9 @@ const tweetController = {
     },
 
     postLike: (req, res) => {
+        const userId = _helpers.getUser(req).id
         Like.create({
-            UserId: req.user.id,
+            UserId: userId,
             TweetId: req.params.id
         }).then(like => {
             return res.redirect('back')
@@ -168,9 +159,10 @@ const tweetController = {
     },
 
     postUnLike: (req, res) => {
+        const userId = _helpers.getUser(req).id
         return Like.findOne({
             where: {
-                UserId: req.user.id,
+                UserId: userId,
                 TweetId: req.params.id
             }
         }).then(like => {
