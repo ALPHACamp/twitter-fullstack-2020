@@ -248,6 +248,7 @@ describe('# user request', () => {
           .end(function (err, res) {
             if (err) return done(err);
             // 檢查 User1 是否有被 User3 追蹤
+            console.log(res.text)
             res.text.should.include('User3')
             return done();
           });
