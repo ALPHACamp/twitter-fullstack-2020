@@ -144,6 +144,8 @@ const userController = {
     },
 
     getUserSelf: (req, res) => {
+
+        console.log('進入個人資料頁....')
         const tweetFindAll = Tweet.findAll({
             order: [['createdAt', 'DESC']],
             where: { UserId: req.params.id },
@@ -170,9 +172,14 @@ const userController = {
 
         Promise.all([tweetFindAll, userFindAll, requestUser])
             .then(responses => {
-                let tweets = responses[0]
-                let users = responses[1]
-                let requestUser = responses[2]
+                // console.log('=========  tweets  ========')
+                // console.log(responses[0])
+                // console.log('=========  userFindAll  ========')
+                // console.log(responses[1])
+                // console.log('=========  requestUser  ========')
+                // console.log(responses[2])
+                let [tweets, users, requestUser] = responses
+
                 users = users.map(user => ({
 
                     ...user.dataValues,
@@ -180,28 +187,30 @@ const userController = {
                     // 計算追蹤者人數
                     FollowerCount: user.Followers.length,
                     // 判斷目前登入使用者是否已追蹤該 User 物件
-                    isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+                    isFollowed: _helper.getUser(req).Followings.map(d => d.id).includes(user.id)
                 }))
                 // 依追蹤者人數排序清單
                 // console.log(users)
 
                 users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-
+                console.log('--------------------------------------------------')
+                console.log(_helper.getUser(req))
+                console.log('--------------------------------------------------')
                 tweets = tweets.map(tweet => ({
                     ...tweet.dataValues,
                     reliesCount: tweet.Replies.length,
                     likeCount: tweet.LikedUsers.length,
-                    isLikedTweet: req.user.LikedTweets.map(d => d.id).includes(tweet.id)
+                    isLikedTweet: _helper.getUser(req).LikedTweets.map(d => d.id).includes(tweet.id)
 
                 }))
 
-                if (req.user.id === requestUser.toJSON().id) {
+                if (_helper.getUser(req).id === requestUser.toJSON().id) {
                     requestUser.dataValues.isUser = true
                 } else {
                     requestUser.dataValues.isUser = false
                 }
 
-                requestUser.dataValues.isFollowing = requestUser.toJSON().Followers.map(d => d.id).includes(req.user.id)
+                requestUser.dataValues.isFollowing = requestUser.toJSON().Followers.map(d => d.id).includes(_helper.getUser(req).id)
 
                 return res.render('user', { tweets, users, requestUser: requestUser.toJSON() })
 
