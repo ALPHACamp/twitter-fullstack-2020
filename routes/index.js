@@ -10,6 +10,7 @@ module.exports = (app, passport) => {
 
     const authenticated = (req, res, next) => {
 
+        console.log('進入一般身份驗證....')
         if (_helpers.ensureAuthenticated(req)) {
 
             if (_helpers.getUser(req).role === '0') {
@@ -72,9 +73,9 @@ module.exports = (app, passport) => {
 
 
     // 追隨
-
-    app.post('/followships/:userId', authenticated, userController.addFollowing)
-    app.delete('/followships/:userId', authenticated, userController.removeFollowing)
+    app.post('/followships', authenticated, userController.addFollowing)
+    // app.post('/followships/:userId', authenticated, userController.addFollowing)
+    app.delete('/followships/:id', authenticated, userController.removeFollowing)
 
     // 帳戶設定
 

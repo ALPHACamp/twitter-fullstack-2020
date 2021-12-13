@@ -11,6 +11,8 @@ const Reply = db.Reply
 const fs = require('fs')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = '244d29ed093c092'
+const _helper = require('../_helpers')
+
 
 const userController = {
     getSignUpPage: (req, res) => {
@@ -83,19 +85,26 @@ const userController = {
 
 
     addFollowing: (req, res) => {
-        return Followship.create({
-            followerId: req.user.id,
-            followingId: req.params.userId
-        }).then((followship) => {
-            return res.redirect('back')
-        })
+        console.log('進入post 追蹤頁面...')
+
+        if (_helper.getUser(req).id === Number(req.body.id)) {
+            return res.json({ status: 'error', message: '不可以跟隨自己' })
+        } else {
+            return Followship.create({
+                followerId: _helper.getUser(req).id,
+                followingId: req.body.id
+            }).then((followship) => {
+                return res.redirect('back')
+            })
+        }
+
     },
 
     removeFollowing: (req, res) => {
         return Followship.findOne({
             where: {
-                followerId: req.user.id,
-                followingId: req.params.userId
+                followerId: _helper.getUser(req).id,
+                followingId: req.params.id
             }
         }).then((followship) => {
             followship.destroy()
