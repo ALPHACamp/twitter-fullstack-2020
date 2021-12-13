@@ -200,8 +200,7 @@
 
 
                   <div class="col-md-10" style="padding:0 15px 0 0;">
-                    <textarea name="description" id=""
-                      style="width:100%; min-height:220px;max-height:220px; border:none;"
+                    <textarea name="comment" id="" style="width:100%; min-height:220px;max-height:220px; border:none;"
                       placeholder="推你的回覆"></textarea>
                   </div>
                 </div>
@@ -250,7 +249,7 @@
               class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
           </form>
           {{else}}
-          <form action="/followships/{{this.id}}" method="POST"><button type="submit" class="btn btn-block mt-1"
+          <form action="/followships" method="POST"><button type="submit" class="btn btn-block mt-1"
               style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>
           </form>
           {{/if}}

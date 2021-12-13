@@ -73,7 +73,7 @@ module.exports = (app, passport) => {
 
     // 追隨
 
-    app.post('/followships/:userId', authenticated, userController.addFollowing)
+    app.post('/followships', authenticated, userController.addFollowing)
     app.delete('/followships/:userId', authenticated, userController.removeFollowing)
 
     // 帳戶設定
