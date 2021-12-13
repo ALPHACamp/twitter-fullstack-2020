@@ -75,30 +75,67 @@ const userController = {
       TweetId: req.params.tweetId
     })
       .then(like => {
-        return Tweet.findOne({where: {id: like.TweetId}}).then(tweet => {
+        return Tweet.findByPk( like.TweetId ).then(tweet => {
           return tweet.increment('likeCounts')
         }).then(tweet => {
+          // console.log('============')
+          // console.log(tweet.toJSON())
+          // console.log('============')
+          // console.log(like.toJSON())
+          // console.log('============')
           return res.redirect('back')
         })
       })
   },
-  // unlike tweet
+  // 信嘗試修改 unlike tweet
   removeLike: (req, res) => {
-    return Like.destroy({
-      where: {
-        UserId: helpers.getUser(req).id,
-        TweetId: req.params.tweetId
-      }
+    return Tweet.findByPk(req.params.tweetId , {
+      include: [
+        Like
+      ]
     })
-      .then(like => {
-        return Tweet.findOne({ where: { id: req.params.tweetId } })
-        .then(tweet => {
-          return tweet.decrement('likeCounts')
-        }).then(tweet => {
-            return res.redirect('back')
+      .then( tweet => {
+        return tweet.decrement('likeCounts')
+        //return Like.findByPk( tweet.Likes.id)
+        // console.log('tweetID: ', req.params.tweetId)
+        // console.log('tweet', tweet.toJSON())
+        // console.log('tweet.Likes.id: ', tweet.Likes[0].id)
+      })
+        .then( like => {
+          return Like.destroy({
+            where: {
+              UserId: helpers.getUser(req).id,
+              TweetId: req.params.tweetId
+            }
           })
         })
+          .then(() => {
+            return res.redirect('back')
+          })
   },
+  
+  // unlike tweet
+  // removeLike: (req, res) => {
+  //   return Like.destroy({
+  //     where: {
+  //       UserId: helpers.getUser(req).id,
+  //       TweetId: req.params.tweetId
+  //     }
+  //   })
+  //     .then(like => {
+  //       return Tweet.findByPk(like.TweetId)
+  //       .then(tweet => {
+  //         return tweet.decrement('likeCounts')
+  //       }).then(tweet => {
+  //         console.log('============')
+  //         console.log(tweet.toJSON())
+  //         console.log('============')
+  //         console.log(like.toJSON())
+  //         console.log('============')
+  //         return res.redirect('back')
+  //         })
+  //       })
+  // },
   // following
   addFollowing:  (req, res) => {
     // 目前的登入者不行追蹤自己
@@ -183,6 +220,8 @@ const userController = {
         })
     }
   },
+  // 信 嘗試修改此頁面 加入popular資料
+  
   //使用者個人資料頁面
   getUserTweets: (req, res) => {
     const loginUser = helpers.getUser(req)
@@ -309,7 +348,7 @@ const userController = {
         replyCounts: tweet.replyCounts,
         likeCounts: tweet.likeCounts
       }))
-      console.log(data)
+     // console.log(data)
       return res.render('userlikes', { loginUser, user, likedTweets: data })
       
     })
