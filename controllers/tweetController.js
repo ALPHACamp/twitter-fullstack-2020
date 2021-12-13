@@ -81,15 +81,16 @@ const tweetController = {
     },
 
     postReplies: (req, res) => {
-        const { description } = req.body
-        if (description.trim().length === 0) {
+        const { comment } = req.body
+
+        if (comment.trim().length === 0) {
             req.flash('error_messages', '回覆輸入不能為空白'),
                 res.redirect('back')
         } else {
             return Reply.create({
-                UserId: req.user.id,
+                UserId: _helpers.getUser(req).id,
                 TweetId: req.params.id,
-                comment: req.body.description
+                comment: req.body.comment
             }).then(reply => {
                 return res.redirect(`/tweets/${req.params.id}/replies`)
             }).catch(error => console.log(error))
@@ -118,14 +119,7 @@ const tweetController = {
 
         Promise.all([tweetFindAll, userFindAll, replyFindAll])
             .then(responses => {
-                // console.log(responses[0])
-
-                let tweets = responses[0]
-                let users = responses[1]
-                let replies = responses[2]
-                // console.log(tweets.toJSON())
-                // console.log(users)
-                // console.log(responses[1])
+                let [tweets, users, replies] = responses
                 users = users.map(user => ({
 
                     ...user.dataValues,
@@ -133,7 +127,7 @@ const tweetController = {
                     // 計算追蹤者人數
                     FollowerCount: user.Followers.length,
                     // 判斷目前登入使用者是否已追蹤該 User 物件
-                    isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+                    isFollowed: _helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
                 }))
                 // 依追蹤者人數排序清單
                 // console.log(users)
