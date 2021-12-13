@@ -1,0 +1,137 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-2 pl-0">
+            {{>left}}
+        </div>
+        <div class="col-md-7 pl-0 pr-0 border-left border-right">
+            <div class="row ml-1 align-items-center ">
+                <a href="/tweets" style="text-decoration: none; color:black">
+                    <i class="fas fa-arrow-left fa-lg"></i>
+                </a>
+                <div class="ml-5">
+                    <h4 class="m-0 font-weight-bold" style="color:#FF6600">{{pageUser.name}}</h4>
+                    <p class="followship-tweetsCount m-0" style="color:#7B7B7B">{{pageUser.Tweets.length}}推文</p>
+                </div>
+            </div>
+            <div class="personal-page">
+                <div class="header">
+                    <div class="background">
+                        <img src="{{ pageUser.background }}" alt="pageUser-background">
+                    </div>
+                    <div class="avatar">
+                        <img src="{{ pageUser.avatar }}" alt="pageUser-avatar">
+                    </div>
+                    <div class="button-block pt-2 pr-5">
+                        {{#ifCond user.id pageUser.id}}
+                            <div class="edit row justify-content-end">
+                                <button class="m-3" data-toggle="modal" data-target="#editModal">編輯個人資料</button>
+                            </div>
+                        {{else}}
+                            <div class="follow row justify-content-end mt-3">
+                            {{#if pageUser.isFollowed}}
+                                <a href="mailto:{{user.email}}">
+                                    <i class="far fa-envelope"></i>
+                                </a>
+                                {{!-- <i class="far fa-bell"></i> --}}
+                                <form action="/following/{{ pageUser.id }}?_method=DELETE" method="POST">
+                                    <button class="following">正在跟隨</button>
+                                </form>
+                            {{else}}
+                                <form action="/following/{{ pageUser.id }}" method="POST">
+                                    <button class="isFollow">跟隨</button>
+                                </form>
+                            {{/if}}
+                            </div>
+                        {{/ifCond}}
+                    </div>
+                    {{>modal}}
+                    <div class=" justify-content ml-2 mt-2">
+                        <h2>{{ pageUser.name }}</h2>
+                        <h6>
+                            <p style="color:#7B7B7B">@{{ pageUser.account }}</p>
+                        </h6>
+                        <p>{{ pageUser.introduction }}</p>
+                    </div>
+                    <div class="d-flex justify-content ml-2 mb-3">
+                        <div class="ml-2">
+                            <a class="user-followings font-weight-bold" href="/user/{{user.id}}/following"
+                            style="text-decoration: none; color:black">
+                            {{pageUser.followingCount}}個</a> 跟隨中
+                        </div>
+                        <div class="ml-4">
+                            <a class="user-followings font-weight-bold" href="/user/{{user.id}}/follower"
+                            style="text-decoration: none; color:black">
+                            {{pageUser.followersCount}}個</a> 跟隨者
+                        </div>
+                    </div>
+                </div>
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-link" href="/user/{{ pageUser.id }}/tweets">推文</a>
+                        <a class="nav-link select" href="/user/{{ pageUser.id }}/replies">推文與回覆</a>
+                        <a class="nav-link" href="/user/{{ pageUser.id }}/likes">喜歡的內容</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-tweets" role="tabpanel"
+                        aria-labelledby="nav-home-tab">
+                        <div class="col px-0">
+                            <div class="tweet-list">
+                                {{#each pageUser.Replies}}
+                                <div class="tweet p-3 border-bottom">
+                                    <div class="tweet-item-left d-flex align-items-stretch">
+                                        <div class="tweet-left d-flex align-items-stretch">
+                                            <a href="/user/{{ this.Tweet.User.id }}/tweets">
+                                                <img src="{{ this.Tweet.User.avatar }}" class="rounded-circle"
+                                                    style="background-size:cover; width: 50px;height: 50px;">
+                                            </a>
+                                        </div>
+                                        <div class="tweet-item-right ml-3">
+                                            <div class="tweet-item-title">
+                                                <span class="mt-1"><a
+                                                        href="/user/{{ this.Tweet.User.id }}/tweets">{{ this.Tweet.User.name }}</a></span>
+                                                <span class="user-account">
+                                                    @{{ this.Tweet.User.account }}．{{momentTime this.createdAt}}
+                                                </span>
+                                            </div>
+                                            <div class="tweet-text my-2">
+                                                {{this.Tweet.description}}
+                                            </div>
+                                            <div class="tweet-buttom">
+                                                <a href="/tweets/{{this.Tweet.id}}" class="mr-5">
+                                                    <i class="far fa-comment mr-1"></i>{{this.Tweet.Replies.length}}
+                                                </a>
+                                                {{#if this.Tweet.isLiked }}
+                                                <form action="/like/{{this.Tweet.id}}?_method=DELETE" method="POST"
+                                                    style="display:inline;">
+                                                    <button type="submit" class="button reply-link"
+                                                        style="background:none;border: none; color: red">
+                                                        <i class="fas fa-heart"></i>
+                                                    </button>
+                                                </form>
+                                                {{else}}
+                                                <form action="/like/{{this.Tweet.id}}" method="POST"
+                                                    style="display:inline;">
+                                                    <button type="submit" class="button reply-link"
+                                                        style="background: none;border: none;">
+                                                        <i class="far fa-heart"></i>
+                                                    </button>
+                                                </form>
+                                                {{/if}}
+                                                {{this.Tweet.LikeUsers.length}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 p-0">
+            {{>right}}
+        </div>
+    </div>
+</div>

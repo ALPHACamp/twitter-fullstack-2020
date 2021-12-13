@@ -1,0 +1,65 @@
+<div class="row mt-3">
+  <div class="col-md-2 pl-0">
+   {{>left}}
+   {{>modal}}
+  </div>
+  <div class="col-md-7 p-0 border-left border-right">
+    <div class="main">
+      <div class="col h4 font-weight-bold border-bottom pb-2">首頁</div>
+      <div class="col tweet-block">
+        <a href="/user/{{user.id}}/tweets" class="avatar">
+          <img src="{{user.avatar}}" class="rounded-circle" style="width: 50px;height: 50px;background: #C4C4C4;">
+        </a>
+        <div class="text">有什麼新鮮事兒?</div>
+        <div class="btn" data-toggle="modal" data-target="#tweetModal">推文</div>
+      </div>
+      <div class="col">
+        <div class="tweet-list mt-3">
+          {{#each tweets}}
+          <div class="tweet">
+            <div class="d-flex align-items-stretch">
+              <div class="tweet-item-left">
+                <a href="/user/{{ this.User.id }}/tweets">
+                  <img src="{{this.User.avatar}}" class="rounded-circle">
+                </a>
+              </div>
+              <div class="tweet-item-right ml-3">
+                <div class="tweet-item-title">
+                  <span class="user-name mt-1"><a href="/user/{{ this.User.id }}/tweets">{{this.User.name}}</a></span>
+                  <span class="user-account">
+                    @{{this.User.account}}．{{moment this.createdAt}}
+                  </span>
+                </div>
+                <div class="tweet-text">
+                    {{this.description}}
+                </div>
+              </div>
+            </div>
+            <div class="tweet-footer d-flex">  
+              <a href="/tweets/{{this.id}}" class="mr-5">
+                <i class="far fa-comment"></i> {{this.replyNum}}
+              </a>
+              {{!-- add like button --}}
+              {{#if this.isLiked }}
+              <form action="/like/{{this.id}}?_method=DELETE" method="POST">
+                <button type="submit"> 
+                  <i class="fas fa-heart like"></i>
+              {{else}}
+              <form action="/like/{{this.id}}" method="POST">
+                <button type="submit">
+                  <i class="far fa-heart"></i>
+              {{/if}}
+              {{this.LikeUsers.length}}
+                </button>
+              </form>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 p-0">
+    {{>right}}
+  </div>
+</div>
