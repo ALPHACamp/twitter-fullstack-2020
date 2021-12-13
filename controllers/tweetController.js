@@ -16,8 +16,10 @@ const tweetController = {
                 { model: User, attributes: ['id', 'name', 'avatar', 'account', 'createdAt'] },
                 { model: Reply, },
                 { model: Like, },
-                { model: User, as: 'LikedUsers' }
-            ]
+                { model: User, as: 'LikedUsers' },
+            ],
+            order: [['createdAt', 'DESC']]
+
         })
         const usersFindAll = await User.findAll({
             attributes: ['id', 'name', 'account', 'avatar'],
