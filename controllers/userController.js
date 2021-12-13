@@ -222,11 +222,6 @@ const userController = {
           where: { role: 'normal' }
         })
           .then( topUsers => {
-            // users.Followings 可以拿到此user的所有他在追蹤的人
-            console.log('===========')
-            console.log('users: ', users.toJSON())
-            //console.log('topUsers: ', topUsers)
-            console.log('===========')
             users.Followings = users.Followings.map(user => ({
                   ...user.dataValues,
                   userName: user.name ,
@@ -246,7 +241,6 @@ const userController = {
             }))
             users.Followings = users.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
             topUsers = topUsers.sort((a, b) => b.followerCount - a.followerCount)
-            //console.log('loginUser: ', helpers.getUser(req) )
             return res.render('userFollowings', { 
               nowUser: users,
               users: users.Followings,
@@ -258,26 +252,18 @@ const userController = {
 
   // 瀏覽 user 的 followers
   getUserFollower: (req, res) => {
-
     return User.findByPk(req.params.userId, {
       include: [
+        Tweet,
         { model: User, as: 'Followers' }
       ]
     })
       .then(users => {
-        console.log('===========')
-        console.log('helpers.getUser(req): ', helpers.getUser(req))
-        console.log('===========')
         User.findAll({
           include: [{ model: User, as: 'Followers' }],
-          //where: { role: 'normal' }
+          where: { role: 'normal' }
         })
           .then(topUsers => {
-            // users.Followings 可以拿到此user的所有他在追蹤的人
-            // console.log('===========')
-            // console.log('users: ', users.Followings)
-            // console.log('topUsers: ', topUsers)
-            // console.log('===========')
             users.Followers = users.Followers.map(user => ({
               ...user.dataValues,
               userName: user.name,
@@ -286,19 +272,22 @@ const userController = {
               userAvatar: user.avatar,
               userIntroduction: user.introduction,
               isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(users.id)
-              //isFollowed: helpers.isMatch(req.user.id , user.id)
             }))
             topUsers = topUsers.map(topUser => ({
               ...topUser.dataValues,
               topUserAvatar: topUser.avatar,
               topUserName: topUser.name,
               topUserAccount: topUser.account,
-              FollowerCount: topUser.Followers.length,
+              followerCount: topUser.Followers.length,
               topUserIsFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(topUser.id)
             }))
-            users.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-            topUsers.sort((a, b) => b.followerCount - a.followerCount)
-            return res.render('userFollowers', { users: users.Followers, topUsers, loginUser: helpers.getUser(req) })
+            users.Followers = users.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+            topUsers = topUsers.sort((a, b) => b.followerCount - a.followerCount)
+            return res.render('userFollowers', {
+              nowUser: users, 
+              users: users.Followers,
+              topUsers,
+              loginUser: helpers.getUser(req) })
           })
       })
   },
