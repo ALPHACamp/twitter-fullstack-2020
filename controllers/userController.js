@@ -86,6 +86,9 @@ const userController = {
 
     addFollowing: (req, res) => {
         console.log('進入post 追蹤頁面...')
+        console.log('================================================')
+        console.log(req.body)
+        console.log('================================================')
         if (_helpers.getUser(req).id === Number(req.body.id)) {
             return res.json({ status: 'error', message: '不可以跟隨自己' })
         } else {
@@ -171,15 +174,8 @@ const userController = {
 
         Promise.all([tweetFindAll, userFindAll, requestUser])
             .then(responses => {
-                // console.log('=========  tweets  ========')
-                // console.log(responses[0])
-                // console.log('=========  userFindAll  ========')
-                // console.log(responses[1])
-                // console.log('=========  requestUser  ========')
-                // console.log(responses[2])
-                let [tweets, users, requestUser] = responses
 
-                // console.log(users)
+                let [tweets, users, requestUser] = responses
 
                 users = users.map(user => ({
 
@@ -190,15 +186,11 @@ const userController = {
                     // 判斷目前登入使用者是否已追蹤該 User 物件
                     isFollowed: _helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
                 }))
-                // console.log(users)
 
                 // 依追蹤者人數排序清單
-                // console.log(users)
 
                 users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-                // console.log('--------------------------------------------------')
-                // console.log(_helpers.getUser(req))
-                // console.log('--------------------------------------------------')
+
                 tweets = tweets.map(tweet => ({
                     ...tweet.dataValues,
                     reliesCount: tweet.Replies.length,
