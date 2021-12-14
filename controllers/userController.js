@@ -451,7 +451,6 @@ const userController = {
                 let requestUser = responses[3]
                 users2 = users2.map(user => ({
                     ...user.dataValues,
-                    isUser: !user.Followers.map(d => d.id).includes(user.id),
                     // 計算追蹤者人數
                     FollowerCount: user.Followers.length,
                     // 判斷目前登入使用者是否已追蹤該 User 物件
