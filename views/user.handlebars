@@ -219,11 +219,11 @@
       <div><small>@{{requestUser.account}}</small></div>
       <div class="mt-2">{{requestUser.introduction}}</div>
       <div style="display: inline-block">
-        <p><strong>{{requestUser.Followings.length}}</strong> <a href="/user/{{user.id}}/followings"
+        <p><strong>{{requestUser.Followings.length}}</strong> <a href="/users/{{user.id}}/followings"
             class="text-secondary">followings</a></p>
       </div>
       <div style="display: inline-block">
-        <p><strong>{{requestUser.Followers.length}}</strong> <a href="/user/{{user.id}}/followers"
+        <p><strong>{{requestUser.Followers.length}}</strong> <a href="/users/{{user.id}}/followers"
             class="text-secondary">followers</a></p>
       </div>
     </div>
@@ -298,6 +298,8 @@
         跟隨誰
       </div>
       {{#each users}}
+      {{#if this.isNotCurrentUser}}
+
       <div
         style="display: flex; justify-content:space-between; border-top:#E6ECF0 1px solid; border-bottom:#E6ECF0 1px solid;"
         class="p-2">
@@ -323,6 +325,7 @@
           {{/if}}
         </div>
       </div>
+      {{/if}}
       {{/each}}
     </div>
   </div>
