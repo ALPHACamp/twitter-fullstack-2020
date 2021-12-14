@@ -86,7 +86,9 @@ const userController = {
 
     addFollowing: (req, res) => {
         console.log('進入post 追蹤頁面...')
-
+        console.log('================================================')
+        console.log(req.body)
+        console.log('================================================')
         if (_helpers.getUser(req).id === Number(req.body.id)) {
             return res.json({ status: 'error', message: '不可以跟隨自己' })
         } else {
