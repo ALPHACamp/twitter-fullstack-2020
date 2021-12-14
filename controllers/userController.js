@@ -505,6 +505,10 @@ const userController = {
         const userId = user.id
         let cover = ''
         let avatar = ''
+        console.log('====== req.body =====')
+        console.log(req.params.id)
+        console.log(req.body)
+        console.log(req.files)
         console.log('======  files ======')
         console.log(files)
         console.log('======  userId ======')
@@ -612,6 +616,7 @@ const userController = {
                             introduction: req.body.introduction
                         }).then(user => {
                             console.log('送回API呼叫的資料')
+
                             return res.json({ status: 'success', data: user })
                             // return res.redirect('back')
                         }).catch(error => {

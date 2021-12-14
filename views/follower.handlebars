@@ -69,7 +69,7 @@
   <div class="col-md-6" style="position: relative;">
     <div class="row align-items-center mb-3 mt-3">
       <div class="col-md-2">
-        <a href="/user/self"><i class="fas fa-arrow-left"></i></a>
+        <a href="/users/{{requestUser.id}}/tweets"><i class="fas fa-arrow-left"></i></a>
       </div>
       <div class="col-md-10">
         <div class="row">
@@ -92,7 +92,7 @@
             href="#">跟隨者</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-secondary font-weight-bold" href="/user/{{user.id}}/followings">正在跟隨</a>
+          <a class="nav-link text-secondary font-weight-bold" href="/users/{{user.id}}/followings">正在跟隨</a>
         </li>
 
       </ul>
@@ -149,11 +149,14 @@
 
         <div>
           {{#if this.isFollowed }}
-          <form action="/followships/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
-              class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-block text-light mt-1"
+              style="border-radius: 40px; background-color:#FF6600;">正在跟隨</button>
           </form>
           {{else}}
-          <form action="/followships/{{this.id}}" method="POST"><button type="submit" class="btn btn-block mt-1"
+          <form action="/followships" method="POST">
+            <input type="hidden" name="id" value="{{this.id}}">
+            <button type="submit" class="btn btn-block mt-1"
               style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>
           </form>
           {{/if}}
