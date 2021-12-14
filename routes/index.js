@@ -64,7 +64,7 @@ module.exports = (app, passport) => {
 
     // 推文首頁
 
-    // app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+    app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 
     app.get('/tweets', authenticated, tweetController.getTweets)
 
