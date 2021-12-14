@@ -136,6 +136,7 @@ const userController = {
   //         })
   //       })
   // },
+
   // following
   addFollowing:  (req, res) => {
     // 目前的登入者不行追蹤自己
@@ -226,9 +227,17 @@ const userController = {
   getUserTweets: (req, res) => {
     const loginUser = helpers.getUser(req)
     return User.findByPk(req.params.userId, {
-      include: Tweet
+      include: [ 
+        Tweet,
+        {model: Tweet, as: 'LikedTweets'},
+        Reply
+       ]
     }).then(user => {
-      //console.log(user.toJSON())
+      // user = user.Tweets.map(user => ({
+      //   ...user.dataValues,
+      //   isLiked: user.Tweets.map(tweet => tweet.id).includes(helpers.getUser(req).id),
+      // }))
+      console.log(user.toJSON())
       return res.render('userTweets', {
         user: user.toJSON(),
         loginUser
