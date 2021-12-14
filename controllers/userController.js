@@ -361,7 +361,8 @@ const userController = {
         let userFindAll2 = User.findAll({
             include: [
                 { model: User, as: 'Followers' }
-            ]
+            ],
+            where: { role: '0' }
         })
         const requestUser = User.findByPk(req.params.id, {
             include: [
@@ -384,11 +385,12 @@ const userController = {
                 }))
                 users2 = users2.map(user => ({
                     ...user.dataValues,
-                    isUser: !user.Followers.map(d => d.id).includes(user.id),
                     // 計算追蹤者人數
                     FollowerCount: user.Followers.length,
                     // 判斷目前登入使用者是否已追蹤該 User 物件
-                    isFollowed: _helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+                    isFollowed: _helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+                    isNotCurrentUser: !(user.id === _helpers.getUser(req).id)
+
                 }))
                 // 依追蹤者人數排序清單
                 users2 = users2.sort((a, b) => b.FollowerCount - a.FollowerCount)
