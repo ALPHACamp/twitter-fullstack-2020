@@ -132,7 +132,7 @@
     </div>
 
 
-    
+
     <!-- userData Modal 這是點了個人資料頁面上的編輯個人資料會談出的 Modal -->
     <div class="modal fade" id="userData" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
@@ -315,7 +315,9 @@
               class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
           </form>
           {{else}}
-          <form action="/followships/{{this.id}}" method="POST"><button type="submit" class="btn btn-block mt-1"
+          <form action="/followships" method="POST">
+            <input type="hidden" name="id" value="{{this.id}}">
+            <button type="submit" class="btn btn-block mt-1"
               style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>
           </form>
           {{/if}}
