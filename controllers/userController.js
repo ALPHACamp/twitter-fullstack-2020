@@ -219,6 +219,7 @@ const userController = {
         const usersFindAll = User.findAll({
             include: [
                 { model: User, as: 'Followers' },
+                { model: User, as: 'Followings' },
             ],
             where: { role: '0' }
         })
@@ -243,10 +244,11 @@ const userController = {
                 let users = responses[0]
                 let users2 = responses[1]
                 let requestUser = responses[2]
-
+                console.log(users)
                 users = users.map(user => ({
                     ...user.dataValues,
-                    isFollowed: user.dataValues.Followers.map(d => d.id).includes(_helpers.getUser(req).id),
+                    isFollowed: user.dataValues.Followings.map(d => d.id).includes(_helpers.getUser(req).id),
+                    FollowingsCount: user.dataValues.Followings.length,
                     followersTime: user.dataValues.Followers.filter(d => { return (d.id === _helpers.getUser(req).id) }),
                     isNotCurrentUser: !(user.id === _helpers.getUser(req).id)
                 }))
@@ -278,7 +280,8 @@ const userController = {
                 sortCreatedAt = sortCreatedAt.sort((a, b) => b.followersTime - a.followersTime)
 
                 users = sortCreatedAt.concat(noCreatedAt)
-
+                users = users.sort((a, b) => b.FollowingsCount - a.FollowingsCount)
+                console.log(users)
 
                 return res.render('follower', { users, users2, requestUser: requestUser.toJSON() })
                 // return res.json({ text: requrestUser.toJSON() })
