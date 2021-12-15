@@ -101,13 +101,18 @@ const tweetController = {
 
     getReplies: (req, res) => {
         const tweetFindAll = Tweet.findByPk(req.params.id, {
-            include: [User]
+            include: [
+                User,
+                { model: Like },
+                { model: Reply }
+            ]
         })
 
         const userFindAll = User.findAll({
             include: [
                 { model: User, as: 'Followers' }
-            ]
+            ],
+            where: { role: '0' }
         })
 
         const replyFindAll = Reply.findAll({
@@ -122,17 +127,16 @@ const tweetController = {
             .then(responses => {
                 let [tweets, users, replies] = responses
                 users = users.map(user => ({
-
                     ...user.dataValues,
                     isUser: !user.Followers.map(d => d.id).includes(user.id),
                     // 計算追蹤者人數
                     FollowerCount: user.Followers.length,
                     // 判斷目前登入使用者是否已追蹤該 User 物件
-                    isFollowed: _helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+                    isFollowed: _helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+                    isNotCurrentUser: !(user.id === _helpers.getUser(req).id)
                 }))
                 // 依追蹤者人數排序清單
-                // console.log(users)
-
+                tweets.dataValues.isLiked = tweets.dataValues.Likes.map(d => d.UserId).includes(_helpers.getUser(req).id)
                 users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
                 return res.render('replyUser', { tweets: tweets.toJSON(), users, replies })

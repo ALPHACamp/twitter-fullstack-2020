@@ -140,7 +140,7 @@
           <div class="row align-items-center ">
             <div class="col-md-3 ">
               <span class="mr-2 ">
-                <button type="submit" data-toggle="modal" data-target="#tweetModel"
+                <button type="submit" data-toggle="modal" data-target="#tweetModel-{{this.id}}"
                   style="border: 0; background-color: #ffffff; ">
                   <i class="far fa-comment" data-id={{this.id}} style=""></i>
                 </button>{{ this.replyCount }}
@@ -163,8 +163,8 @@
         </div>
       </div>
       <!-- Modal -->
-      <div class="modal fade" id="tweetModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true" style="word-break:break-all;">
+      <div class="modal fade" id="tweetModel-{{this.id}}" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="word-break:break-all;">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">

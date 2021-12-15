@@ -100,20 +100,94 @@
       <div class="mt-2 ml-3">{{tweets.description}}
       </div>
       <div class="ml-3">
-        <small>{{tweet.createdAt}}</small>
+        <small>{{moment tweets.createdAt}}</small>
       </div>
       <div class="mt-2" style="border:1px #DEE2E6  solid; padding: 5px;">
-        <div class="font-weight-bold mt-2 ml-3">{{replies.length}} <span class="text-secondary mr-3">回覆</span> xxx <span
-            class="text-secondary">喜歡次數</span></div>
+        <div class="font-weight-bold mt-2 ml-3">
+          {{tweets.Replies.length}}
+          <span class="text-secondary mr-3">回覆</span>
+          {{tweets.Likes.length}}
+          <span class="text-secondary">喜歡次數</span>
+        </div>
       </div>
     </div>
 
-    <div class="row " style="border: 1px #DEE2E6 solid; padding: 5px;">
-      <span class="mr-5 ml-4"><i class="far fa-comment"></i> </span>
-      <span><i class="far fa-heart ml-5"> </i>
-      </span>
+    <div class="row align-items-center ">
+      <div class="col-md-3 ">
+        <span class="mr-2 ">
+          <button type="submit" data-toggle="modal" data-target="#tweetModel-{{tweets.id}}"
+            style="border: 0; background-color: #ffffff; ">
+            <i class="far fa-comment" data-id={{tweets.id}} style=""></i>
+          </button>{{ tweets.replyCount }}
+        </span>
+      </div>
+      <div class="col-md-3">
+        {{#if tweets.isLiked}}
+        <form action="/tweets/{{tweets.id}}/unlike" method="post" class="form-inline toTweet">
+          <span><button type="submit" class="btn btn-link" style="color: red; display:inline">
+              <i class="fas fa-heart " data-id={{tweets.id}}></i></button></span>
+        </form>
+        {{else}}
+        <form action="/tweets/{{tweets.id}}/like" method="post" class="form-inline toTweet">
+          <span><button type="submit" class="btn btn-link text-dark" style="display:context;">
+              <i class="far fa-heart" data-id={{tweets.id}}></i></button></span>
+        </form>
+        {{/if}}
+      </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="tweetModel-{{tweets.id}}" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="word-break:break-all;">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body" name="description">
+            <div class="row">
+              <div class="col-md-2 mt-2" style="padding-right: 0px; ">
+                <img src={{tweets.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+              </div>
+              <div class="col-md-10" style="padding-left: 0px;">
+                <div class="h6">{{tweets.User.name}} <span class="text-secondary">@{{tweets.User.account}}
+                    ．{{moment
+                    tweets.createdAt}}</span>
+                </div>
+                <div>
+                  {{tweets.description}}
+
+                </div>
+              </div>
+            </div>
+            {{!-- 當前使用者回覆區 --}}
+            <form action='/tweets/{{tweets.id}}/replies' method="post">
+              <div class="row mt-3">
+                <div class="col-md-2 mt-2" style="padding-right: 0px; ">
+                  <img src={{user.avatar}} class="rounded-circle" style="width: 50px; height:50px;">
+                </div>
+
+                <div class="col-md-10" style="padding:0 15px 0 0;">
+                  <textarea name="comment" id="" style="width:100%; min-height:220px;max-height:220px; border:none;"
+                    placeholder="推你的回覆"></textarea>
+                </div>
+              </div>
+
+          </div>
+          <div class="modal-footer" style="border-top: #E6ECF0;">
+            <button type="submit" class="btn btn-secondary"
+              style="border-radius: 40px; background-color:#FF6600; padding:0 6px; border:honeydew 1px solid;">回覆
+            </button>
+
+          </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
 
     {{!-- 導航欄 --}}
     {{!-- 留言區域 --}}
@@ -145,13 +219,12 @@
         跟隨誰
       </div>
       {{#each users}}
+      {{#if this.isNotCurrentUser}}
       <div
         style="display: flex; justify-content:space-between; border-top:#E6ECF0 1px solid; border-bottom:#E6ECF0 1px solid;"
         class="p-2">
         <div style="display: flex;">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            style="width: 50px; height:50px; border-radius:50%;">
+          <img src="{{this.avatar}}" style="width: 50px; height:50px; border-radius:50%;">
           <div>
             <div>{{this.name}}</div>
             <div>@{{this.User.account}}</div>
@@ -160,16 +233,19 @@
 
         <div>
           {{#if this.isFollowed }}
-          <form action="/user/self/following/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
               class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
           </form>
           {{else}}
-          <form action="/user/self/following/{{this.id}}" method="POST"><button type="submit"
-              class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">跟隨</button>
+          <form action="/followships" method="POST">
+            <input type="hidden" name="id" value="{{this.id}}">
+            <button type="submit" class="btn btn-block mt-1"
+              style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>
           </form>
           {{/if}}
         </div>
       </div>
+      {{/if}}
       {{/each}}
     </div>
   </div>
