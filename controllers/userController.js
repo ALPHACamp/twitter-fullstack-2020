@@ -231,7 +231,7 @@ const userController = {
                 let users = responses[0]
                 let users2 = responses[1]
                 let requestUser = responses[2]
-                console.log(users)
+                console.log(requestUser)
                 users = users.map(user => ({
                     ...user.dataValues,
                     isFollowed: user.dataValues.Followings.map(d => d.id).includes(_helpers.getUser(req).id),
