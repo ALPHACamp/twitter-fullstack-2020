@@ -120,7 +120,8 @@
 
         {{else}}
 
-        <form action="/followships/{{requestUser.id}}" method="POST" style="display: inline;">
+        <form action="/followships" method="POST" style="display: inline;">
+          <input type="hidden" name="id" value="{{requestUser.id}}">
           <button type="submit" class="btn  mt-1"
             style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨
           </button>
