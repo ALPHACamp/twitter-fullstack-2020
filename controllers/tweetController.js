@@ -16,6 +16,7 @@ const tweetController = {
                 { model: User, attributes: ['id', 'name', 'avatar', 'account', 'createdAt'] },
                 { model: Reply, },
                 { model: Like, },
+
                 { model: User, as: 'LikedUsers' }
             ],
             order: [['createdAt', 'DESC']]
