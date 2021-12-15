@@ -49,8 +49,8 @@
                 </div>
                 <div class="col-md-10">
                   <textarea name="description" id="postText"
-                    style="min-height:225px; max-height:225px; width:100%; border:none;" placeholder="有甚麼新鮮事?"
-                    required></textarea>
+                    style="min-height:225px; max-height:225px; width:100%; border:none;"
+                    placeholder="有甚麼新鮮事?"></textarea>
                 </div>
               </div>
 
@@ -267,8 +267,8 @@
 </div>
 
 
-<script>
-  import Qs from 'qs'
+<script type="module">
+
   const submitText = document.querySelector('#submitText')
   submitText.addEventListener('click', (event) => {
     event.preventDefault()
@@ -284,15 +284,23 @@
       console.log('準備發送訊息到後端儲存!!!')
       console.log(postText.value)
       console.log(`{{ user.id }}`)
-      axios.post('/tweets', Qs.stringify({ UserId: `{{user.id}}`, description: postText.value }))
-        .then(result => {
-          console.log(result)
+
+      const url = 'http://localhost:3000/tweets'
+      let data = {
+        UserId: `{{ user.id }}`,
+        description: postText.value
+      }
+      console.log(data)
+      axios.post(url, data)
+        .then(res => {
+          console.log(res)
+          if (res) {
+            window.location.href = `/tweets`
+          }
         })
-        .catch(error => {
-          console.log(error)
+        .catch(err => {
+          console.log(err)
         })
     }
-
   })
-
 </script>

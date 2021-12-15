@@ -26,6 +26,7 @@ module.exports = (app, passport) => {
             }
             return next()
         }
+        console.log(' ..... 沒有進到Controller ..... ')
         req.flash('error_messages', '帳號錯誤!')
         return res.redirect('/signin')
     }

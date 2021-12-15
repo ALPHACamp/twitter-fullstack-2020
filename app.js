@@ -12,7 +12,8 @@ const session = require('express-session')
 const passport = require('./config/passport')
 const methodOverride = require('method-override')
 app.use('/upload', express.static(__dirname + '/upload'))
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(express.urlencoded({ extended: true }))
 app.engine('handlebars', handlebars({

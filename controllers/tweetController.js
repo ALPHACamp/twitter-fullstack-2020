@@ -61,7 +61,7 @@ const tweetController = {
         console.log('============================================================')
 
         console.log(req.body)
-
+        // console.log(req)
         console.log('============================================================')
         const description = req.body.description
         const userId = _helpers.getUser(req).id
