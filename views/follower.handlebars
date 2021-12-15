@@ -100,6 +100,7 @@
 
     {{!-- 留言區域 --}}
     {{#each users }}
+    {{#if this.isNotCurrentUser}}
     <div class="row  border " style="padding-top:8px; padding-bottom:10px;">
       <div class="col-md-2" style="padding-right: 0px; ">
         <img src={{this.avatar}} class="rounded-circle" style="width: 50px; height:50px;">
@@ -125,6 +126,7 @@
 
       </div>
     </div>
+    {{/if}}
     {{/each}}
   </div>
 
@@ -136,6 +138,7 @@
         跟隨誰
       </div>
       {{#each users2}}
+      {{#if this.isNotCurrentUser}}
       <div
         style="display: flex; justify-content:space-between; border-top:#E6ECF0 1px solid; border-bottom:#E6ECF0 1px solid;"
         class="p-2">
@@ -162,6 +165,7 @@
           {{/if}}
         </div>
       </div>
+      {{/if}}
       {{/each}}
     </div>
   </div>
