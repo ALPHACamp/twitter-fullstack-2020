@@ -377,23 +377,35 @@
   const post_User_Data = document.querySelector('#post_User_Data')
   post_User_Data.addEventListener('click', (event) => {
     event.preventDefault()
+    var formData1 = new FormData();
+    var formData2 = new FormData();
+
     const cover = document.querySelector('#cover')
     const avatar = document.querySelector('#avatar')
     const name = document.querySelector('#name')
     const introduction = document.querySelector('#introduction')
-    console.log(event.target)
-    console.log(cover)
-    console.log(getFiles)
-    console.log(avatar)
-    console.log(getFiles2)
+    formData1.append('avatar', avatar.files[0])
+    formData2.append('cover', getFiles2)
+    console.log('=== 名稱 ===')
     console.log(name.value)
-    console.log(introduction.innerHTML)
-    axios.post('/api/users/11', { avatar: getFiles, cover: getFiles2, name: '1234' })
+    console.log('=== 自我介紹 ===')
+    console.log(introduction.value)
+    console.log('=== avatar ===')
+    console.log(formData1)
+    console.log(avatar.files[0])
+    console.log(getFiles)
+    console.log('=== cover ===')
+    console.log(formData2)
+    const data = { avatar: formData1, cover: formData2, name: name.value, introduction: introduction.value }
+    const userId = `{{user.id}}`
+    axios.post(`/api/users/${userId}`, data,)
       .then(res => {
         console.log(res)
-      }).catch(error => {
-        console.log(error)
       })
+      .catch(err => {
+        console.log(err)
+      })
+
   })
 
 </script>
