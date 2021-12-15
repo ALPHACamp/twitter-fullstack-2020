@@ -9,7 +9,8 @@ const Followship = db.Followship
 const _helpers = require('../_helpers')
 const tweetController = {
     getTweets: async (req, res) => {
-        console.log(req.body)
+
+
         const tweetsFindAll = await Tweet.findAll({
 
             include: [
@@ -17,6 +18,7 @@ const tweetController = {
                 { model: User, attributes: ['id', 'name', 'avatar', 'account', 'createdAt'] },
                 { model: Reply, },
                 { model: Like, },
+
                 { model: User, as: 'LikedUsers' }
             ],
             order: [['createdAt', 'DESC']]
@@ -55,6 +57,12 @@ const tweetController = {
     },
 
     postTweets: (req, res) => {
+
+        console.log('============================================================')
+
+        console.log(req.body)
+
+        console.log('============================================================')
         const description = req.body.description
         const userId = _helpers.getUser(req).id
 
