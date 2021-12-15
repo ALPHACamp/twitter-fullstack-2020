@@ -47,7 +47,7 @@
       </a>
       <div class="name-info ">
         <h5 class="header1 ml-3 mb-0">{{user.name}}</h5>
-        <div class="atAccount ml-3 mb-1">3推文</div>
+        <div class="atAccount ml-3 mb-1">{{user.Tweets.length}}推文</div>
       </div>
     </div>
     {{!-- user-photos --}}
@@ -70,6 +70,15 @@
       </div>
       {{!-- edit-user-button --}}
       <div class="d-flex justify-content-end mt-1 pr-1">
+        {{!-- if loginUser.id === nowUser.id --}}
+        {{!-- 畫面上只有編輯資料按鈕 --}}
+        {{!-- else --}}
+        {{!-- 畫面上有icon:[ 鈴鐺、email]、追蹤/正在追蹤按鈕 --}}
+        {{!-- 追蹤/正在追蹤按鈕 --}}
+        {{!-- if isFollowed --}}
+        {{!-- display 正在跟隨 --}}
+        {{!-- else --}}
+        {{!-- display 跟隨 --}}
         {{#ifCond loginUser.id user.id }}
         {{else}}
         <div class="icon-outline pt-1">
@@ -94,10 +103,12 @@
         <div class="follow d-flex">
           <div class="followship d-flex m-0 mt-2">
             <a href="/users/{{user.id}}/followings" class="d-flex">
+            {{!-- display 此user的追蹤中人數total --}}
               <div class="follow-title">1個</div>
               <div class="following-body">跟隨中</div>
             </a>
             <a href="/users/{{user.id}}/followers" class="d-flex ml-3">
+            {{!-- display 此user的追蹤者人數total --}}
               <div class="follow-title">1個</div>
               <div class="follower-body">跟隨者</div>
             </a>
@@ -108,12 +119,14 @@
       <br>
       <ul class="nav nav-tabs">
         <li class="nav-item">
+          {{!-- 放get users/nowUser.id/tweets連結 --}}
           <a class="nav-link active" href="#">推文</a>
         </li>
         <li class="nav-item">
           <a class="nav-link " href="/users/{{user.id}}/replies">推文與回覆</a>
         </li>
         <li class="nav-item">
+          {{!-- 放get users/nowUser.id/likes連結 --}}
           <a class="nav-link " href="#">喜歡的內容</a>
         </li>
       </ul>
@@ -138,16 +151,36 @@
               <div class="reply-like d-flex mt-2">
                 <div>
                   <i class="far fa-comment mr-2"></i>
+                  {{!-- 此則貼文的總回覆total --}}
                   3
                 </div>
-                <form action="like" method="POST">
+                {{!-- 尚未修改完成 --}}
+                {{!-- if isLiked --}}
+                {{!-- 紅色邊線愛心 unlike--}}
+                {{#ifCond loginUser.id }}
+                <form action="/tweets/{{this.id}}/unlike" method="POST">
                   <div class="like-button ml-4">
                     <button type="submit" class="like-button">
                       <i class="far fa-heart"></i>
                     </button>
-                    3
+                    {{!-- 此則貼文的總liked total --}}
+                    {{this.likeCounts}}
                   </div>
                 </form>
+                {{!-- else --}}
+                {{else}}
+                {{!-- 黑色邊線愛心 like--}}
+                <form action="/tweets/{{this.id}}/like" method="POST">
+                  <div class="like-button ml-4">
+                    <button type="submit" class="like-button">
+                      <i class="far fa-heart"></i>
+                    </button>
+                    {{!-- 此則貼文的總liked total --}}
+                    {{this.likeCounts}}
+                  </div>
+                </form>
+                {{/ifCond}}
+                
               </div>
             </div>
           </div>
