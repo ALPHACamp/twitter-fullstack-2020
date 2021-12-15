@@ -9,7 +9,8 @@ const Followship = db.Followship
 const _helpers = require('../_helpers')
 const tweetController = {
     getTweets: async (req, res) => {
-        console.log(req.body)
+
+
         const tweetsFindAll = await Tweet.findAll({
 
             include: [
@@ -56,6 +57,12 @@ const tweetController = {
     },
 
     postTweets: (req, res) => {
+
+        console.log('============================================================')
+
+        console.log(req.body)
+
+        console.log('============================================================')
         const description = req.body.description
         const userId = _helpers.getUser(req).id
 
