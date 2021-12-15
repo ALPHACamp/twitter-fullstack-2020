@@ -27,12 +27,12 @@
     </ul>
 
     <button class="btn btn-block text-light" style="border-radius: 40px; background-color:#FF6600" href="#"
-      data-toggle="modal" data-target="#exampleModal">推文</button>
+      data-toggle="modal" data-target="#postTextModal">推文</button>
 
 
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="postTextModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -48,7 +48,7 @@
                   <img src={{user.avatar}} class="rounded-circle" style="width: 60px; height:60px;">
                 </div>
                 <div class="col-md-10">
-                  <textarea name="description" id=""
+                  <textarea name="description" id="postText"
                     style="min-height:225px; max-height:225px; width:100%; border:none;" placeholder="有甚麼新鮮事?"
                     required></textarea>
                 </div>
@@ -56,7 +56,9 @@
 
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary" style="border-radius: 40px; background-color:#FF6600 ">推文
+              <span id="postTextErrorArea" style="color: red; margin-right:20px;"></span>
+              <button type="submit" id="submitText" class="btn btn-primary"
+                style="border-radius: 40px; background-color:#FF6600 ">推文
               </button>
             </div>
           </form>
@@ -263,3 +265,33 @@
   </div>
 </div>
 </div>
+
+
+<script>
+  const submitText = document.querySelector('#submitText')
+  submitText.addEventListener('click', (event) => {
+    event.preventDefault()
+    const postText = document.querySelector('#postText')
+    let postTextErrorArea = document.querySelector('#postTextErrorArea')
+    if (postText.value.trim().length === 0) {
+      postTextErrorArea.innerHTML = '內容不可為空白!!!'
+    } else if (postText.value.length > 140) {
+
+      postTextErrorArea.innerHTML = '字數不可超過140個字!!!'
+
+    } else {
+      console.log('準備發送訊息到後端儲存!!!')
+      console.log(postText.value)
+      console.log(`{{ user.id }}`)
+      axios.post('/tweets', { UserId: `{{user.id}}`, description: postText.value })
+        .then(result => {
+          console.log(result)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+
+  })
+
+</script>
