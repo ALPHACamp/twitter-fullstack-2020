@@ -206,13 +206,16 @@ const userController = {
         const usersFindAll = User.findAll({
             include: [
                 { model: User, as: 'Followers' },
-            ]
+                { model: User, as: 'Followings' },
+            ],
+            where: { role: '0' }
         })
 
         let userFindAll2 = User.findAll({
             include: [
                 { model: User, as: 'Followers' }
-            ]
+            ],
+            where: { role: '0' }
         })
         const requestUser = User.findByPk(req.params.id, {
             include: [
@@ -228,10 +231,13 @@ const userController = {
                 let users = responses[0]
                 let users2 = responses[1]
                 let requestUser = responses[2]
+                console.log(users)
                 users = users.map(user => ({
                     ...user.dataValues,
-                    isFollowed: req.user.Followers.map(d => d.id).includes(user.id),
-                    followersTime: req.user.Followers.filter(d => { return (d.id === user.id) })
+                    isFollowed: user.dataValues.Followings.map(d => d.id).includes(_helpers.getUser(req).id),
+                    FollowingsCount: user.dataValues.Followings.length,
+                    followersTime: user.dataValues.Followers.filter(d => { return (d.id === _helpers.getUser(req).id) }),
+                    isNotCurrentUser: !(user.id === _helpers.getUser(req).id)
                 }))
 
                 users2 = users2.map(user => ({
@@ -240,7 +246,8 @@ const userController = {
                     // 計算追蹤者人數
                     FollowerCount: user.Followers.length,
                     // 判斷目前登入使用者是否已追蹤該 User 物件
-                    isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+                    isFollowed: _helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+                    isNotCurrentUser: !(user.id === _helpers.getUser(req).id)
                 }))
                 // 依追蹤者人數排序清單
                 users2 = users2.sort((a, b) => b.FollowerCount - a.FollowerCount)
@@ -260,6 +267,8 @@ const userController = {
                 sortCreatedAt = sortCreatedAt.sort((a, b) => b.followersTime - a.followersTime)
 
                 users = sortCreatedAt.concat(noCreatedAt)
+                users = users.sort((a, b) => b.FollowingsCount - a.FollowingsCount)
+                console.log(users)
 
                 return res.render('follower', { users, users2, requestUser: requestUser.toJSON() })
             }).catch(error => {
@@ -273,11 +282,13 @@ const userController = {
             include: [
                 { model: User, as: 'Followings' },
             ],
+            where: { role: '0' }
         })
         let userFindAll2 = User.findAll({
             include: [
                 { model: User, as: 'Followers' }
-            ]
+            ],
+            where: { role: '0' }
         })
         const requestUser = User.findByPk(req.params.id, {
             include: [
@@ -295,8 +306,9 @@ const userController = {
                 let requestUser = responses[2]
                 users = users.map(user => ({
                     ...user.dataValues,
-                    isFollowings: req.user.Followings.map(d => d.id).includes(user.id),
-                    followingsTime: req.user.Followings.filter(d => { return (d.id === user.id) })
+                    isFollowings: _helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+                    followingsTime: _helpers.getUser(req).Followings.filter(d => { return (d.id === user.id) }),
+                    isNotCurrentUser: !(user.id === _helpers.getUser(req).id)
                 }))
 
                 users2 = users2.map(user => ({
@@ -305,7 +317,8 @@ const userController = {
                     // 計算追蹤者人數
                     FollowerCount: user.Followers.length,
                     // 判斷目前登入使用者是否已追蹤該 User 物件
-                    isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+                    isFollowed: _helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+                    isNotCurrentUser: !(user.id === _helpers.getUser(req).id)
                 }))
                 // 依追蹤者人數排序清單
                 users2 = users2.sort((a, b) => b.FollowerCount - a.FollowerCount)
@@ -476,6 +489,14 @@ const userController = {
         const userId = user.id
         let cover = ''
         let avatar = ''
+        console.log('====== req.body =====')
+        console.log(req.params.id)
+        console.log(req.body)
+        console.log(req.files)
+        console.log('======  files ======')
+        console.log(files)
+        console.log('======  userId ======')
+        console.log(userId)
         if (files) {
             cover = files.cover
             avatar = files.avatar
@@ -574,8 +595,10 @@ const userController = {
                             cover: user.cover,
                             introduction: req.body.introduction
                         }).then(user => {
-                            // return res.json({ status: 'success', data: user })
-                            return res.redirect('back')
+                            console.log('送回API呼叫的資料')
+
+                            return res.json({ status: 'success', data: user })
+                            // return res.redirect('back')
                         }).catch(error => {
                             console.log(error)
                         })

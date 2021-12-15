@@ -72,7 +72,7 @@
   <div class="col-md-6" style="position: relative;">
     <div class="row align-items-center mb-3 mt-3">
       <div class="col-md-2">
-        <i class="fas fa-arrow-left"></i>
+        <a href="/tweets"><i class="fas fa-arrow-left"></i></a>
       </div>
       <div class="col-md-10">
         <div class="row">
@@ -181,8 +181,8 @@
             </div>
             <div class="p-3">
               <div style="background-color: #F5F8FA;">
-                <small for="exampleInputEmail1" style="color:#657786">名稱1</small>
-                <input type="text" id="exampleInputEmail1" name="name"
+                <small for="name" style="color:#657786">名稱1</small>
+                <input type="text" id="name" name="name"
                   style="border:0px; width:100%; border-bottom:2px solid grey; background-color:#F5F8FA;"
                   value="{{requestUser.name}}">
 
@@ -190,8 +190,8 @@
 
 
               <div style="background-color: #F5F8FA; margin-top:40px;">
-                <small for="exampleInputEmail1" style="color:#657786">自我介紹</small>
-                <textarea id="exampleInputEmail1" name="introduction"
+                <small for="introduction" style="color:#657786">自我介紹</small>
+                <textarea id="introduction" name="introduction"
                   style="border:0px; width:100%; border-bottom:2px solid grey; background-color:#F5F8FA; height:150px;"
                   value="">{{requestUser.introduction}}</textarea>
 
@@ -199,7 +199,8 @@
 
             </div>
             <button type="submit" class="btn btn-secondary"
-              style="border-radius: 40px; background-color:#FF6600; padding:0 6px; border:honeydew 1px solid;">儲存
+              style="border-radius: 40px; background-color:#FF6600; padding:0 6px; border:honeydew 1px solid;"
+              id="post_User_Data">儲存
             </button>
           </form>
 
@@ -344,9 +345,10 @@
   avatar.addEventListener("change", handleFiles, false);
   cover.addEventListener("change", handleFiles2, false);
 
+  let getFiles, getFiles2
   function handleFiles() {
     const file = this.files[0];//將上傳檔案轉換為base64字串
-
+    getFiles = this.files[0]
     const fr = new FileReader();//建立FileReader物件
     fr.onload = function (e) {
       console.log(e.target.result)
@@ -355,11 +357,12 @@
 
     // 使用 readAsDataURL 將圖片轉成 Base64
     fr.readAsDataURL(file);    /* now you can work with the file list */
+    return fr
   }
 
   function handleFiles2() {
     const file = this.files[0];//將上傳檔案轉換為base64字串
-
+    getFiles2 = this.files[0]
     const fr = new FileReader();//建立FileReader物件
     fr.onload = function (e) {
       console.log(e.target.result)
@@ -370,5 +373,26 @@
     fr.readAsDataURL(file);    /* now you can work with the file list */
   }
 
+  const post_User_Data = document.querySelector('#post_User_Data')
+  post_User_Data.addEventListener('click', (event) => {
+    event.preventDefault()
+    const cover = document.querySelector('#cover')
+    const avatar = document.querySelector('#avatar')
+    const name = document.querySelector('#name')
+    const introduction = document.querySelector('#introduction')
+    console.log(event.target)
+    console.log(cover)
+    console.log(getFiles)
+    console.log(avatar)
+    console.log(getFiles2)
+    console.log(name.value)
+    console.log(introduction.innerHTML)
+    axios.post('/api/users/11', { avatar: getFiles, cover: getFiles2, name: '1234' })
+      .then(res => {
+        console.log(res)
+      }).catch(error => {
+        console.log(error)
+      })
+  })
 
 </script>

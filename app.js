@@ -1,7 +1,7 @@
 const express = require('express')
 const handlebars = require('express-handlebars')
 const helpers = require('./_helpers');
-
+const bodyParser = require('body-parser')
 const app = express()
 const port = process.env.PORT || 3000
 const db = require('./models')
@@ -12,7 +12,7 @@ const session = require('express-session')
 const passport = require('./config/passport')
 const methodOverride = require('method-override')
 app.use('/upload', express.static(__dirname + '/upload'))
-
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(express.urlencoded({ extended: true }))
 app.engine('handlebars', handlebars({

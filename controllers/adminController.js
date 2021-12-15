@@ -1,6 +1,9 @@
+const { response } = require('express')
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
+const Like = db.Like
+const Reply = db.Reply
 const pageLimit = 10
 
 const adminController = {
@@ -66,8 +69,26 @@ const adminController = {
 
     deleteTweet: (req, res) => {
         const id = req.params.id
-        Tweet.findByPk(id)
+        Tweet.findByPk(id, {
+            include: [
+                { model: Like },
+                { model: Reply }
+            ]
+        })
             .then(tweet => {
+                const likedTweet = Like.findAll({ where: { TweetId: tweet.id } })
+                const replyTweet = Reply.findAll({ where: { TweetId: tweet.id } })
+                // console.log(tweet.dataValues.Replies)
+                Promise.all([likedTweet, replyTweet])
+                    .then(responses => {
+                        let [likedTweet, replyTweet] = responses
+                        likedTweet.forEach(like => {
+                            like.destroy()
+                        })
+                        replyTweet.forEach(reply => {
+                            reply.destroy()
+                        })
+                    })
                 tweet.destroy()
                     .then((tweet) => {
                         req.flash('success_messages', '成功刪除推文！')
