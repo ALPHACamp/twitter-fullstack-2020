@@ -11,6 +11,8 @@ const Reply = db.Reply
 const fs = require('fs')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = '244d29ed093c092'
+const _helpers = require('../_helpers')
+
 
 const userController = {
     getSignUpPage: (req, res) => {
@@ -83,19 +85,25 @@ const userController = {
 
 
     addFollowing: (req, res) => {
-        return Followship.create({
-            followerId: req.user.id,
-            followingId: req.params.userId
-        }).then((followship) => {
-            return res.redirect('back')
-        })
+
+        if (_helpers.getUser(req).id === Number(req.body.id)) {
+            return res.json({ status: 'error', message: '不可以跟隨自己' })
+        } else {
+            return Followship.create({
+                followerId: _helpers.getUser(req).id,
+                followingId: req.body.id
+            }).then((followship) => {
+                return res.redirect('back')
+            })
+        }
+
     },
 
     removeFollowing: (req, res) => {
         return Followship.findOne({
             where: {
-                followerId: req.user.id,
-                followingId: req.params.userId
+                followerId: _helpers.getUser(req).id,
+                followingId: req.params.id
             }
         }).then((followship) => {
             followship.destroy()
@@ -106,7 +114,7 @@ const userController = {
     },
 
     getSetting: (req, res) => {
-        return User.findByPk(req.user.id).then(user => {
+        return User.findByPk(_helpers.getUser(req).id).then(user => {
 
             return res.render('setting', { user: user.toJSON() })
         })
@@ -115,7 +123,7 @@ const userController = {
     postSetting: (req, res) => {
         // console.log(req.body)
         // console.log(req.user)
-        return User.findByPk(req.user.id).then(user => {
+        return User.findByPk(_helpers.getUser(req).id).then(user => {
             console.log(user)
             if (req.body.name.length > 50) {
                 req.flash('error_messages', '名稱不能大於50個字')
@@ -135,6 +143,8 @@ const userController = {
     },
 
     getUserSelf: (req, res) => {
+
+        console.log('進入個人資料頁....')
         const tweetFindAll = Tweet.findAll({
             order: [['createdAt', 'DESC']],
             where: { UserId: req.params.id },
@@ -147,7 +157,9 @@ const userController = {
         const userFindAll = User.findAll({
             include: [
                 { model: User, as: 'Followers' }
-            ]
+            ],
+            where: { role: '0' }
+
         })
 
         const requestUser = User.findByPk(req.params.id, {
@@ -161,9 +173,9 @@ const userController = {
 
         Promise.all([tweetFindAll, userFindAll, requestUser])
             .then(responses => {
-                let tweets = responses[0]
-                let users = responses[1]
-                let requestUser = responses[2]
+
+                let [tweets, users, requestUser] = responses
+
                 users = users.map(user => ({
 
                     ...user.dataValues,
@@ -171,10 +183,11 @@ const userController = {
                     // 計算追蹤者人數
                     FollowerCount: user.Followers.length,
                     // 判斷目前登入使用者是否已追蹤該 User 物件
-                    isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+                    isFollowed: _helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+                    isNotCurrentUser: !(user.id === _helpers.getUser(req).id)
                 }))
+
                 // 依追蹤者人數排序清單
-                // console.log(users)
 
                 users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
@@ -182,17 +195,17 @@ const userController = {
                     ...tweet.dataValues,
                     reliesCount: tweet.Replies.length,
                     likeCount: tweet.LikedUsers.length,
-                    isLikedTweet: req.user.LikedTweets.map(d => d.id).includes(tweet.id)
+                    isLikedTweet: tweet.LikedUsers.map(d => d.id).includes(_helpers.getUser(req).id)
 
                 }))
 
-                if (req.user.id === requestUser.toJSON().id) {
+                if (_helpers.getUser(req).id === requestUser.toJSON().id) {
                     requestUser.dataValues.isUser = true
                 } else {
                     requestUser.dataValues.isUser = false
                 }
 
-                requestUser.dataValues.isFollowing = requestUser.toJSON().Followers.map(d => d.id).includes(req.user.id)
+                requestUser.dataValues.isFollowing = requestUser.toJSON().Followers.map(d => d.id).includes(_helpers.getUser(req).id)
 
                 return res.render('user', { tweets, users, requestUser: requestUser.toJSON() })
 
@@ -231,7 +244,7 @@ const userController = {
                 let users = responses[0]
                 let users2 = responses[1]
                 let requestUser = responses[2]
-                console.log(requestUser)
+                console.log(users)
                 users = users.map(user => ({
                     ...user.dataValues,
                     isFollowed: user.dataValues.Followings.map(d => d.id).includes(_helpers.getUser(req).id),
@@ -271,6 +284,7 @@ const userController = {
                 console.log(users)
 
                 return res.render('follower', { users, users2, requestUser: requestUser.toJSON() })
+                // return res.json({ text: requrestUser.toJSON() })
             }).catch(error => {
                 console.log(error)
             })
@@ -358,7 +372,8 @@ const userController = {
         let userFindAll2 = User.findAll({
             include: [
                 { model: User, as: 'Followers' }
-            ]
+            ],
+            where: { role: '0' }
         })
         const requestUser = User.findByPk(req.params.id, {
             include: [
@@ -381,22 +396,23 @@ const userController = {
                 }))
                 users2 = users2.map(user => ({
                     ...user.dataValues,
-                    isUser: !user.Followers.map(d => d.id).includes(user.id),
                     // 計算追蹤者人數
                     FollowerCount: user.Followers.length,
                     // 判斷目前登入使用者是否已追蹤該 User 物件
-                    isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+                    isFollowed: _helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+                    isNotCurrentUser: !(user.id === _helpers.getUser(req).id)
+
                 }))
                 // 依追蹤者人數排序清單
                 users2 = users2.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-                if (req.user.id === requestUser.toJSON().id) {
+                if (_helpers.getUser(req).id === requestUser.toJSON().id) {
                     requestUser.dataValues.isUser = true
                 } else {
                     requestUser.dataValues.isUser = false
                 }
 
-                requestUser.dataValues.isFollowing = requestUser.toJSON().Followers.map(d => d.id).includes(req.user.id)
+                requestUser.dataValues.isFollowing = requestUser.toJSON().Followers.map(d => d.id).includes(_helpers.getUser(req).id)
 
 
                 return res.render('userLike', { likedTweets: liked, users2, requestUser: requestUser.toJSON() })
@@ -419,11 +435,13 @@ const userController = {
         const userFindAll2 = User.findAll({
             include: [
                 { model: User, as: 'Followers' }
-            ]
+            ],
+            where: { role: '0' }
+
         })
         const tweetFindAll = Tweet.findAll({
             order: [['createdAt', 'DESC']],
-            where: { UserId: req.user.id },
+            where: { UserId: _helpers.getUser(req).id },
             include: [User,
                 { model: Reply, include: [Tweet] },
                 { model: User, as: 'LikedUsers' },
@@ -446,21 +464,22 @@ const userController = {
                 let requestUser = responses[3]
                 users2 = users2.map(user => ({
                     ...user.dataValues,
-                    isUser: !user.Followers.map(d => d.id).includes(user.id),
                     // 計算追蹤者人數
                     FollowerCount: user.Followers.length,
                     // 判斷目前登入使用者是否已追蹤該 User 物件
-                    isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+                    isFollowed: _helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+                    isNotCurrentUser: !(user.id === _helpers.getUser(req).id)
+
                 }))
                 users2 = users2.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-                if (req.user.id === requestUser.toJSON().id) {
+                if (_helpers.getUser(req).id === requestUser.toJSON().id) {
                     requestUser.dataValues.isUser = true
                 } else {
                     requestUser.dataValues.isUser = false
                 }
 
-                requestUser.dataValues.isFollowing = requestUser.toJSON().Followers.map(d => d.id).includes(req.user.id)
+                requestUser.dataValues.isFollowing = requestUser.toJSON().Followers.map(d => d.id).includes(_helpers.getUser(req).id)
 
                 return res.render('userReplies', { replies, users2, tweets, requestUser: requestUser.toJSON() })
             }).catch(error => {
@@ -474,10 +493,18 @@ const userController = {
 
     getUserApi: (req, res) => {
         const userId = req.params.id
+        // console.log('================================================')
+        // console.log(userId)
+        // console.log('================================================')
         User.findByPk(userId)
             .then(user => {
-                console.log(user)
-                return res.json({ status: 'success', data: user })
+                // console.log(user)
+                if (_helpers.getUser(req).id !== user.id) {
+                    return res.json({ status: 'error' })
+                } else {
+                    return res.json({ status: 'success', data: user.toJSON(), name: user.toJSON().name })
+                }
+
             })
             .catch(error => {
                 console.log(error)
@@ -580,10 +607,14 @@ const userController = {
             })
         } else {
             console.log('完全沒有檔案')
-            if (req.body.introduction.trim().length > 160) {
-                req.flash('error_messages', '字數超出上限!')
-                return res.redirect('back')
-            } if (req.body.name.trim().length > 50) {
+            console.log(req.body)
+            if (req.body.introduction) {
+                if (req.body.introduction.trim().length > 160) {
+                    req.flash('error_messages', '字數超出上限!')
+                    return res.redirect('back')
+                }
+            }
+            if (req.body.name.trim().length > 50) {
                 req.flash('error_messages', '字數超出上限50個字!')
                 return res.redirect('back')
             } else {
