@@ -1,0 +1,81 @@
+<div class="row mt-5">
+
+  {{!-- 左邊區域 --}}
+  <div class="col-md-3" style="width:auto; height:auto;">
+    <img class="" style="position: relative; top: 8px; margin-left: 130px;" width="40px"
+      src="https://static.accupass.com/org/2008250550226683301600.jpg">
+
+    <ul class="nav flex-column py-5" style="margin-left: 120px;">
+      <li class="nav-item">
+        <a class="nav-link text-dark"
+          style="font-family: Noto Sans TC; font-size: 18px; font-style: normal; font-weight: 700; line-height:26px; letter-spacing: 0px; "
+          href="/admin/tweets"><i class="fas fa-home"></i> 推文清單</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"
+          style="font-family: Noto Sans TC; font-size: 18px; font-style: normal; font-weight: 700; line-height: 26px; letter-spacing: 0px; color:#FF6600;"
+          href="/admin/users"><i class="fas fa-user"></i> 使用者列表</a>
+      </li>
+    </ul>
+  </div>
+
+  {{!-- 登出鈕 --}}
+  <div class="ml-3" style=" position:fixed; bottom:0px; left: 120px;">
+    <a class="text-dark font-weight-bold" style="border-radius: 40px; width:150px;" href="/logout"><i class="fas
+          fa-sign-out-alt"></i> 登出</a>
+  </div>
+
+
+
+
+  {{!-- 右邊區域------------------------------------------------------------------- --}}
+
+  <div class="col-md-9" style="">
+
+    <div class="" style="margin: 10px;">
+      <div class="h5 font-weight-bold">使用者列表</div>
+    </div>
+
+    {{!-- 使用者名單 --}}
+    {{#each users}}
+    <div
+      style="border-radius: 10px; height: 314px; width: 245px; left: 260px; top: 0px; background-color: #F6F7F8; margin: 6px; display: inline-block;">
+
+      {{!-- 背景圖區域 --}}
+      <div class="row bg bg-info" style="margin: auto;text-align:center;">
+        {{#if this.cover}}
+        <img class="img-fluid" src="{{this.cover}}" alt="..."
+          style="border-radius: 10px 10px 0px 0px;width: 245px; height: 140px;">
+        {{else}}
+        <img class="img-fluid"
+          src="http://www.mansion-taiwan.com.tw/wp-content/uploads/2017/03/Vincom-Landmark-Tower-Project-Landmark-81-2.jpg"
+          alt="..." style="border-radius: 10px 10px 0px 0px;width: 245px; height: 140px;">
+        {{/if}}
+      </div>
+      {{!-- 大頭貼區塊 --}}
+      <div class="row mt-1 mb-2" style="position: relative; top:-50px; right: -50px;text-align:center;">
+        <div class="col-md-8">
+          {{#if this.avatar}}
+          <img src="{{this.avatar}}" alt="..." class="rounded-circle" style="width: 100px; height:100px;">
+          {{else}}
+          <img src="{{this.avatar}}" alt="..." class="rounded-circle" style="width: 100px; height:100px;">
+          {{/if}}
+
+          <div class="h4" style="margin-bottom:0;">{{this.name}}</div>
+          <div class="">@{{this.account}}</div>
+          <div class="mt-2">
+            <div style="display: inline-block;"><i class="far fa-comment"></i> {{this.Tweets.length}}</div>
+            <div style="display: inline-block;"><i class="far fa-heart"></i> {{this.LikedTweets.length}}</div>
+          </div>
+          <div class="mt-2">
+            <p style="text-align:left; display: inline-block; font-size: 14px;"> {{this.Followings.length}} 個跟隨中</p>
+            <p style="text-align:right; display: inline-block; font-size: 14px;"> {{this.Followers.length}} 位追隨者</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+
+
+
+  </div>

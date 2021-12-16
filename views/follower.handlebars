@@ -1,0 +1,173 @@
+<div class="row mt-5">
+
+  {{!-- 左邊區域 --}}
+  <div class="col-md-3">
+    <img class="" style="position: relative; top: 8px; margin-left:15px; margin-bottom:20px" width="40px"
+      src="https://static.accupass.com/org/2008250550226683301600.jpg">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active text-dark font-weight-bold" href="/tweets"><i class="fas fa-home"></i> 首頁</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark font-weight-bold" href="/users/{{requestUser.id}}/tweets"><i
+            class="fas fa-user"></i> 個人資料</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark font-weight-bold" href="/setting"><i class="far fa-sun"></i> 設定</a>
+      </li>
+    </ul>
+
+
+    <button class="btn btn-block text-light" style="border-radius: 40px; background-color:#FF6600" href="#"
+      data-toggle="modal" data-target="#exampleModal">推文</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" style="color:#FF6600;">&times;</span>
+            </button>
+          </div>
+          <form action="#" method="post">
+            <div class="modal-body" style="height: 250px;">
+              <div class="row" style="height: 100%;">
+                <div class="col-md-2">
+                  <img src="https://static.newmobilelife.com/wp-content/uploads/2018/11/oppa1.jpg"
+                    class="rounded-circle" style="width: 60px; height:60px;">
+                </div>
+                <div class="col-md-10">
+                  <textarea name="" id="" style="min-height:225px; max-height:225px; width:100%; border:none;"
+                    placeholder="有甚麼新鮮事?"></textarea>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" style="border-radius: 40px; background-color:#FF6600 ">推文
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+  </div>
+
+  <div class="ml-3" style="position:fixed; bottom:0px; left: 20px;">
+    <a class="text-dark font-weight-bold" style="border-radius: 40px; width:150px;" href="/logout"><i class="fas
+        fa-sign-out-alt"></i> 登出</a>
+  </div>
+  {{!-- 中間區域 --}}
+  <div class="col-md-6" style="position: relative;">
+    <div class="row align-items-center mb-3 mt-3">
+      <div class="col-md-2">
+        <a href="/users/{{requestUser.id}}/tweets"><i class="fas fa-arrow-left"></i></a>
+      </div>
+      <div class="col-md-10">
+        <div class="row">
+          <div class="h5">{{requestUser.name}}</div>
+        </div>
+        <div class="row">
+          <small> {{requestUser.Tweets.length}} 則貼文</small>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    {{!-- 導航欄 --}}
+    <div class="row mt-3 ">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link active font-weight-bold" style="color:#FF6600; border-bottom:3px #FF6600 solid;"
+            href="#">跟隨者</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-secondary font-weight-bold" href="/users/{{requestUser.id}}/followings">正在跟隨</a>
+        </li>
+
+      </ul>
+    </div>
+
+    {{!-- 留言區域 --}}
+    {{#each users }}
+    {{#if this.isNotCurrentUser}}
+    <div class="row  border " style="padding-top:8px; padding-bottom:10px;">
+      <div class="col-md-2" style="padding-right: 0px; ">
+        <img src={{this.avatar}} class="rounded-circle" style="width: 50px; height:50px;">
+      </div>
+      <div class="col-md-10" style="padding-left: 0px;">
+        <div style="display: flex; justify-content:space-between">
+          <div>
+            <div class="font-weight-bold">{{this.name}} </div>
+            <div class="text-secondary">@{{this.account}}</div>
+            <div class="text-secondary">{{this.introduction}}</div>
+          </div>
+
+          {{#if this.isFollowed }}
+          <button type="submit" class="btn text-light mt-1"
+            style="border-radius: 40px; background-color:#FF6600; width:90px; height:38px;">正在跟隨</button>
+
+          {{else}}
+          <button type="submit" class="btn mt-1"
+            style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600; width:58px; height:38px;">跟隨</button>
+
+          {{/if}}
+        </div>
+
+      </div>
+    </div>
+    {{/if}}
+    {{/each}}
+  </div>
+
+  {{!-- 右邊區域 --}}
+  <div class="col-md-3">
+    <div class='rounded' style="background-color: #F5F8FA ;">
+
+      <div class="p-2">
+        跟隨誰
+      </div>
+      {{#each getTopFollowing}}
+      {{#if this.isNotCurrentUser}}
+      <div
+        style="display: flex; justify-content:space-between; border-top:#E6ECF0 1px solid; border-bottom:#E6ECF0 1px solid;"
+        class="p-2">
+        <div style="display: flex;">
+          <img src={{this.avatar}} style="width: 50px; height:50px; border-radius:50%;">
+          <div>
+            <div>{{this.name}}</div>
+            <div>@{{this.account}}</div>
+          </div>
+        </div>
+
+        <div>
+          {{#if this.isFollowed }}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-block text-light mt-1"
+              style="border-radius: 40px; background-color:#FF6600;">正在跟隨</button>
+          </form>
+          {{else}}
+          <form action="/followships" method="POST">
+            <input type="hidden" name="id" value="{{this.id}}">
+            <button type="submit" class="btn btn-block mt-1"
+              style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+      {{/if}}
+      {{/each}}
+    </div>
+  </div>
+</div>
+</div>

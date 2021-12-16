@@ -16,12 +16,12 @@ describe('# Admin::User login request', () => {
   context('go to admin login page', () => {
     // 帶入正確登入帳號、密碼可以成功登入 
     describe('if admin want to log in', () => {
-      before(async() => {
+      before(async () => {
         // 在測試資料庫中，新增 mock 資料
         await db.User.create({
-          name: 'User1', 
-          email: 'User1', 
-          account: 'User1', 
+          name: 'User1',
+          email: 'User1',
+          account: 'User1',
           password: bcrypt.hashSync('User1', bcrypt.genSaltSync(10)),
           role: 'admin'
         })
@@ -32,7 +32,7 @@ describe('# Admin::User login request', () => {
         request(app)
           .get('/admin/signin')
           .expect(200)
-          .end(function(err, res) {
+          .end(function (err, res) {
             if (err) return done(err);
             done();
           });
@@ -46,10 +46,10 @@ describe('# Admin::User login request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .expect('Location', '/admin/tweets') // 可以正確回到 /admin/tweets 頁面
-          .end(function(err, res) {
+          .end(function (err, res) {
             if (err) return done(err);
-              return done();
-            })
+            return done();
+          })
       });
 
       it('login fail', (done) => {
@@ -60,21 +60,21 @@ describe('# Admin::User login request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .expect('Location', '/admin/signin') // 回到登入頁面
-          .end(function(err, res) {
+          .end(function (err, res) {
             if (err) return done(err);
-              return done();
-            })
+            return done();
+          })
       });
 
-      
+
       after(async () => {
         // 清除測試資料庫資料
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
-        await db.User.destroy({where: {},truncate: true, force: true})
+        await db.User.destroy({ where: {}, truncate: true, force: true })
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
       })
 
     });
-    
+
   });
 });

@@ -1,0 +1,277 @@
+[33mcommit 7e5036def21b473b80ad8db20b96e4f60e619b8a[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Lettuce Lu <lettuce.lu@lettucelu.com>
+Date:   Sat Dec 4 03:10:52 2021 +0800
+
+    modify text length over 50
+
+[33mcommit 5e052de4264a655dd3a42932dbc386f41ad5dd53[m
+Author: Lettuce Lu <lettuce.lu@lettucelu.com>
+Date:   Sat Dec 4 02:57:17 2021 +0800
+
+    modify pagination justify-content-center
+
+[33mcommit d4f7570191338e9ef9d4700dca2c0ba980094c12[m
+Author: Lettuce Lu <lettuce.lu@lettucelu.com>
+Date:   Sat Dec 4 02:48:05 2021 +0800
+
+    feat: post like && post unLike
+
+[33mcommit 4d71fa7d87ec5711612b7866f84b53b1812b7e62[m
+Author: Lettuce Lu <lettuce.lu@lettucelu.com>
+Date:   Sat Dec 4 00:19:01 2021 +0800
+
+    post like
+
+[33mcommit dd0c53f892063de53aed3b26abc930ef9a6bceda[m
+Merge: 469b7d0 75aa231
+Author: Lettuce Lu <lettuce.lu@lettucelu.com>
+Date:   Fri Dec 3 22:31:46 2021 +0800
+
+    fixed conflicted!
+
+[33mcommit 469b7d0a0f51e86075805a38d72d5ceb43912233[m
+Author: Lettuce Lu <lettuce.lu@lettucelu.com>
+Date:   Fri Dec 3 22:28:54 2021 +0800
+
+    ...
+
+[33mcommit 75aa23124f2c6527301d5ccebb25a17f06c2cecb[m
+Merge: aa7c60a d039b88
+Author: lettuce lu <lettuce.lu@lettucelu.com>
+Date:   Fri Dec 3 22:21:22 2021 +0800
+
+    Merge pull request #2 from area268457913/master
+    
+    add
+
+[33mcommit d039b88a56a41d9a9cb50738dc2853baa45cdac4[m
+Author: area268457913 <area268457913@hotmail.com>
+Date:   Fri Dec 3 16:35:28 2021 +0800
+
+    add adminTweet pagination & tweet limit & moment
+
+[33mcommit 25c52b8e1dac6712560d3ee86d07c4ff6c1c2065[m
+Author: area268457913 <area268457913@hotmail.com>
+Date:   Fri Dec 3 03:17:35 2021 +0800
+
+    add reply
+
+[33mcommit 3dff39a66b1409bb18392c438b09d0e999679ef7[m
+Author: area268457913 <area268457913@hotmail.com>
+Date:   Fri Dec 3 01:19:29 2021 +0800
+
+    add user self
+
+[33mcommit 1a8276296e5b6f90faf3d79dcbb14dc58fd882a8[m
+Author: area268457913 <area268457913@hotmail.com>
+Date:   Thu Dec 2 16:20:53 2021 +0800
+
+    add setting
+
+[33mcommit 0388ac39fbb54347caeb45a7f8d2a1f6bc31fc81[m
+Author: area268457913 <area268457913@hotmail.com>
+Date:   Thu Dec 2 12:51:31 2021 +0800
+
+    add  removeFollowing
+
+[33mcommit 406b1915c2cc62f298d9d6bdde4306419adb83b9[m
+Author: area268457913 <area268457913@hotmail.com>
+Date:   Thu Dec 2 11:36:00 2021 +0800
+
+    add addFollowing
+
+[33mcommit aa7c60aeb414ae4eeb1913301c60987d9fd47a07[m[33m ([m[1;32mfollowships_test[m[33m)[m
+Author: Lettuce Lu <lettuce.lu@lettucelu.com>
+Date:   Thu Dec 2 10:39:44 2021 +0800
+
+    tweetController add Promise.all to query multiple models
+
+[33mcommit 3f241823e1e445b0d43bc6e8a80d2cf4ae6ef521[m
+Author: Lettuce Lu <lettuce.lu@lettucelu.com>
+Date:   Thu Dec 2 02:14:22 2021 +0800
+
+    ...
+
+[33mcommit cfdfd560621338941df514bd08e061a0c37810e8[m
+Author: Lettuce Lu <lettuce.lu@lettucelu.com>
+Date:   Wed Dec 1 16:06:35 2021 +0800
+
+    split controller
+
+[33mcommit e42ac14fe4bc242dbb1d4cc42251d834ec1a6133[m
+Author: Lettuce Lu <lettuce.lu@lettucelu.com>
+Date:   Wed Dec 1 15:24:53 2021 +0800
+
+    finish models initialization
+
+[33mcommit 9f13071d5edbd29dc2371c2199a4dd81902ad832[m
+Author: Lettuce Lu <lettuce.lu@lettucelu.com>
+Date:   Wed Dec 1 12:51:53 2021 +0800
+
+    add migration for User model with cover and account column
+
+[33mcommit 80470d1ad9c5d1872c844f19fbae3dc2cd570593[m
+Author: Lettuce Lu <lettuce.lu@lettucelu.com>
+Date:   Wed Dec 1 12:38:39 2021 +0800
+
+    add association from User to other models
+
+[33mcommit 082fecb2ed4a5c6f9c0e54d7ea179437764944d6[m
+Author: Lettuce Lu <lettuce.lu@lettucelu.com>
+Date:   Tue Nov 30 14:23:30 2021 +0800
+
+    ...
+
+[33mcommit 8c901d20935b1e9040ba2a9f9a98c9b61202adb7[m
+Author: Lettuce Lu <lettuce.lu@lettucelu.com>
+Date:   Mon Nov 29 22:56:18 2021 +0800
+
+    add flash message
+
+[33mcommit d8b55a2985b19cdfd4eb7c28af112b2bdf7c1199[m
+Author: Lettuce Lu <lettuce.lu@lettucelu.com>
+Date:   Mon Nov 29 18:19:07 2021 +0800
+
+    npx sequelize db:migrate
+
+[33mcommit 74af6a2e5698a7aa3a6e60519fac081d6e6f7d14[m
+Author: Lettuce Lu <lettuce.lu@lettucelu.com>
+Date:   Mon Nov 29 15:44:44 2021 +0800
+
+    add views folder for handlebars file
+
+[33mcommit 5a33b4692bff4b1cbf2eba38db92254af7ba25df[m
+Author: Carrot7712 <carrot7712@gmail.com>
+Date:   Sun Nov 21 23:52:53 2021 +0800
+
+    fix typo
+
+[33mcommit 1543fb68c3c71c8c2fdcdc53d1081a0c8fc440dc[m
+Merge: 09f73a8 9101961
+Author: Serena Tseng <51045074+Carrot7712@users.noreply.github.com>
+Date:   Sun Nov 21 23:48:37 2021 +0800
+
+    feat: add comments
+    
+    Feat/add comments
+
+[33mcommit 9101961ca5f326e7ff8090ea0a9a24742ab3daef[m[33m ([m[1;31morigin/feat/add-comments[m[33m)[m
+Author: Stanney <freehourse2sh@gmail.com>
+Date:   Fri Nov 19 16:03:45 2021 +0800
+
+    add comments to /test/requests/admin/user.spec.js
+
+[33mcommit 14509d0c9b406f60b4762777195cb16a1b07fc65[m
+Author: Stanney <freehourse2sh@gmail.com>
+Date:   Fri Nov 19 15:59:52 2021 +0800
+
+    add comments to test/requests/admin/tweets.spec.js
+
+[33mcommit e9d43ad9a6824dcc6ae12a4a419af1c4cc400453[m
+Author: Stanney <freehourse2sh@gmail.com>
+Date:   Fri Nov 19 15:44:27 2021 +0800
+
+    add comments for test/request/admin/login.sepc.js
+
+[33mcommit 8dcbaa2a3801e354f16f7a911a243ad55d8be3e1[m
+Author: Stanney <freehourse2sh@gmail.com>
+Date:   Fri Nov 19 15:40:08 2021 +0800
+
+    add comments on /test/requests/user.spec.js
+
+[33mcommit 35c663871ba2c9ceb251dde235d6524b045d1ce5[m
+Author: Stanney <freehourse2sh@gmail.com>
+Date:   Fri Nov 19 15:16:12 2021 +0800
+
+    add comments on test/requests/tweet.spec.js
+
+[33mcommit b9f3746bb07cf410a5157669c58f7650ab7cfc5e[m
+Author: Stanney <freehourse2sh@gmail.com>
+Date:   Fri Nov 19 14:48:47 2021 +0800
+
+    add comments on test/requests/reply.spec.js
+
+[33mcommit af80b6169aa6d6f4e3cf6b55e5ea392f9876ec56[m
+Author: Stanney <freehourse2sh@gmail.com>
+Date:   Fri Nov 19 14:37:21 2021 +0800
+
+    add comments on test/requests/login.spec.js
+
+[33mcommit b9fb3dada51b5e94f0496813bf670edac007fd6e[m
+Author: Stanney <freehourse2sh@gmail.com>
+Date:   Fri Nov 19 14:28:04 2021 +0800
+
+    add comments on test/requests/followship.spec.js
+
+[33mcommit 883b60aee201b76a71d84ea109596d86ffde7736[m
+Author: Stanney <freehourse2sh@gmail.com>
+Date:   Fri Nov 19 13:53:24 2021 +0800
+
+    add test/models comments
+
+[33mcommit 09f73a8118810886df8ec2f2128ea950d0ddddf3[m
+Author: WeiYuan <v123582@gmail.com>
+Date:   Thu Sep 30 15:53:14 2021 +0800
+
+    Delete diff
+
+[33mcommit 8cbc6e944fa92c3e4b25e7fc81bdad3b9d0228ac[m
+Author: WeiYuan <v123582@gmail.com>
+Date:   Wed Jul 21 17:26:48 2021 +0800
+
+    Update .travis.yml
+
+[33mcommit 631c4de1290f1c952173d2d80f5fec1b05ce8506[m
+Author: v123582 <v123582@gmail.com>
+Date:   Wed Mar 10 21:17:09 2021 +0800
+
+    hotfix: db.Tweet.destroy({where: {},truncate: true})
+
+[33mcommit 8c2d77fb463b0f895f2eabc2beba65026f27b28c[m
+Author: Ellen Lee <leechinghui.tw@gmail.com>
+Date:   Fri Jul 24 02:50:11 2020 +0800
+
+    fix: post /signup spec add name, password & checkPassword
+
+[33mcommit 1f926c95c51b0c25cad204097e343408184e7f63[m
+Author: Ellen Lee <leechinghui.tw@gmail.com>
+Date:   Thu Jul 23 14:47:23 2020 +0800
+
+    update test db config
+
+[33mcommit 6a47039ac4cdd7712fbfc71a59d46b13ae1ac8ea[m
+Author: v123582 <v123582@gmail.com>
+Date:   Wed Jul 22 19:57:31 2020 +0800
+
+    add travis config
+
+[33mcommit cb769d3ea5773e35621af65a7fb8357d58279cdc[m
+Merge: 37a2a8f a2fbde4
+Author: v123582 <v123582@gmail.com>
+Date:   Wed Jul 22 17:28:57 2020 +0800
+
+    Merge branch 'master' of https://github.com/ALPHACamp/twitter-fullstack-2020
+
+[33mcommit 37a2a8ffb76385b1976c144e2176572d002d5579[m
+Author: v123582 <v123582@gmail.com>
+Date:   Wed Jul 22 17:28:44 2020 +0800
+
+    add travis config
+
+[33mcommit a2fbde462ad5bcc2114c21f0ae0fceb806f4e7c4[m
+Author: ellenlee <leechinghui.tw@gmail.com>
+Date:   Tue Jul 21 00:38:06 2020 +0800
+
+    fix typo: avator -> avatar
+
+[33mcommit bf0757b46e0faae7f0213410cc839fa2a9748366[m
+Author: v123582 <v123582@gmail.com>
+Date:   Wed Jul 1 15:44:15 2020 +0800
+
+    first commit
+
+[33mcommit 400a24fe0f34c622483915ed3a363bd396dd8054[m
+Author: v123582 <v123582@gmail.com>
+Date:   Wed Jul 1 15:10:51 2020 +0800
+
+    first commit
