@@ -525,20 +525,12 @@ const userController = {
         const userId = user.id
         let cover = ''
         let avatar = ''
-        console.log('====== req.body =====')
-        console.log(req.params.id)
-        console.log(req.body)
-        console.log(req.files)
-        console.log('======  files ======')
-        console.log(files)
-        console.log('======  userId ======')
-        console.log(userId)
+
         if (files) {
             cover = files.cover
             avatar = files.avatar
         }
         if (cover && avatar) {
-            console.log('封面跟頭貼都有檔案')
             imgur.setClientID(IMGUR_CLIENT_ID)
             imgur.upload(cover[0].path, (err, imgCover) => {
                 if (avatar) {
@@ -564,7 +556,6 @@ const userController = {
                 }
             })
         } else if (cover) { // 載入 cover
-            console.log('封面有檔案')
             imgur.setClientID(IMGUR_CLIENT_ID)
             imgur.upload(cover[0].path, async (err, imgCover) => {
                 const user = await User.findByPk(req.params.id)
@@ -590,11 +581,9 @@ const userController = {
 
             })
         } else if (avatar) { // 載入 avatar
-            console.log('頭貼都有檔案')
             imgur.setClientID(IMGUR_CLIENT_ID)
             imgur.upload(avatar[0].path, async (err, imgAvr) => {
                 const user = await User.findByPk(req.params.id)
-                console.log(imgAvr)
                 if (req.body.introduction.trim().length > 160) {
                     req.flash('error_messages', '字數超出上限!')
                     return res.redirect('back')
@@ -615,8 +604,7 @@ const userController = {
 
             })
         } else {
-            console.log('完全沒有檔案')
-            console.log(req.body)
+
             if (req.body.introduction) {
                 if (req.body.introduction.trim().length > 160) {
                     req.flash('error_messages', '字數超出上限!')
@@ -637,8 +625,8 @@ const userController = {
                         }).then(user => {
                             console.log('送回API呼叫的資料')
 
-                            return res.json({ status: 'success', data: user })
-                            // return res.redirect('back')
+                            // return res.json({ status: 'success', data: user })
+                            return res.redirect('back')
                         }).catch(error => {
                             console.log(error)
                         })

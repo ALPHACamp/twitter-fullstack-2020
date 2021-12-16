@@ -111,6 +111,7 @@ describe('# user request', () => {
             if (err) return done(err);
             // 檢查是否成功取得 User1 的內容
             res.body.name.should.equal('User1');
+            // res.text.should.include('User2 的 Tweet')
             return done();
           });
       })
@@ -163,7 +164,7 @@ describe('# user request', () => {
           .post('/api/users/1')
           .send('name=abc')
           .set('Accept', 'application/json')
-          .expect(200)
+          .expect(302)
           .end(function (err, res) {
             if (err) return done(err);
             db.User.findByPk(1).then(user => {

@@ -338,10 +338,8 @@
 <script>
   const avatar = document.querySelector('#avatar')
   const cover = document.querySelector('#cover')
-  console.log(avatar)
   const avatarImage = document.querySelector('#avatarImage')
   const coverImage = document.querySelector('#coverImage')
-  console.log(avatarImage)
 
   avatar.addEventListener("change", handleFiles, false);
   cover.addEventListener("change", handleFiles2, false);
@@ -352,7 +350,6 @@
     getFiles = this.files[0]
     const fr = new FileReader();//建立FileReader物件
     fr.onload = function (e) {
-      console.log(e.target.result)
       avatarImage.src = e.target.result
     };
 
@@ -366,7 +363,6 @@
     getFiles2 = this.files[0]
     const fr = new FileReader();//建立FileReader物件
     fr.onload = function (e) {
-      console.log(e.target.result)
       coverImage.src = e.target.result
     };
 
@@ -374,38 +370,6 @@
     fr.readAsDataURL(file);    /* now you can work with the file list */
   }
 
-  const post_User_Data = document.querySelector('#post_User_Data')
-  post_User_Data.addEventListener('click', (event) => {
-    event.preventDefault()
-    var formData1 = new FormData();
-    var formData2 = new FormData();
 
-    const cover = document.querySelector('#cover')
-    const avatar = document.querySelector('#avatar')
-    const name = document.querySelector('#name')
-    const introduction = document.querySelector('#introduction')
-    formData1.append('avatar', avatar.files[0])
-    formData2.append('cover', getFiles2)
-    console.log('=== 名稱 ===')
-    console.log(name.value)
-    console.log('=== 自我介紹 ===')
-    console.log(introduction.value)
-    console.log('=== avatar ===')
-    console.log(formData1)
-    console.log(avatar.files[0])
-    console.log(getFiles)
-    console.log('=== cover ===')
-    console.log(formData2)
-    const data = { avatar: formData1, cover: formData2, name: name.value, introduction: introduction.value }
-    const userId = `{{user.id}}`
-    axios.post(`/api/users/${userId}`, data,)
-      .then(res => {
-        console.log(res)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-
-  })
 
 </script>
