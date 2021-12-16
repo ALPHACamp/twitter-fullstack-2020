@@ -92,7 +92,7 @@
             href="#">跟隨者</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-secondary font-weight-bold" href="/users/{{user.id}}/followings">正在跟隨</a>
+          <a class="nav-link text-secondary font-weight-bold" href="/users/{{requestUser.id}}/followings">正在跟隨</a>
         </li>
 
       </ul>
@@ -137,7 +137,7 @@
       <div class="p-2">
         跟隨誰
       </div>
-      {{#each users2}}
+      {{#each getTopFollowing}}
       {{#if this.isNotCurrentUser}}
       <div
         style="display: flex; justify-content:space-between; border-top:#E6ECF0 1px solid; border-bottom:#E6ECF0 1px solid;"

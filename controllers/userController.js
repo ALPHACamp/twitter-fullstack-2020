@@ -216,6 +216,7 @@ const userController = {
     },
 
     getFollowers: (req, res) => {
+        const id = req.params.id
         const usersFindAll = User.findAll({
             include: [
                 { model: User, as: 'Followers' },
@@ -230,30 +231,35 @@ const userController = {
             ],
             where: { role: '0' }
         })
-        const requestUser = User.findByPk(req.params.id, {
+        const requestUser = User.findByPk(id, {
             include: [
                 Tweet,
-                { model: Tweet, as: 'LikedTweets' },
                 { model: User, as: 'Followers' },
                 { model: User, as: 'Followings' }
-            ]
+            ],
+            where: { role: '0' }
         })
 
         Promise.all([usersFindAll, userFindAll2, requestUser])
             .then(responses => {
-                let users = responses[0]
-                let users2 = responses[1]
-                let requestUser = responses[2]
-                console.log(users)
-                users = users.map(user => ({
+                let [allUsers, getTopFollowing, requestUser] = responses
+                // ===== 重新整理Followers Start ===== //
+                allUsers = allUsers.map(user => ({
                     ...user.dataValues,
-                    isFollowed: user.dataValues.Followings.map(d => d.id).includes(_helpers.getUser(req).id),
+                    // 是否被當前請求的使用者跟隨
+                    isFollowed: user.dataValues.Followings.map(d => d.id).includes(requestUser.id),
+                    // 當前請求的使用者跟隨人數
                     FollowingsCount: user.dataValues.Followings.length,
-                    followersTime: user.dataValues.Followers.filter(d => { return (d.id === _helpers.getUser(req).id) }),
-                    isNotCurrentUser: !(user.id === _helpers.getUser(req).id)
+                    // 當前請求的使用者跟隨者跟隨開始時間
+                    followersTime: user.dataValues.Followers.filter(d => { return (d.id === requestUser.id) }),
+                    // 判斷使用者是否為當前請求的使用者
+                    isNotCurrentUser: !(user.id === requestUser.id)
                 }))
+                // ===== 重新整理Followers End ===== //
 
-                users2 = users2.map(user => ({
+
+                // ===== 重新整理Following的排名 Start ===== //
+                getTopFollowing = getTopFollowing.map(user => ({
                     ...user.dataValues,
                     isUser: !user.Followers.map(d => d.id).includes(user.id),
                     // 計算追蹤者人數
@@ -263,11 +269,14 @@ const userController = {
                     isNotCurrentUser: !(user.id === _helpers.getUser(req).id)
                 }))
                 // 依追蹤者人數排序清單
-                users2 = users2.sort((a, b) => b.FollowerCount - a.FollowerCount)
+                getTopFollowing = getTopFollowing.sort((a, b) => b.FollowerCount - a.FollowerCount)
+                // ===== 重新整理Following的排名 End ===== //
 
+
+                // 依據創建時間進行排序, 再按照次數 Start //
                 let noCreatedAt = []
                 let sortCreatedAt = []
-                users.forEach(user => {
+                allUsers.forEach(user => {
                     if (user.followersTime.length > 0) {
                         user.followersTime = user.followersTime[0].Followship.createdAt
                         sortCreatedAt.push(user)
@@ -277,14 +286,15 @@ const userController = {
                     }
                 })
 
+                // 照時間排序
                 sortCreatedAt = sortCreatedAt.sort((a, b) => b.followersTime - a.followersTime)
+                allUsers = sortCreatedAt.concat(noCreatedAt)
+                // 照跟隨人數排序
+                allUsers = allUsers.sort((a, b) => b.FollowingsCount - a.FollowingsCount)
+                // console.log(allUsers)
+                // 依據創建時間進行排序, 再按照次數 End //
 
-                users = sortCreatedAt.concat(noCreatedAt)
-                users = users.sort((a, b) => b.FollowingsCount - a.FollowingsCount)
-                console.log(users)
-
-                return res.render('follower', { users, users2, requestUser: requestUser.toJSON() })
-                // return res.json({ text: requrestUser.toJSON() })
+                return res.render('follower', { users: allUsers, getTopFollowing, requestUser: requestUser.toJSON() })
             }).catch(error => {
                 console.log(error)
             })
@@ -315,17 +325,16 @@ const userController = {
 
         Promise.all([usersFindAll, userFindAll2, requestUser])
             .then(responses => {
-                let users = responses[0]
-                let users2 = responses[1]
-                let requestUser = responses[2]
-                users = users.map(user => ({
+                let [allUsers, getTopFollowing, requestUser] = responses
+                console.log(requestUser.toJSON())
+                allUsers = allUsers.map(user => ({
                     ...user.dataValues,
-                    isFollowings: _helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
-                    followingsTime: _helpers.getUser(req).Followings.filter(d => { return (d.id === user.id) }),
-                    isNotCurrentUser: !(user.id === _helpers.getUser(req).id)
+                    isFollowings: requestUser.Followings.map(d => d.id).includes(user.id),
+                    followingsTime: requestUser.Followings.filter(d => { return (d.id === user.id) }),
+                    isNotCurrentUser: !(user.id === requestUser.id)
                 }))
 
-                users2 = users2.map(user => ({
+                getTopFollowing = getTopFollowing.map(user => ({
                     ...user.dataValues,
                     isUser: !user.Followers.map(d => d.id).includes(user.id),
                     // 計算追蹤者人數
@@ -335,11 +344,11 @@ const userController = {
                     isNotCurrentUser: !(user.id === _helpers.getUser(req).id)
                 }))
                 // 依追蹤者人數排序清單
-                users2 = users2.sort((a, b) => b.FollowerCount - a.FollowerCount)
+                getTopFollowing = getTopFollowing.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
                 let noCreatedAt = []
                 let sortCreatedAt = []
-                users.forEach(user => {
+                allUsers.forEach(user => {
                     if (user.followingsTime.length > 0) {
                         user.followingsTime = user.followingsTime[0].Followship.createdAt
                         sortCreatedAt.push(user)
@@ -352,9 +361,9 @@ const userController = {
                 sortCreatedAt = sortCreatedAt.sort((a, b) => b.followingsTime - a.followingsTime)
 
 
-                users = sortCreatedAt.concat(noCreatedAt)
+                allUsers = sortCreatedAt.concat(noCreatedAt)
 
-                return res.render('following', { users, users2, requestUser: requestUser.toJSON() })
+                return res.render('following', { users: allUsers, getTopFollowing, requestUser: requestUser.toJSON() })
             }).catch(error => {
                 console.log(error)
             })
