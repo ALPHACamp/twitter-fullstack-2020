@@ -246,12 +246,17 @@ const userController = {
   },
   //設定使用者個人資料頁面推文與回覆頁面
   getUserReplies: (req, res) => {
+    const loginUser = helpers.getUser(req)
     return User.findByPk(req.params.userId, {
-      include: [Reply, Tweet]
+      include: [
+        Tweet,
+        { model: Reply, include:[{ model: Tweet, include:[User] }]}
+      ]
     })
       .then(user => {
         return res.render('userReplies', {
-          user: user.toJSON()
+          user: user.toJSON(),
+          loginUser
         })
       })
   },
