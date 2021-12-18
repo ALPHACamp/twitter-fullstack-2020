@@ -11,7 +11,6 @@ module.exports = (app, passport) => {
   // 未來可嘗試refactor
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      
       if (helpers.getUser(req).role === 'admin') {
         req.flash('error_messages', '無法進入此頁面')
         return res.redirect('/admin/tweets')

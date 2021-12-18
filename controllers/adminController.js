@@ -71,7 +71,7 @@ const adminController = {
       ]
     })
       .then(users => {
-        console.log(users[0])
+
         users = users.map(user => {
           if (user.dataValues !== undefined) {
             return {
@@ -81,7 +81,7 @@ const adminController = {
               userName: user.name,
               userAccount: user.account,
               userTweetTotal: user.Tweets.length,
-              userTweetLikedTotal: user.LikedUsers.length,
+              userTweetLikedTotal: user.LikedTweets.length,
               userFollowingsTotal: user.Followings.length,
               userFollowersTotal: user.Followers.length
             }
