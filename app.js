@@ -48,7 +48,7 @@ app.use(methodOverride('_method'))
 
 // STATIC FILE
 app.use(express.static('public'))
-
+app.use('/upload', express.static(__dirname + '/upload'))
 // LOCAL PARAMS
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg')

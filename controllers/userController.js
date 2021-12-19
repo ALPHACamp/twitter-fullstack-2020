@@ -7,8 +7,9 @@ const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
 
+const fs = require('fs')
 const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+const IMGUR_CLIENT_ID = '3bdeb4f2cae8587'
 const userService = require('../services/userService')
 
 const userController = {
@@ -117,90 +118,74 @@ const userController = {
     res.redirect('/signin')
   },
   getUser: (req, res) => {
-    User.findByPk(req.params.id, { include: [
-      { model: User, as: 'Followings' },
-      { model: User, as: 'Followers' },
-      { model: Tweet, include: [ Reply, { model: User, as: 'LikedUsers'}] },
-      { model: Reply, include: [{ model: Tweet, include: [User] }] },
-      { model: Like, include: [{ model: Tweet, include: [User, Reply, { model: User, as: 'LikedUsers' }]}]}
-    ] }).then(user => {
+    User.findByPk(req.params.id, { 
+      include: [
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+        { model: Tweet, include: [Like, Reply] },
+      ], order: [[Tweet, 'createdAt', 'DESC']]
+    }).then(user => {
       // to avoid conflicting with res.locals.user
-      const userData = {
-        ...user.toJSON(),
-        tweetCount: user.Tweets.length,
-        followingCount: user.Followings.length,
-        followerCount: user.Followers.length,
-        isFollowed: helpers.getUser(req).Followings.map(item => item.id).includes(user.dataValues.id)
-      }
-      
-      userData.Tweets = userData.Tweets.map(tweet => ({
-        ...tweet,
-        replyCount: tweet.Replies.length,
-        isReplied: tweet.Replies.map(item => item.UserId).includes(helpers.getUser(req).id),
-        likeCount: tweet.LikedUsers.length,
-        isLiked: tweet.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id)
-      }))
+        return Like.findAll({ where: { UserId: helpers.getUser(req).id }, raw: true, nest: true })
+          .then((likes) => {
 
-      userData.Likes = userData.Likes.map(like => {
-        return {
-          Tweet: like.Tweet,
-          replyCount: like.Tweet.Replies.length,
-          isReplied: like.Tweet.Replies.map(item => item.UserId).includes(helpers.getUser(req).id),
-          likeCount: like.Tweet.LikedUsers.length,
-          isLiked: like.Tweet.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id)
-        }
+          const userData = user.toJSON()
+          likes = likes.map(like => like.TweetId)
+          userData.Tweets.forEach(tweet => {
+            tweet.isLiked = likes.includes(tweet.id)
+          })
+          userData.tweetCount = userData.Tweets.length
+          userData.isFollowed = userData.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
+          
+          userService.getTopUser(req, res, topUser => {
+            return res.render('userTweets', { userData, topUser })
+          })
+        })
       })
-      userService.getTopUser(req, res, topUser => {
-        return res.render('user', { userData, topUser })
-      })
-    })
   },
-  getUserTweets: (req, res) => {
-    User.findByPk(req.params.id, { include: { model: Tweet, include: [
-      { model: User, as: 'LikedUsers' },
-      { model: Reply, include: [User] }
-    ] } }).then(user => {
-      // to avoid conflicting with res.locals.user
-      const userData = {
-        ...user.toJSON()
-      }
-
-      userData.Tweets = userData.Tweets.map(tweet => ({
-        ...tweet,
-        replyCount: tweet.Replies.length,
-        isReplied: tweet.Replies.map(item => item.UserId).includes(helpers.getUser(req).id),
-        likeCount: tweet.LikedUsers.length,
-        isLiked: tweet.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id)
-      }))
-
-      userService.getTopUser(req, res, topUser => {
-        return res.render('userTweets', { userData, topUser })
-      })
+  getUserReplies: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        { model: Reply, include: [{ model: Tweet, include: [Reply, User] }] }
+      ], order: [[Reply, 'createdAt', 'DESC']]
     })
+      .then(user => {
+        const userData = user.toJSON()
+        userData.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
+
+        userService.getTopUser(req, res, topUser => {
+          return res.render('userReplies', { userData, topUser })
+        })
+      })
   },
   getLikes: (req, res) => {
-    User.findByPk(req.params.id, { include: { model: Tweet, as: 'LikedTweets', include: [
-      User,
-      { model: User, as: 'LikedUsers'},
-      { model: Reply, include: [ User ]}
-    ]} }).then(user => {
-      // to avoid conflicting with res.locals.user
-      const userData = {
-        ...user.toJSON()
-      }
-
-      userData.LikedTweets = userData.LikedTweets.map(tweet => ({
-        ...tweet,
-        replyCount: tweet.Replies.length,
-        isReplied: tweet.Replies.map(item => item.UserId).includes(helpers.getUser(req).id),
-        likeCount: tweet.LikedUsers.length,
-        isLiked: tweet.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id)
-      }))
-
-      userService.getTopUser(req, res, topUser => {
-        return res.render('likes', { userData, topUser })
-      })
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        { model: Like, include: [{ model: Tweet, include: [Reply, Like, User] }] },
+      ], order: [[Like, 'createdAt', 'DESC']]
     })
+      .then(user => {
+        return Like.findAll({ where: { UserId: helpers.getUser(req).id }, raw: true, nest: true })
+          .then((likes) => {
+            const userData = user.toJSON()
+            likes = likes.map(like => like.TweetId)
+            userData.Tweets.forEach(tweet => {
+              tweet.isLiked = likes.includes(tweet.id)
+            })
+            userData.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
+
+            userService.getTopUser(req, res, topUser => {
+              console.log(userData)
+              return res.render('userLikes', { userData, topUser })
+            })
+          })
+      })
+
   },
   addFollowing: (req, res) => {
     if (helpers.getUser(req).id === Number(req.body.id)) {
@@ -270,94 +255,91 @@ const userController = {
         })
       })
   },
-  putUserProfile: async (req, res) => {
+  putUserProfile: (req, res) => {
     if (!req.body.name) {
       req.flash('error_msg', "請輸入名稱")
       return res.redirect('back')
-    } else {
-      if (!req.body.introduction) {
-        req.flash('error_msg', "請輸入自我介紹")
-        return res.redirect('back')
-      } else {
-
-        const { files } = req
-        if (files.avatar !== undefined & files.cover === undefined) {
-          imgur.setClientID(IMGUR_CLIENT_ID);
-          await imgur.upload(files.avatar[0].path, (err, img) => {
-            return User.findByPk(req.params.id)
-              .then((user) => {
-                user.update({
-                  name: req.body.name,
-                  introduction: req.body.introduction,
-                  avatar: files ? img.data.link : user.avatar,
-                }).then((user) => {
-                  req.flash('success_msg', '更新成功!')
-                  return res.redirect('back')
-                })
-              })
-          })
-        }
-        if (files.avatar === undefined & files.cover !== undefined) {
-          imgur.setClientID(IMGUR_CLIENT_ID);
-          await imgur.upload(files.cover[0].path, (err, img) => {
-            return User.findByPk(req.params.id)
-              .then((user) => {
-                user.update({
-                  name: req.body.name,
-                  introduction: req.body.introduction,
-                  cover: files ? img.data.link : user.cover,
-                }).then((user) => {
-                  req.flash('success_msg', '更新成功!')
-                  return res.redirect('back')
-                })
-              })
-          })
-        }
-        if (files.avatar !== undefined & files.cover !== undefined) {
-          imgur.setClientID(IMGUR_CLIENT_ID);
-          await imgur.upload(files.avatar[0].path, (err, img) => {
-            return User.findByPk(req.params.id)
-              .then((user) => {
-                user.update({
-                  name: req.body.name,
-                  introduction: req.body.introduction,
-                  avatar: files ? img.data.link : user.avatar,
-                })
-                  .then(() => {
-                    imgur.setClientID(IMGUR_CLIENT_ID);
-                    imgur.upload(files.cover[0].path, (err, img) => {
-                      return User.findByPk(req.params.id)
-                        .then((user) => {
-                          user.update({
-                            name: req.body.name,
-                            introduction: req.body.introduction,
-                            cover: files ? img.data.link : user.cover,
-                          }).then((user) => {
-                            req.flash('success_msg', '更新成功!')
-                            return res.redirect('back')
-                          })
-                        })
-                    })
-                  })
-              })
-          })
-        }
-        else {
-          await User.findByPk(req.params.id)
-            .then((user) => {
-              user.update({
-                name: req.body.name,
-                introduction: req.body.introduction,
-                avatar: user.avatar,
-                cover: user.cover,
-              })
-                .then((user) => {
-                  req.flash('success_msg', '更新成功!')
-                  return res.redirect('back')
-                })
+    } 
+    if (!req.body.introduction) {
+      req.flash('error_msg', "請輸入自我介紹")
+      return res.redirect('back')
+    }
+    const { files } = req
+    let cover = ''
+    let avatar = ''
+    if (files) {
+      cover = files.cover
+      avatar = files.avatar
+    }
+    if (cover && avatar) {
+      console.log('封面跟頭貼都有檔案')
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(cover[0].path, (err, imgCover) => {
+        if (avatar) {
+          imgur.upload(avatar[0].path, async (err, imgAvr) => {
+            const user = await User.findByPk(req.params.id)
+            await user.update({
+              cover: cover[0] ? imgCover.data.link : user.cover,
+              avatar: avatar[0] ? imgAvr.data.link : user.avatar,
+              name: user.name,
+              introduction: user.introduction ? user.introduction : ''
             })
+            return res.redirect('back')
+          })
         }
-      }
+      })
+    } else if (cover) { // 載入 cover
+      console.log('封面有檔案')
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(cover[0].path, async (err, imgCover) => {
+        const user = await User.findByPk(req.params.id)
+        await user.update({
+          cover: cover[0] ? imgCover.data.link : user.cover,
+          avatar: user.avatar,
+          name: user.name,
+          introduction: user.introduction ? user.introduction : ''
+        }).then(user => {
+          console.log(user)
+        }).catch(error => {
+          console.log(error)
+        })
+        return res.redirect('back')
+      })
+    } else if (avatar) { // 載入 avatar
+      console.log('頭貼都有檔案')
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(avatar[0].path, async (err, imgAvr) => {
+        const user = await User.findByPk(req.params.id)
+        console.log(imgAvr)
+        await user.update({
+          cover: user.cover,
+          avatar: avatar[0] ? imgAvr.data.link : user.avatar,
+          name: user.name,
+          introduction: user.introduction ? user.introduction : ''
+        }).then(user => {
+          console.log(user)
+        }).catch(error => {
+          console.log(error)
+        })
+        return res.redirect('back')
+      })
+    } else {
+      console.log('完全沒有檔案')
+      return User.findByPk(req.params.id)
+        .then(user => {
+          user.update({
+            name: req.body.name,
+            avatar: user.avatar,
+            cover: user.cover,
+            introduction: req.body.introduction
+          }).then(user => {
+            // return res.json({ status: 'success', data: user })
+            return res.redirect('back')
+          }).catch(error => {
+            console.log(error)
+          })
+        })
+
     }
   }
 }
