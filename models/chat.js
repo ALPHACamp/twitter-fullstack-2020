@@ -1,21 +1,22 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Followship = sequelize.define('Followship', {
+  const chat = sequelize.define('chat', {
     id: {
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
-    followerId: {
+    UserId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    followingId: {
-      type: DataTypes.INTEGER,
+    message: {
+      type: DataTypes.TEXT,
       allowNull: false
     }
   }, {});
-  Followship.associate = function(models) {
+  chat.associate = function(models) {
+    // associations can be defined here
   };
-  return Followship;
+  return chat;
 };

@@ -1,0 +1,61 @@
+<div class="center-admin">
+  <div class="left-bar">
+    {{> navbar}}
+  </div>
+
+  <div class="header-admin" style="border-left: 1px solid #e6ecf0;">
+    <p class="p-3 m-0 font-weight-bold" style="font-size: 18px; line-height: 26px; border-bottom: 1px solid #e6ecf0;">帳戶設定</p>
+
+    <form class="form-login ml-3" action="/setting" method="POST" style="width: 100%; margin-top: 30px;" novalidate>
+      <div class="row">
+        <div class="form-floating col-7 mb-4 input-setting">
+          <span class="input-prepend">@</span>
+          <input type="text" class="form-control" id="floatingAccount" placeholder="@Will" value="{{ user.account }}"
+            name="account" style="background-color: #F5F8FA;" required autofocus />
+          <label for="floatingAccount">帳號</label>
+          <div class="invalid-feedback">請輸入帳號</div>
+        </div>
+      </div>
+    
+      <div class="row">
+        <div class="form-floating col-7 mb-4 input-setting">
+          <input type="text" class="form-control" id="floatingName" placeholder="name" value="{{ user.name }}" name="name"
+            style="background-color: #F5F8FA;" maxlength="50" required autofocus />
+          <label for="floatingName">名稱</label>
+          <div class="invalid-feedback">請輸入名稱，最多50字</div>
+        </div>
+      </div>
+    
+      <div class="row">
+        <div class="form-floating col-7 mb-4 input-setting">
+          <input type="Email" class="form-control" id="floatingEmail" placeholder="name@example.com" value="{{ user.email }}"
+            name="email" style="background-color: #F5F8FA;" required autofocus />
+          <label for="floatingEmail">Email</label>
+          <div class="invalid-feedback">請輸入Email</div>
+        </div>
+      </div>
+    
+      <div class="row">
+        <div class="form-floating col-7 mb-4 input-setting">
+          <input type="password" class="form-control" id="floatingPassword" name="password"
+            style="background-color: #F5F8FA;" required />
+          <label for="floatingPassword">密碼</label>
+          <div class="invalid-feedback">請輸入密碼</div>
+        </div>
+      </div>
+    
+      <div class="row">
+        <div class="form-floating col-7 mb-4 input-setting">
+          <input type="password" class="form-control" id="floatingcheckPassword" name="checkPassword"
+            style="background-color: #F5F8FA;" required />
+          <label for="floatingcheckPassword">確認密碼</label>
+          <div class="invalid-feedback">和密碼不符</div>
+        </div>
+      </div>
+    
+      <div class="mt-2" style="margin-left: 46%;">
+        <button class="button-submit mt-2" style="width: 116px; height: 46px;" type="submit">儲存</button>
+      </div>
+    </form>
+  </div>
+</div>

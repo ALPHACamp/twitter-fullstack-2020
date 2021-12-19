@@ -1,0 +1,33 @@
+<div class="center-admin container">
+
+  <div class="left-bar">
+    {{> navbar}}
+  </div>
+
+  <div class="header-admin">
+    <p class="p-3 m-0 font-weight-bold light-border" style="font-size: 18px; line-height: 26px;">推文清單</p>
+  </div>
+
+  <div class="list-tweet list-admin">
+    <ul class="list-group">
+      {{#each tweets}}
+      <li class="list-group-item px-3 d-flex align-items-start justify-content-start">
+        <img class="mr-3 thumbnail" src="{{this.User.avatar}}" alt="">
+        <div class="content-wrapper w-100">
+          <div class="mb-2">
+            <p class="font-weight-bold d-inline">{{this.User.name}}</p>
+            <p class="light-color d-inline">@{{this.User.account}}．{{moment this.createdAt}}</p>
+          </div>
+            <p>{{this.description}}</p>
+        </div>
+        <div class="delete">
+          <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="float: right;">
+            <button type="submit" class="btn"><i class="fas fa-times"></i></button>
+          </form>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+  
+</div>

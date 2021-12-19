@@ -1,0 +1,75 @@
+<nav class="container position-relative" style="height: 100vh;">
+  <div class="logo-wrapper">
+    <img src="/images/logo.svg" alt="">
+  </div>
+  <div class="navbar-wrapper">
+    {{#ifCond user.role 'admin'}}
+    <a class="navbar-action active" href="/admin/tweets">
+      <div class="icon-wrapper">
+        <img src="/images/home.svg" alt="">
+      </div>
+      推文清單
+    </a>
+    <a class="navbar-action" href="/admin/users">
+      <div class="icon-wrapper">
+        <img src="/images/profile.svg" alt="">
+      </div>
+      使用者清單
+    </a>
+    {{else}}
+    <a class="navbar-action active" href="/">
+      <div class="icon-wrapper">
+        <img src="/images/home.svg" alt="">
+      </div>
+      首頁
+    </a>
+    <a class="navbar-action" href="/users/{{../user.id}}/tweets">
+      <div class="icon-wrapper">
+        <img src="/images/profile.svg" alt="">
+      </div>
+      個人資料
+    </a>
+    <a class="navbar-action" href="/setting">
+      <div class="icon-wrapper">
+        <img src="/images/setting.svg" alt="">
+      </div>
+      設定
+    </a>
+    {{/ifCond}}
+  </div>
+  {{#ifCond user.role 'user'}}
+  <button class="button-submit" style="width: 210px;" data-toggle="modal" data-target="#tweetModal">推文</button>
+  {{/ifCond}}
+  <a class="navbar-action position-absolute" href="/logout" style="bottom: 15px;">
+    <div class="icon-wrapper">
+      <img src="/images/logout.svg" alt="">
+    </div>
+    登出
+  </a>
+</nav>
+
+<!-- Modal -->
+<div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-tweet">
+    <div class="modal-content h-100">
+      <div class="modal-header">
+        <button type="button" class="button-close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/tweets" method="POST">
+          <div class="d-flex align-items-start justify-content-start mb-3">
+            <a href="/users/{{user.id}}">
+              <img class="mr-2 thumbnail" src="{{user.avatar}}" alt="">
+            </a>
+            <textarea class="textarea-tweet w-100" id="description" name="description"
+                      rows="6" placeholder="有什麼新鮮事？" maxlength="140"
+            ></textarea>
+          </div>
+          <button class="button-submit mt-2" style="float: right;" type="submit">推文</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

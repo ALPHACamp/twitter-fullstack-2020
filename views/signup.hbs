@@ -1,0 +1,47 @@
+<div class="container py-5 ">
+  <form action="/signup" method="POST" style="width: 100%;" class="signin-form">
+    <div class="adminForm-container">
+      <div class="sign-logo text-center">
+        <img src="../images/logo.svg" alt="" />
+      </div>
+      <div class="admin-text text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-bord">建立你的帳號</h1>
+      </div>
+
+      <div class="form-account form-label-group mb-4 mt-5">
+        <label for="account">帳號</label>
+        <input id="account" name="account" type="text" class="form-control signin-input" placeholder="@Will" value="{{ account }}">
+      </div>
+
+      <div class="form-account form-label-group mb-4">
+        <label for="name">名稱</label>
+        <input id="name" name="name" type="text" class="form-control signin-input" placeholder="name"
+          value="{{ name }}" maxlength="50">
+      </div>
+
+      <div class="form-account form-label-group mb-4">
+        <label for="email">信箱</label>
+        <input id="email" name="email" type="email" class="form-control signin-input" placeholder="accamp@example.com" value="{{ email }}">
+      </div>
+
+      <div class="form-account form-label-group mb-4">
+        <label for="password">密碼</label>
+        <input id="password" name="password" type="password" class="form-control signin-input" placeholder="******" value="{{ password }}">
+      </div>
+
+      <div class="form-account form-label-group mb-4">
+        <label for="checkPassword">密碼確認</label>
+        <input id="checkPassword" name="checkPassword" type="password" class="form-control signin-input" placeholder="******" value="{{ checkPassword }}">
+      </div>
+
+      <button class="btn btn-lg btn-primary btn-block mb-3 w-100 signin-btn" type="submit" :disabled="isProcessing">
+        註冊
+      </button>
+      <div class="sign-in text-center mb-3 w-100">
+        <p class="text-center">
+          <a href="/signin">取消</a>
+        </p>
+      </div>
+    </div>
+  </form>
+</div>

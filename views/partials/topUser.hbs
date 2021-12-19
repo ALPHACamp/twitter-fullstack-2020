@@ -1,0 +1,27 @@
+<ul class="list-group list-topUser">
+  <li class="list-group-item font-weight-bold" style="font-size: 18px;">Popular</li>
+  {{#each topUser}}
+  <li class="list-group-item d-flex align-items-center justify-content-start position-relative">
+    <a href="/users/{{this.id}}/tweets">
+      <img class="mr-2 thumbnail" src="{{this.avatar}}" alt="">
+    </a>
+    <div class="font-weight-bold">
+      <p class="m-0">{{this.name}}</p>
+      <p class="light-color m-0">@{{this.account}}</p>
+    </div>
+    {{#ifCond this.id ../user.id}}
+    {{else}}
+    {{#if ../this.isFollowed}}
+    <form action="/followships/{{../this.id}}?_method=DELETE" method="POST" class="position-absolute" style="right: 12px;">
+      <button class="button-follow following" type="submit">正在跟隨</button>
+    </form>
+    {{else}}
+    <form action="/followships/" method="POST" class="position-absolute" style="right: 12px;">
+      <input type="text" value="{{../this.id}}" name="id" hidden>
+      <button class="button-follow" type="submit">跟隨</button>
+    </form>
+    {{/if}}
+    {{/ifCond}}
+  </li>
+  {{/each}}
+</ul>
