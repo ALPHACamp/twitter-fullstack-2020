@@ -123,15 +123,15 @@ const userController = {
   //     }
   //   })
   //     .then(like => {
-  //       return Tweet.findByPk(like.TweetId)
+  //       return Tweet.findByPk(req.params.tweetId)
   //       .then(tweet => {
   //         return tweet.decrement('likeCounts')
   //       }).then(tweet => {
-  //         console.log('============')
-  //         console.log(tweet.toJSON())
-  //         console.log('============')
-  //         console.log(like.toJSON())
-  //         console.log('============')
+  //         // console.log('============')
+  //         // console.log(tweet.toJSON())
+  //         // console.log('============')
+  //         // console.log(like.toJSON())
+  //         // console.log('============')
   //         return res.redirect('back')
   //         })
   //       })
@@ -221,37 +221,62 @@ const userController = {
         })
     }
   },
-  // 信 嘗試修改此頁面 加入popular資料
-
   //使用者個人資料頁面
   getUserTweets: (req, res) => {
     const loginUser = helpers.getUser(req)
     return User.findByPk(req.params.userId, {
       include: [
-        Tweet,
-        { model: Tweet, as: 'LikedTweets' },
-        Reply
+        { model: Tweet, include: [{ model: User, as: 'LikedUsers' }] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
       ]
-    }).then(user => {
-      // user = user.Tweets.map(user => ({
-      //   ...user.dataValues,
-      //   isLiked: user.Tweets.map(tweet => tweet.id).includes(helpers.getUser(req).id),
-      // }))
-      console.log(user.toJSON())
-      return res.render('userTweets', {
-        user: user.toJSON(),
-        loginUser
-      })
     })
+      .then(user => {
+        User.findAll({
+          include: [{ model: User, as: 'Followers' }],
+          where: { role: 'normal' }
+        }).then(topUser => {
+          isUser = helpers.isMatch(user.id, loginUser.id)
+          const userTweets = user.Tweets.map(result => ({
+            ...result.dataValues,
+            isLiked: result.LikedUsers.map(item => item.id).includes(loginUser.id)
+          }))
+          isFollowed = helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
+
+          topUser = topUser.map(topUser => ({
+            ...topUser.dataValues,
+            topUserAvatar: topUser.avatar,
+            topUserName: topUser.name,
+            topUserAccount: topUser.account,
+            followerCount: topUser.Followers.length,
+            isFollowed: loginUser.Followings.map(f => f.id).includes(topUser.id)
+          }))
+          topUser = topUser.sort((a, b) => b.followerCount - a.followerCount)
+          return res.render('userTweets', {
+            user,
+            userTweets,
+            loginUser,
+            isUser,
+            isFollowed,
+            topUser
+          })
+        })
+      })
   },
+
   //設定使用者個人資料頁面推文與回覆頁面
   getUserReplies: (req, res) => {
+    const loginUser = helpers.getUser(req)
     return User.findByPk(req.params.userId, {
-      include: [Reply, Tweet]
+      include: [
+        Tweet,
+        { model: Reply, include: [{ model: Tweet, include: [User] }] }
+      ]
     })
       .then(user => {
         return res.render('userReplies', {
-          user: user.toJSON()
+          user: user.toJSON(),
+          loginUser
         })
       })
   },
