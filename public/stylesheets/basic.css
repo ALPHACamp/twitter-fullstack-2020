@@ -57,11 +57,12 @@ html, body {
   max-width: 1000px;
 }
 .admin-users-card {
-  display: flex;
-  flex-wrap: wrap;
-  position: relative;
+  margin-right: -100%;
 }
 .user-card {
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px;
   width: 245px;
   height: 314px;
   left: 0px;
@@ -69,7 +70,10 @@ html, body {
   background: #f6f7f8;
   border-radius: 10px;
 }
-.user-cover {
+.user-cover::after {
+  content: "" attr(src) "";
+  display: block;
+  font-size: 12px;
   width: 245px;
   height: 140px;
   left: 0px;
@@ -77,11 +81,15 @@ html, body {
   background: #C4C4C4;
   border-radius: 10px 10px 0px 0px;
 }
+.avatar {
+  position: relative;
+}
 .admin-user-avatar {
   position: absolute;
   width: 100px;
   height: 100px;
-  
+  top: -75px;
+  left: 75px;
   border: 4px solid #FFFFFF;
   border-radius: 50%;
   background-size: cover;
