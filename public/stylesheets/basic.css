@@ -70,14 +70,10 @@ html, body {
   background: #f6f7f8;
   border-radius: 10px;
 }
-.user-cover::after {
-  content: "" attr(src) "";
-  display: block;
+.user-cover {
   font-size: 12px;
   width: 245px;
   height: 140px;
-  left: 0px;
-  top: 0px;
   background: #C4C4C4;
   border-radius: 10px 10px 0px 0px;
 }

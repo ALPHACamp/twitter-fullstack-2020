@@ -38,7 +38,11 @@
       {{#each users}}
       <div class="user-card  mt-3 mx-2">
         <div class="div-cover">
+          {{#if this.userCover}}
           <img class="user-cover" src="{{this.userCover}}">
+          {{else}}
+          <div class="user-cover"></div>
+          {{/if}}
         </div>
         <div class="avatar">
           <img class="admin-user-avatar" src="{{this.userAvatar}}">
