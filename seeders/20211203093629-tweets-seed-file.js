@@ -11,6 +11,8 @@ module.exports = {
         description: faker.lorem.text(),
         createdAt: new Date(),
         updatedAt: new Date(),
+        likeCounts: 0 ,
+        replyCounts: 3 ,
         UserId: i % 5 + 2
       })
 
