@@ -141,8 +141,7 @@ const userController = {
   addFollowing: (req, res) => {
     // 目前的登入者不行追蹤自己
     if (helpers.getUser(req).id === Number(req.body.id)) {
-      req.flash('error_messages', '請你不要追蹤自己')
-      return res.redirect(200, 'back')
+      return res.render('followSelf')
     }
     return Followship.create({
       // 目前登入的使用者id
