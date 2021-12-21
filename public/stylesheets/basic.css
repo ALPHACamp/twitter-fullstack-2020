@@ -416,3 +416,15 @@ img.avatar.large {
 .like-icon {
   color: #E0245E;
 }
+
+#followSelf {
+  margin-top: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#dog {
+  max-width: 30%;
+  border-radius: 20%;
+}
