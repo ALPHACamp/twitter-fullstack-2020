@@ -71,14 +71,24 @@
       {{!-- edit-user-button --}}
       <div class="d-flex justify-content-end mt-1 pr-1">
         {{#ifCond loginUser.id user.id }}
+        <button type="button" class="btn btn-outline ml-2" data-toggle="modal" data-target="#editUserModal">
+          編輯個人資料
+        </button>
         {{else}}
         <div class="icon-outline pt-1">
           <a href="{{ user.email }}"><i class="far fa-envelope"></i></a>
         </div>
+        {{#if user.isFollowed}}
+        <form action="/followships/{{user.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn followings-button mr-3">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="POST">
+          <button type="submit" class="btn followers-button mr-3">跟隨</button>
+          <input type="hidden" name="id" value="{{user.id}}">
+        </form>
+        {{/if}}
         {{/ifCond}}
-        <button type="button" class="btn btn-outline ml-2" data-toggle="modal" data-target="#editUserModal">
-          編輯個人資料
-        </button>
       </div>
     </div>
     {{!-- user-intro --}}
@@ -118,7 +128,8 @@
         </li>
       </ul>
       <div class="user-tweet">
-        {{#each likedTweets}}
+        {{#if user.likedTweets}}
+        {{#each user.likedTweets}}
         <div class="tweet col-md-12">
           <div class="d-flex">
             <div class="mt-2 mr-2 col-md-2" style="padding: 0%;"><a href="/users/{{this.userId}}/tweets"
@@ -161,6 +172,9 @@
         </div>
         <hr />
         {{/each}}
+        {{else}}
+        <div class="mt-4">使用者目前沒有喜歡的內容!</div>
+        {{/if}}
       </div>
     </div>
   </div>

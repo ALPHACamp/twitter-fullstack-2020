@@ -274,8 +274,10 @@ const userController = {
       ]
     })
       .then(user => {
+        user = user.toJSON()
+        user.isFollowed = loginUser.Followings.map(userFlldByLgnUsr => userFlldByLgnUsr.id).includes(user.id)
         return res.render('userReplies', {
-          user: user.toJSON(),
+          user,
           loginUser
         })
       })
@@ -374,7 +376,7 @@ const userController = {
     return User.findByPk(req.params.userId, {
       include: [{ model: Tweet, as: 'LikedTweets', order: [['createdAt', 'DESC']], include: [User]}]
     }).then(user => {
-      const data = user.LikedTweets.map(tweet => ({
+      user.likedTweets = user.LikedTweets.map(tweet => ({
         userId: tweet.User.id,
         userAvatar: tweet.User.avatar,
         userName: tweet.User.name,
@@ -386,7 +388,8 @@ const userController = {
         likeCounts: tweet.likeCounts,
         isLikedByLoginUser: loginUser.LikedTweets.map(tweetLgnUsr => tweetLgnUsr.id).includes(tweet.id)
       }))
-      return res.render('userlikes', { loginUser, user, likedTweets: data })
+      user.isFollowed = loginUser.Followings.map(userFlldByLgnUsr => userFlldByLgnUsr.id).includes(user.id)
+      return res.render('userlikes', { loginUser, user })
     })
   },
 
