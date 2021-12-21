@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "password",
-    "database": "ac_twitter_workspace",
+    "database": "ac_twitter_workspaces",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
@@ -15,7 +15,7 @@
     "logging": false
   },
   "production": {
-    "use_env_variable": "DATABASE_URL",
+    "use_env_variable": "CLEARDB_DATABASE_URL",
     "dialect": "postgres",
     "protocol": "postgres",
     "dialectOptions": {

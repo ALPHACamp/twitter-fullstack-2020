@@ -224,11 +224,11 @@ const userController = {
   getUserTweets: (req, res) => {
     const loginUser = helpers.getUser(req)
     return User.findByPk(req.params.userId, {
-      include: [ 
-        { model: Tweet, include: [{ model: User, as: 'LikedUsers' }]} ,
-        {model: User, as: 'Followers'} ,
-        {model: User, as: 'Followings'},
-       ]
+      include: [
+        { model: Tweet, include: [{ model: User, as: 'LikedUsers' }] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ]
     })
       .then(user => {
         User.findAll({
@@ -269,7 +269,7 @@ const userController = {
     return User.findByPk(req.params.userId, {
       include: [
         Tweet,
-        { model: Reply, include:[{ model: Tweet, include:[User] }]}
+        { model: Reply, include: [{ model: Tweet, include: [User] }] }
       ]
     })
       .then(user => {
@@ -323,7 +323,6 @@ const userController = {
           })
       })
   },
-
   // 瀏覽 user 的 followers
   getUserFollower: (req, res) => {
     return User.findByPk(req.params.userId, {
@@ -366,7 +365,6 @@ const userController = {
           })
       })
   },
-
   //使用者喜歡的內容頁面
   getUserLikes: (req, res) => {
     const loginUser = helpers.getUser(req)
@@ -388,8 +386,19 @@ const userController = {
       return res.render('userlikes', { loginUser, user, likedTweets: data })
 
     })
-  },
 
+    // return Like.findAll({
+    //   raw: true,
+    //   nest: true,
+    //   where: {UserId: req.params.userId},
+    //   include: [{model: Tweet, include: [User, Reply, Like]}]
+    // }).then(likes => {
+    //   console.log(likes)
+    //   likes.forEach(like => {console.log(like.Tweet.Replies)})
+    //   res.render('userlikes', { user,  })
+    // })
+
+  },
   // 瀏覽帳號設定頁面
   editSetting: (req, res) => {
     if (helpers.getUser(req).id !== Number(req.params.userId)) {
