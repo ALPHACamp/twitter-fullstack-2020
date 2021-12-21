@@ -1,7 +1,7 @@
-<div class="row" style="width:100%;">
-  {{!-- 左邊選項欄位 --}}
-  <div class="col-3">
-    <img class="mb-4 pl-2" src="/images/logo.png">
+{{!-- 左邊選項欄位 --}}
+<div class="row col-md-12">
+  <div class="admin-left col-md-3 ml-4">
+    <img class="mb-4 pl-2" src="https://i.imgur.com/8DjhHxL.png">
     <div class="nav-ul-wrapper">
       <ul class="nav flex-column">
         <li class="nav-item py-2">
@@ -31,24 +31,26 @@
 
   {{!-- 右邊清單欄位 --}}
   {{!-- 會用到 avatar,name,account,createdAt,description --}}
-  <div class="col-9 content-container">
-    <p style="font-size: 18px;">推文清單</p>
-    {{#each tweets}}
-    <div class="card">
-      <div class="card-body d-flex">
-        <img class="avatar small mr-3" src="{{this.userAvatar}}">
+  <div class="col-md-10 admin-content">
+    <p class="admin-tweets-title ml-3 mt-3">推文清單</p>
+    <hr />
+
+    <div class="admin-card">
+      {{#each tweets}}
+      <div class="admin-card-body d-flex">
+        <img class="avatar small mr-3 mt-2 ml-3" src="{{this.userAvatar}}">
         <div>
-          <p class="card-title">{{this.userName}} <span class="atAccount">@{{this.userAccount}}•{{moment this.createdAt}}</span></p>
+          <p class="card-title mt-2">{{this.userName}} <span class="atAccount">@{{this.userAccount}}•{{moment
+              this.createdAt}}</span></p>
           <p class="card-text">{{this.tweetDescription}}</p>
         </div>
-        <div class="">
-          <form action="/admin/tweets/{{this.tweetId}}?_method=DELETE" method="POST" onclick="return confirm('確定要刪除這則貼文？')">
-            <button class="btn btn-danger ml-2" type="submit">X</button>
+        <div class="button-delete">
+          <form action="/admin/tweets/{{this.tweetId}}?_method=DELETE" method="POST"
+            onclick="return confirm('確定要刪除這則貼文？')">
+            <button class="admin-delete ml-2" type="submit">x</button>
           </form>
         </div>
       </div>
-      
+      {{/each}}
     </div>
-  {{/each}}
   </div>
-</div>
