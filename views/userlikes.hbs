@@ -140,10 +140,21 @@
                   <i class="far fa-comment mr-2"></i>
                   {{ this.replyCounts }}
                 </div>
-                <div class="ml-4 like-icon">
-                  <i class="fas fa-heart"></i>
-                  {{ this.likeCounts }}
-                </div>
+                {{#if this.isLikedByLoginUser}}
+                <form action='/tweets/{{this.id}}/unlike' method="POST">
+                  <button class="push-button like-icon ml-4" type="submit">
+                    <i class="fas fa-heart"></i>
+                    <span class="ml-2">{{ this.likeCounts }}</span>
+                  </button>
+                </form>
+                {{else}}
+                <form action='/tweets/{{this.id}}/like' method="POST">
+                  <button class="like-button ml-4" type="submit">
+                    <i class="far fa-heart"></i>
+                    <span class="ml-2">{{ this.likeCounts }}</span>
+                  </button>
+                </form>
+                {{/if}}
               </div>
             </div>
           </div>

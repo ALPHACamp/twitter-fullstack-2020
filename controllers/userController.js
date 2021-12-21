@@ -71,7 +71,7 @@ const userController = {
   // like tweet
   addLike: (req,res) => {
     return Like.create({
-      UserId: helpers.getUser(req).id ,
+      UserId: helpers.getUser(req).id,
       TweetId: req.params.tweetId
     })
       .then(like => {
@@ -349,7 +349,7 @@ const userController = {
   getUserLikes: (req, res) => {
     const loginUser = helpers.getUser(req)
     return User.findByPk(req.params.userId, {
-      include: [{ model: Tweet, as: 'LikedTweets', include: [User]}]
+      include: [{ model: Tweet, as: 'LikedTweets', order: [['createdAt', 'DESC']], include: [User]}]
     }).then(user => {
       const data = user.LikedTweets.map(tweet => ({
         userId: tweet.User.id,
@@ -360,11 +360,10 @@ const userController = {
         createdAt: tweet.createdAt,
         description: tweet.description,
         replyCounts: tweet.replyCounts,
-        likeCounts: tweet.likeCounts
+        likeCounts: tweet.likeCounts,
+        isLikedByLoginUser: loginUser.LikedTweets.map(tweetLgnUsr => tweetLgnUsr.id).includes(tweet.id)
       }))
-     // console.log(data)
       return res.render('userlikes', { loginUser, user, likedTweets: data })
-      
     })
   },
 
