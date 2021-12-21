@@ -372,11 +372,7 @@ const userController = {
   getUserLikes: (req, res) => {
     const loginUser = helpers.getUser(req)
     return User.findByPk(req.params.userId, {
-<<<<<<< .merge_file_a02260
       include: [{ model: Tweet, as: 'LikedTweets', order: [['createdAt', 'DESC']], include: [User]}]
-=======
-      include: [{ model: Tweet, as: 'LikedTweets', include: [User] }]
->>>>>>> .merge_file_a08252
     }).then(user => {
       const data = user.LikedTweets.map(tweet => ({
         userId: tweet.User.id,
@@ -390,13 +386,7 @@ const userController = {
         likeCounts: tweet.likeCounts,
         isLikedByLoginUser: loginUser.LikedTweets.map(tweetLgnUsr => tweetLgnUsr.id).includes(tweet.id)
       }))
-<<<<<<< .merge_file_a02260
       return res.render('userlikes', { loginUser, user, likedTweets: data })
-=======
-      // console.log(data)
-      return res.render('userlikes', { loginUser, user, likedTweets: data })
-
->>>>>>> .merge_file_a08252
     })
   },
 
