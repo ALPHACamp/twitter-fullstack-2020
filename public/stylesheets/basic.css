@@ -153,6 +153,17 @@ img.avatar.small {
   color: #657786;
 }
 
+.reply-text {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  color: #657786;
+}
+
+.reply-text.atAccount {
+  color:  #FF6600;
+}
+
 .tweets-center {
   background: #f5f8fa;
   padding-right: 0px;

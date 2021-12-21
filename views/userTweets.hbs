@@ -47,7 +47,7 @@
       </a>
       <div class="name-info ">
         <h5 class="header1 ml-3 mb-0">{{user.name}}</h5>
-        <div class="atAccount ml-3 mb-1">3推文</div>
+        <div class="atAccount ml-3 mb-1">{{user.Tweets.length}}推文</div>
       </div>
     </div>
     {{!-- user-photos --}}
@@ -70,15 +70,25 @@
       </div>
       {{!-- edit-user-button --}}
       <div class="d-flex justify-content-end mt-1 pr-1">
-        {{#ifCond loginUser.id user.id }}
-        {{else}}
-        <div class="icon-outline pt-1">
-          <a href="{{ user.email }}"><i class="far fa-envelope"></i></a>
-        </div>
-        {{/ifCond}}
+        {{#if isUser}}
         <button type="button" class="btn btn-outline ml-2" data-toggle="modal" data-target="#editUserModal">
           編輯個人資料
         </button>
+        {{else}}
+        <div class="icon-outline pt-1">
+          <a href="{{ user.email }}"><i class="far fa-envelope"></i></a>
+          {{#if isFollowed}}
+          <form action="/followships/{{user.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn followings-button">正在跟隨</button>
+          </form>
+          {{else}}
+          <form action="/followships" method="POST">
+            <button type="submit" class="btn followers-button">跟隨</button>
+            <input type="hidden" name="id" value="{{user.id}}">
+          </form>
+          {{/if}}
+        </div>
+        {{/if}}
       </div>
     </div>
     {{!-- user-intro --}}
@@ -94,11 +104,11 @@
         <div class="follow d-flex">
           <div class="followship d-flex m-0 mt-2">
             <a href="/users/{{user.id}}/followings" class="d-flex">
-              <div class="follow-title">1個</div>
+              <div class="follow-title">{{user.Followings.length}} 個</div>
               <div class="following-body">跟隨中</div>
             </a>
             <a href="/users/{{user.id}}/followers" class="d-flex ml-3">
-              <div class="follow-title">1個</div>
+              <div class="follow-title">{{user.Followers.length}} 個</div>
               <div class="follower-body">跟隨者</div>
             </a>
           </div>
@@ -108,17 +118,18 @@
       <br>
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link active" href="#">推文</a>
+          <a class="nav-link active" href="/users/{{user.id}}/tweets">推文</a>
         </li>
         <li class="nav-item">
           <a class="nav-link " href="/users/{{user.id}}/replies">推文與回覆</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="#">喜歡的內容</a>
+          {{!-- 放get users/nowUser.id/likes連結 --}}
+          <a class="nav-link " href="/users/{{user.id}}/likes">喜歡的內容</a>
         </li>
       </ul>
       <div class="user-tweet">
-        {{#each user.Tweets}}
+        {{#each userTweets}}
         <div class="tweet col-md-12">
           <div class="d-flex">
             <div class="mt-2 mr-2 col-md-2" style="padding: 0%;"><a href="/users/{{../user.id}}/tweets"
@@ -138,16 +149,27 @@
               <div class="reply-like d-flex mt-2">
                 <div>
                   <i class="far fa-comment mr-2"></i>
-                  3
+                  {{this.replyCounts}}
                 </div>
-                <form action="like" method="POST">
+                {{#if this.isLiked }}
+                <form action="/tweets/{{this.id}}/unlike" method="POST">
+                  <div class="push-button ml-4">
+                    <button type="submit" class="like-button">
+                      <i class="fas fa-heart"></i>
+                    </button>
+                    {{this.likeCounts}}
+                  </div>
+                </form>
+                {{else}}
+                <form action="/tweets/{{this.id}}/like" method="POST">
                   <div class="like-button ml-4">
                     <button type="submit" class="like-button">
                       <i class="far fa-heart"></i>
                     </button>
-                    3
+                    {{this.likeCounts}}
                   </div>
                 </form>
+                {{/if}}
               </div>
             </div>
           </div>
@@ -158,7 +180,6 @@
     </div>
   </div>
 
-
   {{!-- popular --}}
   <div class="col-3 tweet-right">
     <div class="card border-light popular">
@@ -166,7 +187,7 @@
         Popular
       </div>
       <ul class="list-group list-group-flush">
-        {{#each users}}
+        {{#each topUser}}
         <li class="list-group-item d-flex">
           <div class="mr-2">
             <img class="avatar small" src="{{this.topUserAvatar}}">
@@ -181,8 +202,9 @@
               <button type="submit" class="btn followings-button">正在跟隨</button>
             </form>
             {{else}}
-            <form action="/followships/{{this.id}}" method="POST">
-              <button type="submit" class="btn followers-button">跟隨</button>
+            <form action="/followships" method="POST">
+              <button type="submit" class="btn py-2">跟隨</button>
+              <input type="hidden" name="id" value="{{this.id}}">
             </form>
             {{/if}}
           </div>
