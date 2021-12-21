@@ -377,9 +377,16 @@ const userController = {
   //使用者喜歡的內容頁面
   getUserLikes: (req, res) => {
     const loginUser = helpers.getUser(req)
-    return User.findByPk(req.params.userId, {
-      include: [{ model: Tweet, as: 'LikedTweets', order: [['createdAt', 'DESC']], include: [User]}]
-    }).then(user => {
+    return Promise.all([
+      User.findByPk(req.params.userId, {
+      include: [
+        Tweet,
+        { model: Tweet, as: 'LikedTweets', order: [['createdAt', 'DESC']], include: [User]}
+      ]
+    }),
+      helpers.getPopularUsers(req)
+    ])
+    .then(([user, popularUsers]) => {
       user.likedTweets = user.LikedTweets.map(tweet => ({
         userId: tweet.User.id,
         userAvatar: tweet.User.avatar,
@@ -393,7 +400,7 @@ const userController = {
         isLikedByLoginUser: loginUser.LikedTweets.map(tweetLgnUsr => tweetLgnUsr.id).includes(tweet.id)
       }))
       user.isFollowed = loginUser.Followings.map(userFlldByLgnUsr => userFlldByLgnUsr.id).includes(user.id)
-      return res.render('userlikes', { loginUser, user })
+      return res.render('userlikes', { loginUser, user, popularUsers })
     })
   },
 
