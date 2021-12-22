@@ -141,8 +141,7 @@ const userController = {
   addFollowing: (req, res) => {
     // 目前的登入者不行追蹤自己
     if (helpers.getUser(req).id === Number(req.body.id)) {
-      req.flash('error_messages', '請你不要追蹤自己')
-      return res.redirect(200, 'back')
+      return res.render('followSelf')
     }
     return Followship.create({
       // 目前登入的使用者id
@@ -267,6 +266,7 @@ const userController = {
   //設定使用者個人資料頁面推文與回覆頁面
   getUserReplies: (req, res) => {
     const loginUser = helpers.getUser(req)
+
     return Promise.all([
       User.findByPk(req.params.userId, {
         include: [
@@ -279,6 +279,7 @@ const userController = {
       .then(([user, popularUsers]) => {
         user = user.toJSON()
         user.isFollowed = loginUser.Followings.map(userFlldByLgnUsr => userFlldByLgnUsr.id).includes(user.id)
+
         return res.render('userReplies', {
           user,
           loginUser,
@@ -330,7 +331,6 @@ const userController = {
           })
       })
   },
-
   // 瀏覽 user 的 followers
   getUserFollower: (req, res) => {
     return User.findByPk(req.params.userId, {
@@ -373,7 +373,6 @@ const userController = {
           })
       })
   },
-
   //使用者喜歡的內容頁面
   getUserLikes: (req, res) => {
     const loginUser = helpers.getUser(req)
@@ -396,6 +395,19 @@ const userController = {
       })
   },
 
+
+    // return Like.findAll({
+    //   raw: true,
+    //   nest: true,
+    //   where: {UserId: req.params.userId},
+    //   include: [{model: Tweet, include: [User, Reply, Like]}]
+    // }).then(likes => {
+    //   console.log(likes)
+    //   likes.forEach(like => {console.log(like.Tweet.Replies)})
+    //   res.render('userlikes', { user,  })
+    // })
+
+  },
   // 瀏覽帳號設定頁面
   editSetting: (req, res) => {
     if (helpers.getUser(req).id !== Number(req.params.userId)) {
