@@ -1,7 +1,7 @@
 <div class="row" style="width:100%;">
   {{!-- navbar --}}
   <div class="col-3">
-    <img class="mb-4 pl-2" src="/images/logo.png">
+    <img class="mb-4 pl-2" src="https://i.imgur.com/8DjhHxL.png">
     <div class="nav-ul-wrapper">
       <ul class="nav flex-column">
         <li class="nav-item py-2">
@@ -23,7 +23,7 @@
           </a>
         </li>
         <li class="nav-item py-2">
-          <a class="btn py-2" href="#">推文</a>
+          <button type="button" class="btn tweet-button" data-toggle="modal" data-target="#tweetModal">推文</button>
         </li>
       </ul>
       <ul class="nav flex-column">
@@ -47,7 +47,7 @@
       </a>
       <div class="name-info ">
         <h5 class="header1 ml-3 mb-0">{{user.name}}</h5>
-        <div class="atAccount ml-3 mb-1">3推文</div>
+        <div class="atAccount ml-3 mb-1">{{user.Tweets.length}} 推文</div>
       </div>
     </div>
     {{!-- user-photos --}}
@@ -118,24 +118,25 @@
         </li>
       </ul>
       <div class="user-tweet">
+        {{#if user.Replies}}
         {{#each user.Replies}}
         <div class="tweet col-md-12">
           <div class="d-flex">
             <div class="mt-2 mr-2 col-md-2" style="padding: 0%;"><a href="/users/{{../user.id}}/tweets"
                 class="text-muted">
-                <img class="avatar small" src="{{../this.user.avatar}}">
+                <img class="avatar small" src="{{../user.avatar}}">
               </a>
             </div>
             <div class="col-md-10 mt-2">
               <div class="account-info d-flex" style="flex-auto">
-                <div class="user-name">{{../this.user.name}}</div>
-                <div class="atAccount mb-2 ml-2">@{{user.account}}•{{moment
+                <div class="user-name">{{../user.name}}</div>
+                <div class="atAccount mb-2 ml-2">@{{../user.account}}•{{moment
                   this.createdAt}}</div>
               </div>
               <div class="reply d-flex">
                 <div class="reply-text">回覆</div>
-                <a href="/users/{{../user.id}}/tweets" class="text-muted">
-                  <div class="reply-account ml-3">@{{../user.account}}</div>
+                <a href="/users/{{this.Tweet.User.id}}/tweets" class="text-muted">
+                  <div class="reply-text atAccount ml-1">@{{this.Tweet.User.account}}</div>
                 </a>
               </div>
               <a href="/tweets/{{this.TweetId}}/replies" class="text-muted">
@@ -147,6 +148,9 @@
         </div>
         <hr />
         {{/each}}
+        {{else}}
+        <div class="mt-4">使用者目前沒有回應任何推文!</div>
+        {{/if}}
       </div>
     </div>
   </div>

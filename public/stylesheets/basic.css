@@ -1,11 +1,127 @@
 html, body {
   font-family: 'Noto Sans TC', sans-serif;
+  margin: 0 auto;
+  position: relative;
+  max-width: 1440px;
+  max-height: auto;
 }
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 1350px;
+.wrap {
+  box-sizing: border-box;
+}
+
+.admin-content {
+  position: absolute;
+  width: 1062px;
+  height: auto;
+  left: 378px;
+  top: -1px;
+  padding: 0%;
+  border-right: 1px solid #e6ecf0;
+  border-left: 1px solid #e6ecf0;
+  box-sizing: border-box;
+}
+.admin-left {
+  padding-left: 3%;
+}
+.admin-tweets-title {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+  color: #1C1C1C;
+}
+.admin-card-body {
+ padding-bottom: 2%;
+ border-bottom: 1px solid #e6ecf0;
+}
+.button-delete {
+  position: absolute;
+  left: 1020px;
+}
+.admin-delete {
+  background: none;
+  border: none;
+  color: #657786;
+  font-size: 20px;
+  left: 18.75%;
+  right: 18.75%;
+  top: 18.75%;
+  bottom: 18.75%;
+  cursor: pointer;
+}
+.admin-users {
+  border-right: 1px solid #e6ecf0;
+  border-left: 1px solid #e6ecf0;
+  border-bottom: 1px solid #e6ecf0;
+  height: auto;
+  max-width: 1000px;
+}
+.admin-users-card {
+  margin-right: -100%;
+}
+.user-card {
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px;
+  width: 245px;
+  height: 314px;
+  left: 0px;
+  top: 0px;
+  background: #f6f7f8;
+  border-radius: 10px;
+}
+.user-cover {
+  font-size: 12px;
+  width: 245px;
+  height: 140px;
+  background: #C4C4C4;
+  border-radius: 10px 10px 0px 0px;
+}
+.avatar {
+  position: relative;
+}
+.admin-user-avatar {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: -75px;
+  left: 75px;
+  border: 4px solid #FFFFFF;
+  border-radius: 50%;
+  background-size: cover;
+  object-fit: cover;
+}
+.userName {
+  height: 22px;
+  left: 13.5px;
+  top: 105px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #1C1C1C;
+}
+.userAccount{
+  height: 22px;
+  left: 13.5px;
+  top: 105px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  text-align: center;
+  color: #657786;
+}
+.tweetsAndLikeIcon {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+}
+.userFollowShip {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
 }
 
 .form-signin{
@@ -44,7 +160,7 @@ html, body {
 .text-center-signup {
   display: flex;
   justify-content: right;
-  margin-right: 10%;
+  margin-right: 18%;
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
@@ -95,7 +211,7 @@ html, body {
 }
 
 .siginin-button {
-  margin-left:15.5%;
+  margin-left:18.5%;
   width: 540px;
   height: 46px;
   left: 450px;
@@ -103,7 +219,7 @@ html, body {
 }
 
 .signup-button {
-  margin-left: 29.5%;
+  margin-left: 31.2%;
   width: 540px;
   height: 46px;
   left: 450px;
@@ -151,6 +267,17 @@ img.avatar.small {
   font-weight: bold;
   font-size: 15px;
   color: #657786;
+}
+
+.reply-text {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  color: #657786;
+}
+
+.reply-text.atAccount {
+  color:  #FF6600;
 }
 
 .tweets-center {
@@ -415,4 +542,16 @@ img.avatar.large {
 }
 .like-icon {
   color: #E0245E;
+}
+
+#followSelf {
+  margin-top: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#dog {
+  max-width: 30%;
+  border-radius: 20%;
 }

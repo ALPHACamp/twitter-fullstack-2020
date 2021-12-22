@@ -2,7 +2,7 @@
   {{!-- navbar --}}
   <div class="row col-12">
     <div class="tweets-left col-2">
-      <img class="mb-4 pl-2" src="/images/logo.png">
+      <img class="mb-4 pl-2" src="https://i.imgur.com/8DjhHxL.png">
       <div class="nav-ul-wrapper">
         <ul class="nav flex-column">
           <li class="nav-item py-2">
@@ -186,16 +186,18 @@
             </div>
             <div class="type-text form-group">
               <input type="hidden" name="TweetId" value="{{this.tweetsId}}">
-              <textarea class="form-control new-post-content is-invalid ml-2" name="comment" id="comment"
+              <textarea class="form-control new-post-content is-invalid ml-2" name="comment" id="comment-modal"
                 placeholder="推你的回覆" rows="5" cols="47" maxlength="140"></textarea>
               <div class="invalid-feedback" id="reply-tweet"></div>
             </div>
           </div>
           <div class="add-button  d-flex justify-content-end mr-2">
-            <button type="submit" class="btn mb-2" id="reply">回覆</button>
+            <button type="submit" class="btn mb-2" id="replybtn">回覆</button>
           </div>
         </form>
       </div>
     </div>
   </div>
   {{/each}}
+
+  <script src="/javascripts/replyModal.js"></script>

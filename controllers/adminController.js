@@ -56,22 +56,22 @@ const adminController = {
   },
 
   // admin get all users
-  getUsers:  (req, res) => {
+  getUsers: (req, res) => {
     // user.cover, user.avatar, user.name, user.account
     // user.tweetTotal, 貼文被喜歡的total, 
     // 追蹤人數 , 被追蹤人數
-    return  User.findAll({
-      where: {role: 'normal'},
+    return User.findAll({
+      where: { role: 'normal' },
       include: [
         Tweet,
         // { model: User, as: 'LikedUsers' ,raw: true, nest: true},
-        { model: Tweet, as: 'LikedTweets', raw: true ,nest: true } ,
+        { model: Tweet, as: 'LikedTweets', raw: true, nest: true },
         { model: User, as: 'Followings' },
-        { model: User, as: 'Followers'}
+        { model: User, as: 'Followers' }
       ]
     })
       .then(users => {
-        console.log(users[0])
+
         users = users.map(user => {
           if (user.dataValues !== undefined) {
             return {
@@ -81,14 +81,14 @@ const adminController = {
               userName: user.name,
               userAccount: user.account,
               userTweetTotal: user.Tweets.length,
-              userTweetLikedTotal: user.LikedUsers.length,
+              userTweetLikedTotal: user.LikedTweets.length,
               userFollowingsTotal: user.Followings.length,
               userFollowersTotal: user.Followers.length
             }
           }
         })
         users = users.sort((a, b) => b.userTweetLikedTotal - a.userTweetLikedTotal)
-        return res.render('admin/users', {users})
+        return res.render('admin/users', { users })
       })
   },
 

@@ -69,52 +69,89 @@ const userController = {
   },
 
   // like tweet
-  addLike: (req,res) => {
+  addLike: (req, res) => {
     return Like.create({
-      UserId: helpers.getUser(req).id ,
+      UserId: helpers.getUser(req).id,
       TweetId: req.params.tweetId
     })
       .then(like => {
-        return Tweet.findOne({where: {id: like.TweetId}}).then(tweet => {
+        return Tweet.findByPk(like.TweetId).then(tweet => {
           return tweet.increment('likeCounts')
         }).then(tweet => {
+          // console.log('============')
+          // console.log(tweet.toJSON())
+          // console.log('============')
+          // console.log(like.toJSON())
+          // console.log('============')
           return res.redirect('back')
         })
       })
   },
-  // unlike tweet
+  // 信嘗試修改 unlike tweet
   removeLike: (req, res) => {
-    return Like.destroy({
-      where: {
-        UserId: helpers.getUser(req).id,
-        TweetId: req.params.tweetId
-      }
+    return Tweet.findByPk(req.params.tweetId, {
+      include: [
+        Like
+      ]
     })
+      .then(tweet => {
+        return tweet.decrement('likeCounts')
+        //return Like.findByPk( tweet.Likes.id)
+        // console.log('tweetID: ', req.params.tweetId)
+        // console.log('tweet', tweet.toJSON())
+        // console.log('tweet.Likes.id: ', tweet.Likes[0].id)
+      })
       .then(like => {
-        return Tweet.findOne({ where: { id: req.params.tweetId } })
-        .then(tweet => {
-          return tweet.decrement('likeCounts')
-        }).then(tweet => {
-            return res.redirect('back')
-          })
+        return Like.destroy({
+          where: {
+            UserId: helpers.getUser(req).id,
+            TweetId: req.params.tweetId
+          }
         })
+      })
+      .then(() => {
+        return res.redirect('back')
+      })
   },
+
+  // unlike tweet
+  // removeLike: (req, res) => {
+  //   return Like.destroy({
+  //     where: {
+  //       UserId: helpers.getUser(req).id,
+  //       TweetId: req.params.tweetId
+  //     }
+  //   })
+  //     .then(like => {
+  //       return Tweet.findByPk(req.params.tweetId)
+  //       .then(tweet => {
+  //         return tweet.decrement('likeCounts')
+  //       }).then(tweet => {
+  //         // console.log('============')
+  //         // console.log(tweet.toJSON())
+  //         // console.log('============')
+  //         // console.log(like.toJSON())
+  //         // console.log('============')
+  //         return res.redirect('back')
+  //         })
+  //       })
+  // },
+
   // following
-  addFollowing:  (req, res) => {
+  addFollowing: (req, res) => {
     // 目前的登入者不行追蹤自己
     if (helpers.getUser(req).id === Number(req.body.id)) {
-      req.flash('error_messages', '請你不要追蹤自己')
-      return res.redirect(200,'back')
+      return res.render('followSelf')
     }
-    return  Followship.create({
+    return Followship.create({
       // 目前登入的使用者id
       followerId: helpers.getUser(req).id,
       // 我要追蹤的使用者id
       followingId: req.body.id
     })
-      .then( (followship) => {
+      .then((followship) => {
         req.flash('success_messages', '跟隨成功')
-        return  res.redirect('back')
+        return res.redirect('back')
       })
   },
   // removeFollowing
@@ -136,12 +173,12 @@ const userController = {
 
   getUser: (req, res) => {
     if (helpers.getUser(req).id !== Number(req.params.userId)) {
-      return res.json({ status: 'error', message:'' })
+      return res.json({ status: 'error', message: '' })
     }
     return User.findByPk(req.params.userId)
       .then(user => {
         return res.json(user.toJSON())
-    })
+      })
   },
   postUser: async (req, res) => {
     const { name, introduction } = req.body
@@ -187,23 +224,58 @@ const userController = {
   getUserTweets: (req, res) => {
     const loginUser = helpers.getUser(req)
     return User.findByPk(req.params.userId, {
-      include: Tweet
-    }).then(user => {
-      //console.log(user.toJSON())
-      return res.render('userTweets', {
-        user: user.toJSON(),
-        loginUser
-      })
+      include: [
+        { model: Tweet, include: [{ model: User, as: 'LikedUsers' }] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ]
     })
+      .then(user => {
+        User.findAll({
+          include: [{ model: User, as: 'Followers' }],
+          where: { role: 'normal' }
+        }).then(topUser => {
+          isUser = helpers.isMatch(user.id, loginUser.id)
+          const userTweets = user.Tweets.map(result => ({
+            ...result.dataValues,
+            isLiked: result.LikedUsers.map(item => item.id).includes(loginUser.id)
+          }))
+          isFollowed = helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
+
+          topUser = topUser.map(topUser => ({
+            ...topUser.dataValues,
+            topUserAvatar: topUser.avatar,
+            topUserName: topUser.name,
+            topUserAccount: topUser.account,
+            followerCount: topUser.Followers.length,
+            isFollowed: loginUser.Followings.map(f => f.id).includes(topUser.id)
+          }))
+          topUser = topUser.sort((a, b) => b.followerCount - a.followerCount)
+          return res.render('userTweets', {
+            user,
+            userTweets,
+            loginUser,
+            isUser,
+            isFollowed,
+            topUser
+          })
+        })
+      })
   },
+
   //設定使用者個人資料頁面推文與回覆頁面
   getUserReplies: (req, res) => {
+    const loginUser = helpers.getUser(req)
     return User.findByPk(req.params.userId, {
-      include: [Reply, Tweet]
+      include: [
+        Tweet,
+        { model: Reply, include: [{ model: Tweet, include: [User] }] }
+      ]
     })
       .then(user => {
         return res.render('userReplies', {
-          user: user.toJSON()
+          user: user.toJSON(),
+          loginUser
         })
       })
   },
@@ -211,27 +283,25 @@ const userController = {
 
   // 瀏覽 user 的 followings
   getUserFollowing: (req, res) => {
-    return User.findByPk(req.params.userId, { include: [
-      { model: User, as: 'Followings' }
-    ]})
-      .then( users => {
+    return User.findByPk(req.params.userId, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followings' }
+      ]
+    })
+      .then(users => {
         User.findAll({
           include: [{ model: User, as: 'Followers' }],
           where: { role: 'normal' }
         })
-          .then( topUsers => {
-            // users.Followings 可以拿到此user的所有他在追蹤的人
-            // console.log('===========')
-            // console.log('users: ', users.Followings)
-            // console.log('topUsers: ', topUsers)
-            // console.log('===========')
+          .then(topUsers => {
             users.Followings = users.Followings.map(user => ({
-                  ...user.dataValues,
-                  userName: user.name ,
-                  userId: user.id,
-                  userAccount: user.account,
-                  userAvatar: user.avatar,
-                  userIntroduction: user.introduction,
+              ...user.dataValues,
+              userName: user.name,
+              userId: user.id,
+              userAccount: user.account,
+              userAvatar: user.avatar,
+              userIntroduction: user.introduction,
               isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
             }))
             topUsers = topUsers.map(topUser => ({
@@ -239,38 +309,34 @@ const userController = {
               topUserAvatar: topUser.avatar,
               topUserName: topUser.name,
               topUserAccount: topUser.account,
-              FollowerCount: topUser.Followers.length,
+              followerCount: topUser.Followers.length,
               topUserIsFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(topUser.id)
             }))
-            users.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-            topUsers.sort((a, b) => b.followerCount - a.followerCount)
-            return res.render('userFollowings', { users: users.Followings, topUsers, loginUser: helpers.getUser(req)} )
+            users.Followings = users.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+            topUsers = topUsers.sort((a, b) => b.followerCount - a.followerCount)
+            return res.render('userFollowings', {
+              nowUser: users,
+              users: users.Followings,
+              topUsers: topUsers,
+              loginUser: helpers.getUser(req)
+            })
           })
       })
   },
-
   // 瀏覽 user 的 followers
   getUserFollower: (req, res) => {
-
     return User.findByPk(req.params.userId, {
       include: [
+        Tweet,
         { model: User, as: 'Followers' }
       ]
     })
       .then(users => {
-        console.log('===========')
-        console.log('helpers.getUser(req): ', helpers.getUser(req))
-        console.log('===========')
         User.findAll({
           include: [{ model: User, as: 'Followers' }],
-          //where: { role: 'normal' }
+          where: { role: 'normal' }
         })
           .then(topUsers => {
-            // users.Followings 可以拿到此user的所有他在追蹤的人
-            // console.log('===========')
-            // console.log('users: ', users.Followings)
-            // console.log('topUsers: ', topUsers)
-            // console.log('===========')
             users.Followers = users.Followers.map(user => ({
               ...user.dataValues,
               userName: user.name,
@@ -279,28 +345,31 @@ const userController = {
               userAvatar: user.avatar,
               userIntroduction: user.introduction,
               isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(users.id)
-              //isFollowed: helpers.isMatch(req.user.id , user.id)
             }))
             topUsers = topUsers.map(topUser => ({
               ...topUser.dataValues,
               topUserAvatar: topUser.avatar,
               topUserName: topUser.name,
               topUserAccount: topUser.account,
-              FollowerCount: topUser.Followers.length,
+              followerCount: topUser.Followers.length,
               topUserIsFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(topUser.id)
             }))
-            users.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-            topUsers.sort((a, b) => b.followerCount - a.followerCount)
-            return res.render('userFollowers', { users: users.Followers, topUsers, loginUser: helpers.getUser(req) })
+            users.Followers = users.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+            topUsers = topUsers.sort((a, b) => b.followerCount - a.followerCount)
+            return res.render('userFollowers', {
+              nowUser: users,
+              users: users.Followers,
+              topUsers,
+              loginUser: helpers.getUser(req)
+            })
           })
       })
   },
-
   //使用者喜歡的內容頁面
   getUserLikes: (req, res) => {
     const loginUser = helpers.getUser(req)
     return User.findByPk(req.params.userId, {
-      include: [{ model: Tweet, as: 'LikedTweets', include: [User]}]
+      include: [{ model: Tweet, as: 'LikedTweets', include: [User] }]
     }).then(user => {
       const data = user.LikedTweets.map(tweet => ({
         userId: tweet.User.id,
@@ -313,12 +382,23 @@ const userController = {
         replyCounts: tweet.replyCounts,
         likeCounts: tweet.likeCounts
       }))
-      console.log(data)
+      // console.log(data)
       return res.render('userlikes', { loginUser, user, likedTweets: data })
-      
-    })
-  },
 
+    })
+
+    // return Like.findAll({
+    //   raw: true,
+    //   nest: true,
+    //   where: {UserId: req.params.userId},
+    //   include: [{model: Tweet, include: [User, Reply, Like]}]
+    // }).then(likes => {
+    //   console.log(likes)
+    //   likes.forEach(like => {console.log(like.Tweet.Replies)})
+    //   res.render('userlikes', { user,  })
+    // })
+
+  },
   // 瀏覽帳號設定頁面
   editSetting: (req, res) => {
     if (helpers.getUser(req).id !== Number(req.params.userId)) {
@@ -358,7 +438,7 @@ const userController = {
         if (user.account === account) { req.flash('error_messages', 'account 已重覆註冊！') }
         else { req.flash('error_messages', 'email 已重覆註冊！') }
         return res.redirect('back')
-      } else {        
+      } else {
         return User.findByPk(req.params.userId).then((user) => {
           return user.update({
             account,

@@ -1,7 +1,7 @@
 <div class="row" style="width:100%;">
   {{!-- navbar --}}
   <div class="col-3">
-    <img class="mb-4 pl-2" src="/images/logo.png">
+    <img class="mb-4 pl-2" src="https://i.imgur.com/8DjhHxL.png">
     <div class="nav-ul-wrapper">
       <ul class="nav flex-column">
         <li class="nav-item py-2">
@@ -11,19 +11,19 @@
           </a>
         </li>
         <li class="nav-item py-2">
-          <a class="nav-link active" href="/users/{{user.id}}/tweets">
+          <a class="nav-link active" href="/users/{{loginUser.id}}/tweets">
             <i class="far fa-user"></i>
             <span class="ml-3">個人資料</span>
           </a>
         </li>
         <li class="nav-item py-2">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="/users/{{loginUser.id}}/setting/edit">
             <i class="fas fa-cog"></i>
             <span class="ml-3">設定</span>
           </a>
         </li>
-        <li class="nav-item py-2">
-          <a class="btn py-2" href="#">推文</a>
+        <li class="nav-item nav-btn-modal py-2">
+          <a class="btn btn-modal py-2" data-toggle="modal" data-target="#tweetModal">推文</a>
         </li>
       </ul>
       <ul class="nav flex-column">
@@ -46,19 +46,19 @@
         </div>
       </a>
       <div class="name-info">
-        <h5 class="title-name ml-3">{{user.name}}</h5>
-        <div class="title-info ml-3">3推文</div>
+        <h5 class="title-name ml-3">{{nowUser.name}}</h5>
+        <div class="title-info ml-3">{{nowUser.Tweets.length}} 推文</div>
       </div>
     </div>
     <br>
     <div class="follow-tweet">
       <ul class="nav nav-tabs d-flex">
         <li class="nav-item">
-          
-          <a href="/users/{{users.userId}}/followers" class="nav-link active" id="followers">追隨者</a>
+
+          <a href="/users/{{nowUser.id}}/followers" class="nav-link active" id="followers">追隨者</a>
         </li>
         <li class="nav-item">
-          <a href="/users/{{users.userId}}/followings" class="nav-link " id="followings">正在跟隨</a>
+          <a href="/users/{{nowUser.id}}/followings" class="nav-link " id="followings">正在跟隨</a>
 
         </li>
       </ul>
