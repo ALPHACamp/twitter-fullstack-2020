@@ -47,7 +47,7 @@
       </a>
       <div class="name-info ">
         <h5 class="header1 ml-3 mb-0">{{user.name}}</h5>
-        <div class="atAccount ml-3 mb-1">3推文</div>
+        <div class="atAccount ml-3 mb-1">{{user.Tweets.length}} 推文</div>
       </div>
     </div>
     {{!-- user-photos --}}
@@ -71,14 +71,24 @@
       {{!-- edit-user-button --}}
       <div class="d-flex justify-content-end mt-1 pr-1">
         {{#ifCond loginUser.id user.id }}
+        <button type="button" class="btn btn-outline ml-2" data-toggle="modal" data-target="#editUserModal">
+          編輯個人資料
+        </button>
         {{else}}
         <div class="icon-outline pt-1">
           <a href="{{ user.email }}"><i class="far fa-envelope"></i></a>
         </div>
+        {{#if user.isFollowed}}
+        <form action="/followships/{{user.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn followings-button mr-3">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="POST">
+          <button type="submit" class="btn followers-button mr-3">跟隨</button>
+          <input type="hidden" name="id" value="{{user.id}}">
+        </form>
+        {{/if}}
         {{/ifCond}}
-        <button type="button" class="btn btn-outline ml-2" data-toggle="modal" data-target="#editUserModal">
-          編輯個人資料
-        </button>
       </div>
     </div>
     {{!-- user-intro --}}
@@ -118,18 +128,19 @@
         </li>
       </ul>
       <div class="user-tweet">
-        {{#each likedTweets}}
+        {{#if user.LikedTweets}}
+        {{#each user.LikedTweets}}
         <div class="tweet col-md-12">
           <div class="d-flex">
-            <div class="mt-2 mr-2 col-md-2" style="padding: 0%;"><a href="/users/{{this.userId}}/tweets"
+            <div class="mt-2 mr-2 col-md-2" style="padding: 0%;"><a href="/users/{{this.User.id}}/tweets"
                 class="text-muted">
-                <img class="avatar small" src="{{ this.userAvatar }}">
+                <img class="avatar small" src="{{ this.User.avatar }}">
               </a>
             </div>
             <div class="col-md-10 mt-2">
               <div class="account-info d-flex" style="flex-auto">
-                <div class="user-name">{{ this.userName }}</div>
-                <div class="atAccount mb-2 ml-2">@{{ this.userAccount}}•{{moment
+                <div class="user-name">{{ this.User.name }}</div>
+                <div class="atAccount mb-2 ml-2">@{{ this.User.account}}•{{moment
                   this.createdAt}}</div>
               </div>
               <a href="/tweets/{{this.id}}/replies" class="text-muted">
@@ -140,16 +151,30 @@
                   <i class="far fa-comment mr-2"></i>
                   {{ this.replyCounts }}
                 </div>
-                <div class="ml-4 like-icon">
-                  <i class="fas fa-heart"></i>
-                  {{ this.likeCounts }}
-                </div>
+                {{#if this.isLikedByLoginUser}}
+                <form action='/tweets/{{this.id}}/unlike' method="POST">
+                  <button class="push-button like-icon ml-4" type="submit">
+                    <i class="fas fa-heart"></i>
+                    <span class="ml-2">{{ this.likeCounts }}</span>
+                  </button>
+                </form>
+                {{else}}
+                <form action='/tweets/{{this.id}}/like' method="POST">
+                  <button class="like-button ml-4" type="submit">
+                    <i class="far fa-heart"></i>
+                    <span class="ml-2">{{ this.likeCounts }}</span>
+                  </button>
+                </form>
+                {{/if}}
               </div>
             </div>
           </div>
         </div>
         <hr />
         {{/each}}
+        {{else}}
+        <div class="mt-4">使用者目前沒有喜歡的內容!</div>
+        {{/if}}
       </div>
     </div>
   </div>
@@ -157,36 +182,6 @@
 
   {{!-- popular --}}
   <div class="col-4">
-    <div class="card border-light popular">
-      <div class="card-header">
-        Popular
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar1.png">
-          </div>
-          <div class="mr-5">
-            <p class="mb-0">Pizza Hut</p>
-            <p class="atAccount">@pizzahut</p>
-          </div>
-          <div class="pt-2">
-            <a class="btn py-2" href="#">正在追蹤</a>
-          </div>
-        </li>
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar2.png">
-          </div>
-          <div class="mr-5">
-            <p class="mb-0">MacDonald</p>
-            <p class="atAccount">@macdonald</p>
-          </div>
-          <div class="pt-2">
-            <a class="btn btn-outline py-2" href="#">追蹤</a>
-          </div>
-        </li>
-      </ul>
-    </div>
+      {{> popular}}
   </div>
 </div>

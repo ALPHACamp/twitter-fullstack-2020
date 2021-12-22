@@ -58,15 +58,21 @@ const tweetController = {
 
   //前台瀏覽個別推文
   getTweet: (req, res) => {
-    return Tweet.findByPk(req.params.id, {
-      include: [
-        User,
-        { model: Reply, include: [User] }
-      ]
-    }).then(tweet => {
+    return Promise.all([
+      Tweet.findByPk(req.params.id, {
+        include: [
+          User,
+          { model: Reply, include: [User] },
+          { model: User, as: 'LikedUsers' }
+        ]
+      }),
+      helpers.getPopularUsers(req)
+    ]).then(([tweet, popularUsers]) => {
+      tweet.dataValues.isLiked = tweet.LikedUsers.map(u => u.id).includes(helpers.getUser(req).id)
       return res.render('tweet', {
         tweet: tweet.toJSON(),
-        user: helpers.getUser(req)
+        user: helpers.getUser(req),
+        popularUsers
       })
     })
   },

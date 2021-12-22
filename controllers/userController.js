@@ -266,16 +266,24 @@ const userController = {
   //設定使用者個人資料頁面推文與回覆頁面
   getUserReplies: (req, res) => {
     const loginUser = helpers.getUser(req)
-    return User.findByPk(req.params.userId, {
-      include: [
-        Tweet,
-        { model: Reply, include: [{ model: Tweet, include: [User] }] }
-      ]
-    })
-      .then(user => {
+
+    return Promise.all([
+      User.findByPk(req.params.userId, {
+        include: [
+          Tweet,
+          { model: Reply, include: [{ model: Tweet, include: [User] }] }
+        ]
+      }),
+      helpers.getPopularUsers(req)
+    ])
+      .then(([user, popularUsers]) => {
+        user = user.toJSON()
+        user.isFollowed = loginUser.Followings.map(userFlldByLgnUsr => userFlldByLgnUsr.id).includes(user.id)
+
         return res.render('userReplies', {
-          user: user.toJSON(),
-          loginUser
+          user,
+          loginUser,
+          popularUsers
         })
       })
   },
@@ -368,24 +376,25 @@ const userController = {
   //使用者喜歡的內容頁面
   getUserLikes: (req, res) => {
     const loginUser = helpers.getUser(req)
-    return User.findByPk(req.params.userId, {
-      include: [{ model: Tweet, as: 'LikedTweets', include: [User] }]
-    }).then(user => {
-      const data = user.LikedTweets.map(tweet => ({
-        userId: tweet.User.id,
-        userAvatar: tweet.User.avatar,
-        userName: tweet.User.name,
-        userAccount: tweet.User.account,
-        id: tweet.id,
-        createdAt: tweet.createdAt,
-        description: tweet.description,
-        replyCounts: tweet.replyCounts,
-        likeCounts: tweet.likeCounts
-      }))
-      // console.log(data)
-      return res.render('userlikes', { loginUser, user, likedTweets: data })
+    return Promise.all([
+      User.findByPk(req.params.userId, {
+        include: [
+          Tweet,
+          { model: Tweet, as: 'LikedTweets', order: [['createdAt', 'DESC']], include: [User] }
+        ]
+      }),
+      helpers.getPopularUsers(req)
+    ])
+      .then(([user, popularUsers]) => {
+        user.LikedTweets = user.LikedTweets.map(tweet => ({
+          ...tweet.dataValues,
+          isLikedByLoginUser: loginUser.LikedTweets.map(tweetLgnUsr => tweetLgnUsr.id).includes(tweet.id)
+        }))
+        user.isFollowed = loginUser.Followings.map(userFlldByLgnUsr => userFlldByLgnUsr.id).includes(user.id)
+        return res.render('userlikes', { loginUser, user, popularUsers })
+      })
+  },
 
-    })
 
     // return Like.findAll({
     //   raw: true,

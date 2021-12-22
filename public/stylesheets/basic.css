@@ -261,6 +261,13 @@ img.avatar.small {
   height: 50px;
 }
 
+.avatar-none-small {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background: #999999;
+}
+
 
 .atAccount {
   font-style: normal;
@@ -404,7 +411,7 @@ img.avatar.large {
   padding: auto;
 }
 
-.like-button {
+.like-button,.reply-button {
   background: transparent;
   color: #657786;
   border: none;
