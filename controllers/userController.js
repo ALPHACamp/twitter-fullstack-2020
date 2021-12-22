@@ -350,9 +350,11 @@ const userController = {
       .then(([user, popularUsers]) => {
         user.LikedTweets = user.LikedTweets.map(tweet => ({
           ...tweet.dataValues,
-          isLikedByLoginUser: loginUser.LikedTweets.map(tweetLgnUsr => tweetLgnUsr.id).includes(tweet.id)
+          isLikedByLoginUser: loginUser.LikedTweets ? (loginUser.LikedTweets.map(tweetLgnUsr => tweetLgnUsr.id).includes(tweet.id)) : false
         }))
+
         user.isFollowed = loginUser.Followings.map(userFlldByLgnUsr => userFlldByLgnUsr.id).includes(user.id)
+        console.log('user.LikedTweets: ', user.toJSON())
         return res.render('userlikes', { loginUser, user, popularUsers })
       })
   },
