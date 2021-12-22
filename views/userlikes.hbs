@@ -128,19 +128,19 @@
         </li>
       </ul>
       <div class="user-tweet">
-        {{#if user.likedTweets}}
-        {{#each user.likedTweets}}
+        {{#if user.LikedTweets}}
+        {{#each user.LikedTweets}}
         <div class="tweet col-md-12">
           <div class="d-flex">
-            <div class="mt-2 mr-2 col-md-2" style="padding: 0%;"><a href="/users/{{this.userId}}/tweets"
+            <div class="mt-2 mr-2 col-md-2" style="padding: 0%;"><a href="/users/{{this.User.id}}/tweets"
                 class="text-muted">
-                <img class="avatar small" src="{{ this.userAvatar }}">
+                <img class="avatar small" src="{{ this.User.avatar }}">
               </a>
             </div>
             <div class="col-md-10 mt-2">
               <div class="account-info d-flex" style="flex-auto">
-                <div class="user-name">{{ this.userName }}</div>
-                <div class="atAccount mb-2 ml-2">@{{ this.userAccount}}•{{moment
+                <div class="user-name">{{ this.User.name }}</div>
+                <div class="atAccount mb-2 ml-2">@{{ this.User.account}}•{{moment
                   this.createdAt}}</div>
               </div>
               <a href="/tweets/{{this.id}}/replies" class="text-muted">
