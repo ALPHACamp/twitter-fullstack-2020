@@ -8,8 +8,6 @@ const helpers = require('../_helpers')
 const tweetController = {
 
   getTweets: (req, res) => {
-    // 撈 user , tweets view 的資料
-    // return res.send('是在怎樣')
     return Tweet.findAll({
       order: [['createdAt', 'DESC']],
       include: [

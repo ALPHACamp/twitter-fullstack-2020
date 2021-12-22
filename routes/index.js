@@ -12,7 +12,6 @@ module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === 'admin') {
-        req.flash('error_messages', '無法進入此頁面')
         return res.redirect('/admin/tweets')
       }
       return next()
@@ -24,13 +23,12 @@ module.exports = (app, passport) => {
       if (helpers.getUser(req).role === 'admin') {
         return next()
       }
-      if (helpers.getUser(req).role === 'normal') {
-        req.flash('error_messages', '無此權限')
-        return res.redirect('back')
-      }
-      res.redirect('/admin/signin')
+      return res.redirect('/')
     }
+    res.redirect('/admin/signin')
   }
+
+  app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   //app.get('/tweets', authenticated, (req, res) => res.render('tweets', { user: helpers.getUser(req) }))
   // user 系列
