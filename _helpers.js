@@ -19,9 +19,10 @@ function isMatch(a , b) {
   }
 
   function getPopularUsers(req) {
-    return User.findAll(
-      {include: { model: User, as: 'Followers' }}
-    ).then(users => {
+    return User.findAll({ 
+      where: { role: 'normal' },
+      include: { model: User, as: 'Followers' }
+    }).then(users => {
         users = users.map(user => ({
           ...user.dataValues,
           FollowerCount: user.Followers.length,
