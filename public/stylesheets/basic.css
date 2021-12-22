@@ -295,7 +295,7 @@ img.avatar.large {
   padding: auto;
 }
 
-.like-button {
+.like-button,.reply-button {
   background: transparent;
   color: #657786;
   border: none;
