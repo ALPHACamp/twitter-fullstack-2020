@@ -26,7 +26,7 @@ function isMatch(a , b) {
         users = users.map(user => ({
           ...user.dataValues,
           FollowerCount: user.Followers.length,
-          isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+          isFollowed: this.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
         popularUsers = users.sort((a, b) => b.FollowerCount - a.FollowerCount ).slice(0,10)
         return popularUsers
