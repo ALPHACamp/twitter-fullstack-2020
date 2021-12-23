@@ -105,36 +105,7 @@
     </div>
     {{!-- popular --}}
     <div class="col-3 tweet-right">
-      <div class="card border-light popular">
-        <div class="card-header" style="font-weight: bold;">
-          Popular
-        </div>
-        <ul class="list-group list-group-flush">
-          {{#each users}}
-          <li class="list-group-item d-flex">
-            <div class="mr-2">
-              <img class="avatar small" src="{{this.topUserAvatar}}">
-            </div>
-            <div class="mr-5">
-              <p class="user-name mb-0">{{this.topUserName}}</p>
-              <p class="atAccount">@{{this.topUserAccount}}</p>
-            </div>
-            <div class="pt-2">
-              {{#if this.isFollowed}}
-              <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-                <button type="submit" class="btn followings-button">正在跟隨</button>
-              </form>
-              {{else}}
-              <form action="/followships" method="POST">
-                <button type="submit" class="btn py-2">跟隨</button>
-                <input type="hidden" name="id" value="{{this.id}}">
-              </form>
-              {{/if}}
-            </div>
-          </li>
-          {{/each}}
-        </ul>
-      </div>
+      {{>popular}}
     </div>
   </div>
 

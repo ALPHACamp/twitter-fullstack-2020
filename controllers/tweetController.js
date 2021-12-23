@@ -17,12 +17,9 @@ const tweetController = {
       ]
     })
       .then(tweets => {
-        // 撈 popular user view 的資料
-        User.findAll({
-          include: [{ model: User, as: 'Followers' }],
-          where: { role: 'normal' }
-        })
-          .then(users => {
+        // 撈 popular view 的資料
+        return helpers.getPopularUsers(req)
+          .then(popularUsers => {
             tweets = tweets.map(tweet => {
               if (tweet.dataValues !== undefined) {
                 return {
@@ -41,17 +38,7 @@ const tweetController = {
                 }
               }
             })
-
-            users = users.map(user => ({
-              ...user.dataValues,
-              topUserAvatar: user.avatar,
-              topUserName: user.name,
-              topUserAccount: user.account,
-              followerCount: user.Followers.length,
-              isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
-            }))
-            users = users.sort((a, b) => b.followerCount - a.followerCount)
-            return res.render('tweets', { tweets, users, user: helpers.getUser(req) })
+            return res.render('tweets', { tweets, popularUsers, user: helpers.getUser(req) })
           })
       })
   },
