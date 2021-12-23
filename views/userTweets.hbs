@@ -65,7 +65,7 @@
         {{#if user.avatar }}
         <img class="avatar large" src="{{ user.avatar }}">
         {{else}}
-        <div class="avatar-none-large"></div>
+        <img class="preset-avatar-large" src="https://i.imgur.com/iuHA5Qi.jpg">
         {{/if}}
       </div>
       {{!-- edit-user-button --}}
@@ -134,7 +134,11 @@
           <div class="d-flex">
             <div class="mt-2 mr-2 col-md-2" style="padding: 0%;"><a href="/users/{{../user.id}}/tweets"
                 class="text-muted">
+                {{#if ../this.user.avatar}}
                 <img class="avatar small" src="{{../this.user.avatar}}">
+                {{else}}
+                <img class="preset-avatar" src="https://i.imgur.com/iuHA5Qi.jpg">
+                {{/if}}
               </a>
             </div>
             <div class="col-md-10 mt-2">
@@ -190,7 +194,11 @@
         {{#each topUser}}
         <li class="list-group-item d-flex">
           <div class="mr-2">
+            {{#if this.topUserAvatar}}
             <img class="avatar small" src="{{this.topUserAvatar}}">
+            {{else}}
+            <img class="preset-avatar" src="https://i.imgur.com/iuHA5Qi.jpg">
+            {{/if}}
           </div>
           <div class="mr-5">
             <p class="user-name mb-0">{{this.topUserName}}</p>

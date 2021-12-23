@@ -16,14 +16,30 @@
 </head>
 
 <body>
+  {{#if errors}}
+  {{#each errors}}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ this.message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">×
+    </button>
+  </div>
+  {{/each}}
+  {{/if}}
   {{#if success_messages}}
   <div class="alert alert-success" role="alert" style="margin: 30px 0">
     {{success_messages}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
   {{/if}}
   {{#if error_messages}}
   <div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
     {{error_messages}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
   {{/if}}
 
@@ -105,11 +121,15 @@
           <div class="type-area d-flex">
             <div class="avatar">
               <a href="/users/{{user.id}}/tweets">
+                {{#if user.avatar}}
                 <img src="{{user.avatar}}" class="avatar small ml-1">
+                {{else}}
+                <img class="preset-avatar ml-1" src="https://i.imgur.com/iuHA5Qi.jpg">
+                {{/if}}
               </a>
             </div>
             <div class="type-text">
-              <textarea type="text" class="post-content form-control mb-2 ml-2" id="description-modal"
+              <textarea type="text" class="tweet-post-content form-control mb-2 ml-2" id="description-modal"
                 name="description" placeholder="有什麼新鮮事?" rows="5" cols="47"></textarea>
               <div class="invalid-feedback" id="add-tweet"></div>
             </div>

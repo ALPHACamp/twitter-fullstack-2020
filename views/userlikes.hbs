@@ -65,7 +65,7 @@
         {{#if user.avatar }}
         <img class="avatar large" src="{{ user.avatar }}">
         {{else}}
-        <div class="avatar-none-large"></div>
+        <img class="preset-avatar-large" src="https://i.imgur.com/iuHA5Qi.jpg">
         {{/if}}
       </div>
       {{!-- edit-user-button --}}
@@ -134,8 +134,13 @@
           <div class="d-flex">
             <div class="mt-2 mr-2 col-md-2" style="padding: 0%;"><a href="/users/{{this.User.id}}/tweets"
                 class="text-muted">
+                {{#if this.userAvatar}}
+                <img class="avatar small" src="{{ this.userAvatar }}">
+                {{else}}
+                <img class="preset-avatar" src="https://i.imgur.com/iuHA5Qi.jpg">
+                {{/if}}
                 <img class="avatar small" src="{{ this.User.avatar }}">
-              </a>
+                </a>
             </div>
             <div class="col-md-10 mt-2">
               <div class="account-info d-flex" style="flex-auto">
