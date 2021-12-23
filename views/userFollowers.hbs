@@ -108,35 +108,6 @@
 
   {{!-- popular --}}
   <div class="col-4">
-    <div class="card border-light popular">
-      <div class="card-header">
-        Popular
-      </div>
-      <ul class="list-group list-group-flush">
-        {{#each topUsers}}
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="{{this.topUserAvatar}}">
-          </div>
-          <div class="mr-5">
-            <p class="mb-0">{{this.topUserName}}</p>
-            <p class="atAccount">@{{this.topUserAccount}}</p>
-          </div>
-          <div class="pt-2">
-            {{#if this.topUserIsFollowed}}
-            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-              <button type="submit" class="btn py-2">正在跟隨</button>
-            </form>
-            {{else}}
-            <form action="/followships" method="POST">
-              <button type="submit" class="btn py-2">跟隨</button>
-              <input type="hidden" name="id" value="{{this.id}}">
-            </form>
-            {{/if}}
-          </div>
-        </li>
-        {{/each}}
-      </ul>
-    </div>
+    {{>popular}}
   </div>
 </div>
