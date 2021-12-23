@@ -196,33 +196,21 @@ const userController = {
       ]
     })
       .then(user => {
-        User.findAll({
-          include: [{ model: User, as: 'Followers' }],
-          where: { role: 'normal' }
-        }).then(topUser => {
+        return helpers.getPopularUsers(req)
+        .then(popularUsers => {
           isUser = helpers.isMatch(user.id, loginUser.id)
           const userTweets = user.Tweets.map(result => ({
             ...result.dataValues,
             isLiked: result.LikedUsers.map(item => item.id).includes(loginUser.id)
           }))
           isFollowed = helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
-
-          topUser = topUser.map(topUser => ({
-            ...topUser.dataValues,
-            topUserAvatar: topUser.avatar,
-            topUserName: topUser.name,
-            topUserAccount: topUser.account,
-            followerCount: topUser.Followers.length,
-            isFollowed: loginUser.Followings.map(f => f.id).includes(topUser.id)
-          }))
-          topUser = topUser.sort((a, b) => b.followerCount - a.followerCount)
           return res.render('userTweets', {
             user,
             userTweets,
             loginUser,
             isUser,
             isFollowed,
-            topUser
+            popularUsers
           })
         })
       })
