@@ -77,17 +77,17 @@
         {{else}}
         <div class="icon-outline pt-1">
           <a href="{{ user.email }}"><i class="far fa-envelope"></i></a>
+        </div>
           {{#if isFollowed}}
           <form action="/followships/{{user.id}}?_method=DELETE" method="POST">
-            <button type="submit" class="btn followings-button">正在跟隨</button>
+            <button type="submit" class="btn followings-button mr-3">正在跟隨</button>
           </form>
           {{else}}
           <form action="/followships" method="POST">
-            <button type="submit" class="btn followers-button">跟隨</button>
+            <button type="submit" class="btn followers-button mr-3">跟隨</button>
             <input type="hidden" name="id" value="{{user.id}}">
           </form>
           {{/if}}
-        </div>
         {{/if}}
       </div>
     </div>

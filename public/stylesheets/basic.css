@@ -275,6 +275,13 @@ img.avatar.small {
   border-radius: 50%;
 }
 
+.avatar-none-small {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background: #999999;
+}
+
 
 .atAccount {
   font-style: normal;
@@ -416,7 +423,7 @@ img.avatar.large {
   padding: auto;
 }
 
-.like-button {
+.like-button,.reply-button {
   background: transparent;
   color: #657786;
   border: none;
@@ -560,4 +567,16 @@ img.avatar.large {
 }
 .like-icon {
   color: #E0245E;
+}
+
+#followSelf {
+  margin-top: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#dog {
+  max-width: 30%;
+  border-radius: 20%;
 }

@@ -71,14 +71,24 @@
       {{!-- edit-user-button --}}
       <div class="d-flex justify-content-end mt-1 pr-1">
         {{#ifCond loginUser.id user.id }}
+        <button type="button" class="btn btn-outline ml-2" data-toggle="modal" data-target="#editUserModal">
+          編輯個人資料
+        </button>
         {{else}}
         <div class="icon-outline pt-1">
           <a href="{{ user.email }}"><i class="far fa-envelope"></i></a>
         </div>
+        {{#if user.isFollowed}}
+        <form action="/followships/{{user.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn followings-button mr-3">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="POST">
+          <button type="submit" class="btn followers-button mr-3">跟隨</button>
+          <input type="hidden" name="id" value="{{user.id}}">
+        </form>
+        {{/if}}
         {{/ifCond}}
-        <button type="button" class="btn btn-outline ml-2" data-toggle="modal" data-target="#editUserModal">
-          編輯個人資料
-        </button>
       </div>
     </div>
     {{!-- user-intro --}}
@@ -162,36 +172,6 @@
 
   {{!-- popular --}}
   <div class="col-4">
-    <div class="card border-light popular">
-      <div class="card-header">
-        Popular
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar1.png">
-          </div>
-          <div class="mr-5">
-            <p class="mb-0">Pizza Hut</p>
-            <p class="atAccount">@pizzahut</p>
-          </div>
-          <div class="pt-2">
-            <a class="btn py-2" href="#">正在追蹤</a>
-          </div>
-        </li>
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar2.png">
-          </div>
-          <div class="mr-5">
-            <p class="mb-0">MacDonald</p>
-            <p class="atAccount">@macdonald</p>
-          </div>
-          <div class="pt-2">
-            <a class="btn btn-outline py-2" href="#">追蹤</a>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
+    {{> popular}}
+  </div> 
 </div>
