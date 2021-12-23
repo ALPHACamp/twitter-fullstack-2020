@@ -38,7 +38,11 @@
     <div class="admin-card">
       {{#each tweets}}
       <div class="admin-card-body d-flex">
+        {{#if this.userAvatar}}
         <img class="avatar small mr-3 mt-2 ml-3" src="{{this.userAvatar}}">
+        {{else}}
+        <img class="preset-avatar mr-3 mt-2 ml-3" src="https://i.imgur.com/iuHA5Qi.jpg">
+        {{/if}}
         <div>
           <p class="card-title mt-2">{{this.userName}} <span class="atAccount">@{{this.userAccount}}•{{moment
               this.createdAt}}</span></p>
