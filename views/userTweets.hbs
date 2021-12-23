@@ -129,6 +129,7 @@
         </li>
       </ul>
       <div class="user-tweet">
+        {{#if userTweets}}
         {{#each userTweets}}
         <div class="tweet col-md-12">
           <div class="d-flex">
@@ -176,6 +177,9 @@
         </div>
         <hr />
         {{/each}}
+        {{else}}
+        <div class="mt-4">使用者目前沒有任何推文!</div>
+        {{/if}}
       </div>
     </div>
   </div>

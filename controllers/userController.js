@@ -193,7 +193,8 @@ const userController = {
         { model: Tweet, include: [{ model: User, as: 'LikedUsers' }] },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
-      ]
+      ],
+      order: [[Tweet, 'createdAt', 'DESC']]
     })
       .then(user => {
         return helpers.getPopularUsers(req)
@@ -306,8 +307,10 @@ const userController = {
       User.findByPk(req.params.userId, {
         include: [
           Tweet,
-          { model: Tweet, as: 'LikedTweets', order: [['createdAt', 'DESC']], include: [User] }
-        ]
+          { model: Tweet, as: 'LikedTweets', include: [User] },
+          Like
+        ],
+        order: [[Like, 'createdAt', 'DESC']],
       }),
       helpers.getPopularUsers(req)
     ])
