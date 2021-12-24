@@ -2,6 +2,8 @@
 使用Express及Mysql 打造出來的一個簡單的社群網站。
 
 ![image](/public/images/Simple-Twitter-1.PNG)
+![image](/public/images/Simple-Twitter-2.PNG)
+![image](/public/images/Simple-Twitter-3.PNG)
 
 ## 產品功能
 * 有屬於管理者的登入平台。
