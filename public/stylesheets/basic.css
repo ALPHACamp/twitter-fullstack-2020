@@ -204,6 +204,8 @@ html, body {
 
 .nav-btn-modal {
   color: white;
+  width: 210px;
+  height: 38px;
 }
 
 .btn {
@@ -551,7 +553,12 @@ img.avatar.large {
   border: none;
   border-bottom: 2px solid #FF6600;
 }
-
+.content-container {
+  top: -15px;
+  padding: 0%;
+  border-left: 1px solid #e6ecf0;
+  box-sizing: border-box;
+}
 .setting-title {
   display: flex;
   justify-content: start;
@@ -561,9 +568,25 @@ img.avatar.large {
   color: #1C1C1C;
 }
 .setting-button {
+  position: relative;
   width: 116px;
   height: 46px;
-  left: 914px;
+  left: 420px;
+}
+.setting-form-label-group {
+  position: relative;
+  margin-left: 1.5%;
+  height: 70px;
+}
+.setting-form-label-group label {
+  position: absolute;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 15px;
+  color: #657786;
+  margin-top: 5px;
+  margin-left: 11.5px;
 }
 .like-icon {
   color: #E0245E;

@@ -1,6 +1,6 @@
 <div class="row" style="width:100%;">
   {{!-- navbar --}}
-  <div class="col-2">
+  <div class="col-md-3">
     <img class="mb-4 pl-2" src="https://i.imgur.com/8DjhHxL.png">
     <div class="nav-ul-wrapper">
       <ul class="nav flex-column">
@@ -38,79 +38,48 @@
   </div>
 
   {{!-- content --}}
-  <div class="col-6 content-container">
+  <div class="col-md-9 content-container">
     <form class="form-signin" action="/users/{{ user.id }}/setting?_method=PUT" method="POST" style="width: 100%;">
-      <div class="text-center mb-4">
-        <div class="setting-title">帳戶設定</div>
+      <div class="text-center">
+        <div class="setting-title mt-2 ml-3">帳戶設定</div>
       </div>
       <hr>
-
-      <div class="form-label-group mb-2">
-        <label for="inputAccount">帳號<span style="color: red;">*</span></label>
-        <input type="text" name="account" class="form-control" placeholder="請輸入帳號" value="{{ user.account }}" required
-          autofocus>
+      <div class="setting-form-label-group mt-4 mb-3">
+        <label for="inputAccount">帳號</label>
+        <input type="text" name="account" class="form-control pt-4"
+          style="max-width: 642px; font-weight: 500; font-size: 19px; color: #1c1c1c;" placeholder="請輸入帳號"
+          value="{{ user.account }}" required>
       </div>
 
-      <div class="form-label-group mb-2">
-        <label for="inputName">名稱<span style="color: red;">*</span></label>
-        <input type="text" name="name" class="form-control" placeholder="請輸入名稱" value="{{ user.name }}" required
-          autofocus>
+      <div class="setting-form-label-group mb-3">
+        <label for="inputName">名稱</label>
+        <input type="text" name="name" class="form-control pt-4"
+          style="max-width: 642px; font-weight: 500; font-size: 19px; color: #1c1c1c;" maxlength="50"
+          placeholder="請輸入名稱" value="{{ user.name }}" required>
       </div>
 
-      <div class="form-label-group mb-2 mr-1">
-        <label for="inputEmail">Email<span style="color: red;">*</span></label>
-        <input type="text" name="email" class="form-control" placeholder="請輸入Email" value="{{ user.email }}" required
-          autofocus>
+      <div class="setting-form-label-group mb-3">
+        <label for="inputEmail">Email</label>
+        <input type="text" name="email" class="form-control pt-4"
+          style="max-width: 642px; font-weight: 500; font-size: 19px; color: #1c1c1c;" placeholder="請輸入Email"
+          value="{{ user.email }}" required>
       </div>
 
-      <div class="form-label-group mb-2 ml-2">
+      <div class="setting-form-label-group mb-3">
         <label for="inputPassword">密碼</label>
-        <input type="password" name="password" class="form-control" placeholder="請輸入密碼">
+        <input type="password" name="password" class="form-control pt-4"
+          style="max-width: 642px; font-weight: 500; font-size: 16px; color: #1c1c1c;" placeholder="請輸入密碼">
       </div>
 
-      <div class="form-label-group mb-2 mr-3">
+      <div class="setting-form-label-group mb-3">
         <label for="inputPasswordCheck">確認密碼</label>
-        <input type="password" name="passwordCheck" class="form-control" placeholder="請再次輸入密碼">
+        <input type="password" name="passwordCheck" class="form-control pt-4"
+          style="max-width: 642px; font-weight: 500; font-size: 16px; color: #1c1c1c;" placeholder="請再次輸入密碼">
       </div>
       <br />
-      <div class="d-flex justify-content-end pr-1">
+      <div class="d-flex pr-1">
         <button class="btn setting-button mr-3" type="submit">儲存</button>
       </div>
     </form>
-  </div>
-
-  {{!-- popular --}}
-  <div class="col-4">
-    <div class="card border-light popular">
-      <div class="card-header">
-        Popular
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar1.png">
-          </div>
-          <div class="mr-5">
-            <p class="mb-0">Pizza Hut</p>
-            <p class="atAccount">@pizzahut</p>
-          </div>
-          <div class="pt-2">
-            <a class="btn py-2" href="#">正在追蹤</a>
-          </div>
-        </li>
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar2.png">
-          </div>
-          <div class="mr-5">
-            <p class="mb-0">MacDonald</p>
-            <p class="atAccount">@macdonald</p>
-          </div>
-          <div class="pt-2">
-            <a class="btn btn-outline py-2" href="#">追蹤</a>
-          </div>
-        </li>
-      </ul>
-    </div>
   </div>
 </div>
