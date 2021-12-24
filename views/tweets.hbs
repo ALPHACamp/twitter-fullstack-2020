@@ -1,7 +1,6 @@
-<div class="wrap d-flex">
+<div class="row" style="width:100%;">
   {{!-- navbar --}}
-  <div class="row col-12">
-    <div class="tweets-left col-2">
+    <div class="col-3">
       <img class="mb-4 pl-2" src="https://i.imgur.com/8DjhHxL.png">
       <div class="nav-ul-wrapper">
         <ul class="nav flex-column">
@@ -23,8 +22,8 @@
               <span class="ml-3">設定</span>
             </a>
           </li>
-          <li class="nav-item py-2">
-            <button type="button" class="btn tweet-button" data-toggle="modal" data-target="#tweetModal">推文</button>
+          <li class="nav-item nav-btn-modal py-2">
+            <a class="btn btn-modal py-2" data-toggle="modal" data-target="#tweetModal">推文</a>
           </li>
         </ul>
         <ul class="nav flex-column">
@@ -39,7 +38,7 @@
     </div>
 
     {{!-- content --}}
-    <div class="col-6 tweets-center">
+    <div class="col-5">
       <div class="card border-light mb-3 ">
         <div class="card-header"><span class="header1">首頁</span></div>
         <div class="card-body d-flex">
@@ -89,17 +88,17 @@
                 {{!-- unlike tweet --}}
                 {{#if this.isLiked}}
                 <form action='/tweets/{{this.tweetsId}}/unlike' method="POST">
-                  <button class="push-button" type="submit">
-                    <i class="far fa-heart"></i>
-                    <span class="ml-2">{{this.likeTotal}}</span>
+                  <button class="push-button like-icon ml-4" type="submit">
+                    <i class="fas fa-heart"></i>
+                    <span class="ml-2">{{ this.likeTotal }}</span>
                   </button>
                 </form>
                 {{else}}
                 {{!-- Like tweet --}}
                 <form action='/tweets/{{this.tweetsId}}/like' method="POST">
-                  <button class="like-button" type="submit">
+                  <button class="like-button ml-4" type="submit">
                     <i class="far fa-heart"></i>
-                    <span class="ml-2">{{this.likeTotal}}</span>
+                    <span class="ml-2">{{ this.likeTotal }}</span>
                   </button>
                 </form>
                 {{/if}}
@@ -182,40 +181,9 @@
     </div>
     <script src="/javascripts/replyModal.js"></script>
     {{!-- popular --}}
-    <div class="col-3 tweet-right">
-      <div class="card border-light popular">
-        <div class="card-header" style="font-weight: bold;">
-          Popular
-        </div>
-        <ul class="list-group list-group-flush">
-          {{#each users}}
-          <li class="list-group-item d-flex">
-            <div class="mr-2">
-              {{#if this.topUserAvatar}}
-              <img class="avatar small" src="{{this.topUserAvatar}}">
-              {{else}}
-              <img class="preset-avatar" src="https://i.imgur.com/iuHA5Qi.jpg">
-              {{/if}}
-            </div>
-            <div class="mr-5">
-              <p class="user-name mb-0">{{this.topUserName}}</p>
-              <p class="atAccount">@{{this.topUserAccount}}</p>
-            </div>
-            <div class="pt-2">
-              {{#if this.isFollowed}}
-              <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-                <button type="submit" class="btn followings-button">正在跟隨</button>
-              </form>
-              {{else}}
-              <form action="/followships" method="POST">
-                <button type="submit" class="btn py-2">跟隨</button>
-                <input type="hidden" name="id" value="{{this.id}}">
-              </form>
-              {{/if}}
-            </div>
-          </li>
-          {{/each}}
-        </ul>
-      </div>
+    <div class="col-4">
+      {{>popular}}
     </div>
-  </div>
+  
+
+  <script src="/javascripts/replyModal.js"></script>
