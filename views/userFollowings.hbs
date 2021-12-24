@@ -76,7 +76,11 @@
           <div class="d-flex">
             <div class="col-md-2" style="padding: 0%;">
               <a href="/users/{{this.userId}}/tweets">
+                {{#if this.userAvatar}}
                 <img class="avatar small" src="{{this.userAvatar}}">
+                {{else}}
+                <img class="preset-avatar" src="https://i.imgur.com/iuHA5Qi.jpg">
+                {{/if}}
               </a>
             </div>
             <div class="col-md-10">

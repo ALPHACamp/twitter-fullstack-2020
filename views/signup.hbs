@@ -5,20 +5,25 @@
   <div class="text-center ">
     <div class="sign-title">建立你的帳號</div>
   </div>
-  <div class="form-label-group">
-    <input type="text" name="account" class="form-control" placeholder="帳號" required autofocus>
+  <div class="form-label-groups">
+    <input type="text" name="account" id="account" class="form-control" placeholder="帳號" value="{{account}}">
+    <div class="invalid-feedback"></div>
   </div>
-  <div class="form-label-group">
-    <input type="text" name="name" class="form-control" maxlength="50" placeholder="名稱" required autofocus>
+  <div class="form-label-groups">
+    <input type="text" name="name" id="name" class="form-control" placeholder="名稱" value="{{name}}">
+    <div class="invalid-feedback"></div>
   </div>
-  <div class="form-label-group">
-    <input type="text" name="email" class="form-control" placeholder="Email" required autofocus>
+  <div class="form-label-groups">
+    <input type="text" name="email" id="email" class="form-control" placeholder="Email" value="{{email}}">
+    <div class="invalid-feedback"></div>
   </div>
-  <div class="form-label-group">
-    <input type="password" name="password" class="form-control" placeholder="密碼" required>
+  <div class="form-label-groups">
+    <input type="password" name="password" id="password" class="form-control" placeholder="密碼" value="{{password}}">
+    <div class="invalid-feedback"></div>
   </div>
-  <div class="form-label-group">
-    <input type="password" name="checkPassword" class="form-control" placeholder="確認密碼" required>
+  <div class="form-label-groups">
+    <input type="password" name="checkPassword" id="checkPassword" class="form-control" placeholder="確認密碼">
+    <div class="invalid-feedback"></div>
   </div>
   <br />
   <button class="btn signup-button" type="submit">註冊</button>
@@ -26,3 +31,5 @@
     <a href="/signin">取消</a>
   </div>
 </form>
+
+<script src="/javascripts/signUp.js"></script>
