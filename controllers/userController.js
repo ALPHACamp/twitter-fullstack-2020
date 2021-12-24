@@ -194,22 +194,22 @@ const userController = {
     })
       .then(user => {
         return helpers.getPopularUsers(req)
-        .then(popularUsers => {
-          isUser = helpers.isMatch(user.id, loginUser.id)
-          const userTweets = user.Tweets.map(result => ({
-            ...result.dataValues,
-            isLiked: result.LikedUsers.map(item => item.id).includes(loginUser.id)
-          }))
-          isFollowed = helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
-          return res.render('userTweets', {
-            user,
-            userTweets,
-            loginUser,
-            isUser,
-            isFollowed,
-            popularUsers
+          .then(popularUsers => {
+            isUser = helpers.isMatch(user.id, loginUser.id)
+            const userTweets = user.Tweets.map(result => ({
+              ...result.dataValues,
+              isLiked: result.LikedUsers.map(item => item.id).includes(loginUser.id)
+            }))
+            isFollowed = helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
+            return res.render('userTweets', {
+              user,
+              userTweets,
+              loginUser,
+              isUser,
+              isFollowed,
+              popularUsers
+            })
           })
-        })
       })
   },
   //設定使用者個人資料頁面推文與回覆頁面
@@ -275,6 +275,7 @@ const userController = {
       ]
     })
       .then(users => {
+        console.log(users)
         return helpers.getPopularUsers(req)
           .then(popularUsers => {
             users.Followers = users.Followers.map(user => ({
@@ -284,7 +285,7 @@ const userController = {
               userAccount: user.account,
               userAvatar: user.avatar,
               userIntroduction: user.introduction,
-              isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(users.id)
+              isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
             }))
             users.Followers = users.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
             return res.render('userFollowers', {
