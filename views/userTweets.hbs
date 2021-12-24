@@ -148,27 +148,23 @@
                 <div class="post-text d-flex mt-1" style="flex-auto">{{this.description}}</div>
               </a>
               <div class="reply-like d-flex mt-2">
-                <div>
+                <div class="reply-button mr-2">
                   <i class="far fa-comment mr-2"></i>
                   {{this.replyCounts}}
                 </div>
                 {{#if this.isLiked }}
                 <form action="/tweets/{{this.id}}/unlike" method="POST">
-                  <div class="push-button ml-4">
-                    <button type="submit" class="like-button">
-                      <i class="fas fa-heart"></i>
-                    </button>
-                    {{this.likeCounts}}
-                  </div>
+                  <button class="push-button like-icon ml-4" type="submit">
+                    <i class="fas fa-heart"></i>
+                    <span class="ml-2">{{ this.likeCounts }}</span>
+                  </button>
                 </form>
                 {{else}}
                 <form action="/tweets/{{this.id}}/like" method="POST">
-                  <div class="like-button ml-4">
-                    <button type="submit" class="like-button">
-                      <i class="far fa-heart"></i>
-                    </button>
-                    {{this.likeCounts}}
-                  </div>
+                  <button class="like-button ml-4" type="submit">
+                    <i class="far fa-heart"></i>
+                    <span class="ml-2">{{ this.likeCounts }}</span>
+                  </button>
                 </form>
                 {{/if}}
               </div>
@@ -187,35 +183,5 @@
   {{!-- popular --}}
   <div class="col-4">
     {{>popular}}
-    {{!-- <div class="card border-light popular">
-      <div class="card-header" style="font-weight: bold;">
-        Popular
-      </div>
-      <ul class="list-group list-group-flush">
-        {{#each topUser}}
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="{{this.topUserAvatar}}">
-          </div>
-          <div class="mr-5">
-            <p class="user-name mb-0">{{this.topUserName}}</p>
-            <p class="atAccount">@{{this.topUserAccount}}</p>
-          </div>
-          <div class="pt-2">
-            {{#if this.isFollowed}}
-            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-              <button type="submit" class="btn followings-button">正在跟隨</button>
-            </form>
-            {{else}}
-            <form action="/followships" method="POST">
-              <button type="submit" class="btn py-2">跟隨</button>
-              <input type="hidden" name="id" value="{{this.id}}">
-            </form>
-            {{/if}}
-          </div>
-        </li>
-        {{/each}}
-      </ul>
-    </div> --}}
   </div>
 </div>
