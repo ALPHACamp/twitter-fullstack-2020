@@ -54,7 +54,11 @@
       <div class="account-info d-flex">
         <div>
           <a href="/users/{{tweet.User.id}}/tweets">
+            {{#if tweet.User.avatar}}
             <img class="avatar small" src="{{tweet.User.avatar}}">
+            {{else}}
+            <img class="preset-avatar" src="https://i.imgur.com/iuHA5Qi.jpg">
+            {{/if}}
           </a>
         </div>
         <div class="name-account ml-3">
@@ -67,21 +71,6 @@
         <p>{{momentDay tweet.createdAt}}</p>
       </div>
       <hr />
-      <div class="tweet-reply">
-        <div class="account-info d-flex">
-          <div>
-            <a href="/users/{{tweet.User.id}}/tweets">
-              {{#if tweet.User.avatar}}
-              <img class="avatar small" src="{{tweet.User.avatar}}">
-              {{else}}
-              <img class="preset-avatar" src="https://i.imgur.com/iuHA5Qi.jpg">
-              {{/if}}
-            </a>
-          </div>
-          <div class="name-account ml-3">
-            <div class="user-name">{{tweet.User.name}}</div>
-            <div class="atAccount">@{{tweet.User.account}}</div>
-          </div>
       <div class="reply-like-count d-flex">
         <div class="reply d-flex mr-4">
           <div class="number">{{tweet.replyCounts}}</div>
@@ -120,28 +109,10 @@
               {{#if this.User.avatar}}
               <img class="avatar small" src="{{this.User.avatar}}">
               {{else}}
-              <div class="avatar-none-small" id="current-avatar"></div>
+              <img class="preset-avatar" src="https://i.imgur.com/iuHA5Qi.jpg">
               {{/if}}
             </a>
           </div>
-          <form action="#" method="POST">
-            <button class="like-button ml-5" type="submit">
-              <i class="far fa-heart"></i>
-            </button>
-          </form>
-        </div>
-        <hr />
-        {{#each tweet.Replies}}
-        <div class="tweet col-md-12">
-          <div class="d-flex">
-            <div class="col-md-2 mt-2 mr-2" style="padding: 0%;">
-              <a href="/users/{{this.UserId}}/tweets" class="text-muted">
-                {{#if this.User.avatar}}
-                <img class="avatar small" src="{{this.User.avatar}}">
-                {{else}}
-                <img class="preset-avatar" src="https://i.imgur.com/iuHA5Qi.jpg">
-                {{/if}}
-              </a>
           <div class="col-md-10">
             <div class="account-info d-flex" style="flex-auto">
               <div class="user-name">{{this.User.name}}</div>
@@ -185,7 +156,7 @@
                 {{#if tweet.User.avatar}}
                 <img src="{{tweet.User.avatar}}" class="avatar small ml-1">
                 {{else}}
-                <div class="avatar-none-small" id="current-avatar"></div>
+                <img class="preset-avatar ml-1" src="https://i.imgur.com/iuHA5Qi.jpg">
                 {{/if}}
               </a>
             </div>
@@ -216,7 +187,7 @@
               {{#if user.avatar}}
               <img src="{{user.avatar}}" class="avatar small ml-1">
               {{else}}
-              <div class="avatar-none-small" id="current-avatar"></div>
+              <img class="preset-avatar ml-1" src="https://i.imgur.com/iuHA5Qi.jpg">
               {{/if}}
             </a>
           </div>
@@ -234,3 +205,4 @@
     </div>
   </div>
 </div>
+<script src="/javascripts/replyModal.js"></script>
