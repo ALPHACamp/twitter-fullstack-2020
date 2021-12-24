@@ -189,36 +189,25 @@ const userController = {
         { model: Tweet, include: [{ model: User, as: 'LikedUsers' }] },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
-      ]
+      ],
+      order: [[Tweet, 'createdAt', 'DESC']]
     })
       .then(user => {
-        User.findAll({
-          include: [{ model: User, as: 'Followers' }],
-          where: { role: 'normal' }
-        }).then(topUser => {
+        return helpers.getPopularUsers(req)
+        .then(popularUsers => {
           isUser = helpers.isMatch(user.id, loginUser.id)
           const userTweets = user.Tweets.map(result => ({
             ...result.dataValues,
             isLiked: result.LikedUsers.map(item => item.id).includes(loginUser.id)
           }))
           isFollowed = helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
-
-          topUser = topUser.map(topUser => ({
-            ...topUser.dataValues,
-            topUserAvatar: topUser.avatar,
-            topUserName: topUser.name,
-            topUserAccount: topUser.account,
-            followerCount: topUser.Followers.length,
-            isFollowed: loginUser.Followings.map(f => f.id).includes(topUser.id)
-          }))
-          topUser = topUser.sort((a, b) => b.followerCount - a.followerCount)
           return res.render('userTweets', {
             user,
             userTweets,
             loginUser,
             isUser,
             isFollowed,
-            topUser
+            popularUsers
           })
         })
       })
@@ -256,11 +245,8 @@ const userController = {
       ]
     })
       .then(users => {
-        User.findAll({
-          include: [{ model: User, as: 'Followers' }],
-          where: { role: 'normal' }
-        })
-          .then(topUsers => {
+        return helpers.getPopularUsers(req)
+          .then(popularUsers => {
             users.Followings = users.Followings.map(user => ({
               ...user.dataValues,
               userName: user.name,
@@ -270,20 +256,11 @@ const userController = {
               userIntroduction: user.introduction,
               isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
             }))
-            topUsers = topUsers.map(topUser => ({
-              ...topUser.dataValues,
-              topUserAvatar: topUser.avatar,
-              topUserName: topUser.name,
-              topUserAccount: topUser.account,
-              followerCount: topUser.Followers.length,
-              topUserIsFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(topUser.id)
-            }))
             users.Followings = users.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-            topUsers = topUsers.sort((a, b) => b.followerCount - a.followerCount)
             return res.render('userFollowings', {
               nowUser: users,
               users: users.Followings,
-              topUsers: topUsers,
+              popularUsers,
               loginUser: helpers.getUser(req)
             })
           })
@@ -298,11 +275,8 @@ const userController = {
       ]
     })
       .then(users => {
-        User.findAll({
-          include: [{ model: User, as: 'Followers' }],
-          where: { role: 'normal' }
-        })
-          .then(topUsers => {
+        return helpers.getPopularUsers(req)
+          .then(popularUsers => {
             users.Followers = users.Followers.map(user => ({
               ...user.dataValues,
               userName: user.name,
@@ -312,20 +286,11 @@ const userController = {
               userIntroduction: user.introduction,
               isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(users.id)
             }))
-            topUsers = topUsers.map(topUser => ({
-              ...topUser.dataValues,
-              topUserAvatar: topUser.avatar,
-              topUserName: topUser.name,
-              topUserAccount: topUser.account,
-              followerCount: topUser.Followers.length,
-              topUserIsFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(topUser.id)
-            }))
             users.Followers = users.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-            topUsers = topUsers.sort((a, b) => b.followerCount - a.followerCount)
             return res.render('userFollowers', {
               nowUser: users,
               users: users.Followers,
-              topUsers,
+              popularUsers,
               loginUser: helpers.getUser(req)
             })
           })
@@ -338,8 +303,10 @@ const userController = {
       User.findByPk(req.params.userId, {
         include: [
           Tweet,
-          { model: Tweet, as: 'LikedTweets', order: [['createdAt', 'DESC']], include: [User] }
-        ]
+          { model: Tweet, as: 'LikedTweets', include: [User] },
+          Like
+        ],
+        order: [[Like, 'createdAt', 'DESC']],
       }),
       helpers.getPopularUsers(req)
     ])
@@ -348,9 +315,7 @@ const userController = {
           ...tweet.dataValues,
           isLikedByLoginUser: loginUser.LikedTweets ? (loginUser.LikedTweets.map(tweetLgnUsr => tweetLgnUsr.id).includes(tweet.id)) : false
         }))
-
         user.isFollowed = loginUser.Followings.map(userFlldByLgnUsr => userFlldByLgnUsr.id).includes(user.id)
-        console.log('user.LikedTweets: ', user.toJSON())
         return res.render('userlikes', { loginUser, user, popularUsers })
       })
   },

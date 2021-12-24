@@ -1,6 +1,6 @@
 <div class="row" style="width:100%;">
   {{!-- navbar --}}
-  <div class="col-2">
+  <div class="col-3">
     <img class="mb-4 pl-2" src="https://i.imgur.com/8DjhHxL.png">
     <div class="nav-ul-wrapper">
       <ul class="nav flex-column">
@@ -57,18 +57,18 @@
           autofocus>
       </div>
 
-      <div class="form-label-group mb-2 mr-1">
+      <div class="form-label-group mb-2">
         <label for="inputEmail">Email<span style="color: red;">*</span></label>
         <input type="text" name="email" class="form-control" placeholder="請輸入Email" value="{{ user.email }}" required
           autofocus>
       </div>
 
-      <div class="form-label-group mb-2 ml-2">
+      <div class="form-label-group mb-2">
         <label for="inputPassword">密碼</label>
         <input type="password" name="password" class="form-control" placeholder="請輸入密碼">
       </div>
 
-      <div class="form-label-group mb-2 mr-3">
+      <div class="form-label-group mb-2">
         <label for="inputPasswordCheck">確認密碼</label>
         <input type="password" name="passwordCheck" class="form-control" placeholder="請再次輸入密碼">
       </div>
@@ -79,38 +79,4 @@
     </form>
   </div>
 
-  {{!-- popular --}}
-  <div class="col-4">
-    <div class="card border-light popular">
-      <div class="card-header">
-        Popular
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar1.png">
-          </div>
-          <div class="mr-5">
-            <p class="mb-0">Pizza Hut</p>
-            <p class="atAccount">@pizzahut</p>
-          </div>
-          <div class="pt-2">
-            <a class="btn py-2" href="#">正在追蹤</a>
-          </div>
-        </li>
-        <li class="list-group-item d-flex">
-          <div class="mr-2">
-            <img class="avatar small" src="/images/exampleAvatar2.png">
-          </div>
-          <div class="mr-5">
-            <p class="mb-0">MacDonald</p>
-            <p class="atAccount">@macdonald</p>
-          </div>
-          <div class="pt-2">
-            <a class="btn btn-outline py-2" href="#">追蹤</a>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
 </div>
