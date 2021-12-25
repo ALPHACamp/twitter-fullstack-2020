@@ -1,0 +1,86 @@
+<div class="row" style="width:100%;">
+  {{!-- navbar --}}
+  <div class="col-3">
+    <img class="mb-4 pl-2" src="https://i.imgur.com/8DjhHxL.png">
+    <div class="nav-ul-wrapper">
+      <ul class="nav flex-column">
+        <li class="nav-item py-2">
+          <a class="nav-link" href="/">
+            <i class="fas fa-home"></i>
+            <span class="ml-3">首頁</span>
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="nav-link" href="/users/{{user.id}}/tweets">
+            <i class="far fa-user"></i>
+            <span class="ml-3">個人資料</span>
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="nav-link active" href="/users/{{user.id}}/setting/edit">
+            <i class="fas fa-cog"></i>
+            <span class="ml-3">設定</span>
+          </a>
+        </li>
+        <li class="nav-item nav-btn-modal py-2">
+          <a class="btn btn-modal py-2" data-toggle="modal" data-target="#tweetModal">推文</a>
+        </li>
+      </ul>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="ml-3">登出</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  {{!-- content --}}
+  <div class="col-md-9 content-container">
+    <form class="form-signin" action="/users/{{ user.id }}/setting?_method=PUT" method="POST" style="width: 100%;">
+      <div class="text-center">
+        <div class="setting-title mt-2 ml-3">帳戶設定</div>
+      </div>
+      <hr>
+      <div class="setting-form-label-group mt-4 mb-3">
+        <label for="inputAccount">帳號</label>
+        <input type="text" name="account" class="form-control pt-4"
+          style="max-width: 642px; font-weight: 500; font-size: 19px; color: #1c1c1c;" placeholder="請輸入帳號"
+          value="{{ user.account }}" required>
+      </div>
+
+      <div class="setting-form-label-group mb-3">
+        <label for="inputName">名稱</label>
+        <input type="text" name="name" class="form-control pt-4"
+          style="max-width: 642px; font-weight: 500; font-size: 19px; color: #1c1c1c;" maxlength="50"
+          placeholder="請輸入名稱" value="{{ user.name }}" required>
+      </div>
+
+      <div class="setting-form-label-group mb-3">
+        <label for="inputEmail">Email</label>
+        <input type="text" name="email" class="form-control pt-4"
+          style="max-width: 642px; font-weight: 500; font-size: 19px; color: #1c1c1c;" placeholder="請輸入Email"
+          value="{{ user.email }}" required>
+      </div>
+
+      <div class="setting-form-label-group mb-3">
+        <label for="inputPassword">密碼</label>
+        <input type="password" name="password" class="form-control pt-4"
+          style="max-width: 642px; font-weight: 500; font-size: 16px; color: #1c1c1c;" placeholder="請輸入密碼">
+      </div>
+
+
+      <div class="setting-form-label-group mb-3">
+        <label for="inputPasswordCheck">確認密碼</label>
+        <input type="password" name="passwordCheck" class="form-control pt-4"
+          style="max-width: 642px; font-weight: 500; font-size: 16px; color: #1c1c1c;" placeholder="請再次輸入密碼">
+      </div>
+      <br />
+      <div class="d-flex pr-1">
+        <button class="btn setting-button mr-3" type="submit">儲存</button>
+      </div>
+    </form>
+  </div>
+</div>

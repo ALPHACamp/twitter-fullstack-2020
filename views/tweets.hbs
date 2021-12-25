@@ -1,0 +1,189 @@
+<div class="row" style="width:100%;">
+  {{!-- navbar --}}
+    <div class="col-3">
+      <img class="mb-4 pl-2" src="https://i.imgur.com/8DjhHxL.png">
+      <div class="nav-ul-wrapper">
+        <ul class="nav flex-column">
+          <li class="nav-item py-2">
+            <a class="nav-link active" href="/">
+              <i class="fas fa-home"></i>
+              <span class="ml-3">首頁</span>
+            </a>
+          </li>
+          <li class="nav-item py-2">
+            <a class="nav-link" href="/users/{{ user.id }}/tweets">
+              <i class="far fa-user"></i>
+              <span class="ml-3">個人資料</span>
+            </a>
+          </li>
+          <li class="nav-item py-2">
+            <a class="nav-link" href="/users/{{ user.id}}/setting/edit">
+              <i class="fas fa-cog"></i>
+              <span class="ml-3">設定</span>
+            </a>
+          </li>
+          <li class="nav-item nav-btn-modal py-2">
+            <a class="btn btn-modal py-2" data-toggle="modal" data-target="#tweetModal">推文</a>
+          </li>
+        </ul>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">
+              <i class="fas fa-sign-out-alt"></i>
+              <span class="ml-3">登出</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    {{!-- content --}}
+    <div class="col-5">
+      <div class="card border-light mb-3 ">
+        <div class="card-header"><span class="header1">首頁</span></div>
+        <div class="card-body d-flex">
+          <a href="/users/{{user.id}}/tweets">
+            {{#if user.avatar}}
+            <img class="avatar small mr-3" src="{{user.avatar}}">
+            {{else}}
+            <img class="preset-avatar mr-3" src="https://i.imgur.com/iuHA5Qi.jpg">
+            {{/if}}
+          </a>
+          <form action="/tweets" method="POST" style="width:100%;">
+            <div class="form-group">
+              <textarea type="text" class="post-content form-control" id="description" name="description"
+                placeholder="有什麼新鮮事?" rows="2"></textarea>
+            </div>
+            <button type="submit" class="btn post-tweet" id="btn">推文</button>
+          </form>
+        </div>
+      </div>
+
+      {{!-- tweets --}}
+      <div class="card">
+        {{#each tweets}}
+        <div class="card-body d-flex">
+          <a href="/users/{{this.UserId}}/tweets">
+            {{#if this.tweetsUserAvatar}}
+            <img class="avatar small mr-3" src="{{this.tweetsUserAvatar}}">
+            {{else}}
+            <img class="preset-avatar mr-3" src="https://i.imgur.com/iuHA5Qi.jpg">
+            {{/if}}
+          </a>
+          <div>
+            <p class="user-name">{{this.tweetsUserName}}
+              <span class="atAccount">@{{this.tweetsUserAccount}}•{{moment
+                this.tweetsCreatedAt}}</span>
+            </p>
+            <a href="/tweets/{{this.tweetsId}}/replies" class="text-muted">
+              <p class="post-text">{{this.tweetsContent}}</p>
+            </a>
+            <div class="d-flex">
+              <div class="reply" style="color: #657786;" id="reply" data-toggle="modal"
+                data-target="#exampleModal-reply{{this.tweetsId}}">
+                <i class="far fa-comment"></i>
+                <span class="ml-2 mr-4">{{this.replyTotal}}</span>
+              </div>
+              <div class="likeBtn">
+                {{!-- unlike tweet --}}
+                {{#if this.isLiked}}
+                <form action='/tweets/{{this.tweetsId}}/unlike' method="POST">
+                  <button class="push-button like-icon ml-4" type="submit">
+                    <i class="fas fa-heart"></i>
+                    <span class="ml-2">{{ this.likeTotal }}</span>
+                  </button>
+                </form>
+                {{else}}
+                {{!-- Like tweet --}}
+                <form action='/tweets/{{this.tweetsId}}/like' method="POST">
+                  <button class="like-button ml-4" type="submit">
+                    <i class="far fa-heart"></i>
+                    <span class="ml-2">{{ this.likeTotal }}</span>
+                  </button>
+                </form>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+
+        {{!-- replyModal --}}
+        <div class="modal fade" id="exampleModal-reply{{this.tweetsId}}" tabindex="-1" role="dialog"
+          aria-labelledby="reply-tweet" style="display: none;" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content d-flex">
+              <button type="button" class="btn-dismiss close d-flex justify-content-start ml-3 mt-2"
+                data-dismiss="modal">x</button>
+              <hr />
+              <div class="reply-tweet">
+                <div class="reply-modal-tweet d-flex">
+                  <div class="mt-2" style="padding: 0%;">
+                    <div>
+                      <a href="/users/{{this.tweetUserId}}/tweets">
+                        {{#if this.tweetsUserAvatar}}
+                        <img src="{{this.tweetsUserAvatar}}" class="avatar 
+                        small ml-1">
+                        {{else}}
+                        <img class="preset-avatar ml-1" src="https://i.imgur.com/iuHA5Qi.jpg">
+                        {{/if}}
+                      </a>
+                    </div>
+                    <div class="headerDivider"></div>
+                  </div>
+                  <div class="mt-2" style="flex-grow: 1; position:relative">
+                    <div class="account-info d-flex" style="flex:auto">
+                      <a href="/users/{{this.tweetUserId}}/tweets">
+                        <div class="modal-name ml-3">{{this.tweetsUserName}}</div>
+                      </a>
+                      <div class="atAccount modal-info ml-2">@{{this.tweetsUserAccount}}•{{moment
+                        this.tweetsCreatedAt}}</div>
+                    </div>
+                    <p class="modal-description d-flex ml-3" style="flex: auto">
+                      {{this.tweetsContent}}
+                    </p>
+                    <div class="reply d-flex" style="margin-left">
+                      <div class="reply-text ml-3 mb-2">回覆給</div>
+                      <a href="/users/{{this.tweetUserId}}/tweets">
+                        <div class="reply-account ml-2">@{{this.tweetsUserAccount}}</div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <form action="/tweets/{{this.tweetsId}}/replies" method="POST">
+                <div class="type-area d-flex">
+                  <div>
+                    <a href="/users/{{this.loginUser.id}}/tweets">
+                      {{#if this.loginUser.avatar}}
+                      <img src="{{this.loginUser.avatar}}" class="avatar small ml-1">
+                      {{else}}
+                      <img class="preset-avatar ml-1" src="https://i.imgur.com/iuHA5Qi.jpg">
+                      {{/if}}
+                    </a>
+                  </div>
+                  <div class="type-text form-group">
+                    <input type="hidden" name="TweetId" value="{{this.tweetsId}}">
+                    <textarea type="text" class="form-control new-post-content ml-2" name="comment" id="comment-modal"
+                      placeholder="推你的回覆" rows="5" cols="47" maxlength="140"></textarea>
+                    <div class="invalid-feedback" id="reply-tweet"></div>
+                  </div>
+                </div>
+                <div class="add-button  d-flex justify-content-end mr-2">
+                  <button type="submit" class="btn mb-2" id="replybtn">回覆</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    <script src="/javascripts/replyModal.js"></script>
+    {{!-- popular --}}
+    <div class="col-4">
+      {{>popular}}
+    </div>
+  
+
+  <script src="/javascripts/replyModal.js"></script>

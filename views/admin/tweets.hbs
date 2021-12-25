@@ -1,0 +1,60 @@
+{{!-- 左邊選項欄位 --}}
+<div class="row col-md-12">
+  <div class="admin-left col-md-3 ml-4">
+    <img class="mb-4 pl-2" src="https://i.imgur.com/8DjhHxL.png">
+    <div class="nav-ul-wrapper">
+      <ul class="nav flex-column">
+        <li class="nav-item py-2">
+          <a class="nav-link active" href="/admin/tweets">
+            <i class="fas fa-home"></i>
+            <span class="ml-3">推文清單</span>
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="nav-link" href="/admin/users">
+            <i class="far fa-user"></i>
+            <span class="ml-3">使用者列表</span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="ml-3">登出</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  {{!-- 右邊清單欄位 --}}
+  {{!-- 會用到 avatar,name,account,createdAt,description --}}
+  <div class="col-md-10 admin-content">
+    <p class="admin-tweets-title ml-3 mt-3">推文清單</p>
+    <hr />
+
+    <div class="admin-card">
+      {{#each tweets}}
+      <div class="admin-card-body d-flex">
+        {{#if this.userAvatar}}
+        <img class="avatar small mr-3 mt-2 ml-3" src="{{this.userAvatar}}">
+        {{else}}
+        <img class="preset-avatar mr-3 mt-2 ml-3" src="https://i.imgur.com/iuHA5Qi.jpg">
+        {{/if}}
+        <div>
+          <p class="card-title mt-2">{{this.userName}} <span class="atAccount">@{{this.userAccount}}•{{moment
+              this.createdAt}}</span></p>
+          <p class="card-text">{{this.tweetDescription}}</p>
+        </div>
+        <div class="button-delete">
+          <form action="/admin/tweets/{{this.tweetId}}?_method=DELETE" method="POST"
+            onclick="return confirm('確定要刪除這則貼文？')">
+            <button class="admin-delete ml-2" type="submit">x</button>
+          </form>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>

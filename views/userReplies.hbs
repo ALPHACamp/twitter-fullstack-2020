@@ -1,0 +1,177 @@
+<div class="row" style="width:100%;">
+  {{!-- navbar --}}
+  <div class="col-3">
+    <img class="mb-4 pl-2" src="https://i.imgur.com/8DjhHxL.png">
+    <div class="nav-ul-wrapper">
+      <ul class="nav flex-column">
+        <li class="nav-item py-2">
+          <a class="nav-link" href="/tweets">
+            <i class="fas fa-home"></i>
+            <span class="ml-3">首頁</span>
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="nav-link active" href="/users/{{ loginUser.id }}/tweets">
+            <i class="far fa-user"></i>
+            <span class="ml-3">個人資料</span>
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="nav-link" href="/users/{{ loginUser.id }}/setting/edit">
+            <i class="fas fa-cog"></i>
+            <span class="ml-3">設定</span>
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <button type="button" class="btn tweet-button" data-toggle="modal" data-target="#tweetModal">推文</button>
+        </li>
+      </ul>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="ml-3">登出</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  {{!-- user profile --}}
+  <div class="middle-side col-md-5">
+    <div class="text-title d-flex align-items-center">
+      <a href="javascript:history.back()">
+        <div class="back-icon">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+      </a>
+      <div class="name-info ">
+        <h5 class="header1 ml-3 mb-0">{{user.name}}</h5>
+        <div class="atAccount ml-3 mb-1">{{user.Tweets.length}} 推文</div>
+      </div>
+    </div>
+    {{!-- user-photos --}}
+    <div class="image-wrapper mb-4">
+      {{!-- cover --}}
+      <div class="cover-wrapper">
+        {{#if user.cover}}
+        <img class="cover" src="{{ user.cover }}" alt="">
+        {{ else }}
+        <div class="cover none"></div>
+        {{/if}}
+      </div>
+      {{!-- avatar --}}
+      <div class="avatar-wrapper">
+        {{#if user.avatar }}
+        <img class="avatar large" src="{{ user.avatar }}">
+        {{else}}
+        <img class="preset-avatar-large" src="https://i.imgur.com/iuHA5Qi.jpg">
+        {{/if}}
+      </div>
+      {{!-- edit-user-button --}}
+      <div class="d-flex justify-content-end mt-1 pr-1">
+        {{#ifCond loginUser.id user.id }}
+        <button type="button" class="btn btn-outline ml-2" data-toggle="modal" data-target="#editUserModal">
+          編輯個人資料
+        </button>
+        {{else}}
+        <div class="icon-outline pt-1">
+          <a href="{{ user.email }}"><i class="far fa-envelope"></i></a>
+        </div>
+        {{#if user.isFollowed}}
+        <form action="/followships/{{user.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn followings-button mr-3">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="POST">
+          <button type="submit" class="btn followers-button mr-3">跟隨</button>
+          <input type="hidden" name="id" value="{{user.id}}">
+        </form>
+        {{/if}}
+        {{/ifCond}}
+      </div>
+    </div>
+    {{!-- user-intro --}}
+    <div class="text-info-users">
+      <div class="info-text">
+        <h5 class="name header1">{{user.name}}</h5>
+        <h6 class="atAccount">@{{user.account}}</h6>
+        {{#if user.introduction}}
+        <div class="introduction mt-2">{{ user.introduction }}</div>
+        {{else}}
+        <div class="introduction mt-2">目前沒有自我介紹!</div>
+        {{/if}}
+        <div class="follow d-flex">
+          <div class="followship d-flex m-0 mt-2">
+            <a href="followings" class="d-flex">
+              <div class="follow-title">{{user.Followings.length}} 個</div>
+              <div class="following-body">跟隨中</div>
+            </a>
+            <a href="followers" class="d-flex ml-3">
+              <div class="follow-title">{{user.Followers.length}} 個</div>
+              <div class="follower-body">跟隨者</div>
+            </a>
+          </div>
+        </div>
+      </div>
+      {{!-- tab-area --}}
+      <br>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" href="/users/{{user.id}}/tweets">推文</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">推文與回覆</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/users/{{user.id}}/likes">喜歡的內容</a>
+        </li>
+      </ul>
+      <div class="user-tweet">
+        {{#if user.Replies}}
+        {{#each user.Replies}}
+        <div class="tweet col-md-12">
+          <div class="d-flex">
+            <div class="mt-2 mr-2 col-md-2" style="padding: 0%;"><a href="/users/{{../user.id}}/tweets"
+                class="text-muted">
+                {{#if ../user.avatar}}
+                <img class="avatar small" src="{{../user.avatar}}">
+                {{else}}
+                <img class="preset-avatar" src="https://i.imgur.com/iuHA5Qi.jpg">
+                {{/if}}
+              </a>
+            </div>
+            <div class="col-md-10 mt-2">
+              <div class="account-info d-flex" style="flex-auto">
+                <div class="user-name">{{../user.name}}</div>
+                <div class="atAccount mb-2 ml-2">@{{../user.account}}•{{moment
+                  this.createdAt}}</div>
+              </div>
+              <div class="reply d-flex">
+                <div class="reply-text">回覆</div>
+                <a href="/users/{{this.Tweet.User.id}}/tweets" class="text-muted">
+                  <div class="reply-text atAccount ml-1">@{{this.Tweet.User.account}}</div>
+                </a>
+              </div>
+              <a href="/tweets/{{this.TweetId}}/replies" class="text-muted">
+                <div class="post-text d-flex mt-2" style="flex-auto">{{this.comment}}</div>
+              </a>
+
+            </div>
+          </div>
+        </div>
+        <hr />
+        {{/each}}
+        {{else}}
+        <div class="mt-4">使用者目前沒有回應任何推文!</div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+
+
+  {{!-- popular --}}
+  <div class="col-4">
+    {{> popular}}
+  </div> 
+</div>

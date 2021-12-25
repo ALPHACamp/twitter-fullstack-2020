@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Simple Twitter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/basic.css">
+  <script src="https://kit.fontawesome.com/fae02ff303.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  {{#if errors}}
+  {{#each errors}}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ this.message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">×
+    </button>
+  </div>
+  {{/each}}
+  {{/if}}
+  {{#if success_messages}}
+  <div class="alert alert-success" role="alert" style="margin: 30px 0">
+    {{success_messages}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {{/if}}
+  {{#if error_messages}}
+  <div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
+    {{error_messages}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {{/if}}
+
+  <div class="wrap d-flex mt-3">
+
+    {{{body}}}
+  </div>
+  {{!-- Edit-User-Modal --}}
+  <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="edituserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="/api/users/{{ user.id }}" method="POST" enctype="multipart/form-data">
+          <div class="modal-header">
+            <div class="d-flex">
+              <button type="button" class="btn-dismiss close mr-3" data-dismiss="modal">X</button>
+              <h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
+            </div>
+            <button type="submit" class="btn">儲存</button>
+          </div>
+          <div class="modal-body px-0">
+            <div class="image-wrapper">
+              {{!-- Edit Cover --}}
+              <div class="cover-wrapper" id="cover-wrapper">
+                {{#if user.cover}}
+                <img class="cover" id="current-cover" src="{{ user.cover }}" alt="">
+                {{ else }}
+                <div class="cover none" id="current-cover"></div>
+                {{/if}}
+              </div>
+              <div class="cover-input-wrapper d-flex" id="cover-input-wrapper">
+                <div class="form-group mb-0 mt-2">
+                  <label for="cover-input"><i class="fas fa-camera"></i>
+                    <input type="file" class="form-control-file hide" id="cover-input" name="cover">
+                  </label>
+                </div>
+                <button type="button" class="btn btn-delete py-0 hide" id="delete-cover-btn">X</button>
+              </div>
+              {{!-- Edit Avatar --}}
+              <div class="avatar-wrapper" id="avatar-wrapper">
+                {{#if user.avatar }}
+                <img class="avatar large" id="current-avatar" src="{{ user.avatar }}">
+                {{else}}
+                <img class="preset-avatar-large" id="current-avatar" src="https://i.imgur.com/iuHA5Qi.jpg">
+                {{/if}}
+              </div>
+              <div class="form-group avatar-input-wrapper">
+                <label for="avatar-input"><i class="fas fa-camera on-avatar"></i>
+                  <input type="file" class="form-control-file hide" id="avatar-input" name="avatar">
+                </label>
+              </div>
+            </div>
+          </div>
+          {{!-- Edit-Name & Introduction --}}
+          <div class="form-group px-3">
+            <label for="name">名稱</label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Enter name"
+              value="{{ user.name }}" required>
+          </div>
+          <div class="form-group px-3">
+            <label for="introduction">自我介紹</label>
+            <textarea class="form-control" id="introduction" name="introduction"
+              rows="3">{{ user.introduction }}</textarea>
+          </div>
+      </div>
+      </form>
+    </div>
+  </div>
+  </div>
+
+  {{!-- tweetModal --}}
+  <div class="modal fade" id="tweetModal" tabindex="-1" role="dialog" aria-labelledby="reply-tweet"
+    style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content d-flex">
+        <button type="button" class="btn-dismiss close d-flex justify-content-start ml-3 mt-2"
+          data-dismiss="modal">x</button>
+        <hr />
+        <form action="/tweets" method="POST">
+          <div class="type-area d-flex">
+            <div class="avatar">
+              <a href="/users/{{user.id}}/tweets">
+                {{#if user.avatar}}
+                <img src="{{user.avatar}}" class="avatar small ml-1">
+                {{else}}
+                <img class="preset-avatar ml-1" src="https://i.imgur.com/iuHA5Qi.jpg">
+                {{/if}}
+              </a>
+            </div>
+            <div class="type-text">
+              <textarea type="text" class="tweet-post-content form-control mb-2 ml-2" id="description-modal"
+                name="description" placeholder="有什麼新鮮事?" rows="5" cols="47"></textarea>
+              <div class="invalid-feedback" id="add-tweet"></div>
+            </div>
+          </div>
+          <div class="add-button d-flex justify-content-end mr-2">
+            <button type="submit" class="btn mb-2" id="modal-post-button">推文</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {{!-- replyModal --}}
+
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+  integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="/javascripts/events.js"></script>
+
+</html>
