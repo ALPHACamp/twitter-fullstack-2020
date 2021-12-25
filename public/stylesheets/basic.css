@@ -341,6 +341,11 @@ img.avatar.small {
   opacity: 90%;
 }
 
+.fa-camera.on-avatar {
+  color: #999999;
+  opacity: 90%;
+}
+
 .fa-camera:hover {
   cursor: pointer; 
 }
