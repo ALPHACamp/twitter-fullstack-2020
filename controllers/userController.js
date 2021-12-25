@@ -220,7 +220,9 @@ const userController = {
       User.findByPk(req.params.userId, {
         include: [
           Tweet,
-          { model: Reply, include: [{ model: Tweet, include: [User] }] }
+          { model: Reply, include: [{ model: Tweet, include: [User] }] } ,
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
         ]
       }),
       helpers.getPopularUsers(req)
@@ -228,7 +230,7 @@ const userController = {
       .then(([user, popularUsers]) => {
         user = user.toJSON()
         user.isFollowed = loginUser.Followings.map(userFlldByLgnUsr => userFlldByLgnUsr.id).includes(user.id)
-
+        console.log(user)
         return res.render('userReplies', {
           user,
           loginUser,
@@ -305,7 +307,9 @@ const userController = {
         include: [
           Tweet,
           { model: Tweet, as: 'LikedTweets', include: [User] },
-          Like
+          Like,
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
         ],
         order: [[Like, 'createdAt', 'DESC']],
       }),
