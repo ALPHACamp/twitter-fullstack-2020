@@ -7,9 +7,24 @@
   grid-template-columns:1.5fr 6.5fr 3fr;
 }
 
-.adminGrid{ 
-  display:grid;
-  grid-template-columns:1.5fr 9.5fr;
+.leftSidebar {
+  padding:0;
+  position: relative;
+  text-align: left;
+  border-right: 1px solid #e5e5e5;
+  flex-grow: 1;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  margin:0px;
+}
+
+.buttonList {
+  margin-top: 5;
 }
 
 .fixed{
