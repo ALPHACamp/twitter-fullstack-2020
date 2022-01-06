@@ -1,0 +1,241 @@
+<link rel="stylesheet" href="/stylesheets/myCss.css">
+
+<div class="modal-sections">
+  <div class="modal fade" id="newTwitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {{>newTweet}}
+  </div>
+</div>
+
+<div class="wrap d-flex">
+
+  {{>leftSidebar}}
+
+  <div class="middle-side col-md-4" style="padding:0; height:100%;">
+    <div class="text-title" id="user-count">上線使用者</div>
+
+    <hr style="margin:0; padding:0">
+
+    <ul class="list-group" id="onlineUserList">
+
+    </ul>
+
+  </div>
+
+  {{!-- 右側欄位 --}}
+  <div class="right-side col-md-5" style="padding:0; height:100%;">
+    <div class="text-title">公開聊天室</div>
+    <div class="chat">
+      <ul class="list-group" id="messages">
+        {{!-- 上線 --}}
+        <li class="list-group-item">
+          <div class="log">
+            Casper 上線
+          </div>
+        </li>
+        {{!-- 上線 --}}
+
+        {{!-- 離線 --}}
+        <li class="list-group-item">
+          <div class="log">
+            Casper 離線
+          </div>
+        </li>
+        {{!-- 離線 --}}
+
+        {{#each msg}}
+
+        {{#if selfMsg}}
+        {{!-- 自己的訊息 --}}
+        <li class="list-group-item-myself">
+          <div class="user-information">
+            <div class="current-user">
+              <div class="text-area">
+                <div class="text">{{this.content}}</div>
+              </div>
+            </div>
+            <div class="time">{{time this.createdAt}}</div>
+          </div>
+        </li>
+        {{!-- 自己的訊息 --}}
+
+        {{else}}
+
+        {{!-- 他人訊息 --}}
+        <li class="list-group-item">
+          <div class="information">
+            <div class="other-user">
+              <div class="avatar">
+                <a href="">
+                  <img src="{{this.User.avatar}}" alt="">
+                </a>
+              </div>
+              <div class="text-area">
+                <div class="text">{{this.content}}</div>
+              </div>
+            </div>
+            <div class="time">{{time this.createdAt}}</div>
+        </li>
+        {{!-- 他人訊息 --}}
+
+        {{/if}}
+        {{/each}}
+
+      </ul>
+    </div>
+
+
+    {{!-- 訊息欄位 --}}
+    <div class="type-area">
+      <form action="" method="" id="form" style="display: contents;">
+        <div class="input-area">
+          <input type="text" class="input-chat" id="input" placeholder="輸入訊息..." ng-trim="false">
+        </div>
+        <div class="send-chat">
+          <button class="btn">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<input type="hidden" value="{{currentUser.id}}">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
+<script>
+  let socket = io()
+
+  let messages = document.getElementById('messages')
+  let form = document.getElementById('form')
+  let input = document.getElementById('input')
+
+  // 登入 - 當前使用者資料
+  window.addEventListener('load', function sendUser() {
+    const currentId = "{{currentUser.id}}"
+    const currentName = "{{currentUser.name}}"
+    const currentAvatar = "{{currentUser.avatar}}"
+    const currentAccount = "{{ currentUser.account }}"
+    socket.emit('send user', currentName, currentAccount, currentAvatar, currentId)
+    socket.emit('onlineUser')
+    scrollWindow()
+  })
+
+  // 登入通知
+  socket.on('new user msg', function (currentName, currentAccount, currentAvatar, currentId) {
+    let item = document.createElement('li')
+    let rawHTML = ""
+    item.classList.add('list-group-item')
+    rawHTML += `<div class="log">
+              ${currentName} 上線
+            </div>`
+    item.innerHTML = rawHTML
+    messages.appendChild(item)
+    scrollWindow()
+  })
+
+  // 線上使用者更新
+  socket.on('online user', function (onlineUser) {
+    const userCount = document.querySelector('#user-count')
+    userCount.innerHTML = `上線使用者(${onlineUser.length})`
+    const onlineUserList = document.querySelector('#onlineUserList')
+    let onlineHTML = ""
+    onlineUserList.innerHTML = onlineHTML
+    const item2 = document.createElement('li')
+    item2.classList.add('list-group')
+    // 在線人數
+    for (let i = 0; i < onlineUser.length; i++) {
+      onlineHTML += `<a href="/messages/${onlineUser[i].currentId}">
+      <li class="online-user list-group-item">
+        <div class="avatar">
+          <img src=${onlineUser[i].currentAvatar} alt=""> 
+        </div>
+        <div class="name-account d-flex">
+            <div class="name">${onlineUser[i].currentName}</div>
+            <div class="account">@${onlineUser[i].currentAccount}</div>
+        </div>
+        </li>
+        </a>
+      <hr style="margin:0; padding:0">`
+    }
+    item2.innerHTML = onlineHTML
+    onlineUserList.appendChild(item2)
+  })
+
+  // 本人送出訊息
+  form.addEventListener('submit', function (e) {
+    e.preventDefault()
+    if (input.value) {
+      let item = document.createElement('li')
+      let rawHTML = ""
+      let time = new Date().toLocaleTimeString()
+      item.classList.add("list-group-item-myself")
+      let msg = input.value
+      rawHTML += `<div class="user-information">
+              <div class="current-user">
+                <div class="text-area">
+                  <div class="text">${msg}</div>
+                </div>
+              </div>
+              <div class="time">${time}</div>
+            </div>`
+      item.innerHTML = rawHTML
+      messages.appendChild(item)
+      scrollWindow()
+      const currentAvatar = "{{ currentUser.avatar }}"
+      const currentId = "{{ currentUser.id }}"
+      socket.emit('chat message', input.value, currentId, currentAvatar)
+      input.value = ''
+    }
+  })
+
+  // 接收他人送出訊息
+  socket.on('chat message', function (msg, currentId, currentAvatar) {
+    const userId = "{{ currentUser.id }}"
+    if (Number(userId) !== Number(currentId)) {
+      let item = document.createElement('li')
+      let rawHTML = ""
+      let time = new Date().toLocaleTimeString()
+      item.classList.add('list-group-item')
+      rawHTML += `<div class="information">
+              <div class="other-user">
+                <div class="avatar">
+                  <a href="">
+                    <img src="${currentAvatar}" alt="">
+                  </a>
+                </div>
+                <div class="text-area">
+                  <div class="text"> 
+                    ${msg}
+                    </div>
+                </div>
+              </div>
+              <div class="time">${time}</div>
+            </div>`
+      item.innerHTML = rawHTML
+      messages.appendChild(item)
+      scrollWindow()
+    }
+  });
+
+  // 下線通知
+  socket.on('user offline', function (currentName) {
+    let item = document.createElement('li')
+    let rawHTML = ""
+    item.classList.add('list-group-item')
+    rawHTML += `<div class="log">
+              ${currentName} 已下線
+            </div>`
+    item.innerHTML = rawHTML
+    messages.appendChild(item)
+    scrollWindow()
+  })
+
+  // 捲至最底
+  function scrollWindow() {
+    let h = document.querySelector('.chat')
+    h.scrollTo(0, h.scrollHeight)
+  }
+
+</script>

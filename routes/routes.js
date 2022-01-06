@@ -7,6 +7,7 @@ const tweetController = require('../controllers/tweetController.js')
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
 const replyController = require('../controllers/replyController.js')
+const messageController = require('../controllers/messageController')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -92,12 +93,15 @@ router.post('/admin/signin', passport.authenticate('local', {
 }), adminController.signIn)
 router.get('/admin/logout', adminController.logout)
 
-//後台 - 首頁
+// 後台 - 首頁
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
 // 後台 - 使用者列表
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 // 後台 - 推文清單
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
+
+// 公開聊天室
+router.get('/messages', authenticated, messageController.publicPage)
 
 module.exports = router

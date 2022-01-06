@@ -9,6 +9,13 @@
         <span class="fs-5 fw-bolder">首頁</span>
       </a>
     </div>
+
+    <div class="navItem setting d-flex mb-4">
+      <i class="fas fa-fw fa-fh fa-comments mr-4"></i>
+      <a href="/messages" class="btn sidebarItem">
+        <span class="sidebar-item fs-5 fw-bolder">公開聊天室</span>
+      </a>
+    </div>
   
     <div class="navItem userProfile d-flex mb-4">
       <i class="fas fa-users"></i>
@@ -16,17 +23,21 @@
         <span class="fs-5 fw-bolder">個人資料</span>
       </a>
     </div>
+
     <div class="navItem setting d-flex mb-4 ">
       <i class="fas fa-cog"></i>
       <a href="/users/{{user.id}}/setting?_method=PUT" class="btn sidebarItem">
         <span class="sidebar-item fs-5 fw-bolder">設定</span>
       </a>
     </div>
+
   </div>
+
   <div class="d-grid gap-2 col-9 round">
     <button type="button" class="orange btn text-white round" data-bs-toggle="modal"
       data-bs-target="#newTwitModal">推文</button>
   </div>
+  
   <div class="logout d-flex">
     <div class="logoutLogo me-3 d-flex align-items-center">
       <i class="fas fa-sign-out-alt"></i>
