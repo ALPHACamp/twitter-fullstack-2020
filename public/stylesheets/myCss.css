@@ -1,0 +1,184 @@
+*{
+  font-family: 微軟正黑體;
+}
+
+.grid{ 
+  display:grid;
+  grid-template-columns:1.5fr 6.5fr 3fr;
+}
+
+.leftSidebar {
+  padding:0;
+  position: relative;
+  text-align: left;
+  border-right: 1px solid #e5e5e5;
+  flex-grow: 1;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  margin:0px;
+}
+
+.buttonList {
+  margin-top: 5;
+}
+
+.fixed{
+  position:fixed;
+}
+
+.color-orange{
+  color: #FF6600;
+}
+
+.color-gray{
+  color: #657786;
+}
+
+#ac-logo{
+  width: 50px;
+}
+.userImage{
+  width: 50px;
+  height: 50px;
+}
+.orange{
+  background-color:#FF6600;
+  border-color: #FF6600;
+}
+
+.round{
+  border-radius:50px;
+}
+
+.userSidebar{
+  width: 235px;
+  height: 1196px;
+  left: 113px;
+  top: 4px;
+}
+
+.popularArea{
+  width: 350px;
+  height: 710px;
+  border-radius: 14px;
+  background-color:#F5F8FA;
+}
+
+.followButton{
+  border-color: #FF6600;
+  color: #FF6600;
+}
+
+.userProfileImg{
+  width: 150px;
+  position: absolute;
+  transform: translate(0,-75px);  /*往上移蓋過cover */
+  z-index: 1;
+  margin-left:5px;  
+}
+
+.cover {
+   width: 800px; /* whatever width you want for the cover div */
+   height: 270px;
+   background-color: white; /* optional */
+   overflow: hidden;
+}
+.cover > img {
+   width: 100%;
+}
+
+.addTweet{
+  border: 0;  
+  outline: none;   /*去掉有甚麼新鮮事的外框*/
+  width: 400px;
+  min-height: 150px;
+}
+
+.userCard {
+  border-radius:10px;
+  height: 350px;
+}
+
+.userCard > .userCover {
+   height:140px;
+   border-radius: 10px 10px 0px 0px;
+}
+
+ .userAvatar  {
+   /* transform: translate(0,-50px); */
+   margin-top: -50px;
+   margin-bottom: 50px;
+}
+
+.follow-button {
+  position: relative; 
+  top: 50%;
+  transform: translate(0%,-50%);
+  border-radius: 50px;
+  background-color: #fF6600;
+  color: #ffffff;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 3vh;
+  border:1px #fF6600 solid;
+  padding:0 15px;
+}
+
+.un-follow-button {
+  position: relative; 
+  top: 50%;
+  transform: translate(0%,-50%);
+  border-radius: 50px;
+  background-color: #ffffff;
+  color: #fF6600;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 3vh;
+  border:1px #fF6600 solid;
+  padding:0 15px;
+}
+
+.userCardBody  {
+   transform: translate(0,-50px);
+}
+
+.userAvatar > .avatar {
+   width: 100px;
+   height:100px;
+   border: 5px solid white;
+
+}
+
+.editAvatar > .userAvatar {
+  margin-top: -50px;
+  margin-bottom: 50px;
+  margin-left: 20px;
+  width: 130px;
+}
+
+.userSidebar {
+  width: 235px;
+  height: 1196px;
+  left: 103px;
+  top: 4px;
+}
+.logout {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  
+  position: inherit;
+  width: 235px;
+  height: 60px;
+  top: 850px;
+}

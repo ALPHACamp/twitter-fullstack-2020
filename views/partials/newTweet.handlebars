@@ -1,0 +1,21 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <button type="button" class="btn-close m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="createTweet border">
+      <form action="/tweets" method="POST">
+        <div class="d-flex">
+          <a href="" class="avatar m-2">
+            <img src="{{noImage user.avatar}}" alt="" class="rounded-circle userImage">
+          </a>
+          <textarea class="addTweet" id="description" name="description" placeholder="有什麼新鮮事?" maxlength="140"
+            required></textarea>
+        </div>
+        <div class="d-flex justify-content-end">
+          <div class="round m-3">
+            <button type="submit" class="orange btn text-white round">推文</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<!-- Modal -->
+<div class="modal-sections">
+  <div class="modal fade" id="newTwitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {{>newTweet}}
+  </div>
+
+  <div class="modal fade" id="userProfileEdit" tabindex="-1" role="dialog" aria-labelledby="userProfileEdit"
+    aria-hidden="true">
+    {{>editUserProfile}}
+  </div>
+</div>
+
+<div class="row grid">
+  {{>leftSidebar}}
+
+  <div class="userProfileSection ">
+    {{>message}}
+
+    {{>userProfile}}
+
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link text-secondary active" href="/users/{{user.id}}/tweets">推文</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-secondary" href="/users/{{user.id}}/replies">推文與回覆</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-secondary" href="/users/{{user.id}}/likes">喜歡的內容</a>
+      </li>
+    </ul>
+
+    {{#each tweets}}
+    <div class="tweet border">
+      <div class="d-flex">
+        <span class="avatar m-2">
+          <img src="{{noImage this.User.avatar}}" alt="" class="rounded-circle userImage">
+        </span>
+        <div class="">
+          <div class="d-flex">
+            <div class="name m-2">{{this.User.name}}</div>
+            <div class="tag m-2">@{{this.User.account}}</div>
+            <div class="time m-2">{{moment this.createdAt}}</div>
+          </div>
+          <a href="/tweets/{{this.id}}/replies" class="tweetContent m-2 btn">
+            <p>{{this.description}}</p>
+          </a>
+          <div class="d-flex mb-2">
+            <a href="/tweets/{{this.id}}/replies" class="comment d-flex me-2 btn">
+              <span class="commentIcon me-2">
+                <i class="far fa-comment"></i>
+              </span>
+              <span class="commentAmount">{{this.Replies.length}}</span>
+            </a>
+            <div class="like d-flex">
+              <span class="likeIcon me-2">
+                {{#if isLiked}}
+                <form action="/tweets/{{this.id}}/unlike" method="POST">
+                  <button type="submit" class="btn">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                </form>
+                {{else}}
+                <form action="/tweets/{{this.id}}/like" method="POST">
+                  <button type="submit" class="btn">
+                    <i class="far fa-heart"></i>
+                  </button>
+                </form>
+                {{/if}}
+              </span>
+              <span class="likeAmount mt-1">{{this.Likes.length}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+
+  </div>
+
+  {{>popular}}
+
+</div>

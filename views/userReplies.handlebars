@@ -1,0 +1,60 @@
+<!-- Modal -->
+<div class="modal-sections">
+  <div class="modal fade" id="newTwitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {{>newTweet}}
+  </div>
+
+  <div class="modal fade" id="userProfileEdit" tabindex="-1" role="dialog" aria-labelledby="userProfileEdit"
+    aria-hidden="true">
+    {{>editUserProfile}}
+  </div>
+</div>
+
+<div class="row grid">
+  {{>leftSidebar}}
+
+  <div class="userProfileSection ">
+    {{>message}}
+
+    {{>userProfile}}
+
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link text-secondary" href="/users/{{user.id}}/tweets">推文</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-secondary active" href="/users/{{user.id}}/replies">推文與回覆</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-secondary" href="/users/{{user.id}}/likes">喜歡的內容</a>
+      </li>
+    </ul>
+    {{#each replies}}
+    <div class="comment d-flex border">
+      <div class="avatar m-3">
+        <img src="{{noImage this.User.avatar}}" alt="" class="rounded-circle userImage">
+      </div>
+      <div>
+        <div class="d-flex">
+          <div class="name m-1 fw-bolder">{{this.User.name}}</div>
+          <div class="account m-1">@{{this.User.account}}</div>
+          <div class="timefrom m-1">{{moment this.createdAt}}</div>
+        </div>
+        <div>
+          <div class="d-flex">
+            <div class="m-1">回覆</div>
+            <div class="m-1 color-orange">@{{this.Tweet.User.name}}</div>
+          </div>
+          <div>
+            <p>{{this.comment}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+
+  </div>
+
+  {{>popular}}
+
+</div>

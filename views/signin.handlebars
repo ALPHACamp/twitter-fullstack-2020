@@ -1,0 +1,33 @@
+<div class="container" style="width:40%">
+  <div class="logo text-center m-3">
+    <img src="https://i.imgur.com/ZUJriDp.png" id="ac-logo">
+  </div>
+  <form class="form-signin" {{#if (constainsAdmin url)}}action="/admin/signin" {{else}}action="/signin" {{/if}}
+    method="POST" style="width: 100%;">
+    <div class="text-center mb-4">
+      <h1 class="h3 mb-3 font-weight-normal">{{#if (constainsAdmin url)}}後台登入{{else}}登入Alphitter{{/if}}</h1>
+    </div>
+    {{> message}}
+    <div class="form-label-group">
+      <label for="inputEmail">帳號</label>
+      <input type="text" name="account" class="form-control" placeholder="account" required autofocus>
+    </div>
+    <div class="form-label-group">
+      <label for="inputPassword">密碼</label>
+      <input type="password" name="password" class="form-control" placeholder="Password" required>
+    </div>
+    <br />
+    <div class="text-center">
+      <button class="btn btn-lg btn-primary btn-block orange rounded-pill" type="submit" style="width:100%">登入</button>
+    </div>
+
+    <div class="d-flex justify-content-end mt-3">
+      {{#if (constainsAdmin url)}}{{else}}
+      <a href="/signup">註冊Alphitter</a>．
+      {{/if}}
+      {{#if (constainsAdmin url)}}<a href="/signin">前台登入</a>
+      {{else}}<a href="/admin/signin">後台登入</a>{{/if}}
+
+    </div>
+  </form>
+</div>

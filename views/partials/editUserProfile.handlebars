@@ -1,0 +1,160 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <form action="/users/{{user.id}}/edit?_method=PUT" method="post" enctype="multipart/form-data">
+
+      <div class="modal-header">
+        <div class="d-flex align-items-center">
+          <button type="button" class="btn a-tomato" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+          <span class="modal-title h5 fw-bold ps-3" id="editProfileBtn">編輯個人資料</span>
+        </div>
+        <button type="submit" id="save-button" class="badge btn btn-tomato rounded-pill fw-bold"
+          style="font-size: 1.1em;">儲存</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="col-12 m-0 p-0 position-relative mb-5">
+
+          <div class="form-group" style="height: 180px; border: #E6ECF0 1px solid;">
+            <input type="file" name="cover" id="cover" class="form-control-file container" accept=".jpg,.jpeg,.png"
+              style="display: none;" value="{{user.cover}}">
+            <img class="profile-cover-img" src="{{#if user.cover}}{{user.cover}}{{/if}}"
+              style="background: #C4C4C4;height: 100%;;width:100%;">
+            <div style=" position: absolute; top: 15%; left: 47%;">
+              <label for="cover">
+                <i class=" fas fa-camera btn"
+                  style=" background: transparent; color: white; border: 2px solid white; "></i>
+              </label>
+            </div>
+          </div>
+
+
+          <a href="" class="editAvatar m-2">
+            <input type="file" name="avatar" id="avatar" class="form-control-file" name="avatar"
+              accept=".jpg,.jpeg,.png" style="display: none;" value="{{user.avatar}}">
+            <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://loremflickr.com/300/300/avator{{/if}}" alt=""
+              class="rounded-circle userAvatar">
+            <div style=" position: absolute; top: 30%; left: 16%;">
+              <label for="avatar">
+                <i class=" fas fa-camera btn"
+                  style=" background: transparent; color: white; border: 2px solid white; "></i>
+              </label>
+            </div>
+          </a>
+
+          <div class="form-label-group">
+            <label for="inputName">名稱</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="name" maxlength="50" required autofocus>
+            <div class="invalid-feedback name"></div>
+
+            <div class="count-down name">
+              <small class="count" id="name-count">0</small>
+              <small>/50</small>
+            </div>
+          </div>
+
+          <div class="form-label-group">
+            <label for="description"
+              style="font-weight: 500;font-size: 15px;line-height: 15px;color: #657786;">自我介紹</label>
+            <textarea class="form-control mb-2" name="description" maxlength="160" id="description" cols="25"
+              rows="5">{{user.description}}</textarea>
+            <div class="count-down description">
+              <small class="count" id="description-count">0</small>
+              <small>/160</small>
+            </div>
+          </div>
+
+        </div>
+    </form>
+  </div>
+
+</div>
+
+<script>
+  const name = document.querySelector('#name')
+  const nameCount = document.querySelector('#name-count')
+  const description = document.querySelector('#description')
+  const descriptionCount = document.querySelector('#description-count')
+  const editUserBtn = document.querySelector('.edit-user')
+  const saveBtn = document.querySelector('#save-button')
+  const avatar = document.querySelector('#avatar')
+  const cover = document.querySelector('#cover')
+
+  editUserBtn.addEventListener('click', function countInitial(event) {
+    descriptionCount.innerText = description.value.length
+    nameCount.innerText = name.value.length
+  })
+
+  name.addEventListener('input', function check(event) {
+    if (name.value.length < 1) {
+      name.classList.add('is-invalid')
+      name.nextElementSibling.innerHTML = "名稱不得為空"
+    }
+    if (name.value.length > 50) {
+      name.classList.add('is-invalid')
+      name.nextElementSibling.innerHTML = "名稱不得超過50個字"
+    }
+    if (name.value.length > 0 && name.value.length < 50) {
+      name.classList.remove('is-invalid')
+    }
+    nameCount.innerText = name.value.length
+  })
+
+  description.addEventListener('input', function check(event) {
+    if (description.value.length < 1) {
+      description.classList.add('is-invalid')
+      description.nextElementSibling.innerHTML = "自我介紹不得為空"
+    }
+    if (description.value.length > 160) {
+      description.classList.add('is-invalid')
+      description.nextElementSibling.innerHTML = "自我介紹不得超過160個字"
+    }
+    if (description.value.length > 0 && description.value.length < 160) {
+      description.classList.remove('is-invalid')
+    }
+    descriptionCount.innerText = description.value.length
+  })
+
+  saveBtn.addEventListener('click', function check(event) {
+    if (description.value.length < 1) {
+      description.classList.add('is-invalid')
+      description.nextElementSibling.innerHTML = "自我介紹不得為空"
+    }
+    if (name.value.length < 1) {
+      name.classList.add('is-invalid')
+      name.nextElementSibling.innerHTML = "名稱不得為空"
+    }
+    if (description.classList.contains('is-invalid') || name.classList.contains('is-invalid')) {
+      event.preventDefault()
+    }
+  })
+
+  // 預覽圖片
+  function coverPreview() {
+    const cover = document.querySelector('#cover')
+    const coverfile = document.querySelector('#cover_upload').files[0]
+    const reader = new FileReader()
+
+    reader.addEventListener("load", function () {
+      cover.src = reader.result
+    }, false)
+
+    if (coverfile) {
+      reader.readAsDataURL(coverfile);
+    }
+  }
+  function avatarPreview() {
+    const avatar = document.querySelector('#avatar')
+    const avatarFile = document.querySelector('#avatar_upload').files[0]
+    const reader = new FileReader()
+
+    reader.addEventListener("load", function () {
+      avatar.src = reader.result
+    }, false)
+
+    if (avatarFile) {
+      reader.readAsDataURL(avatarFile);
+    }
+  }
+</script>

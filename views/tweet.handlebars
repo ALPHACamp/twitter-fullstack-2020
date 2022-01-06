@@ -1,0 +1,143 @@
+{{>newTweet}}
+
+<!-- Modal -->
+<div class="modal fade" id="newReplyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <button type="button" class="btn-close m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="d-flex border">
+        <span class="avatar m-2">
+          <img src="{{noImage tweet.avatar}}" alt="" class="rounded-circle userImage">
+        </span>
+        <div class="tweetInformation">
+          <div class="d-flex">
+            <div class="name me-2">
+              <p class="text-secondary mt-3 fw-bolder">{{tweet.User.name}}</p>
+            </div>
+            <p class="text-secondary mt-3 me-1">@{{tweet.User.account}}</p>
+            <p class="mt-3 text-secondary">‧</p>
+            <div class="text-secondary ms-1 mt-3">{{moment tweet.created_at}}</div>
+          </div>
+          <div class="tweetContent">
+            <p>{{tweet.description}}</p>
+          </div>
+          <div class="d-flex">
+            <p>回覆給</p>
+            <p class="color-orange">@{{tweet.User.account}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="createReply">
+        <form action="/tweets/{{tweet.id}}/replies" method="POST">
+          <div class="d-flex">
+            <a href="" class="avatar m-2">
+              <img src="{{noImage user.image}}" alt="" class="rounded-circle userImage">
+            </a>
+            <textarea class="addTweet" id="comment" name="comment" placeholder="推你的回覆" maxlength="140"
+              required></textarea>
+            <input type="hidden" name="TweetId" value="{{tweet.id}}" />
+            <input type="hidden" name="UserId" value="{{user.id}}" />
+          </div>
+          <div class="d-flex justify-content-end">
+            <div class="round m-3">
+              <button type="submit" class="orange btn text-white round">回覆</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row grid">
+
+  {{>leftSidebar}}
+
+  <div class="mainSection">
+    {{>message}}
+    <div class="title border d-flex">
+      <a href="/tweets" class="arrow me-3 d-flex align-items-center btn">
+        <i class="fas fa-arrow-left fs-4"></i>
+      </a>
+      <h5 class="fw-bolder m-3">推文</h5>
+    </div>
+    <div class="tweet border">
+      <div class="d-flex">
+        <a href="/users/{{tweet.User.id}}/tweets" class="avatar m-2">
+          <img src="{{noImage tweet.User.avatar}}" alt="" class="rounded-circle userImage">
+        </a>
+        <div class="name ">
+          <a href="/users/{{tweet.User.id}}/tweets"
+            class="text-secondary m-0 mt-1 fw-bolder btn">{{tweet.User.name}}</a>
+          <p class="text-secondary m-0">@{{tweet.User.account}}</p>
+        </div>
+      </div>
+      <div class="tweetContent m-3">
+        <p>{{tweet.description}}</p>
+      </div>
+      <div class="time m-3">
+        <div>{{momentFormat tweet.created_at}}</div>
+      </div>
+    </div>
+    <div class="border">
+      <div class="d-flex m-3">
+        <div class="replies me-5 d-flex">
+          <div class="repliesAmount fw-bolder me-2">{{tweet.Replies.length}}</div>
+          <div>回覆</div>
+        </div>
+        <div class="likes d-flex">
+          <div class="likesAmount fw-bolder me-2">{{tweet.Likes.length}}</div>
+          <div>喜歡次數</div>
+        </div>
+      </div>
+    </div>
+    <div class="border">
+      <div class="d-flex">
+        <button type="button" class="btn commentIcon me-5" data-bs-toggle="modal" data-bs-target="#newReplyModal">
+          <i class="far fa-comment fs-3 text-secondary"></i>
+        </button>
+
+        {{#if isLiked}}
+        <form action="/tweets/{{tweet.id}}/unlike" method="POST">
+          <button type="submit" class="btn">
+            <i class="fas fa-heart fs-3 "></i>
+          </button>
+        </form>
+        {{else}}
+        <form action="/tweets/{{tweet.id}}/like" method="POST">
+          <button type="submit" class="btn">
+            <i class="far fa-heart fs-3"></i>
+          </button>
+        </form>
+        {{/if}}
+      </div>
+    </div>
+    <div class="commentsList">
+      {{#each tweet.Replies}}
+      <div class="comment d-flex border">
+        <a href="/users/{{this.User.id}}/tweets" class="avatar m-3">
+          <img src="{{noImage this.User.avatar}}" alt="" class="rounded-circle userImage">
+        </a>
+        <div>
+          <div class="d-flex">
+            <a href="/users/{{this.User.id}}/tweets" class="name m-1 fw-bolder btn">{{this.User.name}}</a>
+            <div class="account m-1 mt-2">@{{this.User.account}}</div>
+            <div class="timefrom  m-1 mt-2">{{moment this.createdAt}}</div>
+          </div>
+          <div>
+            <div class="d-flex">
+              <div class="m-1">回覆</div>
+              <div class="m-1 color-orange">@{{../tweet.User.account}}</div>
+            </div>
+            <div>
+              <p>{{this.comment}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{>popular}}
+</div>
