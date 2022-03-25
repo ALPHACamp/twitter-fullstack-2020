@@ -17,13 +17,19 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      account: {
+        type: Sequelize.STRING
+      },
       avatar: {
         type: Sequelize.STRING
       },
       introduction: {
         type: Sequelize.TEXT
       },
-      role: {
+      cover: {
+        type: Sequelize.STRING
+      },
+      isAdmin: {
         type: Sequelize.STRING
       },
       createdAt: {
