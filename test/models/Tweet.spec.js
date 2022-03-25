@@ -24,7 +24,7 @@ describe('# Tweet Model', () => {
   // 檢查 tweet 是否有 ___ 屬性(由於希望學員可以彈性命名 model 欄位，因此這邊留空)
   context('properties', () => {
     ;[
-      'userId', 'comment'
+      'userId', 'content'
     ].forEach(checkPropertyExists(like))
   })
 

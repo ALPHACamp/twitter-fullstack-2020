@@ -2,13 +2,14 @@
 module.exports = (sequelize, DataTypes) => {
   const Tweet = sequelize.define('Tweet', {
     userId: DataTypes.INTEGER,
-    comment: DataTypes.TEXT
+    content: DataTypes.TEXT
   }, {
     modelName: 'Tweet',
     tableName: 'Tweets'
   })
   Tweet.associate = function (models) {
     Tweet.belongsTo(models.User, { foreignKey: 'userId' })
+    Tweet.hasMany(models.Reply, { foreignKey: 'tweetId' })
   }
   return Tweet
 }
