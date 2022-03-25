@@ -11,7 +11,7 @@ const port = 3000
 
 app.engine('.hbs', engine({ extname: '.hbs' }))
 app.set('view engine', '.hbs')
-app.set('views', '/views')
+app.set('views', './views')
 
 app.use(routes)
 
