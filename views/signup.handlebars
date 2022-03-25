@@ -1,0 +1,29 @@
+<div class="sign-container">
+  <div class="sign-message">
+    {{> message}}
+  </div>
+  <img class="sign-icon" src="/images/icon.svg" alt="">
+  <div class="sign-title">建立你的帳號</div>
+  <form action="/signup" method="POST">
+    <div class="sign-form">
+      <label for="account">帳號 <span class="at-span">@</span></label>
+      <input type="text" id="account" name="account" value="{{account}}" style="padding-left: 35px;">
+      <label for="account">名稱</label>
+      <input type="text" id="name" name="name" value="{{name}}">
+      <label for="account">Email</label>
+      <input type="email" id="email" name="email" value="{{email}}">
+      <label for="account">密碼</label>
+      <input type="password" id="password" name="password" placeholder="請輸入 8-12 位數英數字">
+      <label for=" account">再次確認密碼</label>
+      <input type="password" id="passwordCheck" name="passwordCheck">
+      <button class="sign-button" type="submit">註冊</button>
+    </div>
+  </form>
+  <div class="signup-link">
+    <a href="/signin">取消</a>
+  </div>
+</div>
+
+<script>
+
+</script>

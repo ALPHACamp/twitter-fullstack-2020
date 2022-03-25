@@ -1,0 +1,175 @@
+<div class="container-fluid">
+  {{> modal}}
+  {{> left-content}}
+
+  <div class="main-content">
+    <div class="main-title">
+      <a href="/" class="ml-1 mr-5"><i class="fac fa-cus-back"></i></a>
+      推文
+    </div>
+
+    <div class="tweet-content w-100">
+      <div class="tweet-content-top d-flex justify-content-start align-items-center">
+        <a href="/users/{{tweet.User.id}}/tweets">
+          <div class="avatar"
+            style="background: url({{tweet.User.avatar}}),#C4C4C4;background-position:center;background-size:cover;">
+          </div>
+        </a>
+        <div class="column ml-1">
+          <span class="mt-1 mb-1 user-name"><a href="/users/{{tweet.User.id}}/tweets">{{tweet.User.name}}</a></span>
+          <span href="/users/{{tweet.User.id}}" class="user-account">{{tweet.User.account}}</span>
+        </div>
+      </div>
+      <div class="tweet-content-main">
+        <p>{{tweet.description}}</p>
+      </div>
+      <div class="tweet-content-footer">
+        <div class="tweet-time">{{changeTime tweet.createdAt}}
+        </div>
+        <div class="tweet-data">
+          <span class="number">{{tweet.Replies.length}}</span> 回覆 <span
+            class="number ml-2">{{tweet.likedUsers.length}}</span>
+          喜歡次數
+        </div>
+        <div class="tweet-like-reply-link d-flex justify-content-start align-items-center">
+          <a href="#" role="button" class="reply-link ml-1 reply-modal-open">
+            <i class="fac fa-cus-reply"></i>
+          </a>
+          <div class="hidden-info" style="display:none;">
+            <p class="tweet-user-name">{{tweet.User.name}}</p>
+            <p class="tweet-user-account">{{tweet.User.account}}</p>
+            <p class="tweet-description">{{tweet.description}}</p>
+            <p class="tweet-id">{{tweet.id}}</p>
+            <p class="tweet-createdAt">{{moment tweet.createdAt}}</p>
+            <p class="tweet-user-avatar">{{tweet.User.avatar}}</p>
+          </div>
+          {{#if isLiked}}
+          <form method="POST" action="/tweets/{{tweet.id}}/like?_method=DELETE">
+            <button type="submit" class="button like-link">
+              <i class="fac fa-cus-solid-like"></i>
+              {{else}}
+              <form method="POST" action="/tweets/{{tweet.id}}/like">
+                <button type="submit" class="button like-link">
+                  <i class="fac fa-cus-like"></i>
+                  {{/if}}
+                </button>
+              </form>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="reply-list w-100">
+      {{#each tweet.Replies}}
+      <div class="reply-item d-flex">
+        <div class="left">
+          <a href="/users/{{this.User.id}}">
+            <div class="avatar"
+              style="background: url({{this.User.avatar}}),#C4C4C4;background-position:center;background-size:cover;">
+            </div>
+          </a>
+        </div>
+        <div class="right">
+          <div>
+            <a href="/users/{{this.User.id}}" class="user-name mt-1">
+              {{this.User.name}}
+            </a>
+            <sapn class="user-account">{{this.User.account}}．{{moment this.createdAt}}</sapn>
+          </div>
+          <div>
+            <span class="replyto-span-m">回覆</span> <span class="user-account-color-span"><a
+                href="/users/{{../tweet.User.id}}" style="color: #ff6600;">{{../tweet.User.account}}</a></span>
+          </div>
+          <p class="reply-comment">{{this.comment}}
+          </p>
+          <!-- 先註解掉，因為reply目前沒有like和回覆 -->
+          <!--<div class="reply-like-post d-flex justify-content-start align-items-center">
+            <a href="/reply"
+              class="reply-link reply-to-comment ml-2 mr-4 d-flex justify-content-start align-items-center">
+              <i class="fac fa-cus-reply"></i>
+              <span>34</span>
+            </a>
+            <form method="POST">
+              <button type="submit" class="button like-link d-flex justify-content-start align-items-center">
+                <i class="fac fa-cus-like"></i>
+                <span>12</span>
+              </button>
+            </form>
+          </div> -->
+        </div>
+      </div>
+      {{/each}}
+      <!-- 迴圈結束 -->
+
+      <!-- 推文作者回覆 先註解掉，如果要做回覆再用 -->
+      <!--<div class="reply-item">
+        <div class="reply-author-command d-flex justify-content-start align-items-start">
+          <div class="left mr-2">
+            <a href="/users/:id" class="mt-1 mb-1 user-name">
+              <img src="" alt="" class="avtar">
+            </a>
+          </div>
+          <div class="right">
+            <div>
+              <a href="" class="user-name">Pineapple<span class="user-account">@pineapple．3小時</span></a>
+            </div>
+            <div>
+              <span class="replyto-span-m">回覆</span> <span class="user-account-color-span">@apple</span>
+            </div>
+            <div>
+              <p class="pt-1">ue euconsequat ac felis donec et odio pellentes
+                vitaecongue euconsequat ac felis donec et odio pellpellentes
+                vitaecongue euconsequat ac felis donec et ec et odio pellngue euconsequa
+              </p>
+              <div class="reply-like-post d-flex justify-content-start align-items-center">
+                <a href="/reply" class="reply-link reply-to-comment ml-2 mr-4  d-flex align-items-center">
+                  <i class="fac fa-cus-reply"></i>
+                  <span>34</span>
+                </a>
+                <form method="POST">
+                  <button type="submit" class="button like-link d-flex align-items-center">
+                    <i class="fac fa-cus-like"></i>
+                    <span>12</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="author-relply d-fex justify-content-start align-items-start" style="display: flex;">
+          <div class="extention-line"></div>
+          <div class="left mr-2">
+            <a href="/users/:id" class="mt-1 mb-1 user-name">
+              <img src="" alt="" class="avtar">
+            </a>
+          </div>
+          <div class="right">
+            <div>
+              <a href="" class="user-name">Apple<span class="user-account">@apple．3小時</span></a>
+            </div>
+            <div>
+              <p class="pt-1">ue euconsequat ac felis donec et odio pellentes
+                vitaecongus donec et ec et odio pellngue euconsequa
+              </p>
+              <div class="reply-like-post d-flex justify-content-start align-items-center">
+                <a href="/reply" class="reply-link reply-to-comment ml-2 mr-4 d-flex align-items-center">
+                  <i class="fac fa-cus-reply"></i>
+                  <span>34</span>
+                </a>
+                <form method="POST">
+                  <button type="submit" class="button like-link d-flex align-items-center">
+                  <i class="fac fa-cus-like"></i>
+                    <span>12</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      </div> -->
+    </div>
+  </div>
+
+  {{> right-content}}
+</div>

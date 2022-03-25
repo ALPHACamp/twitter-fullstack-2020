@@ -1,0 +1,58 @@
+<div class="container-fluid">
+  <div class="left-content">
+    <div class="left-column">
+      <img class="logo" src="/images/icon.svg" alt="">
+      <div class="nav">
+        <div class="nav-item">
+          <a href="/admin/tweets">
+            <img class="home-icon" src="/images/icon-home.svg" alt="">推文清單
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="/admin/users">
+            <img class="pr-1" src="/images/icon-user.svg" alt="">
+            使用者列表
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="logout">
+      <a href="/logout">
+        <img class="logout-icon" src="/images/icon-logout.svg" alt="">登出
+      </a>
+    </div>
+  </div>
+
+  <div class="admin-main-content">
+    <div class="admin-main-title">
+      推文清單
+    </div>
+
+    <div class="admin-tweets-list">
+      <!-- 推文清單迴圈 -->
+      {{#each tweets}}
+      <div class="admin-tweets-list-item">
+        <div class="admin-tweets-list-item-left">
+          <img src="" alt="" class="avtar">
+        </div>
+        <div class="admin-tweets-list-item-right">
+          <div class="top">
+            <div>
+              <a class="user-name">{{this.User.name}}</a>
+              <span class="user-account">@{{this.User.account}}．{{changeTime this.createdAt}}</span>
+            </div>
+            <form action="/tweets/{{this.id}}?_method=DELETE" method="POST" onsubmit="return confirm('確定要刪除推文嗎？')">
+              <button type="submit" class="button delete-tweet-item">✕</button>
+            </form>
+          </div>
+          <p>
+            {{this.description}}
+          </p>
+        </div>
+      </div>
+      {{/each}}
+      <!-- 迴圈結束 -->
+    </div>
+
+  </div>
+</div>
