@@ -24,6 +24,7 @@ describe('# Reply Model', () => {
   // 檢查 reply 是否有 __ 屬性(由於希望學員可以彈性命名 model 欄位，因此這邊留空)
   context('properties', () => {
     ;[
+      'userId', 'tweetId', 'comment'
     ].forEach(checkPropertyExists(like))
   })
 

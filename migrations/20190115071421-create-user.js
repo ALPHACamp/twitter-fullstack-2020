@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      account: {
+        type: Sequelize.STRING
+      },
       email: {
         type: Sequelize.STRING
       },
@@ -23,7 +26,10 @@ module.exports = {
       introduction: {
         type: Sequelize.TEXT
       },
-      role: {
+      cover: {
+        type: Sequelize.STRING
+      },
+      isAdmin: {
         type: Sequelize.STRING
       },
       createdAt: {
