@@ -3,6 +3,7 @@ const { engine } = require('express-handlebars')
 const flash = require('connect-flash')
 const session = require('express-session')
 
+const passport = require('./config/passport')
 const helpers = require('./_helpers')
 const routes = require('./routes')
 
@@ -20,6 +21,8 @@ app.set('views', './views')
 app.use(express.urlencoded({ extended: true }))
 
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(flash())
 
 app.use((req, res, next) => {

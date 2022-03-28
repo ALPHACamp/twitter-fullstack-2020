@@ -1,0 +1,21 @@
+<div class="d-flex justify-content-center">
+  <div style="width: 40%">
+    <div class="mb-4 text-center">
+      <h1 class="h3 font-weight-normal mb-3">登入 Simple Twitter</h1>
+    </div>
+    <form class="form-signin" action="/signin" method="POST" style="width: 100%;">
+      <div class="form-row mb-3">
+        <label class="form-label" for="account">帳號</label>
+        <input type="text" id="account" name="account" class="form-control" required autofocus>
+      </div>
+      <div class="form-row mb-3">
+        <label class="form-label" for="password">密碼</label>
+        <input type="password" id="password" name="password" class="form-control" required>
+      </div>
+      <button class="btn btn-primary mt-3 btn-block w-100 rounded-pill" type="submit">登入</button>
+    </form>
+    <div class="mb-4 text-center">
+      <p><a href="/signup">註冊 Simple Twitter</a></p>
+    </div>
+  </div>
+</div>
