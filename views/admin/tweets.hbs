@@ -5,8 +5,8 @@
    <div class="list-group-item d-flex justify-content-between align-items-center my-1">
      <div class="d-flex">
       <div class="me-3">
-        {{#if this.avatar}}
-          <img src="{{this.avatar}}" width="50px" height="50px" style="transition: opacity 0.5s; opacity:0;"
+        {{#if this.User.avatar}}
+          <img src="{{this.User.avatar}}" width="50px" height="50px" style="transition: opacity 0.5s; opacity:0;"
           onload="this.style.opacity=1;" class="rounded-circle" />
         {{else}}
           <img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" />
@@ -15,7 +15,7 @@
       <div class="d-flex flex-column">
         <div class="mb-1">
           <span class="fw-bold me-1">{{this.User.name}}</span>
-          <span class="text-secondary fw-bold">@{{this.User.account}}．{{relativeTimeFromNow this.User.createdAt}}</span>
+          <span class="text-secondary fw-bold">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
         </div>
         <div><p>{{this.content}}</p></div>
       </div>

@@ -27,6 +27,15 @@ const adminController = {
     req.flash('success_messages', 'Logout successfully')
     req.logout()
     return res.redirect('/admin/signin')
+  },
+  deleteTweet: (req, res, next) => {
+    return Tweet.findByPk(req.params.id)
+      .then(tweet => {
+        if (!tweet) throw new Error("Tweet doesn't exist!")
+        return tweet.destroy()
+      })
+      .then(() => res.redirect('/admin/tweets'))
+      .catch(err => next(err))
   }
 }
 module.exports = adminController
