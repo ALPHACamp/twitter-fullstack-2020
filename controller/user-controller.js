@@ -27,7 +27,7 @@ const userController = {
       }))
       .then(() => {
         req.flash('success_messages', '成功註冊帳號！')
-        res.redirect('/signin')
+        return res.redirect('/signin')
       })
       .catch(err => next(err))
   },
@@ -35,7 +35,7 @@ const userController = {
     res.render('signin', { url: req.url })
   },
   signIn: (req, res) => {
-    if (helpers.getUser(req).isAdmin) {
+    if (helpers.getUser(req).role === 'admin') {
       req.flash('error_messages', '請從後台登入')
       req.logout()
       return res.redirect('/admin/signin')

@@ -2,7 +2,7 @@ const { ensureAuthenticated, getUser } = require('../_helpers')
 
 const authenticated = (req, res, next) => {
   if (ensureAuthenticated(req)) {
-    if (getUser(req).isAdmin) {
+    if (getUser(req).role === 'admin') {
       return res.redirect('/admin')
     }
     return next()
@@ -12,7 +12,7 @@ const authenticated = (req, res, next) => {
 
 const authenticatedAdmin = (req, res, next) => {
   if (ensureAuthenticated(req)) {
-    if (getUser(req).isAdmin) {
+    if (getUser(req).role === 'admin') {
       return next()
     }
     return res.redirect('/')

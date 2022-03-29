@@ -8,7 +8,7 @@ const adminController = {
     return res.render('admin/signin', { url: req.url })
   },
   signIn: (req, res) => {
-    if (!helpers.getUser(req).isAdmin) {
+    if (helpers.getUser(req).role === null) {
       req.flash('error_messages', '請從前台登入')
       req.logout()
       return res.redirect('/signin')
