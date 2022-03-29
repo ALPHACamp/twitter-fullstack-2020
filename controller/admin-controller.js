@@ -1,8 +1,15 @@
+const { Tweet, User } = require('../models')
 const helpers = require('../_helpers')
 
 const adminController = {
-  getTweets: (req, res) => {
-    return res.render('admin/tweets')
+  getTweets: (req, res, next) => {
+    Tweet.findAll({
+      raw: true,
+      nest: true,
+      include: [User]
+    })
+      .then(tweets => res.render('admin/tweets', { tweets }))
+      .catch(err => next(err))
   },
   signInPage: (req, res) => {
     return res.render('admin/signin', { url: req.url })
