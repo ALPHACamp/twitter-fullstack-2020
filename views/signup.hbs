@@ -1,0 +1,34 @@
+<div class="d-flex justify-content-center">
+  <div style="width: 40%">
+    <div class="mb-4 text-center">
+      <img src="/images/logo.png" class="my-4" style="width: 50px">
+      <h1 class="h3 font-weight-normal mb-3">建立你的帳號</h1>
+    </div>
+    <form class="form-signup" action="/signup" method="POST" style="width: 100%;">
+      <div class="form-row mb-3">
+        <label class="form-label" for="account">帳號</label>
+        <input type="text" id="account" name="account" class="form-control" required autofocus>
+      </div>
+      <div class="form-row mb-3">
+        <label class="form-label" for="name">名稱</label>
+        <input type="text" id="name" name="name" class="form-control" required>
+      </div>
+      <div class="form-row mb-3">
+        <label class="form-label" for="email">Email</label>
+        <input type="text" id="email" name="email" class="form-control" required>
+      </div>
+      <div class="form-row mb-3">
+        <label class="form-label" for="password">密碼</label>
+        <input type="password" id="password" name="password" class="form-control" required>
+      </div>
+      <div class="form-row mb-3">
+        <label class="form-label" for="passwordCheck">密碼確認</label>
+        <input type="password" id="passwordCheck" name="passwordCheck" class="form-control" required>
+      </div>
+      <button class="btn btn-primary mt-3 btn-block w-100 rounded-pill" type="submit">註冊</button>
+    </form>
+    <div class="mb-4 text-center">
+      <p><a href="/signin">取消</a></p>
+    </div>
+  </div>
+</div>

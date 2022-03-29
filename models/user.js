@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     avatar: DataTypes.STRING,
     introduction: DataTypes.TEXT,
     cover: DataTypes.STRING,
-    isAdmin: DataTypes.BOOLEAN
+    role: DataTypes.STRING
   }, {
     modelName: 'User',
     tableName: 'Users'
