@@ -8,7 +8,15 @@ const adminController = {
       nest: true,
       include: [User]
     })
-      .then(tweets => res.render('admin/tweets', { tweets }))
+      .then(tweets => {
+        console.log(typeof tweets)
+        console.log(tweets)
+        const data = tweets.map(t => ({
+          ...t,
+          content: t.content.substring(0, 50)
+        }))
+        return res.render('admin/tweets', { tweets: data })
+      })
       .catch(err => next(err))
   },
   signInPage: (req, res) => {
