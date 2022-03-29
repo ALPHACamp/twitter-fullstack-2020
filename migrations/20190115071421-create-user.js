@@ -29,7 +29,7 @@ module.exports = {
       cover: {
         type: Sequelize.STRING
       },
-      isAdmin: {
+      role: {
         type: Sequelize.STRING
       },
       createdAt: {
