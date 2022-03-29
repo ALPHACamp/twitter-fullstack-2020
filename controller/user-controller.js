@@ -7,7 +7,7 @@ const userController = {
     return res.render('signup', { url: req.url })
   },
   signUp: (req, res, next) => {
-    if (req.body.password !== req.body.passwordCheck) throw new Error('Passwords do not match!')
+    if (req.body.passwordCheck && req.body.password !== req.body.passwordCheck) throw new Error('Passwords do not match!')
 
     return Promise.all([
       User.findOne({ where: { account: req.body.account } }),
