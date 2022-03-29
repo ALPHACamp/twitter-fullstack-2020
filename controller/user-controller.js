@@ -3,7 +3,7 @@ const { User } = require('../models')
 
 const userController = {
   signUpPage: (req, res) => {
-    return res.render('signup')
+    return res.render('signup', { url: req.url })
   },
   signUp: (req, res, next) => {
     if (req.body.password !== req.body.passwordCheck) throw new Error('Passwords do not match!')
@@ -31,7 +31,7 @@ const userController = {
       .catch(err => next(err))
   },
   signInPage: (req, res) => {
-    res.render('signin')
+    res.render('signin', { url: req.url })
   },
   signIn: (req, res) => {
     req.flash('success_messages', 'Login successfully')

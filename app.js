@@ -4,6 +4,7 @@ const flash = require('connect-flash')
 const session = require('express-session')
 
 const passport = require('./config/passport')
+const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const helpers = require('./helpers/auth-helpers')
 const routes = require('./routes')
 
@@ -14,7 +15,7 @@ const SESSION_SECRET = 'secret'
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.engine('.hbs', engine({ extname: '.hbs' }))
+app.engine('.hbs', engine({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', '.hbs')
 app.set('views', './views')
 
