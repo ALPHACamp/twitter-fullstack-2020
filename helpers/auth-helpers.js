@@ -3,7 +3,7 @@ const ensureAuthenticated = req => {
 }
 
 const getUser = req => {
-  return req.user
+  return req.user || null
 }
 
 module.exports = {

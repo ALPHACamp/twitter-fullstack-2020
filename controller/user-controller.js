@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
 const { User } = require('../models')
+const helpers = require('../helpers/auth-helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -34,6 +35,11 @@ const userController = {
     res.render('signin', { url: req.url })
   },
   signIn: (req, res) => {
+    if (helpers.getUser(req).isAdmin) {
+      req.flash('error_messages', '請從後台登入')
+      req.logout()
+      return res.redirect('/admin/signin')
+    }
     req.flash('success_messages', 'Login successfully')
     res.redirect('/tweets')
   },

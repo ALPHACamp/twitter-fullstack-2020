@@ -2,9 +2,9 @@
   <div style="width: 40%">
     <div class="mb-4 text-center">
       <img src="/images/logo.png" class="my-4" style="width: 50px">
-      <h1 class="h3 font-weight-normal mb-3">登入 Simple Twitter</h1>
+      <h1 class="h3 font-weight-normal mb-3">後台登入</h1>
     </div>
-    <form class="form-signin" action="/signin" method="POST" style="width: 100%;">
+    <form class="form-signin" action="/admin/signin" method="POST" style="width: 100%;">
       <div class="form-row mb-3">
         <label class="form-label" for="account">帳號</label>
         <input type="text" id="account" name="account" class="form-control" required autofocus>
@@ -16,9 +16,7 @@
       <button class="btn btn-primary mt-3 btn-block w-100 rounded-pill" type="submit">登入</button>
     </form>
     <div class="mb-4 text-center d-flex justify-content-end">
-      <p><a href="/signup">註冊 Simple Twitter</a></p>
-      <p>．</p>
-      <p><a href="/admin/signin">後台登入</a></p>
+      <p><a href="/signin">前台登入</a></p>
     </div>
   </div>
 </div>
