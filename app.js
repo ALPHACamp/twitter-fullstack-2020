@@ -5,7 +5,7 @@ const session = require('express-session')
 
 const passport = require('./config/passport')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
-const helpers = require('./helpers/auth-helpers')
+const helpers = require('./_helpers')
 const routes = require('./routes')
 
 const app = express()

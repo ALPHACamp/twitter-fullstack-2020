@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const { User } = require('../models')
-const helpers = require('../helpers/auth-helpers')
+const helpers = require('../_helpers')
 
 const userController = {
   signUpPage: (req, res) => {
