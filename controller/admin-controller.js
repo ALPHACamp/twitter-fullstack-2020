@@ -1,11 +1,24 @@
+const { Tweet, User } = require('../models')
 const helpers = require('../_helpers')
 
 const adminController = {
-  getTweets: (req, res) => {
-    return res.render('admin/tweets')
+  getTweets: (req, res, next) => {
+    Tweet.findAll({
+      raw: true,
+      nest: true,
+      include: [User]
+    })
+      .then(tweets => {
+        const data = tweets.map(t => ({
+          ...t,
+          content: t.content.substring(0, 50)
+        }))
+        return res.render('admin/tweets', { tweets: data, url: req.originalUrl })
+      })
+      .catch(err => next(err))
   },
   signInPage: (req, res) => {
-    return res.render('admin/signin', { url: req.url })
+    return res.render('admin/signin', { url: req.originalUrl })
   },
   signIn: (req, res) => {
     if (helpers.getUser(req).role === null) {
@@ -20,6 +33,15 @@ const adminController = {
     req.flash('success_messages', 'Logout successfully')
     req.logout()
     return res.redirect('/admin/signin')
+  },
+  deleteTweet: (req, res, next) => {
+    return Tweet.findByPk(req.params.id)
+      .then(tweet => {
+        if (!tweet) throw new Error("Tweet doesn't exist!")
+        return tweet.destroy()
+      })
+      .then(() => res.redirect('/admin/tweets'))
+      .catch(err => next(err))
   }
 }
 module.exports = adminController
