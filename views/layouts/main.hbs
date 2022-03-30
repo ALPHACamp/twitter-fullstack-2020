@@ -18,13 +18,22 @@
     </main>
   {{else}}
     {{> header}}
-    <main class="w-50" role="main">
-      <div class="container">
-        {{> messages}}
-        {{{body}}}
-      </div>
-    </main>
-    <div class="w-25"></div>  
+      {{#isAdminPage url}}
+        <main class="w-75" role="main">
+          <div class="container">
+            {{> messages}}
+            {{{body}}}
+          </div>
+        </main>
+      {{else}}
+        <main class="w-50" role="main">
+          <div class="container">
+            {{> messages}}
+            {{{body}}}
+          </div>
+        </main>
+        <div class="w-25"></div>
+      {{/isAdminPage}} 
   {{/isSigninSignupPage}}
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
     integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
