@@ -1,35 +1,43 @@
-<h4 class="my-3 fw-bold">使用者列表</h4>
-<div class="d-flex">
-  {{#each users}}
-    <div class="card me-3 border-0" style="width: 15rem;">
-      <div class="card-img-top d-flex flex-column align-items-center">
-        {{!-- Cover --}}
-        {{#if this.cover}}
+<div class="d-flex h-100">
+  {{> admin-nav-column route='users'}}
+
+  <div class="w-75">
+    <h4 class="my-3 fw-bold">使用者列表</h4>
+    <div class="d-flex">
+      {{#each users}}
+      <div class="card me-3 border-0" style="width: 15rem;">
+        <div class="card-img-top d-flex flex-column align-items-center">
+          {{!-- Cover --}}
+          {{#if this.cover}}
           <img src="{{this.cover}}" width="240px" height="140px" style="transition: opacity 0.5s; opacity:0;"
             onload="this.style.opacity=1;" class="mt-5 rounded-top rounded-3" />
-        {{else}}
+          {{else}}
           <img src="https://via.placeholder.com/240" width="240px" height="140px" class="mt-5  rounded-top rounded-3" />
-        {{/if}}
-        {{!-- avatar --}}
-        {{#if this.avatar}}
+          {{/if}}
+          {{!-- avatar --}}
+          {{#if this.avatar}}
           <img src="{{this.avatar}}" width="10px" height="10px" style="transition: opacity 0.5s; opacity:0;
-          margin-top: -70px;" onload="this.style.opacity=1;" class="border border-4 border-light rounded-circle" />
-        {{else}}
-          <img src="https://via.placeholder.com/100" width="100px" height="100px" style="margin-top: -70px;" class="border border-4  border-light rounded-circle" />
-        {{/if}}
+                  margin-top: -70px;" onload="this.style.opacity=1;"
+            class="border border-4 border-light rounded-circle" />
+          {{else}}
+          <img src="https://via.placeholder.com/100" width="100px" height="100px" style="margin-top: -70px;"
+            class="border border-4  border-light rounded-circle" />
+          {{/if}}
+        </div>
+        <div class="card-body d-flex flex-column align-items-center">
+          <p class="card-text fw-bold">{{this.name}}</p>
+          <p class="card-text text-secondary" style="margin-top: -15px;">@{{this.account}}</p>
+          <p>
+            <i class="fa-solid fa-comment text-secondary me-2"></i>{{arrayLength this.Tweets}}
+            <i class="fa-solid fa-heart text-secondary ms-3 me-2"></i>
+          </p>
+          <p>
+            <span class="fw-bold">{{arrayLength this.Followings}} 個</span><span>跟隨中</span>
+            <span class="fw-bold ms-1">{{arrayLength this.Followers}} 位</span><span>跟隨者</span>
+          </p>
+        </div>
       </div>
-      <div class="card-body d-flex flex-column align-items-center">
-        <p class="card-text fw-bold">{{this.name}}</p>
-        <p class="card-text text-secondary" style="margin-top: -15px;">@{{this.account}}</p>
-        <p>
-          <i class="fa-solid fa-comment text-secondary me-2"></i>{{arrayLength this.Tweets}} 
-          <i class="fa-solid fa-heart text-secondary ms-3 me-2"></i>
-        </p>
-        <p>
-          <span class="fw-bold">{{arrayLength this.Followings}} 個</span><span>跟隨中</span>
-          <span class="fw-bold ms-1">{{arrayLength this.Followers}} 位</span><span>跟隨者</span>
-        </p>
-      </div>
+      {{/each}}
     </div>
-  {{/each}}
+  </div>
 </div>

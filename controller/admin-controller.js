@@ -47,8 +47,7 @@ const adminController = {
     return User.findAll({
       nest: true,
       include: [
-        Tweet,
-        Like,
+        { model: Tweet, include: Like },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
