@@ -1,8 +1,7 @@
-<h3 class="my-2 fw-bold">推文清單</h3>
-<br />
-<div class="list-group list-group-flush">
+<h4 class="my-3 fw-bold">推文清單</h4>
+<div class="list-group">
   {{#each tweets}}
-   <div class="list-group-item d-flex justify-content-between align-items-center my-1">
+   <div class="list-group-item d-flex justify-content-between align-items-center border-0">
      <div class="d-flex">
       <div class="me-3">
         {{#if this.User.avatar}}
@@ -22,7 +21,9 @@
      </div>
      <div>
        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
-        <button type="submit" class="btn btn-light"><i class="fa-solid fa-xmark text-secondary"></i></button>
+        <button type="submit" class="btn btn-light" onclick="return confirm(`確定要刪除 {{ this.User.name }} 的Tweet嗎？`)">
+          <i class="fa-solid fa-xmark text-secondary"></i>
+        </button>
        </form>
      </div>
    </div>

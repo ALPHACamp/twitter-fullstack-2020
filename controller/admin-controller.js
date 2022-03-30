@@ -9,18 +9,16 @@ const adminController = {
       include: [User]
     })
       .then(tweets => {
-        console.log(typeof tweets)
-        console.log(tweets)
         const data = tweets.map(t => ({
           ...t,
           content: t.content.substring(0, 50)
         }))
-        return res.render('admin/tweets', { tweets: data })
+        return res.render('admin/tweets', { tweets: data, url: req.originalUrl })
       })
       .catch(err => next(err))
   },
   signInPage: (req, res) => {
-    return res.render('admin/signin', { url: req.url })
+    return res.render('admin/signin', { url: req.originalUrl })
   },
   signIn: (req, res) => {
     if (helpers.getUser(req).role === null) {
