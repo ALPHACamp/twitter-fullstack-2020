@@ -1,9 +1,9 @@
-const { Tweet, User } = require('../models')
+const { Tweet, User, Like } = require('../models')
 const helpers = require('../_helpers')
 
 const adminController = {
   getTweets: (req, res, next) => {
-    Tweet.findAll({
+    return Tweet.findAll({
       raw: true,
       nest: true,
       include: [User]
@@ -41,6 +41,23 @@ const adminController = {
         return tweet.destroy()
       })
       .then(() => res.redirect('/admin/tweets'))
+      .catch(err => next(err))
+  },
+  getUsers: (req, res, next) => {
+    return User.findAll({
+      nest: true,
+      include: [
+        { model: Tweet, include: Like },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    })
+      .then(users => {
+        const data = users.map(user => ({
+          ...user.toJSON()
+        }))
+        return res.render('admin/users', { users: data, url: req.originalUrl })
+      })
       .catch(err => next(err))
   }
 }

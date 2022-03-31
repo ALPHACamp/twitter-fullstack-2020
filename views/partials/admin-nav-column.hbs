@@ -1,0 +1,29 @@
+<div class="w-25 d-flex justify-content-center">
+  <div class="w-50 d-flex flex-column justify-content-between fs-5">
+    {{!-- Vertical Nav Column --}}
+    <nav class="navbar bg-light mb-5">
+      <ul class="navbar-nav w-100">
+        <a href="/admin/tweets" class="my-4">
+          <img src="/images/logo.png" style="width: 50px">
+        </a>
+        <li class="nav-item my-2">
+          <a class="nav-link fw-bold {{#ifCond route 'tweets'}}active{{/ifCond}}" href="/admin/tweets">
+            <i class="fa-solid fa-house me-2"></i>
+            推文清單
+          </a>
+        </li>
+        <li class="nav-item my-2">
+          <a class="nav-link fw-bold {{#ifCond route 'users'}}active{{/ifCond}}" href="/admin/users">
+            <i class="fa-solid fa-user me-2"></i>
+            <span>使用者列表</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    {{!-- Logout Button --}}
+    <a href="/logout" class="mb-5" style="text-decoration:none;">
+      <i class="fa-solid fa-right-from-bracket me-2"></i>
+      <span>登出</span>
+    </a>
+  </div>
+</div>
