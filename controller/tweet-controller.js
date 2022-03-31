@@ -17,6 +17,20 @@ const tweetController = {
       .then(([tweets, users]) => {
         return res.render('tweets', { tweets, users, user: helpers.getUser(req) })
       })
+  },
+  postTweet: (req, res, next) => {
+    const { content } = req.body
+    if (!content) throw new Error('Please enter tweet content!')
+
+    return Tweet.create({
+      userId: helpers.getUser(req).id,
+      content
+    })
+      .then(() => {
+        req.flash('success_messages', 'Tweet posted')
+        res.redirect('/tweets')
+      })
+      .catch(err => next(err))
   }
 }
 module.exports = tweetController

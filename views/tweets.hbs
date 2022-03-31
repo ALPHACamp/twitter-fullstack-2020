@@ -23,7 +23,7 @@
     {{!-- Tweets List --}}
     <div class="list-group">
       {{#each tweets}}
-      <div class="list-group-item tweet-display d-flex justify-content-between align-items-center border-0">
+      <div class="list-group-item tweet-display border-0">
         <div class="d-flex">
           <div class="me-3">
             {{#if this.User.avatar}}
@@ -46,13 +46,6 @@
               <i class="fa-solid fa-heart text-secondary ms-4"></i>
             </div>
           </div>
-        </div>
-        <div>
-          <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
-            <button type="submit" class="btn btn-light" onclick="return confirm(`確定要刪除 {{ this.User.name }} 的Tweet嗎？`)">
-              <i class="fa-solid fa-xmark text-secondary"></i>
-            </button>
-          </form>
         </div>
       </div>
       {{/each}}
