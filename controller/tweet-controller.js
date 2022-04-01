@@ -1,4 +1,4 @@
-const { Tweet, User } = require('../models')
+const { Tweet, User, Like } = require('../models')
 const helpers = require('../_helpers')
 
 const tweetController = {
@@ -30,6 +30,45 @@ const tweetController = {
         req.flash('success_messages', 'Tweet posted')
         res.redirect('/tweets')
       })
+      .catch(err => next(err))
+  },
+  addLike: (req, res, next) => {
+    const { tweetId } = req.params
+    const userId = helpers.getUser(req).id
+    return Promise.all([
+      Tweet.findByPk(tweetId),
+      Like.findOne({
+        where: {
+          userId,
+          tweetId
+        }
+      })
+    ])
+      .then(([tweet, like]) => {
+        if (!tweet) throw new Error("Tweet doesn't exist!")
+        if (like) throw new Error('You have already liked this tweet!')
+
+        return Like.create({
+          userId,
+          tweetId
+        })
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+  removeLike: (req, res, next) => {
+    return Like.findOne({
+      where: {
+        tweetId: req.params.tweetId,
+        userId: helpers.getUser(req).id
+      }
+    })
+      .then(like => {
+        if (!like) throw new Error("You haven't liked this tweet")
+
+        return like.destroy()
+      })
+      .then(() => res.redirect('back'))
       .catch(err => next(err))
   }
 }

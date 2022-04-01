@@ -12,7 +12,7 @@
           {{else}}
             <div><img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" /></div>
           {{/if}}
-          <input type="text" id="content" name="content" class="form-control tweet-input border-0" 
+          <input type="text" id="content" name="content" class="form-control tweet-input w-100 border-0" 
           placeholder="有什麼新鮮事？" required>
         </div>
         <div class="form-row d-flex justify-content-end mb-2">
@@ -20,6 +20,7 @@
         </div>
       </div>
     </form>
+
     {{!-- Tweets List --}}
     <div class="list-group">
       {{#each tweets}}
@@ -41,9 +42,14 @@
             <div>
               <p style="word-wrap: break-word;">{{this.content}}</p>
             </div>
-            <div class="tweet-toolbar">
+            <div class="tweet-toolbar d-flex">
               <i class="fa-solid fa-comment text-secondary me-4"></i>
-              <i class="fa-solid fa-heart text-secondary ms-4"></i>
+              <form action="/like/{{this.id}}?_method=DELETE" method="POST" >
+                <button type="submit" class="border-0" ><i class="fa-solid fa-heart ms-4 text-danger"></i></button>
+              </form>
+              <form action="/like/{{this.id}}" method="POST">
+                <button type="submit" class="border-0"><i class="fa-solid fa-heart text-secondary ms-4"></i></button>
+              </form>
             </div>
           </div>
         </div>

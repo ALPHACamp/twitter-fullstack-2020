@@ -20,6 +20,9 @@ router.get('/logout', userController.logout)
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
 
+router.post('/like/:tweetId', authenticated, tweetController.addLike)
+router.delete('/like/:tweetId', authenticated, tweetController.removeLike)
+
 router.use('/', (req, res) => res.redirect('/tweets'))
 
 router.use('/', generalErrorHandler)
