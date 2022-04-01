@@ -20,7 +20,11 @@ const tweetController = {
           ...t,
           isLiked: likedTweetId.includes(t.id)
         }))
-        return res.render('tweets', { tweets: data, users, user: helpers.getUser(req) })
+        const userData = users.map(u => ({
+          ...u,
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
+        }))
+        return res.render('tweets', { tweets: data, users: userData, user: helpers.getUser(req) })
       })
   },
   postTweet: (req, res, next) => {

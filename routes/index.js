@@ -23,6 +23,9 @@ router.post('/tweets', authenticated, tweetController.postTweet)
 router.post('/like/:tweetId', authenticated, tweetController.addLike)
 router.delete('/like/:tweetId', authenticated, tweetController.removeLike)
 
+router.post('/following/:userId', authenticated, userController.addFollowing)
+router.delete('/following/:userId', authenticated, userController.removeFollowing)
+
 router.use('/', (req, res) => res.redirect('/tweets'))
 
 router.use('/', generalErrorHandler)

@@ -17,7 +17,15 @@
           </div>
         </div>
         <div>
-          <button class="btn btn-outline-primary rounded-pill">跟隨</button>
+          {{#if this.isFollowed}}
+            <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-primary rounded-pill">正在跟隨</button>
+            </form>
+          {{else}}
+            <form action="/following/{{this.id}}" method="POST">
+              <button type="submit" class="btn btn-outline-primary rounded-pill">跟隨</button>
+            </form>
+          {{/if}}
         </div>
       </div>
     {{/each}}
