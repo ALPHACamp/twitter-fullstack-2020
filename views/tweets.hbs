@@ -44,12 +44,15 @@
             </div>
             <div class="tweet-toolbar d-flex">
               <i class="fa-solid fa-comment text-secondary me-4"></i>
-              <form action="/like/{{this.id}}?_method=DELETE" method="POST" >
-                <button type="submit" class="border-0" ><i class="fa-solid fa-heart ms-4 text-danger"></i></button>
-              </form>
-              <form action="/like/{{this.id}}" method="POST">
-                <button type="submit" class="border-0"><i class="fa-solid fa-heart text-secondary ms-4"></i></button>
-              </form>
+              {{#if isLiked}}
+                <form action="/like/{{this.id}}?_method=DELETE" method="POST" >
+                  <button type="submit" class="border-0" ><i class="fa-solid fa-heart ms-4 text-danger"></i></button>
+                </form>
+              {{else}}
+                <form action="/like/{{this.id}}" method="POST">
+                  <button type="submit" class="border-0"><i class="fa-solid fa-heart text-secondary ms-4"></i></button>
+                </form>
+              {{/if}}
             </div>
           </div>
         </div>
