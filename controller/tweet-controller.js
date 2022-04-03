@@ -91,8 +91,8 @@ const tweetController = {
         nest: true,
         include: [
           User,
-          Reply,
-          Like
+          Like,
+          { model: Reply, include: User }
         ]
       }),
       User.findAll({
