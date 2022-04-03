@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { User } = require('../models')
+const { User, Followship } = require('../models')
 const helpers = require('../_helpers')
 
 const userController = {
@@ -47,6 +47,44 @@ const userController = {
     req.flash('success_messages', 'Logout successfully')
     req.logout()
     res.redirect('/signin')
+  },
+  addFollowing: (req, res, next) => {
+    const { userId } = req.params
+    const followerId = helpers.getUser(req).id
+    return Promise.all([
+      User.findByPk(userId),
+      Followship.findOne({
+        where: {
+          followerId,
+          followingId: userId
+        }
+      })
+    ])
+      .then(([user, followship]) => {
+        if (!user) throw new Error("User doesn't exist!")
+        if (followship) throw new Error('You have already followed this user!')
+
+        return Followship.create({
+          followerId,
+          followingId: userId
+        })
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+  removeFollowing: (req, res, next) => {
+    return Followship.findOne({
+      where: {
+        followerId: helpers.getUser(req).id,
+        followingId: req.params.userId
+      }
+    })
+      .then(followship => {
+        if (!followship) throw new Error("You haven't follow this user!")
+        return followship.destroy()
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
   }
 }
 module.exports = userController

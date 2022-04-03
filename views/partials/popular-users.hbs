@@ -1,0 +1,33 @@
+<div class="w-25 ps-1">
+  <h4 class="my-3 fw-bold mb-4">Popular</h4>
+  <div class="list-group">
+    {{#each users}}
+      <div class="list-group-item d-flex justify-content-between border-0" style="width: 90%;">
+        <div class="d-flex">
+          <div class="me-2">
+            {{#if this.avatar}}
+              <div><img src="{{this.avatar}}" width="50px" height="50px" class="rounded-circle"></div>
+            {{else}}
+              <div><img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" /></div>
+            {{/if}}
+          </div>
+          <div class="d-flex flex-column">
+            <div class="fw-bold">{{this.name}}</div>
+            <div class="text-secondary fw-bold">@{{this.account}}</div>
+          </div>
+        </div>
+        <div>
+          {{#if this.isFollowed}}
+            <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-primary rounded-pill">正在跟隨</button>
+            </form>
+          {{else}}
+            <form action="/following/{{this.id}}" method="POST">
+              <button type="submit" class="btn btn-outline-primary rounded-pill">跟隨</button>
+            </form>
+          {{/if}}
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>

@@ -1,3 +1,15 @@
 a.nav-link.active {
   color: orangered;
 }
+
+.tweet-input {
+  inline-size: 500px;
+  word-break: break-all;
+}
+
+.tweet-display {
+  padding: 0px;
+  width: 100%;
+  word-break: break-all;
+  margin-bottom: 25px;
+}

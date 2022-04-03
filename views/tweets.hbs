@@ -1,8 +1,69 @@
 <div class="d-flex h-100">
   {{> nav-column route='tweets'}}
   
-  <div class="w-50">
-    <div>Tweets</div>
+  <div class="w-50 pe-4">
+    <h4 class="my-3 fw-bold mb-4">首頁</h4>
+    {{!-- Top Tweet Form --}}
+    <form action="/tweets" method="POST" class="w-100 my-3 border-bottom border-3">
+      <div>
+        <div class="form-row d-flex">
+          {{#if user.avatar}}
+            <div><img src="{{user.avatar}}" width="50px" height="50px" class="rounded-circle"></div>
+          {{else}}
+            <div><img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" /></div>
+          {{/if}}
+          <input type="text" id="content" name="content" class="form-control tweet-input w-100 border-0" 
+          placeholder="有什麼新鮮事？" required>
+        </div>
+        <div class="form-row d-flex justify-content-end mb-2">
+          <button class="btn btn-primary mt-3 btn-block rounded-pill" type="submit">推文</button>
+        </div>
+      </div>
+    </form>
+
+    {{!-- Tweets List --}}
+    <div class="list-group">
+      {{#each tweets}}
+      <div class="list-group-item tweet-display border-0">
+        <div class="d-flex">
+          <div class="me-3">
+            {{#if this.User.avatar}}
+            <img src="{{this.User.avatar}}" width="50px" height="50px" style="transition: opacity 0.5s; opacity:0;"
+              onload="this.style.opacity=1;" class="rounded-circle" />
+            {{else}}
+            <img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" />
+            {{/if}}
+          </div>
+          <div class="d-flex flex-column">
+            <div class="mb-1">
+              <span class="fw-bold me-1">{{this.User.name}}</span>
+              <span class="text-secondary">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
+            </div>
+            <div>
+              <p style="word-wrap: break-word;">{{this.content}}</p>
+            </div>
+            <div class="tweet-toolbar d-flex align-items-center">
+              <i class="fa-solid fa-comment text-secondary me-3"></i>
+              <span>{{this.replyCount}}</span>
+              {{#if isLiked}}
+                <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="margin: 0px;" class="me-2 ms-5">
+                  <button type="submit" class="border-0 ms-4"><i class="fa-solid fa-heart text-danger"></i></button>
+                </form>
+                <span>{{this.likeCount}}</span>
+              {{else}}
+                <form action="/like/{{this.id}}" method="POST" style="margin: 0px;" class="me-2 ms-5">
+                  <button type="submit" class="border-0 ms-4"><i class="fa-solid fa-heart text-secondary"></i></button>
+                </form>
+                <span>{{this.likeCount}}</span>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
   </div>
+
+  {{> popular-users}}
 </div>
   
