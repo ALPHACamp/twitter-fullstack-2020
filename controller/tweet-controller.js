@@ -84,6 +84,34 @@ const tweetController = {
       })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
+  },
+  getTweet: (req, res, next) => {
+    return Promise.all([
+      Tweet.findByPk(req.params.id, {
+        nest: true,
+        include: [
+          User,
+          Reply,
+          Like
+        ]
+      }),
+      User.findAll({
+        raw: true
+      })
+    ])
+      .then(([tweet, users]) => {
+        if (!tweet) throw new Error("Tweet doesn't exist!")
+        const replyCount = tweet.Replies.length
+        const likeCount = tweet.Likes.length
+        const likedTweetId = helpers.getUser(req) && helpers.getUser(req).Likes.map(l => l.tweetId)
+        const isLiked = likedTweetId.includes(tweet.id)
+        const userData = users.map(u => ({
+          ...u,
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
+        }))
+        res.render('tweet', { tweet: tweet.toJSON(), users: userData, replyCount, likeCount, isLiked })
+      })
+      .catch(err => next(err))
   }
 }
 module.exports = tweetController

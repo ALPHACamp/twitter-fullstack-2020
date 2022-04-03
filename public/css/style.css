@@ -13,3 +13,9 @@ a.nav-link.active {
   word-break: break-all;
   margin-bottom: 25px;
 }
+
+.tweet-item, .tweet-item:hover {
+  text-decoration: none;
+  color: black;
+  cursor: default;
+}
