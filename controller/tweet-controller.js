@@ -109,7 +109,7 @@ const tweetController = {
           ...u,
           isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
         }))
-        res.render('tweet', { tweet: tweet.toJSON(), users: userData, replyCount, likeCount, isLiked })
+        res.render('tweet', { tweet: tweet.toJSON(), users: userData, replyCount, likeCount, isLiked, user: helpers.getUser(req) })
       })
       .catch(err => next(err))
   }

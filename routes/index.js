@@ -5,6 +5,7 @@ const passport = require('../config/passport')
 const admin = require('./modules/admin')
 const tweetController = require('../controller/tweet-controller')
 const userController = require('../controller/user-controller')
+const commentController = require('../controller/comment-controller')
 
 const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
@@ -18,6 +19,7 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/logout', userController.logout)
 
 router.get('/tweets/:id', authenticated, tweetController.getTweet)
+router.post('/tweets/:id', authenticated, commentController.postComment)
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
 
