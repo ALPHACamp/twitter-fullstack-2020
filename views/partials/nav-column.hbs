@@ -13,7 +13,7 @@
           </a>
         </li>
         <li class="nav-item my-2">
-          <a class="nav-link fw-bold" href="#">
+          <a class="nav-link fw-bold {{#ifCond route 'user'}}active{{/ifCond}}" href="/users/{{user.id}}/tweets">
             <i class="fa-solid fa-user me-2"></i>
             <span>個人資料</span>
           </a>

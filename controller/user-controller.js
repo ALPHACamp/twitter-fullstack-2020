@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { User, Followship } = require('../models')
+const { User, Tweet, Followship, Reply, Like } = require('../models')
 const helpers = require('../_helpers')
 
 const userController = {
@@ -47,6 +47,27 @@ const userController = {
     req.flash('success_messages', 'Logout successfully')
     req.logout()
     res.redirect('/signin')
+  },
+  getTweets: (req, res, next) => {
+    const { userId } = req.params
+    return Promise.all([
+      User.findByPk(userId, {
+        include: [
+          { model: Tweet, include: [Reply, Like] },
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' }
+        ]
+      }),
+      User.findAll({
+        raw: true
+      })
+    ])
+      .then(([user, usersData]) => {
+        if (!user) throw new Error("User doesn't exist!")
+        console.log(user.Tweets.Replies)
+        return res.render('userTweets', { user: user.toJSON(), users: usersData })
+      })
+      .catch(err => next(err))
   },
   addFollowing: (req, res, next) => {
     const { userId } = req.params
