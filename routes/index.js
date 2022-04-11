@@ -24,6 +24,7 @@ router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
 
 router.get('/users/:userId/tweets', authenticated, userController.getTweets)
+router.get('/users/:userId/replies', authenticated, userController.getReplies)
 
 router.post('/like/:tweetId', authenticated, tweetController.addLike)
 router.delete('/like/:tweetId', authenticated, tweetController.removeLike)

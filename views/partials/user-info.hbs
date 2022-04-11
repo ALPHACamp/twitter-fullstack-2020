@@ -1,0 +1,50 @@
+<div>
+  <div class="d-flex align-items-center my-3 mb-1">
+    <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left fw-bold" style="color: black;"></i></a>
+    <div class="d-flex flex-column ms-5">
+      <h4 class="fw-bold" style="margin-bottom: 0px;">{{viewUser.name}}</h4>
+      <span class="text-secondary fw-bold" style="margin-top: -5px">{{arrayLength viewUser.Tweets}} 推文</span>
+    </div>
+  </div>
+</div>
+{{!-- User Information --}}
+<div>
+  <div>
+    {{!-- Cover --}}
+    {{#if viewUser.cover}}
+      <img src="{{viewUser.cover}}" width="100%" height="180px" style="transition: opacity 0.5s; opacity:0;"
+        onload="this.style.opacity=1;" class="mt-1 rounded-top rounded-3" />
+    {{else}}
+      <img src="https://via.placeholder.com/480" width="100%" height="180px" class="mt-2 rounded-top rounded-3" />
+    {{/if}}
+  </div>
+  {{!-- Avatar & Edit button --}}
+  <div class="d-flex justify-content-between mt-3">
+    <div>
+      {{#if viewUser.avatar}}
+        <img src="{{viewUser.avatar}}" width="10px" height="10px" style="transition: opacity 0.5s; opacity:0;
+                margin-top: -90px;" onload="this.style.opacity=1;" class="border border-4 border-light rounded-circle" />
+      {{else}}
+        <img src="https://via.placeholder.com/140" width="140px" height="140px" style="margin-top: -90px;"
+          class="border border-4 border-light rounded-circle ms-3" />
+      {{/if}}
+    </div>
+    <div>
+      <a href="#" class="btn btn-outline-primary rounded-pill">編輯個人資料</a>
+    </div>
+  </div>
+  {{!-- Name, Account, Introduction & Followship --}}
+  <div>
+    <div class="d-flex flex-column">
+      <h4 class="fw-bold" style="margin-bottom: 0px;">{{viewUser.name}}</h4>
+      <span class="text-secondary" style="margin-top: -2px">@{{viewUser.account}}</span>
+    </div>
+    <div>
+      <p class="mt-2">{{viewUser.introduction}}</p>
+    </div>
+    <div>
+      <span class="fw-bold">{{arrayLength viewUser.Followings}} 個</span><span class="text-secondary">跟隨中</span>
+      <span class="fw-bold ms-1">{{arrayLength viewUser.Followers}} 位</span><span class="text-secondary">跟隨者</span>
+    </div>
+  </div>
+</div>
