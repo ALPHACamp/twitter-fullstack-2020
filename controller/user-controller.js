@@ -64,8 +64,12 @@ const userController = {
     ])
       .then(([user, usersData]) => {
         if (!user) throw new Error("User doesn't exist!")
-        console.log(user.Tweets.Replies)
-        return res.render('userTweets', { user: user.toJSON(), users: usersData })
+        const likedTweetId = helpers.getUser(req) && helpers.getUser(req).Likes.map(l => l.tweetId)
+        const data = user.Tweets.map(t => ({
+          ...t.toJSON(),
+          isLiked: likedTweetId.includes(t.id)
+        }))
+        return res.render('userTweets', { user: user.toJSON(), tweets: data, users: usersData })
       })
       .catch(err => next(err))
   },
