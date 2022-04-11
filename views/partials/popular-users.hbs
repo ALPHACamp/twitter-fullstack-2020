@@ -6,9 +6,13 @@
         <div class="d-flex">
           <div class="me-2">
             {{#if this.avatar}}
-              <div><img src="{{this.avatar}}" width="50px" height="50px" class="rounded-circle"></div>
+              <div>
+                <a href="/users/{{this.id}}/tweets"><img src="{{this.avatar}}" width="50px" height="50px" class="rounded-circle"></a>
+              </div>
             {{else}}
-              <div><img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" /></div>
+              <div>
+                <a href="/users/{{this.id}}/tweets"><img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle"></a>
+              </div>
             {{/if}}
           </div>
           <div class="d-flex flex-column">

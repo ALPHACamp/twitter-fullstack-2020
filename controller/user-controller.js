@@ -69,7 +69,7 @@ const userController = {
           ...t.toJSON(),
           isLiked: likedTweetId.includes(t.id)
         }))
-        return res.render('userTweets', { user: user.toJSON(), tweets: data, users: usersData })
+        return res.render('user/tweets', { viewUser: user.toJSON(), user: helpers.getUser(req), tweets: data, users: usersData })
       })
       .catch(err => next(err))
   },
