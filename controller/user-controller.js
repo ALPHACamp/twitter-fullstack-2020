@@ -95,12 +95,45 @@ const userController = {
       })
     ])
       .then(([user, users]) => {
+        if (!user) throw new Error("User doesn't exist!")
         const userData = users.map(u => ({
           ...u,
           isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
         }))
         return res.render('user/replies', { viewUser: user.toJSON(), user: helpers.getUser(req), users: userData })
       })
+      .catch(err => next(err))
+  },
+  getLikes: (req, res, next) => {
+    const { userId } = req.params
+    return Promise.all([
+      User.findByPk(userId, {
+        nest: true,
+        include: [
+          Tweet,
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' },
+          { model: Like, include: [{ model: Tweet, include: [User, Reply, Like] }] }
+        ]
+      }),
+      User.findAll({
+        raw: true
+      })
+    ])
+      .then(([user, users]) => {
+        if (!user) throw new Error("User doesn't exist!")
+        const likedTweetId = helpers.getUser(req) && helpers.getUser(req).Likes.map(l => l.tweetId)
+        const data = user.Likes.map(l => ({
+          ...l.toJSON(),
+          isLiked: likedTweetId.includes(l.Tweet.id)
+        }))
+        const userData = users.map(u => ({
+          ...u,
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
+        }))
+        return res.render('user/likes', { viewUser: user.toJSON(), likes: data, user: helpers.getUser(req), users: userData })
+      })
+      .catch(err => next(err))
   },
   addFollowing: (req, res, next) => {
     const { userId } = req.params

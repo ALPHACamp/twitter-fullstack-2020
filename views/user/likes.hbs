@@ -1,0 +1,119 @@
+<div class="d-flex h-100">
+  {{> nav-column route='user'}}
+
+  <div class="w-50">
+    {{> user-info}}
+    {{> user-tabs}}
+
+    {{!-- User Page Likes --}}
+    <div class="mt-3">
+      {{#each likes}}
+        <div class="list-group-item tweet-display border-0">
+          <div class="d-flex">
+            <div class="me-3">
+              {{#if this.Tweet.User.avatar}}
+                <img src="{{this.Tweet.User.avatar}}" width="50px" height="50px" style="transition: opacity 0.5s; opacity:0;"
+                  onload="this.style.opacity=1;" class="rounded-circle" />
+              {{else}}
+                <img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" />
+              {{/if}}
+            </div>
+            <div class="d-flex flex-column w-100">
+              <div class="mb-1">
+                <span class="fw-bold me-1">{{this.Tweet.User.name}}</span>
+                <span class="text-secondary">@{{this.Tweet.User.account}}．{{relativeTimeFromNow this.Tweet.createdAt}}</span>
+              </div>
+              <div>
+                <a href="/tweets/{{this.Tweet.id}}" class="tweet-item">
+                  <p style="word-wrap: break-word;">{{this.Tweet.content}}</p>
+                </a>
+              </div>
+              <div class="tweet-toolbar d-flex align-items-center">
+                <button type="button" class="btn me-3 p-0 border-0" data-bs-toggle="modal"
+                  data-bs-target="#commentModal{{this.Tweet.id}}">
+                  <i class="fa-solid fa-comment text-secondary"></i>
+                </button>
+                <span>{{arrayLength this.Tweet.Replies}}</span>
+                {{#if isLiked}}
+                  <form action="/like/{{this.Tweet.id}}?_method=DELETE" method="POST" style="margin: 0px;" class="me-2 ms-5">
+                    <button type="submit" class="border-0 ms-4"><i class="fa-solid fa-heart text-danger"></i></button>
+                  </form>
+                  <span>{{arrayLength this.Tweet.Likes}}</span>
+                {{else}}
+                  <form action="/like/{{this.Tweet.id}}" method="POST" style="margin: 0px;" class="me-2 ms-5">
+                    <button type="submit" class="border-0 ms-4"><i class="fa-solid fa-heart text-secondary"></i></button>
+                  </form>
+                  <span>{{arrayLength this.Tweet.Likes}}</span>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {{!-- Modal --}}
+        <div class="modal fade" id="commentModal{{this.Tweet.id}}" tabindex="-1" aria-labelledby="commentModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                  style="margin-left: 0px;"></button>
+                <div class="d-flex mt-4">
+                  <div class="me-3">
+                    {{#if ../viewUser.avatar}}
+                      <img src="{{this.Tweet.User.avatar}}" width="50px" height="50px"
+                        style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;"
+                        class="rounded-circle" />
+                    {{else}}
+                      <img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" />
+                    {{/if}}
+                  </div>
+                  <div class="d-flex flex-column">
+                    <div class="mb-1">
+                      <span class="fw-bold me-1">{{this.Tweet.User.name}}</span>
+                      <span class="text-secondary">@{{this.Tweet.User.account}}．{{relativeTimeFromNow this.Tweet.createdAt}}</span>
+                    </div>
+                    <div>
+                      <p style="word-wrap: break-word;">{{this.Tweet.content}}</p>
+                    </div>
+                    <div>
+                      <span>回覆給 </span>
+                      <span>
+                        <a href="/users/{{this.Tweet.User.account}}" style="text-decoration: none;">@{{this.Tweet.User.account}}</a>
+                        </span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <form action="/tweets/{{this.Tweet.id}}" method="POST" class="w-100 my-3">
+                    <div>
+                      <div class="form-row d-flex">
+                        {{#if ../viewUser.avatar}}
+                          <div>
+                            <img src="{{../viewUser.avatar}}" width="50px" height="50px" class="rounded-circle">
+                          </div>
+                        {{else}}
+                          <div>
+                            <img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" />
+                          </div>
+                        {{/if}}
+                        <input type="hidden" name="tweetId" value="{{this.Tweet.id}}" />
+                        <input type="text" id="comment" name="comment" class="form-control tweet-input w-100 border-0"
+                          placeholder="推你的回覆" required>
+                      </div>
+                      <div class="form-row d-flex justify-content-end mb-2">
+                        <button class="btn btn-primary mt-3 btn-block rounded-pill" type="submit">回覆</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+
+  {{> popular-users}}
+</div>
