@@ -19,7 +19,7 @@
           </a>
         </li>
         <li class="nav-item my-2">
-          <a class="nav-link fw-bold" href="#">
+          <a class="nav-link fw-bold {{#ifCond route 'setting'}}active{{/ifCond}}" href="/api/users/{{user.id}}">
             <i class="fa-solid fa-gear me-2"></i>
             <span>設定</span>
           </a>

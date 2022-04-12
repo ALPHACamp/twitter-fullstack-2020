@@ -228,6 +228,46 @@ const userController = {
         return res.render('user/followers', { viewUser: user.toJSON(), followers, user: helpers.getUser(req), users: userData })
       })
       .catch(err => next(err))
+  },
+  getUser: (req, res, next) => {
+    const { userId } = req.params
+    if (Number(userId) !== helpers.getUser(req).id) throw new Error("You can't edit other's profile!")
+    return User.findByPk(userId)
+      .then(user => {
+        if (!user) throw new Error("User doesn't exist!")
+
+        res.render('user/setting', { user: user.toJSON() })
+      })
+      .catch(err => next(err))
+  },
+  postUser: (req, res, next) => {
+    if (req.body.passwordCheck && req.body.password !== req.body.passwordCheck) throw new Error('Passwords do not match!')
+
+    return Promise.all([
+      User.findByPk(req.params.userId),
+      User.findOne({ where: { account: req.body.account } }),
+      User.findOne({ where: { email: req.body.email } })
+    ])
+      .then(([user, registeredAccount, registeredEmail]) => {
+        if (registeredAccount && registeredAccount.toJSON().id !== user.toJSON().id) throw new Error('Account already been used!')
+        if (registeredEmail && registeredEmail.toJSON().id !== user.toJSON().id) throw new Error('Email already been used!')
+
+        return Promise.all([
+          User.findByPk(req.params.userId),
+          bcrypt.hash(req.body.password, 10)
+        ])
+      })
+      .then(([user, hash]) => user.update({
+        account: req.body.account,
+        name: req.body.name,
+        email: req.body.email,
+        password: hash
+      }))
+      .then(() => {
+        req.flash('success_messages', '成功更新帳號資訊！')
+        return res.redirect('/tweets')
+      })
+      .catch(err => next(err))
   }
 }
 module.exports = userController
