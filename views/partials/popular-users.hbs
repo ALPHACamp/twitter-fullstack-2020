@@ -1,4 +1,4 @@
-<div class="w-25 ps-1">
+<div class="w-25 ps-3">
   <h4 class="my-3 fw-bold mb-4">Popular</h4>
   <div class="list-group">
     {{#each users}}
@@ -6,9 +6,13 @@
         <div class="d-flex">
           <div class="me-2">
             {{#if this.avatar}}
-              <div><img src="{{this.avatar}}" width="50px" height="50px" class="rounded-circle"></div>
+              <div>
+                <a href="/users/{{this.id}}/tweets"><img src="{{this.avatar}}" width="50px" height="50px" class="rounded-circle"></a>
+              </div>
             {{else}}
-              <div><img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" /></div>
+              <div>
+                <a href="/users/{{this.id}}/tweets"><img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle"></a>
+              </div>
             {{/if}}
           </div>
           <div class="d-flex flex-column">

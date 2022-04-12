@@ -28,10 +28,14 @@
         <div class="d-flex">
           <div class="me-3">
             {{#if this.User.avatar}}
-              <img src="{{this.User.avatar}}" width="50px" height="50px" style="transition: opacity 0.5s; opacity:0;"
-                onload="this.style.opacity=1;" class="rounded-circle" />
+              <a href="/users/{{this.User.id}}/tweets">
+                <img src="{{this.User.avatar}}" width="50px" height="50px" style="transition: opacity 0.5s; opacity:0;"
+                  onload="this.style.opacity=1;" class="rounded-circle" />
+              </a>
             {{else}}
-              <img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" />
+              <a href="/users/{{this.User.id}}/tweets">
+                <img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" />
+              </a>
             {{/if}}
           </div>
           <div class="d-flex flex-column w-100">
