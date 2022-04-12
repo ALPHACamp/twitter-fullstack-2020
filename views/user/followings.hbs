@@ -1,0 +1,52 @@
+<div class="d-flex h-100">
+  {{> nav-column route='user'}}
+
+  <div class="w-50">
+    {{> user-headbar}}
+    {{> followship-tabs route='followings'}}
+
+    {{#each followings}}
+      <div class="list-group-item mt-3 p-0 border-0" style="width: 95%;">
+        <div class="d-flex">
+          <div class="me-2">
+            {{#if this.avatar}}
+              <div>
+                <a href="/users/{{this.id}}/tweets"><img src="{{this.avatar}}" width="50px" height="50px"
+                    class="rounded-circle"></a>
+              </div>
+            {{else}}
+              <div>
+                <a href="/users/{{this.id}}/tweets"><img src="https://via.placeholder.com/50" width="50px" height="50px"
+                    class="rounded-circle"></a>
+              </div>
+            {{/if}}
+          </div>
+          <div class="d-flex flex-column w-100">
+            <div class="d-flex justify-content-between">
+              <div>
+                <div class="fw-bold">{{this.name}}</div>
+                <div class="text-secondary fw-bold">@{{this.account}}</div>
+              </div>
+              <div>
+                {{#if this.isFollowed}}
+                  <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-primary rounded-pill">正在跟隨</button>
+                  </form>
+                {{else}}
+                  <form action="/following/{{this.id}}" method="POST">
+                    <button type="submit" class="btn btn-outline-primary rounded-pill">跟隨</button>
+                  </form>
+                {{/if}}
+              </div>
+            </div>
+            <div>
+              <p>{{this.introduction}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+
+  {{> popular-users}}
+</div>

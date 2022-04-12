@@ -172,6 +172,62 @@ const userController = {
       })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
+  },
+  getFollowings: (req, res, next) => {
+    const { userId } = req.params
+    return Promise.all([
+      User.findByPk(userId, {
+        nest: true,
+        include: [
+          Tweet,
+          { model: User, as: 'Followings' }
+        ]
+      }),
+      User.findAll({
+        raw: true
+      })
+    ])
+      .then(([user, users]) => {
+        if (!user) throw new Error("User doesn't exist!")
+        const followings = user.toJSON().Followings.map(f => ({
+          ...f,
+          isFollowed: helpers.getUser(req).Followings.some(f2 => f2.id === f.id)
+        }))
+        const userData = users.map(u => ({
+          ...u,
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
+        }))
+        return res.render('user/followings', { viewUser: user.toJSON(), followings, user: helpers.getUser(req), users: userData })
+      })
+      .catch(err => next(err))
+  },
+  getFollowers: (req, res, next) => {
+    const { userId } = req.params
+    return Promise.all([
+      User.findByPk(userId, {
+        nest: true,
+        include: [
+          Tweet,
+          { model: User, as: 'Followers' }
+        ]
+      }),
+      User.findAll({
+        raw: true
+      })
+    ])
+      .then(([user, users]) => {
+        if (!user) throw new Error("User doesn't exist!")
+        const followers = user.toJSON().Followers.map(f => ({
+          ...f,
+          isFollowed: helpers.getUser(req).Followers.some(f2 => f2.id === f.id)
+        }))
+        const userData = users.map(u => ({
+          ...u,
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
+        }))
+        return res.render('user/followers', { viewUser: user.toJSON(), followers, user: helpers.getUser(req), users: userData })
+      })
+      .catch(err => next(err))
   }
 }
 module.exports = userController
