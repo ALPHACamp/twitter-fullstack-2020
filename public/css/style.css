@@ -19,3 +19,7 @@ a.nav-link.active {
   color: black;
   cursor: default;
 }
+
+.user-tab.active {
+  border-bottom: solid;
+}
