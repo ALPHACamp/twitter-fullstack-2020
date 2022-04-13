@@ -9,19 +9,19 @@
         <div class="card-img-top d-flex flex-column align-items-center">
           {{!-- Cover --}}
           {{#if this.cover}}
-          <img src="{{this.cover}}" width="240px" height="140px" style="transition: opacity 0.5s; opacity:0;"
-            onload="this.style.opacity=1;" class="mt-5 rounded-top rounded-3" />
+            <img src="{{this.cover}}" width="240px" height="140px" style="transition: opacity 0.5s; opacity:0;"
+              onload="this.style.opacity=1;" class="mt-5 rounded-top rounded-3" />
           {{else}}
-          <img src="https://via.placeholder.com/240" width="240px" height="140px" class="mt-5  rounded-top rounded-3" />
+            <img src="https://via.placeholder.com/240" width="240px" height="140px" class="mt-5  rounded-top rounded-3" />
           {{/if}}
           {{!-- avatar --}}
           {{#if this.avatar}}
-          <img src="{{this.avatar}}" width="10px" height="10px" style="transition: opacity 0.5s; opacity:0;
-                  margin-top: -70px;" onload="this.style.opacity=1;"
-            class="border border-4 border-light rounded-circle" />
+            <img src="{{this.avatar}}" width="100px" height="100px" style="transition: opacity 0.5s; opacity:0;
+                    margin-top: -70px;" onload="this.style.opacity=1;"
+              class="border border-4 border-light rounded-circle" />
           {{else}}
-          <img src="https://via.placeholder.com/100" width="100px" height="100px" style="margin-top: -70px;"
-            class="border border-4  border-light rounded-circle" />
+            <img src="https://via.placeholder.com/100" width="100px" height="100px" style="margin-top: -70px;"
+              class="border border-4  border-light rounded-circle" />
           {{/if}}
         </div>
         <div class="card-body d-flex flex-column align-items-center">
