@@ -241,12 +241,13 @@ const userController = {
       .catch(err => next(err))
   },
   postUser: (req, res, next) => {
-    if (req.body.passwordCheck && req.body.password !== req.body.passwordCheck) throw new Error('Passwords do not match!')
+    const { account, name, email, password, passwordCheck } = req.body
+    if (passwordCheck && password !== passwordCheck) throw new Error('Passwords do not match!')
 
     return Promise.all([
       User.findByPk(req.params.userId),
-      User.findOne({ where: { account: req.body.account } }),
-      User.findOne({ where: { email: req.body.email } })
+      User.findOne({ where: { account } }),
+      User.findOne({ where: { email } })
     ])
       .then(([user, registeredAccount, registeredEmail]) => {
         if (registeredAccount && registeredAccount.toJSON().id !== user.toJSON().id) throw new Error('Account already been used!')
@@ -254,15 +255,32 @@ const userController = {
 
         return Promise.all([
           User.findByPk(req.params.userId),
-          bcrypt.hash(req.body.password, 10)
+          bcrypt.hash(password, 10)
         ])
       })
       .then(([user, hash]) => user.update({
-        account: req.body.account,
-        name: req.body.name,
-        email: req.body.email,
+        account,
+        name,
+        email,
         password: hash
       }))
+      .then(() => {
+        req.flash('success_messages', '成功更新帳號資訊！')
+        return res.redirect('/tweets')
+      })
+      .catch(err => next(err))
+  },
+  postProfile: (req, res, next) => {
+    const { name, introduction } = req.body
+    const { userId } = req.params
+
+    return User.findByPk(userId)
+      .then(user => {
+        return user.update({
+          name,
+          introduction
+        })
+      })
       .then(() => {
         req.flash('success_messages', '成功更新帳號資訊！')
         return res.redirect('/tweets')
