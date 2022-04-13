@@ -28,6 +28,10 @@ router.get('/users/:userId/replies', authenticated, userController.getReplies)
 router.get('/users/:userId/likes', authenticated, userController.getLikes)
 router.get('/users/:userId/followings', authenticated, userController.getFollowings)
 router.get('/users/:userId/followers', authenticated, userController.getFollowers)
+router.post('/users/:userId/profile', authenticated, userController.postProfile)
+
+router.get('/api/users/:userId', authenticated, userController.getUser)
+router.post('/api/users/:userId', authenticated, userController.postUser)
 
 router.post('/like/:tweetId', authenticated, tweetController.addLike)
 router.delete('/like/:tweetId', authenticated, tweetController.removeLike)

@@ -1,0 +1,32 @@
+<div class="d-flex h-100">
+  {{> nav-column route='setting'}}
+
+  <div class="w-50">
+    <h4 class="my-3 fw-bold mb-4">帳戶設定</h4>
+    <form class="form-setting" action="/api/users/{{user.id}}" method="POST" style="width: 100%;">
+      <div class="form-row mb-3">
+        <label class="form-label" for="account">帳號</label>
+        <input type="text" id="account" name="account" class="form-control" value="{{user.account}}" required autofocus>
+      </div>
+      <div class="form-row mb-3">
+        <label class="form-label" for="name">名稱</label>
+        <input type="text" id="name" name="name" class="form-control" value="{{user.name}}" required>
+      </div>
+      <div class="form-row mb-3">
+        <label class="form-label" for="email">Email</label>
+        <input type="text" id="email" name="email" class="form-control" value="{{user.email}}" required>
+      </div>
+      <div class="form-row mb-3">
+        <label class="form-label" for="password">密碼</label>
+        <input type="password" id="password" name="password" class="form-control" required>
+      </div>
+      <div class="form-row mb-3">
+        <label class="form-label" for="passwordCheck">密碼確認</label>
+        <input type="password" id="passwordCheck" name="passwordCheck" class="form-control" required>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-primary mt-3 btn-block rounded-pill" type="submit" style="width: 100px;">儲存</button>
+      </div>
+    </form>
+  </div>
+</div>
