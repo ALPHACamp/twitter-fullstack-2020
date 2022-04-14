@@ -60,7 +60,10 @@ const userController = {
         ]
       }),
       User.findAll({
-        raw: true
+        raw: true,
+        where: {
+          role: null
+        }
       })
     ])
       .then(([user, users]) => {
@@ -91,7 +94,10 @@ const userController = {
         ]
       }),
       User.findAll({
-        raw: true
+        raw: true,
+        where: {
+          role: null
+        }
       })
     ])
       .then(([user, users]) => {
@@ -117,7 +123,10 @@ const userController = {
         ]
       }),
       User.findAll({
-        raw: true
+        raw: true,
+        where: {
+          role: null
+        }
       })
     ])
       .then(([user, users]) => {
@@ -184,7 +193,10 @@ const userController = {
         ]
       }),
       User.findAll({
-        raw: true
+        raw: true,
+        where: {
+          role: null
+        }
       })
     ])
       .then(([user, users]) => {
@@ -212,7 +224,10 @@ const userController = {
         ]
       }),
       User.findAll({
-        raw: true
+        raw: true,
+        where: {
+          role: null
+        }
       })
     ])
       .then(([user, users]) => {

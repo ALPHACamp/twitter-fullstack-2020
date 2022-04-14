@@ -14,7 +14,10 @@ const tweetController = {
         order: [['createdAt', 'DESC']]
       }),
       User.findAll({
-        raw: true
+        raw: true,
+        where: {
+          role: null
+        }
       })
     ])
       .then(([tweets, users]) => {
@@ -96,7 +99,10 @@ const tweetController = {
         ]
       }),
       User.findAll({
-        raw: true
+        raw: true,
+        where: {
+          role: null
+        }
       })
     ])
       .then(([tweet, users]) => {
