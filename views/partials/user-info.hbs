@@ -13,8 +13,8 @@
   <div class="d-flex justify-content-between mt-3">
     <div>
       {{#if viewUser.avatar}}
-        <img src="{{viewUser.avatar}}" width="10px" height="10px" style="transition: opacity 0.5s; opacity:0;
-                margin-top: -90px;" onload="this.style.opacity=1;" class="border border-4 border-light rounded-circle" />
+        <img src="{{viewUser.avatar}}" width="140px" height="140px" style="transition: opacity 0.5s; opacity:0;
+                margin-top: -90px;" onload="this.style.opacity=1;" class="border border-4 border-light rounded-circle ms-3" />
       {{else}}
         <img src="https://via.placeholder.com/140" width="140px" height="140px" style="margin-top: -90px;"
           class="border border-4 border-light rounded-circle ms-3" />
@@ -29,10 +29,10 @@
     </div>
   </div>
   {{!-- Name, Account, Introduction & Followship --}}
-  <div>
+  <div class="mt-3">
     <div class="d-flex flex-column">
       <h4 class="fw-bold" style="margin-bottom: 0px;">{{viewUser.name}}</h4>
-      <span class="text-secondary" style="margin-top: -2px">@{{viewUser.account}}</span>
+      <span class="text-secondary" style="margin-top: -1px">@{{viewUser.account}}</span>
     </div>
     <div>
       <p class="mt-2">{{viewUser.introduction}}</p>
@@ -73,9 +73,8 @@
             </div>
             <div>
               {{#if viewUser.avatar}}
-                <img src="{{viewUser.avatar}}" width="10px" height="10px" style="transition: opacity 0.5s; opacity:0;
-                                margin-top: -70px;" onload="this.style.opacity=1;"
-                  class="border border-4 border-light rounded-circle" />
+                <img src="{{viewUser.avatar}}" width="140px" height="140px" style="transition: opacity 0.5s; opacity:0;
+                  margin-top: -70px;" onload="this.style.opacity=1;" class="border border-4 border-light rounded-circle ms-3" />
               {{else}}
                 <img src="https://via.placeholder.com/140" width="140px" height="140px" style="margin-top: -70px;"
                   class="border border-4 border-light rounded-circle ms-3" />
