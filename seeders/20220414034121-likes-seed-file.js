@@ -12,7 +12,7 @@ module.exports = {
     )
     const likes = []
     users.forEach(user => {
-      for (; likes.length < 10 * (users.indexOf(user) + 1);) {
+      for (; likes.length < 15 * (users.indexOf(user) + 1);) {
         const chosenTweet = tweets[Math.floor(Math.random() * tweets.length)].id
         if (likes.findIndex(l => l.tweetId === chosenTweet && l.userId === user.id) === -1) {
           likes.push({
@@ -26,7 +26,6 @@ module.exports = {
     })
     await queryInterface.bulkInsert('Likes', likes)
   },
-
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete('Likes', null, {})
   }
