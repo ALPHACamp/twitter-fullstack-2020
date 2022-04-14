@@ -18,7 +18,7 @@ module.exports = {
         replies.push({
           userId: users[Math.floor(Math.random() * users.length)].id,
           tweetId: tweet.id,
-          comment: faker.lorem.text(),
+          comment: faker.lorem.text().substring(0, 140),
           createdAt: new Date(),
           updatedAt: new Date()
         })

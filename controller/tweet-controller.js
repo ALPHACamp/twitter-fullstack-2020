@@ -101,15 +101,18 @@ const tweetController = {
     ])
       .then(([tweet, users]) => {
         if (!tweet) throw new Error("Tweet doesn't exist!")
-        const replyCount = tweet.Replies.length
-        const likeCount = tweet.Likes.length
         const likedTweetId = helpers.getUser(req) && helpers.getUser(req).Likes.map(l => l.tweetId)
-        const isLiked = likedTweetId.includes(tweet.id)
+        const data = {
+          ...tweet.toJSON(),
+          replyCount: tweet.Replies.length,
+          likeCount: tweet.Likes.length,
+          isLiked: likedTweetId.includes(tweet.id)
+        }
         const userData = users.map(u => ({
           ...u,
           isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
         }))
-        res.render('tweet', { tweet: tweet.toJSON(), users: userData, replyCount, likeCount, isLiked, user: helpers.getUser(req) })
+        res.render('tweet', { tweet: data, users: userData, user: helpers.getUser(req) })
       })
       .catch(err => next(err))
   }

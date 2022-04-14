@@ -13,7 +13,7 @@ module.exports = {
       for (let i = 0; i < 10; i++) {
         tweets.push({
           userId: user.id,
-          content: faker.lorem.text(),
+          content: faker.lorem.text().substring(0, 140),
           createdAt: new Date(),
           updatedAt: new Date()
         })
