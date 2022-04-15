@@ -9,6 +9,7 @@ const commentController = require('../controller/comment-controller')
 
 const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
+const upload = require('../middleware/multer')
 
 router.use('/admin', admin)
 
@@ -28,7 +29,8 @@ router.get('/users/:userId/replies', authenticated, userController.getReplies)
 router.get('/users/:userId/likes', authenticated, userController.getLikes)
 router.get('/users/:userId/followings', authenticated, userController.getFollowings)
 router.get('/users/:userId/followers', authenticated, userController.getFollowers)
-router.post('/users/:userId/profile', authenticated, userController.postProfile)
+router.post('/users/:userId/profile', authenticated, upload.fields([
+  { name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.postProfile)
 
 router.get('/api/users/:userId', authenticated, userController.getUser)
 router.post('/api/users/:userId', authenticated, userController.postUser)
