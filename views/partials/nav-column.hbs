@@ -24,7 +24,8 @@
             <span>設定</span>
           </a>
         </li>
-        <button class="btn btn-primary my-4 rounded-pill w-100">推文</button>
+        <button type="button" class="btn btn-primary my-4 rounded-pill w-100" data-bs-toggle="modal"
+         data-bs-target="#tweetModal-{{user.id}}">推文</button>
       </ul>
     </nav>
     {{!-- Logout Button --}}
@@ -32,5 +33,35 @@
       <i class="fa-solid fa-right-from-bracket me-2"></i>
       <span>登出</span>
     </a>
+  </div>
+
+  {{!-- Tweet Modal --}}
+  <div class="modal fade" id="tweetModal-{{user.id}}" tabindex="-1" aria-labelledby="tweettModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            style="margin-left: 0px;"></button>
+          <div>
+            <form action="/tweets" method="POST" class="w-100 my-3">
+              <div>
+                <div class="form-row d-flex">
+                  {{#if user.avatar}}
+                    <div><img src="{{user.avatar}}" width="50px" height="50px" class="rounded-circle"></div>
+                  {{else}}
+                    <div><img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" /></div>
+                  {{/if}}
+                  <textarea class="form-control border-0" name="content" id="content" cols="30" rows="6"
+                    placeholder="有什麼新鮮事"></textarea>
+                </div>
+                <div class="form-row d-flex justify-content-end mb-2">
+                  <button class="btn btn-primary mt-3 btn-block rounded-pill" type="submit">推文</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
