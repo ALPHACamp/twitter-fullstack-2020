@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { User, Tweet, Followship, Reply, Like } = require('../models')
 const helpers = require('../_helpers')
+const { localFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -288,12 +289,22 @@ const userController = {
   postProfile: (req, res, next) => {
     const { name, introduction } = req.body
     const { userId } = req.params
+    const { files } = req
+    const avatarFile = files.avatar || null
+    const coverFile = files.cover || null
 
-    return User.findByPk(userId)
-      .then(user => {
+    return Promise.all([
+      User.findByPk(userId),
+      localFileHandler(avatarFile),
+      localFileHandler(coverFile)
+    ])
+      .then(([user, avatarPath, coverPath]) => {
+        if (!user) throw new Error("User doesn't exist!")
         return user.update({
           name,
-          introduction
+          introduction,
+          avatar: avatarPath || user.avatar,
+          cover: coverPath || user.cover
         })
       })
       .then(() => {
