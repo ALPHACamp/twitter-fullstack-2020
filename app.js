@@ -11,8 +11,12 @@ const helpers = require('./_helpers')
 const routes = require('./routes')
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 const SESSION_SECRET = 'secret'
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
