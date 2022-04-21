@@ -4,7 +4,8 @@
   <div class="w-50 pe-4">
     <h4 class="my-3 fw-bold mb-4">首頁</h4>
     {{!-- Top Tweet Form --}}
-    <form action="/tweets" method="POST" class="w-100 my-3 border-bottom border-3">
+    <form action="/tweets" method="POST" class="w-100 my-3 border-bottom border-3" data-bs-toggle="modal"
+     data-bs-target="#tweetModal-{{user.id}}">
       <div>
         <div class="form-row d-flex">
           {{#if user.avatar}}
@@ -98,23 +99,23 @@
                 </div>
               </div>
               <div>
-                <form action="/tweets/{{this.id}}" method="POST" class="w-100 my-3">
+                <form action="/tweets/{{this.id}}" method="POST" class="w-100 my-4">
                   <div>
                     <div class="form-row d-flex">
                       {{#if ../user.avatar}}
                         <div>
                           <img src="{{../user.avatar}}" width="50px" height="50px" class="rounded-circle">
-                          </div>
+                        </div>
                       {{else}}
                         <div>
                           <img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" />
                         </div>
                       {{/if}}
                       <input type="hidden" name="tweetId" value="{{this.id}}" />
-                      <input type="text" id="comment" name="comment" class="form-control tweet-input w-100 border-0"
-                        placeholder="推你的回覆" required>
+                      <textarea class="form-control border-0" name="comment" id="comment{{this.id}}" cols="30" rows="6" placeholder="推你的回覆" maxlength="140" required></textarea>
                     </div>
-                    <div class="form-row d-flex justify-content-end mb-2">
+                    <div class="form-row d-flex justify-content-end align-items-center mb-2">
+                      <div class="comment{{this.id}}WordCount counter text-danger mt-3 me-4"></div>
                       <button class="btn btn-primary mt-3 btn-block rounded-pill" type="submit">回覆</button>
                     </div>
                   </div>

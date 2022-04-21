@@ -82,10 +82,10 @@
                       <div><img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" /></div>
                     {{/if}}
                     <input type="hidden" name="tweetId" value="{{tweet.id}}" />
-                    <input type="text" id="comment" name="comment" class="form-control tweet-input w-100 border-0"
-                      placeholder="推你的回覆" required>
+                    <textarea class="form-control border-0" name="comment" id="comment{{this.id}}" cols="30" rows="6" placeholder="推你的回覆" maxlength="140" required></textarea>
                   </div>
                   <div class="form-row d-flex justify-content-end mb-2">
+                    <div class="comment{{this.id}}WordCount counter text-danger mt-3 me-4"></div>
                     <button class="btn btn-primary mt-3 btn-block rounded-pill" type="submit">回覆</button>
                   </div>
                 </div>
