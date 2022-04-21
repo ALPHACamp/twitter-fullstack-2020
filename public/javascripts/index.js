@@ -42,6 +42,13 @@ function characterCount() {
     }
   } else if (this.name === 'comment') {
     wordLimit = 140
+    if (this.value.length === 0 && !document.querySelector(`.${this.id}EmptyWarning`)) {
+      const emptyWarning = document.createElement('span')
+      emptyWarning.innerHTML = `<span class="${this.id}EmptyWarning">內容不可空白</span>`
+      displayer.appendChild(emptyWarning)
+    } else if (this.value.length > 0 && document.querySelector(`.${this.id}EmptyWarning`)) {
+      document.querySelector(`.${this.id}EmptyWarning`).remove()
+    }
     if (this.value.length === wordLimit && !document.querySelector(`.${this.id}LengthWarning`)) {
       const wordLengthLimit = document.createElement('span')
       wordLengthLimit.innerHTML = `<span class="${this.id}LengthWarning">字數不可超過 140 字</span>`

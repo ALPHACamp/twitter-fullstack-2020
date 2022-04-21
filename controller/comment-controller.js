@@ -5,6 +5,7 @@ const commentController = {
   postComment: (req, res, next) => {
     const { tweetId, comment } = req.body
     const userId = helpers.getUser(req).id
+    if (!comment) throw new Error("Reply content can't be blank!")
 
     return Promise.all([
       User.findByPk(userId),
