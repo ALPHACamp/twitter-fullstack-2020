@@ -88,12 +88,23 @@
             </div>
             <div class="form-row mt-3">
               <label class="form-label" for="name">名稱</label>
-              <input type="text" id="name" name="name" class="form-control" value="{{viewUser.name}}" required>
+              <input type="text" id="name" name="name" class="form-control" value="{{viewUser.name}}"
+               maxlength="50" required>
+              <div class="nameWordCount counter mt-1 d-flex justify-content-between flex-row-reverse">
+                <div>
+                  <span class="nameCurrentCount">{{textLength viewUser.name}}</span><span>/50</ span>
+                </div>
+              </div>
             </div>
             <div class="form-row mt-5">
               <label class="form-label" for="introduction">自我介紹</label>
               <textarea class="form-control" name="introduction" id="introduction" cols="30" rows="6"
-               placeholder="{{viewUser.introduction}}"></textarea>
+               maxlength="160">{{viewUser.introduction}}</textarea>
+              <div class="introductionWordCount counter mt-1 d-flex justify-content-between flex-row-reverse">
+                <div>
+                  <span class="introductionCurrentCount">{{textLength viewUser.introduction}}</span><span>/160</ span>
+                </div>
+              </div>
             </div>
           </div>
         </form>

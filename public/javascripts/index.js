@@ -1,4 +1,4 @@
-const inputs = ['name', 'content', 'comment']
+const inputs = ['name', 'content', 'comment', 'introduction']
 
 inputs.forEach(inputField => {
   const inputGroup = document.getElementsByName(inputField)
@@ -18,7 +18,7 @@ function characterCount() {
     if (document.querySelector(`.${this.id}CurrentCount`)) {
       document.querySelector(`.${this.id}CurrentCount`).innerText = this.value.length
     } else {
-      const newItem = document.createElement('span')
+      const newItem = document.createElement('div')
       newItem.innerHTML = `<span class="${this.id}CurrentCount" max="${wordLimit}">${this.value.length}</span><span>/${wordLimit}</   span>`
       displayer.appendChild(newItem)
     }
@@ -54,6 +54,21 @@ function characterCount() {
       wordLengthLimit.innerHTML = `<span class="${this.id}LengthWarning">字數不可超過 140 字</span>`
       displayer.appendChild(wordLengthLimit)
     } else if (this.value.length < wordLimit && document.querySelector(`.${this.id}LengthWarning`)) {
+      document.querySelector(`.${this.id}LengthWarning`).remove()
+    }
+  } else if (this.id === 'introduction') {
+    wordLimit = 160
+
+    if (document.querySelector(`.${this.id}CurrentCount`)) {
+      document.querySelector(`.${this.id}CurrentCount`).innerText = this.value.length
+    }
+    if (this.value.length === wordLimit && !document.querySelector(`.${this.id}LengthWarning`)) {
+      this.classList.add('border-danger')
+      const wordLengthLimit = document.createElement('span')
+      wordLengthLimit.innerHTML = `<span class="${this.id}LengthWarning">字數已達上限！</span>`
+      displayer.appendChild(wordLengthLimit)
+    } else if (this.value.length < wordLimit && document.querySelector(`.${this.id}LengthWarning`)) {
+      this.classList.remove('border-danger')
       document.querySelector(`.${this.id}LengthWarning`).remove()
     }
   }
