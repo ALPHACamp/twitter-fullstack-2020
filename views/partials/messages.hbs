@@ -1,12 +1,17 @@
 {{#if error_messages}}
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    {{ error_messages }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <div class="alert alert-dismissible fade show d-flex justify-content-center" role="alert">
+    <button class="border-0 w-100 fw-bolder" data-bs-dismiss="alert" aria-label="Close">
+      {{ error_messages }}
+      <i class="fa-solid fa-exclamation p-2 rounded-circle fa-sm" style="margin-left: 200px;
+       color: white; background-color: #CD5C5C;"></i>
+    </button>
   </div>
 {{/if}}
 {{#if success_messages}}
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    {{ success_messages }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <div class="alert alert-dismissible fade show d-flex justify-content-center" role="alert">
+    <button class="border-0 w-100 fw-bolder" data-bs-dismiss="alert" aria-label="Close">
+      {{ success_messages }}
+      <i class="fa-solid fa-check p-2 rounded-circle" style="margin-left: 200px; color: green; background-color: bisque;"></i>
+    </button>
   </div>
 {{/if}}
