@@ -1,6 +1,11 @@
 <div class="d-flex h-100">
-  {{> nav-column route='user'}}
-
+  {{#ifCond viewUser.id user.id}}
+    {{> nav-column route='user'}}
+  {{/ifCond}}
+  {{#ifNotCond viewUser.id user.id}}
+    {{> nav-column}}
+  {{/ifNotCond}}
+  
   <div class="w-50">
     {{> user-headbar}}
     {{> user-info}}
