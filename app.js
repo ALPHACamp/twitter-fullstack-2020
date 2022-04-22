@@ -11,8 +11,12 @@ const helpers = require('./_helpers')
 const routes = require('./routes')
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 const SESSION_SECRET = 'secret'
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
@@ -35,6 +39,7 @@ app.use('/upload', express.static(path.join(__dirname, 'upload')))
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
+  res.locals.warning_messages = req.flash('warning_messages')
   res.locals.user = helpers.getUser(req)
   next()
 })

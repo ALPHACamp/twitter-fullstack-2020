@@ -4,7 +4,8 @@
   <div class="w-50 pe-4">
     <h4 class="my-3 fw-bold mb-4">首頁</h4>
     {{!-- Top Tweet Form --}}
-    <form action="/tweets" method="POST" class="w-100 my-3 border-bottom border-3">
+    <form action="/tweets" method="POST" class="w-100 my-3 border-bottom border-3" data-bs-toggle="modal"
+     data-bs-target="#tweetModal-{{user.id}}">
       <div>
         <div class="form-row d-flex">
           {{#if user.avatar}}
@@ -49,7 +50,7 @@
               </a>
             </div>
             <div class="tweet-toolbar d-flex align-items-center">
-              <button type="button" class="btn me-3 p-0 border-0" data-bs-toggle="modal" data-bs-target="#commentModal{{this.id}}">
+              <button type="button" class="btn me-3 p-0 border-0" data-bs-toggle="modal" data-bs-target="#commentModal-{{this.id}}">
                 <i class="fa-solid fa-comment text-secondary"></i>
               </button>
               <span>{{this.replyCount}}</span>
@@ -70,19 +71,20 @@
       </div>
 
       {{!-- Modal --}}
-      <div class="modal fade" id="commentModal{{this.id}}" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+      <div class="modal fade" id="commentModal-{{this.id}}" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-body">
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="margin-left: 0px;"></button>
               <div class="d-flex mt-4">
-                <div class="me-3">
+                <div class="me-3 d-flex flex-column">
                   {{#if this.User.avatar}}
                     <img src="{{this.User.avatar}}" width="50px" height="50px" style="transition: opacity 0.5s; opacity:0;"
                       onload="this.style.opacity=1;" class="rounded-circle" />
                   {{else}}
                     <img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" />
                   {{/if}}
+                  <div class="comment-modal-line"></div>
                 </div>
                 <div class="d-flex flex-column">
                   <div class="mb-1">
@@ -92,29 +94,30 @@
                   <div>
                     <p style="word-wrap: break-word;">{{this.content}}</p>
                   </div>
-                  <div>
-                    <span>回覆給 </span><span>@{{this.User.account}}</span>
+                  <div style="font-size: 0.8rem;">
+                    <span>回覆給 </span>
+                    <a href="/users/{{this.User.id}}/tweets"><span>@{{this.User.account}}</span></a>
                   </div>
                 </div>
               </div>
               <div>
-                <form action="/tweets/{{this.id}}" method="POST" class="w-100 my-3">
+                <form action="/tweets/{{this.id}}" method="POST" class="w-100 my-4">
                   <div>
                     <div class="form-row d-flex">
                       {{#if ../user.avatar}}
-                        <div>
+                        <div class="me-1">
                           <img src="{{../user.avatar}}" width="50px" height="50px" class="rounded-circle">
-                          </div>
+                        </div>
                       {{else}}
-                        <div>
+                        <div class="me-1">
                           <img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" />
                         </div>
                       {{/if}}
                       <input type="hidden" name="tweetId" value="{{this.id}}" />
-                      <input type="text" id="comment" name="comment" class="form-control tweet-input w-100 border-0"
-                        placeholder="推你的回覆" required>
+                      <textarea class="form-control border-0" name="comment" id="comment{{this.id}}" cols="30" rows="6" placeholder="推你的回覆" maxlength="140"></textarea>
                     </div>
-                    <div class="form-row d-flex justify-content-end mb-2">
+                    <div class="form-row d-flex justify-content-end align-items-center mb-2">
+                      <div class="comment{{this.id}}WordCount counter text-danger mt-3 me-4"></div>
                       <button class="btn btn-primary mt-3 btn-block rounded-pill" type="submit">回覆</button>
                     </div>
                   </div>

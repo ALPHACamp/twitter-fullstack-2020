@@ -14,10 +14,13 @@ const tweetController = {
         order: [['createdAt', 'DESC']]
       }),
       User.findAll({
-        raw: true,
+        nest: true,
         where: {
           role: null
-        }
+        },
+        include: [
+          { model: User, as: 'Followers' }
+        ]
       })
     ])
       .then(([tweets, users]) => {
@@ -28,10 +31,12 @@ const tweetController = {
           replyCount: t.Replies.length,
           likeCount: t.Likes.length
         }))
-        const userData = users.map(u => ({
-          ...u,
-          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
+        let userData = users.map(u => ({
+          ...u.toJSON(),
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id),
+          FollowerCount: u.Followers.length
         }))
+        userData = userData.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
         return res.render('tweets', { tweets: data, users: userData, user: helpers.getUser(req) })
       })
   },
@@ -96,13 +101,17 @@ const tweetController = {
           User,
           Like,
           { model: Reply, include: User }
-        ]
+        ],
+        order: [[{ model: Reply }, 'createdAt', 'DESC']]
       }),
       User.findAll({
-        raw: true,
+        nest: true,
         where: {
           role: null
-        }
+        },
+        include: [
+          { model: User, as: 'Followers' }
+        ]
       })
     ])
       .then(([tweet, users]) => {
@@ -114,10 +123,12 @@ const tweetController = {
           likeCount: tweet.Likes.length,
           isLiked: likedTweetId.includes(tweet.id)
         }
-        const userData = users.map(u => ({
-          ...u,
-          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
+        let userData = users.map(u => ({
+          ...u.toJSON(),
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id),
+          FollowerCount: u.Followers.length
         }))
+        userData = userData.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
         res.render('tweet', { tweet: data, users: userData, user: helpers.getUser(req) })
       })
       .catch(err => next(err))

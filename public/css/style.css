@@ -2,6 +2,10 @@ a.nav-link.active {
   color: orangered;
 }
 
+a {
+  text-decoration: none;
+}
+
 .tweet-input {
   inline-size: 500px;
   word-break: break-all;
@@ -22,4 +26,95 @@ a.nav-link.active {
 
 .user-tab.active {
   border-bottom: solid;
+}
+
+textarea {
+  border: none;
+  resize: none;
+}
+
+.form-control:focus {
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.form-control {
+  border-bottom: solid;
+  border-bottom-width: 2px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  border-color: #696969;
+}
+
+.form-control:focus, .form-control:hover {
+  border-color: #1E90FF;
+}
+
+.form-label {
+  color: #696969;
+}
+
+.counter {
+  color: #696969
+}
+
+.comment-modal-line {
+  border-right: solid;
+  border-right-width: 2px;
+  border-color: #D3D3D3;
+  width: 50%;
+  height: 60%;
+  margin-bottom: -26px;
+  margin-top: 4px;
+}
+
+.cover-stack {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+}
+
+.profile-cover {
+  opacity: 0.8;
+  grid-column-start: 1;
+  grid-column-end: 13;
+  grid-row-start: 1;
+  grid-row-end: 5;
+}
+
+.profile-cover-tool {
+  position: relative;
+  grid-column-start: 6;
+  grid-column-end: 8;
+  grid-row-start: 2;
+  grid-row-end: 4;
+  width: 100%;
+}
+
+.avatar-stack {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  margin-top: -70px;
+}
+
+.profile-avatar {
+  opacity: 0.8;
+  grid-column-start: 1;
+  grid-column-end: 13;
+  grid-row-start: 1;
+  grid-row-end: 5;
+}
+
+.profile-avatar-tool {
+  position: relative;
+  grid-column-start: 6;
+  grid-column-end: 8;
+  grid-row-start: 2;
+  grid-row-end: 4;
+  width: 100%;
+  left: 10px;
 }

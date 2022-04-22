@@ -1,5 +1,10 @@
 <div class="d-flex h-100">
-  {{> nav-column route='user'}}
+  {{#ifCond viewUser.id user.id}}
+    {{> nav-column route='user'}}
+  {{/ifCond}}
+  {{#ifNotCond viewUser.id user.id}}
+    {{> nav-column}}
+  {{/ifNotCond}}
 
   <div class="w-50">
     {{> user-headbar}}
@@ -31,7 +36,7 @@
               </div>
               <div class="tweet-toolbar d-flex align-items-center">
                 <button type="button" class="btn me-3 p-0 border-0" data-bs-toggle="modal"
-                  data-bs-target="#commentModal{{this.id}}">
+                  data-bs-target="#commentModal-{{this.id}}">
                   <i class="fa-solid fa-comment text-secondary"></i>
                 </button>
                 <span>{{arrayLength this.Replies}}</span>
@@ -52,7 +57,7 @@
         </div>
 
         {{!-- Modal --}}
-        <div class="modal fade" id="commentModal{{this.id}}" tabindex="-1" aria-labelledby="commentModalLabel"
+        <div class="modal fade" id="commentModal-{{this.id}}" tabindex="-1" aria-labelledby="commentModalLabel"
           aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -67,6 +72,7 @@
                     {{else}}
                       <img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" />
                     {{/if}}
+                    <div class="comment-modal-line"></div>
                   </div>
                   <div class="d-flex flex-column">
                     <div class="mb-1">
@@ -76,29 +82,30 @@
                     <div>
                       <p style="word-wrap: break-word;">{{this.content}}</p>
                     </div>
-                    <div>
-                      <span>回覆給 </span><span>@{{../viewUser.account}}</span>
+                    <div style="font-size: 0.8rem;">
+                      <span>回覆給 </span>
+                      <a href="/users/{{../viewUser.id}}/tweets"><span>@{{../viewUser.account}}</span></a>
                     </div>
                   </div>
                 </div>
                 <div>
-                  <form action="/tweets/{{this.id}}" method="POST" class="w-100 my-3">
+                  <form action="/tweets/{{this.id}}" method="POST" class="w-100 my-4">
                     <div>
                       <div class="form-row d-flex">
                         {{#if ../viewUser.avatar}}
-                          <div>
+                          <div class="me-1">
                             <img src="{{../viewUser.avatar}}" width="50px" height="50px" class="rounded-circle">
                           </div>
                         {{else}}
-                          <div>
+                          <div class="me-1">
                             <img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" />
                           </div>
                         {{/if}}
                         <input type="hidden" name="tweetId" value="{{this.id}}" />
-                        <input type="text" id="comment" name="comment" class="form-control tweet-input w-100 border-0"
-                          placeholder="推你的回覆" required>
+                        <textarea class="form-control border-0" name="comment" id="comment{{this.id}}" cols="30" rows="6" placeholder="推你的回覆" maxlength="140"></textarea>
                       </div>
                       <div class="form-row d-flex justify-content-end mb-2">
+                        <div class="comment{{this.id}}WordCount counter text-danger mt-3 me-4"></div>
                         <button class="btn btn-primary mt-3 btn-block rounded-pill" type="submit">回覆</button>
                       </div>
                     </div>
