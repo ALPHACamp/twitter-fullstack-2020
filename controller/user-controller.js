@@ -79,7 +79,11 @@ const userController = {
           ...u,
           isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
         }))
-        return res.render('user/tweets', { viewUser: user.toJSON(), user: helpers.getUser(req), tweets: data, users: userData })
+        const viewUser = {
+          ...user.toJSON(),
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.toJSON().id)
+        }
+        return res.render('user/tweets', { viewUser, user: helpers.getUser(req), tweets: data, users: userData })
       })
       .catch(err => next(err))
   },
@@ -109,7 +113,11 @@ const userController = {
           ...u,
           isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
         }))
-        return res.render('user/replies', { viewUser: user.toJSON(), user: helpers.getUser(req), users: userData })
+        const viewUser = {
+          ...user.toJSON(),
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.toJSON().id)
+        }
+        return res.render('user/replies', { viewUser, user: helpers.getUser(req), users: userData })
       })
       .catch(err => next(err))
   },
@@ -144,7 +152,11 @@ const userController = {
           ...u,
           isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
         }))
-        return res.render('user/likes', { viewUser: user.toJSON(), likes: data, user: helpers.getUser(req), users: userData })
+        const viewUser = {
+          ...user.toJSON(),
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.toJSON().id)
+        }
+        return res.render('user/likes', { viewUser, likes: data, user: helpers.getUser(req), users: userData })
       })
       .catch(err => next(err))
   },

@@ -20,12 +20,32 @@
           class="border border-4 border-light rounded-circle ms-3" />
       {{/if}}
     </div>
-    <div>
+    <div class="d-flex align-items-center text-primary">
       {{#ifCond viewUser.id user.id}}
         <button type="button" class="btn p-0 border-0" data-bs-toggle="modal" data-bs-target="#settingModal-{{viewUser.id}}">
           <span class="btn btn-outline-primary rounded-pill">編輯個人資料</span>
         </button>
       {{/ifCond}}
+      {{#ifNotCond viewUser.id user.id}}
+        <i class="fa-solid fa-envelope fa-lg border border-primary rounded-circle me-2 mb-3"
+         style="line-height: 32px; padding-inline: 6px;"></i>
+        {{#if viewUser.notification}}
+          <i class="fa-solid fa-bell fa-lg text-white bg-primary border border-primary rounded-circle me-2 mb-3"
+            style="line-height: 32px; padding-inline: 6px"></i>
+        {{else}}
+          <i class="fa-solid fa-bell fa-lg border border-primary rounded-circle me-2 mb-3"
+          style="line-height: 32px; padding-inline: 6px"></i>
+        {{/if}}
+        {{#if viewUser.isFollowed}}
+          <form action="/following/{{viewUser.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-primary rounded-pill">正在跟隨</button>
+          </form>
+        {{else}}
+          <form action="/following/{{viewUser.id}}" method="POST">
+            <button type="submit" class="btn btn-outline-primary rounded-pill">跟隨</button>
+          </form>
+        {{/if}}
+      {{/ifNotCond}}
     </div>
   </div>
   {{!-- Name, Account, Introduction & Followship --}}
