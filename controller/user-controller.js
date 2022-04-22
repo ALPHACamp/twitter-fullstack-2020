@@ -62,10 +62,13 @@ const userController = {
         order: [[{ model: Tweet }, 'createdAt', 'DESC']]
       }),
       User.findAll({
-        raw: true,
+        nest: true,
         where: {
           role: null
-        }
+        },
+        include: [
+          { model: User, as: 'Followers' }
+        ]
       })
     ])
       .then(([user, users]) => {
@@ -75,14 +78,16 @@ const userController = {
           ...t.toJSON(),
           isLiked: likedTweetId.includes(t.id)
         }))
-        const userData = users.map(u => ({
-          ...u,
-          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
+        let userData = users.map(u => ({
+          ...u.toJSON(),
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id),
+          FollowerCount: u.Followers.length
         }))
         const viewUser = {
           ...user.toJSON(),
           isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.toJSON().id)
         }
+        userData = userData.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
         return res.render('user/tweets', { viewUser, user: helpers.getUser(req), tweets: data, users: userData })
       })
       .catch(err => next(err))
@@ -101,22 +106,27 @@ const userController = {
         order: [[{ model: Reply }, 'createdAt', 'DESC']]
       }),
       User.findAll({
-        raw: true,
+        nest: true,
         where: {
           role: null
-        }
+        },
+        include: [
+          { model: User, as: 'Followers' }
+        ]
       })
     ])
       .then(([user, users]) => {
         if (!user) throw new Error("User doesn't exist!")
-        const userData = users.map(u => ({
-          ...u,
-          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
+        let userData = users.map(u => ({
+          ...u.toJSON(),
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id),
+          FollowerCount: u.Followers.length
         }))
         const viewUser = {
           ...user.toJSON(),
           isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.toJSON().id)
         }
+        userData = userData.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
         return res.render('user/replies', { viewUser, user: helpers.getUser(req), users: userData })
       })
       .catch(err => next(err))
@@ -135,10 +145,13 @@ const userController = {
         order: [[{ model: Like }, 'createdAt', 'DESC']]
       }),
       User.findAll({
-        raw: true,
+        nest: true,
         where: {
           role: null
-        }
+        },
+        include: [
+          { model: User, as: 'Followers' }
+        ]
       })
     ])
       .then(([user, users]) => {
@@ -148,14 +161,16 @@ const userController = {
           ...l.toJSON(),
           isLiked: likedTweetId.includes(l.Tweet.id)
         }))
-        const userData = users.map(u => ({
-          ...u,
-          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
+        let userData = users.map(u => ({
+          ...u.toJSON(),
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id),
+          FollowerCount: u.Followers.length
         }))
         const viewUser = {
           ...user.toJSON(),
           isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.toJSON().id)
         }
+        userData = userData.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
         return res.render('user/likes', { viewUser, likes: data, user: helpers.getUser(req), users: userData })
       })
       .catch(err => next(err))
@@ -206,7 +221,8 @@ const userController = {
         include: [
           Tweet,
           { model: User, as: 'Followings' }
-        ]
+        ],
+        order: [[{ model: User, as: 'Followings' }, 'createdAt', 'DESC']]
       }),
       User.findAll({
         raw: true,
@@ -237,7 +253,8 @@ const userController = {
         include: [
           Tweet,
           { model: User, as: 'Followers' }
-        ]
+        ],
+        order: [[{ model: User, as: 'Followers' }, 'createdAt', 'DESC']]
       }),
       User.findAll({
         raw: true,
