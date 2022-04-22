@@ -96,7 +96,8 @@ const tweetController = {
           User,
           Like,
           { model: Reply, include: User }
-        ]
+        ],
+        order: [[{ model: Reply }, 'createdAt', 'DESC']]
       }),
       User.findAll({
         raw: true,

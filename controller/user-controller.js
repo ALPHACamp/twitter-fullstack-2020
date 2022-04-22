@@ -58,7 +58,8 @@ const userController = {
           { model: Tweet, include: [Reply, Like] },
           { model: User, as: 'Followings' },
           { model: User, as: 'Followers' }
-        ]
+        ],
+        order: [[{ model: Tweet }, 'createdAt', 'DESC']]
       }),
       User.findAll({
         raw: true,
@@ -92,7 +93,8 @@ const userController = {
           Tweet,
           { model: User, as: 'Followings' },
           { model: User, as: 'Followers' }
-        ]
+        ],
+        order: [[{ model: Reply }, 'createdAt', 'DESC']]
       }),
       User.findAll({
         raw: true,
@@ -121,7 +123,8 @@ const userController = {
           { model: User, as: 'Followings' },
           { model: User, as: 'Followers' },
           { model: Like, include: [{ model: Tweet, include: [User, Reply, Like] }] }
-        ]
+        ],
+        order: [[{ model: Like }, 'createdAt', 'DESC']]
       }),
       User.findAll({
         raw: true,
