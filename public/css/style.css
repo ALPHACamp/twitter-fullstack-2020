@@ -70,3 +70,51 @@ textarea {
   margin-bottom: -26px;
   margin-top: 4px;
 }
+
+.cover-stack {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+}
+
+.profile-cover {
+  opacity: 0.8;
+  grid-column-start: 1;
+  grid-column-end: 13;
+  grid-row-start: 1;
+  grid-row-end: 5;
+}
+
+.profile-cover-tool {
+  position: relative;
+  grid-column-start: 6;
+  grid-column-end: 8;
+  grid-row-start: 2;
+  grid-row-end: 4;
+  width: 100%;
+}
+
+.avatar-stack {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  margin-top: -70px;
+}
+
+.profile-avatar {
+  opacity: 0.8;
+  grid-column-start: 1;
+  grid-column-end: 13;
+  grid-row-start: 1;
+  grid-row-end: 5;
+}
+
+.profile-avatar-tool {
+  position: relative;
+  grid-column-start: 6;
+  grid-column-end: 8;
+  grid-row-start: 2;
+  grid-row-end: 4;
+  width: 100%;
+  left: 10px;
+}
