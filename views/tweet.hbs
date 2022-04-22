@@ -58,6 +58,7 @@
                 {{else}}
                   <img src="https://via.placeholder.com/50" width="50px" height="50px" class="rounded-circle" />
                 {{/if}}
+                <div class="comment-modal-line"></div>
               </div>
               <div class="d-flex flex-column">
                 <div class="mb-1">
@@ -68,12 +69,13 @@
                   <p style="word-wrap: break-word;">{{tweet.content}}</p>
                 </div>
                 <div>
-                  <span>回覆給 </span><span>@{{tweet.User.account}}</span>
+                  <span>回覆給 </span>
+                  <a href="/users/{{tweet.User.id}}/tweets"><span>@{{tweet.User.account}}</span></a>
                 </div>
               </div>
             </div>
             <div>
-              <form action="/tweets/{{tweet.id}}" method="POST" class="w-100 my-3">
+              <form action="/tweets/{{tweet.id}}" method="POST" class="w-100 my-4">
                 <div>
                   <div class="form-row d-flex">
                     {{#if user.avatar}}

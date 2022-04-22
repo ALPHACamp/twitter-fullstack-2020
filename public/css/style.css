@@ -2,6 +2,10 @@ a.nav-link.active {
   color: orangered;
 }
 
+a {
+  text-decoration: none;
+}
+
 .tweet-input {
   inline-size: 500px;
   word-break: break-all;
@@ -55,4 +59,14 @@ textarea {
 
 .counter {
   color: #696969
+}
+
+.comment-modal-line {
+  border-right: solid;
+  border-right-width: 2px;
+  border-color: #D3D3D3;
+  width: 50%;
+  height: 60%;
+  margin-bottom: -30px;
+  margin-top: 4px;
 }
