@@ -225,10 +225,13 @@ const userController = {
         order: [[{ model: User, as: 'Followings' }, 'createdAt', 'DESC']]
       }),
       User.findAll({
-        raw: true,
+        nest: true,
         where: {
           role: null
-        }
+        },
+        include: [
+          { model: User, as: 'Followers' }
+        ]
       })
     ])
       .then(([user, users]) => {
@@ -237,10 +240,12 @@ const userController = {
           ...f,
           isFollowed: helpers.getUser(req).Followings.some(f2 => f2.id === f.id)
         }))
-        const userData = users.map(u => ({
-          ...u,
-          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
+        let userData = users.map(u => ({
+          ...u.toJSON(),
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id),
+          FollowerCount: u.Followers.length
         }))
+        userData = userData.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
         return res.render('user/followings', { viewUser: user.toJSON(), followings, user: helpers.getUser(req), users: userData })
       })
       .catch(err => next(err))
@@ -257,10 +262,13 @@ const userController = {
         order: [[{ model: User, as: 'Followers' }, 'createdAt', 'DESC']]
       }),
       User.findAll({
-        raw: true,
+        nest: true,
         where: {
           role: null
-        }
+        },
+        include: [
+          { model: User, as: 'Followers' }
+        ]
       })
     ])
       .then(([user, users]) => {
@@ -269,10 +277,12 @@ const userController = {
           ...f,
           isFollowed: helpers.getUser(req).Followers.some(f2 => f2.id === f.id)
         }))
-        const userData = users.map(u => ({
-          ...u,
-          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id)
+        let userData = users.map(u => ({
+          ...u.toJSON(),
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id),
+          FollowerCount: u.Followers.length
         }))
+        userData = userData.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
         return res.render('user/followers', { viewUser: user.toJSON(), followers, user: helpers.getUser(req), users: userData })
       })
       .catch(err => next(err))
