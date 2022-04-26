@@ -118,3 +118,22 @@ textarea {
   width: 100%;
   left: 10px;
 }
+
+.admin-nav-column, .nav-column {
+  position: fixed;
+}
+
+.main-column {
+  overflow: auto;
+  margin-left: 25%;
+}
+
+.popular-users-column {
+  position: fixed;
+  overflow: auto;
+  margin-left: 75%;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
