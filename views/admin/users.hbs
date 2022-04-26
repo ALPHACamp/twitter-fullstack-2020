@@ -1,9 +1,9 @@
 <div class="d-flex h-100">
   {{> admin-nav-column route='users'}}
 
-  <div class="w-75">
+  <div class="w-75 main-column">
     <h4 class="my-3 fw-bold">使用者列表</h4>
-    <div class="d-flex">
+    <div class="d-flex flex-wrap">
       {{#each users}}
       <div class="card me-3 border-0" style="width: 15rem;">
         <div class="card-img-top d-flex flex-column align-items-center">
@@ -28,8 +28,8 @@
           <p class="card-text fw-bold">{{this.name}}</p>
           <p class="card-text text-secondary" style="margin-top: -15px;">@{{this.account}}</p>
           <p>
-            <i class="fa-solid fa-comment text-secondary me-2"></i>{{arrayLength this.Tweets}}
-            <i class="fa-solid fa-heart text-secondary ms-3 me-2"></i>
+            <i class="fa-solid fa-comment text-secondary me-2"></i><span>{{arrayLength this.Tweets}}</span>
+            <i class="fa-solid fa-heart text-secondary ms-3 me-2"></i><span>{{this.LikeCount}}</span>
           </p>
           <p>
             <span class="fw-bold">{{arrayLength this.Followings}} 個</span><span>跟隨中</span>

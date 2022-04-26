@@ -51,12 +51,24 @@ const adminController = {
         { model: Tweet, include: Like },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
-      ]
+      ],
+      where: {
+        role: null
+      }
     })
       .then(users => {
-        const data = users.map(user => ({
-          ...user.toJSON()
+        let data = users.map(user => ({
+          ...user.toJSON(),
+          TweetCount: user.Tweets.length,
+          LikeCount: function () {
+            let likes = 0
+            user.Tweets.forEach(tweet => {
+              likes += tweet.Likes.length
+            })
+            return likes
+          }
         }))
+        data = data.sort((a, b) => b.TweetCount - a.TweetCount)
         return res.render('admin/users', { users: data, url: req.originalUrl })
       })
       .catch(err => next(err))

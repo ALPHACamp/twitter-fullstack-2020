@@ -1,4 +1,4 @@
-<div class="w-25 d-flex justify-content-center">
+<div class="w-25 admin-nav-column d-flex justify-content-center h-100">
   <div class="w-50 d-flex flex-column justify-content-between fs-5">
     {{!-- Vertical Nav Column --}}
     <nav class="navbar bg-light mb-5">
@@ -8,13 +8,13 @@
         </a>
         <li class="nav-item my-2">
           <a class="nav-link fw-bold {{#ifCond route 'tweets'}}active{{/ifCond}}" href="/admin/tweets">
-            <i class="fa-solid fa-house me-2"></i>
-            推文清單
+            <i class="fa-solid fa-house fa-fw me-2"></i>
+            <span>推文清單</span>
           </a>
         </li>
         <li class="nav-item my-2">
           <a class="nav-link fw-bold {{#ifCond route 'users'}}active{{/ifCond}}" href="/admin/users">
-            <i class="fa-solid fa-user me-2"></i>
+            <i class="fa-solid fa-user fa-fw me-2"></i>
             <span>使用者列表</span>
           </a>
         </li>

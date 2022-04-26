@@ -15,7 +15,7 @@ module.exports = {
   customTimeFormat: a => {
     return dayjs(a).format('H') < 12 ? dayjs(a).format('上午 h:mm．YYYY年MM月DD日') : dayjs(a).format('下午 h:mm．YYYY年MM月DD日')
   },
-  textLength: t => t.length,
+  textLength: t => t !== null ? t.length : 0,
   ifNotCond: function (a, b, options) {
     return a !== b ? options.fn(this) : options.inverse(this)
   }
