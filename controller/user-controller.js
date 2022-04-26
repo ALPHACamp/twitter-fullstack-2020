@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { User, Tweet, Followship, Reply, Like } = require('../models')
 const helpers = require('../_helpers')
-const { localFileHandler } = require('../helpers/file-helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -334,11 +334,11 @@ const userController = {
     const { files } = req
     const avatarFile = files.avatar || null
     const coverFile = files.cover || null
-
+    console.log(files.avatar)
     return Promise.all([
       User.findByPk(userId),
-      localFileHandler(avatarFile),
-      localFileHandler(coverFile)
+      imgurFileHandler(avatarFile),
+      imgurFileHandler(coverFile)
     ])
       .then(([user, avatarPath, coverPath]) => {
         if (!user) throw new Error("User doesn't exist!")
