@@ -157,9 +157,10 @@ const userController = {
       .then(([user, users]) => {
         if (!user) throw new Error("User doesn't exist!")
         const likedTweetId = helpers.getUser(req) && helpers.getUser(req).Likes.map(l => l.tweetId)
+        // user.Likes.forEach(l => console.log(l.Tweet.id))
         const data = user.Likes.map(l => ({
           ...l.toJSON(),
-          isLiked: likedTweetId.includes(l.Tweet.id)
+          isLiked: l.Tweet && likedTweetId.includes(l.Tweet.id)
         }))
         let userData = users.map(u => ({
           ...u.toJSON(),
