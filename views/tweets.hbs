@@ -2,6 +2,7 @@
   {{> nav-column route='tweets'}}
   
   <div class="w-50 main-column pe-4">
+    {{> messages}}
     <h4 class="my-3 fw-bold mb-4">首頁</h4>
     {{!-- Top Tweet Form --}}
     <form action="/tweets" method="POST" class="w-100 my-3 border-bottom border-3" data-bs-toggle="modal"

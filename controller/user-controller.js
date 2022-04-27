@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { User, Tweet, Followship, Reply, Like } = require('../models')
 const helpers = require('../_helpers')
-const { localFileHandler } = require('../helpers/file-helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -140,7 +140,7 @@ const userController = {
           Tweet,
           { model: User, as: 'Followings' },
           { model: User, as: 'Followers' },
-          { model: Like, include: [{ model: Tweet, include: [User, Reply, Like] }] }
+          { model: Like, include: [{ model: Tweet, include: [User, Reply, Like], required: true }] }
         ],
         order: [[{ model: Like }, 'createdAt', 'DESC']]
       }),
@@ -159,7 +159,7 @@ const userController = {
         const likedTweetId = helpers.getUser(req) && helpers.getUser(req).Likes.map(l => l.tweetId)
         const data = user.Likes.map(l => ({
           ...l.toJSON(),
-          isLiked: likedTweetId.includes(l.Tweet.id)
+          isLiked: l.Tweet && likedTweetId.includes(l.Tweet.id)
         }))
         let userData = users.map(u => ({
           ...u.toJSON(),
@@ -334,11 +334,11 @@ const userController = {
     const { files } = req
     const avatarFile = files.avatar || null
     const coverFile = files.cover || null
-
+    console.log(files.avatar)
     return Promise.all([
       User.findByPk(userId),
-      localFileHandler(avatarFile),
-      localFileHandler(coverFile)
+      imgurFileHandler(avatarFile),
+      imgurFileHandler(coverFile)
     ])
       .then(([user, avatarPath, coverPath]) => {
         if (!user) throw new Error("User doesn't exist!")

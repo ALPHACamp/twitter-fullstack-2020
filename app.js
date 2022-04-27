@@ -10,13 +10,13 @@ const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const helpers = require('./_helpers')
 const routes = require('./routes')
 
-const app = express()
-const port = process.env.PORT || 3000
-const SESSION_SECRET = 'secret'
-
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+
+const app = express()
+const port = process.env.PORT || 3000
+const SESSION_SECRET = 'secret'
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
