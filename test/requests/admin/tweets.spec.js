@@ -70,7 +70,7 @@ describe('# Admin::Tweet request', () => {
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true })
         await db.User.create({})
         await db.User.create({})
-        await db.Tweet.create({ UserId: 2, description: 'Tweet1' })
+        await db.Tweet.create({ UserId: 2, content: 'Tweet1' })
       })
 
       // admin 使用者進到 /admin/tweets 會看到貼文
