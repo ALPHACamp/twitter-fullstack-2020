@@ -34,11 +34,11 @@
           <i class="fa-solid fa-comment text-secondary"></i>
         </button>
         {{#if tweet.isLiked}}
-          <form action="/like/{{tweet.id}}?_method=DELETE" method="POST" style="margin: 0px;" class="me-2 ms-5">
+          <form action="/tweets/{{tweet.id}}/unlike" method="POST" style="margin: 0px;" class="me-2 ms-5">
             <button type="submit" class="border-0 ms-4"><i class="fa-solid fa-heart text-danger fs-4"></i></button>
           </form>
         {{else}}
-          <form action="/like/{{tweet.id}}" method="POST" style="margin: 0px;" class="me-2 ms-5">
+          <form action="/tweets/{{tweet.id}}/like" method="POST" style="margin: 0px;" class="me-2 ms-5">
             <button type="submit" class="border-0 ms-4"><i class="fa-solid fa-heart text-secondary fs-4"></i></button>
           </form>
         {{/if}}

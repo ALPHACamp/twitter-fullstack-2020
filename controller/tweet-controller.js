@@ -24,11 +24,11 @@ const tweetController = {
       })
     ])
       .then(([tweets, users]) => {
-        const likedTweetId = helpers.getUser(req) && helpers.getUser(req).Likes.map(l => l.tweetId)
+        const likedTweetId = helpers.getUser(req).Likes && helpers.getUser(req).Likes.map(l => l.tweetId)
         const data = tweets.map(t => ({
           ...t.toJSON(),
-          isLiked: likedTweetId.includes(t.id),
-          replyCount: t.Replies.length,
+          isLiked: likedTweetId ? likedTweetId.includes(t.id) : null,
+          replyCount: t.Replies ? t.Replies.length : null,
           likeCount: t.Likes.length
         }))
         let userData = users.map(u => ({
@@ -43,6 +43,7 @@ const tweetController = {
   postTweet: (req, res, next) => {
     const { content } = req.body
     if (!content) throw new Error('Please enter tweet content!')
+    if (content.length > 140) throw new Error('Content exceeds length limitation!')
 
     return Tweet.create({
       userId: helpers.getUser(req).id,

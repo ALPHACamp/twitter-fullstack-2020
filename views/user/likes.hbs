@@ -44,12 +44,12 @@
                 </button>
                 <span>{{arrayLength this.Tweet.Replies}}</span>
                 {{#if isLiked}}
-                  <form action="/like/{{this.Tweet.id}}?_method=DELETE" method="POST" style="margin: 0px;" class="me-2 ms-5">
+                  <form action="/tweets/{{this.Tweet.id}}/unlike" method="POST" style="margin: 0px;" class="me-2 ms-5">
                     <button type="submit" class="border-0 ms-4"><i class="fa-solid fa-heart text-danger"></i></button>
                   </form>
                   <span>{{arrayLength this.Tweet.Likes}}</span>
                 {{else}}
-                  <form action="/like/{{this.Tweet.id}}" method="POST" style="margin: 0px;" class="me-2 ms-5">
+                  <form action="/tweets/{{this.Tweet.id}}/like" method="POST" style="margin: 0px;" class="me-2 ms-5">
                     <button type="submit" class="border-0 ms-4"><i class="fa-solid fa-heart text-secondary"></i></button>
                   </form>
                   <span>{{arrayLength this.Tweet.Likes}}</span>

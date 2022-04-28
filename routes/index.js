@@ -35,8 +35,8 @@ router.post('/users/:userId/profile', authenticated, upload.fields([
 router.get('/api/users/:userId', authenticated, userController.getUser)
 router.post('/api/users/:userId', authenticated, userController.postUser)
 
-router.post('/like/:tweetId', authenticated, tweetController.addLike)
-router.delete('/like/:tweetId', authenticated, tweetController.removeLike)
+router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
+router.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
 
 router.post('/following/:userId', authenticated, userController.addFollowing)
 router.delete('/following/:userId', authenticated, userController.removeFollowing)

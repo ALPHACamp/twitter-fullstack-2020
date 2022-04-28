@@ -44,8 +44,8 @@ describe('# tweet request', () => {
         ).returns({ id: 1, Followings: [] })
         // 在測試資料庫中，新增 mock 資料
         await db.User.create({})
-        await db.Tweet.create({ UserId: 1, description: 'User1 的 Tweet1' })
-        await db.Tweet.create({ UserId: 1, description: 'User1 的 Tweet2' })
+        await db.Tweet.create({ UserId: 1, content: 'User1 的 Tweet1' })
+        await db.Tweet.create({ UserId: 1, content: 'User1 的 Tweet2' })
       })
 
       it('can render index', (done) => {
@@ -92,7 +92,7 @@ describe('# tweet request', () => {
         // 送出 request POST /tweets
         request(app)
           .post('/tweets')
-          .send('description=description') // 貼文內容
+          .send('content=content') // 貼文內容
           .set('Accept', 'application/json')
           .expect(302)
           .end(function (err, res) {
@@ -128,7 +128,7 @@ describe('# tweet request', () => {
         // 送出 POST /tweets，就會失敗
         request(app)
           .post('/tweets')
-          .send('description=description')
+          .send('content=content')
           .set('Accept', 'application/json')
           .expect(302)
           .end(function (err, res) {
@@ -159,7 +159,7 @@ describe('# tweet request', () => {
         // 送出 request POST /tweets
         request(app)
           .post('/tweets')
-          .send('description=臣亮言：先帝創業未半，而中道崩殂。今天下三分，益州疲弊，此誠危急存亡之秋也。然侍衛之臣，不懈於內；忠志之士，忘身於外者，蓋追先帝之殊遇，欲報之於陛下也。誠宜開張聖聽，以光先帝遺德，恢弘志士之氣；不宜妄自菲薄，引喻失義，以塞忠諫之路也。宮中府中，俱為一體，陟罰臧否，不宜異同。若有作姦犯科，及為忠善者，宜付有司，論其刑賞，以昭陛下平明之治，不宜篇私，使內外異法也。')
+          .send('content=臣亮言：先帝創業未半，而中道崩殂。今天下三分，益州疲弊，此誠危急存亡之秋也。然侍衛之臣，不懈於內；忠志之士，忘身於外者，蓋追先帝之殊遇，欲報之於陛下也。誠宜開張聖聽，以光先帝遺德，恢弘志士之氣；不宜妄自菲薄，引喻失義，以塞忠諫之路也。宮中府中，俱為一體，陟罰臧否，不宜異同。若有作姦犯科，及為忠善者，宜付有司，論其刑賞，以昭陛下平明之治，不宜篇私，使內外異法也。')
           .set('Accept', 'application/json')
           .expect(302)
           .end(function (err, res) {
@@ -248,7 +248,7 @@ describe('# tweet request', () => {
         ).returns({ id: 1, Followings: [] })
         // 在測試資料庫中，新增 mock 資料
         await db.User.create({})
-        await db.Tweet.create({ UserId: 1, description: 'test' })
+        await db.Tweet.create({ UserId: 1, content: 'test' })
         await db.Like.create({ UserId: 1, TweetId: 1 })
       })
 
