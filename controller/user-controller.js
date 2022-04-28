@@ -98,7 +98,7 @@ const userController = {
       User.findByPk(userId, {
         nest: true,
         include: [
-          { model: Reply, include: [{ model: Tweet, include: [User] }] },
+          { model: Reply, include: [{ model: Tweet, include: [User], required: true }] },
           Tweet,
           { model: User, as: 'Followings' },
           { model: User, as: 'Followers' }
