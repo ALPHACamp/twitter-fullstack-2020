@@ -3,7 +3,8 @@ const helpers = require('../_helpers')
 
 const commentController = {
   postComment: (req, res, next) => {
-    const { tweetId, comment } = req.body
+    const { comment } = req.body
+    const { tweetId } = req.params
     const userId = helpers.getUser(req).id
     if (!comment) throw new Error("Reply content can't be blank!")
 

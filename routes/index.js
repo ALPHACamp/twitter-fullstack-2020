@@ -19,8 +19,10 @@ router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 router.get('/logout', userController.logout)
 
-router.get('/tweets/:id', authenticated, tweetController.getTweet)
-router.post('/tweets/:id', authenticated, commentController.postComment)
+router.get('/tweets/:tweetId/replies', authenticated, tweetController.getTweet)
+router.post('/tweets/:tweetId/replies', authenticated, commentController.postComment)
+router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
+router.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
 
@@ -34,9 +36,6 @@ router.post('/users/:userId/profile', authenticated, upload.fields([
 
 router.get('/api/users/:userId', authenticated, userController.getUser)
 router.post('/api/users/:userId', authenticated, userController.postUser)
-
-router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
-router.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
 
 router.post('/following/:userId', authenticated, userController.addFollowing)
 router.delete('/following/:userId', authenticated, userController.removeFollowing)

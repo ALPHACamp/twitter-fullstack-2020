@@ -32,8 +32,8 @@ describe('# reply request', () => {
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true })
         // 在測試資料庫中，新增 mock 資料
         await db.User.create({})
-        await db.Tweet.create({ UserId: 1, description: 'test' })
-        await db.Reply.create({ UserId: 1, TweetId: 1, comment: 'Tweet1 的 comment' })
+        await db.Tweet.create({ UserId: 1, content: 'test' })
+        await db.Reply.create({ UserId: 1, tweetId: 1, comment: 'Tweet1 的 comment' })
       })
 
       it('should render index', (done) => {
@@ -76,7 +76,7 @@ describe('# reply request', () => {
         ).returns({ id: 1, Followings: [] })
         // 在測試資料庫中，新增 mock 資料
         await db.User.create({})
-        await db.Tweet.create({ UserId: 1, description: 'test' })
+        await db.Tweet.create({ UserId: 1, content: 'test' })
       })
 
       it('POST /tweets/1/replies', (done) => {
