@@ -46,7 +46,7 @@
               <span class="text-secondary">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
             </div>
             <div>
-              <a href="/tweets/{{this.id}}" class="tweet-item">
+              <a href="/tweets/{{this.id}}/replies" class="tweet-item">
                 <p style="word-wrap: break-word;">{{this.content}}</p>
               </a>
             </div>
@@ -102,7 +102,7 @@
                 </div>
               </div>
               <div>
-                <form action="/tweets/{{this.id}}" method="POST" class="w-100 my-4">
+                <form action="/tweets/{{this.id}}/replies" method="POST" class="w-100 my-4">
                   <div>
                     <div class="form-row d-flex">
                       {{#if ../user.avatar}}
