@@ -176,14 +176,20 @@ const userController = {
       .catch(err => next(err))
   },
   addFollowing: (req, res, next) => {
-    const { userId } = req.params
+    const followingId = Number(req.body.id)
     const followerId = helpers.getUser(req).id
+
+    if (followingId === followerId) {
+      req.flash('error_messages', "Can't follow yourself!")
+      return res.redirect(200, 'back')
+    }
+
     return Promise.all([
-      User.findByPk(userId),
+      User.findByPk(followingId),
       Followship.findOne({
         where: {
           followerId,
-          followingId: userId
+          followingId
         }
       })
     ])
@@ -193,7 +199,7 @@ const userController = {
 
         return Followship.create({
           followerId,
-          followingId: userId
+          followingId
         })
       })
       .then(() => res.redirect('back'))

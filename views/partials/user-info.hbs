@@ -37,11 +37,12 @@
           style="line-height: 32px; padding-inline: 6px"></i>
         {{/if}}
         {{#if viewUser.isFollowed}}
-          <form action="/following/{{viewUser.id}}?_method=DELETE" method="POST">
+          <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST">
             <button type="submit" class="btn btn-primary rounded-pill">正在跟隨</button>
           </form>
         {{else}}
-          <form action="/following/{{viewUser.id}}" method="POST">
+          <form action="/followships" method="POST">
+            <input type="hidden" name="id" value="{{viewUser.id}}" />
             <button type="submit" class="btn btn-outline-primary rounded-pill">跟隨</button>
           </form>
         {{/if}}

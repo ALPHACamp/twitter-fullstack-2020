@@ -37,8 +37,8 @@ router.post('/users/:userId/profile', authenticated, upload.fields([
 router.get('/api/users/:userId', authenticated, userController.getUser)
 router.post('/api/users/:userId', authenticated, userController.postUser)
 
-router.post('/following/:userId', authenticated, userController.addFollowing)
-router.delete('/following/:userId', authenticated, userController.removeFollowing)
+router.post('/followships', authenticated, userController.addFollowing)
+router.delete('/followships/:userId', authenticated, userController.removeFollowing)
 
 router.use('/', (req, res) => res.redirect('/tweets'))
 
