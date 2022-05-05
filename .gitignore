@@ -85,3 +85,10 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+# workspace setting
+.vscode/
+
+# ignore temp directory
+temp/
+upload/
