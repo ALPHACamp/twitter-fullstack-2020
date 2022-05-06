@@ -1,22 +1,22 @@
-'use strict';
-const { Model } = require('sequelize');
+'use strict'
+const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    static associate(models) {
-      User.hasMany(models.Reply);
-      User.hasMany(models.Tweet);
-      User.hasMany(models.Like);
+    static associate (models) {
+      User.hasMany(models.Reply)
+      User.hasMany(models.Tweet)
+      User.hasMany(models.Like)
       User.belongsToMany(models.User, {
         through: models.Followship,
         foreignKey: 'followingId',
         as: 'Followers'
-      });
+      })
       User.belongsToMany(models.User, {
         through: models.Followship,
         foreignKey: 'followerId',
         as: 'Followings'
-      });
+      })
     }
   }
   User.init(
@@ -36,6 +36,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'User',
       tableName: 'Users'
     }
-  );
-  return User;
-};
+  )
+  return User
+}
