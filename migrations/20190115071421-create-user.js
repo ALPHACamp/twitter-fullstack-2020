@@ -20,7 +20,7 @@ module.exports = {
       avatar: {
         type: Sequelize.STRING
       },
-      profile: {
+      introduction: {
         type: Sequelize.TEXT
       },
       role: {
