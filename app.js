@@ -1,6 +1,7 @@
 const express = require('express')
 const helpers = require('./_helpers')
 const handlebars = require('express-handlebars')
+const flash = require('connect-flash')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('./config/passport')
@@ -28,6 +29,14 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use(methodOverride('_method'))
+app.use(flash())
+app.use((req, res, next) => {
+  res.locals.success_messages = req.flash('success_messages')
+  res.locals.warning_msg = req.flash('warning_msg')
+  res.locals.error_messages = req.flash('error_messages')
+  res.locals.user = helpers.getUser(req) // use helpers.getUser(req) to replace req.user
+  next()
+})
 
 app.use(routes)
 app.listen(port, () => console.log(`alphitter listening on port ${port}!`))
