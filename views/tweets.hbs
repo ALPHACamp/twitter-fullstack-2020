@@ -1,4 +1,14 @@
-<div>
-  tweets 首頁
-</div>
-<a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">登出</button></a>
+{{> user-profile }}
+{{> user-tabs route='tweets'}}
+<p>tweets</p>
+{{!-- tweets --}}
+<h3 class="mb-3">所有tweets</h3>
+{{#each user.Tweets}}
+  <blockquote class="blockquote mb-0">
+    <span><a href="/users/{{this.UserId}}">{{ ../user.name }}</a></span>
+    <span> @{{ ../user.account }}</span>
+    <p>{{ this.description }}</p>
+    <footer class="blockquote-footer">{{ this.createdAt }}</footer>
+  </blockquote>
+  <hr />
+{{/each}}

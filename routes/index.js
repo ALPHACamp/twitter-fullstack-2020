@@ -20,6 +20,9 @@ router.get('/logout', userController.logout)
 router.get('/tweets', authenticated, tweetController.getTweets)
 
 // user
+router.get('/users/:id/tweets', userController.getUserTweets)
+router.get('/users/:id/replies', userController.getReplies)
+router.get('/users/:id/likes', userController.getLikes)
 router.get('/users/:id', userController.getUser)
 
 router.get('/', exampleController.indexPage)
