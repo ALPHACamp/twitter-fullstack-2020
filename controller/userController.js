@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs')
 const { Tweet, User, Like, Reply } = require('../models')
 const { Op } = require('sequelize')
-const relativeTime = require('dayjs/plugin/relativeTime')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -122,6 +121,9 @@ const userController = {
       const user = await User.findByPk(userId, {
         include: [
           { model: Tweet, include: [Reply, Like] }
+        ],
+        order: [
+          [Tweet, 'createdAt', 'DESC']
         ]
       })
       if (!user) throw new Error("user didn't exist!")
