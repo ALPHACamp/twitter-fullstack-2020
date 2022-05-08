@@ -99,14 +99,14 @@ const userController = {
   getLikes: async (req, res, next) => {
     try {
       const userId = req.params.id
-      const user = await User.findByPk(userId, {
+      const user = await Like.findByPk(userId, {
         include: [
-          { model: Like, include: [User, Tweet] }
+          { model: Tweet, include: [User] }
         ]
       })
       if (!user) throw new Error("user didn't exist!")
-      console.log('userLike:', user.toJSON())
-      // 找到該user的like清單
+      console.log('likes:', user.toJSON())
+      // TODO: 找到該user的like清單
       // 輸出like的tweets(該tweet的User name/account/comment/發文時間/回文數/回文連結/like那個推文的like數)
       return res.render('likes', {
         user: user.toJSON()
