@@ -2,25 +2,13 @@
 const { Tweet, User, Like, Reply } = require('../models')
 
 const userController = {
-  signInPage: (req, res) => {
-    res.render('signin')
-  },
-  signIn: (req, res) => {
-    req.flash('success_messages', '成功登入！')
-    res.redirect('/restaurants')
-  },
-  logout: (req, res) => {
-    req.flash('success_messages', '登出成功！')
-    req.logout()
-    res.redirect('/signin')
-  },
   getUser: async (req, res, next) => {
     try {
       const userId = req.params.id
       const user = await User.findByPk(userId, {
         include: [
-          { model: Tweet, include: [Reply] },
-          { model: Reply },
+          { model: Tweet, include: Reply },
+          { model: Reply, include: User },
           { model: Like },
           { model: User, as: 'Followings' },
           { model: User, as: 'Followers' }

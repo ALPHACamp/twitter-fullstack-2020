@@ -1,0 +1,10 @@
+<ul>
+  {{#each user.Replies}}
+    <li>
+      {{ this.avatar }}
+      <p> {{ this.userId }} @{{ this.account }} </p>
+      <p> {{ this.comment }} </p>
+      
+    </li>
+  {{/each}}
+</ul>
