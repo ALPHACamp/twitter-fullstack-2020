@@ -9,6 +9,8 @@ const exampleController = require('../controller/example-controller')
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 
+router.get('/users/:id', userController.getUser)
+
 router.get('/logout', userController.logout)
 router.get('/', exampleController.indexPage)
 router.use('/', generalErrorHandler)
