@@ -1,4 +1,19 @@
-<div>
-  tweets 首頁
-</div>
-<a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">登出</button></a>
+{{> user-profile }}
+{{> user-tabs route='tweets'}}
+
+{{!-- tweets --}}
+<h3 class="mb-3">使用者的所有tweets</h3>
+{{#each user.Tweets}}
+  <blockquote class="blockquote mb-0">
+    <span><a href="/users/{{this.UserId}}">{{ ../user.name }}</a></span>
+    <span class="blockquote-footer"> @{{ ../user.account }}</span>
+    <span>{{ relativeTimeFromNow this.createdAt }}</span>
+    <p>{{ this.description }}</p>
+  </blockquote>
+  <span class="blockquote-footer">{{ this.Replies.length }}回覆數</span>
+      {{!-- 預留: 回文 POST 功能連結 --}}
+    <form action="/tweets/{{ this.id }}/replies" method="post">
+      <button type="submit">回覆icon</button>
+    </form>
+  <hr />
+{{/each}}

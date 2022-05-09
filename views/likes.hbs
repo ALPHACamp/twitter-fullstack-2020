@@ -1,0 +1,15 @@
+{{> user-profile user=user}}
+{{> user-tabs route='likes'}}
+
+{{!-- likes  TODO:待Like功能完成後更新內容--}}
+<h3 class="mb-3">使用者的所有likes</h3>
+{{#each user.Likes}}
+  <blockquote class="blockquote mb-0">
+    <span><a href="/users/{{this.UserId}}">{{ ../user.name }}</a></span>
+    <span class="blockquote-footer"> @{{ ../user.account }}</span>
+    <span>{{ relativeTimeFromNow this.createdAt }}</span>
+    <p>回覆對象連結<a href="/users/{{this.Tweet.UserId}}"> {{ this.Tweet.User.name }}</a>  </p>
+    <p>{{ this.comment }}</p>
+  </blockquote>
+  <hr />
+{{/each}}

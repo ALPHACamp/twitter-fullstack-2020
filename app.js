@@ -1,6 +1,7 @@
 const express = require('express')
 const helpers = require('./_helpers')
 const handlebars = require('express-handlebars')
+const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const flash = require('connect-flash')
 const methodOverride = require('method-override')
 const session = require('express-session')
@@ -19,7 +20,7 @@ const SESSION_SECRET = process.env.SESSION_SECRET
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.engine('hbs', handlebars({ extname: '.hbs' }))
+app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 
 app.use(express.urlencoded({ extended: true }))
