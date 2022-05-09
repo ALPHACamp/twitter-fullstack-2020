@@ -26,7 +26,8 @@ module.exports = {
             Math.random() * 100
           }`,
           introduction: faker.lorem.text().substring(0, 160),
-          role: true,
+          role: 'admin',
+          isAdmin: true,
           createdAt: new Date(),
           updatedAt: new Date()
         },
@@ -47,7 +48,8 @@ module.exports = {
             Math.random() * 100
           }`,
           introduction: faker.lorem.text().substring(0, 160),
-          role: false,
+          role: 'user',
+          isAdmin: false,
           createdAt: new Date(),
           updatedAt: new Date()
         }
@@ -70,7 +72,8 @@ module.exports = {
           Math.random() * 100
         }`,
         introduction: faker.lorem.text().substring(0, 160),
-        role: false,
+        role: 'user',
+        isAdmin: false,
         createdAt: new Date(),
         updatedAt: new Date()
       })),

@@ -18,6 +18,15 @@ const userController = {
     if (name.length > 50) {
       errors.push({ message: '名稱上限為50字！' })
     }
+    if (errors.length) {
+      return res.render('signup', {
+        errors,
+        name,
+        email,
+        account
+      })
+    }
+
     User.findOne({
       where: {
         [Op.or]: [{ account }, { email }]
@@ -48,7 +57,8 @@ const userController = {
             req.body.password,
             bcrypt.genSaltSync(10),
             null
-          )
+          ),
+          role: 'user'
         }).then(user => {
           res.redirect('/signin')
         })
