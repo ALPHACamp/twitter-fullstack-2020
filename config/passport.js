@@ -11,6 +11,7 @@ passport.use(
     },
     (req, account, password, cb) => {
       User.findOne({ where: { account } }).then(user => {
+        if (!user) { return cb(null, false, req.flash('error_messages', '查無此帳號！')) }
         // 後台登入限制
         if (req.url === '/admin/signin' && user.role === false) {
           return cb(null, false, req.flash('error_messages', '查無此帳號！'))
@@ -19,7 +20,7 @@ passport.use(
         if (req.url === '/signin' && user.role === true) {
           return cb(null, false, req.flash('error_messages', '查無此帳號！'))
         }
-        if (!user) { return cb(null, false, req.flash('error_messages', '查無此帳號！')) }
+
         bcrypt.compare(password, user.password).then(res => {
           if (!res) {
             return cb(
