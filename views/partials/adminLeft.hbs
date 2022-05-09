@@ -1,0 +1,27 @@
+<div class='px-3 pt-2'>
+  <div class='pl-2 pt-1'>
+    <a href='/admin/tweets'>
+      <p>
+        首頁
+      </p>
+    </a>
+  </div>
+  <div class='p-3'>
+    <br />
+    <div class='d-flex align-items-start flex-column bd-highlight mb-3'>
+      <a href='/admin/tweets'>
+        <p class='navCol-btn {{#ifCond  currentPath ' /admin/tweets'}}navCol-btn-active{{/ifCond}}'><i></i>推文清單</p>
+      </a>
+      <div style='font-weight:bold;'>
+        <a href='/admin/users'>
+          <p class='navCol-btn {{#ifCond currentPath ' /admin/users'}}navCol-btn-active{{/ifCond}}'><i></i>使用者列表</p>
+        </a>
+      </div>
+    </div>
+  </div>
+  <a href='/logout'>
+    <p>
+      登出
+    </p>
+  </a>
+</div>
