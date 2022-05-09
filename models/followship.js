@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Followship.init(
     {
+      id: {
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER
+      },
       followingId: DataTypes.INTEGER,
       followerId: DataTypes.INTEGER,
     },
@@ -20,7 +25,6 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'Followship',
       tableName: 'Followships',
-      underscored: true
     }
   )
   return Followship

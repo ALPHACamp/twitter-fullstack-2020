@@ -30,11 +30,20 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
+      id: {
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER
+      },
       name: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       introduction: DataTypes.TEXT,
-      role: DataTypes.STRING,
+      role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'user',
+      },
       avatar: DataTypes.STRING,
       account: DataTypes.STRING,
       cover: DataTypes.STRING
@@ -42,8 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'User',
-      tableName: 'Users',
-      underscored: true
+      tableName: 'Users'
     }
   )
   return User

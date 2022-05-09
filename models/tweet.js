@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Tweet.init(
     {
+      id: {
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER
+      },
       UserId: DataTypes.INTEGER,
       description: DataTypes.TEXT,
     },
@@ -27,7 +32,6 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'Tweet',
       tableName: 'Tweets',
-      underscored: true
     }
   )
   return Tweet

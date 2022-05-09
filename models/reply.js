@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Reply.init(
     {
+      id: {
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER
+      },
       UserId: DataTypes.INTEGER,
       TweetId: DataTypes.INTEGER,
       comment: DataTypes.TEXT,
@@ -22,7 +27,6 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'Reply',
       tableName: 'Replies',
-      underscored: true
     }
   )
   return Reply

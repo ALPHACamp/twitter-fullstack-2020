@@ -14,14 +14,18 @@ module.exports = (sequelize, DataTypes) => {
   }
   Like.init(
     {
+      id: {
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER
+      },
       UserId: DataTypes.INTEGER,
       TweetId: DataTypes.INTEGER,
     },
     {
       sequelize,
       modelName: 'Like',
-      tableName: 'Likes',
-      underscored: true
+      tableName: 'Likes'
     }
   )
   return Like
