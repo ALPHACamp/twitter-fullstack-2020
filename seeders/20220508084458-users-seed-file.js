@@ -14,96 +14,36 @@ module.exports = {
           name: 'root',
           role: 'admin',
           introduction: faker.lorem.text().substring(0, 160),
-          avatar:`https://loremflickr.com/140/140/man,woman/?random=${
+          avatar: `https://loremflickr.com/140/140/man,woman/?random=${
           Math.random() * 100
         }`,
-          cover:`https://loremflickr.com/640/200/landscape,mountain,ocean/?random=${
-          Math.random() * 100
-        }`,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          email: 'user1@example.com',
-          password: await bcrypt.hash('12345678', 10),
-          account: 'user1',
-          name: 'user1',
-          role: 'user',
-          introduction: faker.lorem.text().substring(0,160),
-          avatar:`https://loremflickr.com/140/140/man,woman/?random=${
-          Math.random() * 100
-        }`,
-          cover:`https://loremflickr.com/640/200/landscape,mountain,ocean/?random=${
+        cover: `https://loremflickr.com/640/200/landscape,mountain,ocean/?random=${
           Math.random() * 100
         }`,
           createdAt: new Date(),
           updatedAt: new Date()
-        },
-        {
-          email: 'user2@example.com',
-          password: await bcrypt.hash('12345678', 10),
-          account: 'user2',
-          name: 'user2',
-          role: 'user',
-          introduction: faker.lorem.text().substring(0,160),
-          avatar:`https://loremflickr.com/140/140/man,woman/?random=${
-          Math.random() * 100
-        }`,
-          cover:`https://loremflickr.com/640/200/landscape,mountain,ocean/?random=${
-          Math.random() * 100
-        }`,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          email: 'user3@example.com',
-          password: await bcrypt.hash('12345678', 10),
-          account: 'user3',
-          name: 'user3',
-          role: 'user',
-          introduction: faker.lorem.text().substring(0,160),
-          avatar:`https://loremflickr.com/140/140/man,woman/?random=${
-          Math.random() * 100
-        }`,
-          cover:`https://loremflickr.com/640/200/landscape,mountain,ocean/?random=${
-          Math.random() * 100
-        }`,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          email: 'user4@example.com',
-          password: await bcrypt.hash('12345678', 10),
-          account: 'user4',
-          name: 'user4',
-          role: 'user',
-          introduction: faker.lorem.text().substring(0,160),
-          avatar:`https://loremflickr.com/140/140/man,woman/?random=${
-          Math.random() * 100
-        }`,
-          cover:`https://loremflickr.com/640/200/landscape,mountain,ocean/?random=${
-          Math.random() * 100
-        }`,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        {
-          email: 'user5@example.com',
-          password: await bcrypt.hash('12345678', 10),
-          account: 'user5',
-          name: 'user5',
-          role: 'user',
-          introduction: faker.lorem.text().substring(0,160),
-          avatar:`https://loremflickr.com/140/140/man,woman/?random=${
-          Math.random() * 100
-        }`,
-          cover:`https://loremflickr.com/640/200/landscape,mountain,ocean/?random=${
-          Math.random() * 100
-        }`,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
+        }
       ],
+      {}
+    )
+    await queryInterface.bulkInsert(
+      'Users',
+      Array.from({ length: 5 }, (_, index) => ({
+        email: `user${index + 1}@example.com`,
+        password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10)),
+        account: `user${index + 1}`,
+        name: `user${index + 1}`,
+        role: 'user',
+        introduction: faker.lorem.text().substring(0, 160),
+        avatar: `https://loremflickr.com/140/140/man,woman/?random=${
+          Math.random() * 100
+        }`,
+        cover: `https://loremflickr.com/640/200/landscape,mountain,ocean/?random=${
+          Math.random() * 100
+        }`,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })),
       {}
     )
   },
