@@ -92,3 +92,7 @@ typings/
 # ignore temp directory
 temp/
 upload/
+
+# marcus local mysql docker
+docker-compose.yml
+mysql/
