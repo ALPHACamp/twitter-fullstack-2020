@@ -119,12 +119,10 @@ const userController = {
         ]
       })
       if (!user) throw new Error("user didn't exist!")
-      console.log('user.toJSON().Likes:', user.toJSON().Likes)
       const tweets = user.toJSON().Likes.map(tweet => ({
         ...tweet,
         isLiked: true
       }))
-      console.log('tweets', tweets)
       return res.render('likes', {
         tweets
       })
@@ -144,10 +142,10 @@ const userController = {
         ]
       })
       if (!user) throw new Error("user didn't exist!")
-      const likedTweetId = helpers.getUser(req) && helpers.getUser(req).Likes.map(liked => liked.TweetId)
+      const likedTweetId = helpers.getUser(req) && helpers.getUser(req).Likes && helpers.getUser(req).Likes.map(liked => liked.TweetId)
       const tweets = user.toJSON().Tweets.map(tweet => ({
         ...tweet,
-        isLiked: likedTweetId.includes(tweet.id)
+        isLiked: likedTweetId && likedTweetId.includes(tweet.id)
       }))
       return res.render('tweets', {
         user: user.toJSON(),
@@ -187,8 +185,6 @@ const userController = {
   },
   addLike: (req, res, next) => {
     const { tweetId } = req.params
-    console.log('tweetId', tweetId)
-    console.log('userId', req.user.id)
     return Promise.all([
       Tweet.findByPk(tweetId),
       Like.findOne({
@@ -212,7 +208,7 @@ const userController = {
   removeLike: (req, res, next) => {
     return Like.findOne({
       where: {
-        userId: req.user.id,
+        userId: helpers.getUser(req).id,
         tweetId: req.params.tweetId
       }
     })
