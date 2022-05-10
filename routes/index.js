@@ -20,8 +20,11 @@ router.use('/users', authenticated, admin)
 router.use('/tweets', authenticated, admin)
 
 // 以下註冊、登入、登出路由以及followships
+router.get('/signup', userController.signUpPage)
 
-router.get('/', (req, res) => res.send('Hello World!'))
-
+// fallback 路由
+router.get('/', (req, res) => {
+  res.redirect('/tweets')
+})
 router.use('/', generalErrorHandler)
 module.exports = router
