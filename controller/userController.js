@@ -110,17 +110,23 @@ const userController = {
   getLikes: async (req, res, next) => {
     try {
       const userId = req.params.id
-      const user = await Like.findAll(userId, {
+      const user = await User.findByPk(userId, {
         include: [
-          { model: Tweet, include: [User] }
+          { model: Like, include: [{ model: Tweet, include: [Reply] }] }
+        ],
+        order: [
+          ['createdAt', 'DESC']
         ]
       })
       if (!user) throw new Error("user didn't exist!")
-      console.log('likes:', user.toJSON())
-      // TODO: 找到該user的like清單
-      // 輸出like的tweets(該tweet的User name/account/comment/發文時間/回文數/回文連結/like那個推文的like數)
+      console.log('user.toJSON().Likes:', user.toJSON().Likes)
+      const tweets = user.toJSON().Likes.map(tweet => ({
+        ...tweet,
+        isLiked: true
+      }))
+      console.log('tweets', tweets)
       return res.render('likes', {
-        user: user.toJSON()
+        tweets
       })
     } catch (err) {
       next(err)
@@ -139,7 +145,6 @@ const userController = {
       })
       if (!user) throw new Error("user didn't exist!")
       const likedTweetId = helpers.getUser(req) && helpers.getUser(req).Likes.map(liked => liked.TweetId)
-      // const data = user.toJSON().Tweets
       const tweets = user.toJSON().Tweets.map(tweet => ({
         ...tweet,
         isLiked: likedTweetId.includes(tweet.id)
@@ -195,7 +200,7 @@ const userController = {
     ])
       .then(([tweet, like]) => {
         if (!tweet) throw new Error("Tweet didn't exist!")
-        if (like) throw new Error('You have liked this restaurant!')
+        if (like) throw new Error('You have already liked')
         return Like.create({
           userId: helpers.getUser(req).id,
           tweetId
@@ -212,7 +217,7 @@ const userController = {
       }
     })
       .then(like => {
-        if (!like) throw new Error("You haven't liked this restaurant")
+        if (!like) throw new Error("You haven't liked ")
         return like.destroy()
       })
       .then(() => res.redirect('back'))
