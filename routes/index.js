@@ -33,10 +33,10 @@ router.post('/tweets/:tweetId/like', authenticated, userController.addLike)
 router.post('/tweets/:tweetId/unlike', authenticated, userController.removeLike)
 
 // user
-router.get('/users/:id/tweets', userController.getUserTweets)
-router.get('/users/:id/replies', userController.getReplies)
-router.get('/users/:id/likes', userController.getLikes)
-router.get('/users/:id', userController.getUser)
+router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
+router.get('/users/:id/replies', authenticated, userController.getReplies)
+router.get('/users/:id/likes', authenticated, userController.getLikes)
+router.get('/users/:id', authenticated, userController.getUser)
 
 router.get('/', exampleController.indexPage)
 router.use('/', generalErrorHandler)

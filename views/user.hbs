@@ -1,29 +1,3 @@
 {{> user-profile user=user}}
 {{> user-tabs route='tweets'}}
 
-
-{{!-- tweets --}}
-<h3 class="mb-3">使用者的所有tweets</h3>
-{{#each user.Tweets}}
-  <blockquote class="blockquote mb-0">
-    <span><a href="/users/{{this.UserId}}">{{ ../user.name }}</a></span>
-    <span class="blockquote-footer"> @{{ ../user.account }}</span>
-    <span>{{ relativeTimeFromNow this.createdAt }}</span>
-    <p>{{ this.description }}</p>
-  </blockquote>
-  <span class="blockquote-footer">{{ this.Replies.length }}回覆數</span>
-      {{!-- 預留: 回文 POST 功能連結 --}}
-    <form action="/tweets/{{ this.id }}/replies" method="POST">
-      <button type="submit">回覆icon</button>
-    </form>
-
-      {{!-- Like按鈕 應該加入判斷式: 是否已經like過了 --}}
-    <form action="/tweets/{{ this.id }}/like" method="POST">
-      <button type="submit">加入 LIKE icon</button>
-    </form>
-
-    <form action="/tweets/{{ this.id }}/unlike" method="POST">
-      <button type="submit">移除 LIKE icon</button>
-    </form>
-  <hr />
-{{/each}}
