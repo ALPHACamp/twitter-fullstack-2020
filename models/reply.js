@@ -21,12 +21,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       UserId: DataTypes.INTEGER,
       TweetId: DataTypes.INTEGER,
-      comment: DataTypes.TEXT,
+      comment: DataTypes.TEXT
     },
     {
       sequelize,
       modelName: 'Reply',
-      tableName: 'Replies',
+      tableName: 'Replies'
     }
   )
   return Reply

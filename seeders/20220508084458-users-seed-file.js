@@ -17,7 +17,7 @@ module.exports = {
           avatar: `https://loremflickr.com/140/140/man,woman/?random=${
           Math.random() * 100
         }`,
-        cover: `https://loremflickr.com/640/200/landscape,mountain,ocean/?random=${
+          cover: `https://loremflickr.com/640/200/landscape,mountain,ocean/?random=${
           Math.random() * 100
         }`,
           createdAt: new Date(),
@@ -42,7 +42,7 @@ module.exports = {
           Math.random() * 100
         }`,
         createdAt: new Date(),
-        updatedAt: new Date(),
+        updatedAt: new Date()
       })),
       {}
     )

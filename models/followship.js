@@ -19,12 +19,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER
       },
       followingId: DataTypes.INTEGER,
-      followerId: DataTypes.INTEGER,
+      followerId: DataTypes.INTEGER
     },
     {
       sequelize,
       modelName: 'Followship',
-      tableName: 'Followships',
+      tableName: 'Followships'
     }
   )
   return Followship

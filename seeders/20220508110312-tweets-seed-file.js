@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 const faker = require('faker')
 
 module.exports = {
@@ -9,10 +9,10 @@ module.exports = {
     )
     const usersTweet = []
 
-    for(let i = 0; i < users.length; i++) {
-      const result = Array.from({length: 10}, () => ({
+    for (let i = 0; i < users.length; i++) {
+      const result = Array.from({ length: 10 }, () => ({
         UserId: users[i].id,
-        description: faker.lorem.text().substring(0,140),
+        description: faker.lorem.text().substring(0, 140),
         createdAt: new Date(),
         updatedAt: new Date()
       }))
@@ -24,4 +24,4 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete('Tweets', null, {})
   }
-};
+}
