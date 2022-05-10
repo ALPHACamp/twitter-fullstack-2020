@@ -27,6 +27,10 @@ router.get('/logout', userController.logout)
 // 推文
 router.get('/tweets', authenticated, tweetController.getTweets)
 
+// LIKE 功能
+router.post('/tweets/:tweetId/like', authenticated, userController.addLike)
+router.post('/tweets/:tweetId/unlike', authenticated, userController.removeLike)
+
 // user
 router.get('/users/:id/tweets', userController.getUserTweets)
 router.get('/users/:id/replies', userController.getReplies)

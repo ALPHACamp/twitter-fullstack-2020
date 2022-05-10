@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { Tweet, User, Like, Reply } = require('../models')
 const { Op } = require('sequelize')
+const helpers = require('../_helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -109,7 +110,7 @@ const userController = {
   getLikes: async (req, res, next) => {
     try {
       const userId = req.params.id
-      const user = await Like.findByPk(userId, {
+      const user = await Like.findAll(userId, {
         include: [
           { model: Tweet, include: [User] }
         ]
@@ -171,6 +172,44 @@ const userController = {
     } catch (err) {
       next(err)
     }
+  },
+  addLike: (req, res, next) => {
+    const { tweetId } = req.params
+    console.log('tweetId', tweetId)
+    console.log('userId', req.user.id)
+    return Promise.all([
+      Tweet.findByPk(tweetId),
+      Like.findOne({
+        where: {
+          userId: helpers.getUser(req).id,
+          tweetId
+        }
+      })
+    ])
+      .then(([tweet, like]) => {
+        if (!tweet) throw new Error("Tweet didn't exist!")
+        if (like) throw new Error('You have liked this restaurant!')
+        return Like.create({
+          userId: helpers.getUser(req).id,
+          tweetId
+        })
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+  removeLike: (req, res, next) => {
+    return Like.findOne({
+      where: {
+        userId: req.user.id,
+        tweetId: req.params.tweetId
+      }
+    })
+      .then(like => {
+        if (!like) throw new Error("You haven't liked this restaurant")
+        return like.destroy()
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
   }
 }
 module.exports = userController
