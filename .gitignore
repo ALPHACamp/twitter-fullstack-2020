@@ -93,6 +93,6 @@ typings/
 temp/
 upload/
 
-# marcus local mysql docker
+# ignore marcus local db store
 docker-compose.yml
 mysql/

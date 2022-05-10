@@ -1,1 +1,36 @@
-<div>Hello Index</div>
+{{!-- TODO:只滾動 col-md-6 部分 --}}
+<div class="row align-items-start">
+  {{> left}}
+  <div class="col-md-6">
+    <div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        首頁
+      </nav>
+      <img src="{{ user.avatar }}" alt="user-picture" class="rounded-circle" style="width: 64px; height: 64px;">
+      <form action="/tweets" id="tweets" method="post">
+        <div>
+          <textarea name="comment" id="tweet-content" rows="5" class="form-control" placeholder="有什麼新鮮事？"
+            required></textarea>
+        </div>
+        <button id="submit-btn" class="btn btn-primary">推文</button>
+      </form>
+    </div>
+    {{#each tweets}}
+    <blockquote class="blockquote mb-0">
+      <img src="{{ this.User.avatar }}" alt="user-picture" class="rounded-circle" style="width: 64px; height:64px;">
+      <span><a href="/users/{{ this.UserId }}">{{ this.User.name }}</a></span>
+      <span class="blockquote-footer"> @{{ this.User.account }}</span>
+      <span>{{ relativeTimeFromNow this.createdAt }}</span>
+      <p>{{ this.description }}</p>
+      <div>
+        <span><a href="/tweets/{{this.id}}/replies">回覆</a></span>
+        <span>回覆數量</span>
+        <span><a href="/like/{{this.id}}">喜歡</a></span>
+        <span>喜歡數量</span>
+      </div>
+    </blockquote>
+    <hr />
+    {{/each}}
+  </div>
+  {{> right topUsers=topUsers}}
+</div>
