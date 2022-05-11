@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { Tweet, User, Like, Reply } = require('../models')
 const { Op } = require('sequelize')
+const helpers = require('../_helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -109,17 +110,21 @@ const userController = {
   getLikes: async (req, res, next) => {
     try {
       const userId = req.params.id
-      const user = await Like.findByPk(userId, {
+      const user = await User.findByPk(userId, {
         include: [
-          { model: Tweet, include: [User] }
+          { model: Like, include: [{ model: Tweet, include: [Reply] }] }
+        ],
+        order: [
+          ['createdAt', 'DESC']
         ]
       })
       if (!user) throw new Error("user didn't exist!")
-      console.log('likes:', user.toJSON())
-      // TODO: 找到該user的like清單
-      // 輸出like的tweets(該tweet的User name/account/comment/發文時間/回文數/回文連結/like那個推文的like數)
+      const tweets = user.toJSON().Likes.map(tweet => ({
+        ...tweet,
+        isLiked: true
+      }))
       return res.render('likes', {
-        user: user.toJSON()
+        tweets
       })
     } catch (err) {
       next(err)
@@ -137,8 +142,14 @@ const userController = {
         ]
       })
       if (!user) throw new Error("user didn't exist!")
+      const likedTweetId = helpers.getUser(req) && helpers.getUser(req).Likes && helpers.getUser(req).Likes.map(liked => liked.TweetId)
+      const tweets = user.toJSON().Tweets.map(tweet => ({
+        ...tweet,
+        isLiked: likedTweetId && likedTweetId.includes(tweet.id)
+      }))
       return res.render('tweets', {
-        user: user.toJSON()
+        user: user.toJSON(),
+        tweets
       })
     } catch (err) {
       next(err)
@@ -171,6 +182,42 @@ const userController = {
     } catch (err) {
       next(err)
     }
+  },
+  addLike: (req, res, next) => {
+    const { tweetId } = req.params
+    return Promise.all([
+      Tweet.findByPk(tweetId),
+      Like.findOne({
+        where: {
+          userId: helpers.getUser(req).id,
+          tweetId
+        }
+      })
+    ])
+      .then(([tweet, like]) => {
+        if (!tweet) throw new Error("Tweet didn't exist!")
+        if (like) throw new Error('You have already liked')
+        return Like.create({
+          userId: helpers.getUser(req).id,
+          tweetId
+        })
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+  removeLike: (req, res, next) => {
+    return Like.findOne({
+      where: {
+        userId: helpers.getUser(req).id,
+        tweetId: req.params.tweetId
+      }
+    })
+      .then(like => {
+        if (!like) throw new Error("You haven't liked ")
+        return like.destroy()
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
   }
 }
 module.exports = userController

@@ -1,7 +1,8 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const bcrypt = require('bcryptjs')
-const { User } = require('../models')
+const { User, Like } = require('../models')
+
 passport.use(
   new LocalStrategy(
     {
@@ -40,9 +41,16 @@ passport.serializeUser((user, cb) => {
 })
 // user = user.toJSON()
 // console.log('passport_user.toJSON()', user) // debug用
+// TODO: 要再加入follower & following 的數量，顯示在個人資料頁
 passport.deserializeUser((id, cb) => {
-  return User.findByPk(id, {})
-    .then(user => cb(null, user.toJSON()))
+  return User.findByPk(id, {
+    include: [{ model: Like }]
+    // 拿到user.Likes的陣列[UserId:1,TweetId:1]
+  })
+    .then(user => {
+      // console.log('passport_user.toJSON()', user.toJSON())
+      return cb(null, user.toJSON())
+    })
     .catch(err => cb(err))
 })
 module.exports = passport

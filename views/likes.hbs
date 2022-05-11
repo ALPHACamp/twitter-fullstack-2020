@@ -1,15 +1,30 @@
 {{> user-profile user=user}}
 {{> user-tabs route='likes'}}
 
-{{!-- likes  TODO:待Like功能完成後更新內容--}}
+{{!-- likes --}}
 <h3 class="mb-3">使用者的所有likes</h3>
-{{#each user.Likes}}
+{{#each tweets}}
   <blockquote class="blockquote mb-0">
     <span><a href="/users/{{this.UserId}}">{{ ../user.name }}</a></span>
     <span class="blockquote-footer"> @{{ ../user.account }}</span>
     <span>{{ relativeTimeFromNow this.createdAt }}</span>
-    <p>回覆對象連結<a href="/users/{{this.Tweet.UserId}}"> {{ this.Tweet.User.name }}</a>  </p>
-    <p>{{ this.comment }}</p>
+    <p>{{ this.Tweet.description }}</p>
   </blockquote>
+    <span class="blockquote-footer">{{ this.Tweet.Replies.length }}回覆數</span>
+    <p></p>
+      {{!-- 預留: 單一tweet連結  --}}
+    <form action="/tweets/{{ this.id }}" method="GET">
+      <button type="submit">回覆icon</button>
+    </form>
+
+    {{#if isLiked}}
+      <form action="/tweets/{{ this.id }}/unlike" method="POST">
+        <button type="submit">移除 LIKE icon</button>
+      </form>
+    {{else}}
+      <form action="/tweets/{{ this.id }}/like" method="POST">
+        <button type="submit">加入 LIKE icon</button>
+      </form>
+    {{/if}}
   <hr />
 {{/each}}
