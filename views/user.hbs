@@ -3,12 +3,12 @@
     <div class='col-2 left-column'>
       {{> leftColumn}}
     </div>
-    <div class='col-7 middle-column border p-0'>
+    <div class='col-7 middle-column p-0'>
       {{!-- {{> middleColumn}} --}}
-      <div class='userHeader' style='border: 1px solid blue;'>
+      <div class='userHeader p-2' style='border: 1px solid blue;'>
         <i class="fa-solid fa-arrow-left"></i>
-        <span class="user-name">user1</span>
-        <span class="user-tweets">0 推文</span>
+        <span class="user-name">{{user.name}}</span>
+        <span class="user-tweets">{{tweets.length}} 推文</span>
       </div>
       <div class='userInfo' style='border: 1px solid red;'>
         <img

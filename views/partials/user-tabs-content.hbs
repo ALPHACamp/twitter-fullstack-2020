@@ -1,4 +1,5 @@
-<ul class='list-group list-group-flush'>
+<ul class='list-group'>
+  {{#each tweets}}
   <li class='list-group-item'>
     <div class='row d-flex justify-content-center'>
       <div class='col-2 p-0 d-flex justify-content-center avatar'>
@@ -10,17 +11,15 @@
         />
       </div>
       <div class='col p-0 ps-1 tweet-content'>
-        <strong class='user-name'>user1</strong>
-        <span class='user-account'>@user_1</span>
-        <p class='user-name'>Nulla Lorem mollit cupidatat irure. Laborum magna
-          nulla duis ullamco cillum dolor. Voluptate exercitation incididunt
-          aliquip deserunt reprehenderit elit laborum.
-        </p>
-        <span class='tweet-comments'><i class='fa-solid fa-comment'></i>
-          0</span>
-        <span class='tweet-likes'><i class='fa-solid fa-heart'></i>
-          0</span>
+          <strong class='user-name'>{{../user.name}}</strong>
+          <span class='user-account'>@{{../user.account}}</span>
+          <p class='user-name'>{{this.description}}</p>
+          <span class='tweet-comments'><i class='fa-solid fa-comment'></i>
+            {{this.Replies.length}}</span>
+          <span class='tweet-likes'><i class='fa-solid fa-heart'></i>
+            0</span>
       </div>
     </div>
   </li>
+  {{/each}}
 </ul>
