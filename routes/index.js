@@ -22,6 +22,8 @@ router.use('/tweets', authenticated, tweets)
 
 // 以下註冊、登入、登出路由以及followships
 router.get('/signup', userController.signUpPage)
+router.post('/signup', userController.signUp)
+router.get('/signin', userController.signInPage)
 
 // fallback 路由
 router.get('/', (req, res) => {

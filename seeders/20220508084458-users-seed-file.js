@@ -1,5 +1,5 @@
 'use strict'
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcrypt-nodejs')
 const faker = require('faker')
 
 module.exports = {
@@ -9,7 +9,7 @@ module.exports = {
       [
         {
           email: 'root@example.com',
-          password: await bcrypt.hash('12345678', 10),
+          password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10)),
           account: 'root',
           name: 'root',
           role: 'admin',
