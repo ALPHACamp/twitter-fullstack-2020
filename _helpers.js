@@ -32,9 +32,23 @@ const handlebarsHelpers = {
   }
 }
 
+const removeAllSpace = str => {
+  let newStr = ''
+  newStr = str.replace(/\s/g, '')
+  return newStr
+}
+
+const removeOuterSpace = str => {
+  let newStr = ''
+  newStr = str.trim()
+  return newStr
+}
+
 module.exports = {
   ensureAuthenticated,
   getUser,
   imgurFileHandler,
-  handlebarsHelpers
+  handlebarsHelpers,
+  removeAllSpace,
+  removeOuterSpace
 }
