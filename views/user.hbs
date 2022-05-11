@@ -3,7 +3,7 @@
     <div class='col-2 left-column'>
       {{> leftColumn}}
     </div>
-    <div class='col-7 middle-column p-0'>
+    <div class='col-7 border middle-column p-0'>
       {{!-- {{> middleColumn}} --}}
       <div class='userHeader p-2' style='border: 1px solid blue;'>
         <i class="fa-solid fa-arrow-left"></i>
@@ -13,25 +13,25 @@
       <div class='userInfo' style='border: 1px solid red;'>
         <img
           class="cover"
-          src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg'
+          src='{{user.cover}}'
           alt='background'
           width='100%'
-          height='30%'
+          height='20%'
         />
         <img
           class='rounded-circle avatar'
-          src='https://www.mantruckandbus.com/fileadmin/_processed_/2/b/csm_19-09_startseite_interviewkachel_324_224_3_726a3e77d5.jpg'
+          src='{{user.avatar}}'
           alt='avatar'
-          width='30%'
-          height='20%'
+          width='20%'
+          height='10%'
         />
         <button
           class='btn rounded-pill edit-button'
           style='border: 1px solid #FF6600; color:#FF6600;'
         >編輯個人資料</button>
-        <div class='user-name'><strong>user1</strong></div>
-        <div class='user-account'>@user1</div>
-        <p class='m-0 description'>12312313123123</p>
+        <div class='user-name'><strong>{{user.name}}</strong></div>
+        <div class='user-account'>@{{user.account}}</div>
+        <p class='m-0 user-introduction'>{{user.introduction}}</p>
         <a href="#" class="btn followings">
           0 位跟隨中
         </a>

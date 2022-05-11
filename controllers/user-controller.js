@@ -26,9 +26,27 @@ const userController = {
         ...tweet.toJSON()
       }))
 
-      console.log(data)
+      res.render('user', { user, tweets: data, tab: 'getTweets' })
+    } catch (err) {
+      next(err)
+    }
+  },
+  getReplies: async (req, res, next) => {
+    try {
+      const userId = req.params.id
+      const [user, replies] = await Promise.all([
+        User.findByPk(userId, { raw: true }),
+        Reply.findAll({
+          where: { userId },
+          include: [{ model: Tweet, include: User }]
+        })
+      ])
 
-      res.render('user', { user, tweets: data, route: 'getTweets' })
+      const data = replies.map(reply => ({
+        ...reply.toJSON()
+      }))
+
+      res.render('user', { user, replies: data, tab: 'getReplies' })
     } catch (err) {
       next(err)
     }
