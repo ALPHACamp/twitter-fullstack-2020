@@ -1,4 +1,4 @@
-const { User, Tweet, Reply, Like, Followship, sequelize } = require('../models')
+const { User, Tweet, Reply, Like, Followship } = require('../models')
 
 const { imgurFileHandler } = require('../_helpers')
 
@@ -18,12 +18,12 @@ const userController = {
         User.findByPk(userId, { raw: true }),
         Tweet.findAll({
           include: [Reply],
-          where: { userId }
-        })
+          where: { userId },
+        }),
       ])
 
-      const data = tweets.map(tweet => ({
-        ...tweet.toJSON()
+      const data = tweets.map((tweet) => ({
+        ...tweet.toJSON(),
       }))
 
       res.render('user', { user, tweets: data, tab: 'getTweets' })
@@ -38,19 +38,19 @@ const userController = {
         User.findByPk(userId, { raw: true }),
         Reply.findAll({
           where: { userId },
-          include: [{ model: Tweet, include: User }]
-        })
+          include: [{ model: Tweet, include: User }],
+        }),
       ])
 
-      const data = replies.map(reply => ({
-        ...reply.toJSON()
+      const data = replies.map((reply) => ({
+        ...reply.toJSON(),
       }))
 
       res.render('user', { user, replies: data, tab: 'getReplies' })
     } catch (err) {
       next(err)
     }
-  }
+  },
 }
 
 module.exports = userController
