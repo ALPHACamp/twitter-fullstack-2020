@@ -21,6 +21,7 @@ const userController = {
           where: { userId }
         })
       ])
+      if (!user) throw new Error("User didn't exist!")
 
       const data = tweets.map(tweet => ({
         ...tweet.toJSON()
@@ -34,6 +35,7 @@ const userController = {
   getReplies: async (req, res, next) => {
     try {
       const userId = req.params.id
+
       const [user, replies] = await Promise.all([
         User.findByPk(userId, { raw: true }),
         Reply.findAll({
@@ -41,6 +43,7 @@ const userController = {
           include: [{ model: Tweet, include: User }]
         })
       ])
+      if (!user) throw new Error("User didn't exist!")
 
       const data = replies.map(reply => ({
         ...reply.toJSON()
@@ -63,6 +66,7 @@ const userController = {
           }
         ]
       })
+      if (!user) throw new Error("User didn't exist!")
 
       res.render('user', { user: user.toJSON(), tab: 'getLikedTweets' })
     } catch (err) {
