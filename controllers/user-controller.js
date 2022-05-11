@@ -18,12 +18,12 @@ const userController = {
         User.findByPk(userId, { raw: true }),
         Tweet.findAll({
           include: [Reply],
-          where: { userId },
-        }),
+          where: { userId }
+        })
       ])
 
-      const data = tweets.map((tweet) => ({
-        ...tweet.toJSON(),
+      const data = tweets.map(tweet => ({
+        ...tweet.toJSON()
       }))
 
       res.render('user', { user, tweets: data, tab: 'getTweets' })
@@ -38,12 +38,12 @@ const userController = {
         User.findByPk(userId, { raw: true }),
         Reply.findAll({
           where: { userId },
-          include: [{ model: Tweet, include: User }],
-        }),
+          include: [{ model: Tweet, include: User }]
+        })
       ])
 
-      const data = replies.map((reply) => ({
-        ...reply.toJSON(),
+      const data = replies.map(reply => ({
+        ...reply.toJSON()
       }))
 
       res.render('user', { user, replies: data, tab: 'getReplies' })
@@ -51,6 +51,24 @@ const userController = {
       next(err)
     }
   },
+  getLikedTweets: async (req, res, next) => {
+    try {
+      const userId = req.params.id
+      const user = await User.findByPk(userId, {
+        include: [
+          {
+            model: Tweet,
+            as: 'LikedTweets',
+            include: [User, Reply, { model: User, as: 'LikedUsers' }]
+          }
+        ]
+      })
+
+      res.render('user', { user: user.toJSON(), tab: 'getLikedTweets' })
+    } catch (err) {
+      next(err)
+    }
+  }
 }
 
 module.exports = userController

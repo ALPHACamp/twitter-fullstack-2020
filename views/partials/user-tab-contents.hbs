@@ -13,6 +13,8 @@
       <div class='col p-0 ps-1 tweet-content'>
           <strong class='user-name'>{{../user.name}}</strong>
           <span class='user-account'>@{{../user.account}}</span>
+          *
+          <span class='user-account'>{{relativeTimeFromNow this.createdAt}}</span>
           <p class='user-name'>{{this.description}}</p>
           <span class='tweet-comments'><i class='fa-solid fa-comment'></i>
             {{this.Replies.length}}</span>
@@ -38,6 +40,31 @@
           <span class='user-account'>@{{../user.account}}</span>
           <div class='user-account' style='color:#FF6600'>回覆 @{{this.Tweet.User.account}}</div>
           <p class='user-name'>{{this.comment}}</p>
+      </div>
+    </div>
+  </li>
+  {{/each}}
+  {{#each user.LikedTweets}}
+  <li class='list-group-item'>
+    <div class='row d-flex justify-content-center'>
+      <div class='col-2 p-0 d-flex justify-content-center avatar'>
+        <img
+          src='https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png'
+          alt='alphaCamp'
+          width='50px'
+          height='50px'
+        />
+      </div>
+      <div class='col p-0 ps-1 tweet-content'>
+          <strong class='user-name'>{{this.User.name}}</strong>
+          <span class='user-account'>@{{this.User.account}}</span>
+          *
+          <span class='user-account'>{{relativeTimeFromNow this.createdAt}}</span>
+          <p class='user-name'>{{this.description}}</p>
+          <span class='tweet-comments'><i class='fa-solid fa-comment'></i>
+            {{this.Replies.length}}</span>
+          <span class='tweet-likes'><i class='fa-solid fa-heart'></i>
+            {{this.LikedUsers.length}}</span>
       </div>
     </div>
   </li>

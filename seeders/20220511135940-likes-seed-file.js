@@ -13,8 +13,16 @@ module.exports = {
     const tweetReplies = []
 
     for (let i = 0; i < 3; i++) {
-      const result = Array.from({ length: 3 }, () => ({
-        UserId: users[Math.floor(Math.random() * users.length)].id,
+      const randomNumbers = new Set()
+      // keep adding elements till size of set is equal to n
+      while (randomNumbers.size < 3) {
+        // Generating random number and adding it
+        randomNumbers.add(Math.ceil(Math.random() * (users.length - 1)))
+      }
+      const noRepeatedUsers = [...randomNumbers]
+
+      const result = Array.from({ length: 3 }, (_, index) => ({
+        UserId: users[noRepeatedUsers[index]].id,
         TweetId: tweets[i].id,
         createdAt: new Date(),
         updatedAt: new Date()
