@@ -1,0 +1,49 @@
+<div class='container'>
+  <div class="row">
+    <div class='col-2 left-column'>
+      {{> leftColumn}}
+    </div>
+    <div class='col-7 middle-column border p-0'>
+      {{!-- {{> middleColumn}} --}}
+      <div class='userHeader' style='border: 1px solid blue;'>
+        <i class="fa-solid fa-arrow-left"></i>
+        <span class="user-name">user1</span>
+        <span class="user-tweets">0 推文</span>
+      </div>
+      <div class='userInfo' style='border: 1px solid red;'>
+        <img
+          class="cover"
+          src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg'
+          alt='background'
+          width='100%'
+          height='30%'
+        />
+        <img
+          class='rounded-circle avatar'
+          src='https://www.mantruckandbus.com/fileadmin/_processed_/2/b/csm_19-09_startseite_interviewkachel_324_224_3_726a3e77d5.jpg'
+          alt='avatar'
+          width='30%'
+          height='20%'
+        />
+        <button
+          class='btn rounded-pill edit-button'
+          style='border: 1px solid #FF6600; color:#FF6600;'
+        >編輯個人資料</button>
+        <div class='user-name'><strong>user1</strong></div>
+        <div class='user-account'>@user1</div>
+        <p class='m-0 description'>12312313123123</p>
+        <a href="#" class="btn followings">
+          0 位跟隨中
+        </a>
+        <a href="#" class="btn followers">
+          0 位跟隨者
+        </a>
+      </div>
+      {{> user-tabs}}
+      {{> user-tabs-content}}
+    </div>
+    <div class='col-3 right-column'>
+      {{> rightColumn}}
+    </div>
+  </div>
+</div>

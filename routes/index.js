@@ -15,9 +15,10 @@ const { generalErrorHandler } = require('../middleware/error-handler')
 // admin 路由入口
 router.use('/admin', authenticatedAdmin, admin)
 // users 路由入口
-router.use('/users', authenticated, admin)
+// router.use('/users', authenticated, users)
+router.use('/users', users)
 // tweets 路由入口
-router.use('/tweets', authenticated, admin)
+router.use('/tweets', authenticated, tweets)
 
 // 以下註冊、登入、登出路由以及followships
 router.get('/signup', userController.signUpPage)
