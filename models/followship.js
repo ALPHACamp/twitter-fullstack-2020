@@ -21,7 +21,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.DATE
     }
-  }, {});
+  }, {
+    sequelize,
+    modelName: 'Followship',
+    tableName: 'Followships',
+    underscored: true
+  });
   Followship.associate = function(models) {
     
   };

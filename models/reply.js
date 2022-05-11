@@ -24,7 +24,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.DATE
     }
-  }, {});
+  }, {
+    sequelize,
+    modelName: 'Reply',
+    tableName: 'Replies',
+    underscored: true
+  });
   Reply.associate = function(models) {
     Reply.belongsTo(models.User, { foreignKey: 'UserId' })
     Reply.belongsTo(models.Tweet, { foreignKey: 'UserId' })

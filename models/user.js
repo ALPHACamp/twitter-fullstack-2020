@@ -38,7 +38,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.DATE
     }
-  }, {});
+  }, {
+    sequelize,
+    modelName: 'User',
+    tableName: 'Users',
+    underscored: true
+  });
   User.associate = function(models) {
     User.hasMany(models.Tweet, { foreignKey: 'UserId' })
     User.hasMany(models.Like, { foreignKey: 'UserId' })
