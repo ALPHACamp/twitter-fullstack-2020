@@ -15,7 +15,10 @@ const { generalErrorHandler } = require('../middleware/error-handler')
 // admin 路由入口
 router.use('/admin', authenticatedAdmin, admin)
 // users 路由入口
-router.use('/users', authenticated, users)
+
+// router.use('/users', authenticated, users)
+router.use('/users', users)
+
 // tweets 路由入口
 router.use('/tweets', authenticated, tweets)
 
@@ -23,6 +26,15 @@ router.use('/tweets', authenticated, tweets)
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
+router.post(
+  '/signin',
+  passport.authenticate('user-local', {
+    failureRedirect: '/signin',
+    failureFlash: true
+  }),
+  userController.signIn
+)
+router.get('/logout', userController.logout)
 
 // fallback 路由
 router.get('/', (req, res) => {

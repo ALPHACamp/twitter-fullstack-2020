@@ -5,32 +5,44 @@ const bcrypt = require('bcrypt-nodejs')
 const { User, Tweet } = require('../models')
 
 // set up Passport strategy
-passport.use(
+passport.use('user-local',
   new LocalStrategy(
-    // customize user field
     {
-      usernameField: 'email',
+      usernameField: 'account',
       passwordField: 'password',
       passReqToCallback: true
     },
-    // authenticate user
-    async (req, email, password, cb) => {
-      const user = await User.findOne({ where: { email } })
-      if (!user) {
-        return cb(
-          null,
-          false,
-          req.flash('error_messages', '帳號或密碼輸入錯誤！')
-        )
-      }
-      const submittedPassword = await bcrypt.compare(password, user.password)
-      if (!submittedPassword) {
-        return cb(
-          null,
-          false,
-          req.flash('error_messages', '帳號或密碼輸入錯誤！')
-        )
-      }
+    async (req, account, password, cb) => {
+      const user = await User.findOne({ where: { account } })
+
+      if (!user) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+
+      if (user.role !== 'user') return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+
+      if (!bcrypt.compareSync(password, user.password)) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+
+      return cb(null, user)
+    }
+  )
+)
+
+passport.use('admin-local',
+  new LocalStrategy(
+    {
+      usernameField: 'account',
+      passwordField: 'password',
+      passReqToCallback: true
+    },
+    async (req, account, password, cb) => {
+      console.log(req.body)
+      const user = await User.findOne({ where: { account } })
+
+      if (!user) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+
+      if (user.role !== 'admin') return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+
+      if (!bcrypt.compareSync(password, user.password)) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+
       return cb(null, user)
     }
   )

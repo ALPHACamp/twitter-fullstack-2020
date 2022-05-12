@@ -1,0 +1,28 @@
+<ul class='nav nav-tabs'>
+  <li class='nav-item'>
+    <a
+      class='nav-link'
+      href='/users/{{user.id}}/tweets'
+      {{#ifCond tab 'getTweets'}}
+      style='border-bottom: 2px solid #FF6600; color:#FF6600'
+      {{/ifCond}}
+    >推文</a>
+  </li>
+  <li class='nav-item'>
+    <a class='nav-link' 
+    href='/users/{{user.id}}/replies'
+    {{#ifCond tab 'getReplies'}}
+      style='border-bottom: 2px solid #FF6600; color:#FF6600'
+      {{/ifCond}}
+    >回復</a>
+  </li>
+  <li class='nav-item'>
+    <a class='nav-link' 
+    href='/users/{{user.id}}/likes'
+    {{#ifCond tab 'getLikedTweets'}}
+      style='border-bottom: 2px solid #FF6600; color:#FF6600'
+      {{/ifCond}}
+    >喜歡的内容</a>
+  </li>
+</ul>
+
