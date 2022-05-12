@@ -64,7 +64,13 @@ const userController = {
           ]
         }),
         Tweet.findAll({
-          include: [Reply],
+          include: [
+            Reply,
+            {
+              model: User,
+              as: 'LikedUsers'
+            }
+          ],
           where: { userId }
         }),
         User.findAll({
@@ -89,9 +95,11 @@ const userController = {
       ])
       if (!user) throw new Error("User didn't exist!")
 
-      tweets.forEach(tweet => ({
-        ...tweet.toJSON()
-      }))
+      tweets.forEach(function (tweet, index) {
+        this[index] = { ...tweet.toJSON() }
+      }, tweets)
+
+      console.log(tweets)
 
       const data = user.toJSON()
       const followingUserId = data.Followings.map(user => user.id)
