@@ -87,7 +87,6 @@ const userController = {
       next(err)
     }
   },
-
   getReplies: async (req, res, next) => {
     try {
       const userId = req.params.id
