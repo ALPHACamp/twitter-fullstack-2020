@@ -48,6 +48,14 @@ const userController = {
     } catch (err) {
       next(err)
     }
+  },
+  signIn: async (req, res, next) => {
+    try {
+      req.flash('success_messages', '成功登入！')
+      res.redirect('/tweets')
+    } catch (err) {
+      next(err)
+    }
   }
 }
 
