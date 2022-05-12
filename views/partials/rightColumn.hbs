@@ -3,31 +3,40 @@
     跟隨誰
   </div>
   <ul class='list-group list-group-flush'>
-    <li class='list-group-item'>
-      <div class='row d-flex justify-content-center align-items-center'>
-        <div class='col-2 p-0 d-flex justify-content-center'>
-          <img
-            src='https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png'
-            alt='alphaCamp'
-            width='50px'
-            height='50px'
-          />
+    {{#each followships}}
+      <li class='list-group-item'>
+        <div class='row d-flex justify-content-center align-items-center'>
+          <div class='col-2 p-0 d-flex justify-content-center'>
+            <img
+              src='https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png'
+              alt='alphaCamp'
+              width='50px'
+              height='50px'
+            />
+          </div>
+          <div class='col p-0 ps-1'>
+            <strong class='user-name'>
+              {{this.name}}
+            </strong>
+            <span class='user-account'>
+              @{{this.account}}
+            </span>
+          </div>
+          <div class='col p-0'>
+            {{#if this.isFollowed}}
+              <button
+                class='btn rounded-pill text-light'
+                style='background-color:#FF6600;'
+              >正在追隨</button>
+            {{else}}
+              <button
+                class='btn rounded-pill bg-light'
+                style='border-color:#FF6600; color:#FF6600'
+              >跟隨</button>
+            {{/if}}
+          </div>
         </div>
-        <div class='col p-0 ps-1'>
-          <span class='user-name'>
-            following_1
-          </span>
-          <span class='user-account'>
-            @following_1
-          </span>
-        </div>
-        <div class='col p-0'>
-          <button
-            class='btn rounded-pill text-light'
-            style='background-color:#FF6600;'
-          >正在追隨</button>
-        </div>
-      </div>
-    </li>
+      </li>
+    {{/each}}
   </ul>
 </div>

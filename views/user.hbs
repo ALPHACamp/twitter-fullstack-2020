@@ -32,10 +32,10 @@
         <div class='user-name'><strong>{{user.name}}</strong></div>
         <div class='user-account'>@{{user.account}}</div>
         <p class='m-0 user-introduction'>{{user.introduction}}</p>
-        <a href="#" class="btn followings">
+        <a href="/users/{{user.id}}/followings" class="btn followings">
           0 位跟隨中
         </a>
-        <a href="#" class="btn followers">
+        <a href="/users/{{user.id}}/followers" class="btn followers">
           0 位跟隨者
         </a>
       </div>
