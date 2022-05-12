@@ -10,7 +10,7 @@ module.exports = {
       'SELECT id FROM Users;',
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
-    const tweetReplies = []
+    const likedTweets = []
 
     for (let i = 0; i < tweets.length; i++) {
       const randomNumbers = new Set()
@@ -26,9 +26,9 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       }))
-      tweetReplies.push(...result)
+      likedTweets.push(...result)
     }
-    await queryInterface.bulkInsert('Likes', tweetReplies, {})
+    await queryInterface.bulkInsert('Likes', likedTweets, {})
   },
 
   down: async (queryInterface, Sequelize) => {
