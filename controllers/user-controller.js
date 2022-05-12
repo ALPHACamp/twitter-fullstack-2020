@@ -71,7 +71,8 @@ const userController = {
               as: 'LikedUsers'
             }
           ],
-          where: { userId }
+          where: { userId },
+          order: [['createdAt', 'DESC']]
         }),
         User.findAll({
           include: [
@@ -98,8 +99,6 @@ const userController = {
       tweets.forEach(function (tweet, index) {
         this[index] = { ...tweet.toJSON() }
       }, tweets)
-
-      console.log(tweets)
 
       const data = user.toJSON()
       const followingUserId = data.Followings.map(user => user.id)
@@ -135,8 +134,7 @@ const userController = {
         Reply.findAll({
           where: { userId },
           include: [{ model: Tweet, include: User }],
-          raw: true,
-          nest: true
+          order: [['createdAt', 'DESC']]
         }),
         User.findAll({
           include: [
@@ -159,6 +157,10 @@ const userController = {
         })
       ])
       if (!user) throw new Error("User didn't exist!")
+
+      replies.forEach(function (reply, index) {
+        this[index] = { ...reply.toJSON() }
+      }, replies)
 
       const data = user.toJSON()
       const followingUserId = data.Followings.map(user => user.id)
