@@ -31,6 +31,7 @@ router.post(
   }),
   userController.signIn
 )
+router.get('/logout', userController.logout)
 
 // fallback 路由
 router.get('/', (req, res) => {
