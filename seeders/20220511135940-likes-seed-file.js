@@ -12,11 +12,10 @@ module.exports = {
     )
     const tweetReplies = []
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < tweets.length; i++) {
       const randomNumbers = new Set()
-      // keep adding elements till size of set is equal to n
+
       while (randomNumbers.size < 3) {
-        // Generating random number and adding it
         randomNumbers.add(Math.ceil(Math.random() * (users.length - 1)))
       }
       const noRepeatedUsers = [...randomNumbers]
