@@ -37,6 +37,8 @@ app.use((req, res, next) => {
 
 app.use(routes)
 
+app.use(express.static('public'))
+
 app.listen(port, () => console.log(`Simple Twitter listening on port ${port}!`))
 
 module.exports = app

@@ -1,0 +1,60 @@
+.wrapper{
+    min-width: 375px;
+}
+.logo{
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    margin-top: 64px;
+}
+
+*:focus{
+    box-shadow: none !important;
+}
+
+.signup-form{
+    width: 356px;
+    margin: 0 auto;
+}
+.signup-form h3{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #1c1c1c;
+    line-height: 26px;
+}
+.form-label{
+    background-color: #F5F8FA; 
+    border-radius: 2px;
+    max-width: 356px;
+}
+.form-label label{
+    font-size: 0.85rem;
+    line-height: 0.8rem;
+    color: #696974;
+}
+.form-control{
+    font-size: 1rem;
+    padding-left: 0.5rem;
+    line-height: 1.2rem;
+    border-width:0;
+    border-bottom: 2px solid #657786; 
+    background: #F5F8FA;
+}
+.form-control:hover, .form-control:focus{
+    border-bottom-color: #5085ff;
+    background: #F5F8FA;
+}
+::placeholder{
+    color: #b5b5be !important;
+    font-size: 0.9rem;
+}
+.signup-form button{
+    background-color: #ff6600 !important;
+    border: none !important;
+    width: 100%;
+    font-size: 1.15rem !important;
+    max-width: 356px;
+    border-radius: 50px !important;
+}
+.signup-form button:hover{
+    background-color: #FF974A !important;
+}
