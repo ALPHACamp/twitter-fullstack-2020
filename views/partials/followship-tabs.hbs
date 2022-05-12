@@ -1,0 +1,9 @@
+<ul class="nav nav-tabs mb-4">
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'followings'}}active{{/ifCond}}" href="/users/{{ currentUserId }}/followings">followings</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'followers'}}active{{/ifCond}}" href="/users/{{ currentUserId }}/followers">followers</a>
+  </li>
+</ul>

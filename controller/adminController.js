@@ -1,4 +1,5 @@
-const { Tweet, User, Like, Reply } = require('../models')
+const { Tweet, User } = require('../models')
+const sequelize = require('sequelize')
 
 const adminController = {
   signinPage: (req, res) => {
@@ -23,7 +24,7 @@ const adminController = {
             ? `${r.description.substring(0, 50)}...`
             : r.description
       }))
-      return res.render('admin/tweets', { status: 200, tweet })
+      return res.render('admin/tweets', { status: 200, tweet, page: 'tweets' })
     } catch (e) {
       console.log('e')
       res.status(302)
@@ -50,11 +51,22 @@ const adminController = {
   getUsers: async (req, res) => {
     try {
       const users = await User.findAll({
-        attributes: ['name', 'role', 'account', 'avatar', 'cover'],
+        attributes: [
+          'name',
+          'role',
+          'account',
+          'cover',
+          'avatar',
+          [
+            sequelize.literal(
+              '(select count(Tweets.UserId) from Tweets inner join Likes on Tweets.id = Likes.TweetId where Tweets.UserId = User.id)'
+            ),
+            'likeCount'
+          ]
+        ],
         include: [
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' },
-          { model: Tweet, as: 'LikedTweets' },
           Tweet
         ]
       })
@@ -62,22 +74,16 @@ const adminController = {
         ...r.dataValues,
         followerCount: r.Followers.length,
         followingCount: r.Followings.length,
-        tweetCount: r.Tweets.length,
-        likedCount: r.LikedTweets.length
+        tweetCount: r.Tweets.length
       }))
       const newData = data.filter(a => a.role !== 'admin')
       const user = newData.sort((a, b) => b.tweetCount - a.tweetCount)
-      return res.render('admin/users', { status: 200, user })
+      return res.render('admin/users', { status: 200, user, page: 'users' })
     } catch (e) {
       console.log('e')
       res.status(302)
       return res.redirect('back')
     }
-  },
-  logout: (req, res) => {
-    req.flash('success_messages', '登出成功！')
-    req.logout()
-    res.redirect('/admin/signIn')
   }
 }
 module.exports = adminController

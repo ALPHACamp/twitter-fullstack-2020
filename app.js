@@ -29,6 +29,7 @@ app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: fals
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.use(express.static('public'))
 app.use(methodOverride('_method'))
 app.use(flash())
 app.use((req, res, next) => {
