@@ -16,7 +16,9 @@ const userController = {
       const errors = []
       let { account, name, email, password, checkPassword } = req.body
 
-      if (!account || !email || !password) errors.push({ message: '請確認必填欄位' })
+      if (!account || !email || !password) {
+        errors.push({ message: '請確認必填欄位' })
+      }
 
       const existAccount = await User.findOne({ where: { account } })
       if (existAccount) errors.push({ message: '帳號已被註冊' })
@@ -31,7 +33,9 @@ const userController = {
       if (name.length > 50) errors.push({ message: '名稱長度限制50字元以內' })
       if (!name) name = account
 
-      if (errors.length) return res.render('signup', { errors, account, name, email })
+      if (errors.length) {
+        return res.render('signup', { errors, account, name, email })
+      }
 
       const hash = bcrypt.hashSync('12345678', bcrypt.genSaltSync(10))
       await User.create({ account, name, email, password: hash })
@@ -107,6 +111,52 @@ const userController = {
       if (!user) throw new Error("User didn't exist!")
 
       res.render('user', { user: user.toJSON(), tab: 'getLikedTweets' })
+    } catch (err) {
+      next(err)
+    }
+  },
+  getFollowers: async (req, res, next) => {
+    try {
+      const userId = req.params.id
+
+      const user = await User.findByPk(userId, {
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+
+      const data = user.toJSON()
+      const followingUserId = data.Followings.map(user => user.id)
+
+      data.Followers.forEach(
+        user => (user.isFollowed = followingUserId.includes(user.id))
+      )
+
+      res.render('followship', { user: data, tab: 'getFollowers' })
+    } catch (err) {
+      next(err)
+    }
+  },
+  getFollowings: async (req, res, next) => {
+    try {
+      const userId = req.params.id
+
+      const user = await User.findByPk(userId, {
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+
+      const data = user.toJSON()
+      const followingUserId = data.Followings.map(user => user.id)
+
+      data.Followers.forEach(
+        user => (user.isFollowed = followingUserId.includes(user.id))
+      )
+
+      res.render('followship', { user: data, tab: 'getFollowings' })
     } catch (err) {
       next(err)
     }

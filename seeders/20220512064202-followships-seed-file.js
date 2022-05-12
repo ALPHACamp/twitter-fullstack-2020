@@ -30,8 +30,6 @@ module.exports = {
       followships.push(...result)
     }
 
-    console.log(followships)
-
     await queryInterface.bulkInsert('Followships', followships, {})
   },
 
