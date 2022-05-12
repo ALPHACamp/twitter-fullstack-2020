@@ -33,10 +33,10 @@
         <div class='user-account'>@{{user.account}}</div>
         <p class='m-0 user-introduction'>{{user.introduction}}</p>
         <a href="/users/{{user.id}}/followings" class="btn followings">
-          0 位跟隨中
+          {{user.Followings.length}} 位跟隨中
         </a>
         <a href="/users/{{user.id}}/followers" class="btn followers">
-          0 位跟隨者
+          {{user.Followers.length}} 位跟隨者
         </a>
       </div>
       {{> user-tabs}}
