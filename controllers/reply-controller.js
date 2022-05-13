@@ -18,7 +18,7 @@ const replyController = {
   postReply: (req, res, next) => {
     const TweetId = req.params.id
     const { comment } = req.body
-    return Tweet.findByPk(tweetId)
+    return Tweet.findByPk(TweetId)
       .then(tweet => {
         if (!tweet) {
           throw new Error('This tweet id do not exist')
