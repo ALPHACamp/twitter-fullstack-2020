@@ -27,6 +27,10 @@
     {
       "filePath": "views/tweet.hbs",
       "group": "Default"
+    },
+    {
+      "filePath": "controllers/tweet-controller.js",
+      "group": "Default"
     }
   ]
 }
