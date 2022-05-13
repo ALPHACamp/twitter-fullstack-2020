@@ -52,7 +52,7 @@ passport.deserializeUser((id, cb) => {
     ]
   })
     .then(user => {
-      console.log('passport_user.toJSON()', user.toJSON())
+      // console.log('passport_user.toJSON()', user.toJSON())
       return cb(null, user.toJSON())
     })
     .catch(err => cb(err))
