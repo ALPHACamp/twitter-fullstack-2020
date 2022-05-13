@@ -16,8 +16,7 @@ const { generalErrorHandler } = require('../middleware/error-handler')
 router.use('/admin', authenticatedAdmin, admin)
 
 // users 路由入口
-// router.use('/users', authenticated, users)
-router.use('/users', users) // 暫時免去認證判斷
+router.use('/users', authenticated, users)
 
 // tweets 路由入口
 router.use('/tweets', authenticated, tweets)

@@ -287,6 +287,7 @@ const userController = {
           order: [[sequelize.col('followerCounts'), 'DESC']]
         })
       ])
+      if (!user) throw new Error("User didn't exist!")
 
       const data = user.toJSON()
       const followingUserId = data.Followings.map(user => user.id)
@@ -342,6 +343,7 @@ const userController = {
           order: [[sequelize.col('followerCounts'), 'DESC']]
         })
       ])
+      if (!user) throw new Error("User didn't exist!")
 
       const data = user.toJSON()
       const followingUserId = data.Followings.map(user => user.id)
