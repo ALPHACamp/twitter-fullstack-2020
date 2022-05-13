@@ -1,13 +1,15 @@
-const { User, Tweet, Like, Reply } = require('../models')
+const { User, Tweet } = require('../models')
 const { getUser } = require('../_helpers')
+const testUser = Number(3) // for local test
 
 const tweetController = {
   getTweets: (req, res, next) => {
-    const loginUser = getUser(req) ? getUser(req).id : Number(2)
+    const loginUser = getUser(req) ? getUser(req).id : testUser
     return Promise.all([
       User.findByPk(loginUser, { raw: true, nest: true }),
       Tweet.findAll({
-        include: User,
+        order: [['createdAt', 'DESC']],
+        include: [User],
         raw: true,
         nest: true
       }),
@@ -34,6 +36,21 @@ const tweetController = {
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, LIMIT)
         return res.render('tweets', { user, tweets, users: userData })
+      })
+      .catch(err => next(err))
+  },
+  postTweet: (req, res, next) => {
+    const userId = getUser(req) ? getUser(req) : testUser
+    const { description } = req.body
+    if (!userId) return req.flash('error_messages', '您尚未登入帳號!')
+    if (!description) return req.flash('error_messages', '內容不可空白')
+    Tweet.create({
+      userId,
+      description
+    })
+      .then(() => {
+        req.flash('success_messages', '推文成功')
+        res.redirect('/tweets')
       })
       .catch(err => next(err))
   }
