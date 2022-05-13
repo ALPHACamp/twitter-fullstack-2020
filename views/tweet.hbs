@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="row">
+
+    <div class='col-2 left-column'>
+      {{> leftColumn}}
+    </div>
+    <div class='border d-flex flex-column' style='width: 641px; margin: 0; padding: 0'>
+      <div class='header-wrapper d-inline-block w-100' style=' margin-top:24px; border-bottom: 1px solid gray'>
+        <p style="font-weight: 700;font-size: 24px; line-height: 26px; color: #171725; margin-left: 23px">首頁</p>
+      </div>
+      <div class='post-wrapper w-100' style='border-bottom: 10px solid #E6ECF0'>
+        <div class='p-3' style='height: 120px;'>
+          <form action='/tweets' method='POST'>
+            <div class='d-flex align-items-center justify-content-start'>
+              <a href='/users/{{user.id}}/tweets'>
+                <img class='mr-2 rounded-circle' src='{{user.avatar}}' alt='{{user.name}}'
+                  style='width: 50px; height: 50px' />
+              </a>
+              <textarea class='w-100' id='description' name='description' placeholder='有什麼新鮮事？'
+                maxlength='140'></textarea>
+            </div>
+            <button class='btn mt-2'
+              style='float: right; width: 65px; height: 40px; border-radius: 50px; color: white; background-color: #FF6600; margin:8px 16px 8px 16px'
+              type='submit'>推文</button>
+          </form>
+        </div>
+      </div>
+      <div class='tweets-wrapper w-100'>
+        {{#each tweets}}
+        <div class='d-flex' style='height: 153px;'>
+          <div class='d-flex align-self-center justify-content-center w-100'
+            style=' height: 136px; border-bottom: 1px solid #E6ECF0'>
+            <div class='align-self-start' style='width: 50px; height: 50px; margin-right: 8px'>
+              <a href='/users/{{this.User.id}}/tweets'>
+                <img src='{{this.User.avatar}}' alt='{{this.User.name}}\' s avatar' class='w-100'
+                  style='border-radius: 50%;' />
+              </a>
+            </div>
+            <div class='d-flex flex-column' style='width: 528px; height: 136px'>
+              <div>
+                <a href='/users/{{this.User.id}}/tweets' style='text-decoration: none'>
+                  <span
+                    style='margin-right: 8px; font-weight: 700; font-size:16px; line-height: 26px; color: #171725;'>{{this.User.name}}</span>
+                </a>
+                <span
+                  style='font-weight: 400; font-size: 14px; line-height: 22px; color: #6C757D'>@{{this.User.account}}・{{relativeTimeFromNow
+                  this.createdAt
+                  }}</span>
+              </div>
+              <div style='width: 528px; height: 78px;'>
+                <a href='/tweets/{{this.id}}/replies' style='text-decoration: none;'>
+                  <p style='font-weight: 400; font-size: 16px; line-height: 26px; color: #171725;'>{{this.description}}
+                  </p>
+                </a>
+              </div>
+              <div class='d-flex justify-content-between' style='width: 120px; height: 16p; margin: 8px 0 '>
+                <div>
+                  {{!-- 回覆部分後續會用modal --}}
+                  <span>回覆</span>
+                  <span style='font-size: 14px; line-height: 14px; color:#6C757D'>{{this.Replies.length}}</span>
+                </div>
+                <div>
+                  {{!-- Like部分後續會用Ajax --}}
+                  <span>喜歡</span>
+                  <span style='font-size: 14px; line-height: 14px; color:#6C757D'>{{this.LikedUsers.length}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    <div class='col-3 right-column'>
+      {{> rightColumn}}
+    </div>
+  </div>
+</div>
