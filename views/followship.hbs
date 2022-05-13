@@ -1,0 +1,126 @@
+<div class="row d-flex justify-content-start">
+  {{!-- header --}}
+  <div class="col-8" style="outline: 1px solid #E6ECF0;">
+    <div class="container-fluid mt-3 ps-0 d-flex">
+      <button class="btn" type="button" onclick="javascript:history.back()">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <div class="container-fluid px-0 ms-2">
+        <p class="fs-5 mb-0 fw-bold">{{user.name}}</p>
+        <p class="fs-6 mb-0 text-muted">{{user.Tweets.length}}推文</p>
+      </div>
+    </div>
+
+    {{!-- header body --}}
+    <ul class="nav nav-tabs mb-0">
+      <li class="nav-item">
+        <a class="nav-link fw-bold {{#if followersSelect}}active{{/if}}"
+          href="/users/{{user.id}}/followers?type=followers">追隨者</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link fw-bold {{#if followingsSelect}}active{{/if}}"
+          href="/users/{{user.id}}/followings?type=followings">正在追隨</a>
+      </li>
+    </ul>
+    {{!-- followers --}}
+    {{#if followersSelect}}
+    {{#each user.Followers}}
+    <div class="row mt-2 py-2" style="border-bottom-style:solid; border-color:#e4e7eb; border-width:1px;">
+      <div class="col-2 d-flex flex-row-reverse">
+        <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
+          <img src="{{this.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
+        </a>
+      </div>
+      <div class="col-10 ps-0">
+        <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
+          <div class="d-flex flex-row align-items-center justify-content-between">
+            <p class="fw-bold" style="font-size: 16px; margin: 0 0;">{{this.name}}</p>
+            {{#if this.isFollowersFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+              <button type="submit" class="following-button text-white mx-3">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/followships" method="POST" style="display: contents;">
+              <button type="submit" class="follower-button mx-3">跟隨</button>
+            </form>
+            {{/if}}
+          </div>
+          <div class="mt-2">
+            <p>{{this.introduction}}</p>
+          </div>
+        </a>
+      </div>
+    </div>
+    {{/each}}
+    {{/if}}
+    
+    {{!-- followings --}}
+    {{#if followingsSelect}}
+    {{#each user.Followings}}
+    <div class="row mt-2 py-2" style="border-bottom-style:solid; border-color:#e4e7eb; border-width:1px;">
+      <div class="col-2 d-flex flex-row-reverse">
+        <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
+          <img src="{{this.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
+        </a>
+      </div>
+      <div class="col-10 ps-0">
+        <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
+          <div class="d-flex flex-row align-items-center justify-content-between">
+            <p class="fw-bold" style="font-size: 16px; margin: 0 0;">{{this.name}}</p>
+            {{#if this.isFollowingsFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+              <button type="submit" class="following-button text-white mx-3">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/followships" method="POST" style="display: contents;">
+              <button type="submit" class="follower-button mx-3">跟隨</button>
+            </form>
+            {{/if}}
+          </div>
+          <div class="mt-2">
+            <p>{{this.introduction}}</p>
+          </div>
+        </a>
+      </div>
+    </div>
+    {{/each}}
+    {{/if}}
+  </div>
+
+  {{!-- 追隨者Top10 的使用者 --}}
+  <div class="container col-3 mt-2 mx-3" style="padding: 0 0;width: 250px;">
+    <div class="bg-light">
+      <div class="container d-flex align-items-center mt-3">
+        <h4 class="fw-bold mt-4">跟隨誰</h4>
+      </div>
+      <div class="mt-3" style="height: 1px; width: auto; border-radius: 0px; background: #E6ECF0;"></div>
+      {{#each users}}
+      <div class="d-flex flex-row align-items-center mt-2 py-2">
+        <div class="d-flex align-items-center mx-0">
+          <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
+            <img src="{{this.avatar}}" alt="avatar" style="height: 40px ;width: 40px; border-radius: 50%;">
+          </a>
+        </div>
+        <div class="mx-2">
+          <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
+            <p class="following-user fw-bold" style="font-size: 16px; margin: 0 0;">{{this.name}}</p>
+            <p class="text-muted" style="font-size: 14px; margin: 0 0;">@{{this.account}}</p>
+          </a>
+        </div>
+        <div class="d-flex align-items-center">
+          {{#if this.isFollowed}}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+            <button type="submit" class="following-button text-white">正在跟隨</button>
+          </form>
+          {{else}}
+          <form action="/followships" method="POST" style="display: contents;">
+            <button type="submit" class="follower-button ms-3">跟隨</button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+
