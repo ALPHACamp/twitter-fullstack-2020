@@ -1,4 +1,4 @@
-// const { User } = require('../models')
+const { User, Tweet } = require('../models')
 
 const adminController = {
   signInPage: (req, res) => {
@@ -28,7 +28,14 @@ const adminController = {
     res.redirect('/admin/signin')
   },
   getTweets: (req, res, next) => {
-    res.render('admin/admin_main')
+    Tweet.findAll({
+      raw: true,
+      nest: true,
+      include: User
+    })
+      .then(tweets => {
+        res.render('admin/admin_main', { tweets })
+      })
   },
   getUsers: (req, res, next) => {
     res.render('admin/admin_users')
