@@ -8,7 +8,7 @@
         <div class='row d-flex justify-content-center align-items-center'>
           <div class='col-2 p-0 d-flex justify-content-center'>
             <img
-              src='https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png'
+              src='{{this.avatar}}'
               alt='alphaCamp'
               width='50px'
               height='50px'
@@ -23,16 +23,18 @@
             </span>
           </div>
           <div class='col p-0'>
-            {{#if this.isFollowed}}
-              <button
-                class='btn rounded-pill text-light'
-                style='background-color:#FF6600;'
-              >正在追隨</button>
-            {{else}}
-              <button
-                class='btn rounded-pill bg-light'
-                style='border-color:#FF6600; color:#FF6600'
-              >跟隨</button>
+            {{#if this.isSelf}}
+              {{#if this.isFollowed}}
+                <button
+                  class='btn rounded-pill text-light'
+                  style='background-color:#FF6600;'
+                >正在追隨</button>
+              {{else}}
+                <button
+                  class='btn rounded-pill bg-light'
+                  style='border-color:#FF6600; color:#FF6600'
+                >跟隨</button>
+              {{/if}}
             {{/if}}
           </div>
         </div>

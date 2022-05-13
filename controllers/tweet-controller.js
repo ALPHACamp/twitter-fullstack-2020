@@ -1,4 +1,4 @@
-const { Tweet, User, Reply, Followships, sequelize } = require('../models')
+const { Tweet, User, Reply } = require('../models')
 const helper = require('../_helpers')
 
 const tweetController = {
@@ -17,29 +17,30 @@ const tweetController = {
           include: [
             { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
             { model: Reply, attributes: ['id'] },
-            { model: User, as: 'LikedUsers', attributes: ['id'] }
+            { model: User, as: 'LikedUsers' }
           ]
+        }),
+        User.findAll({
+          attributes: ['id', 'name', 'account', 'avatar'],
+          include: [{ model: User, as: 'Followers', attributes: ['id'] }],
+          where: [{ role: 'user' }]
         })
-        // User.findAll({
-        //   include: [
-        //     { model: User, as: 'Followers' }
-        //   ],
-        //   attributes: ['id', 'name', 'account',
-        //     [
-        //       sequelize.fn('COUNT', sequelize.col('followerId')),
-        //       'followerCounts'
-        //     ]
-        //   ],
-        //   group: 'followingId',
-        //   order: [[sequelize.col('followerCounts'), 'DESC']]
-        // })
       ])
+
+      const followshipData = followships.map(followship => ({
+        ...followship.toJSON(),
+        followerCounts: followship.Followers.length,
+        isFollowed: followship.Followers.some(item => item.id === userId),
+        isSelf: (userId !== followship.id)
+      }))
+        .sort((a, b) => b.followerCounts - a.followerCounts)
+        .slice(0, 10)
       if (!user) throw new Error("User didn't exist!")
       const data = tweets.map(tweet => ({
         ...tweet.toJSON(),
         isLiked: tweet.LikedUsers.some(item => item.id === userId)
       }))
-      res.render('tweet', { user, tweets: data, followships })
+      res.render('tweet', { user, tweets: data, followships: followshipData })
     } catch (err) {
       next(err)
     }
