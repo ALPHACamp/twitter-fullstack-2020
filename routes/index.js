@@ -14,10 +14,9 @@ const { generalErrorHandler } = require('../middleware/error-handler')
 
 // admin 路由入口
 router.use('/admin', authenticatedAdmin, admin)
-// users 路由入口
 
-// router.use('/users', authenticated, users)
-router.use('/users', users)
+// users 路由入口
+router.use('/users', authenticated, users)
 
 // tweets 路由入口
 router.use('/tweets', authenticated, tweets)

@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt-nodejs')
 const { User, Tweet } = require('../models')
 
 // set up Passport strategy
+
 passport.use('user-local',
   new LocalStrategy(
     {
@@ -21,10 +22,12 @@ passport.use('user-local',
 
       if (!bcrypt.compareSync(password, user.password)) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
 
+
       return cb(null, user)
     }
   )
 )
+
 
 passport.use('admin-local',
   new LocalStrategy(
@@ -36,6 +39,7 @@ passport.use('admin-local',
     async (req, account, password, cb) => {
       console.log(req.body)
       const user = await User.findOne({ where: { account } })
+
 
       if (!user) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
 

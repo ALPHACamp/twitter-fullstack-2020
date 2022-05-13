@@ -19,7 +19,7 @@
           <span class='tweet-comments'><i class='fa-solid fa-comment'></i>
             {{this.Replies.length}}</span>
           <span class='tweet-likes'><i class='fa-solid fa-heart'></i>
-            0</span>
+            {{this.LikedUsers.length}}</span>
       </div>
     </div>
   </li>
@@ -38,6 +38,8 @@
       <div class='col p-0 ps-1 tweet-content'>
           <strong class='user-name'>{{../user.name}}</strong>
           <span class='user-account'>@{{../user.account}}</span>
+          *
+          <span class='user-account'>{{relativeTimeFromNow this.createdAt}}</span>
           <div class='user-account' style='color:#FF6600'>回覆 @{{this.Tweet.User.account}}</div>
           <p class='user-name'>{{this.comment}}</p>
       </div>
