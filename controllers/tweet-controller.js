@@ -1,6 +1,6 @@
 const db = require('../models')
 const { Tweet, User, Like, Reply, sequelize } = db
-const { getUser } = require('../_helpers')
+const helper = require('../_helpers')
 const tweetController = {
   getTweets: (req, res, next) => {
     const limit = Number(req.query.limit) || 10
@@ -38,9 +38,10 @@ const tweetController = {
     }).catch(err => next(err))
   },
   postTweet: (req, res, next) => {
+    const UserId = helper.getUser(req).id
     return Tweet.create({
       description: req.body.description,
-      UserId: getUser(req).id
+      UserId
     })
       .then(() => res.redirect('/'))
       .catch(err => next(err))

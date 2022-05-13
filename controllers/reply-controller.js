@@ -1,6 +1,6 @@
 const db = require('../models')
 const { Tweet, User, Like, Reply, sequelize } = db
-const { getUser } = require('../_helpers')
+const helper= require('../_helpers')
 const replyController = {
   getReplies: (req, res, next) => {
     const TweetId = req.params.id
@@ -25,7 +25,7 @@ const replyController = {
         }
         return Reply.create({
           TweetId,
-          UserId: getUser(req).id,
+          UserId: helper.getUser(req).id,
           comment
         })
       }).then(() => {

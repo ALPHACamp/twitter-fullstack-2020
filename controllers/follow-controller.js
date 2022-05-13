@@ -1,26 +1,28 @@
 const db = require('../models')
 const { Tweet, User, Like, Reply, sequelize, Followship} = db
-const { getUser } = require('../_helpers')
+const helper  = require('../_helpers')
 const followshipController={
     postFollowship:(req,res,next)=>{
-        const {id}= req.body
-        if(id===getUser(req)){
-            return next(new Error('unexpexted error'))
+        const followingId= Number(req.body.id)
+        const followerId= helper.getUser(req).id
+        if(followingId===followerId){
+            return res.json(new Error('followingId=followerId'))
         }
         return Followship.findOrCreate({
             where:{
-                followerId: id,
-                followingId: getUser(req).id
+                followerId,
+                followingId
             }
         }).then(()=>res.redirect('/'))
         .catch(err=>next(err))
     },
     deleteFollowship:(req,res,next)=>{
-        const {id}= req.params
+        const followingId= Number(req.params.id)
+        const followerId= helper.getUser(req).id
         return Followship.findOne({
             where:{
-                followerId: id,
-                followingId: getUser(req).id
+                followerId,
+                followingId
             }
         }).then(followship=>{
             if(!followship){
