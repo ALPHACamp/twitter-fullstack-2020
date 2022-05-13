@@ -1,0 +1,17 @@
+<div>
+  <blockquote class="blockquote mb-0">
+    <img src="{{ User.avatar }}" alt="user-picture" class="rounded-circle" style="width: 64px; height:64px;">
+    <span><a href="/users/{{ User.id }}">{{ User.name }}</a></span>
+    <span class="blockquote-footer"> @{{ user.account }}</span>
+    <span>{{ relativeTimeFromNow createdAt }}</span>
+    <p>{{ description }}</p>
+  </blockquote>
+  <hr />
+</div>
+<form action="/tweets/{{ id }}/replies" id="tweets" method="post">
+  <div>
+    <textarea name="comment" id="tweet-content" rows="5" class="form-control" placeholder="推你的回覆"
+      required></textarea>
+  </div>
+  <button id="submit-btn" class="btn btn-primary">推文</button>
+</form>

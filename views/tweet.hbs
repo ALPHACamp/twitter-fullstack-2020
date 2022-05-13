@@ -1,4 +1,48 @@
-<div>
-  tweets 首頁
+{{!-- TODO:只滾動 col-md-6 部分 --}}
+<div class="row align-items-start">
+  {{> left}}
+  <div class="col-md-6">
+    <div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a href="javascript:history.back()"></a>
+        <span>回覆</span>
+      </nav>
+    </div>
+    <div>
+      <blockquote class="blockquote mb-0">
+        <img src="{{ user.avatar }}" alt="user-picture" class="rounded-circle" style="width: 64px; height:64px;">
+        <span><a href="/users/{{ user.Id }}">{{ user.name }}</a></span>
+        <span class="blockquote-footer"> @{{ user.account }}</span>
+        <span>{{ tweet.createdAt }}</span>
+        <p>{{ tweet.description }}</p>
+        <div>
+          <span><a href="/tweets/{{tweet.id}}/replies">回覆</a></span>
+          <span>回覆數量</span>
+          {{!-- TODO:偵測喜歡狀態，切換路由 --}}
+          <span><a href="/tweets/{{tweet.id}}/like">喜歡</a></span>
+          <span>喜歡數量</span>
+        </div>
+      </blockquote>
+      <hr />
+    </div>
+    {{#each replies}}
+    <blockquote class="blockquote mb-0">
+      <img src="{{ this.User.avatar }}" alt="user-picture" class="rounded-circle" style="width: 64px; height:64px;">
+      <span><a href="/users/{{ this.userId }}">{{ this.User.name }}</a></span>
+      <span class="blockquote-footer"> @{{ this.User.account }}</span>
+      <span>{{ relativeTimeFromNow this.createdAt }}</span>
+      <p>{{ this.comment }}</p>
+      <div>
+        {{!-- TODO: 確認是回覆到同一個串還是原本的 twitter 行為(回在該回覆的下面) --}}
+        <span><a href="/tweets/{{this.id}}/replies">回覆</a></span>
+        <span>回覆數量</span>
+        {{!-- TODO:偵測喜歡狀態，切換路由 --}}
+        <span><a href="/tweets/{{this.id}}/like">喜歡</a></span>
+        <span>喜歡數量</span>
+      </div>
+    </blockquote>
+    <hr />
+    {{/each}}
+  </div>
+  {{> right topUsers=topUsers}}
 </div>
-<a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">登出</button></a>

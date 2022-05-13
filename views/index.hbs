@@ -9,7 +9,7 @@
       <img src="{{ user.avatar }}" alt="user-picture" class="rounded-circle" style="width: 64px; height: 64px;">
       <form action="/tweets" id="tweets" method="post">
         <div>
-          <textarea name="comment" id="tweet-content" rows="5" class="form-control" placeholder="有什麼新鮮事？"
+          <textarea name="description" id="tweet-content" rows="5" class="form-control" placeholder="有什麼新鮮事？"
             required></textarea>
         </div>
         <button id="submit-btn" class="btn btn-primary">推文</button>
@@ -22,10 +22,13 @@
       <span class="blockquote-footer"> @{{ this.User.account }}</span>
       <span>{{ relativeTimeFromNow this.createdAt }}</span>
       <p>{{ this.description }}</p>
+      {{!-- TODO: 除了指定的按鈕以外(名字，回覆 icon，喜歡 icon)，點這個推文的其他地方都會到 /tweets/{{this.id}} --}}
+      <a href="/tweets/{{this.id}}">查看這個 tweet</a>
       <div>
         <span><a href="/tweets/{{this.id}}/replies">回覆</a></span>
         <span>回覆數量</span>
-        <span><a href="/like/{{this.id}}">喜歡</a></span>
+        {{!-- TODO:偵測喜歡狀態，切換路由 --}}
+        <span><a href="/tweets/{{this.id}}/like">喜歡</a></span>
         <span>喜歡數量</span>
       </div>
     </blockquote>
