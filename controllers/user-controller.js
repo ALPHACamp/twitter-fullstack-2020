@@ -53,6 +53,23 @@ const userController = {
       next(err)
     }
   },
+  signIn: async (req, res, next) => {
+    try {
+      req.flash('success_messages', '成功登入！')
+      res.redirect('/tweets')
+    } catch (err) {
+      next(err)
+    }
+  },
+  logout: async (req, res, next) => {
+    try {
+      req.flash('success_messages', '登出成功！')
+      req.logout()
+      res.redirect('/signin')
+    } catch (err) {
+      next(err)
+    }
+  },
   getTweets: async (req, res, next) => {
     try {
       const userId = req.params.id
