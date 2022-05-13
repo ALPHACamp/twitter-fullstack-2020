@@ -1,5 +1,32 @@
 {
   "cSpell.words": [
+    "Followship",
     "resave"
+  ],
+  "favorites.resources": [
+    {
+      "filePath": "views/layouts/main.hbs",
+      "group": "Default"
+    },
+    {
+      "filePath": "views/tweets.hbs",
+      "group": "Default"
+    },
+    {
+      "filePath": "app.js",
+      "group": "Default"
+    },
+    {
+      "filePath": "routes/modules/tweets.js",
+      "group": "Default"
+    },
+    {
+      "filePath": "views/partials/left-sidebar.hbs",
+      "group": "Default"
+    },
+    {
+      "filePath": "views/tweet.hbs",
+      "group": "Default"
+    }
   ]
 }
