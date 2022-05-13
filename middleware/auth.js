@@ -12,12 +12,12 @@ const authenticated = (req, res, next) => {
 
 const authenticatedAdmin = (req, res, next) => {
   if (ensureAuthenticated(req)) {
-    if (getUser(req).role === 'admin') { 
+    if (getUser(req).role === 'admin') {
       return next() 
     }
-    res.redirect('/')
+    return res.redirect('/')
   } else {
-    res.redirect('/signin')
+    return res.redirect('/signin')
   }
 }
 

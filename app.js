@@ -17,6 +17,8 @@ app.set('view engine', 'hbs')
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 app.use(methodOverride('_method'))
 
+app.use(express.urlencoded({ extended: true }))
+
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
