@@ -219,6 +219,63 @@ const userController = {
         User.findByPk(userId, {
           include: [
             { model: User, as: 'Followers' },
+            { model: User, as: 'Followings' },
+            {
+              model: Tweet,
+              as: 'LikedTweets',
+              include: [User, Reply, { model: User, as: 'LikedUsers' }]
+            }
+          ]
+        }),
+        User.findAll({
+          include: [
+            {
+              model: User,
+              as: 'Followers'
+            }
+          ],
+          attributes: [
+            'id',
+            'name',
+            'account',
+            [
+              sequelize.fn('COUNT', sequelize.col('followerId')),
+              'followerCounts'
+            ]
+          ],
+          group: 'followingId',
+          order: [[sequelize.col('followerCounts'), 'DESC']]
+        })
+      ])
+      if (!user) throw new Error("User didn't exist!")
+
+      const data = user.toJSON()
+      const followingUserId = data.Followings.map(user => user.id)
+
+      const followshipData = followships
+        .map(user => ({
+          ...user.toJSON(),
+          isFollowed: followingUserId.includes(user.id)
+        }))
+        .slice(0, 10)
+
+      res.render('user', {
+        user: user.toJSON(),
+        followships: followshipData,
+        tab: 'getLikedTweets'
+      })
+    } catch (err) {
+      next(err)
+    }
+  },
+  getFollowers: async (req, res, next) => {
+    try {
+      const userId = req.params.id
+
+      const [user, followships] = await Promise.all([
+        User.findByPk(userId, {
+          include: [
+            { model: User, as: 'Followers' },
             { model: User, as: 'Followings' }
           ]
         }),
