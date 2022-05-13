@@ -1,3 +1,35 @@
 {{> user-profile user=user}}
 {{> user-tabs route='tweets'}}
 
+{{!-- tweets --}}
+<h3 class="mb-3">使用者的所有tweets</h3>
+{{#each user.Tweets }}
+  <blockquote class="blockquote mb-0">
+    <span><a href="/users/{{this.UserId}}">{{ ../user.name }}</a></span>
+    <span class="blockquote-footer"> @{{ ../user.account }}</span>
+    <span>{{ relativeTimeFromNow this.createdAt }}</span>
+    <p>{{ this.description }}</p>
+  </blockquote>
+      {{!-- TODO: 預留: 單一tweet連結  --}}
+    <form action="/tweets/{{ this.id }}" method="GET">
+      <button type="submit">回覆icon + 回覆數{{ this.Replies.length }} </button>
+    </form>
+    <form action="/tweets/{{ this.id }}" method="GET">
+      <button type="submit">Like icon + Like數{{ this.Likes.length }} </button>
+    </form>
+
+
+  {{!-- debug用，正式上線要刪掉   --}}
+  {{!-- 延伸挑戰功能： Like按鈕icon 加入判斷式: 是否已經like過了 --}}
+    {{#if isLiked}}
+      <form action="/tweets/{{ this.id }}/unlike" method="POST">
+        <button type="submit">移除 LIKE icon</button>
+      </form>
+    {{else}}
+      <form action="/tweets/{{ this.id }}/like" method="POST">
+        <button type="submit">加入 LIKE icon</button>
+      </form>
+    {{/if}}
+
+  <hr />
+{{/each}}

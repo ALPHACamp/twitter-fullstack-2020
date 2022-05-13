@@ -41,14 +41,18 @@ passport.serializeUser((user, cb) => {
 })
 // user = user.toJSON()
 // console.log('passport_user.toJSON()', user) // debug用
-// TODO: 要再加入follower & following 的數量，顯示在個人資料頁
+// 加入follower & following 的數量，顯示在個人資料頁
 passport.deserializeUser((id, cb) => {
   return User.findByPk(id, {
-    include: [{ model: Like }]
-    // 拿到user.Likes的陣列[UserId:1,TweetId:1]
+    include: [
+      // 拿到user.Likes的陣列[UserId:1,TweetId:1] follower & following 的 id 陣列
+      { model: Like, attributes: ['UserId', 'TweetId'] },
+      { model: User, as: 'Followers', attributes: ['id'] },
+      { model: User, as: 'Followings', attributes: ['id'] }
+    ]
   })
     .then(user => {
-      // console.log('passport_user.toJSON()', user.toJSON())
+      console.log('passport_user.toJSON()', user.toJSON())
       return cb(null, user.toJSON())
     })
     .catch(err => cb(err))

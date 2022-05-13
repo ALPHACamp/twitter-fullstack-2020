@@ -38,6 +38,7 @@ app.use((req, res, next) => {
   res.locals.error_messages = req.flash('error_messages')
   res.locals.error = req.flash('error')
   res.locals.user = helpers.getUser(req) // use helpers.getUser(req) to replace req.user
+  res.locals.logInUser = helpers.getUser(req) // use helpers.getUser(req) to replace req.user
   next()
 })
 

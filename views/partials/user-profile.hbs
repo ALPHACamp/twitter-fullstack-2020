@@ -7,15 +7,24 @@
 <p>user name: {{ user.name }}</p>
 <p>user account @ {{ user.account }}</p>
 <p>user introduction: {{ user.introduction }}</p>
-<p>{{ user.Followings.length }}個跟隨中(following)</p>
-<p>{{ user.Followers.length }}個跟隨者(follower)</p>
-{{#if personal }}
-  {{!-- <a class="btn btn-primary" href="/users/{{user.id}}/edit">edit</a> --}}
-  <button>是本人才看的到的神奇按鈕</button>
-{{/if}}
+<a href="/users/{{ user.id }}/followings"><p>{{ user.Followings.length }}個跟隨中(following)</p></a>
+<a href="/users/{{ user.id }}/followers"><p>{{ user.Followers.length }}個跟隨者(follower)</p></a>
 
-debug用:
-<p> {{ user.Replies.length }} 回文 </p>
-<p> {{ user.Tweets.length }} 推文 </p>
-<p> {{ user.Likes.length }} LIKES </p>
-<p>{{ user.Replies }} </p>
+{{!-- 是本人，顯示編輯個人資料按鈕 --}}
+{{#ifCond logInUser.id user.id}}
+  <form action="/users/{{user.id}}/edit" method="GET">
+    <button type="submit">是本人才看的到的神奇按鈕</button>
+  </form>
+{{else}}
+{{!-- 不是本人，顯示追蹤判斷按鈕 --}}
+{{!--  TODO:  isFollowed 判斷 --}}
+  {{#if isFollowed}}
+    <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: contents;">
+      <button type="submit" class="btn btn-danger">取消追蹤</button>
+    </form>
+  {{else}}
+    <form action="/followships/{{user.id}}" method="POST" style="display: contents;">
+      <button type="submit" class="btn btn-primary">追蹤</button>
+    </form>
+  {{/if}}
+{{/ifCond}}

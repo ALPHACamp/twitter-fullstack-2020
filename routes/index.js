@@ -30,11 +30,21 @@ router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets/:tweetId/like', authenticated, userController.addLike)
 router.post('/tweets/:tweetId/unlike', authenticated, userController.removeLike)
 
+// follow 功能
+router.post('/followships', authenticated, userController.addFollowing)
+router.post('/followships/:id', authenticated, userController.addFollowing)
+router.delete('/followships/:id', authenticated, userController.removeFollowing)
+
 // user
-router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
+router.get('/users/:id/followings', authenticated, userController.getFollowings)
+router.get('/users/:id/followers', authenticated, userController.getFollowers)
+router.get('/users/:id/tweets', authenticated, userController.getUser)
 router.get('/users/:id/replies', authenticated, userController.getReplies)
 router.get('/users/:id/likes', authenticated, userController.getLikes)
 router.get('/users/:id', authenticated, userController.getUser)
+
+// 防呆路由
+router.get('/users', authenticated, (req, res) => res.redirect('/tweets'))
 
 router.get('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)

@@ -18,11 +18,11 @@
     </form>
 
     {{#if isLiked}}
-      <form action="/tweets/{{ this.id }}/unlike" method="POST">
+      <form action="/tweets/{{ this.Tweet.id }}/unlike" method="POST">
         <button type="submit">移除 LIKE icon</button>
       </form>
     {{else}}
-      <form action="/tweets/{{ this.id }}/like" method="POST">
+      <form action="/tweets/{{ this.Tweet.id }}/like" method="POST">
         <button type="submit">加入 LIKE icon</button>
       </form>
     {{/if}}

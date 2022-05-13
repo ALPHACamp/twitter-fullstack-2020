@@ -21,6 +21,7 @@ describe('# user request', () => {
   context('# tweets', () => {
     before(async () => {
       // 模擬登入資料
+
       this.ensureAuthenticated = sinon
         .stub(helpers, 'ensureAuthenticated')
         .returns(true)

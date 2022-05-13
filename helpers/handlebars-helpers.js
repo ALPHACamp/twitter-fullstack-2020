@@ -7,6 +7,10 @@ module.exports = {
   currentYear: () => dayjs().year(),
   relativeTimeFromNow: a => dayjs(a).fromNow(),
   ifCond: function (a, b, options) {
-    return a === b ? options.fn(this) : options.inverse(this)
+    if (a === b) {
+      return options.fn(this)
+    } else {
+      return options.inverse(this)
+    }
   }
 }
