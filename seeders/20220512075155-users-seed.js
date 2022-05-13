@@ -1,5 +1,6 @@
 'use strict';
 const bcript = require('bcryptjs')
+const faker = require('faker')
 const userList = [{
   id: 1,
   email: 'root@example.com',
