@@ -15,7 +15,7 @@ app.set('view engine', 'hbs')
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 app.use(methodOverride('_method'))
-
+app.use(express.urlencoded({ extended: true }))
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
 app.use(flash()) // 掛載套件
 app.use((req, res, next) => {

@@ -1,7 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const { generalErrorHandler } = require('../middleware/error-handler')
-
+const tweet = require('./modules/tweet')
+const followship = require('./modules/followship')
+router.use('/tweets', tweet)
+router.use('/followships', followship)
 router.get('/', (req, res) => res.render('index'))
 router.use('/', generalErrorHandler)
 module.exports = router

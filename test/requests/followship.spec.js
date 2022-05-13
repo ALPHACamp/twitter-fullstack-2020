@@ -1,4 +1,4 @@
-var chai = require('chai')
+ var chai = require('chai')
 var request = require('supertest')
 var sinon = require('sinon')
 var app = require('../../app')
