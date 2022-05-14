@@ -12,7 +12,7 @@ passport.use(new LocalStrategy({
     User.findOne({ where: { account } })
       .then(user => {
         if (!user) {
-          return done(null, false, req.flash('error_messages', '帳號或密碼錯誤'))
+          return done(null, false, req.flash('error_messages', '帳號不存在'))
         }
         bcrypt.compare(password, user.password).then(res => {
           if (!res) {
