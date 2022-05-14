@@ -19,6 +19,6 @@ router.get('/logout', userController.logout)
 router.get('/users/setting/:id', authenticated, userController.getSetting)
 router.put('/users/setting/:id', authenticated, userController.putSetting)
 
-router.use('/', (req, res) => res.render('index'))
+router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
 module.exports = router
