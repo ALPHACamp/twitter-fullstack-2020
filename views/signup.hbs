@@ -1,0 +1,46 @@
+<div style="display: flex; justify-content: center;">
+  <div style="
+    box-sizing: border-box;
+    position: relative;
+    width: 1400px;
+    height: 1200px;
+    background: #FFFFFF;
+    border-radius: 4px;
+    border: 1px solid #D5D5DC;">
+    <form action="/signup" method="POST" style="display: flex; flex-direction: column; align-items: center">
+      <div style="position: absolute; width: 50px; height: 50px; top: 64px;">
+        <img src="/images/logo.png" alt="login" style="height: 50px; width: 50px;">
+      </div>
+      <div style="position: absolute; width: 168px; height: 26px;
+          top: 138px;">
+        <h1 class="h3 font-weight-normal mb-3">建立你的帳號</h1>
+      </div>
+      <div style="display: inline-block; width: 356px; height: 54px; position: absolute; top: 204px;">
+        <label class="form-label" for="account">帳號</label>
+        <input class="form-control" id="account" type="text" name="account" placeholder="請輸入帳號" required>
+      </div>
+      <div style="display: inline-block; width: 356px; height: 54px; position: absolute; top: 290px;">
+        <label class="form-label" for="name">名稱</label>
+        <input class="form-control" id="name" type="text" name="name" placeholder="請輸入使用者名稱" required>
+      </div>
+      <div style="display: inline-block; width: 356px; height: 54px; position: absolute; top: 376px;">
+        <label class="form-label" for="email">Email</label>
+        <input class="form-control" id="email" type="text" name="email" placeholder="請輸入Email" required>
+      </div>
+      <div style="display: inline-block; width: 356px; height: 54px; position: absolute; top: 462px;">
+        <label class="form-label" for="password">密碼</label>
+        <input class="form-control" id="password" type="password" name="password" placeholder="請設定密碼" required>
+      </div>
+      <div style="display: inline-block; width: 356px; height: 54px; position: absolute; top: 548px;">
+        <label class="form-label" for="checkPassword">密碼確認</label>
+        <input class="form-control" id="checkPassword" type="password" name="checkPassword" placeholder="再次輸入密碼" required>
+      </div>
+      <button class="btn btn-primary btn-block" type="submit"
+        style="display: inline-block; width: 356px; height: 46px; position: absolute; top: 642px; background: #FF6600; border-radius: 50px;">註冊
+      </button>
+      <div style="position: absolute; top: 710px;">
+        <p><a href="/signin">取消</a></p>
+      </div>
+    </form>
+  </div>
+</div>
