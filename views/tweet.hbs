@@ -28,7 +28,7 @@
       </div>
       <hr>
       <div class="d-flex mb-3">
-        <i class="far fa-comment mx-3"></i>
+        <i class="far fa-comment mx-3" data-bs-toggle="modal" data-bs-target="#replyModal"></i>
         <i class="far fa-heart ms-5"></i>
       </div>
       <hr>
@@ -37,7 +37,7 @@
     {{#each data.replies}}
     <div class="row mt-3">
       <div class="col-2 ms-1" style="width: 60px;">
-        <img src="{{this.User.avatar}}" alt="avatar" style="height: 50px ;width: 50px;">
+        <img src="{{this.User.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50px;">
       </div>
       <div class="col-10">
         <div class="d-flex flex-row align-items-center">
@@ -126,32 +126,59 @@
 </form>
 
 {{!-- reply modal --}}
-<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true"
+  data-bs-backdrop="static" data-bs-keyboard="false">
   <div class="modal-dialog" style="max-width: 600px">
     <div class="modal-content" style="border-radius: 15px">
-      <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"
+      {{!-- modal header --}}
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
         style="margin: 15px 0px 0px 15px;"></button>
-      <hr>
-
-      <form action="/tweets" method="POST">
-        <div class="row" style="">
-          <div class="col-2 ms-3" style="width: 60px;">
-            <a href="/users/:id">
-              <img src="/images/logo.png" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
-            </a>
+      <hr class="mb-0">
+      {{!-- tweet content --}}
+      <div class="modal-body">
+        <div class="row">
+          {{!-- tweeter's avatar --}}
+          <div id="tweeter" class="col-2 d-flex flex-column justify-content-start align-items-center">
+            <div style="height: 50px;">
+              <a href="{{tweet.User.id}}">
+                <img src="{{tweet.User.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50px;">
+              </a>
+            </div>
+            <div class="mx-3 mt-3" style="height: 60%; width: 3px; background: #899095;"></div>
           </div>
-          <div class="col-9 mb-3 ">
-            <textarea type="text" class="form-control" id="replyModal" name="reply" rows="5" placeholder="有什麼新鮮事？"
-              style="width: 480px; border: none; background-color: white; word-wrap: break-word;"></textarea>
+          {{!-- tweet's content --}}
+          <div class="col-10">
+            {{!-- tweeter's info --}}
+            <div class="d-flex flex-row align-items-center">
+              <p style="font-size: 16px; margin: 0 0;">{{tweet.User.name}}</p>
+              <p style="font-size: 14px; margin: 0 8px; color: #6C757D;">@{{tweet.User.account}}．{{relativeTimeFromNow tweet.createdAt}}</p>
+            </div>
+            {{!-- tweet's description --}}
+            <div class="mt-2">
+              <p>{{tweet.description}}</p>
+            </div>
+            <p class="mt-2" style="font-size: 14px; color: #6C757D;">回覆給
+              <span style="color:#FF6600;text-decoration: none">@{{tweet.User.account}}</span>
+            </p>
           </div>
         </div>
-      </form>
-
-      <div class="d-flex flex-row-reverse me-3 mb-3">
-        <button type="submit" class="btn btn-primary" id="modal-send-button"
-          style="height: 40px; width: 64px; border-radius: 50px; background: #FF6600;">推文</button>
+        {{!-- reply content --}}
+        <form action="/tweets/{{tweet.id}}/reply" method="POST">
+          <div class="row">
+            <div class="col-2 d-flex justify-content-center">
+              <img src="{{user.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
+            </div>
+            <div class="col-9 mb-3 ">
+              <textarea type="text" class="form-control me-2" id="reply" name="reply" rows="5" placeholder="推你的回復"
+                style="width: 450px; border: none; background-color: white; word-wrap: break-word;"></textarea>
+            </div>
+          </div>
+          <div class="d-flex flex-row-reverse me-3 mb-3">
+            <button type="submit" class="btn btn-primary" id="modal-send-button" data-bs-dismiss="modal"
+              style="height: 40px; width: 64px; border-radius: 50px; background: #FF6600;">回覆</button>
+          </div>
+        </form>
       </div>
-
     </div>
   </div>
 </div>

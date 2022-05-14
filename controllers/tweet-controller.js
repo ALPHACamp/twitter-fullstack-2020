@@ -1,10 +1,13 @@
 const { User, Tweet, Reply, Like } = require('../models')
-const { getUser } = require('../_helpers')
 const testUser = Number(3) // for local test
 
 const tweetController = {
   getTweets: (req, res, next) => {
-    const loginUser = getUser(req) ? getUser(req).id : testUser
+    const loginUser = req.user ? req.user.id : testUser //
+    // if (req.user.role === 'admin') {
+    // req.flash('error_messages', '無使用權限')
+    // res.redirect('/admin/tweets')
+    // }
     return Promise.all([
       User.findByPk(loginUser, { raw: true, nest: true }),
       Tweet.findAll({
@@ -22,7 +25,7 @@ const tweetController = {
       .then(([user, tweets, users]) => {
         // 判斷user存不存在
         if (!user) {
-          req.flash('error_messages:', "User is didn't exist!")
+          req.flash('error_messages:', '還沒登入帳號或使用者不存在')
           return res.redirect('/login')
         }
         // tweets資料
@@ -46,14 +49,23 @@ const tweetController = {
       .catch(err => next(err))
   },
   getTweet: (req, res, next) => {
-    const loginUser = getUser(req) ? getUser(req).id : testUser
+    const loginUser = req.user ? req.user.id : testUser
+    if (!loginUser) {
+      req.flash('error_messages', '帳號不存在')
+      res.redirect('/login')
+    }
+    // else if (req.user.role === 'admin') {
+    //   req.flash('error_messages', '無使用權限')
+    //   res.redirect('/admin/tweets')
+    // }
     return Promise.all([
       Tweet.findByPk(req.params.id, {
         include: [
           User,
           Like,
           { model: Reply, include: User }
-        ]
+        ],
+        order: [[Reply, 'createdAt', 'DESC']]
       }),
       User.findAll({
         where: { role: 'user' },
@@ -61,9 +73,10 @@ const tweetController = {
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
-      })
+      }),
+      User.findByPk(loginUser, { raw: true, nest: true })
     ])
-      .then(([tweet, users]) => {
+      .then(([tweet, users, user]) => {
         const tweetData = tweet.toJSON()
         const data = {
           replies: tweetData.Replies,
@@ -79,13 +92,17 @@ const tweetController = {
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, LIMIT)
-        res.render('tweet', { tweet: tweetData, users: userData, data })
+        res.render('tweet', { tweet: tweetData, users: userData, data, user })
       })
+      .catch(err => next(err))
   },
   postTweet: (req, res, next) => {
-    const userId = getUser(req) ? getUser(req) : testUser
+    const userId = req.user ? req.user.id : testUser
     const { description } = req.body
-    if (!userId) return req.flash('error_messages', '您尚未登入帳號!')
+    if (!userId) {
+      req.flash('error_messages', '您尚未登入帳號!')
+      res.redirect('/signin')
+    }
     if (!description) return req.flash('error_messages', '內容不可空白')
     Tweet.create({
       userId,
@@ -93,7 +110,27 @@ const tweetController = {
     })
       .then(() => {
         req.flash('success_messages', '推文成功')
-        res.redirect('/tweets')
+        res.redirect('back')
+      })
+      .catch(err => next(err))
+  },
+  postReply: (req, res, next) => {
+    const userId = req.user ? req.user.id : testUser
+    const tweetId = req.params.id
+    const { reply } = req.body
+    if (!userId) {
+      req.flash('error_messages', '您尚未登入帳號!')
+      res.redirect('/signin')
+    }
+    if (!reply) return req.flash('error_messages', '內容不可空白')
+    Reply.create({
+      userId,
+      tweetId,
+      comment: reply
+    })
+      .then(() => {
+        req.flash('success_messages', '回覆成功')
+        res.redirect('back')
       })
       .catch(err => next(err))
   }
