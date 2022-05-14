@@ -4,11 +4,39 @@
     <a href="/tweets">首頁</a>
     <a href="/users/{{ user.id }}">個人資料</a>
     <a href="/users/{{ user.id }}/setting">帳戶設定</a>
-    <a href="/tweets/create">
-      <button class="btn btn-primary my-2 my-sm-0">推文</button>
-    </a>
+    <a href="/tweets/create"></a>
+    {{!-- <button class="btn btn-primary my-2 my-sm-0">推文</button> --}}
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#indexTweetModal">
+      推文 modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="indexTweetModal" tabindex="-1" aria-labelledby="indexTweetModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="indexTweetModalLabel">你的名字</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="/tweets" id="tweets" method="post">
+              <div>
+                <textarea name="description" id="tweet-content" rows="5" class="form-control" placeholder="有什麼新鮮事？"
+                  required></textarea>
+              </div>
+              <button id="submit-btn" class="btn btn-primary">推文</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+    
     <a href="/logout">
       <button class="btn btn-outline-success my-2 my-sm-0">登出</button>
     </a>
   </div>
 </div>
+
