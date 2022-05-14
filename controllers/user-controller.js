@@ -95,21 +95,24 @@ const userController = {
         if (!data) throw new Error ("User didn't exists!")
         console.log(data.toJSON())
         return res.json((data.toJSON()))
+                 
     } catch (err) {
         next(err)
-    } 
+    }
 },
 getLikes: async(req, res, next) => {
   try {
       const UserId = req.params.id
       const data = await User.findByPk(UserId, {
           include: [
-              { model : Like, include: [ { model : Tweet, include: [User] }]}
+              { model : Like, include: [ { model : Tweet, include: [User] }]},
+              { model: User, as: 'Followings' },
+              { model: User, as: 'Followers' }
           ]
       })
       if (!data) throw new Error ("User didn't exists!")
       
-      return res.render( {user: data.toJSON()})
+      return res.json((data.toJSON()))
   } catch (err) {
       next(err)
   }
