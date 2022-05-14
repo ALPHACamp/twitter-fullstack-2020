@@ -72,7 +72,6 @@ const userController = {
   },
   getTweets: async (req, res, next) => {
     try {
-      console.log(req.user)
       const userId = Number(req.params.id)
       const [user, tweets, followships] = await Promise.all([
         User.findByPk(userId, {
@@ -217,7 +216,7 @@ const userController = {
   },
   getFollowers: async (req, res, next) => {
     try {
-      const userId = req.params.id
+      const userId = Number(req.params.id)
 
       const [user, followships] = await Promise.all([
         User.findByPk(userId, {
@@ -262,7 +261,7 @@ const userController = {
   },
   getFollowings: async (req, res, next) => {
     try {
-      const userId = req.params.id
+      const userId = Number(req.params.id)
 
       const [user, followships] = await Promise.all([
         User.findByPk(userId, {
@@ -296,6 +295,7 @@ const userController = {
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
+      console.log(followshipData)
       res.render('followship', {
         user: data, // display the followings of user
         followships: followshipData, // rightColumn
@@ -308,7 +308,7 @@ const userController = {
   addFollowing: async (req, res, next) => {
     try {
       const userId = Number(req.user.id)
-      const UserId = Number(req.body.UserId)
+      const UserId = Number(req.body.UserId) // other user
       if (userId === UserId) throw new Error("You can't follow yourself!")
 
       const user = await User.findByPk(userId, {
@@ -333,7 +333,7 @@ const userController = {
   removeFollowing: async (req, res, next) => {
     try {
       const userId = Number(req.user.id)
-      const UserId = Number(req.params.id)
+      const UserId = Number(req.params.id) // other user
       if (userId === UserId) throw new Error("You can't unfollow yourself!")
 
       const user = await User.findByPk(userId, {

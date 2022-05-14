@@ -3,23 +3,35 @@
   <li class='list-group-item'>
     <div class='row d-flex justify-content-center'>
       <div class='col-2 p-0 d-flex justify-content-center avatar'>
-        <img
-          src='https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png'
-          alt='alphaCamp'
-          width='50px'
-          height='50px'
-        />
+        <a href="/users/{{../user.id}}/tweets">
+          <img
+            src='{{../user.avatar}}'
+            alt='alphaCamp'
+            width='50px'
+            height='50px'
+          />
+        </a>
       </div>
       <div class='col p-0 ps-1 tweet-content'>
           <strong class='user-name'>{{../user.name}}</strong>
           <span class='user-account'>@{{../user.account}}</span>
           *
           <span class='user-account'>{{relativeTimeFromNow this.createdAt}}</span>
-          <p class='user-name'>{{this.description}}</p>
-          <span class='tweet-comments'>回復
-            {{this.Replies.length}}</span>
-          <span class='tweet-likes'>喜愛
-            {{this.LikedUsers.length}}</span>
+          <a href="#">
+            <p class='user-name'>{{this.description}}</p>
+          </a>
+          <div class="row d-flex">
+            <div class="col-2">
+              <button class='tweet-comments'>回復</button>
+              <span class='tweet-comments'>{{this.Replies.length}}</span>
+            </div>
+            <div class="col-2">
+              <form action="#" method="post">
+                <button class='tweet-likes' type="submit">喜愛</button>
+                <span class='tweet-likes'>{{this.LikedUsers.length}}</span>
+              </form>
+            </div>
+          </div>
       </div>
     </div>
   </li>
@@ -28,12 +40,14 @@
   <li class='list-group-item'>
     <div class='row d-flex justify-content-center'>
       <div class='col-2 p-0 d-flex justify-content-center avatar'>
-        <img
-          src='https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png'
-          alt='alphaCamp'
-          width='50px'
-          height='50px'
-        />
+        <a href="/users/{{this.Tweet.User.id}}/tweets">
+          <img
+            src='{{this.Tweet.User.avatar}}'
+            alt='alphaCamp'
+            width='50px'
+            height='50px'
+          />
+        </a>
       </div>
       <div class='col p-0 ps-1 tweet-content'>
           <strong class='user-name'>{{../user.name}}</strong>
@@ -41,7 +55,9 @@
           *
           <span class='user-account'>{{relativeTimeFromNow this.createdAt}}</span>
           <div class='user-account' style='color:#FF6600'>回覆 @{{this.Tweet.User.account}}</div>
-          <p class='user-name'>{{this.comment}}</p>
+          <a href="#">
+            <p class='user-name'>{{this.comment}}</p>
+          </a>
       </div>
     </div>
   </li>
@@ -50,23 +66,35 @@
   <li class='list-group-item'>
     <div class='row d-flex justify-content-center'>
       <div class='col-2 p-0 d-flex justify-content-center avatar'>
-        <img
-          src='https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png'
-          alt='alphaCamp'
-          width='50px'
-          height='50px'
-        />
+        <a href="/users/{{this.User.id}}/tweets">
+          <img
+            src='{{this.User.avatar}}'
+            alt='alphaCamp'
+            width='50px'
+            height='50px'
+          />
+        </a>
       </div>
       <div class='col p-0 ps-1 tweet-content'>
           <strong class='user-name'>{{this.User.name}}</strong>
           <span class='user-account'>@{{this.User.account}}</span>
           *
           <span class='user-account'>{{relativeTimeFromNow this.createdAt}}</span>
-          <p class='user-name'>{{this.description}}</p>
-          <span class='tweet-comments'>回復
-            {{this.Replies.length}}</span>
-          <span class='tweet-likes'>喜愛
-            {{this.LikedUsers.length}}</span>
+          <a href="#">
+            <p class='user-name'>{{this.description}}</p>
+          </a>
+          <div class="row d-flex">
+            <div class="col-2">
+              <button class='tweet-comments'>回復</button>
+              <span class='tweet-comments'>{{this.Replies.length}}</span>
+            </div>
+            <div class="col-2">
+              <form action="#" method="post">
+                <button class='tweet-likes' type="submit">喜愛</button>
+                <span class='tweet-likes'>{{this.LikedUsers.length}}</span>
+              </form>
+            </div>
+          </div>
       </div>
     </div>
   </li>
