@@ -1,62 +1,29 @@
-<div class='container mt-5 vh-100' style='width: 356px '>
-  <form action='/signin' method='POST'>
-    <div>
-      <div class='text-center py-4'>
-        <img src='#' alt='logo' />
-      </div>
-
-      <div class='admin-text text-center mb-4'>
-        <h2 class='mb-3'>登入 Alphitter</h2>
+<div class="wrapper">
+  <div class='container'>
+    <form action='/signin' method='POST' class="signup-form">
+      <div class='text-center'>
+        <img class='logo' alt='logo' src='/images/twitter_2022_logo.svg' />
+        <h3 class='mt-2'>登入 Alphitter</h3>
       </div>
       {{>message}}
-      <div
-        class='form-label mb-4 mt-5'
-        style='background-color: #F5F8FA; border-bottom: 2px solid black; border-radius: 2px'
-      >
-        <label for='account'>帳號</label>
-        <input
-          id='account'
-          name='account'
-          type='text'
-          class='form-control'
-          placeholder='請輸入帳號'
-          value='{{account}}'
-          style='border: none;background-color: #F5F8FA'
-          required
-        />
+      <div class='form-label pt-2 mt-4'>
+        <label for='account' class='ms-2'>帳號</label>
+        <input id='account' name='account' type='text' class='form-control' placeholder='請輸入帳號' value='{{account}}' required/>
       </div>
-
-      <div
-        class='form-label mb-4'
-        style='background-color: #F5F8FA; border-bottom: 2px solid black; border-radius: 2px'
-      >
-        <label for='password'>密碼</label>
-        <input
-          id='password'
-          name='password'
-          type='password'
-          class='form-control'
-          placeholder='請輸入密碼'
-          style='border: none;background-color: #F5F8FA'
-          required
-        />
+      <div class='form-label pt-2 mt-4'>
+        <label for='password' class='ms-2'>密碼</label>
+        <input id='password' name='password' type='password' class='form-control' placeholder='請輸入密碼' value='{{password}}' required/>
       </div>
-
-      <button
-        class='btn btn-lg btn-primary btn-block mb-3 w-100'
-        style='background-color: #ff6600; border: none; border-radius: 50px;'
-        type='submit'
-      >
-        登入
-      </button>
-      <div class='d-flex justify-content-end mb-3 w-100'>
-        <p class='text-center px-3'>
-          <a href='/signin'>註冊</a>
+      <button class='btn btn-primary mt-4 mb-3' type='submit'>登入</button>
+      <div class='d-flex justify-content-end signup-links'>
+        <p class='text-center'>
+          <a href='/signup'>註冊</a>
         </p>
+        <p class='text-center'>•</p>
         <p class='text-center'>
           <a href='/admin/signin'>後台登入</a>
         </p>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>

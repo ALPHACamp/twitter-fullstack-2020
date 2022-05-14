@@ -1,3 +1,6 @@
+body{
+    font-family: 'Noto Sans TC', 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+}
 .wrapper{
     min-width: 375px;
 }
@@ -12,6 +15,8 @@
     box-shadow: none !important;
 }
 
+/*-------------- singup/singin form settings --------------*/
+
 .signup-form{
     width: 356px;
     margin: 0 auto;
@@ -20,6 +25,8 @@
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #1c1c1c;
     line-height: 26px;
+    font-weight: bold;
+    margin-bottom: 35px;
 }
 .form-label{
     background-color: #F5F8FA; 
@@ -48,6 +55,7 @@
     font-size: 0.9rem;
 }
 .signup-form button{
+    font-weight: 600;
     background-color: #ff6600 !important;
     border: none !important;
     width: 100%;
@@ -57,4 +65,16 @@
 }
 .signup-form button:hover{
     background-color: #FF974A !important;
+}
+.signup-form a{
+    color: #0062ff;
+    line-height: 26px;
+    font-size: 16px;
+    font-weight: 700;
+}
+.signup-form a:hover{
+    color: #50b5ff;
+}
+.signup-links p{
+    margin-left: 1rem;
 }
