@@ -31,22 +31,16 @@ const adminController = {
       return res.redirect('back')
     }
   },
-  deleteTweets: (req, res) => {
-    const tweetId = req.params.id
-    Tweet.findOne({ where: { id: Number(tweetId) } })
-      .then(tweet => {
-        return tweet.destroy()
-      })
-      .then(() => {
-        res.status(200)
-        req.flash('success_messages', '刪除成功！')
-        res.redirect('back')
-      })
-      .catch(e => {
-        // console.log('e')
-        res.status(302)
-        return res.redirect('back')
-      })
+  deleteTweets: async (req, res, next) => {
+    try {
+      const tweetId = req.params.id
+      const tweet = await Tweet.findOne({ where: { id: Number(tweetId) } })
+      await tweet.destroy()
+      req.flash('success_messages', '刪除成功！')
+      return res.redirect('/admin/tweets')
+    } catch (e) {
+      next(e)
+    }
   },
   getUsers: async (req, res) => {
     try {

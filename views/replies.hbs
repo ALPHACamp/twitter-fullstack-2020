@@ -1,15 +1,36 @@
+<div class="row align-items-start">
+  {{> left}}
+  <div class="col-md-6">
 {{> user-profile user=user}}
 {{> user-tabs route='replies'}}
 
 {{!-- replies --}}
-<h3 class="mb-3">使用者的所有replies</h3>
+<h3 class="mb-3"></h3>
+<p>使用者的所有replies 和 推文 replies先 推文後 createdAt DESC</p>
+
+{{!--  paramsUser 所有 replies  --}}
 {{#each user.Replies}}
   <blockquote class="blockquote mb-0">
-    <span><a href="/users/{{this.UserId}}">{{ ../user.name }}</a></span>
+    <span><a href="/users/{{../user.id}}">{{ ../user.name }}</a></span>
     <span class="blockquote-footer"> @{{ ../user.account }}</span>
     <span>{{ relativeTimeFromNow this.createdAt }}</span>
-    <p>回覆對象連結<a href="/users/{{this.Tweet.UserId}}"> {{ this.Tweet.User.name }}</a>  </p>
+    <p>回覆<a href="/users/{{this.Tweet.User.id}}">@{{ this.Tweet.User.account }}</a></p>
+    <p class="blockquote-footer"> {{ this.Tweet.description }}</p>
     <p>{{ this.comment }}</p>
   </blockquote>
   <hr />
 {{/each}}
+
+{{!--  paramsUser 所有 tweets  --}}
+{{#each user.Tweets}}
+  <blockquote class="blockquote mb-0">
+    <span><a href="/users/{{../user.id}}">{{ ../user.name }}</a></span>
+    <span class="blockquote-footer"> @{{ ../user.account }}</span>
+    <span>{{ relativeTimeFromNow this.createdAt }}</span>
+    <p>{{ this.description }}</p>
+  </blockquote>
+  <hr />
+{{/each}}
+  </div>
+  {{> right topUsers=topUsers}}
+</div>

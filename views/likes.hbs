@@ -1,3 +1,6 @@
+<div class="row align-items-start">
+  {{> left}}
+  <div class="col-md-6">
 {{> user-profile user=user}}
 {{> user-tabs route='likes'}}
 
@@ -5,18 +8,22 @@
 <h3 class="mb-3">使用者的所有likes</h3>
 {{#each tweets}}
   <blockquote class="blockquote mb-0">
-    <span><a href="/users/{{this.UserId}}">{{ ../user.name }}</a></span>
-    <span class="blockquote-footer"> @{{ ../user.account }}</span>
-    <span>{{ relativeTimeFromNow this.createdAt }}</span>
+    <span><a href="/users/{{this.Tweet.UserId}}">{{ this.Tweet.User.name }}</a></span>
+    <span class="blockquote-footer"> @{{ this.Tweet.User.account }}</span>
+    <span>{{ relativeTimeFromNow this.Tweet.createdAt }}</span>
     <p>{{ this.Tweet.description }}</p>
   </blockquote>
     <span class="blockquote-footer">{{ this.Tweet.Replies.length }}回覆數</span>
     <p></p>
       {{!-- 預留: 單一tweet連結  --}}
-    <form action="/tweets/{{ this.id }}" method="GET">
+    <form action="/tweets/{{ this.id }}/replies" method="GET">
       <button type="submit">回覆icon</button>
     </form>
+      <form action="/tweets/{{ this.Tweet.id }}/unlike" method="POST">
+        <button type="submit">移除 LIKE icon</button>
+      </form>
 
+{{!-- 
     {{#if isLiked}}
       <form action="/tweets/{{ this.Tweet.id }}/unlike" method="POST">
         <button type="submit">移除 LIKE icon</button>
@@ -25,6 +32,9 @@
       <form action="/tweets/{{ this.Tweet.id }}/like" method="POST">
         <button type="submit">加入 LIKE icon</button>
       </form>
-    {{/if}}
+    {{/if}} --}}
   <hr />
 {{/each}}
+  </div>
+  {{> right topUsers=topUsers}}
+</div>

@@ -1,3 +1,6 @@
+<div class="row align-items-start">
+  {{> left}}
+  <div class="col-md-6">
 {{currentUser.name}}
 <p>{{currentUser.Tweets.length}}推文</p>
 
@@ -9,9 +12,9 @@
     <span class="blockquote-footer"> @{{ this.account }}</span>
     <span>{{ relativeTimeFromNow this.createdAt }}</span>
     
-  {{#ifCond this.UserId ../logInUser.id }}
+  {{#ifCond this.id ../logInUser.id }}
   {{else}}
-    {{#if isFollowed}}
+    {{#if this.isFollowed}}
       <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
         <button type="submit" class="btn btn-danger">取消追蹤</button>
       </form>
@@ -29,3 +32,6 @@
 
   <hr />
 {{/each}}
+  </div>
+  {{> right topUsers=topUsers}}
+</div>

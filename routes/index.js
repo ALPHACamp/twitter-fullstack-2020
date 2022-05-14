@@ -18,6 +18,7 @@ router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 // 使用者登入
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+
 // 使用者註冊
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
@@ -27,16 +28,18 @@ router.get('/logout', userController.logout)
 router.post('/tweets/:tweetId/like', authenticated, userController.addLike)
 router.post('/tweets/:tweetId/unlike', authenticated, userController.removeLike)
 
-// 推文
-router.get('/tweets/create', authenticated, tweetController.createFakePage)
-router.get('/tweets/:tweetId/replies', authenticated, tweetController.replyFakePage)
+// 推回文 功能
 router.post('/tweets/:tweetId/replies', authenticated, tweetController.addReply)
-router.get('/tweets/:tweetId', authenticated, tweetController.getTweet)
-router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.addTweet)
 
+// 推回文頁面
+router.get('/tweets/create', authenticated, tweetController.createFakePage) // 假頁面
+router.get('/tweets/:tweetId/repliesFake', authenticated, tweetController.replyFakePage) // 假頁面
+router.get('/tweets/:tweetId/replies', authenticated, tweetController.getTweet) // 單一推文回文列表
+router.get('/tweets', authenticated, tweetController.getTweets) // 首頁
+
 // follow 功能
-router.post('/followships', authenticated, userController.addFollowing)
+router.post('/followships', authenticated, userController.addFollowing) // 測試檔路由
 router.post('/followships/:id', authenticated, userController.addFollowing)
 router.delete('/followships/:id', authenticated, userController.removeFollowing)
 
