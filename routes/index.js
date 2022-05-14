@@ -10,7 +10,7 @@ const { authenticated } = require('../middleware/auth')
 const admin = require('./modules/admin')
 
 router.use('/admin', admin)
-router.use('/tweets', tweet)
+router.use('/tweets', authenticated, tweet)
 router.use('/followships', followship)
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
