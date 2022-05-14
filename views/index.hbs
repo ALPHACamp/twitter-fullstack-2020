@@ -22,13 +22,15 @@
       <span class="blockquote-footer"> @{{ this.User.account }}</span>
       <span>{{ relativeTimeFromNow this.createdAt }}</span>
       <p>{{ this.description }}</p>
-      {{!-- TODO: 除了指定的按鈕以外(名字，回覆 icon，喜歡 icon)，點這個推文的其他地方都會到 /tweets/{{this.id}} --}}
-      <a href="/tweets/{{this.id}}">查看這個 tweet</a>
+      {{!-- TODO: 除了指定的按鈕以外(名字，回覆 icon，喜歡 icon)，點這個推文的其他地方都會到 /tweets/{{this.id}}/replies --}}
+      <a href="/tweets/{{this.id}}/replies">查看這個 tweet</a>
       <div>
-        <span><a href="/tweets/{{this.id}}/replies">回覆</a></span>
+        <span><a href="/tweets/{{this.id}}/repliesFake">回覆</a></span>
         <span>回覆數量</span>
         {{!-- TODO:偵測喜歡狀態，切換路由 --}}
-        <span><a href="/tweets/{{this.id}}/like">喜歡</a></span>
+        <form action="/tweets/{{ this.id }}/like" method="POST">
+          <button type="submit">加入 LIKE icon</button>
+        </form>
         <span>喜歡數量</span>
       </div>
     </blockquote>
