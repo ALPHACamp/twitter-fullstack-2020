@@ -4,6 +4,7 @@ const faker = require('faker')
 const userList = [{
   id: 1,
   email: 'root@example.com',
+  account: 'root',
   name: 'root',
   password: bcript.hashSync('12345678',10),
   createdAt: new Date(),
@@ -17,6 +18,7 @@ for(let i=0;i<5;i++){
   userList.push({
     id: i + 2,
     email: `user${i+1}@example.com`,
+    account: `user${i+1}`,
     name: `user${i+1}`,
     password: bcript.hashSync('12345678',10),
     createdAt: new Date(),

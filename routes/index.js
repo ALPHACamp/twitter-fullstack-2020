@@ -7,6 +7,9 @@ const followship = require('./modules/followship')
 const userController = require('../controllers/user-controller')
 const { authenticated } = require('../middleware/auth')
 
+const admin = require('./modules/admin')
+
+router.use('/admin', admin)
 router.use('/tweets', tweet)
 router.use('/followships', followship)
 router.get('/signin', userController.signInPage)
