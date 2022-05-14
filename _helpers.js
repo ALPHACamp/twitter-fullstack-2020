@@ -1,5 +1,5 @@
 function ensureAuthenticated(req) {
-  return req.isAuthenticated();
+  return req.isAuthenticated()
 }
 
 function getUser(req) {
@@ -9,4 +9,4 @@ function getUser(req) {
 module.exports = {
   ensureAuthenticated,
   getUser,
-};
+}
