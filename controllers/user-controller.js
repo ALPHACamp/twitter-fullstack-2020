@@ -1,4 +1,6 @@
 const { User, Tweet, Reply, Like, Followship } = require('../models')
+const { Op } = require('sequelize')
+const bcrypt = require('bcryptjs')
 
 const userController = {
   getUser: (req, res, next) => {
@@ -53,6 +55,7 @@ const userController = {
 
         res.render('user', { user, users: result, tweetsSelect, relpiesSelect, likesSelect })
       })
+      .catch(err => next(err))
   },
   getUserFollowship: (req, res, next) => {
     const { type } = req.query
@@ -108,6 +111,49 @@ const userController = {
 
         res.render('followship', { user, users: result, followersSelect, followingsSelect })
       })
+      .catch(err => next(err))
+  },
+  editUserSetting: (req, res, next) => {
+    return User.findByPk(req.params.id, { raw: true })
+      .then(user => {
+        if (!user) throw new Error("User didn't exist!")
+        res.render('setting', { user })
+      })
+      .catch(err => next(err))
+  },
+  putUserSetting: (req, res, next) => {
+    const { account, name, email, password, checkPassword } = req.body
+
+    if (Number(req.params.id) !== Number(req.user.id)) throw new Error('請勿編輯他人資料')
+    if (name.length > 50) throw new Error('名稱字數超出上限！')
+    if (password !== checkPassword) throw new Error('Passwords do not match!')
+
+    return Promise.all([
+      User.findByPk(req.params.id),
+      User.findOne({ where: { [Op.or]: [{ account }, { email }] } })
+    ])
+      .then(([user, newUser]) => {
+        if (newUser) throw new Error('account 或 email 已重複註冊！')
+
+        bcrypt.hash(password, 10)
+          .then(hash => {
+            return user.update({
+              email,
+              password: hash,
+              name,
+              avatar: user.avatar,
+              cover: user.cover,
+              introduction: user.introduction,
+              role: user.role,
+              account
+            })
+          })
+          .then(() => {
+            req.flash('success_messages', '使用者資料編輯成功')
+            res.redirect(`/users/${req.params.id}`)
+          })
+      })
+      .catch(err => next(err))
   }
 }
 
