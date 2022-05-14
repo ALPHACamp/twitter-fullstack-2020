@@ -72,9 +72,13 @@ const userController = {
   },
   getTweets: async (req, res, next) => {
     try {
-      const userId = Number(req.params.id)
-      const [user, tweets, followships] = await Promise.all([
-        User.findByPk(userId, {
+      const userId = Number(req.user.id) // 登入的使用者
+      const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
+      const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
+
+      const [queryUserData, tweets, followships] = await Promise.all([
+        // 這部分之後可以再優化 userId !== UserId 的時候才需要做
+        User.findByPk(queryUserId, {
           include: [
             { model: User, as: 'Followers' },
             { model: User, as: 'Followings' }
@@ -85,10 +89,14 @@ const userController = {
             Reply,
             {
               model: User,
+              attributes: ['id', 'name', 'account', 'avatar']
+            },
+            {
+              model: User,
               as: 'LikedUsers'
             }
           ],
-          where: { userId },
+          where: { UserId: queryUserId }, // 這裏是帶入 queryUserId 搜尋
           order: [['createdAt', 'DESC']]
         }),
         User.findAll({
@@ -97,12 +105,23 @@ const userController = {
           where: [{ role: 'user' }]
         })
       ])
-      if (!user) throw new Error('使用者不存在 !')
+      if (!queryUserData) throw new Error('使用者不存在 !')
 
+      // 獨立處理 queryUser 的資料
+      const queryUser = queryUserData.toJSON()
+      // 判斷正在瀏覽的頁面，使用者是否為自己
+      queryUser.isSelf = userId === UserId
+      // 判斷正在瀏覽的頁面，使用者是否為自己 “已追蹤” 的使用者
+      queryUser.isFollowed = req.user.Followings.some(
+        item => item.id === queryUser.id
+      )
+
+      // 獨立處理 tweets 的資料
       tweets.forEach(function (tweet, index) {
         this[index] = { ...tweet.toJSON() }
       }, tweets)
 
+      // 獨立處理 rightColumn 的資料
       const followshipData = followships
         .map(followship => ({
           ...followship.toJSON(),
@@ -114,7 +133,7 @@ const userController = {
         .slice(0, 10)
 
       res.render('user', {
-        user: user.toJSON(),
+        queryUser,
         tweets,
         followships: followshipData,
         tab: 'getTweets'
