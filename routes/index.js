@@ -7,7 +7,7 @@ const followship = require('./modules/followship')
 const userController = require('../controllers/user-controller')
 const { authenticated } = require('../middleware/auth')
 
-router.use('/tweets', tweet)
+router.use('/tweets', authenticated, tweet)
 router.use('/followships', followship)
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
