@@ -18,6 +18,7 @@ app.set('view engine', 'hbs')
 app.use(methodOverride('_method'))
 
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
