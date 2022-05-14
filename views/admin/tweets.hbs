@@ -1,1 +1,13 @@
-<h1>admin tweets</h1>
+<h1>推文清單</h1>
+
+{{#each tweets}}
+<span class="fw-bold me-1">{{this.User.name}}</span>
+<span class="text-secondary fw-bold">@{{this.User.account}}</span>
+<div>
+  <p>{{this.description}}</p>
+</div>
+<form action="/admin/restaurants/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+  <button type="submit" class="btn btn-link link-danger"
+    onclick="return confirm(`確定要刪除 {{ this.name }} 嗎？`)">X</button>
+</form>
+{{/each}}

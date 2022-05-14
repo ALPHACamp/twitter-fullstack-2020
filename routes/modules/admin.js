@@ -8,7 +8,11 @@ const { authenticatedAdmin } = require('../../middleware/auth')
 
 router.get('/signin', adminController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
+
+router.delete('/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 router.get('/tweets', authenticatedAdmin, adminController.getTweets)
+
+router.get('/users', authenticatedAdmin, adminController.getUsers)
 
 router.use('/', (req, res) => res.redirect('/admin/tweets'))
 

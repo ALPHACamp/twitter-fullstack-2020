@@ -1,0 +1,9 @@
+<h1>使用者清單</h1>
+
+{{#each users}}
+<span class="fw-bold me-1">{{this.name}}</span>
+<span class="text-secondary fw-bold">@{{this.account}}</span>
+<div>
+  <p>{{this.description}}</p>
+</div>
+{{/each}}
