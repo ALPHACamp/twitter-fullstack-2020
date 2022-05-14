@@ -8,14 +8,14 @@ const userController = {
   }, 
   signIn: (req, res) => {
     req.flash('success_messages', '登入成功!')
-    res.redirect('/')
+    res.redirect('/tweets')
     
   },
   signUpPage: (req, res) => {
     res.render('register')
   },
   signUp: (req, res, next) => {
-    if (req.body.password !== req.body.passwordCheck) throw new Error('Password do not match!')
+    if (req.body.password !== req.body.checkPassword) throw new Error('Password do not match!')
     Promise.all([User.findOne({ where: { email: req.body.email } }), User.findOne({ where: { account: req.body.account } })])
       .then(([userEmail, userAccount]) => {
         if (userEmail) throw new Error('Email already exists!')
@@ -77,7 +77,7 @@ const userController = {
       })
       .then(() => {
         req.flash('success_messages', '使用者資料編輯成功')
-        res.redirect(`/users/setting/${id}`)
+        res.redirect('/')
       })
       .catch(err => next(err))
   }
