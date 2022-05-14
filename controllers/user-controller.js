@@ -80,9 +80,9 @@ const userController = {
         // 這部分之後可以再優化 userId !== UserId 的時候才需要做
         User.findByPk(queryUserId, {
           include: [
-            { model: User, as: 'Followers' },
-            { model: User, as: 'Followings' },
-            { model: Tweet, attributes: ['id'] }
+            { model: User, as: 'Followers', attributes: ['id'] }, // 提供給 Followers 的數量計算
+            { model: User, as: 'Followings', attributes: ['id'] }, // 提供給 Followings 的數量計算
+            { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
           ]
         }),
         Tweet.findAll({
@@ -94,7 +94,8 @@ const userController = {
             },
             {
               model: User,
-              as: 'LikedUsers'
+              as: 'LikedUsers',
+              attributes: ['id']
             }
           ],
           where: { UserId: queryUserId }, // 這裏是帶入 queryUserId 搜尋
@@ -152,9 +153,9 @@ const userController = {
       const [queryUserData, replies, followships] = await Promise.all([
         User.findByPk(queryUserId, {
           include: [
-            { model: User, as: 'Followers' },
-            { model: User, as: 'Followings' },
-            { model: Tweet, attributes: ['id'] }
+            { model: User, as: 'Followers', attributes: ['id'] }, // 提供給 Followers 的數量計算
+            { model: User, as: 'Followings', attributes: ['id'] }, // 提供給 Followings 的數量計算
+            { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
           ]
         }),
         Reply.findAll({
@@ -216,13 +217,15 @@ const userController = {
   },
   getLikedTweets: async (req, res, next) => {
     try {
-      const userId = Number(req.params.id)
+      const userId = Number(req.user.id) // 登入的使用者
+      const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
+      const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
 
-      const [user, followships] = await Promise.all([
-        User.findByPk(userId, {
+      const [queryUserData, followships] = await Promise.all([
+        User.findByPk(queryUserId, {
           include: [
-            { model: User, as: 'Followers' },
-            { model: User, as: 'Followings' },
+            { model: User, as: 'Followers', attributes: ['id'] }, // 提供給 Followers 的數量計算
+            { model: User, as: 'Followings', attributes: ['id'] }, // 提供給 Followings 的數量計算
             {
               model: Tweet,
               as: 'LikedTweets',
@@ -236,8 +239,18 @@ const userController = {
           where: [{ role: 'user' }]
         })
       ])
-      if (!user) throw new Error("User didn't exist!")
+      if (!queryUserData) throw new Error("User didn't exist!")
 
+      // 獨立處理 queryUser 的資料
+      const queryUser = queryUserData.toJSON()
+      // 判斷正在瀏覽的頁面，使用者是否為自己
+      queryUser.isSelf = userId === UserId
+      // 判斷正在瀏覽的頁面，使用者是否為自己 “已追蹤” 的使用者
+      queryUser.isFollowed = req.user.Followings.some(
+        item => item.id === queryUser.id
+      )
+
+      // 獨立處理 rightColumn 的資料
       const followshipData = followships
         .map(followship => ({
           ...followship.toJSON(),
@@ -249,7 +262,7 @@ const userController = {
         .slice(0, 10)
 
       res.render('user', {
-        user: user.toJSON(),
+        queryUser,
         followships: followshipData,
         tab: 'getLikedTweets'
       })
