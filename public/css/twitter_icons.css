@@ -33,3 +33,29 @@ i.user-like{
 .tweet-buttons button:hover i.user-like {
   background-position: -59px -68px;
 }
+.profile-setting i{
+  height: 24px;
+  width: 24px;
+  margin: 0 18px 0 16px;
+}
+i.home{
+  background-position: -25px -57px;
+}
+i.info{
+  background-position: -65px -57px;
+}
+i.setting{
+  background-position: -105px -57px;
+}
+a.active i.home {
+  background-position: -25px -16px;
+}
+a.active i.info {
+  background-position: -65px -16px;
+}
+a.active i.setting {
+  background-position: -105px -16px;
+}
+i.logout{
+  background-position: -223px -57px;
+}

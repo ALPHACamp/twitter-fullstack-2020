@@ -1,4 +1,4 @@
-body, a > h5, .content {
+body, a > .user-name, .follow-tweet .user-name, .content {
     font-family: 'Noto Sans TC', 'Segoe UI', 'Microsoft JhengHei', sans-serif;
     color: #171725;
 }
@@ -9,7 +9,6 @@ body, a > h5, .content {
     width: 50px;
     height: 50px;
     padding: 10px;
-    margin-top: 64px;
 }
 .avatar {
     border-radius: 50%;
@@ -25,6 +24,9 @@ body, a > h5, .content {
 ::placeholder {
     color: #b5b5be !important;
     font-size: 0.9rem;
+}
+input:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px #F5F8FA inset !important;
 }
 button {
     font-weight: 500 !important;
@@ -56,11 +58,23 @@ h5 {
     font-size: 14px;
     line-height: 22px;
 }
+.user-info a, .user-tabs a, .post-user a, .post-content .content, .reply-text a, .profile-setting a, .follow-tweet a{
+    text-decoration: none;
+}
+.ellipsis {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
 /*-------------- singup/singin form settings --------------*/
 .signup-form{
     width: 356px;
     margin: 0 auto;
+}
+.signup-form .logo {
+    margin-top: 64px;
 }
 .signup-form h3{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -184,7 +198,6 @@ h5 {
     margin: 5px 0 8px;
 }
 .user-info a{
-    text-decoration: none;
     color: #171725;
     margin-right: 20px;
 }
@@ -203,7 +216,6 @@ h5 {
     padding-top: 10px;
     display: block;
     text-align: center;
-    text-decoration: none;
 }
 .user-tabs a.active{
     border-bottom: 2px solid #FF6600;
@@ -214,28 +226,30 @@ h5 {
     border-top: 1px solid #e6ecf0;
     padding: 16px 30px 17px 23px ;
 }
-.tweet .avatar {
+.tweet .avatar, .follow-tweet .avatar {
     width: 50px;
     height: 50px;
     margin-right: 8px;
 }
 .post-user{
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 }
 .post-user a{
-    margin-right: 8px;
-    text-decoration: none;
+    margin-right: 5px;
 }
 .post-user span{
     margin-right: 3px;
 }
-.post-content a:hover h5, .reply-text a:hover{
+a > .user-name, .follow-tweet .user-name{
+    font-size: 16px;
+    font-weight: 500;
+}
+a:hover > .user-name, .reply-text a:hover, .follow-tweet a:hover .user-name{
     text-decoration: underline
 }
 .post-content .content{
     padding: 10px 0;
     font-size: 16px;
-    text-decoration: none;
 }
 .post-content .content:hover{   
     color: #92929D;
@@ -255,5 +269,63 @@ h5 {
 }
 .reply-text a{
     color:#FF6600;
-    text-decoration: none;
+}
+/*-------------- profile-setting settings --------------*/
+.profile-setting .logo{
+    margin: 3px;
+}
+.profile-setting a{
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 26px;
+    color: #44444F;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: start;
+    align-items: center;
+    padding:10px 0;
+    margin: 10px 0;
+}
+.profile-setting a:hover{
+    opacity: 0.7;
+}
+.profile-setting a.active{
+    color: #FF6600;
+}
+.navigation button{
+    padding: 9px 12px;
+    margin-top: 5px;
+}
+.navigation a:first-child{
+    padding: 0;
+    margin: 0;
+}
+.navigation a:first-child:hover{
+    opacity: 1;
+}
+/*-------------- top-users-list settings --------------*/
+.popular{
+    width: 100%;
+    border-radius: 14px;
+    background-color: #FAFAFB;
+    align-items: start;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.popular .header{
+    padding: 12px;
+    border-bottom: 1px solid #E6ECF0;
+}
+.popular h4 {
+    margin: 12px;
+    font-weight: 700;
+}
+.follow-tweet{
+    padding: 16px;
+}
+.follow-tweet .user-name-account{
+    max-width: 80px;
+}
+.follow-tweet .secondary-text{
+    color: #92929d;
 }
