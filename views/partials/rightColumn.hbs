@@ -24,15 +24,22 @@
           </div>
           <div class='col p-0'>
             {{#if this.isFollowed}}
+            <form action='/followships/{{this.id}}?_method=DELETE' method='POST'>
               <button
+                type='submit'
                 class='btn rounded-pill text-light'
                 style='background-color:#FF6600;'
               >正在追隨</button>
+            </form>
             {{else}}
+            <form action='/followships' method='POST'>
+              <input type='hidden' name='UserId' value='{{this.id}}'/>
               <button
+                type='submit'
                 class='btn rounded-pill bg-light'
                 style='border-color:#FF6600; color:#FF6600'
               >跟隨</button>
+            </form>
             {{/if}}
           </div>
         </div>

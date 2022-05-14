@@ -111,7 +111,7 @@ const userController = {
           order: [[sequelize.col('followerCounts'), 'DESC']]
         })
       ])
-      if (!user) throw new Error("User didn't exist!")
+      if (!user) throw new Error('使用者不存在 !')
 
       tweets.forEach(function (tweet, index) {
         this[index] = { ...tweet.toJSON() }
@@ -173,7 +173,7 @@ const userController = {
           order: [[sequelize.col('followerCounts'), 'DESC']]
         })
       ])
-      if (!user) throw new Error("User didn't exist!")
+      if (!user) throw new Error('使用者不存在 !')
 
       replies.forEach(function (reply, index) {
         this[index] = { ...reply.toJSON() }
@@ -235,7 +235,7 @@ const userController = {
           order: [[sequelize.col('followerCounts'), 'DESC']]
         })
       ])
-      if (!user) throw new Error("User didn't exist!")
+      if (!user) throw new Error('使用者不存在 !')
 
       const data = user.toJSON()
       const followingUserId = data.Followings.map(user => user.id)
@@ -287,7 +287,7 @@ const userController = {
           order: [[sequelize.col('followerCounts'), 'DESC']]
         })
       ])
-      if (!user) throw new Error("User didn't exist!")
+      if (!user) throw new Error('使用者不存在 !')
 
       const data = user.toJSON()
       const followingUserId = data.Followings.map(user => user.id)
@@ -343,7 +343,7 @@ const userController = {
           order: [[sequelize.col('followerCounts'), 'DESC']]
         })
       ])
-      if (!user) throw new Error("User didn't exist!")
+      if (!user) throw new Error('使用者不存在 !')
 
       const data = user.toJSON()
       const followingUserId = data.Followings.map(user => user.id)
@@ -364,6 +364,58 @@ const userController = {
         followships: followshipData,
         tab: 'getFollowings'
       })
+    } catch (err) {
+      next(err)
+    }
+  },
+  addFollowing: async (req, res, next) => {
+    try {
+      const userId = Number(req.user.id)
+      const UserId = Number(req.body.UserId)
+      if (userId === UserId) throw new Error("You can't follow yourself!")
+
+      const user = await User.findByPk(userId, {
+        include: [{ model: User, as: 'Followings', attributes: ['id'] }]
+      })
+      if (!user) throw new Error('使用者不存在 !')
+
+      const data = user.toJSON()
+      const followingUserId = data.Followings.map(user => user.id)
+
+      if (followingUserId.includes(UserId)) {
+        throw new Error('您已經追蹤過此使用者了 !')
+      }
+
+      await Followship.create({ followerId: userId, followingId: UserId })
+
+      res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
+  },
+  removeFollowing: async (req, res, next) => {
+    try {
+      const userId = Number(req.user.id)
+      const UserId = Number(req.params.id)
+      if (userId === UserId) throw new Error("You can't unfollow yourself!")
+
+      const user = await User.findByPk(userId, {
+        include: [{ model: User, as: 'Followings', attributes: ['id'] }]
+      })
+      if (!user) throw new Error('使用者不存在 !')
+
+      const data = user.toJSON()
+      const followingUserId = data.Followings.map(user => user.id)
+
+      if (!followingUserId.includes(UserId)) {
+        throw new Error('您還未追蹤此使用者 !')
+      }
+
+      await Followship.destroy({
+        where: { followerId: userId, followingId: UserId }
+      })
+
+      res.redirect('back')
     } catch (err) {
       next(err)
     }
