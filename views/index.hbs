@@ -1,6 +1,9 @@
 {{!-- TODO:只滾動 col-md-6 部分 --}}
 <div class="row align-items-start">
-  {{> left}}
+  <div class="left_nav">
+    {{> left}}
+  </div>
+
   <div class="col-md-6">
     <div>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -35,5 +38,7 @@
     <hr />
     {{/each}}
   </div>
-  {{> right topUsers=topUsers}}
+  <div class="right_nav">
+    {{> right topUsers=topUsers}}
+  </div>
 </div>
