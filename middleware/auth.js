@@ -1,8 +1,8 @@
-const { ensureAuthenticated } = require('../_helpers')
+const helpers = require('../_helpers')
 
 
 const authenticated = (req, res, next) => {
-  if (ensureAuthenticated(req)) {
+  if (helpers.ensureAuthenticated(req)) {
     return next()
   }
   res.redirect('/signin')

@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs') 
 const db = require('../models')
-const { User } = db
+const { User, Tweet, Reply, Like } = db
 
 const userController = {
   signInPage: (req, res) => {
@@ -8,7 +8,7 @@ const userController = {
   }, 
   signIn: (req, res) => {
     req.flash('success_messages', '登入成功!')
-    res.redirect('/tweets')
+    res.redirect('/')
     
   },
   signUpPage: (req, res) => {
@@ -80,6 +80,39 @@ const userController = {
         res.redirect('/')
       })
       .catch(err => next(err))
+  },
+  getUser: async(req, res, next) => {
+    try {
+        const UserId = req.params.id
+        const data = await User.findByPk(UserId, {
+            include:[
+                { model: Tweet, include: [Reply] },
+                { model: Reply, include: { model: Tweet, include: [User]}},
+                { model: User, as: 'Followings' },
+                { model: User, as: 'Followers' }
+            ]        
+        })
+        if (!data) throw new Error ("User didn't exists!")
+        console.log(data.toJSON())
+        return res.json((data.toJSON()))
+    } catch (err) {
+        next(err)
+    } 
+},
+getLikes: async(req, res, next) => {
+  try {
+      const UserId = req.params.id
+      const data = await User.findByPk(UserId, {
+          include: [
+              { model : Like, include: [ { model : Tweet, include: [User] }]}
+          ]
+      })
+      if (!data) throw new Error ("User didn't exists!")
+      
+      return res.render( {user: data.toJSON()})
+  } catch (err) {
+      next(err)
   }
+}
 }
 module.exports = userController
