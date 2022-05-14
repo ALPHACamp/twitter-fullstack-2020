@@ -3,10 +3,61 @@
   <a class="active" href='/tweets'><i class="home"></i>首頁</a>
   <a class="" href='/users/{{user.id}}/tweets'><i class="info"></i>個人資料</a>
   <a class="" href='#'><i class="setting"></i>設定</a>
-  <button type="button" class="btn btn-primary" onclick="">推文</button>
+  <button type="button" class="btn btn-primary" data-bs-toggle='modal' data-bs-target='#postModal'>推文</button>
 </div>
 <div class="footer">
   <a href="/signout"><i class="logout"></i>登出</a>
 </div>
 
-            
+{{! 以下為推文modal }}
+<div
+  class='modal fade'
+  id='postModal'
+  tabindex='-1'
+  aria-labelledby='postModalLabel'
+  aria-hidden='true'
+>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <button
+          type='button'
+          class='btn-close'
+          data-bs-dismiss='modal'
+          aria-label='Close'
+        ></button>
+      </div>
+      <div class='modal-body'>
+        <form action='/tweets' method='POST'>
+          <div class='mb-3'>
+            <img
+              class='mr-2 rounded-circle'
+              src='{{user.avatar}}'
+              alt='{{user.name}}'
+              style='width: 50px; height: 50px'
+            />
+            <textarea
+              class='w-100 side-post-description'
+              id='description'
+              name='description'
+              placeholder='有什麼新鮮事？'
+              maxlength='140'
+            ></textarea>
+          </div>
+          <div>
+            <span class='side-post-number'>0 </span>
+            <span>/ 140</span>
+          </div>
+          <button
+            class='btn btn-sm rounded-pill text-light side-post-btn float-end'
+            type='submit'
+            data-bs-toggle='modal'
+            data-bs-target='#postModal'
+            style='background-color:#FF6600;'
+            disabled
+          >推文</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
