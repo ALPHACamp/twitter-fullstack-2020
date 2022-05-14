@@ -14,7 +14,7 @@ const tweetsController = {
       })
       const topUsers = await User.findAll({ raw: true })
       // TODO: topUsers 尚未完成，需要根據 like 術與 follower 數相加
-      return res.render('index', { tweets, topUsers })
+      return res.render('index', { tweets, topUsers, page: 'tweets' })
     } catch (err) {
       next(err)
     }

@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs')
 const { Tweet, User, Like, Reply, Followship } = require('../models')
-const { Op } = require('sequelize')
 const helpers = require('../_helpers')
 
 const userController = {
@@ -89,20 +88,24 @@ const userController = {
         include: [
           {
             model: Tweet,
-            order: [
-              ['updatedAt', 'DESC']
-            ],
-            include: [{ model: Reply, attributes: ['id'] }, { model: Like, attributes: ['id'] }]
+            order: [['updatedAt', 'DESC']],
+            include: [
+              { model: Reply, attributes: ['id'] },
+              { model: Like, attributes: ['id'] }
+            ]
           },
           { model: User, as: 'Followings', attributes: ['id'] },
           { model: User, as: 'Followers', attributes: ['id'] }
         ]
       })
       if (!paramsUser) throw new Error("user didn't exist!")
-      const isFollowed = helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
+      const isFollowed =
+        helpers.getUser(req).Followings &&
+        helpers.getUser(req).Followings.some(f => f.id === Number(userId))
       return res.render('user', {
         user: paramsUser.toJSON(),
-        isFollowed
+        isFollowed,
+        page: 'user'
       })
     } catch (err) {
       next(err)
@@ -117,9 +120,7 @@ const userController = {
           { model: User, as: 'Followings', attributes: ['id'] },
           { model: User, as: 'Followers', attributes: ['id'] }
         ],
-        order: [
-          ['updatedAt', 'DESC']
-        ]
+        order: [['updatedAt', 'DESC']]
       })
       if (!user) throw new Error("user didn't exist!")
       const tweets = user.toJSON().Likes.map(tweet => ({
@@ -141,20 +142,22 @@ const userController = {
         include: [
           {
             model: Reply,
-            include: [{
-              model: Tweet,
-              include: [{
-                model: User,
-                attributes: ['name']
-              }]
-            }]
+            include: [
+              {
+                model: Tweet,
+                include: [
+                  {
+                    model: User,
+                    attributes: ['name']
+                  }
+                ]
+              }
+            ]
           },
           { model: User, as: 'Followings', attributes: ['id'] },
           { model: User, as: 'Followers', attributes: ['id'] }
         ],
-        order: [
-          [Reply, 'updatedAt', 'DESC']
-        ]
+        order: [[Reply, 'updatedAt', 'DESC']]
       })
       if (!user) throw new Error("user didn't exist!")
       return res.render('replies', {
@@ -260,7 +263,10 @@ const userController = {
       })
       const data = currentUser.toJSON().Followings.map(cf => ({
         ...cf,
-        isFollowed: helpers.getUser(req) && helpers.getUser(req).Followers && helpers.getUser(req).Followers.some(f => f.id === cf.id)
+        isFollowed:
+          helpers.getUser(req) &&
+          helpers.getUser(req).Followers &&
+          helpers.getUser(req).Followers.some(f => f.id === cf.id)
       }))
       return res.render('followings', {
         currentUser: currentUser.toJSON(),
@@ -288,7 +294,10 @@ const userController = {
       })
       const data = currentUser.toJSON().Followers.map(cf => ({
         ...cf,
-        isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === cf.id)
+        isFollowed:
+          helpers.getUser(req) &&
+          helpers.getUser(req).Followings &&
+          helpers.getUser(req).Followings.some(f => f.id === cf.id)
       }))
       return res.render('followers', {
         currentUser: currentUser.toJSON(),
