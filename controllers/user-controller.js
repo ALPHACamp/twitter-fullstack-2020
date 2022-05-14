@@ -1,4 +1,4 @@
-const { User, Tweet, Reply, sequelize } = require('../models')
+const { User, Tweet, Reply, Followship } = require('../models')
 const bcrypt = require('bcrypt-nodejs')
 const { removeAllSpace, removeOuterSpace } = require('../_helpers')
 const { imgurFileHandler } = require('../_helpers')
@@ -72,6 +72,7 @@ const userController = {
   },
   getTweets: async (req, res, next) => {
     try {
+      console.log(req.user)
       const userId = Number(req.params.id)
       const [user, tweets, followships] = await Promise.all([
         User.findByPk(userId, {
@@ -103,12 +104,13 @@ const userController = {
         this[index] = { ...tweet.toJSON() }
       }, tweets)
 
-      const followshipData = followships.map(followship => ({
-        ...followship.toJSON(),
-        followerCounts: followship.Followers.length,
-        isFollowed: followship.Followers.some(item => item.id === userId),
-        isSelf: (userId !== followship.id)
-      }))
+      const followshipData = followships
+        .map(followship => ({
+          ...followship.toJSON(),
+          followerCounts: followship.Followers.length,
+          isFollowed: followship.Followers.some(item => item.id === userId),
+          isSelf: userId !== followship.id
+        }))
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
@@ -150,12 +152,13 @@ const userController = {
         this[index] = { ...reply.toJSON() }
       }, replies)
 
-      const followshipData = followships.map(followship => ({
-        ...followship.toJSON(),
-        followerCounts: followship.Followers.length,
-        isFollowed: followship.Followers.some(item => item.id === userId),
-        isSelf: (userId !== followship.id)
-      }))
+      const followshipData = followships
+        .map(followship => ({
+          ...followship.toJSON(),
+          followerCounts: followship.Followers.length,
+          isFollowed: followship.Followers.some(item => item.id === userId),
+          isSelf: userId !== followship.id
+        }))
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
@@ -193,12 +196,13 @@ const userController = {
       ])
       if (!user) throw new Error("User didn't exist!")
 
-      const followshipData = followships.map(followship => ({
-        ...followship.toJSON(),
-        followerCounts: followship.Followers.length,
-        isFollowed: followship.Followers.some(item => item.id === userId),
-        isSelf: (userId !== followship.id)
-      }))
+      const followshipData = followships
+        .map(followship => ({
+          ...followship.toJSON(),
+          followerCounts: followship.Followers.length,
+          isFollowed: followship.Followers.some(item => item.id === userId),
+          isSelf: userId !== followship.id
+        }))
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
@@ -219,84 +223,13 @@ const userController = {
         User.findByPk(userId, {
           include: [
             { model: User, as: 'Followers' },
-            { model: User, as: 'Followings' },
-            {
-              model: Tweet,
-              as: 'LikedTweets',
-              include: [User, Reply, { model: User, as: 'LikedUsers' }]
-            }
-          ]
-        }),
-        User.findAll({
-          include: [
-            {
-              model: User,
-              as: 'Followers'
-            }
-          ],
-          attributes: [
-            'id',
-            'name',
-            'account',
-            [
-              sequelize.fn('COUNT', sequelize.col('followerId')),
-              'followerCounts'
-            ]
-          ],
-          group: 'followingId',
-          order: [[sequelize.col('followerCounts'), 'DESC']]
-        })
-      ])
-      if (!user) throw new Error('使用者不存在 !')
-
-      const data = user.toJSON()
-      const followingUserId = data.Followings.map(user => user.id)
-
-      const followshipData = followships
-        .map(user => ({
-          ...user.toJSON(),
-          isFollowed: followingUserId.includes(user.id)
-        }))
-        .slice(0, 10)
-
-      res.render('user', {
-        user: user.toJSON(),
-        followships: followshipData,
-        tab: 'getLikedTweets'
-      })
-    } catch (err) {
-      next(err)
-    }
-  },
-  getFollowers: async (req, res, next) => {
-    try {
-      const userId = req.params.id
-
-      const [user, followships] = await Promise.all([
-        User.findByPk(userId, {
-          include: [
-            { model: User, as: 'Followers' },
             { model: User, as: 'Followings' }
           ]
         }),
         User.findAll({
-          include: [
-            {
-              model: User,
-              as: 'Followers'
-            }
-          ],
-          attributes: [
-            'id',
-            'name',
-            'account',
-            [
-              sequelize.fn('COUNT', sequelize.col('followerId')),
-              'followerCounts'
-            ]
-          ],
-          group: 'followingId',
-          order: [[sequelize.col('followerCounts'), 'DESC']]
+          attributes: ['id', 'name', 'account', 'avatar'],
+          include: [{ model: User, as: 'Followers', attributes: ['id'] }],
+          where: [{ role: 'user' }]
         })
       ])
       if (!user) throw new Error('使用者不存在 !')
@@ -309,15 +242,18 @@ const userController = {
       )
 
       const followshipData = followships
-        .map(user => ({
-          ...user.toJSON(),
-          isFollowed: followingUserId.includes(user.id)
+        .map(followship => ({
+          ...followship.toJSON(),
+          followerCounts: followship.Followers.length,
+          isFollowed: followship.Followers.some(item => item.id === userId),
+          isSelf: userId !== followship.id
         }))
+        .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
       res.render('followship', {
-        user: data,
-        followships: followshipData,
+        user: data, // display the followers of user, including the followings and followers
+        followships: followshipData, // rightColumn
         tab: 'getFollowers'
       })
     } catch (err) {
@@ -336,23 +272,9 @@ const userController = {
           ]
         }),
         User.findAll({
-          include: [
-            {
-              model: User,
-              as: 'Followers'
-            }
-          ],
-          attributes: [
-            'id',
-            'name',
-            'account',
-            [
-              sequelize.fn('COUNT', sequelize.col('followerId')),
-              'followerCounts'
-            ]
-          ],
-          group: 'followingId',
-          order: [[sequelize.col('followerCounts'), 'DESC']]
+          attributes: ['id', 'name', 'account', 'avatar'],
+          include: [{ model: User, as: 'Followers', attributes: ['id'] }],
+          where: [{ role: 'user' }]
         })
       ])
       if (!user) throw new Error('使用者不存在 !')
@@ -365,15 +287,18 @@ const userController = {
       )
 
       const followshipData = followships
-        .map(user => ({
-          ...user.toJSON(),
-          isFollowed: followingUserId.includes(user.id)
+        .map(followship => ({
+          ...followship.toJSON(),
+          followerCounts: followship.Followers.length,
+          isFollowed: followship.Followers.some(item => item.id === userId),
+          isSelf: userId !== followship.id
         }))
+        .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
       res.render('followship', {
-        user: data,
-        followships: followshipData,
+        user: data, // display the followings of user
+        followships: followshipData, // rightColumn
         tab: 'getFollowings'
       })
     } catch (err) {
