@@ -9,9 +9,7 @@ const tweetController = {
       User.findByPk(loginUser, { raw: true, nest: true }),
       Tweet.findAll({
         order: [['createdAt', 'DESC']],
-        include: [User],
-        raw: true,
-        nest: true
+        include: [User, Reply, Like]
       }),
       User.findAll({
         where: { role: 'user' },
@@ -22,10 +20,18 @@ const tweetController = {
       })
     ])
       .then(([user, tweets, users]) => {
+        // 判斷user存不存在
         if (!user) {
           req.flash('error_messages:', "User is didn't exist!")
           return res.redirect('/login')
         }
+        // tweets資料
+        const tweetsData = tweets.map(tweet => ({
+          ...tweet.toJSON(),
+          repliesCount: tweet.Replies.length,
+          likesCount: tweet.Likes.length
+        }))
+        // users for top10
         const LIMIT = 10
         const userData = users
           .map(user => ({
@@ -35,7 +41,7 @@ const tweetController = {
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, LIMIT)
-        return res.render('tweets', { user, tweets, users: userData })
+        return res.render('tweets', { user, tweets: tweetsData, users: userData })
       })
       .catch(err => next(err))
   },
@@ -64,7 +70,6 @@ const tweetController = {
           replyCount: tweetData.Replies.length,
           likeCount: tweetData.Likes.length
         }
-        console.log('reply:', tweetData)
         const LIMIT = 10
         const userData = users
           .map(user => ({

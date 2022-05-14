@@ -1,13 +1,14 @@
 <div class="row d-flex justify-content-start">
-  {{!-- header --}}
+  {{!-- center --}}
   <div class="col-8" style="outline: 1px solid #E6ECF0;">
+    {{!-- header --}}
     <div class="row">
       <a href="/tweets" class="btn d-flex my-2">
         <h4 class="navbar-brand mb-0">首頁</h4>
       </a>
       <hr>
     </div>
-    {{!-- tweet --}}
+    {{!-- post tweet--}}
     <div class="row my-2 d-flex justify-content-between">
       <div class="col-2 d-flex flex-row-reverse">
         <img src="{{user.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50px;">
@@ -21,38 +22,44 @@
       </div>
     </div>
     {{!-- line --}}
-    <div class="mt-2" style="height: 10px; width: 651px; background: #E6ECF0; position: relative; left: -12px "></div>
+    <div class="mt-2" style="height: 10px; width: 105%; background: #E6ECF0; position: relative; left: -12px;"></div>
     {{!-- tweets --}}
     {{#each tweets}} 
-    <div class="row mt-4">
-      <div class="col-2 d-flex flex-row-reverse">
-        <img src="{{this.User.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50px;"> 
-      </div>
-      <div class="col-10">
-        <div class="d-flex flex-row align-items-center">
-          <p style="font-size: 16px; margin: 0 0;">{{this.User.name}}</p>
-          <p style="font-size: 14px; margin: 0 8px; color: #6C757D;">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</p> 
+      <div class="row mt-4">
+        {{!-- tweeter's avatar --}}
+        <div class="col-2 d-flex flex-row-reverse">
+          <img src="{{this.User.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50px;"> 
         </div>
-        <a href="/tweets/{{this.id}}" style="color:#000000;text-decoration: none"> 
-          <div class="mt-2">
-            <p>{{this.description}}</p> 
+        {{!-- tweet's content --}}
+        <div class="col-10">
+          {{!-- tweeter's info --}}
+          <div class="d-flex flex-row align-items-center">
+            <p style="font-size: 16px; margin: 0 0;">{{this.User.name}}</p>
+            <p style="font-size: 14px; margin: 0 8px; color: #6C757D;">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</p> 
           </div>
-        </a>
-        <div>
-          <i class="far fa-comment me-3">
-            <span class="ms-2">666</span> {{! tweet's replies (pending)}}
-          </i>
-          <i class="far fa-heart mx-3">
-            <span class="ms-2">777</span> {{! tweet's likes (pending)}}
-          </i>
+          {{!-- tweet's description --}}
+          <a href="/tweets/{{this.id}}" style="color:#000000;text-decoration: none"> 
+            <div class="mt-2">
+              <p>{{this.description}}</p> 
+            </div>
+          </a>
+          {{!-- tweet's replies & likes --}}
+          <div class="d-flex">
+            <div>
+              <i class="far fa-comment" data-bs-toggle="modal" data-bs-target="#replyModal" data-bs-tweet="{{this.description}}" data-bs-tweeter-avatar="{{this.User.avatar}}"></i>
+              <span class="ms-1">{{this.repliesCount}}</span>
+            </div>
+            <div class="ms-5">
+              <a href="/user/:id/like"></a><i class="far fa-heart" ></i>
+              <span class="ms-1">{{this.likesCount}}</span>
+            </div>
+          </div>
         </div>
+        <hr class="mb-0 mt-3">
       </div>
-      <hr class="mb-0 mt-3">
-    </div>
     {{/each}}
   </div>
-
-  {{!-- 追隨者Top10 的使用者 --}}
+  {{!-- right-sidebar 追隨者Top10的使用者 --}}
   <div class="container col-3 mt-2 mx-3" style="padding: 0 0;width: 250px;">
     <div class="bg-light">
       <div class="container d-flex align-items-center mt-3">
@@ -87,26 +94,85 @@
   </div>
 </div>
 
+{{!-- reply modal --}}
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog" style="max-width: 600px">
+    <div class="modal-content" style="border-radius: 15px">
+      {{!-- modal header --}}
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+        style="margin: 15px 0px 0px 15px;"></button>
+      <hr class="mb-0">
+      {{!-- tweet content --}}
+      <div class="modal-body">
+        <div class="row">
+          {{!-- tweeter's avatar --}}
+          <div id="tweeter" class="col-2 d-flex flex-column justify-content-start align-items-center">
+            <div style="height: 50px;">
+              <img src="/images/logo.png" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50px;">
+            </div>
+            <div class="mx-3 mt-3" style="height: 60%; width: 3px; background: #899095;"></div>
+          </div>
+          {{!-- tweet's content --}}
+          <div class="col-10">
+            {{!-- tweeter's info --}}
+            <div class="d-flex flex-row align-items-center">
+              <p style="font-size: 16px; margin: 0 0;">User.name</p>
+              <p style="font-size: 14px; margin: 0 8px; color: #6C757D;">@User.account．createdAt</p>
+            </div>
+            {{!-- tweet's description --}}
+            <div class="mt-2">
+              <p>this.descriptionthis.description this.description this.description this.description this.description this.description this.description this.description this.description this.description this.description
+                this.descriptionthis.description this.description this.description this.description
+                this.descriptionthis.description this.description this.description this.description
+              </p>
+            </div>
+              <p class="mt-2" style="font-size: 14px; color: #6C757D;">回覆給
+                <span style="color:#FF6600;text-decoration: none">@{{../tweet.User.account}}</span>
+              </p>
+          </div>
+        </div>
+        {{!-- reply content --}}
+        <form action="/tweets/:id/reply" method="POST">
+          <div class="row">
+            <div class="col-2 d-flex justify-content-center">
+              <img src="/images/logo.png" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
+            </div>  
+            <div class="col-9 mb-3 ">
+              <textarea type="text" class="form-control me-2" id="replyModal" name="reply" rows="5" placeholder="推你的回復"
+                style="width: 450px; border: none; background-color: white; word-wrap: break-word;"></textarea>
+            </div>
+          </div>
+          <div class="d-flex flex-row-reverse me-3 mb-3">
+            <button type="submit" class="btn btn-primary" id="modal-send-button" data-bs-dismiss="modal"
+              style="height: 40px; width: 64px; border-radius: 50px; background: #FF6600;">回覆</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 {{!-- tweets modal --}}
 <form action="/tweets" method="POST">
-  <div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
+  <div class="modal fade" id="tweetModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 600px">
       <div class="modal-content" style="border-radius: 15px">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
           style="margin: 15px 0px 0px 15px;"></button>
         <hr>
-          <div class="row" style="">
-            <div class="col-2 ms-3" style="width: 60px;">
-                <img src="{{user.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
-            </div>
-            <div class="col-9 mb-3 ">
-              <textarea class="form-control" id="description" name="description" rows="5" placeholder="有什麼新鮮事？"
-                style="width: 480px; border: none; background-color: white; word-wrap: break-word;"></textarea>
-            </div>
+        <div class="row">
+          <div class="col-2 ms-3" style="width: 60px;">
+            <img src="{{user.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
           </div>
-          <div class="d-flex flex-row-reverse me-3 mb-3">
-            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" style="height: 40px; width: 64px; border-radius: 50px; background: #FF6600;">推文</button>
+          <div class="col-9 mb-3 ">
+            <textarea class="form-control" id="description" name="description" rows="5" placeholder="有什麼新鮮事？"
+              style="width: 480px; border: none; background-color: white; word-wrap: break-word;"></textarea>
           </div>
+        </div>
+        <div class="d-flex flex-row-reverse me-3 mb-3">
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+            style="height: 40px; width: 64px; border-radius: 50px; background: #FF6600;">推文</button>
+        </div>
       </div>
     </div>
   </div>
