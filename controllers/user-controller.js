@@ -111,9 +111,9 @@ const userController = {
 
       // 獨立處理 queryUser 的資料
       const queryUser = queryUserData.toJSON()
-      // 判斷正在瀏覽的頁面，使用者是否為自己
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己
       queryUser.isSelf = userId === UserId
-      // 判斷正在瀏覽的頁面，使用者是否為自己 “已追蹤” 的使用者
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
       queryUser.isFollowed = req.user.Followings.some(
         item => item.id === queryUser.id
       )
@@ -182,9 +182,9 @@ const userController = {
 
       // 獨立處理 queryUser 的資料
       const queryUser = queryUserData.toJSON()
-      // 判斷正在瀏覽的頁面，使用者是否為自己
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己
       queryUser.isSelf = userId === UserId
-      // 判斷正在瀏覽的頁面，使用者是否為自己 “已追蹤” 的使用者
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
       queryUser.isFollowed = req.user.Followings.some(
         item => item.id === queryUser.id
       )
@@ -243,9 +243,9 @@ const userController = {
 
       // 獨立處理 queryUser 的資料
       const queryUser = queryUserData.toJSON()
-      // 判斷正在瀏覽的頁面，使用者是否為自己
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己
       queryUser.isSelf = userId === UserId
-      // 判斷正在瀏覽的頁面，使用者是否為自己 “已追蹤” 的使用者
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
       queryUser.isFollowed = req.user.Followings.some(
         item => item.id === queryUser.id
       )
@@ -284,7 +284,7 @@ const userController = {
               as: 'Followers',
               attributes: ['id', 'name', 'avatar', 'introduction']
             },
-            { model: User, as: 'Followings' },
+            // { model: User, as: 'Followings' },
             { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
           ]
         }),
@@ -298,19 +298,19 @@ const userController = {
 
       // 獨立處理 queryUser 的資料
       const queryUser = queryUserData.toJSON()
-      // 判斷正在瀏覽的頁面，使用者是否為自己
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己
       queryUser.isSelf = userId === UserId
-      // 判斷正在瀏覽的頁面，使用者是否為自己 “已追蹤” 的使用者
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
       queryUser.isFollowed = req.user.Followings.some(
         item => item.id === queryUser.id
       )
       // 判斷 queryUser 的 followers 是否為已為 user 的 followings
-      queryUser.Followers.forEach(
-        user =>
-          (user.isFollowed = req.user.Followings.some(
-            item => item.id === user.id
-          ))
-      )
+      queryUser.Followers.forEach(user => {
+        user.isFollowed = req.user.Followings.some(
+          item => item.id === user.id
+        )
+        user.isSelf = user.id !== req.user.id
+      })
 
       // 獨立處理 rightColumn 的資料
       const followshipData = followships
@@ -334,13 +334,20 @@ const userController = {
   },
   getFollowings: async (req, res, next) => {
     try {
-      const userId = Number(req.params.id)
+      const userId = Number(req.user.id) // 登入的使用者
+      const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
+      const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
 
-      const [user, followships] = await Promise.all([
-        User.findByPk(userId, {
+      const [queryUserData, followships] = await Promise.all([
+        User.findByPk(queryUserId, {
           include: [
-            { model: User, as: 'Followers' },
-            { model: User, as: 'Followings' }
+            // { model: User, as: 'Followers' },
+            {
+              model: User,
+              as: 'Followings',
+              attributes: ['id', 'name', 'avatar', 'introduction']
+            },
+            { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
           ]
         }),
         User.findAll({
@@ -349,14 +356,23 @@ const userController = {
           where: [{ role: 'user' }]
         })
       ])
-      if (!user) throw new Error('使用者不存在 !')
+      if (!queryUserData) throw new Error('使用者不存在 !')
 
-      const data = user.toJSON()
-      const followingUserId = data.Followings.map(user => user.id)
-
-      data.Followers.forEach(
-        user => (user.isFollowed = followingUserId.includes(user.id))
+      // 獨立處理 queryUser 的資料
+      const queryUser = queryUserData.toJSON()
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己
+      queryUser.isSelf = userId === UserId
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
+      queryUser.isFollowed = req.user.Followings.some(
+        item => item.id === queryUser.id
       )
+      // 判斷 queryUser 的 followers 是否為已為 user 的 followings
+      queryUser.Followings.forEach(user => {
+        user.isFollowed = req.user.Followings.some(
+          item => item.id === user.id
+        )
+        user.isSelf = user.id !== req.user.id
+      })
 
       const followshipData = followships
         .map(followship => ({
@@ -368,9 +384,8 @@ const userController = {
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
-      console.log(followshipData)
       res.render('followship', {
-        user: data, // display the followings of user
+        queryUser, // display the followings of user
         followships: followshipData, // rightColumn
         tab: 'getFollowings'
       })
