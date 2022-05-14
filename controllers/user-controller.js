@@ -82,30 +82,30 @@ const userController = {
           include: [
             { model: User, as: 'Followers', attributes: ['id'] }, // 提供給 Followers 的數量計算
             { model: User, as: 'Followings', attributes: ['id'] }, // 提供給 Followings 的數量計算
-            { model: Tweet, attributes: ['id'] }, // 提供給 tweets 的數量計算
-          ],
+            { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
+          ]
         }),
         Tweet.findAll({
           include: [
             Reply,
             {
               model: User,
-              attributes: ['id', 'name', 'account', 'avatar'],
+              attributes: ['id', 'name', 'account', 'avatar']
             },
             {
               model: User,
               as: 'LikedUsers',
-              attributes: ['id'],
-            },
+              attributes: ['id']
+            }
           ],
           where: { UserId: queryUserId }, // 這裏是帶入 queryUserId 搜尋
-          order: [['createdAt', 'DESC']],
+          order: [['createdAt', 'DESC']]
         }),
         User.findAll({
           attributes: ['id', 'name', 'account', 'avatar'],
           include: [{ model: User, as: 'Followers', attributes: ['id'] }],
-          where: [{ role: 'user' }],
-        }),
+          where: [{ role: 'user' }]
+        })
       ])
       if (!queryUserData) throw new Error('使用者不存在 !')
 
@@ -115,7 +115,7 @@ const userController = {
       queryUser.isSelf = userId === UserId
       // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
       queryUser.isFollowed = req.user.Followings.some(
-        (item) => item.id === queryUser.id
+        item => item.id === queryUser.id
       )
 
       // 獨立處理 tweets 的資料
@@ -125,11 +125,11 @@ const userController = {
 
       // 獨立處理 rightColumn 的資料
       const followshipData = followships
-        .map((followship) => ({
+        .map(followship => ({
           ...followship.toJSON(),
           followerCounts: followship.Followers.length,
-          isFollowed: followship.Followers.some((item) => item.id === userId),
-          isSelf: userId !== followship.id,
+          isFollowed: followship.Followers.some(item => item.id === userId),
+          isSelf: userId !== followship.id
         }))
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
@@ -138,7 +138,7 @@ const userController = {
         queryUser,
         tweets,
         followships: followshipData,
-        tab: 'getTweets',
+        tab: 'getTweets'
       })
     } catch (err) {
       next(err)
@@ -155,28 +155,28 @@ const userController = {
           include: [
             { model: User, as: 'Followers', attributes: ['id'] }, // 提供給 Followers 的數量計算
             { model: User, as: 'Followings', attributes: ['id'] }, // 提供給 Followings 的數量計算
-            { model: Tweet, attributes: ['id'] }, // 提供給 tweets 的數量計算
-          ],
+            { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
+          ]
         }),
         Reply.findAll({
           where: { UserId: queryUserId }, // 這裏是帶入 queryUserId 搜尋
           include: [
             {
               model: User,
-              attributes: ['id', 'name', 'account', 'avatar'],
+              attributes: ['id', 'name', 'account', 'avatar']
             },
             {
               model: Tweet,
-              include: [{ model: User, attributes: ['id', 'account'] }],
-            },
+              include: [{ model: User, attributes: ['id', 'account'] }]
+            }
           ],
-          order: [['createdAt', 'DESC']],
+          order: [['createdAt', 'DESC']]
         }),
         User.findAll({
           attributes: ['id', 'name', 'account', 'avatar'],
           include: [{ model: User, as: 'Followers', attributes: ['id'] }],
-          where: [{ role: 'user' }],
-        }),
+          where: [{ role: 'user' }]
+        })
       ])
       if (!queryUserData) throw new Error('使用者不存在 !')
 
@@ -186,7 +186,7 @@ const userController = {
       queryUser.isSelf = userId === UserId
       // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
       queryUser.isFollowed = req.user.Followings.some(
-        (item) => item.id === queryUser.id
+        item => item.id === queryUser.id
       )
 
       // 獨立處理 replies 的資料
@@ -196,11 +196,11 @@ const userController = {
 
       // 獨立處理 rightColumn 的資料
       const followshipData = followships
-        .map((followship) => ({
+        .map(followship => ({
           ...followship.toJSON(),
           followerCounts: followship.Followers.length,
-          isFollowed: followship.Followers.some((item) => item.id === userId),
-          isSelf: userId !== followship.id,
+          isFollowed: followship.Followers.some(item => item.id === userId),
+          isSelf: userId !== followship.id
         }))
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
@@ -209,7 +209,7 @@ const userController = {
         queryUser,
         replies,
         followships: followshipData,
-        tab: 'getReplies',
+        tab: 'getReplies'
       })
     } catch (err) {
       next(err)
@@ -229,15 +229,15 @@ const userController = {
             {
               model: Tweet,
               as: 'LikedTweets',
-              include: [User, Reply, { model: User, as: 'LikedUsers' }],
-            },
-          ],
+              include: [User, Reply, { model: User, as: 'LikedUsers' }]
+            }
+          ]
         }),
         User.findAll({
           attributes: ['id', 'name', 'account', 'avatar'],
           include: [{ model: User, as: 'Followers', attributes: ['id'] }],
-          where: [{ role: 'user' }],
-        }),
+          where: [{ role: 'user' }]
+        })
       ])
       if (!queryUserData) throw new Error("User didn't exist!")
 
@@ -247,16 +247,16 @@ const userController = {
       queryUser.isSelf = userId === UserId
       // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
       queryUser.isFollowed = req.user.Followings.some(
-        (item) => item.id === queryUser.id
+        item => item.id === queryUser.id
       )
 
       // 獨立處理 rightColumn 的資料
       const followshipData = followships
-        .map((followship) => ({
+        .map(followship => ({
           ...followship.toJSON(),
           followerCounts: followship.Followers.length,
-          isFollowed: followship.Followers.some((item) => item.id === userId),
-          isSelf: userId !== followship.id,
+          isFollowed: followship.Followers.some(item => item.id === userId),
+          isSelf: userId !== followship.id
         }))
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
@@ -264,7 +264,7 @@ const userController = {
       res.render('user', {
         queryUser,
         followships: followshipData,
-        tab: 'getLikedTweets',
+        tab: 'getLikedTweets'
       })
     } catch (err) {
       next(err)
@@ -282,17 +282,17 @@ const userController = {
             {
               model: User,
               as: 'Followers',
-              attributes: ['id', 'name', 'avatar', 'introduction'],
+              attributes: ['id', 'name', 'avatar', 'introduction']
             },
             // { model: User, as: 'Followings' },
-            { model: Tweet, attributes: ['id'] }, // 提供給 tweets 的數量計算
-          ],
+            { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
+          ]
         }),
         User.findAll({
           attributes: ['id', 'name', 'account', 'avatar'],
           include: [{ model: User, as: 'Followers', attributes: ['id'] }],
-          where: [{ role: 'user' }],
-        }),
+          where: [{ role: 'user' }]
+        })
       ])
       if (!queryUserData) throw new Error('使用者不存在 !')
 
@@ -302,23 +302,23 @@ const userController = {
       queryUser.isSelf = userId === UserId
       // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
       queryUser.isFollowed = req.user.Followings.some(
-        (item) => item.id === queryUser.id
+        item => item.id === queryUser.id
       )
       // 判斷 queryUser 的 followers 是否為已為 user 的 followings
-      queryUser.Followers.forEach((user) => {
+      queryUser.Followers.forEach(user => {
         user.isFollowed = req.user.Followings.some(
-          (item) => item.id === user.id
+          item => item.id === user.id
         )
         user.isSelf = user.id !== req.user.id
       })
 
       // 獨立處理 rightColumn 的資料
       const followshipData = followships
-        .map((followship) => ({
+        .map(followship => ({
           ...followship.toJSON(),
           followerCounts: followship.Followers.length,
-          isFollowed: followship.Followers.some((item) => item.id === userId),
-          isSelf: userId !== followship.id,
+          isFollowed: followship.Followers.some(item => item.id === userId),
+          isSelf: userId !== followship.id
         }))
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
@@ -326,7 +326,7 @@ const userController = {
       res.render('followship', {
         queryUser, // display the followers of user, including the followings and followers
         followships: followshipData, // rightColumn
-        tab: 'getFollowers',
+        tab: 'getFollowers'
       })
     } catch (err) {
       next(err)
@@ -345,16 +345,16 @@ const userController = {
             {
               model: User,
               as: 'Followings',
-              attributes: ['id', 'name', 'avatar', 'introduction'],
+              attributes: ['id', 'name', 'avatar', 'introduction']
             },
-            { model: Tweet, attributes: ['id'] }, // 提供給 tweets 的數量計算
-          ],
+            { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
+          ]
         }),
         User.findAll({
           attributes: ['id', 'name', 'account', 'avatar'],
           include: [{ model: User, as: 'Followers', attributes: ['id'] }],
-          where: [{ role: 'user' }],
-        }),
+          where: [{ role: 'user' }]
+        })
       ])
       if (!queryUserData) throw new Error('使用者不存在 !')
 
@@ -364,22 +364,22 @@ const userController = {
       queryUser.isSelf = userId === UserId
       // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
       queryUser.isFollowed = req.user.Followings.some(
-        (item) => item.id === queryUser.id
+        item => item.id === queryUser.id
       )
       // 判斷 queryUser 的 followers 是否為已為 user 的 followings
-      queryUser.Followings.forEach((user) => {
+      queryUser.Followings.forEach(user => {
         user.isFollowed = req.user.Followings.some(
-          (item) => item.id === user.id
+          item => item.id === user.id
         )
         user.isSelf = user.id !== req.user.id
       })
 
       const followshipData = followships
-        .map((followship) => ({
+        .map(followship => ({
           ...followship.toJSON(),
           followerCounts: followship.Followers.length,
-          isFollowed: followship.Followers.some((item) => item.id === userId),
-          isSelf: userId !== followship.id,
+          isFollowed: followship.Followers.some(item => item.id === userId),
+          isSelf: userId !== followship.id
         }))
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
@@ -387,7 +387,7 @@ const userController = {
       res.render('followship', {
         queryUser, // display the followings of user
         followships: followshipData, // rightColumn
-        tab: 'getFollowings',
+        tab: 'getFollowings'
       })
     } catch (err) {
       next(err)
@@ -400,12 +400,12 @@ const userController = {
       if (userId === queryUserId) throw new Error("You can't follow yourself!")
 
       const user = await User.findByPk(userId, {
-        include: [{ model: User, as: 'Followings', attributes: ['id'] }],
+        include: [{ model: User, as: 'Followings', attributes: ['id'] }]
       })
       if (!user) throw new Error('使用者不存在 !')
 
       const data = user.toJSON()
-      const followingUserId = data.Followings.map((user) => user.id)
+      const followingUserId = data.Followings.map(user => user.id)
 
       if (followingUserId.includes(queryUserId)) {
         throw new Error('您已經追蹤過此使用者了 !')
@@ -427,26 +427,26 @@ const userController = {
       }
 
       const user = await User.findByPk(userId, {
-        include: [{ model: User, as: 'Followings', attributes: ['id'] }],
+        include: [{ model: User, as: 'Followings', attributes: ['id'] }]
       })
       if (!user) throw new Error('使用者不存在 !')
 
       const data = user.toJSON()
-      const followingUserId = data.Followings.map((user) => user.id)
+      const followingUserId = data.Followings.map(user => user.id)
 
       if (!followingUserId.includes(queryUserId)) {
         throw new Error('您還未追蹤此使用者 !')
       }
 
       await Followship.destroy({
-        where: { followerId: userId, followingId: queryUserId },
+        where: { followerId: userId, followingId: queryUserId }
       })
 
       res.redirect('back')
     } catch (err) {
       next(err)
     }
-  },
+  }
 }
 
 module.exports = userController
