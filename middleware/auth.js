@@ -1,11 +1,24 @@
-const helper = require('../_helpers')
-
+const helpers = require('../_helpers')
 
 const authenticated = (req, res, next) => {
-  if (helper.ensureAuthenticated(req)) {
+  if (helpers.ensureAuthenticated(req)) {
     return next()
   }
   res.redirect('/signin')
 }
 
-module.exports = {authenticated}
+const authenticatedAdmin = (req, res, next) => {
+  if (helpers.ensureAuthenticated(req)) {
+    if (helpers.getUser(req).role === 'admin') {
+      return next() 
+    }
+    res.redirect('/')
+  } else {
+    res.redirect('/signin')
+  }
+}
+
+module.exports = {
+  authenticated,
+  authenticatedAdmin
+}
