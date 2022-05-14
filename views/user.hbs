@@ -110,13 +110,13 @@
     {{#each user.Likes}}
     <div class="row mt-2 py-2" style="border-bottom-style:solid; border-color:#e4e7eb; border-width:1px;">
       <div class="col-2 d-flex flex-row-reverse">
-        <a class="text-decoration-none text-dark" href="/users/{{this.Tweet.userId}}">
+        <a class="text-decoration-none text-dark" href="/users/{{this.Tweet.UserId}}">
           <img src="{{this.Tweet.User.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
         </a>
       </div>
       <div class="col-10">
         <div class="d-flex flex-row align-items-center">
-          <a class="text-decoration-none text-dark" href="/users/{{this.Tweet.userId}}">
+          <a class="text-decoration-none text-dark" href="/users/{{this.Tweet.UserId}}">
             <p class="fw-bold" style="font-size: 16px; margin: 0 0;">{{this.Tweet.User.name}}</p>
             <p style="font-size: 14px; margin: 0 8px; color: #6C757D;">
               @{{this.Tweet.User.account}}．{{relativeTimeFromNow this.createdAt}}</p>
@@ -149,7 +149,7 @@
       </div>
       <div class="mt-3" style="height: 1px; width: auto; border-radius: 0px; background: #E6ECF0;"></div>
       {{#each users}}
-      <div class="d-flex flex-row align-items-center mt-2 py-2">
+      <div class="d-flex flex-row align-items-center ms-3 py-2">
         <div class="d-flex align-items-center mx-0">
           <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
             <img src="{{this.avatar}}" alt="avatar" style="height: 40px ;width: 40px; border-radius: 50%;">

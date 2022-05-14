@@ -89,11 +89,11 @@ const userController = {
           ...useData,
           Followers: useData.Followers.map(follower => ({
             ...follower,
-            isFollowersFollowed: follower.Followship.followingId === useData.id
+            isFollowersFollowed: req.user.Followings.some(f => f.id === follower.Followship.followerId)
           })),
           Followings: useData.Followings.map(following => ({
             ...following,
-            isFollowingsFollowed: following.Followship.followerId === useData.id
+            isFollowingsFollowed: req.user.Followings.some(f => f.id === following.Followship.followingId)
           }))
         }
 
