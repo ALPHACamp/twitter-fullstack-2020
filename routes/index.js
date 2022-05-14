@@ -9,6 +9,7 @@ const userController = require('../controllers/user-controller')
 const { authenticated } = require('../middleware/auth')
 const admin = require('./modules/admin')
 
+
 router.use('/users', authenticated, user)
 router.use('/tweets', authenticated, tweet)
 router.use('/followships', followship)
