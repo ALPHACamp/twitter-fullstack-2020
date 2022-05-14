@@ -1,0 +1,31 @@
+<div class="container">
+<div class="mb-4 text-center">
+  <h1 class="h3 font-weight-normal mb-3">Setting</h1>
+</div>
+
+<form action="/users/setting/{{user.id}}?_method=PUT" method="POST">
+<div class="form-floating mb-3">
+  <input type="text" class="form-control" id="account" placeholder="Account" name="account" value="{{user.account}}">
+  <label for="floatingInput">Account</label>
+</div>
+<div class="form-floating mb-3">
+  <input type="text" class="form-control" id="name" placeholder="Name" name="name" value="{{user.name}}">
+  <label for="floatingInput">Name</label>
+</div>
+<div class="form-floating mb-3">
+  <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email" value="{{user.email}}">
+  <label for="floatingInput">Email address</label>
+</div>
+<div class="form-floating mb-3">
+  <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+  <label for="floatingPassword">Password</label>
+</div>
+<div class="form-floating mb-3">
+  <input type="password" class="form-control" id="passwordCheck" placeholder="PasswordCheck" name="passwordCheck">
+  <label for="floatingPassword">PasswordCheck</label>
+</div>
+  <div class="mb-4 text-center">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+</div>
