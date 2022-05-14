@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs')
 const { Tweet, User, Like, Reply, Followship } = require('../models')
-const { Op } = require('sequelize')
 const helpers = require('../_helpers')
 
 const userController = {
@@ -9,7 +8,7 @@ const userController = {
       return res.render('signup', { status: 200 })
     } catch (err) {
       res.status(302)
-      console.log('err')
+      // console.log('err')
       return res.redirect('back')
     }
   },
@@ -66,7 +65,7 @@ const userController = {
       res.redirect('/signin')
     } catch (err) {
       res.status(302)
-      console.log('err')
+      // console.log('err')
       return res.redirect('back')
     }
   },
