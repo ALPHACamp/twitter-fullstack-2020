@@ -1,0 +1,10 @@
+i{
+  display: inline-block;
+  background-image: url(/images/twitter_2022_icon.svg);
+  position: relative;
+}
+i.back-arrow {
+  background-position:-20px -100px;
+  height: 24px;
+  width: 24px;
+}
