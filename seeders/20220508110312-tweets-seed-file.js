@@ -9,7 +9,7 @@ module.exports = {
     )
     const usersTweet = []
 
-    for (let i = 0; i < users.length; i++) {
+    for (let i = 1; i < users.length; i++) {
       const result = Array.from({ length: 10 }, () => ({
         UserId: users[i].id,
         description: faker.lorem.text().substring(0, 140),

@@ -13,9 +13,21 @@ module.exports = {
     )
     const tweetReplies = []
 
+    const storedIndex = []
+    function randomIndex () {
+      if (storedIndex.length < 3) {
+        const index = Math.ceil(Math.random() * (users.length - 1))
+        if (storedIndex.some(i => i === index)) return randomIndex()
+        storedIndex.push(index)
+        return index
+      }
+      storedIndex.length = 0
+      return randomIndex()
+    }
+
     for (let i = 0; i < tweets.length; i++) {
       const result = Array.from({ length: 3 }, () => ({
-        UserId: users[Math.floor(Math.random() * users.length)].id,
+        UserId: users[randomIndex()].id,
         TweetId: tweets[i].id,
         comment: faker.lorem.text().substring(0, 140),
         createdAt: new Date(),

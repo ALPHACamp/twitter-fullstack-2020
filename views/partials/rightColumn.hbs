@@ -8,7 +8,7 @@
         <div class='row d-flex justify-content-center align-items-center'>
           <div class='col-2 p-0 d-flex justify-content-center'>
             <img
-              src='https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png'
+              src='{{this.avatar}}'
               alt='alphaCamp'
               width='50px'
               height='50px'
@@ -23,6 +23,7 @@
             </span>
           </div>
           <div class='col p-0'>
+          {{#if this.isSelf}}
             {{#if this.isFollowed}}
             <form action='/followships/{{this.id}}?_method=DELETE' method='POST'>
               <button
@@ -41,6 +42,7 @@
               >跟隨</button>
             </form>
             {{/if}}
+          {{/if}}     
           </div>
         </div>
       </li>
