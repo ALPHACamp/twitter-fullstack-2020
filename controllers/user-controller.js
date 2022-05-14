@@ -8,7 +8,7 @@ const userController = {
   }, 
   signIn: (req, res) => {
     req.flash('success_messages', '登入成功!')
-    res.redirect('/')
+    res.redirect('/tweets')
     
   },
   signUpPage: (req, res) => {
