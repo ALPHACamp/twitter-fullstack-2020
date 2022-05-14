@@ -39,9 +39,7 @@ passport.use(
 passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
-// user = user.toJSON()
 // console.log('passport_user.toJSON()', user) // debug用
-// 加入follower & following 的數量，顯示在個人資料頁
 passport.deserializeUser((id, cb) => {
   return User.findByPk(id, {
     include: [
@@ -52,7 +50,7 @@ passport.deserializeUser((id, cb) => {
     ]
   })
     .then(user => {
-      console.log('passport_user.toJSON()', user.toJSON())
+      // console.log('passport_user.toJSON()', user.toJSON())
       return cb(null, user.toJSON())
     })
     .catch(err => cb(err))

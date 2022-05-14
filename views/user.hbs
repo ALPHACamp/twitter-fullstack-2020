@@ -1,3 +1,6 @@
+<div class="row align-items-start">
+  {{> left}}
+    <div class="col-md-6">
 {{> user-profile user=user}}
 {{> user-tabs route='tweets'}}
 
@@ -10,12 +13,14 @@
     <span>{{ relativeTimeFromNow this.createdAt }}</span>
     <p>{{ this.description }}</p>
   </blockquote>
-      {{!-- TODO: 預留: 單一tweet連結  --}}
-    <form action="/tweets/{{ this.id }}" method="GET">
-      <button type="submit">回覆icon + 回覆數{{ this.Replies.length }} </button>
+      {{!-- TODO: 預留: 單一tweet連結連到該tweet的/tweets/:tweetId/replies  --}}
+    <form action="/tweets/{{this.id}}/repliesFake" method="GET">
+      <button type="submit">回覆icon</button>
+      <span>{{ this.Replies.length }} </span>
     </form>
     <form action="/tweets/{{ this.id }}" method="GET">
-      <button type="submit">Like icon + Like數{{ this.Likes.length }} </button>
+      <button type="submit">Like icon</button>
+      <span>{{ this.Likes.length }} </span>
     </form>
 
 
@@ -23,13 +28,16 @@
   {{!-- 延伸挑戰功能： Like按鈕icon 加入判斷式: 是否已經like過了 --}}
     {{#if isLiked}}
       <form action="/tweets/{{ this.id }}/unlike" method="POST">
-        <button type="submit">移除 LIKE icon</button>
+        <button type="submit">移除 LIKE icon: id- {{ this.id }}</button>
       </form>
     {{else}}
       <form action="/tweets/{{ this.id }}/like" method="POST">
-        <button type="submit">加入 LIKE icon</button>
+        <button type="submit">加入 LIKE icon: id-{{ this.id }}</button>
       </form>
     {{/if}}
 
   <hr />
 {{/each}}
+  </div>
+  {{> right topUsers=topUsers}}
+</div>

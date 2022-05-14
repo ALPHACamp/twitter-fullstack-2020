@@ -1,14 +1,13 @@
 const bcrypt = require('bcryptjs')
 const { Tweet, User, Like, Reply, Followship } = require('../models')
 const helpers = require('../_helpers')
-
 const userController = {
   signUpPage: async (req, res) => {
     try {
       return res.render('signup', { status: 200 })
     } catch (err) {
       res.status(302)
-      console.log('err')
+      // console.log('err')
       return res.redirect('back')
     }
   },
@@ -65,7 +64,7 @@ const userController = {
       res.redirect('/signin')
     } catch (err) {
       res.status(302)
-      console.log('err')
+      // console.log('err')
       return res.redirect('back')
     }
   },
@@ -88,20 +87,18 @@ const userController = {
         include: [
           {
             model: Tweet,
-            order: [['updatedAt', 'DESC']],
-            include: [
-              { model: Reply, attributes: ['id'] },
-              { model: Like, attributes: ['id'] }
-            ]
+            include: [{ model: Reply, attributes: ['id'] }, { model: Like, attributes: ['id'] }]
           },
           { model: User, as: 'Followings', attributes: ['id'] },
           { model: User, as: 'Followers', attributes: ['id'] }
+        ],
+        order: [
+          [Tweet, 'createdAt', 'DESC']
         ]
       })
       if (!paramsUser) throw new Error("user didn't exist!")
-      const isFollowed =
-        helpers.getUser(req).Followings &&
-        helpers.getUser(req).Followings.some(f => f.id === Number(userId))
+      const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
+      // console.log('paramsUser.toJSON()', paramsUser.toJSON())
       return res.render('user', {
         user: paramsUser.toJSON(),
         isFollowed,
@@ -116,20 +113,33 @@ const userController = {
       const userId = req.params.id
       const user = await User.findByPk(userId, {
         include: [
-          { model: Like, include: [{ model: Tweet, include: [Reply] }] },
+          {
+            model: Like,
+            include: [
+              {
+                model: Tweet,
+                include: [
+                  { model: User, attributes: ['id', 'name', 'account'] },
+                  { model: Reply, attributes: ['id'] }
+                ]
+              }]
+          },
           { model: User, as: 'Followings', attributes: ['id'] },
           { model: User, as: 'Followers', attributes: ['id'] }
         ],
-        order: [['updatedAt', 'DESC']]
+        order: [
+          [Like, 'createdAt', 'DESC']
+        ]
       })
       if (!user) throw new Error("user didn't exist!")
-      const tweets = user.toJSON().Likes.map(tweet => ({
-        ...tweet,
-        isLiked: true
-      }))
+      // isLiked 判斷式先保留
+      // const tweets = user.toJSON().Likes.map(tweet => ({
+      //   ...tweet,
+      //   isLiked: true
+      // }))
       return res.render('likes', {
         user: user.toJSON(),
-        tweets
+        tweets: user.toJSON().Likes
       })
     } catch (err) {
       next(err)
@@ -139,25 +149,27 @@ const userController = {
     try {
       const userId = req.params.id
       const user = await User.findByPk(userId, {
+        attributes: ['id', 'name', 'avatar', 'account', 'cover', 'introduction'],
         include: [
           {
             model: Reply,
-            include: [
-              {
-                model: Tweet,
-                include: [
-                  {
-                    model: User,
-                    attributes: ['name']
-                  }
-                ]
-              }
-            ]
+            attributes: ['comment', 'createdAt'],
+            include: [{
+              model: Tweet,
+              attributes: ['description'],
+              include: [{
+                model: User,
+                attributes: ['id', 'account']
+              }]
+            }]
           },
+          { model: Tweet, attributes: ['description', 'createdAt'], order: ['createdAt', 'ASC'] },
           { model: User, as: 'Followings', attributes: ['id'] },
           { model: User, as: 'Followers', attributes: ['id'] }
         ],
-        order: [[Reply, 'updatedAt', 'DESC']]
+        order: [
+          [Reply, 'createdAt', 'DESC']
+        ]
       })
       if (!user) throw new Error("user didn't exist!")
       return res.render('replies', {
@@ -167,41 +179,44 @@ const userController = {
       next(err)
     }
   },
-  addLike: (req, res, next) => {
-    const { tweetId } = req.params
-    return Promise.all([
-      Tweet.findByPk(tweetId),
-      Like.findOne({
+  addLike: async (req, res, next) => {
+    try {
+      const { tweetId } = req.params
+      const like = await Like.findOne({
         where: {
-          userId: helpers.getUser(req).id,
-          tweetId
+          userId: helpers.getUser(req) && helpers.getUser(req).id,
+          tweetId: tweetId
         }
       })
-    ])
-      .then(([tweet, like]) => {
-        if (!tweet) throw new Error("Tweet didn't exist!")
-        if (like) throw new Error('You have already liked')
-        return Like.create({
-          userId: helpers.getUser(req).id,
-          tweetId
-        })
-      })
-      .then(() => res.redirect('back'))
-      .catch(err => next(err))
-  },
-  removeLike: (req, res, next) => {
-    return Like.findOne({
-      where: {
-        userId: helpers.getUser(req).id,
-        tweetId: req.params.tweetId
+      if (like) {
+        return res.redirect('back')
       }
-    })
-      .then(like => {
-        if (!like) throw new Error("You haven't liked ")
-        return like.destroy()
+      await Like.create({
+        UserId: helpers.getUser(req) && helpers.getUser(req).id,
+        TweetId: tweetId
       })
-      .then(() => res.redirect('back'))
-      .catch(err => next(err))
+      return res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
+  },
+  removeLike: async (req, res, next) => {
+    try {
+      const { tweetId } = req.params
+      const like = await Like.findOne({
+        where: {
+          userId: helpers.getUser(req) && helpers.getUser(req).id,
+          tweetId: tweetId
+        }
+      })
+      if (!like) {
+        return res.redirect('back')
+      }
+      await like.destroy()
+      return res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
   },
   addFollowing: async (req, res, next) => {
     try {
@@ -236,7 +251,7 @@ const userController = {
     try {
       const followship = await Followship.findOne({
         where: {
-          followerId: helpers.getUser(req).id,
+          followerId: helpers.getUser(req) && helpers.getUser(req).id,
           followingId: req.params.id
         }
       })
@@ -268,6 +283,7 @@ const userController = {
           helpers.getUser(req).Followers &&
           helpers.getUser(req).Followers.some(f => f.id === cf.id)
       }))
+      console.log('data', data)
       return res.render('followings', {
         currentUser: currentUser.toJSON(),
         followings: data,

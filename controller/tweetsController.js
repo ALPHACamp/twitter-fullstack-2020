@@ -1,5 +1,5 @@
 const { Tweet, User, Reply } = require('../models')
-const { getUser } = require('../_helpers')
+const helpers = require('../_helpers')
 const tweetsController = {
   getTweets: async (req, res, next) => {
     // TODO: like 與 replies 數量
@@ -43,7 +43,7 @@ const tweetsController = {
   },
   addTweet: async (req, res, next) => {
     const { description } = req.body
-    const UserId = getUser(req) && getUser(req).id
+    const UserId = helpers.getUser(req) && helpers.getUser(req).id
     try {
       if (!description || description.trim().length === 0) throw new Error('不能發空白推！')
       if (description.length > 140) throw new Error('推文不能超過140字！')
@@ -81,7 +81,7 @@ const tweetsController = {
   },
   addReply: async (req, res, next) => {
     const TweetId = Number(req.params.tweetId)
-    const UserId = getUser(req) && getUser(req).id
+    const UserId = helpers.getUser(req) && helpers.getUser(req).id
     const { comment } = req.body
 
     try {
