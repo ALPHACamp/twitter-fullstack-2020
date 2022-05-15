@@ -217,7 +217,7 @@
           <div class="form-row mb-3">
             <img src="{{user.avatar}}" alt="avatar"
               style="height: 140px ;width: 141px; position:absolute; top: 124px;left: 16px;border:4px white solid; border-radius: 50%; filter: contrast(50%);">
-            <label for="cover" class="btn cover-uploader" style="position:absolute; top: 175px; left: 60px;">
+            <label for="avatar" class="btn cover-uploader" style="position:absolute; top: 175px; left: 60px;">
               <input class="d-none" type="file" id="avatar" name="avatar">
               <i class="user-avatar fa-solid fa-camera"></i>
             </label>
@@ -229,8 +229,8 @@
             <p class="text-end text-muted now1 mb-0" style="font-size: 0.98em;">{{user.name.length}}/50</p>
           </div>
           <div class="form-row mb-3 p-2">
-            <label class="form-label fw-bold" for="description">自我介紹</label>
-            <textarea class="form-control" id="description" name="description" rows="4">{{user.introduction}}</textarea>
+            <label class="form-label fw-bold" for="introduction">自我介紹</label>
+            <textarea class="form-control" id="introduction" name="introduction" rows="4" required>{{user.introduction}}</textarea>
             <p class="text-end text-muted now1" style="font-size: 0.98em;">{{user.introduction.length}}/160</p>
           </div>
         </div>

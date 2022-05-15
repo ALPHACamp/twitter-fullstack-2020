@@ -2,6 +2,7 @@ const { User, Tweet, Reply, Like, Followship } = require('../models')
 const { Op } = require('sequelize')
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
   getUser: (req, res, next) => {
@@ -246,6 +247,46 @@ const userController = {
       })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
+  },
+  putUser: async (req, res, next) => {
+    try {
+      const { name, introduction } = req.body
+      const { cover, avatar } = req.files
+      let coverFilePath = ''
+      let avatarFilePath = ''
+
+      if (!name) throw new Error('User name is required!')
+      if (!introduction) throw new Error('User introduction is required!')
+      if (name.length > 50) throw new Error('名稱字數超出上限！')
+      if (introduction.length > 160) throw new Error('自我介紹字數超出上限！')
+
+      const user = await User.findByPk(req.params.id)
+
+      if (cover) {
+        coverFilePath = await imgurFileHandler(cover[0])
+      }
+      if (avatar) {
+        avatarFilePath = await imgurFileHandler(avatar[0])
+      }
+      if (!user) throw new Error("User didn't exist!")
+      if (user.id !== Number(helpers.getUser(req).id)) throw new Error("Don't revise other user data!")
+
+      await user.update({
+        email: user.email,
+        password: user.password,
+        name,
+        avatar: avatarFilePath || user.avatar,
+        cover: coverFilePath || user.cover,
+        introduction,
+        role: user.role,
+        account: user.account
+      })
+
+      req.flash('success_messages', '使用者資料編輯成功')
+      res.redirect(`/users/${req.params.id}`)
+    } catch (err) {
+      next(err)
+    }
   }
 }
 
