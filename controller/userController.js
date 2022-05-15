@@ -98,7 +98,6 @@ const userController = {
       })
       if (!paramsUser) throw new Error("user didn't exist!")
       const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
-      // console.log('paramsUser.toJSON()', paramsUser.toJSON())
       return res.render('user', {
         user: paramsUser.toJSON(),
         isFollowed
@@ -131,14 +130,12 @@ const userController = {
         ]
       })
       if (!user) throw new Error("user didn't exist!")
-      // isLiked 判斷式先保留
-      // const tweets = user.toJSON().Likes.map(tweet => ({
-      //   ...tweet,
-      //   isLiked: true
-      // }))
+      const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
+      console.log('isFollowed', isFollowed)
       return res.render('likes', {
         user: user.toJSON(),
-        tweets: user.toJSON().Likes
+        tweets: user.toJSON().Likes,
+        isFollowed
       })
     } catch (err) {
       next(err)
@@ -171,8 +168,10 @@ const userController = {
         ]
       })
       if (!user) throw new Error("user didn't exist!")
+      const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
       return res.render('replies', {
-        user: user.toJSON()
+        user: user.toJSON(),
+        isFollowed
       })
     } catch (err) {
       next(err)
