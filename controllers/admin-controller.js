@@ -42,10 +42,7 @@ const adminController = {
         { model: Tweet, include: Like },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
-      ],
-      where: {
-        role: 'user'
-      }
+      ]
     })
       .then(users => {
         const data = users
