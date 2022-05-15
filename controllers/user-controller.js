@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs') 
 const db = require('../models')
 const { User, Tweet, Reply, Like } = db
+const helper = require('../_helpers')
 const { localFileHandler } = require('../helpers/file-helpers') 
 const userController = {
   signInPage: (req, res) => {
@@ -118,6 +119,7 @@ getLikes: async(req, res, next) => {
 },
 editProfile: async(req, res, next) => {
   try {
+      const currentUser = helper.getUser(req)
       const UserId = req.params.id
       const user = await  User.findOne({ where: { id: UserId } , 
           include: [
@@ -126,7 +128,9 @@ editProfile: async(req, res, next) => {
           ],
           raw: true
         })
-        if (!user) throw new Error("User didn't exist!")
+        if (currentUser.id !== user.id) {
+          return res.json({status: 'error', message:"無法編輯其他使用者資料!"})
+        }
         console.log(user)
         return res.json(user)
   } catch (err) {
