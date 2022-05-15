@@ -9,7 +9,7 @@ const tweetController = {
     return Tweet.findAll({
       include: [{
         model: User,
-        attributes: ['id', 'name', 'avatar'],
+        attributes: ['id', 'name', 'avatar','account'],
         duplicating: false
       }, {
         model: Like,
@@ -34,7 +34,8 @@ const tweetController = {
       raw: true,
       nest: true
     }).then(tweets => {
-      res.json(tweets)
+      // res.json(tweets)
+      res.render('index',{tweets})
     }).catch(err => next(err))
   },
   postTweet: (req, res, next) => {

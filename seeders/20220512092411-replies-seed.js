@@ -17,7 +17,7 @@ module.exports = {
     return queryInterface.bulkInsert('Replies',
       Array.from({length:tweetIds.length*3},(element,index)=>({
         comment:faker.lorem.text(),
-        UserId:Math.floor(Math.random() * (userIds.length - 1) + 1),
+        UserId:Math.floor(Math.random() * (userIds.length) + 1),
         TweetId:tweetIds[index%tweetIds.length].id,
         createdAt: new Date(),
         updatedAt: new Date(),

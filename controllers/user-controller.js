@@ -1,15 +1,21 @@
 const bcrypt = require('bcryptjs') 
 const db = require('../models')
+const helpers = require('../_helpers')
 const { User, Tweet, Reply, Like } = db
-
+const { imgurFileHandler } = require('../helpers/file-helpers') 
 const userController = {
   signInPage: (req, res) => {
     res.render('signin')
   }, 
   signIn: (req, res) => {
+    if (helpers.getUser(req).role === 'admin') {
+      req.flash('error_messages', '帳號不存在')
+      req.logout()
+      res.redirect('/signin')
+    }
     req.flash('success_messages', '登入成功!')
     res.redirect('/tweets')
-    
+
   },
   signUpPage: (req, res) => {
     res.render('register')
@@ -93,7 +99,6 @@ const userController = {
             ]        
         })
         if (!data) throw new Error ("User didn't exists!")
-        console.log(data.toJSON())
         return res.json((data.toJSON()))
                  
     } catch (err) {
@@ -103,19 +108,92 @@ const userController = {
 getLikes: async(req, res, next) => {
   try {
       const UserId = req.params.id
-      const data = await User.findByPk(UserId, {
+      const user = await User.findByPk(UserId, {
           include: [
               { model : Like, include: [ { model : Tweet, include: [User] }]},
               { model: User, as: 'Followings' },
               { model: User, as: 'Followers' }
           ]
       })
-      if (!data) throw new Error ("User didn't exists!")
+      if (!user) throw new Error ("User didn't exists!")
       
-      return res.json((data.toJSON()))
+      return res.json((user.toJSON()))
   } catch (err) {
       next(err)
   }
-}
+},
+editProfile: async(req, res, next) => {
+  try {
+      const currentUser = helper.getUser(req)
+      const UserId = req.params.id
+      const user = await  User.findOne({ where: { id: UserId } , 
+          include: [
+                  { model: User, as: 'Followings' },
+                  { model: User, as: 'Followers' } ,     
+          ],
+          raw: true
+        })
+        if (currentUser.id !== user.id) {
+          return res.json({status: 'error', message:"無法編輯其他使用者資料!"})
+        }
+        return res.json(user)
+  } catch (err) {
+      next(err)
+  }
+},
+putProfile: (req, res, next) => {
+  const UserId = req.params.id
+  const { name, introduction, avatar } = req.body
+  const { file } = req
+  return Promise.all([
+      User.findByPk(UserId),
+      imgurFileHandler(file)
+    ])
+    .then(([user, filePath]) => {
+      if(!user) throw new Error ("User didn't exists!")
+      return user.update({
+          name,
+          introduction,
+          avatar: filePath || user.avatar
+      })
+    })
+    .then((data) => {
+      return res.json(data)
+    })
+    .catch(err => next(err))
+},
+ getFollowers: async(req, res) => {
+   try {
+    const UserId = req.params.id
+    const data = await User.findByPk(UserId, {
+        include: [
+            { model: User, as: 'Followers' },
+        ],
+        order: [['createdAt','DESC']]
+    })
+    if (!data) throw new Error ("User didn't exists!")
+    
+    return res.json((data.toJSON()))
+   } catch (err) {
+     next(err)
+   }
+ },
+ getFollowings: async(req, res) => {
+  try {
+   const UserId = req.params.id
+   const data = await User.findByPk(UserId, {
+       include: [
+           { model: User, as: 'Followings' },
+       ],
+       order: [['createdAt','DESC']]
+   })
+   if (!data) throw new Error ("User didn't exists!")
+   
+   return res.json((data.toJSON()))
+  } catch (err) {
+    next(err)
+  }
+},
+
 }
 module.exports = userController
