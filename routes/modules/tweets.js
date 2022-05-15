@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { tweetController, userController } = require('../../controllers')
+const tweetController = require('../../controllers/tweetController')
+const userController = require('../../controllers/userController')
 
 router.post('/:id/like', userController.addLike)
 router.post('/:id/unlike', userController.removeLike)

@@ -7,7 +7,10 @@ const adminController = require('../../controllers/admin-controller')
 router.get('/signin', adminController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
 router.get('/logout', adminController.logout)
-router.get('/users', adminController.getUsers)
+
+router.get('/users', authenticatedAdmin, adminController.getUsers)
+
+router.delete('/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 router.get('/tweets', authenticatedAdmin, adminController.getTweets)
 
 module.exports = router
