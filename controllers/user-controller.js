@@ -1,6 +1,7 @@
 const { User, Tweet, Reply, Like, Followship } = require('../models')
 const { Op } = require('sequelize')
 const bcrypt = require('bcryptjs')
+const helpers = require('../_helpers')
 
 const userController = {
   getUser: (req, res, next) => {
@@ -41,7 +42,8 @@ const userController = {
         user = {
           ...user.toJSON(),
           followerCount: user.Followers.length,
-          followingCount: user.Followings.length
+          followingCount: user.Followings.length,
+          isFollowed: req.user.Followings.some(f => f.id === user.id)
         }
 
         const result = users
@@ -199,6 +201,55 @@ const userController = {
         if (!like) throw new Error("You haven't liked this tweet")
 
         return like.destroy()
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+  addFollowing: (req, res, next) => {
+    return Promise.all([
+      User.findByPk(req.body.id),
+      Followship.findOne({
+        where: {
+          followerId: helpers.getUser(req).id,
+          followingId: req.body.id
+        }
+      })
+    ])
+      .then(([user, followship]) => {
+        if (!user) throw new Error("User didn't exist!")
+        if (Number(req.body.id) === Number(helpers.getUser(req).id)) {
+          req.flash('error_messages', "Can't following yourself!")
+          return res.redirect(200, 'back')
+        }
+        if (followship) throw new Error('You are already following this user!')
+
+        return Followship.create({
+          followerId: helpers.getUser(req).id,
+          followingId: req.body.id
+        })
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+  removeFollowing: (req, res, next) => {
+    return Promise.all([
+      User.findByPk(req.params.userId),
+      Followship.findOne({
+        where: {
+          followerId: helpers.getUser(req).id,
+          followingId: req.params.userId
+        }
+      })
+    ])
+      .then(([user, followship]) => {
+        if (!user) throw new Error("User didn't exist!")
+        if (Number(req.params.userId) === Number(helpers.getUser(req).id)) {
+          req.flash('error_messages', "Can't delete your follower!")
+          return res.redirect(200, 'back')
+        }
+        if (!followship) throw new Error("You haven't followed this user!")
+
+        return followship.destroy()
       })
       .then(() => res.redirect('back'))
       .catch(err => next(err))

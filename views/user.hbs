@@ -18,7 +18,19 @@
         <img src="{{user.avatar}}" alt="avatar"
           style="height: 140px ;width: 141px; position:absolute; top: 124px;left: 16px;border:4px white solid; border-radius: 50%;">
         <!-- Button trigger modal -->
+        {{#ifCond user.id loginUser.id}}
         <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="modal-button fw-bold">編輯個人資料</button>
+        {{else}}
+        {{#if user.isFollowed}}
+        <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: contents;">
+          <button type="submit" class="user-following-button text-white">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="POST" style="display: contents;">
+          <button type="submit" class="user-follower-button ms-3" name="id" value="{{user.id}}">跟隨</button>
+        </form>
+        {{/if}}
+        {{/ifCond}}
         <div class="card-body mt-5">
           <p class="fw-bold fs-5 mb-0">{{user.name}}</p>
           <p class="fs-6 mb-0 text-muted">@{{user.account}}</p>
@@ -168,7 +180,7 @@
           </form>
           {{else}}
           <form action="/followships" method="POST" style="display: contents;">
-            <button type="submit" class="follower-button ms-3">跟隨</button>
+            <button type="submit" class="follower-button ms-3" name="id" value="{{this.id}}">跟隨</button>
           </form>
           {{/if}}
         </div>

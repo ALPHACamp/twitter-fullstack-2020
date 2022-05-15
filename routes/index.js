@@ -17,6 +17,8 @@ router.get('/logout', loginController.logout)
 router.get('/signup', loginController.signUpPage)
 router.post('/signup', loginController.signUp)
 router.use('/users', authenticated, users)
+router.delete('/followships/:userId', authenticated, userController.removeFollowing)
+router.post('/followships', authenticated, userController.addFollowing)
 router.post('/tweets/:id/like', authenticated, userController.addLike)
 router.post('/tweets/:id/unlike', authenticated, userController.removeLike)
 router.get('/tweets', authenticated, (req, res) => {
