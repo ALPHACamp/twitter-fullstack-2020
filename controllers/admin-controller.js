@@ -55,7 +55,9 @@ const adminController = {
                 userLikes += tweet.Likes.length
               })
               return userLikes
-            }
+            },
+            followers: user.Followers.length,
+            followings: user.Followings.length
           }))
         res.render('admin/users', { users: data })
       })
