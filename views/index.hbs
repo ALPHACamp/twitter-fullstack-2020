@@ -26,19 +26,28 @@
                 </div>
                 <div class="col">
                     <p>
-                        ,<span>{{this.User.name}}</span>,
-                        <span>@{{this.User.account}}</span>,
-                        <span>{{this.updatedAt}}</span>,
+                        <span>{{this.User.name}}</span> 
+                        <span>@{{this.User.account}} ‧ </span>  
+                        <span>{{this.updatedAt}}</span>
                     </p>
                     <p>{{this.description}}</p>
-                    <p>like:{{this.totalLike}} reply:{{this.totalReply}}</p>
+                    <p>
+                        <i class="far fa-comment"></i> {{this.totalReply}}
+                        {{#if this.isLiked}}
+                            <i class="fas fa-heart text-danger"></i> {{this.totalLike}} 
+                        {{else}}
+                            <i class="far fa-heart"></i> {{this.totalLike}} 
+                        {{/if}}
+                    </p>
                 </div>
             </div>
             <hr/>
             {{/each}}
         </div>
     </div>
-    <div class="col"></div>
 
-</div> 
+    <div class="col">
+        {{> right-nav}}
+    </div>
+</div>
 
