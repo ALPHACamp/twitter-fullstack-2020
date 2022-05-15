@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs') 
 const db = require('../models')
-const helper = require('../_helpers')
+const helpers = require('../_helpers')
 const { User, Tweet, Reply, Like } = db
 const { imgurFileHandler } = require('../helpers/file-helpers') 
 const userController = {
@@ -8,7 +8,7 @@ const userController = {
     res.render('signin')
   }, 
   signIn: (req, res) => {
-    if (helper.getUser(req).role === 'admin') {
+    if (helpers.getUser(req).role === 'admin') {
       req.flash('error_messages', '帳號不存在')
       req.logout()
       res.redirect('/signin')
