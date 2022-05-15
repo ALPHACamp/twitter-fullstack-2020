@@ -72,9 +72,6 @@ const userController = {
   },
   getTweets: async (req, res, next) => {
     try {
-      // const userId = Number(req.user.id) // 登入的使用者
-      // const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
-      // const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
       const userId = helpers.getUser(req).id // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
@@ -148,9 +145,6 @@ const userController = {
   },
   getReplies: async (req, res, next) => {
     try {
-      // const userId = Number(req.user.id) // 登入的使用者
-      // const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
-      // const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
       const userId = helpers.getUser(req).id // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
@@ -221,9 +215,6 @@ const userController = {
   },
   getLikedTweets: async (req, res, next) => {
     try {
-      // const userId = Number(req.user.id) // 登入的使用者
-      // const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
-      // const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
       const userId = helpers.getUser(req).id // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
@@ -278,9 +269,6 @@ const userController = {
   },
   getFollowers: async (req, res, next) => {
     try {
-      // const userId = Number(req.user.id) // 登入的使用者
-      // const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
-      // const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
       const userId = helpers.getUser(req).id // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
@@ -343,9 +331,6 @@ const userController = {
   },
   getFollowings: async (req, res, next) => {
     try {
-      // const userId = Number(req.user.id) // 登入的使用者
-      // const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
-      // const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
       const userId = helpers.getUser(req).id // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
@@ -451,11 +436,6 @@ const userController = {
       if (!followingUserId.includes(queryUserId)) {
         throw new Error('您還未追蹤此使用者 !')
       }
-      // const data = user.toJSON()
-      // const followingUserId = data.Followings.map(user => user.id)
-      // if (!followingUserId.includes(queryUserId)) {
-      //   throw new Error('您還未追蹤此使用者 !')
-      // }
 
       await Followship.destroy({
         where: { followerId: userId, followingId: queryUserId }
