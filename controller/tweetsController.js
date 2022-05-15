@@ -1,10 +1,13 @@
-const { Tweet, User, Reply } = require('../models')
+const { Tweet, User, Reply, Followship } = require('../models')
 const helpers = require('../_helpers')
+const Sequelize = require('sequelize')
+
 const tweetsController = {
   getTweets: async (req, res, next) => {
     // TODO: like 與 replies 數量
     try {
       const tweets = await Tweet.findAll({
+        order: [['createdAt', 'DESC']],
         include: {
           model: User,
           attributes: ['name', 'account', 'avatar']
@@ -12,8 +15,20 @@ const tweetsController = {
         raw: true,
         nest: true
       })
-      const topUsers = await User.findAll({ raw: true })
-      // TODO: topUsers 尚未完成，需要根據 like 術與 follower 數相加
+
+      // 右側topUsers, sort by跟隨者follower數量 & isFollowed 按鈕
+      const users = await User.findAll({
+        where: { isAdmin: false },
+        attributes: ['id', 'name', 'account', 'avatar'],
+        include: { model: User, as: 'Followers' }
+      })
+      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
+        return {
+          ...u,
+          Followers: u.Followers.length,
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+        }
+      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
       return res.render('index', { tweets, topUsers })
     } catch (err) {
       next(err)
@@ -35,7 +50,20 @@ const tweetsController = {
         raw: true,
         nest: true
       })
-      const topUsers = await User.findAll({ raw: true })
+
+            // 右側topUsers, sort by跟隨者follower數量 & isFollowed 按鈕
+      const users = await User.findAll({
+        where: { isAdmin: false },
+        attributes: ['id', 'name', 'account', 'avatar'],
+        include: { model: User, as: 'Followers' }
+      })
+      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
+        return {
+          ...u,
+          Followers: u.Followers.length,
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+        }
+      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
       return res.render('tweet', { tweet, replies, topUsers })
     } catch (err) {
       next(err)

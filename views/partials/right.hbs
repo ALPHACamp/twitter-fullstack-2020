@@ -5,7 +5,23 @@
       <img src="{{ this.avatar }}" alt="user-picture" class="rounded-circle" style="width: 32px; height: 32px;">
       <span><a href="/users/{{ this.id }}">{{ this.name }}</a></span>
       <span> @{{ this.account }}</span>
-    </blockquote>
-    <hr />
-    {{/each}}
+
+    {{!-- 是本人，不顯示追蹤按鈕 --}}
+      {{#ifCond ../logInUser.id this.id}}
+        {{else}}
+        {{!--  isFollowed 判斷 --}}
+        {{#if isFollowed}}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+            <button type="submit" class="btn btn-danger">取消追蹤</button>
+          </form>
+        {{else}}
+          <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
+            <button type="submit" class="btn btn-primary">追蹤</button>
+          </form>
+        {{/if}}
+      {{/ifCond}}
+        {{/each}}
+        </blockquote>
+        <hr />
+
 </div>

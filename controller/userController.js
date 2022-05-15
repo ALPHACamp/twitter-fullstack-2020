@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs')
 const { Tweet, User, Like, Reply, Followship } = require('../models')
 const helpers = require('../_helpers')
+const Sequelize = require('sequelize')
+
 const userController = {
   signUpPage: async (req, res) => {
     try {
@@ -98,9 +100,25 @@ const userController = {
       })
       if (!paramsUser) throw new Error("user didn't exist!")
       const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
+
+      // 右側Top10User
+      const users = await User.findAll({
+        where: { isAdmin: false },
+        attributes: ['id', 'name', 'account', 'avatar'],
+        include: { model: User, as: 'Followers' }
+      })
+      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
+        return {
+          ...u,
+          Followers: u.Followers.length,
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+        }
+      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
+
       return res.render('user', {
         user: paramsUser.toJSON(),
-        isFollowed
+        isFollowed,
+        topUsers
       })
     } catch (err) {
       next(err)
@@ -131,11 +149,25 @@ const userController = {
       })
       if (!user) throw new Error("user didn't exist!")
       const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
-      console.log('isFollowed', isFollowed)
+
+      // 右側topUsers, sort by跟隨者follower數量 & isFollowed 按鈕
+      const users = await User.findAll({
+        where: { isAdmin: false },
+        attributes: ['id', 'name', 'account', 'avatar'],
+        include: { model: User, as: 'Followers' }
+      })
+      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
+        return {
+          ...u,
+          Followers: u.Followers.length,
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+        }
+      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
       return res.render('likes', {
         user: user.toJSON(),
         tweets: user.toJSON().Likes,
-        isFollowed
+        isFollowed,
+        topUsers
       })
     } catch (err) {
       next(err)
@@ -169,9 +201,24 @@ const userController = {
       })
       if (!user) throw new Error("user didn't exist!")
       const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
+
+      // 右側topUsers, sort by跟隨者follower數量 & isFollowed 按鈕
+      const users = await User.findAll({
+        where: { isAdmin: false },
+        attributes: ['id', 'name', 'account', 'avatar'],
+        include: { model: User, as: 'Followers' }
+      })
+      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
+        return {
+          ...u,
+          Followers: u.Followers.length,
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+        }
+      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
       return res.render('replies', {
         user: user.toJSON(),
-        isFollowed
+        isFollowed,
+        topUsers
       })
     } catch (err) {
       next(err)
