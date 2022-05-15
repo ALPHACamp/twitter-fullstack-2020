@@ -66,6 +66,8 @@ const tweetController = {
       const UserId = helper.getUser(req).id
       const TweetId = req.params.tweetId
       if (!TweetId) throw new Error('該篇貼文不存在，請重新整理')
+      const existLike = await Like.findOne({ where: { UserId, TweetId } })
+      if (existLike) throw new Error('您已喜歡過該篇貼文')
       const like = await Like.create({ UserId, TweetId })
       return res.status(302).json({ status: 'success', like })
       // res.redirect('back')
@@ -78,6 +80,8 @@ const tweetController = {
       const UserId = helper.getUser(req).id
       const TweetId = req.params.tweetId
       if (!TweetId) throw new Error('該篇貼文不存在，請重新整理')
+      const existLike = await Like.findOne({ where: { UserId, TweetId } })
+      if (!existLike) throw new Error('您尚未喜歡該篇貼文')
       const unlike = await Like.destroy({
         where: { UserId, TweetId }
       })

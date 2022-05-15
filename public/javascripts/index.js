@@ -20,9 +20,7 @@ likeSubmitBtn.forEach(item => {
       item.classList.toggle('liked')
       likedIcon.classList.toggle('user-like')
       await axios({ method: 'post', url: `${URL}tweets/${tweetId}/unlike` })
-      return
-    }
-    if (!item.classList.contains('liked')) {
+    } else {
       likedNumbers.textContent++
       item.classList.toggle('liked')
       likedIcon.classList.toggle('user-like')
