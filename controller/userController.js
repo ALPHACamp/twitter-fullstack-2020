@@ -324,11 +324,27 @@ const userController = {
         ...cf,
         isFollowed: helpers.getUser(req) && helpers.getUser(req).Followers && helpers.getUser(req).Followers.some(f => f.id === cf.id)
       }))
-      console.log('data', data)
+      // console.log('data', data)
+      
+      // 右側Top10User
+      const users = await User.findAll({
+        where: { isAdmin: false },
+        attributes: ['id', 'name', 'account', 'avatar'],
+        include: { model: User, as: 'Followers' }
+      })
+      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
+        return {
+          ...u,
+          Followers: u.Followers.length,
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+        }
+      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
+
       return res.render('followings', {
         currentUser: currentUser.toJSON(),
         followings: data,
-        currentUserId
+        currentUserId,
+        topUsers
       })
     } catch (err) {
       next(err)
@@ -353,10 +369,27 @@ const userController = {
         ...cf,
         isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === cf.id)
       }))
+
+      
+      // 右側Top10User
+      const users = await User.findAll({
+        where: { isAdmin: false },
+        attributes: ['id', 'name', 'account', 'avatar'],
+        include: { model: User, as: 'Followers' }
+      })
+      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
+        return {
+          ...u,
+          Followers: u.Followers.length,
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+        }
+      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
+
       return res.render('followers', {
         currentUser: currentUser.toJSON(),
         followers: data,
-        currentUserId
+        currentUserId,
+        topUsers
       })
     } catch (err) {
       next(err)
