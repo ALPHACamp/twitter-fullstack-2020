@@ -6,7 +6,7 @@ const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 
 const admin = require('./modules/admin.js')
-const home = require('./modules/home.js')
+const tweets = require('./modules/tweets.js')
 const users = require('./modules/users.js')
 
 router.use('/admin', admin)
@@ -17,9 +17,13 @@ router.get('/signup', loginController.signUpPage)
 router.post('/signup', loginController.signUp)
 router.use('/users', users)
 router.get('/tweets', authenticated, (req, res) => {
-  res.render('tweets')
+  if (req.user.role !== 'user') {
+    res.redirect('/admin/tweets')
+  } else {
+    res.render('tweets')
+  }
 })
-router.use('/', authenticated, home)
+router.use('/', authenticated, tweets)
 router.use('/', generalErrorHandler)
 
 module.exports = router
