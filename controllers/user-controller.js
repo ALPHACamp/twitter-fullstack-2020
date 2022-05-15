@@ -43,14 +43,14 @@ const userController = {
           ...user.toJSON(),
           followerCount: user.Followers.length,
           followingCount: user.Followings.length,
-          isFollowed: req.user.Followings.some(f => f.id === user.id)
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
         }
 
         const result = users
           .map(item => ({
             ...item.toJSON(),
             followerCount: item.Followers.length,
-            isFollowed: req.user.Followings.some(f => f.id === item.id)
+            isFollowed: helpers.getUser(req).Followings.some(f => f.id === item.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, LIMIT)
@@ -94,11 +94,11 @@ const userController = {
           ...useData,
           Followers: useData.Followers.map(follower => ({
             ...follower,
-            isFollowersFollowed: req.user.Followings.some(f => f.id === follower.Followship.followerId)
+            isFollowersFollowed: helpers.getUser(req).Followings.some(f => f.id === follower.Followship.followerId)
           })),
           Followings: useData.Followings.map(following => ({
             ...following,
-            isFollowingsFollowed: req.user.Followings.some(f => f.id === following.Followship.followingId)
+            isFollowingsFollowed: helpers.getUser(req).Followings.some(f => f.id === following.Followship.followingId)
           }))
         }
 
@@ -106,7 +106,7 @@ const userController = {
           .map(item => ({
             ...item.toJSON(),
             followerCount: item.Followers.length,
-            isFollowed: req.user.Followings.some(f => f.id === item.id)
+            isFollowed: helpers.getUser(req).Followings.some(f => f.id === item.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, LIMIT)
@@ -126,7 +126,7 @@ const userController = {
   putUserSetting: (req, res, next) => {
     const { account, name, email, password, checkPassword } = req.body
 
-    if (Number(req.params.id) !== Number(req.user.id)) throw new Error('請勿編輯他人資料')
+    if (Number(req.params.id) !== Number(helpers.getUser(req).id)) throw new Error('請勿編輯他人資料')
     if (name.length > 50) throw new Error('名稱字數超出上限！')
     if (password !== checkPassword) throw new Error('Passwords do not match!')
 
