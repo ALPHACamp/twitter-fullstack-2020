@@ -1,44 +1,21 @@
-<div class='card' style='margin-top:16px'>
-  <div class='card-header'>
-    跟隨誰
-  </div>
-  <ul class='list-group list-group-flush'>
-    {{#each followships}}
-      <li class='list-group-item'>
-        <div class='row d-flex justify-content-center align-items-center'>
-          <div class='col-2 p-0 d-flex justify-content-center'>
-            <img
-              src='{{this.avatar}}'
-              alt='alphaCamp'
-              width='50px'
-              height='50px'
-            />
+<div class="popular">
+  <div class="header"><h4>跟隨誰</h4></div>
+  {{#each followships}}
+  <div class="follow-tweet d-flex flex-row align-items-center justify-content-between">
+        <a href="/users/{{user.id}}/tweets" class="d-flex">
+          <img class="avatar" src="{{this.avatar}}" alt="User2 avatar">
+          <div class="d-flex flex-column user-name-account">
+            <span class="user-name ellipsis">{{this.name}}</span>
+            <span class="secondary-text ellipsis">@{{this.account}}</span>
           </div>
-          <div class='col p-0 ps-1'>
-            <strong class='user-name'>
-              {{this.name}}
-            </strong>
-            <span class='user-account'>
-              @{{this.account}}
-            </span>
-          </div>
-          <div class='col p-0'>
-            {{#if this.isSelf}}
-              {{#if this.isFollowed}}
-                <button
-                  class='btn rounded-pill text-light'
-                  style='background-color:#FF6600;'
-                >正在追隨</button>
-              {{else}}
-                <button
-                  class='btn rounded-pill bg-light'
-                  style='border-color:#FF6600; color:#FF6600'
-                >跟隨</button>
-              {{/if}}
-            {{/if}}
-          </div>
-        </div>
-      </li>
-    {{/each}}
-  </ul>
+        </a>
+        {{#if this.isSelf}}
+          {{#if this.isFollowed}}
+            <button type="button" class="btn btn-primary">正在追隨</button>
+            {{else}}
+            <button type="button" class="btn btn-outline">跟隨</button>
+          {{/if}}
+        {{/if}}
+      </div>
+  {{/each}}
 </div>

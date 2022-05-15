@@ -1,20 +1,12 @@
-<div class='d-grid gap-2'>
-  <a class='btn' href='#'><img
-      src='https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png'
-      alt='alphaCamp'
-      width='30'
-      height='30'
-    /></a>
-  <a class='btn' href='#'>首頁</a>
-  <a class='btn' href='/users/{{user.id}}/tweets'>個人資料</a>
-  <a class='btn' href='#'>設定</a>
-  <button
-    class='btn btn-lg rounded-pill text-light'
-    type='button'
-    data-bs-toggle='modal'
-    data-bs-target='#postModal'
-    style='background-color:#FF6600;'
-  >推文</button>
+<div class="navigation d-flex flex-column justify-content-between">
+  <a href='/tweets'><img class='logo' alt='logo' src='/images/twitter_2022_logo.svg' /></a>
+  <a class="active" href='/tweets'><i class="home"></i>首頁</a>
+  <a class="" href='/users/{{user.id}}/tweets'><i class="info"></i>個人資料</a>
+  <a class="" href='#'><i class="setting"></i>設定</a>
+  <button type="button" class="btn btn-primary" data-bs-toggle='modal' data-bs-target='#postModal'>推文</button>
+</div>
+<div class="footer">
+  <a href="/signout"><i class="logout"></i>登出</a>
 </div>
 
 {{! 以下為推文modal }}
@@ -69,3 +61,4 @@
     </div>
   </div>
 </div>
+
