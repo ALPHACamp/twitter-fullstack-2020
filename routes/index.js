@@ -16,7 +16,7 @@ router.get('/signup', loginController.signUpPage)
 router.post('/signup', loginController.signUp)
 
 router.use('/admin', admin)
-router.use('/users', users)
+router.use('/users', authenticated, users)
 router.use('/tweets', authenticated, tweets)
 router.use('/', generalErrorHandler)
 

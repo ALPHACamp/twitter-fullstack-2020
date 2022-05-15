@@ -1,13 +1,12 @@
 const { User, Tweet, Reply, Like } = require('../models')
-const testUser = Number(3) // for local test
 
 const tweetController = {
   getTweets: (req, res, next) => {
-    const loginUser = req.user ? req.user.id : testUser //
-    // if (req.user.role === 'admin') {
-    // req.flash('error_messages', '無使用權限')
-    // res.redirect('/admin/tweets')
-    // }
+    const loginUser = req.user.id
+    if (req.user.role === 'admin') {
+      req.flash('error_messages', '無使用權限')
+      res.redirect('/admin/tweets')
+    }
     return Promise.all([
       User.findByPk(loginUser, { raw: true, nest: true }),
       Tweet.findAll({
@@ -49,15 +48,14 @@ const tweetController = {
       .catch(err => next(err))
   },
   getTweet: (req, res, next) => {
-    const loginUser = req.user ? req.user.id : testUser
+    const loginUser = req.user.id
     if (!loginUser) {
       req.flash('error_messages', '帳號不存在')
       res.redirect('/login')
+    } else if (req.user.role === 'admin') {
+      req.flash('error_messages', '無使用權限')
+      res.redirect('/admin/tweets')
     }
-    // else if (req.user.role === 'admin') {
-    //   req.flash('error_messages', '無使用權限')
-    //   res.redirect('/admin/tweets')
-    // }
     return Promise.all([
       Tweet.findByPk(req.params.id, {
         include: [
@@ -97,7 +95,7 @@ const tweetController = {
       .catch(err => next(err))
   },
   postTweet: (req, res, next) => {
-    const userId = req.user ? req.user.id : testUser
+    const userId = req.user.id
     const { description } = req.body
     if (!userId) {
       req.flash('error_messages', '您尚未登入帳號!')
@@ -115,7 +113,7 @@ const tweetController = {
       .catch(err => next(err))
   },
   postReply: (req, res, next) => {
-    const userId = req.user ? req.user.id : testUser
+    const userId = req.user.id
     const tweetId = req.params.id
     const { reply } = req.body
     if (!userId) {

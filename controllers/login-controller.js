@@ -6,6 +6,7 @@ const loginController = {
     if (!req.user) {
       res.render('signin')
     } else if (req.user.role === 'admin') {
+      console.log('userRole:', req.user.role)
       req.flash('error_messages', '您無此權限！')
       req.logout()
       res.redirect('/signin')
