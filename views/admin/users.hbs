@@ -1,9 +1,33 @@
-<h1>使用者清單</h1>
-
-{{#each users}}
-<span class="fw-bold me-1">{{this.name}}</span>
-<span class="text-secondary fw-bold">@{{this.account}}</span>
-<div>
-  <p>{{this.description}}</p>
+<div class="col">
+  {{> admin-left-nav}}
 </div>
-{{/each}}
+<h1>使用者列表</h1>
+
+<div class="d-flex flex-wrap">
+  {{#each users}}
+  <div class="col-md-4">
+    {{#if this.cover}}
+    <img src="{{this.cover}}" width="250px" height="140px" style="transition: opacity 0.5s; opacity:0;"
+      onload="this.style.opacity=1;" />
+    {{else}}
+    <img src="https://via.placeholder.com/250x140" width="250px" height="140px"
+      style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
+    {{/if}}
+    {{#if this.avatar}}
+    <img src="{{this.avatar}}" class="rounded-circle" width="100px" height="100px" style="transition: opacity 0.5s; opacity:0;"
+      onload="this.style.opacity=1;" />
+    {{else}}
+    <img src="https://via.placeholder.com/100" width="100px" height="100px" style="transition: opacity 0.5s; opacity:0;"
+      onload="this.style.opacity=1;" />
+    {{/if}}
+  </div>
+  <span class="fw-bold me-1">{{this.name}}</span>
+  <span class="text-secondary fw-bold">@{{this.account}}</span>
+  <div>
+    <p>總推文數：{{this.tweetCount}}</p>
+    <p>總like數：{{this.likeCount}}</p>
+    <p>跟隨者：{{this.followers}}</p>
+    <p>跟隨中：{{this.followings}}</p>
+  </div>
+  {{/each}}
+</div>
