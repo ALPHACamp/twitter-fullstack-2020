@@ -394,24 +394,40 @@ const userController = {
     try {
       const userId = Number(helpers.getUser(req).id)
       const queryUserId = Number(req.body.id) // other user
-      if (userId === queryUserId) throw new Error('您不能追蹤自己 !')
+      // if (userId === queryUserId) throw new Error('您不能追蹤自己 !')
+      if (userId === queryUserId) {
+        req.flash('error_messages', '您不能追蹤自己 !')
+        return res.redirect(200, 'back')
+      }
 
       const user = await User.findByPk(userId, {
         include: [{ model: User, as: 'Followings', attributes: ['id'] }]
       })
-      if (!user) throw new Error('使用者不存在 !')
+      // if (!user) throw new Error('使用者不存在 !')
+      if (!user) {
+        req.flash('error_messages', '使用者不存在 !')
+        return res.redirect(200, 'back')
+      }
 
       const queryUser = await User.findByPk(queryUserId, { raw: true })
-      if (!queryUser) throw new Error('使用者不存在 !')
+      // if (!queryUser) throw new Error('使用者不存在 !')
+      if (!queryUser) {
+        req.flash('error_messages', '使用者不存在 !')
+        return res.redirect(200, 'back')
+      }
 
       const followingUserId = user.Followings.map(user => user.id)
+      // if (followingUserId.includes(queryUserId)) {
+      //   throw new Error('您已經追蹤過此使用者了 !')
+      // }
       if (followingUserId.includes(queryUserId)) {
-        throw new Error('您已經追蹤過此使用者了 !')
+        req.flash('error_messages', '您已經追蹤過此使用者了 !')
+        return res.redirect(200, 'back')
       }
 
       await Followship.create({ followerId: userId, followingId: queryUserId })
 
-      res.redirect('back')
+      return res.redirect('back')
     } catch (err) {
       next(err)
     }
@@ -441,7 +457,7 @@ const userController = {
         where: { followerId: userId, followingId: queryUserId }
       })
 
-      res.redirect('back')
+      return res.redirect('back')
     } catch (err) {
       next(err)
     }
