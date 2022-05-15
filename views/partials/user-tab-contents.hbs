@@ -1,15 +1,15 @@
 <div class="tab-contents">
   {{#each tweets}}
   <div class="tweet d-flex">
-    <a href="/users/{{user.id}}/tweets">
-      <img class="avatar" src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" alt="user1 avatar">
+    <a href="/users/{{this.User.id}}/tweets">
+      <img class="avatar" src="{{this.User.avatar}}" alt="user1 avatar">
     </a>
     <div class="post-content">
       <div class="post-user d-flex flex-row align-items-end">
-        <a href="/users/{{user.id}}/tweets">
-          <span class="user-name">{{../user.name}}</span>
+        <a href="/users/{{this.User.id}}/tweets">
+          <span class="user-name">{{this.User.name}}</span>
         </a>
-        <span class="secondary-text">@{{../user.account}}</span>
+        <span class="secondary-text">@{{this.User.account}}</span>
         <span class="secondary-text">•</span>
         <span class="secondary-text">{{relativeTimeFromNow this.createdAt}}</span>
       </div>
@@ -29,15 +29,15 @@
   {{/each}}
   {{#each replies}}
   <div class="tweet d-flex">
-    <a href="/users/{{user.id}}/tweets">
-      <img class="avatar" src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" alt="user1 avatar">
+    <a href="/users/{{this.User.id}}/tweets">
+      <img class="avatar" src="{{this.User.avatar}}" alt="user1 avatar">
     </a>
     <div class="post-content">
       <div class="post-user d-flex flex-row align-items-end">
-        <a href="/users/{{user.id}}/tweets">
-          <span class="user-name">{{../user.name}}</span>
+        <a href="/users/{{this.User.id}}/tweets">
+          <span class="user-name">{{this.User.name}}</span>
         </a>
-        <span class="secondary-text">@{{../user.account}}</span>
+        <span class="secondary-text">@{{this.User.account}}</span>
         <span class="secondary-text">•</span>
         <span class="secondary-text">{{relativeTimeFromNow this.createdAt}}</span>
       </div>
@@ -46,14 +46,14 @@
     </div> 
   </div>
   {{/each}}
-  {{#each user.LikedTweets}}
+  {{#each queryUser.LikedTweets}}
   <div class="tweet d-flex">
-    <a href="/users/{{user.id}}/tweets">
-      <img class="avatar" src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" alt="user1 avatar">
+    <a href="/users/{{this.User.id}}/tweets">
+      <img class="avatar" src="{{this.User.avatar}}" alt="user1 avatar">
     </a>
     <div class="post-content">
       <div class="post-user d-flex flex-row align-items-end">
-        <a href="/users/{{user.id}}/tweets">
+        <a href="/users/{{this.User.id}}/tweets">
           <span class="user-name">{{this.User.name}}</span>
         </a>
         <span class="secondary-text">@{{this.User.account}}</span>

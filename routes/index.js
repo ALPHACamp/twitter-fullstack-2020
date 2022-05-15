@@ -17,6 +17,8 @@ router.use('/admin', authenticatedAdmin, admin)
 
 // users 路由入口
 router.use('/users', authenticated, users)
+router.delete('/followships/:id', authenticated, userController.removeFollowing)
+router.post('/followships', authenticated, userController.addFollowing)
 
 // tweets 路由入口
 router.use('/tweets', authenticated, tweets)
@@ -29,7 +31,7 @@ router.post(
   '/signin',
   passport.authenticate('user-local', {
     failureRedirect: '/signin',
-    failureFlash: true
+    failureFlash: true,
   }),
   userController.signIn
 )

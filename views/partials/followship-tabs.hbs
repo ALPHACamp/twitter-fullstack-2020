@@ -2,7 +2,7 @@
   <li class='nav-item'>
     <a
       class='nav-link'
-      href='/users/{{user.id}}/followers'
+      href='/users/{{queryUser.id}}/followers'
       {{#ifCond tab 'getFollowers'}}
       style='border-bottom: 2px solid #FF6600; color:#FF6600'
       {{/ifCond}}
@@ -10,7 +10,7 @@
   </li>
   <li class='nav-item'>
     <a class='nav-link' 
-    href='/users/{{user.id}}/followings'
+    href='/users/{{queryUser.id}}/followings'
     {{#ifCond tab 'getFollowings'}}
       style='border-bottom: 2px solid #FF6600; color:#FF6600'
       {{/ifCond}}

@@ -6,7 +6,8 @@ const { User, Tweet } = require('../models')
 
 // set up Passport strategy
 
-passport.use('user-local',
+passport.use(
+  'user-local',
   new LocalStrategy(
     {
       usernameField: 'account',
@@ -16,20 +17,37 @@ passport.use('user-local',
     async (req, account, password, cb) => {
       const user = await User.findOne({ where: { account } })
 
-      if (!user) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+      if (!user) {
+        return cb(
+          null,
+          false,
+          req.flash('error_messages', '帳號或密碼輸入錯誤！')
+        )
+      }
 
-      if (user.role !== 'user') return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+      if (user.role !== 'user') {
+        return cb(
+          null,
+          false,
+          req.flash('error_messages', '帳號或密碼輸入錯誤！')
+        )
+      }
 
-      if (!bcrypt.compareSync(password, user.password)) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
-
+      if (!bcrypt.compareSync(password, user.password)) {
+        return cb(
+          null,
+          false,
+          req.flash('error_messages', '帳號或密碼輸入錯誤！')
+        )
+      }
 
       return cb(null, user)
     }
   )
 )
 
-
-passport.use('admin-local',
+passport.use(
+  'admin-local',
   new LocalStrategy(
     {
       usernameField: 'account',
@@ -40,12 +58,29 @@ passport.use('admin-local',
       console.log(req.body)
       const user = await User.findOne({ where: { account } })
 
+      if (!user) {
+        return cb(
+          null,
+          false,
+          req.flash('error_messages', '帳號或密碼輸入錯誤！')
+        )
+      }
 
-      if (!user) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+      if (user.role !== 'admin') {
+        return cb(
+          null,
+          false,
+          req.flash('error_messages', '帳號或密碼輸入錯誤！')
+        )
+      }
 
-      if (user.role !== 'admin') return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
-
-      if (!bcrypt.compareSync(password, user.password)) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+      if (!bcrypt.compareSync(password, user.password)) {
+        return cb(
+          null,
+          false,
+          req.flash('error_messages', '帳號或密碼輸入錯誤！')
+        )
+      }
 
       return cb(null, user)
     }
@@ -61,7 +96,6 @@ passport.deserializeUser(async (id, cb) => {
   try {
     const user = await User.findByPk(id, {
       include: [
-        { model: Tweet, as: 'LikedTweets' },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
