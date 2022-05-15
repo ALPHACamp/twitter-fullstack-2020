@@ -7,24 +7,21 @@ const { generalErrorHandler } = require('../middleware/error-handler')
 const userController = require('../controllers/user-controller')
 
 const admin = require('./modules/admin.js')
-const home = require('./modules/home.js')
+const tweets = require('./modules/tweets.js')
 const users = require('./modules/users.js')
 
-router.use('/admin', admin)
 router.get('/signin', loginController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), loginController.signIn)
 router.get('/logout', loginController.logout)
 router.get('/signup', loginController.signUpPage)
 router.post('/signup', loginController.signUp)
-router.use('/users', authenticated, users)
+
 router.delete('/followships/:userId', authenticated, userController.removeFollowing)
 router.post('/followships', authenticated, userController.addFollowing)
-router.post('/tweets/:id/like', authenticated, userController.addLike)
-router.post('/tweets/:id/unlike', authenticated, userController.removeLike)
-router.get('/tweets', authenticated, (req, res) => {
-  res.render('tweets')
-})
-router.use('/', authenticated, home)
+router.use('/admin', admin)
+router.use('/users', authenticated, users)
+router.use('/tweets', authenticated, tweets)
+
 router.use('/', generalErrorHandler)
 
 module.exports = router
