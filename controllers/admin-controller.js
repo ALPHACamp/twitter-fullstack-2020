@@ -1,10 +1,17 @@
 const { Tweet, User, Like } = require('../models')
 
+const helpers = require('../_helpers')
+
 const adminController = {
   signInPage: (req, res) => {
     res.render('admin/signin')
   },
   signIn: (req, res) => {
+    if (helpers.getUser(req).role === 'user') {
+      req.flash('error_messages', '帳號不存在')
+      req.logout()
+      res.redirect('/signin')
+    }
     req.flash('success_messages', 'Admin成功登入！')
     res.redirect('/admin/tweets')
   },
