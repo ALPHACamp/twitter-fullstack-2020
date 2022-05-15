@@ -4,6 +4,9 @@
 <span class="fw-bold me-1">{{this.name}}</span>
 <span class="text-secondary fw-bold">@{{this.account}}</span>
 <div>
-  <p>{{this.description}}</p>
+  <p>總推文數：{{this.tweetCount}}</p>
+  <p>總like數：{{this.likeCount}}</p>
+  <p>跟隨者：{{this.Followers.length}}</p>
+  <p>跟隨中：{{this.Followings.length}}</p>
 </div>
 {{/each}}
