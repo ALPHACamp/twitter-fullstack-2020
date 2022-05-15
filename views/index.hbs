@@ -25,13 +25,11 @@
       {{!-- TODO: 除了指定的按鈕以外(名字，回覆 icon，喜歡 icon)，點這個推文的其他地方都會到 /tweets/{{this.id}}/replies --}}
       <a href="/tweets/{{this.id}}/replies">查看這個 tweet</a>
       <div>
-        <span><a href="/tweets/{{this.id}}/repliesFake">回覆</a></span>
-        <span>回覆數量</span>
+        <span><a href="/tweets/{{this.id}}/repliesFake">{{ this.Replies }} + 回覆icon</a></span>
         {{!-- TODO:偵測喜歡狀態，切換路由 --}}
         <form action="/tweets/{{ this.id }}/like" method="POST">
-          <button type="submit">加入 LIKE icon</button>
+          <button type="submit">{{ this.Likes }} 喜歡數量</button>
         </form>
-        <span>喜歡數量</span>
       </div>
     </blockquote>
     <hr />
