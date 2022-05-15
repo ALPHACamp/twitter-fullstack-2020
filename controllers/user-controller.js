@@ -154,6 +154,54 @@ const userController = {
           })
       })
       .catch(err => next(err))
+  },
+  addLike: (req, res, next) => {
+    return Promise.all([
+      Tweet.findByPk(req.params.id, {
+        raw: true
+      }),
+      Like.findOne({
+        where: {
+          UserId: req.user.id,
+          TweetId: Number(req.params.id)
+        },
+        raw: true
+      })
+    ])
+      .then(([tweet, like]) => {
+        if (!tweet) throw new Error("Tweet didn't exist!")
+        if (tweet.UserId === req.user.id) throw new Error("Can't like your tweet!")
+        if (like) throw new Error('You have liked this tweet!')
+
+        return Like.create({
+          UserId: req.user.id,
+          TweetId: Number(req.params.id)
+        })
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+  removeLike: (req, res, next) => {
+    return Promise.all([
+      Tweet.findByPk(req.params.id, {
+        raw: true
+      }),
+      Like.findOne({
+        where: {
+          UserId: req.user.id,
+          TweetId: Number(req.params.id)
+        }
+      })
+    ])
+      .then(([tweet, like]) => {
+        if (!tweet) throw new Error("Tweet didn't exist!")
+        if (tweet.UserId === req.user.id) throw new Error("Can't unlike your tweet!")
+        if (!like) throw new Error("You haven't liked this tweet")
+
+        return like.destroy()
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
   }
 }
 
