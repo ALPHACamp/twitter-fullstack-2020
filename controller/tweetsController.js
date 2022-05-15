@@ -13,6 +13,7 @@ const tweetsController = {
           { model: Like, attributes: ['id'] }
         ]
       })
+
       const tweets = tweetList.map(tweet => {
         return tweet.get({ plain: true })
       }).map(tweet => {
@@ -38,6 +39,7 @@ const tweetsController = {
         }
       }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
       return res.render('index', { tweets, topUsers })
+
     } catch (err) {
       next(err)
     }

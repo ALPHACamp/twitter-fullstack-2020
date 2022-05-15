@@ -117,7 +117,8 @@ const userController = {
       return res.render('user', {
         user: paramsUser.toJSON(),
         isFollowed,
-        topUsers
+        topUsers,
+        page: 'user'
       })
     } catch (err) {
       next(err)
@@ -322,7 +323,8 @@ const userController = {
       })
       const data = currentUser.toJSON().Followings.map(cf => ({
         ...cf,
-        isFollowed:  helpers.getUser(req) && helpers.getUser(req).Followers && helpers.getUser(req).Followings.some(f => f.id === cf.id)
+        isFollowed: helpers.getUser(req) && helpers.getUser(req).Followers && helpers.getUser(req).Followings.some(f => f.id === cf.id)
+
       }))
       // console.log('data', data)
       
@@ -367,7 +369,10 @@ const userController = {
       })
       const data = currentUser.toJSON().Followers.map(cf => ({
         ...cf,
-        isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === cf.id)
+        isFollowed:
+          helpers.getUser(req) &&
+          helpers.getUser(req).Followings &&
+          helpers.getUser(req).Followings.some(f => f.id === cf.id)
       }))
 
       

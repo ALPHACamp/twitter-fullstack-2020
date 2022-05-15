@@ -1,0 +1,26 @@
+.tweet-text {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: #1c1c1c;
+}
+
+.tweets_tweet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 16px;
+
+  width: 937px;
+  height: 103px;
+}
+.tweet_btn {
+  position: absolute;
+
+  right: 0;
+
+  bottom: 0;
+}

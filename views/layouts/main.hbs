@@ -10,14 +10,18 @@
     integrity='sha512-usVBAd66/NpVNfBge19gws2j6JZinnca12rAe2l+d+QkLU9fiG02O1X8Q6hepIpr/EYKZvKx/I9WsnujJuOmBA=='
     crossorigin='anonymous' />
   <script src="https://kit.fontawesome.com/0cff0a3bbf.js" crossorigin="anonymous"></script>
-<link rel='stylesheet' href='/stylesheets/admin.css' />
+
+  <link rel='stylesheet' href='/stylesheets/shared.css' />
+  <link rel='stylesheet' href='/stylesheets/admin.css' />
+  <link rel='stylesheet' href='/stylesheets/login.css' />
+  <link rel='stylesheet' href='/stylesheets/tweets.css' />
 </head>
 
 <body>
-  <main class="flex-shrink-0" role="main">
-    <div class="album container pt-5">
-        {{> messages}}
-        {{{ body }}}
+  <main role='main'>
+    <div class='container mx-auto' style="width:50%;">
+      {{> messages}}
+      {{{ body }}}
     </div>
   </main>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js'
@@ -26,8 +30,6 @@
   <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js'
     integrity='sha512-a6ctI6w1kg3J4dSjknHj3aWLEbjitAXAjLDRUxo2wyYmDFRcz2RJuQr5M3Kt8O/TtUSp8n2rAyaXYy1sjoKmrQ=='
     crossorigin='anonymous'></script>
-
-
 </body>
 
 </html>
