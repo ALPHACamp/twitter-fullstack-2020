@@ -1,7 +1,7 @@
 const { User, Tweet, Reply, Followship } = require('../models')
 const bcrypt = require('bcrypt-nodejs')
 const { removeAllSpace, removeOuterSpace } = require('../_helpers')
-const { imgurFileHandler } = require('../_helpers')
+const helpers = require('../_helpers')
 
 const userController = {
   signUpPage: async (req, res, next) => {
@@ -72,9 +72,11 @@ const userController = {
   },
   getTweets: async (req, res, next) => {
     try {
-      const userId = Number(req.user.id) // 登入的使用者
-      const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
-      const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
+      // const userId = Number(req.user.id) // 登入的使用者
+      // const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
+      // const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
+      const userId = helpers.getUser(req).id // 登入的使用者
+      const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
       const [queryUserData, tweets, followships] = await Promise.all([
         // 這部分之後可以再優化 userId !== UserId 的時候才需要做
@@ -112,11 +114,11 @@ const userController = {
       // 獨立處理 queryUser 的資料
       const queryUser = queryUserData.toJSON()
       // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己
-      queryUser.isSelf = userId === UserId
+      queryUser.isSelf = queryUserId === userId
       // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
-      queryUser.isFollowed = req.user.Followings.some(
-        item => item.id === queryUser.id
-      )
+      queryUser.isFollowed = helpers
+        .getUser(req)
+        .Followings.some(item => item.id === queryUser.id)
 
       // 獨立處理 tweets 的資料
       tweets.forEach(function (tweet, index) {
@@ -146,9 +148,11 @@ const userController = {
   },
   getReplies: async (req, res, next) => {
     try {
-      const userId = Number(req.user.id) // 登入的使用者
-      const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
-      const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
+      // const userId = Number(req.user.id) // 登入的使用者
+      // const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
+      // const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
+      const userId = helpers.getUser(req).id // 登入的使用者
+      const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
       const [queryUserData, replies, followships] = await Promise.all([
         User.findByPk(queryUserId, {
@@ -183,11 +187,11 @@ const userController = {
       // 獨立處理 queryUser 的資料
       const queryUser = queryUserData.toJSON()
       // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己
-      queryUser.isSelf = userId === UserId
+      queryUser.isSelf = queryUserId === userId
       // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
-      queryUser.isFollowed = req.user.Followings.some(
-        item => item.id === queryUser.id
-      )
+      queryUser.isFollowed = helpers
+        .getUser(req)
+        .Followings.some(item => item.id === queryUser.id)
 
       // 獨立處理 replies 的資料
       replies.forEach(function (reply, index) {
@@ -217,9 +221,11 @@ const userController = {
   },
   getLikedTweets: async (req, res, next) => {
     try {
-      const userId = Number(req.user.id) // 登入的使用者
-      const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
-      const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
+      // const userId = Number(req.user.id) // 登入的使用者
+      // const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
+      // const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
+      const userId = helpers.getUser(req).id // 登入的使用者
+      const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
       const [queryUserData, followships] = await Promise.all([
         User.findByPk(queryUserId, {
@@ -244,11 +250,11 @@ const userController = {
       // 獨立處理 queryUser 的資料
       const queryUser = queryUserData.toJSON()
       // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己
-      queryUser.isSelf = userId === UserId
+      queryUser.isSelf = queryUserId === userId
       // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
-      queryUser.isFollowed = req.user.Followings.some(
-        item => item.id === queryUser.id
-      )
+      queryUser.isFollowed = helpers
+        .getUser(req)
+        .Followings.some(item => item.id === queryUser.id)
 
       // 獨立處理 rightColumn 的資料
       const followshipData = followships
@@ -272,9 +278,11 @@ const userController = {
   },
   getFollowers: async (req, res, next) => {
     try {
-      const userId = Number(req.user.id) // 登入的使用者
-      const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
-      const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
+      // const userId = Number(req.user.id) // 登入的使用者
+      // const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
+      // const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
+      const userId = helpers.getUser(req).id // 登入的使用者
+      const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
       const [queryUserData, followships] = await Promise.all([
         User.findByPk(queryUserId, {
@@ -282,7 +290,8 @@ const userController = {
             {
               model: User,
               as: 'Followers',
-              attributes: ['id', 'name', 'avatar', 'introduction']
+              attributes: ['id', 'name', 'avatar', 'introduction'],
+              order: [['createdAt', 'DESC']]
             },
             // { model: User, as: 'Followings' },
             { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
@@ -299,17 +308,17 @@ const userController = {
       // 獨立處理 queryUser 的資料
       const queryUser = queryUserData.toJSON()
       // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己
-      queryUser.isSelf = userId === UserId
+      queryUser.isSelf = queryUserId === userId
       // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
-      queryUser.isFollowed = req.user.Followings.some(
-        item => item.id === queryUser.id
-      )
+      queryUser.isFollowed = helpers
+        .getUser(req)
+        .Followings.some(item => item.id === queryUser.id)
       // 判斷 queryUser 的 followers 是否為已為 user 的 followings
       queryUser.Followers.forEach(user => {
-        user.isFollowed = req.user.Followings.some(
-          item => item.id === user.id
-        )
-        user.isSelf = user.id !== req.user.id
+        user.isFollowed = helpers
+          .getUser(req)
+          .Followings.some(item => item.id === user.id)
+        user.isSelf = user.id !== userId
       })
 
       // 獨立處理 rightColumn 的資料
@@ -334,9 +343,11 @@ const userController = {
   },
   getFollowings: async (req, res, next) => {
     try {
-      const userId = Number(req.user.id) // 登入的使用者
-      const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
-      const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
+      // const userId = Number(req.user.id) // 登入的使用者
+      // const UserId = Number(req.params.id) || userId // 如果有傳入 params.id 就帶入 params.id 如果沒有就帶入 user.id
+      // const queryUserId = userId !== UserId ? UserId : userId // 如果 userId !== UserId 代表正在瀏覽他人頁面
+      const userId = helpers.getUser(req).id // 登入的使用者
+      const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
       const [queryUserData, followships] = await Promise.all([
         User.findByPk(queryUserId, {
@@ -345,7 +356,8 @@ const userController = {
             {
               model: User,
               as: 'Followings',
-              attributes: ['id', 'name', 'avatar', 'introduction']
+              attributes: ['id', 'name', 'avatar', 'introduction'],
+              order: [['createdAt', 'DESC']]
             },
             { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
           ]
@@ -361,17 +373,17 @@ const userController = {
       // 獨立處理 queryUser 的資料
       const queryUser = queryUserData.toJSON()
       // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己
-      queryUser.isSelf = userId === UserId
+      queryUser.isSelf = queryUserId === userId
       // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
-      queryUser.isFollowed = req.user.Followings.some(
-        item => item.id === queryUser.id
-      )
+      queryUser.isFollowed = helpers
+        .getUser(req)
+        .Followings.some(item => item.id === queryUser.id)
       // 判斷 queryUser 的 followers 是否為已為 user 的 followings
       queryUser.Followings.forEach(user => {
-        user.isFollowed = req.user.Followings.some(
-          item => item.id === user.id
-        )
-        user.isSelf = user.id !== req.user.id
+        user.isFollowed = helpers
+          .getUser(req)
+          .Followings.some(item => item.id === user.id)
+        user.isSelf = user.id !== userId
       })
 
       const followshipData = followships
@@ -395,18 +407,19 @@ const userController = {
   },
   addFollowing: async (req, res, next) => {
     try {
-      const userId = Number(req.user.id)
-      const queryUserId = Number(req.body.UserId) // other user
-      if (userId === queryUserId) throw new Error("You can't follow yourself!")
+      const userId = Number(helpers.getUser(req).id)
+      const queryUserId = Number(req.body.id) // other user
+      if (userId === queryUserId) throw new Error('您不能追蹤自己 !')
 
       const user = await User.findByPk(userId, {
         include: [{ model: User, as: 'Followings', attributes: ['id'] }]
       })
       if (!user) throw new Error('使用者不存在 !')
 
-      const data = user.toJSON()
-      const followingUserId = data.Followings.map(user => user.id)
+      const queryUser = await User.findByPk(queryUserId, { raw: true })
+      if (!queryUser) throw new Error('使用者不存在 !')
 
+      const followingUserId = user.Followings.map(user => user.id)
       if (followingUserId.includes(queryUserId)) {
         throw new Error('您已經追蹤過此使用者了 !')
       }
@@ -420,10 +433,10 @@ const userController = {
   },
   removeFollowing: async (req, res, next) => {
     try {
-      const userId = Number(req.user.id)
+      const userId = Number(helpers.getUser(req).id)
       const queryUserId = Number(req.params.id) // other user
       if (userId === queryUserId) {
-        throw new Error("You can't unfollow yourself!")
+        throw new Error('您不能取消追蹤自己 !')
       }
 
       const user = await User.findByPk(userId, {
@@ -431,12 +444,18 @@ const userController = {
       })
       if (!user) throw new Error('使用者不存在 !')
 
-      const data = user.toJSON()
-      const followingUserId = data.Followings.map(user => user.id)
+      const queryUser = await User.findByPk(queryUserId, { raw: true })
+      if (!queryUser) throw new Error('使用者不存在 !')
 
+      const followingUserId = user.Followings.map(user => user.id)
       if (!followingUserId.includes(queryUserId)) {
         throw new Error('您還未追蹤此使用者 !')
       }
+      // const data = user.toJSON()
+      // const followingUserId = data.Followings.map(user => user.id)
+      // if (!followingUserId.includes(queryUserId)) {
+      //   throw new Error('您還未追蹤此使用者 !')
+      // }
 
       await Followship.destroy({
         where: { followerId: userId, followingId: queryUserId }
