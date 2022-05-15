@@ -1,47 +1,29 @@
-<div class="card m-2" style="  background: #fafafb;
-  border-radius: 16px;">
-  <div class="card-body py-0 px-2 mt-1 ml-2" style="font-weight:bold; font-size: 24px;">
-    Popular
-  </div>
 
-  {{#each topUsers}}
-  <hr class="m-2">
-  <div class="card-body py-1">
-    <div class="row " style="padding-left:11px; padding-right:5px">
+<div class="col-md-3">
+  <h4>Popular</h4>
+    {{#each topUsers}}
+    <blockquote class="blockquote mb-0">
+      <img src="{{ this.avatar }}" alt="user-picture" class="rounded-circle" style="width: 32px; height: 32px;">
+      <span><a href="/users/{{ this.id }}">{{ this.name }}</a></span>
+      <span> @{{ this.account }}</span>
 
-      <div class="col-2 text-center" style="padding-left:0px">
-        <a href="/users/{{user.id}}/tweets">
-          <img src="{{this.avatar}}" class="avatar_img"></img>
-        </a>
-      </div>
-
-      <div class="col-6 " style=" padding-left:6px">
-        <a href="/users/{{this.id}}/tweets" style='text-decoration: none;'>
-          <p class="m-0" style="font-size:16px;color: black; font-weight:700;">{{this.name}}</p>
-        </a>
-        <p class="m-0" style="font-size:14px;font-weight:500;color:gray;">@{{this.account}}</p>
-      </div>
-
-
-      {{#ifCond this.id ../logInUser.id}}
-      {{else}}
-      {{#if isFollowed}}
-      <div class="col-4 my-1 d-flex flex-row-reverse align-items-center"
-        style="text-align:right; margin:0px; padding:0px;">
-        <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="margin: 0px;padding:0px;">
-          <button class="btn follow_btn">正在跟隨</button>
-        </form>
-      </div>
-      {{else}}
-      <div class="col-4 my-1 d-flex flex-row-reverse align-items-center"
-        style="text-align:right; margin:0px; padding:0px;">
-        <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
-          <button type="submit" class="btn follower_btn" name="id" value="{{this.id}}">跟隨</button>
-        </form>
-      </div>
-      {{/if}}
+    {{!-- 是本人，不顯示追蹤按鈕 --}}
+      {{#ifCond ../logInUser.id this.id}}
+        {{else}}
+        {{!--  isFollowed 判斷 --}}
+        {{#if isFollowed}}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+            <button type="submit" class="btn btn-danger">取消追蹤</button>
+          </form>
+        {{else}}
+          <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
+            <button type="submit" class="btn btn-primary">追蹤</button>
+          </form>
+        {{/if}}
       {{/ifCond}}
-    </div>
-  </div>
-  {{/each}}
+        {{/each}}
+        </blockquote>
+        <hr />
+
 </div>
+

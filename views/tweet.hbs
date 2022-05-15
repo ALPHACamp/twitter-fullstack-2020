@@ -5,23 +5,24 @@
     <div>
       {{!-- 查看單篇推文回覆列表 --}}
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a href="javascript:history.back()"></a>
-        <span>回覆</span>
+        <a href="/tweets"><span>←推文</span></a>
+        
       </nav>
     </div>
+
     <div>
       <blockquote class="blockquote mb-0">
-        <img src="{{ user.avatar }}" alt="user-picture" class="rounded-circle" style="width: 64px; height:64px;">
-        <span><a href="/users/{{ user.Id }}">{{ user.name }}</a></span>
-        <span class="blockquote-footer"> @{{ user.account }}</span>
-        <span>{{ tweet.createdAt }}</span>
+        <img src="{{ tweet.User.avatar }}" alt="user-picture" class="rounded-circle" style="width: 64px; height:64px;">
+        <span><a href="/users/{{ tweet.User.id }}">{{ tweet.User.name }}</a></span>
+        <span class="blockquote-footer"> @{{ tweet.User.account }}</span>
+        <span>{{ relativeTimeFromNow  tweet.createdAt }}</span>
         <p>{{ tweet.description }}</p>
         <div>
-          <span><a href="/tweets/{{tweet.id}}/replies">回覆</a></span>
-          <span>回覆數量</span>
+          <span><a href="/tweets/{{tweet.id}}/repliesFake">{{ tweet.Replies }} + 回覆icon</a></span>
           {{!-- TODO:偵測喜歡狀態，切換路由 --}}
-          <span><a href="/tweets/{{tweet.id}}/like">喜歡</a></span>
-          <span>喜歡數量</span>
+          <form action="/tweets/{{ tweet.id }}/like" method="POST">
+            <button type="submit">{{ tweet.Likes }} 喜歡數量</button>
+          </form>
         </div>
       </blockquote>
       <hr />
@@ -34,12 +35,12 @@
       <span>{{ relativeTimeFromNow this.createdAt }}</span>
       <p>{{ this.comment }}</p>
       <div>
-        {{!-- TODO: 確認是回覆到同一個串還是原本的 twitter 行為(回在該回覆的下面) --}}
-        <span><a href="/tweets/{{this.id}}/replies">回覆</a></span>
-        <span>回覆數量</span>
-        {{!-- TODO:偵測喜歡狀態，切換路由 --}}
-        <span><a href="/tweets/{{this.id}}/like">喜歡</a></span>
-        <span>喜歡數量</span>
+        {{!-- 延伸挑戰 --}}
+        {{!-- <span><a href="/tweets/{{this.id}}/replies">回覆</a></span> --}}
+        <span>回覆icon</span>
+        {{!-- 延伸挑戰 --}}
+        {{!-- <span><a href="/tweets/{{this.id}}/like">喜歡</a></span> --}}
+        <span>喜歡icon</span>
       </div>
     </blockquote>
     <hr />

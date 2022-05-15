@@ -37,6 +37,26 @@
             </div>
           </div>
         </div>
+
+        <button id="submit-btn" class="btn btn-primary">推文</button>
+      </form>
+    </div>
+    {{#each tweets}}
+    <blockquote class="blockquote mb-0">
+      <img src="{{ this.User.avatar }}" alt="user-picture" class="rounded-circle" style="width: 64px; height:64px;">
+      <span><a href="/users/{{ this.UserId }}">{{ this.User.name }}</a></span>
+      <span class="blockquote-footer"> @{{ this.User.account }}</span>
+      <span>{{ relativeTimeFromNow this.createdAt }}</span>
+      <p>{{ this.description }}</p>
+      {{!-- TODO: 除了指定的按鈕以外(名字，回覆 icon，喜歡 icon)，點這個推文的其他地方都會到 /tweets/{{this.id}}/replies --}}
+      <a href="/tweets/{{this.id}}/replies">查看這個 tweet</a>
+      <div>
+        <span><a href="/tweets/{{this.id}}/repliesFake">{{ this.Replies }} + 回覆icon</a></span>
+        {{!-- TODO:偵測喜歡狀態，切換路由 --}}
+        <form action="/tweets/{{ this.id }}/like" method="POST">
+          <button type="submit">{{ this.Likes }} 喜歡數量</button>
+        </form>
+
       </div>
 
       {{!-- 推文列 --}}

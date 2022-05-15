@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { Tweet, User, Like, Reply, Followship } = require('../models')
 const helpers = require('../_helpers')
+
 const userController = {
   signUpPage: async (req, res) => {
     try {
@@ -98,10 +99,25 @@ const userController = {
       })
       if (!paramsUser) throw new Error("user didn't exist!")
       const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
-      // console.log('paramsUser.toJSON()', paramsUser.toJSON())
+
+      // 右側Top10User
+      const users = await User.findAll({
+        where: { isAdmin: false },
+        attributes: ['id', 'name', 'account', 'avatar'],
+        include: { model: User, as: 'Followers' }
+      })
+      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
+        return {
+          ...u,
+          Followers: u.Followers.length,
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+        }
+      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
+
       return res.render('user', {
         user: paramsUser.toJSON(),
         isFollowed,
+        topUsers,
         page: 'user'
       })
     } catch (err) {
@@ -132,14 +148,26 @@ const userController = {
         ]
       })
       if (!user) throw new Error("user didn't exist!")
-      // isLiked 判斷式先保留
-      // const tweets = user.toJSON().Likes.map(tweet => ({
-      //   ...tweet,
-      //   isLiked: true
-      // }))
+      const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
+
+      // 右側topUsers, sort by跟隨者follower數量 & isFollowed 按鈕
+      const users = await User.findAll({
+        where: { isAdmin: false },
+        attributes: ['id', 'name', 'account', 'avatar'],
+        include: { model: User, as: 'Followers' }
+      })
+      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
+        return {
+          ...u,
+          Followers: u.Followers.length,
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+        }
+      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
       return res.render('likes', {
         user: user.toJSON(),
-        tweets: user.toJSON().Likes
+        tweets: user.toJSON().Likes,
+        isFollowed,
+        topUsers
       })
     } catch (err) {
       next(err)
@@ -172,8 +200,25 @@ const userController = {
         ]
       })
       if (!user) throw new Error("user didn't exist!")
+      const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
+
+      // 右側topUsers, sort by跟隨者follower數量 & isFollowed 按鈕
+      const users = await User.findAll({
+        where: { isAdmin: false },
+        attributes: ['id', 'name', 'account', 'avatar'],
+        include: { model: User, as: 'Followers' }
+      })
+      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
+        return {
+          ...u,
+          Followers: u.Followers.length,
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+        }
+      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
       return res.render('replies', {
-        user: user.toJSON()
+        user: user.toJSON(),
+        isFollowed,
+        topUsers
       })
     } catch (err) {
       next(err)
@@ -278,16 +323,30 @@ const userController = {
       })
       const data = currentUser.toJSON().Followings.map(cf => ({
         ...cf,
-        isFollowed:
-          helpers.getUser(req) &&
-          helpers.getUser(req).Followers &&
-          helpers.getUser(req).Followers.some(f => f.id === cf.id)
+        isFollowed: helpers.getUser(req) && helpers.getUser(req).Followers && helpers.getUser(req).Followings.some(f => f.id === cf.id)
+
       }))
-      console.log('data', data)
+      // console.log('data', data)
+      
+      // 右側Top10User
+      const users = await User.findAll({
+        where: { isAdmin: false },
+        attributes: ['id', 'name', 'account', 'avatar'],
+        include: { model: User, as: 'Followers' }
+      })
+      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
+        return {
+          ...u,
+          Followers: u.Followers.length,
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+        }
+      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
+
       return res.render('followings', {
         currentUser: currentUser.toJSON(),
         followings: data,
-        currentUserId
+        currentUserId,
+        topUsers
       })
     } catch (err) {
       next(err)
@@ -315,10 +374,27 @@ const userController = {
           helpers.getUser(req).Followings &&
           helpers.getUser(req).Followings.some(f => f.id === cf.id)
       }))
+
+      
+      // 右側Top10User
+      const users = await User.findAll({
+        where: { isAdmin: false },
+        attributes: ['id', 'name', 'account', 'avatar'],
+        include: { model: User, as: 'Followers' }
+      })
+      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
+        return {
+          ...u,
+          Followers: u.Followers.length,
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+        }
+      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
+
       return res.render('followers', {
         currentUser: currentUser.toJSON(),
         followers: data,
-        currentUserId
+        currentUserId,
+        topUsers
       })
     } catch (err) {
       next(err)

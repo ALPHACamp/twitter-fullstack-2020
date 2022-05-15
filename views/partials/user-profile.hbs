@@ -6,8 +6,35 @@
 {{!-- 是本人，顯示編輯個人資料按鈕 --}}
   {{#ifCond logInUser.id user.id}}
     <form action="/users/{{user.id}}/edit" method="GET">
-      <button type="submit">是本人才看的到的神奇按鈕</button>
+      <button type="submit">編輯個人資料</button>
     </form>
+
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      編輯個人資料
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Understood</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   {{else}}
 {{!-- 不是本人，顯示追蹤判斷按鈕 --}}
     {{!--  isFollowed 判斷 --}}

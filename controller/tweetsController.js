@@ -1,31 +1,72 @@
-const { Tweet, User, Reply } = require('../models')
+const { Tweet, User, Reply, Like } = require('../models')
 const helpers = require('../_helpers')
+
 const tweetsController = {
   getTweets: async (req, res, next) => {
-    // TODO: like 與 replies 數量
+    // like 與 replies 數量
     try {
-      const tweets = await Tweet.findAll({
-        include: {
-          model: User,
-          attributes: ['name', 'account', 'avatar']
-        },
-        raw: true,
-        nest: true
+      const tweetList = await Tweet.findAll({
+        order: [['createdAt', 'DESC']],
+        include: [
+          { model: User, attributes: ['name', 'account', 'avatar'] },
+          { model: Reply, attributes: ['id'] },
+          { model: Like, attributes: ['id'] }
+        ]
       })
-      const topUsers = await User.findAll({ raw: true })
-      // TODO: topUsers 尚未完成，需要根據 like 術與 follower 數相加
-      return res.render('index', { tweets, topUsers, page: 'tweets' })
+
+      const tweets = tweetList.map(tweet => {
+        return tweet.get({ plain: true })
+      }).map(tweet => {
+        return {
+          ...tweet,
+          Replies: tweet.Replies.length,
+          Likes: tweet.Likes.length
+        }
+      })
+      // 右側topUsers, sort by跟隨者follower數量 & isFollowed 按鈕
+      const users = await User.findAll({
+        where: { isAdmin: false },
+        attributes: ['id', 'name', 'account', 'avatar'],
+        include: { model: User, as: 'Followers' }
+      })
+      const topUsers = users.map(user => {
+        return user.get({ plain: true })
+      }).map(u => {
+        return {
+          ...u,
+          Followers: u.Followers.length,
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+        }
+      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
+      return res.render('index', { tweets, topUsers })
+
     } catch (err) {
       next(err)
     }
   },
   getTweet: async (req, res, next) => {
-    const tweetId = Number(req.params.tweetId)
-
     try {
+      const { tweetId } = req.params
       const tweet = await Tweet.findByPk(tweetId, {
-        raw: true
+        include: [
+          { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
+          { model: Reply, attributes: ['id'] },
+          { model: Like, attributes: ['id'] }
+        ]
       })
+      const result = tweet.get({ plain: true })
+      result.Replies = tweet.Replies.length
+      result.Likes = tweet.Likes.length
+      // const tweet = tweetList.map(tweet => {
+      //   return tweet.get({ plain: true })
+      // }).map(tweet => {
+      //   return {
+      //     ...tweet,
+      //     Replies: tweet.Replies.length,
+      //     Likes: tweet.Likes.length
+      //   }
+      // })
+      // console.log('result', result)
       const replies = await Reply.findAll({
         where: { tweetId },
         include: {
@@ -35,8 +76,22 @@ const tweetsController = {
         raw: true,
         nest: true
       })
-      const topUsers = await User.findAll({ raw: true })
-      return res.render('tweet', { tweet, replies, topUsers })
+
+      // 右側topUsers, sort by跟隨者follower數量 & isFollowed 按鈕
+      const users = await User.findAll({
+        where: { isAdmin: false },
+        attributes: ['id', 'name', 'account', 'avatar'],
+        include: { model: User, as: 'Followers' }
+      })
+      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
+        return {
+          ...u,
+          Followers: u.Followers.length,
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+        }
+      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
+
+      return res.render('tweet', { tweet: result, replies, topUsers })
     } catch (err) {
       next(err)
     }
