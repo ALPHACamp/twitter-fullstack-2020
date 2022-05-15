@@ -40,6 +40,43 @@
   background-color: #FEF5E7;
 }
 
+.user-following-button {
+  margin: 0 0;
+  height: 40px;
+  width: 96px;
+  left: 0px;
+  top: 0px;
+  border-radius: 50px;
+  padding: 8px, 16px, 8px, 16px;
+  background: #FF6600;
+  border: #E6ECF0;
+  position: absolute;
+  top: 216px;
+  left: 460px;
+}
+
+.user-follower-button {
+  color: #FF6600;
+  margin: 0 0;
+  height: 40px;
+  width: 76px;
+  left: 0px;
+  top: 0px;
+  border-radius: 50px;
+  padding: 8px, 16px, 8px, 16px;
+  background: white;
+  border: #FF6600;
+  border-width: 1px;
+  border-style: solid;
+  position: absolute;
+  top: 216px;
+  left: 465px;
+}
+
+.user-follower-button:hover {
+  background-color: #FEF5E7;
+}
+
 .follower-button {
   color: #FF6600;
   margin: 0 0;
@@ -68,7 +105,7 @@
   border-radius: 50px;
   padding: 8px, 16px, 8px, 16px;
   background: #FF6600;
-  border: #E6ECF0
+  border: #E6ECF0;
 }
 
 .follower:hover {
