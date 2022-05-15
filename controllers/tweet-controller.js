@@ -1,4 +1,4 @@
-const { Tweet, User, Reply } = require('../models')
+const { Tweet, User, Reply, Like } = require('../models')
 const helper = require('../_helpers')
 
 const tweetController = {
@@ -57,6 +57,32 @@ const tweetController = {
       })
       if (!tweet) throw new Error('推文不成功')
       res.redirect('/tweets')
+    } catch (err) {
+      next(err)
+    }
+  },
+  likeTweets: async (req, res, next) => {
+    try {
+      const UserId = helper.getUser(req).id
+      const TweetId = req.params.tweetId
+      if (!TweetId) throw new Error('該篇貼文不存在，請重新整理')
+      const like = await Like.create({ UserId, TweetId })
+      return res.status(302).json({ status: 'success', like })
+      // res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
+  },
+  unlikeTweets: async (req, res, next) => {
+    try {
+      const UserId = helper.getUser(req).id
+      const TweetId = req.params.tweetId
+      if (!TweetId) throw new Error('該篇貼文不存在，請重新整理')
+      const unlike = await Like.destroy({
+        where: { UserId, TweetId }
+      })
+      return res.status(302).json({ status: 'success', unlike })
+      // res.redirect('back')
     } catch (err) {
       next(err)
     }
