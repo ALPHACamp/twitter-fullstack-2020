@@ -226,7 +226,7 @@ h5 {
     border-top: 1px solid #e6ecf0;
     padding: 16px 30px 17px 23px ;
 }
-.tweet .avatar, .follow-tweet .avatar {
+.tweet .avatar, .follow-tweet .avatar, .modal-body .avatar {
     width: 50px;
     height: 50px;
     margin-right: 8px;
@@ -329,7 +329,7 @@ a:hover > .user-name, .reply-text a:hover, .follow-tweet a:hover .user-name{
 .follow-tweet .secondary-text{
     color: #92929d;
 }
-.follow-tweet button, .home-post-btn{
+.follow-tweet button, .home-post-btn, .side-post-btn{
     font-size: 1rem !important;
 }
 
@@ -340,7 +340,7 @@ a:hover > .user-name, .reply-text a:hover, .follow-tweet a:hover .user-name{
 .user-tweets-header h4{
     font-weight: 700;    
 }
-.tweet textarea{
+.tweet textarea, .modal-body textarea{
     width: 100%;
     resize: none;
     border: 0;
@@ -348,13 +348,19 @@ a:hover > .user-name, .reply-text a:hover, .follow-tweet a:hover .user-name{
     margin-top: 6px;
     font-size: 16px;
 }
-.tweet textarea::placeholder{
+.modal-body textarea {
+    padding-left: 3px;
+    margin-top: 22px;
+    min-height: 140px;
+    margin-bottom: 10px;
+}
+.tweet textarea::placeholder, .modal-body textarea::placeholder{
     font-size: 18px;
     font-weight: 700;
     color: #6C757D !important;
     border-radius: 5px;
 }
-.tweet textarea:hover, .tweet textarea:focus{
+textarea:hover, textarea:focus{
     outline: 0;
     background-color: #FAFAFB;
 }
@@ -364,4 +370,22 @@ a:hover > .user-name, .reply-text a:hover, .follow-tweet a:hover .user-name{
 }
 .home-post-btn{
     margin: 0 25px 0 10px;
+}
+.modal-content{
+    border-radius: 14px;
+    min-width: 634px;
+}
+.modal-header{
+    justify-content: start;
+    padding: 5px;
+}
+.modal-body{
+    padding-top: 0;
+    padding-left: 24px;
+}
+.modal-body a{
+    margin-top: 6px;
+}
+.side-post-btn {
+    margin: 0 0 0 10px;
 }

@@ -5,26 +5,54 @@
       <div class='user-header d-flex flex-row align-items-center'>
         <a href="#"><i class="back-arrow"></i></a>
         <div class="header-text d-flex flex-column">
-          <h5>{{user.name}}</h5>
-          <span class="tweets-count secondary">{{tweets.length}} 推文</span>
+          <h5>{{queryUser.name}}</h5>
+          <span class="tweets-count secondary">{{queryUser.Tweets.length}} 推文</span>
         </div>
       </div>
       <div class='user-banner'>
-        <img class="cover" src='{{user.cover}}' alt='background' width='100%' height='20%'/>
-        <img class='avatar' src='{{user.avatar}}' alt='avatar' width='20%' height='10%'/>
+        <img class="cover" src='{{queryUser.cover}}' alt='background' width='100%' height='20%'/>
+        <img class='avatar' src='{{queryUser.avatar}}' alt='avatar' width='20%' height='10%'/>
         <div class="buttons d-flex justify-content-end">
-          <button class='btn btn-outline' type='submit'>編輯個人資料</button>
+          {{#if queryUser.isSelf}}
+            <button
+              class='btn rounded-pill edit-button'
+              style='border: 1px solid #FF6600; color:#FF6600;'
+            >編輯個人資料</button>
+          {{else}}
+            <div class='row'>
+              <button class='btn rounded-pill message-button col'>私訊</button>
+              <button class='btn rounded-pill ring-button col'>小鈴鐺</button>
+              {{#if queryUser.isFollowed}}
+                <form action='/followships/{{queryUser.id}}?_method=DELETE' method='POST' class="col">
+                  <button
+                    type='submit'
+                    class='btn rounded-pill text-light'
+                    style='background-color:#FF6600;'
+                  >正在追隨</button>
+                </form>
+                {{else}}
+                <form action='/followships' method='POST' class="col">
+                  <input type='hidden' name='id' value='{{queryUser.id}}'/>
+                  <button
+                    type='submit'
+                    class='btn rounded-pill bg-light'
+                    style='border-color:#FF6600; color:#FF6600'
+                  >跟隨</button>
+                </form>
+              {{/if}}
+            </div>
+          {{/if}}
         </div>
       </div>
       <div class="user-info">
-        <h5>{{user.name}}</h5>
-        <div class='secondary-text'>@{{user.account}}</div>
-        <p class='intro'>{{user.introduction}}</p>
-        <a href="/users/{{user.id}}/followings">
-          {{user.Followings.length}} 個<span class="secondary">跟隨中</span>
+        <h5>{{queryUser.name}}</h5>
+        <div class='secondary-text'>@{{queryUser.account}}</div>
+        <p class='intro'>{{queryUser.introduction}}</p>
+        <a href="/users/{{queryUser.id}}/followings">
+          {{queryUser.Followings.length}} 個<span class="secondary">跟隨中</span>
         </a>
-        <a href="/users/{{user.id}}/followers">
-          {{user.Followers.length}} 位<span class="secondary">跟隨者</span>
+        <a href="/users/{{queryUser.id}}/followers">
+          {{queryUser.Followers.length}} 位<span class="secondary">跟隨者</span>
         </a>
       </div>
       {{> user-tabs}}

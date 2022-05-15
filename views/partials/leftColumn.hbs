@@ -10,52 +10,25 @@
 </div>
 
 {{! 以下為推文modal }}
-<div
-  class='modal fade'
-  id='postModal'
-  tabindex='-1'
-  aria-labelledby='postModalLabel'
-  aria-hidden='true'
->
+<div class='modal fade' id='postModal' tabindex='-1' aria-labelledby='postModalLabel' aria-hidden='true'>
   <div class='modal-dialog'>
     <div class='modal-content'>
       <div class='modal-header'>
-        <button
-          type='button'
-          class='btn-close'
-          data-bs-dismiss='modal'
-          aria-label='Close'
-        ></button>
+        <a class='btn-close' data-bs-dismiss='modal' aria-label='Close'></a>
       </div>
       <div class='modal-body'>
-        <form action='/tweets' method='POST'>
-          <div class='mb-3'>
-            <img
-              class='mr-2 rounded-circle'
-              src='{{user.avatar}}'
-              alt='{{user.name}}'
-              style='width: 50px; height: 50px'
-            />
-            <textarea
-              class='w-100 side-post-description'
-              id='description'
-              name='description'
-              placeholder='有什麼新鮮事？'
-              maxlength='140'
-            ></textarea>
+        <form action='/tweets' method='POST' class="d-flex flex-column justify-content-between mb-0">
+          <div class="d-flex align-items-start">
+            <a href="/users/{{user.id}}/tweets">
+              <img class="avatar" src='{{user.avatar}}' alt='{{user.name}}\' s avatar'>
+            </a>
+            <textarea class='side-post-description' id='description' name='description' placeholder='有什麼新鮮事？' maxlength='140'></textarea>
           </div>
-          <div>
-            <span class='side-post-number'>0 </span>
-            <span>/ 140</span>
+          <div class="d-flex justify-content-end align-items-center">
+            <span class='side-post-number secondary-text'>0 </span>
+            <span class="secondary-text">/ 140</span>
+            <button class="btn btn-primary side-post-btn" type='submit' data-bs-toggle='modal' data-bs-target='#postModal' disabled>推文</button>
           </div>
-          <button
-            class='btn btn-sm rounded-pill text-light side-post-btn float-end'
-            type='submit'
-            data-bs-toggle='modal'
-            data-bs-target='#postModal'
-            style='background-color:#FF6600;'
-            disabled
-          >推文</button>
         </form>
       </div>
     </div>

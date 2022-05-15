@@ -1,7 +1,7 @@
-const { User, Tweet, Reply, sequelize } = require('../models')
+const { User, Tweet, Reply, Followship } = require('../models')
 const bcrypt = require('bcrypt-nodejs')
 const { removeAllSpace, removeOuterSpace } = require('../_helpers')
-const { imgurFileHandler } = require('../_helpers')
+const helpers = require('../_helpers')
 
 const userController = {
   signUpPage: async (req, res, next) => {
@@ -72,12 +72,16 @@ const userController = {
   },
   getTweets: async (req, res, next) => {
     try {
-      const userId = Number(req.params.id)
-      const [user, tweets, followships] = await Promise.all([
-        User.findByPk(userId, {
+      const userId = helpers.getUser(req).id // 登入的使用者
+      const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
+
+      const [queryUserData, tweets, followships] = await Promise.all([
+        // 這部分之後可以再優化 userId !== UserId 的時候才需要做
+        User.findByPk(queryUserId, {
           include: [
-            { model: User, as: 'Followers' },
-            { model: User, as: 'Followings' }
+            { model: User, as: 'Followers', attributes: ['id'] }, // 提供給 Followers 的數量計算
+            { model: User, as: 'Followings', attributes: ['id'] }, // 提供給 Followings 的數量計算
+            { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
           ]
         }),
         Tweet.findAll({
@@ -85,10 +89,15 @@ const userController = {
             Reply,
             {
               model: User,
-              as: 'LikedUsers'
+              attributes: ['id', 'name', 'account', 'avatar']
+            },
+            {
+              model: User,
+              as: 'LikedUsers',
+              attributes: ['id']
             }
           ],
-          where: { userId },
+          where: { UserId: queryUserId }, // 這裏是帶入 queryUserId 搜尋
           order: [['createdAt', 'DESC']]
         }),
         User.findAll({
@@ -97,23 +106,35 @@ const userController = {
           where: [{ role: 'user' }]
         })
       ])
-      if (!user) throw new Error("User didn't exist!")
+      if (!queryUserData) throw new Error('使用者不存在 !')
 
+      // 獨立處理 queryUser 的資料
+      const queryUser = queryUserData.toJSON()
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己
+      queryUser.isSelf = queryUserId === userId
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
+      queryUser.isFollowed = helpers
+        .getUser(req)
+        .Followings.some(item => item.id === queryUser.id)
+
+      // 獨立處理 tweets 的資料
       tweets.forEach(function (tweet, index) {
         this[index] = { ...tweet.toJSON() }
       }, tweets)
 
-      const followshipData = followships.map(followship => ({
-        ...followship.toJSON(),
-        followerCounts: followship.Followers.length,
-        isFollowed: followship.Followers.some(item => item.id === userId),
-        isSelf: (userId !== followship.id)
-      }))
+      // 獨立處理 rightColumn 的資料
+      const followshipData = followships
+        .map(followship => ({
+          ...followship.toJSON(),
+          followerCounts: followship.Followers.length,
+          isFollowed: followship.Followers.some(item => item.id === userId),
+          isSelf: userId !== followship.id
+        }))
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
       res.render('user', {
-        user: user.toJSON(),
+        queryUser,
         tweets,
         followships: followshipData,
         tab: 'getTweets'
@@ -124,18 +145,29 @@ const userController = {
   },
   getReplies: async (req, res, next) => {
     try {
-      const userId = Number(req.params.id)
+      const userId = helpers.getUser(req).id // 登入的使用者
+      const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
-      const [user, replies, followships] = await Promise.all([
-        User.findByPk(userId, {
+      const [queryUserData, replies, followships] = await Promise.all([
+        User.findByPk(queryUserId, {
           include: [
-            { model: User, as: 'Followers' },
-            { model: User, as: 'Followings' }
+            { model: User, as: 'Followers', attributes: ['id'] }, // 提供給 Followers 的數量計算
+            { model: User, as: 'Followings', attributes: ['id'] }, // 提供給 Followings 的數量計算
+            { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
           ]
         }),
         Reply.findAll({
-          where: { userId },
-          include: [{ model: Tweet, include: User }],
+          where: { UserId: queryUserId }, // 這裏是帶入 queryUserId 搜尋
+          include: [
+            {
+              model: User,
+              attributes: ['id', 'name', 'account', 'avatar']
+            },
+            {
+              model: Tweet,
+              include: [{ model: User, attributes: ['id', 'account'] }]
+            }
+          ],
           order: [['createdAt', 'DESC']]
         }),
         User.findAll({
@@ -144,23 +176,35 @@ const userController = {
           where: [{ role: 'user' }]
         })
       ])
-      if (!user) throw new Error("User didn't exist!")
+      if (!queryUserData) throw new Error('使用者不存在 !')
 
+      // 獨立處理 queryUser 的資料
+      const queryUser = queryUserData.toJSON()
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己
+      queryUser.isSelf = queryUserId === userId
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
+      queryUser.isFollowed = helpers
+        .getUser(req)
+        .Followings.some(item => item.id === queryUser.id)
+
+      // 獨立處理 replies 的資料
       replies.forEach(function (reply, index) {
         this[index] = { ...reply.toJSON() }
       }, replies)
 
-      const followshipData = followships.map(followship => ({
-        ...followship.toJSON(),
-        followerCounts: followship.Followers.length,
-        isFollowed: followship.Followers.some(item => item.id === userId),
-        isSelf: (userId !== followship.id)
-      }))
+      // 獨立處理 rightColumn 的資料
+      const followshipData = followships
+        .map(followship => ({
+          ...followship.toJSON(),
+          followerCounts: followship.Followers.length,
+          isFollowed: followship.Followers.some(item => item.id === userId),
+          isSelf: userId !== followship.id
+        }))
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
       res.render('user', {
-        user: user.toJSON(),
+        queryUser,
         replies,
         followships: followshipData,
         tab: 'getReplies'
@@ -171,13 +215,14 @@ const userController = {
   },
   getLikedTweets: async (req, res, next) => {
     try {
-      const userId = Number(req.params.id)
+      const userId = helpers.getUser(req).id // 登入的使用者
+      const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
-      const [user, followships] = await Promise.all([
-        User.findByPk(userId, {
+      const [queryUserData, followships] = await Promise.all([
+        User.findByPk(queryUserId, {
           include: [
-            { model: User, as: 'Followers' },
-            { model: User, as: 'Followings' },
+            { model: User, as: 'Followers', attributes: ['id'] }, // 提供給 Followers 的數量計算
+            { model: User, as: 'Followings', attributes: ['id'] }, // 提供給 Followings 的數量計算
             {
               model: Tweet,
               as: 'LikedTweets',
@@ -191,19 +236,30 @@ const userController = {
           where: [{ role: 'user' }]
         })
       ])
-      if (!user) throw new Error("User didn't exist!")
+      if (!queryUserData) throw new Error("User didn't exist!")
 
-      const followshipData = followships.map(followship => ({
-        ...followship.toJSON(),
-        followerCounts: followship.Followers.length,
-        isFollowed: followship.Followers.some(item => item.id === userId),
-        isSelf: (userId !== followship.id)
-      }))
+      // 獨立處理 queryUser 的資料
+      const queryUser = queryUserData.toJSON()
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己
+      queryUser.isSelf = queryUserId === userId
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
+      queryUser.isFollowed = helpers
+        .getUser(req)
+        .Followings.some(item => item.id === queryUser.id)
+
+      // 獨立處理 rightColumn 的資料
+      const followshipData = followships
+        .map(followship => ({
+          ...followship.toJSON(),
+          followerCounts: followship.Followers.length,
+          isFollowed: followship.Followers.some(item => item.id === userId),
+          isSelf: userId !== followship.id
+        }))
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
       res.render('user', {
-        user: user.toJSON(),
+        queryUser,
         followships: followshipData,
         tab: 'getLikedTweets'
       })
@@ -213,111 +269,60 @@ const userController = {
   },
   getFollowers: async (req, res, next) => {
     try {
-      const userId = req.params.id
+      const userId = helpers.getUser(req).id // 登入的使用者
+      const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
-      const [user, followships] = await Promise.all([
-        User.findByPk(userId, {
-          include: [
-            { model: User, as: 'Followers' },
-            { model: User, as: 'Followings' },
-            {
-              model: Tweet,
-              as: 'LikedTweets',
-              include: [User, Reply, { model: User, as: 'LikedUsers' }]
-            }
-          ]
-        }),
-        User.findAll({
+      const [queryUserData, followships] = await Promise.all([
+        User.findByPk(queryUserId, {
           include: [
             {
               model: User,
-              as: 'Followers'
-            }
-          ],
-          attributes: [
-            'id',
-            'name',
-            'account',
-            [
-              sequelize.fn('COUNT', sequelize.col('followerId')),
-              'followerCounts'
-            ]
-          ],
-          group: 'followingId',
-          order: [[sequelize.col('followerCounts'), 'DESC']]
+              as: 'Followers',
+              attributes: ['id', 'name', 'avatar', 'introduction'],
+              order: [['createdAt', 'DESC']]
+            },
+            // { model: User, as: 'Followings' },
+            { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
+          ]
+        }),
+        User.findAll({
+          attributes: ['id', 'name', 'account', 'avatar'],
+          include: [{ model: User, as: 'Followers', attributes: ['id'] }],
+          where: [{ role: 'user' }]
         })
       ])
-      if (!user) throw new Error("User didn't exist!")
+      if (!queryUserData) throw new Error('使用者不存在 !')
 
-      const data = user.toJSON()
-      const followingUserId = data.Followings.map(user => user.id)
-
-      const followshipData = followships
-        .map(user => ({
-          ...user.toJSON(),
-          isFollowed: followingUserId.includes(user.id)
-        }))
-        .slice(0, 10)
-
-      res.render('user', {
-        user: user.toJSON(),
-        followships: followshipData,
-        tab: 'getLikedTweets'
+      // 獨立處理 queryUser 的資料
+      const queryUser = queryUserData.toJSON()
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己
+      queryUser.isSelf = queryUserId === userId
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
+      queryUser.isFollowed = helpers
+        .getUser(req)
+        .Followings.some(item => item.id === queryUser.id)
+      // 判斷 queryUser 的 followers 是否為已為 user 的 followings
+      queryUser.Followers.forEach(user => {
+        user.isFollowed = helpers
+          .getUser(req)
+          .Followings.some(item => item.id === user.id)
+        user.isSelf = user.id !== userId
       })
-    } catch (err) {
-      next(err)
-    }
-  },
-  getFollowers: async (req, res, next) => {
-    try {
-      const userId = req.params.id
 
-      const [user, followships] = await Promise.all([
-        User.findByPk(userId, {
-          include: [
-            { model: User, as: 'Followers' },
-            { model: User, as: 'Followings' }
-          ]
-        }),
-        User.findAll({
-          include: [
-            {
-              model: User,
-              as: 'Followers'
-            }
-          ],
-          attributes: [
-            'id',
-            'name',
-            'account',
-            [
-              sequelize.fn('COUNT', sequelize.col('followerId')),
-              'followerCounts'
-            ]
-          ],
-          group: 'followingId',
-          order: [[sequelize.col('followerCounts'), 'DESC']]
-        })
-      ])
-      if (!user) throw new Error("User didn't exist!")
-
-      const data = user.toJSON()
-      const followingUserId = data.Followings.map(user => user.id)
-
-      data.Followers.forEach(
-        user => (user.isFollowed = followingUserId.includes(user.id))
-      )
-
+      // 獨立處理 rightColumn 的資料
       const followshipData = followships
-        .map(user => ({
-          ...user.toJSON(),
-          isFollowed: followingUserId.includes(user.id)
+        .map(followship => ({
+          ...followship.toJSON(),
+          followerCounts: followship.Followers.length,
+          isFollowed: followship.Followers.some(item => item.id === userId),
+          isSelf: userId !== followship.id
         }))
+        .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
       res.render('followship', {
-        user: data,
-        followships: followshipData,
+        queryUser, // display the followers of user, including the followings and followers
+        followships: followshipData, // rightColumn
         tab: 'getFollowers'
       })
     } catch (err) {
@@ -326,56 +331,133 @@ const userController = {
   },
   getFollowings: async (req, res, next) => {
     try {
-      const userId = req.params.id
+      const userId = helpers.getUser(req).id // 登入的使用者
+      const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
-      const [user, followships] = await Promise.all([
-        User.findByPk(userId, {
+      const [queryUserData, followships] = await Promise.all([
+        User.findByPk(queryUserId, {
           include: [
-            { model: User, as: 'Followers' },
-            { model: User, as: 'Followings' }
+            // { model: User, as: 'Followers' },
+            {
+              model: User,
+              as: 'Followings',
+              attributes: ['id', 'name', 'avatar', 'introduction'],
+              order: [['createdAt', 'DESC']]
+            },
+            { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
           ]
         }),
         User.findAll({
-          include: [
-            {
-              model: User,
-              as: 'Followers'
-            }
-          ],
-          attributes: [
-            'id',
-            'name',
-            'account',
-            [
-              sequelize.fn('COUNT', sequelize.col('followerId')),
-              'followerCounts'
-            ]
-          ],
-          group: 'followingId',
-          order: [[sequelize.col('followerCounts'), 'DESC']]
+          attributes: ['id', 'name', 'account', 'avatar'],
+          include: [{ model: User, as: 'Followers', attributes: ['id'] }],
+          where: [{ role: 'user' }]
         })
       ])
-      if (!user) throw new Error("User didn't exist!")
+      if (!queryUserData) throw new Error('使用者不存在 !')
 
-      const data = user.toJSON()
-      const followingUserId = data.Followings.map(user => user.id)
-
-      data.Followers.forEach(
-        user => (user.isFollowed = followingUserId.includes(user.id))
-      )
+      // 獨立處理 queryUser 的資料
+      const queryUser = queryUserData.toJSON()
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己
+      queryUser.isSelf = queryUserId === userId
+      // 判斷正在瀏覽的 “個人頁面”，使用者是否為自己 “已追蹤” 的使用者
+      queryUser.isFollowed = helpers
+        .getUser(req)
+        .Followings.some(item => item.id === queryUser.id)
+      // 判斷 queryUser 的 followers 是否為已為 user 的 followings
+      queryUser.Followings.forEach(user => {
+        user.isFollowed = helpers
+          .getUser(req)
+          .Followings.some(item => item.id === user.id)
+        user.isSelf = user.id !== userId
+      })
 
       const followshipData = followships
-        .map(user => ({
-          ...user.toJSON(),
-          isFollowed: followingUserId.includes(user.id)
+        .map(followship => ({
+          ...followship.toJSON(),
+          followerCounts: followship.Followers.length,
+          isFollowed: followship.Followers.some(item => item.id === userId),
+          isSelf: userId !== followship.id
         }))
+        .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
       res.render('followship', {
-        user: data,
-        followships: followshipData,
+        queryUser, // display the followings of user
+        followships: followshipData, // rightColumn
         tab: 'getFollowings'
       })
+    } catch (err) {
+      next(err)
+    }
+  },
+  addFollowing: async (req, res, next) => {
+    try {
+      const userId = Number(helpers.getUser(req).id)
+      const queryUserId = Number(req.body.id) // other user
+      // if (userId === queryUserId) throw new Error('您不能追蹤自己 !')
+      if (userId === queryUserId) {
+        req.flash('error_messages', '您不能追蹤自己 !')
+        return res.redirect(200, 'back')
+      }
+
+      const user = await User.findByPk(userId, {
+        include: [{ model: User, as: 'Followings', attributes: ['id'] }]
+      })
+      // if (!user) throw new Error('使用者不存在 !')
+      if (!user) {
+        req.flash('error_messages', '使用者不存在 !')
+        return res.redirect(200, 'back')
+      }
+
+      const queryUser = await User.findByPk(queryUserId, { raw: true })
+      // if (!queryUser) throw new Error('使用者不存在 !')
+      if (!queryUser) {
+        req.flash('error_messages', '使用者不存在 !')
+        return res.redirect(200, 'back')
+      }
+
+      const followingUserId = user.Followings.map(user => user.id)
+      // if (followingUserId.includes(queryUserId)) {
+      //   throw new Error('您已經追蹤過此使用者了 !')
+      // }
+      if (followingUserId.includes(queryUserId)) {
+        req.flash('error_messages', '您已經追蹤過此使用者了 !')
+        return res.redirect(200, 'back')
+      }
+
+      await Followship.create({ followerId: userId, followingId: queryUserId })
+
+      return res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
+  },
+  removeFollowing: async (req, res, next) => {
+    try {
+      const userId = Number(helpers.getUser(req).id)
+      const queryUserId = Number(req.params.id) // other user
+      if (userId === queryUserId) {
+        throw new Error('您不能取消追蹤自己 !')
+      }
+
+      const user = await User.findByPk(userId, {
+        include: [{ model: User, as: 'Followings', attributes: ['id'] }]
+      })
+      if (!user) throw new Error('使用者不存在 !')
+
+      const queryUser = await User.findByPk(queryUserId, { raw: true })
+      if (!queryUser) throw new Error('使用者不存在 !')
+
+      const followingUserId = user.Followings.map(user => user.id)
+      if (!followingUserId.includes(queryUserId)) {
+        throw new Error('您還未追蹤此使用者 !')
+      }
+
+      await Followship.destroy({
+        where: { followerId: userId, followingId: queryUserId }
+      })
+
+      return res.redirect('back')
     } catch (err) {
       next(err)
     }

@@ -18,7 +18,8 @@ i.comment {
 i.like {
   background-position: -36px -68px;
   height: 15px;
-  width: 15px;background-size: 180px;
+  width: 15px;
+  background-size: 180px;
   margin-right: 7px;
 }
 i.user-like{
@@ -58,4 +59,14 @@ a.active i.setting {
 }
 i.logout{
   background-position: -223px -57px;
+}
+.modal-dialog .btn-close{
+  background: url(/images/twitter_2022_icon.svg);
+  background-position: -428px -4px;
+  opacity: 1;
+  cursor: pointer;
+  margin: 0;
+  width: 15px;
+  height: 15px;
+  background-size: 250px;
 }

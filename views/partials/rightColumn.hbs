@@ -2,7 +2,7 @@
   <div class="header"><h4>跟隨誰</h4></div>
   {{#each followships}}
   <div class="follow-tweet d-flex flex-row align-items-center justify-content-between">
-        <a href="/users/{{user.id}}/tweets" class="d-flex">
+        <a href="/users/{{this.id}}/tweets" class="d-flex">
           <img class="avatar" src="{{this.avatar}}" alt="User2 avatar">
           <div class="d-flex flex-column user-name-account">
             <span class="user-name ellipsis">{{this.name}}</span>
@@ -11,11 +11,24 @@
         </a>
         {{#if this.isSelf}}
           {{#if this.isFollowed}}
-            <button type="button" class="btn btn-primary">正在追隨</button>
-            {{else}}
-            <button type="button" class="btn btn-outline">跟隨</button>
+          <form action='/followships/{{this.id}}?_method=DELETE' method='POST'>
+            <button
+              type='submit'
+              class='btn rounded-pill text-light'
+              style='background-color:#FF6600;'
+            >正在追隨</button>
+          </form>
+          {{else}}
+          <form action='/followships' method='POST'>
+            <input type='hidden' name='id' value='{{this.id}}'/>
+            <button
+              type='submit'
+              class='btn rounded-pill bg-light'
+              style='border-color:#FF6600; color:#FF6600'
+            >跟隨</button>
+          </form>
           {{/if}}
-        {{/if}}
+        {{/if}} 
       </div>
   {{/each}}
 </div>
