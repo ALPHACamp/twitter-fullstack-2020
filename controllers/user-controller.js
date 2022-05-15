@@ -1,13 +1,18 @@
 const bcrypt = require('bcryptjs') 
 const db = require('../models')
-const { User, Tweet, Reply, Like } = db
 const helper = require('../_helpers')
-const { localFileHandler } = require('../helpers/file-helpers') 
+const { User, Tweet, Reply, Like } = db
+const { imgurFileHandler } = require('../helpers/file-helpers') 
 const userController = {
   signInPage: (req, res) => {
     res.render('signin')
   }, 
   signIn: (req, res) => {
+    if (helper.getUser(req).role === 'admin') {
+      req.flash('error_messages', '帳號不存在')
+      req.logout()
+      res.redirect('/signin')
+    }
     req.flash('success_messages', '登入成功!')
     res.redirect('/tweets')
     
@@ -131,11 +136,31 @@ editProfile: async(req, res, next) => {
         if (currentUser.id !== user.id) {
           return res.json({status: 'error', message:"無法編輯其他使用者資料!"})
         }
-        console.log(user)
         return res.json(user)
   } catch (err) {
       next(err)
   }
+},
+putProfile: (req, res, next) => {
+  const UserId = req.params.id
+  const { name, introduction, avatar } = req.body
+  const { file } = req
+  return Promise.all([
+      User.findByPk(UserId),
+      imgurFileHandler(file)
+    ])
+    .then(([user, filePath]) => {
+      if(!user) throw new Error ("User didn't exists!")
+      return user.update({
+          name,
+          introduction,
+          avatar: filePath || user.avatar
+      })
+    })
+    .then((data) => {
+      return res.json(data)
+    })
+    .catch(err => next(err))
 },
  getFollowers: async(req, res) => {
    try {
