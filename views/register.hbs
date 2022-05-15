@@ -1,30 +1,43 @@
+<div class="container">
 <div class="mb-4 text-center">
-  <h1 class="h3 font-weight-normal mb-3">Sign Up</h1>
+  <img class="logo mb-5" alt="logo"
+    src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" style="height:50px;">
+  <h1 class="h3 font-weight-normal mb-3">建立你的帳號</h1>
 </div>
 <form class="form-signup" action="/signup" method="POST" style="width: 100%;">
-  <div class="form-row mb-3">
-    <label class="form-label" for="account">Account</label>
-    <input type="text" id="account" name="account" class="form-control" placeholder="account" required autofocus>
+  <div class="mb-3 bg-light">
+    <label for="account" class="form-label">帳號</label>
+    <input type="text" class="form-control bg-light border-0 border-bottom" id="account" name="account"
+      aria-describedby="emailHelp" placeholder="請輸入帳號">
   </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="name">Name</label>
-    <input type="text" id="name" name="name" class="form-control" placeholder="Name" required autofocus>
+  <div class="mb-3 bg-light">
+    <label for="name" class="form-label">名稱</label>
+    <input type="text" class="form-control bg-light border-0 border-bottom" id="name" name="name"
+      aria-describedby="emailHelp" placeholder="請輸入使用者名稱">
   </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="email">Email</label>
-    <input type="text" id="email" name="email" class="form-control" placeholder="Email" required>
+  <div class="mb-3 bg-light">
+    <label for="email" class="form-label">Email</label>
+    <input type="text" class="form-control bg-light border-0 border-bottom" id="email" name="email"
+      aria-describedby="emailHelp" placeholder="請輸入Email">
   </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="password">Password</label>
-    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+  <div class="mb-3 bg-light">
+    <label for="password" class="form-label">密碼</label>
+    <input type="password" class="form-control bg-light border-0 border-bottom" name="password" id="password"
+      placeholder="請輸入密碼">
   </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="checkPassword">checkPassword</label>
-    <input type="password" id="checkPassword" name="checkPassword" class="form-control" placeholder="checkPassword"
-      required>
+  <div class="mb-3 bg-light">
+    <label for="checkPassword" class="form-label">密碼確認</label>
+    <input type="password" class="form-control bg-light border-0 border-bottom" name="checkPassword" id="checkPassword"
+      placeholder="請再次輸入密碼">
   </div>
-  <button class="btn btn-primary btn-block" type="submit">Submit</button>
+  <div class="row justify-content-center mb-5">
+  
+    <button class="btn btn-primary btn-block rounded-pill border-0" type="submit"
+      style="background-color:#FF6600; width: 700px;;">註冊</button>
+  
+  </div>
 </form>
 <div class="mb-4 text-center">
-  <p><a href="/signin">Sign In</a></p>
+  <p><a href="/signin">取消</a></p>
+</div>
 </div>
