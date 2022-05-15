@@ -1,40 +1,36 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-2 m-0 p-0">
+    <div class="col-2 m-0 p-0 left_nav ">
       {{> adminLeft}}
     </div>
 
+    <div class="page-header">
+      推文清單
+    </div>
+    <div class="divider"></div>
+    {{#each tweet}}
+    <div class="card admin_tweet" style="border-radius: 0px;">
+      <div class="card-body">
 
+        <div class="position-absolute" style="top:10px; right:10px">
+          <form action="/admin/tweets/{{ this.id }}?_method=DELETE" method="post">
+            <button type="submit" class="btn btn-sm btn-link text-decoration-none text-secondary">
+              <i class="fas fa-times fa-2x"></i>
+            </button>
+          </form>
+        </div>
 
-    <div class="col-10 m-0 p-0">
-
-      <div class="border-bottom">
-        <h5 class="p-3 font-weight-bold mb-0">推文清單</h5>
-      </div>
-
-      {{#each tweet}}
-      <div class="d-flex justify-content-start admin-tweet"></div>
-      <div class="card" style="border-radius: 0px;">
-        <div class="card-body">
-
-          <div class="position-absolute" style="top:10px; right:10px">
-            <form action="/admin/tweets/{{ this.id }}?_method=DELETE" method="post">
-              <button type="submit" class="btn btn-sm btn-link text-decoration-none text-secondary">
-                <i class="fas fa-times fa-2x"></i>
-              </button>
-            </form>
-          </div>
-
-          <div class="media d-flex ">
-            <img src="{{ this.User.avatar }}" class=" rounded-circle mb-5 me-3" alt="{{ this.User.name }}"
-              style="width: 50px;height: 50px;">
-            <div class="media-body">
-              <div class="d-flex d-inline ">
-                <h5>{{ this.User.name }}</h5>
-                <p class="ms-3 text-secondary d-inline">
-                  @{{this.User.account}} • {{relativeTimeFromNow this.createdAt}}
-                </p>
-              </div>
+        <div class="media d-flex ">
+          <img src="{{ this.User.avatar }}" class=" rounded-circle mb-5 me-3" alt="{{ this.User.name }}"
+            style="width: 50px;height: 50px;">
+          <div class="media-body">
+            <div class="d-flex d-inline ">
+              <h5>{{ this.User.name }}</h5>
+              <p class="ms-3 text-secondary d-inline">
+                @{{this.User.account}} • {{relativeTimeFromNow this.createdAt}}
+              </p>
+            </div>
+            <div class="description_hide">
               <p>
                 {{this.description}}
               </p>
@@ -42,6 +38,8 @@
           </div>
         </div>
       </div>
-      {{/each}}
-
     </div>
+    {{/each}}
+
+  </div>
+</div>
