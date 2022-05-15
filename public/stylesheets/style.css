@@ -97,3 +97,12 @@
   color: #F5B7B1;
 }
 
+a {
+  text-decoration: none;
+  color: black
+}
+
+a:hover {
+  text-decoration: none;
+  color: coral
+}
