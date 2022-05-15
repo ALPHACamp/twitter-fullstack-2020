@@ -1,6 +1,5 @@
-const { Tweet, User, Reply, Followship } = require('../models')
+const { Tweet, User, Reply } = require('../models')
 const helpers = require('../_helpers')
-const Sequelize = require('sequelize')
 
 const tweetsController = {
   getTweets: async (req, res, next) => {
@@ -51,7 +50,7 @@ const tweetsController = {
         nest: true
       })
 
-            // 右側topUsers, sort by跟隨者follower數量 & isFollowed 按鈕
+      // 右側topUsers, sort by跟隨者follower數量 & isFollowed 按鈕
       const users = await User.findAll({
         where: { isAdmin: false },
         attributes: ['id', 'name', 'account', 'avatar'],

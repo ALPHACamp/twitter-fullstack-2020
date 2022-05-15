@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs')
 const { Tweet, User, Like, Reply, Followship } = require('../models')
 const helpers = require('../_helpers')
-const Sequelize = require('sequelize')
 
 const userController = {
   signUpPage: async (req, res) => {
