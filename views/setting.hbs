@@ -1,0 +1,48 @@
+<div class="row d-flex justify-content-start">
+  {{!-- header --}}
+  <div class="col-8" style="outline: 1px solid #E6ECF0; height: 600px;">
+    <div class="container-fluid mt-3 ps-0 d-flex">
+      <div class="container-fluid px-0 ms-2">
+        <p class="fs-4 mb-0 fw-bold">帳戶設定</p>
+      </div>
+    </div>
+
+    {{!-- header body --}}
+    <div class="row my-2 d-flex justify-content-between">
+      <div style="
+          box-sizing: border-box;
+          position: relative;
+          width: 1400px;
+          height: 540px;
+          background: #FFFFFF;
+          border: 1px solid #E6ECF0;">
+        <form action="/users/{{user.id}}/setting?_method=PUT" method="POST"
+          style="display: flex; flex-direction: column; align-items: center">
+          <div style="display: inline-block; width: 520px; height: 54px; position: absolute; top: 20px;">
+            <label class="form-label" for="account">帳號</label>
+            <input class="form-control" id="account" type="text" name="account" value="{{user.account}}" required>
+          </div>
+          <div style="display: inline-block; width: 520px; height: 54px; position: absolute; top: 106px;">
+            <label class="form-label" for="name">名稱</label>
+            <input class="form-control" id="name" type="text" name="name" value="{{user.name}}" required>
+          </div>
+          <div style="display: inline-block; width: 520px; height: 54px; position: absolute; top: 192px;">
+            <label class="form-label" for="email">Email</label>
+            <input class="form-control" id="email" type="text" name="email" value="{{user.email}}" required>
+          </div>
+          <div style="display: inline-block; width: 520px; height: 54px; position: absolute; top: 278px;">
+            <label class="form-label" for="password">密碼</label>
+            <input class="form-control" id="password" type="password" name="password" placeholder="請設定密碼" required>
+          </div>
+          <div style="display: inline-block; width: 520px; height: 54px; position: absolute; top: 364px;">
+            <label class="form-label" for="checkPassword">密碼確認</label>
+            <input class="form-control" id="checkPassword" type="password" name="checkPassword" placeholder="再次輸入密碼"
+              required>
+          </div>
+          <button class="btn btn-primary btn-block fs-5" type="submit"
+            style="display: inline-block; width: 86px; height: 46px; position: absolute; top: 458px; right: 25px; background: #FF6600; border-radius: 50px; border:#E6ECF0;">儲存
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
