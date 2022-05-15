@@ -4,26 +4,24 @@ const router = express.Router()
 const passport = require('../config/passport')
 const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
+const userController = require('../controllers/user-controller')
 
 const admin = require('./modules/admin.js')
 const tweets = require('./modules/tweets.js')
 const users = require('./modules/users.js')
 
-router.use('/admin', admin)
 router.get('/signin', loginController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), loginController.signIn)
 router.get('/logout', loginController.logout)
 router.get('/signup', loginController.signUpPage)
 router.post('/signup', loginController.signUp)
-router.use('/users', users)
-router.get('/tweets', authenticated, (req, res) => {
-  if (req.user.role !== 'user') {
-    res.redirect('/admin/tweets')
-  } else {
-    res.render('tweets')
-  }
-})
-router.use('/', authenticated, tweets)
+
+router.delete('/followships/:userId', authenticated, userController.removeFollowing)
+router.post('/followships', authenticated, userController.addFollowing)
+router.use('/admin', admin)
+router.use('/users', authenticated, users)
+router.use('/tweets', authenticated, tweets)
+
 router.use('/', generalErrorHandler)
 
 module.exports = router
