@@ -119,9 +119,11 @@ const userController = {
 
       // 獨立處理 tweets 的資料
       tweets.forEach(function (tweet, index) {
-        this[index] = { ...tweet.toJSON() }
+        this[index] = {
+          ...tweet.toJSON(),
+          isLiked: tweet.LikedUsers.some(item => item.id === queryUserId)
+        }
       }, tweets)
-
       // 獨立處理 rightColumn 的資料
       const followshipData = followships
         .map(followship => ({

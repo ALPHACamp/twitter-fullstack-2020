@@ -19,10 +19,18 @@
           <i class="comment"></i>
           <span>{{this.Replies.length}}</span>
         </button>
-        <button type="button" class="d-flex flex-row align-items-end">
-          <i class="like"></i>
-          <span >{{this.LikedUsers.length}}</span>
-        </button>
+        {{!-- 以下為like --}}
+        {{#if isLiked}}
+          <button type="button" class="d-flex flex-row align-items-end like-submit-btn liked" data-tweetId="{{this.id}}">
+            <i class="like user-like"></i>
+            <span class="liked-numbers">{{this.LikedUsers.length}}</span>
+          </button>
+        {{else}}
+          <button type="button" class="d-flex flex-row align-items-end like-submit-btn" data-tweetId="{{this.id}}">
+            <i class="like"></i>
+            <span class="liked-numbers">{{this.LikedUsers.length}}</span>
+          </button>
+        {{/if}}
       </div>
     </div> 
   </div>
@@ -66,9 +74,10 @@
           <i class="comment"></i>
           <span>{{this.Replies.length}}</span>
         </button>
-        <button type="button" class="d-flex flex-row align-items-end">
+        {{!-- 以下為like --}}
+        <button type="button" class="d-flex flex-row align-items-end like-submit-btn liked" data-tweetId="{{this.id}}">
           <i class="like user-like"></i>
-          <span >{{this.LikedUsers.length}}</span>
+          <span class="liked-numbers">{{this.LikedUsers.length}}</span>
         </button>
       </div>
     </div> 
