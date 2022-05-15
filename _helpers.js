@@ -44,11 +44,17 @@ const removeOuterSpace = str => {
   return newStr
 }
 
+const postValidation = description => {
+  if (description.trim() !== '') return description
+  return ''
+}
+
 module.exports = {
   ensureAuthenticated,
   getUser,
   imgurFileHandler,
   handlebarsHelpers,
   removeAllSpace,
-  removeOuterSpace
+  removeOuterSpace,
+  postValidation
 }

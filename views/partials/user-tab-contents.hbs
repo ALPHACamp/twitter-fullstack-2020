@@ -1,102 +1,77 @@
-<ul class='list-group rounded-0'>
+<div class="tab-contents">
   {{#each tweets}}
-  <li class='list-group-item'>
-    <div class='row d-flex justify-content-center'>
-      <div class='col-2 p-0 d-flex justify-content-center avatar'>
+  <div class="tweet d-flex">
+    <a href="/users/{{this.User.id}}/tweets">
+      <img class="avatar" src="{{this.User.avatar}}" alt="user1 avatar">
+    </a>
+    <div class="post-content">
+      <div class="post-user d-flex flex-row align-items-end">
         <a href="/users/{{this.User.id}}/tweets">
-          <img
-            src='{{this.User.avatar}}'
-            alt='alphaCamp'
-            width='50px'
-            height='50px'
-          />
+          <span class="user-name">{{this.User.name}}</span>
         </a>
+        <span class="secondary-text">@{{this.User.account}}</span>
+        <span class="secondary-text">•</span>
+        <span class="secondary-text">{{relativeTimeFromNow this.createdAt}}</span>
       </div>
-      <div class='col p-0 ps-1 tweet-content'>
-          <strong class='user-name'>{{this.User.name}}</strong>
-          <span class='user-account'>@{{this.User.account}}</span>
-          *
-          <span class='user-account'>{{relativeTimeFromNow this.createdAt}}</span>
-          <a href="#">
-            <p class='user-name'>{{this.description}}</p>
-          </a>
-          <div class="row d-flex">
-            <div class="col-2">
-              <button class='tweet-comments'>回復</button>
-              <span class='tweet-comments'>{{this.Replies.length}}</span>
-            </div>
-            <div class="col-2">
-              <form action="#" method="post">
-                <button class='tweet-likes' type="submit">喜愛</button>
-                <span class='tweet-likes'>{{this.LikedUsers.length}}</span>
-              </form>
-            </div>
-          </div>
+      <a href="#" class="content">{{this.description}}</a>
+      <div class="tweet-buttons d-flex flex-row align-items-end">
+        <button type="button" class="d-flex flex-row align-items-end">
+          <i class="comment"></i>
+          <span>{{this.Replies.length}}</span>
+        </button>
+        <button type="button" class="d-flex flex-row align-items-end">
+          <i class="like"></i>
+          <span >{{this.LikedUsers.length}}</span>
+        </button>
       </div>
-    </div>
-  </li>
+    </div> 
+  </div>
   {{/each}}
   {{#each replies}}
-  <li class='list-group-item'>
-    <div class='row d-flex justify-content-center'>
-      <div class='col-2 p-0 d-flex justify-content-center avatar'>
+  <div class="tweet d-flex">
+    <a href="/users/{{this.User.id}}/tweets">
+      <img class="avatar" src="{{this.User.avatar}}" alt="user1 avatar">
+    </a>
+    <div class="post-content">
+      <div class="post-user d-flex flex-row align-items-end">
         <a href="/users/{{this.User.id}}/tweets">
-          <img
-            src='{{this.User.avatar}}'
-            alt='alphaCamp'
-            width='50px'
-            height='50px'
-          />
+          <span class="user-name">{{this.User.name}}</span>
         </a>
+        <span class="secondary-text">@{{this.User.account}}</span>
+        <span class="secondary-text">•</span>
+        <span class="secondary-text">{{relativeTimeFromNow this.createdAt}}</span>
       </div>
-      <div class='col p-0 ps-1 tweet-content'>
-          <strong class='user-name'>{{this.User.name}}</strong>
-          <span class='user-account'>@{{this.User.account}}</span>
-          *
-          <span class='user-account'>{{relativeTimeFromNow this.createdAt}}</span>
-          <div class='user-account' style='color:#FF6600'>回覆 @{{this.Tweet.User.account}}</div>
-          <a href="#">
-            <p class='user-name'>{{this.comment}}</p>
-          </a>
-      </div>
-    </div>
-  </li>
+      <div class='secondary-text reply-text'>回覆 <a href="#">@{{this.Tweet.User.account}}</a></div>
+      <p class='content mb-0'>{{this.comment}}</p>
+    </div> 
+  </div>
   {{/each}}
   {{#each queryUser.LikedTweets}}
-  <li class='list-group-item'>
-    <div class='row d-flex justify-content-center'>
-      <div class='col-2 p-0 d-flex justify-content-center avatar'>
+  <div class="tweet d-flex">
+    <a href="/users/{{this.User.id}}/tweets">
+      <img class="avatar" src="{{this.User.avatar}}" alt="user1 avatar">
+    </a>
+    <div class="post-content">
+      <div class="post-user d-flex flex-row align-items-end">
         <a href="/users/{{this.User.id}}/tweets">
-          <img
-            src='{{this.User.avatar}}'
-            alt='alphaCamp'
-            width='50px'
-            height='50px'
-          />
+          <span class="user-name">{{this.User.name}}</span>
         </a>
+        <span class="secondary-text">@{{this.User.account}}</span>
+        <span class="secondary-text">•</span>
+        <span class="secondary-text">{{relativeTimeFromNow this.createdAt}}</span>
       </div>
-      <div class='col p-0 ps-1 tweet-content'>
-          <strong class='user-name'>{{this.User.name}}</strong>
-          <span class='user-account'>@{{this.User.account}}</span>
-          *
-          <span class='user-account'>{{relativeTimeFromNow this.createdAt}}</span>
-          <a href="#">
-            <p class='user-name'>{{this.description}}</p>
-          </a>
-          <div class="row d-flex">
-            <div class="col-2">
-              <button class='tweet-comments'>回復</button>
-              <span class='tweet-comments'>{{this.Replies.length}}</span>
-            </div>
-            <div class="col-2">
-              <form action="#" method="post">
-                <button class='tweet-likes' type="submit">喜愛</button>
-                <span class='tweet-likes'>{{this.LikedUsers.length}}</span>
-              </form>
-            </div>
-          </div>
+      <a href="#" class="content">{{this.description}}</a>
+      <div class="tweet-buttons d-flex flex-row align-items-end">
+        <button type="button" class="d-flex flex-row align-items-end">
+          <i class="comment"></i>
+          <span>{{this.Replies.length}}</span>
+        </button>
+        <button type="button" class="d-flex flex-row align-items-end">
+          <i class="like user-like"></i>
+          <span >{{this.LikedUsers.length}}</span>
+        </button>
       </div>
-    </div>
-  </li>
+    </div> 
+  </div>
   {{/each}}
-</ul>
+</div>
