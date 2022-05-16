@@ -126,17 +126,41 @@ const userController = {
   },
   putUserSetting: (req, res, next) => {
     const { account, name, email, password, checkPassword } = req.body
+    const errors = []
 
-    if (Number(req.params.id) !== Number(helpers.getUser(req).id)) throw new Error('請勿編輯他人資料')
-    if (name.length > 50) throw new Error('名稱字數超出上限！')
-    if (password !== checkPassword) throw new Error('Passwords do not match!')
+    if (Number(req.params.id) !== Number(helpers.getUser(req).id)) {
+      errors.push({ message: '請勿編輯他人資料' })
+    }
+    if (name.length > 50) {
+      errors.push({ message: '名稱字數超出上限！' })
+    }
+    if (password !== checkPassword) {
+      errors.push({ message: 'Passwords do not match!' })
+    }
 
     return Promise.all([
       User.findByPk(req.params.id),
       User.findOne({ where: { [Op.or]: [{ account }, { email }] } })
     ])
       .then(([user, newUser]) => {
-        if (newUser) throw new Error('account 或 email 已重複註冊！')
+        if (newUser) {
+          errors.push({ message: 'account 或 email 已重複註冊！' })
+        }
+        if (errors.length) {
+          const userData = user.toJSON()
+          user = {
+            ...userData,
+            account,
+            name,
+            email
+          }
+          return res.render('setting', {
+            errors,
+            user,
+            password,
+            checkPassword
+          })
+        }
 
         bcrypt.hash(password, 10)
           .then(hash => {
