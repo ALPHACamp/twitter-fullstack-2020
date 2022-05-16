@@ -1,35 +1,5 @@
 {{!-- left-bar --}}
-<div>
-  <div style="
-  display: inline-block; 
-  box-sizing: border-box;
-  position: relative;
-  width: 1400px;
-  height: 1200px;
-  background: #FFFFFF;
-  border: 1px solid #D5D5DC;
-  border-radius: 4px;">
-    <div style="position: absolute; width: 178px; height: 1200px; left: 130px;">
-      <div style="position: relative;">
-        <div style="width: 50px; height: 50px; position: absolute; top: 13px; left: 13px;">
-          <img src="/images/logo.png" alt="login" style="height: 50px; width: 50px;">
-        </div>
-        <ul class="nav flex-column">
-          <li class="nav-item" style="display:flex; align-items: center; position: absolute; top: 85px; left: 17px;">
-            <i class="fas fa-home" style="color: coral;"></i>
-            <a class="nav-link active" aria-current="page" href="/admin/tweets" style="color: coral;">推文清單</a>
-          </li>
-          <li class="nav-item" style="display:flex; align-items: center; position: absolute; top: 148px; left: 17px;">
-            <i class="fas fa-user" style="color:black;"></i>
-            <a class="nav-link" href="/admin/users" style="color:black;">使用者列表</a>
-          </li>
-          <li class="nav-item" style="display:flex; align-items: center; position: absolute; top: 1158px; left: 17px;">
-            <i class="fas fa-arrow-alt-circle-left"></i>
-            <a class="nav-link" href="logout" style="color:black;">登出</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+{{>left-admin-sidebar route='adminTweets'}}
     {{!-- tweets --}}
     <div style="position: absolute; right: 131px; width: 937px; height: 1200px; border: 1px solid #E6ECF0;">
       <div style="height: 49px; width: 937px; border-bottom: 1px solid #E6ECF0;">
@@ -74,5 +44,4 @@
         </ul>
       </nav>
     </div>
-  </div>
 </div>

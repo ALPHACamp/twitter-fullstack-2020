@@ -143,3 +143,24 @@ a:hover {
   text-decoration: none;
   color: coral
 }
+
+
+.nav-admin-tabs .nav-link {
+  width: 120px;
+  text-align: center;
+  color: lightgray;
+  font-weight: 600;
+  border: none;
+}
+
+.nav-admin-tabs .nav-link.active {
+  width: 120px;
+  text-align: center;
+  color: #ff6600;
+  border: none;
+  border-bottom: 2px solid #ff6600;
+}
+
+.nav-admin-tabs .nav-link:hover {
+  color: #ff6600;
+}
