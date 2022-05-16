@@ -8,9 +8,15 @@ const users = require('./modules/users')
 const tweets = require('./modules/tweets')
 
 const userController = require('../controllers/user-controller')
+const apiController = require('../controllers/api-controller')
 
 const { authenticated, authenticatedAdmin } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
+
+// api 路由入口
+router.post('/api/users/:id/avatar', authenticated, upload.single('image'), apiController.putAvatar)
+router.post('/api/users/:id', authenticated, apiController.putUser)
+router.get('/api/users/:id', authenticated, apiController.getUser)
 
 // admin 路由入口
 router.use('/admin', authenticatedAdmin, admin)
@@ -19,8 +25,6 @@ router.use('/admin', authenticatedAdmin, admin)
 router.use('/users', authenticated, users)
 router.delete('/followships/:id', authenticated, userController.removeFollowing)
 router.post('/followships', authenticated, userController.addFollowing)
-router.get('/api/users/:id', authenticated, userController.getUser)
-router.post('/api/users/:id/avatar', authenticated, upload.single('image'), userController.putAvatar)
 
 // tweets 路由入口
 router.use('/tweets', authenticated, tweets)
