@@ -1,20 +1,5 @@
-<ul class='nav nav-tabs'>
-  <li class='nav-item'>
-    <a
-      class='nav-link'
-      href='/users/{{queryUser.id}}/followers'
-      {{#ifCond tab 'getFollowers'}}
-      style='border-bottom: 2px solid #FF6600; color:#FF6600'
-      {{/ifCond}}
-    >追隨者</a>
-  </li>
-  <li class='nav-item'>
-    <a class='nav-link' 
-    href='/users/{{queryUser.id}}/followings'
-    {{#ifCond tab 'getFollowings'}}
-      style='border-bottom: 2px solid #FF6600; color:#FF6600'
-      {{/ifCond}}
-    >正在追蹤</a>
-  </li>
-</ul>
+<div class="user-tabs d-flex mt-3">
+  <a href="/users/{{queryUser.id}}/followers" {{#ifCond tab 'getFollowers'}} class="active" {{/ifCond}}>追隨者</a>
+  <a href="/users/{{queryUser.id}}/followings" {{#ifCond tab 'getFollowings'}} class="active" {{/ifCond}}>正在追隨</a>
+</div>
 

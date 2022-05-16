@@ -1,20 +1,17 @@
-<div class='container'>
-  <div class="row">
-    <div class='col-2 left-column'>
-      {{> leftColumn}}
-    </div>
-    <div class='col-7 border middle-column p-0'>
-      {{!-- {{> middleColumn}} --}}
-      <div class='userHeader p-2' style='border: 1px solid blue;'>
-        <i class="fa-solid fa-arrow-left"></i>
-        <span class="user-name">{{queryUser.name}}</span>
-        <span class="user-tweets">{{queryUser.Tweets.length}} 推文</span>
+<div class="wrapper">
+  <div class='container user-homepage'>
+    <div class="profile-setting d-flex flex-column justify-content-between">{{> leftColumn}}</div>
+    <div class="main">
+      <div class='user-header d-flex flex-row align-items-center'>
+        <a href="#"><i class="back-arrow"></i></a>
+        <div class="header-text d-flex flex-column">
+          <h5>{{queryUser.name}}</h5>
+          <span class="tweets-count secondary">{{queryUser.Tweets.length}} 推文</span>
+        </div>
       </div>
       {{> followship-tabs}}
       {{> followship-tab-contents}}
     </div>
-    <div class='col-3 right-column'>
-      {{> rightColumn}}
-    </div>
+    <div class="top-users-list"> {{> rightColumn}}</div>
   </div>
 </div>
