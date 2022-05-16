@@ -34,7 +34,6 @@ const tweetController = {
     catchTopUsers(req)
   ])
     .then(([tweets,topUsers])  => {
-      // res.json(topUsers)
       tweets=tweets.map(e=>({
         ...e.toJSON(),
         totalLike : e.Likes.length,
