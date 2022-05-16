@@ -64,16 +64,22 @@
 <div class="modal fade" id="user-edit-staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog" id="user-edit-modal-dialog">
     <div class="modal-content" id="user-edit-modal-content">
-      <form action="#" class="user-edit-modal-form">
+      <form name="user-edit-modal-form" class="user-edit-modal-form" enctype="multipart/form-data">
         <div class="modal-header d-flex justify-content-between" id="user-edit-modal-header">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           <h5 class="modal-title" id="user-edit-staticBackdropLabel">編輯個人資料</h5>
-          <button type="button" class="btn btn-primary user-edit-save-button">儲存</button>
+          <button type="button" class="btn btn-primary user-edit-save-button" data-id="{{queryUser.id}}" data-bs-dismiss="modal">儲存</button>
         </div>
         <div class="modal-body" id="user-edit-modal-body">
           <div class="main">
             <div class='user-banner'>
+              <label for="cover-upload-input" class="cover-upload-label">背景更新</label>
+              {{!-- <input id="cover-upload-input" name="image" type="file" style="display: none;" data-id="{{queryUser.id}}" onchange="form.submit()"/> --}}
+              <input id="cover-upload-input" name="image" type="file" style="display: none;" data-id="{{queryUser.id}}"/>
               <img class="cover" src='{{queryUser.cover}}' alt='background'/>
+
+              <label for="avatar-upload-input" class="avatar-upload-label">頭像更新</label>
+              <input id="avatar-upload-input" name="image" type="file" style="display: none;" data-id="{{queryUser.id}}"/>
               <img class='avatar' src='{{queryUser.avatar}}' alt='avatar' />
             </div>
           </div>

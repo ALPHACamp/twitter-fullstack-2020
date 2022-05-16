@@ -7,6 +7,9 @@ const userNameCounts = document.querySelector('.user-edit-modal-name-counts')
 const userIntroduction = document.querySelector('#user-edit-modal-introduction')
 const userIntroductionCounts = document.querySelector('.user-edit-modal-introduction-counts')
 
+const uploadAvatarInput = document.querySelector('#avatar-upload-input')
+// const uploadAvatarBtn = document.querySelector('.avatar-upload-link')
+
 // 點擊 "編輯個人按鈕" 計算顯示的字數
 userEditBtn.addEventListener('click', e => {
   userNameCounts.innerText = userName.value.length
@@ -27,7 +30,57 @@ userEditModal.addEventListener('keyup', e => {
   }
 })
 
-saveBtn.addEventListener('click', async e => {
+const BASE_URL = 'http://localhost:3000'
+
+// 頭像更新
+uploadAvatarInput.addEventListener('change', async e => {
+  // e.preventDefault()
   const target = e.target
-  console.log(target)
+  const queryUserId = target.dataset.id
+  const formData = new FormData()
+  console.log('target.files============================' + target.files)
+  // 抓取 input 的圖片，存入 formData 以 axios 傳入後端
+  formData.append('image', target.files[0])
+  const queryUser = await axios.post(`${BASE_URL}/api/users/${queryUserId}/avatar`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+  console.log(queryUser)
 })
+
+// userEditModal.addEventListener('click', async e => {
+//   // e.preventDefault()
+//   const target = e.target
+
+//   console.log(target)
+// })
+
+// userEditModal.addEventListener('submit', async e => {
+//   // e.preventDefault()
+//   const target = e.target
+//   const userId = target.dataset.id
+//   const formData = new FormData(userEditModal)
+//   console.log(target)
+
+//   await axios({
+//     method: 'post',
+//     url: `${BASE_URL}/api/users/${userId}`,
+//     data: formData,
+//     headers: {
+//       'Content-Type': 'multipart/form-data'
+//     }
+//   })
+// })
+
+// const BASE_URL = 'http://localhost:3000'
+
+// saveBtn.addEventListener('click', async e => {
+//   const target = e.target
+//   const userId = target.dataset.id
+
+//   const queryUser = await axios({
+//     method: 'post',
+//     url: `${BASE_URL}/api/users/${userId}`
+//   })
+// })
