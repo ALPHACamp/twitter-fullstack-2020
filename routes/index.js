@@ -25,6 +25,7 @@ router.use('/users', authenticated, users)
 router.use('/tweets', authenticated, tweets)
 router.use('/api/users', api)
 
+router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
 
 module.exports = router

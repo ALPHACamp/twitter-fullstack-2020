@@ -34,11 +34,11 @@
             </div>
             <div style="display: inline-block; width: 520px; height: 54px; position: absolute; top: 278px;">
               <label class="form-label" for="password">密碼</label>
-              <input class="form-control" id="password" type="password" name="password" placeholder="請設定密碼" required>
+              <input class="form-control" id="password" type="password" name="password" placeholder="請設定密碼" value="{{ password }}" required>
             </div>
             <div style="display: inline-block; width: 520px; height: 54px; position: absolute; top: 364px;">
               <label class="form-label" for="checkPassword">密碼確認</label>
-              <input class="form-control" id="checkPassword" type="password" name="checkPassword" placeholder="再次輸入密碼"
+              <input class="form-control" id="checkPassword" type="password" name="checkPassword" placeholder="再次輸入密碼" value="{{ checkPassword }}"
                 required>
             </div>
             <button class="btn btn-primary btn-block fs-5" type="submit"

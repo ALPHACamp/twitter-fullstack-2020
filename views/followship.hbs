@@ -116,7 +116,7 @@
             </form>
             {{else}}
             <form action="/followships" method="POST" style="display: contents;">
-              <button type="submit" class="follower-button ms-3">跟隨</button>
+              <button type="submit" class="follower-button ms-3" name="id" value="{{this.id}}">跟隨</button>
             </form>
             {{/if}}
           </div>
