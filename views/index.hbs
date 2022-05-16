@@ -106,9 +106,9 @@
                           <form action="/tweets/{{ id }}/replies" id="tweets" method="post">
                             <div>
                               <img src="{{ ../logInUser.avatar }}" class=" rounded-circle mb-5 me-3"
-                                style="width: 50px;height: 50px;maxlength=" 140"">
+                                style="width: 50px;height: 50px;">
                               <textarea name="comment" id="tweet-content" rows="5" class="form-control"
-                                placeholder="推你的回覆" required></textarea>
+                                placeholder="推你的回覆" maxlength="140" required></textarea>
                             </div>
                             <button id="submit-btn" class="btn btn-primary">推文</button>
                           </form>

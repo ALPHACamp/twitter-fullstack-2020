@@ -561,15 +561,15 @@ const userController = {
         const hash = await bcrypt.hash(password, salt)
 
         await User.update({
-            account,
-            name,
-            email,
-            password: hash
-          }, {
-            where: {
-              id: helpers.getUser(req).id
-            }
-          })
+          account,
+          name,
+          email,
+          password: hash
+        }, {
+          where: {
+            id: helpers.getUser(req).id
+          }
+        })
         req.flash('success_messages', '更改成功！')
         return res.redirect('/')
       } else if (req._parsedUrl.pathname.includes('edit')) {
