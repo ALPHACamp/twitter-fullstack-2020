@@ -49,7 +49,6 @@ const tweetController = {
     })
   ])
     .then(([tweets,topUsers])  => {
-      console.log(tweets)
       res.render('index',{tweets,topUsers})
     }).catch(err => next(err))
   },

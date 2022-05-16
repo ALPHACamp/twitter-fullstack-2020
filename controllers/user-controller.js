@@ -90,16 +90,15 @@ const userController = {
   getUser: async(req, res, next) => {
     try {
         const UserId = req.params.id
-        const data = await User.findByPk(UserId, {
+        const user = await User.findByPk(UserId, {
             include:[
                 { model: Tweet, include: [Reply] },
                 { model: Reply, include: { model: Tweet, include: [User]}},
                 { model: User, as: 'Followings' },
                 { model: User, as: 'Followers' }
-            ]        
-        })
-        if (!data) throw new Error ("User didn't exists!")
-        return res.json((data.toJSON()))
+            ]})
+        if (!user) throw new Error ("User didn't exists!")
+        res.render('user', {user: user.toJSON()})
                  
     } catch (err) {
         next(err)
@@ -122,46 +121,52 @@ getLikes: async(req, res, next) => {
       next(err)
   }
 },
-editProfile: async(req, res, next) => {
+editUser: async(req, res, next) => {
   try {
-      const currentUser = helper.getUser(req)
+      const currentUser = helpers.getUser(req)
       const UserId = req.params.id
       const user = await  User.findOne({ where: { id: UserId } , 
           include: [
                   { model: User, as: 'Followings' },
                   { model: User, as: 'Followers' } ,     
-          ],
-          raw: true
+          ]
         })
-        if (currentUser.id !== user.id) {
-          return res.json({status: 'error', message:"無法編輯其他使用者資料!"})
-        }
-        return res.json(user)
+        if (currentUser.id !== user.id) throw new Error("無法編輯其他使用者資料!")
+        console.log(currentUser.id)
+        res.render('editUser', {user:user.toJSON()} )
   } catch (err) {
       next(err)
   }
 },
-putProfile: (req, res, next) => {
-  const UserId = req.params.id
-  const { name, introduction, avatar } = req.body
-  const { file } = req
-  return Promise.all([
-      User.findByPk(UserId),
-      imgurFileHandler(file)
-    ])
-    .then(([user, filePath]) => {
-      if(!user) throw new Error ("User didn't exists!")
-      return user.update({
+putUser: async(req, res, next) => {
+  try {
+      const UserId = helpers.getUser(req).id
+      const { name, introduction } = req.body
+      const { avatar, cover } = req.files
+      let uploadAvatar = ''
+      let uploadCover = ''
+      if (avatar ) {
+        uploadAvatar = await imgurFileHandler(avatar[0]) 
+      }
+      if (cover) {
+        uploadCover = await imgurFileHandler(cover[0]) 
+      }
+      const user = await User.findByPk(UserId)
+      if(!name) throw new Error ("User name is required!")
+      if(introduction.length > 140) throw new Error ('自我介紹字數超過140字')
+      await user.update({
           name,
-          introduction,
-          avatar: filePath || user.avatar
+              introduction,
+              avatar: uploadAvatar || user.avatar,
+              cover: uploadCover ||user.cover
       })
-    })
-    .then((data) => {
-      return res.json(data)
-    })
-    .catch(err => next(err))
+      console.log(UserId)
+      res.redirect(`/users/${req.params.id}/tweets`)
+  } catch (err) {
+      next(err)
+  }
 },
+
  getFollowers: async(req, res) => {
    try {
     const UserId = req.params.id
