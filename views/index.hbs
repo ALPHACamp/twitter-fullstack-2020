@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="text-end me-1 pe-1 mb -1 pb-1">
-                <button type="submit" class="btn btn-danger rounded-pill">推文</button>
+                <button type="submit" class="btn border-0 text-light rounded-pill " style="background-color: #FF6600;">推文</button>
             </div>
         </form>
         <hr class="mt-1"style="border: 10px solid rgb(106, 106, 106);"/>
@@ -22,23 +22,74 @@
             {{#each tweets}}
             <div class="row mx-0 px-0">
                 <div class="col-1">
-                    <img src="{{this.User.avatar}}" class="rounded-circle" style="width:50px;height:50px">
+                    <a href="/users/{{this.User.id}}/tweets"><img src="{{this.User.avatar}}" class="rounded-circle" style="width:50px;height:50px"></a>
                 </div>
                 <div class="col">
                     <p>
-                        ,<span>{{this.User.name}}</span>,
-                        <span>@{{this.User.account}}</span>,
-                        <span>{{this.updatedAt}}</span>,
+                        <span>{{this.User.name}}</span> 
+                        <span>@{{this.User.account}} ‧ </span>  
+                        <span>{{this.updatedAt}}</span>
                     </p>
                     <p>{{this.description}}</p>
-                    <p>like:{{this.totalLike}} reply:{{this.totalReply}}</p>
+                    <div class="d-flex">
+                        <button type="button" class="border-0 bg-body" data-bs-toggle="modal" data-bs-target="#tweet{{this.id}}Reply"><i class="far fa-comment"></i> {{this.totalReply}}</button>
+                        <div class="modal fade" id="tweet{{this.id}}Reply" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <div>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                    </div>
+                                    <div class="modal-body row">
+                                        <div class="col-2 me-0">
+                                            <img src="{{this.User.avatar}}" class="rounded-circle" style="width:50px;height:50px">
+                                        </div>
+                                        <div class="col px-0">
+                                            <span class="fw-bold fs-6">{{this.User.name}}</span><small>@{{this.User.account}} ‧ </small><span>{{this.updatedAt}}</span>
+                                            <br/>
+                                            {{this.description}}
+                                            <br/>
+                                            <small>回覆給<span style="color:#FF6600">@{{this.User.account}}</span></small>
+                                        </div>
+                                        <br/>                                   
+                                        <form method="POST" action="/tweets/{{this.id}}/replies">
+                                            <div class="row">
+                                                <div class="col-2 me-0">
+                                                    <img src="{{../user.avatar}}" class="rounded-circle" style="width:50px;height:50px"> 
+                                                </div>
+                                                <div class="col mx-0 px-0">
+                                                    <textarea class="border-0 mt-2 mx-0 px-0" style="width:100%; border: none;outline: none;resize:none" placeholder="Leave a comment here" id="floatingTextarea2" rows="4"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="text-end">
+                                                <button type="submit" class="btn border-0 text-light rounded-pill " style="background-color: #FF6600;">回覆</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {{#if this.isLiked}}
+                            <form method="POST" action="/tweets/{{this.id}}/unlike">
+                                <button type="submit" class="border-0 bg-body"><i class="fas fa-heart text-danger text-danger"></i> {{this.totalLike}}</button>
+                            </form>
+                        {{else}}
+                            <form method="POST" action="/tweets/{{this.id}}/like">
+                                <button type="submit" class="border-0 bg-body"><i class="far fa-heart"></i> {{this.totalLike}}</button> 
+                            </form>                        
+                        {{/if}}
+                    </div>
                 </div>
             </div>
             <hr/>
             {{/each}}
         </div>
     </div>
-    <div class="col"></div>
 
-</div> 
+    <div class="col">
+        {{> right-nav}}
+    </div>
+</div>
 
