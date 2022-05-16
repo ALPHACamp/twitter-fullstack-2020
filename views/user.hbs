@@ -14,10 +14,10 @@
         <img class='avatar' src='{{queryUser.avatar}}' alt='avatar' width='20%' height='10%'/>
         <div class="buttons d-flex justify-content-end">
           {{#if queryUser.isSelf}}
-            <button
-              class='btn rounded-pill edit-button'
-              style='border: 1px solid #FF6600; color:#FF6600;'
-            >編輯個人資料</button>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn rounded-pill user-edit-modal-button" data-bs-toggle="modal" data-bs-target="#user-edit-staticBackdrop">
+              編輯個人資料
+            </button>
           {{else}}
             <div class='row'>
               <button class='btn rounded-pill message-button col'>私訊</button>
@@ -27,7 +27,6 @@
                   <button
                     type='submit'
                     class='btn rounded-pill text-light'
-                    style='background-color:#FF6600;'
                   >正在追隨</button>
                 </form>
                 {{else}}
@@ -36,7 +35,6 @@
                   <button
                     type='submit'
                     class='btn rounded-pill bg-light'
-                    style='border-color:#FF6600; color:#FF6600'
                   >跟隨</button>
                 </form>
               {{/if}}
@@ -61,3 +59,38 @@
     <div class="top-users-list"> {{> rightColumn}}</div>
   </div> 
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="user-edit-staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" id="user-edit-modal-dialog">
+    <div class="modal-content" id="user-edit-modal-content">
+      <form action="#" class="user-edit-modal-form">
+        <div class="modal-header d-flex justify-content-between" id="user-edit-modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title" id="user-edit-staticBackdropLabel">編輯個人資料</h5>
+          <button type="button" class="btn btn-primary user-edit-save-button">儲存</button>
+        </div>
+        <div class="modal-body" id="user-edit-modal-body">
+          <div class="main">
+            <div class='user-banner'>
+              <img class="cover" src='{{queryUser.cover}}' alt='background'/>
+              <img class='avatar' src='{{queryUser.avatar}}' alt='avatar' />
+            </div>
+          </div>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="user-edit-modal-name" placeholder="user-name" value="{{queryUser.name}}" maxlength="50">
+            <label for="user-edit-modal-name">名稱</label>
+            <p class="text-end"><span class="user-edit-modal-name-counts">0</span>/50</p>
+          </div>
+          <div class="form-floating">
+            <textarea class="form-control" placeholder="user-introduction" id="user-edit-modal-introduction" style="height: 100px" maxlength="160">{{queryUser.introduction}}</textarea>
+            <label for="user-edit-modal-introduction">自我介紹</label>
+            <p class="text-end"><span class="user-edit-modal-introduction-counts">0</span>/160</p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/javascripts/user.js"></script>
