@@ -30,10 +30,14 @@
 /* 左側 */
 .left_nav {
   float: left;
-  width: 20%;
+  width: 178px;
+  height: 1200px;
+  left: 134px;
+  top: 0px;
   position: fixed;
   top: 15px;
-  left: 5%;
+  left: 280px;
+  z-index: 10;
 }
 
 /* 右側 */
@@ -87,4 +91,9 @@
   background: transparent;
   border-width: 0px;
   outline: none;
+}
+
+/* modal */
+.modal-backdrop {
+  z-index: 9;
 }

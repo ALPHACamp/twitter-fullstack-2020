@@ -89,17 +89,21 @@ const userController = {
         include: [
           {
             model: Tweet,
-            include: [{ model: Reply, attributes: ['id'] }, { model: Like, attributes: ['id'] }]
+            include: [
+              { model: Reply, attributes: ['id'] },
+              { model: Like, attributes: ['id'] }
+            ]
           },
           { model: User, as: 'Followings', attributes: ['id'] },
           { model: User, as: 'Followers', attributes: ['id'] }
         ],
-        order: [
-          [Tweet, 'createdAt', 'DESC']
-        ]
+        order: [[Tweet, 'createdAt', 'DESC']]
       })
       if (!paramsUser) throw new Error("user didn't exist!")
-      const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
+      const isFollowed =
+        helpers.getUser(req) &&
+        helpers.getUser(req).Followings &&
+        helpers.getUser(req).Followings.some(f => f.id === Number(userId))
 
       // 右側Top10User
       const users = await User.findAll({
@@ -107,13 +111,22 @@ const userController = {
         attributes: ['id', 'name', 'account', 'avatar'],
         include: { model: User, as: 'Followers' }
       })
-      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
-        return {
-          ...u,
-          Followers: u.Followers.length,
-          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
-        }
-      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
+      const topUsers = users
+        .map(user => {
+          return user.get({ plain: true })
+        })
+        .map(u => {
+          return {
+            ...u,
+            Followers: u.Followers.length,
+            isFollowed:
+              helpers.getUser(req) &&
+              helpers.getUser(req).Followings &&
+              helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+          }
+        })
+        .sort((a, b) => b.Followers - a.Followers)
+        .slice(0, 10)
 
       return res.render('user', {
         user: paramsUser.toJSON(),
@@ -139,17 +152,19 @@ const userController = {
                   { model: User, attributes: ['id', 'name', 'account'] },
                   { model: Reply, attributes: ['id'] }
                 ]
-              }]
+              }
+            ]
           },
           { model: User, as: 'Followings', attributes: ['id'] },
           { model: User, as: 'Followers', attributes: ['id'] }
         ],
-        order: [
-          [Like, 'createdAt', 'DESC']
-        ]
+        order: [[Like, 'createdAt', 'DESC']]
       })
       if (!user) throw new Error("user didn't exist!")
-      const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
+      const isFollowed =
+        helpers.getUser(req) &&
+        helpers.getUser(req).Followings &&
+        helpers.getUser(req).Followings.some(f => f.id === Number(userId))
 
       // 右側topUsers, sort by跟隨者follower數量 & isFollowed 按鈕
       const users = await User.findAll({
@@ -157,18 +172,28 @@ const userController = {
         attributes: ['id', 'name', 'account', 'avatar'],
         include: { model: User, as: 'Followers' }
       })
-      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
-        return {
-          ...u,
-          Followers: u.Followers.length,
-          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
-        }
-      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
+      const topUsers = users
+        .map(user => {
+          return user.get({ plain: true })
+        })
+        .map(u => {
+          return {
+            ...u,
+            Followers: u.Followers.length,
+            isFollowed:
+              helpers.getUser(req) &&
+              helpers.getUser(req).Followings &&
+              helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+          }
+        })
+        .sort((a, b) => b.Followers - a.Followers)
+        .slice(0, 10)
       return res.render('likes', {
         user: user.toJSON(),
         tweets: user.toJSON().Likes,
         isFollowed,
-        topUsers
+        topUsers,
+        page: 'user'
       })
     } catch (err) {
       next(err)
@@ -178,30 +203,46 @@ const userController = {
     try {
       const userId = req.params.id
       const user = await User.findByPk(userId, {
-        attributes: ['id', 'name', 'avatar', 'account', 'cover', 'introduction'],
+        attributes: [
+          'id',
+          'name',
+          'avatar',
+          'account',
+          'cover',
+          'introduction'
+        ],
         include: [
           {
             model: Reply,
             attributes: ['comment', 'createdAt'],
-            include: [{
-              model: Tweet,
-              attributes: ['description'],
-              include: [{
-                model: User,
-                attributes: ['id', 'account']
-              }]
-            }]
+            include: [
+              {
+                model: Tweet,
+                attributes: ['description'],
+                include: [
+                  {
+                    model: User,
+                    attributes: ['id', 'account']
+                  }
+                ]
+              }
+            ]
           },
-          { model: Tweet, attributes: ['description', 'createdAt'], order: ['createdAt', 'ASC'] },
+          {
+            model: Tweet,
+            attributes: ['description', 'createdAt'],
+            order: ['createdAt', 'ASC']
+          },
           { model: User, as: 'Followings', attributes: ['id'] },
           { model: User, as: 'Followers', attributes: ['id'] }
         ],
-        order: [
-          [Reply, 'createdAt', 'DESC']
-        ]
+        order: [[Reply, 'createdAt', 'DESC']]
       })
       if (!user) throw new Error("user didn't exist!")
-      const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
+      const isFollowed =
+        helpers.getUser(req) &&
+        helpers.getUser(req).Followings &&
+        helpers.getUser(req).Followings.some(f => f.id === Number(userId))
 
       // 右側topUsers, sort by跟隨者follower數量 & isFollowed 按鈕
       const users = await User.findAll({
@@ -209,17 +250,27 @@ const userController = {
         attributes: ['id', 'name', 'account', 'avatar'],
         include: { model: User, as: 'Followers' }
       })
-      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
-        return {
-          ...u,
-          Followers: u.Followers.length,
-          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
-        }
-      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
+      const topUsers = users
+        .map(user => {
+          return user.get({ plain: true })
+        })
+        .map(u => {
+          return {
+            ...u,
+            Followers: u.Followers.length,
+            isFollowed:
+              helpers.getUser(req) &&
+              helpers.getUser(req).Followings &&
+              helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+          }
+        })
+        .sort((a, b) => b.Followers - a.Followers)
+        .slice(0, 10)
       return res.render('replies', {
         user: user.toJSON(),
         isFollowed,
-        topUsers
+        topUsers,
+        page: 'user'
       })
     } catch (err) {
       next(err)
@@ -324,29 +375,42 @@ const userController = {
       })
       const data = currentUser.toJSON().Followings.map(cf => ({
         ...cf,
-        isFollowed: helpers.getUser(req) && helpers.getUser(req).Followers && helpers.getUser(req).Followings.some(f => f.id === cf.id)
-
+        isFollowed:
+          helpers.getUser(req) &&
+          helpers.getUser(req).Followers &&
+          helpers.getUser(req).Followings.some(f => f.id === cf.id)
       }))
       // console.log('data', data)
+      
       // 右側Top10User
       const users = await User.findAll({
         where: { isAdmin: false },
         attributes: ['id', 'name', 'account', 'avatar'],
         include: { model: User, as: 'Followers' }
       })
-      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
-        return {
-          ...u,
-          Followers: u.Followers.length,
-          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
-        }
-      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
+      const topUsers = users
+        .map(user => {
+          return user.get({ plain: true })
+        })
+        .map(u => {
+          return {
+            ...u,
+            Followers: u.Followers.length,
+            isFollowed:
+              helpers.getUser(req) &&
+              helpers.getUser(req).Followings &&
+              helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+          }
+        })
+        .sort((a, b) => b.Followers - a.Followers)
+        .slice(0, 10)
 
       return res.render('followings', {
         currentUser: currentUser.toJSON(),
         followings: data,
         currentUserId,
-        topUsers
+        topUsers,
+        page: 'user'
       })
     } catch (err) {
       next(err)
@@ -381,19 +445,29 @@ const userController = {
         attributes: ['id', 'name', 'account', 'avatar'],
         include: { model: User, as: 'Followers' }
       })
-      const topUsers = users.map(user => { return user.get({ plain: true }) }).map(u => {
-        return {
-          ...u,
-          Followers: u.Followers.length,
-          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings && helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
-        }
-      }).sort((a, b) => b.Followers - a.Followers).slice(0, 10)
+      const topUsers = users
+        .map(user => {
+          return user.get({ plain: true })
+        })
+        .map(u => {
+          return {
+            ...u,
+            Followers: u.Followers.length,
+            isFollowed:
+              helpers.getUser(req) &&
+              helpers.getUser(req).Followings &&
+              helpers.getUser(req).Followings.some(f => f.id === Number(u.id))
+          }
+        })
+        .sort((a, b) => b.Followers - a.Followers)
+        .slice(0, 10)
 
       return res.render('followers', {
         currentUser: currentUser.toJSON(),
         followers: data,
         currentUserId,
-        topUsers
+        topUsers,
+        page: 'user'
       })
     } catch (err) {
       next(err)

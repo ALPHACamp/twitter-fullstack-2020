@@ -13,14 +13,12 @@
   align-items: flex-start;
   padding: 0px;
   gap: 16px;
-
   width: 937px;
   height: 103px;
 }
+
 .tweet_btn {
   position: absolute;
-
   right: 0;
-
   bottom: 0;
 }
