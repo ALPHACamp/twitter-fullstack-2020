@@ -17,13 +17,11 @@ router.get('/logout', loginController.logout)
 router.get('/signup', loginController.signUpPage)
 router.post('/signup', loginController.signUp)
 
-
 router.delete('/followships/:userId', authenticated, userController.removeFollowing)
 router.post('/followships', authenticated, userController.addFollowing)
 
 router.use('/users', authenticated, users)
 router.use('/tweets', authenticated, tweets)
-
 
 router.use('/', generalErrorHandler)
 

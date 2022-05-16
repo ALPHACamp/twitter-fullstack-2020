@@ -1,194 +1,199 @@
-<div class="row d-flex justify-content-start" style="position:relative;">
-  {{!-- header --}}
-  <div class="col-8" style="outline: 1px solid #E6ECF0;">
-    <div class="container-fluid mt-3 ps-0 d-flex">
-      <button class="btn" type="button" onclick="javascript:history.back()">
-        <i class="fas fa-arrow-left"></i>
-      </button>
-      <div class="container-fluid px-0 ms-2">
-        <p class="fs-5 mb-0 fw-bold">{{user.name}}</p>
-        <p class="fs-6 mb-0 text-muted">{{user.Tweets.length}}推文</p>
-      </div>
-    </div>
-
-    {{!-- header body --}}
-    <div class="row my-2 d-flex justify-content-between">
-      <div class="card mb-0 px-0" style="position: relative; border-bottom:none;">
-        <img src="{{user.cover}}" class="card-img-top" alt="cover" style="height: 200px ;width: 570px;object-fit:fill;">
-        <img src="{{user.avatar}}" alt="avatar"
-          style="height: 140px ;width: 141px; position:absolute; top: 124px;left: 16px;border:4px white solid; border-radius: 50%;">
-        <!-- Button trigger modal -->
-        {{#ifCond user.id loginUser.id}}
-        <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="modal-button fw-bold">編輯個人資料</button>
-        {{else}}
-        {{#if user.isFollowed}}
-        <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: contents;">
-          <button type="submit" class="user-following-button text-white">正在跟隨</button>
-        </form>
-        {{else}}
-        <form action="/followships" method="POST" style="display: contents;">
-          <button type="submit" class="user-follower-button ms-3" name="id" value="{{user.id}}">跟隨</button>
-        </form>
-        {{/if}}
-        {{/ifCond}}
-        <div class="card-body mt-5">
-          <p class="fw-bold fs-5 mb-0">{{user.name}}</p>
-          <p class="fs-6 mb-0 text-muted">@{{user.account}}</p>
-          <p class="card-text">{{user.introduction}}</p>
-          <p class="card-text">
-            <a class="text-decoration-none text-secondary" href='/users/{{user.id}}/followings?type=followings'>
-              <small class="following">{{user.followingCount}}個跟隨中</small>
-            </a>
-            <a class="text-decoration-none text-secondary" href='/users/{{user.id}}/followers?type=followers'>
-              <small class="follower ms-3">{{user.followerCount}}位跟隨者</small>
-            </a>
-          </p>
+{{>left-sidebar route='user'}}
+<div class="col-8">
+  <div class="row d-flex justify-content-start" style="position:relative;">
+    {{!-- header --}}
+    <div class="col-8" style="outline: 1px solid #E6ECF0;">
+      <div class="container-fluid mt-3 ps-0 d-flex">
+        <button class="btn" type="button" onclick="javascript:history.back()">
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="container-fluid px-0 ms-2">
+          <p class="fs-5 mb-0 fw-bold">{{user.name}}</p>
+          <p class="fs-6 mb-0 text-muted">{{user.Tweets.length}}推文</p>
         </div>
       </div>
-    </div>
-    <ul class="nav nav-tabs mb-0">
-      <li class="nav-item">
-        <a class="nav-link fw-bold {{#if tweetsSelect}}active{{/if}}"
-          href="/users/{{user.id}}/tweets?type=tweets">推文</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link fw-bold {{#if relpiesSelect}}active{{/if}}"
-          href="/users/{{user.id}}/replies?type=relpies">回覆</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link fw-bold {{#if likesSelect}}active{{/if}}"
-          href="/users/{{user.id}}/likes?type=likes">喜歡的內容</a>
-      </li>
-    </ul>
-    {{!-- tweets --}}
-    {{#if tweetsSelect}}
-    {{#each user.Tweets}}
-    <div class="row mt-2 py-2" style="border-bottom-style:solid; border-color:#e4e7eb; border-width:1px;">
-      <div class="col-2 d-flex flex-row-reverse">
-        <a class="text-decoration-none text-dark" href="/tweets/{{this.id}}">
-          <img src="{{../user.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
-        </a>
+
+      {{!-- header body --}}
+      <div class="row my-2 d-flex justify-content-between">
+        <div class="card mb-0 px-0" style="position: relative; border-bottom:none;">
+          <img src="{{user.cover}}" class="card-img-top" alt="cover"
+            style="height: 200px ;width: 570px;object-fit:fill;">
+          <img src="{{user.avatar}}" alt="avatar"
+            style="height: 140px ;width: 141px; position:absolute; top: 124px;left: 16px;border:4px white solid; border-radius: 50%;">
+          <!-- Button trigger modal -->
+          {{#ifCond user.id loginUser.id}}
+          <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="modal-button fw-bold">編輯個人資料</button>
+          {{else}}
+          {{#if user.isFollowed}}
+          <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: contents;">
+            <button type="submit" class="user-following-button text-white">正在跟隨</button>
+          </form>
+          {{else}}
+          <form action="/followships" method="POST" style="display: contents;">
+            <button type="submit" class="user-follower-button ms-3" name="id" value="{{user.id}}">跟隨</button>
+          </form>
+          {{/if}}
+          {{/ifCond}}
+          <div class="card-body mt-5">
+            <p class="fw-bold fs-5 mb-0">{{user.name}}</p>
+            <p class="fs-6 mb-0 text-muted">@{{user.account}}</p>
+            <p class="card-text">{{user.introduction}}</p>
+            <p class="card-text">
+              <a class="text-decoration-none text-secondary" href='/users/{{user.id}}/followings?type=followings'>
+                <small class="following">{{user.followingCount}}個跟隨中</small>
+              </a>
+              <a class="text-decoration-none text-secondary" href='/users/{{user.id}}/followers?type=followers'>
+                <small class="follower ms-3">{{user.followerCount}}位跟隨者</small>
+              </a>
+            </p>
+          </div>
+        </div>
       </div>
-      <div class="col-10">
-        <a class="text-decoration-none text-dark" href="/tweets/{{this.id}}">
+      <ul class="nav nav-tabs mb-0">
+        <li class="nav-item">
+          <a class="nav-link fw-bold {{#if tweetsSelect}}active{{/if}}"
+            href="/users/{{user.id}}/tweets?type=tweets">推文</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold {{#if relpiesSelect}}active{{/if}}"
+            href="/users/{{user.id}}/replies?type=relpies">回覆</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold {{#if likesSelect}}active{{/if}}"
+            href="/users/{{user.id}}/likes?type=likes">喜歡的內容</a>
+        </li>
+      </ul>
+      {{!-- tweets --}}
+      {{#if tweetsSelect}}
+      {{#each user.Tweets}}
+      <div class="row mt-2 py-2" style="border-bottom-style:solid; border-color:#e4e7eb; border-width:1px;">
+        <div class="col-2 d-flex flex-row-reverse">
+          <a class="text-decoration-none text-dark" href="/tweets/{{this.id}}">
+            <img src="{{../user.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
+          </a>
+        </div>
+        <div class="col-10">
+          <a class="text-decoration-none text-dark" href="/tweets/{{this.id}}">
+            <div class="d-flex flex-row align-items-center">
+              <p class="fw-bold" style="font-size: 16px; margin: 0 0;">{{../user.name}}</p>
+              <p style="font-size: 14px; margin: 0 8px; color: #6C757D;">@{{../user.account}}．{{relativeTimeFromNow
+                this.createdAt}}</p>
+            </div>
+            <div class="mt-2">
+              <p>{{this.description}}</p>
+            </div>
+          </a>
+          <div>
+            <i class="far fa-comment me-3">
+              <span class="ms-2 fw-normal">{{this.Replies.length}}</span>
+            </i>
+            <i class="far fa-heart mx-3">
+              <span class="ms-2 fw-normal">{{this.Likes.length}}</span>
+            </i>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      {{/if}}
+
+      {{!-- replies --}}
+      {{#if relpiesSelect}}
+      {{#each user.Replies}}
+      <div class="row mt-2 py-2" style="border-bottom-style:solid; border-color:#e4e7eb; border-width:1px;">
+        <div class="col-2 d-flex flex-row-reverse">
+          <img src="{{../user.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
+        </div>
+        <div class="col-10">
           <div class="d-flex flex-row align-items-center">
             <p class="fw-bold" style="font-size: 16px; margin: 0 0;">{{../user.name}}</p>
             <p style="font-size: 14px; margin: 0 8px; color: #6C757D;">@{{../user.account}}．{{relativeTimeFromNow
               this.createdAt}}</p>
           </div>
-          <div class="mt-2">
-            <p>{{this.description}}</p>
+          <div class="d-flex flex-row align-items-center">
+            <p style="font-size: 14px; margin: 0px; color: #6C757D;">回覆 @{{this.Tweet.User.account}}</p>
           </div>
-        </a>
-        <div>
-          <i class="far fa-comment me-3">
-            <span class="ms-2 fw-normal">{{this.Replies.length}}</span>
-          </i>
-          <i class="far fa-heart mx-3">
-            <span class="ms-2 fw-normal">{{this.Likes.length}}</span>
-          </i>
-        </div>
-      </div>
-    </div>
-    {{/each}}
-    {{/if}}
-
-    {{!-- replies --}}
-    {{#if relpiesSelect}}
-    {{#each user.Replies}}
-    <div class="row mt-2 py-2" style="border-bottom-style:solid; border-color:#e4e7eb; border-width:1px;">
-      <div class="col-2 d-flex flex-row-reverse">
-        <img src="{{../user.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
-      </div>
-      <div class="col-10">
-        <div class="d-flex flex-row align-items-center">
-          <p class="fw-bold" style="font-size: 16px; margin: 0 0;">{{../user.name}}</p>
-          <p style="font-size: 14px; margin: 0 8px; color: #6C757D;">@{{../user.account}}．{{relativeTimeFromNow
-            this.createdAt}}</p>
-        </div>
-        <div class="d-flex flex-row align-items-center">
-          <p style="font-size: 14px; margin: 0px; color: #6C757D;">回覆 @{{this.Tweet.User.account}}</p>
-        </div>
-        <div class="mt-2">
-          <p>{{this.comment}}</p>
-        </div>
-      </div>
-    </div>
-    {{/each}}
-    {{/if}}
-
-    {{!-- likes --}}
-    {{#if likesSelect}}
-    {{#each user.Likes}}
-    <div class="row mt-2 py-2" style="border-bottom-style:solid; border-color:#e4e7eb; border-width:1px;">
-      <div class="col-2 d-flex flex-row-reverse">
-        <a class="text-decoration-none text-dark" href="/users/{{this.Tweet.UserId}}">
-          <img src="{{this.Tweet.User.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
-        </a>
-      </div>
-      <div class="col-10">
-        <div class="d-flex flex-row align-items-center">
-          <a class="text-decoration-none text-dark" href="/users/{{this.Tweet.UserId}}">
-            <p class="fw-bold" style="font-size: 16px; margin: 0 0;">{{this.Tweet.User.name}}</p>
-            <p style="font-size: 14px; margin: 0 8px; color: #6C757D;">
-              @{{this.Tweet.User.account}}．{{relativeTimeFromNow this.createdAt}}</p>
-          </a>
-        </div>
-        <div class="mt-2">
-          <a class="text-decoration-none text-dark" href="/tweets/{{this.Tweet.id}}">
-            <p>{{this.Tweet.description}}</p>
-          </a>
-        </div>
-        <div>
-          <i class="far fa-comment me-3">
-            <span class="ms-2 fw-normal">{{this.Tweet.Replies.length}}</span>
-          </i>
-          <i class="fa-solid fa-heart mx-3" style="color:red;">
-            <span class="ms-2 fw-normal" style="color: black;">{{this.Tweet.Likes.length}}</span>
-          </i>
-        </div>
-      </div>
-    </div>
-    {{/each}}
-    {{/if}}
-  </div>
-
-  {{!-- 追隨者Top10 的使用者 --}}
-  <div class="container col-3 mt-0 mx-3" style="padding: 0 0;width: 250px; position:fixed; top: 0px; right: 100px;">
-    <div class="bg-light" style="border-radius: 15px;">
-      <div class="container d-flex align-items-center mt-3">
-        <h4 class="fw-bold mt-4">跟隨誰</h4>
-      </div>
-      <div class="mt-3" style="height: 1px; width: auto; border-radius: 0px; background: #E6ECF0;"></div>
-      {{#each users}}
-      <div class="d-flex flex-row align-items-center ms-3 py-2">
-        <div class="d-flex align-items-center mx-0">
-          <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
-            <img src="{{this.avatar}}" alt="avatar" style="height: 40px ;width: 40px; border-radius: 50%;">
-          </a>
-        </div>
-        <div class="mx-2">
-          <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
-            <p class="following-user fw-bold" style="font-size: 16px; margin: 0 0;">{{this.name}}</p>
-            <p class="text-muted" style="font-size: 14px; margin: 0 0;">@{{this.account}}</p>
-          </a>
-        </div>
-        <div class="d-flex align-items-center">
-          {{#if this.isFollowed}}
-          <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-            <button type="submit" class="following-button text-white">正在跟隨</button>
-          </form>
-          {{else}}
-          <form action="/followships" method="POST" style="display: contents;">
-            <button type="submit" class="follower-button ms-3" name="id" value="{{this.id}}">跟隨</button>
-          </form>
-          {{/if}}
+          <div class="mt-2">
+            <p>{{this.comment}}</p>
+          </div>
         </div>
       </div>
       {{/each}}
+      {{/if}}
+
+      {{!-- likes --}}
+      {{#if likesSelect}}
+      {{#each user.Likes}}
+      <div class="row mt-2 py-2" style="border-bottom-style:solid; border-color:#e4e7eb; border-width:1px;">
+        <div class="col-2 d-flex flex-row-reverse">
+          <a class="text-decoration-none text-dark" href="/users/{{this.Tweet.UserId}}">
+            <img src="{{this.Tweet.User.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
+          </a>
+        </div>
+        <div class="col-10">
+          <div class="d-flex flex-row align-items-center">
+            <a class="text-decoration-none text-dark" href="/users/{{this.Tweet.UserId}}">
+              <p class="fw-bold" style="font-size: 16px; margin: 0 0;">{{this.Tweet.User.name}}</p>
+              <p style="font-size: 14px; margin: 0 8px; color: #6C757D;">
+                @{{this.Tweet.User.account}}．{{relativeTimeFromNow this.createdAt}}</p>
+            </a>
+          </div>
+          <div class="mt-2">
+            <a class="text-decoration-none text-dark" href="/tweets/{{this.Tweet.id}}">
+              <p>{{this.Tweet.description}}</p>
+            </a>
+          </div>
+          <div>
+            <i class="far fa-comment me-3">
+              <span class="ms-2 fw-normal">{{this.Tweet.Replies.length}}</span>
+            </i>
+            <i class="fa-solid fa-heart mx-3" style="color:red;">
+              <span class="ms-2 fw-normal" style="color: black;">{{this.Tweet.Likes.length}}</span>
+            </i>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      {{/if}}
+    </div>
+
+    {{!-- 追隨者Top10 的使用者 --}}
+    <div class="container col-3 mt-0 mx-3" style="padding: 0 0;width: 250px; position:fixed; top: 0px; right: 100px;">
+      <div class="bg-light" style="border-radius: 15px;">
+        <div class="container d-flex align-items-center mt-3">
+          <h4 class="fw-bold mt-4">跟隨誰</h4>
+        </div>
+        <div class="mt-3" style="height: 1px; width: auto; border-radius: 0px; background: #E6ECF0;"></div>
+        {{#each users}}
+        <div class="d-flex flex-row align-items-center ms-3 py-2">
+          <div class="d-flex align-items-center mx-0">
+            <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
+              <img src="{{this.avatar}}" alt="avatar" style="height: 40px ;width: 40px; border-radius: 50%;">
+            </a>
+          </div>
+          <div class="mx-2">
+            <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
+              <p class="following-user fw-bold" style="font-size: 16px; margin: 0 0;">{{this.name}}</p>
+              <p class="text-muted" style="font-size: 14px; margin: 0 0;">@{{this.account}}</p>
+            </a>
+          </div>
+          <div class="d-flex align-items-center">
+            {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+              <button type="submit" class="following-button text-white">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/followships" method="POST" style="display: contents;">
+              <button type="submit" class="follower-button ms-3" name="id" value="{{this.id}}">跟隨</button>
+            </form>
+            {{/if}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
     </div>
   </div>
 </div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -230,7 +235,8 @@
           </div>
           <div class="form-row mb-3 p-2">
             <label class="form-label fw-bold" for="introduction">自我介紹</label>
-            <textarea class="form-control" id="introduction" name="introduction" rows="4" required>{{user.introduction}}</textarea>
+            <textarea class="form-control" id="introduction" name="introduction" rows="4"
+              required>{{user.introduction}}</textarea>
             <p class="text-end text-muted now1" style="font-size: 0.98em;">{{user.introduction.length}}/160</p>
           </div>
         </div>
