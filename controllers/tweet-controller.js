@@ -1,9 +1,10 @@
 const { User, Tweet, Reply, Like } = require('../models')
+const helpers = require('../_helpers')
 
 const tweetController = {
   getTweets: (req, res, next) => {
-    const loginUser = req.user.id
-    if (req.user.role === 'admin') {
+    const loginUser = helpers.getUser(req).id
+    if (helpers.getUser(req).role === 'admin') {
       req.flash('error_messages', '無使用權限')
       res.redirect('/admin/tweets')
     } else {
@@ -49,11 +50,11 @@ const tweetController = {
     }
   },
   getTweet: (req, res, next) => {
-    const loginUser = req.user.id
+    const loginUser = helpers.getUser(req).id
     if (!loginUser) {
       req.flash('error_messages', '帳號不存在')
       res.redirect('/signin')
-    } else if (req.user.role === 'admin') {
+    } else if (helpers.getUser(req).role === 'admin') {
       req.flash('error_messages', '無使用權限')
       res.redirect('/admin/tweets')
     }
