@@ -189,6 +189,14 @@ h5 {
     font-size: 1rem !important;
     font-weight: 600 !important;
 }
+.btn-round i{
+    width: 40px;
+    height: 40px;
+    border: 1px solid #FF6600;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 16px;
+}
 .user-info{
     padding-left: 16px;
     font-size: 14px;
