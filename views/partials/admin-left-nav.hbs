@@ -1,10 +1,10 @@
 <div class="container d-flex align-items-start flex-column mb-3" style="height:100%">
   <nav class="nav flex-column p-2">
-    <a class="nav-link fs-5 fw-bold text-dark my-1 px-1" href="/admin/tweets">
+    <a class="nav-link fs-5 fw-bold text-dark my-2 px-1" href="/admin/tweets">
       <i class="fas fa-house-user"></i>
       <span class="ms-2">推文清單</span>
     </a>
-    <a class="nav-link fs-5 fw-bold text-dark my-1 px-1" href="/admin/users">
+    <a class="nav-link fs-5 fw-bold text-dark my-2 px-1" href="/admin/users">
       <i class="fas fa-user"></i>
       <span class="ms-2 px-1">使用者列表</span>
     </a>
@@ -12,32 +12,4 @@
   <nav class="nav flex-column mt-auto p-2">
     <a class="nav-link fs-5 fw-bold text-dark my-1 px-1" href="/logout"><i class="fas fa-sign-out-alt"></i> 登出</a>
   </nav>
-</div>
-
-<div class="modal fade" id="tweets" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="row mx-0 px-0">
-            <div class="col-2 pt-1">
-              <img src="{{user.avatar}}" class="rounded-circle" style="width:50px;height:50px;">
-            </div>
-            <div class="col pe-0">
-              <textarea class="border-0 mt-2 " style="width:100%; border: none;outline: none;resize:none"
-                placeholder="Leave a comment here" id="floatingTextarea2" rows="4"></textarea>
-            </div>
-          </div>
-          <div class="text-end me-1 pe-1 mb -1 pb-1">
-            <button type="submit" class="btn btn-danger rounded-pill">推文</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 </div>

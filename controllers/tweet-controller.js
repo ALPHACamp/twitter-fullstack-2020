@@ -3,6 +3,7 @@ const db = require('../models')
 const { Tweet, User, Like, Reply, sequelize } = db
 const { catchTopUsers} = require('../helpers/sequelize-helper')
 const helpers = require('../_helpers')
+const tweet = require("../models/tweet")
 const tweetController = {
   getTweets: (req, res, next) => {
     const limit = Number(req.query.limit) || 10
@@ -15,21 +16,12 @@ const tweetController = {
         duplicating: false
       }, {
         model: Like,
-        attributes: [],
         duplicating: false
       }, {
         model: Reply,
-        attributes: [],
         duplicating: false
       }],
-      attributes: {
-        include: [
-          [sequelize.fn('COUNT', sequelize.col('Likes.id')), 'totalLike'],
-          [sequelize.fn("MAX", sequelize.fn('IF',sequelize.literal('`Likes`.`userId` - '+helpers.getUser(req).id+' = 0'),1,0)),'isLiked'],
-          [sequelize.fn('COUNT', sequelize.col('Replies.id')), 'totalReply']
-        ]
-      },
-      group: 'id', order: [['createdAt', 'DESC']], limit, offset, raw: true, nest: true,
+      order: [['createdAt', 'DESC']], limit, offset,
     }),
     catchTopUsers(req)
   ])
