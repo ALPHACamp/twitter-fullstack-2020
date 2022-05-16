@@ -3,6 +3,7 @@ const db = require('../models')
 const helpers = require('../_helpers')
 const { User, Tweet, Reply, Like } = db
 const { imgurFileHandler } = require('../helpers/file-helpers') 
+const { Op } = require("sequelize")
 const userController = {
   signInPage: (req, res) => {
     res.render('signin')
@@ -90,6 +91,7 @@ const userController = {
   getUser: async(req, res, next) => {
     try {
         const UserId = req.params.id
+        
         const user = await User.findByPk(UserId, {
             include:[
                 { model: Tweet, include: [Reply] },
@@ -98,6 +100,7 @@ const userController = {
                 { model: User, as: 'Followers' }
             ]})
         if (!user) throw new Error ("User didn't exists!")
+        console.log(user)
         res.render('user', {user: user.toJSON()})
                  
     } catch (err) {
@@ -115,8 +118,8 @@ getLikes: async(req, res, next) => {
           ]
       })
       if (!user) throw new Error ("User didn't exists!")
-      
-      return res.json((user.toJSON()))
+      console.log(user)
+      return res.render('user', {user:user.toJSON()})
   } catch (err) {
       next(err)
   }
@@ -131,9 +134,8 @@ editUser: async(req, res, next) => {
                   { model: User, as: 'Followers' } ,     
           ]
         })
-        if (currentUser.id !== user.id) throw new Error("無法編輯其他使用者資料!")
-        console.log(currentUser.id)
-        res.render('editUser', {user:user.toJSON()} )
+        if (currentUser.id !== user.id) throw new Error("無法編輯他人資料!")
+        res.render('editUser',{user: user.toJSON()})
   } catch (err) {
       next(err)
   }
@@ -161,7 +163,7 @@ putUser: async(req, res, next) => {
               cover: uploadCover ||user.cover
       })
       console.log(UserId)
-      res.redirect(`/users/${req.params.id}/tweets`)
+      res.redirect(`/users/${UserId}/tweets`)
   } catch (err) {
       next(err)
   }

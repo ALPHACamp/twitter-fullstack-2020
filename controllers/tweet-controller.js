@@ -1,6 +1,7 @@
 const { Op } = require("sequelize")
 const db = require('../models')
 const { Tweet, User, Like, Reply, sequelize } = db
+const { catchTopUsers} = require('../helpers/sequelize-helper')
 const helpers = require('../_helpers')
 const tweetController = {
   getTweets: (req, res, next) => {
@@ -30,25 +31,10 @@ const tweetController = {
       },
       group: 'id', order: [['createdAt', 'DESC']], limit, offset, raw: true, nest: true,
     }),
-    User.findAll({
-      where:{
-        id:{[Op.ne]: helpers.getUser(req).id}
-      },
-      include:{
-        model:User, as:'Followings', attributes:[],  duplicating:false,
-        through:{
-          attributes:[]
-        }
-      },
-      attributes:['id',"name",'account','avatar',
-        [sequelize.fn('COUNT',sequelize.col('Followings.id')),'totalFollower'],
-        [sequelize.fn('MAX', sequelize.fn('IF',sequelize.literal('`Followings`.`id` - '+helpers.getUser(req).id+' = 0'),1,0)),'isFollowed'],
-      ],
-      group:'id',
-      order:[[sequelize.col('totalFollower'),'DESC']], limit, raw: true, nest: true,
-    })
+    catchTopUsers(req)
   ])
     .then(([tweets,topUsers])  => {
+      // res.json(topUsers)
       res.render('index',{tweets,topUsers})
     }).catch(err => next(err))
   },
