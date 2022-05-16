@@ -20,7 +20,7 @@
             <a class="btn-round ring-button"><i class="btn-ring " data-user-id="31"></i></a>
               {{#if queryUser.isFollowed}}
                 <form action='/followships/{{queryUser.id}}?_method=DELETE' method='POST' class="mb-0">
-                  <button type="submit" class="btn btn-primary">正在追隨</button>
+                  <button type="submit" class="btn btn-primary">正在跟隨</button>
                 </form>
                 {{else}}
                 <form action='/followships' method='POST' class="mb-0">

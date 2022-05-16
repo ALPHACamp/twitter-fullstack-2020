@@ -12,7 +12,7 @@
         {{#if this.isSelf}}
           {{#if this.isFollowed}}
           <form action='/followships/{{this.id}}?_method=DELETE' method='POST'>
-            <button type="submit" class="btn btn-primary">正在追隨</button>
+            <button type="submit" class="btn btn-primary">正在跟隨</button>
           </form>
           {{else}}
           <form action='/followships' method='POST'>
