@@ -136,7 +136,7 @@ const userController = {
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
-      res.render('user', {
+      return res.render('user', {
         queryUser,
         tweets,
         followships: followshipData,
@@ -206,7 +206,7 @@ const userController = {
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
-      res.render('user', {
+      return res.render('user', {
         queryUser,
         replies,
         followships: followshipData,
@@ -261,7 +261,7 @@ const userController = {
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
-      res.render('user', {
+      return res.render('user', {
         queryUser,
         followships: followshipData,
         tab: 'getLikedTweets'
@@ -323,7 +323,7 @@ const userController = {
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
-      res.render('followship', {
+      return res.render('followship', {
         queryUser, // display the followers of user, including the followings and followers
         followships: followshipData, // rightColumn
         tab: 'getFollowers'
@@ -465,9 +465,21 @@ const userController = {
       next(err)
     }
   },
-  getUser: async (req, res, next) => {
+  editUserPage: async (req, res, next) => {
     try {
-      res.render('edit')
+      const userId = Number(helpers.getUser(req).id)
+      const queryUserId = Number(req.params.id) // other user
+      if (userId !== queryUserId) {
+        throw new Error('您沒有權限瀏覽他人頁面 !')
+      }
+
+      const queryUserData = await User.findByPk(queryUserId)
+      if (!queryUserData) throw new Error('使用者不存在 !')
+
+      const queryUser = queryUserData.toJSON()
+      delete queryUser.password
+
+      return res.render('edit', { queryUser })
     } catch (err) {
       next(err)
     }

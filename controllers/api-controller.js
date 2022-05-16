@@ -4,7 +4,8 @@ const helpers = require('../_helpers')
 const apiController = {
   getUser: async (req, res, next) => {
     try {
-      console.log(req.body)
+      console.log(req)
+      // res.json('edit')
     } catch (err) {
       next(err)
     }
