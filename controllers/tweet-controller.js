@@ -6,24 +6,24 @@ const tweetController = {
     const loginUser = helpers.getUser(req).id
     if (helpers.getUser(req).role === 'admin') {
       req.flash('error_messages', '無使用權限')
-      res.redirect('/admin/tweets')
-    } else {
-      return Promise.all([
-        User.findByPk(loginUser, { raw: true, nest: true }),
-        Tweet.findAll({
-          order: [['createdAt', 'DESC']],
-          include: [User, Reply, Like]
-        }),
-        User.findAll({
-          where: { role: 'user' },
-          include: [
-            { model: User, as: 'Followers' },
-            { model: User, as: 'Followings' }
-          ]
-        })
-      ])
-        .then(([user, tweets, users]) => {
-        // 判斷user存不存在
+      return res.redirect('/admin/tweets')
+    }
+    return Promise.all([
+      User.findByPk(loginUser, { raw: true, nest: true }),
+      Tweet.findAll({
+        order: [['createdAt', 'DESC']],
+        include: [User, Reply, Like]
+      }),
+      User.findAll({
+        where: { role: 'user' },
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+    ])
+      .then(([user, tweets, users]) => {
+      // 判斷user存不存在
         if (!user) {
           req.flash('error_messages:', '還沒登入帳號或使用者不存在')
           return res.redirect('/login')
@@ -40,22 +40,13 @@ const tweetController = {
           .map(user => ({
             ...user.toJSON(),
             followerCount: user.Followers.length,
-            isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
+            isFollowed: user.Followings.some(f => f.id === loginUser)
           }))
-          // users for top10
-          const LIMIT = 10
-          const userData = users
-            .map(user => ({
-              ...user.toJSON(),
-              followerCount: user.Followers.length,
-              isFollowed: user.Followings.some(f => f.id === loginUser)
-            }))
-            .sort((a, b) => b.followerCount - a.followerCount)
-            .slice(0, LIMIT)
-          return res.render('tweets', { user, tweets: tweetsData, users: userData })
-        })
-        .catch(err => next(err))
-    }
+          .sort((a, b) => b.followerCount - a.followerCount)
+          .slice(0, LIMIT)
+        return res.render('tweets', { user, tweets: tweetsData, users: userData })
+      })
+      .catch(err => next(err))
   },
   getTweet: (req, res, next) => {
     const loginUser = helpers.getUser(req).id
