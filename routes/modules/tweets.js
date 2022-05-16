@@ -7,6 +7,7 @@ const replyController = require('../../controllers/reply-controller')
 router.get('/', tweetController.getTweets)
 router.post('/', tweetController.postTweets)
 router.get('/:tweetId/replies', replyController.getReplies)
+router.post('/:tweetId/replies', replyController.postReplies)
 router.post('/:tweetId/like', tweetController.likeTweets)
 router.post('/:tweetId/unlike', tweetController.unlikeTweets)
 

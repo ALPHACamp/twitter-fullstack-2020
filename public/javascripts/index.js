@@ -1,12 +1,8 @@
 const URL = 'http://localhost:3000/'
 
-const sidePostSubmitBtn = document.querySelector('.side-post-btn')
-const sidePostSubmitArea = document.querySelector('.side-post-description')
-const sidePostSpan = document.querySelector('.side-post-number')
-
-const homePostSubmitBtn = document.querySelector('.home-post-btn')
-const homePostSubmitArea = document.querySelector('.home-post-description')
-const homePostSpan = document.querySelector('.home-post-number')
+const textCountBtn = document.querySelectorAll('.text-count-btn')
+const textCountArea = document.querySelectorAll('.text-count-area')
+const textCountNumber = document.querySelectorAll('.text-count-number')
 
 const likeSubmitBtn = document.querySelectorAll('.like-submit-btn')
 
@@ -29,8 +25,9 @@ likeSubmitBtn.forEach(item => {
   })
 })
 
-sidePostSubmitArea.addEventListener('keyup', e => textCount(e, sidePostSubmitBtn, sidePostSpan))
-homePostSubmitArea.addEventListener('keyup', e => textCount(e, homePostSubmitBtn, homePostSpan))
+textCountArea.forEach((textArea, i) => {
+  textArea.addEventListener('keydown', e => textCount(e, textCountBtn[i], textCountNumber[i]))
+})
 
 function textCount (e, submitBtn, textNumber) {
   submitBtn = submitBtn || ''

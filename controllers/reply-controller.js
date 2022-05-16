@@ -17,6 +17,7 @@ const replyController = {
           ]
         }),
         Reply.findAll({
+          order: [['createdAt', 'DESC']],
           where: { TweetId },
           include: [{ model: User, attributes: ['id', 'name', 'account', 'avatar'] }]
         }),
@@ -50,6 +51,16 @@ const replyController = {
     } catch (err) {
       next(err)
     }
+  },
+  postReplies: async (req, res, next) => {
+    const UserId = helper.getUser(req).id
+    const TweetId = req.params.tweetId
+    const comment = helper.postValidation(req.body.comment)
+    if (comment.length <= 0) throw new Error('送出回覆不可為空白')
+    if (comment.length > 140) throw new Error('送出回覆超過限制字數140個字')
+    const reply = await Reply.create({ UserId, TweetId, comment })
+    if (!reply) throw new Error('回覆不成功')
+    res.redirect('back')
   }
 }
 
