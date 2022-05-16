@@ -35,6 +35,13 @@ const tweetController = {
   ])
     .then(([tweets,topUsers])  => {
       // res.json(topUsers)
+      tweets=tweets.map(e=>({
+        ...e.toJSON(),
+        totalLike : e.Likes.length,
+        totalReply : e.Replies.length,
+        isLiked : e.Likes.some(f=>f.UserId===helpers.getUser(req).id)
+      }))
+      // res.json(tweets[0])
       res.render('index',{tweets,topUsers})
     }).catch(err => next(err))
   },
