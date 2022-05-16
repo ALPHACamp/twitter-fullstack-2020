@@ -85,7 +85,11 @@ const userController = {
   getUser: async (req, res, next) => {
     try {
       const userId = req.params.id
-      const paramsUser = await User.findByPk(userId, {
+      const paramsUser = await User.findOne({
+        where: {
+          id: userId,
+          isAdmin: false
+        },
         include: [
           {
             model: Tweet,
@@ -142,6 +146,7 @@ const userController = {
     try {
       const userId = req.params.id
       const user = await User.findByPk(userId, {
+        where: { isAdmin: false },
         include: [
           {
             model: Like,
@@ -202,7 +207,11 @@ const userController = {
   getReplies: async (req, res, next) => {
     try {
       const userId = req.params.id
-      const user = await User.findByPk(userId, {
+      const user = await User.findOne({
+        where: {
+          id: userId,
+          isAdmin: false
+        },
         attributes: [
           'id',
           'name',
@@ -362,7 +371,11 @@ const userController = {
   getFollowings: async (req, res, next) => {
     try {
       const currentUserId = req.params.id
-      const currentUser = await User.findByPk(currentUserId, {
+      const currentUser = await User.findOne({
+        where: {
+          id: currentUserId,
+          isAdmin: false
+        },
         attributes: ['id', 'name', 'account'],
         include: [
           {
@@ -379,7 +392,7 @@ const userController = {
           helpers.getUser(req) &&
           helpers.getUser(req).Followers &&
           helpers.getUser(req).Followings.some(f => f.id === cf.id)
-      }))
+      })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
 
       // 右側Top10User
       const users = await User.findAll({
@@ -418,7 +431,11 @@ const userController = {
   getFollowers: async (req, res, next) => {
     try {
       const currentUserId = req.params.id
-      const currentUser = await User.findByPk(currentUserId, {
+      const currentUser = await User.findOne({
+        where: {
+          id: currentUserId,
+          isAdmin: false
+        },
         attributes: ['id', 'name', 'account'],
         include: [
           {
@@ -436,7 +453,7 @@ const userController = {
           helpers.getUser(req) &&
           helpers.getUser(req).Followings &&
           helpers.getUser(req).Followings.some(f => f.id === cf.id)
-      }))
+      })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
 
       // 右側Top10User
       const users = await User.findAll({
