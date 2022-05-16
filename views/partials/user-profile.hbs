@@ -5,9 +5,9 @@
 
 {{!-- 是本人，顯示編輯個人資料按鈕 --}}
   {{#ifCond logInUser.id user.id}}
-    <form action="/users/{{user.id}}/edit" method="GET">
+    {{!-- <form action="/users/{{user.id}}/edit" method="GET">
       <button type="submit">編輯個人資料</button>
-    </form>
+    </form> --}}
 
 
     <!-- Button trigger modal -->
@@ -19,16 +19,47 @@
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+          {{!-- <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">編輯個人資料</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
+          </div> --}}
           <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Understood</button>
+          <form action="/users/{{ user.id }}/edit?_method=PUT" method="post" enctype="multipart/form-data">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <span>編輯個人資料</span>  
+            <button class="btn btn-block mt-4" style="border-radius: 50px; background-color:#FF6600; color: white; width:100px; height: 46px;padding: 8px 24px;" type="submit">儲存</button>
+            <div class="form-group">
+              <img src=" {{ user.cover }}" alt="">
+
+              {{!-- cover 背景 --}}
+              <div class="form-row mb-3">
+                <label class="form-label" for="cover">背景</label>
+                <input class="form-control-file" type="file" id="cover" name="cover">
+              </div>
+
+              <img src=" {{ user.avatar }}" alt="user-picture" class="rounded-circle" style="width: 64px; height:64px;">
+              {{!-- avatar 頭像 --}}
+              <div class="form-row mb-3">
+                <label class="form-label" for="avatar">頭像</label>
+                <input class="form-control-file" type="file" id="avatar" name="avatar">
+              </div>
+            </div>
+
+            <div class="form-row mb-3">
+              <label class="form-label" for="name">名稱</label>
+              <input class="form-control" type="text" name="name" id="name" placeholder="Enter name" value="{{ user.name }}" maxlength="50"
+                required>
+            </div>
+
+            <div class="form-row mb-3">
+              <label class="form-label" for="introduction">自我介紹</label>
+              <textarea class="form-control" name="introduction" id="introduction" row="5" maxlength="140" placeholder="輸入自介" required>{{ user.introduction }}</textarea>
+            </div>
+            {{!-- <button class="btn btn-block mt-4" style="border-radius: 50px; background-color:#FF6600; color: white; width:356px; height: 46px;padding: 8px 24px;" type="submit">儲存</button> --}}
+          </form>
+
+
+
           </div>
         </div>
       </div>

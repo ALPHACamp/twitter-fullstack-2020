@@ -380,8 +380,7 @@ const userController = {
           helpers.getUser(req).Followers &&
           helpers.getUser(req).Followings.some(f => f.id === cf.id)
       }))
-      // console.log('data', data)
-      
+
       // 右側Top10User
       const users = await User.findAll({
         where: { isAdmin: false },
@@ -500,80 +499,78 @@ const userController = {
       .catch(err => next(err))
   },
   editUser: async (req, res, next) => {
-    const errors = []
+    try {
+      const errors = []
 
-    if (req._parsedUrl.pathname.includes('setting')) {
-      const { account, name, email, password, checkPassword } = req.body
-      if (!account || !name || !email || !password || !checkPassword) {
-        errors.push({ message: '以下欄位都需要填入！' })
-      }
-      if (Number(password) !== Number(checkPassword)) {
-        errors.push({ message: '密碼與確認密碼不相符！' })
-      }
-      if (name.length > 50) {
-        errors.push({ message: '名稱上限為50字！' })
-      }
-      // TODO:email 與 account 如果與原本相同應該要過；不相同則反查資料庫，沒有則可過
-
-      // const userEmail = await User.findOne({ where: { email } })
-      // const userAccount = await User.findOne({ where: { account } })
-      // if (userEmail) {
-      //   errors.push({ message: '這個 Email 已經存在。' })
-      // }
-      // if (userAccount) {
-      //   errors.push({ message: '這個 Account 已經存在。' })
-      // }
-      if (errors.length) {
-        return res.render('setUser', {
-          errors,
-          'user.account': account,
-          'user.name': name,
-          'user.email': email
-        })
-      }
-
-      const salt = await bcrypt.genSalt(10)
-      const hash = await bcrypt.hash(password, salt)
-
-      await User.update({
-        account,
-        name,
-        email,
-        password: hash
-      }, {
-        where: {
-          id: helpers.getUser(req).id
+      if (req._parsedUrl.pathname.includes('setting')) {
+        const { account, name, email, password, checkPassword } = req.body
+        if (!account || !name || !email || !password || !checkPassword) {
+          errors.push({ message: '以下欄位都需要填入！' })
         }
-      })
-      req.flash('success_msg', '更改成功！')
-      return res.redirect('/')
-    } else if (req._parsedUrl.pathname.includes('edit')) {
-      // TODO:收背景圖和頭像功能
-      const { name, introduction } = req.body
-
-      if (!name || !introduction) {
-        req.flash('error_msg', '名字自介都需填入！')
-        return res.render('editUserFake', {
-          'user.name': name,
-          'user.introduction': introduction
-        })
-      }
-
-      await User.update({
-        name,
-        introduction
-      }, {
-        where: {
-          id: helpers.getUser(req).id
+        if (Number(password) !== Number(checkPassword)) {
+          errors.push({ message: '密碼與確認密碼不相符！' })
         }
-      })
-      req.flash('success_msg', '更改成功！')
-      return res.redirect(`/users/${helpers.getUser(req).id}`)
-    } else {
-      console.log('you want to do something fishy?')
-      return res.redirect('/')
+        if (name.length > 50) {
+          errors.push({ message: '名稱上限為50字！' })
+        }
+
+        if (errors.length) {
+          return res.render('setUser', {
+            errors,
+            'user.account': account,
+            'user.name': name,
+            'user.email': email
+          })
+        }
+
+        const salt = await bcrypt.genSalt(10)
+        const hash = await bcrypt.hash(password, salt)
+
+        await User.update({
+          account,
+          name,
+          email,
+          password: hash
+        }, {
+          where: {
+            id: helpers.getUser(req).id
+          }
+        })
+        req.flash('success_msg', '更改成功！')
+        return res.redirect('/')
+      } else if (req._parsedUrl.pathname.includes('edit')) {
+        // TODO:收背景圖和頭像功能
+        const { name, introduction } = req.body
+
+        if (!name || !introduction) {
+          req.flash('error_msg', '名字自介都需填入！')
+          return res.render('editUserFake', {
+            'user.name': name,
+            'user.introduction': introduction
+          })
+        }
+
+        // 修改背景圖
+        const { file } = req
+        const filePath = await imgurFileHandler(file)
+        await User.update({
+          name,
+          introduction,
+          cover: filePath || User.cover
+        }, {
+          where: {
+            id: helpers.getUser(req).id
+          }
+        })
+        req.flash('success_msg', '更改成功！')
+        return res.redirect(`/users/${helpers.getUser(req).id}`)
+      } else {
+        console.log('you want to do something fishy?')
+        return res.redirect('/')
+      }
+    } catch (err) {
+      next(err)
     }
   }
-
 }
 module.exports = userController

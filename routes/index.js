@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { authenticated, authenticatedAdmin } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
+const upload = require('../middleware/multer')
 
 const passport = require('../config/passport')
 const userController = require('../controller/userController')
@@ -47,9 +48,12 @@ router.delete('/followships/:id', authenticated, userController.removeFollowing)
 // 帳戶設定
 router.get('/users/:id/setting', authenticated, userController.editUserPage)
 router.put('/users/:id/setting', authenticated, userController.editUser)
+
 // 編輯 user 資料
 router.get('/users/:id/edit', authenticated, userController.editUserFakePage)
-router.put('/users/:id/edit', authenticated, userController.editUser)
+router.put('/users/:id/edit', authenticated, upload.single('cover'), userController.editUser)
+
+// 查看 user 相關頁面
 router.get('/users/:id/followings', authenticated, userController.getFollowings)
 router.get('/users/:id/followers', authenticated, userController.getFollowers)
 router.get('/users/:id/tweets', authenticated, userController.getUser)

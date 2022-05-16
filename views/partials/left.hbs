@@ -51,7 +51,7 @@
     </div>
     {{!-- 個人資料 --}}
     <div style='font-weight:bold;'>
-      <a class='navCol-btn' href="/users/{{ user.id }}" style='text-decoration: none;'>
+      <a class='navCol-btn' href="/users/{{ logInUser.id }}" style='text-decoration: none;'>
         <i class="me-2 mb-3">
           {{#ifCond page 'user'}}
           <p class='navCol-btn-active'>
@@ -77,7 +77,7 @@
     </div>
     {{!-- 設定 --}}
     <div style='font-weight:bold;'>
-      <a class='navCol-btn' href="/users/{{ user.id }}/setting" style='text-decoration: none;'>
+      <a class='navCol-btn' href="/users/{{ logInUser.id }}/setting" style='text-decoration: none;'>
         <i class="me-2 mb-3">
           {{#ifCond page 'users'}}
           <p class='navCol-btn-active'>
@@ -139,7 +139,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="indexTweetModalLabel">你的名字</h5>
+        <h5 class="modal-title" id="indexTweetModalLabel">{{ logInUser.name }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
