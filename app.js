@@ -10,11 +10,12 @@ const helpers = require('./_helpers');
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override') 
 const { getUser, ensureAuthenticated } = require('./_helpers')
+const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const app = express()
 const port = process.env.PORT || 3000
 const SESSION_SECRET = 'secret'
 
-app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
