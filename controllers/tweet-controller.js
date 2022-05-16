@@ -120,16 +120,16 @@ const tweetController = {
   postReply: (req, res, next) => {
     const userId = helpers.getUser(req).id
     const tweetId = req.params.id
-    const { reply } = req.body
+    const comment = req.body.comment
     if (!userId) {
       req.flash('error_messages', '您尚未登入帳號!')
       res.redirect('/signin')
     }
-    if (!reply) return req.flash('error_messages', '內容不可空白')
+    if (!comment) return req.flash('error_messages', '內容不可空白')
     Reply.create({
-      UserId: userId,
+      userId,
       TweetId: tweetId,
-      comment: reply
+      comment
     })
       .then(() => {
         req.flash('success_messages', '回覆成功')
