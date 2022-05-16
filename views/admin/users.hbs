@@ -1,35 +1,6 @@
 {{!-- left-bar --}}
 <div style="display: flex; justify-content: center; flex-direction:column;">
-  <div style="
-  display: inline-block; 
-  box-sizing: border-box;
-  position: relative;
-  width: 1400px;
-  height: 1200px;
-  background: #FFFFFF;
-  border: 1px solid #D5D5DC;
-  border-radius: 4px;">
-    <div style="position: absolute; width: 178px; height: 1200px; left: 130px;">
-      <div style="position: relative;">
-        <div style="width: 50px; height: 50px; position: absolute; top: 13px; left: 13px;">
-          <img src="/images/logo.png" alt="login" style="height: 50px; width: 50px;">
-        </div>
-        <ul class="nav flex-column">
-          <li class="nav-item" style="display:flex; align-items: center; position: absolute; top: 85px; left: 17px;">
-            <i class="fas fa-home" style="color: black;"></i>
-            <a class="nav-link" aria-current="page" href="/admin/tweets" style="color: black;">推文清單</a>
-          </li>
-          <li class="nav-item" style="display:flex; align-items: center; position: absolute; top: 148px; left: 17px;">
-            <i class="fas fa-user" style="color: coral;"></i>
-            <a class="nav-link active" href="/admin/users" style="color: coral;">使用者列表</a>
-          </li>
-          <li class="nav-item" style="display:flex; align-items: center; position: absolute; top: 1158px; left: 17px;">
-            <i class="fas fa-arrow-alt-circle-left"></i>
-            <a class="nav-link" href="logout" style="color:black;">登出</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+{{>left-admin-sidebar route='adminUsers'}}
     {{!-- users --}}
     <div style="position: absolute; left: 332px;  height: 1200px; border: 1px solid #E6ECF0;">
       <div style="height: 49px; width: 1065px; border-bottom: 1px solid #E6ECF0;">
@@ -44,22 +15,25 @@
           <img src="{{this.avatar}}" class="card-img-top" alt="沒圖喔！"
             style="height: 100px; width:100px; position: absolute; top: 64px; left: 74px; border-radius: 50%; border: 4px solid #FFFFFF">
           <div class="card-body" style="position: absolute; width: 249px; height: 170px; bottom: 0px; ">
-            <div style="position: relative; width: 249px; height: 170px;">
-              <h7 class="card-title" style="position: absolute; bottom: 116px; left: 82px; width: 100px; height: 26px;">
+            <div style="position: relative; width: 249px; height: 170px; bottom: 0px; right:20px;">
+              <h7 class="card-title" style="position: absolute; bottom: 116px; left: 102px; width: 100px; height: 26px;">
                 {{this.name}}</h7>
-              <h9 class="card-title" style="position: absolute; bottom: 96px; left: 82px; width: 90px; height: 22px; font-size: 12px; color:gray;">
+              <h9 class="card-title" style="position: absolute; bottom: 96px; left: 102px; width: 90px; height: 22px; font-size: 12px; color: gray;">
                 @{{this.account}}</h9>
-              <div style="position: absolute; bottom: 55px; left: 55px; font-size:10px;">
-                <i class="fas fa-feather-alt">{{this.tweetsCount}}</i>
+              <div style="position: absolute; bottom: 55px; left: 58px; font-size:10px; display:flex;">
+                <i class="fas fa-feather-alt mx-3"></i>
+                <h5 style="font-size:10px;">{{this.tweetsCount}}</h5>
               </div>
-              <div style="position: absolute; bottom: 55px; left: 134px; font-size:10px;">
-                <i class="far fa-heart mx-3">{{this.likesCount}}</i>
+              <div style="position: absolute; bottom: 55px; left: 136px; font-size:10px; display:flex;">
+                <i class="far fa-heart mx-3"></i>
+                <h5 style="font-size:10px;">{{this.likesCount}}</h5>
               </div>
-              <div style="position: absolute; bottom: 24px; left: 46px; font-size:10px;">
+              <div style="position: absolute; bottom: 24px; left: 65px; font-size:10px;">
                 <h7 style="font-size: 2px;">{{this.Followers.length}} 個跟隨中</h7>
               </div>
-              <div style="position: absolute; bottom: 24px; left: 129px; font-size:10px;">
-                <h7 style="font-size: 2px;">{{this.Followings.length}} 個跟隨者</h7>
+              <div style="position: absolute; bottom: 24px; left: 150px; font-size:10px;">
+                <h7 style="font-size: 2px; mx-3">{{this.Followings.length}} 個跟隨者</h7>
+
               </div>
             </div>
           </div>

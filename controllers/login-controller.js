@@ -4,15 +4,7 @@ const { Op } = require('sequelize')
 
 const loginController = {
   signInPage: (req, res) => {
-    if (!req.user) {
-      res.render('signin')
-    } else if (req.user.role === 'admin') {
-      req.flash('error_messages', '您無此權限！')
-      req.logout()
-      res.redirect('/signin')
-    } else {
-      res.redirect('/tweets')
-    }
+    res.render('signin')
   },
   signIn: (req, res) => {
     if (req.user.role === 'admin') {
@@ -25,20 +17,18 @@ const loginController = {
     }
   },
   signUpPage: (req, res) => {
-    if (!req.user) {
-      res.render('signup')
-    } else {
-      req.logout()
-      res.redirect('/signup')
-    }
+    res.render('signup')
   },
   signUp: (req, res, next) => {
     const { name, password, email, checkPassword, account } = req.body
-    if (name.length > 50) throw new Error('名稱請勿超過50個字！')
-    if (password !== checkPassword) throw new Error('Passwords do not match!')
+
+    if (account.length > 50) throw new Error('帳號 請勿超過50個字！')
+    if (name.length > 50) throw new Error('名稱 請勿超過50個字！')
+    if (password !== checkPassword) throw new Error('密碼 與 確認密碼不相符！')
     User.findOne({ where: { [Op.or]: [{ account }, { email }] } })
       .then(user => {
-        if (user) throw new Error('Account or email already exists!')
+        if (user) throw new Error('帳號 或 email已存在！')
+
         return bcrypt.hash(password, 10)
       })
       .then(hash => User.create({
