@@ -23,7 +23,7 @@ const tweetController = {
       })
     ])
       .then(([user, tweets, users]) => {
-      // 判斷user存不存在
+      // 後端驗證user存不存在
         if (!user) {
           req.flash('error_messages:', '還沒登入帳號或使用者不存在')
           return res.redirect('/login')
@@ -32,7 +32,8 @@ const tweetController = {
         const tweetsData = tweets.map(tweet => ({
           ...tweet.toJSON(),
           repliesCount: tweet.Replies.length,
-          likesCount: tweet.Likes.length
+          likesCount: tweet.Likes.length,
+          isLiked: tweet.Likes.some(l => l.UserId === loginUser)
         }))
         // users for top10
         const LIMIT = 10
@@ -80,8 +81,10 @@ const tweetController = {
         const data = {
           replies: tweetData.Replies,
           replyCount: tweetData.Replies.length,
-          likeCount: tweetData.Likes.length
+          likeCount: tweetData.Likes.length,
+          isLiked: tweetData.Likes.some(l => l.UserId === loginUser)
         }
+
         const LIMIT = 10
         const userData = users
           .map(user => ({

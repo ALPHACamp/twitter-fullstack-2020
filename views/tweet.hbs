@@ -30,8 +30,20 @@
         </div>
         <hr>
         <div class="d-flex mb-3">
-          <i class="far fa-comment mx-3" data-bs-toggle="modal" data-bs-target="#replyModal"></i>
-          <i class="far fa-heart ms-5"></i>
+          <i class="far fa-comment mx-3 d-flex align-items-center " data-bs-toggle="modal" data-bs-target="#replyModal"></i>
+          {{#if data.isLiked}}
+          <form action="/tweets/{{tweet.id}}/unlike" method="post">
+            <button type="submit" style=" border: transparent; background: transparent;">
+              <i class="fa-solid fa-heart ms-5" style="color: #E0245E;"></i>
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{tweet.id}}/like" method="post">
+            <button type="submit" style=" border: transparent; background: transparent;">
+              <i class="far fa-heart ms-5"></i>
+            </button>
+          </form>
+          {{/if}}
         </div>
         <hr>
       </div>
