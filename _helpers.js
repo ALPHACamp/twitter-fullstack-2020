@@ -27,6 +27,15 @@ const imgurFileHandler = async file => {
 const handlebarsHelpers = {
   currentYear: dayjs().year(),
   relativeTimeFromNow: a => dayjs(a).fromNow(),
+  amORpm: a => {
+    const hr = dayjs(a).format('H')
+    if (Number(hr) > 12) return '下午'
+    return '上午'
+  },
+  createdYear: a => dayjs(a).format('YYYY'),
+  createdMonth: a => dayjs(a).format('M'),
+  createdDay: a => dayjs(a).format('D'),
+  createdTime: a => dayjs(a).format('h:mm'),
   ifCond: function (a, b, options) {
     return a === b ? options.fn(this) : options.inverse(this)
   }

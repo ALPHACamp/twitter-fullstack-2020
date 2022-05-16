@@ -1,0 +1,96 @@
+<div class="wrapper">
+  <div class='container user-homepage'>
+    <div class="profile-setting d-flex flex-column justify-content-between">{{> leftColumn}}</div>
+    <div class="main">
+      <div class='user-header d-flex flex-row align-items-center'>
+        <a href="javascript:history.back()"><i class="back-arrow"></i></a>
+        <div class="header-text d-flex flex-column">
+          <h5>推文</h5>
+        </div>
+      </div>
+
+      <div class="tweet d-flex">
+        <a href="/users/{{tweet.User.id}}/tweets">
+          <img class="avatar" src="{{tweet.User.avatar}}" alt='{{tweet.User.name}}\' s avatar'>
+        </a>
+        <div class="post-content">
+          <div class="post-user d-flex flex-column align-items-start">
+            <a href="/users/{{tweet.User.id}}/tweets">
+              <span class="user-name">{{tweet.User.name}}</span>
+            </a>
+            <span class="secondary-text">@{{tweet.User.account}}</span>
+          </div>
+          <p class="content">{{tweet.description}}</p>
+          
+          <span class="secondary-text">{{amORpm tweet.createdAt}}</span>
+          <span class="secondary-text">{{createdTime tweet.createdAt}}</span>
+          <span class="secondary-text">•</span>
+          <span class="secondary-text">{{createdYear tweet.createdAt}}年</span>
+          <span class="secondary-text">{{createdMonth tweet.createdAt}}月</span>
+          <span class="secondary-text">{{createdDay tweet.createdAt}}日</span>
+          <div class="tweet-buttons d-flex flex-row align-items-end">
+          </div>
+        </div>
+      </div>
+      {{!-- 回覆以及喜歡次數欄位 --}}
+      <div class="d-flex">
+        <div>
+          <span>{{tweet.Replies.length}}回覆</span>
+        </div>
+        <div>
+          <span>{{tweet.LikedUsers.length}}喜歡次數</span>
+        </div>
+      </div>
+      {{!-- 回覆按鈕以及喜歡欄位 --}}
+      <div class="d-flex">
+        {{!-- 回覆部分後續會用modal --}}
+        <button type="button" class="d-flex flex-row align-items-end">
+          <i class="comment"></i>
+          <span>{{this.Replies.length}}</span>
+        </button>
+
+        {{!-- 以下為like --}}
+        {{#if tweet.isLiked}}
+        <button type="button" class="d-flex flex-row align-items-end like-submit-btn liked" data-tweetId="{{tweet.id}}">
+          <i class="like user-like"></i>
+        </button>
+        {{else}}
+        <button type="button" class="d-flex flex-row align-items-end like-submit-btn" data-tweetId="{{tweet.id}}">
+          <i class="like"></i>
+        </button>
+        {{/if}}
+      </div>
+
+      {{#each replies}}
+      <div class="tweet d-flex">
+        <a href="/users/{{this.User.id}}/tweets">
+          <img class="avatar" src="{{this.User.avatar}}" alt="{{this.User.name}} avatar">
+        </a>
+        <div class="post-content">
+          <div class="post-user d-flex flex-row align-items-end">
+            <a href="/users/{{this.User.id}}/tweets">
+              <span class="user-name">{{this.User.name}}</span>
+            </a>
+            <span class="secondary-text">@{{this.User.account}}</span>
+            <span class="secondary-text">•</span>
+            <span class="secondary-text">{{relativeTimeFromNow this.createdAt}}</span>
+          </div>
+          <div class='secondary-text reply-text'>回覆 <a href="/users/{{../tweet.User.id}}/tweets"">@{{../tweet.User.account}}</a></div>
+          <p class='content mb-0'>{{this.comment}}</p>
+          <div class="tweet-buttons d-flex flex-row align-items-end">
+            <button type="button" class="d-flex flex-row align-items-end">
+              <i class="comment"></i>
+              <span>13</span>
+            </button>
+            <button type="button" class="d-flex flex-row align-items-end">
+              <i class="like"></i>
+              <span>76</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    <div class="top-users-list"> {{> rightColumn}}</div>
+  </div>
+</div>

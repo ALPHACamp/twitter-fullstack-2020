@@ -31,7 +31,7 @@
             <span class="secondary-text">•</span>
             <span class="secondary-text">{{relativeTimeFromNow this.createdAt}}</span>
           </div>
-          <a href="#" class="content">{{this.description}}</a>
+          <a href="/tweets/{{this.id}}/replies" class="content">{{this.description}}</a>
           <div class="tweet-buttons d-flex flex-row align-items-end">
             <button type="button" class="d-flex flex-row align-items-end">
               {{!-- 回覆部分後續會用modal --}}

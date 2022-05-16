@@ -14,7 +14,7 @@ likeSubmitBtn.forEach(item => {
   item.addEventListener('click', async e => {
     const tweetId = item.dataset.tweetid
     const likedIcon = item.querySelector('.like')
-    const likedNumbers = item.querySelector('.liked-numbers')
+    const likedNumbers = item.querySelector('.liked-numbers') || ''
     if (item.classList.contains('liked')) {
       likedNumbers.textContent--
       item.classList.toggle('liked')
