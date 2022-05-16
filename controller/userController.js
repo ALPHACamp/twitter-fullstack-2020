@@ -32,10 +32,10 @@ const userController = {
       const userEmail = await User.findOne({ where: { email } })
       const userAccount = await User.findOne({ where: { account } })
       if (userEmail) {
-        errors.push({ message: '這個 Email 已經註冊過了。' })
+        errors.push({ message: 'email 已重複註冊！' })
       }
       if (userAccount) {
-        errors.push({ message: '這個 Account 已經註冊過了。' })
+        errors.push({ message: 'account 已重複註冊！ ' })
       }
       if (errors.length) {
         return res.render('signup', {
@@ -58,7 +58,9 @@ const userController = {
           null
         ),
         avatar:
-          'https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg'
+          'https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg',
+        cover:
+          'https://dummyimage.com/600x400/000/fff.jpg&text=%E9%A0%90%E8%A8%AD'
       })
 
       req.flash('success_messages', '註冊成功！')
@@ -512,7 +514,9 @@ const userController = {
       attributes: ['id', 'name', 'account', 'email'],
       raw: true
     })
-      .then(user => { res.render('setUser', { user }) })
+      .then(user => {
+        res.render('setUser', { user })
+      })
       .catch(err => next(err))
   },
   editUser: async (req, res, next) => {
@@ -543,16 +547,19 @@ const userController = {
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(password, salt)
 
-        await User.update({
-          account,
-          name,
-          email,
-          password: hash
-        }, {
-          where: {
-            id: helpers.getUser(req).id
+        await User.update(
+          {
+            account,
+            name,
+            email,
+            password: hash
+          },
+          {
+            where: {
+              id: helpers.getUser(req).id
+            }
           }
-        })
+        )
         req.flash('success_msg', '更改成功！')
         return res.redirect('/')
       } else if (req._parsedUrl.pathname.includes('edit')) {
@@ -570,15 +577,18 @@ const userController = {
         // 修改背景圖
         const { file } = req
         const filePath = await imgurFileHandler(file)
-        await User.update({
-          name,
-          introduction,
-          cover: filePath || User.cover
-        }, {
-          where: {
-            id: helpers.getUser(req).id
+        await User.update(
+          {
+            name,
+            introduction,
+            cover: filePath || User.cover
+          },
+          {
+            where: {
+              id: helpers.getUser(req).id
+            }
           }
-        })
+        )
         req.flash('success_msg', '更改成功！')
         return res.redirect(`/users/${helpers.getUser(req).id}`)
       } else {
