@@ -216,7 +216,7 @@ describe('# tweet request', () => {
       })
       it('will save like', done => {
         // 檢查 db 會發現不是空的，代表新增成功
-        db.Like.findOne({ where: { UserId: 1 } }).then(like => {
+        db.Like.findOne({ where: { userId: 1 } }).then(like => {
           expect(like).to.not.be.null
           done()
         })
@@ -265,7 +265,7 @@ describe('# tweet request', () => {
       })
       it('will delete like', done => {
         // 檢查 db，會發現喜愛的資料已清除，因此資料回傳是空的
-        db.Like.findOne({ where: { UserId: 1 } }).then(like => {
+        db.Like.findOne({ where: { userId: 1 } }).then(like => {
           expect(like).to.be.null
           done()
         })
