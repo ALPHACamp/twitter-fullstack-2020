@@ -26,13 +26,14 @@
                 </div>
                 <div class="col">
                     <p>
-                        <span>{{this.User.name}}</span> 
-                        <span>@{{this.User.account}} ‧ </span>  
-                        <span>{{this.updatedAt}}</span>
+                        <span class="fw-bold">{{this.User.name}}</span> 
+                        <small>@{{this.User.account}} ‧ {{relativeTimeFromNow this.updatedAt}}</small>  
                     </p>
                     <p>{{this.description}}</p>
                     <div class="d-flex">
-                        <button type="button" class="border-0 bg-body" data-bs-toggle="modal" data-bs-target="#tweet{{this.id}}Reply"><i class="far fa-comment"></i> {{this.totalReply}}</button>
+                        <div class="col-1">
+                            <button type="button" class="border-0 bg-body" data-bs-toggle="modal" data-bs-target="#tweet{{this.id}}Reply"><i class="far fa-comment"></i> {{ this.totalReply}}</button>
+                        </div>
                         <div class="modal fade" id="tweet{{this.id}}Reply" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -46,7 +47,7 @@
                                             <img src="{{this.User.avatar}}" class="rounded-circle" style="width:50px;height:50px">
                                         </div>
                                         <div class="col px-0">
-                                            <span class="fw-bold fs-6">{{this.User.name}}</span><small>@{{this.User.account}} ‧ </small><span>{{this.updatedAt}}</span>
+                                            <span class="fw-bold fs-6">{{this.User.name}}</span><small>@{{this.User.account}} ‧ </small><span>{{relativeTimeFromNow this.updatedAt}}</span>
                                             <br/>
                                             {{this.description}}
                                             <br/>
@@ -70,7 +71,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                         {{#if this.isLiked}}
                             <form method="POST" action="/tweets/{{this.id}}/unlike">
                                 <button type="submit" class="border-0 bg-body"><i class="fas fa-heart text-danger text-danger"></i> {{this.totalLike}}</button>
@@ -92,4 +92,3 @@
         {{> right-nav}}
     </div>
 </div>
-
