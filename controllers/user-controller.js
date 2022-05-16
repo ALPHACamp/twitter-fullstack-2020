@@ -124,7 +124,7 @@ const userController = {
           isLiked: tweet.LikedUsers.some(item => item.id === queryUserId)
         }
       }, tweets)
-      
+
       // 獨立處理 rightColumn 的資料
       const followshipData = followships
         .map(followship => ({
