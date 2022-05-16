@@ -3,15 +3,7 @@ const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 const adminController = {
   signInPage: (req, res) => {
-    if (!req.user) {
-      res.render('admin/signin')
-    } else if (req.user.role === 'admin') {
-      res.redirect('/admin/tweets')
-    } else {
-      req.flash('error_messages', '您無此權限！')
-      req.logout()
-      res.redirect('/admin/signin')
-    }
+    res.render('admin/signin')
   },
   signIn: (req, res) => {
     if (req.user.role === 'user') {

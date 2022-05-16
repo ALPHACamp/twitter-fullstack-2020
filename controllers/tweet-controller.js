@@ -6,52 +6,53 @@ const tweetController = {
     if (req.user.role === 'admin') {
       req.flash('error_messages', '無使用權限')
       res.redirect('/admin/tweets')
-    }
-    return Promise.all([
-      User.findByPk(loginUser, { raw: true, nest: true }),
-      Tweet.findAll({
-        order: [['createdAt', 'DESC']],
-        include: [User, Reply, Like]
-      }),
-      User.findAll({
-        where: { role: 'user' },
-        include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
-        ]
-      })
-    ])
-      .then(([user, tweets, users]) => {
+    } else {
+      return Promise.all([
+        User.findByPk(loginUser, { raw: true, nest: true }),
+        Tweet.findAll({
+          order: [['createdAt', 'DESC']],
+          include: [User, Reply, Like]
+        }),
+        User.findAll({
+          where: { role: 'user' },
+          include: [
+            { model: User, as: 'Followers' },
+            { model: User, as: 'Followings' }
+          ]
+        })
+      ])
+        .then(([user, tweets, users]) => {
         // 判斷user存不存在
-        if (!user) {
-          req.flash('error_messages:', '還沒登入帳號或使用者不存在')
-          return res.redirect('/login')
-        }
-        // tweets資料
-        const tweetsData = tweets.map(tweet => ({
-          ...tweet.toJSON(),
-          repliesCount: tweet.Replies.length,
-          likesCount: tweet.Likes.length
-        }))
-        // users for top10
-        const LIMIT = 10
-        const userData = users
-          .map(user => ({
-            ...user.toJSON(),
-            followerCount: user.Followers.length,
-            isFollowed: user.Followings.some(f => f.id === loginUser)
+          if (!user) {
+            req.flash('error_messages:', '還沒登入帳號或使用者不存在')
+            return res.redirect('/signin')
+          }
+          // tweets資料
+          const tweetsData = tweets.map(tweet => ({
+            ...tweet.toJSON(),
+            repliesCount: tweet.Replies.length,
+            likesCount: tweet.Likes.length
           }))
-          .sort((a, b) => b.followerCount - a.followerCount)
-          .slice(0, LIMIT)
-        return res.render('tweets', { user, tweets: tweetsData, users: userData })
-      })
-      .catch(err => next(err))
+          // users for top10
+          const LIMIT = 10
+          const userData = users
+            .map(user => ({
+              ...user.toJSON(),
+              followerCount: user.Followers.length,
+              isFollowed: user.Followings.some(f => f.id === loginUser)
+            }))
+            .sort((a, b) => b.followerCount - a.followerCount)
+            .slice(0, LIMIT)
+          return res.render('tweets', { user, tweets: tweetsData, users: userData })
+        })
+        .catch(err => next(err))
+    }
   },
   getTweet: (req, res, next) => {
     const loginUser = req.user.id
     if (!loginUser) {
       req.flash('error_messages', '帳號不存在')
-      res.redirect('/login')
+      res.redirect('/signin')
     } else if (req.user.role === 'admin') {
       req.flash('error_messages', '無使用權限')
       res.redirect('/admin/tweets')

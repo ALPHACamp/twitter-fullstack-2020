@@ -21,7 +21,7 @@ router.post('/followships', authenticated, userController.addFollowing)
 router.use('/admin', admin)
 router.use('/users', authenticated, users)
 router.use('/tweets', authenticated, tweets)
-
+router.get('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
 
 module.exports = router
