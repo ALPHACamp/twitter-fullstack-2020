@@ -9,13 +9,7 @@
       <div class="list-group-item d-flex justify-content-between align-items-start">
         {{!-- avatar --}}
         <div class="col-1 me-1">
-          {{#if this.User.avatar}}
-          <img src="{{this.User.avatar}}" class="rounded-circle" width="50px" height="50px"
-            style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
-          {{else}}
-          <img src="https://via.placeholder.com/50" width="50px" height="50px"
-            style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
-          {{/if}}
+          <img src="{{this.User.avatar}}" class="rounded-circle" style="width:50px;height:50px">
         </div>
         <div class="col-11 d-flex flex-column px-0">
           {{!-- name account --}}
