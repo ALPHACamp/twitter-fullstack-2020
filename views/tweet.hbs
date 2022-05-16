@@ -1,0 +1,22 @@
+<div class="row" >
+    <div class="col">
+        {{> left-nav}}
+    </div>
+    <div class="col-7 border-start border-end px-0">
+        <img src="{{tweet.User.avatar}}" class="rounded-circle" style="width:50px;height:50px;">
+        {{tweet.User.name}}@{{tweet.User.account}}
+        like:{{likes.count}} isliked:{{likes.isLiked}} replies:{{replies.count}}
+        <hr/>
+        {{#each replies.rows}}
+            <img src="{{User.avatar}}" class="rounded-circle" style="width:50px;height:50px;">
+            {{User.name}}@{{User.account}}{{updateAt}}<br/>
+            {{comment}}<br/>
+            回復{{../../tweet.User.name}}
+            <hr/>
+        {{/each}}
+    </div>
+    <div class="col">
+        {{> right-nav}}
+    </div>
+</div>
+

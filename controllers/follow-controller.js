@@ -1,10 +1,10 @@
 const db = require('../models')
 const { Tweet, User, Like, Reply, sequelize, Followship} = db
-const helper  = require('../_helpers')
+const helpers  = require('../_helpers')
 const followshipController={
     postFollowship:(req,res,next)=>{
         const followingId= Number(req.body.id)
-        const followerId= helper.getUser(req).id
+        const followerId= helpers.getUser(req).id
         if(followingId===followerId){
             return res.json(new Error('followingId=followerId'))
         }
@@ -18,7 +18,7 @@ const followshipController={
     },
     deleteFollowship:(req,res,next)=>{
         const followingId= Number(req.params.id)
-        const followerId= helper.getUser(req).id
+        const followerId= helpers.getUser(req).id
         return Followship.findOne({
             where:{
                 followerId,
