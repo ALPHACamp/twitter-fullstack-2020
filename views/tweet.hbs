@@ -3,7 +3,7 @@
   <div class="row d-flex justify-content-start">
     {{!-- header --}}
     <div class="col-8 ms-3" style="outline: 1px solid #E6ECF0;">
-
+      {{!-- tittle --}}
       <div class="row">
         <button class="btn d-flex my-2" type="button" onclick="javascript:history.back()">
           <h4 class="navbar-brand mb-0">← 推文</h4>
@@ -38,9 +38,9 @@
       {{!-- reply --}}
       {{#each data.replies}}
       <div class="row mt-3">
-        <div class="col-2 ms-1" style="width: 60px;">
+        <a href="/users/{{this.User.id}}" class="col-2 ms-1" style="width: 60px;">
           <img src="{{this.User.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50px;">
-        </div>
+        </a>
         <div class="col-10">
           <div class="d-flex flex-row align-items-center">
             <p style="font-size: 16px; margin: 0 0;">{{this.User.name}}</p>
@@ -66,7 +66,7 @@
       {{/each}}
     </div>
 
-    {{!-- 追隨者Top10 的使用者 --}}
+    {{!-- right-sidebar 追隨者Top10的使用者 --}}
     <div class="container col-3 mt-2 mx-3" style="padding: 0 0;width: 250px; position: fixed; top: 0px; right: 100px;">
       <div class="bg-light" style="border-radius: 15px;">
         <div class="container d-flex align-items-center mt-3">
@@ -75,23 +75,21 @@
         <div class="mt-3" style="height: 1px; width: auto; border-radius: 0px; background: #E6ECF0;"></div>
         {{#each users}}
         <div class="d-flex flex-row align-items-center ms-3 py-2">
-          <div class="d-flex align-items-center mx-0">
+          <a href="/users/{{this.id}}" class="d-flex align-items-center mx-0">
             <img src="{{this.avatar}}" alt="avatar" style="height: 40px ;width: 40px; border-radius: 50px;">
-          </div>
+          </a>
           <div class="mx-2">
-            <p class="fw-bold" style="font-size: 16px; margin: 0 0;">{{this.name}}</p>
+            <a href="/users/{{this.id}}" class="fw-bold" style="font-size: 16px; margin: 0 0;">{{this.name}}</a>
             <p class="text-muted" style="font-size: 14px; margin: 0 0;">{{this.account}}</p>
           </div>
           <div class="d-flex align-items-center">
-            {{#if this.isFollowed }}
-            <form action="/followships/{{this.id}}_method=DELETE" method="POST" style="display: contents;">
-              <button type="submit" class="text-white"
-                style="margin: 0 0; height: 40px; width: 96px; left: 0px; top: 0px; border-radius: 50px; padding: 8px, 16px, 8px, 16px; background: #FF6600; border:#E6ECF0">正在跟隨</button>
+            {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+              <button type="submit" class="following-button text-white">正在跟隨</button>
             </form>
             {{else}}
             <form action="/followships" method="POST" style="display: contents;">
-              <button type="submit" class="ms-3"
-                style="color:#FF6600; margin: 0 0; height: 40px; width: 76px; left: 0px; top: 0px; border-radius: 50px; padding: 8px, 16px, 8px, 16px; background:white; border:#FF6600; border-width:1px; border-style:solid;">跟隨</button>
+              <button type="submit" class="follower-button ms-3" name="id" value="{{this.id}}">跟隨</button>
             </form>
             {{/if}}
           </div>
@@ -99,7 +97,7 @@
         {{/each}}
       </div>
     </div>
-    </div>
+  </div>
 
   {{!-- tweets modal --}}
   <form action="/tweets" method="POST">
@@ -165,13 +163,13 @@
             </div>
           </div>
           {{!-- reply content --}}
-          <form action="/tweets/{{tweet.id}}/reply" method="POST">
+          <form action="/tweets/{{tweet.id}}/replies" method="POST">
             <div class="row">
               <div class="col-2 d-flex justify-content-center">
                 <img src="{{user.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
               </div>
               <div class="col-9 mb-3 ">
-                <textarea type="text" class="form-control me-2" id="reply" name="reply" rows="5" placeholder="推你的回復"
+                <textarea type="text" class="form-control me-2" id="reply" name="comment" rows="5" placeholder="推你的回復"
                   style="width: 450px; border: none; background-color: white; word-wrap: break-word;"></textarea>
               </div>
             </div>
