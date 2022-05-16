@@ -52,8 +52,21 @@
                 <span class="ms-1">{{this.repliesCount}}</span>
               </div>
               <div class="ms-5">
-                <a href="/user/:id/like"></a><i class="far fa-heart" ></i>
-                <span class="ms-1">{{this.likesCount}}</span>
+                {{#if this.isLiked}}
+                <form action="/tweets/{{this.id}}/unlike" method="post">
+                  <button type="submit" style="width: 24px; border: transparent; background: transparent;">
+                    <i class="fa-solid fa-heart" style="color: #E0245E;"></i>
+                  </button>
+                  <span class="ms-1">{{this.likesCount}}</span>
+                </form>
+                {{else}}
+                <form action="/tweets/{{this.id}}/like" method="post">
+                  <button type="submit" style="width: 24px; border: transparent; background: transparent;">
+                    <i class="far fa-heart"></i>
+                  </button>
+                  <span class="ms-1">{{this.likesCount}}</span>
+                </form>
+                {{/if}}
               </div>
             </div>
           </div>
