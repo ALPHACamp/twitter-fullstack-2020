@@ -9,6 +9,7 @@ const userController = require('../controllers/user-controller')
 const admin = require('./modules/admin.js')
 const tweets = require('./modules/tweets.js')
 const users = require('./modules/users.js')
+const api = require('./modules/api.js')
 
 router.use('/admin', admin)
 router.get('/signin', loginController.signInPage)
@@ -22,7 +23,10 @@ router.post('/followships', authenticated, userController.addFollowing)
 
 router.use('/users', authenticated, users)
 router.use('/tweets', authenticated, tweets)
-router.get('/', (req, res) => res.redirect('/tweets'))
+
+router.use('/api/users', api)
+
+router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
 
 module.exports = router
