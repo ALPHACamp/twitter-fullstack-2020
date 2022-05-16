@@ -37,7 +37,7 @@ const userController = {
         return res.render('signup', { errors, account, name, email })
       }
 
-      const hash = bcrypt.hashSync('12345678', bcrypt.genSaltSync(10))
+      const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
       await User.create({ account, name, email, password: hash })
 
       req.flash('success_messages', '您已成功註冊帳號！')
@@ -124,7 +124,7 @@ const userController = {
           isLiked: tweet.LikedUsers.some(item => item.id === queryUserId)
         }
       }, tweets)
-      
+
       // 獨立處理 rightColumn 的資料
       const followshipData = followships
         .map(followship => ({
