@@ -11,17 +11,17 @@
                     </div>
                     <div class="col">
                         {{this.name}}<br/>
-                        @{{this.account}}
+                        <small>@{{this.account}}</small>
                     </div>
                 </div>
                     {{#if isFollowed}}
                         <form class="ms-auto mt-1" method="POST" action="/followships/{{this.id}}?_method=DELETE">
-                            <button class="btn btn-danger rounded-pill" type="submit">正在跟隨</button>
+                            <button class="btn rounded-pill" style="background-color: #FF6600;" type="submit">正在跟隨</button>
                         </form>
                     {{else}}
                         <form class="ms-auto mt-1" method="POST" action="/followships">
                             <input name="id" value="{{this.id}}" style="display:none">
-                            <button class="btn btn-outline-danger rounded-pill" type="submit">跟隨</button>
+                            <button class="btn rounded-pill" style="color:#FF6600;border-color:#FF6600" type="submit">跟隨</button>
                         </form>
                     {{/if}}
                 </form>

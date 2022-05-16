@@ -1,26 +1,23 @@
 <div class="container" style="height:100%">
-    <nav class="nav flex-column" style="height:95%">
-        <img class="logo mb-2" alt="logo"
-            src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" style="height:50px; width:50px;">
-        <a class="nav-link fs-5 fw-bold text-dark my-1 px-1" href="/tweets">
-                <i class="fas fa-house-user"></i>
 
-            首頁
+        <img class="logo " alt="logo" src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" style="height:50px;">
+
+    <nav class="nav flex-column" style="height:90%">
+        <a class="nav-link fs-5 fw-bold text-dark my-1 px-1" href="/tweets">
+                <i class="fas fa-house-user"></i>首頁
         </a>
         <a class="nav-link fs-5 fw-bold text-dark my-1 px-1" href="/users/{{user.id}}/tweets">
-                <i class="fas fa-user"></i>
-            個人資料
+                <i class="fas fa-user"></i>個人資料
         </a>
         <a class="nav-link fs-5 fw-bold text-dark my-1 px-1" href="/users/setting/{{user.id}}">
-                <i class="fas fa-user-cog"></i>
-            設定
+                <i class="fas fa-user-cog"></i>設定
         </a>
 
-        <button class="border-0 rounded-pill text-white text-center py-1 fs-5 fw-bold" style="background-color:#FF6600;" data-bs-toggle="modal" data-bs-target="#tweets">推文</button>  
+        <button class="border-0 rounded-pill text-white text-center py-1 fs-5 fw-bold" style="background-color: #FF6600;" data-bs-toggle="modal" data-bs-target="#tweets">推文</button>  
 
     </nav>
     <nav class="nav flex-column" style="height:5%">
-            <a class="nav-link fs-5 fw-bold text-dark my-1 px-1" href="/logout"><i class="fas fa-sign-out-alt"></i> 登出</a>
+        <a class="nav-link fs-5 fw-bold text-dark my-1 px-1" href="/logout"><i class="fas fa-sign-out-alt"></i> 登出</a>
     </nav>
 </div>
 
@@ -42,13 +39,12 @@
                         <textarea class="border-0 mt-2 " style="width:100%; border: none;outline: none;resize:none" placeholder="Leave a comment here" id="floatingTextarea2" rows="4"></textarea>
                     </div>
                 </div>
-                <div class="text-end me-1 pe-1 mb -1 pb-1">
-                    <button type="submit" class="btn btn-danger rounded-pill">推文</button>
+                <div class="text-end me-1 pe-1 mb-1 pb-1">
+                    <button type="submit" class="btn border-0 text-light rounded-pill " style="background-color: #FF6600;">推文</button>
                 </div>
             </form>
         </div>
     </div>
   </div>
-
 </div> 
 

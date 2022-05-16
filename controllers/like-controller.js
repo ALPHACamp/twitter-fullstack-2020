@@ -1,9 +1,9 @@
 const db = require('../models')
 const { Tweet, User, Like, Reply, sequelize } = db
-const helper = require('../_helpers')
+const helpers = require('../_helpers')
 const likeController = {
   likeTweet: (req, res, next) => {
-    const UserId = helper.getUser(req).id
+    const UserId = helpers.getUser(req).id
     const TweetId = req.params.id
     return Tweet.findByPk(TweetId)
       .then(tweet => {
@@ -21,7 +21,7 @@ const likeController = {
       .catch(err => next(err))
   },
   unlikeTweet: (req, res, next) => {
-    const UserId = helper.getUser(req).id
+    const UserId = helpers.getUser(req).id
     const TweetId = req.params.id
     return Like.findOne({
       where:{
