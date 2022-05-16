@@ -40,7 +40,7 @@
               <p style="font-size: 14px; margin: 0 8px; color: #6C757D;">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</p> 
             </div>
             {{!-- tweet's description --}}
-            <a href="/tweets/{{this.id}}" style="color:#000000;text-decoration: none"> 
+            <a href="/tweets/{{this.id}}/replies" style="color:#000000;text-decoration: none"> 
               <div class="mt-2">
                 <p>{{this.description}}</p> 
               </div>
@@ -132,7 +132,7 @@
               </div>
             </div>
             {{!-- reply content --}}
-            <form action="/tweets/{{this.id}}/reply" method="POST">
+            <form action="/tweets/{{this.id}}/replies" method="POST">
               <div class="row">
                 <div class="col-2 d-flex justify-content-center">
                   <img src="{{../user.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">

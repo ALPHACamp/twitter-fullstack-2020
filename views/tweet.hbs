@@ -38,9 +38,9 @@
       {{!-- reply --}}
       {{#each data.replies}}
       <div class="row mt-3">
-        <div class="col-2 ms-1" style="width: 60px;">
+        <a href="/users/{{this.User.id}}" class="col-2 ms-1" style="width: 60px;">
           <img src="{{this.User.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50px;">
-        </div>
+        </a>
         <div class="col-10">
           <div class="d-flex flex-row align-items-center">
             <p style="font-size: 16px; margin: 0 0;">{{this.User.name}}</p>
@@ -163,7 +163,7 @@
             </div>
           </div>
           {{!-- reply content --}}
-          <form action="/tweets/{{tweet.id}}/reply" method="POST">
+          <form action="/tweets/{{tweet.id}}/replies" method="POST">
             <div class="row">
               <div class="col-2 d-flex justify-content-center">
                 <img src="{{user.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
