@@ -97,3 +97,15 @@
 .modal-backdrop {
   z-index: 9;
 }
+
+.close {
+  color: #ff6600;
+  left: 18.75%;
+  right: 18.75%;
+  top: 18.75%;
+  bottom: 18.75%;
+  outline: none;
+  border-style: none;
+  font-size: 30px;
+  background-color: white;
+}

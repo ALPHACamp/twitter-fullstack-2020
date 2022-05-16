@@ -22,3 +22,18 @@
   right: 0;
   bottom: 0;
 }
+
+.tweet-error-message {
+  position: absolute;
+  text-align: right;
+  width: 300px;
+  height: 15px;
+  right: 101px;
+  bottom: 27px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 15px;
+
+  color: #fc5a5a;
+}
