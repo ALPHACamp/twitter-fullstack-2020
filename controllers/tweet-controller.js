@@ -39,7 +39,7 @@ const tweetController = {
           .map(user => ({
             ...user.toJSON(),
             followerCount: user.Followers.length,
-            isFollowed: user.Followings.some(f => f.id === loginUser)
+            isFollowed: req.user.Followings.some(f => f.id === user.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, LIMIT)
@@ -86,7 +86,7 @@ const tweetController = {
           .map(user => ({
             ...user.toJSON(),
             followerCount: user.Followers.length,
-            isFollowed: user.Followings.some(f => f.id === loginUser)
+            isFollowed: req.user.Followings.some(f => f.id === user.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, LIMIT)
