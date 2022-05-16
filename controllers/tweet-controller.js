@@ -24,15 +24,23 @@ const tweetController = {
       ])
         .then(([user, tweets, users]) => {
         // 判斷user存不存在
-          if (!user) {
-            req.flash('error_messages:', '還沒登入帳號或使用者不存在')
-            return res.redirect('/signin')
-          }
-          // tweets資料
-          const tweetsData = tweets.map(tweet => ({
-            ...tweet.toJSON(),
-            repliesCount: tweet.Replies.length,
-            likesCount: tweet.Likes.length
+        if (!user) {
+          req.flash('error_messages:', '還沒登入帳號或使用者不存在')
+          return res.redirect('/login')
+        }
+        // tweets資料
+        const tweetsData = tweets.map(tweet => ({
+          ...tweet.toJSON(),
+          repliesCount: tweet.Replies.length,
+          likesCount: tweet.Likes.length
+        }))
+        // users for top10
+        const LIMIT = 10
+        const userData = users
+          .map(user => ({
+            ...user.toJSON(),
+            followerCount: user.Followers.length,
+            isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
           }))
           // users for top10
           const LIMIT = 10
@@ -88,7 +96,7 @@ const tweetController = {
           .map(user => ({
             ...user.toJSON(),
             followerCount: user.Followers.length,
-            isFollowed: user.Followings.some(f => f.id === loginUser)
+            isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, LIMIT)
@@ -97,13 +105,17 @@ const tweetController = {
       .catch(err => next(err))
   },
   postTweet: (req, res, next) => {
-    const userId = req.user.id
+    const userId = helpers.getUser(req).id
     const { description } = req.body
     if (!userId) {
       req.flash('error_messages', '您尚未登入帳號!')
       res.redirect('/signin')
     }
     if (!description) return req.flash('error_messages', '內容不可空白')
+    if (description.length > 140) {
+      req.flash('error_messages', '推文請在140字以內')
+      return res.redirect('/tweets')
+    }
     Tweet.create({
       userId,
       description
@@ -115,21 +127,22 @@ const tweetController = {
       .catch(err => next(err))
   },
   postReply: (req, res, next) => {
-    const userId = req.user.id
+    const userId = helpers.getUser(req).id
     const tweetId = req.params.id
-    const { reply } = req.body
+    const comment = req.body.comment
     if (!userId) {
       req.flash('error_messages', '您尚未登入帳號!')
       res.redirect('/signin')
     }
-    if (!reply) return req.flash('error_messages', '內容不可空白')
+    if (!comment) return req.flash('error_messages', '內容不可空白')
     Reply.create({
       userId,
-      tweetId,
-      comment: reply
+      TweetId: tweetId,
+      comment
     })
       .then(() => {
         req.flash('success_messages', '回覆成功')
+        // res.redirect('/tweets')
         res.redirect('back')
       })
       .catch(err => next(err))
