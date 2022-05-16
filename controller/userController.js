@@ -525,16 +525,29 @@ const userController = {
 
       if (req._parsedUrl.pathname.includes('setting')) {
         const { account, name, email, password, checkPassword } = req.body
+        console.log(`account: ${account}, email: ${email}`)
+
         if (!account || !name || !email || !password || !checkPassword) {
           errors.push({ message: '以下欄位都需要填入！' })
         }
-        if (Number(password) !== Number(checkPassword)) {
+        if (password !== checkPassword) {
           errors.push({ message: '密碼與確認密碼不相符！' })
         }
         if (name.length > 50) {
           errors.push({ message: '名稱上限為50字！' })
         }
-
+        if (email !== res.locals.logInUser.email) {
+          const checkDuplicate = await User.findOne({ where: { email }, raw: true })
+          if (email === checkDuplicate?.email) {
+            errors.push({ message: '這個 Email 已經有人用了。' })
+          }
+        }
+        if (account !== res.locals.logInUser.account) {
+          const checkDuplicate = await User.findOne({ where: { account }, raw: true })
+          if (account === checkDuplicate?.account) {
+            errors.push({ message: '這個 Account 已經有人用了。' })
+          }
+        }
         if (errors.length) {
           return res.render('setUser', {
             errors,
@@ -547,31 +560,30 @@ const userController = {
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(password, salt)
 
-        await User.update(
-          {
+        await User.update({
             account,
             name,
             email,
             password: hash
-          },
-          {
+          }, {
             where: {
               id: helpers.getUser(req).id
             }
-          }
-        )
-        req.flash('success_msg', '更改成功！')
+          })
+        req.flash('success_messages', '更改成功！')
         return res.redirect('/')
       } else if (req._parsedUrl.pathname.includes('edit')) {
         // TODO:收背景圖和頭像功能
         const { name, introduction } = req.body
 
-        if (!name || !introduction) {
-          req.flash('error_msg', '名字自介都需填入！')
-          return res.render('editUserFake', {
-            'user.name': name,
-            'user.introduction': introduction
-          })
+        if (!name) {
+          req.flash('error_messages', '名字需要填入！')
+          return res.redirect(`/users/${res.locals.logInUser.id}`)
+        }
+
+        if (introduction.length >= 160) {
+          req.flash('error_messages', '自介不能超過 160 字！')
+          return res.redirect(`/users/${res.locals.logInUser.id}`)
         }
 
         // 修改背景圖
@@ -582,14 +594,12 @@ const userController = {
             name,
             introduction,
             cover: filePath || User.cover
-          },
-          {
+          }, {
             where: {
               id: helpers.getUser(req).id
             }
-          }
-        )
-        req.flash('success_msg', '更改成功！')
+          })
+        req.flash('sucesss_messages', '更改成功！')
         return res.redirect(`/users/${helpers.getUser(req).id}`)
       } else {
         console.log('you want to do something fishy?')

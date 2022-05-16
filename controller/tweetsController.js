@@ -118,7 +118,7 @@ const tweetsController = {
     const UserId = helpers.getUser(req) && helpers.getUser(req).id
     try {
       if (!description || description.trim().length === 0) {
-        throw new Error('不能發空白推！')
+        throw new Error('內容不可空白！')
       }
       if (description.length > 140) throw new Error('推文不能超過140字！')
       await Tweet.create({
