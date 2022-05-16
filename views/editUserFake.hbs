@@ -1,0 +1,30 @@
+{{> messages}}
+<div class="d-flex justify-content-between">
+  <button class="btn btn-warning">
+    <a href="javascript:history.back()">回到上一頁</a>
+  </button>
+  <h4>編輯個人資料</h4>
+</div>
+<form action="/users/{{ user.id }}/edit?_method=PUT" method="post">
+  <div class="form-group">
+    <div class="form-row mb-3">
+      <label class="form-label" for="cover">背景</label>
+      <input class="form-control" type="file" id="cover" name="cover">
+    </div>
+    <div class="form-row mb-3">
+      <label class="form-label" for="avatar">頭像</label>
+      <input class="form-control" type="file" id="avatar" name="avatar">
+    </div>
+  </div>
+  <div class="form-row mb-3">
+    <label class="form-label" for="name">名稱</label>
+    <input class="form-control" type="text" name="name" id="name" placeholder="Enter name" value="{{ user.name }}" maxlength="50"
+      required>
+  </div>
+  <div class="form-row mb-3">
+    <label class="form-label" for="introduction">自我介紹</label>
+    <textarea class="form-control" name="introduction" id="introduction" row="5" maxlength="140" placeholder="輸入自介" required>{{ user.introduction }}</textarea>
+  </div>
+  <button class="btn btn-block mt-4" style="border-radius: 50px; background-color:#FF6600; color: white; width:356px; height: 46px;padding: 8px 24px;" type="submit">儲存</button>
+</form>
+

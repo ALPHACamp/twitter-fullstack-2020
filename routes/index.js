@@ -44,6 +44,12 @@ router.post('/followships/:id', authenticated, userController.addFollowing)
 router.delete('/followships/:id', authenticated, userController.removeFollowing)
 
 // user
+// 帳戶設定
+router.get('/users/:id/setting', authenticated, userController.editUserPage)
+router.put('/users/:id/setting', authenticated, userController.editUser)
+// 編輯 user 資料
+router.get('/users/:id/edit', authenticated, userController.editUserFakePage)
+router.put('/users/:id/edit', authenticated, userController.editUser)
 router.get('/users/:id/followings', authenticated, userController.getFollowings)
 router.get('/users/:id/followers', authenticated, userController.getFollowers)
 router.get('/users/:id/tweets', authenticated, userController.getUser)

@@ -1,0 +1,40 @@
+{{> messages}}
+<div class="row align-items-start">
+  {{> left}}
+  <div class="col-6">
+    <form action="/users/{{ user.id }}/setting?_method=PUT" method="POST">
+      <div class="form-group">
+        <input type="text" name="account" class="form-control font-weight-bold" placeholder="帳號"
+          value="{{ user.account }}"
+          style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+          required autofocus>
+      </div>
+      <div class="form-group mt-4">
+        <input type="text" name="name" class="form-control font-weight-bold" placeholder="名稱" maxlength="50"
+          value="{{ user.name }}"
+          style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+          required autofocus>
+      </div>
+      <div class="form-group mt-4">
+        <input type="email" name="email" class="form-control font-weight-bold" placeholder="Email"
+          value="{{ user.email }}"
+          style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+          required autofocus>
+      </div>
+      <div class="form-group mt-4">
+        <input type="password" name="password" class="form-control font-weight-bold" placeholder="密碼"
+          style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+          required>
+      </div>
+      <div class="form-group mt-4">
+        <input type="password" name="checkPassword" class="form-control font-weight-bold" placeholder="密碼確認"
+          style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+          required>
+      </div>
+      <div class="mb-4 text-center">
+        <button class="btn btn-block mt-4" style="border-radius: 50px; background-color:#FF6600; color: white; width:356px; 
+        height: 46px;padding: 8px 24px;" type="submit">儲存</button>
+      </div>
+    </form>
+  </div>
+</div>
