@@ -7,13 +7,26 @@ const admin = require('./modules/admin')
 const users = require('./modules/users')
 const tweets = require('./modules/tweets')
 
+const adminController = require('../controllers/admin-controller')
 const userController = require('../controllers/user-controller')
 
-const { authenticated, authenticatedAdmin } = require('../middleware/auth')
+const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 
 // admin 路由入口
-router.use('/admin', authenticatedAdmin, admin)
+router.use('/admin', admin)
+
+// admin 登入、登出路由
+router.get('/admin/signin', adminController.signInPage)
+router.post(
+  '/admin/signin',
+  passport.authenticate('admin-local', {
+    failureRedirect: '/admin/signin',
+    failureFlash: true
+  }),
+  adminController.signIn
+)
+router.get('/admin/logout', adminController.logout)
 
 // users 路由入口
 router.use('/users', authenticated, users)
@@ -31,7 +44,7 @@ router.post(
   '/signin',
   passport.authenticate('user-local', {
     failureRedirect: '/signin',
-    failureFlash: true,
+    failureFlash: true
   }),
   userController.signIn
 )
@@ -41,5 +54,6 @@ router.get('/logout', userController.logout)
 router.get('/', (req, res) => {
   res.redirect('/tweets')
 })
+
 router.use('/', generalErrorHandler)
 module.exports = router
