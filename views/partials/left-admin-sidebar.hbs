@@ -16,19 +16,19 @@
         <ul class="nav nav-admin-tabs flex-column">
           {{!--推文清單--}}
           <li class="nav-item" style="display:flex; align-items: center; position: absolute; top: 85px; left: 1px;">
-            <a class="nav-admin-link {{#ifCond route 'adminTweets'}} active {{/ifCond}}" aria-current="page" href="/admin/tweets" style="text-decoration:none;">
-              <h5><i class="fas fa-home">推文清單</i></h5>
+            <a class="nav-admin-link {{#ifCond route 'adminTweets'}} active {{/ifCond}}" aria-current="page" href="/admin/tweets">
+              <h5><i class="fas fa-home"></i>推文清單</h5>
             </a>
           </li>
           {{!--使用者列表--}}
-          <li class="nav-item" style="display:flex; align-items: center; position: absolute; top: 148px; left: 1px;">
-            <a class="nav-admin-link {{#ifCond route 'adminUsers'}} active {{/ifCond}}" href="/admin/users" style="text-decoration:none;">
-            <h5><i class="fas fa-user">使用者列表</i></h5>
+          <li class="nav-item" style="display:flex; align-items: center; position: absolute; top: 148px; left: 10px;">
+            <a class="nav-admin-link {{#ifCond route 'adminUsers'}} active {{/ifCond}}" href="/admin/users">
+            <h5><i class="fas fa-user"></i>使用者列表</h5>
             </a>
           </li>
           <li class="nav-item" style="display:flex; align-items: center; position: absolute; top: 1158px; left: 17px;">
             <a class="nav-admin-link" href="/admin/logout">
-              <h5><i class="fa-solid fa-arrow-right-from-bracket mx-1">登出</i></h5>
+              <h5><i class="fa-solid fa-arrow-right-from-bracket mx-1"></i>登出</h5>
             </a>
           </li>
         </ul>
