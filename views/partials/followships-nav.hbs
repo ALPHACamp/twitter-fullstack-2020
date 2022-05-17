@@ -1,0 +1,9 @@
+<ul class="nav nav-tabs my-4">
+            <li class="nav-item">
+                <a class="nav-link {{#if followers}}active{{/if}}" href="/users/{{user.id}}/followers">追隨者</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{#if followings}}active{{/if}}" href="/users/{{user.id}}/followings">正在追隨</a>
+            </li>
+            
+        </ul>
