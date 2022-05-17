@@ -1,22 +1,22 @@
-<div class="container" style="height:100%">
+<div class="container" style="height: 100vh; display:flex; flex-direction:column;">
 
-        <img class="logo " alt="logo" src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" style="height:50px;">
+        <img class="logo " alt="logo" src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" style="height:50px; width:50px;">
 
-    <nav class="nav flex-column" style="height:90%">
-        <a class="nav-link fs-5 fw-bold text-dark my-1 px-1" href="/tweets">
+    <nav class="nav flex-column" style="flex-grow:1;">
+        <a class="nav-link fs-5 fw-bold text-dark my-1 px-1 mb-3" href="/tweets">
                 <i class="fas fa-house-user"></i>首頁
         </a>
-        <a class="nav-link fs-5 fw-bold text-dark my-1 px-1" href="/users/{{user.id}}/tweets">
+        <a class="nav-link fs-5 fw-bold text-dark my-1 px-1 mb-3" href="/users/{{user.id}}/tweets">
                 <i class="fas fa-user"></i>個人資料
         </a>
-        <a class="nav-link fs-5 fw-bold text-dark my-1 px-1" href="/users/setting/{{user.id}}">
+        <a class="nav-link fs-5 fw-bold text-dark my-1 px-1 mb-3" href="/users/setting/{{user.id}}">
                 <i class="fas fa-user-cog"></i>設定
         </a>
 
         <button class="border-0 rounded-pill text-white text-center py-1 fs-5 fw-bold" style="background-color: #FF6600;" data-bs-toggle="modal" data-bs-target="#tweets">推文</button>  
 
     </nav>
-    <nav class="nav flex-column" style="height:5%">
+    <nav class="nav flex-column">
         <a class="nav-link fs-5 fw-bold text-dark my-1 px-1" href="/logout"><i class="fas fa-sign-out-alt"></i> 登出</a>
     </nav>
 </div>
