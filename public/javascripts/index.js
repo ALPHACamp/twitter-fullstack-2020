@@ -26,7 +26,7 @@ likeSubmitBtn.forEach(item => {
 })
 
 textCountArea.forEach((textArea, i) => {
-  textArea.addEventListener('keydown', e => textCount(e, textCountBtn[i], textCountNumber[i]))
+  textArea.addEventListener('keyup', e => textCount(e, textCountBtn[i], textCountNumber[i]))
 })
 
 function textCount (e, submitBtn, textNumber) {
