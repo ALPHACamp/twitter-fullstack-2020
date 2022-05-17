@@ -16,7 +16,7 @@
                 </div>
                     {{#if isFollowed}}
                         <form class="ms-auto mt-1" method="POST" action="/followships/{{this.id}}?_method=DELETE">
-                            <button class="btn rounded-pill" style="background-color: #FF6600;" type="submit">正在跟隨</button>
+                            <button class="btn rounded-pill text-light" style="background-color: #FF6600;" type="submit">正在跟隨</button>
                         </form>
                     {{else}}
                         <form class="ms-auto mt-1" method="POST" action="/followships">

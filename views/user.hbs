@@ -1,0 +1,99 @@
+<div class="row">
+    <div class="col">
+        {{> left-nav route='tweets'}}
+    </div>
+    <div class="col-7 border-start border-end px-0">
+        <h3 class="my-3 px-4 mx-0 fw-bold">←</h3>
+        <div class="card" style="height: 250px;">
+            <img src="{{user.cover}}" class="card-img-top" alt="cover" style="height:100%;width:100%; object-fit:cover">
+        </div>
+        <div class="row mx-0 px-0">
+                <div class="col-1 pt-1">
+                    <img src="{{user.avatar}}" class="rounded-circle" style="width:50px;height:50px;">
+                </div>
+                <div class="col pe-0">
+
+                </div>
+            </div>
+
+        <div>
+            <h5>{{user.name}}</h1>
+                <p>@{{user.name}}</p>
+
+                {{user.introduction}}
+
+        </div>
+        <!-- Button trigger modal -->
+
+
+        <a href="/api/users/{{user.id}}">編輯個人資料</a>
+        <form>
+            
+            <div class="text-end me-1 pe-1 mb -1 pb-1">
+                <form action="/api/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+
+                </form>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    編輯個人資料
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr class="mt-1" style="border: 10px solid rgb(106, 106, 106);" />
+        <div style="overflow:auto;max-height:650px">
+            {{#each user.Tweets}}
+            <div class="row mx-0 px-0">
+                <div class="col-1">
+                    <img src="{{../user.avatar}}" class="rounded-circle" style="width:50px;height:50px">
+                </div>
+                <div class="col">
+                    <p>
+                        <span>{{../user.name}}</span>
+                        <span>@{{../user.account}} ‧ </span>
+                        <span>{{this.updatedAt}}</span>
+                    </p>
+                    <p>{{this.description}}</p>
+                    <p>
+                        <i class="far fa-comment"></i> {{this.totalReply}}
+                        {{#if this.isLiked}}
+                        <i class="fas fa-heart text-danger"></i> {{this.totalLike}}
+                        {{else}}
+                        <i class="far fa-heart"></i> {{this.totalLike}}
+                        {{/if}}
+                    </p>
+                </div>
+            </div>
+            <hr />
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="col">
+        {{> right-nav}}
+    </div>
+    {{#each user.Likes}}
+<h3>{{this.id}}</h3>
+<h5>{{this.Tweet.description}}</h5> 
+<h6>{{this.Tweet.User.name}}</h6>
+{{/each}}
+</div>
