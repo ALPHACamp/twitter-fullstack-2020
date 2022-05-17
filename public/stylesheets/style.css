@@ -164,3 +164,67 @@ a:hover {
 .nav-admin-tabs .nav-link:hover {
   color: #ff6600;
 }
+
+/* for dev */
+.red {
+  outline: 3px solid red;
+}
+
+.green {
+  outline: 3px solid green;
+}
+
+.black {
+  outline: 3px solid black;
+}
+
+.blue {
+  outline: 3px solid blue;
+}
+
+.brown {
+  outline: 3px solid brown;
+}
+.outline {
+  outline: 2px solid #E6ECF0;
+}
+.avatar {
+  height: 50px;
+  width: 50px;
+  border-radius: 50px;
+}
+.main-tweet-btn {
+  height: 40px;
+  width:64px;
+  border-radius: 50px;
+  background: #FF6600;
+  border:#FF6600;
+}
+.main-divider {
+  height: 10px;
+  width: 100%;
+  background: #E6ECF0;
+}
+.main-user-name {
+  font-size: 16px;
+  margin: 0 0;
+}
+.main-user-account {
+  font-size: 14px;
+  margin: 0 8px;
+  color: #6C757D;
+}
+.heart-btn {
+  width: 24px;
+  border: transparent;
+  background: transparent;
+}
+.heart-icon {
+  color: #E0245E;
+}
+.reply-textarea {
+  width: 450px; 
+  border: none; 
+  background-color: white; 
+  word-wrap: break-word;
+}
