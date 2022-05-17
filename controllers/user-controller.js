@@ -465,7 +465,7 @@ const userController = {
       next(err)
     }
   },
-  editUserPage: async (req, res, next) => {
+  userEditPage: async (req, res, next) => {
     try {
       const userId = Number(helpers.getUser(req).id)
       const queryUserId = Number(req.params.id) // other user
@@ -480,6 +480,65 @@ const userController = {
       delete queryUser.password
 
       return res.render('edit', { queryUser })
+    } catch (err) {
+      next(err)
+    }
+  },
+  userEdit: async (req, res, next) => {
+    try {
+      const userId = Number(req.user.id)
+      const queryUserId = Number(req.params.id) // from axios
+      let { account, name, email, password, confirmPassword } = req.body
+
+      if (!account || !email || !password || !confirmPassword) {
+        req.flash('error_messages', '必填欄位未填寫完整 !')
+        return res.redirect('back')
+      }
+      if (password !== confirmPassword) {
+        req.flash('error_messages', '密碼與密碼再確認不相符 !')
+        return res.redirect('back')
+      }
+      if (account.length > 50) {
+        req.flash('error_messages', '帳號長度限制50字元以內 !')
+        return res.redirect('back')
+      }
+      if (name.length > 50) {
+        req.flash('error_messages', '名稱長度限制50字元以內 !')
+        return res.redirect('back')
+      }
+      if (password.length > 50) {
+        req.flash('error_messages', '密碼長度限制50字元以內 !')
+        return res.redirect('back')
+      }
+      if (confirmPassword.length > 50) {
+        req.flash('error_messages', '密碼再確認長度限制50字元以內 !')
+        return res.redirect('back')
+      }
+      if (userId !== queryUserId) {
+        req.flash('error_messages', '您沒有權限編輯使用者 !')
+        return res.redirect('back')
+      }
+
+      account = removeAllSpace(account)
+      name = removeOuterSpace(name)
+      if (!name) name = account
+
+      const queryUser = await User.findByPk(queryUserId)
+      if (!queryUser) {
+        req.flash('error_messages', '使用者不存在 !')
+        return res.redirect('back')
+      }
+      if (bcrypt.compareSync(password, queryUser.password)) {
+        req.flash('error_messages', '新密碼不能與舊密碼相同 !')
+        return res.redirect('back')
+      }
+
+      const hash = await bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+      const updatedQueryUser = await queryUser.update({ account, name, email, password: hash })
+      const data = updatedQueryUser.toJSON()
+      delete data.password
+
+      return res.redirect('back')
     } catch (err) {
       next(err)
     }

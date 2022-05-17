@@ -41,12 +41,12 @@ uploadAvatarInput.addEventListener('change', async e => {
   console.log('target.files============================' + target.files)
   // 抓取 input 的圖片，存入 formData 以 axios 傳入後端
   formData.append('image', target.files[0])
-  const queryUser = await axios.post(`${BASE_URL}/api/users/${queryUserId}/avatar`, formData, {
+  const res = await axios.post(`${BASE_URL}/api/users/${queryUserId}/avatar`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
   })
-  console.log(queryUser)
+  console.log(res)
 })
 
 // userEditModal.addEventListener('click', async e => {
