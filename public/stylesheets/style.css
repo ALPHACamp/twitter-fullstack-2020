@@ -228,3 +228,62 @@ a:hover {
   background-color: white; 
   word-wrap: break-word;
 }
+.tab-anchor {
+  position: relative;
+  left: 3rem;
+  width: 180px;
+  border-bottom: 0px !important;
+}
+.logo {
+  position: relative;
+  left: 8rem;
+}
+.tab-icon {
+  min-width: 130px; 
+  border-bottom: 0px !important;
+}
+.tab-item {
+  min-width: 130px;
+}
+.left-sidebar-btn {
+  position: relative;
+  left: 3rem;
+  height: 40px; 
+  width: 150px; 
+  border-radius: 50px; 
+  background: #FF6600; 
+  border:#FF6600"
+}
+.logout-anchor {
+  min-width: 180px; 
+  border-bottom: 0px !important; 
+  position: relative; 
+  bottom: -25rem; 
+  left: 4rem;
+}
+.left-sidebar-anchor {
+  position: fixed;
+  top: 10px;
+  left: 5px;
+}
+.right-sidebar-anchor {
+  position: fixed;
+  top: 10px;
+}
+.right-sidebar-content {
+  border-radius: 15px;
+}
+.right-sidebar-divider {
+  height: 1px; 
+  width: auto; 
+  border-radius: 0px; 
+  background: #E6ECF0;
+}
+.right-user-name {
+  font-size: 16px; 
+  margin: 0 0;
+}
+.right-user-account {
+  font-size: 14px; 
+  margin: 0 0;
+}
