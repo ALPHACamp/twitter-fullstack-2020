@@ -16,6 +16,18 @@ const { generalErrorHandler } = require('../middleware/error-handler')
 // admin 路由入口
 router.use('/admin', admin)
 
+// admin 登入、登出路由
+router.get('/admin/signin', adminController.signInPage)
+router.post(
+  '/admin/signin',
+  passport.authenticate('admin-local', {
+    failureRedirect: '/admin/signin',
+    failureFlash: true
+  }),
+  adminController.signIn
+)
+router.get('/admin/logout', adminController.logout)
+
 // users 路由入口
 router.use('/users', authenticated, users)
 router.delete('/followships/:id', authenticated, userController.removeFollowing)
@@ -42,18 +54,6 @@ router.get('/logout', userController.logout)
 router.get('/', (req, res) => {
   res.redirect('/tweets')
 })
-
-// admin 登入、登出路由
-router.get('/admin/signin', adminController.signInPage)
-router.post(
-  '/admin/signin',
-  passport.authenticate('admin-local', {
-    failureRedirect: '/admin/signin',
-    failureFlash: true
-  }),
-  adminController.signIn
-)
-router.get('/admin/logout', adminController.logout)
 
 router.use('/', generalErrorHandler)
 module.exports = router
