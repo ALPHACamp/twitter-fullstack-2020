@@ -26,6 +26,7 @@ const tweetController = {
           where: [{ role: 'user' }]
         })
       ])
+      if (!user) throw new Error("User didn't exist!")
 
       const followshipData = followships.map(followship => ({
         ...followship.toJSON(),
@@ -35,7 +36,6 @@ const tweetController = {
       }))
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
-      if (!user) throw new Error("User didn't exist!")
       const data = tweets.map(tweet => ({
         ...tweet.toJSON(),
         isLiked: tweet.LikedUsers.some(item => item.id === userId)

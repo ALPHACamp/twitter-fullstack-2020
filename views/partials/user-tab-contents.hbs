@@ -1,86 +1,113 @@
-<div class="tab-contents">
+<div class='tab-contents'>
   {{#each tweets}}
-  <div class="tweet d-flex">
-    <a href="/users/{{this.User.id}}/tweets">
-      <img class="avatar" src="{{this.User.avatar}}" alt="user1 avatar">
-    </a>
-    <div class="post-content">
-      <div class="post-user d-flex flex-row align-items-end">
-        <a href="/users/{{this.User.id}}/tweets">
-          <span class="user-name">{{this.User.name}}</span>
-        </a>
-        <span class="secondary-text">@{{this.User.account}}</span>
-        <span class="secondary-text">•</span>
-        <span class="secondary-text">{{relativeTimeFromNow this.createdAt}}</span>
-      </div>
-      <a href="#" class="content">{{this.description}}</a>
-      <div class="tweet-buttons d-flex flex-row align-items-end">
-        <button type="button" class="d-flex flex-row align-items-end">
-          <i class="comment"></i>
-          <span>{{this.Replies.length}}</span>
-        </button>
-        {{!-- 以下為like --}}
-        {{#if isLiked}}
-          <button type="button" class="d-flex flex-row align-items-end like-submit-btn liked" data-tweetId="{{this.id}}">
-            <i class="like user-like"></i>
-            <span class="liked-numbers">{{this.LikedUsers.length}}</span>
+    <div class='tweet d-flex'>
+      <a href='/users/{{this.User.id}}/tweets'>
+        <img class='avatar' src='{{this.User.avatar}}' alt='user1 avatar' />
+      </a>
+      <div class='post-content'>
+        <div class='post-user d-flex flex-row align-items-end'>
+          <a href='/users/{{this.User.id}}/tweets'>
+            <span class='user-name'>{{this.User.name}}</span>
+          </a>
+          <span class='secondary-text'>@{{this.User.account}}</span>
+          <span class='secondary-text'>•</span>
+          <span class='secondary-text'>{{relativeTimeFromNow
+              this.createdAt
+            }}</span>
+        </div>
+        <a href='#' class='content'>{{this.description}}</a>
+        <div class='tweet-buttons d-flex flex-row align-items-end'>
+          <button
+            type='button'
+            class='d-flex flex-row align-items-end'
+            data-bs-toggle='modal'
+            data-bs-target='#replyModal-{{this.id}}'
+          >
+            <i class='comment'></i>
+            <span>{{this.Replies.length}}</span>
           </button>
-        {{else}}
-          <button type="button" class="d-flex flex-row align-items-end like-submit-btn" data-tweetId="{{this.id}}">
-            <i class="like"></i>
-            <span class="liked-numbers">{{this.LikedUsers.length}}</span>
-          </button>
-        {{/if}}
+          {{! 以下為like }}
+          {{#if isLiked}}
+            <button
+              type='button'
+              class='d-flex flex-row align-items-end like-submit-btn liked'
+              data-tweetId='{{this.id}}'
+            >
+              <i class='like user-like'></i>
+              <span class='liked-numbers'>{{this.LikedUsers.length}}</span>
+            </button>
+          {{else}}
+            <button
+              type='button'
+              class='d-flex flex-row align-items-end like-submit-btn'
+              data-tweetId='{{this.id}}'
+            >
+              <i class='like'></i>
+              <span class='liked-numbers'>{{this.LikedUsers.length}}</span>
+            </button>
+          {{/if}}
+        </div>
       </div>
-    </div> 
-  </div>
+    </div>
+    {{> reply-modal tweet=this user=../user}}
   {{/each}}
   {{#each replies}}
-  <div class="tweet d-flex">
-    <a href="/users/{{this.User.id}}/tweets">
-      <img class="avatar" src="{{this.User.avatar}}" alt="user1 avatar">
-    </a>
-    <div class="post-content">
-      <div class="post-user d-flex flex-row align-items-end">
-        <a href="/users/{{this.User.id}}/tweets">
-          <span class="user-name">{{this.User.name}}</span>
-        </a>
-        <span class="secondary-text">@{{this.User.account}}</span>
-        <span class="secondary-text">•</span>
-        <span class="secondary-text">{{relativeTimeFromNow this.createdAt}}</span>
+    <div class='tweet d-flex'>
+      <a href='/users/{{this.User.id}}/tweets'>
+        <img class='avatar' src='{{this.User.avatar}}' alt='user1 avatar' />
+      </a>
+      <div class='post-content'>
+        <div class='post-user d-flex flex-row align-items-end'>
+          <a href='/users/{{this.User.id}}/tweets'>
+            <span class='user-name'>{{this.User.name}}</span>
+          </a>
+          <span class='secondary-text'>@{{this.User.account}}</span>
+          <span class='secondary-text'>•</span>
+          <span class='secondary-text'>{{relativeTimeFromNow
+              this.createdAt
+            }}</span>
+        </div>
+        <div class='secondary-text reply-text'>回覆
+          <a href='#'>@{{this.Tweet.User.account}}</a></div>
+        <p class='content mb-0'>{{this.comment}}</p>
       </div>
-      <div class='secondary-text reply-text'>回覆 <a href="#">@{{this.Tweet.User.account}}</a></div>
-      <p class='content mb-0'>{{this.comment}}</p>
-    </div> 
-  </div>
+    </div>
   {{/each}}
   {{#each queryUser.LikedTweets}}
-  <div class="tweet d-flex">
-    <a href="/users/{{this.User.id}}/tweets">
-      <img class="avatar" src="{{this.User.avatar}}" alt="user1 avatar">
-    </a>
-    <div class="post-content">
-      <div class="post-user d-flex flex-row align-items-end">
-        <a href="/users/{{this.User.id}}/tweets">
-          <span class="user-name">{{this.User.name}}</span>
-        </a>
-        <span class="secondary-text">@{{this.User.account}}</span>
-        <span class="secondary-text">•</span>
-        <span class="secondary-text">{{relativeTimeFromNow this.createdAt}}</span>
+    <div class='tweet d-flex'>
+      <a href='/users/{{this.User.id}}/tweets'>
+        <img class='avatar' src='{{this.User.avatar}}' alt='user1 avatar' />
+      </a>
+      <div class='post-content'>
+        <div class='post-user d-flex flex-row align-items-end'>
+          <a href='/users/{{this.User.id}}/tweets'>
+            <span class='user-name'>{{this.User.name}}</span>
+          </a>
+          <span class='secondary-text'>@{{this.User.account}}</span>
+          <span class='secondary-text'>•</span>
+          <span class='secondary-text'>{{relativeTimeFromNow
+              this.createdAt
+            }}</span>
+        </div>
+        <a href='#' class='content'>{{this.description}}</a>
+        <div class='tweet-buttons d-flex flex-row align-items-end'>
+          <button type="button" class="d-flex flex-row align-items-end" data-bs-toggle='modal'
+              data-bs-target='#replyModal-{{this.id}}'>
+              <i class="comment"></i>
+              <span>{{this.Replies.length}}</span>
+          </button>
+          {{! 以下為like }}
+          <button
+            type='button'
+            class='d-flex flex-row align-items-end like-submit-btn liked'
+            data-tweetId='{{this.id}}'
+          >
+            <i class='like user-like'></i>
+            <span class='liked-numbers'>{{this.LikedUsers.length}}</span>
+          </button>
+        </div>
       </div>
-      <a href="#" class="content">{{this.description}}</a>
-      <div class="tweet-buttons d-flex flex-row align-items-end">
-        <button type="button" class="d-flex flex-row align-items-end">
-          <i class="comment"></i>
-          <span>{{this.Replies.length}}</span>
-        </button>
-        {{!-- 以下為like --}}
-        <button type="button" class="d-flex flex-row align-items-end like-submit-btn liked" data-tweetId="{{this.id}}">
-          <i class="like user-like"></i>
-          <span class="liked-numbers">{{this.LikedUsers.length}}</span>
-        </button>
-      </div>
-    </div> 
-  </div>
+    </div>
+    {{> reply-modal tweet=this user=../user}}
   {{/each}}
 </div>
