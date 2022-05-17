@@ -17,7 +17,7 @@ const likeController = {
           }
         })
       })
-      .then(() => res.redirect('/'))
+      .then(() => res.redirect(`${req.get('Referrer')}#tweetId${TweetId}`))
       .catch(err => next(err))
   },
   unlikeTweet: (req, res, next) => {
@@ -35,7 +35,7 @@ const likeController = {
         }
         return like.destroy()
       })
-      .then(() => res.redirect('/'))
+      .then(() => res.redirect(`${req.get('Referrer')}#tweetId${TweetId}`))
       .catch(err => next(err))
   },
 }
