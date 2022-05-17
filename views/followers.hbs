@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col">{{> left-nav}}</div>
+    <div class="col-7 border-start border-end px-0">
+        <div class="row">
+            <div class="col-1">
+                <a href="/users/{{data.id}}/tweets"><i class="fas fa-arrow-left"></i></a>
+            </div>
+            <div class="col">
+                {{data.name}}<br/>
+                <small>@{{data.account}}</small>
+            </div>
+        </div>
+        <hr/>
+        {{> followships-nav}}
+        <hr/>
+        <div style="overflow:auto;height:600px">
+            {{#each data.Followers}}
+            <div class="row">
+                <div class="col-2">
+                    <img src="{{this.avatar}}" class="rounded-circle" style="width:50px;height:50px;">
+                </div>
+                <div class="col">
+                    <div>
+                        <p class="col fw-bold">{{this.name}}</p>
+                        <button class="btn rounded-pill" style="background-color: #FF6600;" type="submit">正在跟隨</button>
+                    </div>
+                    <div>
+                        {{this.introdution}}
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            {{/each}}
+        </div>
+    </div>
+    <div class="col">{{> right-nav}}</div>  
+</div>
