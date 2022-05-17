@@ -14,8 +14,7 @@ const { authenticated, authenticatedAdmin } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 
 // api 路由入口
-router.post('/api/users/:id/avatar', authenticated, upload.single('image'), apiController.putAvatar)
-router.post('/api/users/:id', authenticated, apiController.putUser)
+router.post('/api/users/:id', authenticated, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), apiController.putUser)
 router.get('/api/users/:id', authenticated, apiController.getUser)
 
 // admin 路由入口

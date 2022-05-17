@@ -1,41 +1,41 @@
 const userEditBtn = document.querySelector('.user-edit-modal-button')
+
+const userName = document.querySelector('.name')
+const userIntroduction = document.querySelector('.introduction')
+const userCover = document.querySelector('.cover')
+const userAvatar = document.querySelector('.avatar')
+
 const userEditModal = document.querySelector('#user-edit-modal-dialog')
-const modalSaveBtn = document.querySelector('.user-edit-modal-save-button')
 const modalCloseBtn = document.querySelector('.user-edit-modal-close-button')
 
-const userName = document.querySelector('#user-edit-modal-name')
-const userNameCounts = document.querySelector('.user-edit-modal-name-counts')
-const userIntroduction = document.querySelector('#user-edit-modal-introduction')
-const userIntroductionCounts = document.querySelector('.user-edit-modal-introduction-counts')
+const userModalName = document.querySelector('#user-edit-modal-name')
+const userModalNameCounts = document.querySelector('.user-edit-modal-name-counts')
+const userModalIntroduction = document.querySelector('#user-edit-modal-introduction')
+const userModalIntroductionCounts = document.querySelector('.user-edit-modal-introduction-counts')
 
-const userCover = document.querySelector('#cover-upload-img')
-const userCoverInput = document.querySelector('#cover-upload-input')
-const userAvatar = document.querySelector('#avatar-upload-img')
-const userAvatarInput = document.querySelector('#avatar-upload-input')
+const userModalCover = document.querySelector('#cover-upload-img')
+const userModalCoverInput = document.querySelector('#cover-upload-input')
+const userModalAvatar = document.querySelector('#avatar-upload-img')
+const userModalAvatarInput = document.querySelector('#avatar-upload-input')
 
 const BASE_URL = 'http://localhost:3000'
 // 點擊 "編輯個人按鈕" 計算顯示的字數
 userEditBtn.addEventListener('click', async e => {
   try {
     const target = e.target
-    // console.log(target)
-
     const queryUserId = target.dataset.id
-    const res = await axios.get(`${BASE_URL}/api/users/${queryUserId}`)
 
-    // res.body = res.data.user
+    const res = await axios.get(`${BASE_URL}/api/users/${queryUserId}`)
     const userInfo = res.data.user
 
-    console.log(res)
+    userModalName.value = userInfo.name
+    userModalNameCounts.innerText = userInfo.name.length
 
-    userName.value = userInfo.name
-    userNameCounts.innerText = userInfo.name.length
+    userModalIntroduction.innerText = userInfo.introduction
+    userModalIntroductionCounts.innerText = userInfo.introduction.length
 
-    userIntroduction.innerText = userInfo.introduction
-    userIntroductionCounts.innerText = userInfo.introduction.length
-
-    userCover.src = userInfo.cover
-    userAvatar.src = userInfo.avatar
+    userModalCover.src = userInfo.cover
+    userModalAvatar.src = userInfo.avatar
   } catch (err) {
     console.log(err)
   }
@@ -48,27 +48,26 @@ userEditModal.addEventListener('keyup', e => {
 
   if (target.matches('#user-edit-modal-name')) {
     if (inputValue.length > 50) alert('名字輸入不能超過 50 個字 !')
-    userNameCounts.innerText = inputValue.length
+    userModalNameCounts.innerText = inputValue.length
   } else {
     if (inputValue.length > 160) alert('自我介紹輸入不能超過 160 個字 !')
-    userIntroductionCounts.innerText = inputValue.length
+    userModalIntroductionCounts.innerText = inputValue.length
   }
 })
 
 // 顯示本地圖片的圖片
 userEditModal.addEventListener('change', e => {
   const target = e.target
-  // console.log(target.value)
   const reader = target.matches('input') ? new FileReader() : ''
 
   if (target.matches('#avatar-upload-input')) {
     reader.addEventListener('load', () => {
-      userAvatar.src = reader.result
+      userModalAvatar.src = reader.result
     })
     reader.readAsDataURL(target.files[0])
   } else if (target.matches('#cover-upload-input')) {
     reader.addEventListener('load', () => {
-      userCover.src = reader.result
+      userModalCover.src = reader.result
     })
     reader.readAsDataURL(target.files[0])
   }
@@ -76,68 +75,33 @@ userEditModal.addEventListener('change', e => {
 
 // 關閉 modal 要清空 input 裏 image 占據的空間
 modalCloseBtn.addEventListener('click', e => {
-  userCoverInput.value = null
-  userAvatarInput.value = null
+  userModalCoverInput.value = null
+  userModalAvatarInput.value = null
 })
 
 // 儲存 modal 資訊
-userEditModal.addEventListener('submit', e => {
+userEditModal.addEventListener('submit', async e => {
+  e.preventDefault()
   const target = e.target
-  console.log(target)
+  const queryUserId = target.dataset.id
+
+  const formData = new FormData()
+  formData.append('cover', userModalCoverInput.files[0])
+  formData.append('avatar', userModalAvatarInput.files[0])
+  formData.append('name', userModalName.value)
+  formData.append('introduction', userModalIntroduction.value)
+  const res = await axios.post(`${BASE_URL}/api/users/${queryUserId}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+
+  userModalCoverInput.value = null
+  userModalAvatarInput.value = null
+
+  const userInfo = res.data.user
+  userName.innerText = userInfo.name
+  userIntroduction.innerText = userInfo.introduction
+  userCover.src = userInfo.cover
+  userAvatar.src = userInfo.avatar
 })
-
-// const BASE_URL = 'http://localhost:3000'
-// const uploadAvatarInput = document.querySelector('#avatar-upload-input')
-// const uploadAvatarBtn = document.querySelector('.avatar-upload-link')
-// 頭像更新
-// uploadAvatarInput.addEventListener('change', async e => {
-//   // e.preventDefault()
-//   const target = e.target
-//   const queryUserId = target.dataset.id
-//   const formData = new FormData()
-//   console.log('target.files============================' + target.files)
-//   // 抓取 input 的圖片，存入 formData 以 axios 傳入後端
-//   formData.append('image', target.files[0])
-//   const res = await axios.post(`${BASE_URL}/api/users/${queryUserId}/avatar`, formData, {
-//     headers: {
-//       'Content-Type': 'multipart/form-data'
-//     }
-//   })
-//   console.log(res)
-// })
-
-// userEditModal.addEventListener('click', async e => {
-//   // e.preventDefault()
-//   const target = e.target
-
-//   console.log(target)
-// })
-
-// userEditModal.addEventListener('submit', async e => {
-//   // e.preventDefault()
-//   const target = e.target
-//   const userId = target.dataset.id
-//   const formData = new FormData(userEditModal)
-//   console.log(target)
-
-//   await axios({
-//     method: 'post',
-//     url: `${BASE_URL}/api/users/${userId}`,
-//     data: formData,
-//     headers: {
-//       'Content-Type': 'multipart/form-data'
-//     }
-//   })
-// })
-
-// const BASE_URL = 'http://localhost:3000'
-
-// saveBtn.addEventListener('click', async e => {
-//   const target = e.target
-//   const userId = target.dataset.id
-
-//   const queryUser = await axios({
-//     method: 'post',
-//     url: `${BASE_URL}/api/users/${userId}`
-//   })
-// })

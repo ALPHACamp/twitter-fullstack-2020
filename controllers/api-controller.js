@@ -1,7 +1,5 @@
 const { User } = require('../models')
 const helpers = require('../_helpers')
-const { removeAllSpace, removeOuterSpace } = require('../_helpers')
-const bcrypt = require('bcrypt-nodejs')
 
 const apiController = {
   getUser: async (req, res, next) => {
@@ -23,51 +21,22 @@ const apiController = {
     try {
       const userId = Number(helpers.getUser(req).id)
       const queryUserId = Number(req.params.id) // from axios
-      let { account, name, email, password, confirmPassword } = req.body // from axios
+      const { name, introduction } = req.body // from axios
+      const { cover, avatar } = req.files
+      if (userId !== queryUserId) return res.status(200).json({ status: 'error', message: '您無權限編輯使用者 !' })
+      console.log(cover)
 
-      // if (!account || !email || !password || !confirmPassword) return res.status(500).json({ status: 'error', message: '必填欄位未填寫完整 !' })
-      if (password !== confirmPassword) return res.status(500).json({ status: 'error', message: '密碼與密碼再確認不相符 !' })
-      if (account.length > 50) return res.status(500).json({ status: 'error', message: '帳號長度限制50字元以內' })
-      if (name.length > 50) return res.status(500).json({ status: 'error', message: '名稱長度限制50字元以內' })
-      if (password.length > 50) return res.status(500).json({ status: 'error', message: '密碼長度限制50字元以內' })
-      if (confirmPassword.length > 50) return res.status(500).json({ status: 'error', message: '密碼再確認長度限制50字元以內' })
-      if (userId !== queryUserId) return res.status(500).json({ status: 'error', message: '您沒有權限編輯使用者 !' })
-
-      account = removeAllSpace(account)
-      name = removeOuterSpace(name)
-      if (!name) name = account
-
-      const queryUser = await User.findByPk(queryUserId)
+      const [queryUser, coverFilePath, avatarFilePath] = await Promise.all([User.findByPk(queryUserId), cover ? helpers.imgurFileHandler(cover[0]) : null, avatar ? helpers.imgurFileHandler(avatar[0]) : null])
       if (!queryUser) return res.status(500).json({ status: 'error', message: '使用者不存在 !' })
 
-      const hash = await bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+      const updatedQueryUser = await queryUser.update({ name, introduction, cover: coverFilePath || queryUser.cover, avatar: avatarFilePath || queryUser.avatar })
 
-      const updatedQueryUser = await queryUser.update({ account, name, email, password: hash })
-      const data = updatedQueryUser.toJSON()
-      delete data.password
+      const user = updatedQueryUser.toJSON()
+      delete user.password
 
-      return res.status(200).json({ status: 'success', data })
+      return res.status(200).json({ status: 'success', user })
     } catch (err) {
-      return res.status(500).json({ status: 'error', message: `${err}` })
-    }
-  },
-  putAvatar: async (req, res, next) => {
-    try {
-      console.log(req)
-      const queryUserId = req.params.id
-      const { file } = req
-
-      const [queryUser, filePath] = await Promise.all([User.findByPk(queryUserId), helpers.imgurFileHandler(file)])
-      if (!queryUser) {
-        req.flash('error_messages', '使用者不存在 !')
-      }
-
-      const updatedQueryUser = await queryUser.update({ avatar: filePath || null })
-
-      return res.status(200).json({ status: 'success', data: updatedQueryUser })
-    } catch (err) {
-      return res.status(500).json({ status: 'error', message: `${err}` })
-      // next(err)
+      next(err)
     }
   }
 }
