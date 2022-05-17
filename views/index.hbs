@@ -16,89 +16,26 @@
             </div>
         </form>
         <hr class="mt-1"style="border: 10px solid rgb(106, 106, 106);"/>
-        <div style="overflow:auto;max-height:700px">
+        <div style="overflow:auto;max-height:725px">
             {{#each tweets}}
-            <div class="row mx-0 px-0">
-                <div class="col-1">
-                    <a href="/users/{{this.User.id}}/tweets"><img src="{{this.User.avatar}}" class="rounded-circle" style="width:50px;height:50px"></a>
-                </div>
-                <div class="col">
-                    <p>
-                        <span class="fw-bold">{{this.User.name}}</span> 
-                        <small>@{{this.User.account}} ‧ {{relativeTimeFromNow this.updatedAt}}</small>  
-                    </p>
-                    <p>{{this.description}}</p>
-                    <div class="d-flex">
-                        <div class="col-1">
-                            <button type="button" class="border-0 bg-body" data-bs-toggle="modal" data-bs-target="#tweet{{this.id}}Reply"><i class="far fa-comment"></i> {{ this.totalReply}}</button>
-                        </div>
-                        <div class="modal fade" id="tweet{{this.id}}Reply" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <div>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                    </div>
-                                    <div class="modal-body row">
-                                        <div class="col-2 me-0">
-                                            <img src="{{this.User.avatar}}" class="rounded-circle" style="width:50px;height:50px">
-                                        </div>
-                                        <div class="col px-0">
-                                            <span class="fw-bold fs-6">{{this.User.name}}</span><small>@{{this.User.account}} ‧ </small><span>{{relativeTimeFromNow this.updatedAt}}</span>
-                                            <br/>
-                                            {{this.description}}
-                                            <br/>
-                                            <small>回覆給<span style="color:#FF6600">@{{this.User.account}}</span></small>
-                                        </div>
-                                        <br/>                                   
-                                        <form method="POST" action="/tweets/{{this.id}}/replies">
-                                            <div class="row">
-                                                <div class="col-2 me-0">
-                                                    <img src="{{../user.avatar}}" class="rounded-circle" style="width:50px;height:50px"> 
-                                                </div>
-                                                <div class="col mx-0 px-0">
-                                                    <textarea class="border-0 mt-2 mx-0 px-0" style="width:100%; border: none;outline: none;resize:none" placeholder="Leave a comment here" id="floatingTextarea2" rows="4"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="text-end">
-                                                <button type="submit" class="btn border-0 text-light rounded-pill " style="background-color: #FF6600;">回覆</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{#if this.isLiked}}
-                            <form method="POST" action="/tweets/{{this.id}}/unlike">
-                                <button type="submit" class="border-0 bg-body"><i class="fas fa-heart text-danger text-danger"></i> {{this.totalLike}}</button>
-                            </form>
-                        {{else}}
-                            <form method="POST" action="/tweets/{{this.id}}/like">
-                                <button type="submit" class="border-0 bg-body"><i class="far fa-heart"></i> {{this.totalLike}}</button> 
-                            </form>                        
-                        {{/if}}
-                    </div>
-                </div>
-            </div>
-            <hr/>
+                {{> tweet-block user=../user}}
             {{/each}}
-                    <nav class="mt-3 text-center" aria-label="page navigation">
-                        <ul class="pagination ">
-                            <li class="page-item {{#ifCond pagination.currentPage 1}}disabled{{/ifCond}}">
-                            <a class="page-link" href="/tweets?page={{pagination.prev}}" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">{{pagination.currentPage}}</a></li>
-                            <li class="page-item {{#ifCond pagination.currentPage pagination.totalPage}}disabled{{/ifCond}}">
-                            <a class="page-link" href="/tweets?page={{pagination.next}}" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                            </li>
-                        </ul>
-                    </nav>
+            <nav class="mt-3 text-center" aria-label="page navigation">
+                <ul class="pagination ">
+                    <li class="page-item {{#ifCond pagination.currentPage 1}}disabled{{/ifCond}}">
+                    <a class="page-link" href="/tweets?page={{pagination.prev}}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">{{pagination.currentPage}}</a></li>
+                    <li class="page-item {{#ifCond pagination.currentPage pagination.totalPage}}disabled{{/ifCond}}">
+                    <a class="page-link" href="/tweets?page={{pagination.next}}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
-    <div class="col">{{> right-nav}}</div>
+    <div class="col-3">{{> right-nav}}</div>
 </div>
