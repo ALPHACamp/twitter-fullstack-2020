@@ -16,7 +16,6 @@ const userController = {
     }
     req.flash('success_messages', '登入成功!')
     res.redirect('/tweets')
-
   },
   signUpPage: (req, res) => {
     res.render('register')

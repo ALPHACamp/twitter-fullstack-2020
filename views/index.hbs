@@ -1,5 +1,5 @@
 <div class="row" >
-    <div class="col">{{> left-nav}}</div>
+    <div class="col">{{> left-nav route='index'}}</div>
     <div class="col-7 border-start border-end px-0">
         <h3 class="my-1 px-4 py-0 mx-0 fw-bold">首頁</h3><hr class="my-2 "/>
         <form>
@@ -83,29 +83,21 @@
             </div>
             <hr/>
             {{/each}}
-            <nav class="mt-3" aria-label="page navigation">
-                <ul class="pagination">
-                    <li class="page-item {{#ifCond pagination.currentPage 1}}disabled{{/ifCond}}">
-                    <a class="page-link" href="/tweets?page={{pagination.prev}}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                    </li>
-                    {{#each pagination.pages}}
-                    {{#ifCond this ../pagination.currentPage}}
-                        <li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
-                    {{else}}
-                        <li class="page-item">
-                        <a class="page-link" href="/tweets?page={{this}}">{{this}}</a>
-                        </li>
-                    {{/ifCond}}
-                    {{/each}}
-                    <li class="page-item {{#ifCond pagination.currentPage pagination.totalPage}}disabled{{/ifCond}}">
-                    <a class="page-link" href="/tweets?page={{pagination.next}}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                    </li>
-                </ul>
-            </nav>
+                    <nav class="mt-3 text-center" aria-label="page navigation">
+                        <ul class="pagination ">
+                            <li class="page-item {{#ifCond pagination.currentPage 1}}disabled{{/ifCond}}">
+                            <a class="page-link" href="/tweets?page={{pagination.prev}}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">{{pagination.currentPage}}</a></li>
+                            <li class="page-item {{#ifCond pagination.currentPage pagination.totalPage}}disabled{{/ifCond}}">
+                            <a class="page-link" href="/tweets?page={{pagination.next}}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                            </li>
+                        </ul>
+                    </nav>
         </div>
     </div>
     <div class="col">{{> right-nav}}</div>
