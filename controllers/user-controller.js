@@ -72,7 +72,7 @@ const userController = {
   },
   getTweets: async (req, res, next) => {
     try {
-      const userId = helpers.getUser(req).id // 登入的使用者
+      const userId = Number(helpers.getUser(req).id) // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
       const [queryUserData, tweets, followships] = await Promise.all([
@@ -148,7 +148,7 @@ const userController = {
   },
   getReplies: async (req, res, next) => {
     try {
-      const userId = helpers.getUser(req).id // 登入的使用者
+      const userId = Number(helpers.getUser(req).id) // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
       const [queryUserData, replies, followships] = await Promise.all([
@@ -218,7 +218,7 @@ const userController = {
   },
   getLikedTweets: async (req, res, next) => {
     try {
-      const userId = helpers.getUser(req).id // 登入的使用者
+      const userId = Number(helpers.getUser(req).id) // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
       const [queryUserData, followships] = await Promise.all([
@@ -272,7 +272,7 @@ const userController = {
   },
   getFollowers: async (req, res, next) => {
     try {
-      const userId = helpers.getUser(req).id // 登入的使用者
+      const userId = Number(helpers.getUser(req).id) // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
       const [queryUserData, followships] = await Promise.all([
@@ -334,7 +334,7 @@ const userController = {
   },
   getFollowings: async (req, res, next) => {
     try {
-      const userId = helpers.getUser(req).id // 登入的使用者
+      const userId = Number(helpers.getUser(req).id) // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
       const [queryUserData, followships] = await Promise.all([
@@ -465,7 +465,7 @@ const userController = {
       next(err)
     }
   },
-  userEditPage: async (req, res, next) => {
+  userSettingPage: async (req, res, next) => {
     try {
       const userId = Number(helpers.getUser(req).id)
       const queryUserId = Number(req.params.id) // other user
@@ -479,14 +479,14 @@ const userController = {
       const queryUser = queryUserData.toJSON()
       delete queryUser.password
 
-      return res.render('edit', { queryUser })
+      return res.render('setting', { queryUser })
     } catch (err) {
       next(err)
     }
   },
-  userEdit: async (req, res, next) => {
+  userSetting: async (req, res, next) => {
     try {
-      const userId = Number(req.user.id)
+      const userId = Number(helpers.getUser(req).id)
       const queryUserId = Number(req.params.id) // from axios
       let { account, name, email, password, confirmPassword } = req.body
 

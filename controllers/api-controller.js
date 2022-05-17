@@ -6,15 +6,22 @@ const bcrypt = require('bcrypt-nodejs')
 const apiController = {
   getUser: async (req, res, next) => {
     try {
-      // console.log(req)
-      // res.json('edit')
+      const userId = Number(helpers.getUser(req).id)
+      const queryUserId = Number(req.params.id)
+      if (userId !== queryUserId) return res.status(200).json({ status: 'error', message: '您無權限編輯使用者 !' })
+
+      const queryUser = await User.findByPk(queryUserId, { raw: true })
+      if (!queryUser) return res.status(500).json({ status: 'error', message: '使用者不存在 !' })
+      delete queryUser.password
+
+      return res.status(200).json({ status: 'success', user: queryUser })
     } catch (err) {
       next(err)
     }
   },
   putUser: async (req, res, next) => {
     try {
-      const userId = Number(req.user.id)
+      const userId = Number(helpers.getUser(req).id)
       const queryUserId = Number(req.params.id) // from axios
       let { account, name, email, password, confirmPassword } = req.body // from axios
 

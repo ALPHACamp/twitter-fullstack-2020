@@ -9,7 +9,7 @@
       </div>
       <div class="user-info">
         {{!-- <form action="/api/users/{{queryUser.id}}" method="POST" class="user-info-form"> --}}
-        <form action="/users/{{queryUser.id}}/edit?_method=PUT" method="POST" class="user-info-form">
+        <form action="/users/{{queryUser.id}}/setting?_method=PUT" method="POST" class="user-info-form">
           <div class="form-floating">
             <input type="text" class="form-control" id="user-edit-account" name="account" placeholder="" value="{{queryUser.account}}" maxlength="50" required>
             <label for="user-edit-account">帳號</label>

@@ -15,7 +15,7 @@
         <div class="buttons d-flex justify-content-end">
           {{#if queryUser.isSelf}}
             <!-- Button trigger modal -->
-            <button type="button" class="btn rounded-pill user-edit-modal-button" data-bs-toggle="modal" data-bs-target="#user-edit-staticBackdrop">
+            <button type="button" class="btn rounded-pill user-edit-modal-button" data-id="{{queryUser.id}}" data-bs-toggle="modal" data-bs-target="#user-edit-staticBackdrop">
               編輯個人資料
             </button>
           {{else}}
@@ -66,9 +66,9 @@
     <div class="modal-content" id="user-edit-modal-content">
       <form name="user-edit-modal-form" class="user-edit-modal-form" enctype="multipart/form-data">
         <div class="modal-header d-flex justify-content-between" id="user-edit-modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close user-edit-modal-close-button" data-bs-dismiss="modal" aria-label="Close"></button>
           <h5 class="modal-title" id="user-edit-staticBackdropLabel">編輯個人資料</h5>
-          <button type="button" class="btn btn-primary user-edit-save-button" data-id="{{queryUser.id}}" data-bs-dismiss="modal">儲存</button>
+          <button type="button" class="btn btn-primary user-edit-modal-save-button" data-id="{{queryUser.id}}" data-bs-dismiss="modal">儲存</button>
         </div>
         <div class="modal-body" id="user-edit-modal-body">
           <div class="main">
@@ -76,20 +76,24 @@
               <label for="cover-upload-input" class="cover-upload-label">背景更新</label>
               {{!-- <input id="cover-upload-input" name="image" type="file" style="display: none;" data-id="{{queryUser.id}}" onchange="form.submit()"/> --}}
               <input id="cover-upload-input" name="image" type="file" style="display: none;" data-id="{{queryUser.id}}"/>
-              <img class="cover" src='{{queryUser.cover}}' alt='background'/>
+              <img id="cover-upload-img" class="cover" src='' alt='background'/>
+              {{!-- <img class="cover" src='{{queryUser.cover}}' alt='background'/> --}}
 
               <label for="avatar-upload-input" class="avatar-upload-label">頭像更新</label>
               <input id="avatar-upload-input" name="image" type="file" style="display: none;" data-id="{{queryUser.id}}"/>
-              <img class='avatar' src='{{queryUser.avatar}}' alt='avatar' />
+              <img id="avatar-upload-img" class='avatar' src='' alt='avatar' />
+              {{!-- <img class='avatar' src='{{queryUser.avatar}}' alt='avatar' /> --}}
             </div>
           </div>
           <div class="form-floating">
-            <input type="text" class="form-control" id="user-edit-modal-name" placeholder="user-name" value="{{queryUser.name}}" maxlength="50">
+            {{!-- <input type="text" class="form-control" id="user-edit-modal-name" placeholder="user-name" value="{{queryUser.name}}" maxlength="50"> --}}
+            <input type="text" class="form-control" id="user-edit-modal-name" placeholder="user-name" value="" maxlength="50">
             <label for="user-edit-modal-name">名稱</label>
             <p class="text-end"><span class="user-edit-modal-name-counts">0</span>/50</p>
           </div>
           <div class="form-floating">
-            <textarea class="form-control" placeholder="user-introduction" id="user-edit-modal-introduction" style="height: 100px" maxlength="160">{{queryUser.introduction}}</textarea>
+            {{!-- <textarea class="form-control" placeholder="user-introduction" id="user-edit-modal-introduction" style="height: 100px" maxlength="160">{{queryUser.introduction}}</textarea> --}}
+            <textarea class="form-control" placeholder="user-introduction" id="user-edit-modal-introduction" style="height: 100px" maxlength="160"></textarea>
             <label for="user-edit-modal-introduction">自我介紹</label>
             <p class="text-end"><span class="user-edit-modal-introduction-counts">0</span>/160</p>
           </div>
