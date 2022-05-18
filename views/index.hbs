@@ -1,6 +1,6 @@
 <div class="row" >
     <div class="col">{{> left-nav route='index'}}</div>
-    <div class="col-7 border-start border-end px-0">
+    <div class="col-7 border-start border-end px-0" id="middle" style="overflow:auto;">
         <h3 class="my-1 px-4 py-0 mx-0 fw-bold">首頁</h3><hr class="my-2 "/>
         <form method="POST" action="/tweets">
             <div class="row mx-0 px-0">
@@ -15,8 +15,8 @@
                 <button type="submit" class="btn border-0 text-light rounded-pill " style="background-color: #FF6600;">推文</button>
             </div>
         </form>
-        <hr class="mt-1"style="border: 10px solid rgb(106, 106, 106);"/>
-        <div style="overflow:auto;max-height:725px">
+        <hr class="my-0 "style="border: 10px solid rgb(106, 106, 106);"/>
+        <div style="padding-top:1rem">
             {{#each tweets}}
                 {{> tweet-block user=../user}}
             {{/each}}
@@ -39,3 +39,7 @@
     </div>
     <div class="col-3">{{> right-nav}}</div>
 </div>
+<script>
+    document.getElementById("middle").style.height =  window.innerHeight+'px';
+</script>
+ 
