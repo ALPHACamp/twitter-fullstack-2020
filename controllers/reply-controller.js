@@ -47,7 +47,7 @@ const replyController = {
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
-      res.render('reply', { tweet: tweetData, replies: repliesData, followships: followshipData })
+      res.render('reply', { tweet: tweetData, replies: repliesData, followships: followshipData, leftColTab: 'userHome' })
     } catch (err) {
       next(err)
     }

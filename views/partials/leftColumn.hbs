@@ -1,8 +1,8 @@
 <div class="navigation d-flex flex-column justify-content-between">
   <a href='/tweets'><img class='logo' alt='logo' src='/images/twitter_2022_logo.svg' /></a>
-  <a class="active" href='/tweets'><i class="home"></i>首頁</a>
-  <a class="" href='/users/{{user.id}}/tweets'><i class="info"></i>個人資料</a>
-  <a class="" href='/users/{{user.id}}/setting'><i class="setting"></i>設定</a>
+  <a class="{{#ifCond leftColTab 'userHome'}}active{{/ifCond}}" href='/tweets'><i class="home"></i>首頁</a>
+  <a class="{{#ifCond leftColTab 'userInfo'}}active{{/ifCond}}" href='/users/{{user.id}}/tweets'><i class="info"></i>個人資料</a>
+  <a class="{{#ifCond leftColTab 'userSetting'}}active{{/ifCond}}" href='/users/{{user.id}}/setting'><i class="setting"></i>設定</a>
   <button type="button" class="btn btn-primary" data-bs-toggle='modal' data-bs-target='#postModal'>推文</button>
 </div>
 <div class="footer">

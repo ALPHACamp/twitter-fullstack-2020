@@ -140,7 +140,8 @@ const userController = {
         queryUser,
         tweets,
         followships: followshipData,
-        tab: 'getTweets'
+        tab: 'getTweets',
+        leftColTab: 'userInfo'
       })
     } catch (err) {
       next(err)
@@ -210,7 +211,8 @@ const userController = {
         queryUser,
         replies,
         followships: followshipData,
-        tab: 'getReplies'
+        tab: 'getReplies',
+        leftColTab: 'userInfo'
       })
     } catch (err) {
       next(err)
@@ -264,7 +266,8 @@ const userController = {
       return res.render('user', {
         queryUser,
         followships: followshipData,
-        tab: 'getLikedTweets'
+        tab: 'getLikedTweets',
+        leftColTab: 'userInfo'
       })
     } catch (err) {
       next(err)
@@ -473,7 +476,7 @@ const userController = {
       const queryUser = queryUserData.toJSON()
       delete queryUser.password
 
-      return res.render('setting', { queryUser })
+      return res.render('setting', { queryUser, leftColTab: 'userSetting' })
     } catch (err) {
       next(err)
     }
