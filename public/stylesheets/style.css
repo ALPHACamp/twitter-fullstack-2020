@@ -324,6 +324,26 @@ a:hover {
   position: relative;
   top: -180px;
 }
+.input-form {
+  padding-left: 20px;
+  background: #F5F8FA;
+  border: 1px solid #F5F8FA;
+  border-bottom: 3px solid #657786 ;
+}
+.input-form-label {
+  color: #696974;
+  padding-left: 20px;
+  background: #F5F8FA;
+  border: 1px solid #F5F8FA;
+}
+.form-btn {
+  width: 86px; 
+  height: 46px; 
+  background: #FF6600; 
+  border-radius: 50px; 
+  border:#FF6600;
+  color: white;
+}
 /* for dev */
 .red {
   outline: 3px solid red;

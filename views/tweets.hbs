@@ -9,16 +9,15 @@
       <div class="message">
         {{> messages}}
       </div>
-      <div class="outline">
+      <div class="outline mb-3 pb-0">
         {{!-- header --}}
         <div class="header">
           <a href="/tweets" class=" d-flex mt-3 ms-4">
             <h4 class="navbar-brand mb-0">首頁</h4>
           </a>
-          <hr>
         </div>
         {{!-- post tweet--}}
-        <div class="row my-2 mx-0 d-flex justify-content-center">
+        <div class="row mt-3 py-3 mx-0 d-flex justify-content-center outline">
           <div class="col-2 d-flex flex-row-reverse">
             <img class="avatar" src="{{user.avatar}}" alt="avatar">
           </div>
@@ -29,17 +28,15 @@
             </div>
           </div>
         </div>
-        {{!-- divider --}}
-        <div class="main-divider mt-2"></div>
         {{!-- tweets --}}
         {{#each tweets}}
-          <div class="row mt-4 mx-0">
+          <div class="row pt-4 m-0 outline">
             {{!-- tweeter's avatar --}}
             <a href="/users/{{this.User.id}}" class="col-2 d-flex flex-row-reverse">
               <img src="{{this.User.avatar}}" class="avatar" alt="avatar">
             </a>
             {{!-- tweet's content --}}
-            <div class="col-10">
+            <div class="col-10 pb-3 mb-0">
               {{!-- tweeter's info --}}
               <div class="d-flex flex-row align-items-center">
                 <p class="main-user-name">{{this.User.name}}</p>
@@ -76,7 +73,6 @@
                 </div>
               </div>
             </div>
-            <hr class="mb-0 mt-3">
           </div>
         {{/each}}
       </div>
