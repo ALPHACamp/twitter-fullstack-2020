@@ -4,12 +4,12 @@
     </div>
     <div class="col">
         <p>
-            <a href="/users/{{User.id}}/tweets" style="text-decoration:none;">
+            <a href="/users/{{User.id}}/tweets" style="text-decoration:none; color:black;">
             <span class="fw-bold">{{User.name}}</span>
             </a>
             <small>@{{User.account}} ‧ {{relativeTimeFromNow this.updatedAt}}</small>
             <br/>  
-            <small >回覆 <span style="color:#FF6600">@{{tweet.User.name}}</span></small>
+            <small >回覆 <a href="/users/{{tweet.User.id}}/tweets" style="text-decoration:none;"><span style="color:#FF6600">@{{tweet.User.name}}</span></a></small>
         </p>
         <p>{{this.comment}}</p>
         <div class="d-flex">
