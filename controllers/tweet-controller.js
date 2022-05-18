@@ -4,10 +4,6 @@ const helpers = require('../_helpers')
 const tweetController = {
   getTweets: (req, res, next) => {
     const loginUser = helpers.getUser(req).id
-    if (helpers.getUser(req).role === 'admin') {
-      req.flash('error_messages', '無使用權限')
-      return res.redirect('/admin/tweets')
-    }
     return Promise.all([
       User.findByPk(loginUser, { raw: true, nest: true }),
       Tweet.findAll({
@@ -51,13 +47,6 @@ const tweetController = {
   },
   getTweet: (req, res, next) => {
     const loginUser = helpers.getUser(req).id
-    if (!loginUser) {
-      req.flash('error_messages', '帳號不存在')
-      res.redirect('/signin')
-    } else if (helpers.getUser(req).role === 'admin') {
-      req.flash('error_messages', '無使用權限')
-      res.redirect('/admin/tweets')
-    }
     return Promise.all([
       Tweet.findByPk(req.params.id, {
         include: [
@@ -84,7 +73,6 @@ const tweetController = {
           likeCount: tweetData.Likes.length,
           isLiked: tweetData.Likes.some(l => l.UserId === loginUser)
         }
-
         const LIMIT = 10
         const userData = users
           .map(user => ({
@@ -101,10 +89,6 @@ const tweetController = {
   postTweet: (req, res, next) => {
     const userId = helpers.getUser(req).id
     const { description } = req.body
-    if (!userId) {
-      req.flash('error_messages', '您尚未登入帳號!')
-      res.redirect('/signin')
-    }
     if (!description) return req.flash('error_messages', '內容不可空白')
     if (description.length > 140) {
       req.flash('error_messages', '推文請在140字以內')
@@ -124,10 +108,6 @@ const tweetController = {
     const userId = helpers.getUser(req).id
     const tweetId = req.params.id
     const comment = req.body.comment
-    if (!userId) {
-      req.flash('error_messages', '您尚未登入帳號!')
-      res.redirect('/signin')
-    }
     if (!comment) return req.flash('error_messages', '內容不可空白')
     Reply.create({
       userId,

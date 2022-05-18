@@ -164,3 +164,133 @@ a:hover {
 .nav-admin-link:hover {
   color: #ff6600;
 }
+
+/* main content */
+.main-content {
+  padding-bottom: 0px;
+}
+.outline {
+  outline: 2px solid #E6ECF0;
+}
+.avatar {
+  height: 50px;
+  width: 50px;
+  border-radius: 50px;
+}
+.main-tweet-btn {
+  height: 40px;
+  width:64px;
+  border-radius: 50px;
+  background: #FF6600;
+  border:#FF6600;
+}
+.main-divider {
+  height: 10px;
+  width: 100%;
+  background: #E6ECF0;
+}
+.main-user-name {
+  font-size: 16px;
+  margin: 0 0;
+}
+.main-user-account {
+  font-size: 14px;
+  margin: 0 8px;
+  color: #6C757D;
+}
+.heart-btn {
+  width: 24px;
+  border: transparent;
+  background: transparent;
+}
+.heart-icon {
+  color: #E0245E;
+}
+.reply-textarea {
+  width: 450px; 
+  border: none; 
+  background-color: white; 
+  word-wrap: break-word;
+}
+/* left-sidebar */
+.left-sidebar-anchor {
+  position: fixed;
+  top: 10px;
+}
+.tab-anchor {
+  width: 165px;
+  border-bottom: 0px !important;
+}
+.logo {
+ position: relative;
+ left: 1.3em;
+}
+.tab-icon {
+  width: 130px; 
+  border-bottom: 0px !important;
+  color: #FF6600;
+}
+.tab-item {
+  min-width: max-content;
+}
+.left-sidebar-btn {
+  height: 40px; 
+  width: 150px; 
+  border-radius: 50px; 
+  background: #FF6600; 
+  border:#FF6600;
+}
+.logout-anchor {
+  min-width: 180px; 
+  border-bottom: 0px !important; 
+  position: relative; 
+  top: 140%;
+  left: 1.2rem;
+}
+
+/* right-sidebar  */
+.right-sidebar-anchor {
+  position: fixed;
+  top: 10px;
+}
+.right-sidebar-content {
+  border-radius: 15px;
+}
+.right-user-name {
+  font-size: 16px; 
+  margin: 0 0;
+}
+.right-user-account {
+  font-size: 14px; 
+  margin: 0 0;
+  color: #6C757D;
+}
+.right-reply-description {
+  padding-left: 8px;
+  font-size: 24px;
+}
+.right-reply-time {
+  padding-left: 8px;
+  font-size: 14px;
+}
+
+/* for dev */
+.red {
+  outline: 3px solid red;
+}
+
+.green {
+  outline: 3px solid green;
+}
+
+.black {
+  outline: 3px solid black;
+}
+
+.blue {
+  outline: 3px solid blue;
+}
+
+.brown {
+  outline: 3px solid brown;
+}
