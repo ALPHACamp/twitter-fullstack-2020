@@ -21,7 +21,7 @@ const adminController = {
     res.redirect('/signin')
   },
   getTweets: (req, res, next) => {
-    const DEFAULT_LIMIT = 9
+    const DEFAULT_LIMIT = 7
     const page = Number(req.query.page) || 1
     const limit = Number(req.query.limit) || DEFAULT_LIMIT
     const offset = getOffset(limit, page)
