@@ -1,11 +1,14 @@
-<div class="container-fluid">
-  <div class="row content mt-2">
+<div class="container-lg">
+  <div class="row mt-2">
     {{!-- nav bar --}}
-    <div class="col-lg-3 left-sidebar">
+    <div class="col-lg-3 left-sidebar d-flex justify-content-end">
       {{>left-sidebar route='tweets'}}
     </div>
     {{!-- main content --}}
-    <div class="col-lg-6 main-content d-flex justify-content-center">
+    <div class="col-lg-6 main-content d-flex flex-column justify-content-center">
+      <div class="message">
+        {{> messages}}
+      </div>
       <div class="outline">
         {{!-- header --}}
         <div class="header">
@@ -26,7 +29,7 @@
             </div>
           </div>
         </div>
-        {{!-- line --}}
+        {{!-- divider --}}
         <div class="main-divider mt-2"></div>
         {{!-- tweets --}}
         {{#each tweets}}
@@ -129,7 +132,7 @@
               <img src="{{../user.avatar}}" class="avatar" alt="avatar">
             </div>
             <div class="col-9 mb-3 ">
-              <textarea type="text" class="form-control reply me-2 mt-2" id="reply" name="comment" rows="5" placeholder="推你的回復"></textarea>
+              <textarea type="text" class="form-control reply-textarea me-2 mt-2" id="reply" name="comment" rows="5" placeholder="推你的回復"></textarea>
             </div>
           </div>
           <div class="d-flex flex-row-reverse me-3 mb-3">

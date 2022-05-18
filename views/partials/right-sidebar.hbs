@@ -1,13 +1,15 @@
 <div class="right-sidebar-anchor">
+  {{!-- header --}}
   <div class="col bg-light right-sidebar-content">
-    <div class="container d-flex align-items-center mt-3">
+    <div class="container d-flex align-items-center mt-2">
       <h4 class="fw-bold mt-4">跟隨誰</h4>
     </div>
-    <div class="mt-3 right-sidebar-divider"</div>
+    <hr>
+    {{!-- <div class="mt-3 right-sidebar-divider"</div> --}}
     {{#each users}}
     {{#ifCond this.id ../loginUser.id}}
-    <div class="d-flex flex-row align-items-center mx-3 py-2">
-      <a href="/users/{{this.id}}" class="d-flex align-items-center mx-0">
+    <div class="d-flex align-items-center mx-3 py-2">
+      <a href="/users/{{this.id}}" class="mx-0">
         <img src="{{this.avatar}}" class="avatar" alt="avatar">
       </a>
       <div class="mx-2">
@@ -16,15 +18,15 @@
       </div>
     </div>
     {{else}}
-    <div class="d-flex flex-row align-items-center mx-3 py-2">
-      <a href="/users/{{this.id}}" class="d-flex align-items-center mx-0">
+    <div class="d-flex align-items-center mx-3 py-2">
+      <a href="/users/{{this.id}}" class="mx-0">
         <img src="{{this.avatar}}" class="avatar" alt="avatar">
       </a>
       <div class="mx-2">
         <a href="/users/{{this.id}}" class="fw-bold right-user-name">{{this.name}}</a>
         <p class="text-muted right-user-account">{{this.account}}</p>
       </div>
-      <div class="d-flex align-items-center">
+      <div class="follow-btn">
         {{#if this.isFollowed}}
         <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
           <button type="submit" class="following-button text-white">正在跟隨</button>

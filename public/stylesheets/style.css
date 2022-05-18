@@ -165,25 +165,9 @@ a:hover {
   color: #ff6600;
 }
 
-/* for dev */
-.red {
-  outline: 3px solid red;
-}
-
-.green {
-  outline: 3px solid green;
-}
-
-.black {
-  outline: 3px solid black;
-}
-
-.blue {
-  outline: 3px solid blue;
-}
-
-.brown {
-  outline: 3px solid brown;
+/* main content */
+.main-content {
+  padding-bottom: 0px;
 }
 .outline {
   outline: 2px solid #E6ECF0;
@@ -228,31 +212,33 @@ a:hover {
   background-color: white; 
   word-wrap: break-word;
 }
+/* left-sidebar */
+.left-sidebar-anchor {
+  position: fixed;
+  top: 10px;
+}
 .tab-anchor {
-  position: relative;
-  left: 3rem;
-  width: 180px;
+  width: 165px;
   border-bottom: 0px !important;
 }
 .logo {
-  position: relative;
-  left: 8rem;
+ position: relative;
+ left: 1.3em;
 }
 .tab-icon {
-  min-width: 130px; 
+  width: 130px; 
   border-bottom: 0px !important;
+  color: #FF6600;
 }
 .tab-item {
-  min-width: 130px;
+  min-width: max-content;
 }
 .left-sidebar-btn {
-  position: relative;
-  left: 3rem;
   height: 40px; 
   width: 150px; 
   border-radius: 50px; 
   background: #FF6600; 
-  border:#FF6600"
+  border:#FF6600;
 }
 .logout-anchor {
   min-width: 180px; 
@@ -261,23 +247,14 @@ a:hover {
   bottom: -25rem; 
   left: 4rem;
 }
-.left-sidebar-anchor {
-  position: fixed;
-  top: 10px;
-  left: 5px;
-}
+
+/* right-sidebar  */
 .right-sidebar-anchor {
   position: fixed;
   top: 10px;
 }
 .right-sidebar-content {
   border-radius: 15px;
-}
-.right-sidebar-divider {
-  height: 1px; 
-  width: auto; 
-  border-radius: 0px; 
-  background: #E6ECF0;
 }
 .right-user-name {
   font-size: 16px; 
@@ -286,4 +263,34 @@ a:hover {
 .right-user-account {
   font-size: 14px; 
   margin: 0 0;
+  color: #6C757D;
+}
+.right-reply-description {
+  padding-left: 8px;
+  font-size: 24px;
+}
+.right-reply-time {
+  padding-left: 8px;
+  font-size: 14px;
+}
+
+/* for dev */
+.red {
+  outline: 3px solid red;
+}
+
+.green {
+  outline: 3px solid green;
+}
+
+.black {
+  outline: 3px solid black;
+}
+
+.blue {
+  outline: 3px solid blue;
+}
+
+.brown {
+  outline: 3px solid brown;
 }

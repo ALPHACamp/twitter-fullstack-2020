@@ -1,34 +1,25 @@
-<div class="left-sidebar-anchor">
+<div class="left-sidebar-anchor d-flex flex-column">
   {{!-- logo --}}
-  <div class="col-lg-3 mt-3 d-flex flex-row-reverse">
+  <div class="col mt-3">
     <img src="/images/logo.png" class="avatar logo" alt="logo">
   </div>
   {{!-- tab --}}
   <div class="d-flex tab-anchor">
     <div class="mt-4 mx-2">
-      <ul class="nav nav-tabs tab-anchor">
-
-        <li class="nav-item">
+      <div class="nav nav-tabs tab-anchor">
           <a href="/tweets" class="nav-link tab-icon d-flex align-items-center {{#ifCond route 'tweets'}} active {{/ifCond}}">
             <i class="fas fa-fw fa-home mx-1"></i>
             <h5 class="mt-2 ms-3 tab-item d-flex justify-content-start">首頁</h5>
           </a>
-        </li>
-
-        <li class="nav-item">
           <a href="/users/{{user.id}}" class="nav-link tab-icon d-flex align-items-center {{#ifCond route 'user'}} active {{/ifCond}}">
             <i class="fas fa-fw fa-user mx-1"></i>
             <h5 class="mt-2 ms-3 tab-item d-flex justify-content-start">個人資料</h5>
           </a>
-        </li>
-
-        <li class="nav-item">
           <a href="/users/{{user.id}}/setting" class="nav-link tab-icon d-flex align-items-center {{#ifCond route 'setting'}} active {{/ifCond}}">
             <i class="fas fa-fw fa-cog mx-1"></i>
             <h5 class="mt-2 ms-3 tab-item d-flex justify-content-start">設定</h5>
           </a>
-        </li>
-      </ul>
+      </div>
       <button class="text-white left-sidebar-btn" data-bs-toggle="modal" data-bs-target="#tweetModal">推文</button>
 
       <a href="/logout" class="d-flex align-items-center logout-anchor">
