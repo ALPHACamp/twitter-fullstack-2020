@@ -1,20 +1,20 @@
-<div class="container" style="height:100vh">
+<div class="container px-3" style="height:100vh">
     <img class="logo mb-3" alt="logo" src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" style="height:50px;width:50px;">
     <nav class="nav flex-column">
         <a class="nav-link fs-5 fw-bold  my-1 px-1 mb-3" href="/tweets" style="color:{{#ifCond route 'index'}}#FF6600{{else}}black{{/ifCond}};">
-            <i class="fas fa-house-user"></i>首頁
+            <i class="fas fa-house-user"></i> 首頁
         </a>
-        <a class="nav-link fs-5 fw-bold  my-1 px-1 mb-3" href="/users/{{user.id}}/tweets" style="color:{{#ifCond route 'tweets'}}#FF6600{{else}}black{{/ifCond}};">
-            <i class="fas fa-user"></i>個人資料
+        <a class="nav-link fs-5 fw-bold  my-1 px-1 mb-3" href="/users/{{logInUser.id}}/tweets" style="color:{{#ifCond route 'tweets'}}#FF6600{{else}}black{{/ifCond}};">
+            <i class="fas fa-user"></i> 個人資料
         </a>
-        <a class="nav-link fs-5 fw-bold my-1 px-1 mb-5" href="/users/setting/{{user.id}}"  style="color:{{#ifCond route 'setting'}}#FF6600{{else}}black{{/ifCond}};">
-            <i class="fas fa-user-cog"></i>設定
+        <a class="nav-link fs-5 fw-bold my-1 px-1 mb-5" href="/users/setting/{{logInUser.id}}"  style="color:{{#ifCond route 'setting'}}#FF6600{{else}}black{{/ifCond}};">
+            <i class="fas fa-user-cog"></i> 設定
         </a>
         <button class="border-0 rounded-pill text-white text-center py-1 fs-5 fw-bold" style="background-color: #FF6600;" data-bs-toggle="modal" data-bs-target="#tweets">推文</button>  
     </nav>
 </div>
 
-<div class="ms-1 ps-1" style="margin-top:-50px">
+<div class="ms-1 ps-1" style="margin-top:-55px">
     <a class="nav-link fs-5 fw-bold text-dark my-1 px-1" href="/logout"><i class="fas fa-sign-out-alt"></i> 登出</a>
 </div>
 
@@ -27,13 +27,13 @@
             </div>
         </div>
         <div class="modal-body">
-            <form>
+            <form method="POST" action="/tweets">
                 <div class="row mx-0 px-0">
                     <div class="col-2 pt-1">
-                        <img src="{{user.avatar}}" class="rounded-circle" style="width:50px;height:50px;">
+                        <img src="{{logInUser.avatar}}" class="rounded-circle" style="width:50px;height:50px;">
                     </div>
                     <div class="col pe-0">
-                        <textarea class="border-0 mt-2 " style="width:100%; border: none;outline: none;resize:none" placeholder="Leave a comment here" id="floatingTextarea2" rows="4"></textarea>
+                        <textarea name="description" class="border-0 mt-2 " style="width:100%; border: none;outline: none;resize:none" placeholder="Leave a comment here" id="floatingTextarea2" rows="4"></textarea>
                     </div>
                 </div>
                 <div class="text-end me-1 pe-1 mb-1 pb-1">
@@ -44,4 +44,3 @@
     </div>
   </div>
 </div> 
-

@@ -26,7 +26,7 @@ const replyController = {
         throw new Error('This tweet id do not exist')
       }
       likes.isLiked = likes.rows.some(like=>like.UserId===helpers.getUser(req).id)
-      // res.json(replies)
+      // res.json(tweet)
       res.render('tweet',{tweet,topUsers,replies,likes})
     }).catch(err => next(err))
   },

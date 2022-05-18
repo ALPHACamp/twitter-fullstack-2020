@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('../../controllers/user-controller')
-const upload = require('../../middleware/multer')
+const { authenticated } = require('../../middleware/auth')
 
 
-router.get('/users/:id', upload.fields([{name: 'cover', maxCount: 1}, {name: 'avatar', maxCount: 1}]), userController.editUser)
-router.put('/users/:id', upload.fields([{name: 'cover', maxCount: 1}, {name: 'avatar', maxCount: 1}]), userController.putUser)
+
+router.get('/users/:id', authenticated, userController.editUser)
+router.post('/users/:id', authenticated, userController.putUser)
 
 module.exports = router
