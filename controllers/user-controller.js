@@ -172,7 +172,7 @@ const userController = {
           { model: Reply, include: [{ model: Tweet, include: [User] }] },
           { model: User, as: 'Followings' },
           { model: User, as: 'Followers' }
-        ]
+        ],
       })
       const topUsers = await catchTopUsers(req)
       const followersCount = user.Followers.length
