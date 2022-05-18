@@ -215,7 +215,8 @@ const userController = {
     try {
       const UserId = helpers.getUser(req).id
       const { name, introduction } = req.body
-      const { avatar, cover } = req.files
+      const avatar = req.files ? req.files.avatar : ''
+      const cover = req.files ? req.files.cover : ''
       let uploadAvatar = ''
       let uploadCover = ''
       if (avatar) {
@@ -225,16 +226,15 @@ const userController = {
         uploadCover = await imgurFileHandler(cover[0])
       }
       const user = await User.findByPk(UserId)
-      if (!name) throw new Error("User name is required!")
-      if (introduction.length > 140) throw new Error('自我介紹字數超過160字')
-      await user.update({
+      
+      const data = await user.update({
         name,
         introduction,
         avatar: uploadAvatar || user.avatar,
         cover: uploadCover || user.cover
       })
-      console.log(UserId)
-      res.redirect(`/users/${UserId}/tweets`)
+      
+      res.json(data)
     } catch (err) {
       next(err)
     }
