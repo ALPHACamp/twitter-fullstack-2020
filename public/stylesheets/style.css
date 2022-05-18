@@ -61,20 +61,6 @@
   color: #FF6600;
 }
 
-.user-cover,
-.user-avatar {
-  font-size: 1.5em;
-  color: white
-}
-
-.user-cover:hover {
-  color: #F5B7B1;
-}
-
-.user-avatar:hover {
-  color: #F5B7B1;
-}
-
 a {
   text-decoration: none;
   color: black
@@ -184,9 +170,9 @@ a:hover {
 .logout-anchor {
   min-width: 180px; 
   border-bottom: 0px !important; 
-  position: relative; 
-  top: 140%;
-  left: 1.2rem;
+  position: fixed; 
+  bottom: 5px;
+  left: 15.8%;
 }
 
 /* right-sidebar  */
@@ -224,10 +210,19 @@ a:hover {
   object-fit: fill;
 }
 .user-avatar {
+  font-size: 1.5em;
+  color: white;
   height: 140px;
   width: 141px; 
   border:4px white solid; 
   border-radius: 50%;
+}
+.user-cover:hover {
+  color: #F5B7B1;
+}
+
+.user-avatar:hover {
+  color: #F5B7B1;
 }
 .user-following-button {
   margin: 0 0;
@@ -290,7 +285,45 @@ a:hover {
   position: relative;
   top: -55px;
 }
-
+.user-edit-modal {
+  position: relative;
+  height: 610px; 
+  width: 572px;
+  border-radius: 14px;
+}
+.save-btn {
+  border-radius: 50px;
+  background: #FF6600; 
+  border:#E6ECF0;
+}
+.cover-upload-icon {
+  position:absolute; 
+  top: 45%; 
+  left: 45%;
+}
+.user-edit-avatar {
+  height: 140px ;
+  width: 141px; 
+  border:4px white solid; 
+  border-radius: 50% !important; 
+  filter: contrast(50%) !important;
+}
+.avatar-camera-anchor {
+  position: relative;
+  left: -80px;
+}
+.edit-avatar-anchor{
+  position: relative;
+  top: -94px;
+}
+.edit-name-anchor {
+  position: relative;
+  top: -160px;
+}
+.edit-intro-anchor {
+  position: relative;
+  top: -180px;
+}
 /* for dev */
 .red {
   outline: 3px solid red;

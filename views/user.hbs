@@ -110,49 +110,53 @@
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content" style="position: relative;height: 610px; width: 572px;border-radius: 14px;">
+    <div class="modal-content user-edit-modal">
+      {{!-- edit form --}}
       <form action="/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
-        <div class="modal-header p-2">
+        {{!-- modal header --}}
+        <div class="modal-header mt-1 p-2">
           <div class="col-4 d-flex justify-content-between">
             <button type="button" class="btn-close ms-0 mt-0 pt-0" data-bs-dismiss="modal" aria-label="Close"></button>
             <h5 class="modal-title fw-bold" id="exampleModalLabel">編輯個人資料</h5>
           </div>
           <div class="col-8 d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary"
-              style="border-radius: 50px;background: #FF6600; border:#E6ECF0;">儲存</button>
+            <button type="submit" class="btn save-btn">儲存</button>
           </div>
         </div>
+        {{!-- modal body --}}
         <div class="modal-body p-0">
+          {{!-- cover --}}
           <div class="form-row mb-3 mx-auto" style="position: relative;">
-            <img src="{{user.cover}}" class="card-img-top" alt="cover"
-              style="height: 200px ;width: 570px; filter: contrast(50%);object-fit:fill;">
-            <label for="cover" class="btn cover-uploader" style="position:absolute; top: 90px; left: 280px;">
+            <img src="{{user.cover}}" alt="cover">
+            <label for="cover" class="btn cover-uploader cover-upload-icon">
               <input class="d-none" type="file" id="cover" name="cover">
               <i class="user-cover fa-solid fa-camera"></i>
             </label>
           </div>
-          <div class="form-row mb-3">
-            <img src="{{user.avatar}}" alt="avatar"
-              style="height: 140px ;width: 141px; position:absolute; top: 124px;left: 16px;border:4px white solid; border-radius: 50%; filter: contrast(50%);">
-            <label for="avatar" class="btn cover-uploader" style="position:absolute; top: 175px; left: 60px;">
+          {{!-- avatar --}}
+          <div class="d-flex flex-row justify-content-between align-items-end edit-avatar-anchor">
+            <label for="avatar" class="btn cover-uploader">
+              <img src="{{user.avatar}}" class="user-avatar" alt="avatar">
               <input class="d-none" type="file" id="avatar" name="avatar">
-              <i class="user-avatar fa-solid fa-camera"></i>
+              <i class="fa-solid fa-camera avatar-camera-anchor"></i>
             </label>
           </div>
-          <div class="form-row mt-5 p-2">
+          {{!-- user name --}}
+          <div class="form-row mt-5 p-2 edit-name-anchor">
             <label class="form-label fw-bold" for="name">名稱</label>
             <input class="form-control" type="text" name="name" id="name" placeholder="Enter name" value="{{user.name}}"
               required>
             <p class="text-end text-muted now1 mb-0" style="font-size: 0.98em;">{{user.name.length}}/50</p>
           </div>
-          <div class="form-row mb-3 p-2">
+          {{!-- user intro --}}
+          <div class="form-row mb-3 p-2 edit-intro-anchor">
             <label class="form-label fw-bold" for="introduction">自我介紹</label>
             <textarea class="form-control" id="introduction" name="introduction" rows="4"
               required>{{user.introduction}}</textarea>
             <p class="text-end text-muted now1" style="font-size: 0.98em;">{{user.introduction.length}}/160</p>
           </div>
         </div>
+      </form>
     </div>
-    </form>
   </div>
 </div>
