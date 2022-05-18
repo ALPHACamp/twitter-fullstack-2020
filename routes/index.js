@@ -33,9 +33,6 @@ router.use('/users', authenticated, users)
 router.delete('/followships/:id', authenticated, userController.removeFollowing)
 router.post('/followships', authenticated, userController.addFollowing)
 
-// tweets 路由入口
-router.use('/tweets', authenticated, tweets)
-
 // 以下註冊、登入、登出路由以及followships
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
@@ -49,6 +46,9 @@ router.post(
   userController.signIn
 )
 router.get('/logout', userController.logout)
+
+// tweets 路由入口
+router.use('/tweets', authenticated, tweets)
 
 // fallback 路由
 router.get('/', (req, res) => {
