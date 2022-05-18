@@ -72,7 +72,7 @@ const userController = {
   },
   getTweets: async (req, res, next) => {
     try {
-      const userId = helpers.getUser(req).id // 登入的使用者
+      const userId = Number(helpers.getUser(req).id) // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
       const [queryUserData, tweets, followships] = await Promise.all([
@@ -136,11 +136,12 @@ const userController = {
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
-      res.render('user', {
+      return res.render('user', {
         queryUser,
         tweets,
         followships: followshipData,
-        tab: 'getTweets'
+        tab: 'getTweets',
+        leftColTab: 'userInfo'
       })
     } catch (err) {
       next(err)
@@ -148,7 +149,7 @@ const userController = {
   },
   getReplies: async (req, res, next) => {
     try {
-      const userId = helpers.getUser(req).id // 登入的使用者
+      const userId = Number(helpers.getUser(req).id) // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
       const [queryUserData, replies, followships] = await Promise.all([
@@ -206,11 +207,12 @@ const userController = {
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
-      res.render('user', {
+      return res.render('user', {
         queryUser,
         replies,
         followships: followshipData,
-        tab: 'getReplies'
+        tab: 'getReplies',
+        leftColTab: 'userInfo'
       })
     } catch (err) {
       next(err)
@@ -218,7 +220,7 @@ const userController = {
   },
   getLikedTweets: async (req, res, next) => {
     try {
-      const userId = helpers.getUser(req).id // 登入的使用者
+      const userId = Number(helpers.getUser(req).id) // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
       const [queryUserData, followships] = await Promise.all([
@@ -261,10 +263,11 @@ const userController = {
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
-      res.render('user', {
+      return res.render('user', {
         queryUser,
         followships: followshipData,
-        tab: 'getLikedTweets'
+        tab: 'getLikedTweets',
+        leftColTab: 'userInfo'
       })
     } catch (err) {
       next(err)
@@ -272,7 +275,7 @@ const userController = {
   },
   getFollowers: async (req, res, next) => {
     try {
-      const userId = helpers.getUser(req).id // 登入的使用者
+      const userId = Number(helpers.getUser(req).id) // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
       const [queryUserData, followships] = await Promise.all([
@@ -323,7 +326,7 @@ const userController = {
         .sort((a, b) => b.followerCounts - a.followerCounts)
         .slice(0, 10)
 
-      res.render('followship', {
+      return res.render('followship', {
         queryUser, // display the followers of user, including the followings and followers
         followships: followshipData, // rightColumn
         tab: 'getFollowers'
@@ -334,7 +337,7 @@ const userController = {
   },
   getFollowings: async (req, res, next) => {
     try {
-      const userId = helpers.getUser(req).id // 登入的使用者
+      const userId = Number(helpers.getUser(req).id) // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
       const [queryUserData, followships] = await Promise.all([
@@ -397,7 +400,6 @@ const userController = {
     try {
       const userId = Number(helpers.getUser(req).id)
       const queryUserId = Number(req.body.id) // other user
-      // if (userId === queryUserId) throw new Error('您不能追蹤自己 !')
       if (userId === queryUserId) {
         req.flash('error_messages', '您不能追蹤自己 !')
         return res.redirect(200, 'back')
@@ -406,23 +408,18 @@ const userController = {
       const user = await User.findByPk(userId, {
         include: [{ model: User, as: 'Followings', attributes: ['id'] }]
       })
-      // if (!user) throw new Error('使用者不存在 !')
       if (!user) {
         req.flash('error_messages', '使用者不存在 !')
         return res.redirect(200, 'back')
       }
 
       const queryUser = await User.findByPk(queryUserId, { raw: true })
-      // if (!queryUser) throw new Error('使用者不存在 !')
       if (!queryUser) {
         req.flash('error_messages', '使用者不存在 !')
         return res.redirect(200, 'back')
       }
 
       const followingUserId = user.Followings.map(user => user.id)
-      // if (followingUserId.includes(queryUserId)) {
-      //   throw new Error('您已經追蹤過此使用者了 !')
-      // }
       if (followingUserId.includes(queryUserId)) {
         req.flash('error_messages', '您已經追蹤過此使用者了 !')
         return res.redirect(200, 'back')
@@ -459,6 +456,84 @@ const userController = {
       await Followship.destroy({
         where: { followerId: userId, followingId: queryUserId }
       })
+
+      return res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
+  },
+  userSettingPage: async (req, res, next) => {
+    try {
+      const userId = Number(helpers.getUser(req).id)
+      const queryUserId = Number(req.params.id) // other user
+      if (userId !== queryUserId) {
+        throw new Error('您沒有權限瀏覽他人頁面 !')
+      }
+
+      const queryUserData = await User.findByPk(queryUserId)
+      if (!queryUserData) throw new Error('使用者不存在 !')
+
+      const queryUser = queryUserData.toJSON()
+      delete queryUser.password
+
+      return res.render('setting', { queryUser, leftColTab: 'userSetting' })
+    } catch (err) {
+      next(err)
+    }
+  },
+  userSetting: async (req, res, next) => {
+    try {
+      const userId = Number(helpers.getUser(req).id)
+      const queryUserId = Number(req.params.id) // from axios
+      let { account, name, email, password, confirmPassword } = req.body
+
+      if (!account || !email || !password || !confirmPassword) {
+        req.flash('error_messages', '必填欄位未填寫完整 !')
+        return res.redirect('back')
+      }
+      if (password !== confirmPassword) {
+        req.flash('error_messages', '密碼與密碼再確認不相符 !')
+        return res.redirect('back')
+      }
+      if (account.length > 50) {
+        req.flash('error_messages', '帳號長度限制50字元以內 !')
+        return res.redirect('back')
+      }
+      if (name.length > 50) {
+        req.flash('error_messages', '名稱長度限制50字元以內 !')
+        return res.redirect('back')
+      }
+      if (password.length > 50) {
+        req.flash('error_messages', '密碼長度限制50字元以內 !')
+        return res.redirect('back')
+      }
+      if (confirmPassword.length > 50) {
+        req.flash('error_messages', '密碼再確認長度限制50字元以內 !')
+        return res.redirect('back')
+      }
+      if (userId !== queryUserId) {
+        req.flash('error_messages', '您沒有權限編輯使用者 !')
+        return res.redirect('back')
+      }
+
+      account = removeAllSpace(account)
+      name = removeOuterSpace(name)
+      if (!name) name = account
+
+      const queryUser = await User.findByPk(queryUserId)
+      if (!queryUser) {
+        req.flash('error_messages', '使用者不存在 !')
+        return res.redirect('back')
+      }
+      if (bcrypt.compareSync(password, queryUser.password)) {
+        req.flash('error_messages', '新密碼不能與舊密碼相同 !')
+        return res.redirect('back')
+      }
+
+      const hash = await bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+      const updatedQueryUser = await queryUser.update({ account, name, email, password: hash })
+      const data = updatedQueryUser.toJSON()
+      delete data.password
 
       return res.redirect('back')
     } catch (err) {

@@ -40,7 +40,7 @@ const tweetController = {
         ...tweet.toJSON(),
         isLiked: tweet.LikedUsers.some(item => item.id === userId)
       }))
-      res.render('tweet', { user, tweets: data, followships: followshipData })
+      res.render('tweet', { user, tweets: data, followships: followshipData, leftColTab: 'userHome' })
     } catch (err) {
       next(err)
     }

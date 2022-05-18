@@ -11,10 +11,13 @@
       </div>
       <div class='user-banner'>
         <img class="cover" src='{{queryUser.cover}}' alt='background' width='100%' height='20%'/>
-        <img class='avatar' src='{{queryUser.avatar}}' alt='avatar' width='20%' height='10%'/>
+        <img class='avatar {{#ifCond user.id queryUser.id}}self-avatar{{/ifCond}}' src='{{queryUser.avatar}}' alt='avatar' width='20%' height='10%'/>
         <div class="buttons d-flex justify-content-end align-items-center">
           {{#if queryUser.isSelf}}
-            <button class='btn btn-outline edit-button' type='submit'>編輯個人資料</button>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline edit-button user-edit-modal-button" data-id="{{queryUser.id}}" data-bs-toggle="modal" data-bs-target="#user-edit-staticBackdrop">
+              編輯個人資料
+            </button>
             {{else}}
             <a class="btn-round message-button"><i class="btn-message"></i></a>
             <a class="btn-round ring-button"><i class="btn-ring " data-user-id="31"></i></a>
@@ -32,9 +35,9 @@
         </div>
       </div>
       <div class="user-info">
-        <h5>{{queryUser.name}}</h5>
+        <h5 class="name {{#ifCond user.id queryUser.id}}self-name{{/ifCond}}">{{queryUser.name}}</h5>
         <div class='secondary-text'>@{{queryUser.account}}</div>
-        <p class='intro'>{{queryUser.introduction}}</p>
+        <p class='introduction'>{{queryUser.introduction}}</p>
         <a href="/users/{{queryUser.id}}/followings">
           {{queryUser.Followings.length}} 個<span class="secondary">跟隨中</span>
         </a>
@@ -48,3 +51,43 @@
     <div class="top-users-list"> {{> rightColumn}}</div>
   </div> 
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="user-edit-staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" id="user-edit-modal-dialog">
+    <div class="modal-content" id="user-edit-modal-content">
+      <form name="user-edit-modal-form" class="user-edit-modal-form" enctype="multipart/form-data" data-id="{{queryUser.id}}">
+        <div class="modal-header d-flex justify-content-between" id="user-edit-modal-header">
+          <button type="button" class="btn-close user-edit-modal-close-button" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title" id="user-edit-staticBackdropLabel">編輯個人資料</h5>
+          <button type="submit" class="btn btn-primary user-edit-modal-save-button" data-id="{{queryUser.id}}" data-bs-dismiss="modal">儲存</button>
+        </div>
+        <div class="modal-body" id="user-edit-modal-body">
+          <div class="main">
+            <div class='user-banner'>
+              <label for="cover-upload-input" class="cover-upload-label">背景更新</label>
+              <a class="btn user-edit-modal-remove-cover">X</a>
+              <input id="cover-upload-input" name="image" type="file" style="display: none;" data-id="{{queryUser.id}}"/>
+              <img id="cover-upload-img" class="cover" src='' alt='background'/>
+              <label for="avatar-upload-input" class="avatar-upload-label">頭像更新</label>
+              <input id="avatar-upload-input" name="image" type="file" style="display: none;" data-id="{{queryUser.id}}"/>
+              <img id="avatar-upload-img" class='avatar' src='' alt='avatar' />
+            </div>
+          </div>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="user-edit-modal-name" placeholder="user-name" value="" maxlength="50">
+            <label for="user-edit-modal-name">名稱</label>
+            <p class="text-end"><span class="user-edit-modal-name-counts">0</span>/50</p>
+          </div>
+          <div class="form-floating">
+            <textarea class="form-control" placeholder="user-introduction" id="user-edit-modal-introduction" style="height: 100px" maxlength="160"></textarea>
+            <label for="user-edit-modal-introduction">自我介紹</label>
+            <p class="text-end"><span class="user-edit-modal-introduction-counts">0</span>/160</p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/javascripts/user-edit-modal.js"></script>

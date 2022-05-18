@@ -3,9 +3,9 @@
   {{#each followships}}
   <div class="follow-tweet d-flex flex-row align-items-center justify-content-between">
         <a href="/users/{{this.id}}/tweets" class="d-flex">
-          <img class="avatar" src="{{this.avatar}}" alt="User2 avatar">
+          <img class="avatar {{#ifCond ../user.id this.id}}self-avatar{{/ifCond}}" src="{{this.avatar}}" alt="User2 avatar">
           <div class="d-flex flex-column user-name-account">
-            <span class="user-name ellipsis">{{this.name}}</span>
+            <span class="name ellipsis {{#ifCond ../user.id this.id}}self-name{{/ifCond}}">{{this.name}}</span>
             <span class="secondary-text ellipsis">@{{this.account}}</span>
           </div>
         </a>

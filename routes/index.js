@@ -9,9 +9,14 @@ const tweets = require('./modules/tweets')
 
 const adminController = require('../controllers/admin-controller')
 const userController = require('../controllers/user-controller')
+const apiController = require('../controllers/api-controller')
 
 const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
+
+// api 路由入口
+router.post('/api/users/:id', authenticated, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), apiController.putUser)
+router.get('/api/users/:id', authenticated, apiController.getUser)
 
 // admin 路由入口
 router.use('/admin', admin)
