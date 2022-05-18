@@ -344,6 +344,9 @@ a:hover {
   border:#FF6600;
   color: white;
 }
+.user-content {
+  padding-bottom: -75px;
+}
 /* for dev */
 .red {
   outline: 3px solid red;

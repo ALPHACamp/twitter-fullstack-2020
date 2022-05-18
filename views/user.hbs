@@ -1,15 +1,15 @@
 <div class="container-lg">
-  <div class="row my-2">
+  <div class="row mt-2">
     {{!-- nav bar --}}
     <div class="col-lg-3 left-sidebar d-flex justify-content-end">
       {{>left-sidebar route='user'}}
     </div>
     {{!-- main content --}}
-    <div class="col-lg-6 main-content d-flex flex-column justify-content-center">
+    <div class="col-lg-6 user-content d-flex flex-column justify-content-center">
       <div class="message">
         {{> messages}}
       </div>
-      <div class="outline">
+      <div class="outline mb-0 pb-0">
         {{!-- content --}}
         <div class="content">
           {{!-- tittle --}}
@@ -80,14 +80,73 @@
           {{!-- user content --}}
           <div class="tab-content">
             {{#if tweetsSelect}}
-              {{#each user.Tweets}}
-                {{> user-tweets}}
+              {{#each user.Tweets}} {{!--Like功能未實作--}}
+                <div class="row pt-4 m-0 outline">
+                  {{!-- tweeter's avatar --}}
+                  <div class="col-2 d-flex flex-row-reverse">
+                    <img src="{{../user.avatar}}" class="avatar" alt="avatar">
+                  </div>
+                  {{!-- tweet's content --}}
+                  <div class="col-10 pb-3 mb-0">
+                    {{!-- tweeter's info --}}
+                    <a href="/tweets/{{this.id}}/replies" style="color:#000000;text-decoration: none">
+                      <div class="d-flex flex-row align-items-center">
+                        <p class="main-user-name">{{../user.name}}</p>
+                        <p class="main-user-account">@{{../user.account}}．{{relativeTimeFromNow this.createdAt}}</p>
+                      </div>
+                      {{!-- tweet's description --}}
+                      <div class="mt-2">
+                        <p>{{this.description}}</p>
+                      </div>
+                    </a>
+                    {{!-- tweet's replies & likes --}} 
+                    <div class="d-flex">
+                      <div>
+                        <i class="far fa-comment" data-bs-toggle="modal" data-bs-target="#replyModal{{this.id}}"></i>
+                        <span class="ms-1">{{this.Replies.length}}</span>
+                      </div>
+                      <div class="ms-5">
+                        {{!-- {{#if ../user.isLiked}} --}}
+                        {{!-- <form action="/tweets/{{this.id}}/unlike" method="post">
+                          <button class="heart-btn" type="submit">
+                            <i class="fa-solid fa-heart heart-icon"></i>
+                          </button>
+                          <span class="ms-1">{{this.Likes.length}}</span>
+                        </form> --}}
+                        {{!-- {{else}} --}}
+                        <form action="/tweets/{{this.id}}/like" method="post">
+                          <button class="heart-btn" type="submit">
+                            <i class="far fa-heart"></i>
+                          </button>
+                          <span class="ms-1">{{this.Likes.length}}</span>
+                        </form>
+                        {{!-- {{/if}} --}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               {{/each}}
             {{/if}}
             {{!-- replies --}}
             {{#if relpiesSelect}}
               {{#each user.Replies}}
-                {{> user-replies}}
+                <div class="row py-3 mb-0 mx-0 outline">
+                  <a href="/users/{{../user.id}}" class="col-2 ms-2 ps-3">
+                    <img src="{{../user.avatar}}" class="avatar" alt="avatar">
+                  </a>
+                  <div class="col-9">
+                    <div class="d-flex flex-row align-items-center">
+                      <p class="right-user-name">{{../user.name}}</p>
+                      <p class="right-user-account ms-2">@{{../user.account}}．{{relativeTimeFromNow this.createdAt}}</p>
+                    </div>
+                    <p class="mt-2 right-user-account">回覆
+                      <span style="color:#FF6600;text-decoration: none">@{{this.Tweet.User.account}}</span>
+                    </p>
+                    <div class="mt-2">
+                      <p>{{this.comment}}</p>
+                    </div>
+                  </div>
+                </div>
               {{/each}}
             {{/if}}
             {{!-- likes --}}
