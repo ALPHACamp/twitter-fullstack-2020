@@ -4,7 +4,9 @@
     </div>
     <div class="col">
         <p>
-            <span class="fw-bold">{{User.name}}</span> 
+            <a href="/users/{{User.id}}/tweets" style="text-decoration:none;">
+            <span class="fw-bold">{{User.name}}</span>
+            </a>
             <small>@{{User.account}} ‧ {{relativeTimeFromNow this.updatedAt}}</small>
             <br/>  
             <small >回覆 <span style="color:#FF6600">@{{tweet.User.name}}</span></small>
