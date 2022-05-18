@@ -145,7 +145,7 @@ a:hover {
 }
 
 
-.nav-admin-tabs .nav-link {
+.nav-admin-tabs .nav-admin-link {
   width: 120px;
   text-align: center;
   color: lightgray;
@@ -153,15 +153,15 @@ a:hover {
   border: none;
 }
 
-.nav-admin-tabs .nav-link.active {
+.nav-admin-link.active {
   width: 120px;
   text-align: center;
   color: #ff6600;
   border: none;
-  border-bottom: 2px solid #ff6600;
+  /*border-bottom: 2px solid #ff6600;*/
 }
 
-.nav-admin-tabs .nav-link:hover {
+.nav-admin-link:hover {
   color: #ff6600;
 }
 

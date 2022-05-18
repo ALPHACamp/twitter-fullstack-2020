@@ -2,11 +2,12 @@
   <div style="
     box-sizing: border-box;
     position: relative;
-    width: 1400px;
-    height: 1200px;
+    min-width: 1400px;
+    min-height: 1200px;
     background: #FFFFFF;
     border-radius: 4px;
     border: 1px solid #D5D5DC;">
+    {{> messages}}
     <form action="/signin" method="POST" style="display: flex; flex-direction: column; align-items: center">
       <div style="position: absolute; width: 50px; height: 50px; top: 64px;">
         <img src="/images/logo.png" alt="login" style="height: 50px; width: 50px;">
@@ -25,10 +26,13 @@
       </div>
       <button class="btn btn-primary btn-block" type="submit"
         style="display: inline-block; width: 356px; height: 46px; position: absolute; top: 384px; background: #FF6600; border-radius: 50px;">登入</button>
-      <div style="position: absolute; top: 452px; left: 50%;">
+      <div style="position: absolute; top: 452px; left: 730px;">
         <p><a href="/signup">註冊</a></p>
       </div>
-      <div style="position: absolute; top: 452px; left: 60%">
+      <div style="position: absolute; top: 452px; left: 775px;">
+        <p>・</p>
+      </div>
+      <div style="position: absolute; top: 452px; left: 802px;">
         <p><a href="/admin/signin">後台登入頁</a></p>
       </div>
     </form>
