@@ -114,6 +114,7 @@ const userController = {
       const tweetsCount = user.Tweets.length
 
       res.render('user', {
+        
         user: user.toJSON(),
         topUsers,
         tweets: data,
