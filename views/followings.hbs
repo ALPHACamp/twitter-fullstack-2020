@@ -2,7 +2,7 @@
     <div class="col">{{> left-nav}}</div>
     <div class="col-7 border-start border-end px-0" id="middle" style="overflow:auto;">
         <div class="row mx-1">
-            <div class="col-1 ">
+            <div class="col-1 py-2">
                 <a class="fs-5" style="color: black" href="/users/{{data.id}}/tweets" ><i class="fas fa-arrow-left"></i></a>
             </div>
             <div class="col">
@@ -12,7 +12,7 @@
         </div>
         <hr/>
         {{> followships-nav route='followings'}}
-        <hr/ class="mt-0">
+        <hr class="my-0"/>
             {{#each data.Followings}}
                 {{> followship-block logInUser=../logInUser}}
             {{/each}}

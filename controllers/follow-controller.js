@@ -13,7 +13,7 @@ const followshipController={
                 followerId,
                 followingId
             }
-        }).then(()=>res.redirect('/'))
+        }).then(()=>res.redirect(`${req.get('Referrer')}`))
         .catch(err=>next(err))
     },
     deleteFollowship:(req,res,next)=>{
@@ -29,7 +29,7 @@ const followshipController={
                 throw new Error('this followship do not exist')
             }
             return followship.destroy()
-        }).then(()=>res.redirect('/'))
+        }).then(()=>res.redirect(`${req.get('Referrer')}`))
         .catch(err=>next(err))
     }
 }

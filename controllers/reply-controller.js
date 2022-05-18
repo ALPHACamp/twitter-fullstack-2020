@@ -42,9 +42,9 @@ const replyController = {
           UserId: helpers.getUser(req).id,
           comment
         })
-      }).then(() => {
-        res.redirect('/')
-      }).catch(err => next(err))
+      })
+      .then(() => {res.redirect(`${req.get('Referrer')}`)})
+      .catch(err => next(err))
   }
 }
 module.exports = replyController
