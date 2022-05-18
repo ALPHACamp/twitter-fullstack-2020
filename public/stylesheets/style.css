@@ -244,8 +244,8 @@ a:hover {
   min-width: 180px; 
   border-bottom: 0px !important; 
   position: relative; 
-  bottom: -25rem; 
-  left: 4rem;
+  top: 140%;
+  left: 1.2rem;
 }
 
 /* right-sidebar  */

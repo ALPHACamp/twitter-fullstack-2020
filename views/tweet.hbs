@@ -19,7 +19,7 @@
             <hr>
           {{!-- tweet --}}
           <div class="row mt-2">
-            <div class="col-2 ms-2">
+            <div class="col-2 ms-3">
               <img class="avatar" src="{{tweet.User.avatar}}" alt="avatar" >
             </div>
             <div class="col-5 px-1">
@@ -27,16 +27,16 @@
               <p class="right-user-account">@{{tweet.User.account}}</p>
             </div>
             <div class="mt-2">
-              <p class="right-reply-description">{{tweet.description}}</p>
-              <p class="right-reply-time">{{time tweet.createdAt}}</p>
+              <p class="right-reply-description mx-3">{{tweet.description}}</p>
+              <p class="right-reply-time ms-3">{{time tweet.createdAt}}</p>
               <hr>
-              <div class="d-flex align-items-center">
+              <div class="d-flex align-items-center ms-3">
                 <p class="my-0 ms-2">{{data.replyCount}} 回覆</p>
                 <p class="my-0 ms-4">{{data.likeCount}} 喜歡次數</p>
               </div>
               <hr>
             </div>
-            <div class="d-flex">
+            <div class="d-flex ms-3">
               <i class="far fa-comment mx-3 d-flex align-items-center " data-bs-toggle="modal" data-bs-target="#replyModal"></i>
               {{#if data.isLiked}}
               <form action="/tweets/{{tweet.id}}/unlike" method="post">
