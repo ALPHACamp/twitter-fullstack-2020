@@ -27,23 +27,3 @@ userInfo.addEventListener('keyup', e => {
     userConfirmPasswordCounts.innerText = inputValue.length
   }
 })
-
-// const saveBtn = document.querySelector('.user-edit-save-button')
-// const userInfoForm = document.querySelector('.user-info-form')
-// 治理最終會回傳 axios 給前端，之後再優化
-// const BASE_URL = 'http://localhost:3000'
-// userInfoForm.addEventListener('submit', async e => {
-//   e.preventDefault()
-//   const target = e.target
-//   const formData = new FormData(userInfoForm)
-
-//   const res = await axios.post(`${target.action}`, { formData: ...formData },{ headers: {"Content-Type": "multipart/form-data"}})
-//   console.log(res)
-//   const userData = res.json(res)
-//   console.log(userData)
-
-//   const userInfoInputs = document.querySelectorAll('.user-info input')
-//   userInfoInputs[0].value = userData.account
-//   userInfoInputs[1].value = userData.name
-//   userInfoInputs[2].value = userData.email
-// })

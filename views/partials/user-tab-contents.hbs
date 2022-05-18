@@ -2,12 +2,12 @@
   {{#each tweets}}
     <div class='tweet d-flex'>
       <a href='/users/{{this.User.id}}/tweets'>
-        <img class='avatar' src='{{this.User.avatar}}' alt='user1 avatar' />
+        <img class='avatar {{#ifCond ../user.id this.User.id}}self-avatar{{/ifCond}}' src='{{this.User.avatar}}' alt='user1 avatar' />
       </a>
       <div class='post-content'>
         <div class='post-user d-flex flex-row align-items-end'>
           <a href='/users/{{this.User.id}}/tweets'>
-            <span class='user-name'>{{this.User.name}}</span>
+            <span class='user-name {{#ifCond ../user.id this.User.id}}self-name{{/ifCond}}'>{{this.User.name}}</span>
           </a>
           <span class='secondary-text'>@{{this.User.account}}</span>
           <span class='secondary-text'>•</span>
@@ -15,7 +15,7 @@
               this.createdAt
             }}</span>
         </div>
-        <a href='#' class='content'>{{this.description}}</a>
+        <a href='/tweets/{{this.id}}/replies' class='content'>{{this.description}}</a>
         <div class='tweet-buttons d-flex flex-row align-items-end'>
           <button
             type='button'
@@ -54,12 +54,12 @@
   {{#each replies}}
     <div class='tweet d-flex'>
       <a href='/users/{{this.User.id}}/tweets'>
-        <img class='avatar' src='{{this.User.avatar}}' alt='user1 avatar' />
+        <img class='avatar {{#ifCond ../user.id this.User.id}}self-avatar{{/ifCond}}' src='{{this.User.avatar}}' alt='user1 avatar' />
       </a>
       <div class='post-content'>
         <div class='post-user d-flex flex-row align-items-end'>
           <a href='/users/{{this.User.id}}/tweets'>
-            <span class='user-name'>{{this.User.name}}</span>
+            <span class='user-name {{#ifCond ../user.id this.User.id}}self-name{{/ifCond}}'>{{this.User.name}}</span>
           </a>
           <span class='secondary-text'>@{{this.User.account}}</span>
           <span class='secondary-text'>•</span>
@@ -68,20 +68,20 @@
             }}</span>
         </div>
         <div class='secondary-text reply-text'>回覆
-          <a href='#'>@{{this.Tweet.User.account}}</a></div>
-        <p class='content mb-0'>{{this.comment}}</p>
+          <a href='/users/{{this.Tweet.User.id}}/tweets'>@{{this.Tweet.User.account}}</a></div>
+        <a href='/tweets/{{this.Tweet.id}}/replies' class='content mb-0'>{{this.comment}}</a>
       </div>
     </div>
   {{/each}}
   {{#each queryUser.LikedTweets}}
     <div class='tweet d-flex'>
       <a href='/users/{{this.User.id}}/tweets'>
-        <img class='avatar' src='{{this.User.avatar}}' alt='user1 avatar' />
+        <img class='avatar {{#ifCond ../user.id this.User.id}}self-avatar{{/ifCond}}' src='{{this.User.avatar}}' alt='user1 avatar' />
       </a>
       <div class='post-content'>
         <div class='post-user d-flex flex-row align-items-end'>
           <a href='/users/{{this.User.id}}/tweets'>
-            <span class='user-name'>{{this.User.name}}</span>
+            <span class='user-name {{#ifCond ../user.id this.User.id}}self-name{{/ifCond}}'>{{this.User.name}}</span>
           </a>
           <span class='secondary-text'>@{{this.User.account}}</span>
           <span class='secondary-text'>•</span>
@@ -89,7 +89,7 @@
               this.createdAt
             }}</span>
         </div>
-        <a href='#' class='content'>{{this.description}}</a>
+        <a href='/tweets/{{this.id}}/replies' class='content'>{{this.description}}</a>
         <div class='tweet-buttons d-flex flex-row align-items-end'>
           <button type="button" class="d-flex flex-row align-items-end" data-bs-toggle='modal'
               data-bs-target='#replyModal-{{this.id}}'>

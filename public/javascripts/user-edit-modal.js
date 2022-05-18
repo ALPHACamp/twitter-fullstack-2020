@@ -1,9 +1,9 @@
 const userEditBtn = document.querySelector('.user-edit-modal-button')
 
-const userName = document.querySelector('.name')
+const userNameAll = document.querySelectorAll('.self-name')
 const userIntroduction = document.querySelector('.introduction')
 const userCover = document.querySelector('.cover')
-const userAvatar = document.querySelector('.avatar')
+const userAvatarAll = document.querySelectorAll('.self-avatar')
 
 const userEditModal = document.querySelector('#user-edit-modal-dialog')
 const modalCloseBtn = document.querySelector('.user-edit-modal-close-button')
@@ -100,8 +100,10 @@ userEditModal.addEventListener('submit', async e => {
   userModalAvatarInput.value = null
 
   const userInfo = res.data.user
-  userName.innerText = userInfo.name
   userIntroduction.innerText = userInfo.introduction
   userCover.src = userInfo.cover
-  userAvatar.src = userInfo.avatar
+  userNameAll.forEach(username => username.innerText = userInfo.name)
+  if (userInfo.avatar)userAvatarAll.forEach(useravatar => useravatar.src = userInfo.avatar)
+  // userName.innerText = userInfo.name
+  // userAvatar.src = userInfo.avatar
 })
