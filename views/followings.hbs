@@ -11,8 +11,8 @@
             </div>
         </div>
         <hr/>
-        {{> followships-nav}}
-        <hr/>
+        {{> followships-nav route='followings'}}
+        <hr/ class="mt-0">
             {{#each data.Followings}}
                 {{> followship-block}}
             {{/each}}
