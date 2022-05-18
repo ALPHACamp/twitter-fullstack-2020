@@ -83,7 +83,7 @@
         </div>
         <hr class="mt-2 "/>
         {{#each replies.rows}}
-            {{> reply-block tweet=../tweet }}
+            {{> reply-block tweet=../tweet User=this.User}}
         {{/each}}
     </div>
 
