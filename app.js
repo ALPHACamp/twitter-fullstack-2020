@@ -22,7 +22,7 @@ app.set('view engine', 'hbs')
 app.use(methodOverride('_method'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-
+app.use(express.static('public'))
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
 // 這兩個middleware要在session後面
 app.use(passport.initialize())

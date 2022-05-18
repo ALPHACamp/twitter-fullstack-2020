@@ -1,0 +1,10 @@
+.blockstyle:hover{
+    background-color:rgb(244, 244, 244);
+    cursor: pointer;
+}
+.opacityObject{
+    background-color:rgba(220,38,38,0);
+}
+.opacityObject:hover{
+    font-size:125%;
+}
