@@ -26,8 +26,8 @@
             <small>@{{user.name}}</small><br/>
             <p class="mt-2">{{user.introduction}}</p>
             <div class="d-flex">
-                <p class="me-3 fw-bold">{{followingsCount}}個跟隨中</p> 
-                <p class="me-3 fw-bold">{{followersCount}}位跟隨者</P>
+                <a href="/users/{{user.id}}/followers" style="text-decoration:none;color:black"><p class="me-3 fw-bold">{{followersCount}}位跟隨者</P></a>
+                <a href="/users/{{user.id}}/followings" style="text-decoration:none;color:black"><p class="me-3 fw-bold">{{followingsCount}}個跟隨中</p></a> 
             </div>
         </div>
         <div class="row mx-0 px-0">
