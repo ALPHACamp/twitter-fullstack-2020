@@ -70,3 +70,15 @@ i.logout{
   height: 15px;
   background-size: 250px;
 }
+i.btn-message{
+  background-position: -138px -49px;
+}
+i.btn-message:hover{
+  background-position: -258px -132px;
+}
+i.btn-ring{
+  background-position: -178px -48px;
+}
+i.btn-ring:hover, i.btn-ring-active{
+  background-position: -213px -132px;
+}

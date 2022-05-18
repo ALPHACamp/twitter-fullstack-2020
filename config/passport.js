@@ -62,7 +62,7 @@ passport.use(
         return cb(
           null,
           false,
-          req.flash('error_messages', '帳號或密碼輸入錯誤！')
+          req.flash('error_messages', '查無此帳號請重新輸入！')
         )
       }
 
@@ -70,7 +70,7 @@ passport.use(
         return cb(
           null,
           false,
-          req.flash('error_messages', '帳號或密碼輸入錯誤！')
+          req.flash('error_messages', '您不是管理員無法使用此功能')
         )
       }
 

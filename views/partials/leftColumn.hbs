@@ -6,7 +6,7 @@
   <button type="button" class="btn btn-primary" data-bs-toggle='modal' data-bs-target='#postModal'>推文</button>
 </div>
 <div class="footer">
-  <a href="/signout"><i class="logout"></i>登出</a>
+  <a href="/logout"><i class="logout"></i>登出</a>
 </div>
 
 {{! 以下為推文modal }}
@@ -22,12 +22,12 @@
             <a href="/users/{{user.id}}/tweets">
               <img class="avatar" src='{{user.avatar}}' alt='{{user.name}}\' s avatar'>
             </a>
-            <textarea class='side-post-description' id='description' name='description' placeholder='有什麼新鮮事？' maxlength='140'></textarea>
+            <textarea class='text-count-area' id='description' name='description' placeholder='有什麼新鮮事？' maxlength='140'></textarea>
           </div>
           <div class="d-flex justify-content-end align-items-center">
-            <span class='side-post-number secondary-text'>0 </span>
+            <span class='text-count-number secondary-text'>0 </span>
             <span class="secondary-text">/ 140</span>
-            <button class="btn btn-primary side-post-btn" type='submit' data-bs-toggle='modal' data-bs-target='#postModal' disabled>推文</button>
+            <button class="btn btn-primary side-post-btn text-count-btn" type='submit' data-bs-toggle='modal' data-bs-target='#postModal' disabled>推文</button>
           </div>
         </form>
       </div>
