@@ -7,6 +7,8 @@ const userAvatarAll = document.querySelectorAll('.self-avatar')
 
 const userEditModal = document.querySelector('#user-edit-modal-dialog')
 const modalCloseBtn = document.querySelector('.user-edit-modal-close-button')
+const modalremoveCoverBtn = document.querySelector('.user-edit-modal-remove-cover')
+const acCover = 'https://i.imgur.com/OrTW5at.png'
 
 const userModalName = document.querySelector('#user-edit-modal-name')
 const userModalNameCounts = document.querySelector('.user-edit-modal-name-counts')
@@ -75,8 +77,16 @@ userEditModal.addEventListener('change', e => {
 
 // 關閉 modal 要清空 input 裏 image 占據的空間
 modalCloseBtn.addEventListener('click', e => {
+  userModalCover.src = userCover.src // 如果使用者有按 remove cover 會需要恢復成原本的 src
   userModalCoverInput.value = null
   userModalAvatarInput.value = null
+})
+
+// 點擊 remove cover 的 X
+modalremoveCoverBtn.addEventListener('click', e => {
+  // 排除使用者可能按了 input 圖片又再按 remove cover 需要把 input 裏面的圖片檔案清除
+  userModalCover.src = acCover
+  userModalCoverInput.value = null
 })
 
 // 儲存 modal 資訊
@@ -90,6 +100,7 @@ userEditModal.addEventListener('submit', async e => {
   formData.append('avatar', userModalAvatarInput.files[0])
   formData.append('name', userModalName.value)
   formData.append('introduction', userModalIntroduction.value)
+  userModalCover.src === acCover ? formData.append('acCover', 'https://i.imgur.com/OrTW5at.png') : formData.append('acCover', '')
   const res = await axios.post(`${BASE_URL}/api/users/${queryUserId}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
@@ -102,8 +113,6 @@ userEditModal.addEventListener('submit', async e => {
   const userInfo = res.data.user
   userIntroduction.innerText = userInfo.introduction
   userCover.src = userInfo.cover
-  userNameAll.forEach(username => username.innerText = userInfo.name)
-  if (userInfo.avatar)userAvatarAll.forEach(useravatar => useravatar.src = userInfo.avatar)
-  // userName.innerText = userInfo.name
-  // userAvatar.src = userInfo.avatar
+  userNameAll.forEach(username => { username.innerText = userInfo.name })
+  if (userInfo.avatar)userAvatarAll.forEach(useravatar => { useravatar.src = userInfo.avatar })
 })
