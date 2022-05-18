@@ -1,6 +1,10 @@
 <div class="row">
     <div class="col">
-        {{> left-nav route='tweets'}}
+        {{#ifCond logInUser.id user.id}}
+            {{> left-nav route='tweets'}}
+        {{else}}
+            {{> left-nav }}
+        {{/ifCond}}
     </div>
     <div class="col-7 border-start border-end px-0" style="overflow-x:hidden;overflow-y:auto;" id="middle">
         <div class="row">
@@ -44,8 +48,7 @@
             </a>
             <div class="col-7"></div>
         </div>
-        <hr class="mt-0">
-
+        <hr class="mt-0 mb-0">
         <div>
             {{#each tweets}}
                 {{> tweet-block tweet=this user=../user logInUser=../logInUser}}

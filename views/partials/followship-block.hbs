@@ -6,16 +6,19 @@
         <a href="/users/{{this.id}}/tweets" style="text-decoration:none; color:black;"><span class="col fw-bold align-middle my-0 fs-6">{{this.name}}</span></a>
     </div>
     <div class="col text-end">
-    {{#if this.isFollowed}}
-        <form method="POST" action="/followships/{{this.id}}?method=DELETE">
-            <button class="btn rounded-pill text-light" style="background-color: #FF6600;" type="submit">正在跟隨</button>
-        </form>
-    {{else}}
-        <form method="POST" action="/followships">
-            <input name="id" style="display: none;" value="{{this.id}}">
-            <button class="btn rounded-pill" style="color:#FF6600;border-color:#FF6600" type="submit">跟隨</button>
-        </form>
-    {{/if}}
+        {{#ifCond this.id logInUser.id}}
+        {{else}}
+            {{#if this.isFollowed}}
+                <form method="POST" action="/followships/{{this.id}}?method=DELETE">
+                    <button class="btn rounded-pill text-light" style="background-color: #FF6600;" type="submit">正在跟隨</button>
+                </form>
+            {{else}}
+                <form method="POST" action="/followships">
+                    <input name="id" style="display: none;" value="{{this.id}}">
+                    <button class="btn rounded-pill" style="color:#FF6600;border-color:#FF6600" type="submit">跟隨</button>
+                </form>
+            {{/if}}
+        {{/ifCond}}
     </div>
 </div>
 <div class="row">
