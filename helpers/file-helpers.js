@@ -1,4 +1,7 @@
 const fs = require('fs') // 引入 fs 模組
+const imgur = require('imgur')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+imgur.setClientId(IMGUR_CLIENT_ID)
 const localFileHandler = file => { // file 是 multer 處理完的檔案
   return new Promise((resolve, reject) => {
     if (!file) return resolve(null) 
