@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const userController = require('../../controllers/user-controller')
+const apiController = require('../../controllers/api-controller')
 const { authenticated } = require('../../middleware/auth')
 
 
 
-router.get('/users/:id', authenticated, userController.editUser)
-router.post('/users/:id', authenticated, userController.putUser)
+router.get('/users/:id', authenticated, apiController.getUser)
+router.post('/users/:id', authenticated, apiController.putUser)
 
 module.exports = router
