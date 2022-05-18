@@ -21,7 +21,7 @@ const loginController = {
   },
   signUp: (req, res, next) => {
     const { name, password, email, checkPassword, account } = req.body
-
+    if (!name || !password || !email || !checkPassword || !account) throw new Error('欄位都是必填！')
     if (account.length > 50) throw new Error('帳號 請勿超過50個字！')
     if (name.length > 50) throw new Error('名稱 請勿超過50個字！')
     if (password !== checkPassword) throw new Error('密碼 與 確認密碼不相符！')

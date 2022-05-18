@@ -1,12 +1,14 @@
+<div class="container-lg">
 {{!-- left-bar --}}
-<div style="display: flex; justify-content: center; flex-direction:column;">
 {{>left-admin-sidebar route='adminUsers'}}
+<div>
+  <div>
     {{!-- users --}}
-    <div style="position: absolute; left: 332px;  height: 1200px; border: 1px solid #E6ECF0;">
-      <div style="height: 49px; width: 1065px; border-bottom: 1px solid #E6ECF0;">
+    <div style="position: absolute; left: 600px; max-width: 1065px; height: 1200px; border: 1px solid #E6ECF0;" class="col-lg-7">
+      <div style="height: 49px; max-width: 1065px; border-bottom: 1px solid #E6ECF0;">
         <h5 style="margin-left: 21px; margin-top: 24px;">使用者列表</h5>
       </div>
-      <div style="display: flex; flex-wrap: wrap;">
+      <div style="display: flex; flex-wrap: wrap;" >
         {{#each result}}
         <div class="card" style="width: 249px; height: 310px; margin:8px; position: relative; border-radius: 10px 10px 10px 10px;">
           <div
@@ -33,7 +35,6 @@
               </div>
               <div style="position: absolute; bottom: 24px; left: 150px; font-size:10px;">
                 <h7 style="font-size: 2px; mx-3">{{this.Followings.length}} 個跟隨者</h7>
-
               </div>
             </div>
           </div>
@@ -42,4 +43,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>
