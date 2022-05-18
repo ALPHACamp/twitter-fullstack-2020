@@ -2,157 +2,90 @@
     <div class="col">
         {{> left-nav}}
     </div>
-    <div class="col-7 border-start border-end px-0">
-        <div>
-            <h3 class="my-3 px-4 mx-0 fw-bold">←</h3>
-            <h5>{{user.name}}</h5>
-            <h6>{{tweetsCount}}推文</h6>
-
+    <div class="col-7 border-start border-end px-0" style="overflow-x:hidden;overflow-y:auto;" id="middle">
+        <div class="row">
+            <h3 class="my-3 px-4 mx-0 fw-bold col-1">←</h3>
+            <div class="col">
+                <span class="my-0 py-0 fw-bold fs-5">{{user.name}}</span><br/>
+                <small class="my-0">{{tweetsCount}} 推文</small>
+            </div>
         </div>
 
-        <div class="card" style="height: 250px;">
-            <img src="{{user.cover}}" class="card-img-top" alt="cover" style="height:100%;width:100%; object-fit:cover">
+        <div  style="height: 250px;">
+            <img src="{{user.cover}}"  alt="cover" style="height:100%;width:100%; object-fit:cover">
+        </div>
+        <div class="d-flex px-3" style="margin-top:-80px;z-index:100;position:relative">
+            <img src="{{user.avatar}}" class="me-auto rounded-circle border border-white border-5" style="width:150px;height:150px">
+            <div class="d-flex align-items-end text-end">
+                <button type="button" class="btn rounded-pill" style="color:#FF6600;border-color:#FF6600" data-bs-toggle="modal" data-bs-target="#editProfileModal">編輯個人資料</button>
+            </div>
+        </div>
+
+        <div class="mx-0 px-3">
+            <h3 class="fw-bold mb-0">{{user.name}}</h3>
+            <small>@{{user.name}}</small><br/>
+            <p class="mt-2">{{user.introduction}}</p>
+            <div class="d-flex">
+                <p class="me-3 fw-bold">{{followingsCount}}個跟隨中</p> 
+                <p class="me-3 fw-bold">{{followersCount}}位跟隨者</P>
+            </div>
         </div>
         <div class="row mx-0 px-0">
-            <div class="col-1 pt-1">
-                <img src="{{user.avatar}}" class="rounded-circle" style="width:50px;height:50px;">
-            </div>
-            <div class="col pe-0">
-
-            </div>
+            <a class="col text-center pb-2 " href="/users/{{user.id}}/tweets" style="text-decoration:none;{{#if user.Tweets}}color:#FF6600;border-bottom:solid;border-color:#FF6600;{{else}}color:black;{{/if}}">
+                推文
+            </a>
+            <a class="col text-center pb-2 " href="/users/{{user.id}}/replies" style="text-decoration:none;{{#if userReplies}}color:#FF6600;border-bottom:solid;border-color:#FF6600;{{else}}color:black;{{/if}}">
+                回覆
+            </a>
+            <a class="col-2 text-center pb-2 " href="/users/{{user.id}}/likes" style="text-decoration:none;{{#if user.Likes}}color:#FF6600;border-bottom:solid;border-color:#FF6600;{{else}}color:black;{{/if}}">
+                喜歡的內容
+            </a>
+            <div class="col-7"></div>
         </div>
+        <hr class="mt-0">
 
         <div>
-            <h5>{{user.name}}</h1>
-                <p>@{{user.name}}</p>
-                {{user.introduction}}
-                <P>{{followingsCount}}個跟隨中 {{followersCount}}位跟隨者 </P>
-
-        </div>
-        <!-- Button trigger modal -->
-
-
-        <a href="/api/users/{{user.id}}">編輯個人資料</a>
-        <form>
-
-            <div class="text-end me-1 pe-1 mb -1 pb-1">
-                <form action="/api/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
-
-                </form>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    編輯個人資料
-                </button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                ...
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <hr class="mt-1" style="border: 10px solid rgb(106, 106, 106);" />
-        <ul class="nav nav-tabs my-4">
-            <li class="nav-item">
-                <a class="nav-link {{#if user.Tweets}}active{{/if}}" href="/users/{{user.id}}/tweets">推文</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{#if userReplies}}active{{/if}}" href="/users/{{user.id}}/replies">回覆</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{#if user.Likes}}active{{/if}}" href="/users/{{user.id}}/likes">喜歡的內容</a>
-            </li>
-        </ul>
-        <div style="overflow:auto;max-height:650px">
             {{#each tweets}}
-            <div class="row mx-0 px-0">
-                <div class="col-1">
-                    <img src="{{../user.avatar}}" class="rounded-circle" style="width:50px;height:50px">
-                </div>
-                <div class="col">
-                    <p>
-                        <span>{{../user.name}}</span>
-                        <span>@{{../user.account}} ‧ </span>
-                        <span>{{relativeTimeFromNow this.updatedAt}}</span>
-                    </p>
-                    <p>{{this.description}}</p>
-                    <p>
-                        <i class="far fa-comment"></i> {{this.totalReply}}
-                        {{#if this.isLiked}}
-                        <i class="fas fa-heart text-danger"></i> {{this.totalLike}}
-                        {{else}}
-                        <i class="far fa-heart"></i> {{this.totalLike}}
-                        {{/if}}
-                    </p>
-                </div>
-            </div>
-            <hr />
+                {{> tweet-block tweet=this user=../user}}
             {{/each}}
 
             {{#if likes}}
-            {{#each likes}}
-            <div class="row mx-0 px-0">
-                <div class="col-1">
-                    <img src="{{../user.avatar}}" class="rounded-circle" style="width:50px;height:50px">
-                </div>
-                <div class="col">
-                    <p>
-                        <span>{{this.Tweet.User.name}}</span>
-                        <span>@{{this.Tweet.User.account}} ‧ </span>
-                        <span>{{relativeTimeFromNow this.updatedAt}}</span>
-                    </p>
-                    <p>{{this.Tweet.description}}</p>
-                    <p>
-                        <i class="far fa-comment"></i> {{this.totalReply}}
-                        {{#if this.isLiked}}
-                        <i class="fas fa-heart text-danger"></i> {{this.totalLike}}
-                        {{else}}
-                        <i class="far fa-heart"></i> {{this.totalLike}}
-                        {{/if}}
-                    </p>
-                </div>
-            </div>
-            <hr />
-            {{/each}}
+                {{#each likes}}
+                    {{> tweet-block tweet=this.Tweet user=../user}}
+                {{/each}}
             {{/if}}
 
             {{#if user.Replies}}
-            {{#each user.Replies}}
-            <div class="row mx-0 px-0">
-                <div class="col-1">
-                    <img src="{{../user.avatar}}" class="rounded-circle" style="width:50px;height:50px">
-                </div>
-                <div class="col">
-                    <p>
-                        <span>{{../user.name}}</span>
-                        <span>@{{../user.account}} ‧ </span>
-                        <span>{{relativeTimeFromNow this.updatedAt}}</span>
-                    </p>
-                    <p>回覆@{{this.Tweet.User.account}}</p>
-                    <p>{{this.Tweet.description}}</p>
-                   
-                </div>
-            </div>
-            <hr />
-            {{/each}}
-
+                {{#each user.Replies}}
+                    {{> reply-block tweet=this.Tweet User=../user}}
+                {{/each}}
             {{/if}}
-
         </div>
     </div>
-    <div class="col">{{> right-nav}}</div>
+    <div class="col-3">{{> right-nav}}</div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("middle").style.height =  window.innerHeight+'px';
+</script>

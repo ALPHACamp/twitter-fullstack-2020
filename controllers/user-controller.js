@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const helpers = require('../_helpers')
-const { User, Tweet, Reply, Like } = db
+const { User, Tweet, Reply, Like, sequelize} = db
 const { imgurFileHandler } = require('../helpers/file-helpers')
 const { Op } = require("sequelize")
 const { catchTopUsers } = require('../helpers/sequelize-helper')
@@ -95,7 +95,7 @@ const userController = {
 
       const user = await User.findByPk(UserId, {
         include: [
-          { model: Tweet, include: [Reply, Like] },
+          { model: Tweet, include: [Reply, Like, User] },
           { model: Reply, include: { model: Tweet, include: [User] } },
           { model: User, as: 'Followings' },
           { model: User, as: 'Followers' }
@@ -139,13 +139,17 @@ const userController = {
       const topUsers = await catchTopUsers(req)
       const followersCount = user.Followers.length
       const followingsCount = user.Followings.length
-      const data = user.Likes.map(e => ({
-        ...e.toJSON(),
-        totalLike: e.Tweet.Likes.length,
-        totalReply: e.Tweet.Replies.length,
-        isLiked: e.Tweet.Likes.some(f => f.UserId === helpers.getUser(req).id)
-      }))
-
+      const data = user.Likes.map(e => {
+        const f = {...e.toJSON()}
+        f.Tweet.totalLike= f.Tweet.Likes.length,
+        f.Tweet.totalReply= f.Tweet.Replies.length,
+        f.Tweet.isLiked= f.Tweet.Likes.some(g => g.UserId === helpers.getUser(req).id)
+        return f
+        // ...e.toJSON(),
+        // totalLike: e.Tweet.Likes.length,
+        // totalReply: e.Tweet.Replies.length,
+        // isLiked: e.Tweet.Likes.some(f => f.UserId === helpers.getUser(req).id),
+      })
       if (!user) throw new Error("User didn't exists!")
       return res.render('user', {
         user: user.toJSON(),
@@ -240,7 +244,7 @@ const userController = {
       const data = await User.findByPk(UserId, {
         include: [
           Tweet,
-          { model: User, as: 'Followers' },
+          { model: User, as: 'Followers', include:{model: User,as:'Followers'}},
         ],
         order: [['createdAt', 'DESC']]
       })
@@ -248,10 +252,13 @@ const userController = {
       const tweetsCounts = data.Tweets.length
       let followers = 'followers'
       if (!data) throw new Error("User didn't exists!")
-      
-
+      const user = data.toJSON()
+      user.Followers.forEach(e=>{
+        e.isFollowed = e.Followers.some(f=>f.id===helpers.getUser(req).id)
+      })
+      // res.json(data.toJSON())
       return res.render('followers', {
-        data: data.toJSON(),
+        data: user,
         topUsers,
         tweetsCounts,
         followers
@@ -266,7 +273,7 @@ const userController = {
       const data = await User.findByPk(UserId, {
         include: [
           Tweet,
-          { model: User, as: 'Followings' },
+          { model: User, as: 'Followings',include:{model: User,as:'Followers'}},
         ],
         order: [['createdAt', 'DESC']]
       })
@@ -274,10 +281,13 @@ const userController = {
       const tweetsCounts = data.Tweets.length
       let followings = 'followings'
       if (!data) throw new Error("User didn't exists!")
-      
-
+      const user = data.toJSON()
+      user.Followings.forEach(e=>{
+        e.isFollowed = e.Followers.some(f=>f.id===helpers.getUser(req).id)
+      })
+      // user.Followings.forEach(e=>{e.isFollowed=true})
       return res.render('followings', {
-        data: data.toJSON(),
+        data: user,
         topUsers,
         tweetsCounts,
         followings
