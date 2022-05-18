@@ -19,31 +19,34 @@
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          {{!-- <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">編輯個人資料</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div> --}}
           <div class="modal-body">
-          <form action="/users/{{ user.id }}/edit?_method=PUT" method="post" enctype="multipart/form-data">
+
+          {{!-- 提交表單 --}}
+          <form action="/users/{{ user.id }}/edit" method="POST" enctype="multipart/form-data">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             <span>編輯個人資料</span>  
             <button class="btn btn-block mt-4" style="border-radius: 50px; background-color:#FF6600; color: white; width:100px; height: 46px;padding: 8px 24px;" type="submit">儲存</button>
             <div class="form-group">
+              {{!-- 原始 cover 背景 --}}
               <img src=" {{ user.cover }}" alt="">
 
-              {{!-- cover 背景 --}}
+              {{!-- cover 背景上傳 --}}
               <div class="form-row mb-3">
                 <label class="form-label" for="cover">背景</label>
                 <input class="form-control-file" type="file" id="cover" name="cover">
               </div>
+              {{!-- TODO:要做上傳的圖片預覽? --}}
 
+              {{!-- 原始 avatar 頭像 --}}
               <img src=" {{ user.avatar }}" alt="user-picture" class="rounded-circle" style="width: 64px; height:64px;">
+
               {{!-- avatar 頭像 --}}
               <div class="form-row mb-3">
                 <label class="form-label" for="avatar">頭像</label>
                 <input class="form-control-file" type="file" id="avatar" name="avatar">
               </div>
             </div>
+            {{!-- TODO:是否要做上傳的圖片預覽? --}}
 
             <div class="form-row mb-3">
               <label class="form-label" for="name">名稱</label>

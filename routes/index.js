@@ -51,7 +51,7 @@ router.put('/users/:id/setting', authenticated, userController.editUser)
 
 // 編輯 user 資料
 router.get('/users/:id/edit', authenticated, userController.editUserFakePage)
-router.put('/users/:id/edit', authenticated, upload.single('cover'), userController.editUser)
+router.post('/users/:id/edit', authenticated, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.editUser)
 
 // 查看 user 相關頁面
 router.get('/users/:id/followings', authenticated, userController.getFollowings)
