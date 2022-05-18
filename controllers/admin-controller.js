@@ -8,7 +8,7 @@ const adminController = {
   signIn: (req, res) => {
     if (req.user.role === 'user') {
       req.flash('error_messages', '此帳號不存在！')
-      req.logout()
+      /* req.logout() */
       res.redirect('/admin/signin')
     } else {
       req.flash('success_messages', '成功登入！')
