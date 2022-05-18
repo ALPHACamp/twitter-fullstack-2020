@@ -46,12 +46,12 @@
 
         <div>
             {{#each tweets}}
-                {{> tweet-block tweet=this user=../user}}
+                {{> tweet-block tweet=this user=../user logInUser=../logInUser}}
             {{/each}}
 
             {{#if likes}}
                 {{#each likes}}
-                    {{> tweet-block tweet=this.Tweet user=../user}}
+                    {{> tweet-block tweet=this.Tweet user=../user logInUser=../logInUser}}
                 {{/each}}
             {{/if}}
 
