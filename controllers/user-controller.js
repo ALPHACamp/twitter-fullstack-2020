@@ -92,7 +92,7 @@ const userController = {
   getUser: async (req, res, next) => {
     try {
       const UserId = req.params.id
-
+      const currentUser = helpers.getUser(req)
       const user = await User.findByPk(UserId, {
         include: [
           { model: Tweet, include: [Reply, Like, User] },
@@ -119,7 +119,8 @@ const userController = {
         tweets: data,
         followersCount,
         followingsCount,
-        tweetsCount
+        tweetsCount,
+        currentUser
       })
 
     } catch (err) {
@@ -297,11 +298,10 @@ const userController = {
     }
   },
   putUserProfile: async (req, res, next) => {
-    const UserId = helpers.getUser(req).id
-    const { name, introduction } = req.body
-    const { avatar, cover } = req.files
     try {
-
+      const UserId = helpers.getUser(req).id
+      const { name, introduction } = req.body
+      const { avatar, cover } = req.files
       let uploadAvatar = ''
       let uploadCover = ''
       if (avatar) {
@@ -311,17 +311,16 @@ const userController = {
         uploadCover = await imgurFileHandler(cover[0])
       }
       const user = await User.findByPk(UserId)
-      if (!name) throw new Error("User name is required!")
-      if (introduction.length > 140) throw new Error('自我介紹字數超過140字')
+      if (!name) throw new Error("名稱不可以為空白")
+      if (name.length > 50) throw new Error("名稱字數不可超過50字")
+      if (introduction.length > 140) throw new Error("自我介紹字數不可超過160字")
       await user.update({
         name,
         introduction,
         avatar: uploadAvatar || user.avatar,
         cover: uploadCover || user.cover
       })
-      console.log(user)
-      req.flash('success_messages', '成功更新個人資料！')
-      res.render('user', { user: user.toJSON() })
+      res.redirect(`/users/${UserId}/tweets`)
     } catch (err) {
       next(err)
     }
