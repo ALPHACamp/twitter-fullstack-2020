@@ -190,56 +190,7 @@ const userController = {
     } catch (err) {
       next(err)
     }
-
   },
-  editUser: async (req, res, next) => {
-    try {
-      const currentUser = helpers.getUser(req)
-      const UserId = req.params.id
-      const user = await User.findOne({
-        where: { id: UserId },
-        include: [
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' },
-        ]
-      })
-      if (currentUser.id !== user.id) {
-        return res.json({ status: 'error', messages: '無法編輯其他使用者資料' })
-      }
-      res.json(user.toJSON())
-    } catch (err) {
-      next(err)
-    }
-  },
-  putUser: async (req, res, next) => {
-    try {
-      const UserId = helpers.getUser(req).id
-      const { name, introduction } = req.body
-      const { avatar, cover } = req.files
-      let uploadAvatar = ''
-      let uploadCover = ''
-      if (avatar) {
-        uploadAvatar = await imgurFileHandler(avatar[0])
-      }
-      if (cover) {
-        uploadCover = await imgurFileHandler(cover[0])
-      }
-      const user = await User.findByPk(UserId)
-      if (!name) throw new Error("User name is required!")
-      if (introduction.length > 140) throw new Error('自我介紹字數超過160字')
-      await user.update({
-        name,
-        introduction,
-        avatar: uploadAvatar || user.avatar,
-        cover: uploadCover || user.cover
-      })
-      console.log(UserId)
-      res.redirect(`/users/${UserId}/tweets`)
-    } catch (err) {
-      next(err)
-    }
-  },
-
   getFollowers: async (req, res, next) => {
     try {
       const UserId = req.params.id
@@ -298,13 +249,14 @@ const userController = {
       next(err)
     }
   },
-  putUserProfile: async (req, res, next) => {
+  putUser: async (req, res, next) => {
     try {
       const UserId = helpers.getUser(req).id
       const { name, introduction } = req.body
-      const { avatar, cover } = req.files
+      const { avatar , cover } = req.files
       let uploadAvatar = ''
       let uploadCover = ''
+      
       if (avatar) {
         uploadAvatar = await imgurFileHandler(avatar[0])
       }
@@ -312,10 +264,10 @@ const userController = {
         uploadCover = await imgurFileHandler(cover[0])
       }
       const user = await User.findByPk(UserId)
-      if (!name) throw new Error("名稱不可以為空白")
-      if (name.length > 50) throw new Error("名稱字數不可超過50字")
-      if (introduction.length > 140) throw new Error("自我介紹字數不可超過160字")
-      await user.update({
+      if (!name) throw new Error("名稱不可為空白!")
+      if (name.length > 50) throw new Error("名稱內容不可超過50字!")
+      if (introduction.length > 160) throw new Error("自我介紹內容不可超過160字!")
+        await user.update({
         name,
         introduction,
         avatar: uploadAvatar || user.avatar,
