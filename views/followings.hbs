@@ -14,7 +14,7 @@
         {{> followships-nav route='followings'}}
         <hr/ class="mt-0">
             {{#each data.Followings}}
-                {{> followship-block}}
+                {{> followship-block logInUser=../logInUser}}
             {{/each}}
     </div>
     <div class="col-3">{{> right-nav}}</div>  
