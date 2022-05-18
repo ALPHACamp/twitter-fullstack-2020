@@ -8,3 +8,12 @@
 .opacityObject:hover{
     font-size:125%;
 }
+.linkPicture:hover{
+    transform: scale(1.2,1.2);
+    border-width: 3px;
+    border-color: dodgerblue;
+    border-style: solid;
+}
+.linkText:hover{
+    text-decoration:underline;
+}
