@@ -16,9 +16,11 @@
         </div>
         <div class="d-flex px-3" style="margin-top:-80px;z-index:100;position:relative">
             <img src="{{user.avatar}}" class="me-auto rounded-circle border border-white border-5" style="width:150px;height:150px">
+           {{#ifCond user.id currentUser.id}}
             <div class="d-flex align-items-end text-end">
                 <button type="button" class="btn rounded-pill" style="color:#FF6600;border-color:#FF6600" data-bs-toggle="modal" data-bs-target="#editProfileModal">編輯個人資料</button>
             </div>
+            {{/ifCond}}
         </div>
 
         <div class="mx-0 px-3">
@@ -70,18 +72,47 @@
     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+            <form action="/users/{{user.id}}/edit?_method=PUT" method="POST" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title">編輯個人資料</h5>
+                    </div>
+                    <button type="submit" class="btn border-0 text-light rounded-pill"
+                        style="background-color: #FF6600;">儲存</button>
+                </div>
+                <div class="modal-body row" style="position: relative;">
+                    <div class="form-row mb-3">
+                        <label class="btn cover-uploader" for="cover"
+                            style="position: absolute; top: 110px; left:240px;">
+                            <i class="fa-solid fa-camera" style="font-size: 2em;"></i>
+                            <input class="d-none" type="file" id="cover" name="cover">
+                        </label>
+                        <img src="{{user.cover}}" alt="cover" style="height: 240px; width:470px;">
+                    </div>
+                    <div class="form-row mb-3" style="position: relative;">
+                        <label class="btn avatar-uploader" for="avatar"
+                            style="position: absolute; top: 7px; left: 27px;">
+                            <i class="fa-solid fa-camera" style="font-size: 2em;"></i>
+                            <input class="d-none" type="file" id="avatar" name="avatar">
+                        </label>
+                        <div class="col-1">
+                            <img src="{{user.avatar}}" alt="avatar"
+                                style="height: 80px; width: 80px; border-radius: 50%">
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="name" placeholder="Name" name="name"
+                            value="{{user.name}}">
+                        <label for="floatingInput">名稱</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="introduction" class="form-control" id="introduction" placeholder="introduction"
+                            name="introduction">
+                        <label for="floatingIntroduction">自我介紹</label>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
