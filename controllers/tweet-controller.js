@@ -44,7 +44,7 @@ const tweetController = {
       description: req.body.description,
       UserId
     })
-      .then(() => res.redirect('/'))
+      .then(() => res.redirect(`${req.get('Referrer')}`))
       .catch(err => next(err))
   },
 }
