@@ -19,7 +19,7 @@
         </div>
         {{!-- post tweet--}}
         <div class="row my-2 mx-0 d-flex justify-content-center">
-          <div class="col-2 d-flex flex-row-reverse"">
+          <div class="col-2 d-flex flex-row-reverse">
             <img class="avatar" src="{{user.avatar}}" alt="avatar">
           </div>
           <div class="col-10 mx-0" data-bs-toggle="modal" data-bs-target="#tweetModal">
@@ -33,51 +33,51 @@
         <div class="main-divider mt-2"></div>
         {{!-- tweets --}}
         {{#each tweets}}
-        <div class="row mt-4 mx-0">
-          {{!-- tweeter's avatar --}}
-          <a href="/users/{{this.User.id}}" class="col-2 d-flex flex-row-reverse">
-            <img src="{{this.User.avatar}}" class="avatar" alt="avatar">
-          </a>
-          {{!-- tweet's content --}}
-          <div class="col-10">
-            {{!-- tweeter's info --}}
-            <div class="d-flex flex-row align-items-center">
-              <p class="main-user-name">{{this.User.name}}</p>
-              <p class="main-user-account">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</p>
-            </div>
-            {{!-- tweet's description --}}
-            <a href="/tweets/{{this.id}}/replies" style="color:#000000;text-decoration: none">
-              <div class="mt-2">
-                <p>{{this.description}}</p>
-              </div>
+          <div class="row mt-4 mx-0">
+            {{!-- tweeter's avatar --}}
+            <a href="/users/{{this.User.id}}" class="col-2 d-flex flex-row-reverse">
+              <img src="{{this.User.avatar}}" class="avatar" alt="avatar">
             </a>
-            {{!-- tweet's replies & likes --}}
-            <div class="d-flex">
-              <div>
-                <i class="far fa-comment" data-bs-toggle="modal" data-bs-target="#replyModal{{this.id}}"></i>
-                <span class="ms-1">{{this.repliesCount}}</span>
+            {{!-- tweet's content --}}
+            <div class="col-10">
+              {{!-- tweeter's info --}}
+              <div class="d-flex flex-row align-items-center">
+                <p class="main-user-name">{{this.User.name}}</p>
+                <p class="main-user-account">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</p>
               </div>
-              <div class="ms-5">
-                {{#if this.isLiked}}
-                <form action="/tweets/{{this.id}}/unlike" method="post">
-                  <button class="heart-btn" type="submit">
-                    <i class="fa-solid fa-heart heart-icon"></i>
-                  </button>
-                  <span class="ms-1">{{this.likesCount}}</span>
-                </form>
-                {{else}}
-                <form action="/tweets/{{this.id}}/like" method="post">
-                  <button class="heart-btn" type="submit">
-                    <i class="far fa-heart"></i>
-                  </button>
-                  <span class="ms-1">{{this.likesCount}}</span>
-                </form>
-                {{/if}}
+              {{!-- tweet's description --}}
+              <a href="/tweets/{{this.id}}/replies" style="color:#000000;text-decoration: none">
+                <div class="mt-2">
+                  <p>{{this.description}}</p>
+                </div>
+              </a>
+              {{!-- tweet's replies & likes --}}
+              <div class="d-flex">
+                <div>
+                  <i class="far fa-comment" data-bs-toggle="modal" data-bs-target="#replyModal{{this.id}}"></i>
+                  <span class="ms-1">{{this.repliesCount}}</span>
+                </div>
+                <div class="ms-5">
+                  {{#if this.isLiked}}
+                  <form action="/tweets/{{this.id}}/unlike" method="post">
+                    <button class="heart-btn" type="submit">
+                      <i class="fa-solid fa-heart heart-icon"></i>
+                    </button>
+                    <span class="ms-1">{{this.likesCount}}</span>
+                  </form>
+                  {{else}}
+                  <form action="/tweets/{{this.id}}/like" method="post">
+                    <button class="heart-btn" type="submit">
+                      <i class="far fa-heart"></i>
+                    </button>
+                    <span class="ms-1">{{this.likesCount}}</span>
+                  </form>
+                  {{/if}}
+                </div>
               </div>
             </div>
+            <hr class="mb-0 mt-3">
           </div>
-          <hr class="mb-0 mt-3">
-        </div>
         {{/each}}
       </div>
     </div>

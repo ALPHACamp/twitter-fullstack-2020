@@ -18,65 +18,6 @@
   color: #ff6600;
 }
 
-.modal-button {
-  color: #FF6600;
-  margin: 0 0;
-  height: 40px;
-  width: 130px;
-  left: 0px;
-  top: 0px;
-  border-radius: 50px;
-  padding: 8px, 16px, 8px, 16px;
-  background: white;
-  border: #FF6600;
-  border-width: 1px;
-  border-style: solid;
-  position: absolute;
-  top: 216px;
-  left: 423px;
-}
-
-.modal-button:hover {
-  background-color: #FEF5E7;
-}
-
-.user-following-button {
-  margin: 0 0;
-  height: 40px;
-  width: 96px;
-  left: 0px;
-  top: 0px;
-  border-radius: 50px;
-  padding: 8px, 16px, 8px, 16px;
-  background: #FF6600;
-  border: #E6ECF0;
-  position: absolute;
-  top: 216px;
-  left: 460px;
-}
-
-.user-follower-button {
-  color: #FF6600;
-  margin: 0 0;
-  height: 40px;
-  width: 76px;
-  left: 0px;
-  top: 0px;
-  border-radius: 50px;
-  padding: 8px, 16px, 8px, 16px;
-  background: white;
-  border: #FF6600;
-  border-width: 1px;
-  border-style: solid;
-  position: absolute;
-  top: 216px;
-  left: 465px;
-}
-
-.user-follower-button:hover {
-  background-color: #FEF5E7;
-}
-
 .follower-button {
   color: #FF6600;
   margin: 0 0;
@@ -165,7 +106,7 @@ a:hover {
   color: #ff6600;
 }
 
-/* main content */
+/* tweets & tweet page */
 .main-content {
   padding-bottom: 0px;
 }
@@ -273,6 +214,82 @@ a:hover {
   padding-left: 8px;
   font-size: 14px;
 }
+/* user page */
+.content {
+  position: relative;
+}
+.user-cover {
+  height: 200px;
+  max-width: 100%;
+  object-fit: fill;
+}
+.user-avatar {
+  height: 140px;
+  width: 141px; 
+  border:4px white solid; 
+  border-radius: 50%;
+}
+.user-following-button {
+  margin: 0 0;
+  height: 40px;
+  width: 96px;
+  left: 0px;
+  top: 0px;
+  border-radius: 50px;
+  padding: 8px, 16px, 8px, 16px;
+  background: #FF6600;
+  border: #E6ECF0;
+}
+.user-follower-button {
+  color: #FF6600;
+  margin: 0 0;
+  height: 40px;
+  width: 76px;
+  left: 0px;
+  top: 0px;
+  border-radius: 50px;
+  padding: 8px, 16px, 8px, 16px;
+  background: white;
+  border: #FF6600;
+  border-width: 1px;
+  border-style: solid;
+}
+.user-follower-button:hover {
+  background-color: #FEF5E7;
+}
+.modal-button {
+  color: #FF6600;
+  margin: 0 0;
+  height: 40px;
+  width: 130px;
+  left: 0px;
+  top: 0px;
+  border-radius: 50px;
+  padding: 8px, 16px, 8px, 16px;
+  background: white;
+  border: #FF6600;
+  border-width: 1px;
+  border-style: solid;
+}
+.modal-button:hover {
+  background-color: #FEF5E7;
+}
+.anb-anchor {
+  position: relative;
+  top: -75px;
+}
+.user-info {
+  position: relative;
+  top: -75px;
+}
+.user-tab-anchor {
+  position: relative;
+  top: -55px;
+}
+.tab-content {
+  position: relative;
+  top: -55px;
+}
 
 /* for dev */
 .red {
@@ -293,4 +310,7 @@ a:hover {
 
 .brown {
   outline: 3px solid brown;
+}
+.orange {
+  outline: 3px solid orange;
 }

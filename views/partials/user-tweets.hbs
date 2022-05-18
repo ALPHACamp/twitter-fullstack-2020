@@ -1,0 +1,27 @@
+<div class="row mt-2 py-2" style="border-bottom-style:solid; border-color:#e4e7eb; border-width:1px;">
+  <div class="col-2 d-flex flex-row-reverse">
+    <a class="text-decoration-none text-dark" href="/tweets/{{this.id}}">
+      <img src="{{../user.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
+    </a>
+  </div>
+  <div class="col-10">
+    <a class="text-decoration-none text-dark" href="/tweets/{{this.id}}">
+      <div class="d-flex flex-row align-items-center">
+        <p class="fw-bold" style="font-size: 16px; margin: 0 0;">{{../user.name}}</p>
+        <p style="font-size: 14px; margin: 0 8px; color: #6C757D;">@{{../user.account}}．{{relativeTimeFromNow
+          this.createdAt}}</p>
+      </div>
+      <div class="mt-2">
+        <p>{{this.description}}</p>
+      </div>
+    </a>
+    <div>
+      <i class="far fa-comment me-3">
+        <span class="ms-2 fw-normal">{{this.Replies.length}}</span>
+      </i>
+      <i class="far fa-heart mx-3">
+        <span class="ms-2 fw-normal">{{this.Likes.length}}</span>
+      </i>
+    </div>
+  </div>
+</div>
