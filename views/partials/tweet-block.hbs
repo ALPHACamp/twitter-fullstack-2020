@@ -5,7 +5,9 @@
     <div class="col">
         <div onclick="location.href='/tweets/{{tweet.id}}/replies';">
             <p>
+                <a href="/users/{{tweet.User.id}}/tweets" style="text-decoration:none;">
                 <span class="fw-bold">{{tweet.User.name}}</span> 
+                </a>
                 <small>@{{tweet.User.account}} ‧ {{relativeTimeFromNow tweet.updatedAt}}</small>  
             </p>
 
