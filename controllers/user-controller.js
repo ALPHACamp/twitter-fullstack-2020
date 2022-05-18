@@ -213,10 +213,13 @@ const userController = {
   },
   putUser: async (req, res, next) => {
     try {
-      const UserId = helpers.getUser(req).id
-      const { name, introduction } = req.body
+      const logInUserId = helpers.getUser(req).id
+      const UserId = req.params.id
+      const { name } = req.body
+      let introduction = req.body.introduction || ''
       const avatar = req.files ? req.files.avatar : ''
       const cover = req.files ? req.files.cover : ''
+
       let uploadAvatar = ''
       let uploadCover = ''
       if (avatar) {
@@ -226,15 +229,19 @@ const userController = {
         uploadCover = await imgurFileHandler(cover[0])
       }
       const user = await User.findByPk(UserId)
-      
+
+      if(user.id !== Number(logInUserId)) return res.json({ status: 'error' , message:'不可編輯其他使用者資料!'})
+      if (!name) return res.json({ status: 'error', message:'名稱不可為空白!'})
+      if (name.length > 50) return res.json({ status: 'error', message:'名稱內容不可超過50字!'})
+      if (introduction.length > 160) return res.json({ status: 'error', message:'自我介紹內容不可超過160字!'})
+
       const data = await user.update({
         name,
         introduction,
         avatar: uploadAvatar || user.avatar,
         cover: uploadCover || user.cover
       })
-      
-      res.json(data)
+      res.json({ status: 'success', message:'已成功更新!', data })
     } catch (err) {
       next(err)
     }
@@ -302,9 +309,10 @@ const userController = {
     try {
       const UserId = helpers.getUser(req).id
       const { name, introduction } = req.body
-      const { avatar, cover } = req.files
+      const { avatar , cover } = req.files
       let uploadAvatar = ''
       let uploadCover = ''
+      
       if (avatar) {
         uploadAvatar = await imgurFileHandler(avatar[0])
       }
@@ -312,10 +320,10 @@ const userController = {
         uploadCover = await imgurFileHandler(cover[0])
       }
       const user = await User.findByPk(UserId)
-      if (!name) throw new Error("名稱不可以為空白")
-      if (name.length > 50) throw new Error("名稱字數不可超過50字")
-      if (introduction.length > 140) throw new Error("自我介紹字數不可超過160字")
-      await user.update({
+      if (!name) throw new Error("名稱不可為空白!")
+      if (name.length > 50) throw new Error("名稱內容不可超過50字!")
+      if (introduction.length > 160) throw new Error("自我介紹內容不可超過160字!")
+        await user.update({
         name,
         introduction,
         avatar: uploadAvatar || user.avatar,
