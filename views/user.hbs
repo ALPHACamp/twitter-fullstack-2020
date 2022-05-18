@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col">
-        {{> left-nav}}
+        {{> left-nav route='tweets'}}
     </div>
     <div class="col-7 border-start border-end px-0" style="overflow-x:hidden;overflow-y:auto;" id="middle">
         <div class="row">
@@ -28,8 +28,8 @@
             <small>@{{user.name}}</small><br/>
             <p class="mt-2">{{user.introduction}}</p>
             <div class="d-flex">
-                <p class="me-3 fw-bold">{{followingsCount}}個跟隨中</p> 
-                <p class="me-3 fw-bold">{{followersCount}}位跟隨者</P>
+                <a href="/users/{{user.id}}/followers" style="text-decoration:none;color:black"><p class="me-3 fw-bold">{{followersCount}}位跟隨者</P></a>
+                <a href="/users/{{user.id}}/followings" style="text-decoration:none;color:black"><p class="me-3 fw-bold">{{followingsCount}}個跟隨中</p></a> 
             </div>
         </div>
         <div class="row mx-0 px-0">
@@ -48,12 +48,12 @@
 
         <div>
             {{#each tweets}}
-                {{> tweet-block tweet=this user=../user}}
+                {{> tweet-block tweet=this user=../user logInUser=../logInUser}}
             {{/each}}
 
             {{#if likes}}
                 {{#each likes}}
-                    {{> tweet-block tweet=this.Tweet user=../user}}
+                    {{> tweet-block tweet=this.Tweet user=../user logInUser=../logInUser}}
                 {{/each}}
             {{/if}}
 
