@@ -8,6 +8,7 @@ const authenticated = (req, res, next) => {
       return next()
     }
   }
+  req.flash('error_messages', '請先登入!')
   res.redirect('/signin')
 }
 

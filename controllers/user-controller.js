@@ -11,7 +11,7 @@ const userController = {
   },
   signIn: (req, res) => {
     if (helpers.getUser(req).role === 'admin') {
-      req.flash('error_messages', '帳號不存在')
+      req.flash('error_messages', '帳號不存在！')
       req.logout()
       res.redirect('/signin')
     }
@@ -23,12 +23,14 @@ const userController = {
     res.render('register')
   },
   signUp: (req, res, next) => {
-    if (req.body.password !== req.body.checkPassword) throw new Error('Password do not match!')
-    if (req.body.name.length > 50) throw new Error('名稱需再50字之內!')
+
+    if (req.body.password !== req.body.checkPassword) throw new Error('請確認密碼!')
+    if (req.body.name.length > 50) throw new Error('字數超出上限！')
+
     Promise.all([User.findOne({ where: { email: req.body.email } }), User.findOne({ where: { account: req.body.account } })])
       .then(([userEmail, userAccount]) => {
-        if (userEmail) throw new Error('Email already exists!')
-        if (userAccount) throw new Error('Account already exists!')
+        if (userEmail) throw new Error('email 已重複註冊！')
+        if (userAccount) throw new Error('account 已重複註冊！')
         return bcrypt.hash(req.body.password, 10)
       })
       .then(hash => User.create({
@@ -52,8 +54,8 @@ const userController = {
     const id = Number(req.params.id)
     return User.findByPk(id)
       .then(user => {
-        if (!user) throw new Error("User doesn't exist!")
-        if (user.id !== req.user.id) throw new Error("Can't get other's profile")
+        if (!user) throw new Error("使用者不存在!")
+        if (user.id !== req.user.id) throw new Error("無法編輯他人資料!")
         user = user.toJSON()
         res.render('profile', { user })
       }).catch(err => next(err))
@@ -61,19 +63,27 @@ const userController = {
   putSetting: (req, res, next) => {
     const id = Number(req.params.id)
     const { account, name, email, password, passwordCheck } = req.body
-    if (!account) throw new Error('User account is required!')
-    if (!password) throw new Error('User password is required!')
-    if (password !== passwordCheck) throw new Error('Please confirm the password')
+    if (!account) throw new Error('請輸入帳號!')
+    if (!password) throw new Error('請輸入密碼!')
+    if (password !== passwordCheck) throw new Error('請確認密碼!')
     Promise.all([
       User.findByPk(id),
-      User.findByPk(account),
-      User.findByPk(email)
+      User.findOne({ where: { account } }),
+      User.findOne({ where: { email } })
     ])
       .then(([userId, userAccount, userEmail]) => {
-        if (req.user.id !== id) throw new Error("Cannot edit other's profile")
-        if (!userId) throw new Error("User doesn't exist!")
-        if (userAccount) throw new Error("Account already exist!")
-        if (userEmail) throw new Error("Email already exist!")
+        if (req.user.id !== id) throw new Error("無法編輯他人資料!")
+        if (!userId) throw new Error("使用者不存在!")
+        if (userAccount.id !== userId.id) {
+          if (userAccount) {
+            throw new Error("account 已重複註冊！")
+          }
+        }
+        if (userEmail.id !== userId.id) {
+          if (userEmail) {
+            throw new Error("email 已重複註冊！")
+          }
+        }
         return bcrypt.hash(req.body.password, 10)
           .then(hash => {
             return userId.update({
@@ -274,7 +284,7 @@ const userController = {
       }
       const user = await User.findByPk(UserId)
       if (!name) throw new Error("名稱不可為空白!")
-      if (name.length > 50) throw new Error("名稱內容不可超過50字!")
+      if (name.length > 50) throw new Error("字數超出上限！")
       if (introduction.length > 160) throw new Error("自我介紹內容不可超過160字!")
         await user.update({
         name,
