@@ -177,6 +177,7 @@ a:hover {
 
 /* right-sidebar  */
 .right-sidebar-anchor {
+  width: 18%;
   position: fixed;
   top: 10px;
 }
@@ -201,6 +202,15 @@ a:hover {
   font-size: 14px;
 }
 /* user page */
+.side-outline {
+  border-left: 2px solid #E6ECF0;
+  border-right: 2px solid #E6ECF0;
+}
+.title-outline {
+  border-top: 2px solid #E6ECF0;
+  border-left: 2px solid #E6ECF0;
+  border-right: 2px solid #E6ECF0;
+}
 .content {
   position: relative;
 }
@@ -222,6 +232,9 @@ a:hover {
 }
 
 .user-avatar:hover {
+  color: #F5B7B1;
+}
+.user-avatar-camera:hover {
   color: #F5B7B1;
 }
 .user-following-button {
@@ -279,11 +292,12 @@ a:hover {
 }
 .user-tab-anchor {
   position: relative;
-  top: -55px;
+  top: -53px;
+  border-bottom: 0px;
 }
 .tab-content {
   position: relative;
-  top: -55px;
+  top: -50px;
 }
 .user-edit-modal {
   position: relative;
@@ -347,6 +361,16 @@ a:hover {
 .user-content {
   padding-bottom: -75px;
 }
+.tittle-border {
+  border-bottom: 2px solid #E6ECF0;
+}
+.footer {
+  position: relative;
+  top: -50px;
+  height: 50px;
+  background-color: white;
+}
+
 /* for dev */
 .red {
   outline: 3px solid red;
