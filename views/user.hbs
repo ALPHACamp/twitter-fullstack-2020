@@ -60,7 +60,7 @@
                 {{/each}}
             {{/if}}
 
-            {{#if user.Replies}}
+            {{#if userReplies}}
                 {{#each user.Replies}}
                     {{> reply-block tweet=this.Tweet User=../user}}
                 {{/each}}
