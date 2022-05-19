@@ -30,7 +30,7 @@
         <div class="mx-0 px-3">
             <h3 class="fw-bold mb-0">{{user.name}}</h3>
             <small>@{{user.name}}</small><br/>
-            <p class="mt-2">{{user.introduction}}</p>
+            <p style="word-wrap: break-word; word-break: normal;" class="mt-2">{{user.introduction}}</p>
             <div class="d-flex">
                 <a href="/users/{{user.id}}/followers" style="text-decoration:none;color:black"><p class="me-3 fw-bold">{{followersCount}}位跟隨者</P></a>
                 <a href="/users/{{user.id}}/followings" style="text-decoration:none;color:black"><p class="me-3 fw-bold">{{followingsCount}}個跟隨中</p></a> 
