@@ -10,20 +10,20 @@
       <div class="user">
           <div class="user-banner">
               <img class="cover" src='{{this.cover}}' alt='background'/>
-              <img class='avatar {{#ifCond user.id queryUser.id}}self-avatar{{/ifCond}}' src='{{this.avatar}}' alt='avatar'/>
+              <img class='avatar ' src='{{this.avatar}}' alt='avatar'/>
           </div>
           <div class="user-info d-flex flex-column align-items-center">
-              <h5 class="name {{#ifCond user.id queryUser.id}}self-name{{/ifCond}}">{{this.name}}</h5>
+              <h5 class="name">{{this.name}}</h5>
               <div class='secondary-text'>@{{this.account}}</div>
               <div class="counting d-flex flex-row align-items-center">
                   <i class="comment"></i>
-                  <span>{{this.Replies.length}}</span>
+                  <span>{{this.tweetCounts}}</span>
                   <i class="like"></i>
-                  <span>{{this.Replies.length}}</span>
+                  <span>{{this.beenLikedTweets}}</span>
               </div>
               <div class="follow d-flex flex-row align-items-center">
-                  <div>{{this.Followings.length}} 個<span class="secondary">跟隨中</span></div>
-                  <div>{{this.Followers.length}} 位<span class="secondary">跟隨者</span></div>
+                  <div>{{this.followingCounts}} 個<span class="secondary">跟隨中</span></div>
+                  <div>{{this.followerCounts}} 位<span class="secondary">跟隨者</span></div>
               </div>
           </div>
       </div>
