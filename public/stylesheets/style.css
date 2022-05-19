@@ -361,6 +361,12 @@ a:hover {
 .tittle-border {
   border-bottom: 2px solid #E6ECF0;
 }
+.footer {
+  position: relative;
+  top: -50px;
+  height: 50px;
+  background-color: white;
+}
 
 /* for dev */
 .red {
