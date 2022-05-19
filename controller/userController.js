@@ -54,6 +54,7 @@ const userController = {
         account,
         name,
         email,
+        role: 'user',
         password: bcrypt.hashSync(
           req.body.password,
           bcrypt.genSaltSync(10),
@@ -62,7 +63,7 @@ const userController = {
         avatar:
           'https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg',
         cover:
-          'https://dummyimage.com/600x400/000/fff.jpg&text=%E9%A0%90%E8%A8%AD'
+          'https://dummyimage.com/639x200/000/fff.jpg&text=%E9%A0%90%E8%A8%AD'
       })
 
       req.flash('success_messages', '註冊成功！')
@@ -114,7 +115,7 @@ const userController = {
         helpers.getUser(req) &&
         helpers.getUser(req).Followings &&
         helpers.getUser(req).Followings.some(f => f.id === Number(userId))
-        // isLiked = tweet.LikedBy.some(item => item.id === loginUserId)
+      // isLiked = tweet.LikedBy.some(item => item.id === loginUserId)
       const userTweets = paramsUser.toJSON().Tweets.map(tweet => {
         return {
           ...tweet,
@@ -401,13 +402,16 @@ const userController = {
           { model: Tweet, attributes: ['id'] }
         ]
       })
-      const data = currentUser.toJSON().Followings.map(cf => ({
-        ...cf,
-        isFollowed:
-          helpers.getUser(req) &&
-          helpers.getUser(req).Followers &&
-          helpers.getUser(req).Followings.some(f => f.id === cf.id)
-      })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+      const data = currentUser
+        .toJSON()
+        .Followings.map(cf => ({
+          ...cf,
+          isFollowed:
+            helpers.getUser(req) &&
+            helpers.getUser(req).Followers &&
+            helpers.getUser(req).Followings.some(f => f.id === cf.id)
+        }))
+        .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
 
       // 右側Top10User
       const users = await User.findAll({
@@ -462,13 +466,16 @@ const userController = {
           { model: Tweet, attributes: ['id'] }
         ]
       })
-      const data = currentUser.toJSON().Followers.map(cf => ({
-        ...cf,
-        isFollowed:
-          helpers.getUser(req) &&
-          helpers.getUser(req).Followings &&
-          helpers.getUser(req).Followings.some(f => f.id === cf.id)
-      })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+      const data = currentUser
+        .toJSON()
+        .Followers.map(cf => ({
+          ...cf,
+          isFollowed:
+            helpers.getUser(req) &&
+            helpers.getUser(req).Followings &&
+            helpers.getUser(req).Followings.some(f => f.id === cf.id)
+        }))
+        .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
 
       // 右側Top10User
       const users = await User.findAll({
@@ -528,7 +535,7 @@ const userController = {
       raw: true
     })
       .then(user => {
-        res.render('setUser', { user })
+        res.render('setUser', { user, page: 'users' })
       })
       .catch(err => next(err))
   },
@@ -551,13 +558,19 @@ const userController = {
           errors.push({ message: '名稱上限為50字！' })
         }
         if (email !== res.locals.logInUser.email) {
-          const checkDuplicate = await User.findOne({ where: { email }, raw: true })
+          const checkDuplicate = await User.findOne({
+            where: { email },
+            raw: true
+          })
           if (email === checkDuplicate?.email) {
             errors.push({ message: '這個 Email 已經有人用了。' })
           }
         }
         if (account !== res.locals.logInUser.account) {
-          const checkDuplicate = await User.findOne({ where: { account }, raw: true })
+          const checkDuplicate = await User.findOne({
+            where: { account },
+            raw: true
+          })
           if (account === checkDuplicate?.account) {
             errors.push({ message: '這個 Account 已經有人用了。' })
           }
@@ -574,16 +587,19 @@ const userController = {
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(password, salt)
 
-        await User.update({
-          account,
-          name,
-          email,
-          password: hash
-        }, {
-          where: {
-            id: loginUserId
+        await User.update(
+          {
+            account,
+            name,
+            email,
+            password: hash
+          },
+          {
+            where: {
+              id: loginUserId
+            }
           }
-        })
+        )
         req.flash('success_messages', '更改成功！')
         return res.redirect('/')
       } else if (req._parsedUrl.pathname.includes('edit')) {
@@ -609,15 +625,22 @@ const userController = {
         if (Object.keys(files).length === 0) {
           imgurCover = 0
           imgurAvatar = 0
-        } else if (typeof files.cover === 'undefined' && typeof files.avatar !== 'undefined') {
+        } else if (
+          typeof files.cover === 'undefined' &&
+          typeof files.avatar !== 'undefined'
+        ) {
           // 如果只有更新 avatar
           imgurCover = 0
           imgurAvatar = await imgur.uploadFile(files.avatar[0].path)
-        } else if (typeof files.cover !== 'undefined' && typeof files.avatar === 'undefined') {
+        } else if (
+          typeof files.cover !== 'undefined' &&
+          typeof files.avatar === 'undefined'
+        ) {
           // 如果只有更新 cover
           imgurAvatar = 0
           imgurCover = await imgur.uploadFile(files.cover[0].path)
-        } else { // 如果都有更新
+        } else {
+          // 如果都有更新
           imgurCover = await imgur.uploadFile(files.cover[0].path)
           imgurAvatar = await imgur.uploadFile(files.avatar[0].path)
         }
@@ -628,11 +651,13 @@ const userController = {
             introduction,
             cover: imgurCover?.link || User.cover,
             avatar: imgurAvatar?.link || User.avatar
-          }, {
+          },
+          {
             where: {
               id: loginUserId
             }
-          })
+          }
+        )
         req.flash('sucesss_messages', '更改成功！')
         return res.redirect(`/users/${loginUserId}`)
       } else {

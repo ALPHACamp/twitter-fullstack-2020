@@ -1,15 +1,15 @@
 {{!-- TODO:只滾動 col-md-6 部分 --}}
 
-  {{> left}}
+{{> left}}
 
 
-  <div class="col-6 d2">
-      <div class="col-md-6">
+<div class="col-6 d2">
+  <div class="col-md-6">
     <div>
       {{!-- 查看單篇推文回覆列表 --}}
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a href="/tweets"><span>←推文</span></a>
-        
+
       </nav>
     </div>
 
@@ -18,49 +18,37 @@
         <img src="{{ tweet.User.avatar }}" alt="user-picture" class="rounded-circle" style="width: 64px; height:64px;">
         <span><a href="/users/{{ tweet.User.id }}">{{ tweet.User.name }}</a></span>
         <span class="blockquote-footer"> @{{ tweet.User.account }}</span>
-        <span>{{ relativeTimeFromNow  tweet.createdAt }}</span>
+        <span>{{ relativeTimeFromNow tweet.createdAt }}</span>
         <p>{{ tweet.description }}</p>
         <div>
-          <span><a href="/tweets/{{tweet.id}}/repliesFake">{{ tweet.Replies }} + 回覆icon</a></span>
+          <span><a href="/tweets/{{tweet.id}}/repliesFake"><img src="/images/回覆框.svg" alt="">{{ tweet.Replies }}</a></span>
           {{!-- this.isLiked --}}
-                  {{#if tweet.isLiked}}
-                  <form action="/tweets/{{ tweet.id }}/unlike" method="POST">
-                    <button class="tweets_btn" type="submit">
-                      <span class=" me-1">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path
-                            d="M7.00005 13.4253H6.99072C5.26872 13.3933 0.300049 8.90401 0.300049 4.65201C0.300049 2.60934 1.98338 0.81601 3.90205 0.81601C5.42872 0.81601 6.45538 1.86934 6.99938 2.63601C7.54205 1.87068 8.56871 0.81601 10.096 0.81601C12.016 0.81601 13.6987 2.60934 13.6987 4.65268C13.6987 8.90334 8.72938 13.3927 7.00738 13.424H7.00005V13.4253ZM3.90272 1.81668C2.51605 1.81668 1.30072 3.14201 1.30072 4.65334C1.30072 8.48001 5.99005 12.384 7.00072 12.4253C8.01272 12.384 12.7007 8.48068 12.7007 4.65334C12.7007 3.14201 11.4854 1.81668 10.0987 1.81668C8.41338 1.81668 7.47205 3.77401 7.46405 3.79334C7.31072 4.16801 6.69338 4.16801 6.53938 3.79334C6.53005 3.77334 5.58938 1.81668 3.90338 1.81668H3.90272Z"
-                            fill="#6C757D" />
-                        </svg>
-                        {{#if tweet.Likes}}
-                        {{ tweet.Likes}}
-                        {{else}}
-                        0
-                        {{/if}}
-                      </span>
-                    </button>
-                  </form>
-                  {{else}}
-                  
-                  <form action="/tweets/{{ tweet.id }}/like" method="POST">
-                    <button class="tweets_btn" type="submit">
-                      <span class=" me-1">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path
-                            d="M7.00005 13.4253H6.99072C5.26872 13.3933 0.300049 8.90401 0.300049 4.65201C0.300049 2.60934 1.98338 0.81601 3.90205 0.81601C5.42872 0.81601 6.45538 1.86934 6.99938 2.63601C7.54205 1.87068 8.56871 0.81601 10.096 0.81601C12.016 0.81601 13.6987 2.60934 13.6987 4.65268C13.6987 8.90334 8.72938 13.3927 7.00738 13.424H7.00005V13.4253ZM3.90272 1.81668C2.51605 1.81668 1.30072 3.14201 1.30072 4.65334C1.30072 8.48001 5.99005 12.384 7.00072 12.4253C8.01272 12.384 12.7007 8.48068 12.7007 4.65334C12.7007 3.14201 11.4854 1.81668 10.0987 1.81668C8.41338 1.81668 7.47205 3.77401 7.46405 3.79334C7.31072 4.16801 6.69338 4.16801 6.53938 3.79334C6.53005 3.77334 5.58938 1.81668 3.90338 1.81668H3.90272Z"
-                            fill="#6C757D" />
-                        </svg>
-                        {{#if tweet.Likes}}
-                        {{ tweet.Likes}}
-                        {{else}}
-                        0
-                        {{/if}}
-                      </span>
-                    </button>
-                  </form>
+          {{#if tweet.isLiked}}
+          <form action="/tweets/{{ tweet.id }}/unlike" method="POST">
+            <button class="tweets_btn" type="submit" style="background: transparent;border-width:0px; outline:none">
+              <img src="/images/案讚數.svg" alt="">
+              {{#if tweet.Likes}}
+              {{ tweet.Likes}}
+              {{else}}
+              0
+              {{/if}}
+            </button>
+          </form>
+          {{else}}
+
+          <form action="/tweets/{{ tweet.id }}/like" method="POST">
+            <button class="tweets_btn" type="submit"style="background: transparent;border-width:0px; outline:none">
+              <img src="/images/案讚數.svg" alt="">
+              {{#if tweet.Likes}}
+              {{ tweet.Likes}}
+              {{else}}
+              0
+              {{/if}}
+            </button>
+          </form>
 
 
-                  {{/if}}
+          {{/if}}
         </div>
       </blockquote>
       <hr />
@@ -75,18 +63,18 @@
       <div>
         {{!-- 延伸挑戰 --}}
         {{!-- <span><a href="/tweets/{{this.id}}/replies">回覆</a></span> --}}
-        <span>回覆icon</span>
+        <span><img src="/images/回覆框.svg" alt=""></span>
         {{!-- 延伸挑戰 --}}
         {{!-- <span><a href="/tweets/{{this.id}}/like">喜歡</a></span> --}}
-        <span>喜歡icon</span>
+        <span><img src="/images/案讚數.svg" alt=""></span>
       </div>
     </blockquote>
     <hr />
     {{/each}}
   </div>
-  </div>
+</div>
 
 
 
-  {{> right topUsers=topUsers}}
+{{> right topUsers=topUsers}}
 </div>

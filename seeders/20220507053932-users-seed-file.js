@@ -29,7 +29,7 @@ module.exports = {
           email: 'user1@example.com',
           password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
           account: 'user1',
-          cover: `https://picsum.photos/200/300?random=${Math.random() * 100}`,
+          cover: `https://picsum.photos/639/200?random=${Math.random() * 100}`,
           avatar: `https://picsum.photos/200/300?random=${Math.random() * 100}`,
           introduction: faker.lorem.text().substring(0, 160),
           role: 'user',
