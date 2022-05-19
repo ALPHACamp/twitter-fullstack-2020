@@ -2,7 +2,7 @@
     <div class="col-1">
         <a href="/users/{{User.id}}/tweets"><img src="{{User.avatar}}" class="rounded-circle linkPicture" style="width:50px;height:50px"></a>
     </div>
-    <div class="col">
+    <div class="col" style="max-width:87.5%">
         <p>
             <a href="/users/{{User.id}}/tweets" style="text-decoration:none; color:black;">
                 <span class="fw-bold fs-6 linkText">{{User.name}}</span>
@@ -11,7 +11,7 @@
             <br/>  
             <small >回覆 <a href="/users/{{tweet.User.id}}/tweets" style="text-decoration:none;"><span class="linkText" style="color:#FF6600">@{{tweet.User.name}}</span></a></small>
         </p>
-        <p onclick="location.href='/tweets/{{tweet.id}}/replies';">{{this.comment}}</p>
+        <p style="word-wrap: break-word; word-break: normal;">{{this.comment}}</p>
         <div class="d-flex">
             <div class="col-1"><i class="far fa-comment"></i></div>
             <div class="col-1"><i class="far fa-heart"></i></div>
