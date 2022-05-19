@@ -1,6 +1,33 @@
 <div class="wrapper">
-  <div class='container user-homepage'>
+  <div class='container admin-platform'>
     <div class="profile-setting d-flex flex-column justify-content-between">{{> admin-menu}}</div>
-    <div>admin can see 所有推文</div>
+    <div class="admin-main">
+      <div class='user-tweets-header'>
+        <h4 class="mb-0">推文清單</h4>
+      </div>
+      {{#each tweets}}
+      <div class="tweet d-flex">
+       <img class="avatar" src="{{this.User.avatar}}" alt='{{this.User.name}}\' s avatar'>
+        <div class="post-content d-flex flex-row align-items-top">
+          <div class="tweet-item">
+            <div class="post-user d-flex flex-row align-items-center">
+              <span class="user-name">{{this.User.name}}</span>
+              <span class="secondary-text">@{{this.User.account}}</span>
+              <span class="secondary-text">•</span>
+              <span class="secondary-text">{{relativeTimeFromNow this.createdAt}}</span>
+            </div>
+            <p class="content">{{this.description}}</p>
+          </div>
+          <div class="tweet-buttons">
+            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+              <button type="submit" class="d-flex flex-row align-items-end" onclick="return confirm(`確定要刪除 {{ this.User.name }} 的推文嗎?`)">
+                <i class="btn-close"></i>
+              </button>
+            </form>
+          </div>
+        </div> 
+      </div>
+      {{/each}}
+    </div>
   </div>
 </div>
