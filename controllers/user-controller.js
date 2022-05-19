@@ -75,7 +75,7 @@ const userController = {
       const userId = Number(helpers.getUser(req).id) // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
-      const [queryUserData, tweets, followships] = await Promise.all([
+      const [queryUserData, tweets] = await Promise.all([
         // 這部分之後可以再優化 userId !== UserId 的時候才需要做
         User.findByPk(queryUserId, {
           include: [
@@ -99,11 +99,6 @@ const userController = {
           ],
           where: { UserId: queryUserId }, // 這裏是帶入 queryUserId 搜尋
           order: [['createdAt', 'DESC']]
-        }),
-        User.findAll({
-          attributes: ['id', 'name', 'account', 'avatar'],
-          include: [{ model: User, as: 'Followers', attributes: ['id'] }],
-          where: [{ role: 'user' }]
         })
       ])
       if (!queryUserData) throw new Error('使用者不存在 !')
@@ -125,21 +120,9 @@ const userController = {
         }
       }, tweets)
 
-      // 獨立處理 rightColumn 的資料
-      const followshipData = followships
-        .map(followship => ({
-          ...followship.toJSON(),
-          followerCounts: followship.Followers.length,
-          isFollowed: followship.Followers.some(item => item.id === userId),
-          isSelf: userId !== followship.id
-        }))
-        .sort((a, b) => b.followerCounts - a.followerCounts)
-        .slice(0, 10)
-
       return res.render('user', {
         queryUser,
         tweets,
-        followships: followshipData,
         tab: 'getTweets',
         leftColTab: 'userInfo'
       })
@@ -152,7 +135,7 @@ const userController = {
       const userId = Number(helpers.getUser(req).id) // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
-      const [queryUserData, replies, followships] = await Promise.all([
+      const [queryUserData, replies] = await Promise.all([
         User.findByPk(queryUserId, {
           include: [
             { model: User, as: 'Followers', attributes: ['id'] }, // 提供給 Followers 的數量計算
@@ -173,11 +156,6 @@ const userController = {
             }
           ],
           order: [['createdAt', 'DESC']]
-        }),
-        User.findAll({
-          attributes: ['id', 'name', 'account', 'avatar'],
-          include: [{ model: User, as: 'Followers', attributes: ['id'] }],
-          where: [{ role: 'user' }]
         })
       ])
       if (!queryUserData) throw new Error('使用者不存在 !')
@@ -196,21 +174,9 @@ const userController = {
         this[index] = { ...reply.toJSON() }
       }, replies)
 
-      // 獨立處理 rightColumn 的資料
-      const followshipData = followships
-        .map(followship => ({
-          ...followship.toJSON(),
-          followerCounts: followship.Followers.length,
-          isFollowed: followship.Followers.some(item => item.id === userId),
-          isSelf: userId !== followship.id
-        }))
-        .sort((a, b) => b.followerCounts - a.followerCounts)
-        .slice(0, 10)
-
       return res.render('user', {
         queryUser,
         replies,
-        followships: followshipData,
         tab: 'getReplies',
         leftColTab: 'userInfo'
       })
@@ -223,7 +189,7 @@ const userController = {
       const userId = Number(helpers.getUser(req).id) // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
-      const [queryUserData, followships] = await Promise.all([
+      const [queryUserData] = await Promise.all([
         User.findByPk(queryUserId, {
           include: [
             { model: User, as: 'Followers', attributes: ['id'] }, // 提供給 Followers 的數量計算
@@ -234,11 +200,6 @@ const userController = {
               include: [User, Reply, { model: User, as: 'LikedUsers' }]
             }
           ]
-        }),
-        User.findAll({
-          attributes: ['id', 'name', 'account', 'avatar'],
-          include: [{ model: User, as: 'Followers', attributes: ['id'] }],
-          where: [{ role: 'user' }]
         })
       ])
       if (!queryUserData) throw new Error("User didn't exist!")
@@ -252,20 +213,8 @@ const userController = {
         .getUser(req)
         .Followings.some(item => item.id === queryUser.id)
 
-      // 獨立處理 rightColumn 的資料
-      const followshipData = followships
-        .map(followship => ({
-          ...followship.toJSON(),
-          followerCounts: followship.Followers.length,
-          isFollowed: followship.Followers.some(item => item.id === userId),
-          isSelf: userId !== followship.id
-        }))
-        .sort((a, b) => b.followerCounts - a.followerCounts)
-        .slice(0, 10)
-
       return res.render('user', {
         queryUser,
-        followships: followshipData,
         tab: 'getLikedTweets',
         leftColTab: 'userInfo'
       })
@@ -278,7 +227,7 @@ const userController = {
       const userId = Number(helpers.getUser(req).id) // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
-      const [queryUserData, followships] = await Promise.all([
+      const [queryUserData] = await Promise.all([
         User.findByPk(queryUserId, {
           include: [
             {
@@ -290,11 +239,6 @@ const userController = {
             // { model: User, as: 'Followings' },
             { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
           ]
-        }),
-        User.findAll({
-          attributes: ['id', 'name', 'account', 'avatar'],
-          include: [{ model: User, as: 'Followers', attributes: ['id'] }],
-          where: [{ role: 'user' }]
         })
       ])
       if (!queryUserData) throw new Error('使用者不存在 !')
@@ -315,20 +259,8 @@ const userController = {
         user.isSelf = user.id !== userId
       })
 
-      // 獨立處理 rightColumn 的資料
-      const followshipData = followships
-        .map(followship => ({
-          ...followship.toJSON(),
-          followerCounts: followship.Followers.length,
-          isFollowed: followship.Followers.some(item => item.id === userId),
-          isSelf: userId !== followship.id
-        }))
-        .sort((a, b) => b.followerCounts - a.followerCounts)
-        .slice(0, 10)
-
       return res.render('followship', {
         queryUser, // display the followers of user, including the followings and followers
-        followships: followshipData, // rightColumn
         tab: 'getFollowers'
       })
     } catch (err) {
@@ -340,7 +272,7 @@ const userController = {
       const userId = Number(helpers.getUser(req).id) // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
-      const [queryUserData, followships] = await Promise.all([
+      const [queryUserData] = await Promise.all([
         User.findByPk(queryUserId, {
           include: [
             // { model: User, as: 'Followers' },
@@ -377,19 +309,8 @@ const userController = {
         user.isSelf = user.id !== userId
       })
 
-      const followshipData = followships
-        .map(followship => ({
-          ...followship.toJSON(),
-          followerCounts: followship.Followers.length,
-          isFollowed: followship.Followers.some(item => item.id === userId),
-          isSelf: userId !== followship.id
-        }))
-        .sort((a, b) => b.followerCounts - a.followerCounts)
-        .slice(0, 10)
-
       res.render('followship', {
         queryUser, // display the followings of user
-        followships: followshipData, // rightColumn
         tab: 'getFollowings'
       })
     } catch (err) {
