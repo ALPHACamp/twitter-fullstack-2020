@@ -27,7 +27,8 @@ userEditBtn.addEventListener('click', async e => {
     const queryUserId = target.dataset.id
 
     const res = await axios.get(`${BASE_URL}api/users/${queryUserId}`)
-    const userInfo = res.data.user
+    // const userInfo = res.data.user
+    const userInfo = res.data // 爲了符合 test 檔案
 
     userModalName.value = userInfo.name
     userModalNameCounts.innerText = userInfo.name.length

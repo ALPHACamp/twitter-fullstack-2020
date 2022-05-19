@@ -13,7 +13,8 @@ const apiController = {
       if (!queryUser) return res.status(500).json({ status: 'error', message: '使用者不存在 !' })
       delete queryUser.password
 
-      return res.status(200).json({ status: 'success', user: queryUser })
+      // return res.status(200).json({ status: 'success', user: queryUser })
+      return res.status(200).json(queryUser) // 爲了符合 test 檔案
     } catch (err) {
       next(err)
     }
