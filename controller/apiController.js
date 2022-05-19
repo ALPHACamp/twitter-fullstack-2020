@@ -30,7 +30,6 @@ const apiController = {
         account: userData.account,
         introduction: userData.introduction
       }
-      console.log('result', result)
       res.json({ status: 'success', result })
     } catch (err) {
       next(err)

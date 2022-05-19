@@ -9,13 +9,13 @@
 
 
     <div class="card tweets_card" style="margin-top:301px;border-top: 1px solid #d5d5dc;">
-      {{#each tweets}}
+      {{#each user.Likes}}
       <div class="row row-cols-1 row-cols-md-1">
         <div class="col">
           <div class="tweet_card">
             <div class="popular_imgbody">
               <a href="/users/{{this.Tweet.UserId}}">
-                <img src="{{ this.Tweet.User.avatar}}" class="popular_img" alt="...">
+                <img src="{{this.Tweet.User.avatar}}" class="popular_img" alt="...">
               </a>
             </div>
             <div class="card-body tweet_cardbody">
@@ -69,20 +69,6 @@
             </div>
           </div>
         </div>
-        {{!-- <form action="/tweets/{{ this.Tweet.id }}/unlike" method="POST">
-          <button type="submit">移除 LIKE icon</button>
-        </form> --}}
-        {{!--
-        {{#if isLiked}}
-        <form action="/tweets/{{ this.Tweet.id }}/unlike" method="POST">
-          <button type="submit">移除 LIKE icon</button>
-        </form>
-        {{else}}
-        <form action="/tweets/{{ this.Tweet.id }}/like" method="POST">
-          <button type="submit">加入 LIKE icon</button>
-        </form>
-        {{/if}} --}}
-
       </div>
       {{/each}}
     </div>

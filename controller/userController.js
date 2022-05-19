@@ -169,7 +169,7 @@ const userController = {
               {
                 model: Tweet,
                 include: [
-                  { model: User, attributes: ['id', 'name', 'account'] },
+                  { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
                   { model: Reply, attributes: ['id'] },
                   { model: User, as: 'LikedBy' }
                 ]
@@ -186,6 +186,7 @@ const userController = {
         helpers.getUser(req) &&
         helpers.getUser(req).Followings &&
         helpers.getUser(req).Followings.some(f => f.id === Number(userId))
+      // console.log('user.toJSON().Likes[0].Tweet', user.toJSON().Likes[0].Tweet)
 
       // 右側topUsers, sort by跟隨者follower數量 & isFollowed 按鈕
       const users = await User.findAll({
@@ -209,6 +210,8 @@ const userController = {
         })
         .sort((a, b) => b.Followers - a.Followers)
         .slice(0, 10)
+
+      
       return res.render('likes', {
         user: user.toJSON(),
         tweets: user.toJSON().Likes,
