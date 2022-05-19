@@ -22,6 +22,12 @@ i.like {
   background-size: 180px;
   margin-right: 7px;
 }
+.user-info .like{
+  background-position: -50px -96px;
+  width: 20px;
+  height: 19px;
+  background-size: 250px;
+}
 i.user-like{
   background-position: -59px -68px;
 }

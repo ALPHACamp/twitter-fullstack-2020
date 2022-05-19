@@ -1,0 +1,34 @@
+<div class="wrapper">
+  <div class='container admin-platform'>
+    <div class="profile-setting d-flex flex-column justify-content-between">{{> admin-menu}}</div>
+    <div class="admin-main">
+      <div class='user-tweets-header'>
+        <h4 class="mb-0">使用者列表</h4>
+      </div>
+      <div class="users d-flex align-items-center flex-wrap">
+      {{#each users}}
+      <div class="user">
+          <div class="user-banner">
+              <img class="cover" src='{{this.cover}}' alt='background'/>
+              <img class='avatar {{#ifCond user.id queryUser.id}}self-avatar{{/ifCond}}' src='{{this.avatar}}' alt='avatar'/>
+          </div>
+          <div class="user-info d-flex flex-column align-items-center">
+              <h5 class="name {{#ifCond user.id queryUser.id}}self-name{{/ifCond}}">{{this.name}}</h5>
+              <div class='secondary-text'>@{{this.account}}</div>
+              <div class="counting d-flex flex-row align-items-center">
+                  <i class="comment"></i>
+                  <span>{{this.Replies.length}}</span>
+                  <i class="like"></i>
+                  <span>{{this.Replies.length}}</span>
+              </div>
+              <div class="follow d-flex flex-row align-items-center">
+                  <div>{{this.Followings.length}} 個<span class="secondary">跟隨中</span></div>
+                  <div>{{this.Followers.length}} 位<span class="secondary">跟隨者</span></div>
+              </div>
+          </div>
+      </div>
+      {{/each}}
+      </div>
+    </div>
+  </div>
+</div>
