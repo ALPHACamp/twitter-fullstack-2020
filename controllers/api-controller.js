@@ -24,7 +24,8 @@ const apiController = {
       const userId = Number(helpers.getUser(req).id)
       const queryUserId = Number(req.params.id) // from axios
       const { name, introduction, acCover } = req.body // from axios
-      const { cover, avatar } = req.files
+      const cover = req.files?.cover
+      const avatar = req.files?.avatar
       if (userId !== queryUserId) return res.status(200).json({ status: 'error', message: '您無權限編輯使用者 !' })
 
       const [queryUser, coverFilePath, avatarFilePath] = await Promise.all([User.findByPk(queryUserId), cover ? helpers.imgurFileHandler(cover[0]) : null, avatar ? helpers.imgurFileHandler(avatar[0]) : null])
