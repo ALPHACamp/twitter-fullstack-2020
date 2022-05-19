@@ -5,7 +5,7 @@ const tweetController = {
   getTweets: async (req, res, next) => {
     try {
       const userId = helper.getUser(req).id
-      const [user, tweets, followships] = await Promise.all([
+      const [user, tweets] = await Promise.all([
         User.findByPk(userId,
           {
             attributes: ['id', 'name', 'avatar'],
@@ -19,28 +19,15 @@ const tweetController = {
             { model: Reply, attributes: ['id'] },
             { model: User, as: 'LikedUsers' }
           ]
-        }),
-        User.findAll({
-          attributes: ['id', 'name', 'account', 'avatar'],
-          include: [{ model: User, as: 'Followers', attributes: ['id'] }],
-          where: [{ role: 'user' }]
         })
       ])
       if (!user) throw new Error("User didn't exist!")
 
-      const followshipData = followships.map(followship => ({
-        ...followship.toJSON(),
-        followerCounts: followship.Followers.length,
-        isFollowed: followship.Followers.some(item => item.id === userId),
-        isSelf: (userId !== followship.id)
-      }))
-        .sort((a, b) => b.followerCounts - a.followerCounts)
-        .slice(0, 10)
       const data = tweets.map(tweet => ({
         ...tweet.toJSON(),
         isLiked: tweet.LikedUsers.some(item => item.id === userId)
       }))
-      res.render('tweet', { user, tweets: data, followships: followshipData, leftColTab: 'userHome' })
+      res.render('tweet', { user, tweets: data, leftColTab: 'userHome' })
     } catch (err) {
       next(err)
     }

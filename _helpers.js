@@ -38,7 +38,8 @@ const handlebarsHelpers = {
   createdTime: a => dayjs(a).format('h:mm'),
   ifCond: function (a, b, options) {
     return a === b ? options.fn(this) : options.inverse(this)
-  }
+  },
+  BASE_URL: process.env.BASE_URL
 }
 
 const removeAllSpace = str => {

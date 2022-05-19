@@ -1,26 +1,4 @@
-<div class="popular">
+<div class="popular" id='top-followed-box'>
   <div class="header"><h4>跟隨誰</h4></div>
-  {{#each followships}}
-  <div class="follow-tweet d-flex flex-row align-items-center justify-content-between">
-        <a href="/users/{{this.id}}/tweets" class="d-flex">
-          <img class="avatar {{#ifCond ../user.id this.id}}self-avatar{{/ifCond}}" src="{{this.avatar}}" alt="User2 avatar">
-          <div class="d-flex flex-column user-name-account">
-            <span class="name ellipsis {{#ifCond ../user.id this.id}}self-name{{/ifCond}}">{{this.name}}</span>
-            <span class="secondary-text ellipsis">@{{this.account}}</span>
-          </div>
-        </a>
-        {{#if this.isSelf}}
-          {{#if this.isFollowed}}
-          <form action='/followships/{{this.id}}?_method=DELETE' method='POST'>
-            <button type="submit" class="btn btn-primary">正在跟隨</button>
-          </form>
-          {{else}}
-          <form action='/followships' method='POST'>
-            <input type='hidden' name='id' value='{{this.id}}'/>
-            <button type="submit" class="btn btn-outline">跟隨</button>
-          </form>
-          {{/if}}
-        {{/if}} 
-      </div>
-  {{/each}}
+  {{!-- 由API render Top Followed --}}
 </div>
