@@ -234,6 +234,9 @@ a:hover {
 .user-avatar:hover {
   color: #F5B7B1;
 }
+.user-avatar-camera:hover {
+  color: #F5B7B1;
+}
 .user-following-button {
   margin: 0 0;
   height: 40px;
