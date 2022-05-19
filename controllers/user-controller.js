@@ -24,6 +24,7 @@ const userController = {
   },
   signUp: (req, res, next) => {
     if (req.body.password !== req.body.checkPassword) throw new Error('Password do not match!')
+    if (req.body.name.length > 50) throw new Error('名稱需再50字之內!')
     Promise.all([User.findOne({ where: { email: req.body.email } }), User.findOne({ where: { account: req.body.account } })])
       .then(([userEmail, userAccount]) => {
         if (userEmail) throw new Error('Email already exists!')
