@@ -8,8 +8,8 @@
     </div>
     <div class="col-7 border-start border-end px-0" style="overflow-x:hidden;overflow-y:auto;" id="middle">
         <div class="row">
-            <h3 class="my-3 px-4 mx-0 fw-bold col-1">←</h3>
-            <div class="col">
+            <h3 class="my-3 pe-0 ms-3 fw-bold col-1 blockstyle" onclick="history.back()" >←</h3>
+            <div class="col ms-0 ps-0">
                 <span class="my-0 py-0 fw-bold fs-5">{{user.name}}</span><br/>
                 <small class="my-0">{{tweetsCount}} 推文</small>
             </div>
@@ -22,7 +22,7 @@
             <img src="{{user.avatar}}" class="me-auto rounded-circle border border-white border-5" style="width:150px;height:150px">
            {{#ifCond user.id currentUser.id}}
             <div class="d-flex align-items-end text-end">
-                <button type="button" class="btn rounded-pill" style="color:#FF6600;border-color:#FF6600" data-bs-toggle="modal" data-bs-target="#editProfileModal">編輯個人資料</button>
+                <button type="button" class="btn rounded-pill  myOutlineBtn" data-bs-toggle="modal" data-bs-target="#editProfileModal">編輯個人資料</button>
             </div>
             {{/ifCond}}
         </div>
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="row mx-0 px-0">
-            <a class="col text-center pb-2 " href="/users/{{user.id}}/tweets" style="text-decoration:none;{{#if user.Tweets}}color:#FF6600;border-bottom:solid;border-color:#FF6600;{{else}}color:black;{{/if}}">
+            <a class="col text-center pb-2" href="/users/{{user.id}}/tweets" style="text-decoration:none;{{#if user.Tweets}}color:#FF6600;border-bottom:solid;border-color:#FF6600;{{else}}color:black;{{/if}}">
                 推文
             </a>
             <a class="col text-center pb-2 " href="/users/{{user.id}}/replies" style="text-decoration:none;{{#if userReplies}}color:#FF6600;border-bottom:solid;border-color:#FF6600;{{else}}color:black;{{/if}}">
