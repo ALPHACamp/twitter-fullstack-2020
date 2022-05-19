@@ -1,8 +1,8 @@
 <div class="row pt-4 m-0 outline">
   {{!-- tweeter's avatar --}}
-  <a href="/users/{{../user.id}}" class="col-2 d-flex flex-row-reverse">
-    <img src="{{../user.avatar}}" class="user-avatar" alt="avatar">
-  </a>
+  <div class="col-2 d-flex flex-row-reverse">
+    <img src="{{../user.avatar}}" class="avatar" alt="avatar">
+  </div>
   {{!-- tweet's content --}}
   <div class="col-10 pb-3 mb-0">
     {{!-- tweeter's info --}}
@@ -11,7 +11,7 @@
         <p class="main-user-name">{{../user.name}}</p>
         <p class="main-user-account">@{{../user.account}}．{{relativeTimeFromNow this.createdAt}}</p>
       </div>
-    {{!-- tweet's description --}}
+      {{!-- tweet's description --}}
       <div class="mt-2">
         <p>{{this.description}}</p>
       </div>
@@ -23,21 +23,21 @@
         <span class="ms-1">{{this.Replies.length}}</span>
       </div>
       <div class="ms-5">
-        {{#if this.isLiked}}
-        <form action="/tweets/{{this.id}}/unlike" method="post">
+        {{!-- {{#if ../user.isLiked}} --}}
+        {{!-- <form action="/tweets/{{this.id}}/unlike" method="post">
           <button class="heart-btn" type="submit">
             <i class="fa-solid fa-heart heart-icon"></i>
           </button>
-          <span class="ms-1">{{this.likesCount}}</span>
-        </form>
-        {{else}}
+          <span class="ms-1">{{this.Likes.length}}</span>
+        </form> --}}
+        {{!-- {{else}} --}}
         <form action="/tweets/{{this.id}}/like" method="post">
           <button class="heart-btn" type="submit">
             <i class="far fa-heart"></i>
           </button>
-          <span class="ms-1">{{this.likesCount}}</span>
+          <span class="ms-1">{{this.Likes.length}}</span>
         </form>
-        {{/if}}
+        {{!-- {{/if}} --}}
       </div>
     </div>
   </div>
