@@ -9,81 +9,74 @@
       <div class="message">
         {{> messages}}
       </div>
-      <div class="outline">
-        {{!-- header --}}
-        <div class="header">
-          {{!-- tittle --}}
-            <a class="d-flex mt-3 ms-1"  onclick="javascript:history.back()">
-              <h4 class="navbar-brand mb-0">← 推文</h4>
-            </a>
-            <hr>
-          {{!-- tweet --}}
-          <div class="row mt-2">
-            <div class="col-2 ms-3">
-              <img class="avatar" src="{{tweet.User.avatar}}" alt="avatar" >
-            </div>
-            <div class="col-5 px-1">
-              <p class="right-user-name">{{tweet.User.name}}</p>
-              <p class="right-user-account">@{{tweet.User.account}}</p>
-            </div>
-            <div class="mt-2">
-              <p class="right-reply-description mx-3">{{tweet.description}}</p>
-              <p class="right-reply-time ms-3">{{time tweet.createdAt}}</p>
-              <hr>
-              <div class="d-flex align-items-center ms-3">
-                <p class="my-0 ms-2">{{data.replyCount}} 回覆</p>
-                <p class="my-0 ms-4">{{data.likeCount}} 喜歡次數</p>
-              </div>
-              <hr>
-            </div>
-            <div class="d-flex ms-3">
-              <i class="far fa-comment mx-3 d-flex align-items-center " data-bs-toggle="modal" data-bs-target="#replyModal"></i>
-              {{#if data.isLiked}}
-              <form action="/tweets/{{tweet.id}}/unlike" method="post">
-                <button type="submit" style=" border: transparent; background: transparent;">
-                  <i class="fa-solid fa-heart ms-5" style="color: #E0245E;"></i>
-                </button>
-              </form>
-              {{else}}
-              <form action="/tweets/{{tweet.id}}/like" method="post">
-                <button type="submit" style=" border: transparent; background: transparent;">
-                  <i class="far fa-heart ms-5"></i>
-                </button>
-              </form>
-              {{/if}}
-            </div>
-            <div class="my-0"><hr></div>
+      {{!-- content --}}
+      <div class="content outline mb-3 pb-0">
+        {{!-- tittle --}}
+          <a class="d-flex py-3 ps-1 outline"  onclick="javascript:history.back()">
+            <h4 class="navbar-brand mb-0">← 推文</h4>
+          </a>
+        {{!-- tweet --}}
+        <div class="row pt-3 px-0 mx-0">
+          <div class="col-2 ms-3">
+            <img class="avatar" src="{{tweet.User.avatar}}" alt="avatar" >
           </div>
-          {{!-- reply --}}
-          {{#each data.replies}}
-          <div class="row mt-4 mx-0">
-            <a href="/users/{{this.User.id}}" class="col-2 ms-2 ps-3">
-              <img src="{{this.User.avatar}}" class="avatar" alt="avatar">
-            </a>
-            <div class="col-9">
-              <div class="d-flex flex-row align-items-center">
-                <p class="right-user-name">{{this.User.name}}</p>
-                <p class="right-user-account ms-2">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</p>
-              </div>
-              <p class="mt-2 right-user-account">回覆
-                <span style="color:#FF6600;text-decoration: none">@{{../tweet.User.account}}</span>
-              </p>
-              <div class="mt-2">
-                <p>{{this.comment}}</p>
-              </div>
-              <div>
-                <i class="far fa-comment me-3">
-                  <span class="ms-2">666</span>
-                </i>
-                <i class="far fa-heart mx-3">
-                  <span class="ms-2">777</span>
-                </i>
-              </div>
-            </div>
-            <hr class="mb-0 mt-3">
+          <div class="col-5 px-1">
+            <p class="right-user-name">{{tweet.User.name}}</p>
+            <p class="right-user-account">@{{tweet.User.account}}</p>
           </div>
-          {{/each}}
+          <div class=" pt-2">
+            <p class="right-reply-description mx-3 my-2">{{tweet.description}}</p>
+            <p class="right-reply-time ms-3 mt-3">{{time tweet.createdAt}}</p>
+          </div>
+          <div class="d-flex align-items-center outline py-3">
+            <p class="my-0 ps-2">{{data.replyCount}} 回覆</p>
+            <p class="my-0 ps-4">{{data.likeCount}} 喜歡次數</p>
+          </div>
+          <div class="d-flex my-3 ms-1">
+            <i class="far fa-comment me-5 ms-1 d-flex align-items-center " data-bs-toggle="modal" data-bs-target="#replyModal"></i>
+            {{#if data.isLiked}}
+            <form action="/tweets/{{tweet.id}}/unlike" method="post">
+              <button type="submit" style=" border: transparent; background: transparent;">
+                <i class="fa-solid fa-heart ms-5" style="color: #E0245E;"></i>
+              </button>
+            </form>
+            {{else}}
+            <form action="/tweets/{{tweet.id}}/like" method="post">
+              <button type="submit" style=" border: transparent; background: transparent;">
+                <i class="far fa-heart ms-5"></i>
+              </button>
+            </form>
+            {{/if}}
+          </div>
         </div>
+        {{!-- reply --}}
+        {{#each data.replies}}
+        <div class="row py-3 mx-0 outline">
+          <a href="/users/{{this.User.id}}" class="col-2 ms-2 ps-3">
+            <img src="{{this.User.avatar}}" class="avatar" alt="avatar">
+          </a>
+          <div class="col-9">
+            <div class="d-flex flex-row align-items-center">
+              <p class="right-user-name">{{this.User.name}}</p>
+              <p class="right-user-account ms-2">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</p>
+            </div>
+            <p class="mt-2 right-user-account">回覆
+              <span style="color:#FF6600;text-decoration: none">@{{../tweet.User.account}}</span>
+            </p>
+            <div class="mt-2">
+              <p>{{this.comment}}</p>
+            </div>
+            <div>
+              <i class="far fa-comment me-3">
+                <span class="ms-2">666</span>
+              </i>
+              <i class="far fa-heart mx-3">
+                <span class="ms-2">777</span>
+              </i>
+            </div>
+          </div>
+        </div>
+        {{/each}}
       </div>
     </div>
     {{!-- nav bar --}}

@@ -18,65 +18,6 @@
   color: #ff6600;
 }
 
-.modal-button {
-  color: #FF6600;
-  margin: 0 0;
-  height: 40px;
-  width: 130px;
-  left: 0px;
-  top: 0px;
-  border-radius: 50px;
-  padding: 8px, 16px, 8px, 16px;
-  background: white;
-  border: #FF6600;
-  border-width: 1px;
-  border-style: solid;
-  position: absolute;
-  top: 216px;
-  left: 423px;
-}
-
-.modal-button:hover {
-  background-color: #FEF5E7;
-}
-
-.user-following-button {
-  margin: 0 0;
-  height: 40px;
-  width: 96px;
-  left: 0px;
-  top: 0px;
-  border-radius: 50px;
-  padding: 8px, 16px, 8px, 16px;
-  background: #FF6600;
-  border: #E6ECF0;
-  position: absolute;
-  top: 216px;
-  left: 460px;
-}
-
-.user-follower-button {
-  color: #FF6600;
-  margin: 0 0;
-  height: 40px;
-  width: 76px;
-  left: 0px;
-  top: 0px;
-  border-radius: 50px;
-  padding: 8px, 16px, 8px, 16px;
-  background: white;
-  border: #FF6600;
-  border-width: 1px;
-  border-style: solid;
-  position: absolute;
-  top: 216px;
-  left: 465px;
-}
-
-.user-follower-button:hover {
-  background-color: #FEF5E7;
-}
-
 .follower-button {
   color: #FF6600;
   margin: 0 0;
@@ -120,20 +61,6 @@
   color: #FF6600;
 }
 
-.user-cover,
-.user-avatar {
-  font-size: 1.5em;
-  color: white
-}
-
-.user-cover:hover {
-  color: #F5B7B1;
-}
-
-.user-avatar:hover {
-  color: #F5B7B1;
-}
-
 a {
   text-decoration: none;
   color: black
@@ -165,7 +92,7 @@ a:hover {
   color: #ff6600;
 }
 
-/* main content */
+/* tweets & tweet page */
 .main-content {
   padding-bottom: 0px;
 }
@@ -243,9 +170,9 @@ a:hover {
 .logout-anchor {
   min-width: 180px; 
   border-bottom: 0px !important; 
-  position: relative; 
-  top: 140%;
-  left: 1.2rem;
+  position: fixed; 
+  bottom: 5px;
+  left: 15.8%;
 }
 
 /* right-sidebar  */
@@ -273,7 +200,153 @@ a:hover {
   padding-left: 8px;
   font-size: 14px;
 }
+/* user page */
+.content {
+  position: relative;
+}
+.user-cover {
+  height: 200px;
+  width: 100%;
+  object-fit: fill;
+}
+.user-avatar {
+  font-size: 1.5em;
+  color: white;
+  height: 140px;
+  width: 141px; 
+  border:4px white solid; 
+  border-radius: 50%;
+}
+.user-cover:hover {
+  color: #F5B7B1;
+}
 
+.user-avatar:hover {
+  color: #F5B7B1;
+}
+.user-following-button {
+  margin: 0 0;
+  height: 40px;
+  width: 96px;
+  left: 0px;
+  top: 0px;
+  border-radius: 50px;
+  padding: 8px, 16px, 8px, 16px;
+  background: #FF6600;
+  border: #E6ECF0;
+}
+.user-follower-button {
+  color: #FF6600;
+  margin: 0 0;
+  height: 40px;
+  width: 76px;
+  left: 0px;
+  top: 0px;
+  border-radius: 50px;
+  padding: 8px, 16px, 8px, 16px;
+  background: white;
+  border: #FF6600;
+  border-width: 1px;
+  border-style: solid;
+}
+.user-follower-button:hover {
+  background-color: #FEF5E7;
+}
+.modal-button {
+  color: #FF6600;
+  margin: 0 0;
+  height: 40px;
+  width: 130px;
+  left: 0px;
+  top: 0px;
+  border-radius: 50px;
+  padding: 8px, 16px, 8px, 16px;
+  background: white;
+  border: #FF6600;
+  border-width: 1px;
+  border-style: solid;
+}
+.modal-button:hover {
+  background-color: #FEF5E7;
+}
+.anb-anchor {
+  position: relative;
+  top: -75px;
+}
+.user-info {
+  position: relative;
+  top: -75px;
+}
+.user-tab-anchor {
+  position: relative;
+  top: -55px;
+}
+.tab-content {
+  position: relative;
+  top: -55px;
+}
+.user-edit-modal {
+  position: relative;
+  height: 610px; 
+  width: 572px;
+  border-radius: 14px;
+}
+.save-btn {
+  border-radius: 50px;
+  background: #FF6600; 
+  border:#E6ECF0;
+}
+.cover-upload-icon {
+  position:absolute; 
+  top: 45%; 
+  left: 45%;
+}
+.user-edit-avatar {
+  height: 140px ;
+  width: 141px; 
+  border:4px white solid; 
+  border-radius: 50% !important; 
+  filter: contrast(50%) !important;
+}
+.avatar-camera-anchor {
+  position: relative;
+  left: -80px;
+}
+.edit-avatar-anchor{
+  position: relative;
+  top: -94px;
+}
+.edit-name-anchor {
+  position: relative;
+  top: -160px;
+}
+.edit-intro-anchor {
+  position: relative;
+  top: -180px;
+}
+.input-form {
+  padding-left: 20px;
+  background: #F5F8FA;
+  border: 1px solid #F5F8FA;
+  border-bottom: 3px solid #657786 ;
+}
+.input-form-label {
+  color: #696974;
+  padding-left: 20px;
+  background: #F5F8FA;
+  border: 1px solid #F5F8FA;
+}
+.form-btn {
+  width: 86px; 
+  height: 46px; 
+  background: #FF6600; 
+  border-radius: 50px; 
+  border:#FF6600;
+  color: white;
+}
+.user-content {
+  padding-bottom: -75px;
+}
 /* for dev */
 .red {
   outline: 3px solid red;
@@ -293,6 +366,10 @@ a:hover {
 
 .brown {
   outline: 3px solid brown;
+}
+
+.orange {
+  outline: 3px solid orange;
 }
 
 .logout-admin-anchor {

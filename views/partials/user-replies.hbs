@@ -1,0 +1,17 @@
+<div class="row py-3 mx-0 outline">
+  <a href="/users/{{../user.id}}" class="col-2 ms-2 ps-3">
+    <img src="{{../user.avatar}}" class="avatar" alt="avatar">
+  </a>
+  <div class="col-9">
+    <div class="d-flex flex-row align-items-center">
+      <p class="right-user-name">{{../user.name}}</p>
+      <p class="right-user-account ms-2">@{{../user.account}}．{{relativeTimeFromNow this.createdAt}}</p>
+    </div>
+    <p class="mt-2 right-user-account">回覆
+      <span style="color:#FF6600;text-decoration: none">@{{this.Tweet.User.account}}</span>
+    </p>
+    <div class="mt-2">
+      <p>{{this.comment}}</p>
+    </div>
+  </div>
+</div>
