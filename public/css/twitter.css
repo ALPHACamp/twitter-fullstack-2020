@@ -17,3 +17,22 @@
 .linkText:hover{
     text-decoration:underline;
 }
+
+.myBtn{
+    background-color: #FF6600;
+    color:white;
+}
+.myBtn:hover{
+    filter: brightness(120%);
+    color:white;
+}
+
+.myOutlineBtn{
+    color:#FF6600;
+    border-color:#FF6600;
+    background-color:rgb(249, 249, 249)
+}
+.myOutlineBtn:hover{
+    background-color: #FF6600;
+    color:white;
+}
