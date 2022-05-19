@@ -1,136 +1,125 @@
-{{>left-sidebar route='user'}}
-<div class="col-8">
-  <div class="row d-flex justify-content-start" style="position:relative;">
-    {{!-- header --}}
-    <div class="col-8" style="outline: 1px solid #E6ECF0;">
-      <div class="container-fluid mt-3 ps-0 d-flex">
-        <button class="btn" type="button" onclick="javascript:history.back()">
-          <i class="fas fa-arrow-left"></i>
-        </button>
-        <div class="container-fluid px-0 ms-2">
-          <p class="fs-5 mb-0 fw-bold">{{user.name}}</p>
-          <p class="fs-6 mb-0 text-muted">{{user.Tweets.length}}推文</p>
-        </div>
-      </div>
-
-      {{!-- header body --}}
-      <ul class="nav nav-tabs mb-0">
-        <li class="nav-item">
-          <a class="nav-link fw-bold {{#if followersSelect}}active{{/if}}"
-            href="/users/{{user.id}}/followers?type=followers">追隨者</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-bold {{#if followingsSelect}}active{{/if}}"
-            href="/users/{{user.id}}/followings?type=followings">正在追隨</a>
-        </li>
-      </ul>
-      {{!-- followers --}}
-      {{#if followersSelect}}
-      {{#each user.Followers}}
-      <div class="row mt-2 py-2" style="border-bottom-style:solid; border-color:#e4e7eb; border-width:1px;">
-        <div class="col-2 d-flex flex-row-reverse">
-          <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
-            <img src="{{this.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
-          </a>
-        </div>
-        <div class="col-10 ps-0">
-          <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
-            <div class="d-flex flex-row align-items-center justify-content-between">
-              <p class="fw-bold" style="font-size: 16px; margin: 0 0;">{{this.name}}</p>
-              {{#if this.isFollowersFollowed}}
-              <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                <button type="submit" class="following-button text-white mx-3">正在跟隨</button>
-              </form>
-              {{else}}
-              <form action="/followships" method="POST" style="display: contents;">
-                <button type="submit" class="follower-button mx-3">跟隨</button>
-              </form>
-              {{/if}}
-            </div>
-            <div class="mt-2">
-              <p>{{this.introduction}}</p>
-            </div>
-          </a>
-        </div>
-      </div>
-      {{/each}}
-      {{/if}}
-
-      {{!-- followings --}}
-      {{#if followingsSelect}}
-      {{#each user.Followings}}
-      <div class="row mt-2 py-2" style="border-bottom-style:solid; border-color:#e4e7eb; border-width:1px;">
-        <div class="col-2 d-flex flex-row-reverse">
-          <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
-            <img src="{{this.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
-          </a>
-        </div>
-        <div class="col-10 ps-0">
-          <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
-            <div class="d-flex flex-row align-items-center justify-content-between">
-              <p class="fw-bold" style="font-size: 16px; margin: 0 0;">{{this.name}}</p>
-              {{#if this.isFollowingsFollowed}}
-              <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                <button type="submit" class="following-button text-white mx-3">正在跟隨</button>
-              </form>
-              {{else}}
-              <form action="/followships" method="POST" style="display: contents;">
-                <button type="submit" class="follower-button mx-3">跟隨</button>
-              </form>
-              {{/if}}
-            </div>
-            <div class="mt-2">
-              <p>{{this.introduction}}</p>
-            </div>
-          </a>
-        </div>
-      </div>
-      {{/each}}
-      {{/if}}
+<div class="container-lg">
+  <div class="row mt-2">
+    {{!-- nav bar --}}
+    <div class="col-lg-3 left-sidebar d-flex justify-content-end">
+      {{>left-sidebar route='user'}}
     </div>
-
-    {{!-- 追隨者Top10 的使用者 --}}
-    <div class="container col-3 mt-0 mx-3" style="padding: 0 0;width: 250px; position:fixed; top: 0px; right: 100px;">
-      <div class="bg-light" style="border-radius: 15px;">
-        <div class="container d-flex align-items-center mt-3">
-          <h4 class="fw-bold mt-4">跟隨誰</h4>
-        </div>
-        <div class="mt-3" style="height: 1px; width: auto; border-radius: 0px; background: #E6ECF0;"></div>
-        {{#each users}}
-        {{#ifCond this.id ../loginUser.id}}
-        <div class="d-flex flex-row align-items-center ms-3 py-2">
-          <a href="/users/{{this.id}}" class="d-flex align-items-center mx-0">
-            <img src="{{this.avatar}}" alt="avatar" style="height: 40px ;width: 40px; border-radius: 50px;">
-          </a>
-          <div class="mx-2">
-            <a href="/users/{{this.id}}" class="fw-bold" style="font-size: 16px; margin: 0 0;">{{this.name}}</a>
-            <p class="text-muted" style="font-size: 14px; margin: 0 0;">{{this.account}}</p>
-          </div>
-        </div>
-        {{else}}
-        <div class="d-flex flex-row align-items-center ms-3 py-2">
-          <a href="/users/{{this.id}}" class="d-flex align-items-center mx-0">
-            <img src="{{this.avatar}}" alt="avatar" style="height: 40px ;width: 40px; border-radius: 50px;">
-          </a>
-          <div class="mx-2">
-            <a href="/users/{{this.id}}" class="fw-bold" style="font-size: 16px; margin: 0 0;">{{this.name}}</a>
-            <p class="text-muted" style="font-size: 14px; margin: 0 0;">{{this.account}}</p>
-          </div>
-          <div class="d-flex align-items-center">
-            {{#if this.isFollowed}}
-            <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-              <button type="submit" class="following-button text-white">正在跟隨</button>
-            </form>
-            {{else}}
-            <form action="/followships" method="POST" style="display: contents;">
-              <button type="submit" class="follower-button ms-3" name="id" value="{{this.id}}">跟隨</button>
-            </form>
-            {{/if}}
-          </div>
-        </div>
-        {{/ifCond}}
-        {{/each}}
+    {{!-- main content --}}
+    <div class="col-lg-6 main-content d-flex flex-column justify-content-center">
+      <div class="message">
+        {{> messages}}
       </div>
+      <div class="mb-3 pb-0">
+        {{!-- content --}}
+        <div class="content outline">
+          {{!-- tittle --}}
+          <div class="d-flex tittle-border">
+            <a class="d-flex mt-3 ms-1" onclick="javascript:history.back()">
+              <h4 class="navbar-brand mb-0 me-1">←</h4>
+            </a>
+            <div class="px-0 ms-2 mt-1">
+              <p class="fs-5 mb-0 fw-bold">{{user.name}}</p>
+              <p class="fs-6 mb-0 text-muted">{{user.Tweets.length}}推文</p>
+            </div>
+          </div>
+          {{!-- tab --}}
+          <ul class="nav nav-tabs pt-2 outline">
+            <li class="nav-item">
+              <a class="nav-link fw-bold {{#if followersSelect}}active{{/if}}"
+                href="/users/{{user.id}}/followers?type=followers">追隨者</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-bold {{#if followingsSelect}}active{{/if}}"
+                href="/users/{{user.id}}/followings?type=followings">正在追隨</a>
+            </li>
+          </ul>
+          {{!-- followers --}}
+          {{#if followersSelect}}
+          {{#each user.Followers}}
+            {{!-- user info --}}
+            <div class="d-flex align-items-star outline">
+              {{!-- avatar --}}
+              <div class="ps-3 pt-3">
+                <a href="/users/{{this.id}}">
+                  <img src="{{this.avatar}}" class="avatar" alt="avatar">
+                </a>
+              </div>
+              {{!-- others --}}
+              <div class="container-fluid ps-3 pe-0">
+                {{!-- name & btn --}}{{!--text-decoration-none text-dark--}}
+                <div class="d-flex align-items-center justify-content-between mx-0 mt-2 pt-2">
+                  {{!-- name --}}
+                  <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
+                    <p class="fw-bold main-user-name">{{this.name}}</p>
+                  </a>
+                  {{!-- follow btn --}}
+                  <div class="ms-auto follow-btn">
+                    {{#if this.isFollowingsFollowed}}
+                    <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+                      <button type="submit" class="following-button text-white mx-3">正在跟隨</button>
+                    </form>
+                    {{else}}
+                    <form action="/followships" method="POST">
+                      <button type="submit" class="follower-button mx-3">跟隨</button>
+                    </form>
+                    {{/if}}
+                  </div>
+                </div>
+                {{!-- user introduction --}}
+                <div class="mt-1 pb-1">
+                  <p>{{this.introduction}}</p>
+                </div>
+              </div> 
+            </div>
+          {{/each}}
+          {{/if}}
+
+          {{!-- followings --}}
+          {{#if followingsSelect}}
+          {{#each user.Followings}}
+            {{!-- user info --}}
+            <div class="d-flex align-items-star outline">
+              {{!-- avatar --}}
+              <div class="ps-3 pt-3">
+                <a href="/users/{{this.id}}">
+                  <img src="{{this.avatar}}" class="avatar" alt="avatar">
+                </a>
+              </div>
+              {{!-- others --}}
+              <div class="container-fluid ps-3 pe-0">
+                {{!-- name & btn --}}{{!--text-decoration-none text-dark--}}
+                <div class="d-flex align-items-center justify-content-between mx-0 mt-2 pt-2">
+                  {{!-- name --}}
+                  <a class="text-decoration-none text-dark" href="/users/{{this.id}}">
+                    <p class="fw-bold main-user-name">{{this.name}}</p>
+                  </a>
+                  {{!-- follow btn --}}
+                  <div class="ms-auto follow-btn">
+                    {{#if this.isFollowingsFollowed}}
+                    <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+                      <button type="submit" class="following-button text-white mx-3">正在跟隨</button>
+                    </form>
+                    {{else}}
+                    <form action="/followships" method="POST">
+                      <button type="submit" class="follower-button mx-3">跟隨</button>
+                    </form>
+                    {{/if}}
+                  </div>
+                </div>
+                {{!-- user introduction --}}
+                <div class="mt-1 pb-1">
+                  <p>{{this.introduction}}</p>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    {{!-- nav bar --}}
+    <div class="col-lg-3 right-sidebar mx-0 px-0">
+      {{> right-sidebar}}
     </div>
   </div>
 </div>

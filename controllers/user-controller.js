@@ -7,10 +7,10 @@ const { imgurFileHandler } = require('../helpers/file-helpers')
 const userController = {
   getUser: (req, res, next) => {
     const { type } = req.query
-    let tweetsSelect, relpiesSelect, likesSelect
+    let tweetsSelect, repliesSelect, likesSelect
 
-    if (type === 'relpies') {
-      relpiesSelect = true
+    if (type === 'replies') {
+      repliesSelect = true
     } else if (type === 'likes') {
       likesSelect = true
     } else {
@@ -66,7 +66,7 @@ const userController = {
           isLiked: tweet.Likes.some(l => l.UserId === helpers.getUser(req).id)
         }))
 
-        res.render('user', { user, users: result, tweets, tweetsSelect, relpiesSelect, likesSelect })
+        res.render('user', { user, users: result, tweets, tweetsSelect, repliesSelect, likesSelect })
       })
       .catch(err => next(err))
   },
