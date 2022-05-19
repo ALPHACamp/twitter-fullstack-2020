@@ -35,9 +35,14 @@ const userController = {
       User.findAll({
         where: { role: 'user' },
         include: [{ model: User, as: 'Followers' }]
+      }),
+      Tweet.findAll({
+        where: { userId: req.params.id },
+        order: [['createdAt', 'DESC']],
+        include: [User, Reply, Like]
       })
     ])
-      .then(([user, users]) => {
+      .then(([user, users, tweets]) => {
         const LIMIT = 10
 
         user = {
@@ -56,7 +61,12 @@ const userController = {
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, LIMIT)
 
-        res.render('user', { user, users: result, tweetsSelect, repliesSelect, likesSelect })
+        tweets = tweets.map(tweet => ({
+          ...tweet.toJSON(),
+          isLiked: tweet.Likes.some(l => l.UserId === helpers.getUser(req).id)
+        }))
+
+        res.render('user', { user, users: result, tweets, tweetsSelect, repliesSelect, likesSelect })
       })
       .catch(err => next(err))
   },

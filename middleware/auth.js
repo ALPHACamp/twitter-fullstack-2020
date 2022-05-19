@@ -7,6 +7,7 @@ const authenticated = (req, res, next) => {
 }
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role === 'admin') return next()
+  req.flash('error_messages', '您無此權限!')
   res.redirect('/admin/signin')
 }
 

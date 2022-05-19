@@ -391,6 +391,12 @@ a:hover {
 .brown {
   outline: 3px solid brown;
 }
+
 .orange {
   outline: 3px solid orange;
+}
+
+.logout-admin-anchor {
+  position: fixed; 
+  bottom: 80px;
 }
