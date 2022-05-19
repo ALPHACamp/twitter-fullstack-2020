@@ -2,7 +2,7 @@
   {{#each tweets}}
     <div class='tweet d-flex'>
       <a href='/users/{{this.User.id}}/tweets'>
-        <img class='avatar {{#ifCond ../user.id this.User.id}}self-avatar{{/ifCond}}' src='{{this.User.avatar}}' alt='user1 avatar' />
+        <img class='avatar {{#ifCond ../user.id this.User.id}}self-avatar{{/ifCond}}' src='{{this.User.avatar}}' alt='{{this.User.name}}' />
       </a>
       <div class='post-content'>
         <div class='post-user d-flex flex-row align-items-end'>
@@ -54,7 +54,7 @@
   {{#each replies}}
     <div class='tweet d-flex'>
       <a href='/users/{{this.User.id}}/tweets'>
-        <img class='avatar {{#ifCond ../user.id this.User.id}}self-avatar{{/ifCond}}' src='{{this.User.avatar}}' alt='user1 avatar' />
+        <img class='avatar {{#ifCond ../user.id this.User.id}}self-avatar{{/ifCond}}' src='{{this.User.avatar}}' alt='{{this.User.name}}' />
       </a>
       <div class='post-content'>
         <div class='post-user d-flex flex-row align-items-end'>
@@ -76,7 +76,7 @@
   {{#each likedTweets}}
     <div class='tweet d-flex'>
       <a href='/users/{{this.Tweet.User.id}}/tweets'>
-        <img class='avatar {{#ifCond ../user.id this.Tweet.User.id}}self-avatar{{/ifCond}}' src='{{this.Tweet.User.avatar}}' alt='user1 avatar' />
+        <img class='avatar {{#ifCond ../user.id this.Tweet.User.id}}self-avatar{{/ifCond}}' src='{{this.Tweet.User.avatar}}' alt='{{this.Tweet.User.name}}' />
       </a>
       <div class='post-content'>
         <div class='post-user d-flex flex-row align-items-end'>
