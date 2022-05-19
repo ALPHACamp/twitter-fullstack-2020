@@ -44,9 +44,17 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: 'user'
       },
-      avatar: DataTypes.STRING,
+      avatar: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'https://i.imgur.com/kF4kryU.png'
+      },
       account: DataTypes.STRING,
-      cover: DataTypes.STRING
+      cover: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'https://i.imgur.com/OrTW5at.png'
+      }
     },
     {
       sequelize,
