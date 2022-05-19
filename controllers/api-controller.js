@@ -1,5 +1,6 @@
 const { User } = require('../models')
 const helpers = require('../_helpers')
+const apiServices = require('../service/api-services')
 
 const apiController = {
   getUser: async (req, res, next) => {
@@ -37,6 +38,9 @@ const apiController = {
     } catch (err) {
       next(err)
     }
+  },
+  topFollowed: (req, res, next) => {
+    apiServices.topFollow(req, (err, data) => err ? next(err) : res.json({ status: 'success', data }))
   }
 }
 

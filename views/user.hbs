@@ -3,7 +3,7 @@
     <div class="profile-setting d-flex flex-column justify-content-between">{{> leftColumn}}</div>
     <div class="main">
       <div class='user-header d-flex flex-row align-items-center'>
-        <a href="#"><i class="back-arrow"></i></a>
+        <a href="javascript:history.back()"><i class="back-arrow"></i></a>
         <div class="header-text d-flex flex-column">
           <h5>{{queryUser.name}}</h5>
           <span class="tweets-count secondary">{{queryUser.Tweets.length}} 推文</span>
@@ -75,12 +75,12 @@
             </div>
           </div>
           <div class="form-floating">
-            <input type="text" class="form-control" id="user-edit-modal-name" placeholder="user-name" value="" maxlength="50">
+            <input type="text" class="form-control" id="user-edit-modal-name" value="" maxlength="50">
             <label for="user-edit-modal-name">名稱</label>
             <p class="text-end"><span class="user-edit-modal-name-counts">0</span>/50</p>
           </div>
           <div class="form-floating">
-            <textarea class="form-control" placeholder="user-introduction" id="user-edit-modal-introduction" style="height: 100px" maxlength="160"></textarea>
+            <textarea class="form-control" id="user-edit-modal-introduction" style="height: 100px" maxlength="160"></textarea>
             <label for="user-edit-modal-introduction">自我介紹</label>
             <p class="text-end"><span class="user-edit-modal-introduction-counts">0</span>/160</p>
           </div>

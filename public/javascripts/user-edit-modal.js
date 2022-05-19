@@ -20,14 +20,13 @@ const userModalCoverInput = document.querySelector('#cover-upload-input')
 const userModalAvatar = document.querySelector('#avatar-upload-img')
 const userModalAvatarInput = document.querySelector('#avatar-upload-input')
 
-const BASE_URL = 'http://localhost:3000'
 // 點擊 "編輯個人按鈕" 計算顯示的字數
 userEditBtn.addEventListener('click', async e => {
   try {
     const target = e.target
     const queryUserId = target.dataset.id
 
-    const res = await axios.get(`${BASE_URL}/api/users/${queryUserId}`)
+    const res = await axios.get(`${BASE_URL}api/users/${queryUserId}`)
     const userInfo = res.data.user
 
     userModalName.value = userInfo.name
@@ -101,7 +100,7 @@ userEditModal.addEventListener('submit', async e => {
   formData.append('name', userModalName.value)
   formData.append('introduction', userModalIntroduction.value)
   userModalCover.src === acCover ? formData.append('acCover', 'https://i.imgur.com/OrTW5at.png') : formData.append('acCover', '')
-  const res = await axios.post(`${BASE_URL}/api/users/${queryUserId}`, formData, {
+  const res = await axios.post(`${BASE_URL}api/users/${queryUserId}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
