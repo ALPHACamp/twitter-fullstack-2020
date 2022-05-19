@@ -73,42 +73,42 @@
       </div>
     </div>
   {{/each}}
-  {{#each queryUser.LikedTweets}}
+  {{#each likedTweets}}
     <div class='tweet d-flex'>
-      <a href='/users/{{this.User.id}}/tweets'>
-        <img class='avatar {{#ifCond ../user.id this.User.id}}self-avatar{{/ifCond}}' src='{{this.User.avatar}}' alt='user1 avatar' />
+      <a href='/users/{{this.Tweet.User.id}}/tweets'>
+        <img class='avatar {{#ifCond ../user.id this.Tweet.User.id}}self-avatar{{/ifCond}}' src='{{this.Tweet.User.avatar}}' alt='user1 avatar' />
       </a>
       <div class='post-content'>
         <div class='post-user d-flex flex-row align-items-end'>
-          <a href='/users/{{this.User.id}}/tweets'>
-            <span class='user-name {{#ifCond ../user.id this.User.id}}self-name{{/ifCond}}'>{{this.User.name}}</span>
+          <a href='/users/{{this.Tweet.User.id}}/tweets'>
+            <span class='user-name {{#ifCond ../user.id this.Tweet.User.id}}self-name{{/ifCond}}'>{{this.Tweet.User.name}}</span>
           </a>
-          <span class='secondary-text'>@{{this.User.account}}</span>
+          <span class='secondary-text'>@{{this.Tweet.User.account}}</span>
           <span class='secondary-text'>•</span>
           <span class='secondary-text'>{{relativeTimeFromNow
-              this.createdAt
+              this.Tweet.createdAt
             }}</span>
         </div>
-        <a href='/tweets/{{this.id}}/replies' class='content'>{{this.description}}</a>
+        <a href='/tweets/{{this.Tweet.id}}/replies' class='content'>{{this.Tweet.description}}</a>
         <div class='tweet-buttons d-flex flex-row align-items-end'>
           <button type="button" class="d-flex flex-row align-items-end" data-bs-toggle='modal'
-              data-bs-target='#replyModal-{{this.id}}'>
+              data-bs-target='#replyModal-{{this.Tweet.id}}'>
               <i class="comment"></i>
-              <span>{{this.Replies.length}}</span>
+              <span>{{this.Tweet.Replies.length}}</span>
           </button>
           {{! 以下為like }}
           <button
             type='button'
             class='d-flex flex-row align-items-end like-submit-btn liked'
-            data-tweetId='{{this.id}}'
+            data-tweetId='{{this.Tweet.id}}'
           >
             <i class='like user-like'></i>
-            <span class='liked-numbers'>{{this.LikedUsers.length}}</span>
+            <span class='liked-numbers'>{{this.Tweet.LikedUsers.length}}</span>
           </button>
         </div>
       </div>
     </div>
-    {{> reply-modal tweet=this user=../user}}
+    {{> reply-modal tweet=this.Tweet user=../user}}
   {{/each}}
 </div>
 

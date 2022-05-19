@@ -1,4 +1,4 @@
-const { User, Tweet, Reply, Followship } = require('../models')
+const { User, Tweet, Reply, Followship, Like } = require('../models')
 const bcrypt = require('bcrypt-nodejs')
 const { removeAllSpace, removeOuterSpace } = require('../_helpers')
 const helpers = require('../_helpers')
@@ -189,7 +189,7 @@ const userController = {
       const userId = Number(helpers.getUser(req).id) // 登入的使用者
       const queryUserId = Number(req.params.id) // 瀏覽的使用者，有可能是其他 user
 
-      const [queryUserData] = await Promise.all([
+      const [queryUserData, likedTweets] = await Promise.all([
         User.findByPk(queryUserId, {
           include: [
             { model: User, as: 'Followers', attributes: ['id'] }, // 提供給 Followers 的數量計算
@@ -200,9 +200,27 @@ const userController = {
               include: [User, Reply, { model: User, as: 'LikedUsers' }]
             }
           ]
+        }),
+        Like.findAll({
+          where: { UserId: queryUserId },
+          attributes: ['id', 'createdAt'],
+          include: [{
+            model: Tweet,
+            attributes: ['id', 'description', 'createdAt'],
+            include: [
+              { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
+              { model: Reply, attributes: ['id'] },
+              { model: User, as: 'LikedUsers', attributes: ['id'] }
+            ]
+          }],
+          order: [['createdAt', 'DESC']]
         })
       ])
       if (!queryUserData) throw new Error("User didn't exist!")
+
+      likedTweets.forEach(function (likedTweet, index) {
+        this[index] = { ...likedTweet.toJSON() }
+      }, likedTweets)
 
       // 獨立處理 queryUser 的資料
       const queryUser = queryUserData.toJSON()
@@ -215,6 +233,7 @@ const userController = {
 
       return res.render('user', {
         queryUser,
+        likedTweets,
         tab: 'getLikedTweets',
         leftColTab: 'userInfo'
       })
