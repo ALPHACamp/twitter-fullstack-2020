@@ -48,7 +48,7 @@ const adminController = {
         // 快覽 Tweet 的前 50 個字
         description: tweet.description.substring(0, 50)
       }))
-      res.render('admin/tweets', { user, tweets: data })
+      res.render('admin/tweets', { user, tweets: data, adminMenu: 'tweets' })
     } catch (err) {
       next(err)
     }
@@ -65,37 +65,32 @@ const adminController = {
       next(err)
     }
   },
-  // getUsers: async (req, res, next) => {
-  //   try {
-  //     const user = await Promise.all([
-  //       User.findAll({
-  //         order: [['createdAt', 'DESC']],
-  //         attributes: ['id', 'name', 'account', 'avatar', 'cover'],
-  //         include: [
-  //           { model: User, as: 'Followers', attributes: ['id'] }, // 提供給 Followers 的數量計算
-  //           { model: User, as: 'Followings', attributes: ['id'] }, // 提供給 Followings 的數量計算
-  //           // { model: User, as: 'LikedUsers' },
-  //           // { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
-  //         ]
-  //       })
-  //     ])
-  //     return res.render('admin/users', { users: user })
-  //   } catch (err) {
-  //     next(err)
-  //   }
-  // }
-  getUsers: (req, res, next) => {
-    return User.findAll({
-      raw: true,
-      nest: true,
-      include: [
-        { model: User, as: 'Followers', attributes: ['id'] },
-        { model: User, as: 'Followings', attributes: ['id'] }
-      ]
-    })
-      .then(users => res.render('admin/users', { users }))
-      .catch(err => next(err))
-  }
+  getUsers: async (req, res, next) => {
+    try {
+      const users = await User.findAll({
+        where: { role: 'user' },
+        attributes: ['id', 'name', 'account', 'avatar', 'cover'],
+        include: [
+          { model: User, as: 'Followers', attributes: ['id'] },
+          { model: User, as: 'Followings', attributes: ['id'] },
+          { model: Tweet, attributes: ['id'], include: [{ model: User, as: 'LikedUsers' }] }
+        ]
+      })
 
+      const data = users.map(user => ({
+        ...user.toJSON(),
+        tweetCounts: user.Tweets.length,
+        followingCounts: user.Followers.length,
+        followerCounts: user.Followings.length,
+        beenLikedTweets: user.Tweets.reduce((acc, obj) => {
+          return acc + obj.LikedUsers.length
+        }, 0)
+      }))
+        .sort((a, b) => b.tweetCounts - a.tweetCounts)
+      res.render('admin/users', { users: data, adminMenu: 'users' })
+    } catch (err) {
+      next(err)
+    }
+  }
 }
 module.exports = adminController
