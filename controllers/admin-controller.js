@@ -44,9 +44,9 @@ const adminController = {
         })
       ])
       const data = tweets.map(tweet => ({
-        ...tweet.toJSON()
-        // ...tweet.dataValues,
-        // description: tweet.dataValues.description.substring(0, 100)
+        ...tweet.toJSON(),
+        // 快覽 Tweet 的前 50 個字
+        description: tweet.description.substring(0, 50)
       }))
       res.render('admin/tweets', { user, tweets: data })
     } catch (err) {
@@ -64,6 +64,37 @@ const adminController = {
     } catch (err) {
       next(err)
     }
+  },
+  // getUsers: async (req, res, next) => {
+  //   try {
+  //     const user = await Promise.all([
+  //       User.findAll({
+  //         order: [['createdAt', 'DESC']],
+  //         attributes: ['id', 'name', 'account', 'avatar', 'cover'],
+  //         include: [
+  //           { model: User, as: 'Followers', attributes: ['id'] }, // 提供給 Followers 的數量計算
+  //           { model: User, as: 'Followings', attributes: ['id'] }, // 提供給 Followings 的數量計算
+  //           // { model: User, as: 'LikedUsers' },
+  //           // { model: Tweet, attributes: ['id'] } // 提供給 tweets 的數量計算
+  //         ]
+  //       })
+  //     ])
+  //     return res.render('admin/users', { users: user })
+  //   } catch (err) {
+  //     next(err)
+  //   }
+  // }
+  getUsers: (req, res, next) => {
+    return User.findAll({
+      raw: true,
+      nest: true,
+      include: [
+        { model: User, as: 'Followers', attributes: ['id'] },
+        { model: User, as: 'Followings', attributes: ['id'] }
+      ]
+    })
+      .then(users => res.render('admin/users', { users }))
+      .catch(err => next(err))
   }
 
 }
