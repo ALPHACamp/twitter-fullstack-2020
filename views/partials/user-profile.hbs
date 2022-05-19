@@ -5,13 +5,11 @@
 
 {{!-- 是本人，顯示編輯個人資料按鈕 --}}
   {{#ifCond logInUser.id user.id}}
-    {{!-- <form action="/users/{{user.id}}/edit" method="GET">
-      <button type="submit">編輯個人資料</button>
-    </form> --}}
-
-
+    <form action="/api/users/{{logInUser.id}}" method="get">
+      <button type="submit">test api</button>
+    </form>
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="editBtn">
       編輯個人資料
     </button>
 

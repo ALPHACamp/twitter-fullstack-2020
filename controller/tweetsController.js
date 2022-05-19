@@ -47,6 +47,7 @@ const tweetsController = {
         })
         .sort((a, b) => b.Followers - a.Followers)
         .slice(0, 10)
+      console.log(tweets)
       return res.render('index', { tweets, topUsers, page: 'tweets' })
     } catch (err) {
       next(err)

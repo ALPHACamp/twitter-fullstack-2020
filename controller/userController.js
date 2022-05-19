@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { Tweet, User, Like, Reply, Followship } = require('../models')
 const helpers = require('../_helpers')
-
+const axios = require('axios')
 const imgur = require('imgur')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 imgur.setClientId(IMGUR_CLIENT_ID)

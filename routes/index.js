@@ -8,6 +8,7 @@ const passport = require('../config/passport')
 const userController = require('../controller/userController')
 const tweetController = require('../controller/tweetsController.js')
 const adminController = require('../controller/adminController.js')
+const apiController = require('../controller/apiController.js')
 
 // Admin
 router.get('/admin/signin', adminController.signinPage)
@@ -52,6 +53,9 @@ router.put('/users/:id/setting', authenticated, userController.editUser)
 // 編輯 user 資料
 router.get('/users/:id/edit', authenticated, userController.editUserFakePage)
 router.post('/users/:id/edit', authenticated, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.editUser)
+
+// api
+router.get('/api/users/:id', authenticated, apiController.editUser)
 
 // 查看 user 相關頁面
 router.get('/users/:id/followings', authenticated, userController.getFollowings)
