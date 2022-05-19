@@ -1,8 +1,5 @@
 {{> left}}
 
-
-
-
 <div class="col-6 d2">
   <div class="row row-cols-1 row-cols-md-1">
     <!-- logo -->
@@ -31,13 +28,10 @@
             <div>
               <button class="btn tweet_btn" type="submit">推文</button>
             </div>
-
           </form>
         </div>
       </div>
     </div>
-
-
 
     {{!-- 推文列 --}}
     <div class="card tweets_card">
@@ -69,7 +63,6 @@
                   </p>
                 </a>
               </div>
-
               <div class="tweet_icon">
                 {{!-- 回覆 --}}
                 <span class=" me-1">
@@ -85,9 +78,7 @@
                   <!-- Modal -->
                   <div class="modal fade" id="reply-tweet-{{this.id}}" tabindex="-1"
                     aria-labelledby="indexTweetModalLabel" aria-hidden="true">
-
                     <div class="modal-dialog modal-dialog-scrollable">
-
                       <div class="modal-content" style="border-radius: 20px;width: 700px;height: 500px;top: 56px;">
                         <div class="modal-header" style="left: 0%;right: 0%;top: 5.33%; bottom: 81%;">
                           <button type="button" class="close ml-0 pl-0" data-bs-dismiss="modal" aria-label="Close">
@@ -121,7 +112,6 @@
                                     </p>
                                   </a>
                                 </div>
-
                               </div>
                             </div>
                           </div>
@@ -135,10 +125,8 @@
                           </a>
                         </div>
                         <div class="modal_line"></div>
-
                         <div class="col">
                           <div class="modal-body">
-
                             <div class="media d-flex tweet_cardbody">
                               <div class="popular_imgbody">
                                 <a href="/users/{{this.UserId}}/tweets">
@@ -164,15 +152,9 @@
                             </div>
                           </div>
                         </div>
-
-
                       </div>
                     </div>
                   </div>
-
-
-
-
 
                   {{#if this.Replies}}
                   {{ this.Replies }}
@@ -180,40 +162,60 @@
                   0
                   {{/if}}
                 </span>
-                {{!-- 喜歡 --}}
-                <form action="/tweets/{{ this.id }}/like" method="POST">
-                  <button type="submit" style="background: transparent; border-width:0px; outline:none">
-                    <span class=" me-1">
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
+
+                {{!-- 喜歡  this.isLiked --}}
+                  {{#if this.isLiked}}
+                  <form action="/tweets/{{ this.id }}/unlike" method="POST">
+                    <button type="submit" style="background: transparent; border-width:0px; outline:none">
+                      <span class=" me-1">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
                           d="M7.00005 13.4253H6.99072C5.26872 13.3933 0.300049 8.90401 0.300049 4.65201C0.300049 2.60934 1.98338 0.81601 3.90205 0.81601C5.42872 0.81601 6.45538 1.86934 6.99938 2.63601C7.54205 1.87068 8.56871 0.81601 10.096 0.81601C12.016 0.81601 13.6987 2.60934 13.6987 4.65268C13.6987 8.90334 8.72938 13.3927 7.00738 13.424H7.00005V13.4253ZM3.90272 1.81668C2.51605 1.81668 1.30072 3.14201 1.30072 4.65334C1.30072 8.48001 5.99005 12.384 7.00072 12.4253C8.01272 12.384 12.7007 8.48068 12.7007 4.65334C12.7007 3.14201 11.4854 1.81668 10.0987 1.81668C8.41338 1.81668 7.47205 3.77401 7.46405 3.79334C7.31072 4.16801 6.69338 4.16801 6.53938 3.79334C6.53005 3.77334 5.58938 1.81668 3.90338 1.81668H3.90272Z"
                           fill="#6C757D" />
-                      </svg>
-                      {{#if this.Likes}}
-                      {{ this.Likes }}
-                      {{else}}
-                      0
-                      {{/if}}
-                    </span>
-                  </button>
-                </form>
+                        </svg>
+
+                        {{#if this.Likes}}
+                        {{ this.Likes}}
+                        {{else}}
+                        0
+                        {{/if}}
+
+                      </span>
+                    </button>
+                  </form>
+
+                  {{else}}
+                  
+                  <form action="/tweets/{{ this.id }}/like" method="POST">
+                    <button type="submit" style="background: transparent; border-width:0px; outline:none">
+                      <span class=" me-1">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M7.00005 13.4253H6.99072C5.26872 13.3933 0.300049 8.90401 0.300049 4.65201C0.300049 2.60934 1.98338 0.81601 3.90205 0.81601C5.42872 0.81601 6.45538 1.86934 6.99938 2.63601C7.54205 1.87068 8.56871 0.81601 10.096 0.81601C12.016 0.81601 13.6987 2.60934 13.6987 4.65268C13.6987 8.90334 8.72938 13.3927 7.00738 13.424H7.00005V13.4253ZM3.90272 1.81668C2.51605 1.81668 1.30072 3.14201 1.30072 4.65334C1.30072 8.48001 5.99005 12.384 7.00072 12.4253C8.01272 12.384 12.7007 8.48068 12.7007 4.65334C12.7007 3.14201 11.4854 1.81668 10.0987 1.81668C8.41338 1.81668 7.47205 3.77401 7.46405 3.79334C7.31072 4.16801 6.69338 4.16801 6.53938 3.79334C6.53005 3.77334 5.58938 1.81668 3.90338 1.81668H3.90272Z"
+                          fill="#6C757D" />
+                        </svg>
+
+                        {{#if this.Likes}}
+                        {{ this.Likes}}
+                        {{else}}
+                        0
+                        {{/if}}
+
+                      </span>
+                    </button>
+                  </form>
+
+                  {{/if}}
 
               </div>
             </div>
           </div>
         </div>
-
-
       </div>
-
       {{/each}}
     </div>
   </div>
 </div>
-
-
-
-
 
 
 {{> right}}

@@ -1,6 +1,5 @@
 const { User } = require('../models')
 const helpers = require('../_helpers')
-const axios = require('axios')
 const imgur = require('imgur')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 imgur.setClientId(IMGUR_CLIENT_ID)
@@ -24,12 +23,12 @@ const apiController = {
         ]
       })
       const result = {
-        'id': userData.id,
-        'name': userData.name,
-        'avatar': userData.avatar,
-        'cover': userData.cover,
-        'account': userData.account,
-        'introduction': userData.introduction
+        id: userData.id,
+        name: userData.name,
+        avatar: userData.avatar,
+        cover: userData.cover,
+        account: userData.account,
+        introduction: userData.introduction
       }
       console.log('result', result)
       res.json({ status: 'success', result })

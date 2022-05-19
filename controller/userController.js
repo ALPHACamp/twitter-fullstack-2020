@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs')
 const { Tweet, User, Like, Reply, Followship } = require('../models')
 const helpers = require('../_helpers')
-const axios = require('axios')
 const imgur = require('imgur')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 imgur.setClientId(IMGUR_CLIENT_ID)
@@ -90,6 +89,7 @@ const userController = {
   getUser: async (req, res, next) => {
     try {
       const userId = req.params.id
+      const loginUserId = helpers.getUser(req) && helpers.getUser(req).id
       const paramsUser = await User.findOne({
         where: {
           id: userId,
@@ -100,7 +100,8 @@ const userController = {
             model: Tweet,
             include: [
               { model: Reply, attributes: ['id'] },
-              { model: Like, attributes: ['id'] }
+              { model: Like, attributes: ['id'] },
+              { model: User, as: 'LikedBy' }
             ]
           },
           { model: User, as: 'Followings', attributes: ['id'] },
@@ -113,6 +114,13 @@ const userController = {
         helpers.getUser(req) &&
         helpers.getUser(req).Followings &&
         helpers.getUser(req).Followings.some(f => f.id === Number(userId))
+        // isLiked = tweet.LikedBy.some(item => item.id === loginUserId)
+      const userTweets = paramsUser.toJSON().Tweets.map(tweet => {
+        return {
+          ...tweet,
+          isLiked: tweet.LikedBy.some(item => item.id === loginUserId)
+        }
+      })
 
       // 右側Top10User
       const users = await User.findAll({
@@ -139,6 +147,7 @@ const userController = {
 
       return res.render('user', {
         user: paramsUser.toJSON(),
+        userTweets,
         isFollowed,
         topUsers,
         page: 'user'
@@ -160,7 +169,8 @@ const userController = {
                 model: Tweet,
                 include: [
                   { model: User, attributes: ['id', 'name', 'account'] },
-                  { model: Reply, attributes: ['id'] }
+                  { model: Reply, attributes: ['id'] },
+                  { model: User, as: 'LikedBy' }
                 ]
               }
             ]
@@ -529,7 +539,7 @@ const userController = {
 
       if (req._parsedUrl.pathname.includes('setting')) {
         const { account, name, email, password, checkPassword } = req.body
-        console.log(`account: ${account}, email: ${email}`)
+        // console.log(`account: ${account}, email: ${email}`)
 
         if (!account || !name || !email || !password || !checkPassword) {
           errors.push({ message: '以下欄位都需要填入！' })

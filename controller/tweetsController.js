@@ -5,10 +5,12 @@ const tweetsController = {
   getTweets: async (req, res, next) => {
     // like 與 replies 數量
     try {
+      const loginUserId = helpers.getUser(req) && helpers.getUser(req).id
       const tweetList = await Tweet.findAll({
         order: [['createdAt', 'DESC']],
         include: [
           { model: User, attributes: ['name', 'account', 'avatar'] },
+          { model: User, as: 'LikedBy' },
           { model: Reply, attributes: ['id'] },
           { model: Like, attributes: ['id'] }
         ]
@@ -22,7 +24,8 @@ const tweetsController = {
           return {
             ...tweet,
             Replies: tweet.Replies.length,
-            Likes: tweet.Likes.length
+            Likes: tweet.Likes.length,
+            isLiked: tweet.LikedBy.some(item => item.id === loginUserId)
           }
         })
       // 右側topUsers, sort by跟隨者follower數量 & isFollowed 按鈕
@@ -55,10 +58,12 @@ const tweetsController = {
   },
   getTweet: async (req, res, next) => {
     try {
+      const loginUserId = helpers.getUser(req) && helpers.getUser(req).id
       const { tweetId } = req.params
       const tweet = await Tweet.findByPk(tweetId, {
         include: [
           { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
+          { model: User, as: 'LikedBy' },
           { model: Reply, attributes: ['id'] },
           { model: Like, attributes: ['id'] }
         ]
@@ -66,16 +71,7 @@ const tweetsController = {
       const result = tweet.get({ plain: true })
       result.Replies = tweet.Replies.length
       result.Likes = tweet.Likes.length
-      // const tweet = tweetList.map(tweet => {
-      //   return tweet.get({ plain: true })
-      // }).map(tweet => {
-      //   return {
-      //     ...tweet,
-      //     Replies: tweet.Replies.length,
-      //     Likes: tweet.Likes.length
-      //   }
-      // })
-      // console.log('result', result)
+      result.isLiked = tweet.LikedBy.some(item => item.id === loginUserId)
       const replies = await Reply.findAll({
         where: { tweetId },
         include: {
