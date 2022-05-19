@@ -18,7 +18,7 @@ const tweetController = {
       }, {
         model: Reply,
       }],
-      order: [['createdAt', 'DESC']],limit,offset
+      order: [['createdAt','DESC']],limit,offset
     }),
     catchTopUsers(req),
     Tweet.findAndCountAll({attributes:['id']})
@@ -30,18 +30,18 @@ const tweetController = {
         totalReply : e.Replies.length,
         isLiked : e.Likes.some(f=>f.UserId===helpers.getUser(req).id)
       }))
-      // res.json(t)
       res.render('index',{tweets:data,topUsers,pagination: getPagination(limit, page, T.count)})
     }).catch(err => next(err))
   },
   postTweet: (req, res, next) => {
     const UserId = helpers.getUser(req).id
     const description = req.body.description
-    if(description.length>140){
+    if(!(description.length<=140)){
+      req.flash('error_messages','String length exceeds range' )
       return res.redirect('/tweets')
     }
     return Tweet.create({
-      description: req.body.description,
+      description,
       UserId
     })
       .then(() => res.redirect(`${req.get('Referrer')}`))

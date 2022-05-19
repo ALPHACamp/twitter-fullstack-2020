@@ -8,12 +8,16 @@ const followshipController={
         if(followingId===followerId){
             return res.json(new Error('followingId=followerId'))
         }
-        return Followship.findOrCreate({
-            where:{
-                followerId,
-                followingId
-            }
-        }).then(()=>res.redirect(`${req.get('Referrer')}`))
+        return User.findByPk(followingId).then(user=>{
+            if(!user){ throw new Error('This user id do not exist') }
+            return Followship.findOrCreate({
+                where:{
+                    followerId,
+                    followingId
+                }
+            })
+        })
+        .then(()=>res.redirect(`${req.get('Referrer')}`))
         .catch(err=>next(err))
     },
     deleteFollowship:(req,res,next)=>{
