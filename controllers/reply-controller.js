@@ -34,9 +34,8 @@ const replyController = {
     const { comment } = req.body
     return Tweet.findByPk(TweetId)
       .then(tweet => {
-        if (!tweet) {
-          throw new Error('This tweet id do not exist')
-        }
+        if (!tweet) { throw new Error('This tweet id do not exist')}
+        if(!(comment.length<=140)){ throw new Error('String length exceeds range') }
         return Reply.create({
           TweetId,
           UserId: helpers.getUser(req).id,
