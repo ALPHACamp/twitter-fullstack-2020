@@ -89,7 +89,10 @@ const tweetController = {
   postTweet: (req, res, next) => {
     const userId = helpers.getUser(req).id
     const { description } = req.body
-    if (!description) return req.flash('error_messages', '內容不可空白')
+    if (!description) {
+      req.flash('error_messages', '內容不可空白')
+      return res.redirect('back')
+    }
     if (description.length > 140) {
       req.flash('error_messages', '推文請在140字以內')
       return res.redirect('/tweets')
@@ -108,7 +111,12 @@ const tweetController = {
     const userId = helpers.getUser(req).id
     const tweetId = req.params.id
     const comment = req.body.comment
-    if (!comment) return req.flash('error_messages', '內容不可空白')
+    console.log('comment:', comment)
+    if (!comment) {
+      req.flash('error_messages', '內容不可空白')
+      return res.redirect('back')
+    }
+    console.log('bypass')
     Reply.create({
       userId,
       TweetId: tweetId,
