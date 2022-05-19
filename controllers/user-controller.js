@@ -177,13 +177,15 @@ const userController = {
         })
         ,catchTopUsers(req)
       ])
-      const followersCount = user.Followers.length
-      const followingsCount = user.Followings.length
-      const userReplies = user.Replies
+      const data =user.toJSON()
+      data.Replies=data.Replies.reverse()
+      const followersCount = data.Followers.length
+      const followingsCount = data.Followings.length
+      const userReplies =data.Replies
 
       if (!user) throw new Error("User didn't exists!")
       return res.render('user', {
-        user: user.toJSON(),
+        user: data,
         userReplies,
         topUsers,
         followersCount,
