@@ -36,6 +36,8 @@
 
 .login-button {
   background: #ff6600;
+  width: 356px;
+  height: 46px;
   border-radius: 50px;
   height: 46px;
   font-style: normal;

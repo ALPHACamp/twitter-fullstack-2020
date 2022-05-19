@@ -13,18 +13,10 @@ module.exports = {
           id: 1,
           name: 'root',
           email: 'root@example.com',
-          password: bcrypt.hashSync(
-            '12345678',
-            bcrypt.genSaltSync(10),
-            null
-          ),
+          password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
           account: 'root',
-          cover: `https://loremflickr.com/320/240/personal,cover/?random=${
-            Math.random() * 100
-          }`,
-          avatar: `https://loremflickr.com/320/240/avatar/?random=${
-            Math.random() * 100
-          }`,
+          cover: `https://picsum.photos/200/300?random=${Math.random() * 100}`,
+          avatar: `https://picsum.photos/200/300?random=${Math.random() * 100}`,
           introduction: faker.lorem.text().substring(0, 160),
           role: 'admin',
           isAdmin: true,
@@ -35,18 +27,10 @@ module.exports = {
           id: 2,
           name: 'user1',
           email: 'user1@example.com',
-          password: bcrypt.hashSync(
-            '12345678',
-            bcrypt.genSaltSync(10),
-            null
-          ),
+          password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
           account: 'user1',
-          cover: `https://loremflickr.com/320/240/personal,cover/?random=${
-            Math.random() * 100
-          }`,
-          avatar: `https://loremflickr.com/320/240/avatar/?random=${
-            Math.random() * 100
-          }`,
+          cover: `https://picsum.photos/200/300?random=${Math.random() * 100}`,
+          avatar: `https://picsum.photos/200/300?random=${Math.random() * 100}`,
           introduction: faker.lorem.text().substring(0, 160),
           role: 'user',
           isAdmin: false,
@@ -65,12 +49,8 @@ module.exports = {
         email: faker.internet.email(),
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
         account: faker.name.findName(),
-        cover: `https://loremflickr.com/320/240/personal,cover/?random=${
-          Math.random() * 100
-        }`,
-        avatar: `https://loremflickr.com/320/240/avatar/?random=${
-          Math.random() * 100
-        }`,
+        cover: `https://picsum.photos/200/300?random=${Math.random() * 100}`,
+        avatar: `https://picsum.photos/200/300?random=${Math.random() * 100}`,
         introduction: faker.lorem.text().substring(0, 160),
         role: 'user',
         isAdmin: false,

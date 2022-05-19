@@ -11,6 +11,13 @@
   color: #ff6600;
 }
 
+.left_navtitle:active {
+  color: #ff6600;
+}
+.left_navtitle-active {
+  color: #ff6600;
+}
+
 /* 登出 */
 .logout-btn {
   color: #000000;
@@ -20,83 +27,11 @@
   color: #ff6600;
 }
 
-/* 頭像 */
-.avatar_img {
-  width: 50px;
-  height: 50px;
-  border-radius: 100%;
-}
-
-/* 左側 */
-.left_nav {
-  float: left;
-  width: 178px;
-  height: 1200px;
-  left: 134px;
-  top: 0px;
-  position: fixed;
-  top: 15px;
-  left: 280px;
-  z-index: 10;
-}
-
-/* 右側 */
-.right_nav {
-  float: left;
-  width: 23%;
-  position: fixed;
-  top: 15px;
-  right: 1%;
-}
-
-/* Followship */
-.following_btn {
-  width: 100px;
-  background-color: #ff6600;
-  border-radius: 40px;
-  color: white;
-  font-weight: bold;
-}
-
-.follower_btn {
-  width: 60px;
-  border-radius: 40px;
-  border-color: #ff6600;
-  color: #ff6600;
-  font-weight: bold;
-}
-
-/* 頁標 */
-.page-header {
-  width: 937px;
-  font-family: "Noto Sans TC";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 26px;
-  padding: 16px;
-}
-
-/* 顯示字數限制 */
-.description_hide {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  white-space: normal;
-}
-
-/* 回復框 & like框 */
-.tweets_btn {
-  background: transparent;
-  border-width: 0px;
-  outline: none;
-}
-
 /* modal */
 .modal-backdrop {
   z-index: 9;
 }
+
 
 .close {
   color: #ff6600;

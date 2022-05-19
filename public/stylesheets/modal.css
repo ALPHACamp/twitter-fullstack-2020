@@ -1,0 +1,43 @@
+.modal_line {
+  position: absolute;
+  width: 2px;
+  height: 100px;
+  left: 40px;
+  top: 180px;
+
+  /* grayscale/dark-60 */
+
+  background: #b5b5be;
+}
+
+.modal_text {
+  width: 150px;
+  height: 13px;
+
+  font-family: "Noto Sans TC";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+
+  color: #657786;
+}
+
+.modaltweet_description {
+  margin-left: 50px;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  width: 528px;
+  height: 78px;
+  font-family: "Noto Sans TC";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+  flex: none;
+  flex-grow: 1;
+}

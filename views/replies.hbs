@@ -1,41 +1,95 @@
-<div id="column1" class="col-2 left_nav ">
-  {{> left}}
+{{> left}}
+
+<div class="col-6 d2">
+  <div class="row row-cols-1 row-cols-md-1">
+    {{> user-profile user=user}}
+    <div class="col" style="margin-top:420px ;">
+      {{> user-tabs route='replies'}}
+    </div>
+
+    {{!-- 使用者的所有replies 和 推文 replies先 推文後 createdAt DESC --}}
+    <div class="card tweets_card" style="margin-top:301px;border-top: 1px solid #d5d5dc;">
+      {{#each user.Replies }}
+      <div class="row row-cols-1 row-cols-md-1">
+        <div class="col">
+          <div class="tweet_card">
+            <div class="popular_imgbody">
+              <a href="/users/{{../user.id}}">
+                <img src="{{ ../user.avatar }}" class="popular_img" alt="...">
+              </a>
+            </div>
+            <div class="card-body tweet_cardbody">
+              <div class="tweet_title">
+                <a href="/users/{{../user.id}}" style="text-decoration: none; ">
+                  <p class="tweet_name">{{ ../user.name }}</p>
+                </a>
+                <p class="tweet_acount">
+                  @{{ ../user.account }}
+                </p>
+                <p class="tweet_acount">
+                  • {{relativeTimeFromNow this.createdAt}}
+                </p>
+              </div>
+              <div class="tweet_icon" style="  margin-top:60px; width:300px;">
+                <p class="modal_text">回覆給</p>
+                <a href="/users/{{this.Tweet.User.id}}">
+                  <p class="tweet_acount" style="color: #FC5A5A;margin-left: -148px ">
+                    @{{ this.Tweet.User.account }}
+                  </p>
+                </a>
+              </div>
+              <div class="profiletweet_description">
+                <a href="/tweets/{{../user.id}}/replies" style="text-decoration: none; color: #171725;">
+                  <p style="maxlength=" 140"; ">
+                    {{ this.comment }}
+                  </p>
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </div>   
+      </div>
+      {{/each}}
+
+      {{#each user.Tweets }}
+      <div class=" row row-cols-1 row-cols-md-1">
+                    <div class="col">
+                      <div class="tweet_card">
+                        <div class="popular_imgbody">
+                          <a href="/users/{{../user.id}}">
+                            <img src="{{ ../user.avatar }}" class="popular_img" alt="...">
+                          </a>
+                        </div>
+                        <div class="card-body tweet_cardbody">
+                          <div class="tweet_title">
+                            <a href="/users/{{../user.id}}" style="text-decoration: none; ">
+                              <p class="tweet_name">{{ ../user.name }}</p>
+                            </a>
+                            <p class="tweet_acount">
+                              @{{ ../user.account }}
+                            </p>
+                            <p class="tweet_acount">
+                              • {{relativeTimeFromNow this.createdAt}}
+                            </p>
+                          </div>
+                          <div class="profiletweet_description">
+                            <a href="/tweets/{{../user.id}}/replies" style="text-decoration: none; color: #171725;">
+                              <p style="maxlength=" 140"; ">
+                          {{ this.description }}
+                        </p>
+                      </a>
+                    </div>
+      
+                  </div>
+                </div>
+              </div>   
+            </div>
+            {{/each}}
+    </div>
+
+</div>
 </div>
 
-  <div class="col-md-6">
-{{> user-profile user=user}}
-{{> user-tabs route='replies'}}
 
-{{!-- replies --}}
-<h3 class="mb-3"></h3>
-<p>使用者的所有replies 和 推文 replies先 推文後 createdAt DESC</p>
-
-{{!--  paramsUser 所有 replies  --}}
-{{#each user.Replies}}
-  <blockquote class="blockquote mb-0">
-    <span><a href="/users/{{../user.id}}">{{ ../user.name }}</a></span>
-    <span class="blockquote-footer"> @{{ ../user.account }}</span>
-    <span>{{ relativeTimeFromNow this.createdAt }}</span>
-    <p>回覆<a href="/users/{{this.Tweet.User.id}}">@{{ this.Tweet.User.account }}</a></p>
-    <p class="blockquote-footer"> {{ this.Tweet.description }}</p>
-    <p>{{ this.comment }}</p>
-  </blockquote>
-  <hr />
-{{/each}}
-
-{{!--  paramsUser 所有 tweets  --}}
-{{#each user.Tweets}}
-  <blockquote class="blockquote mb-0">
-    <span><a href="/users/{{../user.id}}">{{ ../user.name }}</a></span>
-    <span class="blockquote-footer"> @{{ ../user.account }}</span>
-    <span>{{ relativeTimeFromNow this.createdAt }}</span>
-    <p>{{ this.description }}</p>
-  </blockquote>
-  <hr />
-{{/each}}
-  </div>
-</div>
-
-<div id="column1" class="col-3 right_nav">
-  {{> right}}
-</div>
+{{> right}}

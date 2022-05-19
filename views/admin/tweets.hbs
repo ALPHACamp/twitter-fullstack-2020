@@ -1,45 +1,63 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-2 m-0 p-0 left_nav ">
-      {{> adminLeft}}
-    </div>
+{{> adminLeft}}
 
-    <div class="page-header">
-      推文清單
-    </div>
-    <div class="divider"></div>
-    {{#each tweet}}
-    <div class="card admin_tweet" style="border-radius: 0px;">
-      <div class="card-body">
-
-        <div class="position-absolute" style="top:10px; right:10px">
-          <form action="/admin/tweets/{{ this.id }}?_method=DELETE" method="post">
-            <button type="submit" class="btn btn-sm btn-link text-decoration-none text-secondary">
-              <i class="fas fa-times fa-2x"></i>
-            </button>
-          </form>
-        </div>
-
-        <div class="media d-flex ">
-          <img src="{{ this.User.avatar }}" class=" rounded-circle mb-5 me-3" alt="{{ this.User.name }}"
-            style="width: 50px;height: 50px;">
-          <div class="media-body">
-            <div class="d-flex d-inline ">
-              <h5>{{ this.User.name }}</h5>
-              <p class="ms-3 text-secondary d-inline">
-                @{{this.User.account}} • {{relativeTimeFromNow this.createdAt}}
-              </p>
-            </div>
-            <div class="description_hide">
-              <p>
-                {{this.description}}
-              </p>
-            </div>
-          </div>
+<div class="col-sm-8 admin_page">
+  <div class="row row-cols-1 row-cols-md-1">
+    {{!-- logo --}}
+    <div class="col">
+      <div class="card admintitle_card">
+        <div class="card-body">
+          <p class="admintitle_title">
+            推文清單
+          </p>
         </div>
       </div>
     </div>
-    {{/each}}
+
+    {{!-- 推文列 --}}
+    <div class="card admintweets_card">
+      {{#each tweet}}
+      <div class="row row-cols-1 row-cols-md-1">
+        <div class="col">
+          <div class="admintweet_card">
+            <div class="admin_imgbody">
+              <a href="/users/{{this.UserId}}/tweets">
+                <img src="{{ this.User.avatar }}" class="popular_img" alt="...">
+              </a>
+            </div>
+            <div class="card-body admintweet_cardbody">
+              <div class="tweet_title">
+                <a href="/users/{{this.UserId}}/tweets" style="text-decoration: none; ">
+                  <p class="tweet_name">{{ this.User.name }}</p>
+                </a>
+                <p class="tweet_acount">
+                  @{{this.User.account}}
+                </p>
+                <p class="tweet_acount">
+                  • {{relativeTimeFromNow this.createdAt}}
+                </p>
+              </div>
+              <div class="tweet_description">
+                <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color: #171725;">
+                  <p style="maxlength=" 140";">
+                    {{this.description}}
+                  </p>
+                </a>
+              </div>
+              <form action="/admin/tweets/{{ this.id }}?_method=DELETE" method="post">
+                <button type="submit" class="btn btn-sm btn-link text-decoration-none text-secondary">
+                  <i class="fas fa-times fa-2x"></i>
+                </button>
+              </form>
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+      {{/each}}
+    </div>
+
 
   </div>
-</div>

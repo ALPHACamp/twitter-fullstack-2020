@@ -1,17 +1,23 @@
-<div class="left_nav">
-  {{> left}}
-</div>
+{{> left}}
 
-<div class="d-flex justify-content-center">
-  {{!-- <div id="column2" class="mx-auto my-auto" style="float:left;width:50%;"> --}}
-    <div id="column2" class="mx-auto my-auto"
-      style="float:left;width:100%;border-left:1px solid #dee2e6;border-right:1px solid #dee2e6;">
-      <div class="page-header">
-        帳戶設定
+<div class="col-6 d2">
+  <div class="row row-cols-1 row-cols-md-1">
+    {{!-- logo --}}
+    <div class="col">
+      <div class="card pagetitle_card">
+        <div class="card-body">
+          <p class="pagetitle_title">
+            帳戶設定
+          </p>
+        </div>
       </div>
-      <div class="d-flex justify-content-start align-content-start flex-wrap admin-user-container"
-        style="padding-left: 26.5px">
-        <div class=' text-center login-container'>
+    </div>
+
+    {{!-- 設定列 --}}
+    <div class="card admintweets_card">
+      <div class="col">
+
+        <div class=' text-center login-container mt-3 ms-4'>
           <form action="/users/{{ user.id }}/setting?_method=PUT" method="POST" style='width: 100%;'>
             <div class="form-group">
               <input type="text" name="account" class="form-control font-weight-bold" placeholder="帳號"
@@ -42,11 +48,14 @@
                 required>
             </div>
             <div class="mb-4 text-center">
-              <button class="btn btn-block mt-4" style="border-radius: 50px; background-color:#FF6600; color: white; width:356px; 
-              height: 46px;padding: 8px 24px;" type="submit">儲存</button>
+              <button class="btn btn-block mt-4 tweet_btn" type="submit">儲存</button>
             </div>
           </form>
         </div>
+
       </div>
     </div>
+
+
   </div>
+</div>

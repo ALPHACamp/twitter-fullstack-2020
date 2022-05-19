@@ -1,5 +1,7 @@
-<div class="row align-items-start">
+
   {{> left}}
+
+<div class="col-6 d2">
   <div class="col-md-6">
 {{currentUser.name}}
 <p>{{currentUser.Tweets.length}}推文</p>
@@ -33,5 +35,9 @@
   <hr />
 {{/each}}
   </div>
-  {{> right topUsers=topUsers}}
+
 </div>
+
+
+
+  {{> right topUsers=topUsers}}

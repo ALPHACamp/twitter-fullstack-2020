@@ -1,0 +1,348 @@
+.container {
+  box-sizing: border-box;
+  position: relative;
+  width: 1400px;
+  height: 1200px;
+  background: #ffffff;
+}
+
+.d1 {
+  position: absolute;
+  width: 178px;
+  height: 1200px;
+  left: 130px;
+  top: 0px;
+  background: #ffffff;
+}
+
+.d2 {
+  position: absolute;
+  width: 641px;
+  left: 332px;
+  top: 1px;
+}
+
+.d3 {
+  outline: solid 1px #e6ecf0;
+  position: absolute;
+  width: 273px;
+  left: 997px;
+  top: 16px;
+  background: #fafafb;
+  border-radius: 16px;
+}
+
+/* left */
+.left_card {
+  border-style: hidden;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  left: 8px;
+  top: 8px;
+}
+
+.left_title {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left: 5px;
+  top: 5px;
+}
+
+.left_navcard {
+  border-style: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 8px;
+
+  position: absolute;
+  width: 178px;
+  height: 244px;
+  left: 0px;
+  top: 66px;
+}
+
+.left_nav_card {
+  border-style: hidden;
+  width: 178px;
+  height: 58px;
+  flex: none;
+  flex-grow: 0;
+}
+
+.left_cardbody {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 16px;
+
+  position: absolute;
+  width: 76px;
+  height: 26px;
+  left: 16px;
+  top: 16px;
+}
+
+.left_navimg {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.left_navlogo {
+  position: absolute;
+  left: 3.75%;
+  right: 3.74%;
+  top: 7.4%;
+  bottom: 8.22%;
+}
+
+.left_navtitle {
+  margin-left: 40px;
+  margin-top: -20px;
+  width: 90px;
+  height: 26px;
+  font-family: "Noto Sans TC";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
+  color: #44444f;
+  flex: none;
+  flex-grow: 0;
+
+}
+
+.left_cardbody1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 16px;
+  position: absolute;
+  width: 120px;
+  height: 26px;
+  left: 16px;
+  top: 16px;
+
+}
+
+.left_cardbody2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  width: 178px;
+  height: 48px;
+  flex: none;
+  flex-grow: 0;
+  margin-top: 5px;
+}
+
+.push-buttonbody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  width: 178px;
+  height: 46px;
+  flex: none;
+  flex-grow: 0;
+}
+
+.push-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
+  width: 178px;
+  height: 46px;
+  background: #ff6600;
+  border-radius: 50px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  font-family: "Noto Sans TC";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+}
+
+.left_cardbody3 {
+  position: absolute;
+  width: 178px;
+  height: 58px;
+  left: 0px;
+  top: 1142px;
+}
+
+.logout-buttonbody {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 16px;
+
+  position: absolute;
+  width: 76px;
+  height: 26px;
+  left: 16px;
+  top: 16px;
+}
+
+/* rigth */
+.popular_card {
+  height: 82px;
+  width: 270px;
+  right: 10px;
+  border-style: hidden;
+  border-radius: 16px;
+}
+
+.Rectangle {
+  position: absolute;
+  height: 1px;
+  left: 0px;
+  right: 0px;
+  top: 74px;
+  background: #e6ecf0;
+}
+
+.popular_title {
+  position: absolute;
+  width: 72px;
+  height: 26px;
+  left: 24px;
+  top: 24px;
+  font-family: "Noto Sans TC";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.popular_imgbody {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  left: 16px;
+  margin-top: 10px;
+}
+
+.popular_img {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.popular_cardtitle {
+  position: absolute;
+  width: 84px;
+  height: 47px;
+  left: 74px;
+  top: 17px;
+}
+
+.popular_cardname {
+  position: absolute;
+  width: 73px;
+  height: 26px;
+  font-family: "Noto Sans TC";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #171725;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.popular_cardaccount {
+  position: absolute;
+  width: 84px;
+  height: 22px;
+  top: 26px;
+  font-family: "Noto Sans TC";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: #92929d;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.follow_btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 0px;
+  position: absolute;
+  width: 96px;
+  height: 40px;
+  right: 16px;
+  top: calc(50% - 40px / 2);
+}
+
+.following_btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 96px;
+  height: 40px;
+  background: #ff6600;
+  border-radius: 50px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  align-self: stretch;
+  font-family: "Noto Sans TC";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.follower_btn {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 40px;
+  background: #ffffff;
+  border: 1px solid #ff6600;
+  border-radius: 50px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  font-family: "Noto Sans TC";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #ff6600;
+}
