@@ -215,7 +215,7 @@ const userController = {
             Tweet,
             { model: User, as: 'Followers', include:{model: User,as:'Followers'}},
           ],
-          order: [['createdAt', 'DESC']]
+          order: [[sequelize.col('Followers.Followship.createdAt'), 'DESC']]
         })
         ,catchTopUsers(req)
       ])
@@ -226,7 +226,6 @@ const userController = {
       user.Followers.forEach(e=>{
         e.isFollowed = e.Followers.some(f=>f.id===helpers.getUser(req).id)
       })
-      user.Followers=user.Followers.reverse()
       return res.render('followers', {
         data: user,
         topUsers,
@@ -246,7 +245,7 @@ const userController = {
             Tweet,
             { model: User, as: 'Followings',include:{model: User,as:'Followers'}},
           ],
-          order: [['createdAt', 'DESC']]
+          order: [[sequelize.col('Followings.Followship.createdAt'), 'DESC']]
         })
         ,catchTopUsers(req)
       ])
@@ -257,7 +256,6 @@ const userController = {
       user.Followings.forEach(e=>{
         e.isFollowed = e.Followers.some(f=>f.id===helpers.getUser(req).id)
       })
-      user.Followings=user.Followings.reverse()
       return res.render('followings', {
         data: user,
         topUsers,
