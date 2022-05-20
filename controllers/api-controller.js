@@ -16,7 +16,7 @@ const apiController = {
                 ]
             })
             if (currentUser.id !== user.id) {
-                return res.json({ status: 'error', messages: '無法編輯其他使用者資料' })
+                return res.json({ status: 'error', messages: '無法編輯其他使用者資料！' })
             }
             res.json(user.toJSON())
         } catch (err) {
@@ -42,10 +42,10 @@ const apiController = {
             }
             const user = await User.findByPk(UserId)
 
-            if (user.id !== Number(logInUserId)) return res.json({ status: 'error', message: '不可編輯其他使用者資料!' })
-            if (!name) return res.json({ status: 'error', message: '名稱不可為空白!' })
-            if (name.length > 50) return res.json({ status: 'error', message: '名稱內容不可超過50字!' })
-            if (introduction.length > 160) return res.json({ status: 'error', message: '自我介紹內容不可超過160字!' })
+            if (user.id !== Number(logInUserId)) return res.json({ status: 'error', message: '不可編輯其他使用者資料！' })
+            if (!name) return res.json({ status: 'error', message: '名稱不可空白！' })
+            if (name.length > 50) return res.json({ status: 'error', message: '字數超出上限！' })
+            if (introduction.length > 160) return res.json({ status: 'error', message: '字數超出上限！' })
 
             const data = await user.update({
                 name,
