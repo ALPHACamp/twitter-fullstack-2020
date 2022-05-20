@@ -4,74 +4,232 @@
 
 
 <div class="col-6 d2">
-  <div class="col-md-6">
-    <div>
-      {{!-- 查看單篇推文回覆列表 --}}
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a href="/tweets"><span>←推文</span></a>
-
-      </nav>
-    </div>
-
-    <div>
-      <blockquote class="blockquote mb-0">
-        <img src="{{ tweet.User.avatar }}" alt="user-picture" class="rounded-circle" style="width: 64px; height:64px;">
-        <span><a href="/users/{{ tweet.User.id }}">{{ tweet.User.name }}</a></span>
-        <span class="blockquote-footer"> @{{ tweet.User.account }}</span>
-        <span>{{ localizedFormat tweet.createdAt }}</span>
-        <p>{{ tweet.description }}</p>
-        <div>
-          <span><a href="/tweets/{{tweet.id}}/replies"><img src="/images/回覆框.svg" alt="">{{ tweet.Replies }}</a></span>
-          {{!-- this.isLiked --}}
-          {{#if tweet.isLiked}}
-          <form action="/tweets/{{ tweet.id }}/unlike" method="POST">
-            <button class="tweets_btn" type="submit" style="background: transparent;border-width:0px; outline:none">
-              <img src="/images/紅心.svg" alt="">
-              {{#if tweet.Likes}}
-              {{ tweet.Likes}}
-              {{else}}
-              0
-              {{/if}}
-            </button>
-          </form>
-          {{else}}
-          <form action="/tweets/{{ tweet.id }}/like" method="POST">
-            <button class="tweets_btn" type="submit"style="background: transparent;border-width:0px; outline:none">
-              <img src="/images/案讚數.svg" alt="">
-              {{#if tweet.Likes}}
-              {{ tweet.Likes}}
-              {{else}}
-              0
-              {{/if}}
-            </button>
-          </form>
-          {{/if}}
+  <div class="row row-cols-1 row-cols-md-1">
+    {{!-- logo --}}
+    <div class="col">
+      <div class="card pagetitle_card" ; style="border-bottom:0px; border-bottom: 1px solid #d5d5dc">
+        <div class="card-body" style="width: 639px;">
+          <a href='/tweets'>
+            <i class='fas fa-arrow-left' style="color: black;"></i>
+          </a>
+          <div style="margin-left:20px;width: 639px;">
+            <p class="profilepagetitle_title" style=" top:12px ;">
+              推文
+            </P>
+          </div>
         </div>
-      </blockquote>
-      <hr />
-    </div>
-    {{#each replies}}
-    <blockquote class="blockquote mb-0">
-      <img src="{{ this.User.avatar }}" alt="user-picture" class="rounded-circle" style="width: 64px; height:64px;">
-      <span><a href="/users/{{ this.userId }}">{{ this.User.name }}</a></span>
-      <span class="blockquote-footer"> @{{ this.User.account }}</span>
-      <span>{{ relativeTimeFromNow this.createdAt }}</span>
-      <p>{{ this.comment }}</p>
-      <div>
-        {{!-- 延伸挑戰 --}}
-        {{!-- <span><a href="/tweets/{{this.id}}/replies">回覆</a></span> --}}
-        <span><img src="/images/回覆框.svg" alt="">0</span>
-        {{!-- 延伸挑戰 --}}
-        {{!-- <span><a href="/tweets/{{this.id}}/like">喜歡</a></span> --}}
-        <span><img src="/images/案讚數.svg" alt="">0</span>
       </div>
-    </blockquote>
-    <hr />
-    {{/each}}
+    </div>
+    {{!-- 單一推文 --}}
+    <div class="col" style="margin-top:51.5px ;border-radius: 0%;  border-left: 1px solid #d5d5dc;
+      border-right: 1px solid #d5d5dc;width: 641px;">
+      <div class="modal-body">
+        <div class="media">
+          <div class="popular_imgbody" style="margin-left: -15px; ">
+            <a href="/users/{{ tweet.User.id }}">
+              <img src="{{ tweet.User.avatar }}" class="popular_img" alt="{{ tweet.User.name }}">
+            </a>
+          </div>
+          <div class="card-body tweet_cardbody" style="margin-left:-27px;height: 335px;">
+            <div class="popular_cardtitle" style="width:300px; margin-left:-12px;margin-top:7px">
+              <a href="/users/{{ tweet.User.id }}" style='text-decoration: none;'>
+                <p class="popular_cardname">{{tweet.User.name}}</p>
+              </a>
+              <p class="popular_cardaccount" style="margin-top:-7px ;">@{{tweet.User.account}}</p>
+            </div>
+
+            <a style="text-decoration: none; color: #171725; ">
+              <p style="width:620px;
+            margin-top:70px;margin-left:-12px;">
+                {{tweet.description}}
+              </p>
+            </a>
+
+            <p style=" margin-top:270px;margin-left:-630px;width:300px;">
+              {{localizedFormat this.createdAt}}
+            </p>
+
+            <div class="d-flex d-inline" style=" width:640px;margin-top:300px;margin-left:-289px;border-top: 1px solid #d5d5dc;border-bottom: 1px solid #d5d5dc;
+      width: 641px;">
+              <P style="width:100px; margin-top:10px; font-weight: 700;font-size: 19px;line-height: 23px;">{{
+                tweet.Replies }} 回覆</P>
+              <P style="width:100px; margin-top:10px; font-weight: 700;font-size: 19px;line-height: 23px;">{{
+                tweet.Likes }} 喜歡次數</P>
+            </div>
+          </div>
+          <div class="d-flex d-inline" style="margin-top:20px">
+            <P style="width:100px; margin-top:20px;">
+              <a href="/tweets/{{this.id}}/replies" style='text-decoration: none;' data-bs-toggle="modal"
+                data-bs-target="#reply-tweet-{{this.id}}">
+                <img style="width:30px;" src="/images/回覆框.svg" alt="">
+              </a>
+            </P>
+            <!-- Modal(參數有誤) -->
+            <div class="modal fade" id="reply-tweet-{{this.id}}" tabindex="-1" aria-labelledby="indexTweetModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content" style="border-radius: 20px;width: 700px;height: 500px;top: 56px;">
+                  <div class="modal-header" style="left: 0%;right: 0%;top: 5.33%; bottom: 81%;">
+                    <button type="button" class="close ml-0 pl-0" data-bs-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="col">
+                    <div class="modal-body">
+                      <div class="media d-flex">
+                        <div class="popular_imgbody">
+                          <a href="/users/{{ tweet.User.id }}">
+                            <img src="{{ tweet.User.avatar }}" class="popular_img" alt="...">
+                          </a>
+                        </div>
+                        <div class="card-body tweet_cardbody">
+                          <div class="tweet_title">
+                            <a href="/users/{{ tweet.User.id }}" style="text-decoration: none; ">
+                              <p class="tweet_name">{{ tweet.User.name }}</p>
+                            </a>
+                            <p class="tweet_acount">
+                              @{{ tweet.User.account }}
+                            </p>
+                            <p class="tweet_acount">
+                              • {{relativeTimeFromNow this.createdAt}}
+                            </p>
+                          </div>
+                          <div class="modaltweet_description">
+                            <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color: #171725;">
+                              <p style="maxlength=" 140";">
+                                {{ tweet.description }}
+                              </p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tweet_icon" style="  margin-top: 280px; width:300px; ">
+                    <p class="modal_text">回覆給</p>
+                    <a href="/users/{{ tweet.User.id }}">
+                      <p class="tweet_acount" style="color: #FC5A5A;margin-left: -148px ">
+                        @{{ tweet.User.account }}
+                      </p>
+                    </a>
+                  </div>
+                  <div class="modal_line"></div>
+                  <div class="col">
+                    <div class="modal-body">
+                      <div class="media d-flex tweet_cardbody">
+                        <div class="popular_imgbody">
+                          <a href="/users/{{logInUser.id}}/tweets">
+                            <img src="{{ logInUser.avatar }}" class="popular_img" alt="...">
+                          </a>
+                        </div>
+                        <div class="media-body" style="margin-left: 30px;">
+                          <form action="/tweets/{{ id }}/replies" id="tweets" method="post">
+                            <div class="d-flex d-inline">
+                              <textarea name="comment" id="tweet-content" rows="5" class="form-control"
+                                placeholder="推你的回覆" maxlength="140"
+                                style=" width: 500px;height: 90px;top: 56px; border:0px; resize : none; outline : 0; overflow:hidden;"></textarea>
+                            </div>
+                            <div class="d-flex d-inline">
+                              <div id='add-tweet-info' class='tweet-error-message'>
+                                內容不可空白
+                              </div>
+                              <button class=" btn tweet_btn" type="submit"
+                                style='width:70px; background-color: #FF6600;border-radius:100px; color:white; font-weight:bold; font-size:18px;position: absolute; right: 15px; bottom:15px;'>回覆</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{!-- 喜歡 this.isLiked --}}
+            {{#if tweet.isLiked}}
+            <form action="/tweets/{{ tweet.id }}/unlike" method="POST" style="margin-top:20px;">
+              <button class="tweets_btn" type="submit" style="background: transparent;border-width:0px; outline:none">
+                <img style="width:30px;" src="/images/紅心.svg" alt="">
+                {{#if tweet.Likes}}
+                {{ tweet.Likes}}
+                {{else}}
+                0
+                {{/if}}
+              </button>
+            </form>
+            {{else}}
+            <form action="/tweets/{{ tweet.id }}/like" method="POST" style="margin-top:20px;">
+              <button class="tweets_btn" type="submit" style="background: transparent;border-width:0px; outline:none">
+                <img style="width:30px;" src="/images/案讚數.svg" alt="">
+                {{#if tweet.Likes}}
+                {{ tweet.Likes}}
+                {{else}}
+                0
+                {{/if}}
+              </button>
+            </form>
+            {{/if}}
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+    {{!-- 回覆列 --}}
+
+      <div class="card tweets_card" style="margin-top: 300px;border-top: 1px solid #d5d5dc;">
+        {{#each replies}}
+        <div class="row row-cols-1 row-cols-md-1">
+          <div class="col">
+            <div class="tweet_card">
+              <div class="popular_imgbody">
+                <a href="/users/{{ this.userId }}">
+                  <img src="{{ this.User.avatar }}" class="popular_img" alt="...">
+                </a>
+              </div>
+              <div class="card-body tweet_cardbody">
+                <div class="tweet_title">
+                  <a href="/users/{{ this.userId }}" style="text-decoration: none; ">
+                    <p class="tweet_name">{{ this.User.name }}</p>
+                  </a>
+                  <p class="tweet_acount">
+                    @{{ this.User.account }}
+                  </p>
+                  <p class="tweet_acount">
+                    • {{ relativeTimeFromNow this.createdAt }}
+                  </p>
+                </div>
+                <div class="tweet_description">
+                  <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color: #171725;">
+                    <p style="maxlength=" 140";">
+                      {{ this.comment }}
+                    </p>
+                  </a>
+                </div>
+                <div class="tweet_icon">
+                  {{!-- 回覆 --}}
+                  <span class=" me-1">
+                    <a href="#" style='text-decoration: none;' data-bs-toggle="modal"
+                      data-bs-target="#reply-tweet-{{this.id}}">
+                      <img src="/images/回覆框.svg" alt="">
+                    </a>
+
+                    <button type="button" style="background: transparent; border-width:0px; outline:none">
+                      <img src="/images/案讚數.svg" alt="">
+                    </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+
+      </div>
+
+
   </div>
 </div>
 
 
 
 {{> right topUsers=topUsers}}
-</div>
