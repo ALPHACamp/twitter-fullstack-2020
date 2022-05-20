@@ -12,6 +12,19 @@
   <script src="https://kit.fontawesome.com/775d5ad35d.js" crossorigin="anonymous"></script>
   <link rel='stylesheet' href='/stylesheets/style.css'>
 
+  <script>
+    function cal_name_words() {
+      let length = document.getElementById("edit-name").value.length;
+      document.getElementById("edit-name-value").innerHTML = length;
+    }
+  </script>
+  <script>
+    function cal_introduction_words() {
+      let length = document.getElementById("edit-introduction").value.length;
+      document.getElementById("edit-introduction-value").innerHTML = length;
+    }
+  </script>
+</head>
 <body>
     {{{ body }}}
 </body>

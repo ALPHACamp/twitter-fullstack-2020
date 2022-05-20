@@ -354,6 +354,7 @@ a:hover {
   border-radius: 50px;
   background: #FF6600;
   border: #E6ECF0;
+  color: white;
 }
 
 .cover-upload-icon {
@@ -382,12 +383,12 @@ a:hover {
 
 .edit-name-anchor {
   position: relative;
-  top: -160px;
+  top: -80px;
 }
 
 .edit-intro-anchor {
   position: relative;
-  top: -180px;
+  top: -100px;
 }
 
 .input-form {
