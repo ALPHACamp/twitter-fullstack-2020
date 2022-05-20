@@ -30,14 +30,14 @@ userEditBtn.addEventListener('click', async e => {
     // const userInfo = res.data.user
     const userInfo = res.data // 爲了符合 test 檔案
 
-    userModalName.value = userInfo.name
-    userModalNameCounts.innerText = userInfo.name.length
+    userModalName.value = userInfo.name || ''
+    userModalNameCounts.innerText = userInfo.name.length || ''
 
-    userModalIntroduction.innerText = userInfo.introduction
-    userModalIntroductionCounts.innerText = userInfo.introduction.length
+    userModalIntroduction.innerText = userInfo.introduction || ''
+    userModalIntroductionCounts.innerText = userInfo.introduction?.length || ''
 
-    userModalCover.src = userInfo.cover
-    userModalAvatar.src = userInfo.avatar
+    userModalCover.src = userInfo.cover || ''
+    userModalAvatar.src = userInfo.avatar || ''
   } catch (err) {
     console.log(err)
   }
@@ -110,9 +110,10 @@ userEditModal.addEventListener('submit', async e => {
   userModalCoverInput.value = null
   userModalAvatarInput.value = null
 
-  const userInfo = res.data.user
-  userIntroduction.innerText = userInfo.introduction
-  userCover.src = userInfo.cover
-  userNameAll.forEach(username => { username.innerText = userInfo.name })
-  if (userInfo.avatar)userAvatarAll.forEach(useravatar => { useravatar.src = userInfo.avatar })
+  // const userInfo = res.data.user
+  // userIntroduction.innerText = userInfo.introduction
+  // userCover.src = userInfo.cover
+  // userNameAll.forEach(username => { username.innerText = userInfo.name })
+  // if (userInfo.avatar)userAvatarAll.forEach(useravatar => { useravatar.src = userInfo.avatar })
+  window.location.reload()
 })
