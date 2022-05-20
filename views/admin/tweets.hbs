@@ -18,7 +18,7 @@
           @{{this.User.account}}。{{relativeTimeFromNow this.createdAt}}</h7>
         <p style="position: absolute; top: 50px; left: 81px; width:400px;">{{this.description}}</p>
         <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST"
-          style="display: inline; position: absolute; top: 21.5px; right: 5px" class="col-lg-1">
+          style="display: inline; position: absolute; top: 21.5px; max-width:937px; right: 5px;">
           <button type="submit" class="btn-close" aria-label="Close" onclick="return confirm(`確定要刪除此留言嗎？`)"></button>
         </form>
       </div>
