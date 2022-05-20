@@ -9,16 +9,16 @@
         <h5 style="margin-left: 21px; margin-top: 24px;">推文清單</h5>
       </div>
       {{#each result}}
-      <div style="position: relative; max-width: 937px; height: 118px; border-bottom: 1px solid #E6ECF0;">
+      <div style="position: relative; max-width: 937px; height: 118px; border-bottom: 1px solid #E6ECF0;"class="col-lg-12">
         <div style="position: absolute; top: 16px; left: 23px; width: 50px; height: 50px;">
           <img src="{{this.User.avatar}}" alt="login" style="height: 50px; width: 50px; border-radius:50%;">
         </div>
         <h7 style="position: absolute; top: 16px; left: 81px">{{this.User.name}}</h7>
-        <h7 style="position: absolute; top: 16px; left: 135px; font-size: 14px; color: gray;">
+        <h7 style="position: absolute; top: 16px; left: 135px; font-size: 14px; color: gray; width:350px;">
           @{{this.User.account}}。{{relativeTimeFromNow this.createdAt}}</h7>
-        <p style="position: absolute; top: 50px; left: 81px">{{this.description}}</p>
+        <p style="position: absolute; top: 50px; left: 81px; width:400px;">{{this.description}}</p>
         <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST"
-          style="display: inline; position: absolute; top: 21.5px; right: 5px">
+          style="display: inline; position: absolute; top: 21.5px; right: 5px" class="col-lg-1">
           <button type="submit" class="btn-close" aria-label="Close" onclick="return confirm(`確定要刪除此留言嗎？`)"></button>
         </form>
       </div>
