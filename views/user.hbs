@@ -245,18 +245,18 @@
             </label>
           </div>
           {{!-- user name --}}
-          <div class="form-row mt-5 p-2 edit-name-anchor">
-            <label class="form-label fw-bold" for="name">名稱</label>
-            <input class="form-control" type="text" name="name" id="name" placeholder="Enter name" value="{{user.name}}"
+          <div class="mb-4 d-flex flex-column edit-name-anchor mx-3">
+            <label class="input-form-label fw-bold" for="edit-name">名稱</label>
+            <input class="input-form" type="text" name="name" id="edit-name" placeholder="Enter name" value="{{user.name}}" onKeyUp="cal_name_words()"
               required>
-            <p class="text-end text-muted now1 mb-0" style="font-size: 0.98em;">{{user.name.length}}/50</p>
+            <p class="text-end" style="font-size: 0.78em;"><span class="text-muted now1 mb-0" id="edit-name-value">{{user.name.length}}</span>/50</p>
           </div>
           {{!-- user intro --}}
-          <div class="form-row mb-3 p-2 edit-intro-anchor">
-            <label class="form-label fw-bold" for="introduction">自我介紹</label>
-            <textarea class="form-control" id="introduction" name="introduction" rows="4"
+          <div class="mb-4 d-flex flex-column edit-intro-anchor mx-3">
+            <label class="input-form-label fw-bold" for="edit-introduction">自我介紹</label>
+            <textarea class="input-form" id="edit-introduction" name="introduction" rows="4" onKeyUp="cal_introduction_words()"
               required>{{user.introduction}}</textarea>
-            <p class="text-end text-muted now1" style="font-size: 0.98em;">{{user.introduction.length}}/160</p>
+            <p class="text-end" style="font-size: 0.78em;" ><span class="text-muted now1" id="edit-introduction-value">{{user.introduction.length}}</span>/160</p>
           </div>
         </div>
       </form>
