@@ -46,6 +46,7 @@ const replyController = {
     if (comment.length > 140) throw new Error('送出回覆超過限制字數140個字')
     const reply = await Reply.create({ UserId, TweetId, comment })
     if (!reply) throw new Error('回覆不成功')
+    req.flash('success_messages', '成功送出回覆')
     res.redirect('back')
   }
 }

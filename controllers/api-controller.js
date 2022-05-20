@@ -24,7 +24,8 @@ const apiController = {
       const userId = Number(helpers.getUser(req).id)
       const queryUserId = Number(req.params.id) // from axios
       const { name, introduction, acCover } = req.body // from axios
-      const { cover, avatar } = req.files
+      const cover = req.files?.cover
+      const avatar = req.files?.avatar
       if (userId !== queryUserId) return res.status(200).json({ status: 'error', message: '您無權限編輯使用者 !' })
 
       const [queryUser, coverFilePath, avatarFilePath] = await Promise.all([User.findByPk(queryUserId), cover ? helpers.imgurFileHandler(cover[0]) : null, avatar ? helpers.imgurFileHandler(avatar[0]) : null])
@@ -34,7 +35,7 @@ const apiController = {
 
       const user = updatedQueryUser.toJSON()
       delete user.password
-
+      req.flash('success_messages', '成功編輯個人資料')
       return res.status(200).json({ status: 'success', user })
     } catch (err) {
       next(err)

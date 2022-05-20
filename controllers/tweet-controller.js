@@ -43,6 +43,7 @@ const tweetController = {
         description: postDescription
       })
       if (!tweet) throw new Error('推文不成功')
+      req.flash('success_messages', '成功送出推文')
       res.redirect('/tweets')
     } catch (err) {
       next(err)
