@@ -26,7 +26,6 @@ const adminController = {
       }))
       return res.render('admin/tweets', { status: 200, tweet, page: 'tweets' })
     } catch (e) {
-      // console.log('e')
       res.status(302)
       return res.redirect('back')
     }
@@ -74,7 +73,6 @@ const adminController = {
       const user = newData.sort((a, b) => b.tweetCount - a.tweetCount)
       return res.render('admin/users', { status: 200, user, page: 'users' })
     } catch (e) {
-      // console.log('e')
       res.status(302)
       return res.redirect('back')
     }

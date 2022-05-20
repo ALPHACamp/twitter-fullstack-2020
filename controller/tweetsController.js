@@ -3,7 +3,6 @@ const helpers = require('../_helpers')
 
 const tweetsController = {
   getTweets: async (req, res, next) => {
-    // like 與 replies 數量
     try {
       const loginUserId = helpers.getUser(req) && helpers.getUser(req).id
       const tweetList = await Tweet.findAll({
@@ -50,7 +49,6 @@ const tweetsController = {
         })
         .sort((a, b) => b.Followers - a.Followers)
         .slice(0, 10)
-      // console.log(tweets)
       return res.render('index', { tweets, topUsers, page: 'tweets' })
     } catch (err) {
       next(err)

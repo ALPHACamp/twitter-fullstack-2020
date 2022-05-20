@@ -41,18 +41,15 @@ passport.use(
 passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
-// console.log('passport_user.toJSON()', user) // debug用
 passport.deserializeUser((id, cb) => {
   return User.findByPk(id, {
     include: [
-      // 拿到user.Likes的陣列[UserId:1,TweetId:1] follower & following 的 id 陣列
       { model: Like, attributes: ['UserId', 'TweetId'] },
       { model: User, as: 'Followers', attributes: ['id'] },
       { model: User, as: 'Followings', attributes: ['id'] }
     ]
   })
     .then(user => {
-      // console.log('passport_user.toJSON()', user.toJSON())
       return cb(null, user.toJSON())
     })
     .catch(err => cb(err))

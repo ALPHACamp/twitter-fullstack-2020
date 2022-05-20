@@ -35,13 +35,11 @@ router.post('/tweets/:tweetId/replies', authenticated, tweetController.addReply)
 router.post('/tweets', authenticated, tweetController.addTweet)
 
 // 推回文頁面
-router.get('/tweets/create', authenticated, tweetController.createFakePage) // 假頁面
-router.get('/tweets/:tweetId/repliesFake', authenticated, tweetController.replyFakePage) // 假頁面
-router.get('/tweets/:tweetId/replies', authenticated, tweetController.getTweet) // 單一推文回文列表
-router.get('/tweets', authenticated, tweetController.getTweets) // 首頁
+router.get('/tweets/:tweetId/replies', authenticated, tweetController.getTweet)
+router.get('/tweets', authenticated, tweetController.getTweets)
 
 // follow 功能
-router.post('/followships', authenticated, userController.addFollowing) // 測試檔路由
+router.post('/followships', authenticated, userController.addFollowing)
 router.post('/followships/:id', authenticated, userController.addFollowing)
 router.delete('/followships/:id', authenticated, userController.removeFollowing)
 
@@ -51,7 +49,6 @@ router.get('/users/:id/setting', authenticated, userController.editUserPage)
 router.put('/users/:id/setting', authenticated, userController.editUser)
 
 // 編輯 user 資料
-router.get('/users/:id/edit', authenticated, userController.editUserFakePage)
 router.post('/users/:id/edit', authenticated, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.editUser)
 
 // 查看 user 相關頁面

@@ -21,7 +21,7 @@
         <span>{{ localizedFormat tweet.createdAt }}</span>
         <p>{{ tweet.description }}</p>
         <div>
-          <span><a href="/tweets/{{tweet.id}}/repliesFake"><img src="/images/回覆框.svg" alt="">{{ tweet.Replies }}</a></span>
+          <span><a href="/tweets/{{tweet.id}}/replies"><img src="/images/回覆框.svg" alt="">{{ tweet.Replies }}</a></span>
           {{!-- this.isLiked --}}
           {{#if tweet.isLiked}}
           <form action="/tweets/{{ tweet.id }}/unlike" method="POST">
@@ -60,10 +60,10 @@
       <div>
         {{!-- 延伸挑戰 --}}
         {{!-- <span><a href="/tweets/{{this.id}}/replies">回覆</a></span> --}}
-        <span><img src="/images/回覆框.svg" alt=""></span>
+        <span><img src="/images/回覆框.svg" alt="">0</span>
         {{!-- 延伸挑戰 --}}
         {{!-- <span><a href="/tweets/{{this.id}}/like">喜歡</a></span> --}}
-        <span><img src="/images/案讚數.svg" alt=""></span>
+        <span><img src="/images/案讚數.svg" alt="">0</span>
       </div>
     </blockquote>
     <hr />

@@ -11,7 +11,6 @@ const userController = {
       return res.render('signup', { status: 200 })
     } catch (err) {
       res.status(302)
-      // console.log('err')
       return res.redirect('back')
     }
   },
@@ -71,7 +70,6 @@ const userController = {
       res.redirect('/signin')
     } catch (err) {
       res.status(302)
-      // console.log('err')
       return res.redirect('back')
     }
   },
@@ -115,7 +113,6 @@ const userController = {
         helpers.getUser(req) &&
         helpers.getUser(req).Followings &&
         helpers.getUser(req).Followings.some(f => f.id === Number(userId))
-      // isLiked = tweet.LikedBy.some(item => item.id === loginUserId)
       const userTweets = paramsUser.toJSON().Tweets.map(tweet => {
         return {
           ...tweet,
@@ -186,7 +183,6 @@ const userController = {
         helpers.getUser(req) &&
         helpers.getUser(req).Followings &&
         helpers.getUser(req).Followings.some(f => f.id === Number(userId))
-      // console.log('user.toJSON().Likes[0].Tweet', user.toJSON().Likes[0].Tweet)
 
       // 右側topUsers, sort by跟隨者follower數量 & isFollowed 按鈕
       const users = await User.findAll({
@@ -548,7 +544,6 @@ const userController = {
 
       if (req._parsedUrl.pathname.includes('setting')) {
         const { account, name, email, password, checkPassword } = req.body
-        // console.log(`account: ${account}, email: ${email}`)
 
         if (!account || !name || !email || !password || !checkPassword) {
           errors.push({ message: '以下欄位都需要填入！' })
@@ -631,18 +626,15 @@ const userController = {
           typeof files.cover === 'undefined' &&
           typeof files.avatar !== 'undefined'
         ) {
-          // 如果只有更新 avatar
           imgurCover = 0
           imgurAvatar = await imgur.uploadFile(files.avatar[0].path)
         } else if (
           typeof files.cover !== 'undefined' &&
           typeof files.avatar === 'undefined'
         ) {
-          // 如果只有更新 cover
           imgurAvatar = 0
           imgurCover = await imgur.uploadFile(files.cover[0].path)
         } else {
-          // 如果都有更新
           imgurCover = await imgur.uploadFile(files.cover[0].path)
           imgurAvatar = await imgur.uploadFile(files.avatar[0].path)
         }

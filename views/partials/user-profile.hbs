@@ -58,27 +58,30 @@ height: 200px; " src="{{ user.cover }}" alt="{{ user.name }}">
                       style="border-radius: 50px; background-color:#FF6600; color: white; width:100px; height: 46px;padding: 8px 24px;"
                       type="submit">儲存</button>
                     <div class="form-group">
-                      {{!-- 原始 cover 背景 --}}
-                      <img src=" {{ user.cover }}" alt="">
+                    {{!-- TODO:是否要做上傳的圖片預覽? --}}
 
                       {{!-- cover 背景上傳 --}}
                       <div class="form-row mb-3">
-                        <label class="form-label" for="cover">背景</label>
-                        <input class="form-control-file" type="file" id="cover" name="cover">
+                        <label class="form-label" for="cover">
+                          <img src=" {{ user.cover }}" alt="" id="coverImg">
+                        </label>
+                        <input class="form-control-file" type="file" id="cover" name="cover" type="hidden" style="display: none;">
                       </div>
-                      {{!-- TODO:要做上傳的圖片預覽? --}}
-
-                      {{!-- 原始 avatar 頭像 --}}
-                      <img src=" {{ user.avatar }}" alt="user-picture" class="rounded-circle"
-                        style="width: 64px; height:64px;">
+                      {{!-- 刪除背景 --}}
+                      {{!-- <div class="form-row mb-3">
+                        <label class="form-label" for="cover">刪除背景</label>
+                        <input class="form-control-file" type="file" id="cover" name="cover" type="hidden" style="display: none;">
+                      </div> --}}
 
                       {{!-- avatar 頭像 --}}
                       <div class="form-row mb-3">
-                        <label class="form-label" for="avatar">頭像</label>
-                        <input class="form-control-file" type="file" id="avatar" name="avatar">
+                        <label class="form-label" for="avatar">
+                          <img src=" {{ user.avatar }}" alt="user-picture" class="rounded-circle" id="avatarImg"
+                        style="width: 64px; height:64px;">
+                        </label>
+                        <input class="form-control-file" type="file" id="avatar" name="avatar" type="hidden" style="display: none;">
                       </div>
                     </div>
-                    {{!-- TODO:是否要做上傳的圖片預覽? --}}
 
                     <div class="form-row mb-3">
                       <label class="form-label" for="name">名稱</label>
@@ -144,3 +147,17 @@ height: 200px; " src="{{ user.cover }}" alt="{{ user.name }}">
     </div>
   </div>
 </div>
+
+<script>cover.onchange = evt => {
+  const [file] = cover.files
+  if (file) {
+    coverImg.src = URL.createObjectURL(file)
+  }
+}</script>
+
+<script>avatar.onchange = evt => {
+  const [file] = avatar.files
+  if (file) {
+    avatarImg.src = URL.createObjectURL(file)
+  }
+}</script>
