@@ -18,7 +18,7 @@
         <img src="{{ tweet.User.avatar }}" alt="user-picture" class="rounded-circle" style="width: 64px; height:64px;">
         <span><a href="/users/{{ tweet.User.id }}">{{ tweet.User.name }}</a></span>
         <span class="blockquote-footer"> @{{ tweet.User.account }}</span>
-        <span>{{ relativeTimeFromNow tweet.createdAt }}</span>
+        <span>{{ localizedFormat tweet.createdAt }}</span>
         <p>{{ tweet.description }}</p>
         <div>
           <span><a href="/tweets/{{tweet.id}}/repliesFake"><img src="/images/回覆框.svg" alt="">{{ tweet.Replies }}</a></span>
@@ -35,7 +35,6 @@
             </button>
           </form>
           {{else}}
-
           <form action="/tweets/{{ tweet.id }}/like" method="POST">
             <button class="tweets_btn" type="submit"style="background: transparent;border-width:0px; outline:none">
               <img src="/images/案讚數.svg" alt="">
@@ -46,8 +45,6 @@
               {{/if}}
             </button>
           </form>
-
-
           {{/if}}
         </div>
       </blockquote>

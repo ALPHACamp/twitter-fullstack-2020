@@ -211,7 +211,6 @@ const userController = {
         .sort((a, b) => b.Followers - a.Followers)
         .slice(0, 10)
 
-      
       return res.render('likes', {
         user: user.toJSON(),
         tweets: user.toJSON().Likes,
