@@ -194,18 +194,27 @@ a:hover {
   background: #FF6600;
   border: #FF6600;
 }
+.logout-anchor {
+  position: fixed;
+  bottom: 5px;
+  left: 9.5em;
+}
 
 /* right-sidebar  */
 .right-sidebar-anchor {
-  width: 18%;
+  width: 19%;
   position: fixed;
-  top: 10px;
+  top: 23px;
 }
-
+.following-header {
+  border-bottom: 1px solid #E6ECF0;
+}
 .right-sidebar-content {
   border-radius: 15px;
 }
-
+.right-bar-name {
+  width: 7em;
+}
 .right-user-name {
   font-size: 16px;
   margin: 0 0;
