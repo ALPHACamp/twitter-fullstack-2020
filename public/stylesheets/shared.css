@@ -44,3 +44,16 @@
   font-size: 30px;
   background-color: white;
 }
+
+
+.nav-link {
+  color: #000000;
+}
+
+.nav-link:active {
+  color: #ff6600;
+}
+
+.nav-link-active {
+  color: #ff6600;
+}

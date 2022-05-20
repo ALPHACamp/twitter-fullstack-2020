@@ -7,6 +7,7 @@
   border-bottom: 1px solid #e6ecf0;
   border-left: 1px solid #d5d5dc;
   border-right: 1px solid #d5d5dc;
+  border-radius: 0%;
 }
 
 .pagetitle_title {
@@ -29,6 +30,7 @@
   top: 50px;
   border-top: 1px solid #e6ecf0;
   border-bottom: 10px solid #e6ecf0;
+  border-radius: 0%;
 }
 
 .push_title {
@@ -95,6 +97,7 @@
   top: 181px;
   border-left: 1px solid #d5d5dc;
   border-right: 1px solid #d5d5dc;
+  border-radius: 0%;
 }
 
 .tweet_card {

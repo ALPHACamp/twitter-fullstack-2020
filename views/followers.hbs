@@ -1,44 +1,82 @@
+{{> left}}
+<div class="col-6 d2">
+  <div class="row row-cols-1 row-cols-md-1">
+    {{!-- logo --}}
+    <div class="col">
+      <div class="card pagetitle_card" ; style="border-bottom:0px;">
+        <div class="card-body" style="width: 639px;">
+          <a href='javascript:history.back()'>
+            <i class='fas fa-arrow-left' style="color: black;"></i>
+          </a>
+          <div style="margin-left:20px;width: 639px;">
+            <p class="profilepagetitle_title" style=" top:0px ;">
+              {{currentUser.name}}
+            <P style="font-weight: 500;font-size: 13px;line-height: 19px;margin-top:-10px">{{currentUser.Tweets.length}}
+              推文
+            </P>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  {{> left}}
+    <div class="col" style="margin-top:51.5px ;border-radius: 0%;  border-left: 1px solid #d5d5dc;
+      border-right: 1px solid #d5d5dc;width: 641px;">
+      {{> followship-tabs route='followers'}}
+    </div>
 
-  <div class="col-6 d2">
-  <div class="col-md-6">
-{{currentUser.name}}
-<p>{{currentUser.Tweets.length}}推文</p>
+    <div class="card tweets_card" style="margin-top:-80px;width: 641px">
+      {{#each followers }}
+      <div class="row row-cols-1 row-cols-md-1">
+        <div class="col">
+          <div class="tweet_card">
+            <div class="popular_imgbody">
+              <a href="/users/{{this.id}}">
+                <img src="{{ this.avatar }}" class="popular_img" alt="...">
+              </a>
+            </div>
+            <div class="card-body tweet_cardbody">
+              <div class="tweet_title" style="width: 300px; ">
+                <a href="/users/{{this.id}}" style="text-decoration: none; ">
+                  <p class="tweet_name">{{ this.name }}</p>
+                </a>
+              </div>
+              <div style=" margin-left:500px;">
+                {{#ifCond this.id ../logInUser.id }}
+                {{else}}
+                {{#if this.isFollowed}}
+                <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                  <button class="btn following_btn">正在跟隨</button>
+                </form>
+                {{else}}
+                <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
+                  <button type="submit" class="btn follower_btn" name="id" value="{{this.id}}">跟隨</button>
+                </form>
+                {{/if}}
+                {{/ifCond}}
+              </div>
 
 
-{{> followship-tabs route='followers'}}
 
-{{#each followers }}
-  <blockquote class="blockquote mb-0">
-    <span><a href="/users/{{this.id}}">{{ this.name }}</a></span>
-    <span class="blockquote-footer"> @{{ this.account }}</span>
-    <span>{{ relativeTimeFromNow this.createdAt }}</span>
-  {{#ifCond this.id ../logInUser.id }}
-  {{else}}
-    {{#if this.isFollowed}}
-      <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-        <button type="submit" class="btn btn-danger">取消追蹤</button>
-      </form>
-    {{else}}
-      <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
-        <button type="submit" class="btn btn-primary">追蹤</button>
-      </form>
-    {{/if}}
-  {{/ifCond}}
+              <div class="tweet_description">
+                <p style="maxlength=" 140";">
+                  {{ this.introduction }}
+                </p>
+              </div>
 
 
-    <p>{{ this.introduction }}</p>
-  </blockquote>
+            </div>
+          </div>
+        </div>
+
+      </div>
 
 
-  <hr />
-{{/each}}
+      {{/each}}
+
+    </div>
   </div>
-
-  </div>
-
+</div>
 
 
-  {{> right topUsers=topUsers}}
-
+{{> right topUsers=topUsers}}

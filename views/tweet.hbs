@@ -26,7 +26,7 @@
           {{#if tweet.isLiked}}
           <form action="/tweets/{{ tweet.id }}/unlike" method="POST">
             <button class="tweets_btn" type="submit" style="background: transparent;border-width:0px; outline:none">
-              <img src="/images/案讚數.svg" alt="">
+              <img src="/images/紅心.svg" alt="">
               {{#if tweet.Likes}}
               {{ tweet.Likes}}
               {{else}}

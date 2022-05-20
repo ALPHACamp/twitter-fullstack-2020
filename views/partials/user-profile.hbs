@@ -1,7 +1,6 @@
 {{!-- logo --}}
 <div class="col">
-  <div class="card pagetitle_card" style="  border-left: 1px solid #d5d5dc;
-  border-right: 1px solid #d5d5dc;">
+  <div class="card pagetitle_card">
     <div class="card-body">
       <a href='javascript:history.back()'>
         <i class='fas fa-arrow-left' style="color: black;"></i>
@@ -22,16 +21,16 @@
   <div class="col">
     <div class="row row-cols-1 row-cols-md-1">
 
-      <div class="card mb-2 mr-1" style="background-color:#fafafb;border-color: #fafafb;width: 641px;
-height: 378px;margin-left:10.5px; margin-top:-131px;">
+      <div class="card mb-2 mr-1" style="background-color:#fafafb;border-color: #fafafb;width: 639px; 
+height: 378px;margin-left:12px; margin-top:-131px;border-radius: 0%;">
 
-        <img class="card-img-top" style="width: 641px;
-height: 200px; margin-left:-11px" src="{{ user.cover }}" alt="{{ user.name }}">
+        <img class="card-img-top" style="width: 640px; border-radius: 0%;margin-left:-12.5px;
+height: 200px; " src="{{ user.cover }}" alt="{{ user.name }}">
 
         <img src="{{ user.avatar }}" class="border-avatar" style="border-radius: 50%; height: 100px; width: 100px;
         margin-top: 70px; margin-left:-255px" alt="{{ user.name }}">
 
-        <div class="profile_btn" style="margin-left:480px; margin-top:12px; outline: 1px solid tomato">
+        <div class="profile_btn" style="margin-left:480px; margin-top:12px; ;">
           {{!-- 是本人，顯示編輯個人資料按鈕 --}}
           {{#ifCond logInUser.id user.id}}
           {{!-- <form action="/users/{{user.id}}/edit" method="GET">

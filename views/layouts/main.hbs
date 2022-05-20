@@ -20,16 +20,17 @@
 </head>
 
 <body>
-  <main role='main'>
-    <div class="container">
-      <div class="row">
-        <div style="margin-right: 500px;">
-          {{> messages}}
-        </div>
-        {{{ body }}}
+
+  <div class="container">
+    <div class="row">
+      <div style="margin-right: 500px;">
+        {{> messages}}
       </div>
+      {{{ body }}}
     </div>
-  </main>
+
+  </div>
+
 
   <script src='https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js'
     integrity='sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj'
@@ -50,7 +51,7 @@
       }, 2000);
     })
   </script>
-<script src="/javascripts/index.js"></script>
+  <script src="/javascripts/index.js"></script>
 </body>
 
 </html>

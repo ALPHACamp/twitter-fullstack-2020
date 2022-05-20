@@ -26,7 +26,7 @@
             <textarea class="push_content" placeholder="有什麼新鮮事?" name="description" id="description" style=" maxlength="
               140""></textarea>
             <div>
-              <button class="btn tweet_btn" type="submit">推文</button>
+              <button class="btn tweet_btn" type="submit" style="margin-top:-1px ; margin-left:550px">推文</button>
             </div>
           </form>
         </div>
@@ -163,7 +163,7 @@
                 {{#if this.isLiked}}
                 <form action="/tweets/{{ this.id }}/unlike" method="POST">
                   <button type="submit" style="background: transparent; border-width:0px; outline:none">
-                    <img src="/images/案讚數.svg" alt="">
+                    <img src="/images/紅心.svg" alt="">
                     {{#if this.Likes}}
                     {{ this.Likes}}
                     {{else}}

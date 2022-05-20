@@ -3,12 +3,13 @@
 <div class="col-6 d2">
   <div class="row row-cols-1 row-cols-md-1">
     {{> user-profile user=user}}
-    <div class="col" style="margin-top:420px ;">
+    <div class="col" style="margin-top:420px ;border-radius: 0%;  border-left: 1px solid #d5d5dc;
+          border-right: 1px solid #d5d5dc;">
       {{> user-tabs route='likes'}}
     </div>
 
 
-    <div class="card tweets_card" style="margin-top:301px;border-top: 1px solid #d5d5dc;">
+    <div class="card tweets_card" style="margin-top:301px;">
       {{#each user.Likes}}
       <div class="row row-cols-1 row-cols-md-1">
         <div class="col">
@@ -55,7 +56,7 @@
                 <form action="/tweets/{{ this.Tweet.id }}/unlike" method="POST">
                   <button type="submit" style="background: transparent; border-width:0px; outline:none">
 
-                    <img src="/images/案讚數.svg" alt="">
+                    <img src="/images/紅心.svg" alt="">
                     {{#if this.Tweet.LikedBy.length}}
                     {{ this.Tweet.LikedBy.length}}
                     {{else}}
