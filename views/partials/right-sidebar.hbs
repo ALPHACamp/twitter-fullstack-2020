@@ -1,3 +1,4 @@
+<link rel='stylesheet' href='/stylesheets/sidebar.css'>
 <div class="right-sidebar-anchor">
   {{!-- header --}}
   <div class="col bg-light right-sidebar-content">
@@ -16,7 +17,7 @@
               </a>
             </div>
             {{!-- name --}}
-            <div class="col-lg-4 mx-0 px-0">
+            <div class="col-lg-4 mx-0 px-0 text-truncate">
               <a href="/users/{{this.id}}" class="fw-bold right-user-name">{{this.name}}</a>
               <p class="text-muted right-user-account">{{this.account}}</p>
             </div>
@@ -24,7 +25,7 @@
         </div>
       {{else}}
         <div class="right-bar">
-          <div class="row my-2 py-1 ps-3">
+          <div class="d-flex flex-column my-2 py-1 ps-3">
             {{!-- avatar --}}
             <div class="col-lg-3 mx-0 px-0">
               <a href="/users/{{this.id}}" class="mx-0">
@@ -32,7 +33,7 @@
               </a>
             </div>
             {{!-- name --}}
-            <div class="col-lg-4 mx-0 px-0">
+            <div class="col-lg-4 mx-0 px-0 text-truncate">
               <a href="/users/{{this.id}}" class="fw-bold right-user-name">{{this.name}}</a>
               <p class="text-muted right-user-account">{{this.account}}</p>
             </div>
