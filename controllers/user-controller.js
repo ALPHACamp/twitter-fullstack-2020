@@ -427,7 +427,7 @@ const userController = {
       const queryUserId = Number(req.params.id) // from axios
       let { account, name, email, password, confirmPassword } = req.body
 
-      if (!account || !email || !password || !confirmPassword) {
+      if (!account || !email) {
         req.flash('error_messages', '必填欄位未填寫完整 !')
         return res.redirect('back')
       }
@@ -465,12 +465,22 @@ const userController = {
         req.flash('error_messages', '使用者不存在 !')
         return res.redirect('back')
       }
-      if (bcrypt.compareSync(password, queryUser.password)) {
+      if (account !== queryUser.account) {
+        const matchedAccount = await User.findAll({ where: { account } })
+        if (matchedAccount)req.flash('error_messages', '此帳號已被其他使用者使用了 !')
+        return res.redirect('back')
+      }
+      if (email !== queryUser.email) {
+        const matchedEmail = await User.findAll({ where: { email } })
+        if (matchedEmail)req.flash('error_messages', '此 email 已被其他使用者使用了 !')
+        return res.redirect('back')
+      }
+      if (password && bcrypt.compareSync(password, queryUser.password)) {
         req.flash('error_messages', '新密碼不能與舊密碼相同 !')
         return res.redirect('back')
       }
 
-      const hash = await bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+      const hash = password ? await bcrypt.hashSync(password, bcrypt.genSaltSync(10)) : queryUser.password
       const updatedQueryUser = await queryUser.update({ account, name, email, password: hash })
       const data = updatedQueryUser.toJSON()
       delete data.password
