@@ -283,9 +283,9 @@ const userController = {
         uploadCover = await imgurFileHandler(cover[0])
       }
       const user = await User.findByPk(UserId)
-      if (!name) throw new Error("名稱不可為空白!")
+      if (!name) throw new Error("名稱不可空白！")
       if (name.length > 50) throw new Error("字數超出上限！")
-      if (introduction.length > 160) throw new Error("自我介紹內容不可超過160字!")
+      if (introduction.length > 160) throw new Error("字數超出上限！")
         await user.update({
         name,
         introduction,
