@@ -22,7 +22,7 @@
             <img src="{{user.avatar}}" class="me-auto rounded-circle border border-white border-5" style="width:150px;height:150px">
            {{#ifCond user.id currentUser.id}}
             <div class="d-flex align-items-end text-end">
-                <button type="button" class="btn rounded-pill  myOutlineBtn" data-bs-toggle="modal" data-bs-target="#editProfileModal">編輯個人資料</button>
+                <button type="button" class="btn rounded-pill  myOutlineBtn" id="editButton" data-id="{{user.id}}" data-bs-toggle="modal" data-bs-target="#editProfileModal">編輯個人資料</button>
             </div>
             {{/ifCond}}
         </div>
@@ -106,13 +106,14 @@
                     </div>
                    
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="name" name="name"
-                              maxlength="50">
+                        <input type="text" class="form-control" id="name" name="name" maxlength="50" value="{{user.name}}">
                         <label for="name" class="fw-bold">名稱</label>
                         <p class="text-end"><span class="nameCounts">0</span>/50</p>
                     </div>
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" name="introduction" id="introduction" maxlength="160" style="height: 150px;"></textarea>
+
+                        <textarea class="form-control" name="introduction" id="introduction" maxlength="160" style="height: 150px;">{{user.introduction}}</textarea>
+
                         <label for="introduction"  class="fw-bold">自我介紹</label>
                         <p class="text-end"><span class="introductionCounts">0</span>/160</p>
                     </div> 
