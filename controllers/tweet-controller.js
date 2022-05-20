@@ -1,5 +1,6 @@
-const { Tweet, User, Reply, Like } = require('../models')
+const { Tweet, User, Reply } = require('../models')
 const helper = require('../_helpers')
+const apiServices = require('../service/api-services')
 
 const tweetController = {
   getTweets: async (req, res, next) => {
@@ -49,35 +50,11 @@ const tweetController = {
       next(err)
     }
   },
-  likeTweets: async (req, res, next) => {
-    try {
-      const UserId = helper.getUser(req).id
-      const TweetId = req.params.tweetId
-      if (!TweetId) throw new Error('該篇貼文不存在，請重新整理')
-      const existLike = await Like.findOne({ where: { UserId, TweetId } })
-      if (existLike) throw new Error('您已喜歡過該篇貼文')
-      const like = await Like.create({ UserId, TweetId })
-      return res.status(302).json({ status: 'success', like })
-      // res.redirect('back')
-    } catch (err) {
-      next(err)
-    }
+  likeTweets: (req, res, next) => {
+    apiServices.likeTweets(req, (err, data) => err ? next(err) : res.status(302).json({ status: 'success', data }))
   },
-  unlikeTweets: async (req, res, next) => {
-    try {
-      const UserId = helper.getUser(req).id
-      const TweetId = req.params.tweetId
-      if (!TweetId) throw new Error('該篇貼文不存在，請重新整理')
-      const existLike = await Like.findOne({ where: { UserId, TweetId } })
-      if (!existLike) throw new Error('您尚未喜歡該篇貼文')
-      const unlike = await Like.destroy({
-        where: { UserId, TweetId }
-      })
-      return res.status(302).json({ status: 'success', unlike })
-      // res.redirect('back')
-    } catch (err) {
-      next(err)
-    }
+  unlikeTweets: (req, res, next) => {
+    apiServices.unlikeTweets(req, (err, data) => err ? next(err) : res.status(302).json({ status: 'success', data }))
   }
 }
 module.exports = tweetController
