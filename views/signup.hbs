@@ -3,7 +3,7 @@
     <form action='/signup' method='POST' class="signup-form">
       <div class='text-center'>
         <img class='logo' alt='logo' src='/images/twitter_2022_logo.svg' />
-        <h3 class='mt-2'>建立你的帳號</h3>
+        <h3 class='mt-2 signup-title'>建立你的帳號</h3>
       </div>
       {{#if errors}}
         {{#each errors}}
@@ -14,7 +14,8 @@
           </div>
         {{/each}}
       {{/if}}
-      <div class='form-label pt-2 mt-4'>
+      <div class="secondary-text">(<span>*</span>欄位為必填)</div>
+      <div class='form-label pt-2 mt-1'>
         <label for='account' class='ms-2'>帳號<span>*</span></label>
         <input id='account' name='account' type='text' class='form-control' placeholder='請輸入帳號' value='{{account}}' required/>
       </div>

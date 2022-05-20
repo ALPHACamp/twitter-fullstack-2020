@@ -59,6 +59,12 @@ h5 {
     font-size: 14px;
     line-height: 22px;
 }
+.alert-text{
+    font-size: 14px;
+    color: #FC5A5A;
+    margin-left: 10px;
+    font-weight: 500;
+}
 .user-info a, .user-tabs a, .post-user a, .post-content .content, .reply-text a, .profile-setting a, .follow-tweet a{
     text-decoration: none;
 }
@@ -75,7 +81,8 @@ h5 {
     margin: 0 auto;
 }
 .signup-form .logo {
-    margin-top: 64px;
+    margin-top: 59px;
+    margin-bottom: 1px;
 }
 .signup-form h3{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -83,6 +90,17 @@ h5 {
     line-height: 26px;
     font-weight: bold;
     margin-bottom: 35px;
+}
+.signup-form .signup-title{
+    margin-bottom: 14px;
+}
+.signup-form .secondary-text{
+    font-size: 0.85rem;
+    text-align: right;
+}
+.signup-form span {
+    color: #FF6600;
+
 }
 .form-label{
     background-color: #F5F8FA; 
@@ -244,6 +262,10 @@ h5 {
     height: 50px;
     margin-right: 8px;
 }
+.tweet-form{
+    border-bottom: 9px solid #E6ECF0;
+    padding-bottom: 16px;
+}
 .post-user{
     margin-bottom: 5px;
 }
@@ -348,16 +370,17 @@ a:hover > .user-name, .reply-text a:hover, .follow-tweet a:hover .user-name{
 .follow-tweet .secondary-text{
     color: #92929d;
 }
-.follow-tweet button, .home-post-btn, .side-post-btn, .post-user button{
+.follow-tweet button, .home-post-btn, .side-post-btn, .post-user button, .reply-modal-post-btn{
     font-size: 1rem !important;
     height: 40px;
+    padding: 8px 16px;
 }
 
 .user-tweets-header{
     padding: 24px;
     border-bottom: 1px solid #E6ECF0;
 }
-.user-tweets-header h4{
+.user-tweets-header h4, .user-header h4{
     font-weight: 700;    
 }
 .tweet textarea, .modal-body textarea{
@@ -379,6 +402,9 @@ a:hover > .user-name, .reply-text a:hover, .follow-tweet a:hover .user-name{
     font-weight: 700;
     color: #6C757D !important;
     border-radius: 5px;
+}
+.reply-area textarea{
+    margin-top: 10px;
 }
 textarea:hover, textarea:focus{
     outline: 0;
@@ -406,10 +432,39 @@ textarea:hover, textarea:focus{
 .modal-body a{
     margin-top: 6px;
 }
-.side-post-btn {
+.side-post-btn, .reply-modal-post-btn {
     margin: 0 0 0 10px;
 }
-
+.reply-area > div > a:after{
+    content: '';
+    position: absolute;
+    top: 89px;
+    left: 48px;
+    width: 2px;
+    height: 86px;
+    background: #B5B5BE;
+}
+.reply-area > div{
+    height: 180px;
+}
+.tweet-reply .content{
+    font-size: 24px;
+    line-height: 36px;
+    padding: 8px 0;
+}
+.reply-counting, .reply-buttons{
+    border-top: 1px solid #E6ECF0;
+    margin: 0 20px;
+    padding: 16px 0;
+    font-size: 19px;
+    font-weight: 700;
+}
+.reply-buttons button{
+    margin: 0;
+}
+.reply-buttons .comment-btn{
+    margin-right: 125px;
+}
 /*-------------- admin-platform settings --------------*/
 .admin-platform{
     display: grid;
@@ -444,7 +499,7 @@ textarea:hover, textarea:focus{
     margin-bottom: 0;
     padding: 3px 0 0;
 }
-.admin-main .content:hover{
+.admin-main .content:hover, .tweet-reply .content:hover{
     color: #171725;
 }
 
