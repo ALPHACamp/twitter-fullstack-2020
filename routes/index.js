@@ -54,9 +54,6 @@ router.put('/users/:id/setting', authenticated, userController.editUser)
 router.get('/users/:id/edit', authenticated, userController.editUserFakePage)
 router.post('/users/:id/edit', authenticated, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.editUser)
 
-// api
-router.get('/api/users/:id', authenticated, apiController.editUser)
-
 // 查看 user 相關頁面
 router.get('/users/:id/followings', authenticated, userController.getFollowings)
 router.get('/users/:id/followers', authenticated, userController.getFollowers)
@@ -67,6 +64,10 @@ router.get('/users/:id', authenticated, userController.getUser)
 
 // 防呆路由
 router.get('/users', authenticated, (req, res) => res.redirect('/tweets'))
+
+// api
+router.get('/api/users/:id', apiController.editUser)
+router.post('/api/users/:id', apiController.putUser)
 
 router.get('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
