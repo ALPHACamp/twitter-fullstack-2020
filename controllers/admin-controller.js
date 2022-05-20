@@ -60,7 +60,10 @@ const adminController = {
           if (!tweet) throw new Error("Tweet didn't exist!")
           return tweet.destroy()
         })
-        .then(() => res.redirect('back'))
+        .then(() => {
+          req.flash('success_messages', '成功刪除')
+          res.redirect('back')
+        })
     } catch (err) {
       next(err)
     }

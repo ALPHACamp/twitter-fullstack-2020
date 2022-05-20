@@ -35,7 +35,7 @@ const apiController = {
 
       const user = updatedQueryUser.toJSON()
       delete user.password
-
+      req.flash('success_messages', '成功編輯個人資料')
       return res.status(200).json({ status: 'success', user })
     } catch (err) {
       next(err)
