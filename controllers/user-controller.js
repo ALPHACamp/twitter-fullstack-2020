@@ -13,28 +13,28 @@ const userController = {
   },
   signUp: async (req, res, next) => {
     try {
-      const errors = []
+      const errors_messages = []
       let { account, name, email, password, checkPassword } = req.body
 
       if (!account || !email || !password) {
-        errors.push({ message: '請確認必填欄位' })
+        errors_messages.push({ message: '請確認必填欄位' })
       }
 
       const existAccount = await User.findOne({ where: { account } })
-      if (existAccount) errors.push({ message: '帳號已被註冊' })
+      if (existAccount) errors_messages.push({ message: '帳號已被註冊' })
 
       const existEmail = await User.findOne({ where: { email } })
-      if (existEmail) errors.push({ message: '信箱已被註冊' })
+      if (existEmail) errors_messages.push({ message: '信箱已被註冊' })
 
-      if (password !== checkPassword) errors.push({ message: '密碼輸入不相同' })
+      if (password !== checkPassword) errors_messages.push({ message: '密碼輸入不相同' })
 
       account = removeAllSpace(account)
       name = removeOuterSpace(name)
-      if (name.length > 50) errors.push({ message: '名稱長度限制50字元以內' })
+      if (name.length > 50) errors_messages.push({ message: '名稱長度限制50字元以內' })
       if (!name) name = account
 
-      if (errors.length) {
-        return res.render('signup', { errors, account, name, email })
+      if (errors_messages.length) {
+        return res.render('signup', { errors_messages, account, name, email })
       }
 
       const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
@@ -366,7 +366,7 @@ const userController = {
       }
 
       await Followship.create({ followerId: userId, followingId: queryUserId })
-
+      req.flash('success_messages', '成功追蹤')
       return res.redirect('back')
     } catch (err) {
       next(err)
@@ -396,7 +396,7 @@ const userController = {
       await Followship.destroy({
         where: { followerId: userId, followingId: queryUserId }
       })
-
+      req.flash('success_messages', '成功取消追蹤')
       return res.redirect('back')
     } catch (err) {
       next(err)
@@ -474,7 +474,7 @@ const userController = {
       const updatedQueryUser = await queryUser.update({ account, name, email, password: hash })
       const data = updatedQueryUser.toJSON()
       delete data.password
-
+      req.flash('success_messages', '成功儲存設定')
       return res.redirect('back')
     } catch (err) {
       next(err)
