@@ -77,43 +77,45 @@
         <div class="modal-content">
             <form action="/users/{{user.id}}/edit?_method=PUT" method="POST" enctype="multipart/form-data">
                 <div class="modal-header">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <h5 class="modal-title">編輯個人資料</h5>
+                        <h5 class="modal-title px-2">編輯個人資料</h5>
                     </div>
                     <button type="submit" class="btn border-0 text-light rounded-pill"
                         style="background-color: #FF6600;">儲存</button>
                 </div>
                 <div class="modal-body row" style="position: relative;">
-                    <div class="form-row mb-3">
+                    <div style="height: 250px;">
+                        <img src="{{user.cover}}" alt="cover" style="height:100%;width:100%; object-fit:cover">
+                    </div>
+                     <div class="form-row ">
                         <label class="btn cover-uploader" for="cover"
-                            style="position: absolute; top: 110px; left:240px;">
-                            <i class="fa-solid fa-camera" style="font-size: 2em;"></i>
+                            style="position: absolute; top: 115px; left:235px;">
+                            <i class="fas fa-camera" style="font-size: 2em;"></i>
                             <input class="d-none" type="file" id="cover" name="cover">
                         </label>
-                        <img src="{{user.cover}}" alt="cover" style="height: 240px; width:470px;">
                     </div>
-                    <div class="form-row mb-3" style="position: relative;">
+                    <div class="d-flex px-3" style="margin-top:-80px;z-index:100;position:relative">
+                        <img src="{{user.avatar}}" class="me-auto rounded-circle border border-white border-5"
+                            style="width:150px;height:150px">
                         <label class="btn avatar-uploader" for="avatar"
-                            style="position: absolute; top: 7px; left: 27px;">
-                            <i class="fa-solid fa-camera" style="font-size: 2em;"></i>
+                            style="position: absolute; top: 45px; left: 65px;">
+                            <i class="fas fa-camera" style="font-size: 2em;"></i>
                             <input class="d-none" type="file" id="avatar" name="avatar">
                         </label>
-                        <div class="col-1">
-                            <img src="{{user.avatar}}" alt="avatar"
-                                style="height: 80px; width: 80px; border-radius: 50%">
-                        </div>
+                    </div>
+                   
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="name" name="name"
+                            value="{{user.name}}"  maxlength="50">
+                        <label for="name">名稱</label>
+                        <p class="text-end"><span class="nameCounts">0</span>/50</p>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="name" placeholder="Name" name="name"
-                            value="{{user.name}}" maxlength="50">
-                        <label for="floatingInput">名稱</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="introduction" class="form-control" id="introduction" placeholder="introduction"
-                            name="introduction" maxlength="160">
-                        <label for="floatingIntroduction">自我介紹</label>
-                    </div>
+                        <textarea class="form-control" name="introduction" id="introduction" maxlength="160" style="height: 150px;">{{user.introduction}}</textarea>
+                        <label for="introduction"  class="fw-bold">自我介紹</label>
+                        <p class="text-end"><span class="introductionCounts">0</span>/160</p>
+                    </div> 
                 </div>
             </form>
         </div>
@@ -123,3 +125,29 @@
 <script>
     document.getElementById("middle").style.height =  window.innerHeight+'px';
 </script>
+
+<script>   
+    const editModal = document.querySelector('#editProfileModal')
+    const inputNameCounts = document.querySelector('.nameCounts')
+    const inputIntroductionCounts = document.querySelector('.introductionCounts')
+//計算按鍵放開時的字數
+editModal.addEventListener('keyup', function(event){
+    const target = event.target
+    const inputValue = target.value || ''
+     if (target.matches('#name')) {
+    inputNameCounts.innerText = inputValue.length
+  } else  { 
+    inputIntroductionCounts.innerText = inputValue.length
+  }
+  })
+
+//計算按下按鍵時的字數，顯示長按時的字數變化
+  editModal.addEventListener('keydown', function(event){
+    const target = event.target
+    const inputValue = target.value || ''
+     if (target.matches('#name')) {
+    inputNameCounts.innerText = inputValue.length
+  } else  { 
+    inputIntroductionCounts.innerText = inputValue.length
+  }
+  })</script>
