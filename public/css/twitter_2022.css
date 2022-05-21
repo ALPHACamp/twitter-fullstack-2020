@@ -120,8 +120,12 @@ h5 {
     border-bottom: 2px solid #657786; 
     background: #F5F8FA;
 }
-.form-control:hover, .form-control:focus{
-    border-bottom-color: #5085ff;
+.form-floating textarea{
+    border-bottom: 2px solid #657786 !important;
+    height: 147px !important;
+}
+.form-control:hover, .form-control:focus, .form-floating textarea:focus{
+    border-bottom-color: #5085ff !important;
     background: #F5F8FA;
 }
 .signup-form button {
@@ -311,6 +315,52 @@ a:hover > .user-name, .reply-text a:hover, .follow-tweet a:hover .user-name{
 .reply-text a{
     color:#FF6600;
 }
+/*-------------- user-profile settings --------------*/
+.user-profile h5{
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 26px;
+    margin-left: 28px;
+    margin-top: 7px;
+}
+.user-profile .user-edit-modal-save-button{
+    margin: 3px 11px 4px 0;
+}
+.user-profile .modal-body{
+    padding: 0;
+}
+.user-profile .main{
+    height: 270px;
+    border: 0;
+    margin-bottom: 16px;
+}
+.user-profile .user-banner .cover {
+    -webkit-filter: brightness(.75)
+}
+.user-profile .modal-body .avatar {
+    width: 140px;
+    height: 140px;
+    -webkit-filter: brightness(.5)
+}
+.user-profile .form-floating{
+    margin: 0 16px;
+}
+.form-floating .form-control{
+    color: #171725;
+    padding: 28px 18px 4px !important;
+    font-size: 18px;
+    height: 54px;
+}
+.form-floating > label{
+    color: #696974;
+    opacity: 1 !important;
+    padding: 12px 18px !important;
+    font-weight: 400;
+}
+.text-end .secondary-text{
+    font-size: 12px;
+    color: #696974;
+}
 /*-------------- profile-setting settings --------------*/
 .profile-setting .logo{
     margin: 3px;
@@ -370,7 +420,7 @@ a:hover > .user-name, .reply-text a:hover, .follow-tweet a:hover .user-name{
 .follow-tweet .secondary-text{
     color: #92929d;
 }
-.follow-tweet button, .home-post-btn, .side-post-btn, .post-user button, .reply-modal-post-btn{
+.follow-tweet button, .home-post-btn, .side-post-btn, .post-user button, .reply-modal-post-btn, .user-edit-modal-save-button{
     font-size: 1rem !important;
     height: 40px;
     padding: 8px 16px;

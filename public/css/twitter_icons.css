@@ -1,4 +1,4 @@
-i{
+i, .camera-icon{
   display: inline-block;
   background: url(/images/twitter_2022_icon.svg);
   position: relative;
@@ -106,4 +106,28 @@ i.btn-ring{
 }
 i.btn-ring:hover, i.btn-ring-active{
   background-position: -213px -132px;
+}
+.user-profile .user-banner .btn-close, .camera-icon {
+  position: absolute;
+  z-index: 1;
+}
+.camera-icon {
+  top: 90px;
+  left: 279px;
+  background-position: -288px -92px;
+  height: 20px;
+  width: 20px;
+  background-size: 335px;
+}
+.user-profile .user-banner .btn-close{
+  top: 93.5px;
+  left: 338px;
+  margin: 0;
+  padding: 0;
+  background-position: -241px -90px;
+}
+.avatar-upload-label{
+  top: 185px;
+  left: 77px;
+  z-index: 1;
 }
