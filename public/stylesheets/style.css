@@ -75,7 +75,7 @@ a:hover {
 .nav-admin-tabs .nav-admin-link {
   width: 120px;
   text-align: center;
-  color: lightgray;
+  color: black;
   font-weight: 600;
   border: none;
 }
@@ -469,5 +469,5 @@ a:hover {
 
 .logout-admin-anchor {
   position: fixed;
-  bottom: 80px;
+  bottom: 60px;
 }

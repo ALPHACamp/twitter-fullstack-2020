@@ -6,23 +6,22 @@
   position: relative;
   min-width: 250px;
   height: 930px;
-  background: #FFFFFF;
-  border: 1px solid #D5D5DC;">
-    <div style="position: absolute; width: 178px; left: 130px;">
+  background: #FFFFFF;">
+    <div style="position: absolute; width: 178px;">
       <div style="position: relative;">
-        <div style="width: 50px; height: 50px; position: absolute; top: 13px; left: 10px;">
+        <div style="width: 50px; height: 50px; position: absolute; top: 13px;">
           <img src="/images/logo.png" alt="login" style="height: 50px; width: 50px;">
         </div>
         <ul class="nav nav-admin-tabs flex-column">
           {{!--推文清單--}}
-          <li class="nav-item" style="display:flex; align-items: center; position: absolute; top: 85px; left: -15px;">
+          <li class="nav-item" style="display:flex; align-items: center; position: absolute; top: 85px; left: -5px;">
             <a class="nav-admin-link {{#ifCond route 'adminTweets'}} active {{/ifCond}}" aria-current="page"
               href="/admin/tweets">
               <h5><i class="fas fa-home"></i>推文清單</h5>
             </a>
           </li>
           {{!--使用者列表--}}
-          <li class="nav-item" style="display:flex; align-items: center; position: absolute; top: 148px; left: -7px;">
+          <li class="nav-item" style="display:flex; align-items: center; position: absolute; top: 148px; left: 5px;">
             <a class="nav-admin-link {{#ifCond route 'adminUsers'}} active {{/ifCond}}" href="/admin/users">
               <h5><i class="fas fa-user"></i>使用者列表</h5>
             </a>

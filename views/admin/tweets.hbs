@@ -3,13 +3,13 @@
 {{>left-admin-sidebar route='adminTweets'}}
   <div style="position: relative;">
     {{!-- tweets --}}
-    <div style="position: absolute; left:262px; max-width: 937px; height: 1200px; border: 1px solid #E6ECF0;" class="col-lg-9">
+    <div style="position: absolute; left:210px; min-width:470px; max-width: 1065px; height: 1200px; border: 1px solid #E6ECF0;" class="col-lg-10">
       {{> messages}}
-      <div style="height: 49px; max-width: 937px; border-bottom: 1px solid #E6ECF0;">
+      <div style="height: 49px; max-width:1065px; border-bottom: 1px solid #E6ECF0;">
         <h5 style="margin-left: 21px; margin-top: 24px;">推文清單</h5>
       </div>
       {{#each result}}
-      <div style="position: relative; max-width: 937px; height: 118px; border-bottom: 1px solid #E6ECF0;"class="col-lg-12">
+      <div style="position: relative; max-width: 1065px; height: 118px; border-bottom: 1px solid #E6ECF0;"class="col-lg-12">
         <div style="position: absolute; top: 16px; left: 23px; width: 50px; height: 50px;">
           <img src="{{this.User.avatar}}" alt="login" style="height: 50px; width: 50px; border-radius:50%;">
         </div>
