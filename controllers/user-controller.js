@@ -150,7 +150,8 @@ const userController = {
             { model: Like, include: [{ model: Tweet, include: [User, Like, Reply] }] },
             { model: User, as: 'Followings' },
             { model: User, as: 'Followers' }
-          ]
+          ],
+          order:[[sequelize.col('Likes.createdAt'),'DESC']]
         })
         ,catchTopUsers(req)
       ])
@@ -162,7 +163,7 @@ const userController = {
         f.Tweet.totalReply= f.Tweet.Replies.length,
         f.Tweet.isLiked= f.Tweet.Likes.some(g => g.UserId === helpers.getUser(req).id)
         return f
-      }).reverse()
+      })
       if (!user) throw new Error("User didn't exists!")
       return res.render('user', {
         user: user.toJSON(),
