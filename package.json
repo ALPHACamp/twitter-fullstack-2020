@@ -9,7 +9,7 @@
     "dev": "NODE_ENV=development nodemon app.js",
     "devWin": "cross-env NODE_ENV=development nodemon app.js",
     "lint": "eslint \"**/*.js\" --fix",
-    "test": "NODE_ENV=test mocha test --exit --recursive --timeout 5000",
+    "test": "cross-env NODE_ENV=test mocha test --exit --recursive --timeout 5000",
     "testTweet": "NODE_ENV=test mocha test/requests/tweet.spec.js --exit --recursive",
     "testReply": "NODE_ENV=test mocha test/requests/reply.spec.js --exit --recursive"
   },
@@ -23,6 +23,7 @@
     "connect-flash": "^0.1.1",
     "cross-env": "^7.0.3",
     "dayjs": "^1.10.6",
+    "dotenv": "^10.0.0",
     "eslint": "^8.15.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
