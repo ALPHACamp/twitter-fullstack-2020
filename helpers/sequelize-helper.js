@@ -5,7 +5,7 @@ const helpers = require('../_helpers')
 function catchTopUsers (req) {
     return User.findAll({
         where:{
-        id:{[Op.ne]: helpers.getUser(req).id}
+        id:{[Op.ne]: helpers.getUser(req).id},role:'user'
         },
         include:{
         model:User, as:'Followers', attributes:[] , duplicating:false,
