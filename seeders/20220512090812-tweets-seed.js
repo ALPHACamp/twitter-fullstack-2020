@@ -9,7 +9,7 @@ module.exports = {
     )
     return queryInterface.bulkInsert('Tweets', 
       Array.from({length: userIds.length*10},(element, index)=>({
-        description:faker.lorem.text(),
+        description:faker.lorem.text().slice(0,139),
         UserId:userIds[index%userIds.length].id,
         createdAt: new Date(),
         updatedAt: new Date(),
