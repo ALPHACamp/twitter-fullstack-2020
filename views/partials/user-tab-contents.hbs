@@ -74,7 +74,7 @@
     </div>
   {{/each}}
   {{#each likedTweets}}
-    <div class='tweet d-flex'>
+    <div class='tweet d-flex like-box'>
       <a href='/users/{{this.Tweet.User.id}}/tweets'>
         <img class='avatar {{#ifCond ../user.id this.Tweet.User.id}}self-avatar{{/ifCond}}' src='{{this.Tweet.User.avatar}}' alt='{{this.Tweet.User.name}}' />
       </a>
@@ -115,3 +115,16 @@
 <script src='/javascripts/text-count.js'></script>
 <script src='/javascripts/post-like.js'></script>
 <script src='/javascripts/top-followed.js'></script>
+
+<script>
+  const likeBoxes = document.querySelectorAll('.like-box')
+  likeSubmitBtn.forEach((item, i) => {
+    item.addEventListener('click', e => {
+      e.stopPropagation()
+      likeBoxes[i].classList.add('ghost')
+      setTimeout(()=>{
+        likeBoxes[i].remove()
+      }, 1000)
+    })
+  })
+</script>
