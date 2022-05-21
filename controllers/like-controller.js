@@ -10,14 +10,9 @@ const likeController = {
         if (!tweet) {
           throw new Error('This tweet id do not exist')
         }
-        return Like.findOrCreate({
-          where:{
-            UserId,
-            TweetId
-          }
-        })
+        return Like.findOrCreate({ where:{ UserId,TweetId}})
       })
-      .then(() => res.redirect(`${req.get('Referrer')}#tweetId${TweetId}`))
+      .then(() => res.json({}))
       .catch(err => next(err))
   },
   unlikeTweet: (req, res, next) => {
@@ -35,7 +30,7 @@ const likeController = {
         }
         return like.destroy()
       })
-      .then(() => res.redirect(`${req.get('Referrer')}#tweetId${TweetId}`))
+      .then(() =>  res.json({}))
       .catch(err => next(err))
   },
 }
