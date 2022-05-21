@@ -129,9 +129,10 @@
           <div class="media-body">
             <form action="/tweets" method="POST">
               <div class="d-flex d-inline">
-                <textarea class="wishContent" placeholder="有什麼新鮮事?" name="description" id="description"
-                  style=" width: 500px;height: 90px;top: 56px; border:0px; resize : none; outline : 0; overflow:hidden; maxlength="
-                  140""></textarea>
+                <textarea class="wishContent" placeholder="有什麼新鮮事?" name="description" id="description" maxlength="
+                  140"
+                  style=" width: 500px;height: 90px;top: 56px; border:0px; resize : none; outline : 0; overflow:hidden; "
+                  required></textarea>
               </div>
               <div class="d-flex d-inline">
                 <div id='add-tweet-info' class='tweet-error-message'>

@@ -19,33 +19,38 @@
 
         <div class=' text-center login-container mt-3 ms-4'>
           <form action="/users/{{ user.id }}/setting?_method=PUT" method="POST" style='width: 100%;'>
-            <div class="form-group">
+            <div class="form-group form-floating">
               <input type="text" name="account" class="form-control font-weight-bold" placeholder="帳號"
                 value="{{ user.account }}"
-                style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+                style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;" id="account"
                 required autofocus>
+                <label for="account">帳號</label>
             </div>
-            <div class="form-group mt-4">
+            <div class="form-group mt-4 form-floating">
               <input type="text" name="name" class="form-control font-weight-bold" placeholder="名稱" maxlength="50"
                 value="{{ user.name }}"
-                style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+                style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"id="account"
                 required autofocus>
+                <label for="account">名稱</label>
             </div>
-            <div class="form-group mt-4">
+            <div class="form-group mt-4 form-floating">
               <input type="email" name="email" class="form-control font-weight-bold" placeholder="Email"
                 value="{{ user.email }}"
-                style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+                style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"id="Email"
                 required autofocus>
+                <label for="Email">Email</label>
             </div>
-            <div class="form-group mt-4">
+            <div class="form-group mt-4 form-floating">
               <input type="password" name="password" class="form-control font-weight-bold" placeholder="密碼"
-                style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+                style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"id="password"
                 required>
+                <label for="password">密碼</label>
             </div>
-            <div class="form-group mt-4">
+            <div class="form-group mt-4 form-floating">
               <input type="password" name="checkPassword" class="form-control font-weight-bold" placeholder="密碼確認"
-                style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+                style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"id="checkPassword"
                 required>
+                <label for="checkPassword">密碼確認</label>
             </div>
             <div class="mb-4 text-center">
               <button class="btn btn-block mt-4 tweet_btn" type="submit">儲存</button>

@@ -8,13 +8,15 @@
 
     <form action="/signin" method="POST" style='width: 100%;'>
 
-      <div class='form-label-group' style='margin-top: 32px;'>
+      <div class='form-label-group form-floating' style='margin-top: 32px;'>
         <input type="text" class="form-control login-input" id="account" name="account" placeholder="帳號" required
           autofocus>
+        <label for="account">帳號</label>
       </div>
 
-      <div class='form-label-group' style='margin-top: 32px;'>
+      <div class='form-label-group form-floating' style='margin-top: 32px;'>
         <input type="password" class="form-control login-input" id="password" name="password" placeholder="密碼" required>
+        <label for="password">密碼</label>
       </div>
 
       <br />

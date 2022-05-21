@@ -22,13 +22,10 @@
 <body>
 
   <div class="container">
+    {{> messages}}
     <div class="row">
-      <div style="margin-right: 500px;">
-        {{> messages}}
-      </div>
       {{{ body }}}
     </div>
-
   </div>
 
 
@@ -51,6 +48,7 @@
       }, 2000);
     })
   </script>
+
 </body>
 
 </html>

@@ -7,25 +7,30 @@
 
     <form action="/signup" method="POST" style='width: 100%;'>
 
-      <div class='form-label-group' style='margin-top: 32px;'>
-        <input type='text' name='account' class='form-control login-input' placeholder='帳號' required autofocus />
+      <div class='form-label-group form-floating' style='margin-top: 32px;'>
+        <input type='text' name='account' class='form-control login-input' placeholder='帳號' id="account" required autofocus />
+        <label for="account">帳號</label>
       </div>
 
-      <div class='form-label-group' style='margin-top: 32px;'>
-        <input type='text' name='name' class='form-control login-input' placeholder='名稱' maxlength="50" required
+      <div class='form-label-group form-floating' style='margin-top: 32px;'>
+        <input type='text' name='name' class='form-control login-input' placeholder='名稱' maxlength="50" id="account"  required
           autofocus />
+          <label for="account">名稱</label>
       </div>
 
-      <div class='form-label-group' style='margin-top: 32px;'>
-        <input type='email' name='email' class='form-control login-input' placeholder='Email' required autofocus />
+      <div class='form-label-group form-floating' style='margin-top: 32px;'>
+        <input type='email' name='email' class='form-control login-input' placeholder='Email' id="Email" required autofocus />
+        <label for="Email">Email</label>
       </div>
 
-      <div class='form-label-group' style='margin-top: 32px;'>
-        <input type='password' name='password' class='form-control login-input' placeholder='密碼' required />
+      <div class='form-label-group form-floating' style='margin-top: 32px;'>
+        <input type='password' name='password' class='form-control login-input' placeholder='密碼' id="password" required />
+        <label for="password">密碼</label>
       </div>
 
-      <div class='form-label-group' style='margin-top: 32px;'>
-        <input type='password' name='checkPassword' class='form-control login-input' placeholder='密碼確認' required />
+      <div class='form-label-group form-floating' style='margin-top: 32px;'>
+        <input type='password' name='checkPassword' class='form-control login-input' placeholder='密碼確認' id="checkPassword" required />
+        <label for="checkPassword">密碼確認</label>
       </div>
 
       <br />

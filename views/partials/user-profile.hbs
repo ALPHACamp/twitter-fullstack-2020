@@ -30,7 +30,7 @@ height: 200px; " src="{{ user.cover }}" alt="{{ user.name }}">
         <img src="{{ user.avatar }}" class="border-avatar" style="border-radius: 50%; height: 100px; width: 100px;
         margin-top: 70px; margin-left:-255px" alt="{{ user.name }}">
 
-        <div class="profile_btn" style="margin-left:480px; margin-top:12px; ;">
+        <div class="profile_btn" style="margin-left:480px; margin-top:12px;   border-style: hidden;">
           {{!-- 是本人，顯示編輯個人資料按鈕 --}}
           {{#ifCond logInUser.id user.id}}
           {{!-- <form action="/users/{{user.id}}/edit" method="GET">
@@ -38,10 +38,14 @@ height: 200px; " src="{{ user.cover }}" alt="{{ user.name }}">
           </form> --}}
 
 
+
           <!-- Button trigger modal -->
-          <button type="button" class="btn profile_btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          <button type="button" class="btn profile_btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+            style="">
             編輯個人資料
           </button>
+
+
 
           <!-- Modal -->
           <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -68,8 +72,8 @@ height: 610px;border-radius: 20px;">
                       {{!-- cover 背景上傳 --}}
                       <div class="form-row mb-3">
                         <img class="card-img-top edit_cover"
-                          style="width:630px; border-radius: 0%;margin-left:-14px; height: 200px;margin-top:-44px ;position:relative" id="coverImg"
-                          src="{{ user.cover }}" alt="{{ user.name }}">
+                          style="width:630px; border-radius: 0%;margin-left:-14px; height: 200px;margin-top:-44px ;position:relative"
+                          id="coverImg" src="{{ user.cover }}" alt="{{ user.name }}">
                         <label class="form-label" for="cover">
                           <img style='position: absolute;left:262px; top:80px; z-index:3;width:35px '
                             src="/images/上傳圖檔.svg" alt="">
@@ -93,8 +97,8 @@ height: 610px;border-radius: 20px;">
                       {{!-- avatar 頭像 --}}
                       <div class="form-row mb-3">
                         <img src="{{ user.avatar }}" class="border-avatar"
-                          style="border-radius: 50%; height: 100px; width: 100px;position:relative;margin-left:-255px ;margin-top:-255px" id="avatarImg"
-                          alt="{{ user.name }}">
+                          style="border-radius: 50%; height: 100px; width: 100px;position:relative;margin-left:-255px ;margin-top:-255px"
+                          id="avatarImg" alt="{{ user.name }}">
                         <label class="form-label" for="avatar">
                           <img style='position: absolute; left:45px; top:200px;margin-top:-22px; z-index:3;width:35px'
                             src="/images/上傳圖檔.svg" alt="">
@@ -107,20 +111,21 @@ height: 610px;border-radius: 20px;">
                     {{!-- name 名稱 --}}
                     <div class="form-row mb-3">
                       <label class="form-label" for="name" style="color: #696974;">名稱</label>
-                      <input class="form-control login-input" type="text" name="name" id="textname" onkeyup="validateName()" placeholder="Enter name"
-                        value="{{ user.name }}" maxlength="50" required>
+                      <input class="form-control login-input" type="text" name="name" id="textname"
+                        onkeyup="validateName()" placeholder="Enter name" value="{{ user.name }}" maxlength="50"
+                        required>
                     </div>
-                    <p id="namecount" style="margin-left: 90%; color: #696974;"  > 
+                    <p id="namecount" style="margin-left: 90%; color: #696974;">
                       <span id="textnamecount" style="color: #696974;">{{ user.name.length }}</span> /50
                     </p>
                     {{!-- 自我介紹 --}}
                     <div class="form-row mb-3">
                       <label class="form-label" for="introduction" style="color: #696974;">自我介紹</label>
-                      <textarea class="form-control login-input" name="introduction" id="introduction" row="5" onkeyup="validate()"
-                        maxlength="160" placeholder="輸入自介" >{{ user.introduction }}</textarea>
+                      <textarea class="form-control login-input" name="introduction" id="introduction" row="5"
+                        onkeyup="validate()" maxlength="160" placeholder="輸入自介">{{ user.introduction }}</textarea>
                     </div>
-                    
-                    <p id="count" style="margin-left: 90%; color: #696974;" > 
+
+                    <p id="count" style="margin-left: 90%; color: #696974;">
                       <span id="textcount" style="color: #696974;">{{ user.introduction.length }}</span> /160
                     </p>
                     {{!-- <button class="btn btn-block mt-4"
@@ -140,6 +145,7 @@ height: 610px;border-radius: 20px;">
           {{else}}
           {{!-- 不是本人，顯示追蹤判斷按鈕 --}}
           {{!-- isFollowed 判斷 --}}
+
           {{#if isFollowed}}
           <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: contents;">
             <button type="submit" class="btn profilefollowing_btn">取消追蹤</button>
@@ -151,6 +157,7 @@ height: 610px;border-radius: 20px;">
           {{/if}}
           {{/ifCond}}
         </div>
+
 
         <div class="card-body" style="margin-top: -20px;">
 
@@ -192,20 +199,20 @@ height: 610px;border-radius: 20px;">
     }
   }</script>
 
-<script>function validate(){
-  const areatextarea = document.querySelector("#introduction")
-  const areatext = document.querySelector("#introduction").value.length
-  const textcount = document.querySelector("#textcount")
-  const wordcount = document.querySelector("#count")
-  textcount.innerHTML = areatext
+<script>function validate() {
+    const areatextarea = document.querySelector("#introduction")
+    const areatext = document.querySelector("#introduction").value.length
+    const textcount = document.querySelector("#textcount")
+    const wordcount = document.querySelector("#count")
+    textcount.innerHTML = areatext
   }
 </script>
 
-<script>function validateName(){
-  const areatextarea = document.querySelector("#textname")
-  const areatext = document.querySelector("#textname").value.length
-  const textcount = document.querySelector("#textnamecount")
-  const wordcount = document.querySelector("#namecount")
-  textcount.innerHTML = areatext
+<script>function validateName() {
+    const areatextarea = document.querySelector("#textname")
+    const areatext = document.querySelector("#textname").value.length
+    const textcount = document.querySelector("#textnamecount")
+    const wordcount = document.querySelector("#namecount")
+    textcount.innerHTML = areatext
   }
 </script>

@@ -1,4 +1,4 @@
-const { Tweet, User } = require('../models')
+const { Tweet, User, Like, Reply } = require('../models')
 const sequelize = require('sequelize')
 
 const adminController = {
@@ -33,8 +33,9 @@ const adminController = {
   deleteTweets: async (req, res, next) => {
     try {
       const tweetId = req.params.id
-      const tweet = await Tweet.findOne({ where: { id: Number(tweetId) } })
-      await tweet.destroy()
+      await Tweet.destroy({ where: { id: Number(tweetId) } })
+      await Like.destroy({ where: { TweetId: Number(tweetId) } })
+      await Reply.destroy({ where: { TweetId: Number(tweetId) } })
       req.flash('success_messages', '刪除成功！')
       return res.redirect('/admin/tweets')
     } catch (e) {

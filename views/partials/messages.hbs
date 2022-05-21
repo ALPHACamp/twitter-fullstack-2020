@@ -1,45 +1,28 @@
 {{#if success_messages}}
-<div class='position-fixed right-0 p-3'
-  style='z-index: 5; position: fixed; top: 20px; left: 50%; transform: translate(-50%, 0%);'>
-  <div id='liveToast' class='toast hide alert' role="status" aria-live="polite" aria-atomic='true' data-bs-delay='2000'>
-    <div class='toast-header' style='height: 96px; padding: 20px 20px; width:350;'>
-      <strong class='mr-auto' style='color: black;font-size: 20px;'>{{success_messages}}</strong>
+<div class="position-fixed alert alert-dismissible fade show" role="alert" style="margin-left:550px ;width: 600px; z-index:10">
+  <strong class='mr-auto' style='color: black;font-size: 20px;margin-left:60px'>{{success_messages}}</strong>
       <img src="/images/success.svg" alt="">
     </div>
-  </div>
-</div>
 {{/if}}
 
 {{#if error_messages}}
-<div class='position-fixed  right-0 p-3'
-  style='z-index: 5; position: fixed; top: 20px; left: 50%; transform: translate(-50%, 0%);'>
-  <div id='liveToast' class='toast hide alert' role="alert" aria-live="assertive" aria-atomic='true'
-    data-bs-delay='2000'>
-    <div class='toast-header' style='height: 96px; padding: 20px 20px; width:350;'>
-      <strong class='mr-auto' style='color: black;font-size: 20px;'>{{error_messages}}</strong>
-      <img src="/images/danger.svg" alt="">
-    </div>
-  </div>
+<div class="position-fixed alert alert-dismissible fade show" role="alert" style="margin-left:550px ;width: 600px;z-index:10">
+  <strong class='mr-auto' style='color: black;font-size: 20px;margin-left:60px'>{{error_messages}}</strong>
+  <img src="/images/danger.svg" alt="">
 </div>
 {{/if}}
 
 {{#if warning_msg}}
-<div class='position-fixed  right-0 p-3'
-  style='z-index: 5; position: fixed; top: 20px; left: 50%; transform: translate(-50%, 0%);'>
-  <div id='liveToast' class='toast hide alert' role="alert" aria-live="assertive" aria-atomic='true'
-    data-bs-delay='2000'>
-    <div class='toast-header' style='height: 96px; padding: 20px 20px; width:350;'>
-      <strong class='mr-auto' style='color: black;font-size: 20px;'>{{ warning_msg }}</strong>
-      <img src="/images/danger.svg" alt="">
-    </div>
-  </div>
+<div class="position-fixed alert alert-dismissible fade show" role="alert" style="margin-left:550px ; width: 600px;z-index:10">
+  <strong class='mr-auto' style='color: black;font-size: 20px; margin-left:60px'>{{ warning_msg }}</strong>
+  <img src="/images/danger.svg" alt="">
 </div>
 {{/if}}
 
 {{#if errors}}
 {{#each errors}}
-<div class=" alert alert-dismissible fade show" role="alert">
-  <strong class='mr-auto' style='color: black;font-size: 20px;'>{{ this.message }}</strong>
+<div class=" alert alert-dismissible fade show" role="alert" style="margin-left:550px ; width: 600px;z-index:10">
+  <strong class='mr-auto' style='color: black;font-size: 20px;margin-left:60px'>{{ this.message }}</strong>
   <img src="/images/danger.svg" alt="">
 </div>
 {{/each}}
