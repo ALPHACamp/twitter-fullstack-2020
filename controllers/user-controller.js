@@ -23,21 +23,25 @@ const userController = {
     res.render('register')
   },
   signUp: (req, res, next) => {
-
-    if (req.body.password !== req.body.checkPassword) throw new Error('請確認密碼!')
-    if (req.body.name.length > 50) throw new Error('字數超出上限！')
-
-    Promise.all([User.findOne({ where: { email: req.body.email } }), User.findOne({ where: { account: req.body.account } })])
+    const { account, name, email, password, checkPassword } = req.body
+    const emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+    if (!account || !email || !password) throw new Error('請確實填寫欄位!')
+    if (password !== checkPassword) throw new Error('請確認密碼!')
+    if (name.length > 50) throw new Error('字數超出上限！')
+    if (email.search(emailRule) == -1) throw new Error('請確認Email格式!')
+    Promise.all([User.findOne({ where: { email: email } }), User.findOne({ where: { account: account } })])
       .then(([userEmail, userAccount]) => {
         if (userEmail) throw new Error('email 已重複註冊！')
         if (userAccount) throw new Error('account 已重複註冊！')
-        return bcrypt.hash(req.body.password, 10)
+        return bcrypt.hash(password, 10)
       })
       .then(hash => User.create({
-        account: req.body.account,
-        name: req.body.name,
-        email: req.body.email,
-        password: hash
+        account: account,
+        name: name,
+        email: email,
+        password: hash,
+        avatar: 'https://www.teepr.com/wp-content/uploads/2018/01/medish.jpg',
+        cover: 'https://storage.inewsdb.com/7a4fac5af8d264b429ce19d9d1c49281.jpg'
       }))
       .then(() => {
         req.flash('success_message', '成功註冊帳號!')
@@ -63,7 +67,11 @@ const userController = {
   putSetting: (req, res, next) => {
     const id = Number(req.params.id)
     const { account, name, email, password, passwordCheck } = req.body
+    const emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+    
     if (!account) throw new Error('請輸入帳號!')
+    if (!email) throw new Error('請輸入Email!')
+    if (email.search(emailRule) == -1) throw new Error('請確認Email格式!')
     if (!password) throw new Error('請輸入密碼!')
     if (password !== passwordCheck) throw new Error('請確認密碼!')
     Promise.all([
@@ -74,13 +82,13 @@ const userController = {
       .then(([userId, userAccount, userEmail]) => {
         if (req.user.id !== id) throw new Error("無法編輯他人資料!")
         if (!userId) throw new Error("使用者不存在!")
-        if (userAccount.id !== userId.id) {
-          if (userAccount) {
+        if (!userAccount == null) {
+          if (userAccount.id !== userId.id) {
             throw new Error("account 已重複註冊！")
           }
         }
-        if (userEmail.id !== userId.id) {
-          if (userEmail) {
+        if (!userEmail == null ) {
+          if (userEmail.id !== userId.id) {
             throw new Error("email 已重複註冊！")
           }
         }
