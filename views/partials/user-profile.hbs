@@ -47,52 +47,75 @@ height: 200px; " src="{{ user.cover }}" alt="{{ user.name }}">
           <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
-              <div class="modal-content">
+              <div class="modal-content" style="width: 634px;
+height: 610px;border-radius: 20px;">
+                <div class="modal-header" style="left: 0%;right: 0%;height:49px; bottom: 81%;">
+                  <button type="button" class="close ml-0 pl-0" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <p
+                  style="width:200px; margin-top:-35px; margin-left:50px;color: #1C1C1C;font-weight: 700;font-size: 18px;">
+                  編輯個人資料</p>
                 <div class="modal-body">
 
                   {{!-- 提交表單 --}}
                   <form action="/users/{{ user.id }}/edit" method="POST" enctype="multipart/form-data">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <span>編輯個人資料</span>
-                    <button class="btn btn-block mt-4"
-                      style="border-radius: 50px; background-color:#FF6600; color: white; width:100px; height: 46px;padding: 8px 24px;"
-                      type="submit">儲存</button>
+                    <button class=" btn tweet_btn" type="submit"
+                      style='width:70px; background-color: #FF6600;border-radius:100px; color:white; font-weight:bold; font-size:18px; right: 15px; bottom:15px;margin-top:-120px'>儲存</button>
                     <div class="form-group">
-                    {{!-- TODO:是否要做上傳的圖片預覽? --}}
+                      {{!-- TODO:是否要做上傳的圖片預覽? --}}
 
                       {{!-- cover 背景上傳 --}}
                       <div class="form-row mb-3">
+                        <img class="card-img-top edit_cover"
+                          style="width:630px; border-radius: 0%;margin-left:-14px; height: 200px;margin-top:-44px ;position:relative"
+                          src="{{ user.cover }}" alt="{{ user.name }}">
                         <label class="form-label" for="cover">
-                          <img src=" {{ user.cover }}" alt="" id="coverImg">
+                          <img style='position: absolute;left:262px; top:80px; z-index:3;width:35px '
+                            src="/images/上傳圖檔.svg" alt="">
+
+
+                          <img style='position: absolute;left:300px; top:85px; z-index:3;width:28px'
+                            src="/images/叉叉.svg" alt="">
                         </label>
-                        <input class="form-control-file" type="file" id="cover" name="cover" type="hidden" style="display: none;">
+                        <input class="form-control-file" type="file" id="cover" name="cover" type="hidden"
+                          style="display: none;">
+
                       </div>
+
                       {{!-- 刪除背景 --}}
                       {{!-- <div class="form-row mb-3">
                         <label class="form-label" for="cover">刪除背景</label>
-                        <input class="form-control-file" type="file" id="cover" name="cover" type="hidden" style="display: none;">
+                        <input class="form-control-file" type="file" id="cover" name="cover" type="hidden"
+                          style="display: none;">
                       </div> --}}
 
                       {{!-- avatar 頭像 --}}
                       <div class="form-row mb-3">
+                        <img src="{{ user.avatar }}" class="border-avatar"
+                          style="border-radius: 50%; height: 100px; width: 100px;position:relative;margin-left:-255px ;margin-top:-255px"
+                          alt="{{ user.name }}">
                         <label class="form-label" for="avatar">
-                          <img src=" {{ user.avatar }}" alt="user-picture" class="rounded-circle" id="avatarImg"
-                        style="width: 64px; height:64px;">
+                          <img style='position: absolute; left:45px; top:200px;margin-top:-22px; z-index:3;width:35px'
+                            src="/images/上傳圖檔.svg" alt="">
                         </label>
-                        <input class="form-control-file" type="file" id="avatar" name="avatar" type="hidden" style="display: none;">
+                        <input class="form-control-file" type="file" id="avatar" name="avatar" type="hidden"
+                          style="display: none;">
                       </div>
                     </div>
 
+
                     <div class="form-row mb-3">
-                      <label class="form-label" for="name">名稱</label>
-                      <input class="form-control" type="text" name="name" id="name" placeholder="Enter name"
+                      <label class="form-label" for="name" style="color: #696974;">名稱</label>
+                      <input class="form-control login-input" type="text" name="name" id="name" placeholder="Enter name"
                         value="{{ user.name }}" maxlength="50" required>
                     </div>
 
                     <div class="form-row mb-3">
-                      <label class="form-label" for="introduction">自我介紹</label>
-                      <textarea class="form-control" name="introduction" id="introduction" row="5" maxlength="160"
-                        placeholder="輸入自介" required>{{ user.introduction }}</textarea>
+                      <label class="form-label" for="introduction" style="color: #696974;">自我介紹</label>
+                      <textarea class="form-control login-input" name="introduction" id="introduction" row="5"
+                        maxlength="160" placeholder="輸入自介" required>{{ user.introduction }}</textarea>
                     </div>
                     {{!-- <button class="btn btn-block mt-4"
                       style="border-radius: 50px; background-color:#FF6600; color: white; width:356px; height: 46px;padding: 8px 24px;"
@@ -105,6 +128,7 @@ height: 200px; " src="{{ user.cover }}" alt="{{ user.name }}">
               </div>
             </div>
           </div>
+
 
 
           {{else}}
@@ -149,15 +173,15 @@ height: 200px; " src="{{ user.cover }}" alt="{{ user.name }}">
 </div>
 
 <script>cover.onchange = evt => {
-  const [file] = cover.files
-  if (file) {
-    coverImg.src = URL.createObjectURL(file)
-  }
-}</script>
+    const [file] = cover.files
+    if (file) {
+      coverImg.src = URL.createObjectURL(file)
+    }
+  }</script>
 
 <script>avatar.onchange = evt => {
-  const [file] = avatar.files
-  if (file) {
-    avatarImg.src = URL.createObjectURL(file)
-  }
-}</script>
+    const [file] = avatar.files
+    if (file) {
+      avatarImg.src = URL.createObjectURL(file)
+    }
+  }</script>
