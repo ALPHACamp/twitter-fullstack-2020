@@ -9,7 +9,7 @@
     "dev": "NODE_ENV=development nodemon app.js",
     "devWin": "cross-env NODE_ENV=development nodemon app.js",
     "lint": "eslint \"**/*.js\" --fix",
-    "test": "NODE_ENV=test mocha test --exit --recursive --timeout 5000",
+    "test": "mocha test --exit --recursive --timeout 5000",
     "testTweet": "NODE_ENV=test mocha test/requests/tweet.spec.js --exit --recursive",
     "testReply": "NODE_ENV=test mocha test/requests/reply.spec.js --exit --recursive"
   },
