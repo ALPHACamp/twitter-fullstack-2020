@@ -241,7 +241,7 @@ const userController = {
             include: [
               {
                 model: Tweet,
-                attributes: ['description'],
+                attributes: ['id', 'description'],
                 include: [
                   {
                     model: User,
@@ -253,7 +253,7 @@ const userController = {
           },
           {
             model: Tweet,
-            attributes: ['description', 'createdAt'],
+            attributes: ['id', 'description', 'createdAt'],
             order: ['createdAt', 'ASC']
           },
           { model: User, as: 'Followings', attributes: ['id'] },

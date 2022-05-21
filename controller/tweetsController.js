@@ -72,6 +72,7 @@ const tweetsController = {
       result.isLiked = tweet.LikedBy.some(item => item.id === loginUserId)
       const replies = await Reply.findAll({
         where: { tweetId },
+        order: [['createdAt', 'DESC']],
         include: {
           model: User,
           attributes: ['name', 'account', 'avatar']
@@ -125,29 +126,6 @@ const tweetsController = {
       next(err)
     }
   },
-  createFakePage: (req, res, next) => {
-    try {
-      return res.render('createFake')
-    } catch (err) {
-      next(err)
-    }
-  },
-  replyFakePage: async (req, res, next) => {
-    const tweetId = Number(req.params.tweetId)
-    const tweet = await Tweet.findByPk(tweetId, {
-      include: {
-        model: User,
-        attributes: ['name', 'account', 'avatar']
-      },
-      raw: true,
-      nest: true
-    })
-    try {
-      return res.render('replyFake', tweet)
-    } catch (err) {
-      next(err)
-    }
-  },
   addReply: async (req, res, next) => {
     const TweetId = Number(req.params.tweetId)
     const UserId = helpers.getUser(req) && helpers.getUser(req).id
@@ -163,7 +141,7 @@ const tweetsController = {
         TweetId,
         comment
       })
-      return res.redirect('/tweets')
+      return res.redirect('back')
     } catch (err) {
       next(err)
     }
