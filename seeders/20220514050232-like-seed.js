@@ -13,13 +13,23 @@ module.exports = {
         { type: queryInterface.sequelize.QueryTypes.SELECT }
       )
     ])
+    const combinationArray=[]
+    for(const u of userIds){
+      for(const t of tweetIds){
+        combinationArray.push([u.id,t.id])
+      }
+    }
     return queryInterface.bulkInsert('Likes',
-      Array.from({length:tweetIds.length},(element,index)=>({
-        UserId:Math.floor(Math.random() * (userIds.length - 1) + 1),
-        TweetId:tweetIds[index%tweetIds.length].id,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }))
+      Array.from({length:tweetIds.length},()=>{
+        const index=Math.floor(Math.random() * combinationArray.length)
+        const [UserId,TweetId]=combinationArray.splice(index,1)[0]
+        return {
+          UserId,
+          TweetId,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
+      })
       , {});
   },
 
