@@ -12,7 +12,7 @@ const userList = [{
   role: 'admin',
   avatar: 'https://loremflickr.com/320/240/human',
   cover: 'https://loremflickr.com/320/240/',
-  introduction: faker.lorem.text()
+  introduction: faker.lorem.text().slice(0,139)
 }]
 for(let i=0;i<5;i++){
   userList.push({
@@ -26,7 +26,7 @@ for(let i=0;i<5;i++){
     role: 'user',
     avatar: 'https://loremflickr.com/320/240/avatar',
     cover: 'https://loremflickr.com/320/240/scenery',
-    introduction: faker.lorem.text()
+    introduction: faker.lorem.text().slice(0,139)
   })
 }
 module.exports = {
