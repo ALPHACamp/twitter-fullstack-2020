@@ -435,22 +435,22 @@ const userController = {
         req.flash('error_messages', '密碼與密碼再確認不相符 !')
         return res.redirect('back')
       }
-      if (account.length > 50) {
-        req.flash('error_messages', '帳號長度限制50字元以內 !')
-        return res.redirect('back')
-      }
+      // if (account.length > 50) {
+      //   req.flash('error_messages', '帳號長度限制50字元以內 !')
+      //   return res.redirect('back')
+      // }
       if (name.length > 50) {
         req.flash('error_messages', '名稱長度限制50字元以內 !')
         return res.redirect('back')
       }
-      if (password.length > 50) {
-        req.flash('error_messages', '密碼長度限制50字元以內 !')
-        return res.redirect('back')
-      }
-      if (confirmPassword.length > 50) {
-        req.flash('error_messages', '密碼再確認長度限制50字元以內 !')
-        return res.redirect('back')
-      }
+      // if (password.length > 50) {
+      //   req.flash('error_messages', '密碼長度限制50字元以內 !')
+      //   return res.redirect('back')
+      // }
+      // if (confirmPassword.length > 50) {
+      //   req.flash('error_messages', '密碼再確認長度限制50字元以內 !')
+      //   return res.redirect('back')
+      // }
       if (userId !== queryUserId) {
         req.flash('error_messages', '您沒有權限編輯使用者 !')
         return res.redirect('back')

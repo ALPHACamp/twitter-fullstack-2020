@@ -2,44 +2,39 @@
   <div class='container user-homepage'>
     <div class="profile-setting d-flex flex-column justify-content-between">{{> leftColumn}}</div>
     <div class="main">
-      <div class='user-header d-flex flex-row align-items-center'>
-        <div class="header-text d-flex flex-column">
-          <h5><b>帳戶設定</b></h5>
-        </div>
+      <div class='user-tweets-header'>
+        <h4 class="mb-0">帳戶設定</h4>
       </div>
-      <div class="user-info">
+      <div class="user-setting">
         {{!-- <form action="/api/users/{{queryUser.id}}" method="POST" class="user-info-form"> --}}
         <form action="/users/{{queryUser.id}}/setting?_method=PUT" method="POST" class="user-info-form">
-          <div class="form-floating">
-            <input type="text" class="form-control" id="user-edit-account" name="account" placeholder="" value="{{queryUser.account}}" maxlength="50" required>
-            <label for="user-edit-account">帳號</label>
-            <p class="text-end"><span class="user-edit-account-counts">{{queryUser.account.length}}</span>/50</p>
+        <div class="user-profile-texts d-flex flex-column align-items-end">
+          <div class="form-label">
+            <label for='user-edit-account'>帳號</label>
+            <input id='user-edit-account' name='account' type='text' class='form-control' placeholder='請輸入帳號' value='{{queryUser.account}}' required/>            
           </div>
-          <div class="form-floating">
-            <input type="text" class="form-control" id="user-edit-name" name="name" placeholder="" value="{{queryUser.name}}" maxlength="50">
+          <div class="form-label">
             <label for="user-edit-name">名稱</label>
-            <p class="text-end"><span class="user-edit-name-counts">{{queryUser.name.length}}</span>/50</p>
+            <input type="text" class="form-control" id="user-edit-name" name="name" placeholder="請輸入使用者名稱" value="{{queryUser.name}}" maxlength="50">
           </div>
-          <div class="form-floating">
-            <input type="email" class="form-control" id="user-edit-email" name="email" placeholder="" value="{{queryUser.email}}" maxlength="50" required>
+          <div class="form-label">
             <label for="user-edit-email">Email</label>
-            <p class="text-end"><span class="user-edit-email-counts">{{queryUser.email.length}}</span>/50</p>
+            <input type="email" class="form-control" id="user-edit-email" name="email" placeholder="請輸入Email" value="{{queryUser.email}}" required>
           </div>
-          <div class="form-floating">
-            <input type="password" class="form-control" id="user-edit-password" name="password" placeholder="" value="" maxlength="50" >
+          <div class="form-label">
             <label for="user-edit-password">密碼</label>
-            <p class="text-end"><span class="user-edit-password-counts">0</span>/50</p>
+            <input type="password" class="form-control" id="user-edit-password" name="password" placeholder="請設定密碼" value="">
           </div>
-          <div class="form-floating">
-            <input type="password" class="form-control" id="user-edit-confirmPassword" name="confirmPassword" placeholder="" value="" maxlength="50" >
+          <div class="form-label">
             <label for="user-edit-confirmPassword">密碼再確認</label>
-            <p class="text-end"><span class="user-edit-confirmPassword-counts">0</span>/50</p>
+            <input type="password" class="form-control" id="user-edit-confirmPassword" name="confirmPassword" placeholder="請再次輸入密碼" value="" >
           </div>
           <button type="submit" class="btn btn-primary user-edit-save-button" data-id="{{queryUser.id}}">儲存</button>
+        </div>          
         </form>
       </div>
     </div>
   </div> 
 </div>
 
-<script src="/javascripts/user-edit.js"></script>
+{{!-- <script src="/javascripts/user-edit.js"></script> --}}

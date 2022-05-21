@@ -52,6 +52,9 @@ i.user-like{
   width: 25px;
   background-size: 320px;
 }
+.reply-buttons i.user-like {
+  background-position: -105px -122px;
+}
 .reply-buttons button:hover i.comment {
   background-position: -23px -157px;
 }
@@ -130,4 +133,18 @@ i.btn-ring:hover, i.btn-ring-active{
   top: 185px;
   left: 77px;
   z-index: 1;
+}
+.admin-main .counting i{
+  height: 24px;
+  width: 24px;
+  margin-right: 5px;
+}
+.admin-main i.like{
+  background-position: -50px -98px;
+  background-size: 260px;
+}
+.admin-main i.comment{
+  background-position: -150px -128px;
+  background-size: 330px;
+  
 }
