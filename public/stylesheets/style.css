@@ -154,54 +154,67 @@ a:hover {
   position: fixed;
   top: 10px;
 }
-
-.tab-anchor {
-  width: 165px;
-  border-bottom: 0px !important;
+.left-sidebar {
+  padding-right: 0;
 }
-
+.logo-block {
+  padding-right: 7em;
+}
 .logo {
-  position: relative;
-  left: 1.3em;
+  height: 50px;
+  width: 50px;
+  border-radius: 50px;
 }
-
-.tab-icon {
+.tab-block {
+  border: 0px !important;
+  padding-right: 2.2em;
+}
+.tab-link {
   width: 130px;
   border-bottom: 0px !important;
-  color: #FF6600;
+  color: black !important;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
-
-.tab-item {
-  min-width: max-content;
+.tab-link.active {
+  color: #FF6600 !important;
 }
-
+.tab-icon {
+  width: 18px;
+  height: 18px;
+}
+.btn-block {
+  margin-top: 0.5em;
+}
 .left-sidebar-btn {
+  margin-top: 0.5em;
   height: 40px;
-  width: 150px;
+  width: 178px;
   border-radius: 50px;
   background: #FF6600;
   border: #FF6600;
 }
-
 .logout-anchor {
-  min-width: 180px;
-  border-bottom: 0px !important;
   position: fixed;
   bottom: 5px;
-  left: 15.8%;
+  left: 9.5em;
 }
 
 /* right-sidebar  */
 .right-sidebar-anchor {
-  width: 18%;
+  width: 19%;
   position: fixed;
-  top: 10px;
+  top: 23px;
 }
-
+.following-header {
+  border-bottom: 1px solid #E6ECF0;
+}
 .right-sidebar-content {
   border-radius: 15px;
 }
-
+.right-bar-name {
+  width: 7em;
+}
 .right-user-name {
   font-size: 16px;
   margin: 0 0;

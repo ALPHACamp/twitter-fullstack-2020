@@ -1,11 +1,11 @@
 <div class="container-lg">
   <div class="row mt-2">
     {{!-- nav bar --}}
-    <div class="col-lg-3 left-sidebar d-flex justify-content-end">
+    <div class="col-lg-3 left-sidebar d-flex flex-column align-items-end">
       {{>left-sidebar route='tweets'}}
     </div>
     {{!-- main content --}}
-    <div class="col-lg-6 main-content d-flex flex-column justify-content-center">
+    <div class="col-lg-6 main-content d-flex flex-column justify-content-start">
       <div class="message">
         {{> messages}}
       </div>
