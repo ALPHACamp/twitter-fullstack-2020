@@ -22,57 +22,33 @@
 
 {{#if error_messages}}
   <div class='alert alert-danger d-flex align-items-center flash' role='alert'>
-    <svg
-      class='bi flex-shrink-0 me-2'
-      width='24'
-      height='24'
-      role='img'
-      aria-label='Danger:'
-    ><use xlink:href='#exclamation-triangle-fill'></use></svg>
     <div class='text'>{{error_messages}}</div>
+    <i class="error"></i>
   </div>
 {{/if}}
 {{#if errors_messages}}
   <div class='alert alert-danger d-flex align-items-center flash' role='alert'>
-    <svg
-      class='bi flex-shrink-0 me-2'
-      width='24'
-      height='24'
-      role='img'
-      aria-label='Danger:'
-    ><use xlink:href='#exclamation-triangle-fill'></use></svg>
     <div class="d-flex flex-column align-items-start justify-content-end">
       {{#each errors_messages }}
       <div class='block text'>{{this.message}}</div>
       {{/each}}
     </div>
+    <i class="error"></i>
   </div>
 {{/if}}
 {{#if success_messages}}
   <div class='alert alert-success d-flex align-items-center flash' role='alert'>
-    <svg
-      class='bi flex-shrink-0 me-2'
-      width='24'
-      height='24'
-      role='img'
-      aria-label='Success:'
-    ><use xlink:href='#check-circle-fill'></use></svg>
     <div class='text'>
       {{success_messages}}
     </div>
+    <i class="success"></i>
   </div>
 {{/if}}
 {{#if warning_messages}}
   <div class='alert alert-warning d-flex align-items-center flash' role='alert'>
-    <svg
-      class='bi flex-shrink-0 me-2'
-      width='24'
-      height='24'
-      role='img'
-      aria-label='Warning:'
-    ><use xlink:href='#exclamation-triangle-fill'></use></svg>
     <div class='text'>
       {{warning_messages}}
     </div>
+    <i class="warning"></i>
   </div>
 {{/if}}
