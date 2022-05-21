@@ -17,17 +17,23 @@
           top: 138px; left: 608;">
         <h1 class="h3 font-weight-normal mb-3">後台登入</h1>
       </div>
-      <div style="display: inline-block; width: 356px; height: 54px; position: absolute; top: 204px;">
-        <label class="form-label" for="account">帳號</label>
-        <input class="form-control" id="account" type="text" name="account" placeholder="請輸入帳號" required>
+      <div style="display: inline-block; position: absolute; height: 54px; width: 356px; top: 204px;
+      border-radius: 2px;">
+      <div style="display: flex; flex-direction: column">
+        <label class="input-form-label" for="account">帳號</label>
+        <input class="input-form" id="account" type="text" name="account" placeholder="請輸入帳號" required>
       </div>
-      <div style="display: inline-block; width: 356px; height: 54px; position: absolute; top: 290px;">
-        <label class="form-label" for="password">密碼</label>
-        <input class="form-control" id="password" type="password" name="password" placeholder="請輸入密碼" required>
+      </div>
+      <div
+        style="display: inline-block; position: absolute; height: 54px; width: 356px; top: 290px; border-radius: 2px;">
+        <div style="display: flex; flex-direction: column">
+          <label class="input-form-label" for="password">密碼</label>
+          <input class="input-form" id="password" type="password" name="password" placeholder="請輸入密碼" required>
+        </div>
       </div>
       <button class="btn btn-primary btn-block" type="submit"
         style="display: inline-block; width: 356px; height: 46px; position: absolute; top: 384px; background: #FF6600; border-radius: 50px;">登入</button>
-      <div style="position: absolute; top: 452px; left: 802px;">
+      <div style="position: absolute; top: 452px; margin-left: 200px;">
         <p><a href="/signin">前台登入頁</a></p>
       </div>
     </form>
