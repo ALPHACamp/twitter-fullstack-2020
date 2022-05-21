@@ -148,3 +148,14 @@ i.btn-ring:hover, i.btn-ring-active{
   background-size: 330px;
   
 }
+i.success, i.error{
+  height: 56px;
+  width: 56px;
+  background: url(/images/twitter_2022_message_icon.svg);
+}
+i.success {
+  background-position: 0 0;
+}
+i.error {
+  background-position: 0 -80px;
+}
