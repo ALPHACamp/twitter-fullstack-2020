@@ -12,8 +12,8 @@ module.exports = {
       cover: `https://loremflickr.com/570/200/scene/?random=${Math.random() * 100}`,
       introduction: faker.lorem.text().slice(0, 160),
       role: 'admin',
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       email: 'user1@example.com',
       password: await bcrypt.hash('12345678', 10),
@@ -23,8 +23,8 @@ module.exports = {
       cover: `https://loremflickr.com/570/200/scene/?random=${Math.random() * 100}`,
       introduction: faker.lorem.text().slice(0, 160),
       role: 'user',
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       email: 'user2@example.com',
       password: await bcrypt.hash('12345678', 10),
@@ -34,8 +34,8 @@ module.exports = {
       cover: `https://loremflickr.com/570/200/scene/?random=${Math.random() * 100}`,
       introduction: faker.lorem.text().slice(0, 160),
       role: 'user',
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       email: 'user3@example.com',
       password: await bcrypt.hash('12345678', 10),
@@ -45,8 +45,8 @@ module.exports = {
       cover: `https://loremflickr.com/570/200/scene/?random=${Math.random() * 100}`,
       introduction: faker.lorem.text().slice(0, 160),
       role: 'user',
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       email: 'user4@example.com',
       password: await bcrypt.hash('12345678', 10),
@@ -56,8 +56,8 @@ module.exports = {
       cover: `https://loremflickr.com/570/200/scene/?random=${Math.random() * 100}`,
       introduction: faker.lorem.text().slice(0, 160),
       role: 'user',
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       email: 'user5@example.com',
       password: await bcrypt.hash('12345678', 10),
@@ -67,8 +67,8 @@ module.exports = {
       cover: `https://loremflickr.com/570/200/scene/?random=${Math.random() * 100}`,
       introduction: faker.lorem.text().slice(0, 160),
       role: 'user',
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {})
   },
 

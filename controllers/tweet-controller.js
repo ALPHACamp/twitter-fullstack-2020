@@ -87,7 +87,7 @@ const tweetController = {
       .catch(err => next(err))
   },
   postTweet: (req, res, next) => {
-    const userId = helpers.getUser(req).id
+    const UserId = helpers.getUser(req).id
     const { description } = req.body
     if (!description) {
       req.flash('error_messages', '內容不可空白')
@@ -98,7 +98,7 @@ const tweetController = {
       return res.redirect('/tweets')
     }
     Tweet.create({
-      userId,
+      UserId,
       description
     })
       .then(() => {
@@ -108,7 +108,7 @@ const tweetController = {
       .catch(err => next(err))
   },
   postReply: (req, res, next) => {
-    const userId = helpers.getUser(req).id
+    const UserId = helpers.getUser(req).id
     const tweetId = req.params.id
     const comment = req.body.comment
     console.log('comment:', comment)
@@ -118,7 +118,7 @@ const tweetController = {
     }
     console.log('bypass')
     Reply.create({
-      userId,
+      UserId,
       TweetId: tweetId,
       comment
     })
