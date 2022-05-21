@@ -466,16 +466,20 @@ const userController = {
         return res.redirect('back')
       }
       if (account !== queryUser.account) {
-        const matchedAccount = await User.findAll({ where: { account } })
-        if (matchedAccount)req.flash('error_messages', '此帳號已被其他使用者使用了 !')
-        return res.redirect('back')
+        const matchedAccount = await User.findOne({ where: { account } })
+        if (matchedAccount) {
+          req.flash('error_messages', '此帳號已被其他使用者使用了 !')
+          return res.redirect('back')
+        }
       }
       if (email !== queryUser.email) {
-        const matchedEmail = await User.findAll({ where: { email } })
-        if (matchedEmail)req.flash('error_messages', '此 email 已被其他使用者使用了 !')
-        return res.redirect('back')
+        const matchedEmail = await User.findOne({ where: { email } })
+        if (matchedEmail) {
+          req.flash('error_messages', '此 email 已被其他使用者使用了 !')
+          return res.redirect('back')
+        }
       }
-      if (password && bcrypt.compareSync(password, queryUser.password)) {
+      if (password && await bcrypt.compareSync(password, queryUser.password)) {
         req.flash('error_messages', '新密碼不能與舊密碼相同 !')
         return res.redirect('back')
       }
@@ -484,6 +488,7 @@ const userController = {
       const updatedQueryUser = await queryUser.update({ account, name, email, password: hash })
       const data = updatedQueryUser.toJSON()
       delete data.password
+
       req.flash('success_messages', '成功儲存設定')
       return res.redirect('back')
     } catch (err) {
