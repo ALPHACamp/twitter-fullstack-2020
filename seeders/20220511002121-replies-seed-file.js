@@ -14,10 +14,10 @@ module.exports = {
       Array.from({ length: 150 }, (v, i) => {
         return {
           comment: faker.lorem.text(),
-          user_id: users[Math.floor(i % users.length)].id,
-          tweet_id: tweets[Math.floor(i / 3)].id,
-          created_at: new Date(),
-          updated_at: new Date()
+          UserId: users[Math.floor(i % users.length)].id,
+          TweetId: tweets[Math.floor(i / 3)].id,
+          createdAt: new Date(),
+          updatedAt: new Date()
         }
       })
     )

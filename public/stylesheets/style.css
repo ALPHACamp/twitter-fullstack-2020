@@ -265,8 +265,6 @@ a:hover {
 }
 
 .user-avatar {
-  font-size: 1.5em;
-  color: white;
   height: 140px;
   width: 141px;
   border: 4px white solid;
