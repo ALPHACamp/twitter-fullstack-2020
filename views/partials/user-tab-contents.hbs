@@ -74,7 +74,7 @@
     </div>
   {{/each}}
   {{#each likedTweets}}
-    <div class='tweet d-flex like-box'>
+    <div class='tweet d-flex {{#if isSelf}}like-box{{/if}}'>
       <a href='/users/{{this.Tweet.User.id}}/tweets'>
         <img class='avatar {{#ifCond ../user.id this.Tweet.User.id}}self-avatar{{/ifCond}}' src='{{this.Tweet.User.avatar}}' alt='{{this.Tweet.User.name}}' />
       </a>
@@ -97,14 +97,25 @@
               <span>{{this.Tweet.Replies.length}}</span>
           </button>
           {{! 以下為like }}
-          <button
-            type='button'
-            class='d-flex flex-row align-items-end like-submit-btn liked'
-            data-tweetId='{{this.Tweet.id}}'
-          >
-            <i class='like user-like'></i>
-            <span class='liked-numbers'>{{this.Tweet.LikedUsers.length}}</span>
-          </button>
+          {{#if this.isLiked}}
+            <button
+              type='button'
+              class='d-flex flex-row align-items-end like-submit-btn liked'
+              data-tweetId='{{this.Tweet.id}}'
+            >
+              <i class='like user-like'></i>
+              <span class='liked-numbers'>{{this.Tweet.LikedUsers.length}}</span>
+            </button>
+          {{else}}
+            <button
+              type='button'
+              class='d-flex flex-row align-items-end like-submit-btn'
+              data-tweetId='{{this.Tweet.id}}'
+            >
+              <i class='like'></i>
+              <span class='liked-numbers'>{{this.Tweet.LikedUsers.length}}</span>
+            </button>
+          {{/if}}
         </div>
       </div>
     </div>
