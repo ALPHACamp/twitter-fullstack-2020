@@ -31,11 +31,11 @@
             </a>
           </div>
           <div class="card-body tweet_cardbody" style="margin-left:-27px;height: 335px;">
-            <div class="popular_cardtitle" style="width:300px; margin-left:-12px;margin-top:7px">
+            <div class="popular_cardtitle" style="width:300px; margin-left:-12px;margin-top:7px; ">
               <a href="/users/{{ tweet.User.id }}" style='text-decoration: none;'>
-                <p class="popular_cardname">{{tweet.User.name}}</p>
+                <p class="popular_cardname" style="width:200px">{{tweet.User.name}}</p>
               </a>
-              <p class="popular_cardaccount" style="margin-top:-7px ;">@{{tweet.User.account}}</p>
+              <p class="popular_cardaccount" style="margin-top:-7px ;width:200px">@{{tweet.User.account}}</p>
             </div>
 
             <a style="text-decoration: none; color: #171725; ">
@@ -95,7 +95,7 @@
                             </p>
                           </div>
                           <div class="modaltweet_description">
-                            <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color: #171725;">
+                            <a href="#" style="text-decoration: none; color: #171725;">
                               <p style="maxlength=" 140";">
                                 {{ tweet.description }}
                               </p>
@@ -123,7 +123,7 @@
                           </a>
                         </div>
                         <div class="media-body" style="margin-left: 30px;">
-                          <form action="/tweets/{{ id }}/replies" id="tweets" method="post">
+                          <form action="/tweets/{{this.id}}/replies" id="tweets" method="post">
                             <div class="d-flex d-inline">
                               <textarea name="comment" id="tweet-content" rows="5" class="form-control"
                                 placeholder="推你的回覆" maxlength="140"
@@ -150,9 +150,7 @@
               <button class="tweets_btn" type="submit" style="background: transparent;border-width:0px; outline:none">
                 <img style="width:30px;" src="/images/紅心.svg" alt="">
                 {{#if tweet.Likes}}
-                {{ tweet.Likes}}
                 {{else}}
-                0
                 {{/if}}
               </button>
             </form>
@@ -161,9 +159,7 @@
               <button class="tweets_btn" type="submit" style="background: transparent;border-width:0px; outline:none">
                 <img style="width:30px;" src="/images/案讚數.svg" alt="">
                 {{#if tweet.Likes}}
-                {{ tweet.Likes}}
                 {{else}}
-                0
                 {{/if}}
               </button>
             </form>
@@ -200,7 +196,7 @@
                   </p>
                 </div>
                 <div class="tweet_description">
-                  <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color: #171725;">
+                  <a href="#" style="text-decoration: none; color: #171725;">
                     <p style="maxlength=" 140";">
                       {{ this.comment }}
                     </p>
@@ -208,14 +204,14 @@
                 </div>
                 <div class="tweet_icon">
                   {{!-- 回覆 --}}
-                  <span class=" me-1">
-                    <a href="#" style='text-decoration: none;' data-bs-toggle="modal"
-                      data-bs-target="#reply-tweet-{{this.id}}">
-                      <img src="/images/回覆框.svg" alt="">
+                    <a  style='text-decoration: none;color: #171725;'>
+                      <img style="width:20px ;" src="/images/回覆框.svg" alt="">
+                      0
                     </a>
 
                     <button type="button" style="background: transparent; border-width:0px; outline:none">
-                      <img src="/images/案讚數.svg" alt="">
+                      <img style="width:20px ;" src="/images/案讚數.svg" alt="">
+                      0
                     </button>
                 </div>
               </div>
