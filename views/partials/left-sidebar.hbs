@@ -1,35 +1,36 @@
 <div class="left-sidebar-anchor d-flex flex-column">
   {{!-- logo --}}
-  <div class="col mt-3">
-    <img src="/images/logo.png" class="avatar logo" alt="logo">
+  <div class="d-flex justify-content-end logo-block">
+    <img src="/images/logo.png" class="logo my-3" alt="logo">
   </div>
-  {{!-- tab --}}
-  <div class="d-flex tab-anchor">
-    <div class="mt-4 mx-2">
-      <div class="nav nav-tabs tab-anchor">
-          <a href="/tweets" class="nav-link tab-icon d-flex align-items-center {{#ifCond route 'tweets'}} active {{/ifCond}}">
-            <i class="fas fa-fw fa-home mx-1"></i>
-            <h5 class="mt-2 ms-3 tab-item d-flex justify-content-start">首頁</h5>
-          </a>
-          <a href="/users/{{user.id}}" class="nav-link tab-icon d-flex align-items-center {{#ifCond route 'user'}} active {{/ifCond}}">
-            <i class="fas fa-fw fa-user mx-1"></i>
-            <h5 class="mt-2 ms-3 tab-item d-flex justify-content-start">個人資料</h5>
-          </a>
-          <a href="/users/{{user.id}}/setting" class="nav-link tab-icon d-flex align-items-center {{#ifCond route 'setting'}} active {{/ifCond}}">
-            <i class="fas fa-fw fa-cog mx-1"></i>
-            <h5 class="mt-2 ms-3 tab-item d-flex justify-content-start">設定</h5>
-          </a>
-      </div>
-      <button class="text-white left-sidebar-btn" data-bs-toggle="modal" data-bs-target="#tweetModal">推文</button>
-
-      <a href="/logout" class="d-flex align-items-center logout-anchor">
-        <i class="fa-solid fa-arrow-right-from-bracket mx-1"></i>
-        <h5 class="mt-2 ms-3 d-flex justify-content-start" style="min-width: 130px;">登出</h5>
-      </a>
-
-    </div>
+  {{!-- tab item --}}
+  <div class="d-flex flex-column align-items-end nav tab-block">
+    <a href="/tweets" class="d-flex align-items-center tab-link {{#ifCond route 'tweets'}} active {{/ifCond}}">
+      <i class="fas fa-fw fa-home mx-1"></i>
+      <h5 class="mt-2 ms-3 tab-item d-flex justify-content-start">首頁</h5>
+    </a>
+    <a href="/users/{{user.id}}" class="d-flex align-items-center tab-link  {{#ifCond route 'user'}} active {{/ifCond}}">
+      <i class="fas fa-fw fa-user mx-1"></i>
+      <h5 class="mt-2 ms-3 tab-item d-flex justify-content-start">個人資料</h5>
+    </a>
+    <a href="/users/{{user.id}}/setting" class="d-flex align-items-center tab-link {{#ifCond route 'setting'}} active {{/ifCond}}">
+      <i class="fas fa-fw fa-cog mx-1"></i>
+      <h5 class="mt-2 ms-3 tab-item d-flex justify-content-start">設定</h5>
+    </a>
+  </div>
+  {{!-- post tweet btn --}}
+  <div class="d-flex justify-content-end btn-block">
+    <button class="text-white left-sidebar-btn" data-bs-toggle="modal" data-bs-target="#tweetModal">推文</button>
   </div>
 </div>
+{{!-- logout --}}
+<div class="logout-anchor d-flex flex-column align-items-end nav tab-block mt-auto">
+  <a href="/logout" class="d-flex align-items-center tab-link">
+    <i class="fa-solid fa-arrow-right-from-bracket mx-1"></i>
+    <h5 class="mt-2 ms-3 tab-item d-flex justify-content-start">登出</h5>
+  </a>
+</div>
+
 {{!-- tweets modal --}}
 <form action="/tweets" method="POST">
   <div class="modal fade" id="tweetModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
