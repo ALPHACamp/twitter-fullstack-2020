@@ -266,35 +266,6 @@ const userController = {
     } catch (err) {
       next(err)
     }
-  },
-  putUser: async (req, res, next) => {
-    try {
-      const UserId = helpers.getUser(req).id
-      const { name, introduction } = req.body
-      const { avatar , cover } = req.files
-      let uploadAvatar = ''
-      let uploadCover = ''
-      
-      if (avatar) {
-        uploadAvatar = await imgurFileHandler(avatar[0])
-      }
-      if (cover) {
-        uploadCover = await imgurFileHandler(cover[0])
-      }
-      const user = await User.findByPk(UserId)
-      if (!name) throw new Error("名稱不可空白！")
-      if (name.length > 50) throw new Error("字數超出上限！")
-      if (introduction.length > 160) throw new Error("字數超出上限！")
-        await user.update({
-        name,
-        introduction,
-        avatar: uploadAvatar || user.avatar,
-        cover: uploadCover || user.cover
-      })
-      res.redirect(`/users/${UserId}/tweets`)
-    } catch (err) {
-      next(err)
-    }
   }
 }
 module.exports = userController
