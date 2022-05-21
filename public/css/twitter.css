@@ -3,6 +3,7 @@
     cursor: pointer;
 }
 .opacityObject{
+    border-style: none;
     background-color:rgba(220,38,38,0);
 }
 .opacityObject:hover{

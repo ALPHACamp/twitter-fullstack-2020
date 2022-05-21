@@ -15,21 +15,18 @@
                 <p style="word-wrap: break-word; word-break: normal;">{{tweet.description}}</p>
             </div>
             <div class="d-flex">
-                <div class="col">
+                <div >
                     <button type="button" class="border-0 opacityObject" data-bs-toggle="modal" data-bs-target="#tweet{{tweet.id}}Reply"><i class="far fa-comment"></i> {{ tweet.totalReply}}</button>
                 </div>
-                <div class="col">
+                <div class="col-1"></div>
+                <button class="opacityObject" id="likeBtn{{tweet.id}}" onclick="toggleLike({{tweet.id}})">
                     {{#if tweet.isLiked}}
-                        <form method="POST" action="/tweets/{{tweet.id}}/unlike">
-                            <button type="submit" class="border-0  opacityObject"><i class="fas fa-heart text-danger text-danger"></i> {{tweet.totalLike}}</button>
-                        </form>
+                        <i class="fas fa-heart text-danger" id="likeBtn{{tweet.id}}Icon"></i><span id="likeBtn{{tweet.id}}Number"> {{tweet.totalLike}}</span>
                     {{else}}
-                        <form method="POST" action="/tweets/{{tweet.id}}/like">
-                            <button type="submit" class="border-0  opacityObject"><i class="far fa-heart"></i> {{tweet.totalLike}}</button> 
-                        </form>                        
+                        <i class="far fa-heart" id="likeBtn{{tweet.id}}Icon"></i><span id="likeBtn{{tweet.id}}Number"> {{tweet.totalLike}}</span>
                     {{/if}}
-                </div>
-                <div class="col-10" onclick="location.href='/tweets/{{tweet.id}}/replies';"></div>
+                </button>
+                <div class="col" onclick="location.href='/tweets/{{tweet.id}}/replies';"></div>
             </div>
         </div>
     </div>
