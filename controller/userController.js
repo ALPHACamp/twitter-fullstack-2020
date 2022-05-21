@@ -266,6 +266,11 @@ const userController = {
               }
             ]
           },
+          {
+            model: Tweet,
+            attributes: ['id', 'description', 'createdAt'],
+            order: ['createdAt', 'ASC']
+          },
           { model: User, as: 'Followings', attributes: ['id'] },
           { model: User, as: 'Followers', attributes: ['id'] }
         ],
