@@ -449,10 +449,11 @@ a:hover > .user-name, .reply-text a:hover, .follow-tweet a:hover .user-name{
 .follow-tweet .secondary-text{
     color: #92929d;
 }
-.follow-tweet button, .home-post-btn, .side-post-btn, .post-user button, .reply-modal-post-btn, .user-edit-modal-save-button{
+.follow-tweet button, .home-post-btn, .side-post-btn, .post-user button, .reply-modal-post-btn, .user-edit-modal-save-button, .user-edit-modal-button, .follow-btn{
     font-size: 1rem !important;
     height: 40px;
     padding: 8px 16px;
+    line-height: 24px !important;
 }
 
 .user-tweets-header{

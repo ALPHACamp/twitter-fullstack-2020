@@ -58,9 +58,11 @@ i.user-like{
 .reply-buttons button:hover i.comment {
   background-position: -23px -157px;
 }
-
 .reply-buttons button:hover i.like {
   background-position: -64px -157px;
+}
+.reply-buttons button:hover i.user-like {
+  background-position: -105px -122px;
 }
 .profile-setting i{
   height: 24px;
@@ -148,7 +150,7 @@ i.btn-ring:hover, i.btn-ring-active{
   background-size: 330px;
   
 }
-i.success, i.error{
+i.success, i.error, i.warning{
   height: 56px;
   width: 56px;
   background: url(/images/twitter_2022_message_icon.svg);
@@ -158,4 +160,7 @@ i.success {
 }
 i.error {
   background-position: 0 -80px;
+}
+i.warning {
+  background-position: -1px -158px;
 }
