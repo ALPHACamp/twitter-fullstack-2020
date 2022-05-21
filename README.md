@@ -44,8 +44,8 @@ Alphitter 為 alphacamp 學期三團體協作專案，主要目的為依照 User
 ```
 $ pwd
 [current_path]
-$ git clone https://github.com/kuangtsao/ac-restaurantList.git
-$ cd ac-restaurantList
+$ git clone https://github.com/kuangtsao/twitter-fullstack-2020.git
+$ cd twitter-fullstack-2020
 ```
 2. 透過 `npm install` 安裝需要的 package
 ```
