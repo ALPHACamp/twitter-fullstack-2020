@@ -10,7 +10,7 @@
 
     {{!-- 使用者的所有replies 和 推文 replies先 推文後 createdAt DESC --}}
     <div class="card tweets_card" style="margin-top:301px;">
-      {{#each user.Replies }}
+      {{#each replies }}
       <div class="row row-cols-1 row-cols-md-1">
         <div class="col">
           <div class="tweet_card">
@@ -53,7 +53,7 @@
       </div>
       {{/each}}
 
-      {{#each user.Tweets }}
+      {{!-- {{#each user.Tweets }}
       <div class=" row row-cols-1 row-cols-md-1">
                     <div class="col">
                       <div class="tweet_card">
@@ -86,7 +86,7 @@
                 </div>
               </div>   
             </div>
-            {{/each}}
+            {{/each}} --}}
     </div>
 
 </div>

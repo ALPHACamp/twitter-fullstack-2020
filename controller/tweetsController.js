@@ -8,13 +8,18 @@ const tweetsController = {
       const tweetList = await Tweet.findAll({
         order: [['createdAt', 'DESC']],
         include: [
-          { model: User, attributes: ['name', 'account', 'avatar'] },
+          {
+            model: User,
+            attributes: ['name', 'account', 'avatar'],
+            where: {
+              isAdmin: false
+            }
+          },
           { model: User, as: 'LikedBy' },
           { model: Reply, attributes: ['id'] },
           { model: Like, attributes: ['id'] }
         ]
       })
-
       const tweets = tweetList
         .map(tweet => {
           return tweet.get({ plain: true })
@@ -60,7 +65,13 @@ const tweetsController = {
       const { tweetId } = req.params
       const tweet = await Tweet.findByPk(tweetId, {
         include: [
-          { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
+          {
+            model: User,
+            attributes: ['id', 'name', 'account', 'avatar'],
+            where: {
+              isAdmin: false
+            }
+          },
           { model: User, as: 'LikedBy' },
           { model: Reply, attributes: ['id'] },
           { model: Like, attributes: ['id'] }

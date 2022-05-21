@@ -10,7 +10,7 @@
 
 
     <div class="card tweets_card" style="margin-top:301px;">
-      {{#each user.Likes}}
+      {{#each tweets}}
       <div class="row row-cols-1 row-cols-md-1">
         <div class="col">
           <div class="tweet_card">
@@ -32,7 +32,7 @@
                 </p>
               </div>
               <div class="tweet_description">
-                <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color: #171725;">
+                <a href="/tweets/{{this.Tweet.id}}/replies" style="text-decoration: none; color: #171725;">
                   <p style="maxlength=" 140";">
                     {{this.Tweet.description}}
                   </p>
@@ -42,7 +42,7 @@
               <div class="tweet_icon">
                 {{!-- 回覆 --}}
                 <span class=" me-1">
-                  <a href="/tweets/{{ this.id }}/replies" style='text-decoration: none;'>
+                  <a href="/tweets/{{ this.Tweet.id }}/replies" style='text-decoration: none;'>
                     <img src="/images/回覆框.svg" alt="">
                   </a>
 

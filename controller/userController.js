@@ -157,8 +157,11 @@ const userController = {
   getLikes: async (req, res, next) => {
     try {
       const userId = req.params.id
-      const user = await User.findByPk(userId, {
-        where: { isAdmin: false },
+      const user = await User.findOne({
+        where: {
+          id: userId,
+          isAdmin: false
+        },
         include: [
           {
             model: Like,
@@ -166,19 +169,28 @@ const userController = {
               {
                 model: Tweet,
                 include: [
-                  { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
+                  {
+                    model: User,
+                    attributes: ['id', 'name', 'account', 'avatar'],
+                    where: {
+                      isAdmin: false
+                    }
+                  },
                   { model: Reply, attributes: ['id'] },
                   { model: User, as: 'LikedBy' }
                 ]
               }
             ]
           },
+          { model: Tweet, attributes: ['id'] },
           { model: User, as: 'Followings', attributes: ['id'] },
           { model: User, as: 'Followers', attributes: ['id'] }
         ],
         order: [[Like, 'createdAt', 'DESC']]
       })
       if (!user) throw new Error("user didn't exist!")
+      const tweets = user.toJSON().Likes.filter(r => r.Tweet)
+      console.log('tweets', tweets)
       const isFollowed =
         helpers.getUser(req) &&
         helpers.getUser(req).Followings &&
@@ -209,7 +221,7 @@ const userController = {
 
       return res.render('likes', {
         user: user.toJSON(),
-        tweets: user.toJSON().Likes,
+        tweets,
         isFollowed,
         topUsers,
         page: 'user'
@@ -245,22 +257,21 @@ const userController = {
                 include: [
                   {
                     model: User,
-                    attributes: ['id', 'account']
+                    attributes: ['id', 'account'],
+                    where: {
+                      isAdmin: false
+                    }
                   }
                 ]
               }
             ]
-          },
-          {
-            model: Tweet,
-            attributes: ['id', 'description', 'createdAt'],
-            order: ['createdAt', 'ASC']
           },
           { model: User, as: 'Followings', attributes: ['id'] },
           { model: User, as: 'Followers', attributes: ['id'] }
         ],
         order: [[Reply, 'createdAt', 'DESC']]
       })
+      const replies = user.toJSON().Replies.filter(r => r.Tweet)
       if (!user) throw new Error("user didn't exist!")
       const isFollowed =
         helpers.getUser(req) &&
@@ -291,6 +302,7 @@ const userController = {
         .slice(0, 10)
       return res.render('replies', {
         user: user.toJSON(),
+        replies,
         isFollowed,
         topUsers,
         page: 'user'
@@ -508,17 +520,6 @@ const userController = {
     } catch (err) {
       next(err)
     }
-  },
-  editUserFakePage: (req, res, next) => {
-    const userId = helpers.getUser(req) && helpers.getUser(req).id
-
-    if (userId !== Number(req.params.id)) {
-      req.flash('error_messages', '只能改自己的資料！')
-      return res.redirect(`/users/${userId}/edit`)
-    }
-    return User.findByPk(userId, { raw: true })
-      .then(user => res.render('editUserFake', { user }))
-      .catch(err => next(err))
   },
   editUserPage: (req, res, next) => {
     const userId = helpers.getUser(req) && helpers.getUser(req).id
