@@ -89,6 +89,15 @@ create database ac_twitter_workspace_test;
 ```
  alphitter listening on port 3000
 ```
+## 共用帳號
+
+- 第一組帳號有**管理者 (Admin)** 權限：
+  - email: root@example.com
+  - password: 12345678
+- 第二組帳號有**使用者 (User)** 權限：
+  - email: user1@example.com
+  - password: 12345678
+
 ## 開發工具
 axios 0.27.2  
 bcrypt-nodejs 0.0.3  
