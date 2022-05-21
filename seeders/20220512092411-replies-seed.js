@@ -1,6 +1,6 @@
 'use strict';
 const faker= require('faker')
-const userIdsQueryString='SELECT `id` FROM `Users`;'
+const userIdsQueryString="SELECT `id` FROM `Users`WHERE role='user';"
 const tweetIdsQueryString='SELECT `id` FROM `Tweets`;'
 
 module.exports = {
