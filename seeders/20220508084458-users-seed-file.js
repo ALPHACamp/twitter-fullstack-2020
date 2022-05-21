@@ -28,7 +28,7 @@ module.exports = {
     )
     await queryInterface.bulkInsert(
       'Users',
-      Array.from({ length: 5 }, (_, index) => ({
+      Array.from({ length: 12 }, (_, index) => ({
         email: `user${index + 1}@example.com`,
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10)),
         account: `user${index + 1}`,

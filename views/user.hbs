@@ -76,17 +76,19 @@
               <img id="avatar-upload-img" class='avatar' src='' alt='{{queryUser.name}} avatar' />
             </div>
           </div>
-          <div class="form-floating">
-            <input type="text" class="form-control" id="user-edit-modal-name" value="" maxlength="50">
-            <label for="user-edit-modal-name">名稱</label>
+          <div class="user-profile-texts">
+            <div class="form-label">
+              <label for="user-edit-modal-name">名稱</label>
+              <input type="text" class="form-control" id="user-edit-modal-name" value="" maxlength="50">            
+            </div>
             <div class="text-end">
               <span class="secondary-text"><span class="user-edit-modal-name-counts">0</span>/50</span>
               <span class="alert-text">字數不可超過 50 字</span>
             </div>
-          </div>
-          <div class="form-floating">
-            <textarea class="form-control" id="user-edit-modal-introduction" style="height: 100px" maxlength="160"></textarea>
-            <label for="user-edit-modal-introduction">自我介紹</label>
+            <div class="form-label">
+              <label for="user-edit-modal-introduction">自我介紹</label>
+              <textarea class="form-control" id="user-edit-modal-introduction" maxlength="160"></textarea>            
+            </div>
             <div class="text-end">
               <span class="secondary-text"><span class="user-edit-modal-introduction-counts">0</span>/160</span>
               <span class="alert-text">字數不可超過 160 字</span>

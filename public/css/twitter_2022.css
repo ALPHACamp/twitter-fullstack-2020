@@ -30,10 +30,11 @@ input:-webkit-autofill {
     box-shadow: 0 0 0px 1000px #F5F8FA inset !important;
 }
 button {
-    font-weight: 500 !important;
+    font-weight: 400 !important;
     background-color: #ff6600 !important;
     border: none !important;
-    font-size: 1.15rem !important;
+    font-size: 20px !important;
+    line-height: 30px !important;
     border-radius: 50px !important;
 }
 button:hover {
@@ -120,11 +121,11 @@ h5 {
     border-bottom: 2px solid #657786; 
     background: #F5F8FA;
 }
-.form-floating textarea{
+.user-profile-texts .form-label textarea{
     border-bottom: 2px solid #657786 !important;
-    height: 147px !important;
+    min-height:123px !important;
 }
-.form-control:hover, .form-control:focus, .form-floating textarea:focus{
+.form-control:hover, .form-control:focus, .user-profile-texts .form-label textarea:focus{
     border-bottom-color: #5085ff !important;
     background: #F5F8FA;
 }
@@ -342,24 +343,52 @@ a:hover > .user-name, .reply-text a:hover, .follow-tweet a:hover .user-name{
     height: 140px;
     -webkit-filter: brightness(.5)
 }
-.user-profile .form-floating{
+.user-profile form{
+    margin-bottom: 7px;
+}
+.user-profile .user-profile-texts{
     margin: 0 16px;
 }
-.form-floating .form-control{
-    color: #171725;
-    padding: 28px 18px 4px !important;
-    font-size: 18px;
-    height: 54px;
+.user-profile-texts .form-label{
+    max-width: 100%;
+    width: 100%;
+    padding: 2px 0 0;
+    margin: 0;
 }
-.form-floating > label{
-    color: #696974;
-    opacity: 1 !important;
-    padding: 12px 18px !important;
+.user-profile-texts .form-label label, .user-profile-texts .form-label .form-control{
+    padding: 0 18px;
+}
+.user-profile-texts .form-label label{
+    font-size: 14px;
     font-weight: 400;
+    line-height: 22px;
+}
+.user-profile-texts .form-label .form-control {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    color: #171725;
+    padding-bottom: 2px !important;
+}
+.user-profile-texts .text-end{
+    margin-bottom: 8px;
+}
+.user-profile-texts .form-label textarea{
+    margin: 0;
 }
 .text-end .secondary-text{
     font-size: 12px;
     color: #696974;
+}
+.user-setting{
+    padding: 24px 23px 0;
+}
+.user-setting .user-profile-texts .form-label{
+    margin-bottom: 32px;
+}
+.user-setting button{
+    margin-top: 8px;
+    padding: 8px 24px;
 }
 /*-------------- profile-setting settings --------------*/
 .profile-setting .logo{
@@ -551,6 +580,14 @@ textarea:hover, textarea:focus{
 }
 .admin-main .content:hover, .tweet-reply .content:hover{
     color: #171725;
+}
+.admin-main .counting{
+    margin: 17px 0 9px;
+    font-size: 16px;
+    line-height: 15px;
+    font-weight: 500;
+    font-family: 'Montserrat', Geneva, Verdana, sans-serif;
+    color: #1C1C1C;
 }
 
 .user{
