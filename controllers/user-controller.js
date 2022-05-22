@@ -215,7 +215,11 @@ const userController = {
       if (!queryUserData) throw new Error("User didn't exist!")
 
       likedTweets.forEach(function (likedTweet, index) {
-        this[index] = { ...likedTweet.toJSON() }
+        this[index] = {
+          ...likedTweet.toJSON(),
+          isLiked: likedTweet.Tweet.LikedUsers.some(item => item.id === userId),
+          isSelf: userId === queryUserId
+        }
       }, likedTweets)
 
       // 獨立處理 queryUser 的資料
