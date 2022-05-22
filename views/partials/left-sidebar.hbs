@@ -32,26 +32,26 @@
 </div>
 
 {{!-- tweets modal --}}
-<form action="/tweets" method="POST">
+<form action="/tweets" method="POST" class="needs-validation" novalidate>
   <div class="modal fade" id="tweetModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="tweetModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="max-width: 600px">
-      <div class="modal-content" style="border-radius: 15px">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-          style="margin: 15px 0px 0px 15px;"></button>
+    <div class="modal-dialog modal-w">
+      <div class="modal-content modal-outline">
+        {{!-- modal header --}}
+        <button id="closeReply" type="button" class="btn-close mt-3 ms-3" data-bs-dismiss="modal" aria-label="Close"></button>
         <hr>
-        <div class="row">
-          <div class="col-2 ms-3" style="width: 60px;">
+        {{!-- modal content --}}
+        <div class="row pt-0">
+          <div class="col-2 d-flex justify-content-center">
             <img src="{{user.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
           </div>
-          <div class="col-9 mb-3 ">
-            <textarea class="form-control" id="description" name="description" rows="5" placeholder="有什麼新鮮事？"
-              style="width: 480px; border: none; background-color: white; word-wrap: break-word;"></textarea>
+          <div class="col-9 mb-2 mt-1 reply-content-anchor">
+            <textarea class="form-control post-modal-textarea mt-2" id="description" name="description" rows="5" placeholder="有什麼新鮮事？" onkeyup="calPostWords()" value="" required></textarea>
+            <div id="post-error" class="invalid-feedback post-error-anchor">內容不可為空白</div>
           </div>
         </div>
-        <div class="d-flex flex-row-reverse me-3 mb-3">
-          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
-            style="height: 40px; width: 64px; border-radius: 50px; background: #FF6600;">推文</button>
+        <div id="post-btn" class="d-flex flex-row-reverse me-2 mb-2">
+          <button type="submit" class="text-white main-tweet-btn">推文</button>
         </div>
       </div>
     </div>
