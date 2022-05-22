@@ -20,10 +20,25 @@
         </div>
         <div class="d-flex px-3" style="margin-top:-80px;z-index:100;position:relative">
             <img src="{{user.avatar}}" class="me-auto rounded-circle border border-white border-5" style="width:150px;height:150px">
-           {{#ifCond user.id currentUser.id}}
+           {{#ifCond user.id logInUser.id}}
             <div class="d-flex align-items-end text-end">
                 <button type="button" class="btn rounded-pill  myOutlineBtn" id="editButton" data-id="{{user.id}}" data-bs-toggle="modal" data-bs-target="#editProfileModal">編輯個人資料</button>
             </div>
+            {{else}}
+                <div class="d-flex align-items-end text-end">
+                    <button class="btn rounded-pill myOutlineBtn" type="button"><i class="far fa-envelope"></i></button> <div style="width: 1rem;"></div>
+                    <button class="btn rounded-pill myOutlineBtn" type="button"><i class="far fa-bell"></i></button> <div style="width: 1rem;"></div>
+                    {{#if isFollowed}}
+                        <form class="ms-auto mt-1 " method="POST" action="/followships/{{user.id}}?_method=DELETE">
+                            <button class="btn rounded-pill myBtn" type="submit">正在跟隨</button>
+                        </form>
+                    {{else}}
+                        <form class="ms-auto mt-1" method="POST" action="/followships">
+                            <input name="id" value="{{user.id}}" style="display:none">
+                            <button class="btn rounded-pill myOutlineBtn" type="submit">跟隨</button>
+                        </form>
+                    {{/if}}
+                </div>
             {{/ifCond}}
         </div>
 

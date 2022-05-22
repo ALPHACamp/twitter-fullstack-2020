@@ -111,7 +111,6 @@ const userController = {
   getUser: async (req, res, next) => {
     try {
       const UserId = req.params.id
-      const currentUser = helpers.getUser(req)
       const [user,topUsers] = await Promise.all([ 
         User.findByPk(UserId, {
           include: [
@@ -133,16 +132,15 @@ const userController = {
       const followersCount = user.Followers.length
       const followingsCount = user.Followings.length
       const tweetsCount = user.Tweets.length
-
+      const isFollowed = user.Followers.some(follower=>follower.id===helpers.getUser(req).id)
       res.render('user', {
-        
+        isFollowed,
         user: user.toJSON(),
         topUsers,
         tweets: data,
         followersCount,
         followingsCount,
-        tweetsCount,
-        currentUser
+        tweetsCount
       })
 
     } catch (err) {
@@ -165,6 +163,7 @@ const userController = {
       ])
       const followersCount = user.Followers.length
       const followingsCount = user.Followings.length
+      const isFollowed = user.Followers.some(follower=>follower.id===helpers.getUser(req).id)
       const data = user.Likes.map(e => {
         const f = {...e.toJSON()}
         f.Tweet.totalLike= f.Tweet.Likes.length,
@@ -178,7 +177,8 @@ const userController = {
         likes: data,
         topUsers,
         followersCount,
-        followingsCount
+        followingsCount,
+        isFollowed
       })
     } catch (err) {
       next(err)
@@ -202,14 +202,15 @@ const userController = {
       const followersCount = data.Followers.length
       const followingsCount = data.Followings.length
       const userReplies =data.Replies
-
+      const isFollowed = user.Followers.some(follower=>follower.id===helpers.getUser(req).id)
       if (!user) throw new Error("User didn't exists!")
       return res.render('user', {
         user: data,
         userReplies,
         topUsers,
         followersCount,
-        followingsCount
+        followingsCount,
+        isFollowed
       })
     } catch (err) {
       next(err)
