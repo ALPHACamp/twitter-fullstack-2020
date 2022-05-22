@@ -23,7 +23,7 @@ btnClose.addEventListener('click', function (event) {
   event.target.nextElementSibling.nextElementSibling.lastElementChild.classList.remove('was-validated')
 })
 
-function calPostWords() {
+function calPostWords () {
   const length = document.getElementById('description').value.length
   console.log('length:', length)
   if (length > 140) {

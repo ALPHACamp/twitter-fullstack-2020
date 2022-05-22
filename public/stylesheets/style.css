@@ -509,6 +509,88 @@ a:hover {
   height: 50px;
   background-color: white;
 }
+/* alert style */
+.alert-message {
+  width: 394px;
+  height: 96px;
+  background-color: white !important;
+  box-shadow: 0px 0px 2px #333333, 0px 3px 10px #333333;
+  border-radius: 8px;
+}
+.success-btn {
+  width: 56px;
+  height: 56px;
+  box-sizing: border-box;
+  position: relative;
+  right: -17px;
+  border-radius: 50px;
+  border: 2px solid #82C43C;
+  background-color: transparent;
+}
+.success-icon {
+  height: 12px;
+  width: 16px;
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  border-radius: 2px;
+  border: 2px solid #82C43C;
+  transform: rotate(-51deg);
+}
+.success-icon-cover {
+  height: 14px;
+  width: 29px;
+  position: absolute;
+  left: 14px;
+  top: 9px;
+  border: 2px solid white;
+  background-color: white;
+  z-index: 3;
+  transform: rotate(-21deg);
+}
+.error-btn {
+  width: 56px;
+  height: 56px;
+  box-sizing: border-box;
+  position: relative;
+  right: -17px;
+  border-radius: 50px;
+  border: 2px solid #FC5A5A;
+  background-color: transparent;
+}
+.error-icon1 {
+  height: 20px;
+  width: 2px;
+  position: absolute;
+  left: 25px;
+  top: 16px;
+  background-color: #FC5A5A;
+  transform: rotate(-45deg);
+}
+.error-icon2 {
+  height: 20px;
+  width: 2px;
+  position: absolute;
+  left: 25px;
+  top: 16px;
+  background-color: #FC5A5A;
+  transform: rotate(45deg);
+}
+.warning-btn {
+  width: 56px;
+  height: 56px;
+  box-sizing: border-box;
+  position: relative;
+  right: -17px;
+  border-radius: 50px;
+  border: 2px solid #FFC542;
+  background-color: transparent;
+}
+.warning-icon {
+  color: #FFC542;
+  font-size: 24px;
+  margin-top: 7px;
+}
 
 /* for dev */
 .red {
