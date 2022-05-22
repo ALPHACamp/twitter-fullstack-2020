@@ -5,13 +5,17 @@ const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('passport')
+const methodOverride = require('method-override')
 
 const app = express()
+const port = 3000
 
 app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
 app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use(methodOverride('_method'))
 
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
@@ -28,6 +32,8 @@ app.use((req, res, next) => {
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 const routes = require('./routes/index')
 routes(app)
