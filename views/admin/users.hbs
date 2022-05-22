@@ -8,6 +8,8 @@
 
     <div class="d-flex flex-wrap justify-content-center">
       {{#each users}}
+      {{#ifCond this.role 'admin'}}
+      {{else}}
       <div class="card me-3 border-0" style="width: 15rem;">
         <div class=" d-flex flex-column align-items-center">
           {{!-- cover --}}
@@ -30,6 +32,7 @@
           </p>
         </div>
       </div>
+      {{/ifCond}}
       {{/each}}
     </div>
   </div>
