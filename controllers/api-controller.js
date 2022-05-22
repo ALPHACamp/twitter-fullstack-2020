@@ -77,10 +77,11 @@ const apiController = {
               [sequelize.fn('MAX',sequelize.fn('IF',sequelize.literal('`Likes`.`UserId`-'+helpers.getUser(req).id+'=0'),1,0)),"isLiked"]
             ]},
             group:'Tweet.id',
-            order: [['createdAt','DESC']],limit:20,
+            order: [['createdAt','DESC']],limit:1,
             raw:true,nest:true
         }).then(tweets=>{
-            const oldestTime = tweets[tweets.length-1].createdAt
+            console.log(tweets)
+            const oldestTime = tweets[tweets.length-1]?.createdAt
             // for(const tweet of tweets){
             //     tweet.createdAt=relativeTimeFromNow(tweet.createdAt)
             // }
