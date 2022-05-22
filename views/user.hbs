@@ -249,16 +249,22 @@
             <label class="input-form-label fw-bold" for="edit-name">名稱</label>
             <input class="input-form" type="text" name="name" id="edit-name" placeholder="Enter name"
               value="{{user.name}}" onKeyUp="calNameWords()" required>
-            <p class="text-end" style="font-size: 0.78em;"><span class="text-muted now1 mb-0"
-                id="edit-name-value">{{user.name.length}}</span>/50</p>
+            <div class="d-flex justify-content-between">
+              <span class="name-messages" id="edit-name-error"></span>
+              <p class="text-end" style="font-size: 0.78em;"><span class="text-muted now1 mb-0"
+                  id="edit-name-value">{{user.name.length}}</span>/50</p>
+            </div>
           </div>
           {{!-- user intro --}}
           <div class="mb-4 d-flex flex-column edit-intro-anchor mx-3">
             <label class="input-form-label fw-bold" for="edit-introduction">自我介紹</label>
             <textarea class="input-form" id="edit-introduction" name="introduction" rows="4"
               onKeyUp="calIntroductionWords()" required>{{user.introduction}}</textarea>
-            <p class="text-end" style="font-size: 0.78em;"><span class="text-muted now1"
-                id="edit-introduction-value">{{user.introduction.length}}</span>/160</p>
+            <div class="d-flex justify-content-between">
+              <span class="name-messages" id="edit-introduction-error"></span>
+              <p class="text-end" style="font-size: 0.78em;"><span class="text-muted now1"
+                  id="edit-introduction-value">{{user.introduction.length}}</span>/160</p>
+            </div>
           </div>
         </div>
       </form>
