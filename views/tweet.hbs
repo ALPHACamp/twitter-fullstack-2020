@@ -73,15 +73,13 @@
                         </div>
                     </div>
                 </div>
-                {{#if likes.isLiked}}
-                    <form method="POST" action="/tweets/{{tweet.id}}/unlike">
-                        <button type="submit" class="border-0 bg-body"><i class="fas fa-heart text-danger text-danger"></i> {{this.totalLike}}</button>
-                    </form>
-                {{else}}
-                    <form method="POST" action="/tweets/{{tweet.id}}/like">
-                        <button type="submit" class="border-0 bg-body"><i class="far fa-heart"></i> {{this.totalLike}}</button> 
-                    </form>                        
-                {{/if}}
+                <button class="border-0 bg-body" id="likeBtn{{tweet.id}}" onclick="toggleLike({{tweet.id}})">
+                    {{#if likes.isLiked}}
+                    <i class="fas fa-heart text-danger" id="likeBtn{{tweet.id}}Icon"></i>
+                    {{else}}
+                    <i class="far fa-heart" id="likeBtn{{tweet.id}}Icon"></i>
+                    {{/if}}
+                </button>
             </div>
         </div>
         <hr class="mt-2 mb-0"/>
