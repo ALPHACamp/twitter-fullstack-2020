@@ -1,10 +1,11 @@
-const express = require('express')
-const router = express.Router()
+// const express = require('express')
+// const router = express.Router()
 const port = 3000
 
+const userController = require('../controllers/userController')
 
 module.exports = (app) => {
-  app.get('/', (req, res) => { return res.render('index') })
+  
 
   // admin 用戶登入 A2-developer in charge
   app.get('/admin/signin', (req, res) => { return res.render('admin/signin') })
@@ -39,10 +40,11 @@ module.exports = (app) => {
   // 註冊、登出、一般用戶登入 A2-developer in charge
   app.get('/signin', (req, res) => { return res.render('signin') })
   app.post('/signin', (req, res) => { })
-  app.get('/signup', (req, res) => { return res.render('signup') })
-  app.post('/signup', (req, res) => { })
+  app.get('/signup', userController.signupPage)
+  app.post('/signup', userController.signup)
   app.get('/signout', (req, res) => { })
 
+  app.get('/', (req, res) => { return res.render('index') })
 
   app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 }
