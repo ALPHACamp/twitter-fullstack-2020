@@ -13,8 +13,7 @@ const apiController = {
       if (!queryUser) return res.status(500).json({ status: 'error', message: '使用者不存在 !' })
       delete queryUser.password
 
-      // return res.status(200).json({ status: 'success', user: queryUser })
-      return res.status(200).json(queryUser) // 爲了符合 test 檔案
+      return res.status(200).json(queryUser)
     } catch (err) {
       next(err)
     }
@@ -22,8 +21,8 @@ const apiController = {
   putUser: async (req, res, next) => {
     try {
       const userId = Number(helpers.getUser(req).id)
-      const queryUserId = Number(req.params.id) // from axios
-      const { name, introduction, acCover } = req.body // from axios
+      const queryUserId = Number(req.params.id)
+      const { name, introduction, acCover } = req.body
 
       if (name?.length > 50) {
         req.flash('error_messages', '名稱長度限制 50 字元以內 !')

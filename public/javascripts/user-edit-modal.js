@@ -20,15 +20,13 @@ const userModalCoverInput = document.querySelector('#cover-upload-input')
 const userModalAvatar = document.querySelector('#avatar-upload-img')
 const userModalAvatarInput = document.querySelector('#avatar-upload-input')
 
-// 點擊 "編輯個人按鈕" 計算顯示的字數
 userEditBtn.addEventListener('click', async e => {
   try {
     const target = e.target
     const queryUserId = target.dataset.id
 
     const res = await axios.get(`${BASE_URL}api/users/${queryUserId}`)
-    // const userInfo = res.data.user
-    const userInfo = res.data // 爲了符合 test 檔案
+    const userInfo = res.data
 
     userModalName.value = userInfo.name || ''
     userModalNameCounts.innerText = userInfo.name.length || 0
@@ -56,7 +54,6 @@ userEditModal.addEventListener('keyup', e => {
   }
 })
 
-// 顯示本地圖片的圖片
 userEditModal.addEventListener('change', e => {
   const target = e.target
   const reader = target.matches('input') ? new FileReader() : ''
@@ -74,21 +71,17 @@ userEditModal.addEventListener('change', e => {
   }
 })
 
-// 關閉 modal 要清空 input 裏 image 占據的空間
 modalCloseBtn.addEventListener('click', e => {
-  userModalCover.src = userCover.src // 如果使用者有按 remove cover 會需要恢復成原本的 src
+  userModalCover.src = userCover.src
   userModalCoverInput.value = null
   userModalAvatarInput.value = null
 })
 
-// 點擊 remove cover 的 X
 modalremoveCoverBtn.addEventListener('click', e => {
-  // 排除使用者可能按了 input 圖片又再按 remove cover 需要把 input 裏面的圖片檔案清除
   userModalCover.src = acCover
   userModalCoverInput.value = null
 })
 
-// 儲存 modal 資訊
 userEditModal.addEventListener('submit', async e => {
   e.preventDefault()
   const target = e.target
@@ -109,10 +102,5 @@ userEditModal.addEventListener('submit', async e => {
   userModalCoverInput.value = null
   userModalAvatarInput.value = null
 
-  // const userInfo = res.data.user
-  // userIntroduction.innerText = userInfo.introduction
-  // userCover.src = userInfo.cover
-  // userNameAll.forEach(username => { username.innerText = userInfo.name })
-  // if (userInfo.avatar)userAvatarAll.forEach(useravatar => { useravatar.src = userInfo.avatar })
   window.location.reload()
 })

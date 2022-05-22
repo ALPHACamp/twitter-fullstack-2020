@@ -45,7 +45,6 @@ const adminController = {
       ])
       const data = tweets.map(tweet => ({
         ...tweet.toJSON(),
-        // 快覽 Tweet 的前 50 個字
         description: tweet.description.substring(0, 50)
       }))
       res.render('admin/tweets', { user, tweets: data, adminMenu: 'tweets' })

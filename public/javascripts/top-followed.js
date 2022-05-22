@@ -1,7 +1,6 @@
 window.addEventListener('DOMContentLoaded', async e => {
   e.stopPropagation()
   const response = await axios({ method: 'get', url: `${BASE_URL}api/topfollowed` })
-  // const response = await axios.get('api/topfollowed')
   const topFollowed = []
   topFollowed.push(...response.data.data.topFollowed)
   const topFollowedBox = document.querySelector('#top-followed-box')

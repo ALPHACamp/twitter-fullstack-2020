@@ -2,9 +2,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt-nodejs')
 
-const { User, Tweet } = require('../models')
-
-// set up Passport strategy
+const { User } = require('../models')
 
 passport.use(
   'user-local',
@@ -55,7 +53,6 @@ passport.use(
       passReqToCallback: true
     },
     async (req, account, password, cb) => {
-      console.log(req.body)
       const user = await User.findOne({ where: { account } })
 
       if (!user) {
@@ -87,7 +84,6 @@ passport.use(
   )
 )
 
-// serialize and deserialize user
 passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
