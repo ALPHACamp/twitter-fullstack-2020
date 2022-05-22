@@ -1,6 +1,6 @@
 'use strict';
 const faker = require('faker')
-const queryString = 'SELECT `id` FROM `Users`;'
+const queryString = "SELECT `id` FROM `Users` WHERE role='user';"
 module.exports = {
   up: async(queryInterface, Sequelize) => {
     const userIds = await queryInterface.sequelize.query(
