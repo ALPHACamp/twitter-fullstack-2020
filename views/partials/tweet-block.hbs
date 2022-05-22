@@ -15,10 +15,10 @@
                 <p style="word-wrap: break-word; word-break: normal;">{{tweet.description}}</p>
             </div>
             <div class="d-flex">
-                <div >
+                <div>
                     <button type="button" class="border-0 opacityObject" data-bs-toggle="modal" data-bs-target="#tweet{{tweet.id}}Reply"><i class="far fa-comment"></i> {{ tweet.totalReply}}</button>
                 </div>
-                <div class="col-1"></div>
+                <div class="col-1" onclick="location.href='/tweets/{{tweet.id}}/replies';"></div>
                 <button class="opacityObject" id="likeBtn{{tweet.id}}" onclick="toggleLike({{tweet.id}})">
                     {{#if tweet.isLiked}}
                         <i class="fas fa-heart text-danger" id="likeBtn{{tweet.id}}Icon"></i><span id="likeBtn{{tweet.id}}Number"> {{tweet.totalLike}}</span>
