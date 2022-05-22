@@ -1,8 +1,8 @@
-# Simple Tweeter
+# Simple Twitter
 This is a simple Twitter-like social networking service, developed full-stack using Node.js（Express framework） and MySQL database.
 
 ***
-## Start to use Simple Tweeter
+## Start to use Simple Twitter
 *   Make sure that you have already installed [Node.js](https://nodejs.org/en/)
 
 1.   Clone this project to your local place from github
@@ -33,7 +33,7 @@ This is a simple Twitter-like social networking service, developed full-stack us
 
           node app.js
     
-## Continue to develop Simple Tweeter
+## Continue to develop Simple Twitter
 *   Make sure that you have already installed [Node.js](https://nodejs.org/en/)
 1.   Don't forget to install [nodemon](https://www.npmjs.com/package/nodemon) to make your development process smoother.
         
@@ -58,7 +58,7 @@ This is a simple Twitter-like social networking service, developed full-stack us
 ***
 ## Normal account
 ### Login page
-![image](https://user-images.githubusercontent.com/87403901/169490632-55f25696-d67f-46e8-9668-1f0bb45a8643.png)
+![image](https://user-images.githubusercontent.com/87403901/169696744-95e79076-6411-4acf-9730-76bbc00ea70b.png)
 
 ### User home page
 ![image](https://user-images.githubusercontent.com/87403901/169490737-9d5c756d-685a-44f7-a422-e2b996cbe88d.png)
