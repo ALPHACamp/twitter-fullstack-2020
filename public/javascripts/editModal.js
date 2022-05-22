@@ -31,7 +31,7 @@ editButton.addEventListener('click', function (event) {
   const target = event.target
   const UserId = target.dataset.id
   axios
-    .get(`http://localhost:3000/api/users/${UserId}`)
+    .get(`/api/users/${UserId}`)
     .then(res => {
       inputIntroductionCounts.innerText = res.data.introduction.length
       inputNameCounts.innerText = res.data.name.length
@@ -50,7 +50,7 @@ editModal.addEventListener('submit', function (event) {
   formData.append('cover', inputCover.files[0])
   formData.append('avatar', inputAvatar.files[0])
   axios
-    .post(`http://localhost:3000/api/users/${UserId}`, formData, {
+    .post(`/api/users/${UserId}`, formData, {
       headers: { "Content-Type": "multipart/form-data" }
     })
     .then(res => {
