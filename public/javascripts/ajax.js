@@ -5,7 +5,7 @@ function toggleLike(tweetId){
     //console.log(likeStatus)
     if(likeStatus){
         axios.post(`/tweets/${tweetId}/unlike`,null,{
-            validateStatus: status =>status >= 200 && status <= 302
+            validateStatus: status =>status === 302
         })
         .then(res=>{
             if(res.status===302){
@@ -18,7 +18,7 @@ function toggleLike(tweetId){
     }
     else{
         axios.post(`/tweets/${tweetId}/like`,null,{
-            validateStatus: status => status >= 200 && status <=302
+            validateStatus: status => status === 302
         })
         .then(res=>{
             if(res.status===302){
