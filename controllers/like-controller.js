@@ -12,7 +12,7 @@ const likeController = {
         }
         return Like.findOrCreate({ where:{ UserId,TweetId}})
       })
-      .then(() => res.status(302).json({}))
+      .then(() => res.redirect('/'))
       .catch(err => next(err))
   },
   unlikeTweet: (req, res, next) => {
@@ -30,7 +30,7 @@ const likeController = {
         }
         return like.destroy()
       })
-      .then(() =>  res.status(302).json({}))
+      .then(() =>  res.redirect('/'))
       .catch(err => next(err))
   },
 }
