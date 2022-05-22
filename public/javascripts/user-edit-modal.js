@@ -31,10 +31,10 @@ userEditBtn.addEventListener('click', async e => {
     const userInfo = res.data // 爲了符合 test 檔案
 
     userModalName.value = userInfo.name || ''
-    userModalNameCounts.innerText = userInfo.name.length || ''
+    userModalNameCounts.innerText = userInfo.name.length || 0
 
     userModalIntroduction.innerText = userInfo.introduction || ''
-    userModalIntroductionCounts.innerText = userInfo.introduction?.length || ''
+    userModalIntroductionCounts.innerText = userInfo.introduction?.length || 0
 
     userModalCover.src = userInfo.cover || ''
     userModalAvatar.src = userInfo.avatar || ''
@@ -43,7 +43,6 @@ userEditBtn.addEventListener('click', async e => {
   }
 })
 
-// 字數即時更新功能，在此抓取的 target 只有 input 或 textarea 有 keyup 功能
 userEditModal.addEventListener('keyup', e => {
   const target = e.target
   const inputValue = target.value || ''
