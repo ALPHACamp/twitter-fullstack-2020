@@ -27,7 +27,7 @@
             <span>{{this.Replies.length}}</span>
           </button>
           {{! 以下為like }}
-          {{#if isLiked}}
+          {{#if this.isLiked}}
             <button
               type='button'
               class='d-flex flex-row align-items-end like-submit-btn liked'
@@ -132,9 +132,9 @@
   likeSubmitBtn.forEach((item, i) => {
     item.addEventListener('click', e => {
       e.stopPropagation()
-      likeBoxes[i].classList.add('ghost')
+      likeBoxes[i]?.classList.add('ghost')
       setTimeout(()=>{
-        likeBoxes[i].remove()
+        likeBoxes[i]?.remove()
       }, 1000)
     })
   })

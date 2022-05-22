@@ -20,7 +20,7 @@ const userModalCoverInput = document.querySelector('#cover-upload-input')
 const userModalAvatar = document.querySelector('#avatar-upload-img')
 const userModalAvatarInput = document.querySelector('#avatar-upload-input')
 
-userEditBtn.addEventListener('click', async e => {
+userEditBtn?.addEventListener('click', async e => {
   try {
     const target = e.target
     const queryUserId = target.dataset.id
@@ -41,7 +41,7 @@ userEditBtn.addEventListener('click', async e => {
   }
 })
 
-userEditModal.addEventListener('keyup', e => {
+userEditModal?.addEventListener('keyup', e => {
   const target = e.target
   const inputValue = target.value || ''
 
@@ -54,7 +54,7 @@ userEditModal.addEventListener('keyup', e => {
   }
 })
 
-userEditModal.addEventListener('change', e => {
+userEditModal?.addEventListener('change', e => {
   const target = e.target
   const reader = target.matches('input') ? new FileReader() : ''
 
@@ -71,18 +71,18 @@ userEditModal.addEventListener('change', e => {
   }
 })
 
-modalCloseBtn.addEventListener('click', e => {
+modalCloseBtn?.addEventListener('click', e => {
   userModalCover.src = userCover.src
   userModalCoverInput.value = null
   userModalAvatarInput.value = null
 })
 
-modalremoveCoverBtn.addEventListener('click', e => {
+modalremoveCoverBtn?.addEventListener('click', e => {
   userModalCover.src = acCover
   userModalCoverInput.value = null
 })
 
-userEditModal.addEventListener('submit', async e => {
+userEditModal?.addEventListener('submit', async e => {
   e.preventDefault()
   const target = e.target
   const queryUserId = target.dataset.id

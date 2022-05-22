@@ -111,10 +111,9 @@ const userController = {
       tweets.forEach(function (tweet, index) {
         this[index] = {
           ...tweet.toJSON(),
-          isLiked: tweet.LikedUsers.some(item => item.id === queryUserId)
+          isLiked: tweet.LikedUsers.some(item => item.id === userId)
         }
       }, tweets)
-
       return res.render('user', {
         queryUser,
         tweets,
