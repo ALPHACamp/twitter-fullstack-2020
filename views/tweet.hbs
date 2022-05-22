@@ -30,7 +30,7 @@
         </div>
         <hr class="my-2 "/>
         <div class="row mx-0 px-0">
-            <div class="col">{{replies.count}}回覆  {{likes.count}}喜歡次數</div>
+            <div class="col">{{replies.count}}回覆  <span id="likeBtn{{tweet.id}}Number">{{likes.count}}</span>喜歡次數</div>
         </div>
         <hr class="my-2 "/>
         <div class="row mx-0 px-0">
@@ -84,9 +84,10 @@
         </div>
         <hr class="mt-2 mb-0"/>
         {{#each replies.rows}}
-            {{> reply-block tweet=../tweet User=this.User}}
+            {{> reply-block tweet=../tweet User=this.User }}
         {{/each}}
     </div>
 
     <div class="col-3">{{> right-nav}}</div>
 </div>
+<script src="/javascripts/scroll.js"></script>
