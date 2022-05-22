@@ -21,26 +21,74 @@ const loginController = {
   },
   signUp: (req, res, next) => {
     const { name, password, email, checkPassword, account } = req.body
-    if (!name || !password || !email || !checkPassword || !account) throw new Error('欄位都是必填！')
-    if (account.length > 50) throw new Error('帳號 請勿超過50個字！')
-    if (name.length > 50) throw new Error('名稱 請勿超過50個字！')
-    if (password !== checkPassword) throw new Error('密碼 與 確認密碼不相符！')
-    User.findOne({ where: { [Op.or]: [{ account }, { email }] } })
-      .then(user => {
-        if (user) throw new Error('帳號 或 email已存在！')
+    const errors = []
+    let nameMessages, accountMessages, emailMessages, passwordMessages, checkPasswordMessages
 
-        return bcrypt.hash(password, 10)
-      })
-      .then(hash => User.create({
-        name,
-        email,
-        account,
-        password: hash,
-        role: 'user'
-      }))
-      .then(() => {
-        req.flash('success_messages', '成功註冊帳號！')
-        return res.redirect('/signin')
+    if (!name || !password || !email || !checkPassword || !account) {
+      errors.push({ message: '所有欄位不能空白！' })
+    }
+    if (account.length > 50) {
+      errors.push({ message: '帳號字數超出上限！' })
+      accountMessages = '帳號字數超出上限！'
+    }
+    if (name.length > 50) {
+      errors.push({ message: '名稱字數超出上限！' })
+      nameMessages = '名稱字數超出上限！'
+    }
+    if (password !== checkPassword) {
+      errors.push({ message: '密碼 與 確認密碼不相符！' })
+      passwordMessages = '密碼 與 確認密碼不相符！'
+      checkPasswordMessages = '密碼 與 確認密碼不相符！'
+    }
+    User.findOne({
+      where: { [Op.or]: [{ account }, { email }] }
+    })
+      .then(user => {
+        if (user) {
+          errors.push({ message: '帳號 或 email已存在！' })
+          if (user.toJSON().account === account && user.toJSON().email === email) {
+            accountMessages = '帳號已存在！'
+            emailMessages = 'email已存在！'
+          } else if (user.toJSON().account === account) {
+            accountMessages = '帳號已存在！'
+          } else {
+            emailMessages = 'email已存在！'
+          }
+        }
+        if (errors.length) {
+          const userData = user.toJSON()
+          user = {
+            ...userData,
+            account,
+            name,
+            email
+          }
+          return res.render('signup', {
+            errors,
+            account,
+            name,
+            email,
+            password,
+            checkPassword,
+            nameMessages,
+            accountMessages,
+            emailMessages,
+            passwordMessages,
+            checkPasswordMessages
+          })
+        }
+        bcrypt.hash(password, 10)
+          .then(hash => User.create({
+            name,
+            email,
+            account,
+            password: hash,
+            role: 'user'
+          }))
+          .then(() => {
+            req.flash('success_messages', '成功註冊帳號！')
+            return res.redirect('/signin')
+          })
       })
       .catch(err => next(err))
   },

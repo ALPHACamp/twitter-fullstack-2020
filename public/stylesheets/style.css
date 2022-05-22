@@ -621,3 +621,70 @@ a:hover {
   position: fixed;
   bottom: 60px;
 }
+
+.input-form-admin {
+  padding-left: 20px;
+  background: #F5F8FA;
+  border: 1px solid #F5F8FA;
+  border-bottom: 2px solid #657786;
+  border-radius: 0px 0px 4px 4px;
+}
+
+
+.input-form-admin:hover {
+  padding-left: 20px;
+  background: #F5F8FA;
+  border: 1px solid #F5F8FA;
+  border-bottom: 2px solid #50B5FF;
+  border-radius: 0px 0px 4px 4px;
+}
+
+.input-form-admin:focus {
+  padding-left: 20px;
+  outline: 2px solid #50B5FF;
+  border-bottom: 2px solid #50B5FF;
+  border-radius: 4px 4px 4px 4px;
+}
+
+.input-form-label-admin {
+  color: #657786;
+  padding-left: 20px;
+  background: #F5F8FA;
+  border: 1px solid #F5F8FA;
+  border-radius: 4px;
+}
+
+.signin-href {
+  color: #0062FF;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-size: 16px;
+  border-bottom: 1px solid #0062FF;
+  padding-bottom: 0.01rem;
+}
+
+.signin-href:hover {
+  color: #0062FF;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-size: 16px;
+  border-bottom: 1px solid #0062FF;
+  padding-bottom: 0.01rem;
+}
+
+.account-length,
+.password-length,
+.admin-account-message,
+.admin-password-message,
+.signup-account-message,
+.signup-name-message,
+.signup-email-message,
+.signup-password-message,
+.signup-checkPasswor-message {
+  color: #FC5A5A;
+  font-size: 12px;
+}
+
+.error-display {
+  border-bottom: 1px solid #FC5A5A;
+}
