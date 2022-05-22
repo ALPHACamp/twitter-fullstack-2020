@@ -4,7 +4,7 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const session = require('express-session')
-const passport = require('passport')
+const passport = require('./config/passport')
 const methodOverride = require('method-override')
 
 const app = express()
@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 const routes = require('./routes/index')
-routes(app)
+routes(app, passport)
 // require('./routes/index')(app)
 
 module.exports = app

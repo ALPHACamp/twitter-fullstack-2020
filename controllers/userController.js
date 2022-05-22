@@ -44,6 +44,14 @@ const userController = {
             // return res.redirect('/signin')
           })
       })
+  },
+
+  signinPage: (req, res) => {
+    return res.render('signin')
+  },
+
+  signin: (req, res) => {
+    return res.redirect('/')
   }
 
 }

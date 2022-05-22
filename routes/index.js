@@ -1,7 +1,15 @@
 const userController = require('../controllers/userController')
 
-module.exports = (app) => {
-  app.get('/', (req, res) => { return res.render('index') })
+const authenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next()
+  }
+  return res.redirect('/signin')
+}
+
+
+module.exports = (app, passport) => {
+  app.get('/', authenticated, (req, res) => { return res.render('index') })
 
   // admin 用戶登入 A2-developer in charge
   app.get('/admin/signin', (req, res) => { return res.render('admin/signin') })
@@ -34,8 +42,11 @@ module.exports = (app) => {
   app.delete('/followships/:id', (req, res) => { })
 
   // 註冊、登出、一般用戶登入 A2-developer in charge
-  app.get('/signin', (req, res) => { return res.render('signin') })
-  app.post('/signin', (req, res) => { })
+  app.get('/signin', userController.signinPage)
+  app.post('/signin', passport.authenticate('local', {
+    failureRedirect: '/signin',
+    failureFlash: true
+  }), userController.signin)
   app.get('/signup', userController.signupPage)
   app.post('/signup', userController.signup)
   app.get('/signout', (req, res) => { })
