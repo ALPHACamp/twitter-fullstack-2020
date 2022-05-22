@@ -16,45 +16,66 @@
           top: 138px;">
         <h1 class="h3 font-weight-normal mb-3">建立你的帳號</h1>
       </div>
-      <div style="display: inline-block; position: absolute; height: 54px; width: 356px; top: 204px; border-radius: 2px; justify-content: center;">
+      <div
+        style="display: inline-block; position: absolute; height: 54px; width: 356px; top: 204px; border-radius: 2px; justify-content: center;">
         <div style="display: flex; flex-direction: column">
-          <label class="input-form-label" for="account">帳號</label>
-          <input class="input-form" id="account" type="text" name="account" placeholder="請輸入帳號" required>
+          <label class="input-form-label-admin" for="signup-account">帳號</label>
+          <input class="input-form-admin" id="signup-account" type="text" name="account" placeholder="請輸入帳號"
+            value="{{account}}">
+          <span class="signup-account-message">
+            {{accountMessages}}
+          </span>
+          </span>
         </div>
       </div>
       <div
         style="display: inline-block; position: absolute; height: 54px; width: 356px; top: 290px; border-radius: 2px;">
         <div style="display: flex; flex-direction: column">
-          <label class="input-form-label" for="name">名稱</label>
-          <input class="input-form" id="name" type="text" name="name" placeholder="請輸入名稱" required>
+          <label class="input-form-label-admin" for="signup-name">名稱</label>
+          <input class="input-form-admin" id="signup-name" type="text" name="name" placeholder="請輸入名稱" value="{{name}}">
+          <span class="signup-name-message">
+            {{nameMessages}}
+          </span>
         </div>
       </div>
       <div
         style="display: inline-block; position: absolute; height: 54px; width: 356px; top: 376px; border-radius: 2px;">
         <div style="display: flex; flex-direction: column">
-          <label class="input-form-label" for="email">Email</label>
-          <input class="input-form" id="email" type="text" name="email" placeholder="請輸入Email" required>
+          <label class="input-form-label-admin" for="signup-email">Email</label>
+          <input class="input-form-admin" id="signup-email" type="text" name="email" placeholder="請輸入Email"
+            value="{{email}}">
+          <span class="signup-email-message">
+            {{emailMessages}}
+          </span>
         </div>
       </div>
       <div
         style="display: inline-block; position: absolute; height: 54px; width: 356px; top: 462px; border-radius: 2px;">
         <div style="display: flex; flex-direction: column">
-          <label class="input-form-label" for="password">密碼</label>
-          <input class="input-form" id="password" type="password" name="password" placeholder="請輸入密碼" required>
+          <label class="input-form-label-admin" for="signup-password">密碼</label>
+          <input class="input-form-admin" id="signup-password" type="password" name="password" placeholder="請輸入密碼"
+            value="{{password}}">
+          <span class="signup-password-message">
+            {{passwordMessages}}
+          </span>
         </div>
       </div>
       <div
         style="display: inline-block; position: absolute; height: 54px; width: 356px; top: 550px; border-radius: 2px;">
         <div style="display: flex; flex-direction: column">
-          <label class="input-form-label" for="checkPassword">密碼確認</label>
-          <input class="input-form" id="checkPassword" type="password" name="checkPassword" placeholder="請再次輸入密碼" required>
+          <label class="input-form-label-admin" for="signup-checkPassword">密碼確認</label>
+          <input class="input-form-admin" id="signup-checkPassword" type="password" name="checkPassword"
+            placeholder="請再次輸入密碼" value="{{checkPassword}}">
+          <span class="signup-checkPasswor-message">
+            {{checkPasswordMessages}}
+          </span>
         </div>
       </div>
-      <button class="btn btn-primary btn-block" type="submit"
+      <button id="signup-botton" class="btn btn-primary btn-block" type="submit"
         style="display: inline-block; width: 356px; height: 46px; position: absolute; top: 642px; background: #FF6600; border-radius: 50px;">註冊
       </button>
       <div style="position: absolute; top: 710px;">
-        <p><a href="/signin">取消</a></p>
+        <a class="signin-href" href="/signin">取消</a>
       </div>
     </form>
   </div>
