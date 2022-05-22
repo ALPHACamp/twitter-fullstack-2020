@@ -1,6 +1,6 @@
 'use strict';
 const faker= require('faker')
-const userIdsQueryString='SELECT `id` FROM `Users`;'
+const userIdsQueryString="SELECT `id` FROM `Users`WHERE role='user';"
 const tweetIdsQueryString='SELECT `id` FROM `Tweets`;'
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
     return queryInterface.bulkInsert('Replies',
       Array.from({length:tweetIds.length*3},(element,index)=>({
         comment:faker.lorem.text().slice(0,139),
-        UserId:Math.floor(Math.random() * (userIds.length) + 1),
+        UserId:userIds[index%userIds.length].id,
         TweetId:tweetIds[index%tweetIds.length].id,
         createdAt: new Date(),
         updatedAt: new Date(),
