@@ -9,11 +9,11 @@
       <i class="fas fa-fw fa-home mx-1"></i>
       <h5 class="mt-2 ms-3 tab-item d-flex justify-content-start">首頁</h5>
     </a>
-    <a href="/users/{{user.id}}" class="d-flex align-items-center tab-link  {{#ifCond route 'user'}} active {{/ifCond}}">
+    <a href="/users/{{loginUser.id}}" class="d-flex align-items-center tab-link  {{#ifCond route 'user'}} active {{/ifCond}}">
       <i class="fas fa-fw fa-user mx-1"></i>
       <h5 class="mt-2 ms-3 tab-item d-flex justify-content-start">個人資料</h5>
     </a>
-    <a href="/users/{{user.id}}/setting" class="d-flex align-items-center tab-link {{#ifCond route 'setting'}} active {{/ifCond}}">
+    <a href="/users/{{loginUser.id}}/setting" class="d-flex align-items-center tab-link {{#ifCond route 'setting'}} active {{/ifCond}}">
       <i class="fas fa-fw fa-cog mx-1"></i>
       <h5 class="mt-2 ms-3 tab-item d-flex justify-content-start">設定</h5>
     </a>

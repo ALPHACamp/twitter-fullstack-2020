@@ -32,7 +32,9 @@
   border-width: 1px;
   border-style: solid;
 }
-
+.btn-content{
+  width: 41%;
+}
 .follower-button:hover {
   background-color: #FEF5E7;
 }
@@ -590,6 +592,16 @@ a:hover {
   color: #FFC542;
   font-size: 24px;
   margin-top: 7px;
+}
+
+/* setting page  */
+.setting-form {
+  width: 100%;
+}
+
+/* follow */
+.follow-content {
+  width: 100%;
 }
 
 /* for dev */

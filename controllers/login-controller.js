@@ -56,13 +56,6 @@ const loginController = {
           }
         }
         if (errors.length) {
-          const userData = user.toJSON()
-          user = {
-            ...userData,
-            account,
-            name,
-            email
-          }
           return res.render('signup', {
             errors,
             account,

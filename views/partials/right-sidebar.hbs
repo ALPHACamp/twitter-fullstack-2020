@@ -9,7 +9,7 @@
 
     <div class="d-flex my-1 py-1">
       {{!-- avatar --}}
-      <div class="mx-0 px-0">
+      <div class="ms-2 px-0">
         <a href="/users/{{this.id}}" class="mx-0">
           <img src="{{this.avatar}}" class="avatar" alt="avatar">
         </a>
@@ -24,7 +24,7 @@
     {{else}}
     <div class="d-flex justify-content-between my-1 py-1">
       {{!-- avatar --}}
-      <div class="mx-0 px-0">
+      <div class="ms-2 px-0">
         <a href="/users/{{this.id}}" class="mx-0">
           <img src="{{this.avatar}}" class="avatar" alt="avatar">
         </a>
@@ -35,14 +35,14 @@
         <p class="text-muted right-user-account">{{this.account}}</p>
       </div>
       {{!-- follow btn --}}
-      <div class="d-flex align-items-center mx-0 px-0">
+      <div class="d-flex btn-content justify-content-end align-items-center mx-0 px-0">
         {{#if this.isFollowed}}
         <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
           <button type="submit" class="following-button text-white">正在跟隨</button>
         </form>
         {{else}}
         <form action="/followships" method="POST" style="display: contents;">
-          <button type="submit" class="follower-button" name="id" value="{{this.id}}">跟隨</button>
+            <button type="submit" class="follower-button" name="id" value="{{this.id}}">跟隨</button>
         </form>
         {{/if}}
       </div>
