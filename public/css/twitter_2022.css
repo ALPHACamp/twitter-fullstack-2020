@@ -296,6 +296,8 @@ a:hover > .user-name, .reply-text a:hover, .follow-tweet a:hover .user-name{
 .post-content .content{
     padding: 10px 0;
     font-size: 16px;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 .post-content .content:hover{   
     color: #92929D;
