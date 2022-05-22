@@ -89,55 +89,50 @@
 {{!-- reply modal --}}
 <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true"
   data-bs-backdrop="static" data-bs-keyboard="false">
-  <div class="modal-dialog" style="max-width: 600px">
-    <div class="modal-content" style="border-radius: 15px">
+  <div class="modal-dialog modal-w">
+    <div class="modal-content modal-outline">
       {{!-- modal header --}}
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-        style="margin: 15px 0px 0px 15px;"></button>
-      <hr class="mb-0">
+      <button id="closeReply" type="button" class="btn-close mt-3 ms-3" data-bs-dismiss="modal" aria-label="Close"></button>
+      <hr>
       {{!-- tweet content --}}
-      <div class="modal-body">
-        <div class="row">
+      <div class="modal-body pt-0">
+        <div class="row mb-1">
           {{!-- tweeter's avatar --}}
           <div id="tweeter" class="col-2 d-flex flex-column justify-content-start align-items-center">
-            <div style="height: 50px;">
-              <a href="{{tweet.User.id}}">
-                <img src="{{tweet.User.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50px;">
-              </a>
-            </div>
-            <div class="mx-3 mt-3" style="height: 60%; width: 3px; background: #899095;"></div>
+            <a href="{{tweet.User.id}}">
+              <img src="{{tweet.User.avatar}}" class="avatar" alt="avatar">
+            </a>
+            <div class="mx-3 mt-3 reply-divider"></div>
           </div>
           {{!-- tweet's content --}}
-          <div class="col-10">
+          <div class="col-10 content-anchor">
             {{!-- tweeter's info --}}
             <div class="d-flex flex-row align-items-center">
-              <p style="font-size: 16px; margin: 0 0;">{{tweet.User.name}}</p>
-              <p style="font-size: 14px; margin: 0 8px; color: #6C757D;">@{{tweet.User.account}}．{{relativeTimeFromNow
-                tweet.createdAt}}</p>
+              <p class="main-user-name">{{tweet.User.name}}</p>
+              <p class="main-user-account">@{{tweet.User.account}}．{{relativeTimeFromNow tweet.createdAt}}</p>
             </div>
             {{!-- tweet's description --}}
             <div class="mt-2">
               <p>{{tweet.description}}</p>
             </div>
-            <p class="mt-2" style="font-size: 14px; color: #6C757D;">回覆給
-              <span style="color:#FF6600;text-decoration: none">@{{tweet.User.account}}</span>
+            <p class="mt-2 main-user-account">回覆給
+              <span class="reply-modal-account">@{{tweet.User.account}}</span>
             </p>
           </div>
         </div>
         {{!-- reply content --}}
-        <form action="/tweets/{{tweet.id}}/replies" method="POST">
+        <form action="/tweets/{{tweet.id}}/replies" method="POST" class="needs-validation" novalidate>
           <div class="row">
             <div class="col-2 d-flex justify-content-center">
-              <img src="{{user.avatar}}" alt="avatar" style="height: 50px ;width: 50px; border-radius: 50%;">
+              <img src="{{user.avatar}}" class="avatar" alt="avatar">
             </div>
-            <div class="col-9 mb-3 ">
-              <textarea type="text" class="form-control me-2" id="reply" name="comment" rows="5" placeholder="推你的回復"
-                style="width: 450px; border: none; background-color: white; word-wrap: break-word;"></textarea>
+            <div class="col-9 mb-2 mt-1 reply-content-anchor">
+              <textarea class="form-control reply-textarea mt-2" id="" name="comment" rows="6" placeholder="推你的回復" required></textarea>
+              <div class="invalid-feedback reply-error-anchor">內容不可為空白</div>
             </div>
           </div>
-          <div class="d-flex flex-row-reverse me-3 mb-3">
-            <button type="submit" class="btn btn-primary" id="modal-send-button" data-bs-dismiss="modal"
-              style="height: 40px; width: 64px; border-radius: 50px; background: #FF6600;">回覆</button>
+          <div id="reply-btn" class="d-flex flex-row-reverse align-items-baseline me-1">
+            <button type="submit" class="text-white main-tweet-btn" id="modal-send-button">回覆</button>
           </div>
         </form>
       </div>

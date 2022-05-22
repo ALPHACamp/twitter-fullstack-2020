@@ -116,7 +116,6 @@ const tweetController = {
       req.flash('error_messages', '內容不可空白')
       return res.redirect('back')
     }
-    console.log('bypass')
     Reply.create({
       UserId,
       TweetId: tweetId,
