@@ -77,7 +77,7 @@
 
             {{#if userReplies}}
                 {{#each user.Replies}}
-                    {{> reply-block tweet=this.Tweet User=../user}}
+                    {{> reply-block tweet=this.Tweet User=../user click=true}}
                 {{/each}}
             {{/if}}
         </div>
