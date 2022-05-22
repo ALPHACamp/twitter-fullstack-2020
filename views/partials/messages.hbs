@@ -1,26 +1,37 @@
 {{#if errors}}
 {{#each errors}}
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
+<div class="alert alert-message alert-dismissible fade show" role="alert">
   {{ this.message }}
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {{/each}}
 {{/if}}
+
 {{#if error_messages}}
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
+<div class="alert alert-message alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
   {{ error_messages }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <button type="button" class="error-btn" data-bs-dismiss="alert" aria-label="Close">
+    <div class="error-icon1"></div>
+    <div class="error-icon2"></div>
+  </button>
 </div>
 {{/if}}
+
 {{#if success_messages}}
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+<div class="alert alert-message alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
   {{ success_messages }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <button type="button" class="success-btn" data-bs-dismiss="alert" aria-label="Close">
+    <div class="success-icon-cover"></div>
+    <div class="success-icon"></div>
+  </button>
 </div>
 {{/if}}
+
 {{#if warning_messages}}
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
+<div class="alert alert-message alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
   {{ warning_messages }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <button type="button" class="warning-btn" data-bs-dismiss="alert" aria-label="Close">
+    <p class="d-flex justify-content-center align-items-center warning-icon">!</p>
+  </button>
 </div>
 {{/if}}
