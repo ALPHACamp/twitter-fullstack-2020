@@ -4,9 +4,11 @@ function toggleLike(tweetId){
     let likeStatus = likeIcon.contains('text-danger')
     //console.log(likeStatus)
     if(likeStatus){
-        axios.post(`/tweets/${tweetId}/unlike`).then(res=>{
-            //console.log(res.status)
-            if(res.status===200){
+        axios.post(`/tweets/${tweetId}/unlike`,null,{
+            validateStatus: status =>status === 302
+        })
+        .then(res=>{
+            if(res.status===302){
                 likeIcon.toggle('text-danger')
                 likeIcon.remove('fas')
                 likeIcon.add('far')
@@ -15,9 +17,11 @@ function toggleLike(tweetId){
         })
     }
     else{
-        axios.post(`/tweets/${tweetId}/like`).then(res=>{
-            //console.log(res.status)
-            if(res.status===200){
+        axios.post(`/tweets/${tweetId}/like`,null,{
+            validateStatus: status => status === 302
+        })
+        .then(res=>{
+            if(res.status===302){
                 likeIcon.toggle('text-danger')
                 likeIcon.remove('far')
                 likeIcon.add('fas')
