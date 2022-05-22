@@ -36,6 +36,10 @@
     {
       "filePath": "controllers/tweet-controller.js",
       "group": "Default"
+    },
+    {
+      "filePath": "public/javascripts/replymodal.js",
+      "group": "Default"
     }
   ]
 }

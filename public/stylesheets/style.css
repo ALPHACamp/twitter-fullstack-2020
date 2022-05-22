@@ -142,11 +142,40 @@ a:hover {
   color: #E0245E;
 }
 
+/* reply modal */
+.modal-outline {
+  border-radius: 15px;
+}
+.modal-w {
+  max-width: 600px
+}
+.reply-divider {
+  height: 100%; 
+  width: 2px; 
+  background: #899095; 
+}
+.content-anchor {
+  margin-left: -25px;
+}
+.reply-content-anchor {
+  margin-left: -13px;
+  padding: 0px;
+}
 .reply-textarea {
   width: 450px;
   border: none;
   background-color: white;
   word-wrap: break-word;
+  padding: 0px;
+}
+.reply-error-anchor {
+  position: absolute;
+  bottom: 2em;
+  left: 400px
+}
+.reply-modal-account {
+  color:#FF6600;
+  text-decoration: none
 }
 
 /* left-sidebar */
@@ -199,7 +228,25 @@ a:hover {
   bottom: 5px;
   left: 9.5em;
 }
+.post-modal-textarea {
+  width: 480px;
+  border: none;
+  background-color: white;
+  word-wrap: break-word;
+  padding: 0px;
+}
+.post-error-anchor {
+  position: absolute;
+  bottom: 1.2em;
+  left: 405px
+}
+.display {
+  display: block !important;
+  position: absolute;
+  bottom: 1.2em;
+  left: 385px
 
+}
 /* right-sidebar  */
 .right-sidebar-anchor {
   width: 19%;
