@@ -14,16 +14,16 @@ function scrollToEnd(){
         axios.get(apiUrl).then(res=>{
             if(res.status===200){
                 const tweets = res.data.tweets
-                console.log(res.data.logInUser)
-                const avatar=res.data.logInUser.avatar
+                // console.log(res.data.logInUser)
+                // const avatar=res.data.logInUser.avatar
                 let i =''
-                for(const tweet of tweets){
-                    i+=tweetHTML(tweet,avatar)
-                }
-                tweetsContainer.innerHTML+=i
+                // for(const tweet of tweets){
+                //     i+=tweetHTML(tweet,avatar)
+                // }
+                // tweetsContainer.innerHTML+=i
                 oldestTime.innerHTML=res.data.oldestTime
                 middle.addEventListener('scroll',scrollToEnd)
-                // /console.log(res.data.tweets)
+                console.log(res.data.tweets)
             }
         }).catch(err=>console.log('apiTweetsError'+err))
     }

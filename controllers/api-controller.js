@@ -62,7 +62,7 @@ const apiController = {
     getTweets:(req,res,next)=>{
         const { time } = req.query
         return Tweet.findAll({
-            where:{ createdAt:{[Op.lt]:time}},
+            where:{ createdAt:{[Op.lt]:new Date(time)}},
             include: [{
               model: User,
               attributes: ['id', 'name', 'avatar','account'],
