@@ -9,5 +9,5 @@ const upload = require('../../middleware/multer')
 router.get('/users/:id', authenticated, apiController.getUser)
 router.post('/users/:id', upload.fields([{name: 'cover', maxCount: 1}, {name: 'avatar', maxCount: 1}]), authenticated, apiController.putUser)
 
-router.get('/tweets', apiController.getTweets)
+router.post('/tweets', apiController.getTweets)
 module.exports = router

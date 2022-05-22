@@ -60,9 +60,11 @@ const apiController = {
         }
     },
     getTweets:(req,res,next)=>{
-        const { time } = req.query
+        const { tweetsIds } = req.body
         return Tweet.findAll({
-            where:{ createdAt:{[Op.lt]:new Date(time)}},
+            where:{
+                id:{[Op.notIn]:tweetsIds}
+            },
             include: [{
               model: User,
               attributes: ['id', 'name', 'avatar','account'],
@@ -77,16 +79,15 @@ const apiController = {
               [sequelize.fn('MAX',sequelize.fn('IF',sequelize.literal('`Likes`.`UserId`-'+helpers.getUser(req).id+'=0'),1,0)),"isLiked"]
             ]},
             group:'Tweet.id',
-            order: [['createdAt','DESC']],limit:1,
+            order: [['createdAt','DESC']],limit:20,
             raw:true,nest:true
         }).then(tweets=>{
-            console.log(tweets)
-            const oldestTime = tweets[tweets.length-1]?.createdAt
-            // for(const tweet of tweets){
-            //     tweet.createdAt=relativeTimeFromNow(tweet.createdAt)
-            // }
-            // return res.json({tweets})
-            return res.json({tweets, oldestTime, logInUser:helpers.getUser(req) })
+            if(tweets){
+                for(const tweet of tweets){
+                    tweet.updatedAt=relativeTimeFromNow(tweet.updatedAt)
+                }
+            }
+            return res.json({tweets, logInUser:helpers.getUser(req)})
         }).catch(err=>next(err))
     }
 }

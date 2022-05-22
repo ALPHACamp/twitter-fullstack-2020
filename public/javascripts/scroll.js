@@ -1,6 +1,6 @@
 const middle = document.getElementById('middle')
 const tweetsContainer = document.getElementById('tweetsContainer')
-const oldestTime = document.getElementById('oldestTime')
+const tweetsIds = JSON.parse( document.getElementById('idArray').innerHTML)
 //
 middle.style.height = window.innerHeight + 'px'
 middle.addEventListener('scroll',scrollToEnd)
@@ -8,22 +8,22 @@ middle.addEventListener('scroll',scrollToEnd)
 function scrollToEnd(){
     if(middle.scrollHeight<=middle.scrollTop+window.innerHeight){
         middle.removeEventListener('scroll',scrollToEnd)
-        const time = oldestTime.innerHTML
-        const apiUrl=`/api/tweets?time=${time}`
+        const apiUrl=`/api/tweets`
         const tweetsHTML=''
-        axios.get(apiUrl).then(res=>{
+        axios.post(
+            apiUrl, JSON.stringify({tweetsIds}), { headers: { 'Content-Type' : 'application/json' } }
+        )
+        .then(res=>{
             if(res.status===200&&res.data?.tweets){
                 const tweets = res.data.tweets
-                console.log(res.data.logInUser)
                 const avatar=res.data.logInUser.avatar
                 let i =''
                 for(const tweet of tweets){
                     i+=tweetHTML(tweet,avatar)
+                    tweetsIds.push(tweet.id)
                 }
                 tweetsContainer.innerHTML+=i
-                oldestTime.innerHTML=res.data.oldestTime
                 middle.addEventListener('scroll',scrollToEnd)
-                //console.log(res.data.tweets)
             }
         }).catch(err=>console.log('apiTweetsError'+err))
     }
