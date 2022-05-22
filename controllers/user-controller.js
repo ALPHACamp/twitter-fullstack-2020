@@ -41,7 +41,8 @@ const userController = {
         email: email,
         password: hash,
         avatar: 'https://www.teepr.com/wp-content/uploads/2018/01/medish.jpg',
-        cover: 'https://storage.inewsdb.com/7a4fac5af8d264b429ce19d9d1c49281.jpg'
+        cover: 'https://storage.inewsdb.com/7a4fac5af8d264b429ce19d9d1c49281.jpg',
+        role: 'user'
       }))
       .then(() => {
         req.flash('success_message', '成功註冊帳號!')
