@@ -194,11 +194,7 @@ const userController = {
           include: [
             { model: User, as: 'Followers', attributes: ['id'] }, // 提供給 Followers 的數量計算
             { model: User, as: 'Followings', attributes: ['id'] }, // 提供給 Followings 的數量計算
-            {
-              model: Tweet,
-              as: 'LikedTweets',
-              include: [User, Reply, { model: User, as: 'LikedUsers' }]
-            }
+            { model: Tweet, attributes: ['id'] }
           ]
         }),
         Like.findAll({
@@ -432,29 +428,17 @@ const userController = {
       let { account, name, email, password, confirmPassword } = req.body
 
       if (!account || !email) {
-        req.flash('error_messages', '必填欄位未填寫完整 !')
+        req.flash('error_messages', '帳號或 email 必填欄位未填寫完整 !')
         return res.redirect('back')
       }
       if (password !== confirmPassword) {
         req.flash('error_messages', '密碼與密碼再確認不相符 !')
         return res.redirect('back')
       }
-      // if (account.length > 50) {
-      //   req.flash('error_messages', '帳號長度限制50字元以內 !')
-      //   return res.redirect('back')
-      // }
       if (name.length > 50) {
-        req.flash('error_messages', '名稱長度限制50字元以內 !')
+        req.flash('error_messages', '名稱長度限制 50 字元以內 !')
         return res.redirect('back')
       }
-      // if (password.length > 50) {
-      //   req.flash('error_messages', '密碼長度限制50字元以內 !')
-      //   return res.redirect('back')
-      // }
-      // if (confirmPassword.length > 50) {
-      //   req.flash('error_messages', '密碼再確認長度限制50字元以內 !')
-      //   return res.redirect('back')
-      // }
       if (userId !== queryUserId) {
         req.flash('error_messages', '您沒有權限編輯使用者 !')
         return res.redirect('back')
