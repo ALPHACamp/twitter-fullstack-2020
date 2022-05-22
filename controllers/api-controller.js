@@ -1,8 +1,9 @@
 const db = require('../models')
 const helpers = require('../_helpers')
-const { User } = db
+const { User, Tweet, sequelize, Like, Reply } = db
 const { imgurFileHandler } = require('../helpers/file-helpers')
-
+const { relativeTimeFromNow } = require('../helpers/handlebars-helpers')
+const { Op } = require('sequelize')
 const apiController = {
     getUser: async (req, res, next) => {
         try {
@@ -58,6 +59,35 @@ const apiController = {
             next(err)
         }
     },
+    getTweets:(req,res,next)=>{
+        const { time } = req.query
+        return Tweet.findAll({
+            where:{ createdAt:{[Op.lt]:time}},
+            include: [{
+              model: User,
+              attributes: ['id', 'name', 'avatar','account'],
+            }, {
+              model: Like,attributes:[],duplicating:false
+            }, {
+              model: Reply,attributes:[],duplicating:false
+            }],
+            attributes:{include:[
+              [sequelize.fn('COUNT',sequelize.fn('DISTINCT',sequelize.col('Replies.id'))),'totalReply'],
+              [sequelize.fn('COUNT',sequelize.fn('DISTINCT',sequelize.col('Likes.id'))),'totalLike'],
+              [sequelize.fn('MAX',sequelize.fn('IF',sequelize.literal('`Likes`.`UserId`-'+helpers.getUser(req).id+'=0'),1,0)),"isLiked"]
+            ]},
+            group:'Tweet.id',
+            order: [['createdAt','DESC']],limit:20,
+            raw:true,nest:true
+        }).then(tweets=>{
+            const oldestTime = tweets[tweets.length-1].createdAt
+            // for(const tweet of tweets){
+            //     tweet.createdAt=relativeTimeFromNow(tweet.createdAt)
+            // }
+            // return res.json({tweets})
+            return res.json({tweets, oldestTime, logInUser:helpers.getUser(req) })
+        }).catch(err=>next(err))
+    }
 }
 
 module.exports = apiController

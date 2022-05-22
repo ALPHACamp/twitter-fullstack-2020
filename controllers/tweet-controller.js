@@ -29,7 +29,8 @@ const tweetController = {
       catchTopUsers(req)
     ])
     .then(([tweets,topUsers])  => {
-      res.render('index',{tweets:tweets.rows,topUsers,pagination: getPagination(limit, page, tweets.count.length)})
+      const oldestTime = tweets.rows[tweets.rows.length-1].createdAt
+      res.render('index',{tweets:tweets.rows,topUsers,pagination: getPagination(limit, page, tweets.count.length),oldestTime})
     }).catch(err => next(err))
   },
   postTweet: (req, res, next) => {
