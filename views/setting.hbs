@@ -20,28 +20,33 @@
         </div>
         {{!-- body --}}
         <div class="p-3 outline">
-          <form action="/users/{{user.id}}/setting?_method=PUT" method="POST">
+          <form action="/users/{{user.id}}/setting?_method=PUT" method="POST" id="setting">
             <div class="mb-4 mt-2 d-flex flex-column">
-              <label class="input-form-label" for="account">帳號</label>
-              <input class="input-form" id="account" type="text" name="account" value="{{user.account}}" required>
+              <label class="input-form-label" for="setting-account">帳號</label>
+              <input class="input-form" id="setting-account" type="text" name="account" value="{{user.account}}" required>
+              <span class="account-messages">{{accountMessages}}</span>
             </div>
             <div class="mb-4 d-flex flex-column">
-              <label class="input-form-label" for="name">名稱</label>
-              <input class="input-form" id="name" type="text" name="name" value="{{user.name}}" required>
+              <label class="input-form-label" for="setting-name">名稱</label>
+              <input class="input-form" id="setting-name" type="text" name="name" value="{{user.name}}" required>
+              <span class="name-messages">{{nameMessages}}</span>
             </div>
             <div class="mb-4 d-flex flex-column">
-              <label class="input-form-label" for="email">Email</label>
-              <input class="input-form" id="email" type="text" name="email" value="{{user.email}}" required>
+              <label class="input-form-label" for="setting-email">Email</label>
+              <input class="input-form" id="setting-email" type="text" name="email" value="{{user.email}}" required>
+              <span class="email-messages">{{emailMessages}}</span>
             </div>
             <div class="mb-4 d-flex flex-column">
-              <label class="input-form-label" for="password">密碼</label>
-              <input class="input-form" id="password" type="password" name="password" placeholder="請設定密碼"
+              <label class="input-form-label" for="setting-password">密碼</label>
+              <input class="input-form" id="setting-password" type="password" name="password" placeholder="請設定密碼"
                 value="{{ password }}" required>
+                <span class="password-messages">{{passwordMessages}}</span>
             </div>
             <div class="mb-4 d-flex flex-column">
-              <label class="input-form-label" for="checkPassword">密碼確認</label>
-              <input class="input-form" id="checkPassword" type="password" name="checkPassword" placeholder="再次輸入密碼"
+              <label class="input-form-label" for="setting-checkPassword">密碼確認</label>
+              <input class="input-form" id="setting-checkPassword" type="password" name="checkPassword" placeholder="再次輸入密碼"
                 value="{{ checkPassword }}" required>
+                <span class="checkPassword-messages">{{passwordMessages}}</span>
             </div>
             <div class="d-flex justify-content-end mt-5">
               <button class="form-btn fs-5" type="submit">儲存</button>

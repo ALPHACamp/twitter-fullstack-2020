@@ -137,15 +137,19 @@ const userController = {
   putUserSetting: (req, res, next) => {
     const { account, name, email, password, checkPassword } = req.body
     const errors = []
+    let nameMessages, accountMessages, emailMessages, passwordMessages, checkPasswordMessages
 
     if (Number(req.params.id) !== Number(helpers.getUser(req).id)) {
       errors.push({ message: '請勿編輯他人資料' })
     }
     if (name.length > 50) {
       errors.push({ message: '名稱字數超出上限！' })
+      nameMessages = '名稱字數超出上限！'
     }
     if (password !== checkPassword) {
       errors.push({ message: 'Passwords do not match!' })
+      passwordMessages = 'Passwords do not match!'
+      checkPasswordMessages = 'Passwords do not match!'
     }
 
     return Promise.all([
@@ -155,6 +159,14 @@ const userController = {
       .then(([user, newUser]) => {
         if (newUser) {
           errors.push({ message: 'account 或 email 已重複註冊！' })
+          if (newUser.toJSON().account === account && newUser.toJSON().email === email) {
+            accountMessages = 'account 已重複註冊！'
+            emailMessages = 'email 已重複註冊！'
+          } else if (newUser.toJSON().account === account) {
+            accountMessages = 'account 已重複註冊！'
+          } else {
+            emailMessages = 'email 已重複註冊！'
+          }
         }
         if (errors.length) {
           const userData = user.toJSON()
@@ -168,7 +180,12 @@ const userController = {
             errors,
             user,
             password,
-            checkPassword
+            checkPassword,
+            nameMessages,
+            accountMessages,
+            emailMessages,
+            passwordMessages,
+            checkPasswordMessages
           })
         }
 
