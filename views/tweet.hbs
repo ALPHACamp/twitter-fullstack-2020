@@ -30,7 +30,7 @@
         </div>
         <hr class="my-2 "/>
         <div class="row mx-0 px-0">
-            <div class="col">{{replies.count}}回覆  <span id="likeBtn{{tweet.id}}Number">{{likes.count}}</span>喜歡次數</div>
+            <div class="col">{{replies.count}}回覆  <span id="totalLike">{{likes.count}}</span>喜歡次數</div>
         </div>
         <hr class="my-2 "/>
         <div class="row mx-0 px-0">
@@ -73,11 +73,11 @@
                         </div>
                     </div>
                 </div>
-                <button class="border-0 bg-body" id="likeBtn{{tweet.id}}" onclick="toggleLike({{tweet.id}})">
+                <button class="border-0 bg-body" onclick="toggleLike(this)" data-is-liked={{likes.isLiked}} data-tweet-id="{{tweet.id}}" >
                     {{#if likes.isLiked}}
-                    <i class="fas fa-heart text-danger" id="likeBtn{{tweet.id}}Icon"></i>
+                    <i class="fas fa-heart text-danger"></i>
                     {{else}}
-                    <i class="far fa-heart" id="likeBtn{{tweet.id}}Icon"></i>
+                    <i class="far fa-heart"></i>
                     {{/if}}
                 </button>
             </div>
@@ -90,4 +90,3 @@
 
     <div class="col-3">{{> right-nav}}</div>
 </div>
-<script src="/javascripts/scroll.js"></script>

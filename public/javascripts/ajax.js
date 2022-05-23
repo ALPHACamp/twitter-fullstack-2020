@@ -1,32 +1,33 @@
-function toggleLike(tweetId){
-    const likeNumber = document.getElementById(`likeBtn${tweetId}Number`)
-    const likeIcon = document.getElementById(`likeBtn${tweetId}Icon`).classList
-    let likeStatus = likeIcon.contains('text-danger')
-    //console.log(likeStatus)
-    if(likeStatus){
+function toggleLike(likeBtn){
+    const isLiked=likeBtn.dataset.isLiked==='true'||likeBtn.dataset.isLiked===true||likeBtn.dataset.isLiked==="1"
+    const tweetId = Number(likeBtn.dataset.tweetId)
+    const icon = likeBtn.querySelector('i')
+    const spanLikeNumber= likeBtn.querySelector('span')||document.getElementById(`totalLike`)
+    // console.log(isLiked)
+    if(isLiked){
+        
         axios.post(`/tweets/${tweetId}/unlike`,null,{
-            validateStatus: status =>status === 302
+            validateStatus: status => 200<=status&&status<=302
         })
         .then(res=>{
-            if(res.status===302){
-                likeIcon.toggle('text-danger')
-                likeIcon.remove('fas')
-                likeIcon.add('far')
-                likeNumber.innerHTML=` ${Number(likeNumber.innerHTML)-1}`
-            }
+            icon.classList.remove('fas')
+            icon.classList.add('far')
+            icon.classList.toggle('text-danger')
+            spanLikeNumber.innerHTML=`${Number(spanLikeNumber.innerHTML)-1}`
+            likeBtn.dataset.isLiked=!isLiked
         })
     }
     else{
+        
         axios.post(`/tweets/${tweetId}/like`,null,{
-            validateStatus: status => status === 302
+            validateStatus: status => 200<=status&&status<=302
         })
         .then(res=>{
-            if(res.status===302){
-                likeIcon.toggle('text-danger')
-                likeIcon.remove('far')
-                likeIcon.add('fas')
-                likeNumber.innerHTML=` ${Number(likeNumber.innerHTML)+1}`
-            }
+            icon.classList.remove('far')
+            icon.classList.add('fas')
+            icon.classList.toggle('text-danger')
+            spanLikeNumber.innerHTML=`${Number(spanLikeNumber.innerHTML)+1}`
+            likeBtn.dataset.isLiked=!isLiked
         })
     }
 }
