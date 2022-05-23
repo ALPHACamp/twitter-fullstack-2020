@@ -52,6 +52,14 @@ const userController = {
 
   signin: (req, res) => {
     return res.redirect('/')
+  },
+
+  adminSigninPage: (req, res) => {
+    return res.render('admin/signin')
+  },
+
+  adminSignin: (req, res) => {
+    return res.redirect('/admin/tweets')
   }
 
 }
