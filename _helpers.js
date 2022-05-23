@@ -4,7 +4,14 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 imgur.setClientId(IMGUR_CLIENT_ID)
 const dayjs = require('dayjs')
 const relativeTime = require('dayjs/plugin/relativeTime')
+const utc = require('dayjs/plugin/utc')
+const timezone = require('dayjs/plugin/timezone')
+const customParseFormat = require('dayjs/plugin/customParseFormat')
 dayjs.extend(relativeTime)
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.extend(customParseFormat)
+dayjs.tz.setDefault('Asia/Taipei')
 
 function ensureAuthenticated (req) {
   return req.isAuthenticated()
@@ -28,14 +35,27 @@ const handlebarsHelpers = {
   currentYear: dayjs().year(),
   relativeTimeFromNow: a => dayjs(a).fromNow(),
   amORpm: a => {
-    const hr = dayjs(a).format('H')
+    const parsedTime = dayjs.tz(a)
+    const hr = dayjs(parsedTime).format('H')
     if (Number(hr) > 12) return '下午'
     return '上午'
   },
-  createdYear: a => dayjs(a).format('YYYY'),
-  createdMonth: a => dayjs(a).format('M'),
-  createdDay: a => dayjs(a).format('D'),
-  createdTime: a => dayjs(a).format('h:mm'),
+  createdYear: a => {
+    const parsedTime = dayjs.tz(a)
+    return dayjs(parsedTime).format('YYYY')
+  },
+  createdMonth: a => {
+    const parsedTime = dayjs.tz(a)
+    return dayjs(parsedTime).format('M')
+  },
+  createdDay: a => {
+    const parsedTime = dayjs.tz(a)
+    return dayjs(parsedTime).format('D')
+  },
+  createdTime: a => {
+    const parsedTime = dayjs.tz(a)
+    return dayjs(parsedTime).format('h:mm')
+  },
   ifCond: function (a, b, options) {
     return a === b ? options.fn(this) : options.inverse(this)
   },
