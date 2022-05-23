@@ -1,0 +1,694 @@
+body, a > .user-name, .follow-tweet .user-name, .content {
+    font-family: 'Noto Sans TC', 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+    color: #171725;
+}
+.wrapper{
+    min-width: 375px;
+}
+.logo{
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+}
+.avatar {
+    border-radius: 50%;
+    box-sizing: border-box;
+    object-fit: cover;
+    background-color: #c4c4c4;
+}
+*:focus{
+    box-shadow: none !important;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+::placeholder {
+    color: #b5b5be !important;
+    font-size: 0.9rem;
+}
+input:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px #F5F8FA inset !important;
+}
+button {
+    font-weight: 400 !important;
+    background-color: #ff6600 !important;
+    border: none !important;
+    font-size: 20px !important;
+    line-height: 30px !important;
+    border-radius: 50px !important;
+}
+button:hover {
+    background-color: #FF974A !important;
+}
+button.btn-outline {
+    color: #ff6600;
+    background-color: #fff !important;
+    border: 1px solid #ff6600 !important;
+}
+button.btn-outline:hover {
+    color: #fff;
+    background-color: #ff6600 !important;
+
+}
+h5 {
+    margin: 0;
+}
+.secondary, .secondary-text, .tweet-buttons button span, i.comment, i.like {
+    color: #6C757D;
+}
+.secondary-text{
+    font-size: 14px;
+    line-height: 22px;
+}
+.alert-text{
+    font-size: 14px;
+    color: #FC5A5A;
+    margin-left: 10px;
+    font-weight: 500;
+}
+.user-info a, .user-tabs a, .post-user a, .post-content .content, .reply-text a, .profile-setting a, .follow-tweet a{
+    text-decoration: none;
+}
+.ellipsis {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/*-------------- singup/singin form settings --------------*/
+.signup-form{
+    width: 356px;
+    margin: 0 auto;
+}
+.signup-form .logo {
+    margin-top: 59px;
+    margin-bottom: 1px;
+}
+.signup-form h3{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #1c1c1c;
+    line-height: 26px;
+    font-weight: bold;
+    margin-bottom: 35px;
+}
+.signup-form .signup-title{
+    margin-bottom: 14px;
+}
+.signup-form .secondary-text{
+    font-size: 0.85rem;
+    text-align: right;
+}
+.signup-form span {
+    color: #FF6600;
+
+}
+.form-label{
+    background-color: #F5F8FA; 
+    border-radius: 2px;
+    max-width: 356px;
+}
+.form-label label{
+    font-size: 0.85rem;
+    line-height: 0.8rem;
+    color: #696974;
+}
+.form-control{
+    font-size: 1rem;
+    padding-left: 0.5rem;
+    line-height: 1.2rem;
+    border-width:0;
+    border-bottom: 2px solid #657786; 
+    background: #F5F8FA;
+}
+.user-profile-texts .form-label textarea{
+    border-bottom: 2px solid #657786 !important;
+    min-height:123px !important;
+}
+.form-control:hover, .form-control:focus, .user-profile-texts .form-label textarea:focus{
+    border-bottom-color: #5085ff !important;
+    background: #F5F8FA;
+}
+.signup-form button {
+    width: 100%;
+    max-width: 356px;
+}
+.signup-form a{
+    color: #0062ff;
+    line-height: 26px;
+    font-size: 16px;
+    font-weight: 700;
+}
+.signup-form a:hover{
+    color: #50b5ff;
+}
+.signup-links p{
+    margin-left: 1rem;
+}
+/*-------------- user-homepage settings --------------*/
+.user-homepage{
+    display: grid;
+    grid-template-columns: 1fr 178px 20px 639px 24px 273px 1fr;
+    grid-template-rows: 100%;
+    grid-template-areas: 'l left-side i main j right-side k';
+    width: 100%;
+    height: 100%;
+}
+.profile-setting {
+    grid-area: left-side;
+}
+.top-users-list{
+    grid-area: right-side;
+}
+.main {
+    grid-area: main;
+    border: 1px solid #e6ecf0;
+}
+.profile-setting, .main, .top-users-list, .admin-main{
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.user-header{
+    height: 59px;
+    padding: 0 0 17px 28px;
+    margin-top: 16px;
+}
+.user-header a{
+    margin:0;
+}
+.header-text{
+    margin-left: 19px;
+}
+.tweets-count{
+    font-size: 13px;
+    font-weight: 600;
+}
+.user-banner{
+    position: relative;
+}
+.user-banner .cover{
+    width: 639px;
+    height: 200px;
+    object-fit: cover;
+    background-color: #c4c4c4;
+}
+.user-banner .avatar{
+    width: 140px;
+    height: 140px;
+    border: 4px solid #fff;
+    position: absolute;
+    top: 124px;
+    left: 16.13px;
+    
+}
+.user-banner .buttons{
+    width: 100%;
+}
+.buttons button{
+    height: 40px;
+    width: 128px;
+    padding: 8px;
+    margin: 16px;
+    line-height: 1rem;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+}
+.btn-round i{
+    width: 40px;
+    height: 40px;
+    border: 1px solid #FF6600;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 16px;
+}
+.user-info{
+    padding-left: 16px;
+    font-size: 14px;
+    line-height: 22px;
+}
+.user-info .intro{
+    margin: 5px 0 8px;
+}
+.user-info a{
+    color: #171725;
+    margin-right: 20px;
+}
+.user-info a:hover span{
+    color: #171725;
+}
+.user-tabs{
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 22px;
+}
+.user-tabs a{
+    color: #657786;
+    width: 130px;
+    height: 45px;
+    padding-top: 10px;
+    display: block;
+    text-align: center;
+}
+.user-tabs a.active{
+    border-bottom: 2px solid #FF6600;
+    color: #FF6600
+}
+.tab-contents{
+    border-bottom: 1px solid #e6ecf0;
+}
+.tweet {
+    width: 100%;
+    border-top: 1px solid #e6ecf0;
+    padding: 16px 30px 17px 23px ;
+}
+.tweet .avatar, .follow-tweet .avatar, .modal-body .avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 8px;
+}
+.tweet-form{
+    border-bottom: 9px solid #E6ECF0;
+    padding-bottom: 16px;
+}
+.post-user{
+    margin-bottom: 5px;
+}
+.post-user span{
+    margin-right: 3px;
+}
+.post-user form{
+    margin-bottom: 0;
+}
+a > .user-name, .follow-tweet .user-name, .user-name{
+    font-size: 16px;
+    font-weight: 500;
+}
+a:hover > .user-name, .reply-text a:hover, .follow-tweet a:hover .user-name{
+    text-decoration: underline
+}
+.user-name{
+    margin-right: 8px !important;
+}
+.post-content{
+    width: 100%;
+}
+.post-content .content{
+    padding: 10px 0;
+    font-size: 16px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+.post-content .content:hover{   
+    color: #92929D;
+}
+.tweet-buttons button{
+    background: transparent !important;
+    margin: 10px 40px 0 0 ;
+    padding: 0;
+}
+.tweet-buttons button span{
+    font-family: Montserrat, monospace,'Courier New', Courier;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 14px;
+    letter-spacing: 0px;
+    text-align: left;
+}
+.reply-text a{
+    color:#FF6600;
+}
+/*-------------- user-profile settings --------------*/
+.user-profile h5{
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 26px;
+    margin-left: 28px;
+    margin-top: 7px;
+}
+.user-profile .user-edit-modal-save-button{
+    margin: 3px 11px 4px 0;
+}
+.user-profile .modal-body{
+    padding: 0;
+}
+.user-profile .main{
+    height: 270px;
+    border: 0;
+    margin-bottom: 16px;
+}
+.user-profile .user-banner .cover {
+    -webkit-filter: brightness(.75)
+}
+.user-profile .modal-body .avatar {
+    width: 140px;
+    height: 140px;
+    -webkit-filter: brightness(.5)
+}
+.user-profile form{
+    margin-bottom: 7px;
+}
+.user-profile .user-profile-texts{
+    margin: 0 16px;
+}
+.user-profile-texts .form-label{
+    max-width: 100%;
+    width: 100%;
+    padding: 2px 0 0;
+    margin: 0;
+}
+.user-profile-texts .form-label label, .user-profile-texts .form-label .form-control{
+    padding: 0 18px;
+}
+.user-profile-texts .form-label label{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+}
+.user-profile-texts .form-label .form-control {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    color: #171725;
+    padding-bottom: 2px !important;
+}
+.user-profile-texts .text-end{
+    margin-bottom: 8px;
+}
+.user-profile-texts .form-label textarea{
+    margin: 0;
+}
+.text-end .secondary-text{
+    font-size: 12px;
+    color: #696974;
+}
+.user-setting{
+    padding: 24px 23px 0;
+}
+.user-setting .user-profile-texts .form-label{
+    margin-bottom: 32px;
+}
+.user-setting button{
+    margin-top: 8px;
+    padding: 8px 24px;
+}
+/*-------------- profile-setting settings --------------*/
+.profile-setting .logo{
+    margin: 3px;
+}
+.profile-setting a{
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 26px;
+    color: #44444F;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: start;
+    align-items: center;
+    padding:10px 0;
+    margin: 10px 0;
+}
+.profile-setting a:hover{
+    opacity: 0.7;
+}
+.profile-setting a.active{
+    color: #FF6600;
+}
+.navigation button{
+    padding: 9px 12px;
+    margin-top: 5px;
+}
+.navigation a:first-child{
+    padding: 0;
+    margin: 0;
+}
+.navigation a:first-child:hover{
+    opacity: 1;
+}
+/*-------------- top-users-list settings --------------*/
+.popular{
+    width: 100%;
+    border-radius: 14px;
+    background-color: #FAFAFB;
+    align-items: start;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.popular .header{
+    padding: 12px;
+    border-bottom: 1px solid #E6ECF0;
+}
+.popular h4 {
+    margin: 12px;
+    font-weight: 700;
+}
+.follow-tweet{
+    padding: 16px;
+}
+.follow-tweet .user-name-account{
+    max-width: 88px;
+}
+.follow-tweet .secondary-text{
+    color: #92929d;
+}
+.follow-tweet button, .home-post-btn, .side-post-btn, .post-user button, .reply-modal-post-btn, .user-edit-modal-save-button, .user-edit-modal-button, .follow-btn{
+    font-size: 1rem !important;
+    height: 40px;
+    padding: 8px 16px;
+    line-height: 24px !important;
+}
+
+.user-tweets-header{
+    padding: 24px;
+    border-bottom: 1px solid #E6ECF0;
+}
+.user-tweets-header h4, .user-header h4{
+    font-weight: 700;    
+}
+.tweet textarea, .modal-body textarea{
+    width: 100%;
+    resize: none;
+    border: 0;
+    padding: 6px;
+    margin-top: 6px;
+    font-size: 16px;
+}
+.modal-body textarea {
+    padding-left: 3px;
+    margin-top: 22px;
+    min-height: 140px;
+    margin-bottom: 10px;
+}
+.tweet textarea::placeholder, .modal-body textarea::placeholder{
+    font-size: 18px;
+    font-weight: 700;
+    color: #6C757D !important;
+    border-radius: 5px;
+}
+.reply-area textarea{
+    margin-top: 10px;
+}
+textarea:hover, textarea:focus{
+    outline: 0;
+    background-color: #FAFAFB;
+}
+.tweet-post{
+    margin-bottom: 0;
+    padding-bottom: 10px;
+}
+.home-post-btn{
+    margin: 0 25px 0 10px;
+}
+.modal-content{
+    border-radius: 14px;
+    min-width: 634px;
+}
+.modal-header{
+    justify-content: start;
+    padding: 5px;
+}
+.modal-body{
+    padding-top: 0;
+    padding-left: 24px;
+}
+.modal-body a{
+    margin-top: 6px;
+}
+.side-post-btn, .reply-modal-post-btn {
+    margin: 0 0 0 10px;
+}
+.reply-area > div > a:after{
+    content: '';
+    position: absolute;
+    top: 89px;
+    left: 48px;
+    width: 2px;
+    height: 86px;
+    background: #B5B5BE;
+}
+.reply-area > div{
+    height: 180px;
+}
+.tweet-reply .content{
+    font-size: 24px;
+    line-height: 36px;
+    padding: 8px 0;
+}
+.reply-counting, .reply-buttons{
+    border-top: 1px solid #E6ECF0;
+    margin: 0 20px;
+    padding: 16px 0;
+    font-size: 19px;
+    font-weight: 700;
+}
+.reply-buttons button{
+    margin: 0;
+}
+.reply-buttons .comment-btn{
+    margin-right: 125px;
+}
+/*-------------- admin-platform settings --------------*/
+.admin-platform{
+    display: grid;
+    grid-template-columns: 1fr 178px 24px minmax(280px, 1075px);
+    grid-template-rows: 100%;
+    grid-template-areas: 'i left-side j main';
+    width: 100%;
+    height: 100%;
+}
+.admin-main{
+    display: flex;
+    flex-flow: column nowrap;
+    grid-area: main;
+    border-left: 1px solid #E6ECF0;
+    border-right: 1px solid #E6ECF0;
+}
+.tweet-item {
+    width: 100%;
+}
+.admin-main .tweet{
+    padding-right: 5px;
+    padding-bottom: 16px;
+}
+.admin-main form, .admin-main button{
+    margin: 0;
+}
+.admin-main .btn-close{
+    font-size: 1rem;
+}
+.admin-main .content{
+    width: 99%;
+    margin-bottom: 0;
+    padding: 3px 0 0;
+}
+.admin-main .content:hover, .tweet-reply .content:hover{
+    color: #171725;
+}
+.admin-main .counting{
+    margin: 17px 0 9px;
+    font-size: 16px;
+    line-height: 15px;
+    font-weight: 500;
+    font-family: 'Montserrat', Geneva, Verdana, sans-serif;
+    color: #1C1C1C;
+}
+
+.user{
+    width: 249px;
+    padding-bottom: 24px;
+    border-radius: 10px;
+    margin: 16px 0 0 15px;
+    background-color: #f6F7F8;
+}
+.user .user-banner{
+    width: 100%;
+    height: 140px;
+    position: relative;
+}
+.user .cover{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.user .avatar{
+    width: 100px;
+    height: 100px;
+    top: 64px;
+    left: 74px;
+}
+.user .user-info{
+    padding: 32px 0 0;
+}
+.user .counting .like{
+    margin-left: 18px !important;
+}
+.user .follow div:first-child{
+    margin-right: 8px;
+}
+
+/* flash message */
+.flash {
+  z-index: 9999999;
+  position: absolute;
+  top: -96px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* width: 394px; */
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04),
+    0px 4px 16px rgba(51, 51, 51, 0.08);
+  border-radius: 8px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding:20px 24px;
+  -webkit-transition: all 0.8s;
+  -moz-transition: all 0.8s;
+  -ms-transition: all 0.8s;
+  -o-transition: all 0.8s;
+  transition: all 0.8s;
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.4);
+  width: 394px;
+  min-height: 96px;
+  border-width: 0;
+}
+
+.cb {
+  top: 20%;
+}
+
+.flash .text {
+  color: #000;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+@keyframes ghost{
+  0%{
+    opacity: 1;
+  }
+  25%{
+    opacity: 0.75;
+  }
+  50%{
+    opacity: 0.5;
+  }
+  75%{
+    opacity: 0.25;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+
+.ghost{
+    animation-name: ghost;
+    animation-duration: 900ms;
+    animation-fill-mode: forwards;
+}

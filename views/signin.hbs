@@ -1,0 +1,25 @@
+<div class="wrapper">
+  <div class='container'>
+    <form action='/signin' method='POST' class="signup-form">
+      <div class='text-center'>
+        <img class='logo' alt='logo' src='/images/twitter_2022_logo.svg' />
+        <h3 class='mt-2'>登入 Alphitter</h3>
+      </div>
+      {{>message}}
+      <div class='form-label pt-2 mt-4'>
+        <label for='account' class='ms-2'>帳號</label>
+        <input id='account' name='account' type='text' class='form-control' placeholder='請輸入帳號' value='{{account}}' required/>
+      </div>
+      <div class='form-label pt-2 mt-4'>
+        <label for='password' class='ms-2'>密碼</label>
+        <input id='password' name='password' type='password' class='form-control' placeholder='請輸入密碼' value='{{password}}' required/>
+      </div>
+      <button class='btn btn-primary mt-4 mb-3' type='submit'>登入</button>
+      <div class='d-flex justify-content-end signup-links'>
+        <p><a href='/signup'>註冊</a></p>
+        <p class='text-center'>•</p>
+        <p><a href='/admin/signin'>後台登入</a></p>
+      </div>
+    </form>
+  </div>
+</div>

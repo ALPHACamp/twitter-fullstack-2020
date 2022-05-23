@@ -1,0 +1,166 @@
+i, .camera-icon{
+  display: inline-block;
+  background: url(/images/twitter_2022_icon.svg);
+  position: relative;
+}
+i.back-arrow {
+  background-position:-26px -96px;
+  height: 24px;
+  width: 24px;
+}
+i.comment {
+  background-position: -12px -68px;
+  height:15px;
+  width:15px;
+  background-size: 180px;
+  margin-right:8px;
+}
+i.like {
+  background-position: -36px -68px;
+  height: 15px;
+  width: 15px;
+  background-size: 180px;
+  margin-right: 7px;
+}
+.user-info .like{
+  background-position: -50px -96px;
+  width: 20px;
+  height: 19px;
+  background-size: 250px;
+}
+i.user-like{
+  background-position: -59px -68px;
+}
+.tweet-buttons button:hover i.comment {
+  background-position: -12px -88px;
+}
+.tweet-buttons button:hover i.like {
+  background-position: -36px -88px;
+}
+.tweet-buttons button:hover i.user-like {
+  background-position: -59px -68px;
+}
+.reply-buttons i.comment{
+  background-position: -23px -122px;
+  height: 25px;
+  width: 25px;
+  background-size: 320px;
+}
+.reply-buttons i.like {
+  background-position: -64px -122px;
+  height: 25px;
+  width: 25px;
+  background-size: 320px;
+}
+.reply-buttons i.user-like {
+  background-position: -105px -122px;
+}
+.reply-buttons button:hover i.comment {
+  background-position: -23px -157px;
+}
+.reply-buttons button:hover i.like {
+  background-position: -64px -157px;
+}
+.reply-buttons button:hover i.user-like {
+  background-position: -105px -122px;
+}
+.profile-setting i{
+  height: 24px;
+  width: 24px;
+  margin: 0 18px 0 16px;
+}
+i.home{
+  background-position: -25px -57px;
+}
+i.info{
+  background-position: -65px -57px;
+}
+i.setting{
+  background-position: -105px -57px;
+}
+a.active i.home {
+  background-position: -25px -16px;
+}
+a.active i.info {
+  background-position: -65px -16px;
+}
+a.active i.setting {
+  background-position: -105px -16px;
+}
+i.logout{
+  background-position: -223px -57px;
+}
+.modal-dialog .btn-close{
+  background: url(/images/twitter_2022_icon.svg);
+  background-position: -552px -10px;
+  opacity: 1;
+  cursor: pointer;
+  margin: 7px 0 0 7px;
+  width: 15px;
+  height: 15px;
+  background-size: 320px;
+}
+i.btn-message{
+  background-position: -138px -49px;
+}
+i.btn-message:hover{
+  background-position: -258px -132px;
+}
+i.btn-ring{
+  background-position: -178px -48px;
+}
+i.btn-ring:hover, i.btn-ring-active{
+  background-position: -213px -132px;
+}
+.user-profile .user-banner .btn-close, .camera-icon {
+  position: absolute;
+  z-index: 1;
+}
+.camera-icon {
+  top: 90px;
+  left: 279px;
+  background-position: -288px -92px;
+  height: 20px;
+  width: 20px;
+  background-size: 335px;
+}
+.user-profile .user-banner .btn-close{
+  top: 93.5px;
+  left: 338px;
+  margin: 0;
+  padding: 0;
+  background-position: -241px -90px;
+}
+.avatar-upload-label{
+  top: 185px;
+  left: 77px;
+  z-index: 1;
+}
+.admin-main .counting i{
+  height: 24px;
+  width: 24px;
+  margin-right: 5px;
+}
+.admin-main i.like{
+  background-position: -50px -98px;
+  background-size: 260px;
+}
+.admin-main i.comment{
+  background-position: -150px -128px;
+  background-size: 330px;
+  
+}
+i.success, i.error, i.warning{
+  height: 56px;
+  width: 56px;
+  background: url(/images/twitter_2022_message_icon.svg);
+}
+i.success {
+  background-position: 0 0;
+}
+i.error {
+  background-position: 0 -80px;
+}
+i.warning {
+  background-position: -1px -158px;
+}

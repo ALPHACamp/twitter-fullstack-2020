@@ -1,0 +1,50 @@
+{{! 以下為推文回覆modal }}
+<div class='modal fade' id='replyModal-{{tweet.id}}' tabindex='-1' aria-labelledby='replyModalLabel' aria-hidden='true'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <a class='btn-close' data-bs-dismiss='modal' aria-label='Close'></a>
+      </div>
+      <div class='modal-body reply-area'>
+        {{!-- 以下modal推文區 --}}
+        <div class="tweet d-flex ps-0">
+          <a href="/users/{{tweet.User.id}}/tweets">
+            <img class="avatar" src="{{tweet.User.avatar}}" alt='{{tweet.User.name}}\' s avatar'>
+          </a>
+          <div class="post-content">
+            <div class="post-user d-flex flex-row align-items-end">
+              <a href="/users/{{tweet.User.id}}/tweets">
+                <span class="user-name">{{tweet.User.name}}</span>
+              </a>
+              <span class="secondary-text">@{{tweet.User.account}}</span>
+              <span class="secondary-text">•</span>
+              <span class="secondary-text">{{relativeTimeFromNow tweet.createdAt}}</span>
+            </div>
+            <a href="/tweets/{{tweet.id}}/replies" class="content">{{tweet.description}}</a>
+            <div class='secondary-text reply-text'>回覆
+              <a href="/users/{{tweet.User.id}}/tweets">@{{tweet.User.account}}</a>
+            </div>
+          </div>
+        </div>
+        {{!-- 以下modal回覆區 --}}
+        <form action='/tweets/{{tweet.id}}/replies' method='POST'
+          class="d-flex flex-column justify-content-between mb-0">
+          <div class="d-flex align-items-start">
+            <a href="/users/{{user.id}}/tweets">
+              <img class="avatar" src='{{user.avatar}}' alt='{{user.name}}\' s avatar'>
+            </a>
+            <textarea class='text-count-area' id='comment' name='comment' placeholder='推你的回覆'
+              maxlength='140'></textarea>
+          </div>
+          <div class="d-flex justify-content-end align-items-center">
+            <span class="secondary-text"><span class="text-count-number">0</span>/140</span>
+            <span class="alert-text text-alert-empty" style="display:block;">內容不可空白</span>
+            <span class="alert-text text-alert-over" style="display:none;">(字數不可超過 140 字)</span>
+            <button class="btn btn-primary text-count-btn reply-modal-post-btn" type='submit' data-bs-toggle='modal'
+              data-bs-target='#replyModal' disabled>回覆</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

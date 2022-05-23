@@ -1,0 +1,141 @@
+<div class='tab-contents'>
+  {{#each tweets}}
+    <div class='tweet d-flex'>
+      <a href='/users/{{this.User.id}}/tweets'>
+        <img class='avatar {{#ifCond ../user.id this.User.id}}self-avatar{{/ifCond}}' src='{{this.User.avatar}}' alt='{{this.User.name}}' />
+      </a>
+      <div class='post-content'>
+        <div class='post-user d-flex flex-row align-items-end'>
+          <a href='/users/{{this.User.id}}/tweets'>
+            <span class='user-name {{#ifCond ../user.id this.User.id}}self-name{{/ifCond}}'>{{this.User.name}}</span>
+          </a>
+          <span class='secondary-text'>@{{this.User.account}}</span>
+          <span class='secondary-text'>•</span>
+          <span class='secondary-text'>{{relativeTimeFromNow
+              this.createdAt
+            }}</span>
+        </div>
+        <a href='/tweets/{{this.id}}/replies' class='content'>{{this.description}}</a>
+        <div class='tweet-buttons d-flex flex-row align-items-end'>
+          <button
+            type='button'
+            class='d-flex flex-row align-items-end'
+            data-bs-toggle='modal'
+            data-bs-target='#replyModal-{{this.id}}'
+          >
+            <i class='comment'></i>
+            <span>{{this.Replies.length}}</span>
+          </button>
+          {{! 以下為like }}
+          {{#if this.isLiked}}
+            <button
+              type='button'
+              class='d-flex flex-row align-items-end like-submit-btn liked'
+              data-tweetId='{{this.id}}'
+            >
+              <i class='like user-like'></i>
+              <span class='liked-numbers'>{{this.LikedUsers.length}}</span>
+            </button>
+          {{else}}
+            <button
+              type='button'
+              class='d-flex flex-row align-items-end like-submit-btn'
+              data-tweetId='{{this.id}}'
+            >
+              <i class='like'></i>
+              <span class='liked-numbers'>{{this.LikedUsers.length}}</span>
+            </button>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    {{> reply-modal tweet=this user=../user}}
+  {{/each}}
+  {{#each replies}}
+    <div class='tweet d-flex'>
+      <a href='/users/{{this.User.id}}/tweets'>
+        <img class='avatar {{#ifCond ../user.id this.User.id}}self-avatar{{/ifCond}}' src='{{this.User.avatar}}' alt='{{this.User.name}}' />
+      </a>
+      <div class='post-content'>
+        <div class='post-user d-flex flex-row align-items-end'>
+          <a href='/users/{{this.User.id}}/tweets'>
+            <span class='user-name {{#ifCond ../user.id this.User.id}}self-name{{/ifCond}}'>{{this.User.name}}</span>
+          </a>
+          <span class='secondary-text'>@{{this.User.account}}</span>
+          <span class='secondary-text'>•</span>
+          <span class='secondary-text'>{{relativeTimeFromNow
+              this.createdAt
+            }}</span>
+        </div>
+        <div class='secondary-text reply-text'>回覆
+          <a href='/users/{{this.Tweet.User.id}}/tweets'>@{{this.Tweet.User.account}}</a></div>
+        <a href='/tweets/{{this.Tweet.id}}/replies' class='content mb-0'>{{this.comment}}</a>
+      </div>
+    </div>
+  {{/each}}
+  {{#each likedTweets}}
+    <div class='tweet d-flex {{#if isSelf}}like-box{{/if}}'>
+      <a href='/users/{{this.Tweet.User.id}}/tweets'>
+        <img class='avatar {{#ifCond ../user.id this.Tweet.User.id}}self-avatar{{/ifCond}}' src='{{this.Tweet.User.avatar}}' alt='{{this.Tweet.User.name}}' />
+      </a>
+      <div class='post-content'>
+        <div class='post-user d-flex flex-row align-items-end'>
+          <a href='/users/{{this.Tweet.User.id}}/tweets'>
+            <span class='user-name {{#ifCond ../user.id this.Tweet.User.id}}self-name{{/ifCond}}'>{{this.Tweet.User.name}}</span>
+          </a>
+          <span class='secondary-text'>@{{this.Tweet.User.account}}</span>
+          <span class='secondary-text'>•</span>
+          <span class='secondary-text'>{{relativeTimeFromNow
+              this.Tweet.createdAt
+            }}</span>
+        </div>
+        <a href='/tweets/{{this.Tweet.id}}/replies' class='content'>{{this.Tweet.description}}</a>
+        <div class='tweet-buttons d-flex flex-row align-items-end'>
+          <button type="button" class="d-flex flex-row align-items-end" data-bs-toggle='modal'
+              data-bs-target='#replyModal-{{this.Tweet.id}}'>
+              <i class="comment"></i>
+              <span>{{this.Tweet.Replies.length}}</span>
+          </button>
+          {{! 以下為like }}
+          {{#if this.isLiked}}
+            <button
+              type='button'
+              class='d-flex flex-row align-items-end like-submit-btn liked'
+              data-tweetId='{{this.Tweet.id}}'
+            >
+              <i class='like user-like'></i>
+              <span class='liked-numbers'>{{this.Tweet.LikedUsers.length}}</span>
+            </button>
+          {{else}}
+            <button
+              type='button'
+              class='d-flex flex-row align-items-end like-submit-btn'
+              data-tweetId='{{this.Tweet.id}}'
+            >
+              <i class='like'></i>
+              <span class='liked-numbers'>{{this.Tweet.LikedUsers.length}}</span>
+            </button>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    {{> reply-modal tweet=this.Tweet user=../user}}
+  {{/each}}
+</div>
+
+<script src='/javascripts/text-count.js'></script>
+<script src='/javascripts/post-like.js'></script>
+<script src='/javascripts/top-followed.js'></script>
+
+<script>
+  const likeBoxes = document.querySelectorAll('.like-box')
+  likeSubmitBtn.forEach((item, i) => {
+    item.addEventListener('click', e => {
+      e.stopPropagation()
+      likeBoxes[i]?.classList.add('ghost')
+      setTimeout(()=>{
+        likeBoxes[i]?.remove()
+      }, 1000)
+    })
+  })
+</script>

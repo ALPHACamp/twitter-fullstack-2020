@@ -1,0 +1,103 @@
+<div class="wrapper">
+  <div class='container user-homepage'>
+    <div class="profile-setting d-flex flex-column justify-content-between">{{> leftColumn}}</div>
+    <div class="main">
+      <div class='user-header d-flex flex-row align-items-center'>
+        <a href="/tweets"><i class="back-arrow"></i></a>
+        <div class="header-text d-flex flex-column">
+          <h5>{{queryUser.name}}</h5>
+          <span class="tweets-count secondary">{{queryUser.Tweets.length}} 推文</span>
+        </div>
+      </div>
+      <div class='user-banner'>
+        <img class="cover" src='{{queryUser.cover}}' alt='{{queryUser.name}} cover' width='100%' height='20%'/>
+        <img class='avatar {{#ifCond user.id queryUser.id}}self-avatar{{/ifCond}}' src='{{queryUser.avatar}}' alt='{{queryUser.name}} avatar' width='20%' height='10%'/>
+        <div class="buttons d-flex justify-content-end align-items-center">
+          {{#if queryUser.isSelf}}
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline edit-button user-edit-modal-button" data-id="{{queryUser.id}}" data-bs-toggle="modal" data-bs-target="#user-edit-staticBackdrop">
+              編輯個人資料
+            </button>
+            {{else}}
+            <a class="btn-round message-button"><i class="btn-message"></i></a>
+            <a class="btn-round ring-button"><i class="btn-ring " data-user-id="31"></i></a>
+              {{#if queryUser.isFollowed}}
+                <form action='/followships/{{queryUser.id}}?_method=DELETE' method='POST' class="mb-0">
+                  <button type="submit" class="btn btn-primary follow-btn">正在跟隨</button>
+                </form>
+                {{else}}
+                <form action='/followships' method='POST' class="mb-0">
+                  <input type='hidden' name='id' value='{{queryUser.id}}'/>
+                  <button type="submit" class="btn btn-outline follow-btn">跟隨</button>
+                </form>
+              {{/if}}
+          {{/if}}
+        </div>
+      </div>
+      <div class="user-info">
+        <h5 class="name {{#ifCond user.id queryUser.id}}self-name{{/ifCond}}">{{queryUser.name}}</h5>
+        <div class='secondary-text'>@{{queryUser.account}}</div>
+        <p class='introduction'>{{queryUser.introduction}}</p>
+        <a href="/users/{{queryUser.id}}/followings">
+          {{queryUser.Followings.length}} 個<span class="secondary">跟隨中</span>
+        </a>
+        <a href="/users/{{queryUser.id}}/followers">
+          {{queryUser.Followers.length}} 位<span class="secondary">跟隨者</span>
+        </a>
+      </div>
+      {{> user-tabs}}
+      {{> user-tab-contents}}
+    </div>
+    <div class="top-users-list"> {{> rightColumn}}</div>
+  </div> 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="user-edit-staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog user-profile" id="user-edit-modal-dialog">
+    <div class="modal-content" id="user-edit-modal-content">
+      <form name="user-edit-modal-form" class="user-edit-modal-form" enctype="multipart/form-data" data-id="{{queryUser.id}}">
+        <div class="modal-header d-flex justify-content-between" id="user-edit-modal-header">
+          <div class="d-flex justify-content-start">
+            <a class="btn-close user-edit-modal-close-button" data-bs-dismiss="modal" aria-label="Close"></a>
+            <h5 class="modal-title" id="user-edit-staticBackdropLabel">編輯個人資料</h5>
+          </div>
+          <button type="submit" class="btn btn-primary user-edit-modal-save-button" data-id="{{queryUser.id}}" data-bs-dismiss="modal">儲存</button>
+        </div>
+        <div class="modal-body" id="user-edit-modal-body">
+          <div class="main">
+            <div class='user-banner'>
+              <label for="cover-upload-input" class="cover-upload-label camera-icon"> </label>
+              <a class="btn user-edit-modal-remove-cover btn-close"></a>
+              <input id="cover-upload-input" name="image" type="file" style="display: none;" data-id="{{queryUser.id}}"/>
+              <img id="cover-upload-img" class="cover" src='' alt='{{queryUser.name}} cover'/>
+              <label for="avatar-upload-input" class="avatar-upload-label camera-icon"> </label>
+              <input id="avatar-upload-input" name="image" type="file" style="display: none;" data-id="{{queryUser.id}}"/>
+              <img id="avatar-upload-img" class='avatar' src='' alt='{{queryUser.name}} avatar' />
+            </div>
+          </div>
+          <div class="user-profile-texts">
+            <div class="form-label">
+              <label for="user-edit-modal-name">名稱</label>
+              <input type="text" class="form-control" id="user-edit-modal-name" value="" maxlength="50">            
+            </div>
+            <div class="text-end">
+              <span class="secondary-text"><span class="user-edit-modal-name-counts">0</span>/50</span>
+              <span class="alert-text">字數不可超過 50 字</span>
+            </div>
+            <div class="form-label">
+              <label for="user-edit-modal-introduction">自我介紹</label>
+              <textarea class="form-control" id="user-edit-modal-introduction" maxlength="160"></textarea>            
+            </div>
+            <div class="text-end">
+              <span class="secondary-text"><span class="user-edit-modal-introduction-counts">0</span>/160</span>
+              <span class="alert-text">字數不可超過 160 字</span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/javascripts/user-edit-modal.js"></script>

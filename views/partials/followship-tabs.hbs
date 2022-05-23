@@ -1,0 +1,5 @@
+<div class="user-tabs d-flex mt-3">
+  <a href="/users/{{queryUser.id}}/followers" {{#ifCond tab 'getFollowers'}} class="active" {{/ifCond}}>追隨者</a>
+  <a href="/users/{{queryUser.id}}/followings" {{#ifCond tab 'getFollowings'}} class="active" {{/ifCond}}>正在追隨</a>
+</div>
+

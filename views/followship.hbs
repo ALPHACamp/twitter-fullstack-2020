@@ -1,0 +1,19 @@
+<div class="wrapper">
+  <div class='container user-homepage'>
+    <div class="profile-setting d-flex flex-column justify-content-between">{{> leftColumn}}</div>
+    <div class="main">
+      <div class='user-header d-flex flex-row align-items-center'>
+        <a href="/users/{{queryUser.id}}/tweets"><i class="back-arrow"></i></a>
+        <div class="header-text d-flex flex-column">
+          <h5>{{queryUser.name}}</h5>
+          <span class="tweets-count secondary">{{queryUser.Tweets.length}} 推文</span>
+        </div>
+      </div>
+      {{> followship-tabs}}
+      {{> followship-tab-contents}}
+    </div>
+    <div class="top-users-list"> {{> rightColumn}}</div>
+  </div>
+</div>
+
+<script src='/javascripts/top-followed.js'></script>
