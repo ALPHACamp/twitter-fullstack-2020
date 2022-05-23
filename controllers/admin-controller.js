@@ -1,4 +1,4 @@
-const { Tweet, User } = require('../models')
+const { Tweet, User, Reply, Like } = require('../models')
 const helper = require('../_helpers')
 
 const adminController = {
@@ -52,17 +52,18 @@ const adminController = {
       next(err)
     }
   },
-  deleteTweet: (req, res, next) => {
+  deleteTweet: async (req, res, next) => {
     try {
-      Tweet.findByPk(req.params.id)
-        .then(tweet => {
-          if (!tweet) throw new Error("Tweet didn't exist!")
-          return tweet.destroy()
-        })
-        .then(() => {
-          req.flash('success_messages', '成功刪除')
-          res.redirect('back')
-        })
+      const TweetId = req.params.id
+      const tweet = await Tweet.findByPk(TweetId)
+      if (!tweet) throw new Error("Tweet didn't exist!")
+      const deletedTweet = await tweet.destroy()
+      const reply = await Reply.destroy({ where: { TweetId } })
+      const like = await Like.destroy({ where: { TweetId } })
+      if (!deletedTweet || !reply || !like) throw new Error('發生錯誤，請稍後再試')
+
+      req.flash('success_messages', '成功刪除')
+      res.redirect('back')
     } catch (err) {
       next(err)
     }
