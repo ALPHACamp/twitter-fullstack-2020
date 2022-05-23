@@ -19,7 +19,7 @@
                     <button type="button" class="border-0 opacityObject" data-bs-toggle="modal" data-bs-target="#tweet{{tweet.id}}Reply"><i class="far fa-comment"></i> {{ tweet.totalReply}}</button>
                 </div>
                 <div class="col-1" onclick="location.href='/tweets/{{tweet.id}}/replies';"></div>
-                <button class="opacityObject" onclick="toggleLike(this)" data-is-liked={{likes.isLiked}} data-tweet-id="{{tweet.id}}">
+                <button class="opacityObject" onclick="toggleLike(this)" data-is-liked="{{tweet.isLiked}}" data-tweet-id="{{tweet.id}}">
                     {{#if tweet.isLiked}}
                         <i class="fas fa-heart text-danger"></i> 
                     {{else}}

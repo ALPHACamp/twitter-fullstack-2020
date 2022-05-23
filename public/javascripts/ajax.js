@@ -1,12 +1,11 @@
 function toggleLike(likeBtn){
-    const isLiked=likeBtn.dataset.isLiked==='true'||likeBtn.dataset.isLiked===true
+    const isLiked=likeBtn.dataset.isLiked==='true'||likeBtn.dataset.isLiked===true||likeBtn.dataset.isLiked==="1"
     const tweetId = Number(likeBtn.dataset.tweetId)
     const icon = likeBtn.querySelector('i')
     const spanLikeNumber= likeBtn.querySelector('span')||document.getElementById(`totalLike`)
-    //
     // console.log(isLiked)
-    //
     if(isLiked){
+        
         axios.post(`/tweets/${tweetId}/unlike`,null,{
             validateStatus: status => 200<=status&&status<=302
         })
@@ -19,6 +18,7 @@ function toggleLike(likeBtn){
         })
     }
     else{
+        
         axios.post(`/tweets/${tweetId}/like`,null,{
             validateStatus: status => 200<=status&&status<=302
         })
