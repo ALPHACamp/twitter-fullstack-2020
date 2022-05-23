@@ -2,7 +2,7 @@ function toggleLike(likeBtn){
     const isLiked=likeBtn.dataset.isLiked==='true'||likeBtn.dataset.isLiked===true
     const tweetId = Number(likeBtn.dataset.tweetId)
     const icon = likeBtn.querySelector('i')
-    const spanLikeNumber= likeBtn.querySelector('span')||document.getElementById(`tweetId${tweetId}TotalLike`)
+    const spanLikeNumber= likeBtn.querySelector('span')||document.getElementById(`totalLike`)
     //
     // console.log(isLiked)
     //
