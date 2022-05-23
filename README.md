@@ -5,7 +5,7 @@ This is a simple Twitter-like social networking service, developed full-stack us
 ## Start to use Simple Twitter
 *   Make sure that you have already installed [Node.js](https://nodejs.org/en/)
 
-1.   Clone this project to your local place from github
+1.   Clone this project to your local place from github.
 
           git clone https://github.com/LouisChen-TW/twitter-fullstack-2020.git
     
@@ -21,16 +21,19 @@ This is a simple Twitter-like social networking service, developed full-stack us
 
           touch .env
           
-5.   Create MySQL database. (* Notice: Don't forget to install [MySQL](https://dev.mysql.com/downloads/mysql/) on your device before creating database !)
+5.   Create MySQL database on [MySQL Workbench](https://dev.mysql.com/downloads/workbench/). (* Notice: Don't forget to install [MySQL](https://dev.mysql.com/downloads/mysql/) on your device !)
 * MySQL database related settings can be found in [config.json](https://github.com/LouisChen-TW/twitter-fullstack-2020/blob/main/config/config.json).
 
-          create database ac_twitter_workspace
+         create database ac_twitter_workspace
+         
+![image](https://user-images.githubusercontent.com/87403901/169786509-88234796-1078-4523-855b-c2b14bf27a7e.png)
+
     
 6.   MySQL database migration.
 
           npx sequelize db:migrate
     
-7.   Add Seed data for test (* Notice: Seed data include 6 users(root, user1, user2, user3, user4, and user5) for testing.)
+7.   Add Seed data for test (* Notice: Seed data include 6 users(root, user1, user2, user3, user4, and user5) for testing.).
 
           npx sequelize db:seed:all
     
