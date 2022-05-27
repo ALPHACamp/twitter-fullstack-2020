@@ -66,7 +66,7 @@ const adminController = {
             followers: user.Followers.length,
             followings: user.Followings.length
           }))
-          data = data.sort((a, b) => b.tweetCount - a.tweetCount)
+        data = data.sort((a, b) => b.tweetCount - a.tweetCount)
         res.render('admin/users', { users: data })
       })
       .catch(err => next(err))
