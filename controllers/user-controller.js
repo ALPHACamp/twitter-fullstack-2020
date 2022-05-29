@@ -165,8 +165,8 @@ const userController = {
       const isFollowed = user.Followers.some(follower => follower.id === helpers.getUser(req).id)
       const data = user.Likes.map(e => {
         const f = { ...e.toJSON() }
-        f.Tweet.totalLike = f.Tweet.Likes.length,
-        f.Tweet.totalReply = f.Tweet.Replies.length,
+        f.Tweet.totalLike = f.Tweet.Likes.length
+        f.Tweet.totalReply = f.Tweet.Replies.length
         f.Tweet.isLiked = f.Tweet.Likes.some(g => g.UserId === helpers.getUser(req).id)
         return f
       })

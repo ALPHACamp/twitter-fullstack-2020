@@ -1,6 +1,6 @@
 const { Op } = require('sequelize')
 const db = require('../models')
-const { Tweet, User, Like, Reply, sequelize } = db
+const { User, sequelize } = db
 const helpers = require('../_helpers')
 function catchTopUsers (req) {
   return User.findAll({
