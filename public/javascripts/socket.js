@@ -1,5 +1,5 @@
-const body = document.body
-let socket = io({query:{name:body.dataset.user}});
+const { user }= document.body.dataset
+let socket = io({query:{name:user}});
 let chatBlock = document.getElementById('chat-block')
 let chatInput = document.getElementById('chat-input');
 let chatForm = document.getElementById('chat-form')
@@ -8,16 +8,15 @@ e.preventDefault();
     if (chatInput.value) {
         let letter=JSON.stringify({
             to:'user3',
-            from:'user1',
+            from:user,
             content:chatInput.value
         }) 
         socket.emit('send message', letter);
-        chatBlock.innerHTML+='自己:'+chatInput.value+'<br/>'
+        chatBlock.innerHTML+=`<div class="text-end">${chatInput.value}</div>`
         chatInput.value = '';
     }
 });
 socket.on('send letter',jsonletter=>{
-    const {content} = JSON.parse(jsonletter)
-    console.log(content)
-    chatBlock.innerHTML+='別人:'+content+'<br/>'
+    const {content, from, to} = JSON.parse(jsonletter)
+    chatBlock.innerHTML+=`<div class="text-start">${content}</div>`
 })
