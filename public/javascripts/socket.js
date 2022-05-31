@@ -1,35 +1,4 @@
-const userId= document.body.dataset.userId
-const socket = io({query:{name:UserId}});
-const chatHeader = document.querySelector('#chat-header')
-const chatContent = document.getElementById('chat-content')
-const chatInput = document.getElementById('chat-input')
-const chatForm = document.getElementById('chat-form')
-let to=''
-chatForm.addEventListener('submit', function(e) {
-e.preventDefault();
-    if (chatInput.value) {
-        let letter=JSON.stringify({
-            to,
-            from:userId,
-            content:chatInput.value
-        }) 
-        socket.emit('send message', letter);
-        chatContent.innerHTML+=`<div class="text-end">${chatInput.value}</div>`
-        chatInput.value = '';
-    }
-});
-socket.on('send letter',jsonletter=>{
-    const {content, from, to} = JSON.parse(jsonletter)
-    chatContent.innerHTML+=`<div class="text-start">${content}</div>`
-})
 
-
-function chat(btn){
-    const chatWith = btn.innerHTML
-    if(chatWith===userId){console.log('不能與自己聊天')}
-    else{
-        chatHeader.innerHTML=chatWith
-        chatContent.innerHTML=''
-        to=chatWith
-    }
-}
+const socket = io({query:{userId:1}})
+console.log(1)
+// 處理通知事務

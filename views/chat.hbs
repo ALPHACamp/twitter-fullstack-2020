@@ -11,15 +11,18 @@
     </div>
     <div class="col ">
         <div class="py-3" style="height:95%;width:100%">
-            <div id="chat-block" class="chatBlock rounded px-2 py-2">
+            <div id="chat-content" class="chatBlock rounded px-2 py-2">
                 1
             </div>
         </div>
-        <form class="" style="height:5%;width:100%">
+        <form class="" style="height:5%;width:100%" id="chat-form">
             <div class="input-group mb-3">
-                <input type="text" class="form-control rounded-pill" required>
-                <button class="btn btn-outline-secondary rounded-circle border-0" type="button" id="button-addon2"><i class="fas fa-angle-double-right"></i></button>
+                <input type="text" value="" id="receiverId">
+                <input type="text" value="{{logInUser.id}}" id="senderId">
+                <input type="text" class="form-control rounded-pill" id="chat-input" required>
+                <button class="btn btn-outline-secondary rounded-circle border-0" type="button"><i class="fas fa-angle-double-right"></i></button>
             </div>
         </form>
     </div>
 </div>
+<script src="/javascripts/chat.js"></script>
