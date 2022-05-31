@@ -37,3 +37,13 @@
     background-color: #FF6600;
     color:white;
 }
+.chatBtn{
+    color:#FF6600;
+    border-style: none;
+    background-color:rgba(220,38,38,0);
+    font-size: 125%;
+}
+.chatBlock{
+    background-color: rgb(245, 245, 245);
+    height: 100%;
+}

@@ -10,13 +10,19 @@ io.on('connection', socket => {
   if ((!sockets[name]) && socket.handshake.query.name) {
     socket.on('send message', jsonLetter => {
       const { to } = JSON.parse(jsonLetter)
-      sockets[to].emit('send letter', jsonLetter)
+      if (sockets[to]) { sockets[to].emit('send letter', jsonLetter) }
+    
+    
+    
     })
-    // socket.on('disconnect', jsonname => {
-    //   const { name } = JSON.parse(jsonname)
-    //   delete sockets[name]
-    // })
+
+    socket.on('disconnect', function (reason) {
+      sockets[name] = null
+      delete sockets[name]
+      console.log(name, reason, Object.keys(sockets))
+    })
     sockets[name] = socket
+    console.log(Object.keys(sockets).length)
   }
 })
 server.listen(3000, () => 1)

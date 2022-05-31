@@ -7,9 +7,13 @@
         <a class="nav-link fs-5 fw-bold blockstyle my-1 px-1 mb-3 rounded-pill" href="/users/{{logInUser.id}}/tweets" style="color:{{#ifCond route 'tweets'}}#FF6600{{else}}black{{/ifCond}};">
             <i class="fas fa-user"></i> 個人資料
         </a>
+        <a class="nav-link fs-5 fw-bold blockstyle my-1 px-1 mb-3 rounded-pill " href="/chat" style="color:{{#ifCond route 'chat'}}#FF6600{{else}}black{{/ifCond}};">
+            <i class="far fa-envelope"></i> 公開聊天室
+        </a>
         <a class="nav-link fs-5 fw-bold my-1 px-1 mb-5 blockstyle rounded-pill" href="/users/setting/{{logInUser.id}}"  style="color:{{#ifCond route 'setting'}}#FF6600{{else}}black{{/ifCond}};">
             <i class="fas fa-user-cog"></i> 設定
         </a>
+        
         <button class="border-0 rounded-pill myBtn text-center py-1 fs-5 fw-bold" data-bs-toggle="modal" data-bs-target="#tweets">推文</button>  
     </nav>
 </div>
