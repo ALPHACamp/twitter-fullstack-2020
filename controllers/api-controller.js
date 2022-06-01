@@ -1,6 +1,6 @@
 const db = require('../models')
 const helpers = require('../_helpers')
-const { User, Tweet, sequelize, Like, Reply } = db
+const { User, Tweet, sequelize, Like, Reply, Message } = db
 const { imgurFileHandler } = require('../helpers/file-helpers')
 const { relativeTimeFromNow } = require('../helpers/handlebars-helpers')
 const { Op } = require('sequelize')
@@ -93,6 +93,23 @@ const apiController = {
       }
       return res.json({ tweets, logInUser: helpers.getUser(req) })
     }).catch(err => next(err))
+  },
+  getMessages: async (req, res, next) => {
+    try {
+      const self = helpers.getUser(req).id
+      const other = Number(req.params.id)
+      const chatHistory = await Message.findAll({
+        where: {
+          [Op.or]: [{ senderId: self, receiverId: other }, { senderId: other, receiverId: self }]
+        },
+        order: [[sequelize.col('createdAt'), 'ASC']],
+        raw: true,
+        nest: true
+      })
+      res.json({ status: 'success', data: chatHistory })
+    } catch (err) {
+      next(err)
+    }
   }
 }
 

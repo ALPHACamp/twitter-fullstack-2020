@@ -1,6 +1,7 @@
 const http = require('http')
 const app = require('./app')
 const { Server } = require('socket.io')
+const { Message } = require('./models')
 //
 const server = http.createServer(app)
 const io = new Server(server)
@@ -8,11 +9,11 @@ const sockets = {}
 io.on('connection', socket => {
   const { userId } = socket.handshake.query
   if ((!sockets[userId]) && userId) {
-    socket.on('post message', message => {
+    socket.on('post message', async(message) => {
       const { senderId, receiverId } = JSON.parse(message)
       // function :store into database
+      Message.create(JSON.parse(message))
       if (sockets[receiverId]) {
-        console.log('server message')
         sockets[receiverId].emit('get message', message)
         sockets[receiverId].emit('notify user', senderId)
       }

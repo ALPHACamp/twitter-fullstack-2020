@@ -37,8 +37,8 @@ socket.on('get message', message => {
             }
         }
         if(chatUser){
-            console.log(chatUser.querySelector('span').style.visibility)
-            chatUser.querySelector('span').style.visibility='visible'
+            // console.log(chatUser.querySelector('#').style.visibility)
+            chatUser.querySelector('#orange-point').style.visibility='visible'
         }else{
             //add a new nav of this sender
         }
@@ -59,9 +59,19 @@ function change(e){
     const { userId } = e.dataset
     //
     document.getElementById('chat-area').hidden=false
-    e.querySelector('span').style.visibility='hidden'
-    chatHeader.innerHTML = e.innerHTML
+    e.querySelector('#orange-point').style.visibility='hidden'
+    chatHeader.innerHTML = e.querySelector('#chat-user-name').innerHTML
     receiverInput.value = userId
-    chatContent.innerHTML=''
-    //api chat history,
+
+    //api chat history
+    axios.get(`/api/chat/${userId}`).then(result=>{
+        // console.log(result.data)
+        const id = Number(userId)
+        chatContent.innerHTML=result.data.data.reduce((total,e)=>{
+            if(id===e.receiverId)
+                return total+myMessage(e.content)
+            else
+                return total+othersMessage(e.content)
+        },'')
+    })
 }

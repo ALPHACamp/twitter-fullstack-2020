@@ -7,16 +7,13 @@
                     Message
                 </span>
             </a>
-            {{#ifCond logInUser.id 2}}
-            <a class="nav-link border-bottom blockstyle" name="chat-user" data-user-id="4" onclick="change(this)">
-                user3<span class="remindIcon">&bull;</span>
-            </a>
-            {{/ifCond}}
-            {{#ifCond logInUser.id 4}}
-            <a class="nav-link border-bottom blockstyle" name="chat-user" data-user-id="2" onclick="change(this)">
-                user1<span class="remindIcon">&bull;</span>
-            </a>
-            {{/ifCond}}
+            {{#each chatUsers}}
+                <a class="nav-link border-bottom blockstyle" name="chat-user" data-user-id="{{this.id}}" onclick="change(this)">
+                    <img src="{{this.avatar}}" class="rounded-circle" style="width:40px;height:40px">
+                    <span class="fs-5 fw-bold text-dark" id="chat-user-name">{{this.name}}</span>
+                    <span class="remindIcon fs-3" id="orange-point">&bull;</span>
+                </a>
+            {{/each}}
         </nav>
     </div>
     <div class="col" id="chat-area" hidden>
@@ -28,7 +25,7 @@
             <div class="input-group mb-3">
                 <input type="text" id="receiver-input" style="display:none ;">
                 <input type="text" value="{{logInUser.id}}" id="sender-input" style="display:none ;" readonly>
-                <input type="text" class="form-control rounded-pill" id="chat-input" required>
+                <input type="text" class="form-control rounded-pill" id="chat-input" placeholder="請輸入內容" required>
                 <button class="btn btn-outline-secondary rounded-circle border-0" type="submit"><i class="fas fa-angle-double-right"></i></button>
             </div>
         </form>
