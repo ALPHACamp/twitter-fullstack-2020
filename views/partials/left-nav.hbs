@@ -1,15 +1,19 @@
-<div class="container px-3" style="height:100vh">
+<div class="container px-3" style="height:100vh" data-user-id="{{logInUser.id}}" id="left-nav">
     <img class="logo mb-3" alt="logo" src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" style="height:50px;width:50px;">
     <nav class="nav flex-column">
         <a class="nav-link fs-5 fw-bold blockstyle my-1 px-1 mb-3 rounded-pill" href="/tweets" style="color:{{#ifCond route 'index'}}#FF6600{{else}}black{{/ifCond}};">
-            <i class="fas fa-house-user"></i> 首頁
+            <i class="fas fa-house-user"></i><span class="remindIcon">&bull;</span>首頁
         </a>
         <a class="nav-link fs-5 fw-bold blockstyle my-1 px-1 mb-3 rounded-pill" href="/users/{{logInUser.id}}/tweets" style="color:{{#ifCond route 'tweets'}}#FF6600{{else}}black{{/ifCond}};">
-            <i class="fas fa-user"></i> 個人資料
+            <i class="fas fa-user-alt"></i><span class="remindIcon">&bull;</span>個人資料
+        </a>
+        <a class="nav-link fs-5 fw-bold blockstyle my-1 px-1 mb-3 rounded-pill " href="/messages" style="color:{{#ifCond route 'chat'}}#FF6600{{else}}black{{/ifCond}};">
+            <i class="far fa-envelope"></i><span class="remindIcon" id="public-chat-remind">&bull;</span>公開聊天室
         </a>
         <a class="nav-link fs-5 fw-bold my-1 px-1 mb-5 blockstyle rounded-pill" href="/users/setting/{{logInUser.id}}"  style="color:{{#ifCond route 'setting'}}#FF6600{{else}}black{{/ifCond}};">
-            <i class="fas fa-user-cog"></i> 設定
+           <i class="fas fa-user-cog"></i><span class="remindIcon">&bull;</span>設定
         </a>
+        
         <button class="border-0 rounded-pill myBtn text-center py-1 fs-5 fw-bold" data-bs-toggle="modal" data-bs-target="#tweets">推文</button>  
     </nav>
 </div>
@@ -44,3 +48,5 @@
     </div>
   </div>
 </div> 
+<script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+<script src="/javascripts/socket.js"></script>

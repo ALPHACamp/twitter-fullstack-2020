@@ -26,7 +26,7 @@
             </div>
             {{else}}
                 <div class="d-flex align-items-end text-end">
-                    <button class="btn rounded-pill myOutlineBtn" type="button"><i class="far fa-envelope"></i></button> <div style="width: 1rem;"></div>
+                    <a href="/messages/chat/{{user.id}}" class="btn rounded-pill myOutlineBtn" type="button"><i class="far fa-envelope"></i></a> <div style="width: 1rem;"></div>
                     <button class="btn rounded-pill myOutlineBtn" type="button"><i class="far fa-bell"></i></button> <div style="width: 1rem;"></div>
                     {{#if isFollowed}}
                         <form class="ms-auto mt-1 " method="POST" action="/followships/{{user.id}}?_method=DELETE">

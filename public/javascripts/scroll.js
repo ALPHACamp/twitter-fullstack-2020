@@ -1,38 +1,37 @@
 const middle = document.getElementById('middle')
 const tweetsContainer = document.getElementById('tweetsContainer')
-const tweetsIds = JSON.parse( document.getElementById('idArray').innerHTML)
+const tweetsIds = JSON.parse(document.getElementById('idArray').innerHTML)
 //
 middle.style.height = window.innerHeight + 'px'
-middle.addEventListener('scroll',scrollToEnd)
+middle.addEventListener('scroll', scrollToEnd)
 //
-function scrollToEnd(){
-    if(middle.scrollHeight<=middle.scrollTop+window.innerHeight){
-        middle.removeEventListener('scroll',scrollToEnd)
-        const apiUrl=`/api/tweets`
-        const tweetsHTML=''
-        axios.post(
-            apiUrl, JSON.stringify({tweetsIds}), { headers: { 'Content-Type' : 'application/json' } }
-        )
-        .then(res=>{
-            if(res.status===200&&res.data?.tweets){
-                const tweets = res.data.tweets
-                const avatar=res.data.logInUser.avatar
-                let i =''
-                for(const tweet of tweets){
-                    i+=tweetHTML(tweet,avatar)
-                    tweetsIds.push(tweet.id)
-                }
-                tweetsContainer.innerHTML+=i
-                middle.addEventListener('scroll',scrollToEnd)
-            }
-        }).catch(err=>console.log('apiTweetsError'+err))
-    }
+function scrollToEnd () {
+  if (middle.scrollHeight <= middle.scrollTop + window.innerHeight) {
+    middle.removeEventListener('scroll', scrollToEnd)
+    const apiUrl = '/api/tweets'
+    const tweetsHTML = ''
+    axios.post(
+      apiUrl, JSON.stringify({ tweetsIds }), { headers: { 'Content-Type': 'application/json' } }
+    )
+      .then(res => {
+        if (res.status === 200 && res.data?.tweets) {
+          const tweets = res.data.tweets
+          const avatar = res.data.logInUser.avatar
+          let i = ''
+          for (const tweet of tweets) {
+            i += tweetHTML(tweet, avatar)
+            tweetsIds.push(tweet.id)
+          }
+          tweetsContainer.innerHTML += i
+          middle.addEventListener('scroll', scrollToEnd)
+        }
+      }).catch(err => console.log('apiTweetsError' + err))
+  }
 }
 
-
-function tweetHTML(tweet,avatar){
-    const likeBtn = tweet.isLiked?`<i class="fas fa-heart text-danger" id="likeBtn${tweet.id}Icon"></i><span id="likeBtn${tweet.id}Number"> ${tweet.totalLike}</span>`:`<i class="far fa-heart" id="likeBtn${tweet.id}Icon"></i><span id="likeBtn${tweet.id}Number"> ${tweet.totalLike}</span>`
-    return`<div class="blockstyle">
+function tweetHTML (tweet, avatar) {
+  const likeBtn = tweet.isLiked ? `<i class="fas fa-heart text-danger" id="likeBtn${tweet.id}Icon"></i><span id="likeBtn${tweet.id}Number"> ${tweet.totalLike}</span>` : `<i class="far fa-heart" id="likeBtn${tweet.id}Icon"></i><span id="likeBtn${tweet.id}Number"> ${tweet.totalLike}</span>`
+  return `<div class="blockstyle">
     <div style="width:100%;height:1rem" onclick="location.href='/tweets/${tweet.id}/replies';"></div>
     <div class="row mx-0 px-0" id="tweetId${tweet.id}">
         <div class="col-1" onclick="location.href='/tweets/${tweet.id}/replies';">
@@ -50,7 +49,7 @@ function tweetHTML(tweet,avatar){
             </div>
             <div class="d-flex">
                 <div>
-                    <button type="button" class="border-0 opacityObject" data-bs-toggle="modal" data-bs-target="#tweet${tweet.id}Reply"><i class="far fa-comment"></i> ${ tweet.totalReply}</button>
+                    <button type="button" class="border-0 opacityObject" data-bs-toggle="modal" data-bs-target="#tweet${tweet.id}Reply"><i class="far fa-comment"></i> ${tweet.totalReply}</button>
                 </div>
                 <div class="col-1" onclick="location.href='/tweets/${tweet.id}/replies';"></div>
                 <button class="opacityObject" id="likeBtn${tweet.id}" onclick="toggleLike(${tweet.id})">

@@ -9,6 +9,7 @@ const api = require('./modules/api')
 const userController = require('../controllers/user-controller')
 const { authenticated } = require('../middleware/auth')
 const admin = require('./modules/admin')
+const message = require('./modules/message')
 
 router.use('/api', authenticated, api)
 router.use('/users', authenticated, user)
@@ -22,9 +23,7 @@ router.post('/signup', userController.signUp)
 router.get('/logout', userController.logout)
 router.get('/users/setting/:id', authenticated, userController.getSetting)
 router.put('/users/setting/:id', authenticated, userController.putSetting)
-
-
-
+router.use('/messages', authenticated, message)
 router.use('/', authenticated, (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
 module.exports = router

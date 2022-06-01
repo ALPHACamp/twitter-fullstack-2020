@@ -10,7 +10,7 @@ const likeController = {
         if (!tweet) {
           throw new Error('This tweet id do not exist')
         }
-        return Like.findOrCreate({ where:{ UserId,TweetId}})
+        return Like.findOrCreate({ where: { UserId, TweetId } })
       })
       .then(() => res.status(302).json({}))
       .catch(err => next(err))
@@ -19,7 +19,7 @@ const likeController = {
     const UserId = helpers.getUser(req).id
     const TweetId = req.params.id
     return Like.findOne({
-      where:{
+      where: {
         UserId,
         TweetId
       }
@@ -30,8 +30,8 @@ const likeController = {
         }
         return like.destroy()
       })
-      .then(() =>  res.status(302).json({}))
+      .then(() => res.status(302).json({}))
       .catch(err => next(err))
-  },
+  }
 }
 module.exports = likeController
