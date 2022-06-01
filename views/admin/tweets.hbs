@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col">
+    {{> admin-left-nav route='tweets'}}
+  </div>
+
+  <div class="col-9 border-start border-end px-0">
+    <h4 class="fw-bold px-4 mt-4 pb-3">推文清單</h4>
+    <div class="list-group">
+      {{#each tweets}}
+      <div class="list-group-item d-flex row mx-0 px-0">
+        {{!-- avatar --}}
+        <div class="col-1 me-1">
+          <img src="{{this.User.avatar}}" class="rounded-circle" style="width:50px;height:50px">
+        </div>
+        <div class="col d-flex flex-column  px-1">
+          {{!-- name account --}}
+          <p>
+            <span class="fw-bold">{{this.User.name}}</span>
+            <span class="text-secondary">@{{this.User.account}} ‧ </span>
+            <span class="text-secondary">{{relativeTimeFromNow this.updatedAt}}</span>
+          </p>
+          {{!-- tweet --}}
+          <p>{{this.description}}</p>
+        </div>
+        <div class="col-1 my-0 py-0">
+          <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+            <button type="submit" class="btn link-secondary"
+              onclick="return confirm(`確定要刪除 {{ this.User.name }} 的推文嗎？`)"><i
+                class="fas fa-times text-secondary"></i></button>
+          </form>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

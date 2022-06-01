@@ -1,0 +1,44 @@
+<div class="container">
+<div class="mb-4 text-center">
+  <h1 class="h3 font-weight-normal mb-3">Setting</h1>
+</div>
+
+<form action="/api/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+<div class="form-floating mb-3">
+  <input type="text" class="form-control" id="account" placeholder="Account" name="account" value="{{user.cover}}">
+  <label for="floatingInput">cover</label>
+</div>
+<div class="form-floating mb-3">
+  <input type="text" class="form-control" id="name" placeholder="Name" name="name" value="{{user.name}}">
+  <label for="floatingInput">Name</label>
+</div>
+<div class="form-floating mb-3">
+  <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email" value="{{user.email}}">
+  <label for="floatingInput">Email address</label>
+</div>
+<div class="form-floating mb-3">
+  <input type="avatar" class="form-control" id="avatar" placeholder="avatar" name="avatar" value="{{user.avatar}}">
+  <label for="floatingInput">Avatar</label>
+</div>
+<div class="form-row mb-3">
+  <label class="form-label" for="avatar">Avatar</label>
+  <input class="form-control" type="file" class="form-control-file" id="avatar" name="avatar">
+</div>
+<div class="form-row mb-3">
+  <label class="form-label" for="Cover">Cover</label>
+  <input class="form-control" type="file" class="form-control-file" id="cover" name="cover">
+</div>
+<div class="form-floating mb-3">
+  <input type="introduction" class="form-control" id="introduction" placeholder="introduction" name="introduction" value="{{user.introduction}}">
+  <label for="floatingIntroduction">Introduction</label>
+  
+</div>
+
+  <div class="mb-4 text-center">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+</div> 
+<h1>{{user.avatar}}</h1>
+<img class="img-responsive center-block" src="{{user.avatar}}" style="width: 250px; margin-bottom: 25px; transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;">
+    <br>

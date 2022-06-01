@@ -1,0 +1,9 @@
+<div class="row">
+        <a class="col text-center pb-3" href="/users/{{data.id}}/followers" style="text-decoration:none;{{#ifCond route 'followers'}}color:#FF6600;border-bottom:solid;border-color:#FF6600;{{else}}color:black;{{/ifCond}}">
+            追隨者
+        </a>
+        <a class="col text-center pb-3" href="/users/{{data.id}}/followings" style="text-decoration:none;{{#ifCond route 'followings'}}color:#FF6600;border-bottom:solid;border-color:#FF6600;{{else}}color:black;{{/ifCond}}">
+            正在追隨
+        </a>
+    <div class="col-7"></div>
+</div>

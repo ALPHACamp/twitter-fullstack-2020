@@ -1,0 +1,52 @@
+<div class="container px-3" style="height:100vh" data-user-id="{{logInUser.id}}" id="left-nav">
+    <img class="logo mb-3" alt="logo" src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" style="height:50px;width:50px;">
+    <nav class="nav flex-column">
+        <a class="nav-link fs-5 fw-bold blockstyle my-1 px-1 mb-3 rounded-pill" href="/tweets" style="color:{{#ifCond route 'index'}}#FF6600{{else}}black{{/ifCond}};">
+            <i class="fas fa-house-user"></i><span class="remindIcon">&bull;</span>首頁
+        </a>
+        <a class="nav-link fs-5 fw-bold blockstyle my-1 px-1 mb-3 rounded-pill" href="/users/{{logInUser.id}}/tweets" style="color:{{#ifCond route 'tweets'}}#FF6600{{else}}black{{/ifCond}};">
+            <i class="fas fa-user-alt"></i><span class="remindIcon">&bull;</span>個人資料
+        </a>
+        <a class="nav-link fs-5 fw-bold blockstyle my-1 px-1 mb-3 rounded-pill " href="/messages" style="color:{{#ifCond route 'chat'}}#FF6600{{else}}black{{/ifCond}};">
+            <i class="far fa-envelope"></i><span class="remindIcon" id="public-chat-remind">&bull;</span>公開聊天室
+        </a>
+        <a class="nav-link fs-5 fw-bold my-1 px-1 mb-5 blockstyle rounded-pill" href="/users/setting/{{logInUser.id}}"  style="color:{{#ifCond route 'setting'}}#FF6600{{else}}black{{/ifCond}};">
+           <i class="fas fa-user-cog"></i><span class="remindIcon">&bull;</span>設定
+        </a>
+        
+        <button class="border-0 rounded-pill myBtn text-center py-1 fs-5 fw-bold" data-bs-toggle="modal" data-bs-target="#tweets">推文</button>  
+    </nav>
+</div>
+
+<div class="ms-1 ps-1" style="margin-top:-55px">
+    <a class="nav-link fs-5 fw-bold text-dark my-1 px-1 blockstyle" href="/logout"><i class="fas fa-sign-out-alt"></i> 登出</a>
+</div>
+
+<div class="modal fade" id="tweets" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <form method="POST" action="/tweets">
+                <div class="row mx-0 px-0">
+                    <div class="col-2 pt-1">
+                        <img src="{{logInUser.avatar}}" class="rounded-circle" style="width:50px;height:50px;">
+                    </div>
+                    <div class="col">
+                        <textarea name="description" class="border-0 mt-2 " style="width:100%; border: none;outline: none;resize:none" placeholder="有什麼新鮮事?" id="floatingTextarea2" rows="4" maxlength="140" required></textarea>
+                    </div>
+                </div>
+                <div class="text-end me-1 pe-1 mb-1 pb-1">
+                    <button type="submit" class="btn border-0 myBtn rounded-pill">推文</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+</div> 
+<script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+<script src="/javascripts/socket.js"></script>

@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col">
+    {{> admin-left-nav route='users'}}
+  </div>
+
+  <div class="col-9 border-start border-end px-0">
+    <h4 class="fw-bold px-4 my-4 pb-4 border-bottom">使用者列表</h4>
+
+    <div class="d-flex flex-wrap justify-content-center">
+      {{#each users}}
+      {{#ifCond this.role 'admin'}}
+      {{else}}
+      <div class="card me-3 border-0" style="width: 15rem;">
+        <div class=" d-flex flex-column align-items-center">
+          {{!-- cover --}}
+          <img src="{{this.cover}}" width="250px" height="140px" style="transition: opacity 0.5s; opacity:0;"
+            class="card-img-top mt-3 rounded-top rounded-3" onload="this.style.opacity=1;" />
+          {{!-- avatar --}}
+          <img src="{{this.avatar}}" class="border border-4  border-light rounded-circle" width="100px" height="100px"
+            style="transition: opacity 0.5s; opacity:0; margin-top: -80px; z-index: 1;" onload="this.style.opacity=1;" />
+        </div>
+        <div class="card-body d-flex flex-column align-items-center" style="background-color: #F6F7F8; margin-top: -20px;">
+          <p class="card-text fw-bold mt-3 mb-0">{{this.name}}</p>
+          <p class="card-text text-secondary fw-bold">@{{this.account}}</p>
+          <p>
+            <i class="fas fa-comment text-secondary me-2"></i><span>{{this.tweetCount}}</span>
+            <i class="far fa-heart text-secondary ms-3 me-2"></i><span>{{this.likeCount}}</span>
+          </p>
+          <p>
+            <span>{{this.followings}} 個</span><span class="text-secondary">跟隨中</span>
+            <span class="ms-2">{{this.followers}} 位</span><span class="text-secondary">跟隨者</span>
+          </p>
+        </div>
+      </div>
+      {{/ifCond}}
+      {{/each}}
+    </div>
+  </div>
+
+</div>

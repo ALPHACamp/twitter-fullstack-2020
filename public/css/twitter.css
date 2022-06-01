@@ -1,0 +1,65 @@
+.blockstyle:hover{
+    background-color:rgb(244, 244, 244);
+    cursor: pointer;
+}
+.opacityObject{
+    border-style: none;
+    background-color:rgba(220,38,38,0);
+}
+.opacityObject:hover{
+    font-size:125%;
+}
+.linkPicture:hover{
+    transform: scale(1.2,1.2);
+    border-width: 3px;
+    border-color: dodgerblue;
+    border-style: solid;
+}
+.linkText:hover{
+    text-decoration:underline;
+}
+
+.myBtn{
+    background-color: #FF6600;
+    color:white;
+}
+.myBtn:hover{
+    filter: brightness(120%);
+    color:white;
+}
+
+.myOutlineBtn{
+    color:#FF6600;
+    border-color:#FF6600;
+    background-color:rgb(255, 255, 255)
+}
+.myOutlineBtn:hover{
+    background-color: #FF6600;
+    color:white;
+}
+.chatBtn{
+    color:#FF6600;
+    border-style: none;
+    background-color:rgba(220,38,38,0);
+    font-size: 125%;
+}
+.chatBlock{
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(161, 161, 161) ;
+    height: 100%;
+}
+.myMessage{
+    color:white;
+    background-color: #FF6600;
+}
+.othersMessage{
+    color:black;
+    background-color: #e9e9e9;
+}
+.remindIcon{
+    color:#FF6600;
+    position: relative;
+    bottom: 10px;
+    visibility:hidden;
+}
