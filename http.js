@@ -6,20 +6,25 @@ const server = http.createServer(app)
 const io = new Server(server)
 const sockets = {}
 io.on('connection', socket => {
-  // const { userId } = socket.handshake.query
-  // if ((!sockets[userId]) && socket.handshake.query.name) {
-  //   socket.on('send message', jsonLetter => {
-  //     const { to } = JSON.parse(jsonLetter)
-  //     if (sockets[to]) { sockets[to].emit('send letter', jsonLetter) }
-  //   })
-
-  //   socket.on('disconnect', function (reason) {
-  //     sockets[userId] = null
-  //     delete sockets[userId]
-  //     console.log(userId, reason, Object.keys(sockets))
-  //   })
-  // sockets[userId] = socket
-  console.log('success')
-  // }
+  const { userId } = socket.handshake.query
+  if ((!sockets[userId]) && userId) {
+    socket.on('post message', message => {
+      const { senderId, receiverId } = JSON.parse(message)
+      // function :store into database
+      if (sockets[receiverId]) {
+        console.log('server message')
+        sockets[receiverId].emit('get message', message)
+        sockets[receiverId].emit('notify user', senderId)
+      }
+    })
+    socket.on('disconnect', reason => {
+      sockets[userId] = null
+      delete sockets[userId]
+      console.log(userId, ' delete:', reason)
+    })
+    sockets[userId] = socket
+    socket = null
+  }
+  console.log('success', userId)
 })
 server.listen(3000, () => 1)

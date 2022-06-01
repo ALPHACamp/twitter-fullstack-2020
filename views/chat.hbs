@@ -1,26 +1,35 @@
 <div class="row">
     <div class="col-2">{{> left-nav route='chat'}}</div>
     <div class="col-3 border-start border-end px-0" style="overflow:auto;">
-        <nav class="nav flex-column">
-
-            <a class="nav-link border-top">Active
-
+        <nav class="nav flex-column" id="people-group">
+            <a class="nav-link border-bottom">
+                <span class="fw-bold text-dark fs-5">
+                    Message
+                </span>
             </a>
-            
+            {{#ifCond logInUser.id 2}}
+            <a class="nav-link border-bottom blockstyle" name="chat-user" data-user-id="4" onclick="change(this)">
+                user3<span class="remindIcon">&bull;</span>
+            </a>
+            {{/ifCond}}
+            {{#ifCond logInUser.id 4}}
+            <a class="nav-link border-bottom blockstyle" name="chat-user" data-user-id="2" onclick="change(this)">
+                user1<span class="remindIcon">&bull;</span>
+            </a>
+            {{/ifCond}}
         </nav>
     </div>
-    <div class="col ">
-        <div class="py-3" style="height:95%;width:100%">
-            <div id="chat-content" class="chatBlock rounded px-2 py-2">
-                1
-            </div>
+    <div class="col" id="chat-area" hidden>
+        <div class="fs-3" style="height:5%;width:100%" id="chat-header"></div>
+        <div class="py-3" style="height:90%;width:100%">
+            <div id="chat-content" class="chatBlock rounded px-2 pt-4 pb-2"></div>
         </div>
         <form class="" style="height:5%;width:100%" id="chat-form">
             <div class="input-group mb-3">
-                <input type="text" value="" id="receiverId">
-                <input type="text" value="{{logInUser.id}}" id="senderId">
+                <input type="text" id="receiver-input" style="display:none ;">
+                <input type="text" value="{{logInUser.id}}" id="sender-input" style="display:none ;" readonly>
                 <input type="text" class="form-control rounded-pill" id="chat-input" required>
-                <button class="btn btn-outline-secondary rounded-circle border-0" type="button"><i class="fas fa-angle-double-right"></i></button>
+                <button class="btn btn-outline-secondary rounded-circle border-0" type="submit"><i class="fas fa-angle-double-right"></i></button>
             </div>
         </form>
     </div>
