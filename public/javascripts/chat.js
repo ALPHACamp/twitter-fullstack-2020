@@ -64,7 +64,7 @@ function change(e){
     receiverInput.value = userId
 
     //api chat history
-    axios.get(`/api/chat/${userId}`).then(result=>{
+    axios.get(`/api/messages/chat/${userId}`).then(result=>{
         // console.log(result.data)
         const id = Number(userId)
         chatContent.innerHTML=result.data.data.reduce((total,e)=>{

@@ -9,7 +9,7 @@ const sockets = {}
 io.on('connection', socket => {
   const { userId } = socket.handshake.query
   if ((!sockets[userId]) && userId) {
-    socket.on('post message', async(message) => {
+    socket.on('post message', async (message) => {
       const { senderId, receiverId } = JSON.parse(message)
       // function :store into database
       Message.create(JSON.parse(message))

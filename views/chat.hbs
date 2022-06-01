@@ -8,7 +8,7 @@
                 </span>
             </a>
             {{#each chatUsers}}
-                <a class="nav-link border-bottom blockstyle" name="chat-user" data-user-id="{{this.id}}" onclick="change(this)">
+                <a class="nav-link border-bottom blockstyle" name="chat-user" {{#ifCond ../newId this.id}}id="new-id"{{/ifCond}} data-user-id="{{this.id}}" onclick="change(this)">
                     <img src="{{this.avatar}}" class="rounded-circle" style="width:40px;height:40px">
                     <span class="fs-5 fw-bold text-dark" id="chat-user-name">{{this.name}}</span>
                     <span class="remindIcon fs-3" id="orange-point">&bull;</span>
@@ -32,3 +32,8 @@
     </div>
 </div>
 <script src="/javascripts/chat.js"></script>
+{{#if newId}}
+<script>
+    change(document.getElementById('new-id'))
+</script>
+{{/if}}

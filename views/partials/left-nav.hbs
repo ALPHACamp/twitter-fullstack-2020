@@ -7,7 +7,7 @@
         <a class="nav-link fs-5 fw-bold blockstyle my-1 px-1 mb-3 rounded-pill" href="/users/{{logInUser.id}}/tweets" style="color:{{#ifCond route 'tweets'}}#FF6600{{else}}black{{/ifCond}};">
             <i class="fas fa-user-alt"></i><span class="remindIcon">&bull;</span>個人資料
         </a>
-        <a class="nav-link fs-5 fw-bold blockstyle my-1 px-1 mb-3 rounded-pill " href="/chat" style="color:{{#ifCond route 'chat'}}#FF6600{{else}}black{{/ifCond}};">
+        <a class="nav-link fs-5 fw-bold blockstyle my-1 px-1 mb-3 rounded-pill " href="/messages" style="color:{{#ifCond route 'chat'}}#FF6600{{else}}black{{/ifCond}};">
             <i class="far fa-envelope"></i><span class="remindIcon" id="public-chat-remind">&bull;</span>公開聊天室
         </a>
         <a class="nav-link fs-5 fw-bold my-1 px-1 mb-5 blockstyle rounded-pill" href="/users/setting/{{logInUser.id}}"  style="color:{{#ifCond route 'setting'}}#FF6600{{else}}black{{/ifCond}};">

@@ -8,5 +8,5 @@ router.get('/users/:id', authenticated, apiController.getUser)
 router.post('/users/:id', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), authenticated, apiController.putUser)
 
 router.post('/tweets', apiController.getTweets)
-router.get('/chat/:id', apiController.getMessages)
+router.get('/messages/chat/:id', apiController.getMessages)
 module.exports = router
