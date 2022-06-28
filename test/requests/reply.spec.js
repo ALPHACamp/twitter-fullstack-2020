@@ -95,7 +95,7 @@ describe('# reply request', () => {
 
       it('when successfully save', (done) => {
         // 讀取測試資料庫的 Reply table 所有資料
-        db.Reply.findOne({where: {userId: 1}}).then(reply => {
+        db.Reply.findOne({where: {UserId: 1}}).then(reply => {
           // 檢查這個 table 不是空的，表示有新增資料進去
           expect(reply).to.not.be.null
           done()

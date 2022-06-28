@@ -102,7 +102,7 @@ describe('# tweet request', () => {
       })
       it('will create current users tweet', (done) => {
         // 檢查 db 裡面是否有 Tweet 的資料，有的話就不會為空
-        db.Tweet.findOne({where: {userId: 1}}).then(tweet => {
+        db.Tweet.findOne({where: {UserId: 1}}).then(tweet => {
           expect(tweet).to.not.be.null
           done()
         })
@@ -169,7 +169,7 @@ describe('# tweet request', () => {
       })
       it('cant create current users tweet', (done) => {
         // 檢查 db 會發現沒有新增的 tweet，表示太長的貼文不會新增成功
-        db.Tweet.findAll({where: {userId: 1}}).then(tweets => {
+        db.Tweet.findAll({where: {UserId: 1}}).then(tweets => {
           expect(tweets).to.be.an('array').that.is.empty;
           done()
         })
@@ -216,7 +216,7 @@ describe('# tweet request', () => {
       })
       it('will save like', (done) => {
         // 檢查 db 會發現不是空的，代表新增成功
-        db.Like.findOne({where: {userId: 1}}).then(like => {
+        db.Like.findOne({where: {UserId: 1}}).then(like => {
           expect(like).to.not.be.null
           done()
         })
@@ -265,7 +265,7 @@ describe('# tweet request', () => {
       })
       it('will delete like', (done) => {
         // 檢查 db，會發現喜愛的資料已清除，因此資料回傳是空的
-        db.Like.findOne({where: {userId: 1}}).then(like => {
+        db.Like.findOne({where: {UserId: 1}}).then(like => {
           expect(like).to.be.null
           done()
         })
