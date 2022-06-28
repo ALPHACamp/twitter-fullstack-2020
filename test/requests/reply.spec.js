@@ -23,7 +23,7 @@ describe('# reply request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: []});
+        ).returns({id: 1, Followings: [], role: 'user'});
 
         // 在測試資料庫中，確保 db 資料清空了
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
@@ -74,7 +74,7 @@ describe('# reply request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: []});
+        ).returns({id: 1, Followings: [], role: 'user'});
         // 在測試資料庫中，新增 mock 資料
         await db.User.create({})
         await db.Tweet.create({UserId: 1, description: 'test'})

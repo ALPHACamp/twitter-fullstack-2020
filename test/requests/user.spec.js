@@ -26,7 +26,7 @@ describe('# user request', () => {
       ).returns(true);
       this.getUser = sinon.stub(
         helpers, 'getUser'
-      ).returns({id: 1, Followings: []});
+      ).returns({id: 1, Followings: [], role: 'user'});
 
       // 確保清除了測試資料庫中的 User, Tweet 資料
       await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
@@ -93,7 +93,7 @@ describe('# user request', () => {
       ).returns(true);
       this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: []});
+        ).returns({id: 1, Followings: [], role: 'user'});
       // 在測試資料庫中，新增 mock 資料
       await db.User.create({name: 'User1'})
       await db.User.create({name: 'User2'})
@@ -150,7 +150,7 @@ describe('# user request', () => {
       ).returns(true);
       this.getUser = sinon.stub(
         helpers, 'getUser'
-      ).returns({id: 1, Followings: []});
+      ).returns({id: 1, Followings: [], role: 'user'});
       // 在測試資料庫中，新增 mock 資料
       await db.User.create({})
     })
@@ -193,7 +193,7 @@ describe('# user request', () => {
       ).returns(true);
       this.getUser = sinon.stub(
         helpers, 'getUser'
-      ).returns({id: 1, Followings: []});
+      ).returns({id: 1, Followings: [], role: 'user'});
       // 在測試資料庫中，新增 mock 資料
       await db.User.create({name: 'User1'})
       await db.User.create({name: 'User2'})
@@ -289,7 +289,7 @@ describe('# user request', () => {
       ).returns(true);
       this.getUser = sinon.stub(
         helpers, 'getUser'
-      ).returns({id: 1, Followings: []});
+      ).returns({id: 1, Followings: [], role: 'user'});
       // 在測試資料庫中，新增 mock 資料
       await db.User.create({})
       await db.Tweet.create({UserId: 1, description: 'Tweet1'})
