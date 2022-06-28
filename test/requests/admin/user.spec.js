@@ -1,11 +1,11 @@
-var chai = require('chai')
-var request = require('supertest')
-var sinon = require('sinon')
-var should = chai.should();
-var expect = chai.expect;
+const chai = require('chai')
+const request = require('supertest')
+const sinon = require('sinon')
+const should = chai.should();
+const expect = chai.expect;
 
-var app = require('../../../app')
-var helpers = require('../../../_helpers');
+const app = require('../../../app')
+const helpers = require('../../../_helpers');
 const db = require('../../../models')
 
 // admin 使用者相關功能測試
