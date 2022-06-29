@@ -1,9 +1,9 @@
-var chai = require('chai')
-var request = require('supertest')
-var sinon = require('sinon')
-var app = require('../../app')
-var helpers = require('../../_helpers');
-var should = chai.should()
+const chai = require('chai')
+const request = require('supertest')
+const sinon = require('sinon')
+const app = require('../../app')
+const helpers = require('../../_helpers');
+const should = chai.should()
 const db = require('../../models')
 
 // 追蹤功能測試
@@ -20,7 +20,7 @@ describe('# followship request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: []});
+        ).returns({id: 1, Followings: [], role: 'user'});
 
         // 在測試資料庫中，新增 mock 資料
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
@@ -97,7 +97,7 @@ describe('# followship request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: []});
+        ).returns({id: 1, Followings: [], role: 'user'});
         // 在測試資料庫中，新增 mock 資料
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
         await db.User.destroy({where: {},truncate: true, force: true})

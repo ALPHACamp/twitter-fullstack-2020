@@ -1,10 +1,10 @@
-var chai = require('chai')
-var request = require('supertest')
-var sinon = require('sinon')
-var app = require('../../app')
-var helpers = require('../../_helpers');
-var should = chai.should()
-var expect = chai.expect;
+const chai = require('chai')
+const request = require('supertest')
+const sinon = require('sinon')
+const app = require('../../app')
+const helpers = require('../../_helpers');
+const should = chai.should()
+const expect = chai.expect;
 const db = require('../../models')
 
 // 測試留言相關功能
@@ -23,7 +23,7 @@ describe('# reply request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: []});
+        ).returns({id: 1, Followings: [], role: 'user'});
 
         // 在測試資料庫中，確保 db 資料清空了
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
@@ -74,7 +74,7 @@ describe('# reply request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: []});
+        ).returns({id: 1, Followings: [], role: 'user'});
         // 在測試資料庫中，新增 mock 資料
         await db.User.create({})
         await db.Tweet.create({UserId: 1, description: 'test'})
@@ -95,7 +95,7 @@ describe('# reply request', () => {
 
       it('when successfully save', (done) => {
         // 讀取測試資料庫的 Reply table 所有資料
-        db.Reply.findOne({where: {userId: 1}}).then(reply => {
+        db.Reply.findOne({where: {UserId: 1}}).then(reply => {
           // 檢查這個 table 不是空的，表示有新增資料進去
           expect(reply).to.not.be.null
           done()

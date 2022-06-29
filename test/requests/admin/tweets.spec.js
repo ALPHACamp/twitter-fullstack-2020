@@ -1,11 +1,11 @@
-var chai = require('chai')
-var request = require('supertest')
-var sinon = require('sinon')
-var should = chai.should();
-var expect = chai.expect;
+const chai = require('chai')
+const request = require('supertest')
+const sinon = require('sinon')
+const should = chai.should();
+const expect = chai.expect;
 
-var app = require('../../../app')
-var helpers = require('../../../_helpers');
+const app = require('../../../app')
+const helpers = require('../../../_helpers');
 const db = require('../../../models')
 
 // 測試 Admin 與貼文相關功能
@@ -25,7 +25,7 @@ describe('# Admin::Tweet request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: []});
+        ).returns({id: 1, Followings: [], role: 'user'});
         // 在測試資料庫中，新增 mock 資料
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
         await db.User.destroy({where: {},truncate: true, force: true})
