@@ -16,7 +16,9 @@ module.exports = (sequelize, DataTypes) => {
     account: {
       type: DataTypes.STRING
     },
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.INTEGER
+    },
     avatar: {
       type: DataTypes.STRING
     },
