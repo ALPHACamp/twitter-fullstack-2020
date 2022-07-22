@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     name: {
-      type: DataTypes.INTEGER
+      type: DataTypes.STRING
     },
     avatar: {
       type: DataTypes.STRING
