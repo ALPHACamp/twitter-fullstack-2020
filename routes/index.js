@@ -31,11 +31,12 @@ router.get('/users/:userId/replies', authenticated, userController.getReplies)
 router.get('/users/:userId/likes', authenticated, userController.getLikes)
 router.get('/users/:userId/followings', authenticated, userController.getFollowings)
 router.get('/users/:userId/followers', authenticated, userController.getFollowers)
-router.post('/users/:userId/profile', authenticated, upload.fields([
-  { name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.postProfile)
+router.get('/users/:userId/settings', authenticated, userController.getSettings)
+router.post('/users/:userId/settings', authenticated, userController.postSettings)
 
 router.get('/api/users/:userId', authenticated, userController.getUser)
-router.post('/api/users/:userId', authenticated, userController.postUser)
+router.post('/api/users/:userId', authenticated, upload.fields([
+  { name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.postProfile)
 
 router.post('/followships', authenticated, userController.addFollowing)
 router.delete('/followships/:userId', authenticated, userController.removeFollowing)

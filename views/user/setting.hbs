@@ -4,7 +4,7 @@
   <div class="w-50 main-column">
     {{> messages}}
     <h4 class="my-3 fw-bold mb-4">帳戶設定</h4>
-    <form class="form-setting" action="/api/users/{{user.id}}" method="POST" style="width: 100%;">
+    <form class="form-setting" action="/users/{{user.id}}/settings" method="POST" style="width: 100%;">
       <div class="form-row mb-3">
         <label class="form-label" for="account">帳號</label>
         <input type="text" id="account" name="account" class="form-control" value="{{user.account}}" required autofocus>

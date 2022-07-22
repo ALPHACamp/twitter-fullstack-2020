@@ -36,8 +36,8 @@ describe('# user request', () => {
       // 在測試資料庫中，新增 mock 資料
       await db.User.create({})
       await db.User.create({})
-      await db.Tweet.create({ UserId: 1, description: 'User1 的 Tweet' })
-      await db.Tweet.create({ UserId: 2, description: 'User2 的 Tweet' })
+      await db.Tweet.create({ userId: 1, content: 'User1 的 Tweet' })
+      await db.Tweet.create({ userId: 2, content: 'User2 的 Tweet' })
     })
 
     // 可以瀏覽自己的貼文頁面
@@ -289,8 +289,8 @@ describe('# user request', () => {
       ).returns({ id: 1, Followings: [] })
       // 在測試資料庫中，新增 mock 資料
       await db.User.create({})
-      await db.Tweet.create({ UserId: 1, description: 'Tweet1' })
-      await db.Like.create({ UserId: 1, TweetId: 1 })
+      await db.Tweet.create({ userId: 1, content: 'Tweet1' })
+      await db.Like.create({ userId: 1, tweetId: 1 })
     })
 
     describe('go to likes page', () => {

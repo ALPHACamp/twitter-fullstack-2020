@@ -71,24 +71,25 @@ const userController = {
         ]
       })
     ])
-      .then(([user, users]) => {
-        if (!user) throw new Error("User doesn't exist!")
-        const likedTweetId = helpers.getUser(req) && helpers.getUser(req).Likes.map(l => l.tweetId)
-        const data = user.Tweets.map(t => ({
+      .then(([viewUser, users]) => {
+        if (!viewUser) throw new Error("User doesn't exist!")
+        const user = helpers.getUser(req)
+        const likedTweetId = user.Likes && user.Likes.map(l => l.tweetId)
+        const tweets = viewUser.Tweets.map(t => ({
           ...t.toJSON(),
-          isLiked: likedTweetId.includes(t.id)
+          isLiked: likedTweetId && likedTweetId.includes(t.id)
         }))
-        let userData = users.map(u => ({
+        users = users.map(u => ({
           ...u.toJSON(),
-          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id),
+          isFollowed: user.Followings.some(f => f.id === u.id),
           FollowerCount: u.Followers.length
         }))
-        const viewUser = {
-          ...user.toJSON(),
-          isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.toJSON().id)
+        viewUser = {
+          ...viewUser.toJSON(),
+          isFollowed: user.Followings.some(f => f.id === viewUser.toJSON().id)
         }
-        userData = userData.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
-        return res.render('user/tweets', { viewUser, user: helpers.getUser(req), tweets: data, users: userData })
+        users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
+        return res.render('user/tweets', { viewUser, user, tweets, users })
       })
       .catch(err => next(err))
   },
@@ -154,24 +155,25 @@ const userController = {
         ]
       })
     ])
-      .then(([user, users]) => {
-        if (!user) throw new Error("User doesn't exist!")
-        const likedTweetId = helpers.getUser(req) && helpers.getUser(req).Likes.map(l => l.tweetId)
-        const data = user.Likes.map(l => ({
+      .then(([viewUser, userData]) => {
+        if (!viewUser) throw new Error("User doesn't exist!")
+        const user = helpers.getUser(req)
+        const likedTweetId = user.Likes && user.Likes.map(l => l.tweetId)
+        const likes = viewUser.Likes.map(l => ({
           ...l.toJSON(),
-          isLiked: l.Tweet && likedTweetId.includes(l.Tweet.id)
+          isLiked: likedTweetId && likedTweetId.includes(l.Tweet.id)
         }))
-        let userData = users.map(u => ({
+        userData = userData.map(u => ({
           ...u.toJSON(),
-          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id),
+          isFollowed: user.Followings.some(f => f.id === u.id),
           FollowerCount: u.Followers.length
         }))
-        const viewUser = {
-          ...user.toJSON(),
-          isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.toJSON().id)
+        viewUser = {
+          ...viewUser.toJSON(),
+          isFollowed: user.Followings.some(f => f.id === viewUser.toJSON().id)
         }
         userData = userData.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
-        return res.render('user/likes', { viewUser, likes: data, user: helpers.getUser(req), users: userData })
+        return res.render('user/likes', { viewUser, likes, user, users: userData })
       })
       .catch(err => next(err))
   },
@@ -277,34 +279,35 @@ const userController = {
         ]
       })
     ])
-      .then(([user, users]) => {
-        if (!user) throw new Error("User doesn't exist!")
-        const followers = user.toJSON().Followers.map(f => ({
+      .then(([viewUser, userData]) => {
+        if (!viewUser) throw new Error("User doesn't exist!")
+        const user = helpers.getUser(req)
+        const followers = viewUser.toJSON().Followers.map(f => ({
           ...f,
-          isFollowed: helpers.getUser(req).Followers.some(f2 => f2.id === f.id)
+          isFollowed: user.Followers && user.Followers.some(f2 => f2.id === f.id)
         }))
-        let userData = users.map(u => ({
+        userData = userData.map(u => ({
           ...u.toJSON(),
-          isFollowed: helpers.getUser(req).Followings.some(f => f.id === u.id),
+          isFollowed: user.Followings && user.Followings.some(f => f.id === u.id),
           FollowerCount: u.Followers.length
         }))
         userData = userData.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
-        return res.render('user/followers', { viewUser: user.toJSON(), followers, user: helpers.getUser(req), users: userData })
+        return res.render('user/followers', { viewUser: viewUser.toJSON(), followers, user, users: userData })
       })
       .catch(err => next(err))
   },
-  getUser: (req, res, next) => {
+  getSettings: (req, res, next) => {
     const { userId } = req.params
-    if (Number(userId) !== helpers.getUser(req).id) throw new Error("You can't edit other's profile!")
+    if (Number(userId) !== helpers.getUser(req).id) { return res.redirect(200, 'back') }
+
     return User.findByPk(userId)
       .then(user => {
         if (!user) throw new Error("User doesn't exist!")
-
         res.render('user/setting', { user: user.toJSON() })
       })
       .catch(err => next(err))
   },
-  postUser: (req, res, next) => {
+  postSettings: (req, res, next) => {
     const { account, name, email, password, passwordCheck } = req.body
     if (passwordCheck && password !== passwordCheck) throw new Error('Passwords do not match!')
 
@@ -338,28 +341,54 @@ const userController = {
     const { name, introduction } = req.body
     const { userId } = req.params
     const { files } = req
-    const avatarFile = files.avatar || null
-    const coverFile = files.cover || null
-    console.log(files.avatar)
-    return Promise.all([
-      User.findByPk(userId),
-      imgurFileHandler(avatarFile),
-      imgurFileHandler(coverFile)
-    ])
-      .then(([user, avatarPath, coverPath]) => {
-        if (!user) throw new Error("User doesn't exist!")
-        return user.update({
-          name,
-          introduction,
-          avatar: avatarPath || user.avatar,
-          cover: coverPath || user.cover
+    const avatarFile = files?.avatar || null
+    const coverFile = files?.cover || null
+
+    if (files) {
+      return Promise.all([
+        User.findByPk(userId),
+        imgurFileHandler(avatarFile),
+        imgurFileHandler(coverFile)
+      ])
+        .then(([user, avatarPath, coverPath]) => {
+          if (!user) throw new Error("User doesn't exist!")
+          return user.update({
+            name,
+            introduction,
+            avatar: avatarPath || user.avatar,
+            cover: coverPath || user.cover
+          })
         })
+        .then(() => {
+          req.flash('success_messages', '成功更新帳號資訊！')
+          return res.redirect('/tweets')
+        })
+        .catch(err => next(err))
+    } else {
+      return User.findByPk(userId)
+        .then(user => {
+          if (!user) throw new Error("User doesn't exist!")
+          return user.update({
+            name,
+            introduction
+          })
+        })
+        .then(() => {
+          req.flash('success_messages', '成功更新帳號資訊！')
+          return res.end()
+        })
+    }
+  },
+  getUser: (req, res) => {
+    const user = helpers.getUser(req)
+    const viewUserId = Number(req.params.userId)
+    if (user.id !== viewUserId) {
+      return res.json({ status: 'error', message: '' })
+    }
+    return User.findByPk(viewUserId)
+      .then(user => {
+        return res.json(user.toJSON())
       })
-      .then(() => {
-        req.flash('success_messages', '成功更新帳號資訊！')
-        return res.redirect('/tweets')
-      })
-      .catch(err => next(err))
   }
 }
 module.exports = userController

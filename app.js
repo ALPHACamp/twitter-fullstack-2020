@@ -18,9 +18,6 @@ const app = express()
 const port = process.env.PORT || 3000
 const SESSION_SECRET = 'secret'
 
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-
 app.engine('.hbs', engine({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', '.hbs')
 app.set('views', './views')
