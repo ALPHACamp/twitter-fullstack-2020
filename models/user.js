@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     avatar: DataTypes.STRING,
     cover: DataTypes.STRING,
     introduction: DataTypes.TEXT,
-    isAdmin: DataTypes.STRING,
+    isAdmin: DataTypes.BOOLEAN,
     role: DataTypes.STRING
   },
     {

@@ -15,7 +15,7 @@ module.exports = {
       type: Sequelize.STRING
     })
     await queryInterface.addColumn('Users', 'is_admin', {
-      type: Sequelize.STRING
+      type: Sequelize.BOOLEAN
     })
   },
 
