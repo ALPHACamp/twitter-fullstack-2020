@@ -12,10 +12,10 @@ module.exports = {
       type: Sequelize.STRING
     })
     await queryInterface.addColumn('Users', 'cover', {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING
     })
-    await queryInterface.addColumn('Users', 'isAdmin', {
-      type: Sequelize.STRING,
+    await queryInterface.addColumn('Users', 'is_admin', {
+      type: Sequelize.STRING
     })
   },
 
