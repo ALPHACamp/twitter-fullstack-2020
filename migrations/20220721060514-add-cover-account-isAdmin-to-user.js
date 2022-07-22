@@ -28,6 +28,6 @@ module.exports = {
     */
     await queryInterface.removeColumn('Users', 'account')
     await queryInterface.removeColumn('Users', 'cover')
-    await queryInterface.removeColumn('Users', 'isAdmin')
+    await queryInterface.removeColumn('Users', 'is_admin')
   }
 };
