@@ -1,0 +1,45 @@
+.main {
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  height: 100vh;
+}
+
+.left-side,
+.right-side {
+  height: 100vh;
+  width: 306px;
+  position: fixed;
+
+}
+
+@media screen and (max-width: 1400px) {
+
+  .left-side,
+  .right-side {
+    width: 261px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+
+  .left-side,
+  .right-side {
+    width: 216px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+
+  .left-side,
+  .right-side {
+    width: 156px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  .left-side,
+  .right-side {
+    width: 111px;
+  }
+}
