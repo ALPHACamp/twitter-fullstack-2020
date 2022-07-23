@@ -4,8 +4,8 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const methodOverride = require('method-override')
 
-const helpers = require('./_helpers')
-// const passport = require('./config/passport')
+// const helpers = require('./_helpers')
+const passport = require('./config/passport')
 const routes = require('./routes')
 
 const app = express()
@@ -19,8 +19,8 @@ app.set('view engine', 'hbs')
 app.use(express.static('public'))
 
 app.use(session({ secret: '12345678', resave: false, saveUninitialized: false }))
-// app.use(passport.initialize())
-// app.use(passport.session())
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use(express.urlencoded({ extended: true }))
 app.use(flash())
