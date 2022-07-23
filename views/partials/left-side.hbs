@@ -1,0 +1,44 @@
+<div class="col">
+  <div class="left-side d-flex flex-column bd-highlight mb-3 ps-5">
+    <a href="/tweets">
+      <img class="logo mb-2" src="images/icons/alphitter-logo.png" alt="alphitter-logo">
+    </a>
+    <div class="m-2 p-2 bd-highlight">
+      <a href="/tweets">
+        <h5><img src="images/icons/house-w.png" alt="home-page">首頁</h5>
+      </a>
+    </div>
+    <div class="m-2 p-2 bd-highlight">
+      <a href="/users/{{userId}}/tweets">
+        <h5><img src="images/icons/person-w.png" alt="personal-page">個人資料</h5>
+      </a>
+    </div>
+    <div class="m-2 p-2 bd-highlight">
+      <a href="/users/{{userId}}/setting">
+        <h5><img src="images/icons/setting-w.png" alt="setting-page">設定</h5>
+      </a>
+    </div>
+    <a type="button" class="tweet-btn ms-3" data-bs-toggle="modal" data-bs-target="#tweetInput">
+      <span>推文</span>
+    </a>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="tweetInput" tabindex="-1" aria-labelledby="tweetInputLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
