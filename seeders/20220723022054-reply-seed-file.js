@@ -4,8 +4,8 @@ const { User, Tweet } = require('../models')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const usersArray = await User.findAll({ raw: true, nester: true })
-    const tweetArray = await Tweet.findAll({ raw: true, nester: true })
+    const usersArray = await User.findAll({ raw: true })
+    const tweetArray = await Tweet.findAll({ raw: true })
 
     // 每一篇 tweet 需要有 3個不同 user 的 reply
     let repliesArray = []
