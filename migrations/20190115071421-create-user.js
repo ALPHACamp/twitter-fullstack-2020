@@ -18,13 +18,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       name: {
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(40)
       },
       avatar: {
         type: Sequelize.STRING
       },
       introduction: {
-        type: Sequelize.STRING(160)
+        type: Sequelize.STRING(140)
       },
       role: {
         type: Sequelize.STRING
