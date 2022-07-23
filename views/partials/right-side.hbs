@@ -1,0 +1,88 @@
+<div class="col">
+  <div class="right-side">
+    <div class="right-side-container d-flex flex-column bd-highlight ms-3 mt-3">
+      <span class="font-lg-dark">推薦跟隨</span>
+      <div class="hr-line"></div>
+      {{#each top10-users}}
+
+      {{/each}}
+      {{!-- 暫時展示區 --}}
+      <div class="d-flex justify-content-between align-items-center flex-row bd-highlight mb-3">
+        <div class="bd-highlight">
+          <a href="/users/{{this.is}}/tweets">
+            <img src="images/icons/alphitter-logo-b.png" alt="avatar">
+          </a>
+        </div>
+        <div class="name-container d-flex flex-column bd-highlight p-1">
+          <a href="/users/{{this.is}}/tweets">
+            <div class="font-name">12wqweqweqweqweqee</div>
+            <div class="font-account">@45awe6</div>
+          </a>
+        </div>
+        <div class="bd-highlight">  
+          <a type="button" class="follow-btn ms-1">
+            跟隨
+          </a>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center flex-row bd-highlight mb-3">
+        <div class="bd-highlight">
+          <a href="/users/{{this.is}}/tweets">
+            <img src="images/icons/alphitter-logo-b.png" alt="avatar">
+          </a>
+        </div>
+        <div class="name-container d-flex flex-column bd-highlight p-1">
+          <a href="/users/{{this.is}}/tweets">
+            <div class="font-name">12wqweqweqweqweqee</div>
+            <div class="font-account">@45awe6</div>
+          </a>
+        </div>
+        <div class="bd-highlight">
+          <a type="button" class="follow-btn ms-1">
+            跟隨
+          </a>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center flex-row bd-highlight mb-3">
+        <div class="bd-highlight">
+          <a href="/users/{{this.is}}/tweets">
+            <img src="images/icons/alphitter-logo-b.png" alt="avatar">
+          </a>
+        </div>
+        <div class="name-container d-flex flex-column bd-highlight p-1">
+          <a href="/users/{{this.is}}/tweets">
+            <div class="font-name">12wqweqweqweqweqee</div>
+            <div class="font-account">@45awe6</div>
+          </a>
+        </div>
+        <div class="bd-highlight">
+          <a type="button" class="following-btn ms-1">
+            正在跟隨
+          </a>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center flex-row bd-highlight mb-3">
+        <div class="bd-highlight">
+          <a href="/users/{{this.is}}/tweets">
+            <img src="images/icons/alphitter-logo-b.png" alt="avatar">
+          </a>
+        </div>
+        <div class="name-container d-flex flex-column bd-highlight p-1">
+          <a href="/users/{{this.is}}/tweets">
+            <div class="font-name">12wqweqweqweqweqee</div>
+            <div class="font-account">@45awe6</div>
+          </a>
+        </div>
+        <div class="bd-highlight">
+          <a type="button" class="following-btn ms-1">
+            正在跟隨
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

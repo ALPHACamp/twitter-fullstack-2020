@@ -5,6 +5,39 @@
    color: #171725;
  }
 
+ .font-lg-dark {
+   font-size: 24px;
+   color: #171725;
+   font-weight: bold;
+ }
+
+ .name-container {
+   width: 0;
+   flex-grow: 1;
+ }
+
+ .font-name {
+   font-size: 16px;
+   color: #171725;
+   font-weight: bold;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+ }
+
+ .font-account {
+   font-size: 14px;
+   color: #92929D;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+ }
+
+ a {
+   text-decoration: none;
+   color: #171725;
+ }
+
  .main {
    border-left: 1px solid #E6ECF0;
    border-right: 1px solid #E6ECF0;
@@ -13,7 +46,6 @@
 
  .left-side,
  .right-side {
-   outline: 2px solid black;
    height: 100vh;
    width: 306px;
    position: fixed;
@@ -62,15 +94,76 @@
    width: 20px;
  }
 
- .button {
+ .tweet-btn {
    width: 178px;
    height: 46px;
    background: #FF6600;
    border-radius: 50px;
+   text-decoration: none;
+   text-align: center
  }
 
- .button span {
+ .tweet-btn span {
+   color: #FFFFFF;
    position: relative;
-   top: 30%;
-   left: 30%;
+   top: 20%;
+   transform: translate(0, -50%);
+   font-size: 20px;
+   line-height: 30px;
+ }
+
+ .right-side-container {
+   padding: 16px;
+   width: 273px;
+   height: 731px;
+   background: #FAFAFB;
+   border-radius: 16px;
+ }
+
+ .right-side-container span {
+   margin: 8px 24px;
+ }
+
+ .right-side-container .hr-line {
+   margin: 16px -16px;
+   border: 1px solid #E6ECF0;
+ }
+
+ .right-side-container img {
+   width: 50px;
+ }
+
+ .following-btn {
+   width: 96px;
+   height: 40px;
+   background: #FF6600;
+   border-radius: 50px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 16px;
+   color: #FFFFFF;
+ }
+
+ .follow-btn {
+   box-sizing: border-box;
+   width: 64px;
+   height: 40px;
+   background: #FFFFFF;
+   border: 1px solid #FF6600;
+   border-radius: 50px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 16px;
+   color: #FF6600;
+ }
+
+ .home-page {
+   margin: 24px 12px;
+ }
+
+ .main .hr-line {
+   margin: 0px -12px;
+   border: 1px solid #E6ECF0;
  }
