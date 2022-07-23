@@ -24,7 +24,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       introduction: {
-        type: Sequelize.TEXT(160)
+        type: Sequelize.STRING(160)
       },
       role: {
         type: Sequelize.STRING
