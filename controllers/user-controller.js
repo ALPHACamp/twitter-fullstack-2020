@@ -1,7 +1,7 @@
 // 登入、註冊、登出、拿到編輯頁、送出編輯
 const bcrypt = require('bcryptjs')
-// const db = require('../models')
-// const { User } = db
+const db = require('../models')
+const { User } = db
 const userController = {
   signUpPage: (req, res) => {
     res.render('signup')
