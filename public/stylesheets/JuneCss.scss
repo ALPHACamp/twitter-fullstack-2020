@@ -2,8 +2,6 @@
 
 #signup-region {
   background: #FFFFFF;
-  font-family: 'Noto Sans TC';
-  font-style: normal;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,8 +65,6 @@
         font-size: 16px;
       }
     .status {
-      height: 2px;
-      width: 356px;
       position: absolute;
       left: 0%;
       right: 0%;
@@ -76,6 +72,7 @@
       bottom: 30.77%;
       background: #657786;
       border-radius: 0px 0px 4px 4px;
+      border: 1px #657786 solid;
     }
     .helper {
       display: flex;
@@ -125,7 +122,11 @@
   }
 
   .status.focus {
-    background: #50B5FF;
+    border-color: #50B5FF;
+  }
+
+  .status.warn {
+    border-color: #FC5A5A;
   }
 
   button {
