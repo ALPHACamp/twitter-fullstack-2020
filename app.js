@@ -3,7 +3,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const path = require('path')
 const helpers = require('./_helpers')
-const { pages } = require('./routes')
 
 const express = require('express')
 const handlebars = require('express-handlebars')
