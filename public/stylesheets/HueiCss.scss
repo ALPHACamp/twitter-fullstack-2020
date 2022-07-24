@@ -1,0 +1,17 @@
+@import "./variableSheet.scss";
+
+// css 規範: 自已的 css 都要包在 特定的id底下，避免去汙染他人的 css
+// 以下為例子
+// section#Huei-region {
+//   .class1 {
+//     color: $dark100
+//   }
+
+//   .class2 {
+//     color: $assistColorBlue;
+
+//     .class2-1 {
+//       color: $mainColor;
+//     }
+//   }
+// }
