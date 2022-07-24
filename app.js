@@ -49,18 +49,11 @@ app.set('view engine', 'hbs')
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-<<<<<<< HEAD
 app.use('/api', apis)
 app.use(pages)
 
 app.get('/', (req, res) => res.send('Hello World!'))
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-=======
-app.use(pages)
-
 app.listen(port, () => {
   console.info(`Example app listening on http://localhost:${port}`)
 })
->>>>>>> master
-
 module.exports = app
