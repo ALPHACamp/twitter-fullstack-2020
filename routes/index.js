@@ -3,8 +3,8 @@ const router = express.Router()
 const passport = require('../config/passport')
 
 const helpers = require('../_helpers')
-const tweetController = require('../controllers/tweet-controller')
-const replyController = require('../controllers/reply-controller')
+const tweetController = require('../controllers/tweetController')
+const replyController = require('../controllers/replyController')
 //前台 tweet 路由
 
 //讀取 所有 tweet
@@ -16,17 +16,17 @@ router.post('/tweets', authenticated, tweetController.PostTweet)
 
 //前台 reply 路由
 
-//讀取 單一 tweet 的 reply
+//讀取 reply 頁面
 router.get('/tweets/:tweet_id/replies', authenticated, replyController.getReply)
-//新增 單一 tweet 的 reply
+//新增 tweet 的 reply
 router.post('/tweets/:tweet_id/replies', authenticated, replyController.postReply)
 
 //前台 tweet 路由(like)
 
-//新增 單一 tweet 的 like
-router.post('/tweets/:tweet_id/like', authenticated, tweetController.like)
-//刪除 單一 tweet 的 like
-router.post('/tweets/:tweet_id/unlike', authenticated, tweetController.unlike)
+//新增 tweet 的 like
+router.post('/tweets/:tweet_id/like', authenticated, tweetController.postLike)
+//刪除 tweet 的 like
+router.post('/tweets/:tweet_id/unlike', authenticated, tweetController.postUnlike)
 
 //前台 followship 路由
 

@@ -5,9 +5,9 @@ const replyController = {
     try {
       const replies = await Reply.findAll({
         where: { TweetId: req.params.tweet_id },
-        include: [User, { model: Tweet, include, User }]
+        include: [User, { model: Tweet, include: User }]
       })
-      res.redirect(`/tweets/${req.params.tweet_id}`, { replies })
+      return res.redirect(`/tweets/${req.params.tweet_id}`, { replies })
     }
     catch (err) {
       next(err)
@@ -25,7 +25,7 @@ const replyController = {
         return res.redirect('back')
       }
       if (comment && comment.length > 140) {
-        req.flash('error_messages', '回覆內容不能超過140字！')
+        req.flash('error_messages', '回覆內容不能超過140字!')
         return res.redirect('back')
       }
       await Reply.create({
@@ -34,7 +34,7 @@ const replyController = {
         comment
       })
       req.flash('success_messages', '成功新增回覆！')
-      res.redirect(`/tweets/${req.params.tweet_id}`)
+      return res.redirect(`/tweets/${req.params.tweet_id}`)
     }
     catch (err) {
       next(err)
