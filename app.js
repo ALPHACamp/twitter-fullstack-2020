@@ -2,6 +2,7 @@ const express = require('express')
 const helpers = require('./_helpers')
 const handlebars = require('express-handlebars')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
+const routes = require('./routes')
 const app = express()
 const port = 3000
 
@@ -12,7 +13,8 @@ app.use(express.static('public'))
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.get('/', (req, res) => res.send('Hello World!'))
+// app.get('/', (req, res) => res.send('Hello World!'))
+app.use(routes)
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 module.exports = app
