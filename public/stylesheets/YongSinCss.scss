@@ -1,0 +1,16 @@
+@import "./reset.scss";
+@import "./variableSheet.scss";
+
+section#ys-region {
+  .class1 {
+    color: $dark100
+  }
+
+  .class2 {
+    color: $dark50;
+
+    .class2-1 {
+      color: $dark30;
+    }
+  }
+}
