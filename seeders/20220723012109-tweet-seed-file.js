@@ -5,7 +5,7 @@ const { User } = require('../models')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     // 查詢資料庫中所有的 user
-    const usersArray = await User.findAll({ raw: true, nester: true })
+    const usersArray = await User.findAll({ raw: true })
 
     let tweetArray = []
     // 製做每位 user 的假 tweet

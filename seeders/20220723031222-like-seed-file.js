@@ -3,8 +3,8 @@ const { User, Tweet } = require('../models')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const usersArray = await User.findAll({ raw: true, nester: true })
-    const tweetArray = await Tweet.findAll({ raw: true, nester: true })
+    const usersArray = await User.findAll({ raw: true })
+    const tweetArray = await Tweet.findAll({ raw: true })
 
     const likesArray = []
     // 讓每位使用者對隨機 10 篇不重複的 Tweet 點 like
