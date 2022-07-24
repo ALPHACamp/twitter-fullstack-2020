@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
-    "lint": "eslint \"**/*.js\" --fix",
-    "test": "mocha test --exit --recursive --timeout 5000"
+    "start": "NODE_ENV=development node app.js",
+    "dev": "NODE_ENV=development nodemon app.js",
+    "test": "mocha test --exit --recursive --timeout 5000",
+    "lint": "eslint \"**/*.js\" --fix"
   },
   "author": "",
   "license": "ISC",
