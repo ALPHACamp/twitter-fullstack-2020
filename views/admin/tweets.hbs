@@ -1,44 +1,14 @@
-{{!-- <div class="container">
-  <div class="row" style="border:1px solid tomato ;">
-    <div class="col-4">
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="main col-4">
+
       {{> admin-left}}
+
     </div>
-    <div class="col-8 d-flex flex-row justify-content-between" style="border:1px solid tomato ;">
-      <div class=" d-flex flex-row">
-        <div class="avatar ">
-          <img class="avatar-img" src="{{this.User.avatar}}" width="50" height="50" alt="">
-        </div>
-        <div class="tweet-text ms-3">
-          <div class="d-inline name">
-            <strong>Andy</strong>
-          </div>
-          <div class="d-inline">
-            @andychienㆍrelativeTimeFromNow this.createdAt
-          </div>
-          <div class="content">
-            dewkdowekfperpvmefopvmfpebmpowrmtbopr
-            bwtrbkoprmtbpmrwptbmporwmbortwb
-            brwb,prwtb,port,bpor,tb
-            wrpb,prt,bopw,rotb
-            prwt,bporw,tbop,rwtb
-          </div>
-        </div>
-      </div>
-      <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
-        <button type="submit" class="btn-close" aria-label="Close"></button>
-      </form>
-    </div>
-  </div>
-</div> --}}
 
-<div class="container ">
-  <div class="row">
+    <div class="main col-8">
 
-    {{> admin-left}}
-
-    <div class="col-10">
       {{> admin-header}}
-
 
       <div class="col-12 d-flex flex-row justify-content-between mt-2 ">
         <div class="user-info d-flex flex-row">
@@ -62,7 +32,6 @@
           <button type="button" class="btn-close" aria-label="Close"></button>
         </form>
       </div>
-
 
     </div>
   </div>
