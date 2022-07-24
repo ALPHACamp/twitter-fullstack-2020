@@ -74,3 +74,135 @@
    top: 30%;
    left: 30%;
  }
+
+
+
+
+
+
+
+
+
+
+
+ /* Admin users css */
+
+ .card {
+   position: relative;
+   width: 249px;
+   height: 314px;
+   background: #f6f7f8;
+   border-radius: 10px;
+ }
+
+ .card-top {
+   position: absolute;
+   left: 0%;
+   right: 0%;
+   top: 0%;
+   width: 249px;
+   height: 140px;
+   background: url(.jpg), #c4c4c4;
+   border-radius: 10px 10px 0px 0px;
+ }
+
+ .card-cover {
+
+   width: 249px;
+   height: 140px;
+   border-radius: 10px 10px 0px 0px;
+ }
+
+ .card-middle {
+   width: 100px;
+   height: 154px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 0px;
+   gap: 8px;
+   position: absolute;
+   left: 29.72%;
+   right: 30.12%;
+   top: 20.38%;
+   bottom: 30.57%;
+ }
+
+ .card-avatar-part {
+   width: 100px;
+   height: 100px;
+ }
+
+ .card-avatar {
+   width: 100px;
+   height: 100px;
+   border: 3px solid #ffffff;
+   border-radius: 50px;
+ }
+
+ .card-name {
+   margin: 0;
+   padding: 0;
+   width: 100px;
+   height: 26px;
+   text-align: center;
+   font-size: 16px;
+   line-height: 26px;
+ }
+
+ .card-account {
+   margin: 0;
+   padding: 0;
+   text-align: center;
+   font-size: 14px;
+   color: #6c757d;
+ }
+
+ .card-tweet-like {
+   display: flex;
+   width: 140px;
+   height: 26px;
+   position: absolute;
+   left: 22.09%;
+   right: 22.09%;
+   top: 74.52%;
+   bottom: 17.2%;
+ }
+
+ .card-tweet,
+ .card-like {
+   display: flex;
+   width: 50%;
+   height: 100%;
+ }
+
+ .card-followship {
+   display: flex;
+   width: 160px;
+   height: 22px;
+   position: absolute;
+   left: 18.48%;
+   right: 18.07%;
+   top: 85.35%;
+   bottom: 7.64%;
+ }
+
+ .card-following,
+ .card-follower {
+   display: flex;
+   justify-content: center;
+   width: 50%;
+   height: 100%;
+   font-size: 10px;
+ }
+
+ .card-img {
+   width: 24px;
+   height: 24px;
+ }
+
+ .card-num {
+   align-items: center;
+   font-size: 16px;
+   margin-left: 5px;
+ }
