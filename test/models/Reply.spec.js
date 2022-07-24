@@ -4,10 +4,7 @@ const proxyquire = require('proxyquire')
 chai.use(require('sinon-chai'))
 
 const { expect } = require('chai')
-const {
-  sequelize,
-  Sequelize
-} = require('sequelize-test-helpers')
+const { sequelize, Sequelize } = require('sequelize-test-helpers')
 
 const db = require('../../models')
 
@@ -35,11 +32,9 @@ describe('# Reply Model', () => {
   // 檢查 reply 是否有 comment 屬性，自動化測試會用到
   context('properties', () => {
     it('called Reply.init with the correct parameters', () => {
-      expect(Reply.init).to.have.been.calledWithMatch(
-        {
-          comment: DataTypes.TEXT
-        }
-      )
+      expect(Reply.init).to.have.been.calledWithMatch({
+        comment: DataTypes.TEXT
+      })
     })
   })
 
