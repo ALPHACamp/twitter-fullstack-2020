@@ -1,13 +1,7 @@
-<<<<<<< HEAD
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 const path = require('path')
-=======
-const express = require('express')
-const handlebars = require('express-handlebars')
-
->>>>>>> master
 const helpers = require('./_helpers')
 const { pages } = require('./routes')
 
