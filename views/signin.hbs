@@ -1,0 +1,46 @@
+<div class="container" style="height: 1200px;">
+  <form action="/signup" id="signin-region" method="POST">
+    <div class="icon">
+      <img src="/images/alphacamp.png" alt="icon">
+    </div>
+    <h3 class="title" style="width: 185px;">登入 Alphitter</h3>
+
+    {{> message}}
+
+    <script>
+      function changeFocus(element) {
+        const target = document.querySelector('.' + element + '-status')
+        if (target.classList.contains('focus')) {
+          target.classList.remove('focus')
+          return
+        }
+        target.classList.toggle('focus')
+      }
+    </script>
+
+    <div class="input">
+      <label for="account">帳號</label>
+      <input name="account" id="account" type="text" placeholder="請輸入帳號" onfocus="changeFocus('account')"
+        onblur="changeFocus('account')" required>
+      <div class="status account-status"></div>
+      <div class="helper"><span></span></div>
+      <div class="count"><span></span></div>
+    </div>
+
+    <div class="input">
+      <label for="password">密碼</label>
+      <input name="password" id="password" type="text" placeholder="請設定密碼" onfocus="changeFocus('password')"
+        onblur="changeFocus('password')" required>
+      <div class="status password-status"></div>
+      <div class="helper"><span></span></div>
+      <div class="count"><span></span></div>
+    </div>
+
+    <button type="submit" class="submit"><span>登入</span></button>
+    <div class="signup-or-admin">
+      <a href="/signup">註冊</a>
+      <span>•</span>
+      <a href="/admin/signin">後台登入</a>
+    </div>
+  </form>
+</div>
