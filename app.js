@@ -12,7 +12,7 @@ const methodOverride = require('method-override')
 const passport = require('./config/passport')
 
 const handlebarsHelpers = require('./helpers/handlerbars-helpers')
-const router = require('./routes')
+const routes = require('./routes')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -37,13 +37,10 @@ app.use((req, res, next) => {
   next()
 })
 
-app.engine('hbs', handlebars({ extname: '.hbs' }))
-app.set('view engine', 'hbs')
-
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.use(router)
+app.use(routes)
 
 app.listen(port, () => {
   console.info(`Example app listening on http://localhost:${port}`)
