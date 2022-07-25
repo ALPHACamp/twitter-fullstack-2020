@@ -1,5 +1,5 @@
 // admin頁面各種 signin/ getuser/ gettweet/ deletetweet/ logout
-
+const { User } = require('../models')
 const adminController = {
   signInPage: (req, res) => {
     res.render('admin/signin')
@@ -17,7 +17,15 @@ const adminController = {
     return res.render('admin/tweets')
   },
   getAdminUsers: (req, res) => {
-    return res.render('admin/users')
+    return User.findAll({
+      raw: true,
+      nest: true
+    })
+      .then(users => {
+        console.log(users)
+        res.render('admin/users', { users })
+      })
+      .catch(err => next(err))
   }
 }
 
