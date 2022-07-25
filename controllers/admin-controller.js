@@ -5,7 +5,7 @@ const adminController = {
     res.render('admin/signin')
   },
   signIn: (req, res) => {
-    // req.flash('success_messages', '成功登入！')
+    req.flash('success_messages', '成功登入！')
     res.redirect('admin/tweets')
   },
   getAdminTweets: (req, res) => {
