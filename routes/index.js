@@ -18,8 +18,13 @@ router.use('/api', apis) // 未添加認證
 
 router.post('/signup', userController.signUp)
 router.get('/signup', userController.signUpPage)
+router.post(
+  '/signin',
+  passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }),
+  userController.signIn
+)
 router.get('/signin', userController.signInPage)
-router.post('/signin', userController.signIn) // 未添加local帳號密碼認證 passport.authenticate('local', { session: false })
+router.get('/logout', userController.logout)
 router.post('/followships', userController.postFollow) // 未添加認證
 router.delete('/followships', userController.postUnfollow) // 未添加認證
 router.get('/', userController.signInPage)
