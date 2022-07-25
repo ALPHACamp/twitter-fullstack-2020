@@ -2,6 +2,7 @@
 const bcrypt = require('bcryptjs')
 const faker = require('faker')
 const userlist = [{
+  id: 1,
   account: 'root',
   email: 'root@example.com',
   password: await bcrypt.hash('12345678', 10),
@@ -15,6 +16,7 @@ const userlist = [{
 
 for (let i = 0; i < 5; i++) {
   userlist.push[{
+    id: (10 + i),
     account: `user${i}`,
     email: `user${i}@example.com`,
     password: await bcrypt.hash('12345678', 10),
