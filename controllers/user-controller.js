@@ -14,14 +14,18 @@ const userController = {
   signUp: async (req, res, next) => {
     try {
       let { account, name, email, password, passwordCheck } = req.body
-      if (!account || !email || !password) throw new Error('Please complete all required fields')
+      if (!account || !email || !password) {
+        throw new Error('Please complete all required fields')
+      }
       if (password !== passwordCheck) throw new Error('Passwords do not match!')
       const existAccount = await User.findOne({ where: { account } })
       if (existAccount) throw new Error('Account already exists!')
       const existEmail = await User.findOne({ where: { email } })
       if (existEmail) throw new Error('Email already exists!')
       name = name.trim()
-      if (name.length > 50) throw new Error("Name can't have too many characters.")
+      if (name.length > 50) {
+        throw new Error("Name can't have too many characters.")
+      }
 
       const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
       const userData = { account, name, email, password: hash }
