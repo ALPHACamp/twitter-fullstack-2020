@@ -5,6 +5,13 @@
    color: #171725;
  }
 
+ button {
+   margin: 0;
+   padding: 0;
+   border: none;
+   outline: none;
+ }
+
  .font-lg-dark {
    font-size: 24px;
    color: #171725;
@@ -38,10 +45,14 @@
    color: #171725;
  }
 
+ .row .main {
+   height: 100vh;
+ }
+
  .main {
    border-left: 1px solid #E6ECF0;
    border-right: 1px solid #E6ECF0;
-   height: 100vh;
+   height: 100%;
  }
 
  .left-side,
@@ -187,6 +198,8 @@
    margin: 0px -12px;
    padding: 16px;
    border-bottom: 1px solid #E6ECF0;
+   /* border-right: 1px solid #E6ECF0;
+   border-left: 1px solid #E6ECF0; */
    position: relative;
    word-wrap: break-word
  }
@@ -197,7 +210,7 @@
    width: 50px;
  }
 
- .text-box {
+ .tweet-post .text-box {
    margin: 0px 10px 40px 67px;
  }
 
@@ -224,7 +237,31 @@
    bottom: 10px
  }
 
- .test {
-   border: none;
-   outline: none
+ .tweet-card-name,
+ .tweet-card .text-box {
+   margin: 0px 10px 20px 67px;
+   position: relative;
+ }
+
+ .tweet-card .text-box img {
+   margin-top: 8px;
+   width: 15px
+ }
+
+ .tweet-card .text-box .speech-bubble {
+   position: absolute;
+   top: 30px;
+   left: 0px
+ }
+
+ .tweet-card .text-box .like-w {
+   position: absolute;
+   top: 30px;
+   left: 80px;
+ }
+
+ .speech-bubble div,
+ .like-w div {
+   margin-left: 20px;
+   font-weight: bold;
  }
