@@ -10,16 +10,17 @@ const userController = {
   signUp: (req, res, next) => {
     if (req.body.password !== req.body.checkPassword) throw new Error('Passwords do not match!')
 
-    User.findOne({
-      where: {
-        email: req.body.email,
-        account: req.body.account
-      }
-    })
-      .then(user => {
-        if (user) { // FIXME: 優化使用者體驗，告知是account還是email有誤
-          throw new Error('Email or account already exists!')
-        }
+    Promise.all([
+      User.findOne({
+        where: { email: req.body.email }
+      }),
+      User.findOne({
+        where: { account: req.body.account }
+      })
+    ])
+      .then(([userEmail, userAccount]) => {
+        if (userEmail) throw new Error('Email already exists!')
+        if (userAccount) throw new Error('Account already exists!')
         return bcrypt.hash(req.body.password, 10)
       })
       .then(hash => User.create({

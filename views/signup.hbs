@@ -1,0 +1,51 @@
+<div class="row justify-content-center" style="margin-right:5px">
+  <img class="m-3" src="images/logo.png" alt="" style="width: 70px; height:50px; ">
+</div>
+<div class=" text-center">
+  <h1 class="" style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 700;
+font-size: 28px;">建立你的帳號</h1>
+</div>
+<div class="row ">
+  <div class="col-md-4 m-auto">
+    <div class="card border-light card-body m-1">
+      <form action="signup" method="POST">
+        <div class="mb-3 signin-signup-page-input-change-backgroundcolor" style="max-width: 356px;">
+          <label class="form-label" for="account"
+            style="margin-left: 10px; margin-bottom:-5px"><small>帳號</small></label>
+          <input type="text" id="account" name="account" class="form-control only-underline-input" placeholder="請輸入帳號"
+            style="" required autofocus>
+        </div>
+        <div class="mb-3 signin-signup-page-input-change-backgroundcolor" style="max-width: 356px;">
+          <label class="form-label" for="name" style="margin-left: 10px; margin-bottom:-5px"><small>名稱</small></label>
+          <input type="text" id="name" name="name" class="form-control only-underline-input" placeholder="請輸入使用者名稱"
+            required autofocus>
+        </div>
+        <div class="mb-3 signin-signup-page-input-change-backgroundcolor" style="max-width: 356px;">
+          <label class="form-label" for="email"
+            style="margin-left: 10px; margin-bottom:-5px"><small>Email</small></label>
+          <input type="email" id="email" name="email" class="form-control only-underline-input" placeholder="請輸入 Email"
+            required>
+        </div>
+        <div class="mb-3 signin-signup-page-input-change-backgroundcolor" style="max-width: 356px;">
+          <label class="form-label" for="password"
+            style="margin-left: 10px; margin-bottom:-5px"><small>密碼</small></label>
+          <input type="password" id="password" name="password" class="form-control only-underline-input"
+            placeholder="請設定密碼" required>
+        </div>
+        <div class="mb-3 signin-signup-page-input-change-backgroundcolor" style="max-width: 356px;">
+          <label class="form-label" for="checkPassword"
+            style="margin-left: 10px; margin-bottom:-5px"><small>密碼確認</small></label>
+          <input type="password" id="checkPassword" name="checkPassword" class="form-control only-underline-input"
+            placeholder="請再次輸入密碼" required>
+        </div>
+        <div class="row text-center m-0 mt-5" style="max-width: 356px;">
+          <button type="submit" class="text-center btn btn-primary btn-lg btn-block"
+            style="background-color: #FF6600; border-radius: 50px; border:none">註冊</button>
+        </div>
+      </form>
+      <div class="mt-3 text-center" style="margin-right:4px ;">
+        <a href="/signin">取消</a>
+      </div>
+    </div>
+  </div>
+</div>
