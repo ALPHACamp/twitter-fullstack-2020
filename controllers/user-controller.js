@@ -1,18 +1,10 @@
 const jwt = require('jsonwebtoken')
 
 const userController = {
-  signInPage: (req, res, next) => {
-
-  },
-  signIn: (req, res, next) => {
-
-  },
-  signUpPage: (req, res, next) => {
-
-  },
-  signUp: (req, res, next) => {
-
-  },
+  signInPage: (req, res, next) => {},
+  signIn: (req, res, next) => {},
+  signUpPage: (req, res, next) => {},
+  signUp: (req, res, next) => {},
   getUserFollowings: (req, res, next) => {
     res.json({ status: 'success' })
   },
