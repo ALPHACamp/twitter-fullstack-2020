@@ -1,17 +1,21 @@
 const assert = require('assert')
 const helpers = require("../_helpers")
-const { User, Tweet } = require('../models')
+// use helpers.getUser(req) to replace req.user
+// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+const { getUser } = require('../_helpers')
+const { User, Tweet, Like, Reply } = require('../models')
+const { imgurFileHandler } = require('../helpers/file-helpers')
+
 const tweetcontroller = {
-  getTweets: (req, res) => {
-    return res.render('tweets')
-  },
-  getUser: (req, res, next) => {
+  getTweets: (req, res, next) => {
+    console.log('here is tweets.')
     const currentUser = getUser(req)
-    Promise.all([User.findByPk(req.params.id, {
+    res.render('tweets') //, { currentUser }
+    Promise.all([User.findByPk(currentUser.id, {
       include: [
+        // tweets
         { model: Comment, include: Restaurant },
         { model: Restaurant, as: 'FavoritedRestaurants' },
-        { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ],
       order: [
@@ -32,7 +36,7 @@ const tweetcontroller = {
       .then(([targetUser, totalComments, commentedRestaurants]) => {
         if (!targetUser) throw new Error("User doesn't exist!")
         const isFollowed = req.user.Followings.some(f => f.id === targetUser.id)
-        res.render('users/profile', {
+        res.render('tweets', {
           targetUser: targetUser.toJSON(), // 查看其他使用者
           user: currentUser, // 現在登入的使用者
           totalComments,

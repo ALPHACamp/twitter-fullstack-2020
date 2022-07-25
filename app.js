@@ -11,12 +11,12 @@ const passport = require('./config/passport')
 const methodOverride = require('method-override')
 const helpers = require('./_helpers')
 
+const { getUser } = require('./_helpers')
 const app = express()
 const port = process.env.PORT || 3000
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-const SESSION_SECRET = 'secret'
 
 app.engine('hbs', handlebars({ extname: '.hbs' }))
 app.set('view engine', 'hbs')
