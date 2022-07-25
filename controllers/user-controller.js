@@ -85,10 +85,7 @@ const userController = {
         where: { user_id: userId },
         raw: true
       })
-      if (!userTweets[0]) throw new Error("This Account haven't tweet!")
-      // return res.render('/users/user-tweets', { userTweets })
-
-      return res.json({ status: 'success', data: userTweets })
+      userTweets[0] ? res.json({ status: 'success', data: userTweets }) : res.json({ status: 'success', data: null })
     } catch (err) {
       next(err)
     }
