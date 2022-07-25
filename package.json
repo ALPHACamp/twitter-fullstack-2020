@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "set NODE_ENV=development && node app.js",
-    "dev": "set NODE_ENV=development && nodemon app.js",
+    "start": "set NODE_ENV=development&& node app.js",
+    "dev": "set NODE_ENV=development&& nodemon app.js",
     "test": "mocha test --exit --recursive --timeout 5000",
     "dbinit": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate && sequelize db:seed:undo:all && npx sequelize db:seed:all",
-    "seedinit":"npx sequelize db:seed:undo:all && npx sequelize db:seed:all"
+    "seedinit": "npx sequelize db:seed:undo:all && npx sequelize db:seed:all"
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +18,7 @@
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "connect-flash": "^0.1.1",
+    "dotenv": "^10.0.0",
     "express": "^4.16.4",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
