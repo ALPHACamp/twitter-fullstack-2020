@@ -1,53 +1,29 @@
 <div class="container  py-3 justify-content-center" style="max-width: 356px;">
-  <div class="mb-4 text-center">
-    <form class="form-signin text-center" action="/admin/signin" method="POST" style="width: 100%;">
-      <img class="admin-login-logo my-5" src="/images/icons/alphitter-logo.png" alt="" style="width:50px;height:50px;">
-      <div class="text-center mb-4">
-        <p class="mb-3 alphitter-signin" style="font-size: 28px;">後台登入</p>
+  <form class="form-signin text-center" action="/admin/signin" method="POST" style="width: 100%;">
+    <img class="admin-login-logo my-4" src="/images/icons/alphitter-logo.png" alt="" style="width:50px;height:50px;">
+    <div class="text-center">
+      <p class="mb-3 alphitter-signin" style="font-size: 28px;">後台登入</p>
+    </div>
+
+    <div class="form-label-group py-3 signin-form ">
+      <input type="text" name="account" class="form-control py-3"
+        style="background-color:#F5F8FA; border-bottom: 2px solid #657786;" placeholder="請輸入帳號" required>
+    </div>
+
+    <div class="form-label-group py-3 signin-form">
+      <input type="password" name="password" class=" signpage form-control py-3"
+        style="background-color:#F5F8FA; border-bottom: 2px solid #657786;" placeholder="請輸入密碼" required>
+    </div>
+
+    <div class="my-3" style="height:70px">
+      <button class="btn btn-block text-light form-control py-3"
+        style="border-radius: 40px; background-color:#FF6600;width:100%;height:54px" type="submit">登入</button>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <div>
+        <p><a href="/signin">前台登入</a></p>
       </div>
-
-      <div class="form-label-group py-3 signin-form ">
-        <input type="text" name="account" class="form-control py-3"
-          style="background-color:#F5F8FA; border-bottom: 2px solid #657786;" placeholder="請輸入帳號" required>
-      </div>
-      <div class="form-label-group py-3 signin-form">
-        <input type="password" name="password" class=" signpage form-control py-3"
-          style="background-color:#F5F8FA; border-bottom: 2px solid #657786;" placeholder="請輸入密碼" required>
-      </div>
-      <br />
-      <div style="height:70px">
-        <button class="btn btn-block text-light form-control py-2"
-          style="border-radius: 40px; background-color:#FF6600;width:100%;height:54px" type="submit">登入</button>
-      </div>
-
-
-      <div class="d-flex justify-content-end">
-        <div>
-          <p><a href="/signin">前台登入</a></p>
-        </div>
-      </div>
-    </form>
-
-
-
-  </div>
+    </div>
+  </form>
 </div>
-
-
-{{!-- <h1 class="h3 font-weight-normal mb-3">Sign In</h1>
-</div>
-<form class="form-signin" action="/signin" method="POST">
-  <div class="form-row mb-3">
-    <label class="form-label" for="email">Email</label>
-    <input class="form-control" id="email" type="text" name="email" class="form-control" placeholder="Email" required
-      autofocus>
-  </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="password">Password</label>
-    <input class="form-control" id="password" type="password" name="password" class="form-control"
-      placeholder="Password" required>
-  </div>
-  <button class="btn btn-primary btn-block" type="submit">Submit</button>
-</form>
-<div class="mb-4 text-center">
-  <p><a href="/signup">Sign Up</a></p> --}}
