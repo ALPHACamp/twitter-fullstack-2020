@@ -24,12 +24,17 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
+      banner: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       introduction: {
         allowNull: true,
         type: Sequelize.TEXT
       },
       role: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: 'user'
       },
       created_at: {
         allowNull: false,
