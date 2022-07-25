@@ -5,8 +5,7 @@ const {
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    static associate(models) {
-
+    static associate (models) {
       User.hasMany(models.Tweet, { foreignKey: 'userId' })
       User.hasMany(models.Reply, { foreignKey: 'userId' })
       User.hasMany(models.Like, { foreignKey: 'userId' })
@@ -31,8 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     role: DataTypes.STRING,
     avatar: DataTypes.STRING,
-    banner: DataTypes.STRING,
-    role: DataTypes.STRING
+    banner: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',
@@ -41,5 +39,4 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   return User
-
 }
