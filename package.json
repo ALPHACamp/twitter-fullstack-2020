@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "set NODE_ENV=development && node app.js",
-    "dev": "set NODE_ENV=development && nodemon app.js",
+    "start": "set NODE_ENV=development&& node app.js",
+    "dev": "set NODE_ENV=development&& nodemon app.js",
     "test": "mocha test --exit --recursive --timeout 5000",
     "dbinit": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate && sequelize db:seed:undo:all && npx sequelize db:seed:all",
     "seedinit":"npx sequelize db:seed:undo:all && npx sequelize db:seed:all"
