@@ -1,11 +1,12 @@
 const { Tweet, User, Like, Reply } = require('../models')
+const helpers = require('../_helpers')
 const tweetController = {
-  getTweets: async (req, res) => {
+  getTweets: async (req, res, next) => {
     try {
       const tweets = await Tweet.findAll({
         include: [
           User,
-          { model: Like, include: User, where: { UserId: req.user.id } }
+          { model: Like, include: User, where: { UserId: helpers.getUser(req).id } }
         ],
         order: [['createdAt', 'DESC']]
       })
@@ -24,14 +25,14 @@ const tweetController = {
       next(err)
     }
   },
-  getTweet: async (req, res) => {
+  getTweet: async (req, res, next) => {
     try {
       const tweet = await Tweet.findByPk(req.params.tweet_id,
         {
           include: [
             User,
             { model: Reply, include: User },
-            { model: Like, include: User, where: { UserId: req.user.id } }
+            { model: Like, include: User, where: { UserId: helpers.getUser(req).id } }
           ]
         })
       if (!tweet) {
@@ -48,14 +49,14 @@ const tweetController = {
       next(err)
     }
   },
-  postTweet: async (req, res) => {
+  postTweet: async (req, res, next) => {
     try {
       const { description } = req.body
       if (!description) {
         req.flash('error_messages', 'Tweet 內容不存在!')
         return res.redirect('back')
       }
-      if (comment.trim() === '') {
+      if (description.trim() === '') {
         req.flash('error_messages', 'Tweet 內容不能為空！')
         return res.redirect('back')
       }
@@ -64,7 +65,7 @@ const tweetController = {
         return res.redirect('back')
       }
       await Tweet.create({
-        UserId: req.user.id,
+        UserId: helpers.getUser(req).id,
         description
       })
       req.flash('success_messages', '成功新增Tweet!')
@@ -73,10 +74,10 @@ const tweetController = {
       next(err)
     }
   },
-  postLike: async (req, res) => {
+  postLike: async (req, res, next) => {
     try {
       await Like.create({
-        UserId: req.user.id,
+        UserId: helpers.getUser(req).id,
         TweetId: req.params.tweet_id
       })
       req.flash('success_messages', '成功 Like!')
@@ -86,14 +87,15 @@ const tweetController = {
       next(err)
     }
   },
-  postUnlike: async (req, res) => {
+  postUnlike: async (req, res, next) => {
     try {
       const like = await Like.fineOne({
         where: {
-          UserId: req.user.id,
+          UserId: helpers.getUser(req).id,
           TweetId: req.params.tweet_id
         }
       })
+      if (!like) return req.flash('error_messages', '你沒有like這個tweet!')
       await like.destroy()
       req.flash('success_messages', '成功 Unlike!')
       return res.redirect('back')

@@ -1,19 +1,20 @@
 const helpers = require('../_helpers')
 const { User, Reply, Tweet } = require('../models')
 const replyController = {
-  getReply: async (req, res) => {
+  getReply: async (req, res, next) => {
     try {
       const replies = await Reply.findAll({
         where: { TweetId: req.params.tweet_id },
         include: [User, { model: Tweet, include: User }]
       })
-      return res.redirect(`/tweets/${req.params.tweet_id}`, { replies })
+      //render要修改
+      return res.render('tweet', { replies: replies.toJSON() })
     }
     catch (err) {
       next(err)
     }
   },
-  postReply: async (req, res) => {
+  postReply: async (req, res, next) => {
     try {
       const comment = req.body.comment
       if (!comment) {

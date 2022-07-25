@@ -1,7 +1,7 @@
 @import "./variableSheet.scss";
 
 section#Huei-region {
-  #tweets {
+  #navbar {
     color: $dark100;
     font-style: normal;
     font-weight: 700;
@@ -21,5 +21,25 @@ section#Huei-region {
     color: $dark0;
     background-color: $mainColor;
     border-color: $mainColor;
+  }
+
+  .icon {
+    width: 50px;
+    height: 50px;
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .logout {
+    left: 100px;
+    bottom: 30px;
   }
 }

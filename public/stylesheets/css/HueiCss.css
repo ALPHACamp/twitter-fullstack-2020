@@ -1,4 +1,4 @@
-section#Huei-region #tweets {
+section#Huei-region #navbar {
   color: #171725;
   font-style: normal;
   font-weight: 700;
@@ -15,4 +15,20 @@ section#Huei-region .btn-orange {
   color: #FFFFFF;
   background-color: #FF6600;
   border-color: #FF6600;
+}
+section#Huei-region .icon {
+  width: 50px;
+  height: 50px;
+}
+section#Huei-region .icon img {
+  width: 40px;
+  height: 40px;
+}
+section#Huei-region img {
+  width: 25px;
+  height: 25px;
+}
+section#Huei-region .logout {
+  left: 100px;
+  bottom: 30px;
 }
