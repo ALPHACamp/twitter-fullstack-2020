@@ -2,7 +2,51 @@
   <div class="row justify-content-md-center">
     {{> left-side}}
     <div class="main col-6">
+
       {{> header}}
+      {{!-- 推文區塊 --}}
+      <form class="tweet-post" action="/tweets" method="POST">
+        <a href="/users/{{this.is}}/tweets">
+          <img src="images/icons/alphitter-logo-b.png" alt="avatar">
+        </a>
+        <div class="text-box">
+          <textarea type="text" name="description" placeholder="有什麼新鮮事？" rows="2" cols="63" maxlength="140"
+            id="index-description">Roger~~~~~~~~~~~~~~~~~~~~~ 加 !
+              Andy~~~~~~~~~~~~~~~~~~~~~~ 油 !</textarea>
+        </div>
+        <div class="bd-highlight">
+          <button type="submit" class="tweet-btn">
+            推文
+          </button>
+        </div>
+      </form>
+
+      <div class="hr-line-b"></div>
+      {{!-- {{#each tweets}} --}}
+      <form class="tweet-card" action="/tweets/{{this.id}}/replies" method="GET">
+        <a href="/users/{{this.is}}/tweets">
+          <img src="images/icons/alphitter-logo-b.png" alt="avatar">
+        </a>
+        <div class="text-box">
+          <textarea type="text" name="description" placeholder="有什麼新鮮事？" rows="2" cols="63" maxlength="140"
+            id="index-description">Roger~~~~~~~~~~~~~~~~~~~~~ 加 !
+                    Andy~~~~~~~~~~~~~~~~~~~~~~ 油 !</textarea>
+        </div>
+        <div class="bd-highlight">
+          <form action="/tweets/{{this.id}}/like" method="POST">
+            <div>
+              <img src="images/icons/speech-bubble.png" alt="">
+            </div>
+          </form>
+          {{!-- <form action="/tweets/{{this.id}}/unlike" method="POST">
+            <button type="submit" class="">
+              <img src="images/icons/like-w.png" alt="">
+            </button>
+          </form> --}}
+        </div>
+      </form>
+      {{!-- {{/each}} --}}
+
     </div>
     {{> right-side}}
   </div>

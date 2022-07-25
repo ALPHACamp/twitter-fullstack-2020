@@ -85,16 +85,24 @@
 
  .left-side .logo {
    margin: 13px 0 0px 13px;
-   width: 40px;
+   padding-bottom: -4px;
+   width: 45px;
+   height: 49px;
  }
 
  .left-side img {
    margin-right: 15px;
    padding-bottom: 4px;
-   width: 20px;
+   width: 25px;
  }
 
- .tweet-btn {
+ .logout {
+   margin-left: 17px;
+   position: absolute;
+   bottom: 20px;
+ }
+
+ .tweet-btn-lg {
    width: 178px;
    height: 46px;
    background: #FF6600;
@@ -103,7 +111,7 @@
    text-align: center
  }
 
- .tweet-btn span {
+ .tweet-btn-lg span {
    color: #FFFFFF;
    position: relative;
    top: 20%;
@@ -137,6 +145,7 @@
    width: 96px;
    height: 40px;
    background: #FF6600;
+   border: none;
    border-radius: 50px;
    display: flex;
    align-items: center;
@@ -166,4 +175,56 @@
  .main .hr-line {
    margin: 0px -12px;
    border: 1px solid #E6ECF0;
+ }
+
+ .hr-line-b {
+   margin: 0px -12px;
+   border: 5px solid #E6ECF0;
+ }
+
+ .tweet-post,
+ .tweet-card {
+   margin: 0px -12px;
+   padding: 16px;
+   border-bottom: 1px solid #E6ECF0;
+   position: relative;
+   word-wrap: break-word
+ }
+
+ .tweet-post img,
+ .tweet-card img {
+   position: absolute;
+   width: 50px;
+ }
+
+ .text-box {
+   margin: 0px 10px 40px 67px;
+ }
+
+ .text-box textarea {
+   border: none;
+   resize: none;
+   outline: none;
+ }
+
+ .tweet-btn {
+   margin-top: 14px;
+   width: 64px;
+   height: 40px;
+   background: #FF6600;
+   border: none;
+   border-radius: 50px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 16px;
+   color: #FFFFFF;
+   position: absolute;
+   right: 25px;
+   bottom: 10px
+ }
+
+ .test {
+   border: none;
+   outline: none
  }
