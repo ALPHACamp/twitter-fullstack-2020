@@ -1,38 +1,22 @@
-<div class="container">
+<div class="admin-container">
   <div class="row justify-content-md-center">
-    <div class="main col-4">
-
-      {{> admin-left}}
-
-    </div>
-
-    <div class="main col-8">
-
-      {{> admin-header}}
-
-      <div class="col-12 d-flex flex-row justify-content-between mt-2 ">
-        <div class="user-info d-flex flex-row">
-          <div class="avatar ">
-            <img class="avatar-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-12.jpg"
-              width="50" height="50" alt="">
-          </div>
-          <div class="tweet-text ms-3">
-            <div class="d-inline name">
-              <strong>Apple</strong>
-            </div>
-            <div class="d-inline acc-time">
-              @appleㆍ3小時
-            </div>
-            <div class="twi-content">
-              sed risus pretium quam vulputate dignissim suspendisse in est ante....
-            </div>
-          </div>
-        </div>
-        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
-          <button type="button" class="btn-close" aria-label="Close"></button>
-        </form>
+    {{> admin-left}}
+    <div class="main col-9">
+      <div class="home-page font-lg-dark">
+        <a href="/tweets">推文清單</a>
       </div>
-
+      <div class="hr-line"></div>
+      {{!-- {{#each}} --}}
+      {{> admin-tweet}}
+      {{> admin-tweet}}
+      {{> admin-tweet}}
+      {{> admin-tweet}}
+      {{> admin-tweet}}
+      {{> admin-tweet}}
+      {{> admin-tweet}}
+      {{> admin-tweet}}
+      {{> admin-tweet}}
+      {{!-- {{/each}} --}}
     </div>
   </div>
 </div>
