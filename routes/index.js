@@ -6,8 +6,10 @@ const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
 const passport = require('../config/passport')
 const admin = require('./modules/admin')
+const user = require('./modules/user')
 
 router.use('/admin', admin)
+router.use('/users', user)
 
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
