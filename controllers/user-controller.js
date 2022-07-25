@@ -35,11 +35,37 @@ const userController = {
       next(err)
     }
   },
-  signInPage: (req, res, next) => {
-    res.render('signin')
+  signInPage: async (req, res, next) => {
+    try {
+      res.render('signin')
+    } catch (err) {
+      next(err)
+    }
   },
-  signIn: (req, res, next) => {
-    res.json({ status: 'success' })
+  signIn: async (req, res, next) => {
+    try {
+      req.flash('success_messages', '成功登入！')
+      // res.redirect('/tweets')
+      const userData = req.user.toJSON()
+      delete userData.password
+      res.json({
+        status: 'success',
+        data: {
+          user: userData
+        }
+      })
+    } catch (err) {
+      next(err)
+    }
+  },
+  logout: async (req, res, next) => {
+    try {
+      req.flash('success_messages', '成功登出！')
+      req.logout()
+      res.redirect('/signin')
+    } catch (err) {
+      next(err)
+    }
   },
   getUserFollowings: (req, res, next) => {
     res.json({ status: 'success' })
@@ -64,7 +90,7 @@ const userController = {
   },
   postUnfollow: (req, res, next) => {
     res.json({ status: 'success' })
-  },
+  }
 }
 
 module.exports = userController

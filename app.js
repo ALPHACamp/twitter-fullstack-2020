@@ -24,8 +24,10 @@ app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(session({ secret: SESSION_SECRET, resave: true, saveUninitialized: false }))
-// app.use(passport.initialize())
-// app.use(passport.session())
+
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use(flash())
 app.use(methodOverride('_method'))
 app.use('/upload', express.static(path.join(__dirname, 'upload')))
