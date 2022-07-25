@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt-nodejs')
+const { raw } = require('body-parser')
 const jwt = require('jsonwebtoken')
 
 const { User, Tweet } = require('../models')
@@ -82,8 +83,9 @@ const userController = {
       const userId = Number(req.params.id)
       const userTweets = await Tweet.findAll({
         where: { user_id: userId },
+        raw: true
       })
-      if (!userTweets) throw new Error("Account didn't exist!")
+      if (!userTweets[0]) throw new Error("This Account haven't tweet!")
       // return res.render('/users/user-tweets', { userTweets })
 
       return res.json({ status: 'success', data: userTweets })
