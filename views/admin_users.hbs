@@ -1,29 +1,26 @@
-<section id="ys-admin-region" class=" main-layout">
-  <div class="container-lg d-flex">
+<section id="ys-admin-region" class="container-ys d-flex">
 
-    <section class="left-region-sidebar">
+  <section class="left-region-sidebar">
+    {{>admin_nav route='users'}}
+  </section>
 
-      {{>admin_nav route='users'}}
+  <section class="right-region-tweet-list">
+    <h4 class="title">使用者清單</h4>
+    <hr style="border:1px solid #E6ECF0">
 
-    </section>
+    <div class="scroll-container">
+      {{#each users}}
 
-    <section class="right-region-tweet-list">
-      <h4 class="title">使用者清單</h4>
-      <hr style="border:1px solid #E6ECF0">
+      <img src="{{this.cover}}.jpg" style="height:80px; width:90%" alt="cover">
+      <img src="{{this.avatar}}" style="width:50px;height:50px;margin-right:8px" alt="avatar ">
+      <h2>{{this.name}}</h2>
+      <h2>@{{this.account}}</h2>
+      <p>{{this.introduction}}</p>
 
-      <div class="scroll-container">
-        {{#each users}}
-
-        <img src="{{this.cover}}.jpg" style="height:100px" alt="cover">
-        <img src="{{this.avatar}}" style="width:50px;height:50px;margin-right:8px" alt="avatar ">
-        <h2>{{this.name}}</h2>
-        <h2>@{{this.account}}</h2>
-        <p>{{this.introduction}}</p>
-
-        {{/each}}
-      </div>
+      {{/each}}
+    </div>
 
 
-    </section>
+  </section>
   </div>
 </section>

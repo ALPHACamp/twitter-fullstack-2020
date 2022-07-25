@@ -3,8 +3,20 @@
 
 
 @media screen and (min-width: 1200px) {
-  .container-lg {
+  #ys-admin-region.container-ys {
     width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+  #ys-admin-region.container-ys {
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
   }
 }
 
@@ -21,110 +33,106 @@ section#ys-admin-region {
     }
   }
 
-  &.main-layout {
-    margin-left: 130px;
-    margin-right: 130px;
+  // left-------------------------------------------------------------------------------------------
+  .left-region-sidebar {
+    width: 178px;
+    height: 100vh;
+
+    .side-bar {
+      display: flex;
+      flex-direction: column;
+
+      img {
+        margin-top: 8px;
+        margin-left: 8px;
+        margin-bottom: 14px;
+        width: 50px;
+        height: 50px;
+      }
+
+      a {
+        padding: 16px;
+        margin-bottom: 24x;
+        color: $dark90;
+
+        &.active {
+          // color: $mainColor;
+          filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
+        }
+      }
+
+      .logout {
+        position: absolute;
+        bottom: 0px;
+      }
+    }
   }
 
-  &.users-layout {
-    margin-left: 130px;
-  }
+  // right--------------------------------------------------------------------------------------------
+  .right-region-tweet-list {
+    height: 100vh;
+    flex: 1;
+    margin-left: 24px;
+    border-left: 1px solid #E6ECF0;
+    border-right: 1px solid #E6ECF0;
+    padding-left: 20px;
 
-  .container-lg {
-    padding: 0px;
+    .title {
+      margin-top: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #E6ECF0;
+    }
 
-    // left-------------------------------------------------------------------------------------------
-    .left-region-sidebar {
-      width: 178px;
-      height: 100vh;
+    .scroll-container {
+      height: 85vh;
+      overflow-y: scroll;
+      scrollbar-color: $dark30 $dark20;
+      scrollbar-width: thin;
 
-      .side-bar {
-        display: flex;
-        flex-direction: column;
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
 
-        img {
-          margin-bottom: 30px;
-          width: 50px;
-          height: 50px;
+      // bar的樣式
+      &::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+
+      .tweet-card {
+        position: relative;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #E6ECF0;
+
+        .head {
+          align-items: center;
         }
 
-        a {
-          // text-decoration: none;
-          padding: 0px;
-          margin-bottom: 40px;
-          color: $dark90;
+        .name {
+          margin-right: 8px;
+          font-weight: 700;
+          font-size: 16px;
 
-          &.active {
-            // color: $mainColor;
-            filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
-          }
         }
 
-        .logout {
-          position: absolute;
-          bottom: 0px;
+        .account,
+        .time {
+          font-weight: 400;
+          font-size: 14px;
+          color: $secondaryColor;
+        }
+
+        .content {
+          margin-top: 8px;
+          padding-right: 3rem;
         }
       }
     }
 
-    // right--------------------------------------------------------------------------------------------
-    .right-region-tweet-list {
-      height: 100vh;
-      flex: 1;
-      margin-left: 48px;
 
-
-      .scroll-container {
-        height: 85vh;
-        overflow-y: scroll;
-        scrollbar-color: $mainColor $dark40;
-        scrollbar-width: thin;
-
-        &::-webkit-scrollbar {
-          width: 6px;
-        }
-
-        // bar的樣式
-        &::-webkit-scrollbar-thumb {
-          border-radius: 3px;
-          background-color: rgba(0, 0, 0, 0.1);
-        }
-
-        .title {
-          margin-top: 24px;
-          margin-bottom: 24px;
-        }
-
-        .tweet-card {
-          position: relative;
-
-          .head {
-            align-items: center;
-          }
-
-          .name {
-            margin-right: 8px;
-            font-weight: 700;
-            font-size: 16px;
-
-          }
-
-          .account,
-          .time {
-            font-weight: 400;
-            font-size: 14px;
-            color: $secondaryColor;
-          }
-
-          .content {
-            margin-top: 8px;
-            padding-right: 3rem;
-          }
-        }
-      }
-
-
-    }
   }
+
 
 }
