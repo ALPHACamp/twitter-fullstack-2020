@@ -5,6 +5,8 @@
     </div>
     <h3 class="title">建立你的帳號</h3>
 
+    {{> message}}
+
     <script>
       function changeFocus(element) {
         const target = document.querySelector('.' + element + '-status')
@@ -67,10 +69,10 @@
     </div>
 
     <div class="input">
-      <label for="passowrd">密碼</label>
-      <input name="passowrd" id="passowrd" type="text" placeholder="請設定密碼" onfocus="changeFocus('passowrd')"
-        onblur="changeFocus('passowrd')" required>
-      <div class="status passowrd-status"></div>
+      <label for="password">密碼</label>
+      <input name="password" id="password" type="text" placeholder="請設定密碼" onfocus="changeFocus('password')"
+        onblur="changeFocus('password')" required>
+      <div class="status password-status"></div>
       <div class="helper"><span></span></div>
       <div class="count"><span></span></div>
     </div>
@@ -84,7 +86,7 @@
       <div class="count"><span></span></div>
     </div>
 
-    <button type="submit"><span>註冊</span></button>
+    <button type="submit" class="submit"><span>註冊</span></button>
     <div class="cancle"><a href="/signin">取消</a></div>
   </form>
 </div>
