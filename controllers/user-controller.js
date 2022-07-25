@@ -6,9 +6,9 @@ const userController = {
     res.render('signup')
   },
   signUp: (req, res, next) => {
-    const { account, name, email, password, confirmpassowrd } = req.body
-    if (password !== confirmpassowrd) throw new Error('密碼與密碼確認不相符!')
-    if (!account || !name || !email || !password || !confirmpassowrd) throw new Error('所有欄位為必填')
+    const { account, name, email, password, checkPassword } = req.body
+    if (password !== checkPassword) throw new Error('密碼與密碼確認不相符!')
+    if (!account || !name || !email || !password || !checkPassword) throw new Error('所有欄位為必填')
     Promise.all([
       User.findOne({ where: { account } }),
       User.findOne({ where: { email }})
@@ -21,7 +21,7 @@ const userController = {
       .then(hash => User.create({ account, name, email, password: hash, role: 'user' }))
       .then(() => {
         req.flash('success_messages', '成功註冊帳號！')
-        res.redirect('/login')
+        res.redirect('/signin')
       })
       .catch(err => next(err))
   },
