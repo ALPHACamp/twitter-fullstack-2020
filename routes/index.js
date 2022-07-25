@@ -1,10 +1,20 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
-
 const helpers = require('../_helpers')
 const tweetController = require('../controllers/tweetController')
 const replyController = require('../controllers/replyController')
+const userController = require('../controllers/user-controller')
+const { generalErrorHandler } = require('../middleware/error-handler')
+const { authenticated } = require('../middleware/auth')
+
+router.get('/signup', userController.signUpPage)
+router.post('/signup', userController.signUp)
+router.get('/signin', userController.signInPage)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+router.get('/logout', userController.logout)
+
+router.use('/', generalErrorHandler)
 //前台 tweet 路由
 
 //讀取 所有 tweet
@@ -34,3 +44,6 @@ router.post('/tweets/:tweet_id/unlike', authenticated, tweetController.postUnlik
 router.post('/followships', authenticated, followshipController.addFollowing)
 //刪除 追隨
 router.delete('/followships/:followingId', authenticated, followshipController.removeFollowing)
+
+
+module.exports = router
