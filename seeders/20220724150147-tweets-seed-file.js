@@ -5,15 +5,15 @@ module.exports = {
     const users = await queryInterface.sequelize.query('SELECT id FROM Users;', {
       type: queryInterface.sequelize.QueryTypes.SELECT
     })
-    await queryInterface.bulkInsert(
-      'Tweets',
-      Array.from({ length: (users.length - 1) * 10 }, () => ({
-        description: faker.lorem.paragraphs(),
-        created_at: new Date(),
-        updated_at: new Date(),
-        user_id: users[Math.floor(Math.random() * (users.length - 1)) + 1].id
-      }))
-    )
+    for (let i = 1; i <= 4; i++) {
+      await queryInterface.bulkInsert(
+        'Tweets', {
+          description: faker.lorem.paragraphs(),
+          created_at: new Date(),
+          updated_at: new Date(),
+          user_id: users[i].id
+        }, {})
+    }
   },
 
   down: async (queryInterface, Sequelize) => {

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 
 const userController = {
   signInPage: (req, res, next) => {
-
+    res.render('signin-front')
   },
   signIn: (req, res, next) => {
 
