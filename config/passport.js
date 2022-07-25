@@ -11,8 +11,8 @@ passport.use(new LocalStrategy(
     passReqToCallback: true
   },
   // authenticate user
-  (req, email, password, cb) => {
-    User.findOne({ where: { email } })
+  (req, account, password, cb) => {
+    User.findOne({ where: { account } })
       .then(user => {
         if (!user) return cb(null, false, req.flash('error_messages', '帳號不存在!'))
         bcrypt.compare(password, user.password).then(res => {
