@@ -1,0 +1,26 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+/* signup表格/signin表格白色背景 */
+.signin-signup-page-input-change-backgroundcolor {
+  border-radius: 2px;
+  background: #F5F8FA;
+}
+
+/* 全專案預設form0control點擊時不會亮 */
+.form-control:focus {
+  box-shadow: none;
+  background: #F5F8FA;
+}
+
+/* signup表格/signin表格預設input只有底線*/
+.only-underline-input {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 2px solid #657786;
+  border-radius: 0%;
+}
