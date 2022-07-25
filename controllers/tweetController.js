@@ -89,7 +89,7 @@ const tweetController = {
   },
   postUnlike: async (req, res, next) => {
     try {
-      const like = await Like.fineOne({
+      const like = await Like.findOne({
         where: {
           UserId: helpers.getUser(req).id,
           TweetId: req.params.tweet_id
