@@ -27,3 +27,4 @@ module.exports = (sequelize, DataTypes) => {
 //   };
 //   return Reply;
 // };
+
