@@ -1,38 +1,52 @@
 // 登入、註冊、登出、拿到編輯頁、送出編輯
 const bcrypt = require('bcryptjs')
 const { User } = require('../models')
+const helpers = require('../_helpers')
+
 const userController = {
+  signInPage: (req, res) => {
+    res.render('signin')
+  },
+  signIn: (req, res) => {
+    if (helpers.getUser(req).role === 'admin') {
+      req.flash('error_messages', '帳號不存在！')
+      req.logout()
+      res.redirect('/signin')
+    }
+    req.flash('success_messages', '成功登入！')
+    res.status(302)
+    res.redirect('/tweets')
+  },
   signUpPage: (req, res) => {
     res.render('signup')
   },
   signUp: (req, res, next) => {
-    const { account, name, email, password, checkPassword } = req.body 
+    const { account, name, email, password, checkPassword } = req.body
     if (req.body.password !== req.body.checkPassword) throw new Error('Passwords do not match!') // assert(req, 'Passwords do not match!')
     if (!account || !name || !email || !password || !checkPassword) throw new Error('Please fill in every blank.')
     if (name.length > 50) throw new Error('字數超出上限！')
-    User.findOne({ where: { email: req.body.email } })
-      .then(user => {
-        if (user) throw new Error('Email already exists!')
-        return bcrypt.hash(req.body.password, 10) // 前面加 return
+    return Promise.all([
+      User.findOne({ where: { email } }),
+      User.findOne({ where: { account } })
+    ])
+      .then(([userEmail, userAccount]) => {
+        if (userEmail) throw new Error('Email already exists!')
+        if (userAccount) throw new Error('This account name has been used.')
+        return bcrypt.hash(password, 10)
       })
       .then(hash => User.create({
-        name: req.body.name,
-        email: req.body.email,
-        password: hash
+        account,
+        email,
+        password: hash,
+        name,
+        avatar: "https://loremflickr.com/320/240/human",
+        role: "user"
       }))
       .then(() => {
         req.flash('success_messages', '成功註冊帳號！')
         res.redirect('/signin')
       })
       .catch(err => next(err))
-  },
-  signInPage: (req, res) => {
-    res.render('signin')
-  },
-  signIn: (req, res) => {
-    req.flash('success_messages', '成功登入！')
-    res.status(302)
-    res.redirect('/tweets')
   },
   logout: (req, res) => {
     req.flash('success_messages', '登出成功！')
