@@ -1,0 +1,40 @@
+<section id="ys-admin-region" class="main-layout">
+  <div class="container-lg d-flex">
+
+    <section class="left-region-sidebar">
+
+      {{>admin_nav route='tweets'}}
+
+    </section>
+
+    <section class="right-region-tweet-list">
+      <h4 class="title">推文清單</h4>
+      <hr style="border:1px solid #E6ECF0">
+
+      <div class="scroll-container">
+        {{#each tweets}}
+        <div class="tweet-card d-flex">
+          <img src="/images/icon/logo-gray.png" style="width:50px;height:50px;margin-right:8px" alt="Picture">
+          <div>
+            <div class="head d-flex">
+              <a class="name" href="/users/:{{this.User.id}}">{{this.User.name}}</a>
+              <a class="account" href="/users/:{{this.User.id}}">@{{this.User.account}}</a>
+              <div class="time">•3小時</div>
+              <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="DELETE" style="display: inline;">
+                <button type="submit" class="btn btn-link link-danger cancel-button"
+                  onclick="return confirm(`確定要刪除 {{this.User.name}} 的這篇 Tweet 嗎？`)">
+                  <img src="/images/icon/cancel.png" alt="X"></button>
+              </form>
+            </div>
+            <div class="content">{{this.description}}
+            </div>
+            <hr style="border:1px solid #E6ECF0">
+          </div>
+        </div>
+        {{/each}}
+      </div>
+
+
+    </section>
+  </div>
+</section>

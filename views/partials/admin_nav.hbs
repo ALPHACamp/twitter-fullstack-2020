@@ -1,0 +1,18 @@
+      <ul class="nav side-bar">
+        <img src="/images/icon/logo.png" alt="alpha camp img">
+        <li class="nav-item">
+          <a class="nav-link d-flex {{#ifCond route 'tweets'}}active{{/ifCond}}" aria-current="page" href="/admin/tweets">
+            <img src="/images/icon/home.png" style="width:22px;height:20px;margin:0px" alt="">
+            推文清單</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex {{#ifCond route 'users'}}active{{/ifCond}}" href="/admin/users">
+            <img src="/images/icon/user.png" style="width:22px;height:20px;margin:0px" alt="">
+            使用者列表
+          </a>
+        </li>
+        <a class="d-flex logout" href="/admin/logout" onclick="return confirm(`確定要登出嗎？`)">
+          <img src="/images/icon/logout.png" style="width:22px;height:20px;margin:0px" alt="">
+          登出
+        </a>
+      </ul>
