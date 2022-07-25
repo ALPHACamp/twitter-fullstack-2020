@@ -45,7 +45,15 @@ const userController = {
   signIn: async (req, res, next) => {
     try {
       req.flash('success_messages', '成功登入！')
-      res.redirect('/tweets')
+      // res.redirect('/tweets')
+      const userData = req.user.toJSON()
+      delete userData.password
+      res.json({
+        status: 'success',
+        data: {
+          user: userData
+        }
+      })
     } catch (err) {
       next(err)
     }
