@@ -5,14 +5,17 @@ module.exports = {
     const users = await queryInterface.sequelize.query('SELECT id FROM Users;', {
       type: queryInterface.sequelize.QueryTypes.SELECT
     })
-    for (let i = 1; i <= 4; i++) {
-      await queryInterface.bulkInsert(
-        'Tweets', {
-          description: faker.lorem.paragraphs(),
-          created_at: new Date(),
-          updated_at: new Date(),
-          user_id: users[i].id
-        }, {})
+    for (let i = 0; i <= 9; i++) {
+      await queryInterface.bulkInsert('Tweets',
+        Array.from({ length: users.length - 1 }, (_, i) => {
+          return {
+            user_id: users[i + 1].id,
+            description: faker.lorem.paragraphs(),
+            created_at: new Date(),
+            updated_at: new Date()
+          }
+        })
+      )
     }
   },
 
