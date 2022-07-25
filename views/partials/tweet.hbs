@@ -1,28 +1,29 @@
-<form class="tweet-card" action="/tweets/{{this.id}}/replies" method="GET">
-  <a href="/users/{{this.is}}/tweets">
-    <img src="images/icons/alphitter-logo-b.png" alt="avatar">
+<form class="tweet-card" action="/tweets/{{this.userId}}/replies" method="GET">
+  <a href="/users/{{this.userId}}/tweets">
+    <img src="{{this.User.avatar}}" alt="avatar">
   </a>
-  <a class="tweet-card-name" href="/users/{{this.is}}/tweets">
-    <span class="font-name">12wqweqweqweqweqee</span>
-    <span class="font-account">@45awe6・3 小時</span>
+  <a class="tweet-card-name" href="/users/{{this.userId}}/tweets">
+    <span class="font-name">{{this.User.name}}</span>
+    <span class="font-account">@{{this.User.account}}</span>
   </a>
   <div class="text-box">
-    <span>qwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwweeeeeeeeeeeeeeeeeeeeeqqqqqqqqqqqqqqqqqq</span>
-    <form action="/tweets/{{this.id}}/like" method="POST">
-      <div class="speech-bubble">
-        <button type="submit">
-          <img src="images/icons/speech-bubble.png" alt="reply">
-        </button>
-        <div class="font-account">50</div>
-      </div>
-    </form>
-    <form action="/tweets/{{this.id}}/unlike" method="POST">
-      <div class="like-w">
-        <button type="submit">
-          <img src="images/icons/like-w.png" alt="like">
-        </button>
-        <div class="font-account">50</div>
-      </div>
-    </form>
+    <span>{{this.description}}
+      <form action="/tweets/{{this.userId}}/like" method="POST">
+        <div class="speech-bubble">
+          <button type="submit">
+            <img src="images/icons/speech-bubble.png" alt="reply">
+          </button>
+          <div class="font-account">50</div>
+        </div>
+      </form>
+      <form action="/tweets/{{this.userId}}/unlike" method="POST">
+        <div class="like-w">
+          <button type="submit">
+            <img src="images/icons/like-w.png" alt="like">
+          </button>
+          <div class="font-account">50</div>
+        </div>
+      </form>
+    </span>
   </div>
 </form>
