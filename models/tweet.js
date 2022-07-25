@@ -9,21 +9,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Tweet.init({
-    UserId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
     description: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'Tweet',
-    tableName: 'Tweets'
+    tableName: 'Tweets',
+    underscored: true
   })
   return Tweet
 }
-
-// 'use strict';
-// module.exports = (sequelize, DataTypes) => {
-//   const Tweet = sequelize.define('Tweet', {
-//   }, {});
-//   Tweet.associate = function (models) {
-//   };
-//   return Tweet;
-// };

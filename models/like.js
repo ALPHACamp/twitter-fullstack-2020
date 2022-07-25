@@ -8,22 +8,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Like.init({
-    UserId: DataTypes.INTEGER,
-    TweetId: DataTypes.INTEGER
+    userId: DataTypes.INTEGER,
+    tweetId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Like',
-    tableName: 'Likes'
+    tableName: 'Likes',
+    underscored: true
   })
   return Like
 }
-
-
-// 'use strict';
-// module.exports = (sequelize, DataTypes) => {
-//   const Like = sequelize.define('Like', {
-//   }, {});
-//   Like.associate = function(models) {
-//   };
-//   return Like;
-// };

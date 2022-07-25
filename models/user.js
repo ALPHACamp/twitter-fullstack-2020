@@ -25,21 +25,14 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     avatar: DataTypes.STRING,
     introduction: DataTypes.STRING,
-    role: DataTypes.STRING
+    role: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'User',
     tableName: 'Users',
     underscored: true,
     timestamps: true,
+    underscored: true
   })
   return User
 }
-
-// module.exports = (sequelize, DataTypes) => {
-//   const User = sequelize.define('User', {
-//   }, {});
-//   User.associate = function (models) {
-//   };
-//   return User;
-// };

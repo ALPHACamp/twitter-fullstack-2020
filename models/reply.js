@@ -8,23 +8,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Reply.init({
-    UserId: DataTypes.INTEGER,
-    TweetId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
+    tweetId: DataTypes.INTEGER,
     comment: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'Reply',
-    tableName: 'Replies'
+    tableName: 'Replies',
+    underscored: true
   })
   return Reply
 }
-
-// 'use strict';
-// module.exports = (sequelize, DataTypes) => {
-//   const Reply = sequelize.define('Reply', {
-//   }, {});
-//   Reply.associate = function(models) {
-//   };
-//   return Reply;
-// };
-

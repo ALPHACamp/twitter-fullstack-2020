@@ -1,4 +1,6 @@
-// require('dotenv').config()
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const path = require('path')
 const express = require('express')
 const routes = require('./routes')
@@ -8,15 +10,14 @@ const session = require('express-session')
 const passport = require('./config/passport')
 const methodOverride = require('method-override')
 const helpers = require('./_helpers')
+
 const app = express()
 const port = process.env.PORT || 3000
 const SESSION_SECRET = 'secret'
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
 
 app.engine('hbs', handlebars({ extname: '.hbs' }))
 app.set('view engine', 'hbs')
+
 app.use(express.urlencoded({ extended: true }))
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
