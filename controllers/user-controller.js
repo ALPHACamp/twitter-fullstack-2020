@@ -82,30 +82,17 @@ const userController = {
         if (userEmail) throw new Error('Email already exists!')
         if (userAccount) throw new Error('This account name has been used.')
         return user.update({
+          account,
           name,
+          email,
+          password,
+          checkPassword,
           image: filePath || user.image
         })
       })
       .then(() => {
         req.flash('success_messages', '使用者資料編輯成功')
         res.redirect(`/tweets`)
-      })
-      .catch(err => next(err))
-
-    return Promise.all([
-      User.findByPk(id),
-      imgurFileHandler(file)
-    ])
-      .then(([user, filePath]) => {
-        if (!user) throw new Error("User didn't exist!")
-        return user.update({
-          name,
-          image: filePath || user.image
-        })
-      })
-      .then(() => {
-        req.flash('success_messages', '使用者資料編輯成功')
-        res.redirect(`/users/${id}`)
       })
       .catch(err => next(err))
   }
