@@ -1,17 +1,45 @@
+const bcrypt = require('bcrypt-nodejs')
 const jwt = require('jsonwebtoken')
 
+const { User } = require('../models')
+
 const userController = {
+  signUpPage: async (req, res, next) => {
+    try {
+      res.render('signup')
+    } catch (err) {
+      next(err)
+    }
+  },
+  signUp: async (req, res, next) => {
+    try {
+      let { account, name, email, password, passwordCheck } = req.body
+      if (!account || !email || !password) throw new Error('Please complete all required fields')
+      if (password !== passwordCheck) throw new Error('Passwords do not match!')
+      const existAccount = await User.findOne({ where: { account } })
+      if (existAccount) throw new Error('Account already exists!')
+      const existEmail = await User.findOne({ where: { email } })
+      if (existEmail) throw new Error('Email already exists!')
+      name = name.trim()
+      if (name.length > 50) throw new Error("Name can't have too many characters.")
+
+      const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+      const userData = { account, name, email, password: hash }
+      await User.create(userData)
+      req.flash('success_messages', '您已成功註冊帳號！')
+      // return res.render('signin')
+
+      delete userData.password
+      return res.json(userData)
+    } catch (err) {
+      next(err)
+    }
+  },
   signInPage: (req, res, next) => {
-    res.render('signin-front')
+    res.render('signin')
   },
   signIn: (req, res, next) => {
-
-  },
-  signUpPage: (req, res, next) => {
-
-  },
-  signUp: (req, res, next) => {
-
+    res.json({ status: 'success' })
   },
   getUserFollowings: (req, res, next) => {
     res.json({ status: 'success' })
@@ -36,7 +64,7 @@ const userController = {
   },
   postUnfollow: (req, res, next) => {
     res.json({ status: 'success' })
-  }
+  },
 }
 
 module.exports = userController
