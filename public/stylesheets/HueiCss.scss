@@ -1,17 +1,25 @@
 @import "./variableSheet.scss";
 
-// css 規範: 自已的 css 都要包在 特定的id底下，避免去汙染他人的 css
-// 以下為例子
-// section#Huei-region {
-//   .class1 {
-//     color: $dark100
-//   }
+section#Huei-region {
+  #tweets {
+    color: $dark100;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 26px;
+    letter-spacing: 0px;
+  }
 
-//   .class2 {
-//     color: $assistColorBlue;
+  .a-orange {
+    color: $mainColor;
+  }
 
-//     .class2-1 {
-//       color: $mainColor;
-//     }
-//   }
-// }
+  .h-orange:hover {
+    color: $assistColorOrange;
+  }
+
+  .btn-orange {
+    color: $dark0;
+    background-color: $mainColor;
+    border-color: $mainColor;
+  }
+}

@@ -1,0 +1,18 @@
+section#Huei-region #tweets {
+  color: #171725;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0px;
+}
+section#Huei-region .a-orange {
+  color: #FF6600;
+}
+section#Huei-region .h-orange:hover {
+  color: #FF974A;
+}
+section#Huei-region .btn-orange {
+  color: #FFFFFF;
+  background-color: #FF6600;
+  border-color: #FF6600;
+}
