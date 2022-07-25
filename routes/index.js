@@ -18,6 +18,7 @@ router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 
 router.get('/tweets', authenticated, tweetController.getTweets)
+router.post('/tweets', authenticated, tweetController.postTweet)
 router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
 

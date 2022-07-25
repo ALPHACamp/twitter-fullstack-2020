@@ -12,7 +12,7 @@ const authenticatedAdmin = (req, res, next) => {
     if (helpers.getUser(req).role === 'admin') return next()
     res.redirect('/')
   } else {
-    res.redirect('/signin')
+    res.redirect('/admin/signin')
   }
 }
 module.exports = {
