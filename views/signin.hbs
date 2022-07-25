@@ -1,5 +1,5 @@
 <div class="container" style="height: 1200px;">
-  <form action="/signup" id="signin-region" method="POST">
+  <form action="/signin" id="signin-region" method="POST">
     <div class="icon">
       <img src="/images/alphacamp.png" alt="icon">
     </div>
@@ -22,8 +22,12 @@
       <label for="account">帳號</label>
       <input name="account" id="account" type="text" placeholder="請輸入帳號" onfocus="changeFocus('account')"
         onblur="changeFocus('account')" required>
-      <div class="status account-status"></div>
+      <div class="status account-status {{#if error_messages_account}} warn {{/if}}"></div>
+      {{#if error_messages_account}}
+      <div class="helper"><span>{{ error_messages_account }}</span></div>
+      {{else}}
       <div class="helper"><span></span></div>
+      {{/if}}
       <div class="count"><span></span></div>
     </div>
 
