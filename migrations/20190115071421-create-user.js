@@ -29,13 +29,10 @@ module.exports = {
       banner:{
         type: Sequelize.STRING
       },
-<<<<<<< HEAD
       is_admin:{
         type: Sequelize.BOOLEAN,
         defaultValue: false
       },
-=======
->>>>>>> 74a0347d210e6207a440d11ad2b49b24f2a1fb92
       created_at: {
         allowNull: false,
         type: Sequelize.DATE
@@ -49,8 +46,4 @@ module.exports = {
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('Users')
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 74a0347d210e6207a440d11ad2b49b24f2a1fb92
