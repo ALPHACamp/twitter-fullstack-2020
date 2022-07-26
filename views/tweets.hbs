@@ -5,13 +5,12 @@
       {{> header}}
       {{!-- 推文區塊 --}}
       <form class="tweet-post" action="/tweets" method="POST">
-        <a href="/users/{{this.is}}/tweets">
-          <img src="images/icons/alphitter-logo-b.png" alt="avatar">
+        <a href="/users/{{user.id}}/tweets">
+          <img src="{{user.avatar}}" alt="avatar">
         </a>
         <div class="text-box">
           <textarea type="text" name="description" placeholder="有什麼新鮮事？" rows="2" cols="63" maxlength="140"
-            id="index-description">Roger~~~~~~~~~~~~~~~~~~~~~ 加 !
-              Andy~~~~~~~~~~~~~~~~~~~~~~ 油 !</textarea>
+            id="index-description" required></textarea>
         </div>
         <div class="bd-highlight">
           <button type="submit" class="tweet-btn">
@@ -21,18 +20,10 @@
       </form>
 
       <div class="hr-line-b"></div>
-      {{!-- {{#each tweets}} --}}
+
+      {{#each tweets}}
       {{> tweet}}
-      {{> tweet}}
-      {{> tweet}}
-      {{> tweet}}
-      {{> tweet}}
-      {{> tweet}}
-      {{> tweet}}
-      {{> tweet}}
-      {{> tweet}}
-      {{> tweet}}
-      {{!-- {{/each}} --}}
+      {{/each}}
 
     </div>
     {{> right-side}}
