@@ -1,4 +1,4 @@
-<section id="ys-admin-region" class="container-ys d-flex">
+<section id="ys-admin-region" class="container-ys users-layout d-flex">
 
   <section class="left-region-sidebar">
     {{>admin_nav route='users'}}
@@ -8,14 +8,26 @@
     <h4 class="title">使用者清單</h4>
     <hr style="border:1px solid #E6ECF0">
 
-    <div class="scroll-container">
+    <div class="scroll-container row">
       {{#each users}}
 
-      <img src="{{this.cover}}.jpg" style="height:80px; width:90%" alt="cover">
-      <img src="{{this.avatar}}" style="width:50px;height:50px;margin-right:8px" alt="avatar ">
-      <h2>{{this.name}}</h2>
-      <h2>@{{this.account}}</h2>
-      <p>{{this.introduction}}</p>
+      <div class="user-card col-lg-3 col-sm-6 col">
+        <img src="{{this.cover}}.jpg" class="user-card-cover" style="" alt="cover">
+        <div class="name-photo">
+          <img src="{{this.avatar}}" class="user-card-avatar" alt="avatar ">
+          <h5>{{this.name}}</h5>
+          <h5>@{{this.account}}</h5>
+        </div>
+        <div class="row-actions">
+          <p><img src="../images/icon/tweet.png" alt="tweet picture">{{tweetsCount}}</p>
+          <p><img src="../images/icon/like.png" alt="like picture">{{likesCount}}</p>
+        </div>
+        <div class="follow">
+          <p>{{followersCount}}個<span>跟隨中</span></p>
+          <p>{{followingsCount}}位<span>跟隨中</span></p>
+        </div>
+      </div>
+
 
       {{/each}}
     </div>

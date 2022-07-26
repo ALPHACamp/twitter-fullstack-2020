@@ -212,3 +212,53 @@ section#ys-admin-region .right-region-tweet-list .scroll-container .tweet-card .
   margin-top: 8px;
   padding-right: 3rem;
 }
+section#ys-admin-region .user-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+section#ys-admin-region .user-card .user-card-cover {
+  border-radius: 10px 10px 0px 0px;
+  height: 7rem;
+  width: 100%;
+}
+section#ys-admin-region .user-card .name-photo {
+  position: relative;
+  top: 3%;
+  transform: translate(0%, -55%);
+}
+section#ys-admin-region .user-card .name-photo .user-card-avatar {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  border: 0.25rem solid #FFFFFF;
+}
+section#ys-admin-region .user-card .row-actions {
+  position: relative;
+  top: -3rem;
+  display: flex;
+}
+section#ys-admin-region .user-card .row-actions p {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+section#ys-admin-region .user-card .row-actions img {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0.5rem;
+}
+section#ys-admin-region .user-card .follow {
+  position: relative;
+  top: -3rem;
+  display: flex;
+}
+section#ys-admin-region .user-card .follow p {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+section#ys-admin-region .user-card .follow span {
+  color: #6C757D;
+}

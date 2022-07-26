@@ -1,4 +1,4 @@
-const { User, Tweet } = require('../models')
+const { User, Tweet, Like } = require('../models')
 
 const adminController = {
   signinPage: (req, res, next) => {
@@ -23,9 +23,25 @@ const adminController = {
     })
   },
   getUsers: (req, res, next) => {
-    User.findAll({ raw: true }).then(users => {
+    User.findAll({
+      nest: true,
+      include: [
+        { model: Tweet, include: Like },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    }).then(users => {
+      const result = users.map(user => {
+        return {
+          ...user.toJSON(),
+          tweetsCount: user.Tweets.length,
+          likesCount: user.Tweets.reduce((acc, cur) => acc + cur.Likes.length, 0),
+          followersCount: user.Followers.length,
+          followingsCount: user.Followings.length
+        }
+      })
       // res.send(users)
-      res.render('admin_users', { users })
+      res.render('admin_users', { users: result })
     })
   }
 }
