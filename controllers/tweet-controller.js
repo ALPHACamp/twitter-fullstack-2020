@@ -53,7 +53,10 @@ const tweetController = {
   getTweets: async (req, res, next) => {
     try {
       const userId = req.user.id
-      const followUser = await Followship.findAll({ where: { following_id: userId }, raw: true })
+      const followUser = await Followship.findAll({
+        where: { following_id: userId },
+        raw: true
+      })
       const followUserId = followUser.map(user => user.followerId)
       const tweets = await Tweet.findAll({
         include: { model: User, as: User },
@@ -63,13 +66,15 @@ const tweetController = {
         raw: true,
         nest: true
       })
-      const likedTweetsId = req.user?.Likes ? req.user.Likes.map(lt => lt.TweetId) : []
+      const likedTweetsId = req.user?.Likes
+        ? req.user.Likes.map(lt => lt.TweetId)
+        : []
       const data = tweets.map(tweets => ({
         ...tweets,
         isLiked: likedTweetsId.includes(tweets.id)
       }))
-      res.render('tweets', { tweets: data })
-      // res.json({ status: 'success', tweets })
+      // res.render('tweets', { tweets: data })
+      res.json({ status: 'success', tweets: data })
     } catch (err) {
       next(err)
     }
