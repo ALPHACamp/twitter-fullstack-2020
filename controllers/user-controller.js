@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt-nodejs')
 const { raw } = require('body-parser')
 const jwt = require('jsonwebtoken')
 
-const { User, Tweet } = require('../models')
+const { User, Tweet, Like, Followship } = require('../models')
 
 const userController = {
   signUpPage: async (req, res, next) => {
@@ -72,11 +72,35 @@ const userController = {
       next(err)
     }
   },
-  getUserFollowings: (req, res, next) => {
-    res.json({ status: 'success' })
+  getUserFollowings: async (req, res, next) => {
+    try {
+      const userId = Number(req.params.id)
+      const user = await User.findByPk(userId, {
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ],
+        order: [['Followings', 'created_at', 'DESC']]
+      })
+      user.Followings[0] ? res.json({ status: 'success', data: user.Followings }) : res.json({ status: 'success', data: null })
+    } catch (err) {
+      next(err)
+    }
   },
-  getUserFollowers: (req, res, next) => {
-    res.json({ status: 'success' })
+  getUserFollowers: async (req, res, next) => {
+    try {
+      const userId = Number(req.params.id)
+      const user = await User.findByPk(userId, {
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ],
+        order: [['Followers', 'created_at', 'DESC']]
+      })
+      user.Followers[0] ? res.json({ status: 'success', data: user.Followers }) : res.json({ status: 'success', data: null })
+    } catch (err) {
+      next(err)
+    }
   },
   getUserTweets: async (req, res, next) => {
     try {
@@ -92,8 +116,18 @@ const userController = {
       next(err)
     }
   },
-  getUserLikes: (req, res, next) => {
-    res.json({ status: 'success' })
+  getUserLikes: async (req, res, next) => {
+    try {
+      const userId = Number(req.params.id)
+      const user = await User.findByPk(userId, {
+        include: [
+          { model: Like, include: Tweet }
+        ]
+      })
+      user.Likes[0] ? res.json({ status: 'success', data: user.Likes }) : res.json({ status: 'success', data: null })
+    } catch (err) {
+      next(err)
+    }
   },
   getUserProfile: async (req, res, next) => {
     try {
@@ -149,10 +183,10 @@ const userController = {
       next(err)
     }
   },
-  postFollow: (req, res, next) => {
+  postFollow: async (req, res, next) => {
     res.json({ status: 'success' })
   },
-  postUnfollow: (req, res, next) => {
+  postUnfollow: async (req, res, next) => {
     res.json({ status: 'success' })
   }
 }
