@@ -4,7 +4,7 @@
     {{>admin_nav route='users'}}
   </section>
 
-  <section class="right-region-tweet-list">
+  <section class="right-region-users-list">
     <h4 class="title">使用者清單</h4>
     <hr style="border:1px solid #E6ECF0">
 
@@ -12,7 +12,7 @@
       {{#each users}}
 
       <div class="user-card col-lg-3 col-sm-6 col">
-        <img src="{{this.cover}}.jpg" class="user-card-cover" style="" alt="cover">
+        <img src="{{this.cover}}" class="user-card-cover" style="" alt="cover">
         <div class="name-photo">
           <img src="{{this.avatar}}" class="user-card-avatar" alt="avatar ">
           <h5>{{this.name}}</h5>
