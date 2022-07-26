@@ -1,5 +1,6 @@
 // admin頁面各種 signin/ getuser/ gettweet/ deletetweet/ logout
-const { User, Tweet } = require('../models')
+const { User, Tweet, Like } = require('../models')
+const { sequelize } = require('../models')
 const adminController = {
   signInPage: (req, res) => {
     res.render('admin/signin')
@@ -13,17 +14,29 @@ const adminController = {
     req.logout()
     res.redirect('/admin/signin')
   },
-  getAdminTweets: (req, res) => {
-    return res.render('admin/tweets')
-  },
-  getAdminUsers: (req, res) => {
+  getAdminUsers: (req, res, next) => {
     return User.findAll({
-      raw: true,
-      nest: true
+      where: { role: 'user' },
+      include: [
+        { model: Tweet, include: [Like] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ]
     })
       .then(users => {
-        console.log(users)
-        res.render('admin/users', { users })
+        const results = users.map(user => ({
+          ...user.toJSON(),
+        }))
+        results.forEach(r => {
+          r.TweetsCount = r.Tweets.length
+          r.FollowingsCount = r.Followings.length
+          r.FollowersCount = r.Followers.length
+          r.TweetsLikedCount = r.Tweets.reduce((num, tweet) => {
+            return num + tweet.Likes.length
+          }, 0)
+        })
+        results.sort((a, b) => b.TweetsCount - a.TweetsCount)
+        res.render('admin/users', { users: results })
       })
       .catch(err => next(err))
   },
@@ -39,7 +52,6 @@ const adminController = {
           ...r,
           description: r.description.substring(0, 50),
         }))
-        console.log(tweets)
         return res.render('admin/tweets', { tweets })
       })
       .catch(err => next(err))
