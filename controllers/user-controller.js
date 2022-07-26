@@ -1,6 +1,6 @@
 // 登入、註冊、登出、拿到編輯頁、送出編輯
 const bcrypt = require('bcryptjs')
-const { User } = require('../models')
+const { User, Tweet } = require('../models')
 const helpers = require('../_helpers')
 
 const userController = {
@@ -101,6 +101,24 @@ const userController = {
         res.redirect(`/tweets`)
       })
       .catch(err => next(err))
+  },
+  getPersonalTweets: async (req, res, next) => {
+    try {
+      const user = helpers.getUser(req.user)
+      console.log('here is user:', user)
+      const tweets = await Tweet.findAll({
+        include: User,
+        order: [
+          ['created_at', 'DESC']
+        ],
+        raw: true,
+        nest: true
+      })
+      return res.render('profile', { tweets, user })
+    }
+    catch (err) {
+      next(err)
+    }
   }
 }
 

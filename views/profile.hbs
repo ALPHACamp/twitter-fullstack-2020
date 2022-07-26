@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+    {{> left-side}}
+    <div class="main col-6">
+      <div class="row">
+        <div class="d-flex m-2">
+          <a href="">
+            <h3 class="my-2 fw-normal" onclick="history.back()">←</h3>
+          </a>
+          <div class="col ms-0 ps-2">
+            <span class="my-0 py-0 fw-bold">{{user.name}}</span><br />
+            <small class="my-0 py-0 text-secondary">5推文</small>
+          </div>
+        </div>
+      </div>
+      {{!-- Cover、大頭貼、個人簡歷 --}}
+      <hr class="my-2">
+      <div class="row m-0 p-0">
+        <div style="height: 250px; px-0">
+          <img src="{{user.cover}}" alt="cover" style="height:100%;width:100%; object-fit:cover">
+        </div>
+        <div class="d-flex px-3" style="margin-top:-80px;z-index:100;position:relative">
+          <img src="{{user.avatar}}" class="me-auto rounded-circle border border-white border-5"
+            style="width:150px;height:150px">
+          <div class="d-flex align-items-end">
+            <button type="button" class="btn rounded-pill background-color:#8064A2;" id="editButton"
+              data-id="{{user.id}}" data-bs-toggle="modal" data-bs-target="#editProfileModal">編輯個人資料</button>
+          </div>
+          {{!-- <div class="bd-highlight">
+            <button type="submit" class="follow-btn ms-1">
+              跟隨
+            </button>
+          </div> --}}
+        </div>
+        <div class="col">
+          <span class="fw-bold fs-5">{{user.name}}</span><br />
+          <small class="text-secondary">@{{user.account}}</small>
+        </div>
+      </div>
+      <div class="row  mx-0 px-0 ">
+        <div class="col" style="max-width: 100%;">
+          <p class="fs-4 mb-0" style="word-wrap: break-word; word-break: normal;">{{user.introduction}}</p>
+        </div>
+      </div>
+
+
+
+      <div class="hr-line-b"></div>
+
+      {{#each tweets}}
+      {{> tweet}}
+      {{/each}}
+
+    </div>
+    {{> right-side}}
+  </div>
+</div>
