@@ -1,2 +1,27 @@
 <h3>帳戶設定</h3>
-<button class='btn btn-primary btn-block' type='submit'>修改</button>
+<form action="/api/users/2" method="POST">
+  <div class="form-row mb-3">
+    <label class="form-label" for="account">帳號</label>
+    <input type="text" id="account" name="account" class="form-control" placeholder="account"
+      value="{{existUser.account}}" onkeyup="this.value=this.value.replace(/\s+/g,'')" required autofocus>
+  </div>
+  <div class="form-row mb-3">
+    <label class="form-label" for="name">名稱</label>
+    <input type="text" id="name" name="name" class="form-control" placeholder="name" value="{{existUser.name}}" required
+      autofocus>
+  </div>
+  <div class="form-row mb-3">
+    <label class="form-label" for="email">名稱</label>
+    <input type="text" id="email" name="email" class="form-control" placeholder="email" value="{{existUser.email}}" required
+      autofocus>
+  </div>
+  <div class="form-row mb-3">
+    <label class="form-label" for="password">密碼</label>
+    <input type="password" id="password" name="password" class="form-control" placeholder="請設定密碼" value="" required>
+  </div>
+  <div class="form-row mb-3">
+    <label class="form-label" for="passwordCheck">密碼再確認</label>
+    <input type="password" id="passwordCheck" name="passwordCheck" class="form-control" placeholder="請再次輸入密碼" required>
+  </div>
+  <button class="btn btn-primary btn-block" type="submit">儲存</button>
+</form>

@@ -4,7 +4,7 @@ const passport = require('../config/passport')
 const admin = require('./modules/admin')
 const users = require('./modules/users')
 const tweets = require('./modules/tweets')
-const apis = require('./modules/api')
+const api = require('./modules/api')
 
 const { apiErrorHandler } = require('../middleware/error-handler.js')
 
@@ -13,7 +13,7 @@ const userController = require('../controllers/user-controller')
 router.use('/admin', admin) // 未添加認證
 router.use('/users', users) // 未添加認證
 router.use('/tweets', tweets) // 未添加認證
-router.use('/api', apis) // 未添加認證
+router.use('/api', api) // 未添加認證
 
 router.post('/signup', userController.signUp)
 router.get('/signup', userController.signUpPage)
