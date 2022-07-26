@@ -6,14 +6,14 @@ const users = require('./modules/users')
 const tweets = require('./modules/tweets')
 const api = require('./modules/api')
 
-const { authenticated, authenticatedAdmin } = require('../middleware/auth')
+const { authenticatedUser, authenticatedAdmin } = require('../middleware/auth')
 const { apiErrorHandler } = require('../middleware/error-handler.js')
 
 const userController = require('../controllers/user-controller')
 
 router.use('/admin', admin) // 未添加認證
 router.use('/users', users) // 未添加認證
-router.use('/tweets', authenticated, tweets)
+router.use('/tweets', authenticatedUser, tweets)
 router.use('/api', api) // 未添加認證
 
 router.post('/signup', userController.signUp)
