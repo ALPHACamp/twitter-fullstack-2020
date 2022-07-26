@@ -1,1 +1,59 @@
-<div> admin !!</div>
+<div class="col-2 nav-left">
+{{> nav-left}}
+</div>
+
+<div class="col-8 nav-body">
+
+  {{!-- 表頭 --}}
+  <div style="border: 1px solid #E6ECF0;">
+    <h4 class="m-3">推文清單</h4>
+  </div>
+
+  {{!-- 推文清單 --}}
+  <ul class="list-group">
+
+    {{#each tweets}}
+    <li class="list-group-item d-flex align-items-start" style="border: 1px solid #E6ECF0;">
+      <div class="mt-2">
+        {{#if this.User.avatar}}
+        <img src="{{this.User.avatar}}" alt="" style="width: 50px;" class="me-3">
+        {{else}}
+        <img src="/images/img.png" alt="" style="width: 50px;" class="me-3">
+        {{/if}}
+      </div>
+      <div class="mt-2" style="width: 100%;">
+        <p>{{this.User.name}} 
+          <span class="text-muted" style="font-size: 14px">
+            @{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}
+          </span>
+        </p>
+        <p>{{this.description}}</p>
+      </div>
+      <div class="mt-2">
+        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+          <button type="submit" class="btn-close" onclick="return confirm(`確定要刪除此推文嗎？`)" data-bs-dismiss="alert" aria-label="Close"></button>
+        </form>
+      </div>
+    </li>
+    {{/each}}
+
+    {{!-- 固定樣板  --}}
+    <li class="list-group-item d-flex align-items-start" style="border: 1px solid #E6ECF0;">
+      <div class="mt-2">
+        <img src="/images/img.png" alt="" style="width: 50px;" class="me-3">
+      </div>
+      <div class="mt-2" style="width: 100%;">
+        <p>Apple <span class="text-muted">@apple・3 小時</span></p>
+        <p>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
+        </div>
+      <div class="mt-2">
+        <form action="/admin/tweets/2?_method=DELETE" method="POST" style="display: inline;">
+          <button type="submit" class="btn-close" onclick="return confirm(`確定要刪除此推文嗎？`)" data-bs-dismiss="alert" aria-label="Close"></button>
+        </form>
+      </div>
+    </li>
+    {{!-- 固定樣板  --}}
+
+
+  </ul>
+</div>
