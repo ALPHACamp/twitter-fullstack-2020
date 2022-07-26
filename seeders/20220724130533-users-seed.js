@@ -21,7 +21,7 @@ module.exports = {
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       name: 'root',
       avatar: 'https://loremflickr.com/150/150/avatar/?random=1',
-      cover: `https://loremflickr.com/700/250/landscape/?lrandom=1`,
+      cover: `https://loremflickr.com/700/250/landscape/?random=1`,
       account: 'root',
       role: 'admin',
       created_at: new Date(),
