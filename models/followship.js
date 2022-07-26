@@ -12,16 +12,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Followship',
-    tableName: 'Followships'
+    tableName: 'Followships',
+    underscored: true
   })
   return Followship
 }
-
-// 'use strict';
-// module.exports = (sequelize, DataTypes) => {
-//   const Followship = sequelize.define('Followship', {
-//   }, {});
-//   Followship.associate = function(models) {
-//   };
-//   return Followship;
-// };

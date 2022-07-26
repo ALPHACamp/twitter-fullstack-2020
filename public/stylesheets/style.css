@@ -5,6 +5,13 @@
    color: #171725;
  }
 
+ button {
+   margin: 0;
+   padding: 0;
+   border: none;
+   outline: none;
+ }
+
  .font-lg-dark {
    font-size: 24px;
    color: #171725;
@@ -38,10 +45,14 @@
    color: #171725;
  }
 
+ .row .main {
+   height: 100vh;
+ }
+
  .main {
    border-left: 1px solid #E6ECF0;
    border-right: 1px solid #E6ECF0;
-   height: 100vh;
+   height: 100%;
  }
 
  .left-side,
@@ -85,16 +96,24 @@
 
  .left-side .logo {
    margin: 13px 0 0px 13px;
-   width: 40px;
+   padding-bottom: -4px;
+   width: 45px;
+   height: 49px;
  }
 
  .left-side img {
    margin-right: 15px;
    padding-bottom: 4px;
-   width: 20px;
+   width: 25px;
  }
 
- .tweet-btn {
+ .logout {
+   margin-left: 17px;
+   position: absolute;
+   bottom: 20px;
+ }
+
+ .tweet-btn-lg {
    width: 178px;
    height: 46px;
    background: #FF6600;
@@ -103,7 +122,7 @@
    text-align: center
  }
 
- .tweet-btn span {
+ .tweet-btn-lg span {
    color: #FFFFFF;
    position: relative;
    top: 20%;
@@ -137,6 +156,7 @@
    width: 96px;
    height: 40px;
    background: #FF6600;
+   border: none;
    border-radius: 50px;
    display: flex;
    align-items: center;
@@ -166,4 +186,255 @@
  .main .hr-line {
    margin: 0px -12px;
    border: 1px solid #E6ECF0;
+ }
+
+ .hr-line-b {
+   margin: 0px -12px;
+   border: 5px solid #E6ECF0;
+ }
+
+ .tweet-post,
+ .tweet-card {
+   margin: 0px -12px;
+   padding: 16px;
+   border-bottom: 1px solid #E6ECF0;
+   position: relative;
+   word-wrap: break-word
+ }
+
+ .tweet-post img,
+ .tweet-card img {
+   position: absolute;
+   width: 50px;
+ }
+
+ .tweet-post .text-box {
+   margin: 0px 10px 40px 67px;
+ }
+
+ .text-box textarea {
+   border: none;
+   resize: none;
+   outline: none;
+ }
+
+ .tweet-btn {
+   margin-top: 14px;
+   width: 64px;
+   height: 40px;
+   background: #FF6600;
+   border: none;
+   border-radius: 50px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 16px;
+   color: #FFFFFF;
+   position: absolute;
+   right: 25px;
+   bottom: 10px
+ }
+
+ .tweet-card-name,
+ .tweet-card .text-box {
+   margin: 0px 10px 30px 67px;
+ }
+
+ .tweet-card .text-box img {
+   margin-top: 8px;
+   width: 15px
+ }
+
+ .tweet-card .text-box span {
+   position: relative;
+ }
+
+ .tweet-card .text-box .speech-bubble {
+   position: absolute;
+   bottom: -30px;
+   left: 0px
+ }
+
+ .tweet-card .text-box .like-w {
+   position: absolute;
+   bottom: -30px;
+   left: 80px;
+ }
+
+ .speech-bubble div,
+ .like-w div {
+   margin-left: 20px;
+   font-weight: bold;
+ }
+
+ .main .hr-line {
+   margin: 0px -12px;
+   border: 1px solid #E6ECF0;
+   top: 30%;
+   left: 30%;
+ }
+
+ /* Admin users css */
+
+ .tweet-card .btn-close {
+   position: absolute;
+   top: 30px;
+   right: 10px;
+ }
+
+ .admin-container .row .main {
+   width: 1125px;
+ }
+
+ .card {
+   position: relative;
+   width: 249px;
+   height: 314px;
+   background: #f6f7f8;
+   border-radius: 10px;
+ }
+
+ .card-top {
+   position: absolute;
+   left: 0%;
+   right: 0%;
+   top: 0%;
+   width: 249px;
+   height: 140px;
+   background: url(.jpg), #c4c4c4;
+   border-radius: 10px 10px 0px 0px;
+ }
+
+ .card-cover {
+
+   width: 249px;
+   height: 140px;
+   border-radius: 10px 10px 0px 0px;
+ }
+
+ .card-middle {
+   width: 100px;
+   height: 154px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 0px;
+   gap: 8px;
+   position: absolute;
+   left: 29.72%;
+   right: 30.12%;
+   top: 20.38%;
+   bottom: 30.57%;
+ }
+
+ .card-avatar-part {
+   width: 100px;
+   height: 100px;
+ }
+
+ .card-avatar {
+   width: 100px;
+   height: 100px;
+   border: 3px solid #ffffff;
+   border-radius: 50px;
+ }
+
+ .card-name {
+   margin: 0;
+   padding: 0;
+   width: 100px;
+   height: 26px;
+   text-align: center;
+   font-size: 16px;
+   line-height: 26px;
+ }
+
+ .card-account {
+   margin: 0;
+   padding: 0;
+   text-align: center;
+   font-size: 14px;
+   color: #6c757d;
+ }
+
+ .card-tweet-like {
+   display: flex;
+   width: 140px;
+   height: 26px;
+   position: absolute;
+   left: 22.09%;
+   right: 22.09%;
+   top: 74.52%;
+   bottom: 17.2%;
+ }
+
+ .card-tweet,
+ .card-like {
+   display: flex;
+   width: 50%;
+   height: 100%;
+ }
+
+ .card-followship {
+   display: flex;
+   width: 160px;
+   height: 22px;
+   position: absolute;
+   left: 18.48%;
+   right: 18.07%;
+   top: 85.35%;
+   bottom: 7.64%;
+ }
+
+ .card-following,
+ .card-follower {
+   display: flex;
+   justify-content: center;
+   width: 50%;
+   height: 100%;
+   font-size: 10px;
+ }
+
+ .card-img {
+   width: 24px;
+   height: 24px;
+ }
+
+ .card-num {
+   align-items: center;
+   font-size: 16px;
+   margin-left: 5px;
+ }
+
+ .card-tweet-like {
+   position: absolute;
+ }
+
+ .card-tweet-like img {
+   width: 20px;
+   position: absolute;
+ }
+
+ .card-tweet-like .tweets-counts {
+   position: absolute;
+   top: 195px;
+   left: 5px
+ }
+
+ .card-tweet-like .likes-counts {
+   position: absolute;
+   top: 195px;
+   left: 85px
+ }
+
+ .card-tweet-like .card-num {
+   margin: -8px 0px 0px 25px
+ }
+
+ .modal-content .tweet-post {
+   border: none
+ }
+
+ #tweetInput button {
+   margin: 0;
  }
