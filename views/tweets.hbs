@@ -29,6 +29,25 @@
   <button class='btn btn-primary btn-block' type='submit'>推文</button>
   <button class='btn btn-primary btn-block' type='submit'>Like</button>
   <button class='btn btn-primary btn-block' type='submit'>回應</button>
+  {{#each tweets}}
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{this.User.account}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{this.User.name}}</h6>
+      <p class="card-text">{{this.description}}
+      </p>
+      {{#if isLiked}}
+      <form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="POST">
+        <button type="submit" class="btn btn-primary m-1">Dislike</button>
+      </form>
+      {{else}}
+      <form action="/tweets/{{this.id}}/like" method="POST">
+        <button type="submit" class="btn btn-primary m-1">like</button>
+      </form>
+      {{/if}}
+    </div>
+  </div>
+  {{/each}}
   <p></p>
   <h3>右側推薦跟隨</h3>
   <button class='btn btn-primary btn-block' type='submit'>追蹤</button>
