@@ -8,13 +8,17 @@ const tweetController = {
     try {
       const user = helpers.getUser(req)
       const tweets = await Tweet.findAll({
-        include: User,
+        include: [
+          User,
+          { model: User, as: 'LikedUsers' }
+        ],
         order: [
           ['created_at', 'DESC']
         ],
         raw: true,
         nest: true
       })
+      console.log('------------------------', tweets)
       return res.render('tweets', { tweets, user })
     }
     catch (err) {
@@ -49,6 +53,7 @@ const tweetController = {
           tweetId
         }
       })
+      console.log(newLike)
       return res.redirect('back')
     }
     catch (err) {
