@@ -6,6 +6,7 @@ const users = require('./modules/users')
 const tweets = require('./modules/tweets')
 const api = require('./modules/api')
 
+const { authenticatedUser, authenticatedAdmin } = require('../middleware/auth')
 const { apiErrorHandler } = require('../middleware/error-handler.js')
 
 const adminController = require('../controllers/admin-controller')
@@ -13,7 +14,7 @@ const userController = require('../controllers/user-controller')
 
 router.use('/admin', admin) // 未添加認證
 router.use('/users', users) // 未添加認證
-router.use('/tweets', tweets) // 未添加認證
+router.use('/tweets', authenticatedUser, tweets)
 router.use('/api', api) // 未添加認證
 
 router.post('/admin/signin',
