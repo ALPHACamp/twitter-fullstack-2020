@@ -178,11 +178,11 @@ const userController = {
       const userData = await User.findByPk(userId)
       userData.update(newUserData)
       req.flash('success_messages', '帳號重新編輯成功，請重新登入！')
-      // return res.redirect('/')
+      return res.redirect('/')
 
-      delete newUserData.password
-      delete newUserData.passwordCheck
-      return res.json({ status: 'success', data: newUserData })
+      // delete newUserData.password
+      // delete newUserData.passwordCheck
+      // return res.json({ status: 'success', data: newUserData })
     } catch (err) {
       next(err)
     }

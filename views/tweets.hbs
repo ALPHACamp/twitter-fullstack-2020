@@ -37,7 +37,7 @@
       <p class="card-text">{{this.description}}
       </p>
       {{#if isLiked}}
-      <form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="POST">
+      <form action="/tweets/{{this.id}}/unlike" method="POST">
         <button type="submit" class="btn btn-primary m-1">Dislike</button>
       </form>
       {{else}}
