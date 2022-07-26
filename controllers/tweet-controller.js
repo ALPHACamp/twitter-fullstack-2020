@@ -1,19 +1,39 @@
 const jwt = require('jsonwebtoken')
-const { Tweet } = require('../models')
+const { Tweet, User, Like, Followship } = require('../models')
 const { getUser } = require('../helpers/auth-helpers')
 
 const tweetController = {
-  getTweetReplies: (req, res, next) => {
+  getTweetReplies: async (req, res, next) => {
     res.json({ status: 'success' })
   },
-  postTweetReply: (req, res, next) => {
+  postTweetReply: async (req, res, next) => {
     res.json({ status: 'success' })
   },
-  likeTweet: (req, res, next) => {
-    res.json({ status: 'success' })
+  likeTweet: async (req, res, next) => {
+    try {
+      const UserId = req.user.id
+      const TweetId = req.params.id
+      const existUser = User.findByPk(UserId)
+      if (!existUser) throw new Error("This account didn't exist!")
+      const LikeTweet = await Like.findOne({ where: { UserId, TweetId } })
+      if (LikeTweet) throw new Error('You already liked this tweet!')
+      Like.create({ UserId, TweetId })
+      return res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
   },
-  unlikeTweet: (req, res, next) => {
-    res.json({ status: 'success' })
+  dislikeTweet: async (req, res, next) => {
+    try {
+      const UserId = req.user.id
+      const TweetId = req.params.id
+      const LikeTweet = await Like.findOne({ where: { UserId, TweetId } })
+      if (!LikeTweet) throw new Error("You haven't liked this tweet!")
+      LikeTweet.destroy()
+      return res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
   },
   postTweetUnlike: (req, res, next) => {
     res.json({ status: 'success' })
@@ -32,12 +52,24 @@ const tweetController = {
   },
   getTweets: async (req, res, next) => {
     try {
+      const userId = req.user.id
+      const followUser = await Followship.findAll({ where: { following_id: userId }, raw: true })
+      const followUserId = followUser.map(user => user.followerId)
       const tweets = await Tweet.findAll({
+        include: { model: User, as: User },
+        where: { UserId: followUserId },
         order: [['createdAt', 'DESC']],
+        limit: 20,
         raw: true,
-        limit: 20
+        nest: true
       })
-      res.json({ status: 'success', tweets })
+      const likedTweetsId = req.user?.Likes ? req.user.Likes.map(lt => lt.TweetId) : []
+      const data = tweets.map(tweets => ({
+        ...tweets,
+        isLiked: likedTweetsId.includes(tweets.id)
+      }))
+      res.render('tweets', { tweets: data })
+      // res.json({ status: 'success', tweets })
     } catch (err) {
       next(err)
     }
