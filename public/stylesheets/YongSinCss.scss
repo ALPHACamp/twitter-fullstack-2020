@@ -1,16 +1,138 @@
 @import "./reset.scss";
 @import "./variableSheet.scss";
 
-section#ys-region {
-  .class1 {
-    color: $dark100
+
+@media screen and (min-width: 1200px) {
+  #ys-admin-region.container-ys {
+    width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
   }
+}
 
-  .class2 {
-    color: $dark50;
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+  #ys-admin-region.container-ys {
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+  }
+}
 
-    .class2-1 {
-      color: $dark30;
+section#ys-admin-region {
+  * {
+    // border: dotted 1px red;
+    color: $dark100;
+
+    .cancel-button {
+      padding: 0px;
+      font-size: 14px;
+      position: absolute;
+      right: 10px;
     }
   }
+
+  // left-------------------------------------------------------------------------------------------
+  .left-region-sidebar {
+    width: 178px;
+    height: 100vh;
+
+    .side-bar {
+      display: flex;
+      flex-direction: column;
+
+      img {
+        margin-top: 8px;
+        margin-left: 8px;
+        margin-bottom: 14px;
+        width: 50px;
+        height: 50px;
+      }
+
+      a {
+        padding: 16px;
+        margin-bottom: 24x;
+        color: $dark90;
+
+        &.active {
+          // color: $mainColor;
+          filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
+        }
+      }
+
+      .logout {
+        position: absolute;
+        bottom: 0px;
+      }
+    }
+  }
+
+  // right--------------------------------------------------------------------------------------------
+  .right-region-tweet-list {
+    height: 100vh;
+    flex: 1;
+    margin-left: 24px;
+    border-left: 1px solid #E6ECF0;
+    border-right: 1px solid #E6ECF0;
+    padding-left: 20px;
+
+    .title {
+      margin-top: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #E6ECF0;
+    }
+
+    .scroll-container {
+      height: 85vh;
+      overflow-y: scroll;
+      scrollbar-color: $dark30 $dark20;
+      scrollbar-width: thin;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      // bar的樣式
+      &::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+
+      .tweet-card {
+        position: relative;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #E6ECF0;
+
+        .head {
+          align-items: center;
+        }
+
+        .name {
+          margin-right: 8px;
+          font-weight: 700;
+          font-size: 16px;
+
+        }
+
+        .account,
+        .time {
+          font-weight: 400;
+          font-size: 14px;
+          color: $secondaryColor;
+        }
+
+        .content {
+          margin-top: 8px;
+          padding-right: 3rem;
+        }
+      }
+    }
+
+
+  }
+
+
 }

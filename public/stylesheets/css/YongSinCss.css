@@ -110,12 +110,105 @@ p {
   font-size: 16px;
 }
 
-section#ys-region .class1 {
+@media screen and (min-width: 1200px) {
+  #ys-admin-region.container-ys {
+    width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+  }
+}
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+  #ys-admin-region.container-ys {
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+  }
+}
+section#ys-admin-region * {
   color: #171725;
 }
-section#ys-region .class2 {
-  color: #D5D5DC;
+section#ys-admin-region * .cancel-button {
+  padding: 0px;
+  font-size: 14px;
+  position: absolute;
+  right: 10px;
 }
-section#ys-region .class2 .class2-1 {
-  color: #F1F1F5;
+section#ys-admin-region .left-region-sidebar {
+  width: 178px;
+  height: 100vh;
+}
+section#ys-admin-region .left-region-sidebar .side-bar {
+  display: flex;
+  flex-direction: column;
+}
+section#ys-admin-region .left-region-sidebar .side-bar img {
+  margin-top: 8px;
+  margin-left: 8px;
+  margin-bottom: 14px;
+  width: 50px;
+  height: 50px;
+}
+section#ys-admin-region .left-region-sidebar .side-bar a {
+  padding: 16px;
+  margin-bottom: 24x;
+  color: #44444F;
+}
+section#ys-admin-region .left-region-sidebar .side-bar a.active {
+  filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
+}
+section#ys-admin-region .left-region-sidebar .side-bar .logout {
+  position: absolute;
+  bottom: 0px;
+}
+section#ys-admin-region .right-region-tweet-list {
+  height: 100vh;
+  flex: 1;
+  margin-left: 24px;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  padding-left: 20px;
+}
+section#ys-admin-region .right-region-tweet-list .title {
+  margin-top: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #E6ECF0;
+}
+section#ys-admin-region .right-region-tweet-list .scroll-container {
+  height: 85vh;
+  overflow-y: scroll;
+  scrollbar-color: #F1F1F5 #FAFAFB;
+  scrollbar-width: thin;
+}
+section#ys-admin-region .right-region-tweet-list .scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+section#ys-admin-region .right-region-tweet-list .scroll-container::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+section#ys-admin-region .right-region-tweet-list .scroll-container .tweet-card {
+  position: relative;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #E6ECF0;
+}
+section#ys-admin-region .right-region-tweet-list .scroll-container .tweet-card .head {
+  align-items: center;
+}
+section#ys-admin-region .right-region-tweet-list .scroll-container .tweet-card .name {
+  margin-right: 8px;
+  font-weight: 700;
+  font-size: 16px;
+}
+section#ys-admin-region .right-region-tweet-list .scroll-container .tweet-card .account,
+section#ys-admin-region .right-region-tweet-list .scroll-container .tweet-card .time {
+  font-weight: 400;
+  font-size: 14px;
+  color: #6C757D;
+}
+section#ys-admin-region .right-region-tweet-list .scroll-container .tweet-card .content {
+  margin-top: 8px;
+  padding-right: 3rem;
 }

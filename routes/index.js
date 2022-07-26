@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const admin = require('./modules/admin')
 const passport = require('../config/passport')
 const helpers = require('../_helpers')
 const tweetController = require('../controllers/tweetController')
@@ -20,6 +21,7 @@ router.post('/followships', authenticated, followshipController.addFollowing)
 router.delete('/followships/:followingId', authenticated, followshipController.removeFollowing)
 
 
+router.use('/admin', admin)
 
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
@@ -28,6 +30,7 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/logout', userController.logout)
 
 router.use('/', generalErrorHandler)
+router.use('/', (req, res) => res.send('404 not found'))
 
 
 module.exports = router
