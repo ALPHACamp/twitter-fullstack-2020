@@ -2,18 +2,92 @@ html,
 body {
   height: 100%;
   width: 100%;
+  font-family: "Montserrat", "Noto Sans TC", sans-serif;
+  font-size: 16px;
+}
+
+.brand-color {
+  color: #ff6600;
+}
+
+.btn-brand {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #ff6600;
+  --bs-btn-border-color: #ff6600;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #d35400;
+  --bs-btn-hover-border-color: #c5570d;
+  --bs-btn-focus-shadow-rgb: 194, 94, 28;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #c5570d;
+  --bs-btn-active-border-color: #c7621f;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #0d6efd;
+  --bs-btn-disabled-border-color: #0d6efd;
+}
+
+.brand-color.nav-pills {
+  --bs-nav-pills-border-radius: 0.375rem;
+  --bs-nav-pills-link-active-color: #fff;
+  --bs-nav-pills-link-active-bg: #ff6600;
+}
+
+.nav-link {
+  --bs-nav-link-hover-color: #d35400;
+  font-size: 18px;
+  font-weight: 700;
+  color: #44444f;
+  cursor: pointer;
+}
+
+.nav-pills .nav-link.active {
+  color: #ff6600;
+  background-color: #fff;
+}
+
+.dark-90 {
+  color: #44444f;
+}
+
+.dark-100 {
+  color: #171725;
+}
+
+.header5 {
+  font-size: 18px;
+}
+
+.icon-size {
+  font-size: 20px;
+}
+
+.fa-xmark.icon-size {
+  font-size: 15px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.radius50 {
+  border-radius: 50px;
+}
+
+textarea {
+  resize: none;
 }
 
 /* signup表格/signin表格白色背景 */
 .signin-signup-page-input-change-backgroundcolor {
   border-radius: 2px;
-  background: #F5F8FA;
+  background: #f5f8fa;
 }
 
 /* 全專案預設form0control點擊時不會亮 */
 .form-control:focus {
   box-shadow: none;
-  background: #F5F8FA;
+  background: #f5f8fa;
 }
 
 /* signup表格/signin表格預設input只有底線*/
