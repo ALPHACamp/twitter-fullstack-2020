@@ -18,7 +18,7 @@ const tweetController = {
         raw: true,
         nest: true
       })
-      console.log('------------------------', tweets)
+      console.log(tweets)
       return res.render('tweets', { tweets, user })
     }
     catch (err) {
@@ -47,13 +47,12 @@ const tweetController = {
     try {
       const userId = helpers.getUser(req).id
       const tweetId = req.params.id
-      const newLike = await Like.findOrCreate({
+      await Like.findOrCreate({
         where: {
-          userId,
-          tweetId
+          UserId: userId,
+          TweetId: tweetId
         }
       })
-      console.log(newLike)
       return res.redirect('back')
     }
     catch (err) {
@@ -66,8 +65,8 @@ const tweetController = {
       const tweetId = req.params.id
       const like = await Like.findOne({
         where: {
-          userId,
-          tweetId
+          UserId: userId,
+          TweetId: tweetId
         }
       })
       await like.destroy()
