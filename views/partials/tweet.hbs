@@ -1,4 +1,4 @@
-<form class="tweet-card" action="/tweets/{{this.userId}}/replies" method="GET">
+<div class="tweet-card">
   <a href="/users/{{this.userId}}/tweets">
     <img src="{{this.User.avatar}}" alt="avatar">
   </a>
@@ -8,7 +8,7 @@
   </a>
   <div class="text-box">
     <span>{{this.description}}
-      <form action="/tweets/{{this.userId}}/like" method="POST">
+      <form action="/tweets/{{this.id}}/like" method="POST">
         <div class="speech-bubble">
           <button type="submit">
             <img src="images/icons/speech-bubble.png" alt="reply">
@@ -16,7 +16,7 @@
           <div class="font-account">50</div>
         </div>
       </form>
-      <form action="/tweets/{{this.userId}}/unlike" method="POST">
+      <form action="/tweets/{{this.id}}/unlike" method="POST">
         <div class="like-w">
           <button type="submit">
             <img src="images/icons/like-w.png" alt="like">
@@ -26,4 +26,4 @@
       </form>
     </span>
   </div>
-</form>
+</div>
