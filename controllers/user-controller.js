@@ -156,10 +156,9 @@ const userController = {
         throw new Error("Can not edit other user's account!")
       }
       let { account, name, email, password, passwordCheck } = req.body
-      if (!account || !email || !password) {
+      if (!account || !email) {
         throw new Error('Please complete all required fields')
       }
-      if (password !== passwordCheck) throw new Error('Passwords do not match!')
       const existAccount = await User.findOne({ where: { account } })
       if (existAccount && Number(existAccount.id) !== req.user.id) {
         throw new Error('Account already exists!')
@@ -172,17 +171,22 @@ const userController = {
       if (name.length > 50) {
         throw new Error("Name can't have too many characters.")
       }
-
+      if (!password) {
+        const newUserData = { account, name, email }
+        const userData = await User.findByPk(userId)
+        return userData.update(newUserData)
+      }
+      if (password !== passwordCheck) throw new Error('Passwords do not match!')
       const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
       const newUserData = { account, name, email, password: hash }
       const userData = await User.findByPk(userId)
       userData.update(newUserData)
-      req.flash('success_messages', '帳號重新編輯成功，請重新登入！')
-      // return res.redirect('/')
+      req.flash('success_messages', '帳號密碼重新編輯成功，請重新登入！')
+      return res.redirect('/')
 
-      delete newUserData.password
-      delete newUserData.passwordCheck
-      return res.json({ status: 'success', data: newUserData })
+      // delete newUserData.password
+      // delete newUserData.passwordCheck
+      // return res.json({ status: 'success', data: newUserData })
     } catch (err) {
       next(err)
     }
