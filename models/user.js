@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     name: DataTypes.STRING,
     avatar: DataTypes.STRING,
+    cover: DataTypes.STRING,
     introduction: DataTypes.STRING,
     role: DataTypes.STRING,
   }, {
@@ -36,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'User',
     tableName: 'Users',
     underscored: true,
-    timestamps: true,
+    timestamps: true
   })
   return User
 }
