@@ -1,0 +1,72 @@
+{{!-- {{> restaurant-tabs route='index'}} --}}
+
+<div class="col-2 nav-left">
+{{> nav-left}}
+</div>
+
+
+<div class="col-10 nav-body">
+
+  {{!-- 表頭 --}}
+  <div style="border: 1px solid #E6ECF0;">
+    <h4 class="m-3">使用者列表</h4>
+  </div>
+
+  {{!-- 卡片區 --}}
+  <div class="container" style="border: 1px solid #E6ECF0;">
+    <div class="row mt-3">
+
+    {{#each users}}
+    <div class="col-xxl-3 col-xl-4 col-md-6 mr-2 mb-3">
+      <div class="card m-2" style="max-width: 249px; background-color: #F6F7F8; border-radius: 10px; border: 0px">
+        <div style="position: relative;">
+
+          {{#if this.cover}}
+          <img src="{{this.cover}}" class="card-img-top" style="height: 140px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+          {{else}}
+          <img src="/images/cover-example.jpeg" class="card-img-top" style="height: 140px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+          {{/if}}
+
+          <div style="position: absolute; top: 47%; left: 30%">
+            {{#if this.avatar}}
+            <img src="{{this.avatar}}" class="card-img-top" style="height: 140px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+            {{else}}
+            <img src="/images/avatar-example.jpeg" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 4px solid #FFFFFF;">
+            {{/if}}
+          </div>
+        </div>
+        
+        {{!-- 文字部分：user name/ account/ followship...etc --}}
+        <div class="mt-4 card-body d-flex flex-column align-items-center">
+          <span style="font-size: 16px; color: #171725">{{this.name}}</span>
+          <span class="text-muted mb-3" style="font-size: 14px">@{{this.account}}</span>
+
+          <div class="d-flex justify-content-around">
+            <div class="mx-2">
+              <i class="fas fa-feather-alt" style="font-size: 18px; color: #696974"></i>
+              <span style="font-size: 16px; color: #171725">{{this.numberOfTweets}}</span>
+            </div>
+            <div class="mx-2">
+              <i class="far fa-heart" style="font-size: 18px; color: #696974"></i>
+              <span style="font-size: 16px; color: #171725">{{this.numberOfBeLike}}</span>
+            </div>
+          </div>
+          <div class="d-flex justify-content-around mb-2">
+              <div class="mx-1">
+                <span style="font-size: 14px; color: #171725">{{this.numberOfFollowings}} 個<span style="color: #6C757D">跟隨中</span>
+                </span>
+              </div>
+              <div class="mx-1">
+                <span style="font-size: 14px; color: #171725">{{this.numberOfFollowers}} 位<span style="color: #6C757D">跟隨者</span></span>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+
+    </div>
+  </div>
+
+</div>
+
