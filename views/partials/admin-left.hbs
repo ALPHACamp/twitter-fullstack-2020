@@ -3,14 +3,16 @@
     <a href="/admin/tweets">
       <img class="logo mb-2" src="../images/icons/alphitter-logo.png" alt="alphitter-logo">
     </a>
-    <div class="m-2 p-2 bd-highlight">
+    <div class="m-2 p-2 bd-highlight ">
       <a href="/admin/tweets">
-        <h5><img src="../images/icons/house-w.png" alt="tweets-list">推文清單</h5>
+        <h5 {{#ifCond route 'tweets' }}style="color: #FF6600;" {{/ifCond}}><img src="../images/icons/house-w.png"
+            alt="tweets-list">推文清單</h5>
       </a>
     </div>
     <div class="m-2 p-2 bd-highlight">
       <a href="/admin/users">
-        <h5><img src="../images/icons/person-w.png" alt="user-list">使用者列表</h5>
+        <h5 {{#ifCond route 'users' }}style="color: #FF6600;" {{/ifCond}}><img src="../images/icons/person-w.png"
+            alt="user-list">使用者列表</h5>
       </a>
     </div>
 

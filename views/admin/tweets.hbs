@@ -1,6 +1,6 @@
 <div class="admin-container">
   <div class="row justify-content-md-center">
-    {{> admin-left}}
+    {{> admin-left route='tweets'}}
     <div class="main col-9">
       <div class="home-page font-lg-dark">
         <a href="/admin/tweets">推文清單</a>
@@ -13,7 +13,7 @@
         </div>
         <a class="tweet-card-name">
           <span class="font-name">{{this.User.name}}</span>
-          <span class="font-account">@{{this.User.account}}ㆍ{{this.createdAt}}</span>
+          <span class="font-account">@{{this.User.account}}ㆍ{{relativeTimeFromNow this.createdAt}}</span>
         </a>
         <div class="text-box">
           <span>{{this.description}}</span>
