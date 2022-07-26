@@ -17,10 +17,14 @@ router.use('/users', users) // 未添加認證
 router.use('/tweets', authenticatedUser, tweets)
 router.use('/api', api) // 未添加認證
 
-router.post('/admin/signin',
-  passport.authenticate('admin-local',
-    { failureRedirect: '/admin/signin', failureFlash: true }),
-  adminController.signIn)
+router.post(
+  '/admin/signin',
+  passport.authenticate('admin-local', {
+    failureRedirect: '/admin/signin',
+    failureFlash: true
+  }),
+  adminController.signIn
+)
 router.get('/admin/signin', adminController.signInPage)
 router.get('/admin/logout', adminController.logout)
 
@@ -28,14 +32,16 @@ router.post('/signup', userController.signUp)
 router.get('/signup', userController.signUpPage)
 router.post(
   '/signin',
-  passport.authenticate('user-local',
-    { failureRedirect: '/signin', failureFlash: true }),
+  passport.authenticate('user-local', {
+    failureRedirect: '/signin',
+    failureFlash: true
+  }),
   userController.signIn
 )
 router.get('/signin', userController.signInPage)
 router.get('/logout', userController.logout)
-router.post('/followships', userController.postFollow) // 未添加認證
-router.delete('/followships', userController.postUnfollow) // 未添加認證
+router.post('/followships', authenticatedUser, userController.postFollow)
+router.delete('/followships', authenticatedUser, userController.postUnfollow)
 
 router.get('/', (req, res) => {
   res.redirect('/tweets')

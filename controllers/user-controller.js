@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt-nodejs')
-const { raw } = require('body-parser')
+const { getUser } = require('../helpers/auth-helpers')
 const jwt = require('jsonwebtoken')
 
 const { User, Tweet, Like, Followship } = require('../models')
@@ -82,7 +82,9 @@ const userController = {
         ],
         order: [['Followings', 'created_at', 'DESC']]
       })
-      user.Followings[0] ? res.json({ status: 'success', data: user.Followings }) : res.json({ status: 'success', data: null })
+      user.Followings[0]
+        ? res.json({ status: 'success', data: user.Followings })
+        : res.json({ status: 'success', data: null })
     } catch (err) {
       next(err)
     }
@@ -97,7 +99,9 @@ const userController = {
         ],
         order: [['Followers', 'created_at', 'DESC']]
       })
-      user.Followers[0] ? res.json({ status: 'success', data: user.Followers }) : res.json({ status: 'success', data: null })
+      user.Followers[0]
+        ? res.json({ status: 'success', data: user.Followers })
+        : res.json({ status: 'success', data: null })
     } catch (err) {
       next(err)
     }
@@ -120,11 +124,11 @@ const userController = {
     try {
       const userId = Number(req.params.id)
       const user = await User.findByPk(userId, {
-        include: [
-          { model: Like, include: Tweet }
-        ]
+        include: [{ model: Like, include: Tweet }]
       })
-      user.Likes[0] ? res.json({ status: 'success', data: user.Likes }) : res.json({ status: 'success', data: null })
+      user.Likes[0]
+        ? res.json({ status: 'success', data: user.Likes })
+        : res.json({ status: 'success', data: null })
     } catch (err) {
       next(err)
     }
@@ -184,10 +188,47 @@ const userController = {
     }
   },
   postFollow: async (req, res, next) => {
-    res.json({ status: 'success' })
+    try {
+      const UserId = getUser(req).id
+      const followingId = Number(req.body.id)
+      if (UserId === followingId) {
+        throw new Error("You can't follow yourself")
+      }
+      const user = await User.findByPk(followingId)
+      if (!user) throw new Error("User didn't exist")
+      if (user.role === 'admin') {
+        throw new Error("You can't follow admin")
+      }
+      const isFollowed = await Followship.findOne({
+        where: { followerId: UserId, followingId }
+      })
+      if (isFollowed) {
+        throw new Error('You are already following this user')
+      }
+      const newFollowShip = await Followship.create({
+        followerId: UserId,
+        followingId
+      })
+      res.json({ status: 'success', newFollowShip })
+    } catch (err) {
+      next(err)
+    }
   },
   postUnfollow: async (req, res, next) => {
-    res.json({ status: 'success' })
+    try {
+      const UserId = getUser(req).id
+      const followingId = Number(req.body.id)
+      const user = await User.findByPk(followingId)
+      if (!user) throw new Error("User didn't exist")
+      const followship = await Followship.findOne({
+        where: { followerId: UserId, followingId }
+      })
+      if (!followship) throw new Error("You haven't follow this user")
+      const destroyedFollowship = await followship.destroy()
+      res.json({ status: 'success', destroyedFollowship })
+    } catch (err) {
+      next(err)
+    }
   }
 }
 
