@@ -407,7 +407,7 @@
  }
 
  .card-tweet-like {
-   position: relative;
+   position: absolute;
  }
 
  .card-tweet-like img {
