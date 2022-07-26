@@ -42,4 +42,56 @@ section#Huei-region {
     left: 100px;
     bottom: 30px;
   }
+
+  .nav-user {
+    position: absolute;
+    width: 273px;
+    height: 731px;
+    left: 997px;
+    top: 16px;
+    background: #FAFAFB;
+    border-radius: 16px;
+  }
+
+  .nav-user-title {
+    position: absolute;
+    left: 24px;
+    top: 24px;
+  }
+
+  .circle {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+  }
+
+  .user-list {
+    position: relative;
+    top: 50px;
+  }
+
+  .user-name-position {
+    position: absolute;
+    left: 60px;
+  }
+
+  .user-follow-bottom {
+    border-radius: 50px;
+    position: absolute;
+    right: 6px;
+  }
+
+  .list-separate {
+    position: relative;
+    top: 60px;
+    height: 1px;
+    margin: 9px 0;
+    background-color: $dark40;
+  }
+
+  .btn-white {
+    color: $mainColor;
+    background-color: $dark0;
+    border-color: $mainColor;
+  }
 }
