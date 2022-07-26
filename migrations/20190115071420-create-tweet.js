@@ -8,9 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      User_id: {
-        type: Sequelize.INTEGER
-      },
       description: {
         type: Sequelize.TEXT
       },
@@ -21,6 +18,9 @@ module.exports = {
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      user_id: {
+        type: Sequelize.INTEGER
       }
     })
   },
