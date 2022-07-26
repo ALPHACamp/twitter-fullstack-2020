@@ -1,4 +1,4 @@
-const { User, Tweet, Like } = require('../models')
+const { User, Tweet, Reply, Like } = require('../models')
 
 const adminController = {
   SignInPage: (req, res) => {
@@ -32,11 +32,21 @@ const adminController = {
       .catch(err => next(err))
   },
 
-  deleteTweet: (req, res, next) => { // FIXME: 要去 Reply 和 Like 把相關資料刪除
+  deleteTweet: (req, res, next) => {
     Tweet.findByPk(req.params.tweetId)
       .then(tweet => {
         if (!tweet) throw new Error("Tweet didn't exist!")
         return tweet.destroy()
+      })
+      .then(() => { // 刪除 Tweet 後，也去 Reply 和 Like 把相關資料刪除
+        Promise.all([
+          Reply.destroy({
+            where: { TweetId: req.params.tweetId }
+          }),
+          Like.destroy({
+            where: { TweetId: req.params.tweetId }
+          })
+        ])
       })
       .then(() => res.redirect('/admin/tweets'))
       .catch(err => next(err))
