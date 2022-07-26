@@ -6,21 +6,21 @@
         <a href="/admin/tweets">推文清單</a>
       </div>
       <div class="hr-line"></div>
-      {{!-- {{#each}} --}}
+      {{#each tweets}}
       <form class="tweet-card" action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
         <div>
-          <img src="../images/icons/alphitter-logo-b.png" alt="avatar">
+          <img src="{{this.User.avatar}}" alt="avatar">
         </div>
-        <a class="tweet-card-name" href="/users/{{this.is}}/tweets">
-          <span class="font-name">Apple</span>
-          <span class="font-account">@appleㆍ3小時</span>
+        <a class="tweet-card-name">
+          <span class="font-name">{{this.User.name}}</span>
+          <span class="font-account">@{{this.User.account}}ㆍ{{this.createdAt}}</span>
         </a>
         <div class="text-box">
-          <span>sed risus pretium quam vulputate dignissim suspendisse in est ante....</span>
+          <span>{{this.description}}</span>
         </div>
         <button type="submit" class="btn-close" aria-label="Close"></button>
       </form>
-      {{!-- {{/each}} --}}
+      {{/each}}
     </div>
   </div>
 </div>
