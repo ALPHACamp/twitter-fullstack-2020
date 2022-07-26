@@ -60,7 +60,7 @@ const tweetController = {
       const followUserId = followUser.map(user => user.followerId)
       const tweets = await Tweet.findAll({
         include: { model: User, as: User },
-        where: { UserId: followUserId },
+        where: { UserId: [...followUserId, userId] },
         order: [['createdAt', 'DESC']],
         limit: 20,
         raw: true,
