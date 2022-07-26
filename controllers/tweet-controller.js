@@ -1,8 +1,8 @@
 const assert = require('assert')
 const helpers = require("../_helpers")
-const { User, Tweet, Like } = require('../models')
+const { User, Tweet, Like, Reply } = require('../models')
+const { imgurFileHandler } = require('../helpers/file-helpers')
 
-// getTweets (進到個人首頁渲染出所有資料)/ 
 const tweetController = {
   getTweets: async (req, res, next) => {
     try {
