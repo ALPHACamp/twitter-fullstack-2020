@@ -6,6 +6,9 @@ const adminController = require('../../controllers/admin-controller')
 router.get('/users', adminController.getUsers)
 router.get('/tweets', adminController.getTweets)
 router.delete('/tweets/:id', adminController.deleteTweet)
-router.post('/signin', adminController.adminSignIn)
+
+router.get('/', (req, res) => {
+  res.redirect('/admin/tweets')
+})
 
 module.exports = router
