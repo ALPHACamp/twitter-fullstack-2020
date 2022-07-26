@@ -18,7 +18,7 @@
         <div class="text-box">
           <span>{{this.description}}</span>
         </div>
-        <button type="submit" class="btn-close" aria-label="Close"></button>
+        <button type="submit" class="btn-close" aria-label="Close" onclick="return confirm(`確定要刪除此則推嗎？`)"></button>
       </form>
       {{/each}}
     </div>
