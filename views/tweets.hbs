@@ -41,7 +41,19 @@
             <div class="d-flex">
               <img src="/images/comment.png" style="width:13.17px;height:13.17px;margin-right:8px" alt="comment">
               <p class="p">{{this.repliedCount}}</p>
-              <img src="/images/like.png" style="width:13.17px;height:13.17px;margin-right:8px" alt="like">
+              {{#if this.isLiked}}
+              <form action="/tweets/{{this.id}}/unlike" method="POST">
+                <button style="position:relative;bottom:5px;">
+                  <img src="/images/redLove.png" style="width:13.17px;height:13.17px;margin-right:8px" alt="like">
+                </button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{this.id}}/like" method="POST">
+                <button style="position:relative;bottom:5px;">
+                  <img src="/images/like.png" style="width:13.17px;height:13.17px;margin-right:8px" alt="unlike">
+                </button>
+              </form>
+              {{/if}}
               <p class="p">{{this.likedCount}}</p>
             </div>
           </div>
