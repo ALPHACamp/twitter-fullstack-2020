@@ -9,6 +9,7 @@ const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const session = require('express-session')
 const passport = require('passport')
 const flash = require('connect-flash')
+const bodyParser = require('body-parser')
 const routes = require('./routes')
 const app = express()
 const port = 3000
@@ -32,8 +33,6 @@ app.use((req, res, next) => {
 })
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-
-// app.get('/', (req, res) => res.send('Hello World!'))
 app.use(routes)
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
