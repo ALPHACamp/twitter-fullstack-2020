@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const { Tweet, User, Like, Followship } = require('../models')
-const { getUser } = require('../_helpers')
+const helpers = require('../_helpers')
 
 const tweetController = {
   getTweetReplies: async (req, res, next) => {
@@ -11,7 +11,7 @@ const tweetController = {
   },
   likeTweet: async (req, res, next) => {
     try {
-      const UserId = req.user.id
+      const UserId = helpers.getUser(req).id
       const TweetId = req.params.id
       const existUser = User.findByPk(UserId)
       if (!existUser) throw new Error("This account didn't exist!")
@@ -25,7 +25,7 @@ const tweetController = {
   },
   dislikeTweet: async (req, res, next) => {
     try {
-      const UserId = req.user.id
+      const UserId = helpers.getUser(req).id
       const TweetId = req.params.id
       const LikeTweet = await Like.findOne({ where: { UserId, TweetId } })
       if (!LikeTweet) throw new Error("You haven't liked this tweet!")
@@ -40,23 +40,29 @@ const tweetController = {
   },
   postTweet: async (req, res, next) => {
     try {
-      const UserId = getUser(req).id
+      const UserId = helpers.getUser(req).id
+      if (!UserId) {
+        return res.redirect(302, '/signin')
+      }
       const description = req.body.description
       if (!description.trim()) throw new Error('推文內容不可為空白')
-      if (description.length > 140) throw new Error('推文不能超過140字')
+      if (description.length > 140) {
+        return res.redirect(302, 'back')
+      }
       await Tweet.create({ description, UserId })
       res.redirect('/tweets')
     } catch (err) {
+      console.log(err)
       next(err)
     }
   },
   getTweets: async (req, res, next) => {
     try {
-      const userId = req.user.id
-      const followingId = req.user.Followings.map(i => i.id)
+      const user = helpers.getUser(req)
+      const followingId = user.Followings.map(i => i.id)
       const tweets = await Tweet.findAll({
         include: { model: User, as: User },
-        where: { UserId: [...followingId, userId] },
+        where: { UserId: [...followingId, user.id] },
         order: [['createdAt', 'DESC']],
         limit: 20,
         raw: true,
