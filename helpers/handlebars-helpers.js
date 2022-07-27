@@ -24,5 +24,9 @@ dayjs.locale('en-my-settings', localeObject)
 dayjs.extend(relativeTime)
 
 module.exports = {
-  relativeTimeFromNow: theTime => dayjs(theTime).fromNow()
+  relativeTimeFromNow: theTime => dayjs(theTime).fromNow(),
+
+  ifCond: function (a, b, options) {
+    return a === b ? options.fn(this) : options.inverse(this)
+  }
 }
