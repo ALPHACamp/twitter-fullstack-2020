@@ -1,0 +1,274 @@
+:root {
+   --base-filter:invert(56%) sepia(52%) saturate(5735%) hue-rotate(359deg) brightness(99%) contrast(108%);
+   --sup1-filter:invert(81%) sepia(12%) saturate(7044%) hue-rotate(323deg) brightness(99%) contrast(105%);
+   --sup2-filter:invert(78%) sepia(32%) saturate(7122%) hue-rotate(181deg) brightness(103%) contrast(102%);
+   --sup3-filter:invert(67%) sepia(88%) saturate(322%) hue-rotate(43deg) brightness(87%) contrast(96%);
+   --sup4-filter:invert(68%) sepia(75%) saturate(4514%) hue-rotate(232deg) brightness(85%) contrast(98%);
+   --sup5-filter:invert(68%) sepia(94%) saturate(370%) hue-rotate(286deg) brightness(102%) contrast(102%);
+   --white-filter:invert(100%) sepia(1%) saturate(2%) hue-rotate(307deg) brightness(107%) contrast(100%);
+   --error-filter:invert(59%) sepia(34%) saturate(4720%) hue-rotate(321deg) brightness(93%) contrast(111%);
+   --base-display:inline-block;
+   --base-size:1rem;
+}
+i{
+    background-size: cover;
+    display: var(--base-display);
+}
+i.logo{
+    background-image: url('./svgs/logo.svg');
+    width: calc(var(--base-size) * 3.125);
+    height: calc(var(--base-size) * 3.125);
+    transition: filter 0.2s;
+}
+i.home{
+    background-image: url('./svgs/home.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+    filter: var(--base-filter);
+    transition: filter 0.2s;
+}
+i.home:hover{
+    filter: var(--sup1-filter);
+}
+i.outline-home{
+    background: url('./svgs/outline-home.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+    transition: background 0.2s, filter 0.2s;
+}
+i.outline-home:hover{
+    background: url('./svgs/home.svg');
+    filter: var(--base-filter);
+}
+i.like{
+    background-image: url('./svgs/like.svg');
+    width: calc(var(--base-size) * 1.875);
+    height: calc(var(--base-size) * 1.875);
+    filter:var(--sup5-filter);
+    transition: width 0.2s,height 0.2s;
+}
+i.like:hover{
+    width: calc(var(--base-size) * 2);
+    height: calc(var(--base-size) * 2);
+}
+i.outline-like{
+    background-image: url('./svgs/outline-like.svg');
+    width: calc(var(--base-size) * 1.875);
+    height: calc(var(--base-size) * 1.875);
+    transition: filter 0.2s;
+}
+i.outline-like:hover{
+    filter: var(--sup5-filter);
+}
+i.logout{
+    background-image: url('./svgs/logout.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+    transition: filter 0.2s;
+}
+i.logout:hover{
+    filter: var(--base-filter);
+}
+i.msg{
+    background-image: url('./svgs/msg.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+    transition: filter 0.2s;
+}
+i.msg:hover{
+    filter: var(--sup2-filter);
+}
+i.outline-msg{
+    background-image: url('./svgs/outline-msg.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+    transition: filter 0.2s;
+}
+i.outline-msg:hover{
+    filter: var(--sup2-filter);
+}
+i.noti{
+    background-image: url('./svgs/noti.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+    transition: filter 0.2s;
+}
+i.noti:hover{
+    filter: var(--sup1-filter);
+}
+i.outline-noti{
+    background-image: url('./svgs/outline-noti.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+    transition: filter 0.2s;
+}
+i.outline-noti:hover{
+    filter: var(--sup1-filter);
+}
+i.noti-danger{
+    background-image: url('./svgs/noti-danger.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+}
+i.noti-info{
+    background-image: url('./svgs/noti-info.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+}
+i.noti-success{
+    background-image: url('./svgs/noti-success.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+}
+i.noti-warning{
+    background-image: url('./svgs/noti-warning.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+}
+i.opt{
+    background-image: url('./svgs/opt.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+    filter: var(--base-filter);
+    transition: filter 0.2s;
+}
+i.opt:hover{
+    filter: var(--sup1-filter);
+}
+i.outline-opt{
+    background: url('./svgs/outline-opt.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+    transition: background 0.2s, filter 0.2s;
+}
+i.outline-opt:hover{
+    background: url('./svgs/opt.svg');
+    filter: var(--base-filter);
+}
+i.post{
+    background-image: url('./svgs/post.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+    filter: var(--base-filter);
+    transition: filter 0.2s;
+}
+i.post:hover{
+    filter: var(--sup1-filter);
+}
+i.user{
+    background-image: url('./svgs/user.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+    filter: var(--base-filter);
+    transition: filter 0.2s;
+}
+i.user:hover{
+    filter: var(--sup1-filter);
+}
+i.outline-user{
+    background-image: url('./svgs/outline-user.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+    transition: background 0.2s,filter 0.2s;
+}
+i.outline-user:hover{
+    background: url('./svgs/user.svg');
+    filter: var(--base-filter);
+}
+i.back{
+    background-image: url('./svgs/outline-back.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+    transition: filter 0.2s;
+}
+i.back:hover{
+    filter: var(--base-filter);
+}
+i.close{
+    background-image: url('./svgs/outline-close.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+    transition: filter 0.2s;
+}
+i.close:hover{
+    filter: var(--error-filter);
+}
+i.photo{
+    background-image: url('./svgs/outline-photo.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+    transition: filter 0.2s;
+}
+i.photo:hover{
+    filter: var(--white-filter);
+}
+i.reply{
+    background-image: url('./svgs/outline-reply.svg');
+    width: calc(var(--base-size) * 1.875);
+    height: calc(var(--base-size) * 1.875);
+    transition: filter 0.2s;
+}
+i.reply:hover{
+    filter: var(--base-filter);
+}
+i.default-index{
+    background-image: url('./svgs/default-index.svg');
+    width: calc(var(--base-size) * 11.125);
+    height: calc(var(--base-size) * 3.625);
+    transition: filter 0.2s;
+}
+i.default-index:hover{
+    filter: var(--base-filter);
+}
+i.active-index{
+    background-image: url('./svgs/active-index.svg');
+    width: calc(var(--base-size) * 11.125);
+    height: calc(var(--base-size) * 3.625);
+}
+i.default-logout{
+    background-image: url('./svgs/default-logout.svg');
+    width: calc(var(--base-size) * 11.125);
+    height: calc(var(--base-size) * 3.625);
+    transition: filter 0.2s;
+}
+i.default-logout:hover{
+    filter: var(--base-filter);
+}
+i.default-setting{
+    background-image: url('./svgs/default-setting.svg');
+    width: calc(var(--base-size) * 11.125);
+    height: calc(var(--base-size) * 3.625);
+    transition: filter 0.2s;
+}
+i.default-setting:hover{
+    filter: var(--base-filter);
+}
+i.active-setting{
+    background-image: url('./svgs/active-setting.svg');
+    width: calc(var(--base-size) * 11.125);
+    height: calc(var(--base-size) * 3.625);
+}
+i.default-user{
+    background-image: url('./svgs/default-user.svg');
+    width: calc(var(--base-size) * 11.125);
+    height: calc(var(--base-size) * 3.625);
+    transition: filter 0.2s;
+}
+i.default-user:hover{
+    filter: var(--base-filter);
+}
+i.active-user{
+    background-image: url('./svgs/active-user.svg');
+    width: calc(var(--base-size) * 11.125);
+    height: calc(var(--base-size) * 3.625);
+}
+i.chat{
+    background-image: url('./svgs/chat.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+}
+i.outline-chat{
+    background-image: url('./svgs/outline-chat.svg');
+    width: calc(var(--base-size) * 1.5);
+    height: calc(var(--base-size) * 1.5);
+}
