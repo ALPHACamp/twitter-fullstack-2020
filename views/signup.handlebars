@@ -1,13 +1,13 @@
-{{> alphitter}}
-<div class="d-flex justify-content-center mt-3 mb-5">
-  <form class="form-signup" action="/signup" method="POST" style="width: 500px;">
-    <div class="text-center mb-4">
-      <p class="fw-bold">建立你的帳號</p>
-    </div>
+<div class="d-flex flex-column justify-content-between align-items-center">
+  {{> alphitter}}
+  <h4 class="text-center fw-bold my-4">建立你的帳號</h4>
+  
+  <form class="form-signup my-3 d-flex flex-column" action="/signup" method="POST" style="width: 356px">
     {{> user-account-form}}
-    <button class="submit-btn" style="width: 500px;" type="submit">註冊</button>
-    <div class="text-center mt-2">
+    <button class="submit-btn" type="submit">註冊</button>
+    <div class="d-flex flex-column justify-content-center align-items-center">
       <a href="/signin">取消</a>
     </div>
   </form>
+  
 </div>
