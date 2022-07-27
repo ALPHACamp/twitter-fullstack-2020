@@ -179,7 +179,7 @@ h5, .h5 {
 }
 
 h6, .h6 {
-  font-size: 1rem;
+  font-size: 1.25rem;
 }
 
 p {
@@ -5719,7 +5719,7 @@ textarea.form-control-lg {
   --bs-modal-border-color: var(--bs-border-color-translucent);
   --bs-modal-border-width: 1px;
   --bs-modal-border-radius: 0.5rem;
-  --bs-modal-box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --bs-modal-box-shadow: 0 0.25rem 0.25rem rgba(51, 51, 51, 0.04), 0 0.25rem 1rem rgba(51, 51, 51, 0.08);
   --bs-modal-inner-border-radius: calc(0.5rem - 1px);
   --bs-modal-header-padding-x: 1rem;
   --bs-modal-header-padding-y: 1rem;
@@ -6555,7 +6555,7 @@ textarea.form-control-lg {
   --bs-offcanvas-bg: #FFFFFF;
   --bs-offcanvas-border-width: 1px;
   --bs-offcanvas-border-color: var(--bs-border-color-translucent);
-  --bs-offcanvas-box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --bs-offcanvas-box-shadow: 0 0.25rem 0.25rem rgba(51, 51, 51, 0.04), 0 0.25rem 1rem rgba(51, 51, 51, 0.08);
 }
 
 @media (max-width: 575.98px) {
@@ -7646,7 +7646,7 @@ textarea.form-control-lg {
 }
 
 .shadow-sm {
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  box-shadow: 0 0.25rem 0.25rem rgba(51, 51, 51, 0.04), 0 0.25rem 1rem rgba(51, 51, 51, 0.08) !important;
 }
 
 .shadow-lg {
@@ -8573,7 +8573,7 @@ textarea.form-control-lg {
 }
 
 .fs-6 {
-  font-size: 1rem !important;
+  font-size: 1.25rem !important;
 }
 
 .fst-italic {
@@ -11537,4 +11537,8 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+}
+.alert {
+  width: 394px;
+  height: 96px;
 }/*# sourceMappingURL=custom.css.map */
