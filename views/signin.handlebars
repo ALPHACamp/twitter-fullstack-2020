@@ -1,15 +1,14 @@
-<div class="d-flex flex-column justify-content-between">
+<div class="d-flex flex-column justify-content-between align-items-center">
   {{>alphitter}}
   <h4 class="text-center fw-bold my-4">登入 Alphitter</h4>
 
-  <form action="/signin" method="post" class="d-flex flex-column">
+  <form action="/signin" method="post" class="d-flex flex-column" style="width: 356px">
     {{>signin-form-control}}
+    <div class="d-flex flex-row justify-content-end">
+      <a href="/signup" class="link-primary">註冊</a>
+      <p class="mx-1">．</p>
+      <a href="/admin/signin" class="link-primary">後臺登入</a>
+    </div>
   </form>
-  
-  <div class="d-flex flex-row justify-content-end">
-    <a href="/signup" class="link-primary">註冊</a>
-    <p class="mx-3">．</p>
-    <a href="/admin/signin" class="link-primary">後臺登入</a>
-  </div>
   
 </div>
