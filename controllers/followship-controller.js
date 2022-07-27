@@ -4,12 +4,10 @@ const helpers = require('../_helpers')
 const followshipController = {
   addFollowing: (req, res, next) => {
     const followerId = (helpers.getUser(req) && helpers.getUser(req).id) || []
-    const followingId = req.params.userId
-    if (followerId === followingId) {
-      res.redirect(200, 'back')
-    }
+    const followingId = Number(req.params.userId)
+    if (followerId === followingId) throw new Error('Not allow to follow yourself!')
     return Promise.all([
-      User.findByPk(followingId),
+      User.findByPk(followerId),
       Followship.findOne({
         where: {
           followerId,
@@ -25,7 +23,7 @@ const followshipController = {
           followingId
         })
       })
-      .then(addedFollowship => res.redirect('back'))
+      .then(createdFollowship => res.redirect('back'))
       .catch(next)
   },
   removeFollowing: (req, res, next) => {

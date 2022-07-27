@@ -4,7 +4,10 @@ const { User, Tweet } = require('models')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const users = await User.findAll({ attribute: ['id'] })
+    const users = await User.findAll({
+      attribute: ['id'],
+      where: { role: 'user' }
+    })
     const tweets = await Tweet.findAll({ attribute: ['id'] })
     const userRandomIndex = Math.floor(Math.random() * users.length)
     const tweetRandomIndex = Math.floor(Math.random() * tweets.length)
@@ -12,10 +15,10 @@ module.exports = {
     const tweetId = tweets[tweetRandomIndex].id
     await queryInterface.bulkInsert('Reply', Array.from({ length: 300 }), () => ({
       comment: faker.lorem.sentence(),
-      user_id: userId,
-      tweet_id: tweetId,
-      created_at: new Date(),
-      updated_at: new Date()
+      userId,
+      tweetId,
+      createdAt: new Date(),
+      updatedAt: new Date()
     }))
   },
 
