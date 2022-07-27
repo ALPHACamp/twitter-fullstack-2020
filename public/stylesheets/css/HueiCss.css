@@ -19,6 +19,7 @@ section#Huei-region .middle-region-home {
 }
 section#Huei-region .left-region-home {
   display: flex;
+  width: 173px;
   margin-left: 130px;
 }
 section#Huei-region .right-region-home {
