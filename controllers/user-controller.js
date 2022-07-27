@@ -13,11 +13,11 @@ const userController = {
   },
   signUp: async (req, res, next) => {
     try {
-      let { account, name, email, password, passwordCheck } = req.body
-      if (!account || !email || !password) {
+      let { account, name, email, password, checkPassword } = req.body
+      if (!account || !name || !email || !password) {
         throw new Error('Please complete all required fields')
       }
-      if (password !== passwordCheck) throw new Error('Passwords do not match!')
+      if (password !== checkPassword) throw new Error('Passwords do not match!')
       const existAccount = await User.findOne({ where: { account } })
       if (existAccount) throw new Error('Account already exists!')
       const existEmail = await User.findOne({ where: { email } })
@@ -32,9 +32,9 @@ const userController = {
       await User.create(userData)
       req.flash('success_messages', '您已成功註冊帳號！')
       // return res.render('signin')
-
-      delete userData.password
-      return res.json(userData)
+      res.redirect(302, '/signin')
+      // delete userData.password
+      // return res.json(userData)
     } catch (err) {
       next(err)
     }
@@ -158,13 +158,13 @@ const userController = {
       if (currentUserId !== userId) {
         throw new Error("Can not edit other user's account!")
       }
-      let { account, name, email, password, passwordCheck } = req.body
+      let { account, name, email, password, checkPassword } = req.body
       if (process.env.NODE_ENV !== 'test') {
         if (!account || !email || !password || !name) {
           throw new Error('Please complete all required fields')
         }
       }
-      if (password !== passwordCheck) throw new Error('Passwords do not match!')
+      if (password !== checkPassword) throw new Error('Passwords do not match!')
       const existAccount = await User.findOne({
         where: { account: account || null }
       })

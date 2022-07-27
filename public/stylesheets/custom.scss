@@ -7,7 +7,3 @@ $btn-brand-bg:#FF6600 !default;
     width: 394px;
     height: 96px;
 }
-
-.btn-brand{
-    @include button-variant($btn-brand-color,$btn-brand-bg)
-}
