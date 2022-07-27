@@ -13,6 +13,18 @@ const userConroller = {
     }
     req.flash('success_messages', '成功登入')
     return res.redirect('/tweets')
+  },
+  getSetting: (req, res, next) => {
+    const id = req.user.id
+
+    User.findByPk(id)
+      .then(user => {
+        if (!user) throw new Error('使用者不存在!')
+        user = user.toJSON()
+        console.log(user)
+        res.render('setting', { user })
+      })
+      .catch(err => next(err))
   }
 }
 

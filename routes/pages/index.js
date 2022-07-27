@@ -12,6 +12,7 @@ const { authenticated, authenticatedAdmin } = require('../../middleware/auth')
 router.use('/admin', admin)
 router.get('/signin', userController.getSignin)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.postSignin)
+router.get('/setting/:id', userController.getSetting)
 router.get('/', (req, res) => res.send('Hello World!'))
 
 module.exports = router
