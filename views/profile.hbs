@@ -1,6 +1,10 @@
 <div class="container" id="profile-region" style="height: 1200px;">
   <div id="profile-left">
-    {{> home-tabs }}
+    {{#ifCond targetUser.id user.id}}
+      {{> home-tabs route='tweet' }}
+    {{else}}
+      {{> home-tabs }}
+    {{/ifCond}}
   </div>
 
   <div id="profile-middle">
@@ -19,13 +23,24 @@
       <img src="{{targetUser.cover}}.jpg" alt="cover" style="width: 100%; height: 200px;">
       <div class="avatar-button">
         <img class="avatar" src="{{targetUser.avatar}}" alt="avatar">
-        
+
         {{#ifCond targetUser.id user.id}}
         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#edit-profile-modal">
           編輯個人資料
         </button>
         {{else}}
-        
+          {{#if user.isFollowed}}
+          <form action="/followships/{{targetUser.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn follow-bottom">正在跟隨</span>
+            </button>
+          </form>
+          {{else}}
+          <form action="/followships" method="POST">
+            <button type="submit" class="btn follow-bottom removefollow" name="id" value={{targetUser.id}}>
+              跟隨
+            </button>
+          </form>
+          {{/if}}
         {{/ifCond}}
         
         <!-- Modal -->
@@ -58,16 +73,43 @@
       <div class="follow">
         <div style="margin-right: 20px;">
           <span class="first">{{targetUser.Followings.length}} 個</span>
-          <span class="second">跟隨中</span>
+          <span class="second"><a href="/users/{{user.id}}/followings">跟隨中</a></span>
         </div>
         <div>
           <span class="first">{{targetUser.Followers.length}} 位</span>
-          <span class="second">跟隨者</span>
+          <span class="second"><a href="/users/{{user.id}}/followers">跟隨者</a></span>
         </div>
       </div>
     </div>
     {{> profile-tabs route='tweets'}}
-    
+    {{#each tweets}}
+    <a href="">
+      <div class="tweet">
+        <div>
+          <img class="avatar" src="{{../targetUser.avatar}}" alt="avatar">
+        </div>
+        <div class="content">
+          <div class="d-flex align-items-center" style="height: 26px;">
+            <span class="name">{{../targetUser.name}}</span>
+            <span class="account">@{{../targetUser.account}}•3小時</span>
+          </div>
+          <div class="description">
+            {{this.description}}
+          </div>
+          <div class="footer">
+            <img src="/images/comment.png" alt="comment">
+            <span style="margin-right: 41.3px;">{{this.repliedCount}}</span>
+            {{#if isLiked}}
+              <img src="/images/redLove.png" alt="like">
+            {{else}}
+              <img src="/images/like.png" alt="like">
+            {{/if}}
+            <span>{{this.likedCount}}</span>
+          </div>
+        </div>
+      </div>
+    </a>
+    {{/each}}
   </div>
   
   <div id="profile-right">

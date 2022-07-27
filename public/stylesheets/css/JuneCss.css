@@ -202,7 +202,11 @@
 
 #profile-region {
   display: grid;
-  grid-template-columns: 20% 52% 28%;
+  grid-template-columns: 20% 54% 26%;
+  padding: 0 55px;
+}
+#profile-region #profile-left {
+  width: 178px;
 }
 #profile-region #profile-middle {
   max-width: 641px;
@@ -268,6 +272,15 @@
   border-color: #FF6600;
   border-radius: 50px;
 }
+#profile-region #profile-middle .user-info .avatar-button .follow-bottom {
+  width: 96px;
+  background-color: #FF6600;
+  color: #FFFFFF;
+}
+#profile-region #profile-middle .user-info .avatar-button .follow-bottom.removefollow {
+  background-color: #FFFFFF;
+  color: #FF6600;
+}
 #profile-region #profile-middle .user-info .name {
   display: flex;
   flex-direction: column;
@@ -313,7 +326,7 @@
 #profile-region #profile-middle .user-info .follow div .first {
   color: #171725;
 }
-#profile-region #profile-middle .user-info .follow div .second {
+#profile-region #profile-middle .user-info .follow div .second a {
   color: #6C757D;
 }
 #profile-region #profile-middle .user-info #edit-profile-modal {
@@ -346,9 +359,56 @@
   background-color: #FF6600;
   color: #FFFFFF;
 }
+#profile-region #profile-middle .tweet {
+  width: 639px;
+  border: 1px #E6ECF0 solid;
+  border-top: none;
+  padding: 16px 0 16px 24px;
+  display: flex;
+}
+#profile-region #profile-middle .tweet .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+#profile-region #profile-middle .tweet .name {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+  margin-right: 8px;
+}
+#profile-region #profile-middle .tweet .account {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #6C757D;
+}
+#profile-region #profile-middle .tweet .description {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+}
+#profile-region #profile-middle .tweet .footer {
+  display: flex;
+  align-items: center;
+  color: #6C757D;
+  margin-top: 5px;
+}
+#profile-region #profile-middle .tweet .footer img {
+  width: 13.17px;
+  height: 13.17px;
+  margin-right: 9.4px;
+}
+#profile-region #profile-middle .tweet .footer span {
+  font-weight: 600;
+  font-size: 14px;
+}
 #profile-region #profile-right {
   width: 273px;
-  padding-left: 25px;
+  padding-left: 28px;
 }
 #profile-region .profile-tabs li a {
   width: 100%;
@@ -371,7 +431,7 @@
 
 @media screen and (min-width: 991px) and (max-width: 1200px) {
   #profile-region {
-    grid-template-columns: 24% 50% 26%;
+    grid-template-columns: 23% 51% 26%;
   }
   #profile-region #profile-right {
     padding-left: 15px;

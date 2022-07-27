@@ -1,4 +1,4 @@
-const { User, Tweet, Reply, Followship } = require('../models')
+const { User, Tweet, Reply, Followship, Like } = require('../models')
 const { getUser } = require('../_helpers')
 const bcrypt = require('bcryptjs')
 const sequelize = require('sequelize')
@@ -54,8 +54,9 @@ const userController = {
       }),
       Tweet.findAll({ 
         where: { UserId: id },
+        include: [Like, Reply],
         order: [['createdAt', 'desc']],
-        raw: true
+        nest: true
       }),
       Followship.findAll({
         include: User,
@@ -67,17 +68,24 @@ const userController = {
       })
     ])
       .then(([targetUser, tweets, followship]) => {
-        if (!targetUser) throw new Error("User didn't exist")
-        console.log(targetUser)
+        if (!targetUser) throw new Error("User didn't exist") 
         const user = getUser(req)
+        user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
         const users = followship
           .map(data => ({
             ...data.User.toJSON(),
-            isFollowed: user.Followings.some(u => u.id === data.followerId)
+            isFollowed: user.Followings.some(u => u.id === data.followingId)
           }))
           .slice(0, 10)
+          const tweetsData = tweets
+            .map(t => ({
+              ...t.toJSON(),
+              likedCount: t.Likes.length,
+              repliedCount: t.Replies.length,
+              isLiked: t.Likes.some(like => like.UserId === user.id)
+            }))
           res.locals.tweetsLength = tweets.length
-        res.render('profile', { targetUser: targetUser.toJSON(), tweets, user, users })
+        res.render('profile', { targetUser: targetUser.toJSON(), tweets: tweetsData, user, users })
       })
       .catch(err => next(err))
   },
