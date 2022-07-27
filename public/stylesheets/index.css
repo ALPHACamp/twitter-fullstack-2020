@@ -1,3 +1,18 @@
+:root {
+  --brand-main: #FF6600;
+  --primary: #0062FF;
+  --secondary: #6C757D;
+  --success: #3DD598;
+  --warning: #FFC542;
+  --error: #FC5A5A;
+  --secondary-orange: #FF974A;
+  --secondary-blue: #50B5FF;
+  --secondary-green: #82C43C;
+  --secondary-purple: #A461D8;
+  --secondary-pink: #FF9AD5;
+  --white: #FFFFFF;
+}
+
 * {
   font-family: 'Noto Sans TC','Montserrat', 'Roboto';
 }
@@ -8,4 +23,13 @@
 
 .font-number {
   font-family: 'Montserrat';
+}
+
+.submit-btn {
+  padding-block: 0.5rem;
+  border: none;
+  border-radius: 50px;
+
+  background-color: var(--brand-main);
+  color: var(--white);
 }
