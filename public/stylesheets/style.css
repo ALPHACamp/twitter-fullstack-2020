@@ -98,3 +98,9 @@ textarea {
   border-bottom: 2px solid #657786;
   border-radius: 0%;
 }
+
+.vertical-line {
+  width: 2px;
+  background: #B5B5BE;
+  border: 0;
+}

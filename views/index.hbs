@@ -2,7 +2,7 @@
   {{> nav-left}}
 </div>
 <div class="col-8 nav-body">
-  <ul class="list-group"  class="me-3">
+  <ul class="list-group me-3" id="tweets-panel">
     <li class="list-group-item d-flex align-items-start" >
       <img src="images/img.png" alt="" style="width: 50px;" class="me-3">
 
@@ -35,14 +35,14 @@
       </div>
     </li>
     <li class="list-group-item d-flex align-items-start" >
-      <img src="images/img.png" alt="" style="width: 50px;" class="me-3">
+      <img src="images/logo.png" alt="" style="width: 50px;" class="me-3">
 
       <div>
-        <p>Apple</p><small>@apple・3 小時</small>
-        <p>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.
+        <p class="mb-1">Apple&nbsp;&nbsp;<small class="text-secondary">@apple・3 小時</small></p>
+        <p class="mb-2">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.
           Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
         <p>
-          <i class="fa-solid fa-comment me-2"></i>
+          <i class="fa-solid fa-comment me-2 pointer" data-bs-toggle="modal" data-bs-target="#post-reply"></i>
           13
           <i class="fa-solid fa-heart ms-4 me-2"></i>
           76
@@ -54,3 +54,58 @@
 <div class="col-2 nav-right">
   {{> nav-right}}
 </div>
+
+<div class="modal fade" id="post-reply" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close p-1 m-1" data-bs-dismiss="modal" aria-label="Close" style="background: rgba(var(--bs-white-rgb),var(--bs-bg-opacity));">
+          <i class="fa-solid fa-xmark icon-size brand-color"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex mb-1" id="madol-tweet">
+          <div class="me-3">
+            <img src="./avatar.png" alt="" style="width: 50px;" id="modal-avatar">
+            <div class="vertical-line mt-2 mx-auto" style="height: 86px;"></div>
+          </div>
+          <div>
+            <div id="modal-content">
+              ...
+            </div>
+            <small class="text-secondary">
+              回覆給&nbsp;&nbsp;<a href="/users/{{this.User.id}}" class="brand-color">@apple</a>
+            </small>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="rounded-circle me-3">
+            <img src="images/img.png" alt="" style="width: 50px;">
+          </div>
+          <div class="flex-fill text-end mt-3">
+            <form href="/tweets" action="POST">
+              <textarea class="border border-0 form-control p-0" id="tweet" name="tweet" maxlength="140" placeholder="有什麼新鮮事？" rows="5" required></textarea>
+              <button type="submit" class="btn btn-brand radius50 mt-3">回覆</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const panel = document.querySelector("#tweets-panel")
+  const content = document.querySelector("#modal-content")
+
+  panel.addEventListener("click", event => {
+    content.innerHTML = ''
+    const tweet = event.target.parentElement.parentElement.parentElement
+    document.querySelector("#modal-avatar").src = tweet.children[0].src
+    const modalContent = tweet.children[1].children[0].cloneNode(true)
+    const modalUser =  tweet.children[1].children[1].cloneNode(true)
+    
+    content.prepend(modalUser)
+    content.prepend(modalContent)
+  })
+</script>
