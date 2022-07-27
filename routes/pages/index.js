@@ -8,6 +8,7 @@ const userController = require('../../controllers/pages/user-controller')
 
 const { authenticated, authenticatedAdmin } = require('../../middleware/auth')
 
+
 router.use('/admin', admin)
 router.get('/signin', userController.getSignin)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.postSignin)
