@@ -199,3 +199,241 @@
 #signup-region .alert, #signin-region .alert {
   width: 356px;
 }
+
+#profile-region {
+  display: grid;
+  grid-template-columns: 20% 54% 26%;
+  padding: 0 55px;
+}
+#profile-region #profile-left {
+  width: 178px;
+}
+#profile-region #profile-middle {
+  max-width: 641px;
+  border: 1px #E6ECF0 solid;
+  padding-top: 16px;
+  height: 100%;
+}
+#profile-region #profile-middle .header {
+  display: flex;
+  height: 59px;
+}
+#profile-region #profile-middle .header .coin {
+  width: 24px;
+  height: 24px;
+  margin: 14px 16px 0 28px;
+}
+#profile-region #profile-middle .header .coin img {
+  width: 17px;
+  height: 14px;
+}
+#profile-region #profile-middle .header .name {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+#profile-region #profile-middle .header .name h5 {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  height: 24px;
+}
+#profile-region #profile-middle .header .name span {
+  font-weight: 500;
+  font-size: 13px;
+  color: #6C757D;
+}
+#profile-region #profile-middle .user-info {
+  height: 378px;
+  margin-bottom: 8px;
+}
+#profile-region #profile-middle .user-info .avatar-button {
+  position: relative;
+  top: -70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#profile-region #profile-middle .user-info .avatar-button .avatar {
+  width: 141.1px;
+  height: 140px;
+  border: 4px #FFFFFF solid;
+  border-radius: 50%;
+  margin-left: 16.13px;
+  margin-bottom: 8px;
+}
+#profile-region #profile-middle .user-info .avatar-button button {
+  width: 128px;
+  height: 40px;
+  margin-top: 64px;
+  margin-right: 16px;
+  background-color: #FFFFFF;
+  color: #FF6600;
+  border-color: #FF6600;
+  border-radius: 50px;
+}
+#profile-region #profile-middle .user-info .avatar-button .follow-bottom {
+  width: 96px;
+  background-color: #FF6600;
+  color: #FFFFFF;
+}
+#profile-region #profile-middle .user-info .avatar-button .follow-bottom.removefollow {
+  background-color: #FFFFFF;
+  color: #FF6600;
+}
+#profile-region #profile-middle .user-info .name {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-left: 16px;
+  position: relative;
+  top: -70px;
+}
+#profile-region #profile-middle .user-info .name h5 {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  height: 24px;
+}
+#profile-region #profile-middle .user-info .name span {
+  font-weight: 400;
+  font-size: 14px;
+  color: #6C757D;
+}
+#profile-region #profile-middle .user-info .introduction {
+  position: relative;
+  top: -70px;
+  margin-left: 16.13px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #171725;
+}
+#profile-region #profile-middle .user-info .follow {
+  position: relative;
+  top: -70px;
+  margin-left: 16.13px;
+  display: flex;
+  justify-content: flex-start;
+  font-weight: 400;
+  font-size: 14px;
+  margin-top: 8px;
+}
+#profile-region #profile-middle .user-info .follow div {
+  display: flex;
+  justify-content: flex-start;
+}
+#profile-region #profile-middle .user-info .follow div .first {
+  color: #171725;
+}
+#profile-region #profile-middle .user-info .follow div .second a {
+  color: #6C757D;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal {
+  position: absolute;
+  top: -150px;
+  width: 634px;
+  height: 610px;
+  border-radius: 14px;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-header {
+  height: 57px;
+  display: flex;
+  justify-content: space-between;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-header .header-left {
+  display: flex;
+  align-items: center;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-header .header-left .btn-close {
+  width: 15px;
+  height: 15px;
+  opacity: 1;
+  background: transparent url(/images/vector_close.png);
+  background-size: 15px 15px;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-header .header-right .save-button {
+  margin: 8px 16px 9px 0;
+  width: 64px;
+  height: 40px;
+  background-color: #FF6600;
+  color: #FFFFFF;
+}
+#profile-region #profile-middle .tweet {
+  width: 639px;
+  border: 1px #E6ECF0 solid;
+  border-top: none;
+  padding: 16px 0 16px 24px;
+  display: flex;
+}
+#profile-region #profile-middle .tweet .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+#profile-region #profile-middle .tweet .name {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+  margin-right: 8px;
+}
+#profile-region #profile-middle .tweet .account {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #6C757D;
+}
+#profile-region #profile-middle .tweet .description {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+}
+#profile-region #profile-middle .tweet .footer {
+  display: flex;
+  align-items: center;
+  color: #6C757D;
+  margin-top: 5px;
+}
+#profile-region #profile-middle .tweet .footer img {
+  width: 13.17px;
+  height: 13.17px;
+  margin-right: 9.4px;
+}
+#profile-region #profile-middle .tweet .footer span {
+  font-weight: 600;
+  font-size: 14px;
+}
+#profile-region #profile-right {
+  width: 273px;
+  padding-left: 28px;
+}
+#profile-region .profile-tabs li a {
+  width: 100%;
+  height: 100%;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 22px;
+  border: none;
+  color: #657786;
+  padding-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+#profile-region .profile-tabs li .nav-link.active {
+  color: #FF6600;
+  padding-bottom: 13px;
+  border-bottom: 2px #FF6600 solid;
+}
+
+@media screen and (min-width: 991px) and (max-width: 1200px) {
+  #profile-region {
+    grid-template-columns: 23% 51% 26%;
+  }
+  #profile-region #profile-right {
+    padding-left: 15px;
+  }
+}
