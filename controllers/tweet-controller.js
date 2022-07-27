@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const { Tweet, User, Like, Followship } = require('../models')
-const { getUser } = require('../helpers/auth-helpers')
+const { getUser } = require('../_helpers')
 
 const tweetController = {
   getTweetReplies: async (req, res, next) => {
