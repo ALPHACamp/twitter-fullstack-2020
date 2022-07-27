@@ -8,49 +8,75 @@
       <h4 class="title">首頁</h4>
       <p class="list-separate-top"></p>
       <p class="list-separate-lg"></p>
-      <form action="/tweets" method="POST">
-        <div class="tweet-text d-flex">
-          <div class="head d-flex">
-            <img src="{{#if user.avatar}}{{user.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
-              class="tweet-user-avatar" style="width:50px;height:50px;" alt="Picture">
-            <textarea class="description form" id="description" name="description" rows="3" placeholder="有什麼新鮮事?"
-              maxlength="140"
-              style="border:none; padding-left: 10px; padding-top: 17px; padding-bottom: 50px; resize:none; "
-              required></textarea>
-            <button type="submit" class="btn btn-orange btn-tweets-bottom" style="border-radius: 50px;">
-              <span class="" style="font-size:16px;">推文</span>
-            </button>
+      <div class="tweet-text d-flex">
+        <div class="head d-flex">
+          <img src="{{#if user.avatar}}{{user.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+            class="tweet-user-avatar" style="width:50px;height:50px;" alt="Picture">
+          <div class="description" data-bs-toggle="modal" data-bs-target="#home-model"
+            style="border:none; padding-left: 10px; padding-top: 17px; padding-bottom: 50px; resize:none; height:190px;">
           </div>
-        </div>
-      </form>
-      {{#each tweets}}
-      <div class="tweet-card d-flex">
-        <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}" alt="Picture"
-          class="tweet-user-avatar">
-        <div>
-          <div class="head d-flex">
-            <a class="name" href="/users/:{{this.User.id}}">{{this.User.name}}</a>
-            <a class="account" href="/users/:{{this.User.id}}">@{{this.User.account}}</a>
-            <div class="time">•3小時</div>
-          </div>
-          <div class="content">
-            {{this.description}}
-          </div>
-          <div class="d-flex">
-            <img src="/images/comment.png" style="width:13.17px;height:13.17px;margin-right:8px" alt="comment">
-            <p class="p">{{this.repliedCount}}</p>
-            <img src="/images/like.png" style="width:13.17px;height:13.17px;margin-right:8px" alt="like">
-            <p class="p">{{this.likedCount}}</p>
-          </div>
+          <button type="button" class="btn btn btn-orange btn-tweets-bottom " data-bs-toggle="modal"
+            data-bs-target="#home-model" style="font-size:16px;border-radius: 50px;">
+            推文
+          </button>
         </div>
       </div>
-      <p class="list-separate-m"></p>
-      {{/each}}
+      <div class=" card-override">
+        {{#each tweets}}
+        <div class="tweet-card d-flex" style="margin:0px;">
+          <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}" alt="Picture"
+            class="tweet-user-avatar">
+          <div>
+            <div class="head d-flex">
+              <a class="name" href="/users/:{{this.User.id}}">{{this.User.name}}</a>
+              <a class="account" href="/users/:{{this.User.id}}">@{{this.User.account}}</a>
+              <div class="time">•3小時</div>
+            </div>
+            <div class="content">
+              {{this.description}}
+            </div>
+            <div class="d-flex">
+              <img src="/images/comment.png" style="width:13.17px;height:13.17px;margin-right:8px" alt="comment">
+              <p class="p">{{this.repliedCount}}</p>
+              <img src="/images/like.png" style="width:13.17px;height:13.17px;margin-right:8px" alt="like">
+              <p class="p">{{this.likedCount}}</p>
+            </div>
+          </div>
+        </div>
+        <p class="list-separate-m"></p>
+        {{/each}}
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="home-model" tabindex="-1" aria-labelledby="home-model" aria-hidden="true">
+      <div class="modal-dialog modal-lg" style="width:639px; position:relative; right:40px;">
+        <div class="modal-content" style="border-radius:16px">
+          <div class="modal-header" style="">
+            <label for="description" class="form-label">
+            </label>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="/tweets" method="POST">
+            <div class="modal-body d-flex">
+              <img src="{{#if user.avatar}}{{user.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+                class="tweet-user-avatar" style="width:50px;height:50px;" alt="Picture">
+              <textarea class="form" id="description" name="description" rows="3" maxlength="140" placeholder="有什麼新鮮事？"
+                style="border:none; width:600px;position:relative; top:10px;resize:none;height:250px;"
+                required></textarea>
+            </div>
+            <button type="submit" class="btn btn-orange btn-tweets-models"
+              style="border-radius: 50px;position:relative; left:550px;bottom:20px;">
+              <span class="" style="font-size:16px;">推文</span>
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
 
 
     <section class="right-region-sidebar">
-      {{> home-user-tabs users=users}}
+      {{> home-user-tabs users=users user=user}}
     </section>
   </div>
 

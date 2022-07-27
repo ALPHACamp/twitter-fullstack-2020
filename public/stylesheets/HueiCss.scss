@@ -2,6 +2,11 @@
 
 section#Huei-region {
 
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
   #navbar {
     color: $dark100;
     font-style: normal;
@@ -20,7 +25,9 @@ section#Huei-region {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex-grow: 1;
+    margin: 0 auto;
+    border-left: 1px solid #E6ECF0;
+    border-right: 1px solid #E6ECF0;
     width: 639px;
   }
 
@@ -131,12 +138,18 @@ section#Huei-region {
 
   .tweets {
     width: 639px;
-    margin-left: 24px;
 
     .title {
       position: relative;
       top: 24px;
       right: 280px;
+    }
+
+    .card-override {
+      height: 68vh;
+      overflow-y: scroll;
+      scrollbar-color: $dark30 $dark20;
+      scrollbar-width: thin;
     }
 
     .list-separate-top {
@@ -170,7 +183,7 @@ section#Huei-region {
     word-wrap: break-word;
     position: relative;
     top: 60px;
-    right: 1px;
+    left: 15px;
 
     .account {
       margin-left: 8px;
@@ -247,4 +260,9 @@ section#Huei-region {
 .position-left-text {
   position: relative;
   left: 20px;
+}
+
+.btn-tweets-models {
+  width: 64px;
+  height: 40px;
 }
