@@ -29,7 +29,7 @@ section#ys-admin-region {
       padding: 0px;
       font-size: 14px;
       position: absolute;
-      right: 10px;
+      right: 1rem;
     }
   }
 
@@ -69,13 +69,15 @@ section#ys-admin-region {
   }
 
   // right--------------------------------------------------------------------------------------------
-  .right-region-tweet-list {
+  .right-region-tweet-list,
+  .right-region-users-list {
     height: 100vh;
     flex: 1;
     margin-left: 24px;
     border-left: 1px solid #E6ECF0;
     border-right: 1px solid #E6ECF0;
     padding-left: 20px;
+    padding-right: 20px;
 
     .title {
       margin-top: 24px;
@@ -130,9 +132,73 @@ section#ys-admin-region {
         }
       }
     }
-
-
   }
 
+  // users region ----------------------------------------
+  // &.container-ys.users-layout {
+  //   width: auto;
+  //   margin-left: 130px;
+  //   margin-right: 10px;
+  // }
+
+  .user-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .user-card-cover {
+      border-radius: 10px 10px 0px 0px;
+      height: 7rem;
+      width: 100%;
+    }
+
+    .name-photo {
+      position: relative;
+      top: 3%;
+      transform: translate(0%, -55%);
+
+      .user-card-avatar {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+        border: 0.25rem solid #FFFFFF;
+      }
+    }
+
+    .row-actions {
+      position: relative;
+      top: -3rem;
+      display: flex;
+
+      p {
+        margin-left: 0.75rem;
+        margin-right: 0.75rem;
+      }
+
+      img {
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin: 0.5rem
+      }
+    }
+
+    .follow {
+      position: relative;
+      top: -3rem;
+      display: flex;
+
+      p {
+        margin-left: 0.25rem;
+        margin-right: 0.25rem;
+      }
+
+      span {
+        color: $secondaryColor;
+      }
+    }
+  }
 
 }

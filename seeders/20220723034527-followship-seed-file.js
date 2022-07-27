@@ -3,7 +3,7 @@ const { User } = require('../models')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const usersArray = await User.findAll({ raw: true })
+    const usersArray = await User.findAll({ where: { role: 'user' }, raw: true })
 
     const followshipsArray = []
     // 讓每位使用者對隨機 2位 不重複的 user 點 follow , 而且不能是自已
