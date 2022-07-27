@@ -10,15 +10,15 @@ const tweetController = {
       const tweets = await Tweet.findAll({
         include: [
           User,
-          { model: User, as: 'LikedUsers' }
+          Like
         ],
         order: [
-          ['created_at', 'DESC']
+          ['created_at', 'DESC'],
+          ['id', 'ASC']
         ],
         raw: true,
         nest: true
       })
-      console.log(tweets)
       return res.render('tweets', { tweets, user })
     }
     catch (err) {
