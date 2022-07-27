@@ -76,6 +76,7 @@ var tweetController = {
             _context.next = 18;
             return regeneratorRuntime.awrap(users.map(function (user) {
               return _objectSpread({}, user.toJSON(), {
+                followerCount: user.Followers.length,
                 isFollowed: helpers.getUser(req).Followings.map(function (f) {
                   return f.id;
                 }).includes(user.id)
@@ -84,23 +85,26 @@ var tweetController = {
 
           case 18:
             users = _context.sent;
+            users = users.sort(function (a, b) {
+              return b.followerCount - a.followerCount;
+            }).slice(0, 10);
             return _context.abrupt("return", res.render('tweets', {
               tweets: tweets,
               users: users,
               user: user
             }));
 
-          case 22:
-            _context.prev = 22;
+          case 23:
+            _context.prev = 23;
             _context.t0 = _context["catch"](0);
             next(_context.t0);
 
-          case 25:
+          case 26:
           case "end":
             return _context.stop();
         }
       }
-    }, null, null, [[0, 22]]);
+    }, null, null, [[0, 23]]);
   },
   getTweet: function getTweet(req, res, next) {
     var tweet, likedCount, repliedCount, isLiked;
