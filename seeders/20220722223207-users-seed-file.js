@@ -13,7 +13,7 @@ module.exports = {
         name: `user${i}`,
         account: `user${i}`,
         avatar: `https://randomuser.me/api/portraits/men/${i + 1}.jpg`,
-        introduction: faker.lorem.text(),
+        introduction: faker.lorem.text().substring(0, 160),
         role: 'user',
         created_at: new Date(),
         updated_at: new Date()
