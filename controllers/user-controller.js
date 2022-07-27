@@ -199,7 +199,9 @@ const userController = {
       const UserId = helpers.getUser(req).id
       const followingId = Number(req.body.id)
       if (UserId === followingId) {
-        throw new Error("You can't follow yourself")
+        return res
+          .status(200)
+          .json({ status: 'error', message: "You can't follow yourself" })
       }
       const user = await User.findByPk(followingId)
       if (!user) throw new Error("User didn't exist")
@@ -216,7 +218,8 @@ const userController = {
         followerId: UserId,
         followingId
       })
-      res.json({ status: 'success', newFollowShip })
+      return res.status(302).json({ status: 'success', newFollowShip })
+      // res.json({ status: 'success', newFollowShip })
     } catch (err) {
       next(err)
     }
@@ -224,7 +227,7 @@ const userController = {
   postUnfollow: async (req, res, next) => {
     try {
       const UserId = helpers.getUser(req).id
-      const followingId = Number(req.body.id)
+      const followingId = Number(req.params.id)
       const user = await User.findByPk(followingId)
       if (!user) throw new Error("User didn't exist")
       const followship = await Followship.findOne({
@@ -232,7 +235,8 @@ const userController = {
       })
       if (!followship) throw new Error("You haven't follow this user")
       const destroyedFollowship = await followship.destroy()
-      res.json({ status: 'success', destroyedFollowship })
+      return res.status(302).json({ status: 'success', destroyedFollowship })
+      // res.json({ status: 'success', destroyedFollowship })
     } catch (err) {
       next(err)
     }

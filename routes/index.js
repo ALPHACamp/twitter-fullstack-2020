@@ -33,7 +33,11 @@ router.get('/signin', userController.signInPage)
 router.get('/logout', authenticatedUser, userController.logout)
 
 router.post('/followships', authenticatedUser, userController.postFollow)
-router.delete('/followships', authenticatedUser, userController.postUnfollow)
+router.delete(
+  '/followships/:id',
+  authenticatedUser,
+  userController.postUnfollow
+)
 
 router.get('/', (req, res) => {
   res.redirect('/tweets')
