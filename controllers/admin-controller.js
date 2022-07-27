@@ -25,9 +25,13 @@ const adminController = {
       order: [['createdAt', 'DESC']],
       raw: true,
       nest: true
-    }) // FIXME: 在清單上快覽 Tweet 的前 50 個字
+    })
       .then(tweets => {
-        res.render('admin/tweets', { tweets })
+        const data = tweets.map(r => ({
+          ...r,
+          description: r.description.substring(0, 50) // 在清單上只快覽 Tweet 的前 50 個字
+        }))
+        res.render('admin/tweets', { tweets: data })
       })
       .catch(err => next(err))
   },
