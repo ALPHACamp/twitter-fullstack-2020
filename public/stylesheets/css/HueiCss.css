@@ -1,3 +1,7 @@
+section#Huei-region body {
+  margin: 0;
+  padding: 0;
+}
 section#Huei-region #navbar {
   color: #171725;
   font-style: normal;
@@ -14,11 +18,14 @@ section#Huei-region .middle-region-home {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-grow: 1;
+  margin: 0 auto;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
   width: 639px;
 }
 section#Huei-region .left-region-home {
   display: flex;
+  width: 173px;
   margin-left: 130px;
 }
 section#Huei-region .right-region-home {
@@ -65,11 +72,12 @@ section#Huei-region .nav-user {
   height: 731px;
   background: #FAFAFB;
   border-radius: 16px;
+  padding-left: 10px;
 }
 section#Huei-region .nav-user-title {
   position: relative;
   top: 30px;
-  left: 20px;
+  left: 10px;
 }
 section#Huei-region .circle {
   height: 50px;
@@ -103,12 +111,26 @@ section#Huei-region .btn-white {
 }
 section#Huei-region .tweets {
   width: 639px;
-  margin-left: 24px;
 }
 section#Huei-region .tweets .title {
   position: relative;
   top: 24px;
   right: 280px;
+}
+section#Huei-region .tweets .card-override {
+  height: 68vh;
+  overflow-y: scroll;
+  scrollbar-color: #F1F1F5 #FAFAFB;
+  scrollbar-width: thin;
+  overflow-x: hidden;
+}
+section#Huei-region .tweets .list-separate-top {
+  position: relative;
+  top: 40px;
+  height: 1px;
+  width: 639px;
+  background-color: #E2E2EA;
+  margin-bottom: 18px;
 }
 section#Huei-region .tweets .list-separate-lg {
   position: relative;
@@ -129,7 +151,7 @@ section#Huei-region .tweet-card {
   word-wrap: break-word;
   position: relative;
   top: 60px;
-  right: 1px;
+  left: 15px;
 }
 section#Huei-region .tweet-card .account {
   margin-left: 8px;
@@ -164,14 +186,14 @@ section#Huei-region .tweet-card .tweet-user-avatar {
 .tweet-text {
   position: relative;
   top: 30px;
-  left: 24px;
+  left: 75px;
 }
 .tweet-text .description {
   width: 526px;
 }
 .tweet-text .btn-tweets-bottom {
   position: relative;
-  right: 50px;
+  right: 150px;
   top: 100px;
   width: 64px;
   height: 40px;
@@ -197,4 +219,9 @@ section#Huei-region .tweet-card .tweet-user-avatar {
 .position-left-text {
   position: relative;
   left: 20px;
+}
+
+.btn-tweets-models {
+  width: 64px;
+  height: 40px;
 }

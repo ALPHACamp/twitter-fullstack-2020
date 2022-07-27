@@ -2,6 +2,11 @@
 
 section#Huei-region {
 
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
   #navbar {
     color: $dark100;
     font-style: normal;
@@ -20,12 +25,15 @@ section#Huei-region {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex-grow: 1;
+    margin: 0 auto;
+    border-left: 1px solid #E6ECF0;
+    border-right: 1px solid #E6ECF0;
     width: 639px;
   }
 
   .left-region-home {
     display: flex;
+    width: 173px;
     margin-left: 130px;
   }
 
@@ -84,12 +92,13 @@ section#Huei-region {
     height: 731px;
     background: #FAFAFB;
     border-radius: 16px;
+    padding-left: 10px;
   }
 
   .nav-user-title {
     position: relative;
     top: 30px;
-    left: 20px;
+    left: 10px;
   }
 
   .circle {
@@ -130,12 +139,28 @@ section#Huei-region {
 
   .tweets {
     width: 639px;
-    margin-left: 24px;
 
     .title {
       position: relative;
       top: 24px;
       right: 280px;
+    }
+
+    .card-override {
+      height: 68vh;
+      overflow-y: scroll;
+      scrollbar-color: $dark30 $dark20;
+      scrollbar-width: thin;
+      overflow-x: hidden;
+    }
+
+    .list-separate-top {
+      position: relative;
+      top: 40px;
+      height: 1px;
+      width: 639px;
+      background-color: $dark40;
+      margin-bottom: 18px;
     }
 
     .list-separate-lg {
@@ -160,7 +185,7 @@ section#Huei-region {
     word-wrap: break-word;
     position: relative;
     top: 60px;
-    right: 1px;
+    left: 15px;
 
     .account {
       margin-left: 8px;
@@ -202,7 +227,7 @@ section#Huei-region {
 .tweet-text {
   position: relative;
   top: 30px;
-  left: 24px;
+  left: 75px;
 
   .description {
     width: 526px;
@@ -210,7 +235,7 @@ section#Huei-region {
 
   .btn-tweets-bottom {
     position: relative;
-    right: 50px;
+    right: 150px;
     top: 100px;
     width: 64px;
     height: 40px;
@@ -237,4 +262,9 @@ section#Huei-region {
 .position-left-text {
   position: relative;
   left: 20px;
+}
+
+.btn-tweets-models {
+  width: 64px;
+  height: 40px;
 }
