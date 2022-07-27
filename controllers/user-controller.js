@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt-nodejs')
-const { getUser } = require('../helpers/auth-helpers')
+const { getUser } = require('../_helpers')
 const jwt = require('jsonwebtoken')
 
 const { User, Tweet, Like, Followship } = require('../models')
