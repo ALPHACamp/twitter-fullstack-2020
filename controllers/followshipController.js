@@ -19,6 +19,7 @@ const followshipController = {
     }
   },
   removeFollowing: async (req, res, next) => {
+    //post 可以 delete不行
     try {
       const followship = await Followship.findOne({
         where: {
@@ -28,7 +29,7 @@ const followshipController = {
       })
       await followship.destroy()
       req.flash('error_messages', '取消追隨成功！')
-      return res.redirect(302,'back')
+      return res.redirect('back')
     }
     catch (err) {
       next(err)

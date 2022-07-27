@@ -1,26 +1,62 @@
 @import "./variableSheet.scss";
 
 section#Huei-region {
+
   #navbar {
     color: $dark100;
     font-style: normal;
-    font-weight: 700;
     line-height: 26px;
     letter-spacing: 0px;
+  }
+
+  .flex-home-page {
+    display: flex;
+    margin: 0 auto;
+    max-width: 1200px;
+    min-width: 992px;
+  }
+
+  .middle-region-home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    width: 639px;
+  }
+
+  .left-region-home {
+    display: flex;
+    margin-left: 130px;
+  }
+
+  .right-region-home {
+    display: flex;
+    width: 273px;
+    margin-right: 130px;
   }
 
   .a-orange {
     color: $mainColor;
   }
 
-  .h-orange:hover {
-    color: $assistColorOrange;
-  }
 
   .btn-orange {
     color: $dark0;
     background-color: $mainColor;
     border-color: $mainColor;
+  }
+
+  a {
+    color: $dark90;
+    background-color: $dark0;
+
+    .color-mask {
+      color: $mainColor;
+    }
+
+    .img-mask {
+      filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
+    }
   }
 
   .icon {
@@ -39,24 +75,21 @@ section#Huei-region {
   }
 
   .logout {
-    left: 100px;
-    bottom: 30px;
+    position: absolute;
+    bottom: 0px;
   }
 
   .nav-user {
-    position: absolute;
     width: 273px;
     height: 731px;
-    left: 997px;
-    top: 16px;
     background: #FAFAFB;
     border-radius: 16px;
   }
 
   .nav-user-title {
-    position: absolute;
-    left: 24px;
-    top: 24px;
+    position: relative;
+    top: 30px;
+    left: 20px;
   }
 
   .circle {
@@ -94,4 +127,114 @@ section#Huei-region {
     background-color: $dark0;
     border-color: $mainColor;
   }
+
+  .tweets {
+    width: 639px;
+    margin-left: 24px;
+
+    .title {
+      position: relative;
+      top: 24px;
+      right: 280px;
+    }
+
+    .list-separate-lg {
+      position: relative;
+      top: 190px;
+      height: 10px;
+      width: 639px;
+      background-color: $dark40;
+    }
+
+    .list-separate-m {
+      position: relative;
+      top: 70px;
+      height: 1px;
+      width: 639px;
+      background-color: $dark40;
+      margin-bottom: 18px;
+    }
+  }
+
+  .tweet-card {
+    word-wrap: break-word;
+    position: relative;
+    top: 60px;
+    right: 1px;
+
+    .account {
+      margin-left: 8px;
+      color: $secondaryColor;
+    }
+
+    .name {
+      color: $dark100;
+      font-weight: bold;
+    }
+
+    .time {
+      color: $secondaryColor;
+    }
+
+    .content {
+      margin-top: 8px;
+      width: 528px;
+      height: 78px;
+    }
+
+    .p {
+      position: relative;
+      bottom: 5px;
+      font-size: 14px;
+      margin-right: 41.3px;
+      color: $secondaryColor;
+    }
+
+    .tweet-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
+      margin-right: 10px;
+    }
+  }
+}
+
+.tweet-text {
+  position: relative;
+  top: 30px;
+  left: 24px;
+
+  .description {
+    width: 526px;
+  }
+
+  .btn-tweets-bottom {
+    position: relative;
+    right: 50px;
+    top: 100px;
+    width: 64px;
+    height: 40px;
+  }
+}
+
+.tweet-user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin-right: 10px;
+}
+
+.flex-nowrap-element {
+  white-space: nowrap;
+  width: 173px;
+}
+
+.position-left {
+  position: relative;
+  left: 10px;
+}
+
+.position-left-text {
+  position: relative;
+  left: 20px;
 }

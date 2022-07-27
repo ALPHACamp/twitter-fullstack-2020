@@ -3,23 +3,43 @@ const helpers = require('../_helpers')
 const tweetController = {
   getTweets: async (req, res, next) => {
     try {
-      const tweets = await Tweet.findAll({
+      let tweets = await Tweet.findAll({
         include: [
-          User,
-          { model: Like, include: User, where: { UserId: helpers.getUser(req).id } }
+          User, Reply, Like
         ],
         order: [['createdAt', 'DESC']]
       })
-      tweets = await tweets.rows.map(tweet => ({
+
+      let users = await User.findAll({
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+
+      const user = await User.findByPk(helpers.getUser(req).id,
+        {
+          raw: true,
+          nest: true
+        })
+
+      const likes = await Like.findAll({
+        where: { UserId: helpers.getUser(req).id }
+      })
+
+      tweets = await tweets.map(tweet => ({
         ...tweet.toJSON(),
         likedCount: tweet.Likes.length,
         repliedCount: tweet.Replies.length,
-        isLiked: tweet.Likes.User.some(
-          l => l.id === tweet.id
-        )
-        //可能要換成 helpers.getUser(req).id
+        isLiked: likes.map(l => l.TweetId).includes(tweet.id)
       }))
-      return res.render('tweets', { tweets })
+
+      users = await users.map(user => ({
+        ...user.toJSON(),
+        isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
+      }))
+
+      return res.render('tweets', { tweets, users, user })
     }
     catch (err) {
       next(err)

@@ -1,5 +1,9 @@
 "use strict";
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 var express = require('express');
 
 var helpers = require('./_helpers');
@@ -14,6 +18,10 @@ var passport = require('passport');
 
 var flash = require('connect-flash');
 
+var bodyParser = require('body-parser');
+
+var methodOverride = require('method-override');
+
 var routes = require('./routes');
 
 var app = express();
@@ -27,6 +35,7 @@ app.set('view engine', 'hbs');
 app.use(express.urlencoded({
   extended: true
 }));
+app.use(methodOverride('_method'));
 app.use(express["static"]('public'));
 app.use(session({
   secret: SESSION_SECRET,

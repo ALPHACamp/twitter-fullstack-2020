@@ -14,13 +14,13 @@ router.use('/admin', admin)
 
 router.get('/tweets/:tweet_id/replies', authenticated, replyController.getReply)
 router.post('/tweets/:tweet_id/replies', authenticated, replyController.postReply)
-router.get('/tweets/:tweet_id', authenticated, tweetController.getTweet)
 router.post('/tweets/:tweet_id/unlike', authenticated, tweetController.postUnlike)
 router.post('/tweets/:tweet_id/like', authenticated, tweetController.postLike)
+router.get('/tweets/:tweet_id', authenticated, tweetController.getTweet)
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
-router.post('/followships', authenticated, followshipController.addFollowing)
 router.delete('/followships/:followingId', authenticated, followshipController.removeFollowing)
+router.post('/followships', authenticated, followshipController.addFollowing)
 
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
@@ -32,7 +32,6 @@ router.get('/users/:id/replies', authenticated, userController.replies)
 router.get('/users/:id/likes', authenticated, userController.likes)
 
 router.use('/', generalErrorHandler)
-router.use('/', (req, res) => res.redirect('/tweets'))
-
+router.use('/', authenticated, tweetController.getTweets)
 
 module.exports = router
