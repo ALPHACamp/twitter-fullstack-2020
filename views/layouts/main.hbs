@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-100">
+<html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,16 +7,13 @@
     <title>Simple Twitter</title>
     <link rel="stylesheet" type="text/css" href="/stylesheets/custom.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/icon.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
   </head>
-  <body class="d-flex flex-column h-100 bg-light">
-    <main class="flex-shrink-0" role="main">
-      <div class="album container pt-5">
-        <div class="pt-5">
-          {{> messages}}
-          {{{body}}}
-        </div>
-      </div>
-    </main>
+  <body>
+    <div class="h-100 mt-5">
+      {{> messages}}
+      {{{body}}}
+    </div>
   </body>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
     integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
