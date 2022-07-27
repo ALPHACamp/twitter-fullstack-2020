@@ -27,9 +27,12 @@ router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 router.get('/logout', userController.logout)
+router.get('/users/:id/tweets', authenticated, userController.tweets)
+router.get('/users/:id/replies', authenticated, userController.replies)
+router.get('/users/:id/likes', authenticated, userController.likes)
 
 router.use('/', generalErrorHandler)
-router.use('/', (req, res) => res.send('404 not found'))
+router.use('/', (req, res) => res.redirect('/tweets'))
 
 
 module.exports = router

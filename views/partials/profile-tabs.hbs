@@ -1,0 +1,13 @@
+<ul class="nav nav-tabs mb-4 profile-tabs">
+  <li class="nav-item" style="width: 130px; height: 52px;">
+    <a class="nav-link {{#ifCond route 'tweets'}}active{{/ifCond}}" href="/users/{{targetUser}}/tweets">推文</a>
+  </li>
+  <li class="nav-item" style="width: 130px; height: 52px">
+    <a class="nav-link {{#ifCond route 'replies'}}active{{/ifCond}}" href="/users/{{targetUser}}/replies">
+      回覆
+    </a>
+  </li>
+  <li class="nav-item" style="width: 130px; height: 52px">
+    <a class="nav-link {{#ifCond route 'likes'}}active{{/ifCond}}" href="/users/{{targetUser}}/likes">喜歡的內容</a>
+  </li>
+</ul>
