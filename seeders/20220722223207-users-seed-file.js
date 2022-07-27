@@ -4,15 +4,15 @@ const faker = require('faker')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    // 產生 五 位使用者資訊
+    // 產生 29 位使用者資訊
     const usersArray = []
-    for (let i = 1; i < 6; i++) {
+    for (let i = 1; i < 30; i++) {
       usersArray.push({
         email: `user${i}@example.com`,
         password: await bcrypt.hash('12345678', 10),
         name: `user${i}`,
         account: `user${i}`,
-        avatar: `https://randomuser.me/api/portraits/men/${i}.jpg`,
+        avatar: `https://randomuser.me/api/portraits/men/${i + 1}.jpg`,
         introduction: faker.lorem.text(),
         role: 'user',
         created_at: new Date(),
