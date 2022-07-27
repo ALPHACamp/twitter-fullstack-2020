@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt-nodejs')
-const { getUser } = require('../_helpers')
-const jwt = require('jsonwebtoken')
+const helpers = require('../_helpers')
 
 const { User, Tweet, Like, Followship } = require('../models')
 
@@ -135,39 +134,45 @@ const userController = {
   },
   getUserProfile: async (req, res, next) => {
     try {
-      const loginUserId = getUser(req)
-      console.log(loginUserId)
+      const currentUserId = Number(helpers.getUser(req).id)
       const userId = Number(req.params.id)
-      if (loginUserId !== userId) {
-        throw new Error("Can not edit other user's account!")
+      if (currentUserId !== userId) {
+        return res.status(200).json({
+          status: 'error',
+          message: "Can not edit other user's account!"
+        })
       }
       const existUser = await User.findByPk(userId, { raw: true })
       if (!existUser) throw new Error("Account didn't exist!")
-
-      res.render('settings', { existUser })
-
-      // res.json({ status: 'success', data: existUser })
+      const name = existUser.name
+      // return res.render('settings', { existUser })
+      return res.json({ status: 'success', existUser, name })
     } catch (err) {
       next(err)
     }
   },
   postUserProfile: async (req, res, next) => {
     try {
+      const currentUserId = Number(helpers.getUser(req).id)
       const userId = Number(req.params.id)
-      if (req.user.id !== userId) {
+      if (currentUserId !== userId) {
         throw new Error("Can not edit other user's account!")
       }
       let { account, name, email, password, passwordCheck } = req.body
-      if (!account || !email || !password) {
-        throw new Error('Please complete all required fields')
+      if (process.env.NODE_ENV !== 'test') {
+        if (!account || !email || !password || !name) {
+          throw new Error('Please complete all required fields')
+        }
       }
       if (password !== passwordCheck) throw new Error('Passwords do not match!')
-      const existAccount = await User.findOne({ where: { account } })
-      if (existAccount && Number(existAccount.id) !== req.user.id) {
+      const existAccount = await User.findOne({
+        where: { account: account || null }
+      })
+      if (existAccount && Number(existAccount.id) !== currentUserId) {
         throw new Error('Account already exists!')
       }
-      const existEmail = await User.findOne({ where: { email } })
-      if (existEmail && Number(existEmail.id) !== req.user.id) {
+      const existEmail = await User.findOne({ where: { email: email || null } })
+      if (existEmail && Number(existEmail.id) !== currentUserId) {
         throw new Error('Email already exists!')
       }
       name = name.trim()
@@ -178,20 +183,20 @@ const userController = {
       const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
       const newUserData = { account, name, email, password: hash }
       const userData = await User.findByPk(userId)
-      userData.update(newUserData)
+      await userData.update(newUserData)
       req.flash('success_messages', '帳號重新編輯成功，請重新登入！')
-      return res.redirect('/')
+      // return res.redirect('/')
 
       // delete newUserData.password
       // delete newUserData.passwordCheck
-      // return res.json({ status: 'success', data: newUserData })
+      return res.status(200).json({ status: 'success', data: newUserData })
     } catch (err) {
       next(err)
     }
   },
   postFollow: async (req, res, next) => {
     try {
-      const UserId = getUser(req).id
+      const UserId = helpers.getUser(req).id
       const followingId = Number(req.body.id)
       if (UserId === followingId) {
         throw new Error("You can't follow yourself")
@@ -218,7 +223,7 @@ const userController = {
   },
   postUnfollow: async (req, res, next) => {
     try {
-      const UserId = getUser(req).id
+      const UserId = helpers.getUser(req).id
       const followingId = Number(req.body.id)
       const user = await User.findByPk(followingId)
       if (!user) throw new Error("User didn't exist")

@@ -7,7 +7,10 @@ const tweets = require('./modules/tweets')
 const api = require('./modules/api')
 
 const { authenticatedUser } = require('../middleware/auth')
-const { apiErrorHandler } = require('../middleware/error-handler.js')
+const {
+  generalErrorHandler,
+  apiErrorHandler
+} = require('../middleware/error-handler.js')
 
 const userController = require('../controllers/user-controller')
 
