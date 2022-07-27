@@ -202,10 +202,7 @@
 
 #profile-region {
   display: grid;
-  grid-template-columns: 15% 56% 29%;
-}
-#profile-region #profile-left {
-  width: 178px;
+  grid-template-columns: 20% 52% 28%;
 }
 #profile-region #profile-middle {
   max-width: 641px;
@@ -320,12 +317,14 @@
   color: #6C757D;
 }
 #profile-region #profile-middle .user-info #edit-profile-modal {
+  position: absolute;
+  top: -150px;
   width: 634px;
   height: 610px;
   border-radius: 14px;
 }
 #profile-region #profile-middle .user-info #edit-profile-modal .modal-header {
-  height: 49px;
+  height: 57px;
   display: flex;
   justify-content: space-between;
 }
@@ -340,8 +339,16 @@
   background: transparent url(/images/vector_close.png);
   background-size: 15px 15px;
 }
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-header .header-right .save-button {
+  margin: 8px 16px 9px 0;
+  width: 64px;
+  height: 40px;
+  background-color: #FF6600;
+  color: #FFFFFF;
+}
 #profile-region #profile-right {
   width: 273px;
+  padding-left: 25px;
 }
 #profile-region .profile-tabs li a {
   width: 100%;
@@ -360,4 +367,13 @@
   color: #FF6600;
   padding-bottom: 13px;
   border-bottom: 2px #FF6600 solid;
+}
+
+@media screen and (min-width: 991px) and (max-width: 1200px) {
+  #profile-region {
+    grid-template-columns: 24% 50% 26%;
+  }
+  #profile-region #profile-right {
+    padding-left: 15px;
+  }
 }

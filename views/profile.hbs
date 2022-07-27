@@ -20,9 +20,13 @@
       <div class="avatar-button">
         <img class="avatar" src="{{targetUser.avatar}}" alt="avatar">
         
+        {{#ifCond targetUser.id user.id}}
         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#edit-profile-modal">
           編輯個人資料
         </button>
+        {{else}}
+        
+        {{/ifCond}}
         
         <!-- Modal -->
         <div class="modal fade" id="edit-profile-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -33,7 +37,11 @@
                   <button type="button" class="btn-close p-0 m-0" data-bs-dismiss="modal" aria-label="Close"></button>
                   <h5 class="modal-title" style="font-weight: 700; margin-left: 36.5px;">編輯個人資料</h5>
                 </div>
-               
+                <form action="POST" class="header-right">
+                  <button type="button" class="btn save-button">
+                    儲存
+                  </button>
+                </form>
               </div>
               <div class="modal-body">
                 
@@ -59,6 +67,7 @@
       </div>
     </div>
     {{> profile-tabs route='tweets'}}
+    
   </div>
   
   <div id="profile-right">
