@@ -54,6 +54,7 @@ const userController = {
     res.redirect('/signin')
   },
   getSetting: (req, res, next) => {
+    console.log(req.params)
     const id = Number(req.params.userid)
     return User.findByPk(id)
       .then(user => {
