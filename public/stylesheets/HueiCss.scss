@@ -5,7 +5,9 @@ section#Huei-region {
     position: absolute;
     width: 273px;
     height: 731px;
-    left: 130px;
+    left: 0px;
+    top: 30px;
+    right: 992px;
     color: $dark100;
     font-style: normal;
     line-height: 26px;
@@ -16,14 +18,24 @@ section#Huei-region {
     color: $mainColor;
   }
 
-  .h-orange:hover {
-    color: $assistColorOrange;
-  }
 
   .btn-orange {
     color: $dark0;
     background-color: $mainColor;
     border-color: $mainColor;
+  }
+
+  a {
+    color: $dark90;
+    background-color: $dark0;
+
+    .color-mask {
+      color: $mainColor;
+    }
+
+    .img-mask {
+      filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
+    }
   }
 
   .icon {
@@ -127,7 +139,7 @@ section#Huei-region {
   }
 
   .tweet-card {
-
+    word-wrap: break-word;
     position: relative;
     top: 60px;
     left: 24px;
@@ -159,6 +171,13 @@ section#Huei-region {
       margin-right: 41.3px;
       color: $secondaryColor;
     }
+
+    .tweet-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
+      margin-right: 10px;
+    }
   }
 }
 
@@ -178,4 +197,11 @@ section#Huei-region {
     width: 64px;
     height: 40px;
   }
+}
+
+.tweet-user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin-right: 10px;
 }

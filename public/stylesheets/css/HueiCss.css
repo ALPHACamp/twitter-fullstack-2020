@@ -2,7 +2,9 @@ section#Huei-region #navbar {
   position: absolute;
   width: 273px;
   height: 731px;
-  left: 130px;
+  left: 0px;
+  top: 30px;
+  right: 992px;
   color: #171725;
   font-style: normal;
   line-height: 26px;
@@ -11,13 +13,20 @@ section#Huei-region #navbar {
 section#Huei-region .a-orange {
   color: #FF6600;
 }
-section#Huei-region .h-orange:hover {
-  color: #FF974A;
-}
 section#Huei-region .btn-orange {
   color: #FFFFFF;
   background-color: #FF6600;
   border-color: #FF6600;
+}
+section#Huei-region a {
+  color: #44444F;
+  background-color: #FFFFFF;
+}
+section#Huei-region a .color-mask {
+  color: #FF6600;
+}
+section#Huei-region a .img-mask {
+  filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
 }
 section#Huei-region .icon {
   width: 50px;
@@ -104,6 +113,7 @@ section#Huei-region .tweets .list-separate-m {
   margin-bottom: 18px;
 }
 section#Huei-region .tweet-card {
+  word-wrap: break-word;
   position: relative;
   top: 60px;
   left: 24px;
@@ -131,6 +141,12 @@ section#Huei-region .tweet-card .p {
   margin-right: 41.3px;
   color: #6C757D;
 }
+section#Huei-region .tweet-card .tweet-user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin-right: 10px;
+}
 
 .tweet-text {
   position: relative;
@@ -146,4 +162,11 @@ section#Huei-region .tweet-card .p {
   top: 100px;
   width: 64px;
   height: 40px;
+}
+
+.tweet-user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin-right: 10px;
 }
