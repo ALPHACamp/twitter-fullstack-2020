@@ -1,6 +1,6 @@
-$primary:#0062FF;
-$secondary:#6C757D;
-$success:#3DD598;
-$warning:#FFC542;
-
 @import "../../node_modules/bootstrap/scss/bootstrap";
+
+.alert{
+    width: 394px;
+    height: 96px;
+}
