@@ -217,14 +217,16 @@ section#ys-FE-users-region {
     flex-direction: column;
     margin-left: auto;
     margin-right: auto;
+    border-left: 1px solid #E6ECF0;
+    border-right: 1px solid #E6ECF0;
   }
 
 
 
   .header {
     align-items: center;
-    height: 3rem;
     padding: 1rem;
+    border-bottom: 1px solid #E6ECF0;
 
     img {
       width: 16px;
@@ -245,6 +247,7 @@ section#ys-FE-users-region {
 
   .tab {
     margin-bottom: 1rem;
+    border-bottom: 1px solid #E6ECF0;
 
     a {
       padding-top: 0.9rem;
@@ -286,6 +289,8 @@ section#ys-FE-users-region {
 
     .tweets {
       margin-bottom: 1rem;
+      border-bottom: 1px solid #E6ECF0;
+      padding-bottom: 1rem;
     }
 
     .top {

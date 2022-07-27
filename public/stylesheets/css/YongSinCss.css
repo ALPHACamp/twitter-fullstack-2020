@@ -283,11 +283,13 @@ section#ys-FE-users-region.followships-layout {
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
 }
 section#ys-FE-users-region .header {
   align-items: center;
-  height: 3rem;
   padding: 1rem;
+  border-bottom: 1px solid #E6ECF0;
 }
 section#ys-FE-users-region .header img {
   width: 16px;
@@ -302,6 +304,7 @@ section#ys-FE-users-region .header .name_tweets p {
 }
 section#ys-FE-users-region .tab {
   margin-bottom: 1rem;
+  border-bottom: 1px solid #E6ECF0;
 }
 section#ys-FE-users-region .tab a {
   padding-top: 0.9rem;
@@ -335,6 +338,8 @@ section#ys-FE-users-region .followers.scroll-container::-webkit-scrollbar-thumb 
 }
 section#ys-FE-users-region .followers .tweets {
   margin-bottom: 1rem;
+  border-bottom: 1px solid #E6ECF0;
+  padding-bottom: 1rem;
 }
 section#ys-FE-users-region .followers .top {
   align-items: center;
