@@ -3,7 +3,7 @@ const { User, Tweet } = require('../models')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const usersArray = await User.findAll({ raw: true })
+    const usersArray = await User.findAll({ where: { role: 'user' }, raw: true })
     const tweetArray = await Tweet.findAll({ raw: true })
 
     const likesArray = []
