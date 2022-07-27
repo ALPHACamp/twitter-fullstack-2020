@@ -14,11 +14,11 @@ const userController = {
   },
   signUp: async (req, res, next) => {
     try {
-      let { account, name, email, password, passwordCheck } = req.body
+      let { account, name, email, password, checkPassword } = req.body
       if (!account || !email || !password) {
         throw new Error('Please complete all required fields')
       }
-      if (password !== passwordCheck) throw new Error('Passwords do not match!')
+      if (password !== checkPassword) throw new Error('Passwords do not match!')
       const existAccount = await User.findOne({ where: { account } })
       if (existAccount) throw new Error('Account already exists!')
       const existEmail = await User.findOne({ where: { email } })
