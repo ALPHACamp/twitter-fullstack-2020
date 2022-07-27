@@ -438,3 +438,7 @@
  #tweetInput button {
    margin: 0;
  }
+
+ .followingId {
+   display: none;
+ }

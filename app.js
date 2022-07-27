@@ -34,6 +34,29 @@ app.use((req, res, next) => {
   next()
 })
 app.use(express.static('public'))
+
+const assert = require('assert')
+const { User, Followship } = require('./models')
+const { count } = require('console')
+
+app.get('/test', async (res, req) => {
+  console.log('---------test-start--------')
+  const topFollower = await Followship.findAndCountAll({
+    group: 'following_id',
+    raw: true,
+    nest: true
+  })
+  const users = []
+  for (let i in topFollower.rows) {
+    const user = await User.findByPk(topFollower.rows[i].followingId, { raw: true })
+    user.followerCounts = topFollower?.count[i].count
+    users.push(user)
+  }
+  console.log(users)
+  console.log('---------test--end---------')
+})
+
+
 app.use(routes)
 
 // use helpers.getUser(req) to replace req.user
