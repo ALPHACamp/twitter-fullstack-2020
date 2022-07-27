@@ -111,6 +111,14 @@ section#Huei-region .tweets .title {
   top: 24px;
   right: 280px;
 }
+section#Huei-region .tweets .list-separate-top {
+  position: relative;
+  top: 40px;
+  height: 1px;
+  width: 639px;
+  background-color: #E2E2EA;
+  margin-bottom: 18px;
+}
 section#Huei-region .tweets .list-separate-lg {
   position: relative;
   top: 190px;

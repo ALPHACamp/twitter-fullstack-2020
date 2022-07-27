@@ -139,6 +139,15 @@ section#Huei-region {
       right: 280px;
     }
 
+    .list-separate-top {
+      position: relative;
+      top: 40px;
+      height: 1px;
+      width: 639px;
+      background-color: $dark40;
+      margin-bottom: 18px;
+    }
+
     .list-separate-lg {
       position: relative;
       top: 190px;
