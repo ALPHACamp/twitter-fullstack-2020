@@ -1,17 +1,271 @@
 @import "./variableSheet.scss";
 
-// css 規範: 自已的 css 都要包在 特定的id底下，避免去汙染他人的 css
-// 以下為例子
-// section#Huei-region {
-//   .class1 {
-//     color: $dark100
-//   }
+section#Huei-region {
 
-//   .class2 {
-//     color: $assistColorBlue;
+  body {
+    margin: 0;
+    padding: 0;
+  }
 
-//     .class2-1 {
-//       color: $mainColor;
-//     }
-//   }
-// }
+  #navbar {
+    color: $dark100;
+    font-style: normal;
+    line-height: 26px;
+    letter-spacing: 0px;
+  }
+
+  .flex-home-page {
+    display: flex;
+    margin: 0 auto;
+    max-width: 1200px;
+    min-width: 992px;
+  }
+
+  .middle-region-home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    border-left: 1px solid #E6ECF0;
+    border-right: 1px solid #E6ECF0;
+    width: 639px;
+  }
+
+  .left-region-home {
+    display: flex;
+    width: 173px;
+    margin-left: 130px;
+  }
+
+  .right-region-home {
+    display: flex;
+    width: 273px;
+    margin-right: 130px;
+  }
+
+  .a-orange {
+    color: $mainColor;
+  }
+
+
+  .btn-orange {
+    color: $dark0;
+    background-color: $mainColor;
+    border-color: $mainColor;
+  }
+
+  a {
+    color: $dark90;
+    background-color: $dark0;
+
+    .color-mask {
+      color: $mainColor;
+    }
+
+    .img-mask {
+      filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
+    }
+  }
+
+  .icon {
+    width: 50px;
+    height: 50px;
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .logout {
+    position: absolute;
+    bottom: 0px;
+  }
+
+  .nav-user {
+    width: 273px;
+    height: 820px;
+    background-color: $dark20;
+    background: #FAFAFB;
+    border-radius: 16px;
+    padding-left: 10px;
+  }
+
+  .nav-user-title {
+    position: relative;
+    top: 30px;
+    left: 10px;
+  }
+
+  .circle {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+  }
+
+  .user-list {
+    position: relative;
+    top: 50px;
+  }
+
+  .user-name-position {
+    position: absolute;
+    left: 60px;
+  }
+
+  .user-follow-bottom {
+    border-radius: 50px;
+    position: absolute;
+    right: 6px;
+  }
+
+  .list-separate {
+    position: relative;
+    top: 60px;
+    height: 1px;
+    margin: 9px 0;
+    background-color: $dark40;
+  }
+
+  .btn-white {
+    color: $mainColor;
+    background-color: $dark0;
+    border-color: $mainColor;
+  }
+
+  .tweets {
+    width: 639px;
+
+    .title {
+      position: relative;
+      top: 24px;
+      right: 280px;
+    }
+
+    .card-override {
+      height: 68vh;
+      overflow-y: scroll;
+      scrollbar-color: $dark30 $dark20;
+      scrollbar-width: thin;
+      overflow-x: hidden;
+    }
+
+    .list-separate-top {
+      position: relative;
+      top: 40px;
+      height: 1px;
+      width: 639px;
+      background-color: $dark40;
+      margin-bottom: 18px;
+    }
+
+    .list-separate-lg {
+      position: relative;
+      top: 190px;
+      height: 10px;
+      width: 639px;
+      background-color: $dark40;
+    }
+
+    .list-separate-m {
+      position: relative;
+      top: 70px;
+      height: 1px;
+      width: 639px;
+      background-color: $dark40;
+      margin-bottom: 18px;
+    }
+  }
+
+  .tweet-card {
+    word-wrap: break-word;
+    position: relative;
+    top: 60px;
+    left: 15px;
+
+    .account {
+      margin-left: 8px;
+      color: $secondaryColor;
+    }
+
+    .name {
+      color: $dark100;
+      font-weight: bold;
+    }
+
+    .time {
+      color: $secondaryColor;
+    }
+
+    .content {
+      margin-top: 8px;
+      width: 528px;
+      height: 78px;
+    }
+
+    .p {
+      position: relative;
+      bottom: 5px;
+      font-size: 14px;
+      margin-right: 41.3px;
+      color: $secondaryColor;
+    }
+
+    .tweet-user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
+      margin-right: 10px;
+    }
+  }
+}
+
+.tweet-text {
+  position: relative;
+  top: 30px;
+  left: 75px;
+
+  .description {
+    width: 526px;
+  }
+
+  .btn-tweets-bottom {
+    position: relative;
+    right: 150px;
+    top: 100px;
+    width: 64px;
+    height: 40px;
+  }
+}
+
+.tweet-user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin-right: 10px;
+}
+
+.flex-nowrap-element {
+  white-space: nowrap;
+  width: 173px;
+}
+
+.position-left {
+  position: relative;
+  left: 10px;
+}
+
+.position-left-text {
+  position: relative;
+  left: 20px;
+}
+
+.btn-tweets-models {
+  width: 64px;
+  height: 40px;
+}

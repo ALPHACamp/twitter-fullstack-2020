@@ -1,0 +1,54 @@
+<section id="Huei-region">
+  <div class="" id="navbar">
+    <div class="col-auto">
+      <div class="d-flex flex-column align-items-start">
+        <ul class="nav flex-column nav-pills">
+          <li class="nav-item py-1">
+            <a class="nav-link text-dark" href="/tweets">
+              <div class="icon">
+                <img src="/images/alphacamp.png" alt="icon">
+              </div>
+            </a>
+          </li>
+          <li class="nav-item flex-nowrap-element">
+            <a class="nav-link text-dark" href="/tweets">
+              <div class="d-flex">
+                <img src="/images/home.png" alt="icon" class="{{#ifCond route 'home'}}img-mask{{/ifCond}}">
+                <span class="h5 h-orange {{#ifCond route 'home'}}color-mask{{/ifCond}}">&nbsp;&nbsp;&nbsp;首頁</span>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item py-2">
+            <a class="nav-link text-dark" href="/users/{{user.id}}/tweets">
+              <div class="d-flex flex-nowrap">
+                <img src="/images/user.png" alt="icon" class="{{#ifCond route 'tweet'}}img-mask{{/ifCond}}">
+                <span class="h5 h-orange {{#ifCond route 'tweet'}}color-mask{{/ifCond}}">&nbsp;&nbsp;&nbsp;個人資料</span>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item py-2">
+            <a class="nav-link text-dark" href="users/{{user.id}}/setting">
+              <div class="d-flex flex-nowrap">
+                <img src="/images/set.png" alt="icon" class="{{#ifCond route 'setting'}}img-mask{{/ifCond}}">
+                <span class="h5 h-orange {{#ifCond route 'setting'}}color-mask{{/ifCond}}">&nbsp;&nbsp;&nbsp;設定</span>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item px-2">
+            <button type="button" class="btn btn-orange rounded-pill mt-3" style="border-radius: 30px 30px 30px 30px; width:178px;height:46px;">
+              <span class="h5">推文</span>
+            </button>
+          </li>
+          <li class="nav-item logout py-2">
+            <a class="nav-link text-dark" href="/logout">
+              <div class="d-flex">
+                <img src="/images/logout.png" alt="icon">
+                <span class="h5 h-orange">&nbsp;&nbsp;登出</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
