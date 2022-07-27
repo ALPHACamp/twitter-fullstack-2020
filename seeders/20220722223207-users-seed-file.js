@@ -4,7 +4,7 @@ const faker = require('faker')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    // 產生 三十 位使用者資訊
+    // 產生 29 位使用者資訊
     const usersArray = []
     for (let i = 1; i < 30; i++) {
       usersArray.push({

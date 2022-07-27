@@ -42,6 +42,7 @@ const adminController = {
 
   getUsers: (req, res, next) => {
     User.findAll({
+      where: { role: 'user' },
       nest: true,
       include: [
         { model: Tweet, include: Like },
