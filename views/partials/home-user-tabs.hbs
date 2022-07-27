@@ -1,6 +1,6 @@
 <h1>{{tweets.id}}</h1>
 <section id="Huei-region">
-  <div class="container-lg nav-user">
+  <div class="nav-user">
     <h4 class="nav-user-title">推薦跟隨</h4>
     <ul>
       <p class="list-separate"></p>
@@ -10,10 +10,10 @@
           <a href="/users/{{this.id}}/tweets">
             <div class="d-flex">
               <img src="{{#if this.avatar}}{{this.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}" alt=""
-                class="circle">
+                class="circle position-left">
               <div class="d-flex flex-column user-name-position">
-                <p class="text-dark">{{this.name}}</p>
-                <p class="text-black-50">@{{this.account}}</p>
+                <p class="text-dark position-left-text">{{this.name}}</p>
+                <p class="text-black-50 position-left-text">@{{this.account}}</p>
               </div>
               {{#if this.isFollowed}}
               <form action="/followships/{{this.id}}?_method=DELETE" method="POST">

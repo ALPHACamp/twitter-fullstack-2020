@@ -1,17 +1,38 @@
 @import "./variableSheet.scss";
 
 section#Huei-region {
+
   #navbar {
-    position: absolute;
-    width: 273px;
-    height: 731px;
-    left: 0px;
-    top: 30px;
-    right: 992px;
     color: $dark100;
     font-style: normal;
     line-height: 26px;
     letter-spacing: 0px;
+  }
+
+  .flex-home-page {
+    display: flex;
+    margin: 0 auto;
+    max-width: 1200px;
+    min-width: 992px;
+  }
+
+  .middle-region-home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    width: 639px;
+  }
+
+  .left-region-home {
+    display: flex;
+    margin-left: 130px;
+  }
+
+  .right-region-home {
+    display: flex;
+    width: 273px;
+    margin-right: 130px;
   }
 
   .a-orange {
@@ -59,20 +80,16 @@ section#Huei-region {
   }
 
   .nav-user {
-    position: absolute;
     width: 273px;
     height: 731px;
-    left: 997px;
-    top: 16px;
-    right: 0px;
     background: #FAFAFB;
     border-radius: 16px;
   }
 
   .nav-user-title {
-    position: absolute;
-    left: 24px;
-    top: 24px;
+    position: relative;
+    top: 30px;
+    left: 20px;
   }
 
   .circle {
@@ -113,16 +130,17 @@ section#Huei-region {
 
   .tweets {
     width: 639px;
+    margin-left: 24px;
 
     .title {
       position: relative;
       top: 24px;
-      left: 24px;
+      right: 280px;
     }
 
     .list-separate-lg {
       position: relative;
-      top: 200px;
+      top: 190px;
       height: 10px;
       width: 639px;
       background-color: $dark40;
@@ -142,7 +160,7 @@ section#Huei-region {
     word-wrap: break-word;
     position: relative;
     top: 60px;
-    left: 24px;
+    right: 1px;
 
     .account {
       margin-left: 8px;
@@ -204,4 +222,19 @@ section#Huei-region {
   height: 50px;
   border-radius: 50px;
   margin-right: 10px;
+}
+
+.flex-nowrap-element {
+  white-space: nowrap;
+  width: 173px;
+}
+
+.position-left {
+  position: relative;
+  left: 10px;
+}
+
+.position-left-text {
+  position: relative;
+  left: 20px;
 }

@@ -1,5 +1,5 @@
 <section id="Huei-region">
-  <div class="container-lg" id="navbar">
+  <div class="" id="navbar">
     <div class="col-auto">
       <div class="d-flex flex-column px-4 align-items-start">
         <ul class="nav flex-column nav-pills pr-5" style="width:100%;">
@@ -10,7 +10,7 @@
               </div>
             </a>
           </li>
-          <li class="nav-item py-2">
+          <li class="nav-item py-2 flex-nowrap-element">
             <a class="nav-link text-dark" href="/tweets">
               <div class="d-flex">
                 <img src="/images/home.png" alt="icon" class="{{#ifCond route 'home'}}img-mask{{/ifCond}}">
@@ -20,7 +20,7 @@
           </li>
           <li class="nav-item py-2">
             <a class="nav-link text-dark" href="/users/{{user.id}}/tweets">
-              <div class="d-flex">
+              <div class="d-flex flex-nowrap">
                 <img src="/images/user.png" alt="icon" class="{{#ifCond route 'tweet'}}img-mask{{/ifCond}}">
                 <span class="h5 h-orange {{#ifCond route 'tweet'}}color-mask{{/ifCond}}">&nbsp;&nbsp;&nbsp;個人資料</span>
               </div>
@@ -28,15 +28,14 @@
           </li>
           <li class="nav-item py-2">
             <a class="nav-link text-dark" href="users/{{user.id}}/setting">
-              <div class="d-flex">
+              <div class="d-flex flex-nowrap">
                 <img src="/images/set.png" alt="icon" class="{{#ifCond route 'setting'}}img-mask{{/ifCond}}">
                 <span class="h5 h-orange {{#ifCond route 'setting'}}color-mask{{/ifCond}}">&nbsp;&nbsp;&nbsp;設定</span>
               </div>
             </a>
           </li>
           <li class="nav-item px-2">
-            <button type="button" class="btn btn-orange rounded-pill mt-3"
-              style="width: 80%; border-radius: 30px 30px 30px 30px;">
+            <button type="button" class="btn btn-orange rounded-pill mt-3" style="border-radius: 30px 30px 30px 30px;">
               <span class="h5">推文</span>
             </button>
           </li>
