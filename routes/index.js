@@ -15,7 +15,7 @@ const userController = require('../controllers/user-controller')
 router.use('/admin', admin) // 未添加認證
 router.use('/users', users) // 未添加認證
 router.use('/tweets', authenticatedUser, tweets)
-router.use('/api', api) // 未添加認證
+router.use('/api', authenticatedUser, api) // 未添加認證
 
 router.post(
   '/admin/signin',

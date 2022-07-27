@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt-nodejs')
-const { getUser } = require('../helpers/auth-helpers')
+const { getUser } = require('../_helpers')
 const jwt = require('jsonwebtoken')
 
 const { User, Tweet, Like, Followship } = require('../models')
@@ -135,16 +135,18 @@ const userController = {
   },
   getUserProfile: async (req, res, next) => {
     try {
+      const loginUserId = getUser(req)
+      console.log(loginUserId)
       const userId = Number(req.params.id)
-      if (req.user.id !== userId) {
+      if (loginUserId !== userId) {
         throw new Error("Can not edit other user's account!")
       }
       const existUser = await User.findByPk(userId, { raw: true })
       if (!existUser) throw new Error("Account didn't exist!")
 
-      return res.render('settings', { existUser })
+      res.render('settings', { existUser })
 
-      // return res.json({ status: 'success', data: existUser })
+      // res.json({ status: 'success', data: existUser })
     } catch (err) {
       next(err)
     }

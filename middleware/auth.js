@@ -1,4 +1,4 @@
-const helpers = require('../helpers/auth-helpers')
+const helpers = require('../_helpers')
 
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
