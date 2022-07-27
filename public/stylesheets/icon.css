@@ -35,26 +35,27 @@ i.outline-home{
     width: calc(var(--base-size) * 1.5);
     height: calc(var(--base-size) * 1.5);
     transition: background 0.2s, filter 0.2s;
+    font-style: normal;
 }
-i.outline-home:hover{
+/* i.outline-home:hover{
     background: url('./svgs/home.svg');
     filter: var(--base-filter);
-}
+} */
 i.like{
     background-image: url('./svgs/like.svg');
-    width: calc(var(--base-size) * 1.875);
-    height: calc(var(--base-size) * 1.875);
+    width: calc(var(--base-size) * 1);
+    height: calc(var(--base-size) * 1);
     filter:var(--sup5-filter);
     transition: width 0.2s,height 0.2s;
 }
 i.like:hover{
-    width: calc(var(--base-size) * 2);
-    height: calc(var(--base-size) * 2);
+    width: calc(var(--base-size) * 1);
+    height: calc(var(--base-size) * 1);
 }
 i.outline-like{
     background-image: url('./svgs/outline-like.svg');
-    width: calc(var(--base-size) * 1.875);
-    height: calc(var(--base-size) * 1.875);
+    width: calc(var(--base-size) * 1);
+    height: calc(var(--base-size) * 1);
     transition: filter 0.2s;
 }
 i.outline-like:hover{
@@ -204,8 +205,8 @@ i.photo:hover{
 }
 i.reply{
     background-image: url('./svgs/outline-reply.svg');
-    width: calc(var(--base-size) * 1.875);
-    height: calc(var(--base-size) * 1.875);
+    width: calc(var(--base-size) * 1);
+    height: calc(var(--base-size) * 1);
     transition: filter 0.2s;
 }
 i.reply:hover{
