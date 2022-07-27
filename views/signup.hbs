@@ -1,45 +1,70 @@
-<div class='mb-4 text-center'>
-  <h1 class='h3 font-weight-normal mb-3'>Sign Up</h1>
-</div>
-<form class='form-signup' action='/signup' method='POST' style='width: 100%;'>
-  <div class='form-row mb-3'>
-    <label class='form-label' for='account'>Account</label>
-    <input
-      type='text'
-      id='account'
-      name='account'
-      class='form-control'
-      placeholder='Account'
-      onkeyup="this.value=this.value.replace(/\s+/g,'')"
-      required
-      autofocus
-    />
+<div class='row w-100'>
+  <div class='col-3 mx-auto'>
+    <div class='mb-4 text-center'>
+      <i class="logo mb-4"></i>
+      <p class='h3 fw-bold mb-3'>建立你的帳號</p>
+    </div>
+    <form class='form-signup' action='/signup' method='POST'>
+      <div class='form-row mb-4' style='background-color: #F5F8FA'>
+        <label class='form-label m-0 pt-1 ps-3' for='account' style='color: #696974' >帳號</label>
+        <input
+          type='text'
+          id='account'
+          name='account'
+          class='form-control border-0 p-0 ps-3'
+          style='margin: 0;'
+          placeholder='請輸入帳號'
+          onkeyup="this.value=this.value.replace(/\s+/g,'')"
+          required
+          autofocus
+        >
+        <hr class='m-0' style="background: #657786; border: 1px solid #657786; border-radius: 0px 0px 4px 4px;  opacity: 1;">
+      </div>
+      <div class='form-row mb-4' style='background-color: #F5F8FA'>
+        <label class='form-label m-0 pt-1 ps-3' for='name' style='color: #696974' >名稱</label>
+        <input
+          type='text'
+          id='name'
+          name='name'
+          class='form-control border-0 p-0 ps-3'
+          style='margin: 0;'
+          placeholder='請輸入使用者名稱'
+          onblur="this.value=this.value.replace(/^\s+|\s+$/g,'')"
+          required
+        />
+        <hr class='m-0' style="background: #657786; border: 1px solid #657786; border-radius: 0px 0px 4px 4px;  opacity: 1;">
+      </div>
+      <div class='form-row mb-4' style='background-color: #F5F8FA'>
+        <label class='form-label m-0 pt-1 ps-3' for='email' style='color: #696974' >Email</label>
+        <input type='text' id='email' name='email' class='form-control border-0 p-0 ps-3'
+          style='margin: 0;' placeholder='請輸入 Email' required />
+        <hr class='m-0' style="background: #657786; border: 1px solid #657786; border-radius: 0px 0px 4px 4px;  opacity: 1;">
+      </div>
+      <div class='form-row mb-4' style='background-color: #F5F8FA'>
+        <label class='form-label m-0 pt-1 ps-3' for='password' style='color: #696974' >密碼</label>
+        <input type='password' id='password' name='password' class='form-control border-0 p-0 ps-3'
+          style='margin: 0;' placeholder='請設定密碼' required />
+        <hr class='m-0' style="background: #657786; border: 1px solid #657786; border-radius: 0px 0px 4px 4px;  opacity: 1;">
+      </div>
+      <div class='form-row mb-5' style='background-color: #F5F8FA'>
+        <label class='form-label m-0 pt-1 ps-3' for='checkPassword' style='color: #696974' >密碼確認</label>
+        <input
+          type='password'
+          id='checkPassword'
+          name='checkPassword'
+          class='form-control border-0 p-0 ps-3'
+          style='margin: 0;'
+          placeholder='請再次輸入密碼'
+          required
+        />
+        <hr class='m-0' style="background: #657786; border: 1px solid #657786; border-radius: 0px 0px 4px 4px;  opacity: 1;">
+      </div>
+      <div class='mb-4 text-center'>
+        <button class='btn btn-brand mb-3 rounded-pill border-0 w-100' type='submit'>註冊</button>
+        <p>
+          <a href='/signin'>取消</a>
+        </p>
+      </div>
+    </form>
   </div>
-  <div class='form-row mb-3'>
-    <label class='form-label' for='name'>Name</label>
-    <input type='text' id='name' name='name' class='form-control' placeholder='Name' required autofocus />
-  </div>
-  <div class='form-row mb-3'>
-    <label class='form-label' for='email'>Email</label>
-    <input type='text' id='email' name='email' class='form-control' placeholder='Email' required />
-  </div>
-  <div class='form-row mb-3'>
-    <label class='form-label' for='password'>Password</label>
-    <input type='password' id='password' name='password' class='form-control' placeholder='Password' required />
-  </div>
-  <div class='form-row mb-3'>
-    <label class='form-label' for='passwordCheck'>Password Check</label>
-    <input
-      type='password'
-      id='passwordCheck'
-      name='passwordCheck'
-      class='form-control'
-      placeholder='Password Check'
-      required
-    />
-  </div>
-  <button class='btn btn-primary btn-block' type='submit'>Submit</button>
-</form>
-<div class='mb-4 text-center'>
-  <p><a href='/signin'>Sign In</a></p>
 </div>
