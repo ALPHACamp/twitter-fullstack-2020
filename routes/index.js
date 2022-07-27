@@ -14,6 +14,8 @@ router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 router.get('/logout', userController.logout)
 
+router.get('/users/:id/followers', userController.followers)
+
 router.use('/', generalErrorHandler)
 router.use('/', (req, res) => res.send('404 not found'))
 

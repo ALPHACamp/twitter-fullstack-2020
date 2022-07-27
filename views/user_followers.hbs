@@ -1,0 +1,102 @@
+<section id="ys-FE-users-region" class="temp-layout followships-layout">
+
+  {{#with observedUser}}
+  <div class="header d-flex">
+    <img src="/images/icon/arrow.png" alt="">
+    <div class="name_tweets">
+      <h5 class="name">{{name}}</h5>
+      <p class="tweets">{{Tweets.length}} 推文</p>
+    </div>
+  </div>
+  {{/with}}
+
+
+  <ul class="tab nav d-flex">
+    <li class="nav-item">
+      <a class="nav-link tab-btn follower active" href="/users/{{user.id}}/followers"> 追隨者</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link tab-btn followings" href="/users/{{user.id}}/followings"> 正在追隨</a>
+    </li>
+  </ul>
+
+
+
+  <div class="followers scroll-container">
+
+    <div class="tweets">
+      <div class="top d-flex">
+        <img src="/images/alphacamp.png" alt="avatar">
+        <p class="name">apple</p>
+        <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+          <button type="submit" class="follow-btn following">正在跟隨</button>
+        </form>
+      </div>
+      <p class="context">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit eius labore sint, quae beatae
+        quia minus at eum sequi! Facere maxime corporis nulla dolorum sapiente magnam, ullam alias accusamus aliquid.
+      </p>
+    </div>
+
+    <div class="tweets">
+      <div class="top d-flex">
+        <img src="/images/alphacamp.png" alt="avatar">
+        <p class="name">apple</p>
+        <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+          <button type="submit" class="follow-btn following">正在跟隨</button>
+        </form>
+      </div>
+      <p class="context">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit eius labore sint, quae beatae
+        quia minus at eum sequi! Facere maxime corporis nulla dolorum sapiente magnam, ullam alias accusamus aliquid.
+      </p>
+    </div>
+
+    <div class="tweets">
+      <div class="top d-flex">
+        <img src="/images/alphacamp.png" alt="avatar">
+        <p class="name">apple</p>
+        <form action="/following/{{this.id}}" method="POST" style="display: contents;">
+          <button type="submit" class="follow-btn follow">跟隨</button>
+        </form>
+      </div>
+      <p class="context">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit eius labore sint, quae beatae
+        quia minus at eum sequi! Facere maxime corporis nulla dolorum sapiente magnam, ullam alias accusamus aliquid.
+      </p>
+    </div>
+
+    <div class="tweets">
+      <div class="top d-flex">
+        <img src="/images/alphacamp.png" alt="avatar">
+        <p class="name">apple</p>
+        <form action="/following/{{this.id}}" method="POST" style="display: contents;">
+          <button type="submit" class="follow-btn follow">跟隨</button>
+        </form>
+      </div>
+      <p class="context">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit eius labore sint, quae beatae
+        quia minus at eum sequi! Facere maxime corporis nulla dolorum sapiente magnam, ullam alias accusamus aliquid.
+      </p>
+    </div>
+
+    {{#each followers}}
+    <div class="tweets">
+      <div class="top d-flex">
+        <img src="{{this.avatar}}" alt="avatar">
+        <p class="name">{{this.name}}</p>
+
+        {{#if isFollowed}}
+        <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+          <button type="submit" class="follow-btn following">正在跟隨</button>
+        </form>
+
+        {{else}}
+        <form action="/following/{{this.id}}" method="POST" style="display: contents;">
+          <button type="submit" class="follow-btn follow">跟隨</button>
+        </form>
+        {{/if}}
+
+      </div>
+      <p class="context">{{this.introduction}}</p>
+    </div>
+    {{/each}}
+
+  </div>
+</section>

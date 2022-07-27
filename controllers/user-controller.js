@@ -1,4 +1,5 @@
-const { User } = require('../models')
+const { Tweet, User } = require('../models')
+const helpers = require('../_helpers')
 const bcrypt = require('bcryptjs')
 
 const userController = {
@@ -36,6 +37,26 @@ const userController = {
     req.flash('success_messages', '登出成功！')
     req.logout()
     res.redirect('/signin')
+  },
+
+  followers: (req, res, next) => {
+    const observedUserId = req.params.id
+    const loginUser = helpers.getUser(req)
+
+    return User.findByPk(observedUserId, {
+      nest: true,
+      include: [Tweet, { model: User, as: 'Followers' }]
+    })
+      .then(user => {
+        const result = user.Followers.map(user => {
+          return {
+            ...user.toJSON(),
+            isFollowed: loginUser?.Followings.some(f => f.id === user.id)
+          }
+        })
+        res.render('user_followers', { observedUser: user.toJSON(), followers: result })
+      })
+      .catch(err => next(err))
   }
 }
 
