@@ -92,12 +92,13 @@ section#Huei-region {
     height: 731px;
     background: #FAFAFB;
     border-radius: 16px;
+    padding-left: 10px;
   }
 
   .nav-user-title {
     position: relative;
     top: 30px;
-    left: 20px;
+    left: 10px;
   }
 
   .circle {
@@ -150,6 +151,7 @@ section#Huei-region {
       overflow-y: scroll;
       scrollbar-color: $dark30 $dark20;
       scrollbar-width: thin;
+      overflow-x: hidden;
     }
 
     .list-separate-top {
@@ -225,7 +227,7 @@ section#Huei-region {
 .tweet-text {
   position: relative;
   top: 30px;
-  left: 24px;
+  left: 75px;
 
   .description {
     width: 526px;
@@ -233,7 +235,7 @@ section#Huei-region {
 
   .btn-tweets-bottom {
     position: relative;
-    right: 50px;
+    right: 150px;
     top: 100px;
     width: 64px;
     height: 40px;
