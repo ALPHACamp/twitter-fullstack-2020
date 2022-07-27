@@ -36,8 +36,11 @@ const tweetController = {
 
       users = await users.map(user => ({
         ...user.toJSON(),
+        followerCount: user.Followers.length,
         isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
       }))
+      users = users.sort((a, b) => b.followerCount - a.followerCount)
+        .slice(0, 10)
 
       return res.render('tweets', { tweets, users, user })
     }

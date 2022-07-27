@@ -43,6 +43,7 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
+<<<<<<< HEAD
   tweets: (req, res, next) => {
     const id = req.params.id
     Promise.all([
@@ -152,9 +153,49 @@ const userController = {
           }))
           .slice(0, 10)
         res.render('profile', { targetUser: targetUser.toJSON(), likes, user, users })
+=======
+
+  followers: (req, res, next) => {
+    const observedUserId = req.params.id
+    const loginUser = helpers.getUser(req)
+
+    return User.findByPk(observedUserId, {
+      nest: true,
+      include: [Tweet, { model: User, as: 'Followers' }]
+    })
+      .then(user => {
+        const result = user.Followers.map(user => {
+          return {
+            ...user.toJSON(),
+            isFollowed: loginUser?.Followings.some(f => f.id === user.id)
+          }
+        })
+        res.render('user_followers', { observedUser: user.toJSON(), followers: result })
+      })
+      .catch(err => next(err))
+  },
+
+  followings: (req, res, next) => {
+    const observedUserId = req.params.id
+    const loginUser = helpers.getUser(req)
+
+    return User.findByPk(observedUserId, {
+      nest: true,
+      include: [Tweet, { model: User, as: 'Followings' }]
+    })
+      .then(user => {
+        const result = user.Followings.map(user => {
+          return {
+            ...user.toJSON(),
+            isFollowed: loginUser?.Followings.some(f => f.id === user.id)
+          }
+        })
+        res.render('user_followings', { observedUser: user.toJSON(), followings: result })
+>>>>>>> origin/master
       })
       .catch(err => next(err))
   }
+
 }
 
 module.exports = userController

@@ -52,8 +52,10 @@ const adminController = {
     }).then(users => {
       const result = users
         .map(user => {
+          const userObj = user.toJSON()
+          delete userObj.password
           return {
-            ...user.toJSON(),
+            ...userObj,
             tweetsCount: user.Tweets.length,
             likesCount: user.Tweets.reduce((acc, cur) => acc + cur.Likes.length, 0),
             followersCount: user.Followers.length,

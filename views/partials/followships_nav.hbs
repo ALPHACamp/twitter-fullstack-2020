@@ -1,0 +1,23 @@
+{{#with observedUser}}
+<div class="header d-flex">
+  <a href="javascript:history.back()">
+    <img src="/images/icon/arrow.png" alt="">
+  </a>
+  <div class="name_tweets">
+    <h5 class="name">{{name}}</h5>
+    <p class="tweets">{{Tweets.length}} 推文</p>
+  </div>
+</div>
+
+
+{{/with}}
+<ul class="tab nav d-flex">
+  <li class="nav-item">
+    <a class="nav-link tab-btn follower {{#ifCond route 'followers'}} active {{/ifCond}}"
+      href="/users/{{observedUser.id}}/followers"> 追隨者</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link tab-btn followings {{#ifCond route 'followings'}} active {{/ifCond}}"
+      href="/users/{{observedUser.id}}/followings"> 正在追隨</a>
+  </li>
+</ul>

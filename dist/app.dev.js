@@ -8,6 +8,8 @@ var express = require('express');
 
 var helpers = require('./_helpers');
 
+var methodOverride = require('method-override');
+
 var handlebars = require('express-handlebars');
 
 var handlebarsHelpers = require('./helpers/handlebars-helpers');
@@ -19,8 +21,6 @@ var passport = require('passport');
 var flash = require('connect-flash');
 
 var bodyParser = require('body-parser');
-
-var methodOverride = require('method-override');
 
 var routes = require('./routes');
 
@@ -35,7 +35,6 @@ app.set('view engine', 'hbs');
 app.use(express.urlencoded({
   extended: true
 }));
-app.use(methodOverride('_method'));
 app.use(express["static"]('public'));
 app.use(session({
   secret: SESSION_SECRET,
@@ -45,6 +44,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+app.use(methodOverride('_method'));
 app.use(function (req, res, next) {
   res.locals.success_messages = req.flash('success_messages');
   res.locals.error_messages = req.flash('error_messages');

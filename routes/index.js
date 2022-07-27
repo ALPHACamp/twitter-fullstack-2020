@@ -31,6 +31,9 @@ router.get('/users/:id/tweets', authenticated, userController.tweets)
 router.get('/users/:id/replies', authenticated, userController.replies)
 router.get('/users/:id/likes', authenticated, userController.likes)
 
+router.get('/users/:id/followers', authenticated, userController.followers)
+router.get('/users/:id/followings', authenticated, userController.followings)
+
 router.use('/', generalErrorHandler)
 router.use('/', authenticated, tweetController.getTweets)
 

@@ -69,7 +69,8 @@ section#Huei-region .logout {
 }
 section#Huei-region .nav-user {
   width: 273px;
-  height: 731px;
+  height: 820px;
+  background-color: #FAFAFB;
   background: #FAFAFB;
   border-radius: 16px;
   padding-left: 10px;

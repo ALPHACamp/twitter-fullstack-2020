@@ -39,7 +39,10 @@
               {{this.description}}
             </div>
             <div class="d-flex">
-              <img src="/images/comment.png" style="width:13.17px;height:13.17px;margin-right:8px" alt="comment">
+              <button style="position:relative;bottom:5px;">
+                <img src="/images/comment.png" style="width:13.17px;height:13.17px;margin-right:8px" alt="comment"
+                  data-bs-toggle="modal" data-bs-target="#home-reply-model">
+              </button>
               <p class="p">{{this.repliedCount}}</p>
               {{#if this.isLiked}}
               <form action="/tweets/{{this.id}}/unlike" method="POST">
@@ -63,7 +66,7 @@
       </div>
     </div>
 
-    <!-- Modal -->
+    <!-- 新增 tweet Modal -->
     <div class="modal fade" id="home-model" tabindex="-1" aria-labelledby="home-model" aria-hidden="true">
       <div class="modal-dialog modal-lg" style="width:639px; position:relative; right:40px;">
         <div class="modal-content" style="border-radius:16px">
@@ -85,6 +88,42 @@
               <span class="" style="font-size:16px;">推文</span>
             </button>
           </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- 回覆 tweet Modal -->
+    <div class="modal fade" id="home-reply-model" tabindex="-1" aria-labelledby="home-model" aria-hidden="true">
+      <div class="modal-dialog modal-lg" style="width:639px; position:relative; right:40px;">
+        <div class="modal-content" style="border-radius:16px">
+          <div class="modal-header" style="">
+            <label for="description" class="form-label">
+            </label>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="container" style="height:500px;">
+            <div class="row" style="height:200px;">
+              <div class="col">
+              </div>
+            </div>
+            <div class="row" style="height:200px;">
+              <div class="col">
+                <form action="/tweets/{{this.id}}/replies" method="POST">
+                  <div class="modal-body d-flex">
+                    <img src="{{#if user.avatar}}{{user.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+                      class="tweet-user-avatar" style="width:50px;height:50px;" alt="Picture">
+                    <textarea class="form" id="description" name="description" rows="3" maxlength="140"
+                      placeholder="推你的回覆" style="border:none; width:600px;position:relative; top:10px;resize:none;"
+                      required></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-orange btn-tweets-models"
+                    style="border-radius: 50px;position:relative; left:550px;top:130px;">
+                    <span class="" style="font-size:16px;">推文</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
