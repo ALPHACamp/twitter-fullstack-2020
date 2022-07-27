@@ -244,16 +244,32 @@
 }
 #profile-region #profile-middle .user-info {
   height: 378px;
+  margin-bottom: 8px;
 }
-#profile-region #profile-middle .user-info .avatar {
+#profile-region #profile-middle .user-info .avatar-button {
+  position: relative;
+  top: -70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#profile-region #profile-middle .user-info .avatar-button .avatar {
   width: 141.1px;
   height: 140px;
   border: 4px #FFFFFF solid;
   border-radius: 50%;
-  position: relative;
-  top: -70px;
   margin-left: 16.13px;
   margin-bottom: 8px;
+}
+#profile-region #profile-middle .user-info .avatar-button button {
+  width: 128px;
+  height: 40px;
+  margin-top: 64px;
+  margin-right: 16px;
+  background-color: #FFFFFF;
+  color: #FF6600;
+  border-color: #FF6600;
+  border-radius: 50px;
 }
 #profile-region #profile-middle .user-info .name {
   display: flex;
@@ -282,6 +298,47 @@
   font-size: 14px;
   line-height: 22px;
   color: #171725;
+}
+#profile-region #profile-middle .user-info .follow {
+  position: relative;
+  top: -70px;
+  margin-left: 16.13px;
+  display: flex;
+  justify-content: flex-start;
+  font-weight: 400;
+  font-size: 14px;
+  margin-top: 8px;
+}
+#profile-region #profile-middle .user-info .follow div {
+  display: flex;
+  justify-content: flex-start;
+}
+#profile-region #profile-middle .user-info .follow div .first {
+  color: #171725;
+}
+#profile-region #profile-middle .user-info .follow div .second {
+  color: #6C757D;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal {
+  width: 634px;
+  height: 610px;
+  border-radius: 14px;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-header {
+  height: 49px;
+  display: flex;
+  justify-content: space-between;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-header .header-left {
+  display: flex;
+  align-items: center;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-header .header-left .btn-close {
+  width: 15px;
+  height: 15px;
+  opacity: 1;
+  background: transparent url(/images/vector_close.png);
+  background-size: 15px 15px;
 }
 #profile-region #profile-right {
   width: 273px;

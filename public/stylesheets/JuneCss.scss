@@ -242,15 +242,31 @@
     }
     .user-info {
       height: 378px;
-      .avatar {
-        width: 141.1px;
-        height: 140px;
-        border: 4px $dark0 solid;
-        border-radius: 50%;
+      margin-bottom: 8px;
+      .avatar-button {
         position: relative;
         top: -70px;
-        margin-left: 16.13px;
-        margin-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .avatar {
+            width: 141.1px;
+            height: 140px;
+            border: 4px $dark0 solid;
+            border-radius: 50%;
+            margin-left: 16.13px;
+            margin-bottom: 8px;
+          }
+        button {
+          width: 128px;
+          height: 40px;
+          margin-top: 64px;
+          margin-right: 16px;
+          background-color: $dark0;
+          color: $mainColor;
+          border-color: $mainColor;
+          border-radius: 50px;
+        }
       }
       .name {
         display: flex;
@@ -280,16 +296,53 @@
         line-height: 22px;
         color: $dark100;
       }
+      .follow {
+        position: relative;
+        top: -70px;
+        margin-left: 16.13px;
+        display: flex;
+        justify-content: flex-start;
+        font-weight: 400;
+        font-size: 14px;
+        margin-top: 8px;
+        div {
+          display: flex;
+          justify-content: flex-start;
+          .first {
+            color: $dark100;
+          }
+          .second {
+            color: $secondaryColor;
+          }
+        }
+      }
+      #edit-profile-modal {
+        // position: absolute;
+        width: 634px;
+        height: 610px;
+        border-radius: 14px;
+        .modal-header {
+          height: 49px;
+          display: flex;
+          justify-content: space-between;
+          .header-left {
+            display: flex;
+            align-items: center;
+            .btn-close {
+              width: 15px;
+              height: 15px;
+              opacity: 1;
+              background: transparent url(/images/vector_close.png);
+              background-size: 15px 15px;
+              
+            }
+          }
+        }
+      }
     }
   }
   #profile-right {
     width: 273px;
-    // .nav-user {
-    //   padding: 24px 16px;
-    //   .nav-user-title {
-    //     position: unset;
-    //   }
-    // }
   }
   .profile-tabs {
     li {

@@ -36,8 +36,7 @@ const userController = {
       return res.redirect('/signin')
     }
     req.flash('success_messages', '成功登入！')
-    res.send('login')
-    // res.redirect('/tweets')
+    res.redirect('/tweets')
   },
   logout: (req, res) => {
     req.flash('success_messages', '登出成功！')
@@ -47,7 +46,12 @@ const userController = {
   tweets: (req, res, next) => {
     const id = req.params.id
     Promise.all([
-      User.findByPk(id),
+      User.findByPk(id, {
+        include: [
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' }
+        ]
+      }),
       Tweet.findAll({ 
         where: { UserId: id },
         order: [['createdAt', 'desc']],
@@ -64,6 +68,7 @@ const userController = {
     ])
       .then(([targetUser, tweets, followship]) => {
         if (!targetUser) throw new Error("User didn't exist")
+        console.log(targetUser)
         const user = getUser(req)
         const users = followship
           .map(data => ({
@@ -71,6 +76,7 @@ const userController = {
             isFollowed: user.Followings.some(u => u.id === data.followerId)
           }))
           .slice(0, 10)
+          res.locals.tweetsLength = tweets.length
         res.render('profile', { targetUser: targetUser.toJSON(), tweets, user, users })
       })
       .catch(err => next(err))
