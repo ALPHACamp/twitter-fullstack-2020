@@ -1,4 +1,13 @@
 {{> alphitter}}
 <div class="d-flex justify-content-center mt-3 mb-5">
-  {{> user-account-form}}
+  <form class="form-signup" action="/signup" method="POST" style="width: 500px;">
+    <div class="text-center mb-4">
+      <p class="fw-bold">建立你的帳號</p>
+    </div>
+    {{> user-account-form}}
+    <button class="submit-btn" style="width: 500px;" type="submit">註冊</button>
+    <div class="text-center mt-2">
+      <a href="/signin">取消</a>
+    </div>
+  </form>
 </div>
