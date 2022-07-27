@@ -33,6 +33,9 @@ router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 router.get('/logout', userController.logout)
 
+router.get('/users/:id/followers', authenticated, userController.followers)
+router.get('/users/:id/followings', authenticated, userController.followings)
+
 router.use('/', generalErrorHandler)
 router.use('/', authenticated, tweetController.getTweets)
 //router.use('/', (req, res) => res.send('404 not found'))

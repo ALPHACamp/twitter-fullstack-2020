@@ -202,3 +202,135 @@ section#ys-admin-region {
   }
 
 }
+
+section#ys-FE-users-region {
+  * {
+    // border: dotted 1px red;
+  }
+
+  &.temp-layout {
+    width: 45%;
+  }
+
+  &.followships-layout {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    border-left: 1px solid #E6ECF0;
+    border-right: 1px solid #E6ECF0;
+  }
+
+
+
+  .header {
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #E6ECF0;
+
+    img {
+      width: 16px;
+      height: 14px;
+    }
+
+    .name_tweets {
+      margin-left: 1rem;
+
+      p {
+        color: $secondaryColor;
+        font-size: 0.75rem;
+      }
+    }
+
+
+  }
+
+  .tab {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #E6ECF0;
+
+    a {
+      padding-top: 0.9rem;
+      padding-bottom: 0.9rem;
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+      color: $secondaryColor;
+
+      &.active {
+        filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
+        border-bottom: 1px solid $mainColor;
+      }
+    }
+
+  }
+
+  .followers {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    height: 1000px;
+
+    &.scroll-container {
+      height: 85vh;
+      overflow-y: scroll;
+      scrollbar-color: $dark30 $dark20;
+      scrollbar-width: thin;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      // bar的樣式
+      &::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .tweets {
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #E6ECF0;
+      padding-bottom: 1rem;
+    }
+
+    .top {
+      align-items: center;
+
+      img {
+        margin-left: 1.5rem;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+      }
+
+      .name {
+        margin-left: 0.5rem;
+        font-weight: 700;
+      }
+
+      .follow-btn {
+        position: absolute;
+        right: 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        text-align: center;
+      }
+
+      .follow {
+        border: 1px solid $mainColor;
+        color: $mainColor;
+      }
+
+      .following {
+        background-color: $mainColor;
+        color: white
+      }
+    }
+
+    .context {
+      margin-left: 5rem;
+      overflow-wrap: break-word;
+    }
+
+  }
+}
