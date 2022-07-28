@@ -54,7 +54,6 @@ const userConroller = {
       .then(user => {
         if (!user) throw new Error('使用者不存在!')
         user = user.toJSON()
-        console.log(user)
         res.render('setting', { user })
       })
   }
