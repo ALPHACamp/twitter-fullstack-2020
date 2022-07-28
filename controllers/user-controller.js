@@ -1,6 +1,6 @@
 // 登入、註冊、登出、拿到編輯頁、送出編輯
 const bcrypt = require('bcryptjs')
-const { User, Tweet } = require('../models')
+const { User, Tweet, Reply, Like } = require('../models')
 const helpers = require('../_helpers')
 
 const userController = {
@@ -58,7 +58,7 @@ const userController = {
     return User.findByPk(id)
       .then(user => {
         if (!user) throw new Error('使用者不存在!')
-        if (user.id !== helpers.getUser(req).user.id) throw new Error('無法編輯他人資料!')
+        if (user.id !== helpers.getUser(req).id) throw new Error('無法編輯他人資料!')
         user = user.toJSON()
         res.render('setting', { user })
       }).catch(err => next(err))
@@ -104,15 +104,20 @@ const userController = {
   },
   getPersonalTweets: async (req, res, next) => {
     try {
-      const user = helpers.getUser(req.user)
+      const user = helpers.getUser(req)
+      const userId = helpers.getUser(req).id
       const tweets = await Tweet.findAll({
         include: User,
+        where: {
+          ...userId ? { userId } : {}
+        },
         order: [
           ['created_at', 'DESC']
         ],
         raw: true,
         nest: true
       })
+      console.log('tweets', tweets)
       user.introduction = user.introduction.substring(0, 20);
       return res.render('profile', { tweets, user })
     }
@@ -122,7 +127,7 @@ const userController = {
   },
   getPersonalFollowings: async (req, res, next) => {
     try {
-      const user = helpers.getUser(req.user)
+      const user = helpers.getUser(req)
       const tweets = await Tweet.findAll({
         include: User,
         order: [
@@ -140,7 +145,7 @@ const userController = {
   },
   getPersonalFollowers: async (req, res, next) => {
     try {
-      const user = helpers.getUser(req.user)
+      const user = helpers.getUser(req)
       const tweets = await Tweet.findAll({
         include: User,
         order: [
@@ -158,27 +163,33 @@ const userController = {
   },
   getPersonalLikes: async (req, res, next) => {
     try {
-      const user = helpers.getUser(req.user)
-      const tweets = await Tweet.findAll({
-        include: User,
+      const user = helpers.getUser(req)
+      const userId = helpers.getUser(req).id
+      const likes = await Like.findAll({
+        include: [User, Tweet],
         order: [
           ['created_at', 'DESC']
         ],
         raw: true,
         nest: true
       })
+      console.log('likes', likes)
       user.introduction = user.introduction.substring(0, 20);
-      return res.render('profilelike', { tweets, user })
+      return res.render('profilelike', { likes, user })
     }
     catch (err) {
       next(err)
     }
   },
-  getPersonalLikes: async (req, res, next) => {
+  getPersonalReplies: async (req, res, next) => {
     try {
-      const user = helpers.getUser(req.user)
-      const tweets = await Tweet.findAll({
+      const user = helpers.getUser(req)
+      const userId = helpers.getUser(req).id
+      const replies = await Reply.findAll({
         include: User,
+        where: {
+          ...userId ? { userId } : {}
+        },
         order: [
           ['created_at', 'DESC']
         ],
@@ -186,7 +197,8 @@ const userController = {
         nest: true
       })
       user.introduction = user.introduction.substring(0, 20);
-      return res.render('profilereply', { tweets, user })
+      console.log('replies', replies)
+      return res.render('profilereply', { replies, user })
     }
     catch (err) {
       next(err)

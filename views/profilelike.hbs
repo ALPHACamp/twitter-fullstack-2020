@@ -54,9 +54,9 @@
 
 
       <div class="hr-line-b"></div>
-      {{>tweet-tabs route='users'}}
-      {{#each tweets}}
-      {{> tweet}}
+      {{>tweet-tabs route='likes'}}
+      {{#each likes}}
+      {{> tweet route='likes'}}
       {{/each}}
 
     </div>
