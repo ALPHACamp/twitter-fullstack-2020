@@ -1,6 +1,7 @@
 const assert = require('assert')
 const helpers = require("../_helpers")
-const { Followship } = require('../models')
+const sortObj = require('../helpers/sortObj')
+const { User, Followship } = require('../models')
 
 const followController = {
   addFollow: async (req, res, next) => {
@@ -32,9 +33,38 @@ const followController = {
           followingId
         }
       })
-      assert(following, '你已經取消追蹤囉')
+      assert(!following, '你已經取消追蹤囉')
       const removedFollow = await following.destroy()
       return res.redirect('back')
+    }
+    catch (err) {
+      next(err)
+    }
+  },
+  getTopFollowers: async (req, res, next) => {
+    try {
+      const followingUserId = await Followship.findAll({
+        where: { followerId: helpers.getUser(req).id },
+        raw: true
+      })
+      const topFollower = await Followship.findAndCountAll({
+        group: 'following_id',
+        raw: true,
+        nest: true
+      })
+      // const topFollower = await User.findAll({
+      //   limit: 10,
+      //   raw: true,
+      //   nest: true
+      // })
+      const users = []
+      for (let i in topFollower.rows) {
+        const user = await User.findByPk(topFollower.rows[i].followingId, { raw: true })
+        user.followerCounts = topFollower?.count[i].count
+        users.push(user)
+        users.sort(sortObj('followerCounts'))
+      }
+      res.json({ followingUserId, users })
     }
     catch (err) {
       next(err)
