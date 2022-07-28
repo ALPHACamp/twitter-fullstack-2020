@@ -245,7 +245,7 @@
 }
 #profile-region #profile-middle .user-info {
   height: 378px;
-  margin-bottom: 8px;
+  margin-bottom: 30px;
 }
 #profile-region #profile-middle .user-info .avatar-button {
   position: relative;
@@ -304,6 +304,7 @@
   position: relative;
   top: -70px;
   margin-left: 16.13px;
+  margin-top: 6px;
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
@@ -427,6 +428,43 @@
   color: #FF6600;
   padding-bottom: 13px;
   border-bottom: 2px #FF6600 solid;
+}
+#profile-region .scroll-container {
+  height: 85vh;
+  overflow-y: scroll;
+  scrollbar-color: #F1F1F5 #FAFAFB;
+  scrollbar-width: thin;
+}
+#profile-region .scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+#profile-region .scroll-container::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+#profile-region .scroll-container .tweet-card {
+  position: relative;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #E6ECF0;
+}
+#profile-region .scroll-container .tweet-card .head {
+  align-items: center;
+}
+#profile-region .scroll-container .tweet-card .name {
+  margin-right: 8px;
+  font-weight: 700;
+  font-size: 16px;
+}
+#profile-region .scroll-container .tweet-card .account,
+#profile-region .scroll-container .tweet-card .time {
+  font-weight: 400;
+  font-size: 14px;
+  color: #6C757D;
+}
+#profile-region .scroll-container .tweet-card .content {
+  margin-top: 8px;
+  padding-right: 3rem;
 }
 
 @media screen and (min-width: 991px) and (max-width: 1200px) {

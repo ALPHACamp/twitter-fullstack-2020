@@ -43,7 +43,6 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-<<<<<<< HEAD
   tweets: (req, res, next) => {
     const id = req.params.id
     Promise.all([
@@ -153,8 +152,9 @@ const userController = {
           }))
           .slice(0, 10)
         res.render('profile', { targetUser: targetUser.toJSON(), likes, user, users })
-=======
-
+      })
+      .catch(err => next(err))
+  },
   followers: (req, res, next) => {
     const observedUserId = req.params.id
     const loginUser = helpers.getUser(req)
@@ -174,7 +174,6 @@ const userController = {
       })
       .catch(err => next(err))
   },
-
   followings: (req, res, next) => {
     const observedUserId = req.params.id
     const loginUser = helpers.getUser(req)
@@ -191,11 +190,9 @@ const userController = {
           }
         })
         res.render('user_followings', { observedUser: user.toJSON(), followings: result })
->>>>>>> origin/master
       })
       .catch(err => next(err))
   }
-
 }
 
 module.exports = userController

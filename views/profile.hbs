@@ -69,7 +69,7 @@
         <h5>{{targetUser.name}}</h5>
         <span>@{{targetUser.account}}</span>
       </div>
-      <span class="introduction">{{targetUser.introduction}}</span>
+      <span class="introduction" style="display: block;">{{targetUser.introduction}}</span>
       <div class="follow">
         <div style="margin-right: 20px;">
           <span class="first">{{targetUser.Followings.length}} 個</span>
@@ -82,6 +82,7 @@
       </div>
     </div>
     {{> profile-tabs route='tweets'}}
+    <div class="scroll-container">
     {{#each tweets}}
     <a href="">
       <div class="tweet">
@@ -91,7 +92,7 @@
         <div class="content">
           <div class="d-flex align-items-center" style="height: 26px;">
             <span class="name">{{../targetUser.name}}</span>
-            <span class="account">@{{../targetUser.account}}•3小時</span>
+            <span class="account">@{{../targetUser.account}}•{{relativeTimeFromNow this.createdAt}}</span>
           </div>
           <div class="description">
             {{this.description}}
@@ -100,9 +101,13 @@
             <img src="/images/comment.png" alt="comment">
             <span style="margin-right: 41.3px;">{{this.repliedCount}}</span>
             {{#if isLiked}}
-              <img src="/images/redLove.png" alt="like">
+            <form action="/tweets/{{this.id}}/unlike" method="POST">
+              <button type="submit"><img src="/images/redLove.png" alt="like"></button>
+            </form>
             {{else}}
-              <img src="/images/like.png" alt="like">
+            <form action="/tweets/{{this.id}}/like" method="POST">
+              <button type="submit"><img src="/images/like.png" alt="like"></button>
+            </form>
             {{/if}}
             <span>{{this.likedCount}}</span>
           </div>
@@ -110,6 +115,7 @@
       </div>
     </a>
     {{/each}}
+    </div>
   </div>
   
   <div id="profile-right">
