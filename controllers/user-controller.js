@@ -182,7 +182,7 @@ const userController = {
         nest: true
       })
       user.introduction = user.introduction.substring(0, 20);
-      return res.render('profilelike', { likes, user })
+      return res.render('profileLike', { likes, user })
     }
     catch (err) {
       next(err)
@@ -204,7 +204,7 @@ const userController = {
         nest: true
       })
       user.introduction = user.introduction.substring(0, 20);
-      return res.render('profilereply', { replies, user })
+      return res.render('profileReply', { replies, user })
     }
     catch (err) {
       next(err)

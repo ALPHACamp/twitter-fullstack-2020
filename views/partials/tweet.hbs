@@ -8,13 +8,12 @@
   </a>
   <div class="text-box">
     <span>{{#ifCond route 'tweets'}}{{this.description}}{{/ifCond}}
-      {{#ifCond route 'mainpage'}}{{this.description}}{{/ifCond}}
       {{#ifCond route 'replies'}}{{this.comment}}{{/ifCond}}
       {{#ifCond route 'likes'}}{{this.Tweet.description}}{{/ifCond}}
       <form action="/tweets/{{this.id}}/like" method="POST">
         <div class="speech-bubble">
           <button type="submit">
-            <img src="https://upload.cc/i1/2022/07/26/rKCiDo.png" alt="reply">
+            <img src="/images/icons/speech-bubble.png" alt="reply">
           </button>
           <div class="font-account">50</div>
         </div>
@@ -24,7 +23,7 @@
       <form action="/tweets/{{this.id}}/unlike" method="POST">
         <div class="like-w">
           <button type="submit">
-            <img src="images/icons/like.png" alt="like">
+            <img src="/images/icons/like.png" alt="like">
           </button>
           <div class="font-account">50</div>
         </div>
@@ -33,7 +32,7 @@
       <form action="/tweets/{{this.id}}/like" method="POST">
         <div class="like-w">
           <button type="submit">
-            <img src="https://upload.cc/i1/2022/07/26/ZdBEx9.png" alt="like">
+            <img src="/images/icons/like-w.png" alt="like">
           </button>
           <div class="font-account">50</div>
         </div>
