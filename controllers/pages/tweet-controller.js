@@ -1,4 +1,7 @@
-const tweetConroller = {
+const tweetController = {
+  getTweets: (req, res) => {
+    res.render('tweets')
+  }
 }
 
-module.exports = tweetConroller
+module.exports = tweetController
