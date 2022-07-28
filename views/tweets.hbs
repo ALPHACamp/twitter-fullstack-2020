@@ -21,17 +21,18 @@
       </div>
       <div class="diver"></div>
       {{!-- 推文卡片 --}}
+      {{#each tweets}}
       <div class="tweet-container ms-3">
         <div class="d-flex flex-wrap mt-3">
           <div class="me-1">
-            <img src="https://i.imgur.com/vYhPi3M.jpeg" alt="" class="avatar-sm rounded-pill">
+            <img src="{{this.User.avatar}}" alt="" class="avatar-sm rounded-pill">
           </div>
           <div class="user-comment-container d-flex flex-column text-start ms-1">
             <div class="user-name-account">
-              <h6 class="user-name fw-bold fs-5">XXX</h6>
-              <p class="user-account fw-normal fs-6">@aaa・{{relativeTimeFromNow this.createdAt}}</p>
+              <h6 class="user-name fw-bold fs-5">{{this.User.name}}</h6>
+              <p class="user-account fw-normal fs-6">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</p>
             </div>
-            <p class="comment">fsajklgsaedfkljasklfaeswklfjfasklefjklasefjklasefjklaasweflkj</p>
+            <p class="comment">{{this.description}}</p>
             <div class="comment-like-btn-container mb-3">
               <i class="reply"></i>
               <p class="count ms-2">123</p><i class="outline-like ms-5"></i>
@@ -40,6 +41,7 @@
           </div>
         </div>
       </div>
+      {{/each}}
       {{!-- 推文卡片結束 --}}
     </div>
     {{!-- 中央部分結束 --}}

@@ -1,6 +1,5 @@
-const jwt = require('jsonwebtoken')
 const { Tweet, User, Like, Followship, Reply } = require('../models')
-const { getUser } = require('../_helpers')
+const helpers = require('../_helpers')
 
 const tweetController = {
   getTweetReplies: async (req, res, next) => {
@@ -44,7 +43,7 @@ const tweetController = {
   },
   likeTweet: async (req, res, next) => {
     try {
-      const UserId = getUser(req).id
+      const UserId = helpers.getUser(req).id
       const TweetId = req.params.id
       const existUser = User.findByPk(UserId)
       if (!existUser) throw new Error("This account didn't exist!")
@@ -58,7 +57,7 @@ const tweetController = {
   },
   dislikeTweet: async (req, res, next) => {
     try {
-      const UserId = getUser(req).id
+      const UserId = helpers.getUser(req).id
       const TweetId = req.params.id
       const LikeTweet = await Like.findOne({ where: { UserId, TweetId } })
       if (!LikeTweet) throw new Error("You haven't liked this tweet!")
@@ -73,7 +72,7 @@ const tweetController = {
   },
   postTweet: async (req, res, next) => {
     try {
-      const UserId = getUser(req).id
+      const UserId = helpers.getUser(req).id
       if (!UserId) {
         return res.redirect(302, '/signin')
       }
@@ -91,7 +90,7 @@ const tweetController = {
   },
   getTweets: async (req, res, next) => {
     try {
-      const user = getUser(req)
+      const user = helpers.getUser(req)
       const followingId = user.Followings.map(i => i.id)
       const tweets = await Tweet.findAll({
         include: { model: User, as: User },
