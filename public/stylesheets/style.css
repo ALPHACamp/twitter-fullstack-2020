@@ -1,4 +1,8 @@
 .body-container {
+  position: fixed;
+  height: 100%;
+  left: 50%;
+  margin-left: -565px;
   display: flex;
   justify-content: center;
   flex-wrap: nowrap;
@@ -6,34 +10,40 @@
 
 .menu {
   width: 178px;
+  height: 100%;
   margin-right: 20px;
 }
 
-.menu-item {
-  display: flex;
-  align-items: center;
-}
-
-.menu-text {
-  font-size: 18px;
+.nav {
   height: 100%;
-  line-height: 18px;
-}
-
-.menu-item:hover {
-  color: #FF6600;
-}
-
-.icon-home {
-  color:#FF6600
 }
 
 /* center-part */
 
 .center-part {
+  height: 100%;
   min-width: 300px;
   width: 640px;
   padding: 0 0 0 0;
+}
+
+.tweet-container {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.scrollbar {
+  /* padding-left: 6px; */
+}
+
+.scrollbar::-webkit-scrollbar {
+  display: none;
+  /* width: 6px; */
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  /* border-radius: 3px; */
+  /* background-color: rgba(0, 0, 0, 0.1); */
 }
 
 .avatar-sm {
@@ -76,7 +86,7 @@
 .user-account {
   display: inline;
   color: #6C757D;
-  height:24px;
+  height: 24px;
   line-height: 24px;
 }
 
@@ -94,11 +104,54 @@
   border: 0 0 0 0;
 }
 
-.recommend-follow-list{
+.recommend-follow-list {
   width: 273px;
   margin-left: 20px;
 }
 
 .follow-list {
   background-color: #FAFAFB;
+}
+
+.user-name-account {
+  width: 50px;
+  overflow: hidden;
+}
+
+.follow-btn {
+  display: inline;
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px 0 20px;
+  background-color: white;
+  color: #FF6600;
+  border: 1px solid #FF6600;
+}
+
+.follow-btn:hover {
+  background-color: #FF6600;
+  color: white;
+  border: 1px solid #FF6600;
+}
+
+.following-btn {
+  display: inline;
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px 0 20px;
+  background-color: #FF6600;
+  color: white;
+  border: 1px solid #FF6600;
+}
+
+.following-btn:hover {
+  background-color: white;
+  color: #FF6600;
+  border: 1px solid #FF6600;
+}
+
+.follow-input {
+  display: none;
 }

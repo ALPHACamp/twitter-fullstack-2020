@@ -35,9 +35,6 @@ const tweetController = {
       next(err)
     }
   },
-  postTweetUnlike: (req, res, next) => {
-    res.json({ status: 'success' })
-  },
   postTweet: async (req, res, next) => {
     try {
       const UserId = getUser(req).id
@@ -53,6 +50,15 @@ const tweetController = {
   getTweets: async (req, res, next) => {
     try {
       const role = req.user.role
+
+      let topUser = await User.findAll({ include: [{ model: User, as: 'Followers' }] })
+      topUser = topUser.map(user => ({
+        ...user.toJSON(),
+        followerCount: user.Followers.length,
+        isFollowed: req.user.Followings.some(f => f.id === user.id)
+      }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+
       const tweets = await Tweet.findAll({
         order: [['createdAt', 'DESC']],
         attributes: ['id', 'description', 'createdAt'],
@@ -69,7 +75,7 @@ const tweetController = {
         isLiked: likedTweetsId.includes(tweets.id)
       }))
       // res.json(tweets)
-      res.render('tweets', { tweets: data, role })
+      res.render('tweets', { tweets: data, role, topUser})
       // res.json({ status: 'success', tweets: data })
     } catch (err) {
       next(err)

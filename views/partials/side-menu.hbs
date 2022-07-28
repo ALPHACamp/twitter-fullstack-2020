@@ -1,17 +1,21 @@
 {{#ifCond role 'user'}}
 <div class="menu" id="menu">
-  <nav class="nav flex-column justify-content-start align-items-start mt-2">
+  <nav class="nav d-flex flex-column justify-content-start align-items-start mt-2">
     <i class="logo ms-2"></i>
     <a class=" " aria-current="page" href="#">
-      <i class="active-index outline-home  "></i>
+      <i class="active-index"></i>
     </a>
     <a class="" href="#">
-      <i class="default-user outline-home  "></i>
+      <i class="default-user"></i>
     </a>
     <a class="" href="#">
-      <i class="default-setting outline-home  "></i>
+      <i class="default-setting"></i>
     </a>
     <div class="btn btn-brand rounded-pill border-0 w-100">推文</div>
+    <div class="flex-fill"></div>
+    <a class="" href="#">
+      <i class="default-logout"></i>
+    </a>
   </nav>
 </div>
 {{/ifCond}}
