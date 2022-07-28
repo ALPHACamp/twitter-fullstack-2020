@@ -10,10 +10,10 @@ module.exports = {
     const normalUsers = users.splice(1)
     await queryInterface.bulkInsert('Tweets',
       Array.from({ length: 50 }).map((_, index) => ({
-        user_id: normalUsers[Math.floor(index / 10)].id,
+        UserId: normalUsers[Math.floor(index / 10)].id,
         description: faker.lorem.sentences(3),
-        created_at: new Date(),
-        updated_at: new Date()
+        createdAt: new Date(),
+        updatedAt: new Date()
       })
       ), {})
   },

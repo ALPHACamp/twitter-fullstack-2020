@@ -118,7 +118,7 @@ const userController = {
         nest: true
       })
       console.log('tweets', tweets)
-      user.introduction = user.introduction.substring(0, 20);
+      // user.introduction = user.introduction.substring(0, 20);
       return res.render('profile', { tweets, user })
     }
     catch (err) {
@@ -164,7 +164,6 @@ const userController = {
   getPersonalLikes: async (req, res, next) => {
     try {
       const user = helpers.getUser(req)
-      const userId = helpers.getUser(req).id
       const likes = await Like.findAll({
         include: [User, Tweet],
         order: [
