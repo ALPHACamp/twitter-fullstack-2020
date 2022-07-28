@@ -1,48 +1,63 @@
 <div class="body-container text-center"> {{!-- 其他頁面把這個 container 放進去--}}
-      {{> side-menu }}
-    {{!-- 中央部分 --}}
-    <div class="center-part border" id="center-part">
-      <div class="text-index border-bottom" id="text-index">
-        <div class="text-start ms-3 mt-4 mb-3 ">
-          <h4 class="fw-bold ">首頁</h4>
-        </div>
+  {{> side-menu }}
+  {{!-- 中央部分 --}}
+  <div class="center-part border" id="center-part">
+    <div class="text-index border-bottom" id="text-index">
+      <div class="text-start ms-3 mt-4 mb-3 ">
+        <h4 class="fw-bold ">首頁</h4>
       </div>
-      <div class="tweet-input ms-3">
-        <form action="" class="">
-          <div class="d-flex flex-wrap mt-3">
-            <div class="me-1">
-              <img src="https://i.imgur.com/vYhPi3M.jpeg" alt="" class="avatar-sm rounded-pill">
-            </div>
-            <textarea class="comment-input w-auto border border-0 ms-1 mb-1" name="comment-input" id="comment-input"
-              cols="65" rows="3" placeholder="有什麼新鮮事？"></textarea>
-            <div class="send-button btn btn-brand rounded-pill px-3 ms-auto mb-3 me-3">推文</div>
-          </div>
-        </form>
-      </div>
-      <div class="diver"></div>
-      {{!-- 推文卡片 --}}
-      <div class="tweet-container ms-3">
+    </div>
+    <div class="tweet-input ms-3">
+      <form action="" class="">
         <div class="d-flex flex-wrap mt-3">
           <div class="me-1">
             <img src="https://i.imgur.com/vYhPi3M.jpeg" alt="" class="avatar-sm rounded-pill">
           </div>
-          <div class="user-comment-container d-flex flex-column text-start ms-1">
-            <div class="user-name-account">
-              <h6 class="user-name fw-bold fs-5">XXX</h6>
-              <p class="user-account fw-normal fs-6">@aaa・{{relativeTimeFromNow this.createdAt}}</p>
+          <textarea class="comment-input w-auto border border-0 ms-1 mb-1" name="comment-input" id="comment-input"
+            cols="65" rows="3" placeholder="有什麼新鮮事？"></textarea>
+          <div class="send-button btn btn-brand rounded-pill px-3 ms-auto mb-3 me-3">推文</div>
+        </div>
+      </form>
+    </div>
+    <div class="diver"></div>
+    {{!-- 推文卡片 --}}
+    <div class="tweet-container scrollbar">
+      {{#each tweets}}
+      <div class="tweet-card ms-3">
+        <div class="d-flex flex-wrap mt-3">
+          <div class="avatar-container me-1">
+            <img src="https://i.imgur.com/vYhPi3M.jpeg" alt="" class="avatar-sm rounded-pill">
+          </div>
+          <div class="user-description-container d-flex flex-column text-start ms-1">
+            <div class="user-name-account mb-2">
+              <h6 class="user-name fw-bold fs-5">{{this.User.name}}</h6>
+              <p class="user-account fw-normal fs-6">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</p>
             </div>
-            <p class="comment">fsajklgsaedfkljasklfaeswklfjfasklefjklasefjklasefjklaasweflkj</p>
-            <div class="comment-like-btn-container mb-3">
+            <p class="description me-4">{{this.description}}</p>
+            <div class="description-like-btn-container mb-3">
               <i class="reply"></i>
-              <p class="count ms-2">123</p><i class="outline-like ms-5"></i>
-              <p class="count ms-2">456</p>
+              <p class="count ms-2">{{this.Replies.length}}</p>
+              {{#if this.isLiked}}
+              <form class="form-like" action="http://localhost:3000/tweets/{{this.id}}/unlike" method="POST"
+                style="display:inline">
+                <button class="border border-0 bg-white" type="submit"><i class="like ms-5"></i></button>
+              </form>
+              {{else}}
+              <form action="http://localhost:3000/tweets/{{this.id}}/like" method="POST" style="display:inline">
+                <button class="border border-0 bg-white" type="submit" style="display:inline"><i
+                    class="outline-like ms-5"></i></button>
+              </form>
+              {{/if}}
+              <p class="count ms-2"></p>
             </div>
           </div>
         </div>
       </div>
-      {{!-- 推文卡片結束 --}}
+      {{/each}}
     </div>
-    {{!-- 中央部分結束 --}}
-    {{!-- 推薦清單開始 --}}
-    {{> recommend-follow }}
+    {{!-- 推文卡片結束 --}}
+  </div>
+  {{!-- 中央部分結束 --}}
+  {{!-- 推薦清單開始 --}}
+  {{> recommend-follow }}
 </div>

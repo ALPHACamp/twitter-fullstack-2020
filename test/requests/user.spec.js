@@ -320,4 +320,4 @@ describe('# user request', () => {
       await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true })
     })
   })
-});
+})
