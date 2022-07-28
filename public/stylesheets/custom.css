@@ -11505,6 +11505,12 @@ textarea.form-control-lg {
   .fs-4 {
     font-size: 1.5rem !important;
   }
+  .fs-5 {
+    font-size: 1rem !important;
+  }
+  .fs-6 {
+    font-size: 0.875rem !important;
+  }
 }
 @media print {
   .d-print-inline {

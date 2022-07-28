@@ -1,13 +1,46 @@
 const jwt = require('jsonwebtoken')
-const { Tweet, User, Like, Followship } = require('../models')
-const helpers = require('../_helpers')
+const { Tweet, User, Like, Followship, Reply } = require('../models')
+const { getUser } = require('../_helpers')
 
 const tweetController = {
   getTweetReplies: async (req, res, next) => {
-    res.json({ status: 'success' })
+    try {
+      const followerId = req.user.Followers.map(fu => fu.id)
+      const TweetId = req.params.id
+      const existTweet = Tweet.findByPk(TweetId)
+      if (!existTweet) throw new Error("This tweet didn't exist!")
+      const replies = await Reply.findAll({
+        where: { TweetId },
+        include: [{ model: User }],
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
+      })
+      const data = replies.map(reply => ({
+        ...reply,
+        isFollowed: followerId.includes(reply.userId)
+      }))
+      return res.render('tweets/tweet-replies', { replies: data })
+    } catch (err) {
+      next(err)
+    }
   },
   postTweetReply: async (req, res, next) => {
-    res.json({ status: 'success' })
+    const UserId = req.user.id
+    const comment = req.body.comment
+    const TweetId = req.params.id
+    const existTweet = Tweet.findByPk(TweetId)
+    if (!existTweet) {
+      req.flash('error_messages', '這個推文已經不存在！')
+      res.redirect('/')
+    }
+    if (!comment) {
+      req.flash('error_messages', '內容不可空白')
+      res.redirect('/')
+    }
+    // return res.json({status: 'success', existTweet})
+    await Reply.create({ UserId, TweetId, comment })
+    return res.redirect('back')
   },
   likeTweet: async (req, res, next) => {
     try {
