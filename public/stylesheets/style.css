@@ -114,6 +114,10 @@
 }
 
 .user-name-account {
+  width: 240px;
+}
+
+.follow-list-user-name-account {
   width: 50px;
   overflow: hidden;
 }
