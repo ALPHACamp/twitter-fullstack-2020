@@ -16,7 +16,7 @@ module.exports = {
       created_at: new Date(),
       updated_at: new Date()
     }))
-    users.unshift({
+    users.push({
       email: 'root@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       name: 'root',

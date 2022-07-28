@@ -25,6 +25,7 @@ router.post('/followships', authenticated, followController.addFollow)
 router.delete('/followships/:id', authenticated, followController.removeFollow)
 
 router.get('/tweets/:id/replies', authenticated, replyController.getReplies)
+router.post('/tweets/:id/replies', authenticated, replyController.postReply)
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
 router.get('/api/users/:id', authenticated, apiController.renderEditPage)
