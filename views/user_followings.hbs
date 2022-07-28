@@ -1,4 +1,5 @@
 <section id="ys-FE-users-region" class="temp-layout followships-layout">
+  
 
   {{>followships_nav route='followings'}}
 
@@ -11,13 +12,13 @@
         <p class="name">{{this.name}}</p>
 
         {{#if isFollowed}}
-        <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+        <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
           <button type="submit" class="follow-btn following">正在跟隨</button>
         </form>
 
         {{else}}
-        <form action="/following/{{this.id}}" method="POST" style="display: contents;">
-          <button type="submit" class="follow-btn follow">跟隨</button>
+        <form action="/followships" method="POST" style="display: contents;">
+          <button type="submit" class="follow-btn follow" name="id" value={{this.id}}>跟隨</button>
         </form>
         {{/if}}
 
