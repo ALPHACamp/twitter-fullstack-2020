@@ -29,6 +29,9 @@ module.exports = {
       banner:{
         type: Sequelize.STRING
       },
+      role: {
+        type: Sequelize.STRING
+      },
       is_admin:{
         type: Sequelize.BOOLEAN,
         defaultValue: false
