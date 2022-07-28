@@ -90,7 +90,6 @@ const tweetController = {
   getTweets: async (req, res, next) => {
     try {
       const currentUser = helpers.getUser(req)
-      const role = currentUser.role
 
       let topUser = await User.findAll({
         include: [{ model: User, as: 'Followers' }]
@@ -119,7 +118,7 @@ const tweetController = {
         isLiked: likedTweetsId.includes(tweets.id)
       }))
       // res.json(tweets)
-      res.render('tweets', { tweets: data, role, topUser })
+      res.render('tweets', { tweets: data, role: currentUser.role, topUser })
       // res.json({ status: 'success', tweets: data })
     } catch (err) {
       next(err)

@@ -1,4 +1,5 @@
 const { User, Tweet, Like } = require('../models')
+const helpers = require('../_helpers')
 
 const adminController = {
   signInPage: async (req, res, next) => {
@@ -27,18 +28,28 @@ const adminController = {
   },
   getUsers: async (req, res, next) => {
     try {
-      const users = await User.findAll({
+      const admin = helpers.getUser(req)
+      const users = await User.findAndCountAll({
         include: [
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' },
-          Like,
-          Tweet
+          { model: Tweet, include: Like }
         ],
         where: { role: 'user' }
       })
-      users.sort((a, b) => b.Tweets.length - a.Tweets.length)
-      // res.render('admin/admin-users', { users })
-      res.json({ users })
+      users.rows = users.rows.map(u => u.toJSON())
+      users.rows = users.rows.map(u => ({
+        ...u,
+        likeCount: helpers.getThousands(
+          u.Tweets.reduce((a, b) => {
+            return a + b.Likes.length
+          }, 0)
+        ),
+        tweetCount: helpers.getThousands(u.Tweets.length)
+      }))
+      users.rows.sort((a, b) => b.Tweets.length - a.Tweets.length)
+      res.render('admin/admin-users', { users: users.rows, role: admin.role })
+      // res.json({ users })
     } catch (err) {
       next(err)
     }
@@ -47,10 +58,18 @@ const adminController = {
     try {
       const tweets = await Tweet.findAll({
         include: User,
-        raw: true
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
       })
-      // res.render('admin/admin-tweets',{tweets})
-      res.json({ tweets })
+      tweets.forEach(t => {
+        if (t.description.length > 50) {
+          t.description = t.description.substring(0, 50) + '...'
+        }
+      })
+      const admin = helpers.getUser(req)
+      res.render('admin/admin-tweets', { tweets, role: admin.role })
+      // res.json({ tweets })
     } catch (err) {
       next(err)
     }

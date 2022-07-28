@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt-nodejs')
 const helpers = require('../_helpers')
-const { imgurFileHandler } = require('../helpers/file-helpers')
+// const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const { User, Tweet, Like, Followship } = require('../models')
 
