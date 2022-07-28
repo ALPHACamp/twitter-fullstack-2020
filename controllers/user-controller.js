@@ -14,7 +14,11 @@ const userController = {
   signUp: async (req, res, next) => {
     try {
       let { account, name, email, password, checkPassword } = req.body
+<<<<<<< HEAD
       if (!account || !name || !email || !password) {
+=======
+      if (!account || !email || !password) {
+>>>>>>> a412160a499144f84a89752e3e328c88e63dd88d
         throw new Error('Please complete all required fields')
       }
       if (password !== checkPassword) throw new Error('Passwords do not match!')
