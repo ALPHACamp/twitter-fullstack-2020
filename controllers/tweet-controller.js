@@ -37,11 +37,17 @@ const tweetController = {
   },
   postTweet: async (req, res, next) => {
     try {
-      const UserId = getUser(req).id
+      const UserId = helpers.getUser(req).id
+      const userAvatar = req.user.avatar
+      if (!UserId) {
+        return res.redirect(302, '/signin')
+      }
       const description = req.body.description
       if (!description.trim()) throw new Error('推文內容不可為空白')
-      if (description.length > 140) throw new Error('推文不能超過140字')
-      await Tweet.create({ description, UserId })
+      if (description.length > 140) {
+        return res.redirect(302, 'back')
+      }
+      await Tweet.create({ description, UserId, userAvatar })
       res.redirect('/tweets')
     } catch (err) {
       next(err)
@@ -49,14 +55,17 @@ const tweetController = {
   },
   getTweets: async (req, res, next) => {
     try {
-      const role = req.user.role
-
-      let topUser = await User.findAll({ include: [{ model: User, as: 'Followers' }] })
-      topUser = topUser.map(user => ({
-        ...user.toJSON(),
-        followerCount: user.Followers.length,
-        isFollowed: req.user.Followings.some(f => f.id === user.id)
-      }))
+      const currentUser = helpers.getUser(req)
+      const role = currentUser.role
+      let topUser = await User.findAll({
+        include: [{ model: User, as: 'Followers' }]
+      })
+      topUser = topUser
+        .map(user => ({
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+          isFollowed: currentUser.Followings.some(f => f.id === user.id)
+        }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
       const tweets = await Tweet.findAll({
@@ -75,7 +84,7 @@ const tweetController = {
         isLiked: likedTweetsId.includes(tweets.id)
       }))
       // res.json(tweets)
-      res.render('tweets', { tweets: data, role, topUser})
+      res.render('tweets', { tweets: data, role, topUser, currentUser})
       // res.json({ status: 'success', tweets: data })
     } catch (err) {
       next(err)

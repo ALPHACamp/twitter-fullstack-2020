@@ -1,8 +1,13 @@
+textarea:focus,
+input:focus {
+  outline: 0;
+}
+
 .body-container {
   position: fixed;
   height: 100%;
   left: 50%;
-  margin-left: -565px;
+  margin-left: -510px;
   display: flex;
   justify-content: center;
   flex-wrap: nowrap;
@@ -16,6 +21,11 @@
 
 .nav {
   height: 100%;
+}
+
+.window-description-input {
+  resize: none;
+  height: 150px;
 }
 
 /* center-part */
@@ -60,9 +70,10 @@
   width: 5rem;
 }
 
-.comment-input {
-  resize: none
+.description-input {
+  resize: none;
 }
+
 
 .diver {
   padding: 0 13px 0 13px;

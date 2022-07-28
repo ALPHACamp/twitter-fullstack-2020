@@ -8,14 +8,14 @@
       </div>
     </div>
     <div class="tweet-input ms-3">
-      <form action="" class="">
+      <form action="/tweets" method="POST">
         <div class="d-flex flex-wrap mt-3">
           <div class="me-1">
-            <img src="https://i.imgur.com/vYhPi3M.jpeg" alt="" class="avatar-sm rounded-pill">
+            <img src="{{currentUser.avatar}}" alt="" class="avatar-sm rounded-pill">
           </div>
-          <textarea class="comment-input w-auto border border-0 ms-1 mb-1" name="comment-input" id="comment-input"
+          <textarea class="description-input w-auto border border-0 ms-1 mb-1" name="description" id="description"
             cols="65" rows="3" placeholder="有什麼新鮮事？"></textarea>
-          <div class="send-button btn btn-brand rounded-pill px-3 ms-auto mb-3 me-3">推文</div>
+          <button type="submit" class="send-button btn btn-brand rounded-pill px-3 ms-auto mb-3 me-3">推文</button>
         </div>
       </form>
     </div>
@@ -26,7 +26,7 @@
       <div class="tweet-card ms-3">
         <div class="d-flex flex-wrap mt-3">
           <div class="avatar-container me-1">
-            <img src="https://i.imgur.com/vYhPi3M.jpeg" alt="" class="avatar-sm rounded-pill">
+            <img src="{{this.User.avatar}}" alt="" class="avatar-sm rounded-pill">
           </div>
           <div class="user-description-container d-flex flex-column text-start ms-1">
             <div class="user-name-account mb-2">
