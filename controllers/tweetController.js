@@ -53,7 +53,8 @@ const tweetController = {
       let tweet = await Tweet.findByPk(req.params.tweet_id,
         {
           include: [
-            User, Like, Reply
+            User, Like, Reply,
+            { model: Reply, include: User }
           ],
           order: [['createdAt', 'DESC']]
         })
@@ -68,10 +69,9 @@ const tweetController = {
       const likes = await Like.findAll({
         where: { UserId: helpers.getUser(req).id }
       })
-
       const likedCount = tweet.Likes.length
       const repliedCount = tweet.Replies.length
-      const isLiked = likes.map(l => l.TweetId).includes(tweet.id)
+      //const isLiked = likes.map(l => l.TweetId).includes(tweet.id)
 
 
       users = await users.map(user => ({
@@ -81,7 +81,7 @@ const tweetController = {
       }))
       users = users.sort((a, b) => b.followerCount - a.followerCount)
         .slice(0, 10)
-      return res.render('tweet', { tweet, users, likedCount, repliedCount, isLiked })
+      return res.render('tweet', { tweet: tweet.toJSON(), users, likedCount, repliedCount })
     } catch (err) {
       next(err)
     }

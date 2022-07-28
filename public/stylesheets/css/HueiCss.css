@@ -302,3 +302,42 @@ section#Huei-region .tweet-card .tweet-user-avatar {
   right: 80px;
   color: #FC5A5A;
 }
+
+.list-separate-lg {
+  position: relative;
+  top: 190px;
+  height: 10px;
+  width: 639px;
+  background-color: #E2E2EA;
+}
+
+.card-override-reply {
+  height: 47vh;
+  overflow-y: scroll;
+  scrollbar-color: #F1F1F5 #FAFAFB;
+  scrollbar-width: thin;
+  overflow-x: hidden;
+}
+
+.like-reply-number .number {
+  display: inline;
+  color: #000000;
+  font-size: 19px;
+}
+.like-reply-number .word {
+  display: inline;
+  color: #6C757D;
+  font-size: 19px;
+}
+
+.tweet-name-account .name {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+}
+.tweet-name-account .account {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #6C757D;
+}

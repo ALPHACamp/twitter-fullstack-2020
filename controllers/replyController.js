@@ -8,7 +8,7 @@ const replyController = {
         include: [User, { model: Tweet, include: User }]
       })
       //render要修改
-      return res.render('tweets', { replies: replies.toJSON() })
+      return res.render('tweet', { replies: replies.toJSON() })
     }
     catch (err) {
       next(err)
