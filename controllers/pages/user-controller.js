@@ -63,16 +63,18 @@ const userConroller = {
         },
         include: [User],
         where: { UserId },
-        order: [['createdAt', 'ASC']]
+        order: [['createdAt', 'DESC']]
       })
     ])
       .then(([user, tweets]) => {
         if (!user || isAdmin(user)) throw new Error('使用者不存在')
 
+        user.isFollowing = req.user?.Followings.some(following => following.id === user.id)
         tweets = tweets.map(tweet => ({
           ...tweet.toJSON(),
           isLiked: req.user?.Likes.some(like => like.TweetId === tweet.id)
         }))
+
         res.render('user', { user, tweets })
       })
       .catch(err => next(err))
@@ -87,13 +89,16 @@ const userConroller = {
           User,
           { model: Tweet, include: [User] }
         ],
-        where: { UserId }
+        where: { UserId },
+        order: [['createdAt', 'DESC']]
       })
     ])
       .then(([user, replies]) => {
         if (!user || isAdmin(user)) throw new Error('使用者不存在')
 
+        user.isFollowing = req.user?.Followings.some(following => following.id === user.id)
         replies = replies.map(reply => reply.toJSON())
+
         res.render('user', { user, replies })
       })
       .catch(err => next(err))
@@ -115,12 +120,13 @@ const userConroller = {
           include: User
         }],
         where: { UserId },
-        order: [['createdAt', 'ASC']]
+        order: [['createdAt', 'DESC']]
       })
     ])
       .then(([user, likes]) => {
         if (!user || isAdmin(user)) throw new Error('使用者不存在')
 
+        user.isFollowing = req.user?.Followings.some(following => following.id === user.id)
         const likedTweets = likes.map(like => ({
           ...like.Tweet.toJSON(),
           isLiked: req.user?.Likes.some(userLike => userLike.id === like.id)
