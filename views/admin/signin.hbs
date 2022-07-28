@@ -14,7 +14,7 @@
           class='form-control border-0 p-0 ps-3'
           style='margin: 0;'
           placeholder='請輸入帳號'
-          onkeyup="this.value=this.value.replace(/\s+/g,'')"
+          onkeyup="this.value=this.value.replace(/[^\w_]/g,'')"
           required
           autofocus
         />
@@ -33,6 +33,7 @@
           class='form-control border-0 p-0 ps-3'
           style='margin: 0;'
           placeholder='請輸入密碼'
+          onkeyup="this.value=this.value.replace(/[\u4e00-\u9fa5]/g,'')"
           required
         />
         <hr
