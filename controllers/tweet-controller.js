@@ -49,15 +49,15 @@ const tweetController = {
       const tweets = await Tweet.findAll({
         include: [
           User,
-          { model: User, as: 'LikedUsers' }
+          Like
         ],
         order: [
-          ['created_at', 'DESC']
+          ['created_at', 'DESC'],
+          ['id', 'ASC']
         ],
         raw: true,
         nest: true
       })
-      console.log('------------------------', tweets)
       return res.render('tweets', { tweets, user })
     }
     catch (err) {
@@ -69,9 +69,9 @@ const tweetController = {
       const { description } = req.body
       assert(description.length <= 140, "請以 140 字以內為限")
       assert((description.trim() !== ''), "內容不可空白")
-      const userId = helpers.getUser(req).id
+      const UserId = helpers.getUser(req).id
       const createdTweet = await Tweet.create({
-        userId,
+        UserId,
         description
       })
       assert(createdTweet, "Failed to create tweet!")
@@ -84,15 +84,14 @@ const tweetController = {
   },
   addLike: async (req, res, next) => {
     try {
-      const userId = helpers.getUser(req).id
-      const tweetId = req.params.id
-      const newLike = await Like.findOrCreate({
+      const UserId = helpers.getUser(req).id
+      const TweetId = req.params.id
+      const like = await Like.findOrCreate({
         where: {
-          userId,
-          tweetId
+          UserId,
+          TweetId
         }
       })
-      console.log(newLike)
       return res.redirect('back')
     }
     catch (err) {
@@ -101,12 +100,12 @@ const tweetController = {
   },
   removeLike: async (req, res, next) => {
     try {
-      const userId = helpers.getUser(req).id
-      const tweetId = req.params.id
+      const UserId = helpers.getUser(req).id
+      const TweetId = req.params.id
       const like = await Like.findOne({
         where: {
-          userId,
-          tweetId
+          UserId,
+          TweetId
         }
       })
       await like.destroy()

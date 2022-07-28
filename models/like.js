@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Like.init({
-    userId: DataTypes.INTEGER,
-    tweetId: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER,
+    TweetId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Like',

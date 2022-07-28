@@ -6,9 +6,9 @@
       {{!-- Cover、大頭貼、個人簡歷 --}}
       {{> user-info}}
 
-      {{>tweet-tabs route='tweets'}}
+      {{>tweet-tabs route='likes'}}
       {{#each tweets}}
-      {{> tweet route='tweets'}}
+      {{> tweet route='likes'}}
       {{/each}}
 
     </div>

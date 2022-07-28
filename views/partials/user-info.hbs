@@ -1,0 +1,64 @@
+<div class="row m-0 p-0">
+  <div style="height: 250px; padding:0px">
+    {{!-- <img src="{{user.cover}}" alt="cover" style="height:100%;width:100%; object-fit:cover"> --}}
+    <img src="/images/cover-default.jpg" alt="cover" style="height:100%;width:100%; object-fit:cover">
+  </div>
+  <div class="d-flex justify-content-between px-3" style="margin-top:-80px;z-index:100;position:relative">
+    <a href="/users/{{user.id}}/tweets">
+      <img src="{{user.avatar}}" class="me-auto rounded-circle border border-white border-5"
+        style="width:150px;height:150px">
+    </a>
+    <div class="d-flex align-items-end">
+      <button type="button" class="setting-btn ms-1" id="editButton" data-id="{{user.id}}" data-bs-toggle="modal"
+        data-bs-target="#editProfileModal">編輯個人資料</button>
+    </div>
+  </div>
+  <div class="name-container d-flex flex-column bd-highlight p-1 ms-3">
+    <a href="/users/{{user.id}}/tweets">
+      <div class="font-name">{{user.name}}</div>
+      <div class="font-account">@{{user.account}}</div>
+    </a>
+  </div>
+</div>
+<div class="col" style="max-width: 100%;">
+  <p class="font-intro mx-4">{{user.introduction}}</p>
+  <div class="card-followship ms-2">
+    <div class="card-following">
+      <a href="/users/:userid/followings">
+        20 個跟隨中
+      </a>
+    </div>
+    <div class="card-follower">
+      <a href="/users/:userid/followers">
+        20 個跟隨者
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="tweetInputLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-2">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form class="tweet-post" action="/tweets" method="POST">
+        <a href="/users/{{user.id}}/tweets">
+          <img class="ms-2" src="{{user.avatar}}" alt="avatar">
+        </a>
+        <div class="text-box">
+          <textarea type="text" name="description" placeholder="有什麼新鮮事？" rows="2" cols="45" maxlength="140"
+            required></textarea>
+        </div>
+        <div class="bd-highlight">
+          <button type="submit" class="tweet-btn">
+            推文
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+<!-- Modal -->

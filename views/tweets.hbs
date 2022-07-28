@@ -1,12 +1,12 @@
 <div class="container">
   <div class="row justify-content-md-center">
-    {{> left-side}}
+    {{> left-side route='tweets'}}
     <div class="main col-6">
       {{> header}}
       {{!-- 推文區塊 --}}
       <form class="tweet-post" action="/tweets" method="POST">
         <a href="/users/{{user.id}}/tweets">
-          <img src="{{user.avatar}}" alt="avatar">
+          <img class='rounded-circle' src="{{user.avatar}}" alt="avatar">
         </a>
         <div class="text-box">
           <textarea type="text" name="description" placeholder="有什麼新鮮事？" rows="2" cols="63" maxlength="140"
@@ -22,7 +22,7 @@
       <div class="hr-line-b"></div>
 
       {{#each tweets}}
-      {{> tweet}}
+      {{> tweet route='tweets'}}
       {{/each}}
 
     </div>
