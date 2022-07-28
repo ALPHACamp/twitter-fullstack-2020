@@ -1,0 +1,66 @@
+<div class="d-flex align-items-center">
+  <a href="javascript:history.back()">
+    <img src="/images/icon-black-back.png" class="" style="width: 17px;height:14px;">
+  </a>
+  <div class="">
+    <h5 class="fw-bold" style="height: 24px;">{{user.name}}</h5>
+    <p class="" style="height: 19px;">{{user.tweetCounts}}推文</p>
+  </div>
+</div>
+
+<img src="{{user.banner}}">
+{{!-- 使用者資料 --}}
+<div>
+  <img src="{{user.avatar}}" class="rounded-circle">
+  {{#ifCond user.id loginUser.id}}
+    <button class="btn">編輯個人資料</button>
+  {{else}}
+    <a href="#">
+      <img src="/images/icon-black-message.png">
+    </a>
+    <a href="#">
+      <img src="/images/icon-black-notification.png">
+    </a>
+    {{#if isFollowing}}
+      <form action="/followships?_method=DELETE" method="POST" style="display: contents;">
+        <button type="submit" class="btn btn-primary">正在跟隨</button>
+      </form>
+    {{else}}
+      <form action="/followships" method="POST" style="display: contents;">
+        <button type="submit" class="btn btn-primary">跟隨</button>
+      </form>
+    {{/if}}
+  {{/ifCond}}
+</div>
+
+<div>
+  <h5>{{user.name}}</h5>
+  <p>@{{user.account}}</p>
+  <p>{{user.introduction}}</p>
+  <a href="/users/{{user.id}}/followings">{{user.followingCounts}}個追隨中</a>
+  <a href="/users/{{user.id}}/followers">{{user.followerCounts}}位追隨者</a>
+</div>
+
+<ul class="nav nav-tabs mb-4 user-nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link {{#if tweets}}active{{/if}}" href="/users/{{user.id}}/tweets">推文</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{#if replies}}active{{/if}}" href="/users/{{user.id}}/replies">回覆</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{#if likedTweets}}active{{/if}}" href="/users/{{user.id}}/likes">喜歡的內容</a>
+  </li>
+</ul>
+
+{{#each tweets}}
+  {{!-- {{> tweet-card}} --}}
+{{/each}}
+
+{{#each replies}}
+  {{!-- {{> reply-card}} --}}
+{{/each}}
+
+{{#each likedTweets}}
+  {{!-- {{> tweet-card}} --}}
+{{/each}}

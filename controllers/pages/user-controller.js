@@ -1,5 +1,7 @@
-const { User } = require('../../models')
+const { User, Tweet, sequelize } = require('../../models')
 const bcrypt = require('bcryptjs')
+
+const { isAdmin, userInfoHelper } = require('../../helpers/user-helpers')
 
 const userConroller = {
   getSignin: (req, res) => {
@@ -44,6 +46,34 @@ const userConroller = {
       .then(() => {
         req.flash('success_messages', '成功註冊帳號！')
         res.redirect('/signin')
+      })
+      .catch(err => next(err))
+  },
+  getTweets: (req, res, next) => {
+    const UserId = req.params.userId
+
+    return Promise.all([
+      userInfoHelper(UserId),
+      Tweet.findAll({
+        attributes: {
+          include: [
+            [sequelize.literal('(SELECT COUNT(`id`) FROM `Replies` WHERE `TweetId` = `Tweet`.`id`)'), 'replyCounts'],
+            [sequelize.literal('(SELECT COUNT(`id`) FROM `Likes` WHERE `TweetId` = `Tweet`.`id`)'), 'likeCounts']
+          ]
+        },
+        include: [User],
+        where: { UserId },
+        order: [['createdAt', 'ASC']]
+      })
+    ])
+      .then(([user, tweets]) => {
+        if (!user || isAdmin(user)) throw new Error('使用者不存在')
+
+        tweets = tweets.map(tweet => ({
+          ...tweet.toJSON(),
+          isLiked: req.user?.Likes.some(like => like.TweetId === tweet.id)
+        }))
+        res.render('user', { user, tweets })
       })
       .catch(err => next(err))
   }

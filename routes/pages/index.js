@@ -3,11 +3,13 @@ const router = express.Router()
 const passport = require('../../config/passport')
 
 const admin = require('./modules/admin')
+const users = require('./modules/users')
 
 const userController = require('../../controllers/pages/user-controller')
 
 const { authenticated, authenticatedAdmin } = require('../../middleware/auth')
 
+router.use('/users', authenticated, users)
 router.use('/admin', admin)
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
