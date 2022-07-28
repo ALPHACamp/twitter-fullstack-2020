@@ -1,4 +1,4 @@
-<div class="nav nav-pills brand-color flex-column sticky-top">
+<div class="nav nav-pills brand-color flex-column sticky-top" style="height: 100vh;">
   <img src="./alpha.png" alt="" style="width: 50px;" class="m-2">
   <a class="nav-link active" href="/">
     <i class="fa-solid fa-house-chimney-window"></i>&nbsp;&nbsp;首頁
@@ -12,22 +12,31 @@
   <button class="btn btn-brand radius50" data-bs-toggle="modal" data-bs-target="#post-tweet">
     <span style="font-size: 20px;">推文</span>
   </button>
+
+  <div class="position-absolute bottom-0 start-0 mb-3">
+    <a class="header5 pointer dark-90" href="/logout">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>&nbsp;&nbsp;登出
+    </a>
+  </div>
 </div>
 <div class="modal fade" id="post-tweet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="btn-close p-1 m-1" data-bs-dismiss="modal" aria-label="Close" style="background: rgba(var(--bs-white-rgb),var(--bs-bg-opacity));">
+        <button type="button" class="btn-close p-1 m-1" data-bs-dismiss="modal" aria-label="Close"
+          style="background: rgba(var(--bs-white-rgb),var(--bs-bg-opacity));">
           <i class="fa-solid fa-xmark icon-size brand-color"></i>
         </button>
       </div>
       <div class="modal-body">
         <div class="d-flex">
-          <div class="border border-light border-3 rounded-circle me-3" style="width: 50px; height: 50px; background: url('/avatar.png'); background-size: cover; background-position: center;">
+          <div class="border border-light border-3 rounded-circle me-3"
+            style="width: 50px; height: 50px; background: url('/avatar.png'); background-size: cover; background-position: center;">
           </div>
           <div class="flex-fill text-end">
             <form href="/tweets" action="POST">
-              <textarea class="border border-0 form-control" id="tweet" name="tweet" maxlength="140" placeholder="有什麼新鮮事？" rows="5" required></textarea>
+              <textarea class="border border-0 form-control" id="tweet" name="tweet" maxlength="140"
+                placeholder="有什麼新鮮事？" rows="5" required></textarea>
               <button type="submit" class="btn btn-brand radius50 mt-3">送出</button>
             </form>
           </div>
