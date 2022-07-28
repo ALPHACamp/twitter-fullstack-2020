@@ -1,0 +1,34 @@
+<div class="row justify-content-center h-100 w-100">
+{{> side-menu}}
+<div class="middle col-6">
+<div class="card rounded-0" style="height:74px;">
+  <div class="card-body row align-items-center">
+    <h4 class="col-3 mb-0 fw-bold">使用者列表</h4>
+  </div>
+</div>
+<div class="row row-cols-1 row-cols-md-4 g-3 m-auto border border-top-0">
+{{#each users}}
+        <div class="col" style="border-radius:10px;">
+          <div class="card border-0 bg-secondary bg-opacity-10">
+            <img src="{{this.cover_photo}}" onerror="this.onerror='null';this.src='/pic/default_cover_photo.png'" class="card-img-top" alt="cover photo" style="height: 140px;">
+            <img src="{{this.avatar}}" onerror="this.onerror='null';this.src='/pic/default_avatar.png'" alt="avatar" class="admin-user-avatar border rounded-circle border-4 border-white m-auto mt-n6">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title align-self-center">{{this.name}}</h5>
+              <small class="align-self-center mb-3">＠{{this.account}}</small>
+              <div class="d-flex justify-content-center align-items-center mb-2">
+                <img src="/stylesheets/svgs/post.svg" class="opacity-50 me-1" alt="tweet count">
+                <strong class="ms-1">{{this.Tweets.length}}</strong>
+                <img src="/stylesheets/svgs/outline-like.svg" class="opacity-50 ms-3" alt="like count" style="width: 24px; height:24px;">
+                <strong class="ms-1">{{this.likeCount}}</strong>
+              </div>
+              <div class="d-flex justify-content-center align-items-center mb-2">
+                <small class="fw-bold">{{this.Followings.length}}位</small><small>跟隨中</small>
+                <small class="fw-bold ms-2">{{this.Followers.length}}位</small><small>跟隨者</small>
+              </div>
+            </div>
+          </div>
+        </div>
+{{/each}}
+</div>
+</div>
+</div>
