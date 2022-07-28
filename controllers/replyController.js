@@ -8,7 +8,7 @@ const replyController = {
         include: [User, { model: Tweet, include: User }]
       })
       //render要修改
-      return res.render('tweet', { replies: replies.toJSON() })
+      return res.render('tweets', { replies: replies.toJSON() })
     }
     catch (err) {
       next(err)
@@ -16,7 +16,7 @@ const replyController = {
   },
   postReply: async (req, res, next) => {
     try {
-      const comment = req.body.comment
+      const { comment } = req.body
       if (!comment) {
         req.flash('error_messages', '回覆內容不存在！')
         return res.redirect('back')

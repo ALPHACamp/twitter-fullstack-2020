@@ -60,14 +60,6 @@
   bottom: 35.9%;
   border: none;
 }
-#signup-region .input input::-moz-placeholder, #signin-region .input input::-moz-placeholder {
-  color: #B5B5BE;
-  font-size: 16px;
-}
-#signup-region .input input:-ms-input-placeholder, #signin-region .input input:-ms-input-placeholder {
-  color: #B5B5BE;
-  font-size: 16px;
-}
 #signup-region .input input::placeholder, #signin-region .input input::placeholder {
   color: #B5B5BE;
   font-size: 16px;

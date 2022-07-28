@@ -269,3 +269,80 @@ section#Huei-region {
   width: 64px;
   height: 40px;
 }
+
+.content {
+  margin-top: 8px;
+  width: 528px;
+  height: 78px;
+}
+
+.color-secondaryColor {
+  color: $secondaryColor;
+}
+
+.color-main {
+  color: $mainColor;
+}
+
+.reply-separate-m {
+  position: relative;
+  left: 25px;
+  bottom: 130px;
+  height: 86px;
+  width: 2px;
+  background-color: $dark60;
+}
+
+.count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0px 0px;
+  position: absolute;
+  top: 270px;
+  right: 250px;
+  background: $dark0;
+
+  span {
+    font-weight: 500;
+    line-height: 20px;
+    text-align: right;
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+    color: $dark80;
+  }
+}
+
+.name-helper {
+  text-align: right;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  color: $errorColor;
+  position: relative;
+  top: 255px;
+  right: 100px;
+}
+
+.a-number-check {
+  position: absolute;
+  top: 250px;
+  right: 200px;
+  color: $dark80;
+  font-weight: 500;
+}
+
+.c-number-check {
+  text-align: right;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  position: absolute;
+  top: 250px;
+  right: 80px;
+  color: $errorColor;
+}

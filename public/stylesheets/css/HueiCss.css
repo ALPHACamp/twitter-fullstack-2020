@@ -226,3 +226,79 @@ section#Huei-region .tweet-card .tweet-user-avatar {
   width: 64px;
   height: 40px;
 }
+
+.content {
+  margin-top: 8px;
+  width: 528px;
+  height: 78px;
+}
+
+.color-secondaryColor {
+  color: #6C757D;
+}
+
+.color-main {
+  color: #FF6600;
+}
+
+.reply-separate-m {
+  position: relative;
+  left: 25px;
+  bottom: 130px;
+  height: 86px;
+  width: 2px;
+  background-color: #B5B5BE;
+}
+
+.count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0px 0px;
+  position: absolute;
+  top: 270px;
+  right: 250px;
+  background: #FFFFFF;
+}
+.count span {
+  font-weight: 500;
+  line-height: 20px;
+  text-align: right;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  color: #696974;
+}
+
+.name-helper {
+  text-align: right;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  color: #FC5A5A;
+  position: relative;
+  top: 255px;
+  right: 100px;
+}
+
+.a-number-check {
+  position: absolute;
+  top: 250px;
+  right: 200px;
+  color: #696974;
+  font-weight: 500;
+}
+
+.c-number-check {
+  text-align: right;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  position: absolute;
+  top: 250px;
+  right: 80px;
+  color: #FC5A5A;
+}

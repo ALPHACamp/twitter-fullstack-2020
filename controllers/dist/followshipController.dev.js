@@ -29,7 +29,7 @@ var followshipController = {
             }));
 
           case 6:
-            req.flash('error_messages', '追隨成功！');
+            req.flash('success_messages', '追隨成功！');
             return _context.abrupt("return", res.redirect('back'));
 
           case 10:
@@ -65,7 +65,7 @@ var followshipController = {
             return regeneratorRuntime.awrap(followship.destroy());
 
           case 6:
-            req.flash('error_messages', '取消追隨成功！');
+            req.flash('success_messages', '取消追隨成功！');
             return _context2.abrupt("return", res.redirect('back'));
 
           case 10:

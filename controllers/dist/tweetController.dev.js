@@ -107,7 +107,7 @@ var tweetController = {
     }, null, null, [[0, 23]]);
   },
   getTweet: function getTweet(req, res, next) {
-    var tweet, likedCount, repliedCount, isLiked;
+    var tweet, users, likes, likedCount, repliedCount, isLiked;
     return regeneratorRuntime.async(function getTweet$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -115,53 +115,73 @@ var tweetController = {
             _context2.prev = 0;
             _context2.next = 3;
             return regeneratorRuntime.awrap(Tweet.findByPk(req.params.tweet_id, {
-              include: [User, {
-                model: Reply,
-                include: User
-              }, {
-                model: Like,
-                include: User,
-                where: {
-                  UserId: helpers.getUser(req).id
-                }
-              }]
+              include: [User, Like, Reply],
+              order: [['createdAt', 'DESC']]
             }));
 
           case 3:
             tweet = _context2.sent;
+            _context2.next = 6;
+            return regeneratorRuntime.awrap(User.findAll({
+              include: [{
+                model: User,
+                as: 'Followers'
+              }, {
+                model: User,
+                as: 'Followings'
+              }]
+            }));
 
-            if (tweet) {
-              _context2.next = 7;
-              break;
-            }
+          case 6:
+            users = _context2.sent;
+            _context2.next = 9;
+            return regeneratorRuntime.awrap(Like.findAll({
+              where: {
+                UserId: helpers.getUser(req).id
+              }
+            }));
 
-            req.flash('error_messages', 'Tweet 不存在!');
-            return _context2.abrupt("return", res.redirect('back'));
-
-          case 7:
+          case 9:
+            likes = _context2.sent;
             likedCount = tweet.Likes.length;
             repliedCount = tweet.Replies.length;
-            isLiked = tweet.Likes.User.some(function (l) {
-              return l === tweet.id;
-            });
+            isLiked = likes.map(function (l) {
+              return l.TweetId;
+            }).includes(tweet.id);
+            _context2.next = 15;
+            return regeneratorRuntime.awrap(users.map(function (user) {
+              return _objectSpread({}, user.toJSON(), {
+                followerCount: user.Followers.length,
+                isFollowed: helpers.getUser(req).Followings.map(function (f) {
+                  return f.id;
+                }).includes(user.id)
+              });
+            }));
+
+          case 15:
+            users = _context2.sent;
+            users = users.sort(function (a, b) {
+              return b.followerCount - a.followerCount;
+            }).slice(0, 10);
             return _context2.abrupt("return", res.render('tweet', {
-              tweet: tweet.toJSON(),
+              tweet: tweet,
+              users: users,
               likedCount: likedCount,
               repliedCount: repliedCount,
               isLiked: isLiked
             }));
 
-          case 13:
-            _context2.prev = 13;
+          case 20:
+            _context2.prev = 20;
             _context2.t0 = _context2["catch"](0);
             next(_context2.t0);
 
-          case 16:
+          case 23:
           case "end":
             return _context2.stop();
         }
       }
-    }, null, null, [[0, 13]]);
+    }, null, null, [[0, 20]]);
   },
   postTweet: function postTweet(req, res, next) {
     var description;
