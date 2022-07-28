@@ -1,0 +1,104 @@
+.body-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.menu {
+  width: 178px;
+  margin-right: 20px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+}
+
+.menu-text {
+  font-size: 18px;
+  height: 100%;
+  line-height: 18px;
+}
+
+.menu-item:hover {
+  color: #FF6600;
+}
+
+.icon-home {
+  color:#FF6600
+}
+
+/* center-part */
+
+.center-part {
+  min-width: 300px;
+  width: 640px;
+  padding: 0 0 0 0;
+}
+
+.avatar-sm {
+  width: 3.125rem;
+  height: 3.125rem;
+}
+
+.user-description-container {
+  max-width: 90%;
+}
+
+
+.send-button {
+  width: 5rem;
+}
+
+.comment-input {
+  resize: none
+}
+
+.diver {
+  padding: 0 13px 0 13px;
+  border-bottom: 10px solid #E6ECF0;
+}
+
+.user-comment-container {
+  width: auto;
+}
+
+.user-name-account {
+  width: auto;
+}
+
+.user-name {
+  display: inline;
+  width: 10rem;
+  line-height: 24px;
+}
+
+.user-account {
+  display: inline;
+  color: #6C757D;
+  height:24px;
+  line-height: 24px;
+}
+
+.comment-like-btn-container {
+  display: flex;
+  align-items: center;
+}
+
+.count {
+  display: inline;
+  margin-bottom: 0;
+}
+
+.like-btn {
+  border: 0 0 0 0;
+}
+
+.recommend-follow-list{
+  width: 273px;
+  margin-left: 20px;
+}
+
+.follow-list {
+  background-color: #FAFAFB;
+}

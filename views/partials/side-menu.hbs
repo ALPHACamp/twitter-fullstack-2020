@@ -1,0 +1,35 @@
+{{#ifCond role 'user'}}
+<div class="menu" id="menu">
+  <nav class="nav flex-column justify-content-start align-items-start mt-2">
+    <i class="logo ms-2"></i>
+    <a class=" " aria-current="page" href="#">
+      <i class="active-index outline-home  "></i>
+    </a>
+    <a class="" href="#">
+      <i class="default-user outline-home  "></i>
+    </a>
+    <a class="" href="#">
+      <i class="default-setting outline-home  "></i>
+    </a>
+    <div class="btn btn-brand rounded-pill border-0 w-100">推文</div>
+  </nav>
+</div>
+{{/ifCond}}
+
+{{#ifCond role 'admin'}}
+<div class="menu" id="menu">
+  <nav class="nav flex-column justify-content-start align-items-start mt-2">
+    <i class="logo ms-2"></i>
+    <a class=" " aria-current="page" href="#">
+      123
+    </a>
+    <a class="" href="#">
+      <i class="default-user outline-home  "></i>
+    </a>
+    <a class="" href="#">
+      456
+    </a>
+    789
+  </nav>
+</div>
+{{/ifCond}}

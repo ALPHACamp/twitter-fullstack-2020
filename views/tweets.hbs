@@ -1,61 +1,59 @@
-<div>
-  <h1>Simple Twitter</h1>
-  <hr />
-  <h2>登入相關</h2>
-  <br />
-  <h3>前台</h3>
-  <ul>
-    <li><a href='/signin'>Sign In</a></li>
-    <li><a href='/signup'>Sign Up</a></li>
-  </ul>
-  <h3>後台</h3>
-  <ul>
-    <li><a href='/admin/signin'>Sign In</a></li>
-    <li><a href='/admin'>後台主頁</a></li>
-  </ul>
-  <br />
-  <h2>主畫面</h2>
-  <br />
-  <h3>左側選單</h3>
-  <ul>
-    <li><a href='/'>首頁</a></li>
-    <li><a href='/profile/user:{{id}}'>個人資料(需userId)</a></li>
-    <li><a href='/settings'>設定</a></li>
-    <li><a href='/user:{{id}}'>推文(需userId)</a></li>
-  </ul>
-  <button class='btn btn-danger btn-block' type='submit'>登出</button>
-  <p></p>
-  <h3>中央區域</h3>
-  <button class='btn btn-primary btn-block' type='submit'>推文</button>
-  <button class='btn btn-primary btn-block' type='submit'>Like</button>
-  <button class='btn btn-primary btn-block' type='submit'>回應</button>
-  {{#each tweets}}
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title">{{this.User.account}}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">{{this.User.name}}</h6>
-      <p class="card-text">{{this.description}}
-      </p>
-      {{#if isLiked}}
-      <form action="/tweets/{{this.id}}/unlike" method="POST">
-        <button type="submit" class="btn btn-primary m-1">Dislike</button>
-      </form>
-      {{else}}
-      <form action="/tweets/{{this.id}}/like" method="POST">
-        <button type="submit" class="btn btn-primary m-1">like</button>
-      </form>
-      {{/if}}
+<div class="body-container text-center"> {{!-- 其他頁面把這個 container 放進去--}}
+  {{> side-menu }}
+  {{!-- 中央部分 --}}
+  <div class="center-part border" id="center-part">
+    <div class="text-index border-bottom" id="text-index">
+      <div class="text-start ms-3 mt-4 mb-3 ">
+        <h4 class="fw-bold ">首頁</h4>
+      </div>
     </div>
+    <div class="tweet-input ms-3">
+      <form action="" class="">
+        <div class="d-flex flex-wrap mt-3">
+          <div class="me-1">
+            <img src="https://i.imgur.com/vYhPi3M.jpeg" alt="" class="avatar-sm rounded-pill">
+          </div>
+          <textarea class="comment-input w-auto border border-0 ms-1 mb-1" name="comment-input" id="comment-input"
+            cols="65" rows="3" placeholder="有什麼新鮮事？"></textarea>
+          <div class="send-button btn btn-brand rounded-pill px-3 ms-auto mb-3 me-3">推文</div>
+        </div>
+      </form>
+    </div>
+    <div class="diver"></div>
+    {{!-- 推文卡片 --}}
+    {{#each tweets}}
+    <div class="tweet-container ms-3">
+      <div class="d-flex flex-wrap mt-3">
+        <div class="avatar-container me-1">
+          <img src="https://i.imgur.com/vYhPi3M.jpeg" alt="" class="avatar-sm rounded-pill">
+        </div>
+        <div class="user-description-container d-flex flex-column text-start ms-1">
+          <div class="user-name-account mb-2">
+            <h6 class="user-name fw-bold fs-5">{{this.User.name}}</h6>
+            <p class="user-account fw-normal fs-6">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</p>
+          </div>
+          <p class="description">{{this.description}}</p>
+          <div class="description-like-btn-container mb-3">
+            <i class="reply"></i>
+            <p class="count ms-2">{{this.Replies.length}}</p>
+            {{#if this.isLiked}}
+            <form class="form-like" action="http://localhost:3000/tweets/{{this.id}}/unlike" method="POST" style="display:inline">
+              <button class="border border-0 bg-white" type="submit"><i class="like ms-5"></i></button>
+            </form>
+            {{else}}
+            <form action="http://localhost:3000/tweets/{{this.id}}/like" method="POST" style="display:inline">
+              <button class="border border-0 bg-white" type="submit" style="display:inline"><i class="outline-like ms-5"></i></button>
+            </form>
+            {{/if}}
+            <p class="count ms-2"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+    {{!-- 推文卡片結束 --}}
   </div>
-  {{/each}}
-  <p></p>
-  <h3>右側推薦跟隨</h3>
-  <button class='btn btn-primary btn-block' type='submit'>追蹤</button>
-  <p></p>
-  <h3>共用</h3>
-  <ul>
-    <li><a href='/user:{{id}}'>查看使用者推文牆(需userId)</a></li>
-    <li><a href='/tweets:{{id}}'>查看特定推文(需tweetId)</a></li>
-  </ul>
-  <p></p>
+  {{!-- 中央部分結束 --}}
+  {{!-- 推薦清單開始 --}}
+  {{> recommend-follow }}
 </div>
