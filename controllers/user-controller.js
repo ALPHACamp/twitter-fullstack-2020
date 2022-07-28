@@ -13,7 +13,7 @@ const userController = {
     if (!account || !name || !email || !password || !checkPassword) throw new Error('所有欄位為必填')
     Promise.all([
       User.findOne({ where: { account } }),
-      User.findOne({ where: { email }})
+      User.findOne({ where: { email } })
     ])
       .then(([account, email]) => {
         if (account) throw new Error('account 已重複註冊！')
@@ -43,7 +43,6 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-<<<<<<< HEAD
   tweets: (req, res, next) => {
     const id = req.params.id
     Promise.all([
@@ -53,7 +52,7 @@ const userController = {
           { model: User, as: 'Followers' }
         ]
       }),
-      Tweet.findAll({ 
+      Tweet.findAll({
         where: { UserId: id },
         include: [Like, Reply],
         order: [['createdAt', 'desc']],
@@ -69,7 +68,7 @@ const userController = {
       })
     ])
       .then(([targetUser, tweets, followship]) => {
-        if (!targetUser) throw new Error("User didn't exist") 
+        if (!targetUser) throw new Error("User didn't exist")
         const user = getUser(req)
         user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
         const users = followship
@@ -78,14 +77,14 @@ const userController = {
             isFollowed: user.Followings.some(u => u.id === data.followingId)
           }))
           .slice(0, 10)
-          const tweetsData = tweets
-            .map(t => ({
-              ...t.toJSON(),
-              likedCount: t.Likes.length,
-              repliedCount: t.Replies.length,
-              isLiked: t.Likes.some(like => like.UserId === user.id)
-            }))
-          res.locals.tweetsLength = tweets.length
+        const tweetsData = tweets
+          .map(t => ({
+            ...t.toJSON(),
+            likedCount: t.Likes.length,
+            repliedCount: t.Replies.length,
+            isLiked: t.Likes.some(like => like.UserId === user.id)
+          }))
+        res.locals.tweetsLength = tweets.length
         res.render('profile', { targetUser: targetUser.toJSON(), tweets: tweetsData, user, users })
       })
       .catch(err => next(err))
@@ -153,7 +152,10 @@ const userController = {
           }))
           .slice(0, 10)
         res.render('profile', { targetUser: targetUser.toJSON(), likes, user, users })
-=======
+      })
+      .catch(err => next(err))
+  },
+
 
   followers: (req, res, next) => {
     const observedUserId = req.params.id
@@ -191,11 +193,11 @@ const userController = {
           }
         })
         res.render('user_followings', { observedUser: user.toJSON(), followings: result })
->>>>>>> origin/master
       })
       .catch(err => next(err))
   }
 
 }
+
 
 module.exports = userController
