@@ -1,6 +1,28 @@
 <div class="recommend-follow-list">
-  <div class="follow-list m-2 border rounded-4" id="follow-list">
-    <div class="">推薦跟隨</div>
-    <div class="">跟隨清單</div>
+  <div class="follow-list m-2 border border-0 rounded-4" id="follow-list">
+    <div class="text-container border-bottom">
+      <div class="h3 fw-bold text-start m-4 pt-4">推薦跟隨</div>
+    </div>
+    {{#each topUser}}
+    <div class="user-container d-flex m-3">
+      <img src="https://i.imgur.com/vYhPi3M.jpeg" alt="" class="avatar-sm rounded-pill">
+      <div class="follow-list-user-name-account ms-2 mb-2 d-flex flex-column flex-grow-1 justify-content-start align-items-start">
+        <h6 class="user-name fw-bold fs-5 text-start mb-0 w-25">{{this.name}}</h6>
+        <p class="user-account fw-normal fs-6 mb-0 w-25">@{{this.account}}</p>
+      </div>
+      {{#if this.isFollowed}}
+      <form action="http://localhost:3000/followships" method="POST" style="display:inline" class="d-flex justify-content-center ms-2">
+      <input type="hidden" value="{{this.id}}" name="id">
+        <button class="following-btn rounded-pill" type="submit">正在跟隨</button>
+      </form>
+      {{else}}
+      <form action="http://localhost:3000/followships" method="POST" style="display:inline"
+        class="d-flex justify-content-center ms-2">
+        <input type="hidden" value="{{this.id}}" name="id">
+        <button class="follow-btn rounded-pill" type="submit">跟隨</button>
+      </form>
+      {{/if}}
+    </div>
+    {{/each}}
   </div>
 </div>
