@@ -20,10 +20,12 @@ const adminConroller = {
     const tweets = dbResult[0].map(tweet => tweet)
     return res.render('admin/tweets', { tweets })
   },
-  deleteTweet: async (req, res) => {
-    await sequelize.query('DELETE FROM Tweets WHERE `Tweets`.`id` = ' + req.params.tweetId + ';')
-    req.flash('error_messages', '成功刪除一筆推文')
-    return res.redirect('back')
+  deleteTweet: (req, res) => {
+    return sequelize.query('DELETE FROM Tweets WHERE `Tweets`.`id` = ' + req.params.tweetId + ';')
+      .then(() => {
+        req.flash('error_messages', '成功刪除一筆推文')
+        res.redirect('back')
+      })
   }
 }
 
