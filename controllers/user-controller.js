@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt-nodejs')
 const helpers = require('../_helpers')
+// const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const { User, Tweet, Like, Followship } = require('../models')
 
@@ -196,11 +197,11 @@ const userController = {
   },
   postFollow: async (req, res, next) => {
     try {
-      const UserId = helpers.getUser(req).id
+      const UserId = Number(helpers.getUser(req).id)
       const followingId = Number(req.body.id)
       if (UserId === followingId) {
         req.flash('error_messages', "You can't follow yourself")
-        return res.redirect(302, 'back')
+        return res.redirect(200, 'back')
       }
 
       const user = await User.findByPk(followingId)

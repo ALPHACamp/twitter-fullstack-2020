@@ -1,10 +1,11 @@
-const { Tweet, User, Like, Reply } = require('../models')
+const { Tweet, User, Like, Followship, Reply } = require('../models')
 const helpers = require('../_helpers')
 
 const tweetController = {
   getTweetReplies: async (req, res, next) => {
     try {
-      const followerId = req.user.Followers.map(fu => fu.id)
+      const currentUser = helpers.getUser(req)
+      const followerId = currentUser.Followings.map(fu => fu.id)
       const TweetId = req.params.id
       const existTweet = Tweet.findByPk(TweetId)
       if (!existTweet) throw new Error("This tweet didn't exist!")
@@ -20,12 +21,13 @@ const tweetController = {
         isFollowed: followerId.includes(reply.userId)
       }))
       return res.render('tweets/tweet-replies', { replies: data })
+      // res.json({ replies: data })
     } catch (err) {
       next(err)
     }
   },
   postTweetReply: async (req, res, next) => {
-    const UserId = req.user.id
+    const UserId = helpers.getUser(req).id
     const comment = req.body.comment
     const TweetId = req.params.id
     const existTweet = Tweet.findByPk(TweetId)
@@ -87,7 +89,7 @@ const tweetController = {
   },
   getTweets: async (req, res, next) => {
     try {
-      const role = req.user.role
+      const currentUser = helpers.getUser(req)
 
       let topUser = await User.findAll({
         include: [{ model: User, as: 'Followers' }]
@@ -96,7 +98,7 @@ const tweetController = {
         .map(user => ({
           ...user.toJSON(),
           followerCount: user.Followers.length,
-          isFollowed: req.user.Followings.some(f => f.id === user.id)
+          isFollowed: currentUser.Followings.some(f => f.id === user.id)
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
@@ -109,14 +111,14 @@ const tweetController = {
         ]
       })
       const likedTweetsId = req.user?.Likes
-        ? req.user.Likes.map(lt => lt.TweetId)
+        ? currentUser.Likes.map(lt => lt.TweetId)
         : []
       const data = tweets.map(tweets => ({
         ...tweets.toJSON(),
         isLiked: likedTweetsId.includes(tweets.id)
       }))
       // res.json(tweets)
-      res.render('tweets', { tweets: data, role, topUser })
+      res.render('tweets', { tweets: data, role: currentUser.role, topUser })
       // res.json({ status: 'success', tweets: data })
     } catch (err) {
       next(err)
