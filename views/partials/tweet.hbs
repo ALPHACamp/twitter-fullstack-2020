@@ -1,10 +1,10 @@
 <div class="tweet-card">
-  <a href="/users/{{this.userId}}/tweets">
+  <a href="/users/{{this.User.id}}/tweets">
     <img class="me-auto rounded-circle" src="{{this.User.avatar}}" alt="avatar">
   </a>
-  <a class="tweet-card-name" href="/users/{{this.userId}}/tweets">
+  <a class="tweet-card-name" href="/users/{{this.User.id}}/tweets">
     <span class="font-name">{{this.User.name}}</span>
-    <span class="font-account">@{{this.User.account}}</span>
+    <span class="font-account">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</span>
   </a>
   <div class="text-box">
     <span>{{#ifCond route 'tweets'}}{{this.description}}{{/ifCond}}
@@ -20,7 +20,7 @@
         </div>
       </form>
 
-      {{#if this.LikedUsers.id}}
+      {{#if this.Likes.id}}
       <form action="/tweets/{{this.id}}/unlike" method="POST">
         <div class="like-w">
           <button type="submit">

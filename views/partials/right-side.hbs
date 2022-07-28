@@ -8,14 +8,15 @@
       {{/each}}
       {{!-- 暫時展示區 --}}
       <form action="/followships" method="POST">
+        <input class="followingId" type="text" name="id" value="{{user.id}}">
         <div class="d-flex justify-content-between align-items-center flex-row bd-highlight mb-3">
           <div class="bd-highlight">
-            <a href="/users/{{this.is}}/tweets">
+            <a href="/users/{{user.id}}/tweets">
               <img class="me-auto rounded-circle" src="{{user.avatar}}" alt="avatar">
             </a>
           </div>
           <div class="name-container d-flex flex-column bd-highlight p-1">
-            <a href="/users/{{this.is}}/tweets">
+            <a href="/users/{{user.id}}/tweets">
               <div class="font-name">12wqweqweqweqweqee</div>
               <div class="font-account">@45awe6</div>
             </a>
@@ -28,15 +29,15 @@
         </div>
       </form>
 
-      <form action="/followships" method="POST">
+      <form action="/followships/:followingId?_method=DELETE" method="POST">
         <div class="d-flex justify-content-between align-items-center flex-row bd-highlight mb-3">
           <div class="bd-highlight">
-            <a href="/users/{{this.is}}/tweets">
+            <a href="/users/{{this.id}}/tweets">
               <img class="me-auto rounded-circle" src="{{user.avatar}}" alt="avatar">
             </a>
           </div>
           <div class="name-container d-flex flex-column bd-highlight p-1">
-            <a href="/users/{{this.is}}/tweets">
+            <a href="/users/{{this.id}}/tweets">
               <div class="font-name">12wqweqweqweqqweqweqee</div>
               <div class="font-account">@45awe6d</div>
             </a>

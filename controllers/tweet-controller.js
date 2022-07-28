@@ -30,9 +30,9 @@ const tweetController = {
       const { description } = req.body
       assert(description.length <= 140, "請以 140 字以內為限")
       assert((description.trim() !== ''), "內容不可空白")
-      const userId = helpers.getUser(req).id
+      const UserId = helpers.getUser(req).id
       const createdTweet = await Tweet.create({
-        userId,
+        UserId,
         description
       })
       assert(createdTweet, "Failed to create tweet!")
@@ -45,12 +45,12 @@ const tweetController = {
   },
   addLike: async (req, res, next) => {
     try {
-      const userId = helpers.getUser(req).id
-      const tweetId = req.params.id
-      await Like.findOrCreate({
+      const UserId = helpers.getUser(req).id
+      const TweetId = req.params.id
+      const like = await Like.findOrCreate({
         where: {
-          UserId: userId,
-          TweetId: tweetId
+          UserId,
+          TweetId
         }
       })
       return res.redirect('back')
@@ -61,12 +61,12 @@ const tweetController = {
   },
   removeLike: async (req, res, next) => {
     try {
-      const userId = helpers.getUser(req).id
-      const tweetId = req.params.id
+      const UserId = helpers.getUser(req).id
+      const TweetId = req.params.id
       const like = await Like.findOne({
         where: {
-          UserId: userId,
-          TweetId: tweetId
+          UserId,
+          TweetId
         }
       })
       await like.destroy()
