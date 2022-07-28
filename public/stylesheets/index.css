@@ -14,7 +14,7 @@
 }
 
 * {
-  font-family: 'Noto Sans TC','Montserrat', 'Roboto';
+  font-family: 'Noto Sans TC', 'Montserrat', 'Roboto';
 }
 
 .font-text {
@@ -33,4 +33,10 @@
 
   background-color: var(--brand-main);
   color: var(--white);
+}
+
+.left-nav {
+  position: fixed;
+  /* top: 30px;
+  right: 5px; */
 }
