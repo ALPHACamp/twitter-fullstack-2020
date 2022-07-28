@@ -113,7 +113,80 @@ const userController = {
         raw: true,
         nest: true
       })
+      user.introduction = user.introduction.substring(0, 20);
       return res.render('profile', { tweets, user })
+    }
+    catch (err) {
+      next(err)
+    }
+  },
+  getPersonalFollowings: async (req, res, next) => {
+    try {
+      const user = helpers.getUser(req)
+      const tweets = await Tweet.findAll({
+        include: User,
+        order: [
+          ['created_at', 'DESC']
+        ],
+        raw: true,
+        nest: true
+      })
+      user.introduction = user.introduction.substring(0, 20);
+      return res.render('personfollow', { tweets, user })
+    }
+    catch (err) {
+      next(err)
+    }
+  },
+  getPersonalFollowers: async (req, res, next) => {
+    try {
+      const user = helpers.getUser(req)
+      const tweets = await Tweet.findAll({
+        include: User,
+        order: [
+          ['created_at', 'DESC']
+        ],
+        raw: true,
+        nest: true
+      })
+      user.introduction = user.introduction.substring(0, 20);
+      return res.render('personfollow', { tweets, user })
+    }
+    catch (err) {
+      next(err)
+    }
+  },
+  getPersonalLikes: async (req, res, next) => {
+    try {
+      const user = helpers.getUser(req.user)
+      const tweets = await Tweet.findAll({
+        include: User,
+        order: [
+          ['created_at', 'DESC']
+        ],
+        raw: true,
+        nest: true
+      })
+      user.introduction = user.introduction.substring(0, 20);
+      return res.render('profilelike', { tweets, user })
+    }
+    catch (err) {
+      next(err)
+    }
+  },
+  getPersonalLikes: async (req, res, next) => {
+    try {
+      const user = helpers.getUser(req)
+      const tweets = await Tweet.findAll({
+        include: User,
+        order: [
+          ['created_at', 'DESC']
+        ],
+        raw: true,
+        nest: true
+      })
+      user.introduction = user.introduction.substring(0, 20);
+      return res.render('profilereply', { tweets, user })
     }
     catch (err) {
       next(err)

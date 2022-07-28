@@ -39,14 +39,21 @@
       </div>
       <div class="row  mx-0 px-0 ">
         <div class="col" style="max-width: 100%;">
-          <p class="fs-4 mb-0" style="word-wrap: break-word; word-break: normal;">{{user.introduction}}</p>
+          <p class="fs-5 mb-0" style="word-wrap: break-word; word-break: normal;">{{user.introduction}}</p>
+        </div>
+        <div class="d-flex">
+          <a href="/users/{{user.id}}/followers" style="text-decoration:none;color:black">
+            <p class="me-3 fw-bold text-secondary">5位跟隨者</P>
+          </a>
+          <a href="/users/{{user.id}}/followings" style="text-decoration:none;color:black">
+            <p class="me-3 fw-bold text-secondary">5個跟隨中</p>
+          </a>
         </div>
       </div>
 
 
-
       <div class="hr-line-b"></div>
-
+      {{>tweet-tabs route='users'}}
       {{#each tweets}}
       {{> tweet}}
       {{/each}}
@@ -54,6 +61,7 @@
     </div>
     {{> right-side}}
   </div>
+<<<<<<< HEAD
 </div>
 
 <!-- Modal -->
@@ -128,3 +136,32 @@
 </div>
 
 <script src="/public/javascripts/editProfileModal.js"></script>
+=======
+  <!-- Modal -->
+  <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="tweetInputLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-2">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form class="tweet-post" action="/tweets" method="POST">
+          <a href="/users/{{user.id}}/tweets">
+            <img class="ms-2" src="{{user.avatar}}" alt="avatar">
+          </a>
+          <div class="text-box">
+            <textarea type="text" name="description" placeholder="有什麼新鮮事？" rows="2" cols="45" maxlength="140"
+              required></textarea>
+          </div>
+          <div class="bd-highlight">
+            <button type="submit" class="tweet-btn">
+              推文
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+</div>
+>>>>>>> master

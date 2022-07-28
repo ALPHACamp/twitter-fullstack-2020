@@ -439,7 +439,6 @@
    margin: 0;
  }
 
-
  /* Profile-Modal */
  .modal-profile-content {
    border: none
@@ -521,4 +520,9 @@
  .modal-body {
    position: relative;
    top: 50px
+ }
+
+ .followingId {
+   display: none;
+
  }

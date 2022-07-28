@@ -21,7 +21,7 @@ app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }))
+app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
@@ -34,6 +34,29 @@ app.use((req, res, next) => {
   next()
 })
 app.use(express.static('public'))
+
+const assert = require('assert')
+const { User, Followship } = require('./models')
+const { count } = require('console')
+
+app.get('/test', async (res, req) => {
+  console.log('---------test-start--------')
+  const topFollower = await Followship.findAndCountAll({
+    group: 'following_id',
+    raw: true,
+    nest: true
+  })
+  const users = []
+  for (let i in topFollower.rows) {
+    const user = await User.findByPk(topFollower.rows[i].followingId, { raw: true })
+    user.followerCounts = topFollower?.count[i].count
+    users.push(user)
+  }
+  console.log(users)
+  console.log('---------test--end---------')
+})
+
+
 app.use(routes)
 
 // use helpers.getUser(req) to replace req.user
