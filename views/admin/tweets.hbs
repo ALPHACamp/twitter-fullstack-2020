@@ -6,11 +6,11 @@
 
   {{!-- 表頭 --}}
   <div style="border: 1px solid #E6ECF0;">
-    <h4 class="m-3">推文清單</h4>
+    <h4 class="m-3"><b>推文清單</b></h4>
   </div>
 
   {{!-- 推文清單 --}}
-  <ul class="list-group">
+  <ul class="list-group" style="border-radius: 0px;">
 
     {{#each tweets}}
     <li class="list-group-item d-flex align-items-start" style="border: 1px solid #E6ECF0;">
@@ -21,9 +21,10 @@
         <img src="/images/img.png" alt="" style="width: 50px;" class="me-3">
         {{/if}}
       </div>
+
       <div class="mt-2" style="width: 100%;">
-        <p>{{this.User.name}} 
-          <span class="text-muted" style="font-size: 14px">
+        <p><b>{{this.User.name}}</b> 
+          <span class="text-muted" style="font-size: 14px; padding-left: 8px">
             @{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}
           </span>
         </p>
