@@ -111,6 +111,7 @@
 }
 
 body {
+  height: 100%;
   margin: 0;
   font-family: var(--bs-body-font-family);
   font-size: var(--bs-body-font-size);
@@ -11547,4 +11548,5 @@ textarea.form-control-lg {
 .alert {
   width: 394px;
   height: 96px;
-}/*# sourceMappingURL=custom.css.map */
+}
+/*# sourceMappingURL=custom.css.map */

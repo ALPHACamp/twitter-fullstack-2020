@@ -4,7 +4,8 @@ const helpers = require('../_helpers')
 const tweetController = {
   getTweetReplies: async (req, res, next) => {
     try {
-      const followerId = req.user.Followers.map(fu => fu.id)
+      const currentUser = helpers.getUser(req)
+      const followerId = currentUser.Followings.map(fu => fu.id)
       const TweetId = req.params.id
       const existTweet = Tweet.findByPk(TweetId)
       if (!existTweet) throw new Error("This tweet didn't exist!")
@@ -20,12 +21,13 @@ const tweetController = {
         isFollowed: followerId.includes(reply.userId)
       }))
       return res.render('tweets/tweet-replies', { replies: data })
+      // res.json({ replies: data })
     } catch (err) {
       next(err)
     }
   },
   postTweetReply: async (req, res, next) => {
-    const UserId = req.user.id
+    const UserId = helpers.getUser(req).id
     const comment = req.body.comment
     const TweetId = req.params.id
     const existTweet = Tweet.findByPk(TweetId)
@@ -49,26 +51,23 @@ const tweetController = {
       if (!existUser) throw new Error("This account didn't exist!")
       const LikeTweet = await Like.findOne({ where: { UserId, TweetId } })
       if (LikeTweet) throw new Error('You already liked this tweet!')
-      Like.create({ UserId, TweetId })
+      await Like.create({ UserId, TweetId })
       return res.redirect('back')
     } catch (err) {
       next(err)
     }
   },
-  dislikeTweet: async (req, res, next) => {
+  unlikeTweet: async (req, res, next) => {
     try {
       const UserId = helpers.getUser(req).id
       const TweetId = req.params.id
       const LikeTweet = await Like.findOne({ where: { UserId, TweetId } })
       if (!LikeTweet) throw new Error("You haven't liked this tweet!")
-      LikeTweet.destroy()
+      await LikeTweet.destroy()
       return res.redirect('back')
     } catch (err) {
       next(err)
     }
-  },
-  postTweetUnlike: (req, res, next) => {
-    res.json({ status: 'success' })
   },
   postTweet: async (req, res, next) => {
     try {
@@ -90,24 +89,37 @@ const tweetController = {
   },
   getTweets: async (req, res, next) => {
     try {
-      const user = helpers.getUser(req)
-      const followingId = user.Followings.map(i => i.id)
+      const currentUser = helpers.getUser(req)
+      const role = currentUser.role
+
+      let topUser = await User.findAll({
+        include: [{ model: User, as: 'Followers' }]
+      })
+      topUser = topUser
+        .map(user => ({
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+          isFollowed: currentUser.Followings.some(f => f.id === user.id)
+        }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+
       const tweets = await Tweet.findAll({
-        include: { model: User, as: User },
-        where: { UserId: [...followingId, user.id] },
         order: [['createdAt', 'DESC']],
-        limit: 20,
-        raw: true,
-        nest: true
+        attributes: ['id', 'description', 'createdAt'],
+        include: [
+          { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
+          { model: Reply, attributes: ['id'] }
+        ]
       })
       const likedTweetsId = req.user?.Likes
-        ? req.user.Likes.map(lt => lt.TweetId)
+        ? currentUser.Likes.map(lt => lt.TweetId)
         : []
       const data = tweets.map(tweets => ({
-        ...tweets,
+        ...tweets.toJSON(),
         isLiked: likedTweetsId.includes(tweets.id)
       }))
-      res.render('tweets', { tweets: data })
+      // res.json(tweets)
+      res.render('tweets', { tweets: data, role, topUser })
       // res.json({ status: 'success', tweets: data })
     } catch (err) {
       next(err)

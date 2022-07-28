@@ -197,30 +197,34 @@ const userController = {
   },
   postFollow: async (req, res, next) => {
     try {
-      const UserId = helpers.getUser(req).id
+      const UserId = Number(helpers.getUser(req).id)
       const followingId = Number(req.body.id)
       if (UserId === followingId) {
-        return res
-          .status(200)
-          .json({ status: 'error', message: "You can't follow yourself" })
+        req.flash('error_messages', "You can't follow yourself")
+        return res.redirect(200, 'back')
       }
+
       const user = await User.findByPk(followingId)
       if (!user) throw new Error("User didn't exist")
       if (user.role === 'admin') {
-        throw new Error("You can't follow admin")
+        req.flash('error_messages', "You can't follow admin")
+        return res.redirect('back')
       }
+
       const isFollowed = await Followship.findOne({
         where: { followerId: UserId, followingId }
       })
+
       if (isFollowed) {
-        throw new Error('You are already following this user')
+        await isFollowed.destroy()
+        return res.redirect('back')
       }
-      const newFollowShip = await Followship.create({
+
+      await Followship.create({
         followerId: UserId,
         followingId
       })
-      return res.status(302).json({ status: 'success', newFollowShip })
-      // res.json({ status: 'success', newFollowShip })
+      return res.redirect('/')
     } catch (err) {
       next(err)
     }
