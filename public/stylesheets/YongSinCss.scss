@@ -211,8 +211,8 @@ section#ys-FE-users-region {
   &.followships-layout {
     display: flex;
     flex-direction: column;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
     border-left: 1px solid #E6ECF0;
     border-right: 1px solid #E6ECF0;
   }
@@ -253,7 +253,7 @@ section#ys-FE-users-region {
       color: $secondaryColor;
 
       &.active {
-        filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
+        // filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
         border-bottom: 1px solid $mainColor;
       }
     }
