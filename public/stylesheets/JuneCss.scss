@@ -394,6 +394,7 @@
         font-size: 16px;
         line-height: 26px;
         color: $dark100;
+        margin-top: 6px;
       }
       .footer {
         display: flex;
@@ -408,6 +409,18 @@
         span {
           font-weight: 600;
           font-size: 14px;
+        }
+      }
+      .reply-to {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+        margin-top: 4px;
+        .reply {
+          color: $secondaryColor;
+        }
+        .account {
+          color: $mainColor;
         }
       }
     }

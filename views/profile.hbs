@@ -81,41 +81,67 @@
         </div>
       </div>
     </div>
-    {{> profile-tabs route='tweets'}}
-    <div class="scroll-container">
-    {{#each tweets}}
-    <a href="">
-      <div class="tweet">
-        <div>
-          <img class="avatar" src="{{../targetUser.avatar}}" alt="avatar">
-        </div>
-        <div class="content">
-          <div class="d-flex align-items-center" style="height: 26px;">
-            <span class="name">{{../targetUser.name}}</span>
-            <span class="account">@{{../targetUser.account}}•{{relativeTimeFromNow this.createdAt}}</span>
+    {{#if replies}}
+      {{> profile-tabs route='replies'}}
+      <div class="scroll-container">
+        {{#each replies}}
+          <div class="tweet">
+            <div>
+              <img class="avatar" src="{{../targetUser.avatar}}" alt="avatar">
+            </div>
+            <div class="content">
+              <div class="d-flex align-items-center" style="height: 26px;">
+                <span class="name">{{../targetUser.name}}</span>
+                <span class="account">@{{../targetUser.account}}•{{relativeTimeFromNow this.createdAt}}</span>
+              </div>
+              <div class="reply-to">
+                <span class="reply">回復</span>
+                <span class="account">@{{this.Tweet.User.account}}</span>
+              </div>
+              <div class="description">
+                {{this.comment}}
+              </div>
+            </div>
           </div>
-          <div class="description">
-            {{this.description}}
-          </div>
-          <div class="footer">
-            <img src="/images/comment.png" alt="comment">
-            <span style="margin-right: 41.3px;">{{this.repliedCount}}</span>
-            {{#if isLiked}}
-            <form action="/tweets/{{this.id}}/unlike" method="POST">
-              <button type="submit"><img src="/images/redLove.png" alt="like"></button>
-            </form>
-            {{else}}
-            <form action="/tweets/{{this.id}}/like" method="POST">
-              <button type="submit"><img src="/images/like.png" alt="like"></button>
-            </form>
-            {{/if}}
-            <span>{{this.likedCount}}</span>
-          </div>
-        </div>
+        {{/each}}
       </div>
-    </a>
-    {{/each}}
-    </div>
+    {{else}}
+      {{> profile-tabs route='tweets'}}
+      <div class="scroll-container">
+      {{#each tweets}}
+      <a href="/tweets/{{this.id}}">
+        <div class="tweet">
+          <div>
+            <img class="avatar" src="{{../targetUser.avatar}}" alt="avatar">
+          </div>
+          <div class="content">
+            <div class="d-flex align-items-center" style="height: 26px;">
+              <span class="name">{{../targetUser.name}}</span>
+              <span class="account">@{{../targetUser.account}}•{{relativeTimeFromNow this.createdAt}}</span>
+            </div>
+            <div class="description">
+              {{this.description}}
+            </div>
+            <div class="footer">
+              <img src="/images/comment.png" alt="comment">
+              <span style="margin-right: 41.3px;">{{this.repliedCount}}</span>
+              {{#if isLiked}}
+              <form action="/tweets/{{this.id}}/unlike" method="POST">
+                <button type="submit"><img src="/images/redLove.png" alt="like"></button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{this.id}}/like" method="POST">
+                <button type="submit"><img src="/images/like.png" alt="like"></button>
+              </form>
+              {{/if}}
+              <span>{{this.likedCount}}</span>
+            </div>
+          </div>
+        </div>
+      </a>
+      {{/each}}
+      </div>
+    {{/if}}
   </div>
   
   <div id="profile-right">

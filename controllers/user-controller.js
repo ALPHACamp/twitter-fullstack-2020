@@ -89,10 +89,15 @@ const userController = {
       })
       .catch(err => next(err))
   },
-  replies: (req, res) => {
+  replies: (req, res, next) => {
     const id = req.params.id
     Promise.all([
-      User.findOne({ where: { id } }),
+      User.findByPk(id, {
+        include: [
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' }
+        ]
+      }),
       Reply.findAll({
         where: { UserId: id },
         include: [{ model: Tweet, include: User }],
@@ -112,10 +117,11 @@ const userController = {
       .then(([targetUser, replies, followship]) => {
         if (!targetUser) throw new Error("User didn't exist")
         const user = getUser(req)
+        user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
         const users = followship
           .map(data => ({
             ...data.User.toJSON(),
-            isFollowed: user.Followings.some(u => u.id === data.followerId)
+            isFollowed: user.Followings.some(u => u.id === data.followingId)
           }))
           .slice(0, 10)
         res.render('profile', { targetUser: targetUser.toJSON(), replies, user, users })
@@ -157,7 +163,7 @@ const userController = {
   },
   followers: (req, res, next) => {
     const observedUserId = req.params.id
-    const loginUser = helpers.getUser(req)
+    const loginUser = getUser(req)
 
     return User.findByPk(observedUserId, {
       nest: true,
@@ -176,7 +182,7 @@ const userController = {
   },
   followings: (req, res, next) => {
     const observedUserId = req.params.id
-    const loginUser = helpers.getUser(req)
+    const loginUser = getUser(req)
 
     return User.findByPk(observedUserId, {
       nest: true,

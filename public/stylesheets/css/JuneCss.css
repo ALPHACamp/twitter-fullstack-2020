@@ -391,6 +391,7 @@
   font-size: 16px;
   line-height: 26px;
   color: #171725;
+  margin-top: 6px;
 }
 #profile-region #profile-middle .tweet .footer {
   display: flex;
@@ -406,6 +407,18 @@
 #profile-region #profile-middle .tweet .footer span {
   font-weight: 600;
   font-size: 14px;
+}
+#profile-region #profile-middle .tweet .reply-to {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  margin-top: 4px;
+}
+#profile-region #profile-middle .tweet .reply-to .reply {
+  color: #6C757D;
+}
+#profile-region #profile-middle .tweet .reply-to .account {
+  color: #FF6600;
 }
 #profile-region #profile-right {
   width: 273px;
