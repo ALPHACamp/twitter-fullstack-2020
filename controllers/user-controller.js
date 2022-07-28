@@ -151,15 +151,11 @@ const userController = {
             isFollowed: user.Followings.some(u => u.id === data.followerId)
           }))
           .slice(0, 10)
-        res.render('profile', { targetUser: targetUser.toJSON(), likes, user, users })
-      })
-      .catch(err => next(err))
-  },
-
+        res.render('profile', { targetUser: targetUser.toJSON(), likes, user, users })})},
 
   followers: (req, res, next) => {
     const observedUserId = req.params.id
-    const loginUser = helpers.getUser(req)
+    const loginUser = getUser(req)
 
     return User.findByPk(observedUserId, {
       nest: true,
@@ -179,7 +175,7 @@ const userController = {
 
   followings: (req, res, next) => {
     const observedUserId = req.params.id
-    const loginUser = helpers.getUser(req)
+    const loginUser = getUser(req)
 
     return User.findByPk(observedUserId, {
       nest: true,
