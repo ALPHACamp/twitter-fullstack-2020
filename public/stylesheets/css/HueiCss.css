@@ -226,3 +226,118 @@ section#Huei-region .tweet-card .tweet-user-avatar {
   width: 64px;
   height: 40px;
 }
+
+.content {
+  margin-top: 8px;
+  width: 528px;
+  height: 78px;
+}
+
+.color-secondaryColor {
+  color: #6C757D;
+}
+
+.color-main {
+  color: #FF6600;
+}
+
+.reply-separate-m {
+  position: relative;
+  left: 25px;
+  bottom: 130px;
+  height: 86px;
+  width: 2px;
+  background-color: #B5B5BE;
+}
+
+.count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0px 0px;
+  position: absolute;
+  top: 270px;
+  right: 250px;
+  background: #FFFFFF;
+}
+.count span {
+  font-weight: 500;
+  line-height: 20px;
+  text-align: right;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  color: #696974;
+}
+
+.name-helper {
+  text-align: right;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  color: #FC5A5A;
+  position: relative;
+  top: 255px;
+  right: 100px;
+}
+
+.a-number-check {
+  position: absolute;
+  top: 250px;
+  right: 200px;
+  color: #696974;
+  font-weight: 500;
+}
+
+.c-number-check {
+  text-align: right;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  position: absolute;
+  top: 250px;
+  right: 80px;
+  color: #FC5A5A;
+}
+
+.list-separate-lg {
+  position: relative;
+  top: 190px;
+  height: 10px;
+  width: 639px;
+  background-color: #E2E2EA;
+}
+
+.card-override-reply {
+  height: 47vh;
+  overflow-y: scroll;
+  scrollbar-color: #F1F1F5 #FAFAFB;
+  scrollbar-width: thin;
+  overflow-x: hidden;
+}
+
+.like-reply-number .number {
+  display: inline;
+  color: #000000;
+  font-size: 19px;
+}
+.like-reply-number .word {
+  display: inline;
+  color: #6C757D;
+  font-size: 19px;
+}
+
+.tweet-name-account .name {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+}
+.tweet-name-account .account {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #6C757D;
+}

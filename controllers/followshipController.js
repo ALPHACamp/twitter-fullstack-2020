@@ -11,7 +11,7 @@ const followshipController = {
         followerId: helpers.getUser(req).id,
         followingId: req.body.id
       })
-      req.flash('error_messages', '追隨成功！')
+      req.flash('success_messages', '追隨成功！')
       return res.redirect('back')
     }
     catch (err) {
@@ -28,7 +28,7 @@ const followshipController = {
         }
       })
       await followship.destroy()
-      req.flash('error_messages', '取消追隨成功！')
+      req.flash('success_messages', '取消追隨成功！')
       return res.redirect('back')
     }
     catch (err) {
