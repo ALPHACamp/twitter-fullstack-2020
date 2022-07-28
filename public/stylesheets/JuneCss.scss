@@ -208,12 +208,13 @@
   padding: 0 55px;
   #profile-left {
     width: 178px;
+    height: 1200px;
   }
   #profile-middle {
     max-width: 641px;
     border: 1px #E6ECF0 solid;
     padding-top: 16px;
-    height: 100%;
+    height: 1200px;
     .header {
       display: flex;
       height: 59px;
@@ -241,6 +242,22 @@
           font-size: 13px;
           color: $secondaryColor;
         }
+      }
+    }
+    .scroll-container {
+      height: 660px;
+      overflow-y: scroll;
+      scrollbar-color: $dark30 $dark20;
+      scrollbar-width: thin;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      // bar的樣式
+      &::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background-color: rgba(0, 0, 0, 0.1);
       }
     }
     .user-info {
@@ -557,11 +574,7 @@
         }
       }
     }
-  }
-  #profile-right {
-    width: 273px;
-    padding-left: 28px;
-  }
+  
   .profile-tabs {
     li {
         a {
@@ -584,22 +597,7 @@
         }
       }
   }
-  .scroll-container {
-    height: 85vh;
-    overflow-y: scroll;
-    scrollbar-color: $dark30 $dark20;
-    scrollbar-width: thin;
-
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    // bar的樣式
-    &::-webkit-scrollbar-thumb {
-      border-radius: 3px;
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-
+  
 
     .tweet-card {
       position: relative;
@@ -630,6 +628,10 @@
         padding-right: 3rem;
       }
     }
+  }
+  #profile-right {
+    width: 273px;
+    padding-left: 28px;
   }
 }
 
