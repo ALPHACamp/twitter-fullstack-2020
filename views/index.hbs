@@ -3,7 +3,7 @@
 </div>
 <div class="col-8 nav-body">
   <ul class="list-group me-3" id="tweets-panel">
-    <li class="list-group-item d-flex align-items-start" >
+    <li class="list-group-item d-flex align-items-start">
       <img src="images/img.png" alt="" style="width: 50px;" class="me-3">
 
       <div>
@@ -19,7 +19,7 @@
         </p>
       </div>
     </li>
-    <li class="list-group-item d-flex align-items-start" >
+    <li class="list-group-item d-flex align-items-start">
       <img src="images/img.png" alt="" style="width: 50px;" class="me-3">
 
       <div>
@@ -34,12 +34,12 @@
         </p>
       </div>
     </li>
-    <li class="list-group-item d-flex align-items-start" >
-      <img src="images/logo.png" alt="" style="width: 50px;" class="me-3">
+    <li class="list-group-item d-flex align-items-start">
+      <img src="images/img.png" alt="" style="width: 50px;" class="me-3">
 
       <div>
-        <p class="mb-1">Apple&nbsp;&nbsp;<small class="text-secondary">@apple・3 小時</small></p>
-        <p class="mb-2">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.
+        <p>Apple<small>@apple・3 小時</small></p>
+        <p>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.
           Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
         <p>
           <i class="fa-solid fa-comment me-2 pointer" data-bs-toggle="modal" data-bs-target="#post-reply"></i>
@@ -59,7 +59,8 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="btn-close p-1 m-1" data-bs-dismiss="modal" aria-label="Close" style="background: rgba(var(--bs-white-rgb),var(--bs-bg-opacity));">
+        <button type="button" class="btn-close p-1 m-1" data-bs-dismiss="modal" aria-label="Close"
+          style="background: rgba(var(--bs-white-rgb),var(--bs-bg-opacity));">
           <i class="fa-solid fa-xmark icon-size brand-color"></i>
         </button>
       </div>
@@ -83,9 +84,13 @@
             <img src="images/img.png" alt="" style="width: 50px;">
           </div>
           <div class="flex-fill text-end mt-3">
-            <form href="/tweets/{{tweet.id}}" action="POST" id="tweet-link">
-              <textarea class="border border-0 form-control p-0" id="tweet" name="tweet" maxlength="140" placeholder="有什麼新鮮事？" rows="5" required></textarea>
-              <button type="submit" class="btn btn-brand radius50 mt-3">回覆</button>
+            <form href="/tweets" action="POST" class="needs-validation" novalidate>
+              <textarea class="border border-0 form-control p-0 mb-2" id="tweet" name="tweet" maxlength="140"
+                placeholder="有什麼新鮮事？" rows="5" required></textarea>
+              <div class="invalid-feedback me-1" style="display: inline;">
+                內容不可空白
+              </div>
+              <button type="submit" class="btn btn-brand radius50 ms-3">回覆</button>
             </form>
           </div>
         </div>
@@ -104,11 +109,26 @@
     document.querySelector("#modal-avatar").src = tweet.children[0].src
     const modalContent = tweet.children[1].children[0].cloneNode(true)
     modalContent.classList.add("mb-2")
-    const modalUser =  tweet.children[1].children[1].cloneNode(true)
+    const modalUser = tweet.children[1].children[1].cloneNode(true)
     modalUser.classList.add("mb-1")
     document.querySelector("#tweet-link").href = "/tweets/{{tweet.id}}"
-    
+
     content.prepend(modalUser)
     content.prepend(modalContent)
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
   })
 </script>

@@ -1,12 +1,11 @@
 {
   "development": {
-    "username": "hBXj9ikBCN",
-    "password": "O87caUwjBA",
-    "database": "hBXj9ikBCN",
-    "host": "remotemysql.com",
+    "username": "root",
+    "password": "password",
+    "database": "ac_twitter_workspace",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
-
   "test": {
     "username": "root",
     "password": "password",
