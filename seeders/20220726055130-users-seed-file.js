@@ -12,7 +12,7 @@ module.exports = {
       avatar: 'https://randomuser.me/api/portraits/men/88.jpg',
       introduction: faker.lorem.text().substring(0, 160),
       banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
-      is_admin: true,
+      role: 'admin',
       created_at: new Date(),
       updated_at: new Date()
     }, {
@@ -23,7 +23,7 @@ module.exports = {
       avatar: 'https://randomuser.me/api/portraits/men/4.jpg',
       introduction: faker.lorem.text().substring(0, 160),
       banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
-      is_admin: false,
+      role: 'user',
       created_at: new Date(),
       updated_at: new Date()
     }, {
@@ -34,7 +34,7 @@ module.exports = {
       avatar: 'https://randomuser.me/api/portraits/women/17.jpg',
       introduction: faker.lorem.text().substring(0, 160),
       banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
-      is_admin: false,
+      role: 'user',
       created_at: new Date(),
       updated_at: new Date()
     }, {
@@ -45,7 +45,7 @@ module.exports = {
       avatar: 'https://randomuser.me/api/portraits/women/19.jpg',
       introduction: faker.lorem.text().substring(0, 160),
       banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
-      is_admin: false,
+      role: 'user',
       created_at: new Date(),
       updated_at: new Date()
     }, {
@@ -56,7 +56,7 @@ module.exports = {
       avatar: 'https://randomuser.me/api/portraits/women/20.jpg',
       introduction: faker.lorem.text().substring(0, 160),
       banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
-      is_admin: false,
+      role: 'user',
       created_at: new Date(),
       updated_at: new Date()
     }, {
@@ -67,7 +67,7 @@ module.exports = {
       avatar: 'https://randomuser.me/api/portraits/men/17.jpg',
       introduction: faker.lorem.text().substring(0, 160),
       banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
-      is_admin: false,
+      role: 'user',
       created_at: new Date(),
       updated_at: new Date()
     }, {
@@ -78,7 +78,7 @@ module.exports = {
       avatar: 'https://randomuser.me/api/portraits/men/30.jpg',
       introduction: faker.lorem.text().substring(0, 160),
       banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
-      is_admin: false,
+      role: 'user',
       created_at: new Date(),
       updated_at: new Date()
     }, {
@@ -89,7 +89,7 @@ module.exports = {
       avatar: 'https://randomuser.me/api/portraits/men/46.jpg',
       introduction: faker.lorem.text().substring(0, 160),
       banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
-      is_admin: false,
+      role: 'user',
       created_at: new Date(),
       updated_at: new Date()
     }, {
@@ -100,7 +100,7 @@ module.exports = {
       avatar: 'https://randomuser.me/api/portraits/women/51.jpg',
       introduction: faker.lorem.text().substring(0, 160),
       banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
-      is_admin: false,
+      role: 'user',
       created_at: new Date(),
       updated_at: new Date()
     }, {
@@ -111,7 +111,7 @@ module.exports = {
       avatar: 'https://randomuser.me/api/portraits/women/2.jpg',
       introduction: faker.lorem.text().substring(0, 160),
       banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
-      is_admin: false,
+      role: 'user',
       created_at: new Date(),
       updated_at: new Date()
     }, {
@@ -122,7 +122,7 @@ module.exports = {
       avatar: 'https://randomuser.me/api/portraits/men/80.jpg',
       introduction: faker.lorem.text().substring(0, 160),
       banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
-      is_admin: false,
+      role: 'user',
       created_at: new Date(),
       updated_at: new Date()
     }], {})

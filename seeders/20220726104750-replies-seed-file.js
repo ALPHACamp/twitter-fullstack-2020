@@ -1,6 +1,6 @@
 'use strict'
 const faker = require('faker')
-const { User, Tweet } = require('models')
+const { User, Tweet } = require('../models')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -13,7 +13,7 @@ module.exports = {
     const tweetRandomIndex = Math.floor(Math.random() * tweets.length)
     const userId = users[userRandomIndex].id
     const tweetId = tweets[tweetRandomIndex].id
-    await queryInterface.bulkInsert('Reply', Array.from({ length: 300 }), () => ({
+    await queryInterface.bulkInsert('Replies', Array.from({ length: 300 }), () => ({
       comment: faker.lorem.sentence(),
       userId,
       tweetId,
@@ -23,6 +23,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Reply', null, {})
+    await queryInterface.bulkDelete('Replies', null, {})
   }
 }
