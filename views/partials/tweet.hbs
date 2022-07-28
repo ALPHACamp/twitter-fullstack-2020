@@ -7,7 +7,10 @@
     <span class="font-account">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</span>
   </a>
   <div class="text-box">
-    <span>{{this.description}}
+    <span>{{#ifCond route 'tweets'}}{{this.description}}{{/ifCond}}
+      {{#ifCond route 'mainpage'}}{{this.description}}{{/ifCond}}
+      {{#ifCond route 'replies'}}{{this.comment}}{{/ifCond}}
+      {{#ifCond route 'likes'}}{{this.Tweet.description}}{{/ifCond}}
       <form action="/tweets/{{this.id}}/like" method="POST">
         <div class="speech-bubble">
           <button type="submit">

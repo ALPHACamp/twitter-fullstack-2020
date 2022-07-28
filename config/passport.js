@@ -26,8 +26,14 @@ passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
 passport.deserializeUser((id, cb) => {
-  User.findByPk(id).then(user => {
-    return cb(null, user.toJSON())
+  return User.findByPk(id, {
+    include: [
+      { model: User, as: 'Followers' },
+      { model: User, as: 'Followings' }
+    ]
   })
+    .then(user => cb(null, user.toJSON()))
+    .catch(err => cb(err))
 })
+
 module.exports = passport
