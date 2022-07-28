@@ -101,9 +101,6 @@ const userConroller = {
         res.redirect('/tweets')
       })
       .catch(err => next(err))
-  },
-  getTweets: (req, res) => {
-    res.render('tweets')
   }
 }
 

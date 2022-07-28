@@ -5,6 +5,7 @@ const passport = require('../../config/passport')
 const admin = require('./modules/admin')
 
 const userController = require('../../controllers/pages/user-controller')
+const tweetController = require('../../controllers/pages/tweet-controller')
 
 const { authenticated, authenticatedAdmin } = require('../../middleware/auth')
 
@@ -19,7 +20,7 @@ router.get('/logout', userController.logout)
 router.get('/setting/:id', authenticated, userController.getSetting)
 router.put('/setting/:id', authenticated, userController.editSetting)
 
-router.get('/tweets', authenticated, userController.getTweets)
+router.get('/tweets', authenticated, tweetController.getTweets)
 
 router.get('/', (req, res) => res.send('Hello World!'))
 
