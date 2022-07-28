@@ -5,11 +5,25 @@ const passport = require('./config/passport')
 const handlebars = require('express-handlebars')
 const flash = require('connect-flash')
 const helpers = require('./_helpers')
+const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const routes = require('./routes')
 
 const app = express()
 const port = 3000
 const SESSION_SECRET = 'secret'
+
+app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
+app.set('view engine', 'hbs')
+
+app.use(session({
+  secret: 'ThisIsMySecret',
+  resave: false,
+  saveUninitialized: true
+}))
+app.use(express.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
+app.use(express.json())
+app.use(flash())
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
