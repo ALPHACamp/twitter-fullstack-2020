@@ -54,12 +54,11 @@ const userController = {
     res.redirect('/signin')
   },
   getSetting: (req, res, next) => {
-    console.log(req.params)
     const id = Number(req.params.userid)
     return User.findByPk(id)
       .then(user => {
         if (!user) throw new Error('使用者不存在!')
-        if (user.id !== helpers.getUser(req).user.id) throw new Error('無法編輯他人資料!')
+        if (user.id !== helpers.getUser(req).id) throw new Error('無法編輯他人資料!')
         user = user.toJSON()
         res.render('setting', { user })
       }).catch(err => next(err))
@@ -105,8 +104,7 @@ const userController = {
   },
   getPersonalTweets: async (req, res, next) => {
     try {
-      const user = helpers.getUser(req.user)
-      console.log('here is user:', user)
+      const user = helpers.getUser(req)
       const tweets = await Tweet.findAll({
         include: User,
         order: [

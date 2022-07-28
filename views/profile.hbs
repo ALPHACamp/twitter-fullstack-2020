@@ -60,64 +60,71 @@
 <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content" style="width: 600px; height: 657px;">
-      <form action="/users/{{user.id}}/edit?_method=PUT" method="POST" enctype="multipart/form-data" id="profileForm"
-        novalidate>
-        <div class="modal-header d-flex justify-content-start">
-          <button type="button" class="button-close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true" style="background-color: #FFFFFF;color: #FF6600;">&times;</span>
-          </button>
+      {{!-- <form action="/api/users/{{user.id}}" data-id="{{user.id}}" method="POST" enctype="multipart/form-data"
+        id="profileForm" novalidate> --}}
+        <form action="/api/users/{{user.id}}" data-id="{{user.id}}" enctype="multipart/form-data" id="profileForm"
+          novalidate>
 
-          <p class="p-0 mb-0 mr-auto font-weight-bold" style="font-size: 18px; margin-left: 35px;">編輯個人資料</p>
-          <div class="modal-profile-save">
-            <button class="button-submit button-save modal-profile-button-save" type="submit">儲存</button>
+          <div class="modal-header d-flex justify-content-start">
+            <button type="submit" class="button-close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" style="background-color: #FFFFFF;color: #FF6600;">&times;</span>
+            </button>
+
+            <p class="p-0 mb-0 mr-auto font-weight-bold" style="font-size: 18px; margin-left: 35px;">編輯個人資料</p>
+            <div class="modal-profile-save">
+              <button id="profileModalBtn" class="button-submit button-save modal-profile-button-save"
+                type="submit">儲存</button>
+            </div>
+
           </div>
-
-        </div>
-        <div class="modal-profile-top">
-          <img class="modal-profile-cover" src="{{user.cover}}" alt="" id="cover-placeholder">
-          <label id="coverImage">
-            <img class="modal-profile-upload-cover" src="https://upload.cc/i1/2022/07/26/u3WmYF.png" alt=""
-              id="coverImage">
-            <input id="coverImage" name="cover" type="file" hidden>
-          </label>
-          <div class="modal-profile-avatar">
-            <img class="modal-profile-avatar-img" src="{{user.avatar}}" alt="" id="avatar-placeholder">
-            <label id="avatarImage">
-              <img class="modal-profile-upload-avatar" src="https://upload.cc/i1/2022/07/26/u3WmYF.png" alt=""
-                id="avatarImage">
-              <input id="avatarImage" name="cover" type="file" onchange="readAvatar(this)" hidden>
+          <div class="modal-profile-top">
+            <img class="modal-profile-cover" src="{{user.cover}}" alt="" id="cover-placeholder">
+            <label id="coverImage">
+              <img class="modal-profile-upload-cover" src="https://upload.cc/i1/2022/07/26/u3WmYF.png" alt=""
+                id="coverImage">
+              <input id="coverImage" name="cover" type="file" hidden>
             </label>
-          </div>
+            <div class="modal-profile-avatar">
+              <img class="modal-profile-avatar-img" src="{{user.avatar}}" alt="" id="avatar-placeholder">
+              <label id="avatarImage">
+                <img class="modal-profile-upload-avatar" src="https://upload.cc/i1/2022/07/26/u3WmYF.png" alt=""
+                  id="avatarImage">
+                <input id="avatarImage" name="avatar" type="file" onchange="readAvatar(this)" hidden>
+              </label>
+            </div>
 
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="form-floating">
-              <input type="text" class="form-control" id="modalProfileName" placeholder="Enter Name"
-                value="{{ user.name }}" name="name" style="background-color: #F5F8FA;border-bottom: 2px solid #657786; "
-                maxlength="50" required autofocus />
-              <label for="modalProfileName" style="margin-left:15px ;">名稱</label>
-              <p style="margin:10px 0px 0px 515px ;font-size:12px;color:#696974">
-                {{ user.name.length }}/50
-              </p>
-              <div class="invalid-feedback">請輸入名稱，最多50字</div>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="modalProfileName" placeholder="Enter Name"
+                  value="{{ user.name }}" name="name"
+                  style="background-color: #F5F8FA;border-bottom: 2px solid #657786; " maxlength="50" required
+                  autofocus />
+                <label for="modalProfileName" style="margin-left:15px ;">名稱</label>
+                <p style="margin:10px 0px 0px 515px ;font-size:12px;color:#696974">
+                  {{ user.name.length }}/50
+                </p>
+                <div class="invalid-feedback">請輸入名稱，最多50字</div>
+              </div>
+            </div>
+
+            <div class="row" style="">
+              <div class="form-floating">
+                <textarea class="form-control" id="modalProfileInfo" placeholder="Your Introduction" name="introduction"
+                  style="background-color: #F5F8FA;border-bottom: 2px solid #657786;height:150px;" rows="4"
+                  maxlength="160">{{ user.introduction }}</textarea>
+                <label for="modalProfileInfo" style="margin-left:15px;">自我介紹</label>
+                <p style="margin:10px 0px 0px 500px;font-size:12px;color:#696974">
+                  {{ user.introduction.length}}/160
+                </p>
+                <div class="invalid-feedback">自我介紹最多160字</div>
+              </div>
             </div>
           </div>
-
-          <div class="row" style="">
-            <div class="form-floating">
-              <textarea class="form-control" id="profileIntro" placeholder="Your Introduction" name="introduction"
-                style="background-color: #F5F8FA;border-bottom: 2px solid #657786;height:150px;" rows="4"
-                maxlength="160">{{ user.introduction }}</textarea>
-              <label for="profileIntro" style="margin-left:15px;">自我介紹</label>
-              <p style="margin:10px 0px 0px 500px;font-size:12px;color:#696974">
-                {{ user.introduction.length}}/160
-              </p>
-              <div class="invalid-feedback">自我介紹最多160字</div>
-            </div>
-          </div>
-        </div>
-      </form>
+        </form>
     </div>
   </div>
 </div>
+
+<script src="/public/javascripts/editProfileModal.js"></script>

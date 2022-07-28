@@ -48,7 +48,7 @@ const tweetController = {
   // },
   getTweets: async (req, res, next) => {
     try {
-      const user = helpers.getUser(req.user)
+      const user = helpers.getUser(req)
       const tweets = await Tweet.findAll({
         include: User,
         order: [
@@ -68,7 +68,7 @@ const tweetController = {
       const { description } = req.body
       assert(description.length <= 140, "請以 140 字以內為限")
       assert((description.trim() !== ''), "內容不可空白")
-      const userId = helpers.getUser(req.user).id
+      const userId = helpers.getUser(req).id
       const createdTweet = await Tweet.create({
         userId,
         description
