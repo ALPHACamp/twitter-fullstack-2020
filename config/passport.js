@@ -14,8 +14,16 @@ passport.use(
     },
     async (req, account, password, cb) => {
       const user = await User.findOne({ where: { account } })
-      if (!user || user.role !== 'user' || !bcrypt.compareSync(password, user.password)) {
-        return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+      if (
+        !user ||
+        user.role !== 'user' ||
+        !bcrypt.compareSync(password, user.password)
+      ) {
+        return cb(
+          null,
+          false,
+          req.flash('error_messages', '帳號或密碼輸入錯誤！')
+        )
       }
       return cb(null, user)
     }
@@ -32,8 +40,16 @@ passport.use(
     },
     async (req, account, password, cb) => {
       const user = await User.findOne({ where: { account } })
-      if (!user || user.role !== 'admin' || !bcrypt.compareSync(password, user.password)) {
-        return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+      if (
+        !user ||
+        user.role !== 'admin' ||
+        !bcrypt.compareSync(password, user.password)
+      ) {
+        return cb(
+          null,
+          false,
+          req.flash('error_messages', '帳號或密碼輸入錯誤！')
+        )
       }
       return cb(null, user)
     }
@@ -50,9 +66,10 @@ passport.deserializeUser((id, cb) => {
       { model: User, as: 'Followings' },
       { model: Like }
     ]
-  }).then(user => {
-    cb(null, user.toJSON())
   })
+    .then(user => {
+      cb(null, user.toJSON())
+    })
     .catch(err => cb(err))
 })
 

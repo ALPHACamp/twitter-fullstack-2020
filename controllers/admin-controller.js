@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken')
+const { User, Tweet, Like } = require('../models')
 
 const adminController = {
   signInPage: async (req, res, next) => {
@@ -11,15 +11,7 @@ const adminController = {
   signIn: async (req, res, next) => {
     try {
       req.flash('success_messages', '成功登入！')
-      // res.redirect('/admin/tweets')
-      const userData = req.user.toJSON()
-      delete userData.password
-      res.json({
-        status: 'success',
-        data: {
-          user: userData
-        }
-      })
+      res.redirect(302, '/admin/tweets')
     } catch (err) {
       next(err)
     }
@@ -33,14 +25,46 @@ const adminController = {
       next(err)
     }
   },
-  getUsers: (req, res, next) => {
-    res.json({ status: 'success' })
+  getUsers: async (req, res, next) => {
+    try {
+      const users = await User.findAll({
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+          Like,
+          Tweet
+        ],
+        where: { role: 'user' }
+      })
+      users.sort((a, b) => b.Tweets.length - a.Tweets.length)
+      // res.render('admin/admin-users', { users })
+      res.json({ users })
+    } catch (err) {
+      next(err)
+    }
   },
-  getTweets: (req, res, next) => {
-    res.json({ status: 'success' })
+  getTweets: async (req, res, next) => {
+    try {
+      const tweets = await Tweet.findAll({
+        include: User,
+        raw: true
+      })
+      // res.render('admin/admin-tweets',{tweets})
+      res.json({ tweets })
+    } catch (err) {
+      next(err)
+    }
   },
-  deleteTweet: (req, res, next) => {
-    res.json({ status: 'success' })
+  deleteTweet: async (req, res, next) => {
+    try {
+      const tweet = await Tweet.findByPk(req.params.id)
+      if (!tweet) throw new Error("Tweet didn't exist")
+      await tweet.destroy()
+      res.redirect('/admin/tweets')
+      // res.json({ destroyTweet })
+    } catch (err) {
+      next(err)
+    }
   }
 }
 
