@@ -50,24 +50,38 @@ const tweetController = {
   },
   getTweet: async (req, res, next) => {
     try {
-      const tweet = await Tweet.findByPk(req.params.tweet_id,
+      let tweet = await Tweet.findByPk(req.params.tweet_id,
         {
           include: [
-            User,
-            { model: Reply, include: User },
-            { model: Like, include: User, where: { UserId: helpers.getUser(req).id } }
-          ]
+            User, Like, Reply,
+            { model: Reply, include: User }
+          ],
+          order: [['createdAt', 'DESC']]
         })
-      if (!tweet) {
-        req.flash('error_messages', 'Tweet 不存在!')
-        return res.redirect('back')
-      }
+
+      let users = await User.findAll({
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+
+      const likes = await Like.findAll({
+        where: { UserId: helpers.getUser(req).id }
+      })
       const likedCount = tweet.Likes.length
       const repliedCount = tweet.Replies.length
-      const isLiked = tweet.Likes.User.some(
-        l => l === tweet.id
-      )
-      return res.render('tweet', { tweet: tweet.toJSON(), likedCount, repliedCount, isLiked })
+      //const isLiked = likes.map(l => l.TweetId).includes(tweet.id)
+
+
+      users = await users.map(user => ({
+        ...user.toJSON(),
+        followerCount: user.Followers.length,
+        isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
+      }))
+      users = users.sort((a, b) => b.followerCount - a.followerCount)
+        .slice(0, 10)
+      return res.render('tweet', { tweet: tweet.toJSON(), users, likedCount, repliedCount })
     } catch (err) {
       next(err)
     }

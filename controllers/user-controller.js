@@ -85,7 +85,7 @@ const userController = {
             isLiked: t.Likes.some(like => like.UserId === user.id)
           }))
         res.locals.tweetsLength = tweets.length
-        res.status(200).render('profile', { targetUser: targetUser.toJSON(), tweets: tweetsData, user, users })
+        res.render('profile', { targetUser: targetUser.toJSON(), tweets: tweetsData, user, users })
       })
       .catch(err => next(err))
   },
@@ -220,5 +220,6 @@ const userController = {
       .catch(err => next(err))
   }
 }
+
 
 module.exports = userController

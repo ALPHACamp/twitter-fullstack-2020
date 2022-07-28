@@ -204,10 +204,6 @@ section#ys-admin-region {
 }
 
 section#ys-FE-users-region {
-  * {
-    // border: dotted 1px red;
-  }
-
   &.temp-layout {
     width: 45%;
   }
@@ -215,8 +211,8 @@ section#ys-FE-users-region {
   &.followships-layout {
     display: flex;
     flex-direction: column;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
     border-left: 1px solid #E6ECF0;
     border-right: 1px solid #E6ECF0;
   }
@@ -257,7 +253,7 @@ section#ys-FE-users-region {
       color: $secondaryColor;
 
       &.active {
-        filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
+        // filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
         border-bottom: 1px solid $mainColor;
       }
     }
@@ -333,4 +329,189 @@ section#ys-FE-users-region {
     }
 
   }
+}
+
+section#ys-FE-users-setting {
+  &.temp-layout {
+    width: 50%;
+  }
+
+  &.followships-layout {
+    margin-left: auto;
+    margin-right: auto;
+    border-left: 1px solid #E6ECF0;
+    border-right: 1px solid #E6ECF0;
+    padding: 0rem 1.5rem
+  }
+
+  #setting-region {
+    background: $dark0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $dark100;
+
+    .title {
+      width: 100%;
+      padding: 1.5rem 0rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      line-height: 26px;
+    }
+
+    .input {
+      width: 100%;
+      height: 78px;
+      border-radius: 2px;
+      margin-bottom: 8px;
+      background: #F5F8FA;
+      position: relative;
+
+      label {
+        position: absolute;
+        left: 2.96%;
+        right: 2.96%;
+        top: 2.56%;
+        bottom: 69.23%;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+        height: 22px;
+        width: 334.9px;
+        color: $dark80;
+        background: transparent;
+      }
+
+      input {
+        width: 334.9px;
+        height: 26px;
+        background: transparent;
+        position: absolute;
+        left: 2.96%;
+        right: 2.96%;
+        top: 30.77%;
+        bottom: 35.9%;
+        border: none;
+      }
+
+      input::placeholder {
+        color: $dark60;
+        font-size: 16px;
+      }
+
+      .status {
+        position: absolute;
+        left: 0%;
+        right: 0%;
+        top: 66.67%;
+        bottom: 30.77%;
+        background: #657786;
+        border-radius: 0px 0px 4px 4px;
+        border: 1px #657786 solid;
+      }
+
+      .helper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 4px 0px 0px;
+        position: absolute;
+        background: $dark0;
+        left: 0%;
+        right: 50%;
+        top: 69.23%;
+        bottom: 0%;
+
+        span {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 20px;
+          flex: none;
+          order: 0;
+          align-self: stretch;
+          flex-grow: 0;
+          color: $errorColor;
+        }
+      }
+
+      .count {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 4px 0px 0px;
+        position: absolute;
+        left: 50%;
+        right: 0%;
+        top: 69.23%;
+        bottom: 0%;
+        background: $dark0;
+
+        span {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 20px;
+          text-align: right;
+          flex: none;
+          order: 0;
+          align-self: stretch;
+          flex-grow: 0;
+          color: $dark80;
+        }
+      }
+    }
+
+    .status.focus {
+      border-color: #50B5FF;
+    }
+
+    .status.warn {
+      border-color: $errorColor;
+    }
+
+    .submit {
+      display: flex;
+      justify-content: end;
+      margin-top: 8px;
+      width: 100%;
+
+      span {
+        padding: 8px 24px;
+        width: 88px;
+        height: 46px;
+        background: $mainColor;
+        border-radius: 50px;
+        color: $dark0;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 30px;
+      }
+    }
+
+    .signup-or-admin {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      width: 100%;
+      padding: 0 12px 0 0;
+      margin-top: 22px;
+
+      a {
+        text-decoration: underline;
+        color: #0062FF;
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      span {
+        width: 16px;
+        height: 24px;
+        margin: 0 12px;
+      }
+    }
+
+    .alert {
+      width: 100%;
+    }
+  }
+
 }

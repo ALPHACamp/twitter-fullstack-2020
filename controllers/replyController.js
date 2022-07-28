@@ -16,7 +16,7 @@ const replyController = {
   },
   postReply: async (req, res, next) => {
     try {
-      const comment = req.body.comment
+      const { comment } = req.body
       if (!comment) {
         req.flash('error_messages', '回覆內容不存在！')
         return res.redirect('back')
