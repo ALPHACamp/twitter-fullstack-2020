@@ -31,8 +31,15 @@
       </div>
     </div>
   {{else}}
-    {{!-- user layout 3-column --}}
-    {{{body}}}
+    <div class="col-2">
+      {{!-- left Navigation --}}
+    </div>
+    <div class="col-8">
+      {{{body}}}
+    </div>
+    <div class="col-2">
+      {{!-- right Navigation --}}
+    </div>
   {{/if}}
 
 {{else}}
