@@ -1,13 +1,11 @@
 const assert = require('assert')
 const helpers = require("../_helpers")
-const sortObj = require('../helpers/sortObj')
 const { User, Followship } = require('../models')
 
 const followController = {
   addFollow: async (req, res, next) => {
     try {
       const follower = await User.findByPk(helpers.getUser(req).id)
-      const follower2 = helpers.getUser(req)
       const following = await User.findByPk(Number(req.body.id))
       assert(following, `user didn't exist!`)
       if (follower.id === following.id) return res.redirect(200, 'back')
