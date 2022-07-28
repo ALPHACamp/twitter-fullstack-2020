@@ -45,7 +45,7 @@ const userController = {
   },
   tweets: (req, res, next) => {
     const id = req.params.id
-    Promise.all([
+    return Promise.all([
       User.findByPk(id, {
         include: [
           { model: User, as: 'Followings' },
@@ -85,13 +85,13 @@ const userController = {
             isLiked: t.Likes.some(like => like.UserId === user.id)
           }))
         res.locals.tweetsLength = tweets.length
-        res.render('profile', { targetUser: targetUser.toJSON(), tweets: tweetsData, user, users })
+        res.status(200).render('profile', { targetUser: targetUser.toJSON(), tweets: tweetsData, user, users })
       })
       .catch(err => next(err))
   },
   replies: (req, res, next) => {
     const id = req.params.id
-    Promise.all([
+    return Promise.all([
       User.findByPk(id, {
         include: [
           { model: User, as: 'Followings' },
@@ -126,13 +126,13 @@ const userController = {
           }))
           .slice(0, 10)
         res.locals.tweetsLength = targetUser.Tweets.length
-        res.render('profile', { targetUser: targetUser.toJSON(), replies, user, users })
+        res.status(200).render('profile', { targetUser: targetUser.toJSON(), replies, user, users })
       })
       .catch(err => next(err))
   },
   likes: (req, res, next) => {
     const id = req.params.id
-    Promise.all([
+    return Promise.all([
       User.findByPk(id, {
         include: [
           { model: User, as: 'Followings' },
@@ -177,7 +177,7 @@ const userController = {
             isLiked: l.Tweet.Likes.some(like => like.UserId === user.id)
           }))
         res.locals.tweetsLength = targetUser.Tweets.length
-        res.render('profile', { targetUser: targetUser.toJSON(), likes: likesData, user, users })
+        res.status(200).render('profile', { targetUser: targetUser.toJSON(), likes: likesData, user, users })
       })
       .catch(err => next(err))
   },
