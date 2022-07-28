@@ -1,46 +1,29 @@
 const rightSideContainer = document.querySelector('.right-side-container')
-const getTopFollowers = `${location.protocol} + ${window.location.host}/followships/top10`
+const getTopFollowers = `${location.protocol}//${window.location.host}/followships/top10`
 
-// axios.get('http://http://localhost:3000/followships/top10')
-//   .then((response) => console.log(response))
-//   .catch((error) => console.log(error))
-
-// DEFAULT CODE ////////////////////////
-// const BASE_URL = 'https://lyric-api-403c0.firebaseio.com/'
-// const songList = document.querySelector('#song-list')
-
-// axios.get(getTopFollowers)
-//   .then(function (response) {
-//     rightSideContainer.innerHTML = `
-//       ${response}
-//       `
-//     console.log(response.data.lyrics)
-//   })
-//   .catch(error => console.log(error))
-
-axios.get('http://localhost:3000/followships/top10')
+axios.get(getTopFollowers)
   .then((response) => {
-    const { users, followingUserId } = response.data
-    const following = followingUserId.map(following => following.followingId)
+    const { followerList, topFollowerUsers } = response.data
+    const followingId = followerList.map(info => info.followingId)
     let htmlContent = `
      <span class="font-lg-dark">推薦跟隨</span>
       <div class="hr-line"></div>
     `
-    console.log(following.includes(2))
-    users.forEach(topFollower => {
-      if (following.includes(topFollower.id)) {
+    topFollowerUsers.forEach(topFollowerUser => {
+      if (followingId.includes(topFollowerUser.id)) {
+        console.log(followingId, topFollowerUser.id)
         htmlContent += `
-           <form action="/followships/${topFollower.id}?_method=DELETE" method="POST">
+           <form action="/followships/${topFollowerUser.id}?_method=DELETE" method="POST">
         <div class="d-flex justify-content-between align-items-center flex-row bd-highlight mb-3">
           <div class="bd-highlight">
-            <a href="/users/${topFollower.id}/tweets">
-              <img class="me-auto rounded-circle" src="${topFollower.avatar}" alt="avatar">
+            <a href="/users/${topFollowerUser.id}/tweets">
+              <img class="me-auto rounded-circle" src="${topFollowerUser.avatar}" alt="avatar">
             </a>
           </div>
           <div class="name-container d-flex flex-column bd-highlight p-1">
-            <a href="/users/${topFollower.id}/tweets">
-              <div class="font-name">${topFollower.name}</div>
-              <div class="font-account">${topFollower.account}</div>
+            <a href="/users/${topFollowerUser.id}/tweets">
+              <div class="font-name">${topFollowerUser.name}</div>
+              <div class="font-account">${topFollowerUser.account}</div>
             </a>
           </div>
           <div class="bd-highlight">
@@ -54,17 +37,17 @@ axios.get('http://localhost:3000/followships/top10')
       } else {
         htmlContent += `
                 <form action="/followships" method="POST">
-        <input class="followingId" type="text" name="id" value="${topFollower.id}">
+        <input class="followingId" type="text" name="id" value="${topFollowerUser.id}">
         <div class="d-flex justify-content-between align-items-center flex-row bd-highlight mb-3">
           <div class="bd-highlight">
-            <a href="/users/${topFollower.id}/tweets">
-              <img class="me-auto rounded-circle" src="${topFollower.avatar}" alt="avatar">
+            <a href="/users/${topFollowerUser.id}/tweets">
+              <img class="me-auto rounded-circle" src="${topFollowerUser.avatar}" alt="avatar">
             </a>
           </div>
           <div class="name-container d-flex flex-column bd-highlight p-1">
-            <a href="/users/${topFollower.id}/tweets">
-              <div class="font-name">${topFollower.name}</div>
-              <div class="font-account">${topFollower.account}</div>
+            <a href="/users/${topFollowerUser.id}/tweets">
+              <div class="font-name">${topFollowerUser.name}</div>
+              <div class="font-account">${topFollowerUser.account}</div>
             </a>
           </div>
           <div class="bd-highlight">

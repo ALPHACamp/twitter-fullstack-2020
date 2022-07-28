@@ -27,23 +27,6 @@ passport.use(new LocalStrategy(
 passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
-// passport.deserializeUser(async (id, cb) => {
-//   const topFollower = await Followship.findAndCountAll({
-//     group: 'following_id',
-//     raw: true,
-//     nest: true
-//   })
-//   const users = []
-//   for (let i in topFollower.rows) {
-//     const user = await User.findByPk(topFollower.rows[i].followingId, { raw: true })
-//     user.followerCounts = topFollower?.count[i].count
-//     users.push(user)
-//     users.sort(sortObj('followerCounts'))
-//   }
-//   const user = await User.findByPk(id, { raw: true })
-//   user.followers = users
-//   return cb(null, user)
-// })
 passport.deserializeUser((id, cb) => {
   User.findByPk(id).then(user => {
     return cb(null, user.toJSON())

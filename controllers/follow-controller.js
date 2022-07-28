@@ -6,17 +6,26 @@ const { User, Followship } = require('../models')
 const followController = {
   addFollow: async (req, res, next) => {
     try {
-      const followingId = Number(req.body.id)
-      const followerId = helpers.getUser(req).id
-      if (followingId === followerId) return res.redirect(200, 'back')
+      const follower = await User.findByPk(helpers.getUser(req).id)
+      const follower2 = helpers.getUser(req)
+      const following = await User.findByPk(Number(req.body.id))
+      assert(following, `user didn't exist!`)
+      if (follower.id === following.id) return res.redirect(200, 'back')
       const newFollow = await Followship.findOrCreate({
         where: {
-          followerId,
-          followingId
+          followerId: follower.id,
+          followingId: following.id
         }
       })
       const isFollowing = newFollow[1]
       assert(isFollowing, '你已經追蹤人家了啦~♥')
+      // 更新追隨、追蹤人數
+      await follower.update({
+        followingCounts: follower.followingCounts += 1
+      })
+      await following.update({
+        followerCounts: following.followerCounts += 1
+      })
       return res.redirect('back')
     }
     catch (err) {
@@ -25,16 +34,24 @@ const followController = {
   },
   removeFollow: async (req, res, next) => {
     try {
-      const followingId = req.params.id
-      const followerId = helpers.getUser(req).id
-      const following = await Followship.findOne({
+      const follower = await User.findByPk(helpers.getUser(req).id)
+      const following = await User.findByPk(Number(req.params.id))
+      assert(following, `user didn't exist!`)
+      const isFollowing = await Followship.findOne({
         where: {
-          followerId,
-          followingId
+          followerId: follower.id,
+          followingId: following.id
         }
       })
-      assert(following, '你已經取消追蹤囉')
-      const removedFollow = await following.destroy()
+      assert(isFollowing, '你已經取消追蹤囉')
+      const removedFollow = await isFollowing.destroy()
+      // 更新追隨、追蹤人數
+      await follower.update({
+        followingCounts: follower.followingCounts -= 1
+      })
+      await following.update({
+        followerCounts: following.followerCounts -= 1
+      })
       return res.redirect('back')
     }
     catch (err) {
@@ -43,28 +60,22 @@ const followController = {
   },
   getTopFollowers: async (req, res, next) => {
     try {
-      const followingUserId = await Followship.findAll({
-        where: { followerId: helpers.getUser(req).id },
+      const follower = helpers.getUser(req)
+      const followerList = await Followship.findAll({
+        where: {
+          followerId: follower.id
+        },
         raw: true
       })
-      const topFollower = await Followship.findAndCountAll({
-        group: 'following_id',
-        raw: true,
-        nest: true
+      const topFollowerUsers = await User.findAll({
+        order: [
+          ['followerCounts', 'DESC'],
+          ['id', 'ASC']
+        ],
+        limit: 10,
+        raw: true
       })
-      // const topFollower = await User.findAll({
-      //   limit: 10,
-      //   raw: true,
-      //   nest: true
-      // })
-      const users = []
-      for (let i in topFollower.rows) {
-        const user = await User.findByPk(topFollower.rows[i].followingId, { raw: true })
-        user.followerCounts = topFollower?.count[i].count
-        users.push(user)
-        users.sort(sortObj('followerCounts'))
-      }
-      res.json({ followingUserId, users })
+      return res.json({ followerList, topFollowerUsers })
     }
     catch (err) {
       next(err)
