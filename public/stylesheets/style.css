@@ -104,3 +104,7 @@ textarea {
   background: #B5B5BE;
   border: 0;
 }
+
+.was-validated .form-control:invalid {
+  background-size: 0;
+}
