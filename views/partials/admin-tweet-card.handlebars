@@ -1,0 +1,21 @@
+<tr>
+  <td>
+    <div class="d-flex flex-row justfify-content-between">
+      <img src="{{this.avatar}}" class='rounded-circle me-2' width="50" height="50">
+      <div class="d-flex flex-column justify-content-start flex-grow-1">
+        <div class="d-flex flex-row align-items-center mb-2">
+          <span class="fw-bold me-2" style="font-size: 16px;">{{this.name}}</span>
+          <span style="color: #6C757D;font-size: 14px;">@{{this.account}}</span>
+          <span style="color: #6C757D;font-size: 14px;">．</span>
+          <span style="color: #6C757D;font-size: 14px;">{{relativeTimeFromNow this.createdAt}}</span>
+        </div>
+        <p style="font-size: 16px;">
+          {{this.description}}
+        </p>
+      </div>
+      <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="post">
+        <button type="submit" class="btn-close" aria-label="Close"></button>
+      </form>
+    </div>
+  </td>
+</tr>

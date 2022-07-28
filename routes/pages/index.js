@@ -4,13 +4,18 @@ const passport = require('../../config/passport')
 
 const admin = require('./modules/admin')
 
+const adminController = require('../../controllers/pages/admin-controller')
 const userController = require('../../controllers/pages/user-controller')
 const tweetController = require('../../controllers/pages/tweet-controller')
 
 const { authenticated, authenticatedAdmin } = require('../../middleware/auth')
 
-router.use('/admin', admin)
+// admin route
+router.get('/admin/signin', adminController.getSignin)
+router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.postSignin)
+router.use('/admin', authenticatedAdmin, admin)
 
+// user route
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.getSignin)
