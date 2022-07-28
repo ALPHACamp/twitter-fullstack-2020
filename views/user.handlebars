@@ -14,7 +14,7 @@
   <div class="user-info">
     <img src="{{checkAvatar user.avatar}}" class="rounded-circle user-avatar">
     {{#ifCond user.id loginUser.id}}
-      <a class="text-decoration-none user-option user-edit">編輯個人資料</a>
+      <a class="text-decoration-none user-option user-edit" href="/api/users/{{user.id}}">編輯個人資料</a>
     {{else}}
       <div class="user-option" style="display: inline;">
         <a class="text-decoration-none" href="#">
