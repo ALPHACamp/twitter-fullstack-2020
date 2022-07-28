@@ -1,1 +1,36 @@
-{{> left-nav}}
+{{!-- <div class="container">
+  <div class="row">
+    <div class="col-2">左邊導覽列</div>
+    <div class="col-8"> --}}
+      {{!--中間上半部 --}}
+      <div class="card" style="height: 300px;">
+        <div class="card-header bg-white">
+          <h5 class="text-start fw-bold">首頁</h5>
+        </div>
+        <div class="card-body">
+          <form action="/tweets" method="POST">
+            <div class="card p-1" style="border: none">
+              <div class="row">
+                <div class="col-1">
+                  <img src="{{loginUser.avatar}}" style="border-radius: 50px; width: 50px; height: 50px;">
+                </div>
+                <div class="col-11">
+                  <textarea class="form-control" id="text" name="description" rows="3" style="border: none"
+                    placeholder="有什麼新鮮事？" maxlength="140" required></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="submit-btn" style="width: 100px">
+                  推文
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      {{!-- 中間下半部 --}}
+
+    {{!-- </div>
+    <div class="col-2">右邊追蹤排名</div>
+  </div>
+</div> --}}

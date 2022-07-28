@@ -26,6 +26,7 @@ router.get('/setting', authenticated, userController.getSetting)
 router.put('/setting', authenticated, userController.editSetting)
 
 router.get('/tweets', authenticated, tweetController.getTweets)
+router.post('/tweets', authenticated, tweetController.addTweet)
 
 router.get('/', (req, res) => res.send('Hello World!'))
 
