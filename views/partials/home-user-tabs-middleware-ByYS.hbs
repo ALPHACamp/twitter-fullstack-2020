@@ -1,0 +1,43 @@
+<h1>{{tweets.id}}</h1>
+<section id="Huei-region" <div class="nav-user">
+  <h4 class="nav-user-title">推薦跟隨</h4>
+  <ul>
+    <p class="list-separate"></p>
+    {{#each recommendedUsers}}
+
+    {{#ifCondFalse this.id ../user.id}}
+    <li>
+      <div class="d-flex align-items-center user-list mt-4">
+        <a href="/users/{{this.id}}/tweets">
+          <div class="d-flex">
+            <img src="{{#if this.avatar}}{{this.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}" alt=""
+              class="circle">
+            <div class="d-flex flex-column user-name-position">
+              <p class="text-dark position-left-text">{{this.name}}</p>
+              <p class="text-black-50 position-left-text">@{{this.account}}</p>
+            </div>
+            {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-orange rounded-pill mt-1 user-follow-bottom" <span
+                class="">正在追隨</span>
+              </button>
+            </form>
+            {{else}}
+            <form action="/followships" method="POST">
+              <button type="submit" class="btn btn-white rounded-pill mt-1 user-follow-bottom" name="id"
+                value={{this.id}}>
+                <span class="p">追隨</span>
+              </button>
+            </form>
+            {{/if}}
+          </div>
+        </a>
+      </div>
+    </li>
+    {{/ifCondFalse}}
+    
+    {{/each}}
+
+  </ul>
+  </div>
+</section>

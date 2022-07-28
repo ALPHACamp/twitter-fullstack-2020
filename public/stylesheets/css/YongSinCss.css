@@ -281,8 +281,8 @@ section#ys-FE-users-region.temp-layout {
 section#ys-FE-users-region.followships-layout {
   display: flex;
   flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
   border-left: 1px solid #E6ECF0;
   border-right: 1px solid #E6ECF0;
 }
@@ -314,7 +314,6 @@ section#ys-FE-users-region .tab a {
   color: #6C757D;
 }
 section#ys-FE-users-region .tab a.active {
-  filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
   border-bottom: 1px solid #FF6600;
 }
 section#ys-FE-users-region .followers {
@@ -372,4 +371,166 @@ section#ys-FE-users-region .followers .top .following {
 section#ys-FE-users-region .followers .context {
   margin-left: 5rem;
   overflow-wrap: break-word;
+}
+
+section#ys-FE-users-setting.temp-layout {
+  width: 50%;
+}
+section#ys-FE-users-setting.followships-layout {
+  margin-left: auto;
+  margin-right: auto;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  padding: 0rem 1.5rem;
+}
+section#ys-FE-users-setting #setting-region {
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #171725;
+}
+section#ys-FE-users-setting #setting-region .title {
+  width: 100%;
+  padding: 1.5rem 0rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  line-height: 26px;
+}
+section#ys-FE-users-setting #setting-region .input {
+  width: 100%;
+  height: 78px;
+  border-radius: 2px;
+  margin-bottom: 8px;
+  background: #F5F8FA;
+  position: relative;
+}
+section#ys-FE-users-setting #setting-region .input label {
+  position: absolute;
+  left: 2.96%;
+  right: 2.96%;
+  top: 2.56%;
+  bottom: 69.23%;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  height: 22px;
+  width: 334.9px;
+  color: #696974;
+  background: transparent;
+}
+section#ys-FE-users-setting #setting-region .input input {
+  width: 334.9px;
+  height: 26px;
+  background: transparent;
+  position: absolute;
+  left: 2.96%;
+  right: 2.96%;
+  top: 30.77%;
+  bottom: 35.9%;
+  border: none;
+}
+section#ys-FE-users-setting #setting-region .input input::placeholder {
+  color: #B5B5BE;
+  font-size: 16px;
+}
+section#ys-FE-users-setting #setting-region .input .status {
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 66.67%;
+  bottom: 30.77%;
+  background: #657786;
+  border-radius: 0px 0px 4px 4px;
+  border: 1px #657786 solid;
+}
+section#ys-FE-users-setting #setting-region .input .helper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0px 0px;
+  position: absolute;
+  background: #FFFFFF;
+  left: 0%;
+  right: 50%;
+  top: 69.23%;
+  bottom: 0%;
+}
+section#ys-FE-users-setting #setting-region .input .helper span {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  color: #FC5A5A;
+}
+section#ys-FE-users-setting #setting-region .input .count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0px 0px;
+  position: absolute;
+  left: 50%;
+  right: 0%;
+  top: 69.23%;
+  bottom: 0%;
+  background: #FFFFFF;
+}
+section#ys-FE-users-setting #setting-region .input .count span {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: right;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  color: #696974;
+}
+section#ys-FE-users-setting #setting-region .status.focus {
+  border-color: #50B5FF;
+}
+section#ys-FE-users-setting #setting-region .status.warn {
+  border-color: #FC5A5A;
+}
+section#ys-FE-users-setting #setting-region .submit {
+  display: flex;
+  justify-content: end;
+  margin-top: 8px;
+  width: 100%;
+}
+section#ys-FE-users-setting #setting-region .submit span {
+  padding: 8px 24px;
+  width: 88px;
+  height: 46px;
+  background: #FF6600;
+  border-radius: 50px;
+  color: #FFFFFF;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+}
+section#ys-FE-users-setting #setting-region .signup-or-admin {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  padding: 0 12px 0 0;
+  margin-top: 22px;
+}
+section#ys-FE-users-setting #setting-region .signup-or-admin a {
+  text-decoration: underline;
+  color: #0062FF;
+  font-size: 16px;
+  line-height: 24px;
+}
+section#ys-FE-users-setting #setting-region .signup-or-admin span {
+  width: 16px;
+  height: 24px;
+  margin: 0 12px;
+}
+section#ys-FE-users-setting #setting-region .alert {
+  width: 100%;
 }

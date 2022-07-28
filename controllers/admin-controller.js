@@ -48,21 +48,34 @@ const adminController = {
         { model: Tweet, include: Like },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
-      ]
+      ],
+      attributes: {
+        include: [
+          [
+            sequelize.literal(`(
+                    SELECT COUNT(*)
+                    FROM Tweets AS t
+                    WHERE
+                    t.user_Id = User.id
+                )`),
+            'tweetsCount'
+          ]
+        ]
+      },
+      order: [[sequelize.literal('tweetsCount'), 'DESC']]
     }).then(users => {
-      const result = users
-        .map(user => {
-          const userObj = user.toJSON()
-          delete userObj.password
-          return {
-            ...userObj,
-            tweetsCount: user.Tweets.length,
-            likesCount: user.Tweets.reduce((acc, cur) => acc + cur.Likes.length, 0),
-            followersCount: user.Followers.length,
-            followingsCount: user.Followings.length
-          }
-        })
-        .sort((a, b) => b.tweetsCount - a.tweetsCount)
+      const result = users.map(user => {
+        const userObj = user.toJSON()
+        delete userObj.password
+        return {
+          ...userObj,
+          // tweetsCount: user.Tweets.length, 計算推文數交給上面 sql 來做
+          likesCount: user.Tweets.reduce((acc, cur) => acc + cur.Likes.length, 0),
+          followersCount: user.Followers.length,
+          followingsCount: user.Followings.length
+        }
+      })
+      // .sort((a, b) => b.tweetsCount - a.tweetsCount) 排序交給 sql 來做
       // res.send(result)
       res.render('admin_users', { users: result })
     })
