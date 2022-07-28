@@ -1,17 +1,51 @@
-const jwt = require('jsonwebtoken')
 const { Tweet, User, Like, Followship, Reply } = require('../models')
-const { getUser } = require('../_helpers')
+const helpers = require('../_helpers')
 
 const tweetController = {
   getTweetReplies: async (req, res, next) => {
-    res.json({ status: 'success' })
+    try {
+      const currentUser = helpers.getUser(req)
+      const followerId = currentUser.Followings.map(fu => fu.id)
+      const TweetId = req.params.id
+      const existTweet = Tweet.findByPk(TweetId)
+      if (!existTweet) throw new Error("This tweet didn't exist!")
+      const replies = await Reply.findAll({
+        where: { TweetId },
+        include: [{ model: User }],
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
+      })
+      const data = replies.map(reply => ({
+        ...reply,
+        isFollowed: followerId.includes(reply.userId)
+      }))
+      return res.render('tweets/tweet-replies', { replies: data })
+      // res.json({ replies: data })
+    } catch (err) {
+      next(err)
+    }
   },
   postTweetReply: async (req, res, next) => {
-    res.json({ status: 'success' })
+    const UserId = helpers.getUser(req).id
+    const comment = req.body.comment
+    const TweetId = req.params.id
+    const existTweet = Tweet.findByPk(TweetId)
+    if (!existTweet) {
+      req.flash('error_messages', '這個推文已經不存在！')
+      res.redirect('/')
+    }
+    if (!comment) {
+      req.flash('error_messages', '內容不可空白')
+      res.redirect('/')
+    }
+    // return res.json({status: 'success', existTweet})
+    await Reply.create({ UserId, TweetId, comment })
+    return res.redirect('back')
   },
   likeTweet: async (req, res, next) => {
     try {
-      const UserId = req.user.id
+      const UserId = helpers.getUser(req).id
       const TweetId = req.params.id
       const existUser = User.findByPk(UserId)
       if (!existUser) throw new Error("This account didn't exist!")
@@ -25,7 +59,7 @@ const tweetController = {
   },
   unlikeTweet: async (req, res, next) => {
     try {
-      const UserId = req.user.id
+      const UserId = helpers.getUser(req).id
       const TweetId = req.params.id
       const LikeTweet = await Like.findOne({ where: { UserId, TweetId } })
       if (!LikeTweet) throw new Error("You haven't liked this tweet!")
@@ -50,6 +84,7 @@ const tweetController = {
       await Tweet.create({ description, UserId, userAvatar })
       res.redirect('/tweets')
     } catch (err) {
+      console.log(err)
       next(err)
     }
   },
@@ -73,11 +108,11 @@ const tweetController = {
         attributes: ['id', 'description', 'createdAt'],
         include: [
           { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
-          { model: Reply, attributes: ['id'] },
+          { model: Reply, attributes: ['id'] }
         ]
       })
       const likedTweetsId = req.user?.Likes
-        ? req.user.Likes.map(lt => lt.TweetId)
+        ? currentUser.Likes.map(lt => lt.TweetId)
         : []
       const data = tweets.map(tweets => ({
         ...tweets.toJSON(),

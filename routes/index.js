@@ -7,7 +7,10 @@ const tweets = require('./modules/tweets')
 const api = require('./modules/api')
 
 const { authenticatedUser } = require('../middleware/auth')
-const { apiErrorHandler } = require('../middleware/error-handler.js')
+const {
+  generalErrorHandler,
+  apiErrorHandler
+} = require('../middleware/error-handler.js')
 
 const userController = require('../controllers/user-controller')
 
@@ -30,7 +33,11 @@ router.get('/signin', userController.signInPage)
 router.get('/logout', authenticatedUser, userController.logout)
 
 router.post('/followships', authenticatedUser, userController.postFollow)
-router.delete('/followships', authenticatedUser, userController.postUnfollow)
+router.delete(
+  '/followships/:id',
+  authenticatedUser,
+  userController.postUnfollow
+)
 
 router.get('/', (req, res) => {
   res.redirect('/tweets')
