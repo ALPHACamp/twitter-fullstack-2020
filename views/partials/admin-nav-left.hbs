@@ -1,0 +1,16 @@
+<div class="nav nav-pills flex-column sticky-top">
+  <img src="/images/logo.png" alt="" style="width: 50px;" class="m-2">
+
+  <a class="nav-link pointer {{#ifCond route 'tweets'}}brand-color{{else}}dark-90{{/ifCond}}" href="/admin/tweets">
+    <span class="h5 fw-bold">
+      <i class="fa-solid fa-house-chimney-window"></i>&nbsp;&nbsp;推文清單
+    </span>
+  </a>
+
+  <a class="nav-link pointer {{#ifCond route 'users'}}brand-color{{else}}dark-90{{/ifCond}}" href="/admin/users">
+    <span class="h5 fw-bold">
+      <i class="fa-solid fa-user"></i>&nbsp;&nbsp;使用者列表
+    </span>
+  </a>
+  
+</div>

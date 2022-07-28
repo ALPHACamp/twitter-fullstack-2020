@@ -1,1 +1,42 @@
-<div> admin !!</div>
+<div class="col-2 nav-left">
+{{> admin-nav-left route='tweets'}}
+</div>
+
+<div class="col-10 nav-body">
+
+  {{!-- 表頭 --}}
+  <div style="border: 1px solid #E6ECF0;">
+    <h4 class="m-3"><b>推文清單</b></h4>
+  </div>
+
+  {{!-- 推文清單 --}}
+  <ul class="list-group" style="border-radius: 0px;">
+
+    {{#each tweets}}
+    <li class="list-group-item d-flex align-items-start" style="border: 1px solid #E6ECF0;">
+      <div class="mt-2">
+        {{#if this.User.avatar}}
+        <img src="{{this.User.avatar}}" alt="" style="width: 50px;" class="me-3">
+        {{else}}
+        <img src="/images/img.png" alt="" style="width: 50px;" class="me-3">
+        {{/if}}
+      </div>
+
+      <div class="mt-2" style="width: 100%;">
+        <p><b>{{this.User.name}}</b> 
+          <span class="text-muted" style="font-size: 14px; padding-left: 8px">
+            @{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}
+          </span>
+        </p>
+        <p>{{this.description}}</p>
+      </div>
+      <div class="mt-2">
+        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+          <button type="submit" class="btn-close" onclick="return confirm(`確定要刪除此推文嗎？`)" data-bs-dismiss="alert" aria-label="Close"></button>
+        </form>
+      </div>
+    </li>
+    {{/each}}
+
+  </ul>
+</div>

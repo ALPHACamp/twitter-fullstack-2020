@@ -6,6 +6,7 @@ const methodOverride = require('method-override')
 
 // const helpers = require('./_helpers')
 const passport = require('./config/passport')
+const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const routes = require('./routes')
 
 const app = express()
@@ -14,7 +15,7 @@ const port = 3000
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.engine('hbs', exphbs({ extname: '.hbs' }))
+app.engine('hbs', exphbs({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 app.use(express.static('public'))
 
