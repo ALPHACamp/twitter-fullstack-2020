@@ -3,7 +3,7 @@
     {{> left-nav}}
     <div class="col-6 ms-3">
       <h4 class="text-start fw-bold mb-4">帳號設定</h4>
-      <form class="form-signup my-3 d-flex flex-column" action="/setting/{{loginUser.id}}?_method=PUT" method="POST">
+      <form class="form-signup my-3 d-flex flex-column" action="/setting?_method=PUT" method="POST">
         {{> user-account-form}}
         <div class="row justify-content-end mx-3">
           <button class="submit-btn" type="submit" style="width: 100px">
