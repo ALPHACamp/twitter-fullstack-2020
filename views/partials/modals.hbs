@@ -1,0 +1,27 @@
+<!-- 新增貼文-->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form action="/tweets" method="POST">
+          <label for="description" class="form-label"></label>
+          <textarea name="description" id="description" class="tweetTextarea"
+            style="width: 100%; height:100px; resize: none;" placeholder="有什麼新鮮事？" name="description" maxlength="140"
+            required></textarea>
+          <h4>
+            <button type="submit" class="badge rounded-pill text-bg-warning" style="border: none;">
+              推文
+            </button>
+          </h4>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

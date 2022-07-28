@@ -1,5 +1,7 @@
 <div class="wrapper d-flex">
 
+  {{> modals}}
+
   <!-- Sidebar -->
   <nav id="left-sidebar" style="display:flex; align-items:stretch; width:15%;height:1200px; margin-left:130px;">
     <ul class="list-unstyled" style="position:fixed ">
@@ -19,7 +21,10 @@
       {{!-- todo: 跳出modal --}}
       <li style=" margin-bottom: 20px;">
         <h4>
-          <a href="/tweets/modal" class="badge rounded-pill text-bg-warning" style="text-decoration: none;">推文</a>
+          <button type="button" class="badge rounded-pill text-bg-warning" data-bs-toggle="modal"
+            data-bs-target="#myModal" style="border: none;">
+            推文
+          </button>
         </h4>
       </li>
   </nav>
@@ -31,12 +36,17 @@
           style="text-decoration: none; color: inherit;">首頁</a></h4>
       <div class="mb-3" style="border-bottom:8px solid rgb(209, 203, 203)">
         <img src="{{user.profile_photo}}" alt="avatar" style="position:relative;">
-        <label for="exampleFormControlTextarea1" class="form-label"></label>
-        <textarea class="form-control" placeholder="有什麼新鮮事 ?" style="height:100px; resize: none;"></textarea>
-        {{!-- todo: 跳出modal --}}
-        <h4>
-          <a href="/tweets/modal" class="badge rounded-pill text-bg-warning" style="text-decoration: none;">推文</a>
-        </h4>
+
+        <form method="POST" action="/tweets">
+          <textarea name="description" id="description" class="tweetTextarea"
+            style="width: 100%; height:100px; resize: none;" placeholder="有什麼新鮮事？"></textarea>
+          <h4>
+            <button type="button" class="badge rounded-pill text-bg-warning" data-bs-toggle="modal"
+              data-bs-target="#myModal" style="border: none;">
+              推文
+            </button>
+          </h4>
+        </form>
       </div>
       <table class="table align-middle">
         <tbody>
@@ -59,5 +69,5 @@
   </div>
 
   {{>right-content}}
-  
+
 </div>

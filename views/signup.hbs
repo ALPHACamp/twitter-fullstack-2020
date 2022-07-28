@@ -1,0 +1,35 @@
+<div class="container mx-auto mt-5" style="max-width: 575px;">
+  <div class="mb-4 text-center">
+    <img class="sign-icon" src="" alt="AC icon">
+    <h1 class="h3 font-weight-normal mb-3 fw-bold">建立你的帳號</h1>
+  </div>
+  <form class="form-signup" action="/signup" method="POST" style="width: 100%;">
+    <div class="form-row mb-3">
+      <label class="form-label" for="account">帳號</label>
+      <input type="text" id="name" name="account" class="form-control" placeholder="請輸入帳號" value="{{account}}" required
+        autofocus>
+    </div>
+    <div class="form-row mb-3">
+      <label class="form-label" for="name">名稱</label>
+      <input type="text" id="name" name="name" class="form-control" placeholder="請輸入使用者名稱" value="{{name}}" required>
+    </div>
+    <div class="form-row mb-3">
+      <label class="form-label" for="email">Email</label>
+      <input type="text" id="email" name="email" class="form-control" placeholder="請輸入Email" value="{{email}}" required>
+    </div>
+    <div class="form-row mb-3">
+      <label class="form-label" for="password">密碼</label>
+      <input type="password" id="password" name="password" class="form-control" placeholder="請設定密碼" required>
+    </div>
+    <div class="form-row mb-3">
+      <label class="form-label" for="passwordCheck">密碼確認</label>
+      <input type="password" id="passwordCheck" name="passwordCheck" class="form-control" placeholder="請再次輸入密碼"
+        required>
+    </div>
+    <h3><button class="badge rounded-pill text-bg-warning" type="submit" style="border:none; width=100%">註冊</button>
+    </h3>
+  </form>
+  <div class="mb-4 text-center cancel-button">
+    <p><a href="/">取消</a></p>
+  </div>
+</div>
