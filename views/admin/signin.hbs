@@ -4,7 +4,7 @@
       <i class='logo mb-4'></i>
       <p class='h3 fw-bold mb-3'>後台登入</p>
     </div>
-    <form class='form-signin' action='/admin/signin' method='POST'>
+    <form class='form-signin needs-validation' action='/admin/signin' method='POST' novalidate>
       <div class='form-row mb-4' style='background-color: #F5F8FA'>
         <label class='form-label m-0 pt-1 ps-3' for='account' style='color: #696974'>帳號</label>
         <input
@@ -22,6 +22,7 @@
           class='m-0'
           style='background: #657786; border: 1px solid #657786; border-radius: 0px 0px 4px 4px;  opacity: 1;'
         />
+        <div class="invalid-feedback m-0" style='background-color: #ffffff'>Please enter your account.</div>
       </div>
       <div class='form-row mb-4' style='background-color: #F5F8FA'>
         <label class='form-label m-0 pt-1 ps-3' for='password' style='color: #696974'>密碼</label>
@@ -38,6 +39,7 @@
           class='m-0'
           style='background: #657786; border: 1px solid #657786; border-radius: 0px 0px 4px 4px;  opacity: 1;'
         />
+        <div class="invalid-feedback m-0" style='background-color: #ffffff'>Please enter your password.</div>
       </div>
       <div class='mb-4 text-center'>
         <button class='btn btn-brand mb-3 rounded-pill border-0 w-100' type='submit'>登入</button>
@@ -48,3 +50,17 @@
     </form>
   </div>
 </div>
+
+<script>
+  (function () {
+    'use strict'
+    const form = document.querySelector('.needs-validation')
+    form.addEventListener('submit', function (event) {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      form.classList.add('was-validated')
+    })
+  })()
+</script>
