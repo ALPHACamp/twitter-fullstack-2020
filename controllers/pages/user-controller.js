@@ -1,4 +1,4 @@
-const { User, Tweet, sequelize } = require('../../models')
+const { User, Tweet, Reply, sequelize } = require('../../models')
 const bcrypt = require('bcryptjs')
 
 const { isAdmin, userInfoHelper } = require('../../helpers/user-helpers')
@@ -74,6 +74,27 @@ const userConroller = {
           isLiked: req.user?.Likes.some(like => like.TweetId === tweet.id)
         }))
         res.render('user', { user, tweets })
+      })
+      .catch(err => next(err))
+  },
+  getReplies: (req, res, next) => {
+    const UserId = req.params.userId
+
+    return Promise.all([
+      userInfoHelper(UserId),
+      Reply.findAll({
+        include: [
+          User,
+          { model: Tweet, include: [User] }
+        ],
+        where: { UserId }
+      })
+    ])
+      .then(([user, replies]) => {
+        if (!user || isAdmin(user)) throw new Error('使用者不存在')
+
+        replies = replies.map(reply => reply.toJSON())
+        res.render('user', { user, replies })
       })
       .catch(err => next(err))
   }
