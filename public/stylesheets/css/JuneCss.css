@@ -339,6 +339,7 @@
 }
 #profile-region #profile-middle .user-info #edit-profile-modal .modal-header {
   height: 57px;
+  width: 634px;
   display: flex;
   justify-content: space-between;
 }
@@ -359,6 +360,138 @@
   height: 40px;
   background-color: #FF6600;
   color: #FFFFFF;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body {
+  height: 100%;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .cover {
+  width: 100%;
+  height: 200px;
+  filter: brightness(60%);
+  opacity: 0.75;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .icons {
+  position: relative;
+  top: -110px;
+  display: flex;
+  justify-content: center;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .icons img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(150%);
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .avatar-icon .avatar {
+  width: 141.1px;
+  height: 140px;
+  border: 4px #FFFFFF solid;
+  border-radius: 50%;
+  position: relative;
+  top: -90px;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .avatar-icon .avatar img {
+  border-radius: 50%;
+  filter: brightness(60%);
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .avatar-icon .icon {
+  width: 24px;
+  height: 24px;
+  filter: brightness(150%);
+  position: relative;
+  top: -180px;
+  right: -73px;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input {
+  position: relative;
+  top: -120px;
+  margin-top: -120px;
+  background: #F5F8FA;
+  margin: 0 16px;
+  width: 590px;
+  display: flex;
+  flex-direction: column;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input label {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  height: 22px;
+  color: #696974;
+  background: transparent;
+  padding-left: 17.84px;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input input, #profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input textarea {
+  height: 26px;
+  background: transparent;
+  border: none;
+  padding-left: 17.84px;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input input::-moz-placeholder {
+  color: #B5B5BE;
+  font-size: 16px;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input input:-ms-input-placeholder {
+  color: #B5B5BE;
+  font-size: 16px;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input input::placeholder {
+  color: #B5B5BE;
+  font-size: 16px;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input .status {
+  width: 590px;
+  height: 0;
+  background: #657786;
+  border-radius: 0px 0px 4px 4px;
+  border: 1px #657786 solid;
+  margin-top: 2px;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input .status.focus {
+  border-color: #50B5FF;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input .status.warn {
+  border-color: #FC5A5A;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input .helper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0px 0px;
+  background: #FFFFFF;
+  width: 50%;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input .helper span {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  color: #FC5A5A;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input .count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0px 0px;
+  bottom: 0%;
+  background: #FFFFFF;
+  width: 50%;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input .count span {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: right;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  color: #696974;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .name-input {
+  margin: 16px 0 32px 16px;
 }
 #profile-region #profile-middle .tweet {
   width: 639px;
