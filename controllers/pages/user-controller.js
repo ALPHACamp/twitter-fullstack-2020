@@ -47,6 +47,11 @@ const userConroller = {
       })
       .catch(err => next(err))
   },
+  logout: (req, res) => {
+    req.flash('success_messages', '登出成功')
+    req.logout()
+    res.redirect('/signin')
+  },
   getSetting: (req, res, next) => {
     const id = req.user.id
 
@@ -56,6 +61,49 @@ const userConroller = {
         user = user.toJSON()
         res.render('setting', { user })
       })
+  },
+  editSetting: (req, res, next) => {
+    const id = req.params.id
+    const { account, name, email, password, checkPassword } = req.body
+    if (!account || !name || !email) throw new Error('帳號、名稱、Email 不可空白!')
+    if (password !== checkPassword) throw new Error('密碼與確認密碼不相符!')
+    if (name.length > 50) throw new Error('名稱長度超出上限 50 字！')
+
+    Promise.all([
+      User.findByPk(id),
+      User.findOne({ where: { email } }),
+      User.findOne({ where: { account } })
+    ])
+      .then(([user, userEmail, userAccount]) => {
+        if (userAccount) {
+          // 同帳號，id 卻不同，表示修改後的帳號撞名了
+          if (userAccount.id !== user.id) {
+            throw new Error('Account 已經存在!')
+          }
+        }
+        if (userEmail) {
+          if (userEmail.id !== user.id) {
+            throw new Error('Email 已經存在!')
+          }
+        }
+        return bcrypt.hash(req.body.password, 10)
+          .then(hash => {
+            return user.update({
+              account,
+              name,
+              email,
+              password: hash
+            })
+          })
+      })
+      .then(() => {
+        req.flash('success_messages', '使用者資料編輯成功')
+        res.redirect('/tweets')
+      })
+      .catch(err => next(err))
+  },
+  getTweets: (req, res) => {
+    res.render('tweets')
   }
 }
 

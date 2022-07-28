@@ -11,12 +11,12 @@
       </a>
     </div>
     <div class="p-2 bd-highlight">
-      <a href="/users/{{user.id}}/tweets">
+      <a href="/users/{{loginUser.id}}/tweets">
         <img src="/images/nav-icon-profile.png">
       </a>
     </div>
     <div class="p-2 bd-highlight">
-      <a href="/setting/{{user.id}}">
+      <a href="/setting/{{loginUser.id}}">
         <img src="/images/nav-icon-setting.png">
       </a>
     </div>
@@ -45,7 +45,7 @@
         <form action="/tweets" method="POST">
           <div class="row">
             <div class="col-1 me-2">
-              <img src="{{user.avatar}}" style="border-radius: 50px; width: 50px; height: 50px;">
+              <img src="{{loginUser.avatar}}" style="border-radius: 50px; width: 50px; height: 50px;">
             </div>
             <div class="form-row mb-2 col-10">
               <textarea class="form-control" type="text" id="text" name="description" rows="3" placeholder="有什麼新鮮事？"
