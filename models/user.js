@@ -16,11 +16,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'followerId',
         as: 'Followings'
       })
-      User.belongsToMany(models.Tweet, {
-        through: models.Like,
-        foreignKey: 'UserId',
-        as: 'LikedTweets'
-      })
     }
   };
   User.init({
@@ -31,7 +26,9 @@ module.exports = (sequelize, DataTypes) => {
     avatar: DataTypes.STRING,
     cover: DataTypes.STRING,
     introduction: DataTypes.STRING,
-    role: DataTypes.STRING,
+    followerCounts: DataTypes.INTEGER,
+    followingCounts: DataTypes.INTEGER,
+    role: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',

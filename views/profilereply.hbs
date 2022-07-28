@@ -52,6 +52,7 @@
       </div>
 
 
+
       <div class="hr-line-b"></div>
       {{>tweet-tabs route='users'}}
       {{#each tweets}}
@@ -61,30 +62,4 @@
     </div>
     {{> right-side}}
   </div>
-  <!-- Modal -->
-  <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="tweetInputLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header p-2">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form class="tweet-post" action="/tweets" method="POST">
-          <a href="/users/{{user.id}}/tweets">
-            <img class="ms-2" src="{{user.avatar}}" alt="avatar">
-          </a>
-          <div class="text-box">
-            <textarea type="text" name="description" placeholder="有什麼新鮮事？" rows="2" cols="45" maxlength="140"
-              required></textarea>
-          </div>
-          <div class="bd-highlight">
-            <button type="submit" class="tweet-btn">
-              推文
-            </button>
-          </div>
-        </form>
-
-      </div>
-    </div>
-  </div>
-  <!-- Modal -->
 </div>
