@@ -41,8 +41,6 @@ module.exports = {
 
     return queryInterface.bulkInsert('Replies',
       Array.from({ length: 150 }).map((d, i) => ({
-        id: i,
-
         user_id: users[(i % 5)].id,
         tweet_id: tweets[Math.floor(i / 3)].id,
         comment: faker.lorem.sentences(3),
