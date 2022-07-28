@@ -61,7 +61,6 @@
     </div>
     {{> right-side}}
   </div>
-<<<<<<< HEAD
 </div>
 
 <!-- Modal -->
@@ -87,17 +86,20 @@
           </div>
           <div class="modal-profile-top">
             <img class="modal-profile-cover" src="{{user.cover}}" alt="" id="cover-placeholder">
-            <label id="coverImage">
-              <img class="modal-profile-upload-cover" src="https://upload.cc/i1/2022/07/26/u3WmYF.png" alt=""
-                id="coverImage">
-              <input id="coverImage" name="cover" type="file" hidden>
-            </label>
+            <div>
+              <label id="coverImage">
+                <img class="modal-profile-upload-cover" src="https://upload.cc/i1/2022/07/26/u3WmYF.png" alt=""
+                  id="coverImage">
+                <input id="inputCoverImage" name="cover" type="file" hidden>
+              </label>
+            </div>
+
             <div class="modal-profile-avatar">
               <img class="modal-profile-avatar-img" src="{{user.avatar}}" alt="" id="avatar-placeholder">
               <label id="avatarImage">
                 <img class="modal-profile-upload-avatar" src="https://upload.cc/i1/2022/07/26/u3WmYF.png" alt=""
                   id="avatarImage">
-                <input id="avatarImage" name="avatar" type="file" onchange="readAvatar(this)" hidden>
+                <input id="inputAvatarImage" name="avatar" type="file" hidden>
               </label>
             </div>
 
@@ -135,33 +137,4 @@
   </div>
 </div>
 
-<script src="/public/javascripts/editProfileModal.js"></script>
-=======
-  <!-- Modal -->
-  <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="tweetInputLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header p-2">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form class="tweet-post" action="/tweets" method="POST">
-          <a href="/users/{{user.id}}/tweets">
-            <img class="ms-2" src="{{user.avatar}}" alt="avatar">
-          </a>
-          <div class="text-box">
-            <textarea type="text" name="description" placeholder="有什麼新鮮事？" rows="2" cols="45" maxlength="140"
-              required></textarea>
-          </div>
-          <div class="bd-highlight">
-            <button type="submit" class="tweet-btn">
-              推文
-            </button>
-          </div>
-        </form>
-
-      </div>
-    </div>
-  </div>
-  <!-- Modal -->
-</div>
->>>>>>> master
+<script src="/javascripts/editProfileModal.js"></script>

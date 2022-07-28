@@ -27,7 +27,7 @@ router.post('/tweets', authenticated, tweetController.postTweet)
 router.get('/api/users/:id', authenticated, apiController.renderEditPage)
 router.post('/api/users/:id', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), authenticated, apiController.putEditPage)
 router.use('/admin', admin)
-router.use('/users', user)
+router.use('/users', authenticated, user)
 router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
 
