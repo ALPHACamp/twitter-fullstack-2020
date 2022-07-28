@@ -2,7 +2,9 @@ const helpers = require('../_helpers')
 
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'user') throw new Error('Permission denied')
+    if (helpers.getUser(req).role === 'user') {
+      return res.redirect('/tweets')
+    }
     if (helpers.getUser(req).role === 'admin') return next()
     res.redirect('/')
   } else {
@@ -11,7 +13,9 @@ const authenticatedAdmin = (req, res, next) => {
 }
 const authenticatedUser = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'admin') throw new Error('Need a user account to continue')
+    if (helpers.getUser(req).role === 'admin') {
+      return res.redirect('/admin/tweets')
+    }
     if (helpers.getUser(req).role === 'user') return next()
     res.redirect('/')
   } else {
