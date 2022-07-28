@@ -1,6 +1,6 @@
 // 登入、註冊、登出、拿到編輯頁、送出編輯
 const bcrypt = require('bcryptjs')
-const { User, Tweet, Reply, Like } = require('../models')
+const { User, Tweet, Reply, Like, Followship, sequelize } = require('../models')
 const helpers = require('../_helpers')
 
 const userController = {
@@ -105,11 +105,11 @@ const userController = {
   getPersonalTweets: async (req, res, next) => {
     try {
       const user = helpers.getUser(req)
-      const userId = helpers.getUser(req).id
+      const UserId = helpers.getUser(req).id
       const tweets = await Tweet.findAll({
         include: User,
         where: {
-          ...userId ? { userId } : {}
+          ...UserId ? { UserId } : {}
         },
         order: [
           ['created_at', 'DESC']
@@ -117,7 +117,6 @@ const userController = {
         raw: true,
         nest: true
       })
-      console.log('tweets', tweets)
       // user.introduction = user.introduction.substring(0, 20);
       return res.render('profile', { tweets, user })
     }
@@ -145,17 +144,27 @@ const userController = {
   },
   getPersonalFollowers: async (req, res, next) => {
     try {
-      const user = helpers.getUser(req)
-      const tweets = await Tweet.findAll({
-        include: User,
-        order: [
-          ['created_at', 'DESC']
-        ],
-        raw: true,
-        nest: true
+      // const currentUser = helpers.getUser(req)
+      // const UserId = helpers.getUser(req).id
+
+      const targetUser = await User.findByPk(req.params.userid, {
+        include: [
+          Tweet,
+          { model: User, as: 'Followers', include: { model: User, as: 'Followers' } }
+        ]
+        // order: [[sequelize.col('Followers.Followship.createdAt'), 'DESC']]
       })
-      user.introduction = user.introduction.substring(0, 20);
-      return res.render('personfollow', { tweets, user })
+      if (!targetUser) throw new Error("User doesn't exist!")
+      const tweetsCounts = targetUser.Tweets.length
+      const readyuser = targetUser.toJSON()
+      readyuser.Followers.forEach(e => {
+        e.isFollowed = e.Followers.some(f => f.id === helpers.getUser(req).id)
+      })
+      // console.log('result', result)
+      return res.render('personfollow', {
+        data: readyuser,
+        tweetsCounts,
+      })
     }
     catch (err) {
       next(err)
@@ -172,7 +181,6 @@ const userController = {
         raw: true,
         nest: true
       })
-      console.log('likes', likes)
       user.introduction = user.introduction.substring(0, 20);
       return res.render('profilelike', { likes, user })
     }
@@ -183,11 +191,11 @@ const userController = {
   getPersonalReplies: async (req, res, next) => {
     try {
       const user = helpers.getUser(req)
-      const userId = helpers.getUser(req).id
+      const UserId = helpers.getUser(req).id
       const replies = await Reply.findAll({
         include: User,
         where: {
-          ...userId ? { userId } : {}
+          ...UserId ? { UserId } : {}
         },
         order: [
           ['created_at', 'DESC']
@@ -196,7 +204,6 @@ const userController = {
         nest: true
       })
       user.introduction = user.introduction.substring(0, 20);
-      console.log('replies', replies)
       return res.render('profilereply', { replies, user })
     }
     catch (err) {
