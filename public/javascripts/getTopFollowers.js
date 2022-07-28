@@ -30,7 +30,7 @@ axios.get('http://localhost:3000/followships/top10')
     users.forEach(topFollower => {
       if (following.includes(topFollower.id)) {
         htmlContent += `
-           <form action="/followships/:${topFollower.id}?_method=DELETE" method="POST">
+           <form action="/followships/${topFollower.id}?_method=DELETE" method="POST">
         <div class="d-flex justify-content-between align-items-center flex-row bd-highlight mb-3">
           <div class="bd-highlight">
             <a href="/users/${topFollower.id}/tweets">

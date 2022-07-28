@@ -33,7 +33,7 @@ const followController = {
           followingId
         }
       })
-      assert(!following, '你已經取消追蹤囉')
+      assert(following, '你已經取消追蹤囉')
       const removedFollow = await following.destroy()
       return res.redirect('back')
     }
