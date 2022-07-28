@@ -104,7 +104,7 @@ const userController = {
   },
   getPersonalTweets: async (req, res, next) => {
     try {
-      const user = helpers.getUser(req.user)
+      const user = helpers.getUser(req)
       const tweets = await Tweet.findAll({
         include: User,
         order: [
@@ -122,7 +122,7 @@ const userController = {
   },
   getPersonalFollowings: async (req, res, next) => {
     try {
-      const user = helpers.getUser(req.user)
+      const user = helpers.getUser(req)
       const tweets = await Tweet.findAll({
         include: User,
         order: [
@@ -140,7 +140,7 @@ const userController = {
   },
   getPersonalFollowers: async (req, res, next) => {
     try {
-      const user = helpers.getUser(req.user)
+      const user = helpers.getUser(req)
       const tweets = await Tweet.findAll({
         include: User,
         order: [
@@ -176,7 +176,7 @@ const userController = {
   },
   getPersonalLikes: async (req, res, next) => {
     try {
-      const user = helpers.getUser(req.user)
+      const user = helpers.getUser(req)
       const tweets = await Tweet.findAll({
         include: User,
         order: [
