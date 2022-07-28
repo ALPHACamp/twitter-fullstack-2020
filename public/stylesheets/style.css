@@ -526,3 +526,200 @@
    display: none;
 
  }
+
+
+
+
+ .reply-tweet-card {
+   position: relative;
+   width: 639px;
+   height: 335px;
+   margin-top: 10px
+ }
+
+ .reply-main-tweet {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   padding: 0px;
+   gap: 8px;
+   position: absolute;
+   width: 602px;
+   height: 205px;
+   left: 16px;
+   top: 0px;
+   border-bottom: 1px solid #E6ECF0
+ }
+
+ .reply-main-user {
+   display: flex;
+   flex-direction: row;
+   align-items: flex-start;
+   padding: 0px;
+   gap: 8px;
+
+   width: 109px;
+   height: 50px;
+
+   /* Inside auto layout */
+   flex: none;
+   order: 0;
+   flex-grow: 0;
+ }
+
+ .reply-main-avatar {
+   width: 50px;
+   height: 50px;
+   border-radius: 50%;
+
+ }
+
+ .reply-main-content {
+   position: absolute;
+   width: 620px;
+   height: 108px;
+   top: 58px;
+
+   font-family: 'Noto Sans TC';
+   font-style: normal;
+   font-weight: 400;
+   font-size: 24px;
+
+   color: #171725;
+
+
+   /* Inside auto layout */
+
+   flex: none;
+   order: 1;
+   flex-grow: 0;
+ }
+
+ .reply-main-time {
+   position: absolute;
+   top: 175px;
+   width: 188px;
+   height: 22px;
+   /* body/14px/medium */
+   font-family: 'Noto Sans TC';
+   font-style: normal;
+   font-weight: 500;
+   font-size: 14px;
+   line-height: 22px;
+   /* identical to box height, or 157% */
+
+   /* color/secondary */
+   color: #6C757D;
+   /* Inside auto layout */
+   flex: none;
+   order: 2;
+   flex-grow: 0;
+
+ }
+
+ .reply-nums-likes {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   padding: 0px;
+   gap: 24px;
+
+   position: absolute;
+   left: 2.65%;
+   right: 64.48%;
+   top: 65.97%;
+   bottom: 25.67%;
+ }
+
+ .reply-icon-part {
+   display: flex;
+   flex-direction: row;
+   align-items: flex-start;
+   padding: 3px 0px;
+   gap: 128px;
+
+   position: absolute;
+   left: 2.64%;
+   right: 67.94%;
+   top: 84.18%;
+   bottom: 5.07%;
+
+ }
+
+ .reply-line {
+   position: absolute;
+   width: 639px;
+   height: 1px;
+   background: #E6ECF0
+ }
+
+ .replier-box {
+   display: flex;
+   flex-direction: row;
+   align-items: flex-start;
+   padding: 0px;
+   gap: 16px;
+
+   width: 639px;
+   height: 133px;
+   margin-top: 5px
+ }
+
+ .replier-avatar {
+   width: 50px;
+   height: 50px;
+   margin-left: 16px;
+   margin-top: 10px
+ }
+
+ .replier-info-box {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   padding: 0px;
+   gap: 8px;
+   width: 528px;
+   height: 130px;
+   /* Inside auto layout */
+   flex: none;
+   order: 1;
+   flex-grow: 0;
+   margin-top: 10px
+ }
+
+ .replier-name-box {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   padding: 0px;
+   gap: 8px;
+
+   width: 251px;
+   height: 26px;
+ }
+
+ .replier-target {
+   display: flex;
+   flex-direction: row;
+
+   width: 150px;
+   height: 22px;
+   /* body/14px/regular */
+   font-family: 'Noto Sans TC';
+   font-style: normal;
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 22px;
+   /* identical to box height, or 157% */
+   /* color/secondary */
+   color: #6C757D;
+ }
+
+ .replier-text {
+   display: flex;
+   flex-direction: row;
+   align-items: flex-start;
+   padding: 0px;
+   width: 528px;
+   height: 60px;
+ }

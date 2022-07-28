@@ -1,0 +1,113 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+    {{> left-side}}
+    <div class="main col-6">
+      <div class="home-page font-lg-dark">
+        <a href="/tweets">推文</a>
+      </div>
+      <div class="hr-line"></div>
+
+      {{!-- 推文區塊 --}}
+
+      <div class="reply-tweet-card">
+        <div class="reply-main-tweet">
+          <div class="reply-main-user">
+            <a href="/users/2/tweets">
+              <img class="reply-main-avatar" src="https://upload.cc/i1/2022/07/26/G7ZpeB.png" alt="avatar"
+                style="width:50px; ">
+            </a>
+            <div>
+              <span class="font-name">Andy</span>
+              <span class="font-account">@AndyChien</span>
+            </div>
+          </div>
+
+          <div class="reply-main-content">
+            <p>Culpa sint ut laboriosam odit omnis quia. Autem natus sed ut possimus id corrupti libero. A iure
+              inventore
+            </p>
+          </div>
+          <div class="reply-main-time">
+            <p>上午10:00 - 2022年7月28日</p>
+          </div>
+        </div>
+
+        <div class="reply-nums-likes">
+          <div class="reply-nums">34 回覆</div>
+          <div class="replu-likes">808 喜歡次數</div>
+
+        </div>
+        <div class="reply-line" style="top:265px"></div>
+        <div class="reply-icon-part">
+          <form action="/tweets/2/replies" method="POST">
+            <div class="speech-bubble">
+              <button type="submit">
+                <a href="" data-bs-toggle="modal" data-bs-target="#replyInputModatl">
+                  <img src="https://upload.cc/i1/2022/07/26/rKCiDo.png" alt="reply" style="width: 30px;height:30px">
+                </a>
+              </button>
+            </div>
+          </form>
+
+          <form action="/tweets/2/unlike" method="POST">
+            <div class="like-w">
+              <button type="submit">
+                <img src="https://upload.cc/i1/2022/07/26/ZdBEx9.png" alt="like" style="width: 30px;height:30px">
+              </button>
+            </div>
+          </form>
+
+        </div>
+        <div class="reply-line" style="top:340px"></div>
+      </div>
+      {{!-- each --}}
+      <div class="replier-box">
+
+
+        <div class="replier-avatar">
+          <img class="reply-main-avatar" src="https://upload.cc/i1/2022/07/26/G7ZpeB.png" alt="avatar"
+            style="width:50px; height:50px;border-radius:50%">
+        </div>
+        <div class="replier-info-box">
+          <div class="replier-name-box">
+            <div class="replier-name">
+              <span class="font-name">Rakim</span>
+              <span class="font-account" style="margin-left: 5px;">@RakimC - 10天前</span>
+            </div>
+          </div>
+          <div class="replier-target">
+            <span>回覆給</span>
+            <span style="margin-left:3px; color:#FF6600">@Andy</span>
+          </div>
+
+          <div class="replier-text">
+            <p>today is a good day</p>
+          </div>
+
+
+
+
+
+
+
+        </div>
+
+
+
+      </div>
+
+      <div class="reply-line" style="margin-top:10px"></div>
+
+      {{!-- each --}}
+
+
+
+
+
+
+
+
+    </div>
+    {{> right-side}}
+  </div>
+</div>

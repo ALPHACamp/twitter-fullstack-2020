@@ -8,10 +8,12 @@
   </a>
   <div class="text-box">
     <span>{{this.description}}
-      <form action="/tweets/{{this.id}}/like" method="POST">
+      <form action="/tweets/{{this.id}}/replies" method="GET">
         <div class="speech-bubble">
           <button type="submit">
-            <img src="https://upload.cc/i1/2022/07/26/rKCiDo.png" alt="reply">
+            <a href="" data-bs-toggle="modal" data-bs-target="#replyInputModatl{{this.id}}">
+              <img src="https://upload.cc/i1/2022/07/26/rKCiDo.png" alt="reply">
+            </a>
           </button>
           <div class="font-account">50</div>
         </div>
