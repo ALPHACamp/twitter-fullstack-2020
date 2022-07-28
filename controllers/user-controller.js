@@ -77,14 +77,14 @@ const userController = {
             isFollowed: user.Followings.some(u => u.id === data.followingId)
           }))
           .slice(0, 10)
-          const tweetsData = tweets
-            .map(t => ({
-              ...t.toJSON(),
-              likedCount: t.Likes.length,
-              repliedCount: t.Replies.length,
-              isLiked: t.Likes.some(like => like.UserId === user.id)
-            }))
-          res.locals.tweetsLength = tweets.length
+        const tweetsData = tweets
+          .map(t => ({
+            ...t.toJSON(),
+            likedCount: t.Likes.length,
+            repliedCount: t.Replies.length,
+            isLiked: t.Likes.some(like => like.UserId === user.id)
+          }))
+        res.locals.tweetsLength = tweets.length
         res.render('profile', { targetUser: targetUser.toJSON(), tweets: tweetsData, user, users })
       })
       .catch(err => next(err))
@@ -95,7 +95,8 @@ const userController = {
       User.findByPk(id, {
         include: [
           { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' }
+          { model: User, as: 'Followers' },
+          Tweet
         ]
       }),
       Reply.findAll({
@@ -124,6 +125,7 @@ const userController = {
             isFollowed: user.Followings.some(u => u.id === data.followingId)
           }))
           .slice(0, 10)
+        res.locals.tweetsLength = targetUser.Tweets.length
         res.render('profile', { targetUser: targetUser.toJSON(), replies, user, users })
       })
       .catch(err => next(err))
@@ -131,12 +133,21 @@ const userController = {
   likes: (req, res, next) => {
     const id = req.params.id
     Promise.all([
-      User.findOne({ where: { id } }),
+      User.findByPk(id, {
+        include: [
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' },
+          Tweet
+        ]
+      }),
       Like.findAll({
         where: { UserId: id },
-        include: [{ model: Tweet, include: User }],
+        include: [
+          { model: Tweet, include: User },
+          { model: Tweet, include: Like },
+          { model: Tweet, include: Reply }
+        ],
         order: [['createdAt', 'desc']],
-        raw: true,
         nest: true
       }),
       Followship.findAll({
@@ -151,13 +162,22 @@ const userController = {
       .then(([targetUser, likes, followship]) => {
         if (!targetUser) throw new Error("User didn't exist")
         const user = getUser(req)
+        user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
         const users = followship
           .map(data => ({
             ...data.User.toJSON(),
-            isFollowed: user.Followings.some(u => u.id === data.followerId)
+            isFollowed: user.Followings.some(u => u.id === data.followingId)
           }))
           .slice(0, 10)
-        res.render('profile', { targetUser: targetUser.toJSON(), likes, user, users })
+        const likesData = likes
+          .map(l => ({
+            ...l.toJSON(),
+            likedCount: l.Tweet.Likes.length,
+            repliedCount: l.Tweet.Replies.length,
+            isLiked: l.Tweet.Likes.some(like => like.UserId === user.id)
+          }))
+        res.locals.tweetsLength = targetUser.Tweets.length
+        res.render('profile', { targetUser: targetUser.toJSON(), likes: likesData, user, users })
       })
       .catch(err => next(err))
   },
