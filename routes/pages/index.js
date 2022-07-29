@@ -3,10 +3,10 @@ const router = express.Router()
 const passport = require('../../config/passport')
 
 const admin = require('./modules/admin')
+const tweets = require('./modules/tweets')
 
 const adminController = require('../../controllers/pages/admin-controller')
 const userController = require('../../controllers/pages/user-controller')
-const tweetController = require('../../controllers/pages/tweet-controller')
 
 const { authenticated, authenticatedAdmin } = require('../../middleware/auth')
 
@@ -14,6 +14,9 @@ const { authenticated, authenticatedAdmin } = require('../../middleware/auth')
 router.get('/admin/signin', adminController.getSignin)
 router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.postSignin)
 router.use('/admin', authenticatedAdmin, admin)
+
+// tweets route
+router.use('/tweets', authenticated, tweets)
 
 // user route
 router.get('/signup', userController.signUpPage)
@@ -24,9 +27,6 @@ router.get('/logout', userController.logout)
 
 router.get('/setting', authenticated, userController.getSetting)
 router.put('/setting', authenticated, userController.editSetting)
-
-router.get('/tweets', authenticated, tweetController.getTweets)
-router.post('/tweets', authenticated, tweetController.addTweet)
 
 router.get('/', (req, res) => res.send('Hello World!'))
 

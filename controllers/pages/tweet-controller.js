@@ -2,24 +2,22 @@ const { Tweet, User, Reply, Like } = require('../../models')
 const helpers = require('../../_helpers')
 
 const tweetController = {
-  getTweets: (req, res) => {
+  getTweets: (req, res, next) => {
     return Tweet.findAll({
       include: [User, Reply, Like],
       order: [['createdAt', 'DESC']]
     })
       .then(tweets => {
         const tweetData = tweets.map(t => ({
-          ...t.dataValues,
-          name: t.User.name,
-          account: t.User.account,
-          avatar: t.User.avatar,
+          ...t.toJSON(),
           replyCounts: t.Replies.length,
           likeCounts: t.Likes.length
         }))
         res.render('tweets', { tweetData })
       })
+      .catch(err => next(err))
   },
-  addTweet: (req, res) => {
+  addTweet: (req, res, next) => {
     const UserId = helpers.getUser(req).id
     const { description } = req.body
     if (!description.trim()) {
@@ -38,6 +36,7 @@ const tweetController = {
         req.flash('success_messages', '成功發布推文')
         res.redirect('/tweets')
       })
+      .catch(err => next(err))
   }
 }
 
