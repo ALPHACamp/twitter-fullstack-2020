@@ -10,11 +10,9 @@ const userController = {
   signUp: (req, res, next) => {
     const { account, name, email, password, checkPassword } = req.body
     if (password !== checkPassword) throw new Error('密碼與密碼確認不相符!')
-    if (!account || !name || !email || !password || !checkPassword) throw new Error('所有欄位為必填')
-    Promise.all([
-      User.findOne({ where: { account } }),
-      User.findOne({ where: { email } })
-    ])
+    if (!account || !name || !email || !password || !checkPassword)
+      throw new Error('所有欄位為必填')
+    Promise.all([User.findOne({ where: { account } }), User.findOne({ where: { email } })])
       .then(([account, email]) => {
         if (account) throw new Error('account 已重複註冊！')
         if (email) throw new Error('email 已重複註冊！')
@@ -67,37 +65,32 @@ const userController = {
         order: [[sequelize.literal('count'), 'DESC']]
       })
     ])
-    .then(([targetUser, tweets, followship]) => {
-      if (!targetUser) throw new Error("User didn't exist")
-      const user = getUser(req)
-      user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
-      const users = followship
-        .map(data => ({
-          ...data.User.toJSON(),
-          isFollowed: user.Followings.some(u => u.id === data.followingId)
-        }))
-        .slice(0, 10)
-      const tweetsData = tweets
-        .map(t => ({
+      .then(([targetUser, tweets, followship]) => {
+        if (!targetUser) throw new Error("User didn't exist")
+        const user = getUser(req)
+        user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        const users = followship
+          .map(data => ({
+            ...data.User.toJSON(),
+            isFollowed: user.Followings.some(u => u.id === data.followingId)
+          }))
+          .slice(0, 10)
+        const tweetsData = tweets.map(t => ({
           ...t.toJSON(),
           likedCount: t.Likes.length,
           repliedCount: t.Replies.length,
           isLiked: t.Likes.some(like => like.UserId === user.id)
         }))
-      res.locals.tweetsLength = tweets.length
-      res.render('profile', { targetUser: targetUser.toJSON(), tweets: tweetsData, user, users })
-    })
-    .catch(err => next(err))
+        res.locals.tweetsLength = tweets.length
+        res.render('profile', { targetUser: targetUser.toJSON(), tweets: tweetsData, user, users })
+      })
+      .catch(err => next(err))
   },
   replies: (req, res, next) => {
     const id = req.params.id
     return Promise.all([
       User.findByPk(id, {
-        include: [
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' },
-          Tweet
-        ]
+        include: [{ model: User, as: 'Followings' }, { model: User, as: 'Followers' }, Tweet]
       }),
       Reply.findAll({
         where: { UserId: id },
@@ -134,11 +127,7 @@ const userController = {
     const id = req.params.id
     return Promise.all([
       User.findByPk(id, {
-        include: [
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' },
-          Tweet
-        ]
+        include: [{ model: User, as: 'Followings' }, { model: User, as: 'Followers' }, Tweet]
       }),
       Like.findAll({
         where: { UserId: id },
@@ -169,15 +158,16 @@ const userController = {
             isFollowed: user.Followings.some(u => u.id === data.followingId)
           }))
           .slice(0, 10)
-        const likesData = likes
-          .map(l => ({
-            ...l.toJSON(),
-            likedCount: l.Tweet.Likes.length,
-            repliedCount: l.Tweet.Replies.length,
-            isLiked: l.Tweet.Likes.some(like => like.UserId === user.id)
-          }))
+        const likesData = likes.map(l => ({
+          ...l.toJSON(),
+          likedCount: l.Tweet.Likes.length,
+          repliedCount: l.Tweet.Replies.length,
+          isLiked: l.Tweet.Likes.some(like => like.UserId === user.id)
+        }))
         res.locals.tweetsLength = targetUser.Tweets.length
-        res.status(200).render('profile', { targetUser: targetUser.toJSON(), likes: likesData, user, users })
+        res
+          .status(200)
+          .render('profile', { targetUser: targetUser.toJSON(), likes: likesData, user, users })
       })
       .catch(err => next(err))
   },
@@ -195,7 +185,7 @@ const userController = {
             ...user.toJSON(),
             isFollowed: loginUser?.Followings.some(f => f.id === user.id)
           }
-        })
+        }).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
         res.render('user_followers', { observedUser: user.toJSON(), followers: result })
       })
       .catch(err => next(err))
@@ -214,7 +204,7 @@ const userController = {
             ...user.toJSON(),
             isFollowed: loginUser?.Followings.some(f => f.id === user.id)
           }
-        })
+        }).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
         res.render('user_followings', { observedUser: user.toJSON(), followings: result })
       })
       .catch(err => next(err))
