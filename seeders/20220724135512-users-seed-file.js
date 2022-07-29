@@ -71,7 +71,7 @@ module.exports = {
           account: 'user5',
           email: 'user5@example.com',
           password: bcrypt.hashSync('12345678', salt),
-          name: 'five',
+          name: 'user_five',
           avatar: `https://minimaltoolkit.com/images/randomdata/female/${Math.floor(Math.random() * 100) + 1}.jpg`,
           cover_photo: 'https://i.picsum.photos/id/480/640/200.jpg?hmac=L5TbU_95g3i0TiMkoqFEyH50TRgsm1INA-5_xx0rMSo',
           introduction: faker.lorem.words(),

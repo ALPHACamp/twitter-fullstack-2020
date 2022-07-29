@@ -84,7 +84,6 @@ const tweetController = {
       await Tweet.create({ description, UserId, userAvatar })
       res.redirect('/tweets')
     } catch (err) {
-      console.log(err)
       next(err)
     }
   },
@@ -108,7 +107,8 @@ const tweetController = {
         attributes: ['id', 'description', 'createdAt'],
         include: [
           { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
-          { model: Reply, attributes: ['id'] }
+          { model: Reply, attributes: ['id'] },
+          { model: Like, attributes: ['id'] }
         ]
       })
       const likedTweetsId = req.user?.Likes
@@ -119,7 +119,7 @@ const tweetController = {
         isLiked: likedTweetsId.includes(tweets.id)
       }))
       // res.json(tweets)
-      res.render('tweets', { tweets: data, role, topUser, currentUser})
+      res.render('tweets', { tweets: data, role, topUser, currentUser })
       // res.json({ status: 'success', tweets: data })
     } catch (err) {
       next(err)
