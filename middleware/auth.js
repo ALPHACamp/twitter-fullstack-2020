@@ -21,9 +21,7 @@ const authenticatedAdmin = (req, res, next) => {
 }
 
 const authenticatedLimit = (req, res, next) => {
-  // console.log('req.user',helpers.getUser(req).id)
-  // console.log('params', req.params.id)
-  if (helpers.getUser(req).id === req.params.id) return next()
+  if (helpers.getUser(req).id === Number(req.params.id)) return next()
   res.json({ status: 'error', data: '只能修改自己的資料' })
   res.redirect(200, 'back')
 }

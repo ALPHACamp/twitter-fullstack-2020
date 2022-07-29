@@ -57,7 +57,7 @@
           editBtn.addEventListener('click', () => {
             axios.get('/api/users/' + {{user.id}})
               .then(response => {
-                const userInfo = response.data.data
+                const userInfo = response.data
                 coverInput.src = userInfo.cover
                 avatarInput.src = userInfo.avatar
                 nameInput.value = userInfo.name
@@ -70,7 +70,6 @@
           
           saveBtn.addEventListener('click', () => {
             if (nameInput.value.length > 50 || introductionInput.value.length > 160) {
-              console.log(nameInput.value)
               return alert('字數超出上限！')
             }
             const data = {
