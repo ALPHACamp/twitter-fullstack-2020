@@ -1,4 +1,5 @@
 const { sequelize, Sequelize, User, Tweet, Like } = require('../models')
+const { Op } = require('sequelize')
 
 const adminController = {
   signinPage: (req, res, next) => {
@@ -42,7 +43,8 @@ const adminController = {
 
   getUsers: (req, res, next) => {
     User.findAll({
-      where: { role: 'user' },
+      // where: { role: 'user' }, 用這個方法排除 admin 會使 test 不通過
+      // where: { role: { [Op.not]: 'admin' } }, 正確排除資料，但測試一樣不過
       nest: true,
       include: [
         { model: Tweet, include: Like },
@@ -64,17 +66,19 @@ const adminController = {
       },
       order: [[sequelize.literal('tweetsCount'), 'DESC']]
     }).then(users => {
-      const result = users.map(user => {
-        const userObj = user.toJSON()
-        delete userObj.password
-        return {
-          ...userObj,
-          // tweetsCount: user.Tweets.length, 計算推文數交給上面 sql 來做
-          likesCount: user.Tweets.reduce((acc, cur) => acc + cur.Likes.length, 0),
-          followersCount: user.Followers.length,
-          followingsCount: user.Followings.length
-        }
-      })
+      const result = users
+        .filter(user => user.role !== 'admin') // 過濾 admin 不能出現在 users 清單
+        .map(user => {
+          const userObj = user.toJSON()
+          delete userObj.password
+          return {
+            ...userObj,
+            // tweetsCount: user.Tweets.length, 計算推文數交給上面 sql 來做
+            likesCount: user.Tweets.reduce((acc, cur) => acc + cur.Likes.length, 0),
+            followersCount: user.Followers.length,
+            followingsCount: user.Followings.length
+          }
+        })
       // .sort((a, b) => b.tweetsCount - a.tweetsCount) 排序交給 sql 來做
       // res.send(result)
       res.render('admin_users', { users: result })
