@@ -26,3 +26,15 @@ function showReplyModel (tid) {
   replyInput.action = `/tweets/${tid}/replies`
   replyTo.textContent = account
 }
+
+const replyForm = document.querySelector('#reply-input')
+const replyTextArea = document.querySelector('#reply-comment')
+const errorMsg = document.querySelector('#error-msg')
+
+replyForm.addEventListener('submit', e => {
+  if (replyTextArea.value.length === 0 || replyTextArea > 140) {
+    e.preventDefault()
+    e.stopPropagation()
+    errorMsg.textContent = '內容不可空白'
+  }
+})

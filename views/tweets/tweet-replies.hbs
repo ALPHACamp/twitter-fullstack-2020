@@ -1,7 +1,7 @@
 <div class="body-container" id="data-panel">
   {{> side-menu }}
   {{!-- 中央部分 --}}
-  <div class="center-part border scrollbar">
+  <div class="center-part border h-100 overflow-auto scrollbar">
     <div class="border-bottom">
       <div class="text-start ms-3 mt-4 mb-3 ">
         <a href="/tweets" class="btn border-0"><i class="back"></i></a>
@@ -106,8 +106,9 @@
   {{!-- 回覆的推文資料結束 --}}
   <form action="" method="post" class="row g-0 mt-2" id="reply-input">
     <img src="{{currentUser.avatar}}" alt="model-user-avatar" class="avatar-sm rounded-circle col-1">
-    <textarea id="comment" name="comment" class="col-10 ms-3 border-0 overflow-hidden" maxlength="140" placeholder="推你的回覆" rows="6" style="resize: none;"></textarea>
-    <button type="submit" class="btn btn-brand rounded-pill fw-light col-2" data-bs-dismiss="modal" style="width: 60px; margin-left: 405px;">回覆</button>
+    <textarea id="reply-comment" name="comment" class="col-10 ms-3 border-0 overflow-hidden" maxlength="140" placeholder="推你的回覆" rows="6" style="resize: none;"></textarea>
+    <small class="offset-md-7 col-3 mt-2 text-error" id="error-msg"></small>
+    <button type="submit" id="post-comment" class="btn btn-brand rounded-pill fw-light col-2" style="width: 60px;">回覆</button>
   </form>
         </div>
           
