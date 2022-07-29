@@ -12780,4 +12780,42 @@ textarea.form-control-lg {
 .alert {
   width: 394px;
   height: 96px;
-}/*# sourceMappingURL=custom.css.map */
+}
+.follow-btn {
+  display: inline;
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px 0 20px;
+  background-color: white;
+  color: #FF6600;
+  border: 1px solid #FF6600;
+}
+
+.follow-btn:hover {
+  background-color: #FF6600;
+  color: white;
+  border: 1px solid #FF6600;
+}
+
+.following-btn {
+  display: inline;
+  width: auto;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px 0 20px;
+  background-color: #FF6600;
+  color: white;
+  border: 1px solid #FF6600;
+}
+
+.following-btn:hover {
+  background-color: white;
+  color: #FF6600;
+  border: 1px solid #FF6600;
+}
+
+.follow-input {
+  display: none;
+}
+/*# sourceMappingURL=custom.css.map */

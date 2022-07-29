@@ -4,8 +4,8 @@
       <div class="modal-header d-flex justify-content-start">
         <i class="close ms-0" data-bs-dismiss="modal" aria-label="Close"></i>
       </div>
-      {{!-- --}}
-        <div class="d-flex flex-wrap mt-3">
+      {{!-- 原推文 --}}
+        <div class="reply-wrapper d-flex flex-wrap mt-3 ms-3">
           <div class="modal-avatar-container me-1">
             <div class="border rounded-circle border-5 border-white">
             <img src="{{tweet.User.avatar}}" alt="" class="avatar-sm rounded-pill modal-user-avatar" id="modal-user-avatar">
@@ -20,10 +20,10 @@
             <p class="modal-description me-4" id="modal-description">{{tweet.description}}</p>
           </div>
         </div>
-        {{!-- --}}
-        <div class="tweet-input modal-body ms-3">
+        {{!-- 回覆 --}}
+        <div class="tweet-input modal-body">
           <form action="/tweets/{{tweet.id}}/replies" method="POST">
-            <div class="d-flex flex-wrap mt-3 ms-1">
+            <div class="d-flex flex-wrap mt-1 ms-1">
               <div class="me-1">
                 <img src="{{user.avatar}}" alt="" class="avatar-sm rounded-pill">
               </div>
