@@ -130,7 +130,7 @@ const userController = {
       if (personal.id === user.id) {
         const tweets = await Tweet.findAll({
           where: {
-            UserId: user.id
+            ...user ? { UserId: user.id } : {}
           },
           include: [
             User
@@ -151,7 +151,7 @@ const userController = {
       } else {
         const tweets = await Tweet.findAll({
           where: {
-            UserId: personal.id
+            ...personal ? { UserId: personal.id } : {}
           },
           include: [
             User
@@ -168,7 +168,6 @@ const userController = {
           ...tweet,
           isLiked: likedTweetsId?.includes(tweet.id)
         }))
-        console.log(personal)
         return res.render('profile', { tweetsList, user, personal })
       }
     }
@@ -241,20 +240,42 @@ const userController = {
   getPersonalReplies: async (req, res, next) => {
     try {
       const user = helpers.getUser(req)
-      const UserId = helpers.getUser(req).id
-      const replies = await Reply.findAll({
-        include: User,
-        where: {
-          ...UserId ? { UserId } : {}
-        },
-        order: [
-          ['created_at', 'DESC']
-        ],
-        raw: true,
-        nest: true
+      const personal = await User.findByPk(Number(req.params.id), {
+        raw: true
       })
-      user.introduction = user.introduction.substring(0, 20);
-      return res.render('profileReply', { replies, user })
+      if (personal.id === user.id) {
+        const replies = await Reply.findAll({
+          where: {
+            ...user ? { UserId: user.id } : {}
+          },
+          include: [
+            User
+          ],
+          order: [
+            ['created_at', 'DESC'],
+            ['id', 'ASC']
+          ],
+          raw: true,
+          nest: true
+        })
+        return res.render('profileReply', { replies, user })
+      } else {
+        const replies = await Reply.findAll({
+          where: {
+            ...personal ? { UserId: personal.id } : {}
+          },
+          include: [
+            User
+          ],
+          order: [
+            ['created_at', 'DESC'],
+            ['id', 'ASC']
+          ],
+          raw: true,
+          nest: true
+        })
+        return res.render('profileReply', { replies, user, personal })
+      }
     }
     catch (err) {
       next(err)
