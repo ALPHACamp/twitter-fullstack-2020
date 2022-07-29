@@ -19,7 +19,7 @@
         </div>
       </form>
 
-      {{#if this.Likes.id}}
+      {{#if this.isLiked}}
       <form action="/tweets/{{this.id}}/unlike" method="POST">
         <div class="like-w">
           <button type="submit">
