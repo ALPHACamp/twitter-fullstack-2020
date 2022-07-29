@@ -1,1 +1,44 @@
-{{> left-nav}}
+{{!--中間上半部 --}}
+<div class="card" style="height: 300px;">
+  <div class="card-header bg-white">
+    <h5 class="text-start fw-bold">首頁</h5>
+  </div>
+  <div class="card-body">
+
+    <form action="/tweets" method="POST">
+      <div class="card " style="border: none">
+        {{> tweet-reply-form}}
+      </div>
+    </form>
+
+  </div>
+</div>
+{{!-- 中間下半部 --}}
+<table class="table table-bordered mt-3">
+  <thead>
+    <tr>
+      <th>
+        <h5 class='my-3 fw-bold'>推文清單</h5>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each tweetData}}
+      {{> tweet-card}}
+    {{/each}}
+  </tbody>
+</table>
+
+<!-- 點擊留言時產生的 Modal，不過還沒開始動工 -->
+<div class="modal fade" id="tweet-reply-modal" tabindex="-1" aria-labelledby="tweet-reply-modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 634px; height: 350px;">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/tweets" method="POST">
+        {{> tweet-reply-form}}
+      </form>
+    </div>
+  </div>
+</div>
