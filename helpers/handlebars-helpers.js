@@ -8,5 +8,6 @@ module.exports = {
     return a === b ? options.fn(this) : options.inverse(this)
   },
   checkBanner: banner => banner || '/images/user-defaultBanner.png',
-  checkAvatar: avatar => avatar || '/images/user-defaultAvatar.png'
+  checkAvatar: avatar => avatar || '/images/user-defaultAvatar.png',
+  isAdmin: userRole => userRole === 'admin'
 }

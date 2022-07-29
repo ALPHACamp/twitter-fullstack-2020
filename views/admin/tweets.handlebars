@@ -1,1 +1,14 @@
-this is admin tweets
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>
+        <h5 class='my-3 fw-bold'>推文清單</h5>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each tweets}}
+    {{>admin-tweet-card}}
+    {{/each}}
+  </tbody>
+</table>
