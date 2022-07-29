@@ -30,9 +30,15 @@
       </div>
       <div class="modal-body">
         <div class="d-flex">
-          <div class="border border-light border-3 rounded-circle me-3"
-            style="width: 50px; height: 50px; background: url('/avatar.png'); background-size: cover; background-position: center;">
-          </div>
+          {{#if user}}
+            <div class="border border-light border-3 rounded-circle me-3"
+              style="width: 50px; height: 50px; background: url('{{user.avatar}}'); background-size: cover; background-position: center;">
+            </div>
+          {{else}}
+            <div class="border border-light border-3 rounded-circle me-3"
+              style="width: 50px; height: 50px; background: url('/images/avatar-example.jpeg'); background-size: cover; background-position: center;">
+            </div>
+          {{/if}}
           <div class="flex-fill text-end">
             <form href="/tweets" action="POST">
               <textarea class="border border-0 form-control mb-3" id="tweet" name="tweet" maxlength="150"
