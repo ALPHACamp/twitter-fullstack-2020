@@ -1,4 +1,5 @@
 const { Tweet, User, Reply, Like } = require('../../models')
+const helpers = require('../../_helpers')
 
 const tweetController = {
   getTweets: (req, res) => {
@@ -19,7 +20,7 @@ const tweetController = {
       })
   },
   addTweet: (req, res) => {
-    const UserId = req.user.id
+    const UserId = helpers.getUser(req).id
     const { description } = req.body
     if (!description.trim()) {
       req.flash('error_messages', '推文不可空白')
