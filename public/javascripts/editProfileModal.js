@@ -40,11 +40,9 @@ editModal.addEventListener('submit', function (event) {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
     .then(res => {
-
       console.log(formData.get('name'))
       console.log(formData.get('avatar'))
-
-      // history.go(0)   // 刷新本頁
+      history.go(0)   // 刷新本頁
 
     })
     .catch(err => console.log(err))

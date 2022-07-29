@@ -7,23 +7,25 @@
     <span class="font-account">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</span>
   </a>
   <div class="text-box">
-    <span>{{this.description}}
+
+    <span>
+      {{#ifCond route 'tweets'}}{{this.description}}{{/ifCond}}
+      {{#ifCond route 'replies'}}{{this.comment}}{{/ifCond}}
+      {{#ifCond route 'likes'}}{{this.Tweet.description}}{{/ifCond}}
+      {{#ifCond route 'tweets'}}
       <form action="/tweets/{{this.id}}/replies" method="GET">
         <div class="speech-bubble">
           <button type="submit">
-            <a href="" data-bs-toggle="modal" data-bs-target="#replyInputModatl{{this.id}}">
-              <img src="https://upload.cc/i1/2022/07/26/rKCiDo.png" alt="reply">
-            </a>
+            <img src="/images/icons/speech-bubble.png" alt="reply">
           </button>
           <div class="font-account">50</div>
         </div>
       </form>
-
       {{#if this.Likes.id}}
       <form action="/tweets/{{this.id}}/unlike" method="POST">
         <div class="like-w">
           <button type="submit">
-            <img src="images/icons/like.png" alt="like">
+            <img src="/images/icons/like.png" alt="like">
           </button>
           <div class="font-account">50</div>
         </div>
@@ -32,12 +34,23 @@
       <form action="/tweets/{{this.id}}/like" method="POST">
         <div class="like-w">
           <button type="submit">
-            <img src="https://upload.cc/i1/2022/07/26/ZdBEx9.png" alt="like">
+            <img src="/images/icons/like-w.png" alt="like">
           </button>
           <div class="font-account">50</div>
         </div>
       </form>
       {{/if}}
+
+
+      {{/ifCond}}
+
+
+
+      {{#ifCond route 'replies'}}
+
+      {{/ifCond}}
+
+
 
     </span>
   </div>
