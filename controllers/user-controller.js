@@ -110,6 +110,7 @@ const userController = {
     try {
       const currentUser = helpers.getUser(req)
       const userId = Number(req.params.id)
+      const self = (currentUser.id === userId) ? true : null
       let topUser = await User.findAll({
         include: [{ model: User, as: 'Followers' }]
       })
@@ -124,9 +125,12 @@ const userController = {
         where: { user_id: userId },
         raw: true
       })
+      console.log(userTweets)
+      console.log(currentUser)
       res.render('users/user-tweets', {
         tweets: userTweets,
         role: currentUser.role,
+        self,
         currentUser,
         topUser
       })
@@ -145,13 +149,6 @@ const userController = {
       next(err)
     }
   },
-  // getUserProfile: async (req, res, next) => {
-  //   try {
-  //     res.render('settings')
-  //   } catch (err) {
-  //     next(err)
-  //   }
-  // },
   postFollow: async (req, res, next) => {
     try {
       const UserId = Number(helpers.getUser(req).id)
@@ -205,7 +202,8 @@ const userController = {
   },
   getSettingPage: async (req, res, next) => {
     try {
-      res.render('settings')
+      const currentUser = helpers.getUser(req)
+      res.render('users/user-setting', { role: currentUser.role, currentUser })
     } catch (err) {
       next(err)
     }
