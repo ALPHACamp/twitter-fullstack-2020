@@ -4,7 +4,8 @@ button:focus {
   outline: 0;
 }
 
-html,body {
+html,
+body {
   height: 100%;
   padding: 0;
   margin: 0;
@@ -97,10 +98,6 @@ html,body {
   object-fit: cover;
 }
 
-.user-description-container {
-  max-width: 90%;
-}
-
 .send-button {
   width: 5rem;
 }
@@ -135,6 +132,27 @@ html,body {
   color: #6C757D;
   height: 24px;
   line-height: 24px;
+}
+
+.description-link,.back-link {
+  text-decoration: none;
+  color: #171725;
+}
+
+.description-link:hover,.back-link :hover {
+  text-decoration: none;
+  color: #171725;
+}
+
+.description {
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+
+
+.description-content:hover {
+  text-decoration: none;
 }
 
 .description-like-btn-container {
@@ -176,9 +194,7 @@ html,body {
 
 
 /* reply modal */
-.reply-wrapper {
-
-}
+.reply-wrapper {}
 
 .modal-description-container {
   position: relative;

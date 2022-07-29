@@ -1,4 +1,4 @@
-<div class="body-container text-center"> {{!-- 其他頁面把這個 container 放進去 --}}
+<div class="body-container text-center">
   {{> side-menu }}
   {{!-- 中央部分 --}}
   <div class="center-part border" id="center-part">
@@ -24,28 +24,32 @@
     <div class="tweet-container scrollbar">
       {{#each tweets}}
       <div class="tweet-card border-bottom border-1">
-        <div class="d-flex flex-wrap ms-3 mt-3">
+        <div class="d-flex flex-nowrap ms-3 mt-3">
           <div class="avatar-container me-1">
             <a href="/users/{{this.User.id}}/tweets">
               <img src="{{this.User.avatar}}" alt="" class="avatar-sm rounded-pill" id="tweet-avatar-{{this.User.id}}">
             </a>
           </div>
-          <div class="user-description-container d-flex flex-column text-start ms-1">
+          <div class="user-description-container d-flex flex-column text-start ms-1 me-3 w-100">
             <div class="user-name-account mb-2">
               <a href="/users/{{this.User.id}}/tweets" class="name-link">
-                <h6 class="user-name fw-bold fs-5" id="tweet-name-{{this.User.id}}">{{this.User.name}}</h6>
+                <h6 class="user-name fw-bold fs-5 " id="tweet-name-{{this.User.id}}">{{this.User.name}}</h6>
               </a>
               <a href="/users/{{this.User.id}}/tweets" class="account-link">
-                <span class="user-account fw-normal fs-6" id="tweet-account-{{this.User.id}}">@{{this.User.account}}</span>
+                <span class="user-account fw-normal fs-6"
+                  id="tweet-account-{{this.User.id}}">@{{this.User.account}}</span>
               </a>
               <span class="fw-normal fs-6" id="tweet-time-{{this.id}}">・{{relativeTimeFromNow this.createdAt}}</span>
             </div>
-            <p class="description me-4" id="description-{{this.id}}">{{this.description}}</p>
+            <a href="/tweets/{{this.id}}/replies" class="description-link">
+              <div class="description me-4" id="description-{{this.id}}">
+                <p class="description-content">{{this.description}}</p>
+              </div>
+            </a>
             <div class="description-like-btn-container mb-3">
               <button class="reply-btn d-flex align-items-center" data-bs-toggle="modal"
-                data-bs-target="#reply-modal-{{this.id}}" data-tweetid="{{this.id}}"
-                  data-userid="{{this.User.id}}">
-                <i class="reply" data-bs-toggle="modal" data-bs-target="#replyTweetBtn" ></i>
+                data-bs-target="#reply-modal-{{this.id}}" data-tweetid="{{this.id}}" data-userid="{{this.User.id}}">
+                <i class="reply" data-bs-toggle="modal" data-bs-target="#replyTweetBtn"></i>
                 <span class="reply-count ms-2">{{this.Replies.length}}</span>
               </button>
               {{#if this.isLiked}}
@@ -69,6 +73,5 @@
     {{!-- 推文卡片結束 --}}
   </div>
   {{!-- 中央部分結束 --}}
-  {{!-- 推薦清單開始 --}}
   {{> recommend-follow }}
 </div>
