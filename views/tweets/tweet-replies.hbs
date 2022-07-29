@@ -1,7 +1,118 @@
-{{#each replies}}
-  {{this.comment}}
+<div class="body-container" id="data-panel">
+  {{> side-menu }}
+  {{!-- 中央部分 --}}
+  <div class="center-part border h-100 overflow-auto scrollbar">
+    <div class="border-bottom">
+      <div class="text-start ms-3 mt-4 mb-3 ">
+        <a href="/tweets" class="btn border-0"><i class="back"></i></a>
+        <h4 class="fw-bold d-inline">推文</h4>
+      </div>
+    </div>
+    <div class="rounded-0 card border-0 border-bottom p-3">
+      <div class="row g-1">
+        <div class="col-1 position-relative">
+          <a href="/users/{{tweet.User.id}}/tweets">
+            <img src="{{tweet.User.avatar}}" onerror="this.onerror=null;this.src='/pic/no_pic.png';" id="avatar-{{tweet.id}}" class="avatar-sm rounded-circle position-absolute end-0" alt="avatar" />
+          </a>
+        </div>
+        <div class="col-10 ms-2">
+          <a href="/users/{{tweet.User.id}}/tweets" class="text-black text-decoration-none"><h5 class="card-title fw-bold mb-0" id="name-{{tweet.id}}">{{tweet.User.name}}</h5></a>
+          <a href="/users/{{tweet.User.id}}/tweets" class="text-decoration-none"><small class="text-muted fw-light" id="account-{{tweet.id}}">＠{{tweet.User.account}}</small></a>
+        </div>
+        <h4 class="col-12 mt-4" id="description-{{tweet.id}}">{{tweet.description}}</h4>
+        <small class="col-10">{{timeFormat tweet.createdAt}}</small>
+        <p id="time-{{tweet.id}}" class="d-none">{{relativeTimeFromNow tweet.createdAt}}</p>
+        <div class="border-top mt-2"></div>
+        <span class="col-10 ms-1 mt-3"><strong>{{tweet.Replies.length}}</strong> 回覆<strong class="ms-4">{{tweet.Likes.length}}</strong>喜歡次數</span>
+        <div class="border-top mt-3"></div>
+        <button class="bg-body border-0 col-1 mt-3 me-5 opacity-50">
+          <img src="/stylesheets/svgs/outline-reply.svg" alt="reply-icon" class="r-btn" data-tid="{{tweet.id}}" data-bs-toggle="modal" data-bs-target="#replyTweet" style="width: 25px; height:25px;">
+        </button>
+        {{#if isLiked}}
+        <form action="/tweets/{{tweet.id}}/unlike" method="post" class="col-2 mt-3">
+          <button type="submit" data-tid="{{tweet.id}}" class="ul-btn bg-body border-0"><img src="/stylesheets/svgs/like.svg" alt="like-icon" style="width: 25px; height:25px; filter:var(--sup5-filter)"></button>
+        </form>
+        {{else}}
+        <form action="/tweets/{{tweet.id}}/like" method="post" class="col-2 mt-3">
+          <button type="submit" data-tid="{{tweet.id}}" class="l-btn bg-body border-0 opacity-50"><img src="/stylesheets/svgs/outline-like.svg" alt="unlike-icon" style="width: 25px; height:25px;"></button>
+        </form>
+        {{/if}}
+      </div>
+    </div>
+
+{{#each tweet.Replies}}
+<div class="card rounded-0 border-0 border-bottom">
+  <div class="row g-0 mx-3">
+    <div class="col-1 my-3 m-auto position-relative">
+      <a href="/users/{{this.User.id}}/tweets">
+      <img
+        src="{{this.User.avatar}}"
+        onerror="this.onerror=null;this.src='/pic/no_pic.png';"
+        class="avatar-sm rounded-circle position-absolute end-0"
+        alt="avatar"
+      />
+      </a>
+    </div>
+    <div class="col-11">
+      <div class="card-body">
+        <a href="" class="text-decoration-none text-black">
+        <h5 class="card-title fw-bolder">{{this.User.name}} <small
+            class="text-muted fw-light"
+          >@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</small>
+        </h5>
+        </a>
+        <small class="d-block mt-2">回覆<a class="text-decoration-none text-brand ms-1" href="/users/{{this.User.id}}/tweets">＠{{this.User.account}}</a></small>
+        <p class="card-text mt-2">{{this.comment}}</p>
+      </div>
+    </div>
+  </div>
+</div>
 {{/each}}
-<form action="http://localhost:3000/tweets/381/replies" method="POST">
-  <input type="text" name="comment" id="comment" />
-  <button type="submit">send</button>
-</form>
+  </div>
+  {{> recommend-follow }}
+</div>
+
+<!-- Reply Modal -->
+<div class="modal fade" id="replyTweet" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="border-radius: 14px;">
+        <div class="modal-header pb-1">
+          <button type="button" class="btn border-0 p-0 ms-0" data-bs-dismiss="modal" aria-label="Close"><i class="noti-danger"></i></button>
+        </div>
+        <div class="modal-body pt-0">
+  {{!-- 回覆的推文資料 --}}
+  <div class="card border-0">
+    <div class="row g-0 mx-3">
+      <div class="col-1 my-3 m-auto position-relative">
+        <img
+          src=""
+          alt="avatar"
+          class="avatar-sm rounded-circle position-absolute end-0"
+          id="reply-tweet-avatar"
+        />
+        <div class="border-start border-3 position-absolute" style="height: calc(100% - 55px); width: 1px; right: 23px; bottom: -10px; border-color: #B5B5BE;"></div>
+      </div>
+      <div class="col-11">
+        <div class="card-body">
+          <h5 class="card-title fw-bold" id="reply-tweet-name"><small
+              class="text-muted fw-light" id="reply-tweet-account"></small>
+          </h5>
+          <p class="card-text" id="reply-tweet-description"></p>
+          <small class="fw-light">回覆給 <small id="reply-to" class="text-brand"></small></small>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{!-- 回覆的推文資料結束 --}}
+  <form action="" method="post" class="row g-0 mt-2" id="reply-input">
+    <img src="{{currentUser.avatar}}" alt="model-user-avatar" class="avatar-sm rounded-circle col-1">
+    <textarea id="reply-comment" name="comment" class="col-10 ms-3 border-0 overflow-hidden" maxlength="140" placeholder="推你的回覆" rows="6" style="resize: none;"></textarea>
+    <small class="offset-md-7 col-3 mt-2 text-error" id="error-msg"></small>
+    <button type="submit" id="post-comment" class="btn btn-brand rounded-pill fw-light col-2" style="width: 60px;">回覆</button>
+  </form>
+        </div>
+          
+      </div>
+    </div>
+  </div>
+  <!-- Reply Modal End -->

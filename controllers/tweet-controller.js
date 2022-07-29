@@ -1,27 +1,23 @@
-const { Tweet, User, Like, Followship, Reply } = require('../models')
+const { Tweet, User, Like, Reply } = require('../models')
 const helpers = require('../_helpers')
 
 const tweetController = {
   getTweetReplies: async (req, res, next) => {
     try {
       const currentUser = helpers.getUser(req)
-      const followerId = currentUser.Followings.map(fu => fu.id)
       const TweetId = req.params.id
-      const existTweet = Tweet.findByPk(TweetId)
-      if (!existTweet) throw new Error("This tweet didn't exist!")
-      const replies = await Reply.findAll({
-        where: { TweetId },
-        include: [{ model: User }],
-        order: [['createdAt', 'DESC']],
-        raw: true,
-        nest: true
+      const tweet = await Tweet.findByPk(TweetId, {
+        include: [{ model: Reply, include: User }, User, Like]
       })
-      const data = replies.map(reply => ({
-        ...reply,
-        isFollowed: followerId.includes(reply.userId)
-      }))
-      return res.render('tweets/tweet-replies', { replies: data })
-      // res.json({ replies: data })
+      if (!tweet) throw new Error("This tweet didn't exist!")
+      const data = tweet.toJSON()
+      const isLiked = data.Likes.some(t => t.UserId === currentUser.id)
+      return res.render('tweets/tweet-replies', {
+        tweet: data,
+        isLiked,
+        currentUser,
+        role: currentUser.role
+      })
     } catch (err) {
       next(err)
     }
