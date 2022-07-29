@@ -10,14 +10,16 @@ module.exports = {
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
     const numberOfTweets = 10 // 為每個使用者生成 10 篇 tweet
+    const upperLimitOfTweet = 140 // 每篇貼文上限 140 字
 
     const tweets = []
 
     for (let i = 0; i < users.length; i++) {
       for (let x = 0; x < numberOfTweets; x++) {
+        const randomWords = Math.floor(Math.random() * (upperLimitOfTweet + 1))
         tweets.push({
           UserId: users[i].id,
-          description: faker.lorem.words(130),
+          description: faker.lorem.words(upperLimitOfTweet).substring(0, randomWords),
           createdAt: new Date(),
           updatedAt: new Date()
         })

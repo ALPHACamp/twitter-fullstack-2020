@@ -15,7 +15,7 @@ module.exports = {
       updatedAt: new Date()
     }]
 
-    const numberOfUsers = 5 // 本次預計生成 5 個 normal users
+    const numberOfUsers = 15 // 本次預計生成 15 個 normal users
     for (let i = 1; i <= numberOfUsers; i++) { // 放入 normal users
       users.push({
         account: `user${i}`,

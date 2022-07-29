@@ -15,13 +15,16 @@ module.exports = {
     )
 
     const numberOfReplies = 3 // 每篇 tweet 有隨機 3 則留言
+    const upperLimitOfTweet = 140 // 每篇貼文上限 140 字
+
     const replies = []
     for (const tweet of tweets) {
       for (let i = 0; i < numberOfReplies; i++) {
+        const randomWords = Math.floor(Math.random() * (upperLimitOfTweet + 1))
         replies.push({
           TweetId: tweet.id,
           UserId: users[Math.floor(Math.random() * users.length)].id,
-          comment: faker.lorem.words(15),
+          comment: faker.lorem.words(upperLimitOfTweet).substring(0, randomWords),
           createdAt: new Date(),
           updatedAt: new Date()
         })
