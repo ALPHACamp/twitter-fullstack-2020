@@ -1,12 +1,12 @@
-<div class="nav nav-pills brand-color flex-column sticky-top" style="height: 100vh;">
+<div class="nav nav-pills brand-color flex-column sticky-top" style="height: 92vh;">
   <img src="./alpha.png" alt="" style="width: 50px;" class="m-2">
-  <a class="nav-link active" href="/">
+  <a class="nav-link {{#ifCond route 'index'}}active{{/ifCond}}" href="/">
     <i class="fa-solid fa-house-chimney-window"></i>&nbsp;&nbsp;首頁
   </a>
-  <a class="nav-link" href="/users/{{user.id}}">
+  <a class="nav-link {{#ifCond route 'personal-info'}}active{{/ifCond}}" href="/users/{{user.id}}">
     <i class="fa-solid fa-user"></i>&nbsp;&nbsp;個人資料
   </a>
-  <a class="nav-link mb-3" herf="/users/{{user.id}}/setting">
+  <a class="nav-link mb-3 {{#ifCond route 'setting'}}active{{/ifCond}}" herf="/users/{{user.id}}/setting">
     <i class="fa-solid fa-gear"></i>&nbsp;&nbsp;設定
   </a>
   <button class="btn btn-brand radius50" data-bs-toggle="modal" data-bs-target="#post-tweet">
