@@ -4,10 +4,14 @@ const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated, authenticatedAdmin } = require('../middleware/auth')
 const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
+const apiController = require('../controllers/api-controller')
 const followController = require('../controllers/follow-controller')
+const replyController = require('../controllers/reply-controller')
+
 const passport = require('../config/passport')
 const admin = require('./modules/admin')
 const user = require('./modules/user')
+const upload = require('../middleware/multer')
 
 
 router.get('/signin', userController.signInPage)
@@ -20,10 +24,16 @@ router.post('/tweets/:id/unlike', authenticated, tweetController.removeLike)
 router.get('/followships/top10', authenticated, followController.getTopFollowers)
 router.delete('/followships/:id', authenticated, followController.removeFollow)
 router.post('/followships', authenticated, followController.addFollow)
+
+router.get('/tweets/:id/replies', authenticated, replyController.getReplies)
+router.post('/tweets/:id/replies', authenticated, replyController.postReply)
+
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
+router.get('/api/users/:id', authenticated, apiController.renderEditPage)
+router.post('/api/users/:id', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), authenticated, apiController.putEditPage)
 router.use('/admin', admin)
-router.use('/users', user)
+router.use('/users', authenticated, user)
 router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
 

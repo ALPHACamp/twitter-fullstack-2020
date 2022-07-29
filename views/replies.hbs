@@ -1,0 +1,161 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+    {{> left-side}}
+    <div class="main col-6">
+      <div class="home-page font-lg-dark">
+        <a href="/tweets">推文</a>
+      </div>
+      <div class="hr-line"></div>
+
+      {{!-- 推文區塊 --}}
+
+      <div class="reply-tweet-card">
+        <div class="reply-main-tweet">
+          <div class="reply-main-user">
+            <a href="/users/{{tweet.User.id}}/tweets">
+              <img class="reply-main-avatar" src="{{tweet.User.avatar}}" alt="avatar" style="width:50px; ">
+            </a>
+            <div>
+              <span class="font-name">{{tweet.User.name}}</span>
+              <span class="font-account">@{{tweet.User.account}}</span>
+            </div>
+          </div>
+
+          <div class="reply-main-content">
+            <p>
+              {{tweet.description}}
+            </p>
+          </div>
+          <div class="reply-main-time">
+            <p>{{normalTimeForm tweet.createdAt}}</p>
+          </div>
+        </div>
+
+        <div class="reply-nums-likes">
+          <div class="reply-nums">{{replies.length}} 回覆</div>
+          <div class="replu-likes">{{#if tweet.Likes}}{{tweet.Likes.length}}{{else}}0{{/if}}喜歡次數</div>
+          {{!-- 這邊可能要修改邏輯 --}}
+        </div>
+        <div class="reply-line" style="top:265px"></div>
+        <div class="reply-icon-part">
+          {{!-- <form action="/tweets/{{tweet.id}}/replies" method="POST"> --}}
+            <div class="speech-bubble">
+              <button type="submit">
+                <a href="" data-bs-toggle="modal" data-bs-target="#replyInputModatl">
+                  <img src="https://upload.cc/i1/2022/07/26/rKCiDo.png" alt="reply"
+                    style="width: 30px;height:30px;background-color:#FFFFFF">
+                </a>
+              </button>
+            </div>
+            {{!--
+          </form> --}}
+
+          {{#if tweet.Likes.id}}
+          <form action="/tweets/{{tweet.id}}/unlike" method="POST">
+            <div class="speech-bubble">
+              <button type="submit">
+
+                <img src="/images/icons/like.png" alt="reply" style="width: 30px;height:30px;background-color:#FFFFFF">
+
+              </button>
+            </div>
+          </form>
+          {{else}}
+          <form action="/tweets/{{tweet.id}}/like" method="POST">
+            <div class="speech-bubble">
+              <button type="submit">
+
+                <img src="/images/icons/like-w.png" alt="reply"
+                  style="width: 30px;height:30px;background-color:#FFFFFF">
+
+              </button>
+            </div>
+          </form>
+          {{/if}}
+        </div>
+        <div class="reply-line" style="top:340px"></div>
+      </div>
+
+      {{#each replies}}
+
+      <div class="replier-box">
+        <div class="replier-avatar">
+          <img class="reply-main-avatar" src="{{this.User.avatar}}" alt="avatar"
+            style="width:50px; height:50px;border-radius:50%">
+        </div>
+        <div class="replier-info-box">
+          <div class="replier-name-box">
+            <div class="replier-name">
+              <span class="font-name">{{this.User.name}}</span>
+              <span class="font-account" style="margin-left: 5px;">@{{this.User.account}} - {{relativeTimeFromNow
+                this.createdAt}}</span>
+            </div>
+          </div>
+          <div class="replier-target">
+            <span>回覆給</span>
+            <span style="margin-left:3px; color:#FF6600">@{{this.Tweet.User.account}}</span>
+          </div>
+
+          <div class="replier-text">
+            <p>{{this.comment}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reply-line" style="margin-top:15px"></div>
+
+      {{/each}}
+
+
+
+
+
+
+
+
+    </div>
+    {{> right-side}}
+  </div>
+</div>
+
+{{!-- Modal --}}
+
+<div class="modal fade" id="replyInputModatl" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="height:500px">
+      <div class="modal-header" style=" margin:0px">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body row" style=" margin-top:0px; top:0px">
+
+        <div class="col-2 " style="height:200px">
+          <img src="{{tweet.User.avatar}}" class="rounded-circle" style="width:50px;height:50px">
+        </div>
+        <div class="col px-0" style="max-width: 80%;height:200px">
+          <span class="fw-bold fs-6">{{tweet.User.name}}</span><small>@{{tweet.User.account}} ‧
+          </small><span>{{relativeTimeFromNow tweet.updatedAt}}</span>
+          <br />
+          <p class="my-2" style="word-wrap: break-word; word-break: normal;">{{tweet.description}}</p>
+          <small>回覆給<span style="color:#FF6600">@{{tweet.User.account}}</span></small>
+        </div>
+
+        <form action="/tweets/{{tweet.id}}/replies" method="POST" style="border-top:1px solid #E6ECF0 ;">
+          <div class="row mt-3">
+            <div class="col-2 me-0">
+              <img src="{{user.avatar}}" class="rounded-circle" style="width:50px;height:50px">
+            </div>
+            <div class="col mx-0 px-0">
+              <input name="comment" class="border-0 mt-2 mx-0 px-0"
+                style="width:95%; border: none;outline: none;resize:none" placeholder="推你的回覆" id="floatingTextarea2"
+                rows="4" maxlength="140" required></input>
+            </div>
+          </div>
+          <div class="text-end">
+            <button type="submit" class="btn"
+              style="background-color:#FF6600;border-radius: 50px;color:white">回覆</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

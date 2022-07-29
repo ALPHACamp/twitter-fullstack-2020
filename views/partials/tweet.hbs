@@ -7,10 +7,13 @@
     <span class="font-account">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</span>
   </a>
   <div class="text-box">
-    <span>{{#ifCond route 'tweets'}}{{this.description}}{{/ifCond}}
+
+    <span>
+      {{#ifCond route 'tweets'}}{{this.description}}{{/ifCond}}
       {{#ifCond route 'replies'}}{{this.comment}}{{/ifCond}}
       {{#ifCond route 'likes'}}{{this.Tweet.description}}{{/ifCond}}
-      <form action="/tweets/{{this.id}}/like" method="POST">
+      {{#ifCond route 'tweets'}}
+      <form action="/tweets/{{this.id}}/replies" method="GET">
         <div class="speech-bubble">
           <button type="submit">
             <img src="/images/icons/speech-bubble.png" alt="reply">
@@ -18,7 +21,6 @@
           <div class="font-account">50</div>
         </div>
       </form>
-
       {{#if this.Likes.id}}
       <form action="/tweets/{{this.id}}/unlike" method="POST">
         <div class="like-w">
@@ -38,6 +40,17 @@
         </div>
       </form>
       {{/if}}
+
+
+      {{/ifCond}}
+
+
+
+      {{#ifCond route 'replies'}}
+
+      {{/ifCond}}
+
+
 
     </span>
   </div>

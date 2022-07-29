@@ -1,6 +1,6 @@
 // admin頁面各種 signin/ getuser/ gettweet/ deletetweet/ logout
 const { User, Tweet, Like, Reply } = require('../models')
-
+const helpers = require('../_helpers')
 const adminController = {
   signInPage: (req, res) => {
     res.render('admin/signin')

@@ -3,6 +3,7 @@ const relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
 module.exports = {
   relativeTimeFromNow: a => dayjs(a).fromNow(),
+  normalTimeForm: a => dayjs(a).format('YYYY/MM/DD-A h:m'),
   ifCond: function (a, b, options) {
     return a === b ? options.fn(this) : options.inverse(this)
   }

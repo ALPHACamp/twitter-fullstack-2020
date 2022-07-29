@@ -174,7 +174,7 @@ const userController = {
     try {
       const user = helpers.getUser(req)
       const likes = await Like.findAll({
-        include: [User, Tweet],
+        include: User,
         order: [
           ['created_at', 'DESC']
         ],
@@ -191,8 +191,10 @@ const userController = {
   getPersonalReplies: async (req, res, next) => {
     try {
       const user = helpers.getUser(req)
+
       const UserId = helpers.getUser(req).id
       const replies = await Reply.findAll({
+
         include: User,
         where: {
           ...UserId ? { UserId } : {}
@@ -203,6 +205,7 @@ const userController = {
         raw: true,
         nest: true
       })
+      console.log(replies)
       user.introduction = user.introduction.substring(0, 20);
       return res.render('profileReply', { replies, user })
     }
