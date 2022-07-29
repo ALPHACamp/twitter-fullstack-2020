@@ -21,20 +21,25 @@
 </div>
 {{/ifCond}}
 
-{{#ifCond role 'admin'}}
-<div class="menu" id="menu">
-  <nav class="nav flex-column justify-content-start align-items-start mt-2">
-    <i class="logo ms-2"></i>
-    <a class=" " aria-current="page" href="#">
-      123
-    </a>
-    <a class="" href="#">
-      <i class="default-user outline-home  "></i>
-    </a>
-    <a class="" href="#">
-      456
-    </a>
-    789
-  </nav>
-</div>
+{{#ifCond role "admin"}}
+  <div class="menu vh-100 col-2" id="menu">
+    <nav class="nav flex-column justify-content-start align-items-start mt-2">
+      <a href="/admin/tweets"><i class="logo ms-2 mb-2"></i></a>
+      <a
+        href="/admin/tweets"
+        class="btn border-0 ms-1 d-flex align-items-center pe-0 mb-3 {{#if tweets}}text-brand{{/if}}"
+      ><i class="{{#if tweets}}home{{else}}outline-home{{/if}} ms-2"></i><h5
+          class="mb-0 mt-1 ms-3"
+        >推文清單</h5></a>
+        <a
+        href="/admin/users"
+        class="btn border-0 ms-1 d-flex align-items-center pe-0 mb-3 {{#if users}}text-brand{{/if}}"
+      ><i class="{{#if users}}user{{else}}outline-user{{/if}} ms-2"></i><h5
+          class="mb-0 mt-1 ms-3"
+        >使用者列表</h5></a>
+        <a class="mt-auto" href="/admin/logout">
+        <i class="default-logout"></i>
+      </a>
+    </nav>
+  </div>
 {{/ifCond}}

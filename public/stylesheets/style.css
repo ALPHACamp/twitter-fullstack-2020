@@ -84,6 +84,13 @@ button:focus {
 .avatar-sm {
   width: 3.125rem;
   height: 3.125rem;
+  object-fit: cover;
+}
+
+.admin-user-avatar {
+  width: 6.25rem;
+  height: 6.25rem;
+  object-fit: cover;
 }
 
 .user-description-container {
@@ -116,6 +123,7 @@ button:focus {
   display: inline;
   width: 10rem;
   line-height: 24px;
+  cursor: pointer;
 }
 
 .user-account {
