@@ -72,6 +72,7 @@ const tweetController = {
   postTweet: async (req, res, next) => {
     try {
       const UserId = helpers.getUser(req).id
+      const userAvatar = req.user.avatar
       if (!UserId) {
         return res.redirect(302, '/signin')
       }
@@ -80,17 +81,15 @@ const tweetController = {
       if (description.length > 140) {
         return res.redirect(302, 'back')
       }
-      await Tweet.create({ description, UserId })
+      await Tweet.create({ description, UserId, userAvatar })
       res.redirect('/tweets')
     } catch (err) {
-      console.log(err)
       next(err)
     }
   },
   getTweets: async (req, res, next) => {
     try {
       const currentUser = helpers.getUser(req)
-
       let topUser = await User.findAll({
         include: [{ model: User, as: 'Followers' }]
       })
@@ -107,7 +106,8 @@ const tweetController = {
         attributes: ['id', 'description', 'createdAt'],
         include: [
           { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
-          { model: Reply, attributes: ['id'] }
+          { model: Reply, attributes: ['id'] },
+          { model: Like, attributes: ['id'] }
         ]
       })
       const likedTweetsId = req.user?.Likes

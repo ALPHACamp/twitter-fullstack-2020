@@ -5,19 +5,19 @@
     </div>
     {{#each topUser}}
     <div class="user-container d-flex m-3">
-      <img src="https://i.imgur.com/vYhPi3M.jpeg" alt="" class="avatar-sm rounded-pill">
+      <img src="{{this.avatar}}" alt="" class="avatar-sm rounded-pill">
       <div class="follow-list-user-name-account ms-2 mb-2 d-flex flex-column flex-grow-1 justify-content-start align-items-start">
         <h6 class="user-name fw-bold fs-5 text-start mb-0 w-25">{{this.name}}</h6>
         <p class="user-account fw-normal fs-6 mb-0 w-25">@{{this.account}}</p>
       </div>
       {{#if this.isFollowed}}
-      <form action="http://localhost:3000/followships" method="POST" style="display:inline" class="d-flex justify-content-center ms-2">
+      <form action="http://localhost:3000/followships" method="POST" style="display:inline" class="follow-form d-flex justify-content-center ms-2">
       <input type="hidden" value="{{this.id}}" name="id">
         <button class="following-btn rounded-pill" type="submit">正在跟隨</button>
       </form>
       {{else}}
       <form action="http://localhost:3000/followships" method="POST" style="display:inline"
-        class="d-flex justify-content-center ms-2">
+        class="follow-form d-flex justify-content-center ms-2">
         <input type="hidden" value="{{this.id}}" name="id">
         <button class="follow-btn rounded-pill" type="submit">跟隨</button>
       </form>

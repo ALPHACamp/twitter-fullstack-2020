@@ -186,13 +186,13 @@ i.back:hover{
     filter: var(--base-filter);
 }
 i.close{
-    background-image: url('./svgs/outline-close.svg');
-    width: calc(var(--base-size) * 1.5);
-    height: calc(var(--base-size) * 1.5);
+    background-image: url('./svgs/close.svg');
+    width: calc(var(--base-size) * 0.938);
+    height: calc(var(--base-size) * 0.938);
     transition: filter 0.2s;
 }
 i.close:hover{
-    filter: var(--error-filter);
+    filter: var(--base-filter);
 }
 i.photo{
     background-image: url('./svgs/outline-photo.svg');

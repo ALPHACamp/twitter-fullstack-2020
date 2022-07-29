@@ -1,25 +1,24 @@
-{{#ifCond role "user"}}
-  <div class="menu" id="menu">
-    <nav
-      class="nav d-flex flex-column justify-content-start align-items-start mt-2"
-    >
-      <i class="logo ms-2"></i>
-      <a class="" aria-current="page" href="#">
-        <i class="active-index"></i>
-      </a>
-      <a class="" href="#">
-        <i class="default-user"></i>
-      </a>
-      <a class="" href="#">
-        <i class="default-setting"></i>
-      </a>
-      <div class="btn btn-brand rounded-pill border-0 w-100">推文</div>
-      <div class="flex-fill"></div>
-      <a class="" href="#">
-        <i class="default-logout"></i>
-      </a>
-    </nav>
-  </div>
+{{#ifCond role 'user'}}
+<div class="menu" id="menu">
+  <nav class="nav d-flex flex-column justify-content-start align-items-start mt-2">
+    <a href="/"><i class="logo ms-2"></i></a>
+    <a aria-current="page" href="/">
+      <i class="active-index"></i>
+    </a>
+    <a href="/users/{{currentUser.id}}/tweets">
+      <i class="default-user"></i>
+    </a>
+    <a href="/users/{{currentUser.id}}/setting">
+      <i class="default-setting"></i>
+    </a>
+    <button class="btn btn-brand rounded-pill border-0 w-100" data-bs-toggle="modal"
+      data-bs-target="#sendTweetBtn">推文</button>
+    <div class="flex-fill"></div>
+    <a class="" href="/logout">
+      <i class="default-logout"></i>
+    </a>
+  </nav>
+</div>
 {{/ifCond}}
 
 {{#ifCond role "admin"}}

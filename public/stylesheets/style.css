@@ -1,8 +1,14 @@
+textarea:focus,
+input:focus,
+button:focus {
+  outline: 0;
+}
+
 .body-container {
   position: fixed;
   height: 100%;
   left: 50%;
-  margin-left: -565px;
+  margin-left: -510px;
   display: flex;
   justify-content: center;
   flex-wrap: nowrap;
@@ -18,6 +24,11 @@
   height: 100%;
 }
 
+.window-description-input {
+  resize: none;
+  height: 150px;
+}
+
 /* center-part */
 
 .center-part {
@@ -30,6 +41,30 @@
 .tweet-container {
   height: 100%;
   overflow-y: scroll;
+}
+
+.name-link {
+  color: #171725;
+  text-decoration: none;
+}
+
+.name-link:hover {
+  color: #6C757D;
+  text-decoration: none;
+}
+
+.account-link {
+  text-decoration: none;
+}
+
+.reply-btn {
+  border: 0;
+  background-color: white;
+}
+
+.like-submit-btn {
+  border: 0;
+  background-color: white;
 }
 
 .scrollbar {
@@ -62,14 +97,14 @@
   max-width: 90%;
 }
 
-
 .send-button {
   width: 5rem;
 }
 
-.comment-input {
-  resize: none
+.description-input {
+  resize: none;
 }
+
 
 .diver {
   padding: 0 13px 0 13px;
@@ -98,7 +133,7 @@
   line-height: 24px;
 }
 
-.comment-like-btn-container {
+.description-like-btn-container {
   display: flex;
   align-items: center;
 }
@@ -166,4 +201,32 @@
 
 .follow-input {
   display: none;
+}
+
+/* reply modal */
+.connect-line {
+  height: 100%;
+  width: 6px;
+  background-color: #6C757D;
+}
+
+.modal-description-container {
+  position: relative;
+  top: 10px;
+  left: -40px;
+  border-left: 3px solid #CCD6DD;
+  padding-left: 40px;
+  max-width: 85%;
+}
+
+.modal-avatar-container {
+  z-index: 1;
+}
+
+#modal-user-avatar {
+  margin-bottom: 30px solid white;
+}
+
+.modal {
+  z-index: 1;
 }

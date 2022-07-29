@@ -8,14 +8,14 @@
       </div>
     </div>
     <div class="tweet-input ms-3">
-      <form action="" class="">
+      <form action="/tweets" method="POST">
         <div class="d-flex flex-wrap mt-3">
           <div class="me-1">
-            <img id="user-avatar" src="{{User.avatar}}" alt="" class="avatar-sm rounded-pill">
+            <img src="{{currentUser.avatar}}" alt="" class="avatar-sm rounded-pill">
           </div>
-          <textarea class="comment-input w-auto border border-0 ms-1 mb-1" name="comment-input" id="comment-input"
+          <textarea class="description-input w-auto border border-0 ms-1 mb-1" name="description" id="description"
             cols="65" rows="3" placeholder="有什麼新鮮事？"></textarea>
-          <div class="send-button btn btn-brand rounded-pill px-3 ms-auto mb-3 me-3">推文</div>
+          <button type="submit" class="send-button btn btn-brand rounded-pill px-3 ms-auto mb-3 me-3">推文</button>
         </div>
       </form>
     </div>
@@ -23,36 +23,47 @@
     {{!-- 推文卡片 --}}
     <div id="tweets-container" class="tweet-container scrollbar">
       {{#each tweets}}
-      <div class="tweet-card ms-3">
-        <div class="d-flex flex-wrap mt-3">
+      <div class="tweet-card border-bottom border-1">
+        <div class="d-flex flex-wrap ms-3 mt-3">
           <div class="avatar-container me-1">
-            <img src="{{this.User.avatar}}" alt="avatar" id="avatar-{{this.id}}" class="avatar-sm rounded-pill">
+            <a href="/users/{{this.User.id}}/tweets">
+              <img src="{{this.User.avatar}}" alt="" class="avatar-sm rounded-pill" id="tweet-avatar-{{this.User.id}}">
+            </a>
           </div>
           <div class="user-description-container d-flex flex-column text-start ms-1">
             <div class="user-name-account mb-2">
-              <h6 class="user-name fw-bold fs-5" id="name-{{this.id}}">{{this.User.name}}</h6>
-              <small class="user-account fw-normal" id="account-{{this.id}}">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</small>
+              <a href="/users/{{this.User.id}}/tweets" class="name-link">
+                <h6 class="user-name fw-bold fs-5" id="tweet-name-{{this.User.id}}">{{this.User.name}}</h6>
+              </a>
+              <a href="/users/{{this.User.id}}/tweets" class="account-link">
+                <span class="user-account fw-normal fs-6" id="tweet-account-{{this.User.id}}">@{{this.User.account}}</span>
+              </a>
+              <span class="fw-normal fs-6" id="tweet-time-{{this.id}}">・{{relativeTimeFromNow this.createdAt}}</span>
             </div>
             <p class="description me-4" id="description-{{this.id}}">{{this.description}}</p>
             <div class="description-like-btn-container mb-3">
-              <button class="border border-0 bg-white btn-reply" type="button" data-id="{{this.id}}"  data-bs-toggle="modal" data-bs-target="#reply-model"><i class="reply"></i></button>
-              <p class="count ms-2">{{this.Replies.length}}</p>
+              <button class="reply-btn d-flex align-items-center" data-bs-toggle="modal"
+                data-bs-target="#reply-modal-{{this.id}}" data-tweetid="{{this.id}}"
+                  data-userid="{{this.User.id}}">
+                <i class="reply" data-bs-toggle="modal" data-bs-target="#replyTweetBtn" ></i>
+                <span class="reply-count ms-2">{{this.Replies.length}}</span>
+              </button>
               {{#if this.isLiked}}
-              <form class="form-like" action="http://localhost:3000/tweets/{{this.id}}/unlike" method="POST"
-                style="display:inline">
-                <button class="border border-0 bg-white" type="submit"><i class="like ms-5"></i></button>
-              </form>
+              <button type="button" class="d-flex align-items-center like-submit-btn liked" data-tweetid="{{this.id}}">
+                <i class="like"></i>
+                <span class="like-count ms-2">{{ this.Likes.length}}</span>
+              </button>
               {{else}}
-              <form action="http://localhost:3000/tweets/{{this.id}}/like" method="POST" style="display:inline">
-                <button class="border border-0 bg-white" type="submit" style="display:inline"><i
-                    class="outline-like ms-5"></i></button>
-              </form>
+              <button type="button" class="d-flex align-items-center like-submit-btn" data-tweetid="{{this.id}}">
+                <i class="like outline-like"></i>
+                <span class="like-count ms-2">{{ this.Likes.length}}</span>
+              </button>
               {{/if}}
-              <p class="count ms-2"></p>
             </div>
           </div>
         </div>
       </div>
+      {{> reply-modal tweet=this user=../currentUser}}
       {{/each}}
     </div>
     {{!-- 推文卡片結束 --}}
