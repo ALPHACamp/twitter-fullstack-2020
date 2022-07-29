@@ -15,7 +15,7 @@
         </a>
       </div>
       <div class="name">
-        <h5>{{targetUser.name}}</h5>
+        <h5 id="header-name">{{targetUser.name}}</h5>
         <span>{{tweetsLength}} 推文</span>
       </div>
     </div>
@@ -69,6 +69,10 @@
           })
           
           saveBtn.addEventListener('click', () => {
+            if (nameInput.value.length > 50 || introductionInput.value.length > 160) {
+              console.log(nameInput.value)
+              return alert('字數超出上限！')
+            }
             const data = {
               cover: coverInput.src,
               avatar: avatarInput.src,
@@ -77,11 +81,7 @@
             }
             axios.post('/api/users/' + {{ user.id }}, data)
             .then(response => {
-              document.querySelector('#profile-cover').src = data.cover
-              document.querySelector('#profile-avatar').src = data.avatar
-              document.querySelector('#profile-name').innerText = data.name
-              document.querySelector('#profile-introduction').innerText = data.introduction
-              myModal.hide()
+              history.go(0)
             })
             .catch(err => console.warn(err))
           })
