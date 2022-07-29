@@ -8,11 +8,11 @@ const replyController = require('../controllers/replyController')
 const followshipController = require('../controllers/followshipController')
 const userController = require('../controllers/user-controller')
 const { generalErrorHandler } = require('../middleware/error-handler')
-const { authenticated } = require('../middleware/auth')
+const { authenticated, authenticatedLimit } = require('../middleware/auth')
 const { getRecommendedUsers } = require('../middleware/recommendedUser')
 
 router.use('/admin', admin)
-router.use('/api', api)
+router.use('/api', authenticatedLimit, api)
 
 router.post('/tweets/:tweet_id/replies', authenticated, replyController.postReply)
 router.post('/tweets/:tweet_id/unlike', authenticated, tweetController.postUnlike)
