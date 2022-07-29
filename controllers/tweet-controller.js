@@ -117,11 +117,11 @@ const tweetController = {
         ...tweets.toJSON(),
         isLiked: likedTweetsId.includes(tweets.id)
       }))
-      // res.json(tweets)
+      // res.json(tweets).
       res.render('tweets', {
         tweets: data,
         role: currentUser.role,
-        User: currentUser,
+        currentUser,
         topUser
       })
       // res.json({ status: 'success', tweets: data })
