@@ -108,14 +108,28 @@ const userController = {
   },
   getUserTweets: async (req, res, next) => {
     try {
+      const currentUser = helpers.getUser(req)
       const userId = Number(req.params.id)
+      let topUser = await User.findAll({
+        include: [{ model: User, as: 'Followers' }]
+      })
+      topUser = topUser
+        .map(user => ({
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+          isFollowed: currentUser.Followings.some(f => f.id === user.id)
+        }))
+        .sort((a, b) => b.followerCount - a.followerCount)
       const userTweets = await Tweet.findAll({
         where: { user_id: userId },
         raw: true
       })
-      userTweets[0]
-        ? res.json({ status: 'success', data: userTweets })
-        : res.json({ status: 'success', data: null })
+      res.render('users/user-tweets', {
+        tweets: userTweets,
+        role: currentUser.role,
+        currentUser,
+        topUser
+      })
     } catch (err) {
       next(err)
     }
@@ -126,20 +140,18 @@ const userController = {
       const user = await User.findByPk(userId, {
         include: [{ model: Like, include: Tweet }]
       })
-      user.Likes[0]
-        ? res.json({ status: 'success', data: user.Likes })
-        : res.json({ status: 'success', data: null })
+      user.Likes[0] ? res.json({ status: 'success', data: user.Likes }) : res.json({ status: 'success', data: null })
     } catch (err) {
       next(err)
     }
   },
-  getUserProfile: async (req, res, next) => {
-    try {
-      res.render('settings')
-    } catch (err) {
-      next(err)
-    }
-  },
+  // getUserProfile: async (req, res, next) => {
+  //   try {
+  //     res.render('settings')
+  //   } catch (err) {
+  //     next(err)
+  //   }
+  // },
   postFollow: async (req, res, next) => {
     try {
       const UserId = Number(helpers.getUser(req).id)
@@ -193,19 +205,7 @@ const userController = {
   },
   getSettingPage: async (req, res, next) => {
     try {
-      const currentUserId = Number(helpers.getUser(req).id)
-      const userId = Number(req.params.id)
-      if (currentUserId !== userId) {
-        return res.status(200).json({
-          status: 'error',
-          message: "Can not edit other user's account!"
-        })
-      }
-      const existUser = await User.findByPk(userId, { raw: true })
-      if (!existUser) throw new Error("Account didn't exist!")
-      const name = existUser.name
-      // return res.render('settings', { existUser })
-      return res.json({ status: 'success', existUser, name })
+      res.render('settings')
     } catch (err) {
       next(err)
     }

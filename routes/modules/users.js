@@ -9,6 +9,6 @@ router.get('/:id/setting', userController.getSettingPage)
 router.get('/:id/tweets', userController.getUserTweets)
 router.get('/topUsers', userController.getTopUser)
 router.get('/:id/likes', userController.getUserLikes)
-router.get('/:id', userController.getUserProfile)
+// router.get('/:id', userController.getUserProfile)
 
 module.exports = router
