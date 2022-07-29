@@ -1,0 +1,37 @@
+<div class="body-container text-center">
+  {{> side-menu }}
+  {{!-- 中央部分 --}}
+  <div class="center-part border" id="center-part">
+    <div class="text-index border-bottom" id="text-index">
+      <div class="user-tweets-header text-start ms-3 mt-4 mb-3 d-flex align-items-center ">
+        <i class="back"></i>
+        <div class="index-name-wrapper ms-3">
+          <h4 class="fw-bold index-user-name mb-0">{{user.name}}</h4>
+          <span class="count-tweet text-black-50 fw-bold fs-6">{{user.Tweets.length}} 推文</span>
+        </div>
+
+      </div>
+    </div>
+    {{> follow-tabs route='followings'}}
+    <div class="scroll-part scrollbar">
+      {{!-- 追隨卡片 --}}
+      <div class="follow-container">
+        {{#each Followings}}
+        <div class="follow-card">
+          <div class="avatar-container me-1">
+            <a href="/users/{{this.User.id}}/tweets">
+              <img src="{{this.User.avatar}}" alt="" class="avatar-sm rounded-pill" id="tweet-avatar-{{this.User.id}}">
+            </a>
+          </div>
+          <div class="reply-user-name"></div>
+          <button class="following-btn rounded-pill" data-userid="{{this.id}}" type="submit">正在跟隨</button>
+          <div class="reply-content fw-400"></div>
+        </div>
+        {{/each}}
+      </div>
+      {{!-- 推文卡片結束 --}}
+    </div>
+  </div>
+  {{!-- 中央部分結束 --}}
+  {{> recommend-follow }}
+</div>

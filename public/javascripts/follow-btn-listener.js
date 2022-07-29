@@ -1,0 +1,1 @@
+await axios.post('https://testapi.org/post', { id: 4 })
