@@ -41,11 +41,11 @@ body {
   min-width: 300px;
   width: 640px;
   padding: 0 0 0 0;
+  overflow-y: scroll;
 }
 
 .tweet-container {
   height: 75%;
-  overflow-y: scroll;
 }
 
 .name-link {
@@ -134,12 +134,14 @@ body {
   line-height: 24px;
 }
 
-.description-link,.back-link {
+.description-link,
+.back-link {
   text-decoration: none;
   color: #171725;
 }
 
-.description-link:hover,.back-link :hover {
+.description-link:hover,
+.back-link :hover {
   text-decoration: none;
   color: #171725;
 }
