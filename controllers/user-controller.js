@@ -1,6 +1,7 @@
 // 登入、註冊、登出、拿到編輯頁、送出編輯
+const assert = require('assert')
 const bcrypt = require('bcryptjs')
-const { User, Tweet, Reply, Like, Followship, sequelize } = require('../models')
+const { User, Tweet, Reply, Like, Followship } = require('../models')
 const helpers = require('../_helpers')
 
 const userController = {
@@ -53,72 +54,120 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  getSetting: (req, res, next) => {
-    const id = Number(req.params.userid)
-    return User.findByPk(id)
-      .then(user => {
-        if (!user) throw new Error('使用者不存在!')
-        if (user.id !== helpers.getUser(req).id) throw new Error('無法編輯他人資料!')
-        user = user.toJSON()
-        res.render('setting', { user })
-      }).catch(err => next(err))
+  getSetting: async (req, res, next) => {
+    try {
+      const user = await User.findByPk(Number(req.params.id), { raw: true })
+      assert(user, '使用者不存在!')
+      assert(user.id === helpers.getUser(req).id, '無法編輯他人資料!')
+      return res.render('setting', user)
+    }
+    catch (err) {
+      next(err)
+    }
   },
-  putSetting: (req, res, next) => {
-    const id = req.params.userid
-    // const { file } = req
-    const { account, name, email, password, checkPassword } = req.body
-    if (req.body.password !== req.body.checkPassword) throw new Error('Passwords do not match!')
-    if (!account || !name || !email || !password || !checkPassword) throw new Error('Please fill in every blank.')
-    if (name.length > 50) throw new Error('字數超出上限！')
-    Promise.all([
-      User.findByPk(id),
-      User.findOne({ where: { email } }),
-      User.findOne({ where: { account } })
-    ])
-      .then(([user, useremail, useraccount]) => {
-        if (!(useraccount == null)) {
-          if (useraccount.id !== user.id) {
-            throw new Error('account 已重複註冊！')
-          }
-        }
-        if (!(useremail == null)) {
-          if (useremail.id !== user.id) {
-            throw new Error('email 已重複註冊！')
-          }
-        }
-        return bcrypt.hash(req.body.password, 10)
-          .then(hash => {
-            return user.update({
-              account,
-              name,
-              email,
-              password: hash
-            })
-          })
+  putSetting: async (req, res, next) => {
+    try {
+      const user = await User.findByPk(Number(req.params.id))
+      const { account, name, email, password, checkPassword } = req.body
+      const errors = []
+      if (password !== checkPassword) {
+        errors.push({ message: '密碼與確認密碼不相符！' })
+      }
+      if (name?.length > 50 && account?.length > 50) {
+        errors.push({ message: '字數超出上限！' })
+      }
+      const userEmail = await User.findOne({
+        where: { ...email ? { email } : {} },
+        raw: true
       })
-      .then(() => {
-        req.flash('success_messages', '使用者資料編輯成功')
-        res.redirect(`/tweets`)
+      const userName = await User.findOne({
+        where: { ...name ? { name } : {} },
+        raw: true
       })
-      .catch(err => next(err))
+      const userAccount = await User.findOne({
+        where: { ...account ? { account } : {} },
+        raw: true
+      })
+      if (userEmail && userEmail.id !== user.id) {
+        errors.push({ message: 'email 已重複註冊！' })
+      }
+      if (userAccount && userAccount.id !== user.id) {
+        errors.push({ message: 'account 已重複註冊！' })
+      }
+      if (userName && userName.id !== user.id) {
+        errors.push({ message: 'name 已重複註冊！' })
+      }
+      if (errors.length) {
+        return res.render('setting', {
+          errors,
+          account,
+          name,
+          email,
+          password,
+          checkPassword
+        })
+      }
+      const hash = password ? await bcrypt.hash(password, 10) : ''
+      const editedUser = await user.update({
+        account,
+        name,
+        email,
+        password: hash
+      })
+      req.flash('success_messages', '使用者資料編輯成功')
+      return res.redirect(`/tweets`)
+    }
+    catch (err) {
+      next(err)
+    }
   },
   getPersonalTweets: async (req, res, next) => {
     try {
-      const user = helpers.getUser(req)
-      const UserId = helpers.getUser(req).id
-      const tweets = await Tweet.findAll({
-        include: User,
-        where: {
-          ...UserId ? { UserId } : {}
-        },
-        order: [
-          ['created_at', 'DESC']
-        ],
-        raw: true,
-        nest: true
-      })
-      // user.introduction = user.introduction.substring(0, 20);
-      return res.render('profile', { tweets, user })
+      const user = helpers.getUser(req.params)
+      const personal = await User.findByPk(Number(req.params.id))
+      if (personal.id === user.id) {
+        const tweets = await Tweet.findAll({
+          where: {
+            UserId: user.id
+          },
+          include: [
+            User
+          ],
+          order: [
+            ['created_at', 'DESC'],
+            ['id', 'ASC']
+          ],
+          raw: true,
+          nest: true
+        })
+        const likedTweetsId = req.user?.likedTweets.map(tweet => tweet.id)
+        const tweetsList = tweets.map(tweet => ({
+          ...tweet,
+          isLiked: likedTweetsId?.includes(tweet.id)
+        }))
+        return res.render('tweets', { tweetsList, user })
+      } else {
+        const tweets = await Tweet.findAll({
+          where: {
+            UserId: personal.id
+          },
+          include: [
+            User
+          ],
+          order: [
+            ['created_at', 'DESC'],
+            ['id', 'ASC']
+          ],
+          raw: true,
+          nest: true
+        })
+        const likedTweetsId = req.user?.likedTweets.map(tweet => tweet.id)
+        const tweetsList = tweets.map(tweet => ({
+          ...tweet,
+          isLiked: likedTweetsId?.includes(tweet.id)
+        }))
+        return res.render('tweets', { tweetsList, user })
+      }
     }
     catch (err) {
       next(err)
@@ -135,7 +184,6 @@ const userController = {
         raw: true,
         nest: true
       })
-      user.introduction = user.introduction.substring(0, 20);
       return res.render('personfollow', { tweets, user })
     }
     catch (err) {
@@ -181,7 +229,6 @@ const userController = {
         raw: true,
         nest: true
       })
-      user.introduction = user.introduction.substring(0, 20);
       return res.render('profileLike', { likes, user })
     }
     catch (err) {
