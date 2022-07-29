@@ -8,7 +8,7 @@ const apiController = {
         if (!data) throw new Error("user didn't exist")
         const user = data.toJSON()
         delete user.password
-        res.json({ status: 'success', data: user })
+        res.json({ status: 'success', ...user })
       })
       .catch(err => next(err))
   },
@@ -18,10 +18,12 @@ const apiController = {
     User.findByPk(id)
       .then(data => {
         if (!data) throw new Error("user didn't exist")
-        data.update({ cover, avatar, name, introduction })
-        const user = data.toJSON()
+        return data.update({ cover, avatar, name, introduction })
+      })
+      .then(newData => {
+        const user = newData.toJSON()
         delete user.password
-        res.json({ status: 'success', data: user })
+        res.json({ status: 'success', ...user })
       })
       .catch(err => next(err))
   }

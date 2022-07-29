@@ -12,7 +12,7 @@ const { authenticated, authenticatedLimit } = require('../middleware/auth')
 const { getRecommendedUsers } = require('../middleware/recommendedUser')
 
 router.use('/admin', admin)
-router.use('/api', authenticatedLimit, api)
+router.use('/api', authenticated, api)
 
 router.post('/tweets/:tweet_id/replies', authenticated, replyController.postReply)
 router.post('/tweets/:tweet_id/unlike', authenticated, tweetController.postUnlike)
