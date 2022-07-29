@@ -42,7 +42,7 @@
             <div class="head d-flex">
               <a class="name" href="/users/:{{this.User.id}}">{{this.User.name}}</a>
               <a class="account" href="/users/:{{this.User.id}}">@{{this.User.account}}</a>
-              <div class="time">•3小時</div>
+              <div class="time">•{{momentNow this.createdAt}}</div>
             </div>
             <a href="/tweets/{{this.id}}/replies">
               <div class="content">
@@ -94,7 +94,7 @@
                       <div class="head d-flex" style="position:relative;top:10px;">
                         {{this.User.name}}&nbsp;&nbsp;
                         <p class="color-secondaryColor">@{{this.User.account}}</p>
-                        <div class="time color-secondaryColor">•3小時</div>
+                        <div class="time color-secondaryColor">•{{momentNow this.createdAt}}</div>
                       </div>
                     </div>
                     <div class="content" style="position:relative; left:63px;">
