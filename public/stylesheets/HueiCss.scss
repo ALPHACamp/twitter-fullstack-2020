@@ -174,7 +174,7 @@ section#Huei-region {
 
     .list-separate-m {
       position: relative;
-      top: 70px;
+      top: 17px;
       height: 1px;
       width: 639px;
       background-color: $dark40;
@@ -185,7 +185,7 @@ section#Huei-region {
   .tweet-card {
     word-wrap: break-word;
     position: relative;
-    top: 60px;
+    top: 10px;
     left: 15px;
 
     .account {
@@ -391,4 +391,10 @@ section#Huei-region {
     color: #6C757D;
   }
 
+}
+
+tweet-vector {
+  height: 14px;
+  width: 17px;
+  border-radius: 0px;
 }

@@ -45,7 +45,7 @@ const userController = {
   },
   tweets: (req, res, next) => {
     const id = req.params.id
-    Promise.all([
+    return Promise.all([
       User.findByPk(id, {
         include: [
           { model: User, as: 'Followings' },
@@ -89,10 +89,16 @@ const userController = {
     })
     .catch(err => next(err))
   },
-  replies: (req, res) => {
+  replies: (req, res, next) => {
     const id = req.params.id
-    Promise.all([
-      User.findOne({ where: { id } }),
+    return Promise.all([
+      User.findByPk(id, {
+        include: [
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' },
+          Tweet
+        ]
+      }),
       Reply.findAll({
         where: { UserId: id },
         include: [{ model: Tweet, include: User }],
@@ -112,25 +118,36 @@ const userController = {
       .then(([targetUser, replies, followship]) => {
         if (!targetUser) throw new Error("User didn't exist")
         const user = getUser(req)
+        user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
         const users = followship
           .map(data => ({
             ...data.User.toJSON(),
-            isFollowed: user.Followings.some(u => u.id === data.followerId)
+            isFollowed: user.Followings.some(u => u.id === data.followingId)
           }))
           .slice(0, 10)
-        res.render('profile', { targetUser: targetUser.toJSON(), replies, user, users })
+        res.locals.tweetsLength = targetUser.Tweets.length
+        res.status(200).render('profile', { targetUser: targetUser.toJSON(), replies, user, users })
       })
       .catch(err => next(err))
   },
   likes: (req, res, next) => {
     const id = req.params.id
-    Promise.all([
-      User.findOne({ where: { id } }),
+    return Promise.all([
+      User.findByPk(id, {
+        include: [
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' },
+          Tweet
+        ]
+      }),
       Like.findAll({
         where: { UserId: id },
-        include: [{ model: Tweet, include: User }],
+        include: [
+          { model: Tweet, include: User },
+          { model: Tweet, include: Like },
+          { model: Tweet, include: Reply }
+        ],
         order: [['createdAt', 'desc']],
-        raw: true,
         nest: true
       }),
       Followship.findAll({
@@ -142,17 +159,28 @@ const userController = {
         order: [[sequelize.literal('count'), 'DESC']]
       })
     ])
-    .then(([targetUser, likes, followship]) => {
-      if (!targetUser) throw new Error("User didn't exist")
-      const user = getUser(req)
-      const users = followship
-        .map(data => ({
-          ...data.User.toJSON(),
-          isFollowed: user.Followings.some(u => u.id === data.followerId)
-        }))
-        .slice(0, 10)
-      res.render('profile', { targetUser: targetUser.toJSON(), likes, user, users })})},
-
+      .then(([targetUser, likes, followship]) => {
+        if (!targetUser) throw new Error("User didn't exist")
+        const user = getUser(req)
+        user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        const users = followship
+          .map(data => ({
+            ...data.User.toJSON(),
+            isFollowed: user.Followings.some(u => u.id === data.followingId)
+          }))
+          .slice(0, 10)
+        const likesData = likes
+          .map(l => ({
+            ...l.toJSON(),
+            likedCount: l.Tweet.Likes.length,
+            repliedCount: l.Tweet.Replies.length,
+            isLiked: l.Tweet.Likes.some(like => like.UserId === user.id)
+          }))
+        res.locals.tweetsLength = targetUser.Tweets.length
+        res.status(200).render('profile', { targetUser: targetUser.toJSON(), likes: likesData, user, users })
+      })
+      .catch(err => next(err))
+  },
   followers: (req, res, next) => {
     const observedUserId = req.params.id
     const loginUser = getUser(req)
@@ -172,7 +200,6 @@ const userController = {
       })
       .catch(err => next(err))
   },
-
   followings: (req, res, next) => {
     const observedUserId = req.params.id
     const loginUser = getUser(req)

@@ -10,7 +10,7 @@
   <div id="profile-middle">
     <div class="header">
       <div class="coin">
-        <a href="history.back()">
+        <a href="javascript:history.back()">
           <img src="/images/vector.png" alt="vector">
         </a>
       </div>
@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="user-info">
-      <img src="{{targetUser.cover}}.jpg" alt="cover" style="width: 100%; height: 200px;">
+      <img src="{{targetUser.cover}}" alt="cover" style="width: 100%; height: 200px;">
       <div class="avatar-button">
         <img class="avatar" src="{{targetUser.avatar}}" alt="avatar">
 
@@ -44,7 +44,7 @@
         {{/ifCond}}
         
         <!-- Modal -->
-        <div class="modal fade" id="edit-profile-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="edit-profile-modal" aria-hidden="true">
           <div class="modal-dialog m-0 p-0" style="width: 634px; height: 610px;">
             <div class="modal-content" style="width: 634px; height: 610px;">
               <div class="modal-header">
@@ -58,32 +58,133 @@
                   </button>
                 </form>
               </div>
-              <div class="modal-body">
-                
+              <div class="modal-body p-0" style="width: 634px; height: 552px;">
+                <img class="cover" src="{{targetUser.cover}}" alt="cover">
+                <div class="icons">
+                  <img src="/images/camera.png" alt="camera" style="margin-right: 36px;">
+                  <img src="/images/ventor_close_2.png" alt="cancel">
+                </div>
+                <div class="avatar-icon">
+                  <div class="avatar">
+                    <img src="{{targetUser.avatar}}" alt="avatar">
+                  </div>
+                  <img class="icon" src="/images/camera.png" alt="camera" style="margin-right: 36px;">
+                </div>
+                <div class="input name-input" style="height: 54px">
+                  <label for="name">名稱</label>
+                  <input name="name" id="name" type="text" placeholder="請輸入使用者名稱" onfocus="changeFocus('name')"
+                    onblur="changeFocus('name')" oninput="counts('name')" value="{{targetUser.name}}" required>
+                  <div class="status name-status"></div>
+                  <div class="d-flex">
+                    <div class="helper name-helper"><span></span></div>
+                    <div class="count name-count"><span>{{targetUser.name.length}}/50</span></div>
+                  </div>
+                </div>
+                <div class="input" style="height: 147px">
+                  <label for="name">自我介紹</label>
+                  <textarea name="introduction" id="introduction" type="text" placeholder="請輸入使用者名稱" onfocus="changeFocus('introduction')"
+                  onblur="changeFocus('introduction')" oninput="counts('introduction')"
+                  onkeydown="if(event.keyCode == 13) return false;"
+                  style="height: 123px;">{{targetUser.introduction}}</textarea>
+                  <div class="status introduction-status"></div>
+                  <div class="d-flex">
+                    <div class="helper introduction-helper"><span></span></div>
+                    <div class="count introduction-count"><span>{{targetUser.introduction.length}}/160</span></div>
+                  </div>
+                </div>
+                <script>
+                  function changeFocus(element) {
+                    const target = document.querySelector('.' + element + '-status')
+                    if (target.classList.contains('focus')) {
+                      target.classList.remove('focus')
+                      return
+                    }
+                    target.classList.toggle('focus')
+                  }
+                  function counts(element) {
+                    let maxLength = 50
+                    if (element === 'introduction') {
+                      maxLength = 160
+                    }
+                    const counts = document.querySelector('#' + element).value.length
+                    document.querySelector('.' + element + '-count span').innerText = counts + `/${maxLength}`
+                    const status = document.querySelector('.' + element + '-status')
+                    if (status.classList.contains('focus') && counts > maxLength) {
+                      document.querySelector('.' + element + '-helper span').innerText = '字數超出上限！'
+                      status.classList.remove('focus')
+                      status.classList.toggle('warn')
+                      return
+                    }
+                    if (status.classList.contains('warn') && counts <= maxLength) {
+                      status.classList.remove('warn')
+                      status.classList.toggle('focus')
+                      document.querySelector('.element-helper span').innerText = ''
+                    }
+                  }
+                </script>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       <div class="name">
         <h5>{{targetUser.name}}</h5>
         <span>@{{targetUser.account}}</span>
       </div>
-      <span class="introduction">{{targetUser.introduction}}</span>
+      <span class="introduction" style="display: block;">{{targetUser.introduction}}</span>
       <div class="follow">
         <div style="margin-right: 20px;">
           <span class="first">{{targetUser.Followings.length}} 個</span>
-          <span class="second"><a href="/users/{{user.id}}/followings">跟隨中</a></span>
+          <span class="second"><a href="/users/{{targetUser.id}}/followings">跟隨中</a></span>
         </div>
         <div>
           <span class="first">{{targetUser.Followers.length}} 位</span>
-          <span class="second"><a href="/users/{{user.id}}/followers">跟隨者</a></span>
+          <span class="second"><a href="/users/{{targetUser.id}}/followers">跟隨者</a></span>
         </div>
       </div>
     </div>
-    {{> profile-tabs route='tweets'}}
-    {{#each tweets}}
-    <a href="">
+    {{#if tweets}}
+      {{> profile-tabs route='tweets'}}
+      <div class="scroll-container">
+      {{#each tweets}}
+      <a href="/tweets/{{this.id}}">
+        <div class="tweet">
+          <div>
+            <img class="avatar" src="{{../targetUser.avatar}}" alt="avatar">
+          </div>
+          <div class="content">
+            <div class="d-flex align-items-center" style="height: 26px;">
+              <span class="name">{{../targetUser.name}}</span>
+              <span class="account">@{{../targetUser.account}}•{{relativeTimeFromNow this.createdAt}}</span>
+            </div>
+            <div class="description">
+              {{this.description}}
+            </div>
+            <div class="footer">
+              <img src="/images/comment.png" alt="comment">
+              <span style="margin-right: 41.3px;">{{this.repliedCount}}</span>
+              {{#if isLiked}}
+              <form action="/tweets/{{this.id}}/unlike" method="POST">
+                <button type="submit"><img src="/images/redLove.png" alt="like"></button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{this.id}}/like" method="POST">
+                <button type="submit"><img src="/images/like.png" alt="like"></button>
+              </form>
+              {{/if}}
+              <span>{{this.likedCount}}</span>
+            </div>
+          </div>
+        </div>
+      </a>
+      {{/each}}
+      </div>
+    {{/if}}
+    {{#if replies}}
+    {{> profile-tabs route='replies'}}
+    <div class="scroll-container">
+      {{#each replies}}
       <div class="tweet">
         <div>
           <img class="avatar" src="{{../targetUser.avatar}}" alt="avatar">
@@ -91,25 +192,57 @@
         <div class="content">
           <div class="d-flex align-items-center" style="height: 26px;">
             <span class="name">{{../targetUser.name}}</span>
-            <span class="account">@{{../targetUser.account}}•3小時</span>
+            <span class="account">@{{../targetUser.account}}•{{relativeTimeFromNow this.createdAt}}</span>
+          </div>
+          <div class="reply-to">
+            <span class="reply">回復</span>
+            <span class="account">@{{this.Tweet.User.account}}</span>
           </div>
           <div class="description">
-            {{this.description}}
-          </div>
-          <div class="footer">
-            <img src="/images/comment.png" alt="comment">
-            <span style="margin-right: 41.3px;">{{this.repliedCount}}</span>
-            {{#if isLiked}}
-              <img src="/images/redLove.png" alt="like">
-            {{else}}
-              <img src="/images/like.png" alt="like">
-            {{/if}}
-            <span>{{this.likedCount}}</span>
+            {{this.comment}}
           </div>
         </div>
       </div>
-    </a>
-    {{/each}}
+      {{/each}}
+    </div>
+    {{/if}}
+    {{#if likes}}
+      {{> profile-tabs route='likes'}}
+      <div class="scroll-container">
+        {{#each likes}}
+        <a href="/tweets/{{this.Tweet.id}}">
+          <div class="tweet">
+            <div>
+              <img class="avatar" src="{{this.Tweet.User.avatar}}" alt="avatar">
+            </div>
+            <div class="content">
+              <div class="d-flex align-items-center" style="height: 26px;">
+                <span class="name">{{this.Tweet.User.name}}</span>
+                <span class="account">@{{this.Tweet.User.account}}•{{relativeTimeFromNow this.createdAt}}</span>
+              </div>
+              <div class="description">
+                {{this.Tweet.description}}
+              </div>
+              <div class="footer">
+                <img src="/images/comment.png" alt="comment">
+                <span style="margin-right: 41.3px;">{{this.repliedCount}}</span>
+                {{#if isLiked}}
+                <form action="/tweets/{{this.Tweet.id}}/unlike" method="POST">
+                  <button type="submit"><img src="/images/redLove.png" alt="like"></button>
+                </form>
+                {{else}}
+                <form action="/tweets/{{this.Tweet.id}}/like" method="POST">
+                  <button type="submit"><img src="/images/like.png" alt="like"></button>
+                </form>
+                {{/if}}
+                <span>{{this.likedCount}}</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        {{/each}}
+      </div>
+    {{/if}}
   </div>
   
   <div id="profile-right">
