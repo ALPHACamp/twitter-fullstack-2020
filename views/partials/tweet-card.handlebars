@@ -2,14 +2,15 @@
   <td>
     <div class="d-flex flex-row justfify-content-between">
       <a href="/users/{{this.UserId}}/tweets">
-        <img src="{{this.User.avatar}}" class='rounded-circle me-2' width="50" height="50">
+        <img src="{{checkAvatar this.User.avatar}}" class='rounded-circle me-2' width="50" height="50">
       </a>
       <div class="d-flex flex-column justify-content-start flex-grow-1">
         <div class="d-flex flex-row align-items-center">
           <a href="/users/{{this.UserId}}/tweets" style="text-decoration:none;">
             <span class="fw-bold me-2" style="font-size: 16px;">{{this.User.name}}</span>
           </a>
-          <span style="color: #6C757D;font-size: 14px;">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
+          <span style="color: #6C757D;font-size: 14px;">@{{this.User.account}}．{{relativeTimeFromNow
+            this.createdAt}}</span>
         </div>
         <a href="/tweets/{{this.id}}/replies" style="color:#1C1C1C; text-decoration:none;">
           <p style="font-size: 16px;">
@@ -17,17 +18,34 @@
           </p>
         </a>
         <div class="d-flex justify-content-start flex-grow-1">
-          <div class="me-4 btn p-0" style="border: none;">
-              <img src="/images/icon-black-reply.png" data-bs-toggle="modal" data-bs-target="#tweet-reply-modal" style="width: 25px; height: 25px;">
+          <div>
+            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
+              data-bs-target="#tweet-reply-modal">
+              <i class="far fa-comment me-1" style="color: #353535; width: 25px; height: 25px;"></i>
               <span style="color: #6C757D;font-size: 14px;">{{this.replyCounts}}</span>
+            </button>
           </div>
-          <div class="me-4 btn p-0" style="border: none;">
-            <img src="/images/icon-black-unlike.png" style="width: 25px; height: 25px;">
-            <span style="color: #6C757D;font-size: 14px;">{{this.likeCounts}}</span>
+          {{#if isLiked}}
+          <div>
+            <form action="/tweets/{{ this.id }}/unlike" method="POST">
+              <button type="submit" class="btn btn-outline-light">
+                <i class="fas fa-heart me-1" style="color: red; width: 25px; height: 25px;"></i>
+                <span style="color: #6C757D;font-size: 14px;">{{this.likeCounts}}</span>
+              </button>
+            </form>
           </div>
+          {{else}}
+          <div>
+            <form action="/tweets/{{ this.id }}/like" method="POST">
+              <button type="submit" class="btn btn-outline-light">
+                <i class="far fa-heart me-1" style="color: #353535; width: 25px; height: 25px;"></i>
+                <span style="color: #6C757D;font-size: 14px;">{{this.likeCounts}}</span>
+              </button>
+            </form>
+          </div>
+          {{/if}}
         </div>
       </div>
     </div>
   </td>
 </tr>
-
