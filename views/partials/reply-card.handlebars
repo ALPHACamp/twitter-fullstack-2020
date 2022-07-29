@@ -1,0 +1,14 @@
+<div class="reply d-flex">
+  <img src="{{checkAvatar this.User.avatar}}" class="rounded-circle reply-avatar">
+  <div>
+    <div class="reply-secondary">
+      <span class="fw-bold reply-name">{{this.User.name}}</span>
+      <span>@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
+    </div>
+    <div class="reply-secondary">
+      <span>回覆</span>
+      <a href="/users/{{this.Tweet.User.id}}/tweets" class="text-decoration-none reply-account">@{{this.Tweet.User.account}}</a>
+    </div>
+    <p class="reply-comment">{{this.comment}}</p>
+  </div>
+</div>

@@ -1,6 +1,8 @@
-const { User } = require('../../models')
+const { User, Tweet, Reply, Like, sequelize } = require('../../models')
 const bcrypt = require('bcryptjs')
 const helpers = require('../../_helpers')
+
+const { isAdmin, userInfoHelper } = require('../../helpers/user-helpers')
 
 const userConroller = {
   getSignin: (req, res) => {
@@ -47,6 +49,92 @@ const userConroller = {
         res.redirect('/signin')
       })
       .catch(err => next(err))
+  },
+  getTweets: (req, res, next) => {
+    const UserId = req.params.userId
+
+    return Promise.all([
+      userInfoHelper(UserId),
+      Tweet.findAll({
+        attributes: {
+          include: [
+            [sequelize.literal('(SELECT COUNT(`id`) FROM `Replies` WHERE `TweetId` = `Tweet`.`id`)'), 'replyCounts'],
+            [sequelize.literal('(SELECT COUNT(`id`) FROM `Likes` WHERE `TweetId` = `Tweet`.`id`)'), 'likeCounts']
+          ]
+        },
+        include: [User],
+        where: { UserId },
+        order: [['createdAt', 'DESC']]
+      })
+    ])
+      .then(([user, tweets]) => {
+        if (!user || isAdmin(user)) throw new Error('使用者不存在')
+
+        user.isFollowing = req.user?.Followings.some(following => following.id === user.id)
+        tweets = tweets.map(tweet => ({
+          ...tweet.toJSON(),
+          isLiked: req.user?.Likes.some(like => like.TweetId === tweet.id)
+        }))
+
+        res.render('user', { user, tweets })
+      })
+      .catch(err => next(err))
+  },
+  getReplies: (req, res, next) => {
+    const UserId = req.params.userId
+
+    return Promise.all([
+      userInfoHelper(UserId),
+      Reply.findAll({
+        include: [
+          User,
+          { model: Tweet, include: [User] }
+        ],
+        where: { UserId },
+        order: [['createdAt', 'DESC']]
+      })
+    ])
+      .then(([user, replies]) => {
+        if (!user || isAdmin(user)) throw new Error('使用者不存在')
+
+        user.isFollowing = req.user?.Followings.some(following => following.id === user.id)
+        replies = replies.map(reply => reply.toJSON())
+
+        res.render('user', { user, replies })
+      })
+      .catch(err => next(err))
+  },
+  getLikes: (req, res, next) => {
+    const UserId = req.params.userId
+
+    return Promise.all([
+      userInfoHelper(UserId),
+      Like.findAll({
+        include: [{
+          model: Tweet,
+          attributes: {
+            include: [
+              [sequelize.literal('(SELECT COUNT(`id`) FROM `Replies` WHERE `TweetId` = `Tweet`.`id`)'), 'replyCounts'],
+              [sequelize.literal('(SELECT COUNT(`id`) FROM `Likes` WHERE `TweetId` = `Tweet`.`id`)'), 'likeCounts']
+            ]
+          },
+          include: User
+        }],
+        where: { UserId },
+        order: [['createdAt', 'DESC']]
+      })
+    ])
+      .then(([user, likes]) => {
+        if (!user || isAdmin(user)) throw new Error('使用者不存在')
+
+        user.isFollowing = req.user?.Followings.some(following => following.id === user.id)
+        const likedTweets = likes.map(like => ({
+          ...like.Tweet.toJSON(),
+          isLiked: req.user?.Likes.some(userLike => userLike.id === like.id)
+        }))
+
+        res.render('user', { user, likedTweets })
+      })
   },
   logout: (req, res) => {
     req.flash('success_messages', '登出成功')

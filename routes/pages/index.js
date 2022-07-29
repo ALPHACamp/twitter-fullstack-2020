@@ -3,6 +3,7 @@ const router = express.Router()
 const passport = require('../../config/passport')
 
 const admin = require('./modules/admin')
+const users = require('./modules/users')
 
 const adminController = require('../../controllers/pages/admin-controller')
 const userController = require('../../controllers/pages/user-controller')
@@ -16,6 +17,9 @@ router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '
 router.use('/admin', authenticatedAdmin, admin)
 
 // user route
+router.use('/users', authenticated, users)
+
+// others
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.getSignin)

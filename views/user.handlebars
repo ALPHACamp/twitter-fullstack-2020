@@ -1,0 +1,72 @@
+<div class="d-flex align-items-center user-header">
+  <a href="javascript:history.back()">
+    <img class="user-arrow" src="/images/icon-black-back.png">
+  </a>
+  <div>
+    <h5 class="fw-bold user-header-name">{{user.name}}</h5>
+    <p class="user-header-tweet">{{user.tweetCounts}}推文</p>
+  </div>
+</div>
+
+{{!-- 使用者資料 --}}
+<div class="user-card">
+  <img class="user-banner" src="{{checkBanner user.banner}}"> 
+  <div class="user-info">
+    <img src="{{checkAvatar user.avatar}}" class="rounded-circle user-avatar">
+    {{#ifCond user.id loginUser.id}}
+      <a class="text-decoration-none user-option user-edit" href="/api/users/{{user.id}}">編輯個人資料</a>
+    {{else}}
+      <div class="user-option" style="display: inline;">
+        <a class="text-decoration-none" href="#">
+          <img class="message" src="/images/icon-black-message.png">
+        </a>
+        <a class="text-decoration-none" href="#">
+          <img class="notification" src="/images/icon-black-notification.png">
+        </a>
+        {{#if user.isFollowing}}
+          <form action="/followships?_method=DELETE" method="POST" style="display: contents;">
+            <button type="submit" class="user-following">正在跟隨</button>
+          </form>
+        {{else}}
+          <form action="/followships" method="POST" style="display: contents;">
+            <button type="submit" class="user-unfollowing">跟隨</button>
+          </form>
+        {{/if}}
+      </div>
+    {{/ifCond}}
+
+    <h5 class="user-name fw-bold">{{user.name}}</h5>
+    <p class="user-account">@{{user.account}}</p>
+    <p class="user-introduction">{{user.introduction}}</p>
+    <a class="text-decoration-none user-follow" href="/users/{{user.id}}/followings">
+      <span class="user-follow-number">{{user.followingCounts}} 個</span>追隨中
+    </a>
+    <a class="text-decoration-none user-follow" href="/users/{{user.id}}/followers">
+      <span class="user-follow-number">{{user.followerCounts}} 位</span>追隨者
+    </a>
+  </div>
+</div>
+
+<ul class="d-flex mb-4 user-nav-tabs">
+  <li class="user-nav-item {{#if tweets}}active{{/if}}">
+    <a class="user-nav-link" href="/users/{{user.id}}/tweets">推文</a>
+  </li>
+  <li class="user-nav-item {{#if replies}}active{{/if}}">
+    <a class="user-nav-link" href="/users/{{user.id}}/replies">回覆</a>
+  </li>
+  <li class="user-nav-item {{#if likedTweets}}active{{/if}}">
+    <a class="user-nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
+  </li>
+</ul>
+
+{{#each tweets}}
+  {{> tweet-card}}
+{{/each}}
+
+{{#each replies}}
+  {{> reply-card}}
+{{/each}}
+
+{{#each likedTweets}}
+  {{> tweet-card}}
+{{/each}}
