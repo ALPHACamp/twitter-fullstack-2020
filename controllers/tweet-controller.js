@@ -67,19 +67,17 @@ const tweetController = {
   },
   postTweet: async (req, res, next) => {
     try {
-      const user = helpers.getUser(req)
-
-      if (!user) {
+      const UserId = helpers.getUser(req).id
+      if (!UserId) {
         return res.redirect(302, '/signin')
       }
-      const UserId = user.id
       const description = req.body.description
       if (!description.trim()) throw new Error('推文內容不可為空白')
       if (description.length > 140) {
         return res.redirect(302, 'back')
       }
       await Tweet.create({ description, UserId })
-      res.redirect('/tweets')
+      return res.redirect('/tweets')
     } catch (err) {
       next(err)
     }

@@ -15,18 +15,19 @@ body {
 .body-container {
   height: 100%;
   display: flex;
+  margin: 0 auto 0 auto;
   justify-content: center;
-  flex-wrap: wrap;
 }
 
 .menu {
   height: 100%;
-  width: 178px;
-  margin-right: 20px;
+  width: 290px;
 }
 
 .nav {
   height: 100%;
+  width: 178px;
+  margin-left: 75px;
 }
 
 .window-description-input {
@@ -41,11 +42,29 @@ body {
   min-width: 300px;
   width: 640px;
   padding: 0 0 0 0;
-  overflow-y: scroll;
 }
 
 .tweet-container {
   height: 75%;
+}
+
+.scroll-part {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.scrollbar {
+  /* padding-left: 6px; */
+}
+
+.scrollbar::-webkit-scrollbar {
+  display: none;
+  /* width: 6px; */
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  /* border-radius: 3px; */
+  /* background-color: rgba(0, 0, 0, 0.1); */
 }
 
 .name-link {
@@ -72,20 +91,6 @@ body {
   background-color: white;
 }
 
-.scrollbar {
-  /* padding-left: 6px; */
-}
-
-.scrollbar::-webkit-scrollbar {
-  display: none;
-  /* width: 6px; */
-}
-
-.scrollbar::-webkit-scrollbar-thumb {
-  /* border-radius: 3px; */
-  /* background-color: rgba(0, 0, 0, 0.1); */
-}
-
 .avatar-sm {
   width: 3.125rem;
   height: 3.125rem;
@@ -102,14 +107,27 @@ body {
   width: 5rem;
 }
 
-.description-input {
+.description-input,
+.modal-description-input,
+.side-description-input,
+.reply-description-input {
+  min-width:30px;
   resize: none;
 }
 
+#description-length,
+#modal-description-length,
+#side-description-length {
+  line-height: 22px;
+}
 
 .diver {
   padding: 0 13px 0 13px;
   border-bottom: 10px solid #E6ECF0;
+}
+
+.tweet-container {
+  height: ;
 }
 
 .user-comment-container {
@@ -146,10 +164,11 @@ body {
   color: #171725;
 }
 
-.description {
-  width: 100%;
+.description, .description-content, .modal-description {
+  max-width: 100%;
   height: 100%;
   text-decoration: none;
+  word-break: break-all;
 }
 
 
@@ -196,21 +215,30 @@ body {
 
 
 /* reply modal */
-.reply-wrapper {}
+
+.reply-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 1rem;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  transition: transform 0.4s ease-out;
+}
 
 .modal-description-container {
   position: relative;
   top: 10px;
-  left: -40px;
+  left: -35px;
   border-left: 3px solid #CCD6DD;
-  padding-left: 40px;
-  max-width: 85%;
+  padding-left: 35px;
+  max-width: 90%;
 }
 
 .modal-avatar-container {
   z-index: 1;
 }
 
-#modal-user-avatar {
-  margin-bottom: 30px solid white;
+.modal-avatar-border {
+  border-bottom: 10px solid white;
 }

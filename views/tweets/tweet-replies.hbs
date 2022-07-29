@@ -29,9 +29,13 @@
           <img src="/stylesheets/svgs/outline-reply.svg" alt="reply-icon" class="r-btn" data-tid="{{tweet.id}}" data-bs-toggle="modal" data-bs-target="#replyTweet" style="width: 25px; height:25px;">
         </button>
         {{#if isLiked}}
-          <a href="/tweets/{{tweet.id}}/unlike" data-tid="{{tweet.id}}" class="ul-btn border-0 col-2 mt-3"><img src="/stylesheets/svgs/like.svg" alt="like-icon" style="width: 25px; height:25px; filter:var(--sup5-filter)"></a>
+        <form action="/tweets/{{tweet.id}}/unlike" method="post" class="col-2 mt-3">
+          <button type="submit" data-tid="{{tweet.id}}" class="ul-btn bg-body border-0"><img src="/stylesheets/svgs/like.svg" alt="like-icon" style="width: 25px; height:25px; filter:var(--sup5-filter)"></button>
+        </form>
         {{else}}
-          <a href="/tweets/{{tweet.id}}/like" data-tid="{{tweet.id}}" class="l-btn border-0 col-2 mt-3 opacity-50"><img src="/stylesheets/svgs/outline-like.svg" alt="unlike-icon" style="width: 25px; height:25px;"></a>
+        <form action="/tweets/{{tweet.id}}/like" method="post" class="col-2 mt-3">
+          <button type="submit" data-tid="{{tweet.id}}" class="l-btn bg-body border-0 opacity-50"><img src="/stylesheets/svgs/outline-like.svg" alt="unlike-icon" style="width: 25px; height:25px;"></button>
+        </form>
         {{/if}}
       </div>
     </div>
