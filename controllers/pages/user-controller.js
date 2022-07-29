@@ -133,7 +133,8 @@ const userConroller = {
         }))
 
         res.render('user', { user, likedTweets })
-=======
+      })
+  },
   logout: (req, res) => {
     req.flash('success_messages', '登出成功')
     req.logout()
