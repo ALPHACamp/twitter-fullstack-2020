@@ -3,6 +3,7 @@ const helpers = require('../_helpers')
 // const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const { User, Tweet, Like, Followship } = require('../models')
+const { NONE } = require('sequelize')
 
 const userController = {
   signUpPage: async (req, res, next) => {
@@ -261,6 +262,26 @@ const userController = {
       const name = existUser.name
       // return res.render('settings', { existUser })
       return res.json({ status: 'success', existUser, name })
+    } catch (err) {
+      next(err)
+    }
+  },
+  getTopUser: async (req, res, next) => {
+    try {
+      const currentUser = helpers.getUser(req)
+      let topUser = await User.findAll({
+        include: [{ model: User, as: 'Followers' }]
+      })
+      topUser = topUser
+        .map(user => ({
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+          isFollowed: currentUser.Followings.some(f => f.id === user.id),
+          password: null
+        }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+      res.json({ status: 'success', topUser })
+      // res.render('tweets', { topUser, currentUser })
     } catch (err) {
       next(err)
     }
