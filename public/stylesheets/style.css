@@ -196,21 +196,30 @@ body {
 
 
 /* reply modal */
-.reply-wrapper {}
+
+.reply-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 1rem;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  transition: transform 0.4s ease-out;
+}
 
 .modal-description-container {
   position: relative;
   top: 10px;
-  left: -40px;
+  left: -35px;
   border-left: 3px solid #CCD6DD;
-  padding-left: 40px;
-  max-width: 85%;
+  padding-left: 35px;
+  max-width: 90%;
 }
 
 .modal-avatar-container {
   z-index: 1;
 }
 
-#modal-user-avatar {
-  margin-bottom: 30px solid white;
+.modal-avatar-border {
+  border-bottom: 10px solid white;
 }

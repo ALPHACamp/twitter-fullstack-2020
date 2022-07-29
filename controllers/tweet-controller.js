@@ -72,7 +72,6 @@ const tweetController = {
   postTweet: async (req, res, next) => {
     try {
       const UserId = helpers.getUser(req).id
-      const userAvatar = req.user.avatar
       if (!UserId) {
         return res.redirect(302, '/signin')
       }
@@ -81,7 +80,7 @@ const tweetController = {
       if (description.length > 140) {
         return res.redirect(302, 'back')
       }
-      await Tweet.create({ description, UserId, userAvatar })
+      await Tweet.create({ description, UserId })
       res.redirect('/tweets')
     } catch (err) {
       next(err)
