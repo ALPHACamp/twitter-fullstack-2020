@@ -48,50 +48,6 @@ const tweetController = {
       next(err)
     }
   },
-  getTweet: async (req, res, next) => {
-    try {
-      let tweet = await Tweet.findByPk(req.params.tweet_id,
-        {
-          include: [
-            User, Like, Reply,
-            { model: Reply, include: User }
-          ],
-          order: [['createdAt', 'DESC']]
-        })
-
-      let users = await User.findAll({
-        include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
-        ]
-      })
-
-      const user = await User.findByPk(helpers.getUser(req).id,
-        {
-          raw: true,
-          nest: true
-        })
-
-      const likes = await Like.findAll({
-        where: { UserId: helpers.getUser(req).id }
-      })
-      const likedCount = tweet.Likes.length
-      const repliedCount = tweet.Replies.length
-      const isLiked = likes.map(l => l.TweetId).includes(tweet.id)
-
-
-      users = await users.map(user => ({
-        ...user.toJSON(),
-        followerCount: user.Followers.length,
-        isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
-      }))
-      users = users.sort((a, b) => b.followerCount - a.followerCount)
-        .slice(0, 10)
-      return res.render('tweet', { tweet: tweet.toJSON(), users, user, likedCount, repliedCount, isLiked })
-    } catch (err) {
-      next(err)
-    }
-  },
   postTweet: async (req, res, next) => {
     try {
       const { description } = req.body
