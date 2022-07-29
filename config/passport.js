@@ -16,11 +16,10 @@ passport.use(new LocalStrategy(
       .findOne({ where: { account } })
       .then(user => {
         if (!user) {
-          req.flash('error_messages', '帳號輸入錯誤，或尚未註冊')
-          return cb(null, false)
+          return cb(null, false, req.flash('error_messages', '帳號輸入錯誤，或尚未註冊'))
         }
         const result = bcrypt.compareSync(password, user.password)
-        if (!result) return cb(new Error('密碼錯誤'), false)
+        if (!result) return cb(null, false, req.flash('error_messages', '輸入密碼錯誤'))
         return cb(null, user)
       })
       .catch(err => cb(err))
