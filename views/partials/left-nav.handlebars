@@ -1,87 +1,73 @@
 {{#if (isAdmin loginUser.role)}}
-  <div class="d-flex flex-column bd-highlight left-nav">
-    <div class="ms-2 p-2 bd-highlight">
-      <a href="/admin/tweets">
-        <img src="/images/alphitter-logo.png">
-      </a>
-    </div>
-    <div class="p-2 bd-highlight">
-      <a href="/admin/tweets">
-        <img src="/images/nav-icon-homepage-tweets.png">
-      </a>
-    </div>
-    <div class="p-2 bd-highlight">
-      <a href="/admin/users">
-        <img src="/images/icon-user-list.png">
-      </a>
-    </div>
-    <div class="p-2 bd-highlight">
-      <a href="/logout">
-        <img src="/images/nav-icon-logout.png">
-      </a>
-    </div>
+<div class="d-flex flex-column bd-highlight left-nav">
+  <div class="ms-2 p-2 bd-highlight">
+    <a href="/admin/tweets">
+      <img src="/images/alphitter-logo.png">
+    </a>
   </div>
+  <div class="p-2 bd-highlight">
+    <a href="/admin/tweets">
+      <img src="/images/nav-icon-homepage-tweets.png">
+    </a>
+  </div>
+  <div class="p-2 bd-highlight">
+    <a href="/admin/users">
+      <img src="/images/icon-user-list.png">
+    </a>
+  </div>
+  <div class="p-2 bd-highlight">
+    <a href="/logout">
+      <img src="/images/nav-icon-logout.png">
+    </a>
+  </div>
+</div>
 {{else}}
-  <div class="d-flex flex-column bd-highlight left-nav">
-    <div class="ms-2 p-2 bd-highlight">
-      <a href="/tweets">
-        <img src="/images/alphitter-logo.png">
-      </a>
-    </div>
-    <div class="p-2 bd-highlight">
-      <a href="/tweets">
-        <img src="/images/nav-icon-homepage.png">
-      </a>
-    </div>
-    <div class="p-2 bd-highlight">
-      <a href="/users/{{loginUser.id}}/tweets">
-        <img src="/images/nav-icon-profile.png">
-      </a>
-    </div>
-    <div class="p-2 bd-highlight">
-      <a href="/setting">
-        <img src="/images/nav-icon-setting.png">
-      </a>
-    </div>
-    <div class="p-2 bd-highlight">
-      <button type="button" class="submit-btn" data-bs-toggle="modal" data-bs-target="#left-nav-Modal"
-        style="width: 150px">
-        推文
-      </button>
-    </div>
-    <div class="p-2 bd-highlight">
-      <a href="/logout">
-        <img src="/images/nav-icon-logout.png">
-      </a>
-    </div>
+<div class="d-flex flex-column bd-highlight left-nav">
+  <div class="ms-2 p-2 bd-highlight">
+    <a href="/tweets">
+      <img src="/images/alphitter-logo.png">
+    </a>
   </div>
+  <div class="p-2 bd-highlight">
+    <a href="/tweets">
+      <img src="/images/nav-icon-homepage.png">
+    </a>
+  </div>
+  <div class="p-2 bd-highlight">
+    <a href="/users/{{loginUser.id}}/tweets">
+      <img src="/images/nav-icon-profile.png">
+    </a>
+  </div>
+  <div class="p-2 bd-highlight">
+    <a href="/setting">
+      <img src="/images/nav-icon-setting.png">
+    </a>
+  </div>
+  <div class="p-2 bd-highlight">
+    <button type="button" class="submit-btn" data-bs-toggle="modal" data-bs-target="#left-nav-Modal"
+      style="width: 150px">
+      推文
+    </button>
+  </div>
+  <div class="p-2 bd-highlight">
+    <a href="/logout">
+      <img src="/images/nav-icon-logout.png">
+    </a>
+  </div>
+</div>
 {{/if}}
-
 
 
 <!-- Modal -->
 <div class="modal fade" id="left-nav-Modal" tabindex="-1" aria-labelledby="left-nav-ModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content" style="width: 634px; height: 400px;">
+    <div class="modal-content" style="width: 634px; height: 350px;">
       <div class="modal-header">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <form action="/tweets" method="POST">
-          <div class="row">
-            <div class="col-1 me-2">
-              <img src="{{loginUser.avatar}}" style="border-radius: 50px; width: 50px; height: 50px;">
-            </div>
-            <div class="form-row mb-2 col-10">
-              <textarea class="form-control" type="text" id="description" name="description" rows="3" placeholder="有什麼新鮮事？"
-                maxlength="140" required></textarea>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="submit-btn" style="width: 100px">推文</button>
-          </div>
-        </form>
-      </div>
+      <form action="/tweets" method="POST">
+        {{> tweet-reply-form}}
+      </form>
     </div>
   </div>
 </div>

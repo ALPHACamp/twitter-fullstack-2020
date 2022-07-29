@@ -4,24 +4,13 @@
     <h5 class="text-start fw-bold">首頁</h5>
   </div>
   <div class="card-body">
+
     <form action="/tweets" method="POST">
-      <div class="card p-1" style="border: none">
-        <div class="row">
-          <div class="col-1">
-            <img src="{{loginUser.avatar}}" style="border-radius: 50px; width: 50px; height: 50px;">
-          </div>
-          <div class="col-11">
-            <textarea class="form-control" id="text" name="description" rows="3" style="border: none"
-              placeholder="有什麼新鮮事？" maxlength="140" required></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="submit-btn" style="width: 100px">
-            推文
-          </button>
-        </div>
+      <div class="card " style="border: none">
+        {{> tweet-reply-form}}
       </div>
     </form>
+
   </div>
 </div>
 {{!-- 中間下半部 --}}
@@ -40,29 +29,16 @@
   </tbody>
 </table>
 
-<!-- Modal -->
+<!-- 點擊留言時產生的 Modal，不過還沒開始動工 -->
 <div class="modal fade" id="tweet-reply-modal" tabindex="-1" aria-labelledby="tweet-reply-modalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content" style="width: 634px; height: 400px;">
+    <div class="modal-content" style="width: 634px; height: 350px;">
       <div class="modal-header">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <form action="/tweets" method="POST">
-          <div class="row">
-            <div class="col-1 me-2">
-              <img src="{{loginUser.avatar}}" style="border-radius: 50px; width: 50px; height: 50px;">
-            </div>
-            <div class="form-row mb-2 col-10">
-              <textarea class="form-control" type="text" id="text" name="description" rows="3" placeholder="有什麼新鮮事？"
-                maxlength="140" required></textarea>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="submit-btn" style="width: 100px">推文</button>
-          </div>
-        </form>
-      </div>
+      <form action="/tweets" method="POST">
+        {{> tweet-reply-form}}
+      </form>
     </div>
   </div>
 </div>
