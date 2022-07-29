@@ -280,7 +280,7 @@ const userController = {
           password: null
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
-      res.json({ status: 'success', topUser })
+      res.json({ status: 'success', topUser, currentUser })
       // res.render('tweets', { topUser, currentUser })
     } catch (err) {
       next(err)
