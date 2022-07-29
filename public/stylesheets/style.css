@@ -108,3 +108,7 @@ textarea {
 .was-validated .form-control:invalid {
   background-size: 0;
 }
+
+.display-none {
+  display: none;
+}
