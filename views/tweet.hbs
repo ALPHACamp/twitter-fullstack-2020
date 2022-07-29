@@ -34,7 +34,8 @@
             <p
               style="height:100px;width:600px; position:relative;bottom:10px;font-size:24px;line-height: 36px;font-weight: 400;">
               {{tweet.description}}</p>
-            <p style="color:#6C757D;font-size:14px;">上午 10:05 . 2021年11月10號</p>
+            <p style="color:#6C757D;font-size:14px;">{{momentTime
+              tweet.createdAt}}．{{momentDate tweet.createdAt}}</p>
           </div>
           <div class="description"
             style="border:none; padding-left: 10px; padding-top: 17px; padding-bottom: 50px; resize:none; height:190px;">
@@ -85,7 +86,7 @@
             <div class="head d-flex">
               <a class="name" href="/users/:{{this.User.id}}">{{this.User.name}}</a>
               <a class="account" href="/users/:{{this.User.id}}">@{{this.User.account}}</a>
-              <div class="time">•3小時</div>
+              <div class="time">•{{momentNow this.createdAt}}</div>
             </div>
             <div class="content">
               {{this.comment}}
@@ -95,63 +96,7 @@
         <p class="list-separate-m"></p>
 
         <!-- 回覆 tweet Modal -->
-        <div class="modal fade" id="tweet-reply-model" tabindex="-1" aria-labelledby="home-model" aria-hidden="true">
-          <div class="modal-dialog modal-lg" style="width:639px; position:relative; right:40px;">
-            <div class="modal-content" style="border-radius:16px">
-              <div class="modal-header" style="">
-                <label for="description" class="form-label">
-                </label>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="container" style="height:500px;">
-                <div class="row" style="height:200px;">
-                  <div class="col">
-                    <!--回覆的那則tweet內容-->
-                    <div class="d-flex" style="position:relative;top:10px;left:3px;">
-                      <img
-                        src="{{#if ../tweet.User.avatar}}{{../tweet.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
-                        alt="Picture" class="tweet-user-avatar" style="width:50px;height:50px;">
-                      <div class="head d-flex" style="position:relative;top:10px;">
-                        {{../tweet.User.name}}&nbsp;&nbsp;
-                        <p class="color-secondaryColor">@{{../tweet.User.account}}</p>
-                        <div class="time color-secondaryColor">•3小時</div>
-                      </div>
-                    </div>
-                    <div class="content" style="position:relative; left:63px;">
-                      {{../tweet.description}}
-                    </div>
-                    <div class="content" style="position:relative; left:63px;top:15px;">
-                      <p class="color-secondaryColor" style="display:inline">回覆給</p>
-                      <p class="color-main" style="display:inline">@{{../tweet.User.account}}</p>
-                    </div>
-                    <p class="reply-separate-m"></p>
-                  </div>
-                </div>
-                <!--要回覆的內容-->
-                <div class="row" style="height:200px;">
-                  <div class="col">
-                    <form action="/tweets/{{../tweet.id}}/replies" method="POST" onsubmit="return checkformReply('b')">
-                      <div class="modal-body d-flex" style="position:relative;right:12px;">
-                        <img src="{{#if ../user.avatar}}{{../user.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
-                          class="tweet-user-avatar" style="width:50px;height:50px;" alt="Picture">
-                        <textarea class="form" id="b" name="comment" rows="3" maxlength="141" placeholder="推你的回覆"
-                          oninput="countsReply('a','b','c')"
-                          style="border:none; min-width:550px;position:relative; top:10px;resize:none;"
-                          required></textarea>
-                        <div id="c" class="c-number-check">內容不可空白</div>
-                        <div id="a" class="a-number-check">0/140</div>
-                      </div>
-                      <button type="submit" class="btn btn-orange btn-tweets-models"
-                        style="border-radius: 50px;position:relative; left:550px;top:130px;">
-                        <span class="" style="font-size:16px;">回覆</span>
-                      </button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
         <script>
           function countsReply(id, id2, id3) {
             const counts = document.getElementById(id2).value.length
@@ -181,8 +126,7 @@
     </div>
     <!--每一則 tweet 結束-->
 
-    <!-- 新增 tweet Modal -->
-    <div class="modal fade" id="home-model" tabindex="-1" aria-labelledby="home-model" aria-hidden="true">
+    <div class="modal fade" id="tweet-reply-model" tabindex="-1" aria-labelledby="home-model" aria-hidden="true">
       <div class="modal-dialog modal-lg" style="width:639px; position:relative; right:40px;">
         <div class="modal-content" style="border-radius:16px">
           <div class="modal-header" style="">
@@ -190,27 +134,53 @@
             </label>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <form action="/tweets" method="POST" onsubmit="return checkform()">
-            <div class="modal-body d-flex">
-              <img src="{{#if user.avatar}}{{user.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
-                class="tweet-user-avatar" style="width:50px;height:50px;" alt="Picture">
-              <textarea class="form" id="description" name="description" rows="3" maxlength="141" placeholder="有什麼新鮮事？"
-                oninput="counts()"
-                style="border:none; width:600px;position:relative; top:10px;resize:none;height:250px;"
-                required></textarea>
-              <div class="helper name-helper"><span>內容不可空白</span></div>
-              <div class="count name-count"><span>0/140</span></div>
+          <div class="container" style="height:500px;">
+            <div class="row" style="height:200px;">
+              <div class="col">
+                <!--回覆的那則tweet內容-->
+                <div class="d-flex" style="position:relative;top:10px;left:3px;">
+                  <img src="{{#if tweet.User.avatar}}{{tweet.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+                    alt="Picture" class="tweet-user-avatar" style="width:50px;height:50px;">
+                  <div class="head d-flex" style="position:relative;top:10px;">
+                    {{tweet.User.name}}&nbsp;&nbsp;
+                    <p class="color-secondaryColor">@{{tweet.User.account}}</p>
+                    <div class="time color-secondaryColor">•{{momentNow this.createdAt}}</div>
+                  </div>
+                </div>
+                <div class="content" style="position:relative; left:63px;">
+                  {{tweet.description}}
+                </div>
+                <div class="content" style="position:relative; left:63px;top:15px;">
+                  <p class="color-secondaryColor" style="display:inline">回覆給</p>
+                  <p class="color-main" style="display:inline">@{{tweet.User.account}}</p>
+                </div>
+                <p class="reply-separate-m"></p>
+              </div>
             </div>
-            <button type="submit" class="btn btn-orange btn-tweets-models"
-              style="border-radius: 50px;position:relative; left:550px;bottom:20px;">
-              <span class="" style="font-size:16px;">推文</span>
-            </button>
-          </form>
+            <!--要回覆的內容-->
+            <div class="row" style="height:200px;">
+              <div class="col">
+                <form action="/tweets/{{tweet.id}}/replies" method="POST" onsubmit="return checkformReply('b')">
+                  <div class="modal-body d-flex" style="position:relative;right:12px;">
+                    <img src="{{#if user.avatar}}{{user.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+                      class="tweet-user-avatar" style="width:50px;height:50px;" alt="Picture">
+                    <textarea class="form" id="b" name="comment" rows="3" maxlength="141" placeholder="推你的回覆"
+                      oninput="countsReply('a','b','c')"
+                      style="border:none; min-width:550px;position:relative; top:10px;resize:none;" required></textarea>
+                    <div id="c" class="c-number-check">內容不可空白</div>
+                    <div id="a" class="a-number-check">0/140</div>
+                  </div>
+                  <button type="submit" class="btn btn-orange btn-tweets-models"
+                    style="border-radius: 50px;position:relative; left:550px;top:130px;">
+                    <span class="" style="font-size:16px;">回覆</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <!-- 新增 tweet Modal 結束 -->
-
 
     <!--右側推薦追蹤清單-->
     <section class="right-region-sidebar">
