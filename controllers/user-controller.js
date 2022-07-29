@@ -123,8 +123,10 @@ const userController = {
   },
   getPersonalTweets: async (req, res, next) => {
     try {
-      const user = helpers.getUser(req.params)
-      const personal = await User.findByPk(Number(req.params.id))
+      const user = helpers.getUser(req)
+      const personal = await User.findByPk(Number(req.params.id), {
+        raw: true
+      })
       if (personal.id === user.id) {
         const tweets = await Tweet.findAll({
           where: {
@@ -145,7 +147,7 @@ const userController = {
           ...tweet,
           isLiked: likedTweetsId?.includes(tweet.id)
         }))
-        return res.render('tweets', { tweetsList, user })
+        return res.render('profile', { tweetsList, user })
       } else {
         const tweets = await Tweet.findAll({
           where: {
@@ -166,7 +168,8 @@ const userController = {
           ...tweet,
           isLiked: likedTweetsId?.includes(tweet.id)
         }))
-        return res.render('tweets', { tweetsList, user })
+        console.log(personal)
+        return res.render('profile', { tweetsList, user, personal })
       }
     }
     catch (err) {
