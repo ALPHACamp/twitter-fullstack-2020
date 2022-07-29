@@ -11,7 +11,6 @@
     <span>
       {{#ifCond route 'tweets'}}{{this.description}}{{/ifCond}}
       {{#ifCond route 'replies'}}{{this.comment}}{{/ifCond}}
-      {{#ifCond route 'likes'}}{{this.Tweet.description}}{{/ifCond}}
       {{#ifCond route 'tweets'}}
       <form action="/tweets/{{this.id}}/replies" method="GET">
         <div class="speech-bubble">
@@ -41,18 +40,7 @@
         </div>
       </form>
       {{/if}}
-
-
       {{/ifCond}}
-
-
-
-      {{#ifCond route 'replies'}}
-
-      {{/ifCond}}
-
-
-
     </span>
   </div>
 </div>

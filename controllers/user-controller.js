@@ -223,15 +223,56 @@ const userController = {
   getPersonalLikes: async (req, res, next) => {
     try {
       const user = helpers.getUser(req)
-      const likes = await Like.findAll({
-        include: User,
-        order: [
-          ['created_at', 'DESC']
-        ],
-        raw: true,
-        nest: true
+      const personal = await User.findByPk(Number(req.params.id), {
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+          { model: Tweet, as: 'likedTweets' }
+        ]
       })
-      return res.render('profileLike', { likes, user })
+      if (personal.id === user.id) {
+        const likedTweetsId = req.user?.likedTweets.map(tweet => tweet.id)
+        const tweets = await Tweet.findAll({
+          where: {
+            ...likedTweetsId ? { id: likedTweetsId } : {}
+          },
+          include: [
+            User
+          ],
+          order: [
+            ['created_at', 'DESC'],
+            ['id', 'ASC']
+          ],
+          raw: true,
+          nest: true
+        })
+        const tweetsList = tweets.map(tweet => ({
+          ...tweet,
+          isLiked: true
+        }))
+        return res.render('profileLike', { tweetsList, user })
+      } else {
+        const likedTweetsId = personal?.likedTweets.map(tweet => tweet.id)
+        const tweets = await Tweet.findAll({
+          where: {
+            ...likedTweetsId ? { id: likedTweetsId } : {}
+          },
+          include: [
+            User
+          ],
+          order: [
+            ['created_at', 'DESC'],
+            ['id', 'ASC']
+          ],
+          raw: true,
+          nest: true
+        })
+        const tweetsList = tweets.map(tweet => ({
+          ...tweet,
+          isLiked: true
+        }))
+        return res.render('profileLike', { tweetsList, user, personal })
+      }
     }
     catch (err) {
       next(err)
