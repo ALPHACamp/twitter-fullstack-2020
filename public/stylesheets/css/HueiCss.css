@@ -142,7 +142,7 @@ section#Huei-region .tweets .list-separate-lg {
 }
 section#Huei-region .tweets .list-separate-m {
   position: relative;
-  top: 70px;
+  top: 17px;
   height: 1px;
   width: 639px;
   background-color: #E2E2EA;
@@ -151,7 +151,7 @@ section#Huei-region .tweets .list-separate-m {
 section#Huei-region .tweet-card {
   word-wrap: break-word;
   position: relative;
-  top: 60px;
+  top: 10px;
   left: 15px;
 }
 section#Huei-region .tweet-card .account {
@@ -183,65 +183,55 @@ section#Huei-region .tweet-card .tweet-user-avatar {
   border-radius: 50px;
   margin-right: 10px;
 }
-
-.tweet-text {
+section#Huei-region .tweet-text {
   position: relative;
   top: 30px;
   left: 75px;
 }
-.tweet-text .description {
+section#Huei-region .tweet-text .description {
   width: 526px;
 }
-.tweet-text .btn-tweets-bottom {
+section#Huei-region .tweet-text .btn-tweets-bottom {
   position: relative;
   right: 150px;
   top: 100px;
   width: 64px;
   height: 40px;
 }
-
-.tweet-user-avatar {
+section#Huei-region .tweet-user-avatar {
   width: 50px;
   height: 50px;
   border-radius: 50px;
   margin-right: 10px;
 }
-
-.flex-nowrap-element {
+section#Huei-region .flex-nowrap-element {
   white-space: nowrap;
   width: 173px;
 }
-
-.position-left {
+section#Huei-region .position-left {
   position: relative;
   left: 10px;
 }
-
-.position-left-text {
+section#Huei-region .position-left-text {
   position: relative;
   left: 20px;
 }
-
-.btn-tweets-models {
+section#Huei-region .btn-tweets-models {
   width: 64px;
   height: 40px;
 }
-
-.content {
+section#Huei-region .content {
   margin-top: 8px;
   width: 528px;
   height: 78px;
 }
-
-.color-secondaryColor {
+section#Huei-region .color-secondaryColor {
   color: #6C757D;
 }
-
-.color-main {
+section#Huei-region .color-main {
   color: #FF6600;
 }
-
-.reply-separate-m {
+section#Huei-region .reply-separate-m {
   position: relative;
   left: 25px;
   bottom: 130px;
@@ -249,8 +239,7 @@ section#Huei-region .tweet-card .tweet-user-avatar {
   width: 2px;
   background-color: #B5B5BE;
 }
-
-.count {
+section#Huei-region .count {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -260,7 +249,7 @@ section#Huei-region .tweet-card .tweet-user-avatar {
   right: 250px;
   background: #FFFFFF;
 }
-.count span {
+section#Huei-region .count span {
   font-weight: 500;
   line-height: 20px;
   text-align: right;
@@ -270,8 +259,7 @@ section#Huei-region .tweet-card .tweet-user-avatar {
   flex-grow: 0;
   color: #696974;
 }
-
-.name-helper {
+section#Huei-region .name-helper {
   text-align: right;
   flex: none;
   order: 0;
@@ -282,16 +270,14 @@ section#Huei-region .tweet-card .tweet-user-avatar {
   top: 255px;
   right: 100px;
 }
-
-.a-number-check {
+section#Huei-region .a-number-check {
   position: absolute;
   top: 250px;
   right: 200px;
   color: #696974;
   font-weight: 500;
 }
-
-.c-number-check {
+section#Huei-region .c-number-check {
   text-align: right;
   flex: none;
   order: 0;
@@ -302,42 +288,43 @@ section#Huei-region .tweet-card .tweet-user-avatar {
   right: 80px;
   color: #FC5A5A;
 }
-
-.list-separate-lg {
+section#Huei-region .list-separate-lg {
   position: relative;
   top: 190px;
   height: 10px;
   width: 639px;
   background-color: #E2E2EA;
 }
-
-.card-override-reply {
+section#Huei-region .card-override-reply {
   height: 47vh;
   overflow-y: scroll;
   scrollbar-color: #F1F1F5 #FAFAFB;
   scrollbar-width: thin;
   overflow-x: hidden;
 }
-
-.like-reply-number .number {
+section#Huei-region .like-reply-number .number {
   display: inline;
   color: #000000;
   font-size: 19px;
 }
-.like-reply-number .word {
+section#Huei-region .like-reply-number .word {
   display: inline;
   color: #6C757D;
   font-size: 19px;
 }
-
-.tweet-name-account .name {
+section#Huei-region .tweet-name-account .name {
   font-weight: 700;
   font-size: 16px;
   line-height: 26px;
 }
-.tweet-name-account .account {
+section#Huei-region .tweet-name-account .account {
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
   color: #6C757D;
+}
+section#Huei-region tweet-vector {
+  height: 14px;
+  width: 17px;
+  border-radius: 0px;
 }

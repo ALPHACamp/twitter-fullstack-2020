@@ -174,7 +174,7 @@ section#Huei-region {
 
     .list-separate-m {
       position: relative;
-      top: 70px;
+      top: 17px;
       height: 1px;
       width: 639px;
       background-color: $dark40;
@@ -185,7 +185,7 @@ section#Huei-region {
   .tweet-card {
     word-wrap: break-word;
     position: relative;
-    top: 60px;
+    top: 10px;
     left: 15px;
 
     .account {
@@ -223,172 +223,179 @@ section#Huei-region {
       margin-right: 10px;
     }
   }
-}
 
-.tweet-text {
-  position: relative;
-  top: 30px;
-  left: 75px;
 
-  .description {
-    width: 526px;
+  .tweet-text {
+    position: relative;
+    top: 30px;
+    left: 75px;
+
+    .description {
+      width: 526px;
+    }
+
+    .btn-tweets-bottom {
+      position: relative;
+      right: 150px;
+      top: 100px;
+      width: 64px;
+      height: 40px;
+    }
   }
 
-  .btn-tweets-bottom {
+  .tweet-user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    margin-right: 10px;
+  }
+
+  .flex-nowrap-element {
+    white-space: nowrap;
+    width: 173px;
+  }
+
+  .position-left {
     position: relative;
-    right: 150px;
-    top: 100px;
+    left: 10px;
+  }
+
+  .position-left-text {
+    position: relative;
+    left: 20px;
+  }
+
+  .btn-tweets-models {
     width: 64px;
     height: 40px;
   }
-}
 
-.tweet-user-avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  margin-right: 10px;
-}
+  .content {
+    margin-top: 8px;
+    width: 528px;
+    height: 78px;
+  }
 
-.flex-nowrap-element {
-  white-space: nowrap;
-  width: 173px;
-}
+  .color-secondaryColor {
+    color: $secondaryColor;
+  }
 
-.position-left {
-  position: relative;
-  left: 10px;
-}
+  .color-main {
+    color: $mainColor;
+  }
 
-.position-left-text {
-  position: relative;
-  left: 20px;
-}
+  .reply-separate-m {
+    position: relative;
+    left: 25px;
+    bottom: 130px;
+    height: 86px;
+    width: 2px;
+    background-color: $dark60;
+  }
 
-.btn-tweets-models {
-  width: 64px;
-  height: 40px;
-}
+  .count {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 0px 0px;
+    position: absolute;
+    top: 270px;
+    right: 250px;
+    background: $dark0;
 
-.content {
-  margin-top: 8px;
-  width: 528px;
-  height: 78px;
-}
+    span {
+      font-weight: 500;
+      line-height: 20px;
+      text-align: right;
+      flex: none;
+      order: 0;
+      align-self: stretch;
+      flex-grow: 0;
+      color: $dark80;
+    }
+  }
 
-.color-secondaryColor {
-  color: $secondaryColor;
-}
-
-.color-main {
-  color: $mainColor;
-}
-
-.reply-separate-m {
-  position: relative;
-  left: 25px;
-  bottom: 130px;
-  height: 86px;
-  width: 2px;
-  background-color: $dark60;
-}
-
-.count {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 4px 0px 0px;
-  position: absolute;
-  top: 270px;
-  right: 250px;
-  background: $dark0;
-
-  span {
-    font-weight: 500;
-    line-height: 20px;
+  .name-helper {
     text-align: right;
     flex: none;
     order: 0;
     align-self: stretch;
     flex-grow: 0;
+    color: $errorColor;
+    position: relative;
+    top: 255px;
+    right: 100px;
+  }
+
+  .a-number-check {
+    position: absolute;
+    top: 250px;
+    right: 200px;
     color: $dark80;
-  }
-}
-
-.name-helper {
-  text-align: right;
-  flex: none;
-  order: 0;
-  align-self: stretch;
-  flex-grow: 0;
-  color: $errorColor;
-  position: relative;
-  top: 255px;
-  right: 100px;
-}
-
-.a-number-check {
-  position: absolute;
-  top: 250px;
-  right: 200px;
-  color: $dark80;
-  font-weight: 500;
-}
-
-.c-number-check {
-  text-align: right;
-  flex: none;
-  order: 0;
-  align-self: stretch;
-  flex-grow: 0;
-  position: absolute;
-  top: 250px;
-  right: 80px;
-  color: $errorColor;
-}
-
-.list-separate-lg {
-  position: relative;
-  top: 190px;
-  height: 10px;
-  width: 639px;
-  background-color: $dark40;
-}
-
-.card-override-reply {
-  height: 47vh;
-  overflow-y: scroll;
-  scrollbar-color: $dark30 $dark20;
-  scrollbar-width: thin;
-  overflow-x: hidden;
-}
-
-.like-reply-number {
-  .number {
-    display: inline;
-    color: #000000;
-    font-size: 19px;
+    font-weight: 500;
   }
 
-  .word {
-    display: inline;
-    color: #6C757D;
-    font-size: 19px;
-  }
-}
-
-.tweet-name-account {
-  .name {
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 26px;
+  .c-number-check {
+    text-align: right;
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+    position: absolute;
+    top: 250px;
+    right: 80px;
+    color: $errorColor;
   }
 
-  .account {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 22px;
-    color: #6C757D;
+  .list-separate-lg {
+    position: relative;
+    top: 190px;
+    height: 10px;
+    width: 639px;
+    background-color: $dark40;
   }
 
+  .card-override-reply {
+    height: 47vh;
+    overflow-y: scroll;
+    scrollbar-color: $dark30 $dark20;
+    scrollbar-width: thin;
+    overflow-x: hidden;
+  }
+
+  .like-reply-number {
+    .number {
+      display: inline;
+      color: #000000;
+      font-size: 19px;
+    }
+
+    .word {
+      display: inline;
+      color: #6C757D;
+      font-size: 19px;
+    }
+  }
+
+  .tweet-name-account {
+    .name {
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 26px;
+    }
+
+    .account {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 22px;
+      color: #6C757D;
+    }
+
+  }
+
+  tweet-vector {
+    height: 14px;
+    width: 17px;
+    border-radius: 0px;
+  }
 }

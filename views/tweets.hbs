@@ -42,11 +42,13 @@
             <div class="head d-flex">
               <a class="name" href="/users/:{{this.User.id}}">{{this.User.name}}</a>
               <a class="account" href="/users/:{{this.User.id}}">@{{this.User.account}}</a>
-              <div class="time">•3小時</div>
+              <div class="time">•{{momentNow this.createdAt}}</div>
             </div>
-            <div class="content">
-              <a href="/tweets/{{this.id}}">{{this.description}}</a>
-            </div>
+            <a href="/tweets/{{this.id}}/replies">
+              <div class="content">
+                {{this.description}}
+              </div>
+            </a>
             <div class="d-flex">
               <button style="position:relative;bottom:5px;">
                 <img src="/images/comment.png" style="width:13.17px;height:13.17px;margin-right:8px" alt="comment"
@@ -92,7 +94,7 @@
                       <div class="head d-flex" style="position:relative;top:10px;">
                         {{this.User.name}}&nbsp;&nbsp;
                         <p class="color-secondaryColor">@{{this.User.account}}</p>
-                        <div class="time color-secondaryColor">•3小時</div>
+                        <div class="time color-secondaryColor">•{{momentNow this.createdAt}}</div>
                       </div>
                     </div>
                     <div class="content" style="position:relative; left:63px;">
@@ -113,15 +115,14 @@
                       <div class="modal-body d-flex" style="position:relative;right:12px;">
                         <img src="{{#if ../user.avatar}}{{../user.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
                           class="tweet-user-avatar" style="width:50px;height:50px;" alt="Picture">
-                        <textarea class="form" id="b-{{this.id}}" name="comment" rows="3" maxlength="141"
+                        <textarea class="form" id="b-{{this.id}}" name="comment" rows="4" maxlength="141"
                           placeholder="推你的回覆" oninput="countsReply('a-{{this.id}}','b-{{this.id}}','c-{{this.id}}')"
-                          style="border:none; min-width:550px;position:relative; top:10px;resize:none;"
-                          required></textarea>
+                          style="border:none; width:550px;position:relative; top:10px;resize:none;" required></textarea>
                         <div id="c-{{this.id}}" class="c-number-check">內容不可空白</div>
                         <div id="a-{{this.id}}" class="a-number-check">0/140</div>
                       </div>
                       <button type="submit" class="btn btn-orange btn-tweets-models"
-                        style="border-radius: 50px;position:relative; left:550px;top:130px;">
+                        style="border-radius: 50px;position:absolute; left:550px;top:490px;">
                         <span class="" style="font-size:16px;">回覆</span>
                       </button>
                     </form>
@@ -173,7 +174,7 @@
             <div class="modal-body d-flex">
               <img src="{{#if user.avatar}}{{user.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
                 class="tweet-user-avatar" style="width:50px;height:50px;" alt="Picture">
-              <textarea class="form" id="description" name="description" rows="3" maxlength="141" placeholder="有什麼新鮮事？"
+              <textarea class="form" id="description" name="description" rows="4" maxlength="141" placeholder="有什麼新鮮事？"
                 oninput="counts()"
                 style="border:none; width:600px;position:relative; top:10px;resize:none;height:250px;"
                 required></textarea>
