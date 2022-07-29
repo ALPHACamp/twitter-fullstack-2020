@@ -19,37 +19,36 @@
 </head>
 
 <body>
-{{#if loginUser}}
-  {{#if (isAdmin loginUser.role)}}
-    <div class="row">
-      {{> messages}}
-      <div class="col-2">
-        <a href="/logout">登出</a>
-      </div>
-      <div class="col-10">
-        {{{body}}}
-      </div>
-    </div>
-  {{else}}
+  {{#if loginUser}}
+  <div class="row">
+    {{> messages}}
     <div class="col-2">
       {{>left-nav}}
     </div>
+    {{#if (isAdmin loginUser.role)}}
+    <div class="col-10">
+      {{{body}}}
+    </div>
+    {{else}}
     <div class="col-8">
       {{{body}}}
     </div>
     <div class="col-2">
       {{!-- right Navigation --}}
     </div>
+    {{/if}}
+  </div>
+
+  {{else}}
+  {{!-- Sign in / Sign up --}}
+  <div class="mt-3 d-flex flex-column">
+    <main class="mx-auto" style="width: 356px;">
+      {{> messages}}
+      {{{body}}}
+    </main>
+  </div>
   {{/if}}
 
-{{else}}
-<div class="mt-3 d-flex flex-column">
-  <main class="mx-auto" style="width: 356px;">
-    {{> messages}}
-    {{{body}}}
-  </main>
-</div>
-{{/if}}
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
