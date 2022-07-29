@@ -1,3 +1,9 @@
+<style>
+  .display-none {
+    display: none;
+  }
+</style>
+
 <div class="nav nav-pills brand-color flex-column sticky-top" style="height: 92vh;">
   <img src="./alpha.png" alt="" style="width: 50px;" class="m-2">
   <a class="nav-link {{#ifCond route 'index'}}active{{/ifCond}}" href="/">
@@ -35,9 +41,12 @@
           </div>
           <div class="flex-fill text-end">
             <form href="/tweets" action="POST">
-              <textarea class="border border-0 form-control" id="tweet" name="tweet" maxlength="140"
+              <textarea class="border border-0 form-control mb-3" id="tweet" name="tweet" maxlength="150"
                 placeholder="有什麼新鮮事？" rows="5" required></textarea>
-              <button type="submit" class="btn btn-brand radius50 mt-3">送出</button>
+              <span class="text-danger me-1 display-none" id="invalid-info"
+                style="font-size: 15px; font-weight:500;">字數不可超過
+                140 字</span>
+              <button type="submit" class="btn btn-brand radius50 ms-3">送出</button>
             </form>
           </div>
         </div>
@@ -45,3 +54,16 @@
     </div>
   </div>
 </div>
+
+<script>
+  const tweet = document.querySelector("#tweet")
+  const invalid = document.querySelector("#invalid-info")
+
+  tweet.addEventListener('input', event => {
+    if (tweet.value.length > 140) {
+      invalid.classList.remove('display-none')
+    } else {
+      invalid.classList.add('display-none')
+    }
+  })
+</script>
