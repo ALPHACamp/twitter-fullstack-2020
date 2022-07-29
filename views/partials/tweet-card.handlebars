@@ -27,7 +27,7 @@
           </div>
           {{#if isLiked}}
           <div>
-            <form action="/tweets/{{ this.id }}/unlike?_method=POST" method="POST">
+            <form action="/tweets/{{ this.id }}/unlike" method="POST">
               <button type="submit" class="btn btn-outline-light">
                 <i class="fas fa-heart me-1" style="color: red; width: 25px; height: 25px;"></i>
                 <span style="color: #6C757D;font-size: 14px;">{{this.likeCounts}}</span>
