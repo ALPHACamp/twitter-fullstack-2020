@@ -15,7 +15,8 @@
     <div class="scroll-part scrollbar">
       {{!-- 追隨卡片 --}}
       <div class="follow-container scrollbar">
-        {{#each user.Followings}}
+        {{#if user.Followers}}
+        {{#each user.Followers}}
         <div class="follow-card d-flex mb-3">
           <div class="avatar-container ms-4 me-1">
             <a href="/users/{{this.id}}/tweets">
@@ -31,6 +32,9 @@
           </div>
         </div>
         {{/each}}
+        {{else}}
+        <h3 class="text-start m-3">嘿! 你還沒開始追蹤任何人</h3>
+        {{/if}}
       </div>
       {{!-- 推文卡片結束 --}}
     </div>

@@ -22,6 +22,3 @@ likeSubmitBtn.forEach((btn, i) => {
     }
   })
 })
-
-
-await axios.post('https://testapi.org/post', { id: 4 })
