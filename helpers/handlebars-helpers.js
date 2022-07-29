@@ -17,9 +17,6 @@ module.exports = {
     moment.locale('zh-tw')
     return moment(timeNow).fromNow()
   },
-  momentYear: function (year) {
-    return moment(year).format("YYYY-MM-DD LT")
-  },
   // {{momentTime tweet.createdAt}} ex.上午 10:53
   momentTime: function (time) {
     moment.locale('zh-tw')
