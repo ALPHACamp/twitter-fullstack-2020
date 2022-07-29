@@ -11,12 +11,12 @@
   <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
 </head>
 
-<body id="data-panel">
-  {{> messages}}
-  <div class="body-container text-center">
+<body>
+  <div class="vh-100">
+    {{> messages}}
     {{{body}}}
+    {{> side-tweet-btn-model}}
   </div>
-  {{> side-tweet-btn-model}}
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
