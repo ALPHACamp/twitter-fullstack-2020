@@ -1,0 +1,23 @@
+<div class="modal fade" id="sendTweetBtn" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-start">
+        <i class="close ms-0" data-bs-dismiss="modal" aria-label="Close"></i>
+      </div>
+      <div class="tweet-input model-body ms-3">
+        <form action="/tweets" method="POST">
+          <div class="d-flex flex-wrap mt-3">
+            <div class="me-1">
+              <img src="{{currentUser.avatar}}" alt="" class="avatar-sm rounded-pill">
+            </div>
+            <textarea class="window-description-input w-auto border border-0 ms-1 mb-1" name="description"
+              id="description" cols="65" rows="8" placeholder="有什麼新鮮事？"></textarea>
+          </div>
+          <div class="modal-footer border border-0">
+            <button type="submit" class="send-button btn btn-brand rounded-pill px-3 ms-auto mb-3 me-3">推文</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

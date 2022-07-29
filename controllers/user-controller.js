@@ -245,6 +245,25 @@ const userController = {
     } catch (err) {
       next(err)
     }
+  },
+  getSettingPage: async (req, res, next) => {
+    try {
+      const currentUserId = Number(helpers.getUser(req).id)
+      const userId = Number(req.params.id)
+      if (currentUserId !== userId) {
+        return res.status(200).json({
+          status: 'error',
+          message: "Can not edit other user's account!"
+        })
+      }
+      const existUser = await User.findByPk(userId, { raw: true })
+      if (!existUser) throw new Error("Account didn't exist!")
+      const name = existUser.name
+      // return res.render('settings', { existUser })
+      return res.json({ status: 'success', existUser, name })
+    } catch (err) {
+      next(err)
+    }
   }
 }
 
