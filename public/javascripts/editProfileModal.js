@@ -5,6 +5,10 @@ const inputIntroduction = document.querySelector('#modalProfileInfo')
 const editButton = document.querySelector('#editButton')
 const inputCover = document.querySelector('#inputCoverImage')
 const inputAvatar = document.querySelector('#inputAvatarImage')
+const nameLength = document.querySelector('#nameLength')
+const introLength = document.querySelector('#introLength')
+const avatarValue = document.querySelector('#avatarValue')
+const coverValue = document.querySelector('#coverValue')
 
 editButton.addEventListener('click', function (event) {
   const target = event.target
@@ -12,7 +16,12 @@ editButton.addEventListener('click', function (event) {
   axios
     .get(`/api/users/${UserId}`)
     .then(res => {
-      console.log('res.data', res.data)
+      inputName.value = res.data.name
+      inputIntroduction.value = res.data.introduction
+      avatarValue.src = res.data.avatar
+      coverValue.src = res.data.cover
+      nameLength.innerText = `${res.data.name.length}/50`
+      introLength.innerText = `${res.data.introduction.length}/160`
     })
     .catch(err => console.log(err))
 })
@@ -31,7 +40,12 @@ editModal.addEventListener('submit', function (event) {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
     .then(res => {
-      history.go(0)   // 刷新本頁
+
+      console.log(formData.get('name'))
+      console.log(formData.get('avatar'))
+
+      // history.go(0)   // 刷新本頁
+
     })
     .catch(err => console.log(err))
 })
