@@ -119,7 +119,7 @@ const tweetController = {
         isLiked: likedTweetsId.includes(tweets.id)
       }))
       // res.json(tweets)
-      res.render('tweets', { tweets: data, role, topUser, currentUser })
+feature/tweet-page
       // res.json({ status: 'success', tweets: data })
     } catch (err) {
       next(err)
