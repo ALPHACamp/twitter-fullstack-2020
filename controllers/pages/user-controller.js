@@ -1,5 +1,6 @@
 const { User, Tweet, Reply, Like, sequelize } = require('../../models')
 const bcrypt = require('bcryptjs')
+const helpers = require('../../_helpers')
 
 const { isAdmin, userInfoHelper } = require('../../helpers/user-helpers')
 
@@ -9,7 +10,7 @@ const userConroller = {
   },
   postSignin: (req, res) => {
     const ADMIN = 'admin'
-    if (req.user.role === ADMIN) {
+    if (helpers.getUser(req).role === ADMIN) {
       req.logout()
       req.flash('error_messages', '帳號不存在')
       return res.redirect('/signin')
@@ -142,7 +143,7 @@ const userConroller = {
     res.redirect(targetPath)
   },
   getSetting: (req, res, next) => {
-    const id = req.user.id
+    const id = helpers.getUser(req).id
 
     User.findByPk(id)
       .then(user => {
@@ -153,7 +154,7 @@ const userConroller = {
       .catch(err => next(err))
   },
   editSetting: (req, res, next) => {
-    const id = req.user.id
+    const id = helpers.getUser(req).id
     const { account, name, email, password, checkPassword } = req.body
 
     if (!account || !name || !email) throw new Error('帳號、名稱、Email 不可空白!')
