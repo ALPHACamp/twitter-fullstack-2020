@@ -17,9 +17,10 @@
   "production": {
     "username": "root",
     "password": null,
-    "database": "CLEARDB_DATABASE_URL",
+    "database": "database_production",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "use_env_variable": "CLEARDB_DATABASE_URL"
   },
   "travis": {
     "username": "travis",
