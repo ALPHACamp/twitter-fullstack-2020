@@ -9,9 +9,6 @@ const apiController = {
     })
   },
   putEditPage: async (req, res, next) => {
-    // userServices.putEditPage(req, res, (data) => {
-    //   return res.status(200).json(data)
-    // })
     try {
       const currentUserId = helpers.getUser(req).id
       const userId = req.params.id
@@ -19,9 +16,6 @@ const apiController = {
       const introduction = req.body.introduction || ''
       const avatar = req.files ? req.files.avatar : ''
       const cover = req.files ? req.files.cover : ''
-
-
-
 
       let uploadAvatar = ''
       let uploadCover = ''

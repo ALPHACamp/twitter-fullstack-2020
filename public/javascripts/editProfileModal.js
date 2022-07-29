@@ -6,17 +6,13 @@ const editButton = document.querySelector('#editButton')
 const inputCover = document.querySelector('#inputCoverImage')
 const inputAvatar = document.querySelector('#inputAvatarImage')
 
-console.log('-------===========================================')
 editButton.addEventListener('click', function (event) {
-  console.log('================================')
   const target = event.target
   const UserId = target.dataset.id
   axios
     .get(`/api/users/${UserId}`)
     .then(res => {
-
       console.log('res.data', res.data)
-
     })
     .catch(err => console.log(err))
 })
@@ -35,7 +31,6 @@ editModal.addEventListener('submit', function (event) {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
     .then(res => {
-      console.log(formData)
       history.go(0)   // 刷新本頁
     })
     .catch(err => console.log(err))

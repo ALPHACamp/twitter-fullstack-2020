@@ -30,9 +30,6 @@ const userServices = {
       const avatar = req.files ? req.files.avatar : ''
       const cover = req.files ? req.files.cover : ''
 
-
-
-
       let uploadAvatar = ''
       let uploadCover = ''
       if (avatar) {
@@ -47,8 +44,6 @@ const userServices = {
       if (!name) return res.json({ status: 'error', message: '名字不可空白！' })
       if (name.length > 50) return res.json({ status: 'error', message: '字數超出上限！' })
       if (introduction.length > 160) return res.json({ status: 'error', message: '字數超出上限！' })
-
-
 
       const data = await user.update({
         name,

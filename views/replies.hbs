@@ -33,7 +33,7 @@
 
         <div class="reply-nums-likes">
           <div class="reply-nums">{{replies.length}} 回覆</div>
-          <div class="replu-likes">{{#if tweet.Likes.id}}{{tweet.Likes.length}}{{else}}0{{/if}}喜歡次數</div>
+          <div class="replu-likes">{{#if tweet.Likes}}{{tweet.Likes.length}}{{else}}0{{/if}}喜歡次數</div>
           {{!-- 這邊可能要修改邏輯 --}}
         </div>
         <div class="reply-line" style="top:265px"></div>
