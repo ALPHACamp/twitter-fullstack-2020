@@ -11,7 +11,7 @@
       <form action="/tweets" method="POST">
         <div class="d-flex flex-wrap mt-3">
           <div class="me-1">
-            <img src="{{User.avatar}}" alt="" class="avatar-sm rounded-pill">
+            <img src="{{currentUser.avatar}}" alt="" class="avatar-sm rounded-pill">
           </div>
           <textarea class="description-input w-auto border border-0 ms-1 mb-1" name="description" id="description"
             cols="65" rows="3" placeholder="有什麼新鮮事？"></textarea>
@@ -43,9 +43,9 @@
             <p class="description me-4" id="description-{{this.id}}">{{this.description}}</p>
             <div class="description-like-btn-container mb-3">
               <button class="reply-btn d-flex align-items-center" data-bs-toggle="modal"
-                data-bs-target="#reply-modal-{{this.id}}" data-tweetid="{{this.id}}"
+                data-bs-target="#replyTweetBtn" data-tweetid="{{this.id}}"
                   data-userid="{{this.User.id}}">
-                <i class="reply" data-bs-toggle="modal" data-bs-target="#replyTweetBtn" ></i>
+                <i class="reply" data-tweetid="{{this.id}}" data-userid="{{this.User.id}}"></i>
                 <span class="reply-count ms-2">{{this.Replies.length}}</span>
               </button>
               {{#if this.isLiked}}
@@ -73,36 +73,46 @@
   {{> recommend-follow }}
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="reply-model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Reply Modal -->
+<div class="modal fade" id="replyTweetBtn" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal-content" style="border-radius: 14px;">
+      <div class="modal-header pb-1">
+        <button type="button" class="btn border-0 p-0 ms-0" data-bs-dismiss="modal" aria-label="Close"><i class="noti-danger"></i></button>
       </div>
-      <div class="modal-body" id="reply-model-description">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">回覆</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      <div class="modal-body pt-0">
+{{!-- 回覆的推文資料 --}}
+<div class="card border-0">
+  <div class="row g-0 mx-3">
+    <div class="col-1 my-3 m-auto position-relative">
+      <img
+        src=""
+        alt="avatar"
+        class="avatar-sm rounded-circle position-absolute end-0"
+        id="reply-tweet-avatar"
+      />
+      <div class="border-start border-3 position-absolute" style="height: calc(100% - 55px); width: 1px; right: 23px; bottom: -10px; border-color: #B5B5BE;"></div>
+    </div>
+    <div class="col-11">
+      <div class="card-body">
+        <h5 class="card-title fw-bold" id="reply-tweet-name"><small
+            class="text-muted fw-light" id="reply-tweet-account"></small>
+        </h5>
+        <p class="card-text" id="reply-tweet-description"></p>
+        <small class="fw-light">回覆給 <small class="reply-to text-brand">＠user1</small></small>
       </div>
     </div>
   </div>
 </div>
-
-<script>
-  const dataPanel = document.querySelector('#tweets-container')
-  dataPanel.addEventListener('click', (e)=>{
-    if (e.target.matches('.btn-reply')) {
-      showReplyModel(e.target.dataset.id)
-    }
-  })
-  function showReplyModel(userId,tweetId){
-    const avatar = document.querySelector(`#tweet-avatar-${userId}`)
-    const name = document.querySelector(`#tweet-name-${userId}`)
-    const account = document.querySelector(`#tweet-account-${userId}`)
-    const description = document.querySelector(`#description-${tweetId}`)
-    
-  }
-</script>
+{{!-- 回覆的推文資料結束 --}}
+<form action="" method="post" class="row g-0 mt-2" id="reply-input">
+  <img src="{{currentUser.avatar}}" alt="model-user-avatar" class="avatar-sm rounded-circle col-1">
+  <textarea id="comment" name="comment" class="col-10 ms-3 border-0 overflow-hidden" maxlength="140" placeholder="推你的回覆" rows="6" style="resize: none;"></textarea>
+  <button type="submit" class="btn btn-brand rounded-pill fw-light col-2" data-bs-dismiss="modal" style="width: 60px; margin-left: 405px;">回覆</button>
+</form>
+      </div>
+        
+    </div>
+  </div>
+</div>
+<!-- Reply Modal End -->
