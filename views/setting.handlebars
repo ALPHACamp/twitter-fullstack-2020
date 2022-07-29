@@ -1,8 +1,6 @@
 <div class="container">
-  <div class="row">
-    {{> left-nav}}
-    <div class="col-6 ms-3">
-      <h4 class="text-start fw-bold mb-4">帳號設定</h4>
+    <div class="ms-3">
+      <h5 class="text-start fw-bold mb-4">帳戶設定</h5>
       <form class="form-signup my-3 d-flex flex-column" action="/setting?_method=PUT" method="POST">
         {{> user-account-form}}
         <div class="row justify-content-end mx-3">
@@ -12,5 +10,4 @@
         </div>
       </form>
     </div>
-  </div>
 </div>
