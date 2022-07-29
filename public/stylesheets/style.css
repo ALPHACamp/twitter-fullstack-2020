@@ -4,19 +4,23 @@ button:focus {
   outline: 0;
 }
 
-.body-container {
-  position: fixed;
+html,body {
   height: 100%;
-  left: 50%;
-  margin-left: -510px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.body-container {
+  height: 100%;
   display: flex;
   justify-content: center;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
 
 .menu {
-  width: 178px;
   height: 100%;
+  width: 178px;
   margin-right: 20px;
 }
 
@@ -39,7 +43,7 @@ button:focus {
 }
 
 .tweet-container {
-  height: 100%;
+  height: 75%;
   overflow-y: scroll;
 }
 
@@ -84,6 +88,13 @@ button:focus {
 .avatar-sm {
   width: 3.125rem;
   height: 3.125rem;
+  object-fit: cover;
+}
+
+.admin-user-avatar {
+  width: 6.25rem;
+  height: 6.25rem;
+  object-fit: cover;
 }
 
 .user-description-container {
@@ -116,6 +127,7 @@ button:focus {
   display: inline;
   width: 10rem;
   line-height: 24px;
+  cursor: pointer;
 }
 
 .user-account {
@@ -139,7 +151,11 @@ button:focus {
   border: 0 0 0 0;
 }
 
+
+
+/* follow-list */
 .recommend-follow-list {
+  height: 100%;
   width: 273px;
   margin-left: 20px;
 }
@@ -148,7 +164,7 @@ button:focus {
   background-color: #FAFAFB;
 }
 
-.user-name-account {
+.follow-list-user-name-account {
   width: 240px;
 }
 
@@ -157,49 +173,11 @@ button:focus {
   overflow: hidden;
 }
 
-.follow-btn {
-  display: inline;
-  width: auto;
-  height: 40px;
-  line-height: 40px;
-  padding: 0 20px 0 20px;
-  background-color: white;
-  color: #FF6600;
-  border: 1px solid #FF6600;
-}
 
-.follow-btn:hover {
-  background-color: #FF6600;
-  color: white;
-  border: 1px solid #FF6600;
-}
-
-.following-btn {
-  display: inline;
-  width: auto;
-  height: 40px;
-  line-height: 40px;
-  padding: 0 20px 0 20px;
-  background-color: #FF6600;
-  color: white;
-  border: 1px solid #FF6600;
-}
-
-.following-btn:hover {
-  background-color: white;
-  color: #FF6600;
-  border: 1px solid #FF6600;
-}
-
-.follow-input {
-  display: none;
-}
 
 /* reply modal */
-.connect-line {
-  height: 100%;
-  width: 6px;
-  background-color: #6C757D;
+.reply-wrapper {
+
 }
 
 .modal-description-container {
@@ -217,8 +195,4 @@ button:focus {
 
 #modal-user-avatar {
   margin-bottom: 30px solid white;
-}
-
-.modal {
-  z-index: 1;
 }
