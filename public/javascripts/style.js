@@ -3,26 +3,26 @@
 const dataPanel = document.querySelector('#data-panel')
 
 dataPanel.addEventListener('click', e => {
-  if (e.target.matches('.reply')) {
-    console.log(e.target.dataset)
-    showReplyModel(e.target.dataset.userid, e.target.dataset.tweetid)
+  if (e.target.matches('.r-btn')) {
+    showReplyModel(e.target.dataset.tid)
   }
 })
 
-function showReplyModel (userId, tweetId) {
-  const avatar = document.querySelector(`#tweet-avatar-${userId}`).src
-  const name = document.querySelector(`#tweet-name-${userId}`).textContent
-  const account = document.querySelector(`#tweet-account-${userId}`).textContent
-  const time = document.querySelector(`#tweet-time-${tweetId}`).textContent
-  const description = document.querySelector(`#description-${tweetId}`)
-    .textContent
+function showReplyModel (tid) {
+  const avatar = document.querySelector(`#avatar-${tid}`).src
+  const name = document.querySelector(`#name-${tid}`).textContent
+  const account = document.querySelector(`#account-${tid}`).textContent
+  const time = document.querySelector(`#time-${tid}`).textContent
+  const description = document.querySelector(`#description-${tid}`).textContent
 
   const replyAvatar = document.querySelector('#reply-tweet-avatar')
   const replyName = document.querySelector('#reply-tweet-name')
   const replyDescription = document.querySelector('#reply-tweet-description')
   const replyInput = document.querySelector('#reply-input')
+  const replyTo = document.querySelector('#reply-to')
   replyAvatar.src = avatar
-  replyName.innerHTML = `${name} <small class="text-muted fw-light" id="reply-tweet-account" style="font-size: 14px;">${account}${time}</small>`
+  replyName.innerHTML = `${name} <small class="text-muted fw-light" id="reply-tweet-account" style="font-size: 14px;">${account}．${time}</small>`
   replyDescription.textContent = description
-  replyInput.action = `/tweets/${tweetId}/replies`
+  replyInput.action = `/tweets/${tid}/replies`
+  replyTo.textContent = account
 }
