@@ -1,28 +1,34 @@
 <div class="col">
   <div class="left-side d-flex flex-column bd-highlight mb-3 ps-5">
     <a href="/tweets">
-      <img class="logo mb-2" src="https://upload.cc/i1/2022/07/26/jOKSuy.png" alt="alphitter-logo">
+      <img class="logo mb-2" src="/images/icons/alphitter-logo.png" alt="alphitter-logo">
     </a>
     <div class="m-2 p-2 bd-highlight">
       <a href="/tweets">
-        <h5><img src="https://upload.cc/i1/2022/07/26/6efx4C.png" alt="home-page">首頁</h5>
+        <h5 style="color:{{#ifCond route 'tweets'}}#FF6600;{{else}}black{{/ifCond}}">
+          <img src="/images/icons/house.png" alt="home-page">首頁
+        </h5>
       </a>
     </div>
     <div class="m-2 p-2 bd-highlight">
       <a href="/users/{{user.id}}/tweets">
-        <h5><img src="https://upload.cc/i1/2022/07/26/QkWoti.png" alt="personal-page">個人資料</h5>
+        <h5 style="color:{{#ifCond route 'profile'}}#FF6600;{{else}}black{{/ifCond}}">
+          <img src="/images/icons/person.png" alt="personal-page">個人資料
+        </h5>
       </a>
     </div>
     <div class="m-2 p-2 bd-highlight">
       <a href="/users/{{user.id}}/setting">
-        <h5><img src="https://upload.cc/i1/2022/07/26/08ZQLC.png" alt="setting-page">設定</h5>
+        <h5 style="color:{{#ifCond route 'setting'}}#FF6600;{{else}}black{{/ifCond}}">
+          <img src="/images/icons/setting.png" alt="setting-page">設定
+        </h5>
       </a>
     </div>
     <a type="button" class="tweet-btn-lg ms-3" data-bs-toggle="modal" data-bs-target="#tweetInput">
       <span>推文</span>
     </a>
     <a class="logout" href="/logout">
-      <h5><img src="https://upload.cc/i1/2022/07/26/wRYmLj.png" alt="logout">登出</h5>
+      <h5><img src="/images/icons/exit.png" alt="logout">登出</h5>
     </a>
   </div>
 

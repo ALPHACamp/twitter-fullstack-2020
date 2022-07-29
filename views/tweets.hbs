@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row justify-content-md-center">
-    {{> left-side}}
+    {{> left-side route='tweets'}}
     <div class="main col-6">
       {{> header}}
       {{!-- 推文區塊 --}}
@@ -22,7 +22,7 @@
       <div class="hr-line-b"></div>
 
       {{#each tweets}}
-      {{> tweet}}
+      {{> tweet route='tweets'}}
       {{/each}}
 
     </div>
