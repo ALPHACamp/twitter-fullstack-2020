@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "alphitter",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -13,9 +13,12 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "connect-flash": "^0.1.1",
+    "dotenv": "^10.0.0",
+    "dayjs": "^1.10.6",
     "express": "^4.16.4",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
