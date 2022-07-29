@@ -20,7 +20,7 @@
   <link href="/stylesheets/index.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="overflowx-hidden">
   {{#if loginUser}}
   <div class="row">
     <div class="col-2">
@@ -33,10 +33,11 @@
     </div>
     {{else}}
     <div class="col-8">
+      {{> messages}}
       {{{body}}}
     </div>
     <div class="col-2">
-      {{!-- right Navigation --}}
+      {{> right-nav}}
     </div>
     {{/if}}
   </div>
