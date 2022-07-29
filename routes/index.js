@@ -3,7 +3,7 @@ const router = express.Router()
 const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 
-const userController = require('../controllers/user-controller') 
+const userController = require('../controllers/user-controller')
 const followshipController = require('../controllers/followship-controller')
 const tweetController = require('../controllers/tweet-controller')
 

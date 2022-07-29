@@ -1,0 +1,28 @@
+<div class="container d-flex justify-content-center bg-white">
+  <div class="col-5">
+    <div class="d-flex justify-content-center row login-logo">
+      <img src="https://upload.cc/i1/2022/07/26/jOKSuy.png" alt="logo" style="height: 40px; width: 70px; border-radius: 0px;">
+      <p class="text-center mt-3 mb-3" style="font-size:23px">登入 Alphitter</p>
+    </div>
+    <form action="/signin" method="POST" style='width: 100%;'>
+      <div class="form-floating">
+        <input type="text" class="form-control" id="account" name="account" placeholder="請輸入帳號" required>
+        <label for="account">帳號</label>
+      </div>
+      <div class="form-floating mt-4">
+        <input type="password" class="form-control" id="password" name="password" placeholder="請輸入密碼" required>
+        <label for="password">密碼</label>
+      </div>
+      <div class="mt-4 mb-4 text-center">
+        <button class="btn col-12 login-button" style="color: #FFFFFF; background: #FF6600; border-radius: 50px;" type="submit">登入</button>
+      </div>
+      <div class="login-link text-end">
+        <p>
+          <a class="me-2" style="font-size: 16px;" href=" /signup">註冊</a>
+          •
+          <a class="ms-2" style="font-size: 16px;" href=" /admin/signin">後台登入</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
