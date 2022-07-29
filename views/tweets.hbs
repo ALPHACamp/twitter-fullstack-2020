@@ -11,7 +11,7 @@
       <form action="/tweets" method="POST">
         <div class="d-flex flex-wrap mt-3">
           <div class="me-1">
-            <img src="{{currentUser.avatar}}" alt="" class="avatar-sm rounded-pill">
+            <img src="{{User.avatar}}" alt="" class="avatar-sm rounded-pill">
           </div>
           <textarea class="description-input w-auto border border-0 ms-1 mb-1" name="description" id="description"
             cols="65" rows="3" placeholder="有什麼新鮮事？"></textarea>
@@ -98,15 +98,11 @@
       showReplyModel(e.target.dataset.id)
     }
   })
-  function showReplyModel(id){
-    console.log(id)
-    const avatar = document.querySelector(`#avatar-${id}`)
-    const name = document.querySelector(`#name-${id}`)
-    const account = document.querySelector(`#account-${id}`)
-    const description = document.querySelector(`#description-${id}`)
-    console.log(avatar.src)
-    console.log(name.innerTEXT)
-    console.log(account.innerTEXT)
-    console.log(description.innerTEXT)
+  function showReplyModel(userId,tweetId){
+    const avatar = document.querySelector(`#tweet-avatar-${userId}`)
+    const name = document.querySelector(`#tweet-name-${userId}`)
+    const account = document.querySelector(`#tweet-account-${userId}`)
+    const description = document.querySelector(`#description-${tweetId}`)
+    
   }
 </script>
