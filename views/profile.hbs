@@ -25,7 +25,7 @@
         <img class="avatar" src="{{targetUser.avatar}}" alt="avatar">
 
         {{#ifCond targetUser.id user.id}}
-        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#edit-profile-modal">
+        <button type="button" class="btn" id="edit-btn" data-bs-toggle="modal" data-bs-target="#edit-profile-modal">
           編輯個人資料
         </button>
         {{else}}
@@ -42,7 +42,23 @@
           </form>
           {{/if}}
         {{/ifCond}}
-        
+
+        <script>
+          const editBtn = document.querySelector('#edit-btn')
+          editBtn.addEventListener('click', () => {
+            axios.get('/api/users/' + {{user.id}})
+              .then(response => {
+                const userInfo = response.data.data
+                document.querySelector('#cover').src = userInfo.cover
+                document.querySelector('#avatar').src = userInfo.avatar
+                document.querySelector('#name').value = userInfo.name
+                document.querySelector('.name-count span').innerText = userInfo.name.length + '/50'
+                document.querySelector('#introduction').innerText = userInfo.introduction
+                document.querySelector('.introduction-count span').innerText = userInfo.introduction.length + '/160'
+              }).catch(err => console.warn(err))
+          })
+        </script>
+
         <!-- Modal -->
         <div class="modal fade" id="edit-profile-modal" aria-hidden="true">
           <div class="modal-dialog m-0 p-0" style="width: 634px; height: 610px;">
@@ -59,25 +75,25 @@
                 </form>
               </div>
               <div class="modal-body p-0" style="width: 634px; height: 552px;">
-                <img class="cover" src="{{targetUser.cover}}" alt="cover">
+                <img class="cover" id="cover" src="" alt="cover">
                 <div class="icons">
                   <img src="/images/camera.png" alt="camera" style="margin-right: 36px;">
                   <img src="/images/ventor_close_2.png" alt="cancel">
                 </div>
                 <div class="avatar-icon">
                   <div class="avatar">
-                    <img src="{{targetUser.avatar}}" alt="avatar">
+                    <img id="avatar" src="" alt="avatar">
                   </div>
                   <img class="icon" src="/images/camera.png" alt="camera" style="margin-right: 36px;">
                 </div>
                 <div class="input name-input" style="height: 54px">
                   <label for="name">名稱</label>
                   <input name="name" id="name" type="text" placeholder="請輸入使用者名稱" onfocus="changeFocus('name')"
-                    onblur="changeFocus('name')" oninput="counts('name')" value="{{targetUser.name}}" required>
+                    onblur="changeFocus('name')" oninput="counts('name')" required>
                   <div class="status name-status"></div>
                   <div class="d-flex">
                     <div class="helper name-helper"><span></span></div>
-                    <div class="count name-count"><span>{{targetUser.name.length}}/50</span></div>
+                    <div class="count name-count"><span>0/50</span></div>
                   </div>
                 </div>
                 <div class="input" style="height: 147px">
@@ -85,11 +101,11 @@
                   <textarea name="introduction" id="introduction" type="text" placeholder="請輸入使用者名稱" onfocus="changeFocus('introduction')"
                   onblur="changeFocus('introduction')" oninput="counts('introduction')"
                   onkeydown="if(event.keyCode == 13) return false;"
-                  style="height: 123px;">{{targetUser.introduction}}</textarea>
+                  style="height: 123px;"></textarea>
                   <div class="status introduction-status"></div>
                   <div class="d-flex">
                     <div class="helper introduction-helper"><span></span></div>
-                    <div class="count introduction-count"><span>{{targetUser.introduction.length}}/160</span></div>
+                    <div class="count introduction-count"><span>0/160</span></div>
                   </div>
                 </div>
                 <script>

@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const admin = require('./modules/admin')
+const api = require('./modules/api')
 const passport = require('../config/passport')
-const helpers = require('../_helpers')
 const tweetController = require('../controllers/tweetController')
 const replyController = require('../controllers/replyController')
 const followshipController = require('../controllers/followshipController')
@@ -12,6 +12,7 @@ const { authenticated } = require('../middleware/auth')
 const { getRecommendedUsers } = require('../middleware/recommendedUser')
 
 router.use('/admin', admin)
+router.use('/api', api)
 
 router.post('/tweets/:tweet_id/replies', authenticated, replyController.postReply)
 router.post('/tweets/:tweet_id/unlike', authenticated, tweetController.postUnlike)
