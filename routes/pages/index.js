@@ -4,6 +4,7 @@ const passport = require('../../config/passport')
 
 const admin = require('./modules/admin')
 const tweets = require('./modules/tweets')
+const users = require('./modules/users')
 
 const adminController = require('../../controllers/pages/admin-controller')
 const userController = require('../../controllers/pages/user-controller')
@@ -19,6 +20,9 @@ router.use('/admin', authenticatedAdmin, admin)
 router.use('/tweets', authenticated, tweets)
 
 // user route
+router.use('/users', authenticated, users)
+
+// others
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.getSignin)
