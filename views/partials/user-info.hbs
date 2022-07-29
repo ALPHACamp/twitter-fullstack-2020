@@ -1,4 +1,46 @@
+<<<<<<< HEAD
 <hr class="my-2">
+=======
+{{#if personal}}
+<div class="row m-0 p-0">
+  <div style="height: 250px; padding:0px">
+    {{!-- <img src="{{user.cover}}" alt="cover" style="height:100%;width:100%; object-fit:cover"> --}}
+    <img src="/images/cover-default.jpg" alt="cover" style="height:100%;width:100%; object-fit:cover">
+  </div>
+  <div class="d-flex justify-content-between px-3" style="margin-top:-80px;z-index:100;position:relative">
+    <a href="/users/{{personal.id}}/tweets">
+      <img src="{{personal.avatar}}" class="me-auto rounded-circle border border-white border-5"
+        style="width:150px;height:150px">
+    </a>
+    <div class="d-flex align-items-end">
+      <button type="button" class="setting-btn ms-1" id="editButton" data-id="{{personal.id}}" data-bs-toggle="modal"
+        data-bs-target="#editProfileModal">編輯個人資料</button>
+    </div>
+  </div>
+  <div class="name-container d-flex flex-column bd-highlight p-1 ms-3">
+    <a href="/users/{{personal.id}}/tweets">
+      <div class="font-name">{{personal.name}}</div>
+      <div class="font-account">@{{personal.account}}</div>
+    </a>
+  </div>
+</div>
+<div class="col" style="max-width: 100%;">
+  <p class="font-intro mx-4">{{personal.introduction}}</p>
+  <div class="card-followship ms-2">
+    <div class="card-following">
+      <a href="/users/{{personal.id}}/followings">
+        {{personal.followingCounts}} 個跟隨中
+      </a>
+    </div>
+    <div class="card-follower">
+      <a href="/users/{{personal.id}}/followers">
+        {{personal.followerCounts}} 個跟隨者
+      </a>
+    </div>
+  </div>
+</div>
+{{else}}
+>>>>>>> MioDev
 <div class="row m-0 p-0">
   <div style="height: 250px; px-0">
     <img src="{{user.cover}}" alt="cover" style="height:100%;width:100%; object-fit:cover">
@@ -22,6 +64,7 @@
     <small class="text-secondary">@{{user.account}}</small>
   </div>
 </div>
+<<<<<<< HEAD
 <div class="row  mx-0 px-0 ">
   <div class="col" style="max-width: 100%;">
     <p class="fs-5 mb-0" style="word-wrap: break-word; word-break: normal;">{{user.introduction}}</p>
@@ -33,8 +76,24 @@
     <a href="/users/{{user.id}}/followings" style="text-decoration:none;color:black">
       <p class="me-3 fw-bold text-secondary">5個跟隨中</p>
     </a>
+=======
+<div class="col" style="max-width: 100%;">
+  <p class="font-intro mx-4">{{user.introduction}}</p>
+  <div class="card-followship ms-2">
+    <div class="card-following">
+      <a href="/users/{{user.id}}/followings">
+        {{user.followingCounts}} 個跟隨中
+      </a>
+    </div>
+    <div class="card-follower">
+      <a href="/users/{{user.id}}/followers">
+        {{user.followerCounts}} 個跟隨者
+      </a>
+    </div>
+>>>>>>> MioDev
   </div>
 </div>
+{{/if}}
 
 <!-- Modal -->
 <!-- Modal -->
