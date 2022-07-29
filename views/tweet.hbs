@@ -6,8 +6,13 @@
     </section>
     <!--推文頁-->
     <div class="tweets middle-region-home">
-      <h4 class="title">推文</h4>
-      <div style="position:relative;left:220px;bottom:10px; z-index:1">
+      <div style="position:relative;right:260px;top:20px;" class="d-flex">
+        <a href="/tweets">
+          <img src="/images/vector.png" alt="vector" class="tweet-vector" style="display:inline;margin-top:2px;">
+        </a>
+        <h4 style="display:inline;margin-left:10px">推文</h4>
+      </div>
+      <div style="position:relative;left:220px;bottom:10px;">
         {{> message}}
       </div>
 
@@ -48,7 +53,25 @@
       </div>
 
       <div style="height:60px; width:606px;position:relative;top:25px;">
-
+        <div class="d-flex" style="margin-top:16px;">
+          <button style="position:relative;bottom:5px;">
+            <img src="/images/comment.png" style="width:25px;height:25px;position:relative;top:5px;" alt="comment"
+              data-bs-toggle="modal" data-bs-target="#tweet-reply-model">
+          </button>
+          {{#if isLiked}}
+          <form action="/tweets/{{tweet.id}}/unlike" method="POST">
+            <button style="position:relative;left:90px; top:2px">
+              <img src="/images/redLove.png" style="width:25px;height:25px;" alt="like">
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{tweet.id}}/like" method="POST">
+            <button style="position:relative;left:90px;top:2px">
+              <img src="/images/like.png" style="width:25px;height:25px;" alt="unlike">
+            </button>
+          </form>
+          {{/if}}
+        </div>
       </div>
 
       <!--每一則 reply -->
@@ -72,8 +95,7 @@
         <p class="list-separate-m"></p>
 
         <!-- 回覆 tweet Modal -->
-        <div class="modal fade" id="home-reply-model{{this.id}}" tabindex="-1" aria-labelledby="home-model"
-          aria-hidden="true">
+        <div class="modal fade" id="tweet-reply-model" tabindex="-1" aria-labelledby="home-model" aria-hidden="true">
           <div class="modal-dialog modal-lg" style="width:639px; position:relative; right:40px;">
             <div class="modal-content" style="border-radius:16px">
               <div class="modal-header" style="">
@@ -86,20 +108,21 @@
                   <div class="col">
                     <!--回覆的那則tweet內容-->
                     <div class="d-flex" style="position:relative;top:10px;left:3px;">
-                      <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+                      <img
+                        src="{{#if ../tweet.User.avatar}}{{../tweet.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
                         alt="Picture" class="tweet-user-avatar" style="width:50px;height:50px;">
                       <div class="head d-flex" style="position:relative;top:10px;">
-                        {{this.User.name}}&nbsp;&nbsp;
-                        <p class="color-secondaryColor">@{{this.User.account}}</p>
+                        {{../tweet.User.name}}&nbsp;&nbsp;
+                        <p class="color-secondaryColor">@{{../tweet.User.account}}</p>
                         <div class="time color-secondaryColor">•3小時</div>
                       </div>
                     </div>
                     <div class="content" style="position:relative; left:63px;">
-                      {{this.description}}
+                      {{../tweet.description}}
                     </div>
                     <div class="content" style="position:relative; left:63px;top:15px;">
                       <p class="color-secondaryColor" style="display:inline">回覆給</p>
-                      <p class="color-main" style="display:inline">@{{this.User.account}}</p>
+                      <p class="color-main" style="display:inline">@{{../tweet.User.account}}</p>
                     </div>
                     <p class="reply-separate-m"></p>
                   </div>
@@ -107,17 +130,16 @@
                 <!--要回覆的內容-->
                 <div class="row" style="height:200px;">
                   <div class="col">
-                    <form action="/tweets/{{this.id}}/replies" method="POST"
-                      onsubmit="return checkformReply('b-{{this.id}}')">
+                    <form action="/tweets/{{../tweet.id}}/replies" method="POST" onsubmit="return checkformReply('b')">
                       <div class="modal-body d-flex" style="position:relative;right:12px;">
                         <img src="{{#if ../user.avatar}}{{../user.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
                           class="tweet-user-avatar" style="width:50px;height:50px;" alt="Picture">
-                        <textarea class="form" id="b-{{this.id}}" name="comment" rows="3" maxlength="141"
-                          placeholder="推你的回覆" oninput="countsReply('a-{{this.id}}','b-{{this.id}}','c-{{this.id}}')"
+                        <textarea class="form" id="b" name="comment" rows="3" maxlength="141" placeholder="推你的回覆"
+                          oninput="countsReply('a','b','c')"
                           style="border:none; min-width:550px;position:relative; top:10px;resize:none;"
                           required></textarea>
-                        <div id="c-{{this.id}}" class="c-number-check">內容不可空白</div>
-                        <div id="a-{{this.id}}" class="a-number-check">0/140</div>
+                        <div id="c" class="c-number-check">內容不可空白</div>
+                        <div id="a" class="a-number-check">0/140</div>
                       </div>
                       <button type="submit" class="btn btn-orange btn-tweets-models"
                         style="border-radius: 50px;position:relative; left:550px;top:130px;">
@@ -195,30 +217,5 @@
       {{> home-user-tabs users=users user=user}}
     </section>
   </div>
-
-
-  <script>
-    function counts() {
-      const counts = document.querySelector('#description').value.length
-      document.querySelector('.name-count span').innerText = counts + '/140'
-      if (counts > 140) {
-        document.querySelector('.name-helper span').innerText = '字數超出上限！'
-        return
-      }
-      if (counts > 0 && counts <= 140) {
-        document.querySelector('.name-helper span').innerText = ''
-      }
-      if (counts === 0) {
-        document.querySelector('.name-helper span').innerText = '內容不可空白'
-      }
-    }
-    function checkform() {
-      const counts = document.querySelector('#description').value.length
-      if (counts > 140) {
-        alert('字數超出上限！')
-        return false
-      }
-    }
-  </script>
 
 </section>

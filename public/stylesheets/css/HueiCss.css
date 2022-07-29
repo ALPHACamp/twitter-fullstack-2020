@@ -341,3 +341,9 @@ section#Huei-region .tweet-card .tweet-user-avatar {
   line-height: 22px;
   color: #6C757D;
 }
+
+tweet-vector {
+  height: 14px;
+  width: 17px;
+  border-radius: 0px;
+}
