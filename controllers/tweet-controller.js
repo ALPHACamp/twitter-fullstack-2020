@@ -81,7 +81,7 @@ const tweetController = {
         return res.redirect(302, 'back')
       }
       await Tweet.create({ description, UserId })
-      res.redirect('/tweets')
+      return res.redirect('/tweets')
     } catch (err) {
       next(err)
     }

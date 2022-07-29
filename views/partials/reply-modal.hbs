@@ -24,51 +24,22 @@
       </div>
       {{!-- 回覆 --}}
       <div class="tweet-input modal-body">
-        <form action="/tweets/{{tweet.id}}/replies" method="POST" clas="needs-validation">
+        <form action="/tweets/{{tweet.id}}/replies" method="POST" class="reply-form needs-validation" id="reply-form">
           <div class="d-flex flex-wrap mt-1">
             <div class="me-1">
               <img src="{{user.avatar}}" alt="" class="avatar-sm rounded-pill">
             </div>
-            <textarea class="window-description-input w-auto border border-0 ms-1 mb-1" name="comment" id="comment"
+            <textarea class="reply-description-input w-auto border border-0 ms-1 mb-1" name="comment" id="comment"
               cols="65" rows="8" placeholder="有什麼新鮮事？"></textarea>
           </div>
           <div class="modal-footer border border-0">
-            <button type="submit" class="send-button btn btn-brand rounded-pill px-3 ms-auto mb-3 me-3">回覆</button>
+            <div class="d-flex justify-content-end align-times-center w-100 mb-3">
+              <div class="reply-description-length text-black-50 ms-auto me-3 fs-6 align-self-center" id="reply-description-length"></div>
+              <button type="submit" class="reply-btn-send send-button btn btn-brand rounded-pill px-3 me-3" id="reply-btn-send" disabled>推文</button>
+            </div>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
-
-<script>
-  (function () {
-    'use strict'
-    const form = document.querySelector('.needs-validation')
-    form.addEventListener('submit', function (event) {
-      if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
-      form.classList.add('was-validated')
-    })
-  })()
-
-  const password = document.querySelector(".window-description-input")
-  const checkPassword = document.getElementById("checkPassword")
-  function validatePassword() {
-    if (password.value !== checkPassword.value) {
-      checkPassword.setCustomValidity(' ')
-    } else {
-      checkPassword.setCustomValidity('')
-    }
-  }
-  password.onchange = validatePassword
-  checkPassword.onkeyup = validatePassword
-
-  const name = document.getElementById("name")
-  const nameLength = document.getElementById("name-length")
-  name.addEventListener('input', function (event) {
-    nameLength.textContent = name.value.length + '/50'
-  })
-</script>
