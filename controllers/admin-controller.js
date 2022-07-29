@@ -18,7 +18,12 @@ const adminController = {
   },
 
   getTweets: (req, res, next) => {
-    Tweet.findAll({ include: User, raw: true, nest: true }).then(tweets => {
+    Tweet.findAll({
+      include: User,
+      raw: true,
+      nest: true,
+      order: [['created_at', 'DESC']]
+    }).then(tweets => {
       const result = tweets.map(tweet => {
         return {
           ...tweet,
@@ -47,23 +52,27 @@ const adminController = {
       // where: { role: { [Op.not]: 'admin' } }, 正確排除資料，但測試一樣不過
       nest: true,
       include: [
-        { model: Tweet, include: Like },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
+        { model: Tweet, attributes: ['id'], include: { model: Like, attributes: ['id'] } },
+        { model: User, attributes: ['id'], as: 'Followers', through: { attributes: ['id'] } },
+        { model: User, attributes: ['id'], as: 'Followings', through: { attributes: ['id'] } }
       ],
-      attributes: {
-        include: [
-          [
-            sequelize.literal(`(
-                    SELECT COUNT(*)
-                    FROM Tweets AS t
-                    WHERE
-                    t.user_Id = User.id
-                )`),
-            'tweetsCount'
-          ]
+      attributes: [
+        'id',
+        'name',
+        'account',
+        'cover',
+        'avatar',
+        'role',
+        [
+          sequelize.literal(`(
+                SELECT COUNT(*)
+                FROM Tweets AS t
+                WHERE
+                t.user_Id = User.id
+            )`),
+          'tweetsCount'
         ]
-      },
+      ],
       order: [[sequelize.literal('tweetsCount'), 'DESC']]
     }).then(users => {
       const result = users
