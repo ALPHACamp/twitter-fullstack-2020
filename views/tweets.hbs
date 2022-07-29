@@ -11,7 +11,7 @@
       <form action="" class="">
         <div class="d-flex flex-wrap mt-3">
           <div class="me-1">
-            <img src="{{this.User.avatar}}" alt="" class="avatar-sm rounded-pill">
+            <img id="user-avatar" src="{{User.avatar}}" alt="" class="avatar-sm rounded-pill">
           </div>
           <textarea class="comment-input w-auto border border-0 ms-1 mb-1" name="comment-input" id="comment-input"
             cols="65" rows="3" placeholder="有什麼新鮮事？"></textarea>
@@ -21,21 +21,21 @@
     </div>
     <div class="diver"></div>
     {{!-- 推文卡片 --}}
-    <div class="tweet-container scrollbar">
+    <div id="tweets-container" class="tweet-container scrollbar">
       {{#each tweets}}
       <div class="tweet-card ms-3">
         <div class="d-flex flex-wrap mt-3">
           <div class="avatar-container me-1">
-            <img src="https://i.imgur.com/vYhPi3M.jpeg" alt="" class="avatar-sm rounded-pill">
+            <img src="{{this.User.avatar}}" alt="avatar" id="avatar-{{this.id}}" class="avatar-sm rounded-pill">
           </div>
           <div class="user-description-container d-flex flex-column text-start ms-1">
             <div class="user-name-account mb-2">
-              <h6 class="user-name fw-bold fs-5">{{this.User.name}}</h6>
-              <p class="user-account fw-normal fs-6">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</p>
+              <h6 class="user-name fw-bold fs-5" id="name-{{this.id}}">{{this.User.name}}</h6>
+              <small class="user-account fw-normal" id="account-{{this.id}}">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</small>
             </div>
-            <p class="description me-4">{{this.description}}</p>
+            <p class="description me-4" id="description-{{this.id}}">{{this.description}}</p>
             <div class="description-like-btn-container mb-3">
-              <i class="reply"></i>
+              <button class="border border-0 bg-white btn-reply" type="button" data-id="{{this.id}}"  data-bs-toggle="modal" data-bs-target="#reply-model"><i class="reply"></i></button>
               <p class="count ms-2">{{this.Replies.length}}</p>
               {{#if this.isLiked}}
               <form class="form-like" action="http://localhost:3000/tweets/{{this.id}}/unlike" method="POST"
@@ -61,3 +61,41 @@
   {{!-- 推薦清單開始 --}}
   {{> recommend-follow }}
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="reply-model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="reply-model-description">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">回覆</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const dataPanel = document.querySelector('#tweets-container')
+  dataPanel.addEventListener('click', (e)=>{
+    if (e.target.matches('.btn-reply')) {
+      showReplyModel(e.target.dataset.id)
+    }
+  })
+  function showReplyModel(id){
+    console.log(id)
+    const avatar = document.querySelector(`#avatar-${id}`)
+    const name = document.querySelector(`#name-${id}`)
+    const account = document.querySelector(`#account-${id}`)
+    const description = document.querySelector(`#description-${id}`)
+    console.log(avatar.src)
+    console.log(name.innerTEXT)
+    console.log(account.innerTEXT)
+    console.log(description.innerTEXT)
+  }
+</script>
