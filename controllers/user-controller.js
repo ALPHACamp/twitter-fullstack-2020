@@ -178,15 +178,12 @@ const userController = {
   getPersonalFollowings: async (req, res, next) => {
     try {
       const user = helpers.getUser(req)
-      const tweets = await Tweet.findAll({
-        include: User,
-        order: [
-          ['created_at', 'DESC']
-        ],
-        raw: true,
-        nest: true
+      const personal = await User.findByPk(Number(req.params.id), {
+        include: [
+          { model: User, as: 'Followings' }
+        ]
       })
-      return res.render('personfollow', { tweets, user })
+      return res.render('followings', { personal: personal.toJSON(), user })
     }
     catch (err) {
       next(err)
@@ -194,27 +191,13 @@ const userController = {
   },
   getPersonalFollowers: async (req, res, next) => {
     try {
-      // const currentUser = helpers.getUser(req)
-      // const UserId = helpers.getUser(req).id
-
-      const targetUser = await User.findByPk(req.params.userid, {
+      const user = helpers.getUser(req)
+      const personal = await User.findByPk(Number(req.params.id), {
         include: [
-          Tweet,
-          { model: User, as: 'Followers', include: { model: User, as: 'Followers' } }
+          { model: User, as: 'Followers' }
         ]
-        // order: [[sequelize.col('Followers.Followship.createdAt'), 'DESC']]
       })
-      if (!targetUser) throw new Error("User doesn't exist!")
-      const tweetsCounts = targetUser.Tweets.length
-      const readyuser = targetUser.toJSON()
-      readyuser.Followers.forEach(e => {
-        e.isFollowed = e.Followers.some(f => f.id === helpers.getUser(req).id)
-      })
-      // console.log('result', result)
-      return res.render('personfollow', {
-        data: readyuser,
-        tweetsCounts,
-      })
+      return res.render('followers', { personal: personal.toJSON(), user })
     }
     catch (err) {
       next(err)

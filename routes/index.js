@@ -33,7 +33,7 @@ router.post('/tweets', authenticated, tweetController.postTweet)
 router.get('/api/users/:id', apiUserController.getSetting)
 router.post('/api/users/:id', apiUserController.putSetting)
 router.use('/admin', admin)
-router.use('/users', authenticated, user)
+router.use('/users', user)
 router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
 
