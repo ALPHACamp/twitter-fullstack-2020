@@ -5,9 +5,7 @@ const apiController = {
     const id = req.params.id
     User.findByPk(id)
       .then(data => {
-        if (!data) {
-          return res.json({ status: "user didn't exist" })
-        }
+        if (!data) throw new Error("user didn't exist")
         const user = data.toJSON()
         delete user.password
         res.json({ status: 'success', data: user })
@@ -19,9 +17,7 @@ const apiController = {
     const id = req.params.id
     User.findByPk(id)
       .then(data => {
-        if (!data) {
-          return res.json({ status: "user didn't exist" })
-        }
+        if (!data) throw new Error("user didn't exist")
         data.update({ cover, avatar, name, introduction })
         const user = data.toJSON()
         delete user.password
