@@ -40,12 +40,18 @@
    white-space: nowrap;
  }
 
+ .font-intro {
+   font-size: 14px;
+   color: #171725;
+ }
+
  a {
    text-decoration: none;
    color: #171725;
  }
 
- .row .main {
+ .row .main,
+ .row .user-main {
    height: 100vh;
  }
 
@@ -53,6 +59,13 @@
    border-left: 1px solid #E6ECF0;
    border-right: 1px solid #E6ECF0;
    height: 100%;
+ }
+
+ .user-main {
+   border-left: 1px solid #E6ECF0;
+   border-right: 1px solid #E6ECF0;
+   height: 100%;
+   padding: 0;
  }
 
  .left-side,
@@ -186,6 +199,14 @@
  .main .hr-line {
    margin: 0px -12px;
    border: 1px solid #E6ECF0;
+   top: 30%;
+   left: 30%;
+ }
+
+ .user-main .hr-line {
+   border: 1px solid #E6ECF0;
+   top: 30%;
+   left: 30%;
  }
 
  .hr-line-b {
@@ -265,13 +286,6 @@
  .like-w div {
    margin-left: 20px;
    font-weight: bold;
- }
-
- .main .hr-line {
-   margin: 0px -12px;
-   border: 1px solid #E6ECF0;
-   top: 30%;
-   left: 30%;
  }
 
  /* Admin users css */
@@ -377,6 +391,7 @@
 
  .card-followship {
    display: flex;
+   justify-content: center;
    width: 160px;
    height: 22px;
    position: absolute;
@@ -386,10 +401,14 @@
    bottom: 7.64%;
  }
 
+ .user-main .card-followship {
+   position: relative;
+   left: 10px;
+ }
+
  .card-following,
  .card-follower {
    display: flex;
-   justify-content: center;
    width: 50%;
    height: 100%;
    font-size: 10px;
@@ -441,4 +460,22 @@
 
  .followingId {
    display: none;
+ }
+
+ .nav-item {
+   width: 130px;
+ }
+
+ .setting-btn {
+   box-sizing: border-box;
+   width: 128px;
+   height: 40px;
+   background: #FFFFFF;
+   border: 1px solid #FF6600;
+   border-radius: 50px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 16px;
+   color: #FF6600;
  }
