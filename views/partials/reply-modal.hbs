@@ -1,43 +1,45 @@
-<div class="modal fade" id="reply-modal-{{tweet.id}}" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+<div class="modal fade" id="reply-modal-{{tweet.id}}" tabindex="-1" aria-labelledby="replyModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header d-flex justify-content-start">
         <i class="close ms-0" data-bs-dismiss="modal" aria-label="Close"></i>
       </div>
       {{!-- 原推文 --}}
-        <div class="reply-wrapper d-flex flex-wrap mt-3 ms-3">
-          <div class="modal-avatar-container me-1">
-            <div class="modal-avatar-border">
-            <img src="{{tweet.User.avatar}}" alt="" class="avatar-sm rounded-pill modal-user-avatar" id="modal-user-avatar">
-            </div>
-          </div>
-          <div class="modal-description-container d-flex flex-column text-start ms-1">
-            <div class="user-name-account mb-2">
-              <span class="modal-user-name fw-bold fs-5" id="modal-user-name">{{tweet.User.name}}</span>
-              <span class="modal-user-account fw-normal fs-6" id="modal-user-account">@{{tweet.User.account}}</span>
-              <span class="modal-time fw-normal fs-6" id="modal-time">{{relativeTimeFromNow tweet.createdAt}}</span>
-            </div>
-            <p class="modal-description me-4" id="modal-description">{{tweet.description}}</p>
+      <div class="reply-wrapper d-flex flex-wrap mt-3 ms-3">
+        <div class="modal-avatar-container me-1">
+          <div class="modal-avatar-border">
+            <img src="{{tweet.User.avatar}}" alt="" class="avatar-sm rounded-pill modal-user-avatar"
+              id="modal-user-avatar">
           </div>
         </div>
-        {{!-- 回覆 --}}
-        <div class="tweet-input modal-body">
-          <form action="/tweets/{{tweet.id}}/replies" method="POST">
-            <div class="d-flex flex-wrap mt-1">
-              <div class="me-1">
-                <img src="{{user.avatar}}" alt="" class="avatar-sm rounded-pill">
-              </div>
-              <textarea class="window-description-input w-auto border border-0 ms-1 mb-1" name="comment"
-                id="comment" cols="65" rows="8" placeholder="有什麼新鮮事？"></textarea>
-            </div>
-            <div class="modal-footer border border-0">
-              <button type="submit" class="send-button btn btn-brand rounded-pill px-3 ms-auto mb-3 me-3">回覆</button>
-            </div>
-          </form>
+        <div class="modal-description-container d-flex flex-column text-start ms-1">
+          <div class="user-name-account mb-2">
+            <span class="modal-user-name fw-bold fs-5" id="modal-user-name">{{tweet.User.name}}</span>
+            <span class="modal-user-account fw-normal fs-6" id="modal-user-account">@{{tweet.User.account}}</span>
+            <span class="modal-time fw-normal fs-6" id="modal-time">{{relativeTimeFromNow tweet.createdAt}}</span>
+          </div>
+          <p class="modal-description me-4" id="modal-description">{{tweet.description}}</p>
         </div>
+      </div>
+      {{!-- 回覆 --}}
+      <div class="tweet-input modal-body">
+        <form action="/tweets/{{tweet.id}}/replies" method="POST" clas="needs-validation">
+          <div class="d-flex flex-wrap mt-1">
+            <div class="me-1">
+              <img src="{{user.avatar}}" alt="" class="avatar-sm rounded-pill">
+            </div>
+            <textarea class="window-description-input w-auto border border-0 ms-1 mb-1" name="comment" id="comment"
+              cols="65" rows="8" placeholder="有什麼新鮮事？"></textarea>
+          </div>
+          <div class="modal-footer border border-0">
+            <button type="submit" class="send-button btn btn-brand rounded-pill px-3 ms-auto mb-3 me-3">回覆</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+</div>
 
 <script>
   (function () {
@@ -52,7 +54,7 @@
     })
   })()
 
-  const password = document.getElementById("password")
+  const password = document.querySelector(".window-description-input")
   const checkPassword = document.getElementById("checkPassword")
   function validatePassword() {
     if (password.value !== checkPassword.value) {
