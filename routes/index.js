@@ -11,16 +11,18 @@ const tweetController = require('../controllers/tweet-controller')
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 router.get('/logout', userController.logout)
+router.get('/signup', userController.signUpPage)
+router.post('/signup', userController.signUp)
 
-router.get('/users/:id/setting', userController.getSetting)
-router.get('/users', userController.getUsers)
+router.get('/users/:id/setting', authenticated, userController.getSetting)
+router.get('/users', authenticated, userController.getUsers)
 
 router.post('/followships/:userId', authenticated, followshipController.addFollowing)
 router.delete('/followships/:userId', authenticated, followshipController.removeFollowing)
 
 router.get('/tweets', tweetController.getTweets)
 
-router.use('/', (req, res) => res.render('users'))
+router.use('/', (req, res) => res.redirect('users'))
 router.use('/', generalErrorHandler)
 
 module.exports = router
