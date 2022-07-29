@@ -23,6 +23,7 @@ const userController = {
   },
   signUp: (req, res, next) => {
     const { account, name, email, password, confirmPassword } = req.body
+
     if (!name || !email || !password || !confirmPassword || !account) throw new Error('所有欄位都是必填。')
     if (password !== confirmPassword) throw new Error('密碼 或 帳號 不正確！')
     if (name.length > 50) throw new Error('名稱上限為50字！')
@@ -55,6 +56,13 @@ const userController = {
     return res.render('users')
   },
   getSetting: (req, res, next) => {
+    const currentUserId = helpers.getUser(req) && helpers.getUser(req).id
+
+    if (currentUserId !== Number(req.params.id)) {
+      req.flash('error_messages', '只能改自己的資料！')
+      return res.redirect(`/users/${currentUserId}/setting`)
+    }
+
     return User.findByPk(req.params.id, {
       raw: true
     })
@@ -62,6 +70,45 @@ const userController = {
         res.render('setting', { user })
       })
       .catch(err => next(err))
+  },
+  putSetting: (req, res, next) => {
+    const currentUser = helpers.getUser(req)
+    const { account, name, email, password, confirmPassword } = req.body
+
+    if (!account || !name || !email || !password || !confirmPassword) throw new Error('所有欄位都是必填！')
+    if (password !== confirmPassword) throw new Error('密碼與確認密碼不相符！')
+    if (name.length > 50) throw new Error('名稱上限為50字！')
+
+    return Promise.all([
+      User.findByPk(currentUser.id),
+      User.findOne({ where: { email }, raw: true }),
+      User.findOne({ where: { account }, raw: true })
+    ])
+      .then(([user, findEmail, findAccount]) => {
+        if (findAccount) {
+          if (findAccount.id !== user.id) throw new Error('帳號已被使用！')
+        }
+
+        if (findEmail) {
+          if (findEmail.id !== user.id) throw new Error('email已被使用！')
+        }
+
+        return bcrypt.hash(password, 10)
+          .then(hash => {
+            return user.update({
+              account,
+              name,
+              email,
+              password: hash
+            })
+          })
+      })
+      .then(() => {
+        req.flash('success_messages', '資料修改成功！')
+        return res.redirect(`/users/${currentUser.id}/setting`)
+      })
+      .catch(err => next(err))
   }
+
 }
 module.exports = userController

@@ -24,15 +24,15 @@
               <input type="text" name="name" class="form-control font-weight-bold" placeholder="名稱" maxlength="50"
                 value="{{ user.name }}"
                 style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
-                id="account" required autofocus>
-              <label for="account">名稱</label>
+                id="name" required autofocus>
+              <label for="name">名稱</label>
             </div>
             <div class="form-group mt-4 form-floating">
               <input type="email" name="email" class="form-control font-weight-bold" placeholder="Email"
                 value="{{ user.email }}"
                 style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
-                id="Email" required autofocus>
-              <label for="Email">Email</label>
+                id="email" required autofocus>
+              <label for="email">Email</label>
             </div>
             <div class="form-group mt-4 form-floating">
               <input type="password" name="password" class="form-control font-weight-bold" placeholder="請設定密碼"
@@ -41,10 +41,10 @@
               <label for="password">密碼</label>
             </div>
             <div class="form-group mt-4 form-floating">
-              <input type="password" name="checkPassword" class="form-control font-weight-bold" placeholder="請再次輸入密碼"
+              <input type="password" name="confirmPassword" class="form-control font-weight-bold" placeholder="請再次輸入密碼"
                 style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
                 id="confirmPassword" required>
-              <label for="checkPassword">密碼再確認</label>
+              <label for="confirmPassword">密碼再確認</label>
             </div>
             <div class="mb-4 text-center">
               <button class="btn btn-block mt-4 tweet_btn" type="submit">儲存</button>
