@@ -23,7 +23,7 @@ router.delete('/followships/:userId', authenticated, followshipController.remove
 
 router.get('/tweets', authenticated, tweetController.getTweets)
 
-router.use('/', (req, res) => res.redirect('users'))
+router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
 
 module.exports = router

@@ -1,55 +1,80 @@
-<div class="col-6 d2">
-  <div class="row row-cols-1 row-cols-md-1">
-    <div class="col">
-      <div class="card pagetitle_card">
-        <div class="card-body">
-          <p class="pagetitle_title">
-            帳戶設定
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="card admintweets_card" style="border-radius: 0%;">
-      <div class="col">
-        <div class=' text-center login-container mt-3 ms-4'>
-          <form action="/users/{{ user.id }}/setting?_method=PUT" method="POST" style='width: 100%;'>
-            <div class="form-group form-floating">
-              <input type="text" name="account" class="form-control font-weight-bold" placeholder="帳號"
-                value="{{ user.account }}"
-                style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
-                id="account" required autofocus>
-              <label for="account">帳號</label>
-            </div>
-            <div class="form-group mt-4 form-floating">
-              <input type="text" name="name" class="form-control font-weight-bold" placeholder="名稱" maxlength="50"
-                value="{{ user.name }}"
-                style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
-                id="name" required autofocus>
-              <label for="name">名稱</label>
-            </div>
-            <div class="form-group mt-4 form-floating">
-              <input type="email" name="email" class="form-control font-weight-bold" placeholder="Email"
-                value="{{ user.email }}"
-                style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
-                id="email" required autofocus>
-              <label for="email">Email</label>
-            </div>
-            <div class="form-group mt-4 form-floating">
-              <input type="password" name="password" class="form-control font-weight-bold" placeholder="請設定密碼"
-                style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
-                id="password" required>
-              <label for="password">密碼</label>
-            </div>
-            <div class="form-group mt-4 form-floating">
-              <input type="password" name="confirmPassword" class="form-control font-weight-bold" placeholder="請再次輸入密碼"
-                style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
-                id="confirmPassword" required>
-              <label for="confirmPassword">密碼再確認</label>
-            </div>
-            <div class="mb-4 text-center">
-              <button class="btn btn-block mt-4 tweet_btn" type="submit">儲存</button>
-            </div>
-          </form>
+<div class="wrapper d-flex">
+
+  <!-- Sidebar -->
+  <nav id="left-sidebar" style="display:flex; align-items:stretch; width:15%;height:1200px; margin-left:130px;">
+    <ul class="list-unstyled" style="position:fixed ">
+      <img class="mt-2" src="https://upload.cc/i1/2022/07/29/g7ZiA1.png" alt="AC icon"
+        style="height: 40px; width: 70px; border-radius: 0px;">
+      <li style=" margin-bottom: 20px;">
+        <h6><a href="/tweets" style="text-decoration: none; color: inherit;"><i class="fa-solid fa-house"></i> 首頁</a>
+        </h6>
+      </li>
+      <li style=" margin-bottom: 20px;">
+        <h6><a href="/users/{{user.id}}" style="text-decoration: none; color: inherit;"><i
+              class="fa-solid fa-user-astronaut"></i> 個人資料</a></h6>
+      </li>
+      <li style=" margin-bottom: 20px;">
+        <h6><a href="/users/{{user.id}}/setting" style="text-decoration: none; color: inherit;"><i
+              class="fa-solid fa-gear"></i> 設定</a></h6>
+      </li>
+      {{!-- todo: 跳出modal --}}
+      <li style=" margin-bottom: 20px;">
+        <h6>
+          <a href="/tweets/modal" class="btn"
+            style="color: #FFFFFF; background: #FF6600; border-radius: 50px;">推文</a>
+        </h6>
+      </li>
+  </nav>
+
+  <div class="container"
+    style="margin:0px; padding:0px;  border-left: 2px solid rgb(209, 203, 203); border-right: 2px solid rgb(209, 203, 203); width:50%;">
+    <div>
+      <h4 class="fw-bold" style="padding:15px; border-bottom:2px solid rgb(209, 203, 203); margin-bottom: 0rem;">
+        <a href="/tweets" style="text-decoration: none; color: inherit;">帳戶設定</a>
+      </h4>
+      <div class="card p-3" style="border-radius: 0%;">
+        <div class="col col-10" style="display: contents;">
+          <div class=' text-center login-container mt-3'>
+            <form action="/users/{{ user.id }}/setting?_method=PUT" method="POST" style='width: 100%;'>
+              <div class="form-group form-floating">
+                <input type="text" name="account" class="form-control font-weight-bold" placeholder="帳號"
+                  value="{{ user.account }}"
+                  style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+                  id="account" required autofocus>
+                <label for="account">帳號</label>
+              </div>
+              <div class="form-group mt-4 form-floating">
+                <input type="text" name="name" class="form-control font-weight-bold" placeholder="名稱" maxlength="50"
+                  value="{{ user.name }}"
+                  style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+                  id="name" required autofocus>
+                <label for="name">名稱</label>
+              </div>
+              <div class="form-group mt-4 form-floating">
+                <input type="email" name="email" class="form-control font-weight-bold" placeholder="Email"
+                  value="{{ user.email }}"
+                  style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+                  id="email" required autofocus>
+                <label for="email">Email</label>
+              </div>
+              <div class="form-group mt-4 form-floating">
+                <input type="password" name="password" class="form-control font-weight-bold" placeholder="請設定密碼"
+                  style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+                  id="password" required>
+                <label for="password">密碼</label>
+              </div>
+              <div class="form-group mt-4 form-floating">
+                <input type="password" name="confirmPassword" class="form-control font-weight-bold"
+                  placeholder="請再次輸入密碼"
+                  style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+                  id="confirmPassword" required>
+                <label for="confirmPassword">密碼再確認</label>
+              </div>
+              <div class="mb-4 text-end">
+                <button class="btn btn-block mt-4 tweet_btn" style="color: #FFFFFF; background: #FF6600; border-radius: 50px;" type="submit">儲存</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

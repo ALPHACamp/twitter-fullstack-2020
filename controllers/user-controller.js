@@ -11,7 +11,7 @@ const userController = {
   },
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
-    res.redirect('/users') // 暫時使用
+    res.redirect('/tweets') // 暫時使用
   },
   logout: (req, res) => {
     req.flash('success_messages', '登出成功！')
@@ -77,7 +77,7 @@ const userController = {
 
     if (!account || !name || !email || !password || !confirmPassword) throw new Error('所有欄位都是必填！')
     if (password !== confirmPassword) throw new Error('密碼與確認密碼不相符！')
-    if (name.length > 50) throw new Error('名稱上限為50字！')
+    if (name.length > 50) throw new Error('字數超出上限！')
 
     return Promise.all([
       User.findByPk(currentUser.id),
@@ -86,11 +86,11 @@ const userController = {
     ])
       .then(([user, findEmail, findAccount]) => {
         if (findAccount) {
-          if (findAccount.id !== user.id) throw new Error('帳號已被使用！')
+          if (findAccount.id !== user.id) throw new Error('account 已重複註冊！')
         }
 
         if (findEmail) {
-          if (findEmail.id !== user.id) throw new Error('email已被使用！')
+          if (findEmail.id !== user.id) throw new Error('email 已重複註冊！')
         }
 
         return bcrypt.hash(password, 10)
@@ -104,8 +104,8 @@ const userController = {
           })
       })
       .then(() => {
-        req.flash('success_messages', '資料修改成功！')
-        return res.redirect(`/users/${currentUser.id}/setting`)
+        req.flash('success_messages', '個人資料修改成功！')
+        return res.redirect('/tweets')
       })
       .catch(err => next(err))
   }

@@ -3,24 +3,25 @@
   <!-- Sidebar -->
   <nav id="left-sidebar" style="display:flex; align-items:stretch; width:15%;height:1200px; margin-left:130px;">
     <ul class="list-unstyled" style="position:fixed ">
-      <img src="" alt="ac-logo" style=" margin-top: 20px;margin-bottom:10px;">
+      <img class="mt-2" src="https://upload.cc/i1/2022/07/29/g7ZiA1.png" alt="AC icon"
+        style="height: 40px; width: 70px; border-radius: 0px;">
       <li style=" margin-bottom: 20px;">
-        <h4><a href="/tweets" style="text-decoration: none; color: inherit;"><i class="fa-solid fa-house"></i> 首頁</a>
-        </h4>
+        <h6><a href="/tweets" style="text-decoration: none; color: inherit;"><i class="fa-solid fa-house"></i> 首頁</a>
+        </h6>
       </li>
       <li style=" margin-bottom: 20px;">
-        <h4><a href="/users/{{user.id}}" style="text-decoration: none; color: inherit;"><i
-              class="fa-solid fa-user-astronaut"></i> 個人資料</a></h4>
+        <h6><a href="/users/{{user.id}}" style="text-decoration: none; color: inherit;"><i
+              class="fa-solid fa-user-astronaut"></i> 個人資料</a></h6>
       </li>
       <li style=" margin-bottom: 20px;">
-        <h4><a href="/users/{{user.id}}/setting" style="text-decoration: none; color: inherit;"><i
-              class="fa-solid fa-gear"></i> 設定</a></h4>
+        <h6><a href="/users/{{user.id}}/setting" style="text-decoration: none; color: inherit;"><i
+              class="fa-solid fa-gear"></i> 設定</a></h6>
       </li>
       {{!-- todo: 跳出modal --}}
       <li style=" margin-bottom: 20px;">
-        <h4>
-          <a href="/tweets/modal" class="badge rounded-pill text-bg-warning" style="text-decoration: none;">推文</a>
-        </h4>
+        <h6>
+          <a href="/tweets/modal" class="btn" style="color: #FFFFFF; background: #FF6600; border-radius: 50px;">推文</a>
+        </h6>
       </li>
   </nav>
 
@@ -35,7 +36,7 @@
         <textarea class="form-control" placeholder="有什麼新鮮事 ?" style="height:100px; resize: none;"></textarea>
         {{!-- todo: 跳出modal --}}
         <h4>
-          <a href="/tweets/modal" class="badge rounded-pill text-bg-warning" style="text-decoration: none;">推文</a>
+          <a href="/tweets/modal" class="badge rounded-pill text-bg-warning" style="text-decoration: none; color: #FFFFFF; background: #FF6600; border-radius: 50px;">推文</a>
         </h4>
       </div>
       <table class="table align-middle">
