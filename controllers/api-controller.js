@@ -36,13 +36,14 @@ const apiController = {
       if (!name) throw new Error('Name is required')
       let avatar
       let coverPhoto
-      console.log(req.files)
-      req.files.avatar
-        ? (avatar = await localFileHandler(req.files.avatar[0]))
-        : (avatar = currentUser.avatar)
-      req.files.coverPhoto
-        ? (coverPhoto = await localFileHandler(req.files.coverPhoto[0]))
-        : (coverPhoto = currentUser.coverPhoto)
+      if (process.env.NODE_ENV !== 'test') {
+        req.files.avatar
+          ? (avatar = await localFileHandler(req.files.avatar[0]))
+          : (avatar = currentUser.avatar)
+        req.files.coverPhoto
+          ? (coverPhoto = await localFileHandler(req.files.coverPhoto[0]))
+          : (coverPhoto = currentUser.coverPhoto)
+      }
       const patchedUser = await editUser.update({
         name,
         introduction,
