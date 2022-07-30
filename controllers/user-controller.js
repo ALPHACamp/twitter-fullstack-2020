@@ -246,7 +246,7 @@ const userController = {
       if (currentUser.Followings.some(fr => fr.id === profileUser.id)) {
         profileUser.isFollowed = true
       }
-      const repliesTweets = await Reply.findAll({
+      const repliedTweets = await Reply.findAll({
         where: { UserId: userId },
         include: [
           {
@@ -260,16 +260,11 @@ const userController = {
         ],
         order: [['createdAt', 'DESC']]
       })
-      repliesTweets.forEach(function (reply, index) {
+      repliedTweets.forEach(function (reply, index) {
         this[index] = { ...reply.toJSON() }
-      }, repliesTweets)
-      // const likedTweetsId = profileUser?.Likes ? currentUser.Likes.map(lt => lt.TweetId) : []
-      // profileUser.Tweets = profileUser.Tweets.map(tweets => ({
-      //   ...tweets,
-      //   isLiked: likedTweetsId.includes(tweets.id)
-      // }))
+      }, repliedTweets)
       res.render('users/user-replies', {
-        repliesTweets,
+        repliedTweets,
         role: currentUser.role,
         currentUser,
         profileUser,
