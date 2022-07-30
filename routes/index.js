@@ -21,7 +21,7 @@ router.get('/users', authenticated, userController.getUsers)
 router.post('/followships/:userId', authenticated, followshipController.addFollowing)
 router.delete('/followships/:userId', authenticated, followshipController.removeFollowing)
 
-router.get('/tweets', tweetController.getTweets)
+router.get('/tweets', authenticated, tweetController.getTweets)
 
 router.use('/', (req, res) => res.redirect('users'))
 router.use('/', generalErrorHandler)

@@ -11,7 +11,7 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      account:{
+      account: {
         type: Sequelize.STRING
       },
       email: {
@@ -26,11 +26,11 @@ module.exports = {
       introduction: {
         type: Sequelize.TEXT
       },
-      banner:{
+      banner: {
         type: Sequelize.STRING
       },
       role: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       created_at: {
         allowNull: false,
