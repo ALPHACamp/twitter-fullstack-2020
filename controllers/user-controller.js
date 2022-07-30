@@ -190,54 +190,33 @@ const userController = {
       const user = helpers.getUser(req)
       const personal = await User.findByPk(Number(req.params.id), {
         include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' },
+          { model: Tweet },
           { model: Tweet, as: 'likedTweets' }
         ]
       })
-      if (personal.id === user.id) {
-        const likedTweetsId = req.user?.likedTweets.map(tweet => tweet.id)
-        const tweets = await Tweet.findAll({
-          where: {
-            ...likedTweetsId ? { id: likedTweetsId } : {}
-          },
-          include: [
-            User
-          ],
-          order: [
-            ['created_at', 'DESC'],
-            ['id', 'ASC']
-          ],
-          raw: true,
-          nest: true
-        })
-        const tweetsList = tweets.map(tweet => ({
-          ...tweet,
-          isLiked: true
-        }))
-        return res.render('profileLike', { tweetsList, user })
-      } else {
-        const likedTweetsId = personal?.likedTweets.map(tweet => tweet.id)
-        const tweets = await Tweet.findAll({
-          where: {
-            ...likedTweetsId ? { id: likedTweetsId } : {}
-          },
-          include: [
-            User
-          ],
-          order: [
-            ['created_at', 'DESC'],
-            ['id', 'ASC']
-          ],
-          raw: true,
-          nest: true
-        })
-        const tweetsList = tweets.map(tweet => ({
-          ...tweet,
-          isLiked: true
-        }))
-        return res.render('profileLike', { tweetsList, user, personal })
+      const likedTweetsId = personal?.likedTweets.map(tweet => tweet.id)
+      const tweets = await Tweet.findAll({
+        where: {
+          ...likedTweetsId ? { id: likedTweetsId } : {}
+        },
+        include: [
+          User
+        ],
+        order: [
+          ['created_at', 'DESC'],
+          ['id', 'ASC']
+        ],
+        raw: true,
+        nest: true
+      })
+      for (let i in tweets) {
+        const replies = await Reply.findAndCountAll({ where: { TweetId: tweets[i].id } })
+        const likes = await Like.findAndCountAll({ where: { TweetId: tweets[i].id } })
+        tweets[i].repliedCounts = replies.count
+        tweets[i].likedCounts = likes.count
+        tweets[i].isLiked = likedTweetsId?.includes(tweets[i].id)
       }
+      return res.render('profileLike', { tweets, user, personal: personal.toJSON() })
     }
     catch (err) {
       next(err)
