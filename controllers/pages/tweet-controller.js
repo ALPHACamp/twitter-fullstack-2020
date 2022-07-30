@@ -101,7 +101,6 @@ const tweetController = {
         tweet.replies = tweet.Replies.map(reply => ({
           ...reply
         }))
-        // res.json({ tweet })
         res.render('tweet', { tweet })
       })
       .catch(err => next(err))
