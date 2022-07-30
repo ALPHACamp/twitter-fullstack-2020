@@ -94,38 +94,11 @@
           </div>
         </div>
         <p class="list-separate-m"></p>
-
-        <!-- 回覆 tweet Modal -->
-
-        <script>
-          function countsReply(id, id2, id3) {
-            const counts = document.getElementById(id2).value.length
-            document.getElementById(id).innerText = counts + '/140'
-            if (counts > 140) {
-              document.getElementById(id3).innerText = '字數超出上限！'
-              return
-            }
-            if (counts > 0 && counts <= 140) {
-              document.getElementById(id3).innerText = ''
-            }
-            if (counts === 0) {
-              document.getElementById(id3).innerText = '內容不可空白'
-            }
-          }
-          function checkformReply(id2) {
-            const counts = document.getElementById(id2).value.length
-            if (counts > 140) {
-              alert('字數超出上限！')
-              return false
-            }
-          }
-        </script>
-        <!-- 回覆 tweet Modal 結束 -->
         {{/each}}
       </div>
     </div>
     <!--每一則 tweet 結束-->
-
+    <!-- 回覆 tweet Modal -->
     <div class="modal fade" id="tweet-reply-model" tabindex="-1" aria-labelledby="home-model" aria-hidden="true">
       <div class="modal-dialog modal-lg" style="width:639px; position:relative; right:40px;">
         <div class="modal-content" style="border-radius:16px">
@@ -181,6 +154,32 @@
         </div>
       </div>
     </div>
+    <!-- 回覆 tweet Modal 結束 -->
+
+
+    <script>
+      function countsReply(id, id2, id3) {
+        const counts = document.getElementById(id2).value.length
+        document.getElementById(id).innerText = counts + '/140'
+        if (counts > 140) {
+          document.getElementById(id3).innerText = '字數超出上限！'
+          return
+        }
+        if (counts > 0 && counts <= 140) {
+          document.getElementById(id3).innerText = ''
+        }
+        if (counts === 0) {
+          document.getElementById(id3).innerText = '內容不可空白'
+        }
+      }
+      function checkformReply(id2) {
+        const counts = document.getElementById(id2).value.length
+        if (counts > 140) {
+          alert('字數超出上限！')
+          return false
+        }
+      }
+    </script>
 
     <!--右側推薦追蹤清單-->
     <section class="right-region-sidebar">

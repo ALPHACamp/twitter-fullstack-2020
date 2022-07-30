@@ -1,14 +1,30 @@
 {{#if error_messages}}
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-  {{ error_messages }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+<script>
+  Swal.fire({
+    toast: true,
+    position: 'top-end',
+    icon: 'error',
+    title: '{{ error_messages }}',
+    showConfirmButton: false,
+    timer: 5000,
+    timerProgressBar: true,
+    toast: true,
+  })
+</script>
 {{/if}}
 {{#if success_messages}}
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-  {{ success_messages }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+<script>
+  Swal.fire({
+    toast: true,
+    position: 'top-end',
+    icon: 'success',
+    title: '{{ success_messages }}',
+    showConfirmButton: false,
+    timer: 5000,
+    timerProgressBar: true,
+    toast: true,
+  })
+</script>
 {{/if}}
 {{#if warning_msg}}
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
