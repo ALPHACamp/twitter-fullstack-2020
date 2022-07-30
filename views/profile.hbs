@@ -22,7 +22,11 @@
     <div class="user-info">
       <img id="profile-cover" src="{{targetUser.cover}}" alt="cover" style="width: 100%; height: 200px;">
       <div class="avatar-button">
+        {{#if targetUser.avatar}}
         <img class="avatar" id="profile-avatar" src="{{targetUser.avatar}}" alt="avatar">
+        {{else}}
+        <img class="avatar" id="profile-avatar" src="/images/avatar-default.jpg" alt="avatar" style="background-color: white;">
+        {{/if}}
 
         {{#ifCond targetUser.id user.id}}
         <button type="button" class="btn" id="edit-btn">
@@ -191,7 +195,7 @@
       {{> profile-tabs route='tweets'}}
       <div class="scroll-container">
       {{#each tweets}}
-      <a href="/tweets/{{this.id}}">
+      <a href="/tweets/{{this.id}}/replies">
         <div class="tweet">
           <div>
             <img class="avatar" src="{{../targetUser.avatar}}" alt="avatar">
@@ -253,7 +257,7 @@
       {{> profile-tabs route='likes'}}
       <div class="scroll-container">
         {{#each likes}}
-        <a href="/tweets/{{this.Tweet.id}}">
+        <a href="/tweets/{{this.Tweet.id}}/replies">
           <div class="tweet">
             <div>
               <img class="avatar" src="{{this.Tweet.User.avatar}}" alt="avatar">
@@ -261,7 +265,7 @@
             <div class="content">
               <div class="d-flex align-items-center" style="height: 26px;">
                 <span class="name">{{this.Tweet.User.name}}</span>
-                <span class="account">@{{this.Tweet.User.account}}•{{relativeTimeFromNow this.createdAt}}</span>
+                <span class="account">@{{this.Tweet.User.account}}•{{relativeTimeFromNow this.Tweet.createdAt}}</span>
               </div>
               <div class="description">
                 {{this.Tweet.description}}
@@ -289,6 +293,6 @@
   </div>
   
   <div id="profile-right">
-    {{> home-user-tabs}}
+    {{> home-user-tabs-middleware-ByYS}}
   </div>
 </div>
