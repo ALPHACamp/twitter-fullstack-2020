@@ -254,6 +254,7 @@ const userController = {
       })
       const followingsId = user?.Followings?.map(f => f.id)
       user.isFollowed = (followingsId.includes(personal.id))
+      console.log('/////////////', replies)
       return res.render('profile-reply', { replies, user, personal: personal.toJSON() })
     }
     catch (err) {
