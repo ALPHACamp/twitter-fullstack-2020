@@ -1,12 +1,12 @@
 {{#ifCond role 'user'}}
 <div class="menu" id="menu">
-  <nav class="nav d-flex flex-column justify-content-start align-items-start mt-2">
+  <nav class="nav side-menu d-flex flex-column justify-content-start align-items-start mt-2">
     <a href="/"><i class="logo ms-2"></i></a>
     <a aria-current="page" href="/">
       <i class="{{#ifCond route 'tweets'}}active-index{{else}}default-index{{/ifCond}}"></i>
     </a>
     <a href="/users/{{currentUser.id}}/tweets">
-      <i class="{{#if self}}active-user{{else}}default-user{{/if}}"></i>
+      <i class="{{#ifCond currentUser.id profileUser.id}}active-user{{else}}default-user{{/ifCond}}"></i>
     </a>
     <a href="/users/{{currentUser.id}}/setting">
       <i class="{{#ifCond route 'setting'}}active-setting{{else}}default-setting{{/ifCond}}"></i>
