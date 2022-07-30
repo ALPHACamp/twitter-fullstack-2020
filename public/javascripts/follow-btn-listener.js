@@ -1,17 +1,17 @@
 window.addEventListener('load', async e => {
-  const followBtn = document.querySelectorAll('.follow-item') || ''
-  followBtn.forEach((btn, i) => {
+  const followBtns = document.querySelectorAll('.follow-item') || ''
+
+  followBtns.forEach((btn, i) => {
     btn.addEventListener('click', async e => {
       try {
         let userId = btn.dataset.userid || ''
         const toggleBtn = []
-        followBtn.forEach(followBtn => {
+        followBtns.forEach((followBtn, i) => {
           if (followBtn.getAttribute('data-userid') === userId) {
             toggleBtn.push(followBtn)
           }
         })
         if (btn.classList.contains('following-btn')) {
-          console.log(toggleBtn)
           toggleBtn.forEach(btn => {
             btn.classList.remove('following-btn')
             btn.classList.add('follow-btn')

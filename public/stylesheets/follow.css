@@ -63,7 +63,7 @@ body {
 .follow-item {
   box-sizing: border-box;
   width: auto;
-  height: 99.9%;
+  padding: 0 15px 0 15px;
 }
 
 .follow-link {
@@ -147,4 +147,8 @@ body {
   height: 13px;
   font-size: 13px;
   line-height: 13px;
+}
+
+.name-account-wrapper {
+  overflow-x: hidden;
 }

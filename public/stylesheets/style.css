@@ -111,7 +111,7 @@ body {
 .modal-description-input,
 .side-description-input,
 .reply-description-input {
-  min-width:30px;
+  min-width: 30px;
   resize: none;
 }
 
@@ -164,7 +164,9 @@ body {
   color: #171725;
 }
 
-.description, .description-content, .modal-description {
+.description,
+.description-content,
+.modal-description {
   max-width: 100%;
   height: 100%;
   text-decoration: none;
@@ -212,10 +214,18 @@ body {
   overflow: hidden;
 }
 
+.list-user-name,
+.list-user-account {
+  width:80%;
+}
 
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
 /* reply modal */
-
 .modal-description-container {
   position: relative;
   top: 10px;
@@ -245,16 +255,11 @@ body {
 .upload-photo:hover {
   filter: var(--base-filter);
 }
+
 #cancel-photo:hover {
   filter: var(--error-filter);
 }
+
 #info-name:focus {
   outline: none;
 }
-/* 
-.user-tweets-header {
-  height: 75px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-} */
