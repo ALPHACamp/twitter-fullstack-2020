@@ -32,6 +32,10 @@ router.get('/logout', userController.logout)
 router.get('/setting', authenticated, userController.getSetting)
 router.put('/setting', authenticated, userController.editSetting)
 
-router.get('/', (req, res) => res.send('Hello World!'))
+router.post('/followships', authenticated, userController.addFollowship)
+router.delete('/followships', authenticated, userController.deleteFollowship)
+
+// fallback route
+router.get('/', (req, res) => res.redirect('/tweets'))
 
 module.exports = router
