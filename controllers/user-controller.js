@@ -73,34 +73,70 @@ const userController = {
   },
   getUserFollowings: async (req, res, next) => {
     try {
-      const userId = Number(req.params.id)
-      const user = await User.findByPk(userId, {
-        include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
-        ],
-        order: [['Followings', 'created_at', 'DESC']]
+      const currentUser = helpers.getUser(req)
+      const userId = Number(helpers.getUser(req).id)
+      const role = helpers.getUser(req).role
+      const queryUserId = Number(req.params.id)
+      const queryUserData = await User.findByPk(queryUserId, {
+        include: [{
+          model: User,
+          as: 'Followings',
+          attributes: ['id', 'name', 'avatar', 'introduction'],
+          order: [['createdAt', 'DESC']]
+        },
+        { model: Tweet, attributes: ['id'] }
+        ]
       })
-      user.Followings[0]
-        ? res.json({ status: 'success', data: user.Followings })
-        : res.json({ status: 'success', data: null })
+      if (!queryUserData) throw new Error('使用者不存在 !')
+
+      const queryUser = queryUserData.toJSON()
+      queryUser.isSelf = queryUserId === userId
+      queryUser.isFollowed = helpers
+        .getUser(req)
+        .Followings.some(item => item.id === queryUser.id)
+      queryUser.Followings.forEach(user => {
+        user.isFollowed = helpers
+          .getUser(req)
+          .Followings.some(item => item.id === user.id)
+        user.isSelf = user.id === userId
+      })
+      console.log(queryUser)
+      return res.render('users/user-followers', { queryUser, role, currentUser})
     } catch (err) {
       next(err)
     }
   },
   getUserFollowers: async (req, res, next) => {
     try {
-      const userId = Number(req.params.id)
-      const user = await User.findByPk(userId, {
-        include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
-        ],
-        order: [['Followers', 'created_at', 'DESC']]
+      const currentUser = helpers.getUser(req)
+      const userId = Number(helpers.getUser(req).id)
+      const role = helpers.getUser(req).role
+      const queryUserId = Number(req.params.id)
+      const queryUserData = await User.findByPk(queryUserId, {
+        include: [{
+          model: User,
+          as: 'Followers',
+          attributes: ['id', 'name', 'avatar', 'introduction'],
+          order: [['createdAt', 'DESC']]
+        },
+        { model: Tweet, attributes: ['id'] }
+        ]
       })
-      user.Followers[0]
-        ? res.json({ status: 'success', data: user.Followers })
-        : res.json({ status: 'success', data: null })
+      if (!queryUserData) throw new Error('使用者不存在 !')
+
+      const queryUser = queryUserData.toJSON()
+      queryUser.isSelf = queryUserId === userId
+      queryUser.isFollowed = helpers
+        .getUser(req)
+        .Followings.some(item => item.id === queryUser.id)
+      queryUser.Followers.forEach(user => {
+        user.isFollowed = helpers
+          .getUser(req)
+          .Followings.some(item => item.id === user.id)
+        user.isSelf = user.id === userId
+      })
+      console.log(queryUser)
+      return res.render('users/user-followers', { queryUser, role, currentUser })
     } catch (err) {
       next(err)
     }

@@ -258,6 +258,11 @@ body {
 #cancel-photo:hover {
   filter: var(--error-filter);
 }
-#info-name:focus {
-  outline: none;
-}
+
+/* 
+.user-tweets-header {
+  height: 75px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+} */

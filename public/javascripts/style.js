@@ -3,7 +3,7 @@
 const dataPanel = document.querySelector('#data-panel')
 
 dataPanel.addEventListener('click', e => {
-  if (e.target.matches('.r-btn')) {
+  if (e.target.matches('#r-btn')) {
     showReplyModel(e.target.dataset.tid)
   } else if (e.target.matches('#show-info-modal')) {
     showInfoModal(e.target.dataset.userid)
@@ -33,6 +33,7 @@ if (infoForm) {
 }
 
 function showReplyModel (tid) {
+  console.log(tid)
   const avatar = document.querySelector(`#avatar-${tid}`).src
   const name = document.querySelector(`#name-${tid}`).textContent
   const account = document.querySelector(`#account-${tid}`).textContent

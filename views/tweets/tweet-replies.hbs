@@ -26,7 +26,7 @@
         <span class="col-10 ms-1 mt-3"><strong>{{tweet.Replies.length}}</strong> 回覆<strong class="ms-4">{{tweet.Likes.length}}</strong>喜歡次數</span>
         <div class="border-top mt-3"></div>
         <button class="bg-body border-0 col-1 mt-3 me-5 opacity-50">
-          <img src="/stylesheets/svgs/outline-reply.svg" alt="reply-icon" class="r-btn" data-tid="{{tweet.id}}" data-bs-toggle="modal" data-bs-target="#replyTweet" style="width: 25px; height:25px;">
+          <img src="/stylesheets/svgs/outline-reply.svg" alt="reply-icon" style="width: 25px; height:25px;" data-tid="{{tweet.id}}" data-bs-toggle="modal" data-bs-target="#replyTweet" id="r-btn">
         </button>
         {{#if isLiked}}
         <form action="/tweets/{{tweet.id}}/unlike" method="post" class="col-2 mt-3">

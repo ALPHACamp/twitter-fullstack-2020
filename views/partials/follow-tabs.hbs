@@ -1,0 +1,8 @@
+<ul class="nav nav-tabs mb-3 follow-tab">
+  <li class="follow-item {{#ifCond route 'followers'}}current{{/ifCond}}">
+    <a class="follow-link fw-bold {{#ifCond route 'followers'}}text-brand{{/ifCond}}" href="/users/{{queryUser.id}}/followers">追隨者</a>
+  </li>
+  <li class="follow-item {{#ifCond route 'followings'}}current{{/ifCond}}">
+    <a class="follow-link fw-bold {{#ifCond route 'followings'}}text-brand{{/ifCond}}" href="/users/{{queryUser.id}}/followings">正在追隨</a>
+  </li>
+</ul>
