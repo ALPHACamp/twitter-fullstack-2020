@@ -1,0 +1,144 @@
+textarea:focus,
+input:focus,
+button:focus {
+  outline: 0;
+}
+
+
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.body-container {
+  height: 100%;
+  display: flex;
+  margin: 0 auto 0 auto;
+  justify-content: center;
+}
+
+
+
+/* left menu */
+
+.menu {
+  height: 100%;
+  width: 290px;
+}
+
+
+.window-description-input {
+  resize: none;
+  height: 150px;
+}
+
+
+/* center-part */
+
+.center-part {
+  height: 100%;
+  min-width: 300px;
+  width: 640px;
+  padding: 0 0 0 0;
+}
+
+.follow-tab {
+  box-sizing: border-box;
+  margin: 0 0 0 0;
+  border: 0 0 0 0;
+  outline: 0 0 0 0;
+  max-height: 52px;
+  width: 100%;
+}
+
+.follow-item {
+  box-sizing: border-box;
+  width: 130px;
+  height: 99.9%;
+}
+
+.follow-link {
+  box-sizing: border-box;
+  height: 100%;
+  text-decoration: none;
+  line-height: 52px;
+  color: #657786;
+}
+
+.follow-link:hover {
+  box-sizing: border-box;
+  height: 100%;
+  text-decoration: none;
+  line-height: 52px;
+  color: #FF6600;
+}
+
+.current {
+  box-sizing: border-box;
+  border-bottom: 3px solid #FF6600;
+}
+
+.follow-container {
+  height: 75%;
+  width: 100%;
+}
+
+.follow-card {
+  min-height: 160px;
+  width: 100%;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.card-top-wrapper {
+  margin: 0 5px 0 5px;
+}
+
+.follow-card-body {
+  width: 100%;
+}
+
+.reply-user-name {
+  font-size: 16px;
+  line-height: 40px;
+}
+
+.reply-content {
+  font-weight: 400;
+  font-size: 16px;
+  word-break: break-all;
+}
+
+.scroll-part {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.scrollbar {
+  /* padding-left: 6px; */
+}
+
+.scrollbar::-webkit-scrollbar {
+  display: none;
+  /* width: 6px; */
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  /* border-radius: 3px; */
+  /* background-color: rgba(0, 0, 0, 0.1); */
+}
+
+
+.index-user-name {
+  height: 18px;
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.count-tweet-text {
+  height: 13px;
+  font-size: 13px;
+  line-height: 13px;
+}

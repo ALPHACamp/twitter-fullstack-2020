@@ -1,0 +1,56 @@
+<div class="body-container text-center">
+  {{> side-menu }}
+  {{!-- 中央部分 --}}
+  <div class="center-part border" id="center-part">
+    <div class="text-index border-bottom" id="text-index">
+      <a class="text-decoration-none" href="javascript:history.back(-1)">
+        <div class="user-tweets-header text-start ms-3 mt-4 mb-3 d-flex align-items-center ">
+          <i class="back"></i>
+      </a>
+      <div class="index-name-wrapper ms-3">
+        <h4 class="text-black fw-bold index-user-name mb-0">{{queryUser.name}}</h4>
+        <span class="count-tweet text-black-50 fw-bold fs-6">{{queryUser.Tweets.length}} 推文</span>
+      </div>
+    </div>
+  </div>
+  {{> follow-tabs route='followings'}}
+  <div class="scroll-part scrollbar">
+    {{!-- 追隨卡片 --}}
+    <div class="follow-container scrollbar">
+      {{#if queryUser.Followings}}
+      {{#each queryUser.Followings}}
+      <div class="follow-card d-flex mb-3">
+        <div class="avatar-container ms-4 me-1">
+          <a href="/users/{{this.id}}/tweets">
+            <img src="{{this.avatar}}" alt="" class="avatar-sm rounded-pill" id="tweet-avatar-{{this.id}}">
+          </a>
+        </div>
+        <div class="follow-card-body me-4">
+          <div class="card-top-wrapper d-flex justify-content-between">
+            <div class="reply-user-name fw-bold">{{this.name}}</div>
+            {{#if this.isSelf}}
+            <div></div>
+            {{else}}
+            {{#if this.isFollowed}}
+            <button class="following-btn follow-item rounded-pill" id="follow-btn" data-userid="{{this.id}}"
+              type="submit">正在跟隨</button>
+            {{else}}
+            <button class="follow-btn follow-item rounded-pill" id="follow-btn" data-userid="{{this.id}}"
+              type="submit">跟隨</button>
+            {{/if}}
+            {{/if}}
+          </div>
+          <div class="reply-content d-flex justify-content-start align-items-start ms-1">{{this.introduction}}</div>
+        </div>
+      </div>
+      {{/each}}
+      {{else}}
+      <h3 class="text-start m-3">嘿! 你還沒開始追蹤任何人</h3>
+      {{/if}}
+    </div>
+    {{!-- 推文卡片結束 --}}
+  </div>
+</div>
+{{!-- 中央部分結束 --}}
+{{> recommend-follow }}
+</div>
