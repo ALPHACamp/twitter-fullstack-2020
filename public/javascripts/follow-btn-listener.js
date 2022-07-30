@@ -4,7 +4,7 @@ window.addEventListener('load', async e => {
   followBtns.forEach((btn, i) => {
     btn.addEventListener('click', async e => {
       try {
-        let userId = btn.dataset.userid || ''
+        const userId = btn.dataset.userid || ''
         const toggleBtn = []
         followBtns.forEach((followBtn, i) => {
           if (followBtn.getAttribute('data-userid') === userId) {
@@ -18,10 +18,10 @@ window.addEventListener('load', async e => {
             btn.textContent = '跟隨'
           })
           // 追蹤者數量-1
-          const userAccontElement = btn.previousElementSibling.children[1] || ''
+          const userAccount = btn.dataset.useraccount || ''
           const profileAccontElement = document.querySelector('#profile-account') || ''
           if (!profileAccontElement) return await axios.post('/followships', { id: userId })
-          if (profileAccontElement.textContent === userAccontElement.textContent) {
+          if (profileAccontElement.textContent.replace('@', '') === userAccount) {
             const countFollowingsElement = document.querySelector('#count-followers') || ''
             // 文字處裡
             const index = countFollowingsElement.textContent.indexOf('個')
@@ -37,11 +37,10 @@ window.addEventListener('load', async e => {
             btn.classList.add('following-btn')
             btn.textContent = '正在跟隨'
           })
-          // 追蹤者數量+1
-          const userAccontElement = btn.previousElementSibling.children[1] || ''
+          const userAccount = btn.dataset.useraccount || ''
           const profileAccontElement = document.querySelector('#profile-account') || ''
           if (!profileAccontElement) return await axios.post('/followships', { id: userId })
-          if (profileAccontElement.textContent === userAccontElement.textContent) {
+          if (profileAccontElement.textContent.replace('@', '') === userAccount) {
             const countFollowingsElement = document.querySelector('#count-followers') || ''
             // 文字處裡
             const index = countFollowingsElement.textContent.indexOf('個')

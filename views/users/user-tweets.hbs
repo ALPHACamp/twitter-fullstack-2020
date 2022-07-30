@@ -25,9 +25,9 @@
             </button>
             {{else}}
               {{#if profileUser.isFollowed}}
-                <button id="follow" class="following-btn follow-item btn btn-brand rounded-pill me-3 mt-3" data-userid="{{profileUser.id}}">正在跟隨</button>
+                <button id="follow" class="following-btn follow-item btn btn-brand rounded-pill me-3 mt-3" data-userid="{{profileUser.id}}" data-useraccount="{{profileUser.account}}">正在跟隨</button>
               {{else}}
-                <button id="follow" class="follow-btn follow-item btn btn-outline-brand rounded-pill me-3 mt-3" data-userid="{{profileUser.id}}">跟隨</button>
+                <button id="follow" class="follow-btn follow-item btn btn-outline-brand rounded-pill me-3 mt-3" data-userid="{{profileUser.id}}" data-useraccount="{{profileUser.account}}">跟隨</button>
               {{/if}}
           {{/ifCond}}
         </div>
