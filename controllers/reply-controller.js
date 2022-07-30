@@ -42,42 +42,12 @@ const replyController = {
         include: [User, Like],
       })
       const user = helpers.getUser(req)
-
+      likedTweetUsers = tweet.Likes.map(like => like.UserId)
+      user.isLiked = likedTweetUsers.includes(user.id)
       return res.render('replies', { tweet: tweet.toJSON(), replies, user })
     } catch (err) {
       next(err)
     }
-    // try {
-    //   const user = helpers.getUser(req)
-    //   const likedTweetsId = req.user?.Likes.map(like => like.TweetId)
-    //   const personal = await User.findByPk(Number(req.params.id), {
-    //     include: [
-    //       { model: Tweet }
-    //     ]
-    //   })
-    //   const replies = await Reply.findAll({
-    //     where: {
-    //       ...personal ? { TweetId: personal.id } : {}
-    //     },
-    //     include: [
-    //       User,
-    //       { model: Tweet, include: [User] }
-    //     ],
-    //     order: [
-    //       ['created_at', 'DESC'],
-    //       ['id', 'ASC']
-    //     ],
-    //     raw: true,
-    //     nest: true
-    //   })
-
-    //   const tweet = await Tweet.findByPk(req.params.id, {
-    //     include: [User, Like],
-    //   })
-    //   return res.render('replies', { tweet: tweet.toJSON(), replies, user })
-    // } catch (err) {
-    //   next(err)
-    // }
   }
 }
 

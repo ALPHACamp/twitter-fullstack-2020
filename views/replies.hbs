@@ -30,10 +30,10 @@
 
         <div class="count d-flex flex-row bd-highlight p-2">
           <div class="me-4">
-            <span class="reply-num me-1">{{this.repliedCounts}}0</span>
+            <span class="reply-num me-1">{{replies.length}}</span>
             <span class="reply-font">回覆</span>
           </div>
-          <span class="reply-num me-1">{{this.likedCounts}}0</span>
+          <span class="reply-num me-1">{{tweet.Likes.length}}</span>
           <span class="reply-font">喜歡次數</span>
         </div>
         <div class="d-flex flex-row bd-highlight p-3">
@@ -44,8 +44,8 @@
             </a>
           </button>
 
-          {{#if this.isLiked}}
-          <form class="ms-5" action="/tweets/{{tweet.id}}/unlike" method="POST">
+          {{#if user.isLiked}}
+          <form class="ms-5 ps-5" action="/tweets/{{tweet.id}}/unlike" method="POST">
             <button type="submit">
               <img src="/images/icons/like.png" alt="reply" style="width: 30px;height:30px;background-color:#FFFFFF">
             </button>
