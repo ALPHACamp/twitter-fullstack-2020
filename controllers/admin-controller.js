@@ -96,3 +96,80 @@ const adminController = {
 }
 
 module.exports = adminController
+
+/** getUsers 功能可以使用 sequelize raw query 效能好很多，但是測試檔不會過 ，所以先保留著
+ *
+const results  = await sequelize.query(
+    `
+  SELECT 
+    id, 
+    name,
+    account,
+    cover,
+    avatar,
+    role,
+    following_cnt, 
+    follower_cnt, 
+    tweets_cnt, 
+    all_like_cnt 
+  FROM 
+    users u 
+    join (
+      SELECT 
+        count(*) following_cnt, 
+        follower_id 
+      FROM 
+        followships f 
+        join users u on u.id = f.follower_id 
+      group by 
+        name 
+      order by 
+        following_cnt desc
+    ) as fer on fer.follower_id = u.id 
+    join (
+      SELECT 
+        count(*) follower_cnt, 
+        following_id 
+      FROM 
+        followships f 
+        join users u on u.id = f.following_id 
+      group by 
+        name 
+      order by 
+        follower_cnt desc
+    ) as fing on fing.following_id = u.id 
+    join (
+      select 
+        user_id, 
+        count(*) tweets_cnt 
+      from 
+        tweets 
+      group by 
+        user_id
+    ) as t on t.user_id = u.id 
+    join (
+      select 
+        user_id, 
+        sum(like_cnt) all_like_cnt 
+      from 
+        tweets t 
+        join (
+          SELECT 
+            tweet_id, 
+            count(*) like_cnt 
+          FROM 
+            likes 
+          group by 
+            tweet_id
+        ) as l on l.tweet_id = t.id 
+      group by 
+        user_id
+    ) as l on l.user_id = u.id 
+  order by 
+    tweets_cnt desc
+    `,
+    { type: QueryTypes.SELECT }
+  )
+  console.log("process ~ results", results)
+ * 
+ */
