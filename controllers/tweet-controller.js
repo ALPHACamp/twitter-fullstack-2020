@@ -22,12 +22,12 @@ const tweetController = {
           isFollowed: currentUser.Followings.some(f => f.id === user.id)
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
-      let profileUser = await User.findByPk(userId, {
-        include: [
-          { model: User, as: 'Followers', attributes: ['id'] },
-          { model: User, as: 'Followings', attributes: ['id'] }
-        ]
-      })
+      // let profileUser = await User.findByPk(userId, {
+      //   include: [
+      //     { model: User, as: 'Followers', attributes: ['id'] },
+      //     { model: User, as: 'Followings', attributes: ['id'] }
+      //   ]
+      // })
       return res.render('tweets/tweet-replies', {
         tweet: data,
         isLiked,

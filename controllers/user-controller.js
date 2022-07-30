@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt-nodejs')
 const helpers = require('../_helpers')
-// const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const { User, Tweet, Like, Reply, Followship } = require('../models')
 
@@ -207,7 +206,9 @@ const userController = {
           { model: Like, attributes: ['id'] }
         ]
       })
-      const likedTweetsId = req.user?.Likes ? currentUser.Likes.map(lt => lt.TweetId) : []
+      const likedTweetsId = req.user?.Likes
+        ? currentUser.Likes.map(lt => lt.TweetId)
+        : []
       const data = userTweets.map(tweets => ({
         ...tweets.toJSON(),
         isLiked: likedTweetsId.includes(tweets.id)
@@ -260,7 +261,9 @@ const userController = {
           { model: Like, attributes: ['id'] }
         ]
       })
-      const likedTweetsId = req.user?.Likes ? currentUser.Likes.map(lt => lt.TweetId) : []
+      const likedTweetsId = req.user?.Likes
+        ? currentUser.Likes.map(lt => lt.TweetId)
+        : []
       const data = userTweets.map(tweets => ({
         ...tweets.toJSON(),
         isLiked: likedTweetsId.includes(tweets.id)
@@ -312,7 +315,9 @@ const userController = {
           { model: Like, attributes: ['id'] }
         ]
       })
-      const likedTweetsId = req.user?.Likes ? currentUser.Likes.map(lt => lt.TweetId) : []
+      const likedTweetsId = req.user?.Likes
+        ? currentUser.Likes.map(lt => lt.TweetId)
+        : []
       const data = userTweets.map(tweets => ({
         ...tweets.toJSON(),
         isLiked: likedTweetsId.includes(tweets.id)

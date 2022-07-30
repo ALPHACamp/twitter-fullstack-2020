@@ -19,16 +19,16 @@
         <img class="profile-avatar border border-5 border-white rounded-circle" src='{{profileUser.avatar}}' />
         <div class="buttons d-flex justify-content-end align-items-center">
           {{#ifCond currentUser.id profileUser.id}}
-          <!-- Button trigger modal -->
-          <button type="button" class="btn btn-outline-brand rounded-pill me-3 mt-3">
-            編輯個人資料
-          </button>
-          {{else}}
-          {{#if profileUser.isFollowed}}
-          <button id="follow" data-userid="{{profileUser.id}}" class="following-btn follow-item btn btn-brand rounded-pill me-3 mt-3">正在跟隨</button>
-          {{else}}
-          <button id="follow" data-userid="{{profileUser.id}}" class="follow-btn follow-item btn btn-outline-brand rounded-pill me-3 mt-3">跟隨</button>
-          {{/if}}
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-brand rounded-pill me-3 mt-3" data-bs-toggle="modal" data-bs-target="#edit-info" id="show-info-modal" data-userid="{{currentUser.id}}">
+              編輯個人資料
+            </button>
+            {{else}}
+              {{#if profileUser.isFollowed}}
+                <button id="follow" class="btn btn-brand rounded-pill me-3 mt-3">正在跟隨</button>
+              {{else}}
+                <button id="follow" class="btn btn-outline-brand rounded-pill me-3 mt-3">跟隨</button>
+              {{/if}}
           {{/ifCond}}
         </div>
       </div>
@@ -106,3 +106,4 @@
   {{!-- 中央部分結束 --}}
   {{> recommend-follow }}
 </div>
+{{> edit-info}}
