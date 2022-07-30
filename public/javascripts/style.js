@@ -101,6 +101,7 @@ function infoIntroCheck (target) {
   introLength.textContent = `${length}/160`
 }
 async function showInfoModal (uid) {
+  // eslint-disable-next-line no-undef
   const data = await axios.get(`/api/users/${uid}`)
   const existUser = data.data.existUser
   const infoCoverPhoto = document.querySelector('#info-cover-photo')
