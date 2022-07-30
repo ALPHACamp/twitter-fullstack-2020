@@ -90,7 +90,7 @@ const userController = {
         ...u,
         isFollowed: currentUser.Followings.some(f => f.id === user.id)
       }))
-      console.log(data)
+      console.log('followings' + data)
       // console.log(data.Followings)
       return res.render('users/user-followings', { user: data, role: data.role, currentUser })
       // user.Followings[0]
@@ -113,11 +113,11 @@ const userController = {
         order: [['Followers', 'created_at', 'DESC']],
       })
       let data = user.toJSON()
-      data.Followings = data.Followers.map(u => ({
+      data.Followers = data.Followers.map(u => ({
         ...u,
         isFollowed: currentUser.Followers.some(f => f.id === user.id)
       }))
-      console.log(data)
+      console.log('followers' + data)
       return res.render('users/user-followers', { user: data, role: data.role, currentUser })
       // user.Followers[0]
       //   ? res.json({ status: 'success', data: user.Followers })
