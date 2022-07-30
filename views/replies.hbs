@@ -50,7 +50,7 @@
             {{!--
           </form> --}}
 
-          {{#if tweet.Likes.id}}
+          {{#if tweet.Likes}}
           <form action="/tweets/{{tweet.id}}/unlike" method="POST">
             <div class="speech-bubble">
               <button type="submit">
