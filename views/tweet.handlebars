@@ -1,0 +1,74 @@
+{{!--中間上半部 --}}
+<div class="d-flex flex-row justify-content-between card p-2" style="border-radius: 0px;">
+  <div class="d-flex flex-column justify-content-start flex-grow-1">
+    <div class="d-flex flex-row align-items-center mb-2">
+      <a href="/users/{{tweet.UserId}}/tweets">
+        <img src="{{checkAvatar tweet.User.avatar}}" class='rounded-circle me-2' width="50" height="50">
+      </a>
+      <div class="d-flex flex-column">
+        <a href="/users/{{tweet.UserId}}/tweets" style="text-decoration:none;">
+          <span class="fw-bold me-2" style="font-size: 16px; color: black;">{{tweet.User.name}}</span>
+        </a>
+        <span style="color: #6C757D;font-size: 14px;">@{{tweet.User.account}}</span>
+      </div>
+    </div>
+    <p style="font-size: 16px;">
+      {{tweet.description}}
+    </p>
+    <div class="d-flex flex-row align-items-center">
+      <span style="color: #6C757D;font-size: 14px;">{{tweet.period}} {{tweet.time}}．{{tweet.date}}</span>
+    </div>
+    <hr>
+    <div class="d-flex flex-row align-items-center">
+      <span class="p-1" style="font-size: 14px; font-weight: bold;">{{tweet.replyCounts}}</span>
+      <span style="color: #6C757D; font-size: 14px;">回覆</span>
+      <span class="p-1 ms-3" style="font-size: 14px; font-weight: bold;">{{tweet.likeCounts}}</span>
+      <span style="color: #6C757D; font-size: 14px;">喜歡次數</span>
+    </div>
+    <hr>
+    <div class="d-flex justify-content-start flex-grow-1">
+      <div>
+        <button type="button" class="btn btn-outline-light me-3" data-bs-toggle="modal"
+          data-bs-target="#tweet-reply-modal">
+          <i class="far fa-comment me-1" style="color: #353535; width: 25px; height: 25px;"></i>
+        </button>
+      </div>
+      {{#if tweet.isLiked}}
+      <div>
+        <form action="/tweets/{{ tweet.id }}/unlike" method="POST">
+          <button type="submit" class="btn btn-outline-light">
+            <i class="fas fa-heart me-1" style="color: red; width: 25px; height: 25px;"></i>
+          </button>
+        </form>
+      </div>
+      {{else}}
+      <div>
+        <form action="/tweets/{{ tweet.id }}/like" method="POST">
+          <button type="submit" class="btn btn-outline-light">
+            <i class="far fa-heart me-1" style="color: #353535; width: 25px; height: 25px;"></i>
+          </button>
+        </form>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</div>
+{{!-- 中間下半部 --}}
+{{#each tweet.replies}}
+  {{> reply-card}}
+{{/each}}
+
+<!-- 點擊留言時產生的 Modal，不過還沒開始動工 -->
+<div class="modal fade" id="tweet-reply-modal" tabindex="-1" aria-labelledby="tweet-reply-modalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 634px; height: 350px;">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="" method="">
+        {{> tweet-reply-form}}
+      </form>
+    </div>
+  </div>
+</div>
