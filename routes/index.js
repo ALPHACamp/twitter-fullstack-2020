@@ -31,6 +31,8 @@ router.get('/logout', userController.logout)
 router.get('/users/:id/tweets', authenticated, userController.tweets)
 router.get('/users/:id/replies', authenticated, userController.replies)
 router.get('/users/:id/likes', authenticated, userController.likes)
+router.get('/users/:id/setting', authenticated, userController.settingPage)
+router.post('/users/:id/setting', authenticated, userController.putSetting)
 
 router.get('/users/:id/followers', authenticated, getRecommendedUsers, userController.followers)
 router.get('/users/:id/followings', authenticated, getRecommendedUsers, userController.followings)
