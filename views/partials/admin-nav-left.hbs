@@ -1,16 +1,16 @@
-<div class="nav nav-pills flex-column sticky-top">
-  <img src="/images/logo.png" alt="" style="width: 50px;" class="m-2">
+<div class="nav nav-pills brand-color flex-column sticky-top" style="height: 92vh;">
+  <img src="/images/logo.png" alt="" style="width: 50px;" class="mx-2 mt-2 mb-4">
 
-  <a class="nav-link pointer {{#ifCond route 'tweets'}}brand-color{{else}}dark-90{{/ifCond}}" href="/admin/tweets">
-    <span class="h5 fw-bold">
-      <i class="fa-solid fa-house-chimney-window"></i>&nbsp;&nbsp;推文清單
-    </span>
+  <a class="nav-link mb-4 {{#ifCond route 'tweets'}}active{{/ifCond}}" href="/admin/tweets">
+    <i class="fa-solid fa-house-chimney-window"></i>&nbsp;&nbsp;推文清單
+  </a>
+  <a class="nav-link mb-4 {{#ifCond route 'users'}}active{{/ifCond}}" href="/admin/users">
+    <i class="fa-regular fa-user"></i>&nbsp;&nbsp;使用者列表
   </a>
 
-  <a class="nav-link pointer {{#ifCond route 'users'}}brand-color{{else}}dark-90{{/ifCond}}" href="/admin/users">
-    <span class="h5 fw-bold">
-      <i class="fa-solid fa-user"></i>&nbsp;&nbsp;使用者列表
-    </span>
-  </a>
-  
+  <div class="position-absolute bottom-0 start-0 mb-3">
+    <a class="header5 pointer dark-90" href="/admin/logout" style=" text-decoration: none; padding-left: 19px">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>&nbsp;&nbsp;登出
+    </a>
+  </div>
 </div>

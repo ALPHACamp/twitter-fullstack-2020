@@ -1,0 +1,65 @@
+<div class="modal fade" id="post-reply" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      
+      {{!-- 關閉按鈕 --}}
+      <div class="modal-header">
+        <button type="button" class="btn-close p-1 m-1" data-bs-dismiss="modal" aria-label="Close"
+          style="background: rgba(var(--bs-white-rgb),var(--bs-bg-opacity));">
+          <i class="fa-solid fa-xmark icon-size brand-color"></i>
+        </button>
+      </div>
+
+      {{!-- 上半部（原始tweet部分） --}}
+      <div class="modal-body">
+        <div class="d-flex mb-1" id="madol-tweet">
+          
+          {{!-- 塞資料：原本 tweet 的發文者頭像和那條線 --}}
+          <div class="me-3 d-flex flex-column" id="modal-origin-user-avatar">
+            <img src="/images/img.png" alt="" style="width: 50px;" id="modal-avatar">
+            <div class="mt-2 mx-auto" style="border: 1px solid #B5B5BE; height: 100%">
+              <hr>
+            </div>
+          </div>
+
+          <div class="mb-3">            
+            {{!-- 塞資料：原本 tweet 的發文者資訊、tweet 內文 --}}
+            <div id="modal-origin-tweet-information">
+              tweet information
+            </div>
+          
+            {{!-- 塞資料 --}}
+            <small class="text-secondary" id="modal-reply-account">
+              回覆給&nbsp;&nbsp;<a href="/users/{{this.User.id}}" class="brand-color">@apple</a>
+            </small>
+
+          </div>
+        </div>
+
+
+        {{!-- 下半部（輸入框部分） --}}
+        <div class="d-flex">
+
+          {{!-- 塞資料：回覆者的頭像＝登入者的頭像 --}}
+          <div class="rounded-circle me-3" id="login-user-avatar">
+          </div>
+
+          {{!-- 塞資料：回覆區塊的 form --}}
+          <div class="flex-fill text-end mt-3" id="modal-reply-form-div">
+
+
+            <form action="" method="POST" class="needs-validation" novalidate>
+              <textarea class="border border-0 form-control p-0 mb-2" name="comment" placeholder="推你的回覆" maxlength="141" rows="5" required id="modal-reply-textarea"></textarea>
+              <span class="text-danger me-1" style="font-size: 15px; font-weight:500;" id="validate-empty" >內容不可空白</span>
+              <span class="text-danger me-1 display-none" style="font-size: 15px; font-weight:500;" id="validate-over">字數不可超過140 字</span>
+              <button type="submit" class="btn btn-brand radius50 ms-3">回覆</button>
+            </form>
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

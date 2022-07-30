@@ -1,1 +1,13 @@
-<h2>Hi! {{user.name}}</h2>
+{{!-- left-nav-bar --}}
+<div class="col-2 nav-left">
+  {{> nav-left route='personal-info'}}
+</div>
+
+<div class="col-8 nav-body">
+  <h2>Hi! {{user.name}}</h2>
+</div>
+
+{{!-- right-nav-bar --}}
+<div class="col-2 nav-right">
+  {{> nav-right}}
+</div>
