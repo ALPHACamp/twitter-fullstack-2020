@@ -377,11 +377,12 @@ section#ys-FE-users-setting.temp-layout {
   width: 50%;
 }
 section#ys-FE-users-setting.followships-layout {
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
   border-left: 1px solid #E6ECF0;
   border-right: 1px solid #E6ECF0;
   padding: 0rem 1.5rem;
+  width: 50%;
 }
 section#ys-FE-users-setting #setting-region {
   background: #FFFFFF;

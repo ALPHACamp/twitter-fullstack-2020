@@ -8,7 +8,7 @@ const replyController = require('../controllers/replyController')
 const followshipController = require('../controllers/followshipController')
 const userController = require('../controllers/user-controller')
 const { generalErrorHandler } = require('../middleware/error-handler')
-const { authenticated, authenticatedLimit } = require('../middleware/auth')
+const { authenticated } = require('../middleware/auth')
 const { getRecommendedUsers } = require('../middleware/recommendedUser')
 
 router.use('/admin', admin)
@@ -31,6 +31,9 @@ router.get('/logout', userController.logout)
 router.get('/users/:id/tweets', authenticated, getRecommendedUsers, userController.tweets)
 router.get('/users/:id/replies', authenticated, getRecommendedUsers, userController.replies)
 router.get('/users/:id/likes', authenticated, getRecommendedUsers, userController.likes)
+
+router.get('/users/:id/setting', authenticated, userController.settingPage)
+router.post('/users/:id/setting', authenticated, userController.putSetting)
 
 router.get('/users/:id/followers', authenticated, getRecommendedUsers, userController.followers)
 router.get('/users/:id/followings', authenticated, getRecommendedUsers, userController.followings)

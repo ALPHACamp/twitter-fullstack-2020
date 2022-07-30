@@ -2,6 +2,7 @@
   <div class="" id="navbar">
     <div class="col-auto">
       <div class="d-flex flex-column align-items-start">
+
         <ul class="nav flex-column nav-pills">
           <li class="nav-item py-1">
             <a class="nav-link text-dark" href="/tweets">
@@ -19,7 +20,7 @@
             </a>
           </li>
           <li class="nav-item py-2">
-            <a class="nav-link text-dark" href="/users/{{user.id}}/tweets">
+            <a class="nav-link text-dark" href="/users/{{loginUser.id}}/tweets">
               <div class="d-flex flex-nowrap">
                 <img src="/images/user.png" alt="icon" class="{{#ifCond route 'tweet'}}img-mask{{/ifCond}}">
                 <span class="h5 h-orange {{#ifCond route 'tweet'}}color-mask{{/ifCond}}">&nbsp;&nbsp;&nbsp;個人資料</span>
@@ -27,7 +28,7 @@
             </a>
           </li>
           <li class="nav-item py-2">
-            <a class="nav-link text-dark" href="/users/{{user.id}}/setting">
+            <a class="nav-link text-dark" href="/users/{{loginUser.id}}/setting">
               <div class="d-flex flex-nowrap">
                 <img src="/images/set.png" alt="icon" class="{{#ifCond route 'setting'}}img-mask{{/ifCond}}">
                 <span class="h5 h-orange {{#ifCond route 'setting'}}color-mask{{/ifCond}}">&nbsp;&nbsp;&nbsp;設定</span>
@@ -48,6 +49,7 @@
             </a>
           </li>
         </ul>
+
       </div>
     </div>
   </div>
