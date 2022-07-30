@@ -1,19 +1,19 @@
 <div class="py-3">
   <ul class="nav nav-tabs mx-0 px-0mb-4;">
     <li class="nav-item d-flex justify-content-center px-2">
-      <a class="col text-center" href="/users/{{user.id}}/tweets"
+      <a class="col text-center" href="/users/{{personal.id}}/tweets"
         style="text-decoration:none;color:{{#ifCond route 'tweets'}}#FF6600;border-bottom:solid;border-color:#FF6600;{{else}}black{{/ifCond}}">
         推文
       </a>
     </li>
     <li class="nav-item d-flex justify-content-centerpx-2">
-      <a class="col text-center" href="/users/{{user.id}}/replies"
+      <a class="col text-center" href="/users/{{personal.id}}/replies"
         style="text-decoration:none;color:{{#ifCond route 'replies'}}#FF6600;border-bottom:solid;border-color:#FF6600;{{else}}black{{/ifCond}}">
         回覆
       </a>
     </li>
     <li class="nav-item d-flex justify-content-center px-2">
-      <a class="col text-center" href="/users/{{user.id}}/likes"
+      <a class="col text-center" href="/users/{{personal.id}}/likes"
         style="text-decoration:none;color:{{#ifCond route 'likes' }}#FF6600;border-bottom:solid;border-color:#FF6600;{{else}}black{{/ifCond}}">
         喜歡的內容
       </a>

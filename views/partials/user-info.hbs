@@ -1,44 +1,99 @@
-<hr class="my-2">
+{{#ifCond user.id personal.id}}
 <div class="row m-0 p-0">
-  <div style="height: 250px; px-0">
-    <img src="{{user.cover}}" alt="cover" style="height:100%;width:100%; object-fit:cover">
+  <div style="height: 250px; padding:0px">
+    <img src="{{#if user.cover}}{{user.cover}}{{else}}/images/cover-default.jpg{{/if}}" alt="cover"
+      style="height:100%;width:100%; object-fit:cover">
   </div>
-  <div class="d-flex px-3" style="margin-top:-80px;z-index:100;position:relative">
-    <img src="{{user.avatar}}" class="me-auto rounded-circle border border-white border-5"
-      style="width:150px;height:150px">
+  <div class="d-flex justify-content-between px-3" style="margin-top:-80px;z-index:100;position:relative">
+    <a href="/users/{{user.id}}/tweets">
+      <img src="{{user.avatar}}" class="me-auto rounded-circle border border-white border-5"
+        style="width:150px;height:150px">
+    </a>
     <div class="d-flex align-items-end">
-      <button type="button" class="btn rounded-pill background-color:#8064A2;" id="editButton" data-id="{{user.id}}"
-        style=" background-color: #FFFFFF;color: #FF6600;border:1px solid #FF6600;border-radius:50px"
-        data-bs-toggle="modal" data-bs-target="#profileModal">編輯個人資料</button>
+      <button type="button" class="setting-btn ms-1" id="editButton" data-id="{{user.id}}" data-bs-toggle="modal"
+        data-bs-target="#editProfileModal">編輯個人資料</button>
     </div>
-    {{!-- <div class="bd-highlight">
-      <button type="submit" class="follow-btn ms-1">
-        跟隨
-      </button>
-    </div> --}}
   </div>
-  <div class="col">
-    <span class="fw-bold fs-5">{{user.name}}</span><br />
-    <small class="text-secondary">@{{user.account}}</small>
-  </div>
-</div>
-<div class="row  mx-0 px-0 ">
-  <div class="col" style="max-width: 100%;">
-    <p class="fs-5 mb-0" style="word-wrap: break-word; word-break: normal;">{{user.introduction}}</p>
-  </div>
-  <div class="d-flex">
-    <a href="/users/{{user.id}}/followers" style="text-decoration:none;color:black">
-      <p class="me-3 fw-bold text-secondary">5位跟隨者</P>
-    </a>
-    <a href="/users/{{user.id}}/followings" style="text-decoration:none;color:black">
-      <p class="me-3 fw-bold text-secondary">5個跟隨中</p>
+  <div class="name-container d-flex flex-column bd-highlight p-1 ms-3">
+    <a href="/users/{{user.id}}/tweets">
+      <div class="font-name">{{user.name}}</div>
+      <div class="font-account">@{{user.account}}</div>
     </a>
   </div>
 </div>
+<div class="col" style="max-width: 100%;">
+  <p class="font-intro mx-4">{{user.introduction}}</p>
+  <div class="card-followship ms-2">
+    <div class="card-following">
+      <a href="/users/{{user.id}}/followings">
+        {{user.followingCounts}} 個跟隨中
+      </a>
+    </div>
+    <div class="card-follower">
+      <a href="/users/{{user.id}}/followers">
+        {{user.followerCounts}} 個跟隨者
+      </a>
+    </div>
+  </div>
+</div>
+{{else}}
+<div class="row m-0 p-0">
+  <div style="height: 250px; padding:0px">
+    <img src="{{#if personal.cover}}{{personal.cover}}{{else}}/images/cover-default.jpg{{/if}}" alt="cover"
+      style="height:100%;width:100%; object-fit:cover">
+  </div>
+  <div class="d-flex justify-content-between px-3" style="margin-top:-80px;z-index:100;position:relative">
+    <a href="/users/{{personal.id}}/tweets">
+      <img src="{{personal.avatar}}" class="me-auto rounded-circle border border-white border-5"
+        style="width:150px;height:150px">
+    </a>
+    <div class="d-flex align-items-end">
+      {{#if user.isFollowed}}
+      <form action="/followships/{{personal.id}}?_method=DELETE" method="POST">
+        <div class="bd-highlight">
+          <button type="submit" class="following-btn ms-1">
+            正在跟隨
+          </button>
+        </div>
+      </form>
+      {{else}}
+      <form action="/followships" method="POST">
+        <input class="followingId" type="text" name="id" value="{{personal.id}}">
+        <div class="bd-highlight">
+          <button type="submit" class="follow-btn ms-1">
+            跟隨
+          </button>
+        </div>
+      </form>
+      {{/if}}
+    </div>
+  </div>
+  <div class="name-container d-flex flex-column bd-highlight p-1 ms-3">
+    <a href="/users/{{personal.id}}/tweets">
+      <div class="font-name">{{personal.name}}</div>
+      <div class="font-account">@{{personal.account}}</div>
+    </a>
+  </div>
+</div>
+<div class="col" style="max-width: 100%;">
+  <p class="font-intro mx-4">{{personal.introduction}}</p>
+  <div class="card-followship ms-2">
+    <div class="card-following">
+      <a href="/users/{{personal.id}}/followings">
+        {{personal.followingCounts}} 個跟隨中
+      </a>
+    </div>
+    <div class="card-follower">
+      <a href="/users/{{personal.id}}/followers">
+        {{personal.followerCounts}} 個跟隨者
+      </a>
+    </div>
+  </div>
+</div>
+{{/ifCond}}
 
 <!-- Modal -->
-<!-- Modal -->
-<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content" style="width: 600px; height: 657px;">
       <form action="/api/users/{{user.id}}" data-id="{{user.id}}" enctype="multipart/form-data" id="profileForm"
@@ -57,6 +112,7 @@
           </div>
 
         </div>
+
         <div class="modal-profile-top">
           <img class="modal-profile-cover" src="" alt="" id="coverValue">
           <div>
@@ -108,84 +164,5 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-{{!-- Modal backup --}}
-{{!-- <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content" style="width: 600px; height: 657px;">
-
-      <form action="/api/users/{{user.id}}" data-id="{{user.id}}" enctype="multipart/form-data" id="profileForm"
-        novalidate>
-
-        <div class="modal-header d-flex justify-content-start">
-          <button type="submit" class="button-close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true" style="background-color: #FFFFFF;color: #FF6600;">&times;</span>
-          </button>
-
-          <p class="p-0 mb-0 mr-auto font-weight-bold" style="font-size: 18px; margin-left: 35px;">編輯個人資料</p>
-          <div class="modal-profile-save">
-            <button id="profileModalBtn" class="button-submit button-save modal-profile-button-save"
-              type="submit">儲存</button>
-          </div>
-
-        </div>
-        <div class="modal-profile-top">
-          <img class="modal-profile-cover" src="{{user.cover}}" alt="" id="cover-placeholder">
-          <div>
-            <label id="coverImage">
-              <img class="modal-profile-upload-cover" src="https://upload.cc/i1/2022/07/26/u3WmYF.png" alt=""
-                id="coverImage">
-              <input id="inputCoverImage" name="cover" type="file" hidden>
-            </label>
-          </div>
-
-          <div class="modal-profile-avatar">
-            <img class="modal-profile-avatar-img" src="{{user.avatar}}" alt="" id="avatar-placeholder">
-            <label id="avatarImage">
-              <img class="modal-profile-upload-avatar" src="https://upload.cc/i1/2022/07/26/u3WmYF.png" alt=""
-                id="avatarImage">
-              <input id="inputAvatarImage" name="avatar" type="file" hidden>
-            </label>
-          </div>
-
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="form-floating">
-              <input type="text" class="form-control" id="modalProfileName" placeholder="Enter Name"
-                value="{{ user.name }}" name="name" style="background-color: #F5F8FA;border-bottom: 2px solid #657786; "
-                maxlength="50" required autofocus />
-              <label for="modalProfileName" style="margin-left:15px ;">名稱</label>
-              <p style="margin:10px 0px 0px 515px ;font-size:12px;color:#696974">
-                {{ user.name.length }}/50
-              </p>
-              <div class="invalid-feedback">請輸入名稱，最多50字</div>
-            </div>
-          </div>
-
-          <div class="row" style="">
-            <div class="form-floating">
-              <textarea class="form-control" id="modalProfileInfo" placeholder="Your Introduction" name="introduction"
-                style="background-color: #F5F8FA;border-bottom: 2px solid #657786;height:150px;" rows="4"
-                maxlength="160">{{ user.introduction }}</textarea>
-              <label for="modalProfileInfo" style="margin-left:15px;">自我介紹</label>
-              <p style="margin:10px 0px 0px 500px;font-size:12px;color:#696974">
-                {{ user.introduction.length}}/160
-              </p>
-              <div class="invalid-feedback">自我介紹最多160字</div>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</div> --}}
-
-
-
 
 <script src="/javascripts/editProfileModal.js"></script>

@@ -58,13 +58,7 @@ const followController = {
   },
   getTopFollowers: async (req, res, next) => {
     try {
-      const follower = helpers.getUser(req)
-      const followerList = await Followship.findAll({
-        where: {
-          followerId: follower.id
-        },
-        raw: true
-      })
+      const user = helpers.getUser(req)
       const topFollowerUsers = await User.findAll({
         order: [
           ['followerCounts', 'DESC'],
@@ -73,7 +67,7 @@ const followController = {
         limit: 10,
         raw: true
       })
-      return res.json({ followerList, topFollowerUsers })
+      return res.json({ user, topFollowerUsers })
     }
     catch (err) {
       next(err)

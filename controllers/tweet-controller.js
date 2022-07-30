@@ -1,16 +1,15 @@
 const assert = require('assert')
 const helpers = require("../_helpers")
 const { User, Tweet, Like, Reply } = require('../models')
-const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const tweetController = {
   getTweets: async (req, res, next) => {
     try {
       const user = helpers.getUser(req)
+      const likedTweetsId = req.user?.likedTweets.map(tweet => tweet.id)
       const tweets = await Tweet.findAll({
         include: [
-          User,
-          Like
+          User
         ],
         order: [
           ['created_at', 'DESC'],
@@ -19,6 +18,13 @@ const tweetController = {
         raw: true,
         nest: true
       })
+      for (let i in tweets) {
+        const replies = await Reply.findAndCountAll({ where: { TweetId: tweets[i].id } })
+        const likes = await Like.findAndCountAll({ where: { TweetId: tweets[i].id } })
+        tweets[i].repliedCounts = replies.count
+        tweets[i].likedCounts = likes.count
+        tweets[i].isLiked = likedTweetsId?.includes(tweets[i].id)
+      }
       return res.render('tweets', { tweets, user })
     }
     catch (err) {

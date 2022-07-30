@@ -19,7 +19,7 @@ editButton.addEventListener('click', function (event) {
       inputName.value = res.data.name
       inputIntroduction.value = res.data.introduction
       avatarValue.src = res.data.avatar
-      coverValue.src = res.data.cover
+      coverValue.src = res.data.cover ? res.data.cover : `${location.protocol}//${window.location.host}/images/cover-default.jpg`
       nameLength.innerText = `${res.data.name.length}/50`
       introLength.innerText = `${res.data.introduction.length}/160`
     })
