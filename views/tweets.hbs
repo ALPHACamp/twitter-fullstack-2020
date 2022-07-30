@@ -3,62 +3,63 @@
   {{> modals}}
 
   <!-- Sidebar -->
-  <nav id="left-sidebar" style="display:flex; align-items:stretch; width:15%;height:1200px; margin-left:130px;">
-    <ul class="list-unstyled" style="position:fixed ">
-      <img src="" alt="ac-logo" style=" margin-top: 20px;margin-bottom:10px;">
-      <li style=" margin-bottom: 20px;">
-        <h4><a href="/tweets" style="text-decoration: none; color: inherit;"><i class="fa-solid fa-house"></i> 首頁</a>
+  <nav id="left-sidebar">
+    <ul class="list-unstyled" id="list">
+      <img src="https://upload.cc/i1/2022/07/29/g7ZiA1.png" alt="ac-logo" id="ac-logo">
+      <li>
+        <h4><a href="/tweets"><img src="https://upload.cc/i1/2022/07/29/YZQVxJ.png" alt="index" class="icon"> 首頁</a>
         </h4>
       </li>
-      <li style=" margin-bottom: 20px;">
-        <h4><a href="/users/{{user.id}}" style="text-decoration: none; color: inherit;"><i
-              class="fa-solid fa-user-astronaut"></i> 個人資料</a></h4>
+      <li>
+        <h4><a href="/users/{{user.id}}"><img src="https://upload.cc/i1/2022/07/29/za0M5r.png" alt="index" class="icon">
+            個人資料</a></h4>
       </li>
-      <li style=" margin-bottom: 20px;">
-        <h4><a href="/users/{{user.id}}/setting" style="text-decoration: none; color: inherit;"><i
-              class="fa-solid fa-gear"></i> 設定</a></h4>
+      <li>
+        <h4><a href="/users/{{user.id}}/setting"><img src="https://upload.cc/i1/2022/07/29/AQiCy4.png" alt="index"
+              class="icon"> 設定</a></h4>
       </li>
       {{!-- todo: 跳出modal --}}
-      <li style=" margin-bottom: 20px;">
+      <li>
         <h4>
-          <button type="button" class="badge rounded-pill text-bg-warning" data-bs-toggle="modal"
-            data-bs-target="#myModal" style="border: none;">
+          <button type="button" class="badge rounded-pill text-bg-warning tweet-button" data-bs-toggle="modal"
+            data-bs-target="#myModal">
             推文
           </button>
         </h4>
       </li>
+      <li id="logout">
+        <h3><a href="/logout"><img src="https://upload.cc/i1/2022/07/29/i8J0Gd.png" alt="index" class="icon">登出</a>
+        </h3>
+      </li>
   </nav>
 
-  <div class="container"
-    style="margin:0px; padding:0px;  border-left: 2px solid rgb(209, 203, 203); border-right: 2px solid rgb(209, 203, 203); width:65%;">
+  <div class="container">
     <div>
-      <h4 class="fw-bold" style="padding:15px; border-bottom:2px solid rgb(209, 203, 203)"><a href="/tweets"
-          style="text-decoration: none; color: inherit;">首頁</a></h4>
-      <div class="mb-3" style="border-bottom:8px solid rgb(209, 203, 203)">
-        <img src="{{user.profile_photo}}" alt="avatar" style="position:relative;">
-
-        <form method="POST" action="/tweets">
-          <textarea name="description" id="description" class="tweetTextarea"
-            style="width: 100%; height:100px; resize: none;" placeholder="有什麼新鮮事？"></textarea>
+      <h4 id="header"><a href="/tweets">首頁</a>
+      </h4>
+      <div class="mb-3" id="post-tweet">
+        <a href="/users/{{user.id}}"><img src="{{user.avatar}}" alt="avatar" id="avatar"></a>
+        <p id="placeholder" data-bs-toggle="modal" data-bs-target="#myModal">有什麼新鮮事 ?</p>
+        <form method="POST" action="/tweets" data-bs-toggle="modal" data-bs-target="#myModal">
+          <textarea name="description" id="description" class="tweetTextarea" disabled></textarea>
           <h4>
-            <button type="button" class="badge rounded-pill text-bg-warning" data-bs-toggle="modal"
-              data-bs-target="#myModal" style="border: none;">
+            <button type="button" class="badge rounded-pill text-bg-warning tweet-button post-tweet-button">
               推文
             </button>
           </h4>
         </form>
       </div>
-      <table class="table align-middle">
+      <table class="table">
         <tbody>
           {{#each tweets}}
-          <tr>
-            <td>icon</td>
-            <td>使用者名稱{{user.name}}
-              <small>@帳號{{user.account}}．{{relativeTimeFromNow this.createdAt}}</small>
+          <tr class="post">
+            <td><img src="https://upload.cc/i1/2022/07/29/CW8Hu0.png" alt="post-icon" class="post-icon"></td>
+            <td>{{this.User.name}}
+              <small>@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</small>
               <p>{{this.description}}</p>
               <div>
-                <small>{{replies.length}}xx回應</small>
-                <small>{{likes.length}}xx喜歡</small>
+                <small>{{this.Replies.length}} 回應</small>
+                <small>{{this.Likes.length}}xx喜歡</small>
               </div>
             </td>
           </tr>
@@ -69,5 +70,4 @@
   </div>
 
   {{>right-content}}
-
 </div>
