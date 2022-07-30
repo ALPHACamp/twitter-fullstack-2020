@@ -33,14 +33,12 @@
         </div>
       </div>
       <div class="text-start m-3 ms-3">
-        <p class="m-0 fw-bold fs-4">{{profileUser.name}}</p>
-        <p class="mb-2" style="color: #6C757D;">@{{profileUser.account}}</p>
+        <p class="m-0 fw-bold fs-4" id="profile-name">{{profileUser.name}}</p>
+        <p class="mb-2" style="color: #6C757D;" id="profile-account">@{{profileUser.account}}</p>
         <p class="mb-2">{{profileUser.introduction}}</p>
         <div>
-          <a class="text-decoration-none" href="/users/{{profileUser.id}}/followings"><span
-              class="text-black" id="count-followings">{{profileUser.Followings.length}} 個</span><span style="color: #6C757D;">跟隨中</span></a>
-          <a class="text-decoration-none" id="count-followers" href="/users/{{profileUser.id}}/followers"><span
-              class="ms-3 text-black">{{profileUser.Followers.length}} 位</span><span
+          <a class="text-decoration-none" href="/users/{{profileUser.id}}/followings"><span class="text-black" id="count-followings">{{profileUser.Followings.length}} 個</span><span style="color: #6C757D;">跟隨中</span></a>
+          <a class="text-decoration-none" href="/users/{{profileUser.id}}/followers"><span class="ms-3 text-black" id="count-followers">{{profileUser.Followers.length}} 位</span><span
               style="color: #6C757D;">跟隨者</span></a>
         </div>
       </div>
@@ -49,7 +47,6 @@
       </div>
       {{!-- 推文卡片 --}}
       <div class="tweet-container">
-
         {{#each tweets}}
         <div class="tweet-card border-bottom border-1">
           <div class="d-flex flex-nowrap ms-3 mt-3">
