@@ -18,7 +18,7 @@ module.exports = {
             return {
               followingCount: data.dataValues.count,
               ...data.User.toJSON(),
-              isFollowed: loginUser.Followings.some(u => u.id === data.followingId)
+              isFollowed: loginUser?.Followings.some(u => u.id === data.followingId)
             }
           })
           .slice(0, 10)
