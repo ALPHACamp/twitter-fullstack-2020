@@ -85,12 +85,12 @@ const userController = {
         ],
         order: [['Followings', 'created_at', 'DESC']]
       })
-      const data = user.toJSON()
+      let data = user.toJSON()
+      data.Followings = data.Followings.map(u => ({
+        ...u,
+        isFollowed: currentUser.Followings.some(f => f.id === user.id)
+      }))
       console.log(data)
-      // data.Followings = data.Followings.map(u => ({
-      //   ...u,
-      //   isFollowed: u.id = currentUser.id
-      // }))
       // console.log(data.Followings)
       return res.render('users/user-followings', { user: data, role: data.role, currentUser })
       // user.Followings[0]
@@ -112,7 +112,11 @@ const userController = {
         ],
         order: [['Followers', 'created_at', 'DESC']],
       })
-      const data = user.toJSON()
+      let data = user.toJSON()
+      data.Followings = data.Followers.map(u => ({
+        ...u,
+        isFollowed: currentUser.Followers.some(f => f.id === user.id)
+      }))
       console.log(data)
       return res.render('users/user-followers', { user: data, role: data.role, currentUser })
       // user.Followers[0]

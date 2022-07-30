@@ -26,7 +26,15 @@
           <div class="follow-card-body me-4">
             <div class="card-top-wrapper d-flex justify-content-between">
               <div class="reply-user-name fw-bold">{{this.name}}</div>
-              <button class="follow-btn rounded-pill" data-userid="{{this.id}}" type="submit">跟隨</button>
+              {{#ifCond this.id ../currentUser.id}}
+              {{else}}
+              {{#if this.isFollowed}}
+              <button class="following-btn follow-item rounded-pill" id="follow-btn" data-userid="{{this.id}}"
+                type="submit">正在跟隨</button>
+              {{else}}
+              <button class="follow-btn follow-item rounded-pill" id="follow-btn" data-userid="${topFollowed[i].id}"  type="submit">跟隨</button>
+              {{/if}}
+              {{/ifCond}}
             </div>
             <div class="reply-content d-flex justify-content-start align-items-start ms-1">{{this.introduction}}</div>
           </div>
