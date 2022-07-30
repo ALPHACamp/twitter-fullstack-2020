@@ -16,12 +16,12 @@
       <li class="list-group-item" style="border: 1px solid #E6ECF0;">
         <div class="d-flex justify-content-start mb-4">
           {{#if user.avatar}}
-          <div>
-            <img src="{{user.avatar}}" alt="" style="width: 50px;" class="me-3">
+          <div class="mt-2" style="height: 50px; width: 50px; margin-right: 12px">
+            <img src="{{user.avatar}}" alt="" style="border-radius: 50%; max-width: 100%; max-height: 100%;" class="me-3">
           </div>
           {{else}}
-          <div>
-            <img src="/images/img.png" alt="" style="width: 50px;" class="me-3">
+          <div class="mt-2" style="height: 50px; width: 50px; margin-right: 12px">
+            <img src="/images/img.png" alt="" style="border-radius: 50%; max-width: 100%; max-height: 100%;" class="me-3">
           </div>
           {{/if}}
           <p style="color: #6C757D; font-size: 18px; padding-top: 14px">有什麼新鮮事？</p>
@@ -37,6 +37,7 @@
 
   {{!-- 推文清單 --}}
   <ul class="list-group" style="border-radius: 0px;" id="tweets-panel">
+
     {{#each tweets}}
     <li class="list-group-item d-flex align-items-start" style="border: 1px solid #E6ECF0">
     
@@ -65,7 +66,9 @@
         </div>
         
         {{!-- 第二橫列：tweet content --}}
-        <p class="mt-2">{{this.description}}</p>
+        <a href="/tweets/{{this.id}}/replies" style=" text-decoration: none; color: #171725">
+          <p class="mt-2">{{this.description}}</p>
+        </a>
         
         {{!-- 第三橫列：reply & 按讚 --}}
         <div style="font-size: 14px; color: #6C757D">
@@ -87,7 +90,7 @@
             {{!-- this.User.id => 要改成該篇推文的id --}}
             <form action="/tweets/{{this.User.id}}/unlike" method="POST" class="d-inline-block" >
               <button type="submit" style="all: unset; cursor: pointer;">
-                <i class="fa-solid fa-heart me-2" style="color: red; font-size: 16px"></i>
+                <i class="fa-solid fa-heart me-2" style="font-size: 16px"></i>
               </button>
             </form>
             {{else}}
