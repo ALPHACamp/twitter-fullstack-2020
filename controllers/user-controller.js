@@ -151,6 +151,8 @@ const userController = {
         tweets[i].likedCounts = likes.count
         tweets[i].isLiked = likedTweetsId?.includes(tweets[i].id)
       }
+      const followingsId = user?.Followings?.map(f => f.id)
+      user.isFollowed = (followingsId.includes(personal.id))
       return res.render('profile', { tweets, user, personal: personal.toJSON() })
     }
     catch (err) {
@@ -216,6 +218,8 @@ const userController = {
         tweets[i].likedCounts = likes.count
         tweets[i].isLiked = likedTweetsId?.includes(tweets[i].id)
       }
+      const followingsId = user?.Followings?.map(f => f.id)
+      user.isFollowed = (followingsId.includes(personal.id))
       return res.render('profileLike', { tweets, user, personal: personal.toJSON() })
     }
     catch (err) {
@@ -243,6 +247,8 @@ const userController = {
         raw: true,
         nest: true
       })
+      const followingsId = user?.Followings?.map(f => f.id)
+      user.isFollowed = (followingsId.includes(personal.id))
       return res.render('profileReply', { replies, user, personal })
     }
     catch (err) {

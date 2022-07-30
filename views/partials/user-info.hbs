@@ -48,8 +48,24 @@
         style="width:150px;height:150px">
     </a>
     <div class="d-flex align-items-end">
-      <button type="button" class="setting-btn ms-1" id="editButton" data-id="{{personal.id}}" data-bs-toggle="modal"
-        data-bs-target="#editProfileModal">編輯個人資料</button>
+      {{#if user.isFollowed}}
+      <form action="/followships/{{personal.id}}?_method=DELETE" method="POST">
+        <div class="bd-highlight">
+          <button type="submit" class="following-btn ms-1">
+            正在跟隨
+          </button>
+        </div>
+      </form>
+      {{else}}
+      <form action="/followships" method="POST">
+        <input class="followingId" type="text" name="id" value="{{personal.id}}">
+        <div class="bd-highlight">
+          <button type="submit" class="follow-btn ms-1">
+            跟隨
+          </button>
+        </div>
+      </form>
+      {{/if}}
     </div>
   </div>
   <div class="name-container d-flex flex-column bd-highlight p-1 ms-3">

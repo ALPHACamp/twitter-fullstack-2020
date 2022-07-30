@@ -13,51 +13,51 @@ axios.get(getTopFollowers)
       if (topFollowerUser.id === user.id) return
       if (followingsId.includes(topFollowerUser.id)) {
         htmlContent += `
-           <form action="/followships/${topFollowerUser.id}?_method=DELETE" method="POST">
-        <div class="d-flex justify-content-between align-items-center flex-row bd-highlight mb-3">
-          <div class="bd-highlight">
-            <a href="/users/${topFollowerUser.id}/tweets">
-              <img class="me-auto rounded-circle" src="${topFollowerUser.avatar}" alt="avatar">
-            </a>
-          </div>
-          <div class="name-container d-flex flex-column bd-highlight p-1">
-            <a href="/users/${topFollowerUser.id}/tweets">
-              <div class="font-name">${topFollowerUser.name}</div>
-              <div class="font-account">${topFollowerUser.account}</div>
-            </a>
-          </div>
-          <div class="bd-highlight">
-            <button type="submit" class="following-btn ms-1">
+        <form action="/followships/${topFollowerUser.id}?_method=DELETE" method="POST">
+          <div class="d-flex justify-content-between align-items-center flex-row bd-highlight mb-3">
+            <div class="bd-highlight">
+              <a href="/users/${topFollowerUser.id}/tweets">
+                <img class="me-auto rounded-circle" src="${topFollowerUser.avatar}" alt="avatar">
+              </a>
+            </div>
+            <div class="name-container d-flex flex-column bd-highlight p-1">
+              <a href="/users/${topFollowerUser.id}/tweets">
+                <div class="font-name">${topFollowerUser.name}</div>
+                <div class="font-account">${topFollowerUser.account}</div>
+              </a>
+            </div>
+            <div class="bd-highlight">
+              <button type="submit" class="following-btn ms-1">
               正在跟隨
-            </button>
+              </button>
+            </div>
           </div>
-        </div>
-      </form>
-          `
+        </form>
+        `
       } else {
         htmlContent += `
-                <form action="/followships" method="POST">
-        <input class="followingId" type="text" name="id" value="${topFollowerUser.id}">
-        <div class="d-flex justify-content-between align-items-center flex-row bd-highlight mb-3">
-          <div class="bd-highlight">
-            <a href="/users/${topFollowerUser.id}/tweets">
-              <img class="me-auto rounded-circle" src="${topFollowerUser.avatar}" alt="avatar">
-            </a>
+        <form action="/followships" method="POST">
+          <input class="followingId" type="text" name="id" value="${topFollowerUser.id}">
+          <div class="d-flex justify-content-between align-items-center flex-row bd-highlight mb-3">
+            <div class="bd-highlight">
+              <a href="/users/${topFollowerUser.id}/tweets">
+                <img class="me-auto rounded-circle" src="${topFollowerUser.avatar}" alt="avatar">
+              </a>
+            </div>
+            <div class="name-container d-flex flex-column bd-highlight p-1">
+              <a href="/users/${topFollowerUser.id}/tweets">
+                <div class="font-name">${topFollowerUser.name}</div>
+                <div class="font-account">${topFollowerUser.account}</div>
+              </a>
+            </div>
+            <div class="bd-highlight">
+              <button type="submit" class="follow-btn ms-1">
+                跟隨
+              </button>
+            </div>
           </div>
-          <div class="name-container d-flex flex-column bd-highlight p-1">
-            <a href="/users/${topFollowerUser.id}/tweets">
-              <div class="font-name">${topFollowerUser.name}</div>
-              <div class="font-account">${topFollowerUser.account}</div>
-            </a>
-          </div>
-          <div class="bd-highlight">
-            <button type="submit" class="follow-btn ms-1">
-              跟隨
-            </button>
-          </div>
-        </div>
-      </form>
-          `
+        </form>
+        `
       }
     })
     rightSideContainer.innerHTML = htmlContent
