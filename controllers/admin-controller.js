@@ -6,6 +6,11 @@ const adminController = {
     res.render('admin/signin')
   },
   signIn: (req, res) => {
+    if (helpers.getUser(req).role === 'user') {
+      req.flash('error_messages', '帳號不存在！')
+      req.logout()
+      res.redirect('/admin/signin')
+    }
     req.flash('success_messages', '成功登入！')
     res.redirect('/admin/tweets')
   },
