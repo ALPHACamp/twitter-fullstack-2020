@@ -17,7 +17,7 @@
           <button type="submit">
             <img src="/images/icons/speech-bubble.png" alt="reply">
           </button>
-          <div class="font-account">50</div>
+          <div class="font-account">{{this.repliedCounts}}</div>
         </div>
       </form>
 
@@ -27,7 +27,7 @@
           <button type="submit">
             <img src="/images/icons/like.png" alt="like">
           </button>
-          <div class="font-account">50</div>
+          <div class="font-account">{{this.likedCounts}}</div>
         </div>
       </form>
       {{else}}
@@ -36,7 +36,7 @@
           <button type="submit">
             <img src="/images/icons/like-w.png" alt="like">
           </button>
-          <div class="font-account">50</div>
+          <div class="font-account">{{this.likedCounts}}</div>
         </div>
       </form>
       {{/if}}

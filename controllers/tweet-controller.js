@@ -1,11 +1,12 @@
 const assert = require('assert')
 const helpers = require("../_helpers")
-const { User, Tweet, Like } = require('../models')
+const { User, Tweet, Like, Reply } = require('../models')
 
 const tweetController = {
   getTweets: async (req, res, next) => {
     try {
       const user = helpers.getUser(req)
+      const likedTweetsId = req.user?.likedTweets.map(tweet => tweet.id)
       const tweets = await Tweet.findAll({
         include: [
           User
@@ -17,12 +18,14 @@ const tweetController = {
         raw: true,
         nest: true
       })
-      const likedTweetsId = req.user?.likedTweets.map(tweet => tweet.id)
-      const tweetsList = tweets.map(tweet => ({
-        ...tweet,
-        isLiked: likedTweetsId?.includes(tweet.id)
-      }))
-      return res.render('tweets', { tweetsList, user })
+      for (let i in tweets) {
+        const replies = await Reply.findAndCountAll({ where: { TweetId: tweets[i].id } })
+        const likes = await Like.findAndCountAll({ where: { TweetId: tweets[i].id } })
+        tweets[i].repliedCounts = replies.count
+        tweets[i].likedCounts = likes.count
+        tweets[i].isLiked = likedTweetsId?.includes(tweets[i].id)
+      }
+      return res.render('tweets', { tweets, user })
     }
     catch (err) {
       next(err)

@@ -33,6 +33,34 @@ app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)
   next()
 })
+
+const { Tweet, Like, User, Reply } = require('./models')
+app.get('/test', async (req, res) => {
+  console.log('----------start-----------')
+  const tweets = await Tweet.findAll({
+    include: [
+      User
+    ],
+    order: [
+      ['created_at', 'DESC'],
+      ['id', 'ASC']
+    ],
+    limit: 10,
+    raw: true,
+    nest: true
+  })
+  for (let i in tweets) {
+    const replies = await Reply.findAndCountAll({ where: { TweetId: tweets[i].id } })
+    const likes = await Like.findAndCountAll({ where: { TweetId: tweets[i].id } })
+    tweets[i].repliedCounts = replies.count
+    tweets[i].likedCounts = likes.count
+    console.log('////////////////')
+    // console.log(tweets[i])
+  }
+  console.log(tweets)
+})
+
+
 app.use(express.static('public'))
 app.use(routes)
 
