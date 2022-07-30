@@ -153,7 +153,8 @@ const userController = {
             model: Tweet,
             include: [
               { model: Like, attributes: ['id'] },
-              { model: Reply, attributes: ['id'] }
+              { model: Reply, attributes: ['id'] },
+              { model: User, attributes: ['avatar'] },
             ]
           },
           { model: User, attributes: ['id'], as: 'Followers' },
