@@ -22,7 +22,11 @@
     <div class="user-info">
       <img id="profile-cover" src="{{targetUser.cover}}" alt="cover" style="width: 100%; height: 200px;">
       <div class="avatar-button">
+        {{#if targetUser.avatar}}
         <img class="avatar" id="profile-avatar" src="{{targetUser.avatar}}" alt="avatar">
+        {{else}}
+        <img class="avatar" id="profile-avatar" src="/images/avatar-default.jpg" alt="avatar" style="background-color: white;">
+        {{/if}}
 
         {{#ifCond targetUser.id user.id}}
         <button type="button" class="btn" id="edit-btn">
