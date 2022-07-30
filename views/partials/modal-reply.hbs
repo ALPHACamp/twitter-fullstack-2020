@@ -48,14 +48,10 @@
           <div class="flex-fill text-end mt-3" id="modal-reply-form-div">
 
 
-            <form href="" action="POST" class="needs-validation" novalidate >
-              <textarea class="border border-0 form-control p-0 mb-2" id="modal-reply-textarea" name="tweet" maxlength="150"
-                placeholder="推你的回覆" rows="5" required></textarea>
-
-              <span class="text-danger me-1" id="validate-empty" style="font-size: 15px; font-weight:500;">內容不可空白</span>
-
-              <span class="text-danger me-1 display-none" id="validate-over" style="font-size: 15px; font-weight:500;">字數不可超過140 字</span>
-
+            <form href="" method="POST" class="needs-validation" novalidate>
+              <textarea class="border border-0 form-control p-0 mb-2" name="comment" placeholder="推你的回覆" maxlength="141" rows="5" required id="modal-reply-textarea"></textarea>
+              <span class="text-danger me-1" style="font-size: 15px; font-weight:500;" id="validate-empty" >內容不可空白</span>
+              <span class="text-danger me-1 display-none" style="font-size: 15px; font-weight:500;" id="validate-over">字數不可超過140 字</span>
               <button type="submit" class="btn btn-brand radius50 ms-3">回覆</button>
             </form>
 

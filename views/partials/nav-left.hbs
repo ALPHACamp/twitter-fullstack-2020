@@ -40,8 +40,8 @@
             </div>
           {{/if}}
           <div class="flex-fill text-end">
-            <form href="/tweets" action="POST">
-              <textarea class="border border-0 form-control mb-3" id="tweet" name="tweet" maxlength="150"
+            <form href="/tweets" method="POST">
+              <textarea class="border border-0 form-control mb-3" id="description" name="description" maxlength="150"
                 placeholder="有什麼新鮮事？" rows="5" required></textarea>
               <span class="text-danger me-1 display-none" id="invalid-info"
                 style="font-size: 15px; font-weight:500;">字數不可超過

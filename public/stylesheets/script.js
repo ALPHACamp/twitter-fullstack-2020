@@ -43,8 +43,8 @@ panel.addEventListener('click', event => {
   `
 
   replyFormDiv.innerHTML = `
-    <form id="modal-reply-form" href="/tweets/${tweet.dataset.tweetid}/replies" action="POST" class="needs-validation" novalidate>
-      <textarea class="border border-0 form-control p-0 mb-2" name="tweet" placeholder="推你的回覆" maxlength="141" rows="5" required id="modal-reply-textarea"></textarea>
+    <form id="modal-reply-form" href="/tweets/${tweet.dataset.tweetid}/replies" method="POST" class="needs-validation" novalidate>
+      <textarea class="border border-0 form-control p-0 mb-2" name="comment" placeholder="推你的回覆" maxlength="141" rows="5" required id="modal-reply-textarea"></textarea>
 
       <span class="text-danger me-1" style="font-size: 15px; font-weight:500;" id="validate-empty" >內容不可空白</span>
 
