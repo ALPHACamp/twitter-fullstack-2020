@@ -1,0 +1,90 @@
+<!-- Edit Modal -->
+<div
+  class="modal fade"
+  id="editInfo"
+  tabindex="-1"
+  aria-labelledby="replyModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content" style="border-radius: 14px;">
+      <div class="modal-header pb-1">
+        <button
+          type="button"
+          class="btn border-0 p-0 ms-0"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ><i class="noti-danger"></i></button>
+        <h5 class="fw-bold">編輯個人資料</h5>
+        <form action="" method="post" id="post-edit-info">
+          <button
+            type="submit"
+            id="post-comment"
+            class="btn btn-brand rounded-pill fw-light col-2"
+            style="width: 60px;"
+          >回覆</button>
+        </form>
+      </div>
+      <div class="modal-body pt-0">
+        {{! 回覆的推文資料 }}
+        <div class="card border-0">
+          <div class="row g-0 mx-3">
+            <div class="col-1 my-3 m-auto position-relative">
+              <img
+                src=""
+                alt="avatar"
+                class="avatar-sm rounded-circle position-absolute end-0"
+                id="reply-tweet-avatar"
+              />
+              <div
+                class="border-start border-3 position-absolute"
+                style="height: calc(100% - 55px); width: 1px; right: 23px; bottom: -10px; border-color: #B5B5BE;"
+              ></div>
+            </div>
+            <div class="col-11">
+              <div class="card-body">
+                <h5 class="card-title fw-bold" id="reply-tweet-name"><small
+                    class="text-muted fw-light"
+                    id="reply-tweet-account"
+                  ></small>
+                </h5>
+                <p class="card-text" id="reply-tweet-description"></p>
+                <small class="fw-light">回覆給
+                  <small id="reply-to" class="text-brand"></small></small>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{! 回覆的推文資料結束 }}
+        <form action="" method="post" class="row g-0 mt-2" id="reply-input">
+          <img
+            src="{{currentUser.avatar}}"
+            alt="model-user-avatar"
+            class="avatar-sm rounded-circle col-1"
+          />
+          <textarea
+            id="reply-comment"
+            name="comment"
+            class="col-10 ms-3 border-0 overflow-hidden"
+            maxlength="140"
+            placeholder="推你的回覆"
+            rows="6"
+            style="resize: none;"
+          ></textarea>
+          <small
+            class="offset-md-7 col-3 mt-2 text-error"
+            id="error-msg"
+          ></small>
+          <button
+            type="submit"
+            id="post-comment"
+            class="btn btn-brand rounded-pill fw-light col-2"
+            style="width: 60px;"
+          >回覆</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Edit Modal End -->

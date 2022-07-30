@@ -8,6 +8,28 @@ dataPanel.addEventListener('click', e => {
   }
 })
 
+dataPanel.addEventListener('input', e => {
+  if (e.target.matches('#info-name')) {
+    infoNameCheck(e.target)
+  } else if (e.target.matches('#info-intro')) {
+    infoIntroCheck(e.target)
+  }
+})
+
+const replyInputs = document.querySelector('#reply-input')
+const infoForm = document.querySelector('#info-form')
+
+if (replyInputs) {
+  replyInputs.addEventListener('submit', e => {
+    replyFormVerify(e)
+  })
+}
+if (infoForm) {
+  infoForm.addEventListener('submit', e => {
+    infoFormVerify(e)
+  })
+}
+
 function showReplyModel (tid) {
   const avatar = document.querySelector(`#avatar-${tid}`).src
   const name = document.querySelector(`#name-${tid}`).textContent
@@ -27,14 +49,45 @@ function showReplyModel (tid) {
   replyTo.textContent = account
 }
 
-const replyForm = document.querySelector('#reply-input')
-const replyTextArea = document.querySelector('#reply-comment')
-const errorMsg = document.querySelector('#error-msg')
-
-replyForm.addEventListener('submit', e => {
-  if (replyTextArea.value.length === 0 || replyTextArea > 140) {
+function replyFormVerify (e) {
+  const replyTextArea = document.querySelector('#reply-comment')
+  const errorMsg = document.querySelector('#error-msg')
+  if (replyTextArea.value.length === 0 || replyTextArea.value.length > 140) {
     e.preventDefault()
     e.stopPropagation()
     errorMsg.textContent = '內容不可空白'
+  }
+}
+
+function infoFormVerify (e) {
+  const infoName = document.querySelector('#info-name')
+  const infoIntro = document.querySelector('#info-intro')
+  if (
+    infoName.value.length === 0 ||
+    infoName.value.length > 50 ||
+    infoIntro.value.length > 160
+  ) {
+    e.preventDefault()
+    e.stopPropagation()
+  }
+}
+
+function infoNameCheck (target) {
+  const nameMsg = document.querySelector('#name-error-msg')
+  nameMsg.textContent = `${target.value.length}`
+}
+const infoName = document.querySelector('#info-name')
+const nameMsg = document.querySelector('#name-error-msg')
+const infoIntro = document.querySelector('#info-intro')
+const introMsg = document.querySelector('#intro-error-msg')
+
+console.log(infoName)
+
+infoName.addEventListener('keypress', e => {
+  nameMsg.textContent = `${infoName.value.length}/50`
+  if (infoName.value.length === 50) {
+    nameMsg.classList.add('text-error')
+  } else if (infoName.value.length < 50) {
+    nameMsg.classList.remove('text-error')
   }
 })

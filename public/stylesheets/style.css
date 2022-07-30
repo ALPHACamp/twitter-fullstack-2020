@@ -250,3 +250,14 @@ body {
   top: 42%;
   right: 72%;
 }
+
+/* editinfo */
+.upload-photo:hover {
+  filter: var(--base-filter);
+}
+#cancel-photo:hover {
+  filter: var(--error-filter);
+}
+#info-name:focus {
+  outline: none;
+}
