@@ -15,17 +15,17 @@
         </a>
       </div>
       <div class="name">
-        <h5>{{targetUser.name}}</h5>
+        <h5 id="header-name">{{targetUser.name}}</h5>
         <span>{{tweetsLength}} 推文</span>
       </div>
     </div>
     <div class="user-info">
-      <img src="{{targetUser.cover}}" alt="cover" style="width: 100%; height: 200px;">
+      <img id="profile-cover" src="{{targetUser.cover}}" alt="cover" style="width: 100%; height: 200px;">
       <div class="avatar-button">
-        <img class="avatar" src="{{targetUser.avatar}}" alt="avatar">
+        <img class="avatar" id="profile-avatar" src="{{targetUser.avatar}}" alt="avatar">
 
         {{#ifCond targetUser.id user.id}}
-        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#edit-profile-modal">
+        <button type="button" class="btn" id="edit-btn">
           編輯個人資料
         </button>
         {{else}}
@@ -42,7 +42,50 @@
           </form>
           {{/if}}
         {{/ifCond}}
-        
+
+        {{!-- edit profile function --}}
+        <script type="module">
+          const editBtn = document.querySelector('#edit-btn')
+          const saveBtn = document.querySelector('.save-button')
+          const myModal = new bootstrap.Modal(document.getElementById('edit-profile-modal'), {
+              keyboard: false
+            })
+          const coverInput = document.querySelector('#cover')
+          const avatarInput = document.querySelector('#avatar')
+          const nameInput = document.querySelector('#name')
+          const introductionInput = document.querySelector('#introduction')
+          editBtn.addEventListener('click', () => {
+            axios.get('/api/users/' + {{user.id}})
+              .then(response => {
+                const userInfo = response.data
+                coverInput.src = userInfo.cover
+                avatarInput.src = userInfo.avatar
+                nameInput.value = userInfo.name
+                introductionInput.value = userInfo.introduction
+                document.querySelector('.name-count span').innerText = userInfo.name.length + '/50'
+                document.querySelector('.introduction-count span').innerText = userInfo.introduction.length + '/160'
+                myModal.show()
+              }).catch(err => console.warn(err))
+          })
+          
+          saveBtn.addEventListener('click', () => {
+            if (nameInput.value.length > 50 || introductionInput.value.length > 160) {
+              return alert('字數超出上限！')
+            }
+            const data = {
+              cover: coverInput.src,
+              avatar: avatarInput.src,
+              name: nameInput.value,
+              introduction: introductionInput.value
+            }
+            axios.post('/api/users/' + {{ user.id }}, data)
+            .then(response => {
+              history.go(0)
+            })
+            .catch(err => console.warn(err))
+          })
+        </script>
+
         <!-- Modal -->
         <div class="modal fade" id="edit-profile-modal" aria-hidden="true">
           <div class="modal-dialog m-0 p-0" style="width: 634px; height: 610px;">
@@ -59,25 +102,25 @@
                 </form>
               </div>
               <div class="modal-body p-0" style="width: 634px; height: 552px;">
-                <img class="cover" src="{{targetUser.cover}}" alt="cover">
+                <img class="cover" id="cover" src="" alt="cover">
                 <div class="icons">
                   <img src="/images/camera.png" alt="camera" style="margin-right: 36px;">
                   <img src="/images/ventor_close_2.png" alt="cancel">
                 </div>
                 <div class="avatar-icon">
                   <div class="avatar">
-                    <img src="{{targetUser.avatar}}" alt="avatar">
+                    <img id="avatar" src="" alt="avatar">
                   </div>
                   <img class="icon" src="/images/camera.png" alt="camera" style="margin-right: 36px;">
                 </div>
                 <div class="input name-input" style="height: 54px">
                   <label for="name">名稱</label>
                   <input name="name" id="name" type="text" placeholder="請輸入使用者名稱" onfocus="changeFocus('name')"
-                    onblur="changeFocus('name')" oninput="counts('name')" value="{{targetUser.name}}" required>
+                    onblur="changeFocus('name')" oninput="counts('name')" required>
                   <div class="status name-status"></div>
                   <div class="d-flex">
                     <div class="helper name-helper"><span></span></div>
-                    <div class="count name-count"><span>{{targetUser.name.length}}/50</span></div>
+                    <div class="count name-count"><span>0/50</span></div>
                   </div>
                 </div>
                 <div class="input" style="height: 147px">
@@ -85,11 +128,11 @@
                   <textarea name="introduction" id="introduction" type="text" placeholder="請輸入使用者名稱" onfocus="changeFocus('introduction')"
                   onblur="changeFocus('introduction')" oninput="counts('introduction')"
                   onkeydown="if(event.keyCode == 13) return false;"
-                  style="height: 123px;">{{targetUser.introduction}}</textarea>
+                  style="height: 123px;"></textarea>
                   <div class="status introduction-status"></div>
                   <div class="d-flex">
                     <div class="helper introduction-helper"><span></span></div>
-                    <div class="count introduction-count"><span>{{targetUser.introduction.length}}/160</span></div>
+                    <div class="count introduction-count"><span>0/160</span></div>
                   </div>
                 </div>
                 <script>
@@ -129,10 +172,10 @@
       </div>
 
       <div class="name">
-        <h5>{{targetUser.name}}</h5>
+        <h5 id="profile-name">{{targetUser.name}}</h5>
         <span>@{{targetUser.account}}</span>
       </div>
-      <span class="introduction" style="display: block;">{{targetUser.introduction}}</span>
+      <span class="introduction" id="profile-introduction" style="display: block;">{{targetUser.introduction}}</span>
       <div class="follow">
         <div style="margin-right: 20px;">
           <span class="first">{{targetUser.Followings.length}} 個</span>
