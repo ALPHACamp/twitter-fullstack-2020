@@ -8,7 +8,7 @@
     <a href="/users/{{currentUser.id}}/tweets">
       <i class="{{#ifCond currentUser.id profileUser.id}}active-user{{else}}default-user{{/ifCond}}"></i>
     </a>
-    <a href="/users/{{currentUser.id}}/setting">
+    <a href="/users/setting">
       <i class="{{#ifCond route 'setting'}}active-setting{{else}}default-setting{{/ifCond}}"></i>
     </a>
     <button class="btn btn-brand rounded-pill border-0 w-100" data-bs-toggle="modal"

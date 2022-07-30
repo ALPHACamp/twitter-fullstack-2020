@@ -332,33 +332,39 @@ const userController = {
         throw new Error("Can not edit other user's account!")
       }
       let { account, name, email, password, checkPassword } = req.body
-      if (process.env.NODE_ENV !== 'test') {
-        if (!account || !email || !password || !name) {
-          throw new Error('Please complete all required fields')
-        }
+
+      if (!account || !email || !name) {
+        throw new Error('Please complete all required fields')
       }
+
       if (password !== checkPassword) throw new Error('Passwords do not match!')
+
       const existAccount = await User.findOne({
         where: { account: account || null }
       })
       if (existAccount && Number(existAccount.id) !== currentUserId) {
         throw new Error('Account already exists!')
       }
+
       const existEmail = await User.findOne({ where: { email: email || null } })
       if (existEmail && Number(existEmail.id) !== currentUserId) {
         throw new Error('Email already exists!')
       }
+
       name = name.trim()
       if (name.length > 50) {
         throw new Error("Name can't have too many characters.")
       }
 
-      const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
-      const newUserData = { account, name, email, password: hash }
+      const newUserData = { account, name, email }
+      if (password.length) {
+        const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+        newUserData.password = hash
+      }
       const userData = await User.findByPk(userId)
       await userData.update(newUserData)
       req.flash('success_messages', '帳號重新編輯成功！')
-      return res.status(200).json({ status: 'success', data: newUserData })
+      return res.redirect(`/users/${currentUserId}/tweets`)
     } catch (err) {
       next(err)
     }
