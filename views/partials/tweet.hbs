@@ -7,7 +7,13 @@
     <span class="font-account">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</span>
   </a>
   <div class="text-box">
-
+    {{#ifCond route 'replies'}}
+    <span class="font-account">回覆</span>
+    <a href="/users/{{this.Tweet.User.id}}/tweets">
+      <span class="font-account" style="color:#FF6600"> @{{this.Tweet.User.account}}</span>
+    </a>
+    <p class="space"></p>
+    {{/ifCond}}
     <span>
       {{#ifCond route 'tweets'}}{{this.description}}{{/ifCond}}
       {{#ifCond route 'replies'}}{{this.comment}}{{/ifCond}}

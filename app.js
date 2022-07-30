@@ -13,9 +13,6 @@ const helpers = require('./_helpers')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const app = express()
 const port = process.env.PORT || 3000
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
 
 app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
@@ -33,19 +30,6 @@ app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)
   next()
 })
-
-const { Tweet, Like, User, Reply } = require('./models')
-app.get('/test', async (req, res) => {
-  console.log('----------start-----------')
-  const user = await User.findByPk(9, {
-    include: [
-      { model: Tweet }
-    ]
-  })
-  console.log(user.Tweets.length)
-})
-
-
 app.use(express.static('public'))
 app.use(routes)
 

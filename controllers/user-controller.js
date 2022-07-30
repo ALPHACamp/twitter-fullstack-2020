@@ -124,7 +124,7 @@ const userController = {
   getPersonalTweets: async (req, res, next) => {
     try {
       const user = helpers.getUser(req)
-      const likedTweetsId = user?.likedTweets.map(tweet => tweet.id)
+      const likedTweetsId = req.user?.likedTweets.map(tweet => tweet.id)
       const personal = await User.findByPk(Number(req.params.id), {
         include: [
           { model: Tweet }
@@ -228,39 +228,22 @@ const userController = {
       const personal = await User.findByPk(Number(req.params.id), {
         raw: true
       })
-      if (personal.id === user.id) {
-        const replies = await Reply.findAll({
-          where: {
-            ...user ? { UserId: user.id } : {}
-          },
-          include: [
-            User
-          ],
-          order: [
-            ['created_at', 'DESC'],
-            ['id', 'ASC']
-          ],
-          raw: true,
-          nest: true
-        })
-        return res.render('profileReply', { replies, user })
-      } else {
-        const replies = await Reply.findAll({
-          where: {
-            ...personal ? { UserId: personal.id } : {}
-          },
-          include: [
-            User
-          ],
-          order: [
-            ['created_at', 'DESC'],
-            ['id', 'ASC']
-          ],
-          raw: true,
-          nest: true
-        })
-        return res.render('profileReply', { replies, user, personal })
-      }
+      const replies = await Reply.findAll({
+        where: {
+          ...personal ? { UserId: personal.id } : {}
+        },
+        include: [
+          User,
+          { model: Tweet, include: User }
+        ],
+        order: [
+          ['created_at', 'DESC'],
+          ['id', 'ASC']
+        ],
+        raw: true,
+        nest: true
+      })
+      return res.render('profileReply', { replies, user, personal })
     }
     catch (err) {
       next(err)
