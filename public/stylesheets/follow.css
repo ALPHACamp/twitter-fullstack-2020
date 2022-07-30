@@ -4,6 +4,7 @@ button:focus {
   outline: 0;
 }
 
+
 html,
 body {
   height: 100%;
@@ -20,6 +21,7 @@ body {
 }
 
 
+
 /* left menu */
 
 .menu {
@@ -27,11 +29,6 @@ body {
   width: 290px;
 }
 
-.nav {
-  height: 100%;
-  width: 178px;
-  margin-left: 75px;
-}
 
 .window-description-input {
   resize: none;
