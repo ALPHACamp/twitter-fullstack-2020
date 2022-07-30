@@ -17,10 +17,7 @@ window.addEventListener('DOMContentLoaded', async e => {
     <h6 class="user-name fw-bold fs-5 text-start mb-0 w-25">${topFollowed[i].name}</h6>
     <p class="user-account fw-normal fs-6 mb-0 w-25">@${topFollowed[i].account}</p>
   </div>
-  <form action="http://localhost:3000/followships" method="POST" style="display:inline"
-    class="follow-form d-flex justify-content-center ms-2">
-    <input type="hidden" value="${topFollowed[i].id}" name="id">
-    <button class="following-btn rounded-pill" type="submit">正在跟隨</button>
+    <button class="following-btn follow-item rounded-pill" id="follow-btn" data-userid="${topFollowed[i].id}"  type="submit">正在跟隨</button>
   </form>
 </div>`
     } else {
@@ -35,12 +32,36 @@ window.addEventListener('DOMContentLoaded', async e => {
     <h6 class="user-name fw-bold fs-5 text-start mb-0 w-25">${topFollowed[i].name}</h6>
     <p class="user-account fw-normal fs-6 mb-0 w-25">@${topFollowed[i].account}</p>
   </div>
-  <form action="http://localhost:3000/followships" method="POST" style="display:inline"
-    class="follow-form d-flex justify-content-center ms-2">
-    <input type="hidden" value="${topFollowed[i].id}" name="id">
-    <button class="follow-btn rounded-pill" type="submit">跟隨</button>
+    <button class="follow-btn follow-item rounded-pill" id="follow-btn" data-userid="${topFollowed[i].id}"  type="submit">跟隨</button>
   </form>
 </div>`
     }
   })
 })
+
+// window.addEventListener('load', async e => {
+//   const followBtn = document.querySelectorAll('.follow-item') || ''
+
+//   followBtn.forEach((btn, i) => {
+//     btn.addEventListener('click', async e => {
+//       try {
+//         let userId = btn.dataset.userid || ''
+//         if (btn.classList.contains('following-btn')) {
+//           btn.classList.remove('following-btn')
+//           btn.classList.add('follow-btn')
+//           btn.textContent = '跟隨'
+//           return await axios.post('/followships', { id: userId })
+//         } else if (btn.classList.contains('follow-btn')) {
+//           btn.classList.remove('follow-btn')
+//           btn.classList.add('following-btn')
+//           btn.textContent = '正在跟隨'
+//           return await axios.post('/followships', { id: userId })
+//         } else {
+//           return
+//         }
+//       } catch (err) {
+//         console.log(err)
+//       }
+//     })
+//   })
+// })

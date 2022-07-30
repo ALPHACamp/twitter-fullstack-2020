@@ -53,19 +53,19 @@ body {
   overflow-y: scroll;
 }
 
-.scrollbar {
-  /* padding-left: 6px; */
-}
+/* .scrollbar {
+  padding-left: 6px;
+} */
 
 .scrollbar::-webkit-scrollbar {
   display: none;
   /* width: 6px; */
 }
 
-.scrollbar::-webkit-scrollbar-thumb {
-  /* border-radius: 3px; */
-  /* background-color: rgba(0, 0, 0, 0.1); */
-}
+/* .scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.1);
+} */
 
 .name-link {
   color: #171725;
@@ -126,9 +126,9 @@ body {
   border-bottom: 10px solid #E6ECF0;
 }
 
-.tweet-container {
+/* .tweet-container {
   height: ;
-}
+} */
 
 .user-comment-container {
   width: auto;
@@ -261,3 +261,10 @@ body {
 #info-name:focus {
   outline: none;
 }
+/* 
+.user-tweets-header {
+  height: 75px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+} */
