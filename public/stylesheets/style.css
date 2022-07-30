@@ -238,6 +238,7 @@
  }
 
  .text-box textarea {
+   max-width: 455px;
    border: none;
    resize: none;
    outline: none;
