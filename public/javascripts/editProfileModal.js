@@ -1,4 +1,4 @@
-const editModal = document.querySelector('#profileModal')
+const editModal = document.querySelector('#editProfileModal')
 
 const inputName = document.querySelector('#modalProfileName')
 const inputIntroduction = document.querySelector('#modalProfileInfo')
@@ -40,10 +40,18 @@ editModal.addEventListener('submit', function (event) {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
     .then(res => {
-      console.log(formData.get('name'))
-      console.log(formData.get('avatar'))
       history.go(0)   // 刷新本頁
-
     })
     .catch(err => console.log(err))
+})
+
+inputName.addEventListener('input', e => {
+  const lengthOfName = inputName.value.length
+  if (lengthOfName > 50) {
+    inputName.style.color = "red"
+
+  } else {
+    inputName.style.color = "green"
+
+  }
 })

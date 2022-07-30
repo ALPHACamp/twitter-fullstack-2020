@@ -38,9 +38,12 @@ const replyController = {
         ],
         order: [['createdAt', 'DESC']]
       })
-      const tweet = replies[0].Tweet
+      const tweet = await Tweet.findByPk(req.params.id, {
+        include: [User, Like],
+      })
       const user = helpers.getUser(req)
-      return res.render('replies', { tweet, replies, user })
+
+      return res.render('replies', { tweet: tweet.toJSON(), replies, user })
     } catch (err) {
       next(err)
     }
