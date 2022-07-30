@@ -41,11 +41,7 @@ body {
   height: 100%;
   min-width: 300px;
   width: 640px;
-  padding: 0 0 0 0;
-}
-
-.tweet-container {
-  height: 75%;
+  padding: 0 0 30px 0;
 }
 
 .scroll-part {
@@ -66,6 +62,10 @@ body {
   border-radius: 3px;
   background-color: rgba(0, 0, 0, 0.1);
 } */
+
+.tweet-container {
+  height: 100%;
+}
 
 .name-link {
   color: #171725;

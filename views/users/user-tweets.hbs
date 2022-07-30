@@ -38,8 +38,8 @@
         <p class="mb-2">{{profileUser.introduction}}</p>
         <div>
           <a class="text-decoration-none" href="/users/{{profileUser.id}}/followings"><span
-              class="text-black">{{profileUser.Followings.length}} 個</span><span style="color: #6C757D;">跟隨中</span></a>
-          <a class="text-decoration-none" href="/users/{{profileUser.id}}/followers"><span
+              class="text-black" id="count-followings">{{profileUser.Followings.length}} 個</span><span style="color: #6C757D;">跟隨中</span></a>
+          <a class="text-decoration-none" id="count-followers" href="/users/{{profileUser.id}}/followers"><span
               class="ms-3 text-black">{{profileUser.Followers.length}} 位</span><span
               style="color: #6C757D;">跟隨者</span></a>
         </div>
