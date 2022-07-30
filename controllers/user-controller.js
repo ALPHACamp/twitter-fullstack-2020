@@ -149,13 +149,19 @@ const userController = {
       const topUser = await getTopUser(currentUser)
       let profileUser = await User.findByPk(userId, {
         include: [
-          { model: Tweet, include: [{ model: Like }] },
+          {
+            model: Tweet,
+            include: [
+              { model: Like, attributes: ['id'] },
+              { model: Reply, attributes: ['id'] }
+            ]
+          },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' },
-          { model: Reply, include: [{ model: Tweet, include: [Reply, User] }] },
+          { model: Reply, attributes: ['id'] },
           { model: Like, attributes: ['id'] }
         ],
-        order: [[Reply, 'createdAt', 'DESC']]
+        order: [[Tweet, 'createdAt', 'DESC']]
       })
       if (!profileUser) throw new Error("This user didn't exist!")
       profileUser = profileUser.toJSON()

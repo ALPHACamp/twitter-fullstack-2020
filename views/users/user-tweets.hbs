@@ -79,18 +79,18 @@
                 <button class="reply-btn d-flex align-items-center" data-bs-toggle="modal"
                   data-bs-target="#reply-modal-{{this.id}}" data-tweetid="{{this.id}}" data-userid="{{this.UserId}}">
                   <i class="reply"></i>
-                  <span class="reply-count ms-2">{{../profileUser.Replies.length}}</span>
+                  <span class="reply-count ms-2">{{this.Replies.length}}</span>
                 </button>
                 {{#if this.isLiked}}
                 <button type="button" class="d-flex align-items-center like-submit-btn liked"
                   data-tweetid="{{this.id}}">
                   <i class="like"></i>
-                  <span class="like-count ms-2">{{ this.Likes.length}}</span>
+                  <span class="like-count ms-2">{{this.Likes.length}}</span>
                 </button>
                 {{else}}
                 <button type="button" class="d-flex align-items-center like-submit-btn" data-tweetid="{{this.id}}">
                   <i class="like outline-like"></i>
-                  <span class="like-count ms-2">{{ this.Likes.length}}</span>
+                  <span class="like-count ms-2">{{this.Likes.length}}</span>
                 </button>
                 {{/if}}
               </div>
