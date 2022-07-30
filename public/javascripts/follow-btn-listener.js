@@ -22,7 +22,7 @@ window.addEventListener('load', async e => {
           toggleBtn.forEach(btn => {
             btn.classList.remove('follow-btn')
             btn.classList.add('following-btn')
-            btn.textContent = '跟隨'
+            btn.textContent = '正在跟隨'
           })
           return await axios.post('/followships', { id: userId })
         } else {
