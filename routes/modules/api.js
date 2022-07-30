@@ -3,8 +3,7 @@ const router = express.Router()
 
 const apiController = require('../../controllers/api-controller')
 
-// router.get('/users/:id/tweets', userController.getUserTweets)
-router.get('/users/:id', apiController.getUserProfile)
-router.post('/users/:id', apiController.postUserProfile)
+router.get('/users/:id', apiController.getUserInfo)
+router.post('/users/:id', apiController.postUserInfo)
 
 module.exports = router

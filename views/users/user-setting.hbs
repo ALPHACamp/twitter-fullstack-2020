@@ -6,7 +6,7 @@
         <h4 class="fw-bold ">帳戶設定</h4>
       </div>
     </div>
-    <form class='form-signup needs-validation p-4 text-start' action='/signup' method='POST' novalidate>
+    <form class='form-signup needs-validation p-4 text-start' action='/users/{{currentUser.id}}/setting?_method=PATCH' method='POST' novalidate>
       <div class='form-row mb-4' style='background-color: #F5F8FA'>
         <label class='form-label m-0 pt-1 ps-3' for='account' style='color: #696974'>帳號</label>
         <input type='text' id='account' name='account' class='form-control border-0 p-0 ps-3' style='margin: 0;'
@@ -35,7 +35,7 @@
       <div class='form-row mb-4' style='background-color: #F5F8FA'>
         <label class='form-label m-0 pt-1 ps-3' for='password' style='color: #696974'>密碼</label>
         <input type='password' id='password' name='password' class='form-control border-0 p-0 ps-3' style='margin: 0;'
-          placeholder='請設定密碼' onkeyup="this.value=this.value.replace(/[\u4e00-\u9fa5]/g,'')" required />
+          placeholder='請設定密碼' onkeyup="this.value=this.value.replace(/[\u4e00-\u9fa5]/g,'')"/>
         <hr class='m-0'
           style="background: #657786; border: 1px solid #657786; border-radius: 0px 0px 4px 4px;  opacity: 1;">
         <div class="invalid-feedback m-0" style='background-color: #ffffff'>Please choose a password.</div>
@@ -44,12 +44,12 @@
         <label class='form-label m-0 pt-1 ps-3' for='checkPassword' style='color: #696974'>密碼再確認</label>
         <input type='password' id='checkPassword' name='checkPassword' class='form-control border-0 p-0 ps-3'
           style='margin: 0;' placeholder='請再次輸入密碼' onkeyup="this.value=this.value.replace(/[\u4e00-\u9fa5]/g,'')"
-          required />
+          />
         <hr class='m-0'
           style="background: #657786; border: 1px solid #657786; border-radius: 0px 0px 4px 4px;  opacity: 1;">
-        <div class="invalid-feedback m-0" style='background-color: #ffffff'>Please confirm your password.</div>
+        <div class="invalid-feedback m-0" style='background-color: #ffffff'>Password and confirm password does not match.</div>
       </div>
-      <button class='btn btn-brand btn-lg rounded-pill mt-3 me-3 float-end' id="save">儲存</button>
+      <button class='btn btn-brand btn-lg rounded-pill mt-3 me-3 float-end'>儲存</button>
     </form>
   </div>
   <div style="width: 273px; margin-left: 20px;"></div>
@@ -79,6 +79,18 @@
   }
   password.onchange = validatePassword
   checkPassword.onkeyup = validatePassword
+
+  function requiredSwitch() {
+    if (password.value) {
+      password.required = true
+      checkPassword.required = true
+    } else if (!password.value && !checkPassword.value) {
+      password.required = false
+      checkPassword.required = false
+    }
+  }
+  password.oninput = requiredSwitch()
+  checkPassword.oninput = requiredSwitch()
 
   const name = document.getElementById("name")
   const nameLength = document.getElementById("name-length")

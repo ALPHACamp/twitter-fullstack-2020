@@ -5,7 +5,7 @@ const helpers = require('../_helpers')
 const { User } = require('../models')
 
 const apiController = {
-  getUserProfile: async (req, res, next) => {
+  getUserInfo: async (req, res, next) => {
     try {
       const currentUserId = Number(helpers.getUser(req).id)
       const userId = Number(req.params.id)
@@ -23,7 +23,7 @@ const apiController = {
       next(err)
     }
   },
-  postUserProfile: async (req, res, next) => {
+  postUserInfo: async (req, res, next) => {
     try {
       const currentUserId = Number(helpers.getUser(req).id)
       const userId = Number(req.params.id)
