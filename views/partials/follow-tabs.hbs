@@ -1,4 +1,4 @@
-<div class="py-3">
+<div class="py-3" style="margin:0 -12px;">
   <ul class="nav nav-tabs mx-0 px-0mb-4;">
     <li class="nav-item d-flex justify-content-center px-2">
       <a class="col text-center" href="/users/{{#if personal}}{{personal.id}}{{else}}{{user.id}}{{/if}}/followers"
@@ -6,7 +6,7 @@
         追隨者
       </a>
     </li>
-    <li class="nav-item d-flex justify-content-centerpx-2">
+    <li class="nav-item d-flex justify-content-center px-2">
       <a class="col text-center" href="/users/{{#if personal}}{{personal.id}}{{else}}{{user.id}}{{/if}}/followings"
         style="text-decoration:none;color:{{#ifCond route 'followings'}}#FF6600;border-bottom:solid;border-color:#FF6600;{{else}}black{{/ifCond}}">
         正在追隨

@@ -164,7 +164,8 @@ const userController = {
       const user = helpers.getUser(req)
       const personal = await User.findByPk(Number(req.params.id), {
         include: [
-          { model: User, as: 'Followings' }
+          { model: User, as: 'Followings' },
+          { model: Tweet }
         ]
       })
       return res.render('followings', { personal: personal.toJSON(), user })
@@ -178,7 +179,8 @@ const userController = {
       const user = helpers.getUser(req)
       const personal = await User.findByPk(Number(req.params.id), {
         include: [
-          { model: User, as: 'Followers' }
+          { model: User, as: 'Followers' },
+          { model: Tweet }
         ]
       })
       return res.render('followers', { personal: personal.toJSON(), user })
