@@ -68,48 +68,57 @@
 
 .user-card {
   width: 639px;
+  position: relative;
 }
 
 .user-banner {
   width: 639px;
   height: 200px;
   object-fit: cover;
+  position: relative;
 }
 
 .user-info {
   padding: 0 16px;
   position: relative;
-  top: -64px;
+  top: 72px;
+  margin-bottom: 92px;
 }
 
 .user-avatar {
   width: 141.1px;
   height: 140px;
   border: var(--white) solid 4px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  position: absolute;
+  left: 2.52%;
+  top: 124px;
 }
 
 .user-edit {
   height: 40px;
-  width: 128px;
   border-radius: 50px;
   padding: 8px 16px;
   color: var(--brand-main);
   background-color: var(--white);
   border: var(--brand-main) solid 1px;
+  box-sizing: border-box;
   line-height: 24px;
   font-size: 16px;
-  position: relative;
-  top: 36px;
-  left: 337.77px;
+  text-decoration: none;
+  position: absolute;
+  top: 216px;
+  right: 16px;
 }
 
 .user-option {
   height: 40px;
   line-height: 24px;
   font-size: 16px;
-  position: relative;
-  top: 36px;
-  left: 257.77px;
+  position: absolute;
+  top: 216px;
+  right: 16px;
 }
 
 .message,
@@ -186,6 +195,7 @@
   width: 639px;
   border-bottom: #E6ECF0 solid 1px;
   padding: 0;
+  margin-bottom: 18px;
 }
 
 .user-nav-item {
@@ -251,4 +261,129 @@
 .reply-comment {
   font-size: 16px;
   line-height: 26px;
+}
+
+.modal {
+  width: 634px;
+  border-radius: 14px;
+  position: fixed;
+  left: 334px;
+  top: 56px;
+}
+
+.modal .btn-close {
+  height: 15px;
+  padding: 0;
+  margin: 0;
+  background-image: url(../images/icon-orange-close.png);
+  opacity: 1;
+}
+
+.modal-dialog {
+  margin: 0;
+  max-width: none;
+}
+
+.modal-header {
+  height: 56px;
+}
+
+.modal-title {
+  height: 26px;
+  position: absolute;
+  left: 11.2%;
+  top: 2.46%;
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 700;
+  color: #1C1C1C
+}
+
+.modal-save {
+  width: 64px;
+  height: 40px;
+  padding: 8px 16px;
+
+  background: var(--brand-main);
+  border: none;
+  border-radius: 50px;
+
+  color: #FFFFFF;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.modal .user-banner {
+  height: 200px;
+  width: 639px;
+  color: #17172580;
+  opacity: 0.75;
+}
+
+.modal .user-avatar {
+  height: 140px;
+  width: 141.10406494140625px;
+
+  position: absolute;
+  top: 181px;
+  left: 16.13px;
+}
+
+#user-modal-body {
+  position: relative;
+  top: 56px;
+}
+
+#user-modal-body .input {
+  width: 602px;
+  padding: 0 17.84px;
+  margin-top: 8px;
+
+  border-bottom: #657786 solid 2px;
+  border-radius: 2px;
+
+  background: #F5F8FA;
+}
+
+.word-count {
+  height: 20px;
+
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  color: #696974;
+}
+
+#user-modal-body .form-label {
+  height: 22px;
+  width: 566.32px;
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #696974;
+}
+
+#user-modal-body .form-control {
+  width: 566.32px;
+  color: #171725;
+  padding: 0;
+  border: none;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  background: #F5F8FA;
+}
+
+.add-photo {
+  position: absolute;
+  left: 44%;
+  top: 50%;
+}
+
+.remove-photo {
+  position: absolute;
+  left: 53.23%;
+  top: 50%;
 }

@@ -11,10 +11,11 @@
 {{!-- 使用者資料 --}}
 <div class="user-card">
   <img class="user-banner" src="{{checkBanner user.banner}}"> 
-  <div class="user-info">
-    <img src="{{checkAvatar user.avatar}}" class="rounded-circle user-avatar">
+  <div>
+    <img src="{{checkAvatar user.avatar}}" class="user-avatar">
     {{#ifCond user.id loginUser.id}}
-      <a class="text-decoration-none user-option user-edit" href="/api/users/{{user.id}}">編輯個人資料</a>
+      <button class="user-edit" id="edit-user" data-id="{{user.id}}"
+        data-bs-toggle="modal" data-bs-target="#edit-user-modal">編輯個人資料</button>
     {{else}}
       <div class="user-option" style="display: inline;">
         <a class="text-decoration-none" href="#">
@@ -34,8 +35,10 @@
         {{/if}}
       </div>
     {{/ifCond}}
+  </div>
 
-    <h5 class="user-name fw-bold">{{user.name}}</h5>
+  <div class="user-info">
+    <h5 class="user-name fw-bold m-0">{{user.name}}</h5>
     <p class="user-account">@{{user.account}}</p>
     <p class="user-introduction">{{user.introduction}}</p>
     <a class="text-decoration-none user-follow" href="/users/{{user.id}}/followings">
@@ -47,7 +50,7 @@
   </div>
 </div>
 
-<ul class="d-flex mb-4 user-nav-tabs">
+<ul class="d-flex user-nav-tabs">
   <li class="user-nav-item {{#if tweets}}active{{/if}}">
     <a class="user-nav-link" href="/users/{{user.id}}/tweets">推文</a>
   </li>
@@ -70,3 +73,31 @@
 {{#each likedTweets}}
   {{> tweet-card}}
 {{/each}}
+
+{{!-- modal --}}
+<div class="modal fade" id="edit-user-modal" tabindex="-1" aria-labelledby="edit-user-ModalLabel" aria-hidden="true">
+  <form action="/api/users/" method="POST" id="user-modal-form">
+    <div class="modal-dialog">
+      <div class="modal-content" style="height: 610px;">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title" id="edit-user-ModalLabel">編輯個人資料</h5>
+          <button type="submit" class="modal-save">儲存</button>
+        </div>
+  
+        <div class="user-banner" id="user-modal-banner">
+          <img class="add-photo" src="/images/icon-white-add-photo.png">
+          <img class="remove-photo" src="/images/icon-white-close.png">
+        </div>
+  
+        <div class="user-avatar" id="user-modal-avatar" style="background-size: cover;">
+          <img class="add-photo" src="/images/icon-white-add-photo.png">
+        </div>
+  
+        <div class="modal-body" id="user-modal-body">
+          {{!-- input user name & introduction --}}
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
