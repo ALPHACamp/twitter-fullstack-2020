@@ -101,8 +101,23 @@ const userController = {
           .Followings.some(item => item.id === user.id)
         user.isSelf = user.id === userId
       })
-      console.log(queryUser)
-      return res.render('users/user-followers', { queryUser, role, currentUser})
+      let topUser = await User.findAll({
+        include: [{ model: User, as: 'Followers' }]
+      })
+      topUser = topUser
+        .map(user => ({
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+          isFollowed: currentUser.Followings.some(f => f.id === user.id)
+        }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+      let profileUser = await User.findByPk(userId, {
+        include: [
+          { model: User, as: 'Followers', attributes: ['id'] },
+          { model: User, as: 'Followings', attributes: ['id'] }
+        ]
+      })
+      return res.render('users/user-followings', { queryUser, role, currentUser, topUser })
     } catch (err) {
       next(err)
     }
@@ -136,8 +151,23 @@ const userController = {
           .Followings.some(item => item.id === user.id)
         user.isSelf = user.id === userId
       })
-      console.log(queryUser)
-      return res.render('users/user-followers', { queryUser, role, currentUser })
+      let topUser = await User.findAll({
+        include: [{ model: User, as: 'Followers' }]
+      })
+      topUser = topUser
+        .map(user => ({
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+          isFollowed: currentUser.Followings.some(f => f.id === user.id)
+        }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+      let profileUser = await User.findByPk(userId, {
+        include: [
+          { model: User, as: 'Followers', attributes: ['id'] },
+          { model: User, as: 'Followings', attributes: ['id'] }
+        ]
+      })
+      return res.render('users/user-followers', { queryUser, role, currentUser, topUser })
     } catch (err) {
       next(err)
     }
@@ -164,7 +194,7 @@ const userController = {
       })
       if (!profileUser) throw new Error("This user didn't exist!")
       profileUser = profileUser.toJSON()
-      if (profileUser.Followers.map(fr => fr.id === currentUser.id)) {
+      if (currentUser.Followings.some(fr => fr.id === profileUser.id)) {
         profileUser.isFollowed = true
       }
       const userTweets = await Tweet.findAll({
@@ -182,7 +212,7 @@ const userController = {
         ...tweets.toJSON(),
         isLiked: likedTweetsId.includes(tweets.id)
       }))
-      console.log(profileUser)
+      console.log(topUser)
       res.render('users/user-tweets', {
         tweets: data,
         role: currentUser.role,
@@ -235,7 +265,6 @@ const userController = {
         ...tweets.toJSON(),
         isLiked: likedTweetsId.includes(tweets.id)
       }))
-      console.log(profileUser)
       res.render('users/user-tweets', {
         tweets: data,
         role: currentUser.role,
@@ -288,7 +317,6 @@ const userController = {
         ...tweets.toJSON(),
         isLiked: likedTweetsId.includes(tweets.id)
       }))
-      console.log(profileUser)
       res.render('users/user-tweets', {
         tweets: data,
         role: currentUser.role,
