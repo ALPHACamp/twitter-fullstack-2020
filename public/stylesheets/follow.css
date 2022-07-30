@@ -21,21 +21,6 @@ body {
 }
 
 
-
-/* left menu */
-
-.menu {
-  height: 100%;
-  width: 290px;
-}
-
-
-.window-description-input {
-  resize: none;
-  height: 150px;
-}
-
-
 /* follow-center-part */
 
 .follow-tab {

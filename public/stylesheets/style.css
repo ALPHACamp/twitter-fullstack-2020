@@ -225,6 +225,14 @@ body {
   text-overflow: ellipsis;
 }
 
+.following-btn {
+  min-width: 96px;
+}
+
+.follow-btn {
+  min-width: 65px;
+}
+
 /* reply modal */
 .modal-description-container {
   position: relative;
