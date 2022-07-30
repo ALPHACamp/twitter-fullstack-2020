@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt-nodejs')
 const helpers = require('../_helpers')
+const getTopUser = require('../helpers/top-user-helper')
 
 const { User, Tweet, Like, Reply, Followship } = require('../models')
 
@@ -100,22 +101,7 @@ const userController = {
           .Followings.some(item => item.id === user.id)
         user.isSelf = user.id === userId
       })
-      let topUser = await User.findAll({
-        include: [{ model: User, as: 'Followers' }]
-      })
-      topUser = topUser
-        .map(user => ({
-          ...user.toJSON(),
-          followerCount: user.Followers.length,
-          isFollowed: currentUser.Followings.some(f => f.id === user.id)
-        }))
-        .sort((a, b) => b.followerCount - a.followerCount)
-      let profileUser = await User.findByPk(userId, {
-        include: [
-          { model: User, as: 'Followers', attributes: ['id'] },
-          { model: User, as: 'Followings', attributes: ['id'] }
-        ]
-      })
+      const topUser = getTopUser(currentUser)
       return res.render('users/user-followings', { queryUser, role, currentUser, topUser })
     } catch (err) {
       next(err)
@@ -150,22 +136,7 @@ const userController = {
           .Followings.some(item => item.id === user.id)
         user.isSelf = user.id === userId
       })
-      let topUser = await User.findAll({
-        include: [{ model: User, as: 'Followers' }]
-      })
-      topUser = topUser
-        .map(user => ({
-          ...user.toJSON(),
-          followerCount: user.Followers.length,
-          isFollowed: currentUser.Followings.some(f => f.id === user.id)
-        }))
-        .sort((a, b) => b.followerCount - a.followerCount)
-      let profileUser = await User.findByPk(userId, {
-        include: [
-          { model: User, as: 'Followers', attributes: ['id'] },
-          { model: User, as: 'Followings', attributes: ['id'] }
-        ]
-      })
+      const topUser = await getTopUser(currentUser)
       return res.render('users/user-followers', { queryUser, role, currentUser, topUser })
     } catch (err) {
       next(err)
@@ -175,16 +146,7 @@ const userController = {
     try {
       const currentUser = helpers.getUser(req)
       const userId = Number(req.params.id)
-      let topUser = await User.findAll({
-        include: [{ model: User, as: 'Followers' }]
-      })
-      topUser = topUser
-        .map(user => ({
-          ...user.toJSON(),
-          followerCount: user.Followers.length,
-          isFollowed: currentUser.Followings.some(f => f.id === user.id)
-        }))
-        .sort((a, b) => b.followerCount - a.followerCount)
+      const topUser = await getTopUser(currentUser)
       let profileUser = await User.findByPk(userId, {
         include: [
           { model: User, as: 'Followers', attributes: ['id'] },
@@ -213,7 +175,6 @@ const userController = {
         ...tweets.toJSON(),
         isLiked: likedTweetsId.includes(tweets.id)
       }))
-      console.log(topUser)
       res.render('users/user-tweets', {
         tweets: data,
         role: currentUser.role,
@@ -230,16 +191,7 @@ const userController = {
     try {
       const currentUser = helpers.getUser(req)
       const userId = Number(req.params.id)
-      let topUser = await User.findAll({
-        include: [{ model: User, as: 'Followers' }]
-      })
-      topUser = topUser
-        .map(user => ({
-          ...user.toJSON(),
-          followerCount: user.Followers.length,
-          isFollowed: currentUser.Followings.some(f => f.id === user.id)
-        }))
-        .sort((a, b) => b.followerCount - a.followerCount)
+      const topUser = await getTopUser(currentUser)
       let profileUser = await User.findByPk(userId, {
         include: [
           { model: User, as: 'Followers', attributes: ['id'] },
@@ -284,16 +236,7 @@ const userController = {
     try {
       const currentUser = helpers.getUser(req)
       const userId = Number(req.params.id)
-      let topUser = await User.findAll({
-        include: [{ model: User, as: 'Followers' }]
-      })
-      topUser = topUser
-        .map(user => ({
-          ...user.toJSON(),
-          followerCount: user.Followers.length,
-          isFollowed: currentUser.Followings.some(f => f.id === user.id)
-        }))
-        .sort((a, b) => b.followerCount - a.followerCount)
+      const topUser = await getTopUser(currentUser)
       let profileUser = await User.findByPk(userId, {
         include: [
           { model: User, as: 'Followers', attributes: ['id'] },
