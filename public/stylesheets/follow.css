@@ -54,9 +54,15 @@ body {
   width: 100%;
 }
 
-.follow-item {
+.follow-item-tab {
   box-sizing: border-box;
   width: 130px;
+  height: 99.9%;
+}
+
+.follow-item {
+  box-sizing: border-box;
+  width: auto;
   height: 99.9%;
 }
 
@@ -87,7 +93,7 @@ body {
 }
 
 .follow-card {
-  min-height: 160px;
+  min-height: auto;
   width: 100%;
   border-bottom: 1px solid #E6ECF0;
 }

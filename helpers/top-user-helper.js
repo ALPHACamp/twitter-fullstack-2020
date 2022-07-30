@@ -9,6 +9,7 @@ const getTopUser = async currentUser => {
       .map(user => ({
         ...user.toJSON(),
         followerCount: user.Followers.length,
+        isAdminOrSelf: user.id === currentUser.id || user.role === 'admin',
         isFollowed: currentUser.Followings.some(f => f.id === user.id)
       }))
       .sort((a, b) => b.followerCount - a.followerCount)

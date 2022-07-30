@@ -216,16 +216,6 @@ body {
 
 /* reply modal */
 
-.reply-wrapper::before {
-  content: "";
-  position: absolute;
-  top: 1rem;
-  bottom: 1rem;
-  left: 1rem;
-  right: 1rem;
-  transition: transform 0.4s ease-out;
-}
-
 .modal-description-container {
   position: relative;
   top: 10px;
