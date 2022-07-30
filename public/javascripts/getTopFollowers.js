@@ -3,15 +3,15 @@ const getTopFollowers = `${location.protocol}//${window.location.host}/followshi
 
 axios.get(getTopFollowers)
   .then((response) => {
-    const { followerList, topFollowerUsers } = response.data
-    const followingId = followerList.map(info => info.followingId)
+    const { user, topFollowerUsers } = response.data
+    const followingsId = user?.Followings?.map(f => f.id)
     let htmlContent = `
      <span class="font-lg-dark">推薦跟隨</span>
       <div class="hr-line"></div>
     `
     topFollowerUsers.forEach(topFollowerUser => {
-      if (followingId.includes(topFollowerUser.id)) {
-        console.log(followingId, topFollowerUser.id)
+      if (topFollowerUser.id === user.id) return
+      if (followingsId.includes(topFollowerUser.id)) {
         htmlContent += `
            <form action="/followships/${topFollowerUser.id}?_method=DELETE" method="POST">
         <div class="d-flex justify-content-between align-items-center flex-row bd-highlight mb-3">
