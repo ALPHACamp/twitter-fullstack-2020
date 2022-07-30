@@ -32,8 +32,7 @@ app.use((req, res, next) => {
   res.locals.error_messages_account = req.flash('error_messages_account')
   next()
 })
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+
 app.use(routes)
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

@@ -62,7 +62,9 @@ const userController = {
       .then(([targetUser, tweets]) => {
         if (!targetUser) throw new Error("User didn't exist")
         const user = getUser(req)
-        user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        if (user) {
+          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        }
         const tweetsData = tweets
           .map(t => ({
             ...t.toJSON(),
@@ -96,7 +98,9 @@ const userController = {
       .then(([targetUser, replies]) => {
         if (!targetUser) throw new Error("User didn't exist")
         const user = getUser(req)
-        user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        if (user) {
+          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        }
         res.locals.tweetsLength = targetUser.Tweets.length
         res.status(200).render('profile', { targetUser: targetUser.toJSON(), replies, user })
       })
@@ -126,7 +130,9 @@ const userController = {
       .then(([targetUser, likes]) => {
         if (!targetUser) throw new Error("User didn't exist")
         const user = getUser(req)
-        user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        if (user) {
+          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        }
         const likesData = likes
           .map(l => ({
             ...l.toJSON(),
