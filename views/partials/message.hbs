@@ -2,13 +2,12 @@
 <script>
   Swal.fire({
     toast: true,
-    position: 'top-end',
+    position: 'top',
     icon: 'error',
     title: '{{ error_messages }}',
     showConfirmButton: false,
-    timer: 5000,
-    timerProgressBar: true,
-    toast: true,
+    timer: 3500,
+    timerProgressBar: true
   })
 </script>
 {{/if}}
@@ -16,13 +15,12 @@
 <script>
   Swal.fire({
     toast: true,
-    position: 'top-end',
+    position: 'top',
     icon: 'success',
     title: '{{ success_messages }}',
     showConfirmButton: false,
-    timer: 5000,
-    timerProgressBar: true,
-    toast: true,
+    timer: 3500,
+    timerProgressBar: true
   })
 </script>
 {{/if}}
