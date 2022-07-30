@@ -93,7 +93,7 @@
 {{/ifCond}}
 
 <!-- Modal -->
-<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content" style="width: 600px; height: 657px;">
       <form action="/api/users/{{user.id}}" data-id="{{user.id}}" enctype="multipart/form-data" id="profileForm"
@@ -112,6 +112,7 @@
           </div>
 
         </div>
+
         <div class="modal-profile-top">
           <img class="modal-profile-cover" src="" alt="" id="coverValue">
           <div>

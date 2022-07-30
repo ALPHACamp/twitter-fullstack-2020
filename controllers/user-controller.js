@@ -230,7 +230,9 @@ const userController = {
     try {
       const user = helpers.getUser(req)
       const personal = await User.findByPk(Number(req.params.id), {
-        raw: true
+        include: [
+          { model: Tweet },
+        ]
       })
       const replies = await Reply.findAll({
         where: {
@@ -238,6 +240,7 @@ const userController = {
         },
         include: [
           User,
+          { model: Tweet },
           { model: Tweet, include: User }
         ],
         order: [
@@ -249,7 +252,7 @@ const userController = {
       })
       const followingsId = user?.Followings?.map(f => f.id)
       user.isFollowed = (followingsId.includes(personal.id))
-      return res.render('profileReply', { replies, user, personal })
+      return res.render('profileReply', { replies, user, personal: personal.toJSON() })
     }
     catch (err) {
       next(err)

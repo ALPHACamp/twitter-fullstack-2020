@@ -23,7 +23,7 @@ axios.get(getTopFollowers)
             <div class="name-container d-flex flex-column bd-highlight p-1">
               <a href="/users/${topFollowerUser.id}/tweets">
                 <div class="font-name">${topFollowerUser.name}</div>
-                <div class="font-account">${topFollowerUser.account}</div>
+                <div class="font-account">@${topFollowerUser.account}</div>
               </a>
             </div>
             <div class="bd-highlight">
