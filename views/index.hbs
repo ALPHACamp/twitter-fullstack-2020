@@ -42,11 +42,11 @@
     
       {{!-- avatar （連結到該user個人頁面）--}}
       <a href="/users/{{this.User.id}}">
-        <div class="mt-2">
+        <div class="mt-2" style="height: 50px; width: 50px; margin-right: 12px">
           {{#if this.User.avatar}}
-          <img src="{{this.User.avatar}}" alt="" style="width: 50px;" class="me-3">
+          <img src="{{this.User.avatar}}" alt="" style="border-radius: 50%; max-width: 100%; max-height: 100%;" class="me-3">
           {{else}}
-          <img src="/images/img.png" alt="" style="width: 50px;" class="me-3">
+          <img src="/images/img.png" alt="" style="border-radius: 50%; max-width: 100%; max-height: 100%;" class="me-3">
           {{/if}}
         </div>
       </a>
