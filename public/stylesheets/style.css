@@ -469,33 +469,11 @@
  }
 
  .modal-profile-save {
-   display: flex;
-   flex-direction: column;
-   align-items: flex-start;
-   padding: 0px;
-
    position: absolute;
    left: 87.38%;
    right: 2.52%;
-   top: 1.31%;
+   top: 1.8%;
    bottom: 92.13%;
- }
-
- .modal-profile-button-save {
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   padding: 8px 16px;
-
-   width: 64px;
-   height: 40px;
-
-   /* color/brand/main */
-
-   background: #FF6600;
-   border-radius: 50px;
-   color: #FFFFFF
  }
 
  .modal-profile-cover {
