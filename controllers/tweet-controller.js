@@ -12,11 +12,28 @@ const tweetController = {
       if (!tweet) throw new Error("This tweet didn't exist!")
       const data = tweet.toJSON()
       const isLiked = data.Likes.some(t => t.UserId === currentUser.id)
+      let topUser = await User.findAll({
+        include: [{ model: User, as: 'Followers' }]
+      })
+      topUser = topUser
+        .map(user => ({
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+          isFollowed: currentUser.Followings.some(f => f.id === user.id)
+        }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+      let profileUser = await User.findByPk(userId, {
+        include: [
+          { model: User, as: 'Followers', attributes: ['id'] },
+          { model: User, as: 'Followings', attributes: ['id'] }
+        ]
+      })
       return res.render('tweets/tweet-replies', {
         tweet: data,
         isLiked,
         currentUser,
-        role: currentUser.role
+        role: currentUser.role,
+        topUser
       })
     } catch (err) {
       next(err)
@@ -112,7 +129,6 @@ const tweetController = {
         ...tweets.toJSON(),
         isLiked: likedTweetsId.includes(tweets.id)
       }))
-      // res.json(tweets).
       res.render('tweets', {
         tweets: data,
         role: currentUser.role,

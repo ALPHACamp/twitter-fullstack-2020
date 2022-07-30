@@ -4,7 +4,26 @@
       <div class="h3 fw-bold text-start m-4 pt-4">推薦跟隨</div>
     </div>
     <div class="d-flex flex-column m-3 mt-0 pb-4" id="top-users-container">
-
+      {{#each topUser}}
+      {{#ifCond this.role 'admin'}}
+      {{#ifCond this.id ../currentUser.id}}
+      {{/ifCond}}
+      {{else}}
+      <div class="user-container d-flex mt-2 mb-2">
+        <a href="/users/{{this.id}}/tweets"><img src="{{this.avatar}}" alt="" class="avatar-sm rounded-pill"></a>
+        <div
+          class="follow-list-user-name-account ms-2 mb-2 d-flex flex-column flex-grow-1 justify-content-start align-items-start">
+          <h6 class="user-name fw-bold fs-5 text-start mb-0 w-25">{{this.name}}</h6>
+          <p class="user-account fw-normal fs-6 mb-0 w-25">@{{this.account}}</p>
+        </div>
+        {{#if this.isFollowed}}
+        <button class="following-btn follow-item rounded-pill" data-userid="{{this.id}}" type="submit">正在跟隨</button>
+        {{else}}
+        <button class="follow-btn follow-item rounded-pill" data-userid="{{this.id}}" type="submit">跟隨</button>
+        {{/if}}
+      </div>
+      {{/ifCond}}
+      {{/each}}
     </div>
   </div>
 </div>
