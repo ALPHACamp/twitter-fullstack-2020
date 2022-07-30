@@ -1,5 +1,6 @@
 const { Tweet, User, Like, Reply } = require('../models')
 const helpers = require('../_helpers')
+const getTopUser = require('../helpers/top-user-helper')
 
 const tweetController = {
   getTweetReplies: async (req, res, next) => {
@@ -12,16 +13,7 @@ const tweetController = {
       if (!tweet) throw new Error("This tweet didn't exist!")
       const data = tweet.toJSON()
       const isLiked = data.Likes.some(t => t.UserId === currentUser.id)
-      let topUser = await User.findAll({
-        include: [{ model: User, as: 'Followers' }]
-      })
-      topUser = topUser
-        .map(user => ({
-          ...user.toJSON(),
-          followerCount: user.Followers.length,
-          isFollowed: currentUser.Followings.some(f => f.id === user.id)
-        }))
-        .sort((a, b) => b.followerCount - a.followerCount)
+      const topUser = getTopUser(currentUser)
       // let profileUser = await User.findByPk(userId, {
       //   include: [
       //     { model: User, as: 'Followers', attributes: ['id'] },
@@ -102,17 +94,7 @@ const tweetController = {
   getTweets: async (req, res, next) => {
     try {
       const currentUser = helpers.getUser(req)
-      let topUser = await User.findAll({
-        include: [{ model: User, as: 'Followers' }]
-      })
-      topUser = topUser
-        .map(user => ({
-          ...user.toJSON(),
-          followerCount: user.Followers.length,
-          isFollowed: currentUser.Followings.some(f => f.id === user.id)
-        }))
-        .sort((a, b) => b.followerCount - a.followerCount)
-
+      const topUser = getTopUser(currentUser)
       const tweets = await Tweet.findAll({
         order: [['createdAt', 'DESC']],
         attributes: ['id', 'description', 'createdAt'],
