@@ -102,7 +102,7 @@ const userController = {
           user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
         }
         res.locals.tweetsLength = targetUser.Tweets.length
-        res.status(200).render('profile', { targetUser: targetUser.toJSON(), replies, user })
+        res.render('profile', { targetUser: targetUser.toJSON(), replies, user })
       })
       .catch(err => next(err))
   },
@@ -138,10 +138,10 @@ const userController = {
             ...l.toJSON(),
             likedCount: l.Tweet.Likes.length,
             repliedCount: l.Tweet.Replies.length,
-            isLiked: l.Tweet.Likes.some(like => like.UserId === user.id)
+            isLiked: user? l.Tweet.Likes.some(like => like.UserId === user.id) : false
           }))
         res.locals.tweetsLength = targetUser.Tweets.length
-        res.status(200).render('profile', { targetUser: targetUser.toJSON(), likes: likesData, user })
+        res.render('profile', { targetUser: targetUser.toJSON(), likes: likesData, user })
       })
       .catch(err => next(err))
   },
