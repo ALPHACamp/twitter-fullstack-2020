@@ -205,13 +205,30 @@ const userController = {
       if (currentUser.Followings.some(fr => fr.id === profileUser.id)) {
         profileUser.isFollowed = true
       }
-      // const likedTweetsId = profileUser?.Likes ? currentUser.Likes.map(lt => lt.TweetId) : []
-      // profileUser.Tweets = profileUser.Tweets.map(tweets => ({
-      //   ...tweets,
-      //   isLiked: likedTweetsId.includes(tweets.id)
-      // }))
+      const likedTweets = await Like.findAll({
+        where: { UserId: userId },
+        attributes: ['id', 'createdAt'],
+        include: [
+          {
+            model: Tweet,
+            attributes: ['id', 'description', 'createdAt'],
+            include: [
+              { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
+              { model: Reply, attributes: ['id'] },
+              { model: Like, attributes: ['id'] }
+            ]
+          }
+        ],
+        order: [['createdAt', 'DESC']]
+      })
+      likedTweets.forEach(function (tweet, index) {
+        this[index] = {
+          ...tweet.toJSON()
+        }
+      }, likedTweets)
+      console.log(likedTweets)
       res.render('users/user-likes', {
-        // likedTweets,
+        likedTweets,
         profileUser,
         role: currentUser.role,
         currentUser,
