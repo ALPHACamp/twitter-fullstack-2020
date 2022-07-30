@@ -1,29 +1,49 @@
 <div class="body-container text-center">
-  {{> side-menu route='tweets'}}
+  {{> side-menu }}
   {{!-- 中央部分 --}}
   <div class="center-part border" id="center-part">
-    <div class="text-index border-bottom" id="text-index">
-      <div class="user-tweets-header text-start ms-3 mt-4 mb-3 ">
-        <h4 class="fw-bold ">首頁</h4>
+    <div class="border-bottom">
+      <div class="user-tweets-header text-start ms-3 my-2">
+        <div class='d-flex flex-row align-items-center'>
+          <a href="/tweets"><i class="back"></i></a>
+          <div class="d-flex flex-column ms-3">
+            <span class="fw-bold fs-5">{{currentUser.name}}</span>
+            <span class="fs-6" style="color: #6C757D;">{{tweets.length}} 推文</span>
+          </div>
+        </div>
       </div>
     </div>
     <div class="scroll-part scrollbar">
-      <div class="tweet-input ms-3">
-        <form class="needs-validation" action="/tweets" method="POST" id="tweet-form" novalidate>
-          <div class="d-flex flex-wrap mt-3">
-            <div class="me-1">
-              <img src="{{currentUser.avatar}}" alt="" class="avatar-sm rounded-pill">
-            </div>
-            <textarea class="description-input w-auto border border-0 ms-1 mb-1 needs-validation" name="description"
-              id="description" cols="65" rows="3" placeholder="有什麼新鮮事？" maxlength='140' required></textarea>
-            <div class="d-flex justify-content-end align-times-center w-100 mb-3">
-              <div class="text-black-50 ms-auto me-3 fs-6 align-self-center" id="description-length"></div>
-              <button type="submit" class="send-button btn btn-brand rounded-pill px-3 me-3">推文</button>
-            </div>
-          </div>
-        </form>
+      <div class="banner position-relative">
+        <img src='{{profileUser.coverPhoto}}' width='100%' height='20%'/>
+        <img class="profile-avatar border border-5 border-white rounded-circle" src='{{profileUser.avatar}}'/>
+        <div class="buttons d-flex justify-content-end align-items-center">
+          {{#ifCond currentUser.id profileUser.id}}
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-brand rounded-pill me-3 mt-3">
+              編輯個人資料
+            </button>
+            {{else}}
+              {{#if profileUser.isFollowed}}
+                <button id="follow" class="btn btn-brand rounded-pill me-3 mt-3">正在跟隨</button>
+              {{else}}
+                <button id="follow" class="btn btn-outline-brand rounded-pill me-3 mt-3">跟隨</button>
+              {{/if}}
+          {{/ifCond}}
+        </div>
       </div>
-      <div class="diver"></div>
+      <div class="text-start m-3 ms-3">
+        <p class="m-0 fw-bold fs-4">{{profileUser.name}}</p>
+        <p class="mb-2"  style="color: #6C757D;">@{{profileUser.account}}</p>
+        <p class="mb-2">{{profileUser.introduction}}</p>
+        <div>
+          <span>{{profileUser.Followings.length}} 個</span><span  style="color: #6C757D;">跟隨中</span>
+          <span class="ms-3">{{profileUser.Followers.length}} 個</span><span style="color: #6C757D;">跟隨者</span>
+        </div>
+      </div>
+      <div class="my-3">
+        {{> user-tabs}}
+      </div>
       {{!-- 推文卡片 --}}
       <div class="tweet-container">
         {{#each tweets}}

@@ -24,7 +24,7 @@ body {
   width: 290px;
 }
 
-.nav {
+.side-menu {
   height: 100%;
   width: 178px;
   margin-left: 75px;
@@ -241,4 +241,12 @@ body {
 
 .modal-avatar-border {
   border-bottom: 10px solid white;
+}
+
+/* profile */
+.profile-avatar {
+  width: 25%;
+  position: absolute;
+  top: 42%;
+  right: 72%;
 }
