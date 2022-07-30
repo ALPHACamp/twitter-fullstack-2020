@@ -33,8 +33,7 @@ app.use((req, res, next) => {
   res.locals.loginUser = helpers.getUser(req)
   next()
 })
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+
 app.use(routes)
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
