@@ -1,15 +1,15 @@
 <ul class="nav nav-tabs mb-3 follow-tab">
-  <a class="text-decoration-none" href="/users/{{queryUser.id}}/followers">
-    <li class="follow-item {{#ifCond route 'followers'}}current{{/ifCond}}">
-      <span class="follow-link fw-bold {{#ifCond route 'followers'}}text-brand{{/ifCond}}">
-        正在追隨
-      </span>
-    </li>
-  </a>
   <a class="text-decoration-none" href="/users/{{queryUser.id}}/followings">
     <li class="follow-item {{#ifCond route 'followings'}}current{{/ifCond}}">
       <span class="follow-link fw-bold {{#ifCond route 'followings'}}text-brand{{/ifCond}}">
         正在追隨
+      </span>
+    </li>
+  </a>
+  <a class="text-decoration-none" href="/users/{{queryUser.id}}/followers">
+    <li class="follow-item {{#ifCond route 'followers'}}current{{/ifCond}}">
+      <span class="follow-link fw-bold {{#ifCond route 'followers'}}text-brand{{/ifCond}}">
+        追隨者
       </span>
     </li>
   </a>
