@@ -15,8 +15,8 @@
     <div class="scroll-part scrollbar">
       {{!-- 追隨卡片 --}}
       <div class="follow-container scrollbar">
-        {{#if user.Followers}}
-        {{#each user.Followers}}
+        {{#if queryUser.Followers}}
+        {{#each queryUser.Followers}}
         <div class="follow-card d-flex mb-3">
           <div class="avatar-container ms-4 me-1">
             <a href="/users/{{this.id}}/tweets">
@@ -26,7 +26,8 @@
           <div class="follow-card-body me-4">
             <div class="card-top-wrapper d-flex justify-content-between">
               <div class="reply-user-name fw-bold">{{this.name}}</div>
-              {{#ifCond this.id ../currentUser.id}}
+              {{#if this.isSelf}}
+              <div></div>
               {{else}}
               {{#if this.isFollowed}}
               <button class="following-btn follow-item rounded-pill" id="follow-btn" data-userid="{{this.id}}"
@@ -35,7 +36,7 @@
               <button class="follow-btn follow-item rounded-pill" id="follow-btn" data-userid="{{this.id}}"
                 type="submit">跟隨</button>
               {{/if}}
-              {{/ifCond}}
+              {{/if}}
             </div>
             <div class="reply-content d-flex justify-content-start align-items-start ms-1">{{this.introduction}}</div>
           </div>

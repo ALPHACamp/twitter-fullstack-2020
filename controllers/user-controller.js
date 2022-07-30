@@ -86,11 +86,11 @@ const userController = {
         order: [['Followings', 'created_at', 'DESC']]
       })
       let data = user.toJSON()
+      console.log('followings:' + data)
       data.Followings = data.Followings.map(u => ({
         ...u,
-        isFollowed: currentUser.Followings.some(f => f.id === user.id)
+        isFollowed: currentUser.Followers.some(fu => fu.id === u.id)
       }))
-      console.log('followings' + data)
       // console.log(data.Followings)
       return res.render('users/user-followings', { user: data, role: data.role, currentUser })
       // user.Followings[0]
@@ -102,26 +102,33 @@ const userController = {
   },
   getUserFollowers: async (req, res, next) => {
     try {
-      const currentUser = helpers.getUser(req)
-      const userId = Number(req.params.id)
-      const user = await User.findByPk(userId, {
-        include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' },
-          { model: Tweet, as: 'Tweets' }
-        ],
-        order: [['Followers', 'created_at', 'DESC']],
+      const userId = Number(helpers.getUser(req).id)
+      const role = Number(helpers.getUser(req).id).role
+      const queryUserId = Number(req.params.id)
+      const queryUserData = await User.findByPk(userId, {
+        include: [{
+          model: User,
+          as: 'Followers',
+          attributes: ['id', 'name', 'avatar', 'introduction'],
+          order: [['createdAt', 'DESC']]
+        },
+        { model: Tweet, attributes: ['id'] }
+        ]
       })
-      let data = user.toJSON()
-      data.Followers = data.Followers.map(u => ({
-        ...u,
-        isFollowed: currentUser.Followers.some(f => f.id === user.id)
-      }))
-      console.log('followers' + data)
-      return res.render('users/user-followers', { user: data, role: data.role, currentUser })
-      // user.Followers[0]
-      //   ? res.json({ status: 'success', data: user.Followers })
-      //   : res.json({ status: 'success', data: null })
+      if (!queryUserData) throw new Error('使用者不存在 !')
+
+      const queryUser = queryUserData.toJSON()
+      queryUser.isSelf = queryUserId === userId
+      queryUser.isFollowed = helpers
+        .getUser(req)
+        .Followings.some(item => item.id === queryUser.id)
+      queryUser.Followers.forEach(user => {
+        user.isFollowed = helpers
+          .getUser(req)
+          .Followings.some(item => item.id === user.id)
+        user.isSelf = user.id !== userId
+      })
+      return res.render('users/user-followers', { queryUser, role })
     } catch (err) {
       next(err)
     }
