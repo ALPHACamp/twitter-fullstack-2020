@@ -124,7 +124,7 @@ const userController = {
   getPersonalTweets: async (req, res, next) => {
     try {
       const user = helpers.getUser(req)
-      const likedTweetsId = req.user?.likedTweets.map(tweet => tweet.id)
+      const likedTweetsId = req.user?.Likes.map(tweet => tweet.id)
       const personal = await User.findByPk(Number(req.params.id), {
         include: [
           { model: Tweet }
@@ -193,10 +193,10 @@ const userController = {
       const personal = await User.findByPk(Number(req.params.id), {
         include: [
           { model: Tweet },
-          { model: Tweet, as: 'likedTweets' }
+          { model: Like, as: Tweet }
         ]
       })
-      const likedTweetsId = personal?.likedTweets.map(tweet => tweet.id)
+      const likedTweetsId = personal?.Likes.map(tweet => tweet.id)
       const tweets = await Tweet.findAll({
         where: {
           ...likedTweetsId ? { id: likedTweetsId } : {}
