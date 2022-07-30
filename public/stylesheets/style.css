@@ -813,3 +813,77 @@
    text-decoration: none;
    text-align: center
  }
+
+ .alert:nth-child(1) {
+   position: fixed;
+   left: 50%;
+   top: 20px;
+   transform: translate(-50%, 0);
+   animation-name: message;
+   animation-duration: 3s;
+   visibility: hidden;
+   z-index: 10;
+ }
+
+ .alert:nth-child(2) {
+   position: fixed;
+   left: 50%;
+   top: 100px;
+   transform: translate(-50%, 0);
+   animation-name: message;
+   animation-duration: 3.5s;
+   visibility: hidden;
+   z-index: 10;
+ }
+
+ .alert:nth-child(3) {
+   position: fixed;
+   left: 50%;
+   top: 180px;
+   transform: translate(-50%, 0);
+   animation-name: message;
+   animation-duration: 4s;
+   visibility: hidden;
+   z-index: 10;
+ }
+
+ .alert:nth-child(4) {
+   position: fixed;
+   left: 50%;
+   top: 260px;
+   transform: translate(-50%, 0);
+   animation-name: message;
+   animation-duration: 4.5s;
+   visibility: hidden;
+   z-index: 10;
+ }
+
+ .alert:nth-child(5) {
+   position: fixed;
+   left: 50%;
+   top: 340px;
+   transform: translate(-50%, 0);
+   animation-name: message;
+   animation-duration: 5s;
+   visibility: hidden;
+   z-index: 10;
+ }
+
+ @keyframes message {
+   0% {
+     opacity: 0;
+   }
+
+   15% {
+     opacity: 1;
+   }
+
+   85% {
+     opacity: 1;
+   }
+
+   100% {
+     visibility: visible;
+     opacity: 0;
+   }
+ }
