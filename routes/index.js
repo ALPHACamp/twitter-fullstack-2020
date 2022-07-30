@@ -43,6 +43,6 @@ router.get('/', (req, res) => {
   res.redirect('/tweets')
 })
 
-router.use('/', apiErrorHandler)
+router.use('/', generalErrorHandler)
 
 module.exports = router
