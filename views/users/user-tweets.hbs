@@ -50,23 +50,23 @@
       {{!-- 推文卡片 --}}
       <div class="tweet-container">
 
-        {{#each tweets}}
+        {{#each profileUser.Tweets}}
         <div class="tweet-card border-bottom border-1">
           <div class="d-flex flex-nowrap ms-3 mt-3">
             <div class="avatar-container me-1">
-              <a href="/users/{{this.User.id}}/tweets">
-                <img src="{{this.User.avatar}}" alt="" class="avatar-sm rounded-pill"
-                  id="tweet-avatar-{{this.User.id}}">
+              <a href="/users/{{this.UserId}}/tweets">
+                <img src="{{../profileUser.avatar}}" alt="" class="avatar-sm rounded-pill"
+                  id="tweet-avatar-{{this.UserId}}">
               </a>
             </div>
             <div class="user-description-container d-flex flex-column text-start ms-1 me-3 w-100">
               <div class="user-name-account mb-2">
-                <a href="/users/{{this.User.id}}/tweets" class="name-link">
-                  <h6 class="user-name fw-bold fs-5 " id="tweet-name-{{this.User.id}}">{{this.User.name}}</h6>
+                <a href="/users/{{this.UserId}}/tweets" class="name-link">
+                  <h6 class="user-name fw-bold fs-5 " id="tweet-name-{{this.UserId}}">{{../profileUser.name}}</h6>
                 </a>
-                <a href="/users/{{this.User.id}}/tweets" class="account-link">
+                <a href="/users/{{this.UserId}}/tweets" class="account-link">
                   <span class="user-account fw-normal fs-6"
-                    id="tweet-account-{{this.User.id}}">@{{this.User.account}}</span>
+                    id="tweet-account-{{this.UserId}}">@{{../profileUser.account}}</span>
                 </a>
                 <span class="fw-normal fs-6" id="tweet-time-{{this.id}}">・{{relativeTimeFromNow this.createdAt}}</span>
               </div>
@@ -77,9 +77,9 @@
               </a>
               <div class="description-like-btn-container mb-3">
                 <button class="reply-btn d-flex align-items-center" data-bs-toggle="modal"
-                  data-bs-target="#reply-modal-{{this.id}}" data-tweetid="{{this.id}}" data-userid="{{this.User.id}}">
+                  data-bs-target="#reply-modal-{{this.id}}" data-tweetid="{{this.id}}" data-userid="{{this.UserId}}">
                   <i class="reply"></i>
-                  <span class="reply-count ms-2">{{this.Replies.length}}</span>
+                  <span class="reply-count ms-2">{{../profileUser.Replies.length}}</span>
                 </button>
                 {{#if this.isLiked}}
                 <button type="button" class="d-flex align-items-center like-submit-btn liked"
