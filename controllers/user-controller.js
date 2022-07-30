@@ -220,7 +220,7 @@ const userController = {
       }
       const followingsId = user?.Followings?.map(f => f.id)
       user.isFollowed = (followingsId.includes(personal.id))
-      return res.render('profileLike', { tweets, user, personal: personal.toJSON() })
+      return res.render('profile-like', { tweets, user, personal: personal.toJSON() })
     }
     catch (err) {
       next(err)
@@ -252,7 +252,7 @@ const userController = {
       })
       const followingsId = user?.Followings?.map(f => f.id)
       user.isFollowed = (followingsId.includes(personal.id))
-      return res.render('profileReply', { replies, user, personal: personal.toJSON() })
+      return res.render('profile-reply', { replies, user, personal: personal.toJSON() })
     }
     catch (err) {
       next(err)
