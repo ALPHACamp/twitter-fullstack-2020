@@ -12,7 +12,7 @@ const passport = require('./config/passport')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const { pages, apis } = require('./routes')
 
-const SESSION_SECRET = process.env.SESSION_SECRET
+const SESSION_SECRET = process.env.SESSION_SECRET || 'twitterSECRET'
 
 const app = express()
 const port = process.env.PORT || 3000
