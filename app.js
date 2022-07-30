@@ -37,27 +37,12 @@ app.use((req, res, next) => {
 const { Tweet, Like, User, Reply } = require('./models')
 app.get('/test', async (req, res) => {
   console.log('----------start-----------')
-  const tweets = await Tweet.findAll({
+  const user = await User.findByPk(9, {
     include: [
-      User
-    ],
-    order: [
-      ['created_at', 'DESC'],
-      ['id', 'ASC']
-    ],
-    limit: 10,
-    raw: true,
-    nest: true
+      { model: Tweet }
+    ]
   })
-  for (let i in tweets) {
-    const replies = await Reply.findAndCountAll({ where: { TweetId: tweets[i].id } })
-    const likes = await Like.findAndCountAll({ where: { TweetId: tweets[i].id } })
-    tweets[i].repliedCounts = replies.count
-    tweets[i].likedCounts = likes.count
-    console.log('////////////////')
-    // console.log(tweets[i])
-  }
-  console.log(tweets)
+  console.log(user.Tweets.length)
 })
 
 

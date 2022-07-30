@@ -6,7 +6,7 @@ const tweetController = {
   getTweets: async (req, res, next) => {
     try {
       const user = helpers.getUser(req)
-      const likedTweetsId = req.user?.likedTweets.map(tweet => tweet.id)
+      const likedTweetsId = user?.likedTweets.map(tweet => tweet.id)
       const tweets = await Tweet.findAll({
         include: [
           User
