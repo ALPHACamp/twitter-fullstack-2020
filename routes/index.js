@@ -22,6 +22,7 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/logout', authenticatedUser, userController.logout)
 
 router.get('/tweets', authenticatedUser, tweetController.getTweets)
+router.post('/tweets', authenticatedUser, tweetController.postTweet)
 
 router.use('/', (req, res) => {
   res.redirect('/tweets')

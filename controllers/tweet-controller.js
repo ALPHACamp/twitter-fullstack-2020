@@ -52,6 +52,16 @@ const tweetController = {
         })
       })
       .catch(err => next(err))
+  },
+  postTweet: (req, res, next) => {
+    const userId = Number(helpers.getUser(req).id)
+    const { description } = req.body
+    if (!description) throw new Error("Description didn't exist!")
+    if (description.length > 140) throw new Error('Description too long!')
+
+    return Tweet.create({ UserId: userId, description })
+      .then(() => res.redirect('/'))
+      .catch(err => next(err))
   }
 }
 module.exports = tweetController
