@@ -1,12 +1,27 @@
-<nav class="follower-recommendation p-2 position-fixed">
+<nav class="follower-recommendation mt-2 mx-0 position-fixed">
   <ul class="list-group ">
     <li class="list-group-item bg-light">
       <h4 class="fw-bold" style="font-size: 24px">
         推薦跟隨
       </h4>
     </li>
+    {{#each loginUser.topFollowings}}
     <li class="list-group-item bg-light">
-      An item
+      <div class="d-flex justify-content-between">
+        <img src="{{this.avatar}}" class="rounded-circle me-2" width="50" height="50">
+        <div class="d-flex flex-column flex-grow-1 me-2">
+          <span class="fw-bold" style="font-size: 16px;">{{this.name}}</span>
+          <span style="font-size: 14px; color: #6C757D">@{{this.account}}</span>
+        </div>
+        <button type="button" class="px-3"
+          style="font-size: 16px; border-radius: 50px; border: 1px solid #FF6600;
+            {{#if this.isFollowing}}color: #FFFFFF; background-color: #FF6600;
+            {{else}}color: #FF6600; background-color: #FFFFFF;
+            {{/if}}">
+          {{#if this.isFollowing}}正在跟隨{{else}}跟隨{{/if}}
+        </button>
+      </div>
     </li>
+    {{/each}}
   </ul>
 </nav>
