@@ -21,29 +21,7 @@ body {
 }
 
 
-
-/* left menu */
-
-.menu {
-  height: 100%;
-  width: 290px;
-}
-
-
-.window-description-input {
-  resize: none;
-  height: 150px;
-}
-
-
-/* center-part */
-
-.center-part {
-  height: 100%;
-  min-width: 300px;
-  width: 640px;
-  padding: 0 0 0 0;
-}
+/* follow-center-part */
 
 .follow-tab {
   box-sizing: border-box;
@@ -54,10 +32,16 @@ body {
   width: 100%;
 }
 
-.follow-item {
+.follow-item-tab {
   box-sizing: border-box;
   width: 130px;
   height: 99.9%;
+}
+
+.follow-item {
+  box-sizing: border-box;
+  width: auto;
+  padding: 0 15px 0 15px;
 }
 
 .follow-link {
@@ -87,7 +71,7 @@ body {
 }
 
 .follow-card {
-  min-height: 160px;
+  min-height: auto;
   width: 100%;
   border-bottom: 1px solid #E6ECF0;
 }
@@ -111,26 +95,6 @@ body {
   word-break: break-all;
 }
 
-.scroll-part {
-  height: 100%;
-  overflow-y: scroll;
-}
-
-.scrollbar {
-  /* padding-left: 6px; */
-}
-
-.scrollbar::-webkit-scrollbar {
-  display: none;
-  /* width: 6px; */
-}
-
-.scrollbar::-webkit-scrollbar-thumb {
-  /* border-radius: 3px; */
-  /* background-color: rgba(0, 0, 0, 0.1); */
-}
-
-
 .index-user-name {
   height: 18px;
   font-size: 18px;
@@ -141,4 +105,8 @@ body {
   height: 13px;
   font-size: 13px;
   line-height: 13px;
+}
+
+.name-account-wrapper {
+  overflow-x: hidden;
 }

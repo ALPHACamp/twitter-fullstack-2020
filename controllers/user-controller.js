@@ -101,7 +101,7 @@ const userController = {
           .Followings.some(item => item.id === user.id)
         user.isSelf = user.id === userId
       })
-      const topUser = getTopUser(currentUser)
+      const topUser = await getTopUser(currentUser)
       return res.render('users/user-followings', { queryUser, role, currentUser, topUser })
     } catch (err) {
       next(err)
