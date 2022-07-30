@@ -1,9 +1,5 @@
 const bcrypt = require('bcrypt-nodejs')
 const helpers = require('../_helpers')
-const {
-  imgurFileHandler,
-  localFileHandler
-} = require('../helpers/file-helpers')
 
 const { User, Tweet, Like, Reply, Followship } = require('../models')
 
@@ -388,28 +384,6 @@ const userController = {
         .sort((a, b) => b.followerCount - a.followerCount)
       res.json({ status: 'success', topUser, currentUser })
       // res.render('tweets', { topUser, currentUser })
-    } catch (err) {
-      next(err)
-    }
-  },
-  postUserInformation: async (req, res, next) => {
-    try {
-      const currentUser = helpers.getUser(req)
-      if (currentUser.id !== Number(req.params.id)) {
-        throw new Error("You can't edit others info")
-      }
-      const editUser = await User.findByPk(Number(req.params.id))
-      const { name, introduction } = req.body
-      if (!name) throw new Error('Name is required')
-      const avatar = await localFileHandler(req.files.avatar[0])
-      const coverPhoto = await localFileHandler(req.files.coverPhoto[0])
-      const patchedUser = await editUser.update({
-        name,
-        introduction,
-        avatar,
-        coverPhoto
-      })
-      res.json({ status: 200, data: patchedUser })
     } catch (err) {
       next(err)
     }

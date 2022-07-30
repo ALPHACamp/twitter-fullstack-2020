@@ -20,7 +20,7 @@
         <div class="buttons d-flex justify-content-end align-items-center">
           {{#ifCond currentUser.id profileUser.id}}
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-outline-brand rounded-pill me-3 mt-3">
+            <button type="button" class="btn btn-outline-brand rounded-pill me-3 mt-3" data-bs-toggle="modal" data-bs-target="#edit-info" id="show-info-modal" data-userid="{{currentUser.id}}">
               編輯個人資料
             </button>
             {{else}}
@@ -103,3 +103,4 @@
   {{!-- 中央部分結束 --}}
   {{> recommend-follow }}
 </div>
+{{> edit-info}}

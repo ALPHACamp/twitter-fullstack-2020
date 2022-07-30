@@ -1,89 +1,149 @@
 <!-- Edit Modal -->
 <div
-  class="modal fade"
-  id="editInfo"
+  class="modal fade position-relative"
+  id="edit-info"
   tabindex="-1"
   aria-labelledby="replyModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog">
-    <div class="modal-content" style="border-radius: 14px;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="border-radius: 14px">
       <div class="modal-header pb-1">
-        <button
-          type="button"
-          class="btn border-0 p-0 ms-0"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ><i class="noti-danger"></i></button>
-        <h5 class="fw-bold">編輯個人資料</h5>
-        <form action="" method="post" id="post-edit-info">
+        <div>
           <button
-            type="submit"
-            id="post-comment"
-            class="btn btn-brand rounded-pill fw-light col-2"
-            style="width: 60px;"
-          >回覆</button>
-        </form>
+            type="button"
+            class="btn border-0 p-0 ms-0"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            <i class="noti-danger"></i>
+          </button>
+          <h5 class="fw-bold d-inline ms-3">編輯個人資料</h5>
+        </div>
       </div>
-      <div class="modal-body pt-0">
-        {{! 回覆的推文資料 }}
-        <div class="card border-0">
-          <div class="row g-0 mx-3">
-            <div class="col-1 my-3 m-auto position-relative">
-              <img
-                src=""
-                alt="avatar"
-                class="avatar-sm rounded-circle position-absolute end-0"
-                id="reply-tweet-avatar"
-              />
-              <div
-                class="border-start border-3 position-absolute"
-                style="height: calc(100% - 55px); width: 1px; right: 23px; bottom: -10px; border-color: #B5B5BE;"
-              ></div>
-            </div>
-            <div class="col-11">
-              <div class="card-body">
-                <h5 class="card-title fw-bold" id="reply-tweet-name"><small
-                    class="text-muted fw-light"
-                    id="reply-tweet-account"
-                  ></small>
-                </h5>
-                <p class="card-text" id="reply-tweet-description"></p>
-                <small class="fw-light">回覆給
-                  <small id="reply-to" class="text-brand"></small></small>
-              </div>
+      <div class="modal-body pt-0 px-0">
+        <form
+          action=""
+          method="post"
+          class="row g-0"
+          id="info-form"
+          enctype="multipart/form-data"
+        >
+          <div
+            class="col-12"
+            style="
+                  background-image: url();
+                  background-size: cover;
+                  height: 200px;
+                "
+            id="info-cover-photo"
+          >
+            <div class="row justify-content-center align-items-center h-100">
+              <label class="btn btn-outline border-0 col-1 upload-photo">
+                <input type="file" name="coverPhoto" class="d-none" />
+                <img
+                  src="/stylesheets/svgs/outline-photo.svg"
+                  alt="cover-photo"
+                  style="
+                        filter: var(--white-filter);
+                        transition: filter 0.3s;
+                      "
+                />
+              </label>
+              <button class="btn btn-outline border-0 col-1" id="cancel-photo">
+                <img
+                  src="/stylesheets/svgs/outline-close.svg"
+                  alt="close-icon"
+                  style="
+                        filter: var(--white-filter);
+                        transition: filter 0.3s;
+                      "
+                />
+              </button>
             </div>
           </div>
-        </div>
-        {{! 回覆的推文資料結束 }}
-        <form action="" method="post" class="row g-0 mt-2" id="reply-input">
-          <img
-            src="{{currentUser.avatar}}"
-            alt="model-user-avatar"
-            class="avatar-sm rounded-circle col-1"
-          />
-          <textarea
-            id="reply-comment"
-            name="comment"
-            class="col-10 ms-3 border-0 overflow-hidden"
-            maxlength="140"
-            placeholder="推你的回覆"
-            rows="6"
-            style="resize: none;"
-          ></textarea>
+          <div class="col-3 position-relative">
+            <img
+              src=""
+              alt="model-user-avatar"
+              class="rounded-circle border border-4 border border-light mx-3"
+              style="
+                    width: 140px;
+                    height: 140px;
+                    object-fit: cover;
+                    margin-top: -70px;
+                  "
+              id="info-avatar"
+            />
+            <label
+              class="btn btn-outline border-0 upload-photo position-absolute p-0"
+              style="top: -20%; left: 48%"
+            >
+              <input type="file" name="avatar" class="d-none" />
+              <img
+                src="/stylesheets/svgs/outline-photo.svg"
+                alt="cover-photo"
+                style="filter: var(--white-filter); transition: filter 0.3s"
+              />
+            </label>
+          </div>
+          <div
+            class="form-floating mt-3 ms-3 border-bottom border-dark border-2"
+            style="width: calc(100% - 2rem)"
+          >
+            <input
+              type="text"
+              class="form-control border-0 rounded-0 pb-0"
+              id="info-name"
+              name="name"
+              maxlength="50"
+            />
+            <label for="info-name" class="pb-1">名稱</label>
+          </div>
           <small
-            class="offset-md-7 col-3 mt-2 text-error"
-            id="error-msg"
+            class="offset-md-9 col-2 mt-1"
+            id="name-error-msg"
+            style="font-size: 12px"
           ></small>
+          <small
+            class="col-1 mt-1"
+            id="name-length"
+            style="font-size: 12px"
+          >0/50</small>
+          <div
+            class="form-floating mt-3 ms-3 border-bottom border-dark border-2"
+            style="width: calc(100% - 2rem)"
+          >
+            <textarea
+              type="text"
+              class="form-control border-0 rounded-0 pb-0"
+              id="info-intro"
+              name="introduction"
+              style="resize: none; height: 150px"
+              maxlength="160"
+            ></textarea>
+            <label for="info-intro" class="pb-1">自我介紹</label>
+          </div>
+          <small
+            class="offset-md-9 col-2 mt-1"
+            id="intro-error-msg"
+            style="font-size: 12px"
+          ></small>
+          <small
+            class="col-1 mt-1"
+            id="intro-length"
+            style="font-size: 12px"
+          >0/160</small>
           <button
             type="submit"
             id="post-comment"
-            class="btn btn-brand rounded-pill fw-light col-2"
-            style="width: 60px;"
-          >回覆</button>
+            class="btn btn-brand rounded-pill fw-light col-2 position-absolute"
+            style="width: 60px; top: -7.5%; right: 3%"
+          >
+            儲存
+          </button>
         </form>
       </div>
-
     </div>
   </div>
 </div>
