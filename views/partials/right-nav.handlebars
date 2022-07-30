@@ -13,13 +13,16 @@
           <span class="fw-bold" style="font-size: 16px;">{{this.name}}</span>
           <span style="font-size: 14px; color: #6C757D">@{{this.account}}</span>
         </div>
-        <button type="button" class="px-3"
-          style="font-size: 16px; border-radius: 50px; border: 1px solid #FF6600;
-            {{#if this.isFollowing}}color: #FFFFFF; background-color: #FF6600;
-            {{else}}color: #FF6600; background-color: #FFFFFF;
-            {{/if}}">
-          {{#if this.isFollowing}}正在跟隨{{else}}跟隨{{/if}}
-        </button>
+        <form class="d-flex" action="/followships{{#if this.isFollowing}}?_method=DELETE{{/if}}" method="post">
+          <input type="hidden" value="{{this.id}}" name="followingId" />
+          <button type="submit" class="px-3"
+            style="font-size: 16px; border-radius: 50px; border: 1px solid #FF6600;
+              {{#if this.isFollowing}}color: #FFFFFF; background-color: #FF6600;
+              {{else}}color: #FF6600; background-color: #FFFFFF;
+              {{/if}}">
+            {{#if this.isFollowing}}正在跟隨{{else}}跟隨{{/if}}
+          </button>
+        </form>
       </div>
     </li>
     {{/each}}
