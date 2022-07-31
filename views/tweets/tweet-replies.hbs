@@ -107,7 +107,9 @@
   <form action="" method="post" class="row g-0 mt-2" id="reply-input">
     <img src="{{currentUser.avatar}}" alt="model-user-avatar" class="avatar-sm rounded-circle col-1">
     <textarea id="reply-comment" name="comment" class="col-10 ms-3 border-0 overflow-hidden" maxlength="140" placeholder="推你的回覆" rows="6" style="resize: none;"></textarea>
-    <small class="offset-md-7 col-3 mt-2 text-error" id="error-msg"></small>
+    <div class="text-black-50 ms-auto me-3 fs-6 align-self-center" id="reply-description-length">
+    </div>
+    <small class="offset-md-6 col-4 mt-2 me-3 text-error text-end" id="error-msg"></small>
     <button type="submit" id="post-comment" class="btn btn-brand rounded-pill fw-light col-2" style="width: 60px;">回覆</button>
   </form>
         </div>

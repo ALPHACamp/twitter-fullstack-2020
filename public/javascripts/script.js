@@ -29,15 +29,18 @@ dataPanel.addEventListener('change', e => {
   }
 })
 
-const replyInputs = document.querySelector('#reply-input')
+const replyInputs = document.querySelector('#reply-comment')
 
 if (replyInputs) {
   replyInputs.addEventListener('submit', e => {
     replyFormVerify(e)
   })
+  replyInputs.addEventListener('input', e => {
+    replyFormVerify(e)
+  })
 }
 // 接收後端傳來的錯誤訊息
-function showErrorMessage (message) {
+function showErrorMessage(message) {
   const div = document.querySelector('#messages-area')
   div.innerHTML = `<div class="alert alert-light alert-dismissible fade show fixed-top mx-auto mt-5 shadow-sm" role="alert" style="z-index:1200;">
   <div class="row align-items-center ps-5" data-bs-dismiss="alert" aria-label="Close"><p class="fs-6 col-10 mb-0 p-0">${message}</p><a class="col-1" >
@@ -46,7 +49,7 @@ function showErrorMessage (message) {
   fill="#FC5A5A"></path></svg></a></div></div>`
 }
 
-function showReplyModel (tid) {
+function showReplyModel(tid) {
   const avatar = document.querySelector(`#avatar-${tid}`).src
   const name = document.querySelector(`#name-${tid}`).textContent
   const account = document.querySelector(`#account-${tid}`).textContent
@@ -65,17 +68,35 @@ function showReplyModel (tid) {
   replyTo.textContent = account
 }
 
-function replyFormVerify (e) {
+function replyFormVerify(e) {
   const replyTextArea = document.querySelector('#reply-comment')
   const errorMsg = document.querySelector('#error-msg')
-  if (replyTextArea.value.length === 0 || replyTextArea.value.length > 140) {
-    e.preventDefault()
-    e.stopPropagation()
+  if (e === 'submit') {
+    if (replyTextArea.value.length === 0 || replyTextArea.value.length > 140) {
+      e.preventDefault()
+      e.stopPropagation()
+      errorMsg.textContent = '內容不可空白'
+    }
+  }
+  if (replyTextArea.value.length === 0) {
+    errorMsg.classList.remove('text-black-50')
+    errorMsg.classList.add('text-error')
     errorMsg.textContent = '內容不可空白'
+  }
+  if (replyTextArea.value.length > 0) {
+    errorMsg.classList.add('text-black-50')
+    errorMsg.classList.remove('text-error')
+    console.log(errorMsg.textContent.length)
+    errorMsg.textContent = replyTextArea.value.length + '/140'
+  }
+  if (replyTextArea.value.length >= 140) {
+    errorMsg.classList.remove('text-black-50')
+    errorMsg.classList.add('text-error')
+    errorMsg.textContent = '字數不可超過140字'
   }
 }
 
-async function postInfoForm (target) {
+async function postInfoForm(target) {
   try {
     const formName = document.querySelector('#info-name')
     const formIntro = document.querySelector('#info-intro')
@@ -124,7 +145,7 @@ async function postInfoForm (target) {
   }
 }
 
-function infoNameCheck (target) {
+function infoNameCheck(target) {
   const nameLength = document.querySelector('#name-length')
   const nameMsg = document.querySelector('#name-error-msg')
   const length = target.value.length
@@ -142,7 +163,7 @@ function infoNameCheck (target) {
   nameLength.textContent = `${length}/50`
 }
 
-function infoIntroCheck (target) {
+function infoIntroCheck(target) {
   const introLength = document.querySelector('#intro-length')
   const introMsg = document.querySelector('#intro-error-msg')
   const length = target.value.length
@@ -155,7 +176,7 @@ function infoIntroCheck (target) {
   }
   introLength.textContent = `${length}/160`
 }
-async function showInfoModal (uid) {
+async function showInfoModal(uid) {
   try {
     // eslint-disable-next-line no-undef
     const res = await axios.get(`/api/users/${uid}`)
@@ -193,7 +214,7 @@ async function showInfoModal (uid) {
   }
 }
 
-function showInputFile (target) {
+function showInputFile(target) {
   const fileName = target.value
   const ext = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase()
   const infoCoverPhoto = document.querySelector('#info-cover-photo')
@@ -223,7 +244,7 @@ function showInputFile (target) {
   }
 }
 
-function removeInputFile (target) {
+function removeInputFile(target) {
   const infoCoverPhoto = document.querySelector('#info-cover-photo')
   infoCoverPhoto.style.backgroundImage = `url('${target.dataset.originPhoto}')`
   document.querySelector('#input-cover-photo').value = ''
