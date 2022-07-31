@@ -15,6 +15,8 @@ const userController = {
   signUp: async (req, res, next) => {
     try {
       let { account, name, email, password, checkPassword } = req.body
+      const avatar = '/pic/no_pic.png'
+      const coverPhoto = '/pic/default_cover_photo.png'
       if (!account || !name || !email || !password) {
         throw new Error('Please complete all required fields')
       }
@@ -29,7 +31,7 @@ const userController = {
       }
 
       const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
-      const userData = { account, name, email, password: hash }
+      const userData = { account, name, email, password: hash, avatar, coverPhoto }
       await User.create(userData)
       req.flash('success_messages', '您已成功註冊帳號！')
       // return res.render('signin')
