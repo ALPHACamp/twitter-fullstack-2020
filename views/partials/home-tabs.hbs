@@ -35,20 +35,100 @@
             </a>
           </li>
           <li class="nav-item px-2">
-            <button type="button" class="btn btn-orange rounded-pill mt-3" style="border-radius: 30px 30px 30px 30px; width:178px;height:46px;">
-              <span class="h5">推文</span>
-            </button>
+            <div class="head d-flex" data-bs-toggle="modal" data-bs-target="#home-model">
+              <button type="button" class="btn btn-orange rounded-pill mt-3"
+                style="border-radius: 30px 30px 30px 30px; width:178px;height:46px;">
+                <span class="h5">推文</span>
+              </button>
+            </div>
           </li>
           <li class="nav-item logout py-2">
-            <a class="nav-link text-dark" href="/logout">
+            <button class="nav-link text-dark" id="logout">
               <div class="d-flex">
                 <img src="/images/logout.png" alt="icon">
                 <span class="h5 h-orange">&nbsp;&nbsp;登出</span>
               </div>
-            </a>
+            </button>
           </li>
         </ul>
       </div>
     </div>
   </div>
+
+
+  <!-- 新增 tweet Modal -->
+  <div class="modal fade" id="home-model" tabindex="-1" aria-labelledby="home-model" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width:639px; position:relative; right:40px;">
+      <div class="modal-content" style="border-radius:16px">
+        <div class="modal-header" style="">
+          <label for="description" class="form-label">
+          </label>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="/tweets" method="POST" onsubmit="return checkform()">
+          <div class="modal-body d-flex">
+            <img src="{{#if user.avatar}}{{user.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+              class="tweet-user-avatar" style="width:50px;height:50px;" alt="Picture">
+            <textarea class="form" id="description" name="description" rows="4" maxlength="141" placeholder="有什麼新鮮事？"
+              oninput="counts()" style="border:none; width:600px;position:relative; top:10px;resize:none;height:250px;"
+              required></textarea>
+            <div class="helper name-helper"><span>內容不可空白</span></div>
+            <div class="count name-count"><span>0/140</span></div>
+          </div>
+          <button type="submit" class="btn btn-orange btn-tweets-models"
+            style="border-radius: 50px;position:relative; left:550px;bottom:20px;">
+            <span class="" style="font-size:16px;">推文</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- 新增 tweet Modal 結束 -->
+
+  <script>
+    function counts() {
+      const counts = document.querySelector('#description').value.length
+      document.querySelector('.name-count span').innerText = counts + '/140'
+      if (counts > 140) {
+        document.querySelector('.name-helper span').innerText = '字數超出上限！'
+        return
+      }
+      if (counts > 0 && counts <= 140) {
+        document.querySelector('.name-helper span').innerText = ''
+      }
+      if (counts === 0) {
+        document.querySelector('.name-helper span').innerText = '內容不可空白'
+      }
+    }
+    function checkform() {
+      const counts = document.querySelector('#description').value.length
+      if (counts > 140) {
+        alert('字數超出上限！')
+        return false
+      }
+    }
+  </script>
+
+
+
+  <script type="text/javascript">
+    $('#logout').on('click', function () {
+      Swal.fire({
+        title: "你確定要登出嗎？",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#5cb85c',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '是，我要登出'
+        // cancelButtonText: "否",
+        // cancelButtonColor: "#6c757d",
+        // allowOutsideClick: false
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "/logout";
+        }
+      })
+    });
+  </script>
+
 </section>

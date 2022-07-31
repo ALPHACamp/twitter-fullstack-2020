@@ -2,7 +2,7 @@
   <div class="flex-home-page">
     <!--左側導覽列-->
     <section class="left-region-sidebar">
-      {{> home-tabs route='home'}}
+      {{> home-tabs route='home' users=users user=user}}
     </section>
     <!--首頁-->
     <div class="tweets middle-region-home">
@@ -10,7 +10,6 @@
       <div style="position:relative;left:220px;bottom:10px; z-index:1">
         {{> message}}
       </div>
-
       <p class="list-separate-top"></p>
       <p class="list-separate-lg"></p>
       <!--新增推文-->
@@ -36,12 +35,14 @@
       <div class=" card-override">
         {{#each tweets}}
         <div class="tweet-card d-flex" style="margin:0px;">
-          <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}" alt="Picture"
-            class="tweet-user-avatar">
+          <a class="" href="/users/{{this.User.id}}/tweets">
+            <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+              alt="Picture" class="tweet-user-avatar">
+          </a>
           <div>
             <div class="head d-flex">
-              <a class="name" href="/users/:{{this.User.id}}">{{this.User.name}}</a>
-              <a class="account" href="/users/:{{this.User.id}}">@{{this.User.account}}</a>
+              <a class="name" href="/users/{{this.User.id}}/tweets">{{this.User.name}}</a>
+              <a class="account" href="/users/{{this.User.id}}/tweets">@{{this.User.account}}</a>
               <div class="time">•{{momentNow this.createdAt}}</div>
             </div>
             <a href="/tweets/{{this.id}}/replies">
@@ -222,5 +223,7 @@
       }
     }
   </script>
+
+
 
 </section>
