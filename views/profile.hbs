@@ -73,7 +73,25 @@
             }).catch(err => console.warn(err))
           })
 
-          saveBtn.addEventListener('click', () => { history.go(0) })
+          saveBtn.addEventListener('click', () => {
+            const formData = new FormData()
+            const coverImagefile = document.querySelector('#coverImage')
+            const avatarImagefile = document.querySelector('#image')
+
+            formData.append("coverImage", coverImagefile.files[0])
+            formData.append("image", avatarImagefile.files[0])
+            formData.append('name', nameInput.value)
+            formData.append('introduction', introductionInput.value)
+
+            axios.post('/api/users/{{user.id}}', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            }).then(response => {
+              history.go(0)              
+            })
+
+          })
         </script>
 
         <!-- Modal -->
@@ -92,7 +110,7 @@
                 {{!-- 表單開始 --}}
                 <form action="/api/users/{{user.id}}" method="POST" class="header-right" enctype="multipart/form-data">
 
-                  <button type="submit" class="btn save-button" style="position: absolute;right: 0.5rem;top: -7rem;">
+                  <button type="button" class="btn save-button" style="position: absolute;right: 0.5rem;top: -7rem;">
                     儲存
                   </button>
 
