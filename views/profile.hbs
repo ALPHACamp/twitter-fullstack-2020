@@ -84,7 +84,8 @@
             }
             axios.post('/api/users/' + {{ user.id }}, data)
             .then(response => {
-              history.go(0)
+              if (response.data.status === 'success') return history.go(0)
+              console.warn(response.data.message)
             })
             .catch(err => console.warn(err))
           })
