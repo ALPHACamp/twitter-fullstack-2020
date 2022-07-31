@@ -73,32 +73,7 @@
             }).catch(err => console.warn(err))
           })
 
-          saveBtn.addEventListener('click', () => {
-            if (nameInput.value.length > 50 || introductionInput.value.length > 160) {
-              return alert('字數超出上限！')
-            }
-            const data = {
-              cover: coverInput.src,
-              avatar: avatarInput.src,
-              name: nameInput.value,
-              introduction: introductionInput.value
-            }
-
-
-            axios({
-              method: 'post',
-              url: '/api/users/' + {{ user.id }},
-            data: data,
-            headers: {
-            'Content-Type': `multipart/form-data;`,
-          }
-
-              })
-            .then(response => {
-              console.log("saveBtn.addEventListener ~ response", response)
-            })
-            .catch(err => console.warn(err))
-          })
+          saveBtn.addEventListener('click', () => { history.go(0) })
         </script>
 
         <!-- Modal -->
@@ -117,7 +92,7 @@
                 {{!-- 表單開始 --}}
                 <form action="/api/users/{{user.id}}" method="POST" class="header-right" enctype="multipart/form-data">
 
-                  <button type="submit" class="btn" style="position: absolute;right: 0.5rem;top: -7rem;">
+                  <button type="submit" class="btn save-button" style="position: absolute;right: 0.5rem;top: -7rem;">
                     儲存
                   </button>
 
@@ -128,8 +103,8 @@
                   <div class="icons">
                     <label class="form-label" for="coverImage"><img class="icon" src="/images/camera.png" alt="camera"
                         style="margin-right: 36px;"></label>
-                    <input class="form-control" type="file" class="form-control-file" id="coverImage" style="display:none"
-                      name="coverImage">
+                    <input class="form-control" type="file" class="form-control-file" id="coverImage"
+                      style="display:none" name="coverImage">
                     <img src="/images/ventor_close_2.png" alt="cancel">
                   </div>
 

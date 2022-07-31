@@ -14,31 +14,31 @@ const apiController = {
       .catch(err => next(err))
   },
   postUser: async (req, res, next) => {
+    const userId = req.params.id
     const { files } = req
     const { name, introduction } = req.body
-    const user = await User.findByPk(req.params.id)
+    const user = await User.findByPk(userId)    
     let avatarFilePath = user.dataValues.avatar
     let coverFilePath = user.dataValues.cover
-
-    if (files.image) {
+    if (files?.image) {
       avatarFilePath = await localFileHandler(...files.image)
       console.log('avatarFilePath : ', avatarFilePath)
     }
 
-    if (files.coverImage) {
+    if (files?.coverImage) {
       coverFilePath = await localFileHandler(...files.coverImage)
       console.log('coverFilePath :', coverFilePath)
     }
-
     if (!user) throw new Error("user didn't exist")
-    user.update({
+    await user.update({
       name,
       introduction,
       avatar: avatarFilePath,
       cover: coverFilePath
     })
 
-    return res.redirect('back')
+    return res.json({ status: 'success', ...user.toJSON() })
+    // res.sendStatus(200).redirect('back')
 
     // User.findByPk(id)
     //   .then(data => {
