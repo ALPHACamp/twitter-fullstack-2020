@@ -1,4 +1,4 @@
-const { sequelize, Sequelize, User, Tweet, Like } = require('../models')
+const { sequelize, Sequelize, User, Tweet, Like, Reply } = require('../models')
 const { Op } = require('sequelize')
 
 const adminController = {
@@ -36,14 +36,18 @@ const adminController = {
   },
 
   deleteTweet: (req, res, next) => {
-    return Tweet.findByPk(req.params.id)
-      .then(tweet => {
+    return Promise.all([
+      Tweet.findByPk(req.params.id).then(tweet => {
         if (!tweet) throw new Error("tweet didn't exist!")
         return tweet.destroy()
+      }),
+      Reply.destroy({
+        where: { tweet_id: req.params.id }
+      }),
+      Like.destroy({
+        where: { tweet_id: req.params.id }
       })
-      .then(() => {
-        res.redirect('back')
-      })
+    ]).then(() => res.redirect('back'))
   },
 
   getUsers: (req, res, next) => {

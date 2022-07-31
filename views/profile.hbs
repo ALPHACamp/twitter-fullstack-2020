@@ -1,9 +1,9 @@
 <div class="container" id="profile-region" style="height: 1200px;">
   <div id="profile-left">
     {{#ifCond targetUser.id user.id}}
-      {{> home-tabs route='tweet' }}
+    {{> home-tabs route='tweet' }}
     {{else}}
-      {{> home-tabs }}
+    {{> home-tabs }}
     {{/ifCond}}
   </div>
 
@@ -25,7 +25,8 @@
         {{#if targetUser.avatar}}
         <img class="avatar" id="profile-avatar" src="{{targetUser.avatar}}" alt="avatar">
         {{else}}
-        <img class="avatar" id="profile-avatar" src="/images/avatar-default.jpg" alt="avatar" style="background-color: white;">
+        <img class="avatar" id="profile-avatar" src="/images/avatar-default.jpg" alt="avatar"
+          style="background-color: white;">
         {{/if}}
 
         {{#ifCond targetUser.id user.id}}
@@ -33,18 +34,18 @@
           編輯個人資料
         </button>
         {{else}}
-          {{#if user.isFollowed}}
-          <form action="/followships/{{targetUser.id}}?_method=DELETE" method="POST">
-            <button type="submit" class="btn follow-bottom">正在跟隨</span>
-            </button>
-          </form>
-          {{else}}
-          <form action="/followships" method="POST">
-            <button type="submit" class="btn follow-bottom removefollow" name="id" value={{targetUser.id}}>
-              跟隨
-            </button>
-          </form>
-          {{/if}}
+        {{#if user.isFollowed}}
+        <form action="/followships/{{targetUser.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn follow-bottom">正在跟隨</span>
+          </button>
+        </form>
+        {{else}}
+        <form action="/followships" method="POST">
+          <button type="submit" class="btn follow-bottom removefollow" name="id" value={{targetUser.id}}>
+            跟隨
+          </button>
+        </form>
+        {{/if}}
         {{/ifCond}}
 
         {{!-- edit profile function --}}
@@ -52,42 +53,47 @@
           const editBtn = document.querySelector('#edit-btn')
           const saveBtn = document.querySelector('.save-button')
           const myModal = new bootstrap.Modal(document.getElementById('edit-profile-modal'), {
-              keyboard: false
-            })
+            keyboard: false
+          })
           const coverInput = document.querySelector('#cover')
           const avatarInput = document.querySelector('#avatar')
           const nameInput = document.querySelector('#name')
           const introductionInput = document.querySelector('#introduction')
           editBtn.addEventListener('click', () => {
-            axios.get('/api/users/' + {{user.id}})
-              .then(response => {
-                const userInfo = response.data
-                coverInput.src = userInfo.cover
-                avatarInput.src = userInfo.avatar
-                nameInput.value = userInfo.name
-                introductionInput.value = userInfo.introduction
-                document.querySelector('.name-count span').innerText = userInfo.name.length + '/50'
-                document.querySelector('.introduction-count span').innerText = userInfo.introduction.length + '/160'
-                myModal.show()
-              }).catch(err => console.warn(err))
-          })
-          
-          saveBtn.addEventListener('click', () => {
-            if (nameInput.value.length > 50 || introductionInput.value.length > 160) {
-              return alert('字數超出上限！')
-            }
-            const data = {
-              cover: coverInput.src,
-              avatar: avatarInput.src,
-              name: nameInput.value,
-              introduction: introductionInput.value
-            }
-            axios.post('/api/users/' + {{ user.id }}, data)
+            axios.get('/api/users/' + {{ user.id }})
             .then(response => {
-              history.go(0)
-            })
-            .catch(err => console.warn(err))
+              const userInfo = response.data
+              coverInput.src = userInfo.cover
+              avatarInput.src = userInfo.avatar
+              nameInput.value = userInfo.name
+              introductionInput.value = userInfo.introduction
+              document.querySelector('.name-count span').innerText = userInfo.name.length + '/50'
+              document.querySelector('.introduction-count span').innerText = userInfo.introduction.length + '/160'
+              myModal.show()
+            }).catch(err => console.warn(err))
           })
+
+          saveBtn.addEventListener('click', () => {
+            const formData = new FormData()
+            const coverImagefile = document.querySelector('#coverImage')
+            const avatarImagefile = document.querySelector('#image')
+
+            formData.append("coverImage", coverImagefile.files[0])
+            formData.append("image", avatarImagefile.files[0])
+            formData.append('name', nameInput.value)
+            formData.append('introduction', introductionInput.value)
+
+            axios.post('/api/users/{{user.id}}', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            }).then(response => {
+              history.go(0)
+              {{!-- document.querySelector('#edit-btn').click() --}}
+            })
+          })
+
+
         </script>
 
         <!-- Modal -->
@@ -99,48 +105,69 @@
                   <button type="button" class="btn-close p-0 m-0" data-bs-dismiss="modal" aria-label="Close"></button>
                   <h5 class="modal-title" style="font-weight: 700; margin-left: 36.5px;">編輯個人資料</h5>
                 </div>
-                <form action="POST" class="header-right">
-                  <button type="button" class="btn save-button">
-                    儲存
-                  </button>
-                </form>
+
               </div>
               <div class="modal-body p-0" style="width: 634px; height: 552px;">
-                <img class="cover" id="cover" src="" alt="cover">
-                <div class="icons">
-                  <img src="/images/camera.png" alt="camera" style="margin-right: 36px;">
-                  <img src="/images/ventor_close_2.png" alt="cancel">
-                </div>
-                <div class="avatar-icon">
-                  <div class="avatar">
-                    <img id="avatar" src="" alt="avatar">
+
+                {{!-- 表單開始 --}}
+                <form action="/api/users/{{user.id}}" method="POST" class="header-right" enctype="multipart/form-data">
+
+                  <button type="button" class="btn save-button" style="position: absolute;right: 0.5rem;top: -7rem;">
+                    儲存
+                  </button>
+
+                  {{!-- COVER --}}
+                  <img class="cover" id="cover" src="" alt="cover">
+
+                  {{!-- COVER 內的兩個 icons --}}
+                  <div class="icons">
+                    <label class="form-label" for="coverImage"><img class="icon" src="/images/camera.png" alt="camera"
+                        style="margin-right: 36px;"></label>
+                    <input class="form-control" type="file" class="form-control-file" id="coverImage"
+                      style="display:none" name="coverImage" onchange="previewCoverImage()">
+                    <img src="/images/ventor_close_2.png" alt="cancel">
                   </div>
-                  <img class="icon" src="/images/camera.png" alt="camera" style="margin-right: 36px;">
-                </div>
-                <div class="input name-input" style="height: 54px">
-                  <label for="name">名稱</label>
-                  <input name="name" id="name" type="text" placeholder="請輸入使用者名稱" onfocus="changeFocus('name')"
-                    onblur="changeFocus('name')" oninput="counts('name')" required>
-                  <div class="status name-status"></div>
-                  <div class="d-flex">
-                    <div class="helper name-helper"><span></span></div>
-                    <div class="count name-count"><span>0/50</span></div>
+
+                  {{!-- 大頭貼 --}}
+                  <div class="avatar-icon">
+                    <div class="avatar">
+                      <img id="avatar" src="" alt="avatar">
+                    </div>
+
+                    <label class="form-label" for="image"><img class="icon" src="/images/camera.png" alt="camera"
+                        style="margin-right: 36px;"></label>
+                    <input class="form-control" type="file" class="form-control-file" id="image" style="display:none"
+                      name="image" onchange="previewAvatarImage()">
                   </div>
-                </div>
-                <div class="input" style="height: 147px">
-                  <label for="name">自我介紹</label>
-                  <textarea name="introduction" id="introduction" type="text" placeholder="請輸入使用者名稱" onfocus="changeFocus('introduction')"
-                  onblur="changeFocus('introduction')" oninput="counts('introduction')"
-                  onkeydown="if(event.keyCode == 13) return false;"
-                  style="height: 123px;"></textarea>
-                  <div class="status introduction-status"></div>
-                  <div class="d-flex">
-                    <div class="helper introduction-helper"><span></span></div>
-                    <div class="count introduction-count"><span>0/160</span></div>
+
+                  {{!-- 名稱 --}}
+                  <div class="input name-input" style="height: 54px">
+                    <label for="name">名稱</label>
+                    <input name="name" id="name" type="text" placeholder="請輸入使用者名稱" onfocus="changeFocus('name')"
+                      onblur="changeFocus('name')" oninput="counts('name')" required>
+                    <div class="status name-status"></div>
+                    <div class="d-flex">
+                      <div class="helper name-helper"><span></span></div>
+                      <div class="count name-count"><span>0/50</span></div>
+                    </div>
                   </div>
-                </div>
+
+                  {{!-- 自我介紹 --}}
+                  <div class="input" style="height: 147px">
+                    <label for="name">自我介紹</label>
+                    <textarea name="introduction" id="introduction" type="text" placeholder="請輸入使用者名稱"
+                      onfocus="changeFocus('introduction')" onblur="changeFocus('introduction')"
+                      oninput="counts('introduction')" onkeydown="if(event.keyCode == 13) return false;"
+                      style="height: 123px;"></textarea>
+                    <div class="status introduction-status"></div>
+                    <div class="d-flex">
+                      <div class="helper introduction-helper"><span></span></div>
+                      <div class="count introduction-count"><span>0/160</span></div>
+                    </div>
+                  </div>
+                </form>
                 <script>
-                  function changeFocus(element) {
+                  function changeFocus (element) {
                     const target = document.querySelector('.' + element + '-status')
                     if (target.classList.contains('focus')) {
                       target.classList.remove('focus')
@@ -148,7 +175,7 @@
                     }
                     target.classList.toggle('focus')
                   }
-                  function counts(element) {
+                  function counts (element) {
                     let maxLength = 50
                     if (element === 'introduction') {
                       maxLength = 160
@@ -166,6 +193,34 @@
                       status.classList.remove('warn')
                       status.classList.toggle('focus')
                       document.querySelector('.element-helper span').innerText = ''
+                    }
+                  }
+                  function previewAvatarImage () {
+                    const avatarImageDOM = document.querySelector('#image')
+                    const avatarImagefile = avatarImageDOM.files
+                    console.log('previewImage')
+                    if (avatarImagefile.length > 0) {
+                      const fileReader = new FileReader()
+
+                      fileReader.onload = function (event) {
+                        document.getElementById('avatar').setAttribute('src', event.target.result)
+                      }
+
+                      fileReader.readAsDataURL(avatarImagefile[0])
+                    }
+                  }
+                  function previewCoverImage () {
+                    const coverImageDOM = document.querySelector('#coverImage')
+                    const coverImagefile = coverImageDOM.files
+                    console.log('previewImage')
+                    if (coverImagefile.length > 0) {
+                      const fileReader = new FileReader()
+
+                      fileReader.onload = function (event) {
+                        document.getElementById('cover').setAttribute('src', event.target.result)
+                      }
+
+                      fileReader.readAsDataURL(coverImagefile[0])
                     }
                   }
                 </script>
@@ -192,8 +247,8 @@
       </div>
     </div>
     {{#if tweets}}
-      {{> profile-tabs route='tweets'}}
-      <div class="scroll-container">
+    {{> profile-tabs route='tweets'}}
+    <div class="scroll-container">
       {{#each tweets}}
       <a href="/tweets/{{this.id}}/replies">
         <div class="tweet">
@@ -226,7 +281,7 @@
         </div>
       </a>
       {{/each}}
-      </div>
+    </div>
     {{/if}}
     {{#if replies}}
     {{> profile-tabs route='replies'}}
@@ -254,44 +309,44 @@
     </div>
     {{/if}}
     {{#if likes}}
-      {{> profile-tabs route='likes'}}
-      <div class="scroll-container">
-        {{#each likes}}
-        <a href="/tweets/{{this.Tweet.id}}/replies">
-          <div class="tweet">
-            <div>
-              <img class="avatar" src="{{this.Tweet.User.avatar}}" alt="avatar">
+    {{> profile-tabs route='likes'}}
+    <div class="scroll-container">
+      {{#each likes}}
+      <a href="/tweets/{{this.Tweet.id}}/replies">
+        <div class="tweet">
+          <div>
+            <img class="avatar" src="{{this.Tweet.User.avatar}}" alt="avatar">
+          </div>
+          <div class="content">
+            <div class="d-flex align-items-center" style="height: 26px;">
+              <span class="name">{{this.Tweet.User.name}}</span>
+              <span class="account">@{{this.Tweet.User.account}}•{{relativeTimeFromNow this.Tweet.createdAt}}</span>
             </div>
-            <div class="content">
-              <div class="d-flex align-items-center" style="height: 26px;">
-                <span class="name">{{this.Tweet.User.name}}</span>
-                <span class="account">@{{this.Tweet.User.account}}•{{relativeTimeFromNow this.Tweet.createdAt}}</span>
-              </div>
-              <div class="description">
-                {{this.Tweet.description}}
-              </div>
-              <div class="footer">
-                <img src="/images/comment.png" alt="comment">
-                <span style="margin-right: 41.3px;">{{this.repliedCount}}</span>
-                {{#if isLiked}}
-                <form action="/tweets/{{this.Tweet.id}}/unlike" method="POST">
-                  <button type="submit"><img src="/images/redLove.png" alt="like"></button>
-                </form>
-                {{else}}
-                <form action="/tweets/{{this.Tweet.id}}/like" method="POST">
-                  <button type="submit"><img src="/images/like.png" alt="like"></button>
-                </form>
-                {{/if}}
-                <span>{{this.likedCount}}</span>
-              </div>
+            <div class="description">
+              {{this.Tweet.description}}
+            </div>
+            <div class="footer">
+              <img src="/images/comment.png" alt="comment">
+              <span style="margin-right: 41.3px;">{{this.repliedCount}}</span>
+              {{#if isLiked}}
+              <form action="/tweets/{{this.Tweet.id}}/unlike" method="POST">
+                <button type="submit"><img src="/images/redLove.png" alt="like"></button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{this.Tweet.id}}/like" method="POST">
+                <button type="submit"><img src="/images/like.png" alt="like"></button>
+              </form>
+              {{/if}}
+              <span>{{this.likedCount}}</span>
             </div>
           </div>
-        </a>
-        {{/each}}
-      </div>
+        </div>
+      </a>
+      {{/each}}
+    </div>
     {{/if}}
   </div>
-  
+
   <div id="profile-right">
     {{> home-user-tabs-middleware-ByYS}}
   </div>
