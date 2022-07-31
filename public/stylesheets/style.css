@@ -298,8 +298,9 @@ body {
   filter: var(--base-filter);
 }
 
-#cancel-photo:hover {
+#remove-photo:hover {
   filter: var(--error-filter);
+  cursor: pointer;
 }
 
 #info-name:focus {
