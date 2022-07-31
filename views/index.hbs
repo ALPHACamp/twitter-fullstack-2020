@@ -34,74 +34,79 @@
   {{!-- 推文清單 --}}
   <ul class="list-group" style="border-radius: 0px;" id="tweets-panel">
 
-    {{#each tweets}}
-    <li class="list-group-item d-flex align-items-start" style="border: 1px solid #E6ECF0">
-    
-      {{!-- avatar （連結到該user個人頁面）--}}
-      <a href="/users/{{this.User.id}}">
-        <div class="mt-2" style="height: 50px; width: 50px; margin-right: 12px">
-          {{#if this.User.avatar}}
-          <div class="mt-2 rounded-circle" style="height: 50px; width: 50px; margin-right: 12px; background: url('{{this.User.avatar}}'); background-size: cover; background-position: center;"></div>
-          {{else}}
-          <div class="mt-2 rounded-circle" style="height: 50px; width: 50px; margin-right: 12px; background: url('/images/img.png'); background-size: cover; background-position: center;"></div>
-          {{/if}}
-        </div>
-      </a>
+    {{#if tweets}}
+      {{#each tweets}}
+      <li class="list-group-item d-flex align-items-start" style="border: 1px solid #E6ECF0">
       
-      {{!-- 推文區塊 --}}
-      <div class="mt-2" style="width: 100%;">
-        {{!-- 第一橫列：user information & create time --}}
-        <div>
-          <a style="text-decoration: none; color: #171725" href="/users/{{this.User.id}}">
-            <span style="font-size: 16px"><b>{{this.User.name}}</b></span>
-          </a>
-          <span style="font-size: 14px; padding-left: 8px">@{{this.User.account}}・</span>
-          <a style="text-decoration: none; color: #6C757D" href="/tweets/{{this.id}}/replies">
-            <span style="font-size: 14px">{{relativeTimeFromNow this.createdAt}}</span>
-          </a>
-        </div>
-        
-        {{!-- 第二橫列：tweet content --}}
-        <a href="/tweets/{{this.id}}/replies" style=" text-decoration: none; color: #171725">
-          <p class="mt-2">{{this.description}}</p>
+        {{!-- avatar （連結到該user個人頁面）--}}
+        <a href="/users/{{this.User.id}}">
+          <div class="mt-2" style="height: 50px; width: 50px; margin-right: 12px">
+            {{#if this.User.avatar}}
+            <div class="mt-2 rounded-circle" style="height: 50px; width: 50px; margin-right: 12px; background: url('{{this.User.avatar}}'); background-size: cover; background-position: center;"></div>
+            {{else}}
+            <div class="mt-2 rounded-circle" style="height: 50px; width: 50px; margin-right: 12px; background: url('/images/img.png'); background-size: cover; background-position: center;"></div>
+            {{/if}}
+          </div>
         </a>
         
-        {{!-- 第三橫列：reply & 按讚 --}}
-        <div style="font-size: 14px; color: #6C757D">
-          <i class="fa-regular fa-comment me-2 pointer" style="font-size: 16px" data-bs-toggle="modal" data-bs-target="#post-reply" 
-          data-userid="{{this.User.id}}" 
-          data-username="{{this.User.name}}" 
-          data-useraccount="{{this.User.account}}" 
-          data-tweetcreate="{{relativeTimeFromNow this.createdAt}}" 
-          data-tweetdescription="{{this.description}}" 
-          data-tweetid="{{this.id}}" 
-          {{#if this.User.avatar}}data-useravatar="{{this.User.avatar}}"{{else}}data-useravatar="/images/img.png"{{/if}} 
-          {{#if ../user.avatar}}data-loginuseravatar="{{../user.avatar}}"{{else}}data-loginuseravatar="/images/img.png"{{/if}}>
-          </i>
-          <span>{{this.numberOfReply}}</span>
+        {{!-- 推文區塊 --}}
+        <div class="mt-2" style="width: 100%;">
+          {{!-- 第一橫列：user information & create time --}}
+          <div>
+            <a style="text-decoration: none; color: #171725" href="/users/{{this.User.id}}">
+              <span style="font-size: 16px"><b>{{this.User.name}}</b></span>
+            </a>
+            <span style="font-size: 14px; padding-left: 8px">@{{this.User.account}}・</span>
+            <a style="text-decoration: none; color: #6C757D" href="/tweets/{{this.id}}/replies">
+              <span style="font-size: 14px">{{relativeTimeFromNow this.createdAt}}</span>
+            </a>
+          </div>
+          
+          {{!-- 第二橫列：tweet content --}}
+          <a href="/tweets/{{this.id}}/replies" style=" text-decoration: none; color: #171725">
+            <p class="mt-2">{{this.description}}</p>
+          </a>
+          
+          {{!-- 第三橫列：reply & 按讚 --}}
+          <div style="font-size: 14px; color: #6C757D">
+            <i class="fa-regular fa-comment me-2 pointer" style="font-size: 16px" data-bs-toggle="modal" data-bs-target="#post-reply" 
+            data-userid="{{this.User.id}}" 
+            data-username="{{this.User.name}}" 
+            data-useraccount="{{this.User.account}}" 
+            data-tweetcreate="{{relativeTimeFromNow this.createdAt}}" 
+            data-tweetdescription="{{this.description}}" 
+            data-tweetid="{{this.id}}" 
+            {{#if this.User.avatar}}data-useravatar="{{this.User.avatar}}"{{else}}data-useravatar="/images/img.png"{{/if}} 
+            {{#if ../user.avatar}}data-loginuseravatar="{{../user.avatar}}"{{else}}data-loginuseravatar="/images/img.png"{{/if}}>
+            </i>
+            <span>{{this.numberOfReply}}</span>
 
 
-          <div class="d-inline-block mb-1" style="padding-left: 35px;">
-            {{#if isLiked}}
-            <form action="/tweets/{{this.id}}/unlike" method="POST" class="d-inline-block" >
-              <button type="submit" style="all: unset; cursor: pointer;">
-                <i class="fa-solid fa-heart me-2" style="font-size: 16px"></i>
-              </button>
-            </form>
-            {{else}}
-            <form action="/tweets/{{this.id}}/like" method="POST" class="d-inline-block" >
-              <button type="submit" style="all: unset; cursor: pointer;">
-                <i class="fa-regular fa-heart me-2" style="font-size: 16px"></i>
-              </button>
-            </form>
-            {{/if}}
-            <span>{{this.numberOfLike}}</span>
+            <div class="d-inline-block mb-1" style="padding-left: 35px;">
+              {{#if isLiked}}
+              <form action="/tweets/{{this.id}}/unlike" method="POST" class="d-inline-block" >
+                <button type="submit" style="all: unset; cursor: pointer;">
+                  <i class="fa-solid fa-heart me-2" style="font-size: 16px"></i>
+                </button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{this.id}}/like" method="POST" class="d-inline-block" >
+                <button type="submit" style="all: unset; cursor: pointer;">
+                  <i class="fa-regular fa-heart me-2" style="font-size: 16px"></i>
+                </button>
+              </form>
+              {{/if}}
+              <span>{{this.numberOfLike}}</span>
+            </div>
           </div>
         </div>
-      </div>
 
-    </li>
-    {{/each}}
+      </li>
+      {{/each}}
+    {{else}}
+    <h3>目前沒有推文，趕快新增一篇吧！</h3>
+    {{/if}}
+    
   </ul>
 </div>
 
