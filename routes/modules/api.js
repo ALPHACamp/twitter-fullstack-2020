@@ -13,5 +13,6 @@ router.post(
   ]),
   apiController.postUserInfo
 )
+router.post('/followships', apiController.putFollow)
 
 module.exports = router

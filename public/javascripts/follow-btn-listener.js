@@ -11,16 +11,25 @@ window.addEventListener('load', async e => {
             toggleBtn.push(followBtn)
           }
         })
+        // 如果按鈕為追蹤狀態，切換class，並置入新的文字內容
         if (btn.classList.contains('following-btn')) {
           toggleBtn.forEach(btn => {
             btn.classList.remove('following-btn')
             btn.classList.add('follow-btn')
             btn.textContent = '跟隨'
           })
-          // 追蹤者數量-1
-          const userAccount = btn.dataset.useraccount || ''
           const profileAccontElement = document.querySelector('#profile-account') || ''
-          if (!profileAccontElement) return await axios.post('/followships', { id: userId })
+          const userAccount = btn.dataset.useraccount || ''
+
+          // 如果沒在profile頁面直接送出 follow，如果有接收到錯誤訊息顯示錯誤訊息
+          if (!profileAccontElement) {
+            const res = await axios.post('/api/followships', { id: userId })
+            if (res.data.status === 'error') {
+              return showErrorMessage(res.data.message)
+            }
+          }
+
+          // 如果有在profile頁面，且旁邊追蹤者為同樣的user，追蹤者數量-1
           if (profileAccontElement.textContent.replace('@', '') === userAccount) {
             const countFollowingsElement = document.querySelector('#count-followers') || ''
             // 文字處裡
@@ -30,16 +39,32 @@ window.addEventListener('load', async e => {
             amount--
             countFollowingsElement.textContent = amount.toString() + ' 個'
           }
-          return await axios.post('/followships', { id: userId })
-        } else if (btn.classList.contains('follow-btn')) {
+          // 送出POST
+          const res = await axios.post('/api/followships', { id: 2 })
+          if (res.data.status === 'error') {
+            return showErrorMessage(res.data.message)
+          }
+        }
+
+        // 如果按鈕為未追蹤狀態，切換class，並置入新的文字內容
+        if (btn.classList.contains('follow-btn')) {
           toggleBtn.forEach(btn => {
             btn.classList.remove('follow-btn')
             btn.classList.add('following-btn')
             btn.textContent = '正在跟隨'
           })
+
+          // 如果沒在profile頁面直接送出 follow，如果有接收到錯誤訊息顯示錯誤訊息
           const userAccount = btn.dataset.useraccount || ''
           const profileAccontElement = document.querySelector('#profile-account') || ''
-          if (!profileAccontElement) return await axios.post('/followships', { id: userId })
+          if (!profileAccontElement) {
+            const res = await axios.post('/api/followships', { id: userId })
+            if (res.data.status === 'error') {
+              return showErrorMessage(res.data.message)
+            }
+          }
+
+          // 如果有在profile頁面，且旁邊追蹤者為同樣的user，追蹤者數量+1
           if (profileAccontElement.textContent.replace('@', '') === userAccount) {
             const countFollowingsElement = document.querySelector('#count-followers') || ''
             // 文字處裡
@@ -49,10 +74,13 @@ window.addEventListener('load', async e => {
             amount++
             countFollowingsElement.textContent = amount.toString() + ' 個'
           }
-          return await axios.post('/followships', { id: userId })
-        } else {
-          return
+          const res = await axios.post('/api/followships', { id: userId })
+          if (res.data.status === 'error') {
+            return showErrorMessage(res.data.message)
+          }
         }
+
+        return
       } catch (err) {
         console.log(err)
       }

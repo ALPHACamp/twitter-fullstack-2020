@@ -6,7 +6,7 @@ const {
 const fileHelper =
   process.env.NODE_ENV === 'production' ? imgurFileHandler : localFileHandler
 
-const { User } = require('../models')
+const { User, Followship } = require('../models')
 
 const apiController = {
   getUserInfo: async (req, res, next) => {
@@ -59,6 +59,45 @@ const apiController = {
         coverPhoto
       })
       res.json({ status: 200, data: patchedUser })
+    } catch (err) {
+      next(err)
+    }
+  },
+  putFollow: async (req, res, next) => {
+    try {
+      const UserId = Number(helpers.getUser(req).id)
+      const followingId = Number(req.body.id)
+      if (UserId === followingId) {
+        console.log('hey')
+        return res.status(200).json({
+          status: 'error',
+          message: "You can't follow yourself"
+        })
+      }
+
+      const user = await User.findByPk(followingId)
+      if (!user) throw new Error("User didn't exist")
+      if (user.role === 'admin') {
+        return res.status(200).json({
+          status: 'error',
+          message: "You can't follow admin"
+        })
+      }
+
+      const isFollowed = await Followship.findOne({
+        where: { followerId: UserId, followingId }
+      })
+
+      if (isFollowed) {
+        await isFollowed.destroy()
+        return res.redirect('back')
+      }
+
+      await Followship.create({
+        followerId: UserId,
+        followingId
+      })
+      return res.redirect('/')
     } catch (err) {
       next(err)
     }
