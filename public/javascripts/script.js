@@ -1,4 +1,5 @@
 'use strict'
+window.URL = window.URL || window.webkitURL
 
 const dataPanel = document.querySelector('#data-panel')
 
@@ -17,6 +18,12 @@ dataPanel.addEventListener('input', e => {
     infoNameCheck(e.target)
   } else if (e.target.matches('#info-intro')) {
     infoIntroCheck(e.target)
+  }
+})
+
+dataPanel.addEventListener('change', e => {
+  if (e.target.matches('.input-pic')) {
+    showInputFile(e.target)
   }
 })
 
@@ -154,5 +161,35 @@ async function showInfoModal (uid) {
     submitBtn.dataset.userid = existUser.id
   } catch (err) {
     console.log(err)
+  }
+}
+
+function showInputFile (target) {
+  const fileName = target.value
+  const ext = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase()
+  const infoCoverPhoto = document.querySelector('#info-cover-photo')
+  const infoAvatar = document.querySelector('#info-avatar')
+  if (
+    target.files &&
+    target.files[0] &&
+    (ext === 'gif' || ext === 'jpg' || ext === 'png' || ext === 'jpeg')
+  ) {
+    const [file] = target.files
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+
+    reader.onload = function (e) {
+      if (target.matches('#input-cover-photo')) {
+        infoCoverPhoto.style.backgroundImage = `url('${e.target.result}')`
+      } else if (target.matches('#input-avatar')) {
+        infoAvatar.src = e.target.result
+      }
+    }
+  } else {
+    if (target.matches('#input-cover-photo')) {
+      infoCoverPhoto.style.backgroundImage = "url('/public/pic/NoPicture')"
+    } else if (target.matches('#input-avatar')) {
+      infoAvatar.src = '/public/pic/NoPicture'
+    }
   }
 }
