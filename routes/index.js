@@ -4,6 +4,7 @@ const router = express.Router()
 const passport = require('../config/passport')
 
 const admin = require('./modules/admin')
+const api = require('./modules/api')
 
 const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
@@ -14,7 +15,9 @@ const { authenticatedUser } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 
 router.use('/admin', admin)
+router.use('/api', authenticatedUser, api)
 router.use('/followships', authenticatedUser, followships)
+
 router.get('/users/:userId', authenticatedUser, userController.getProfile)
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
