@@ -31,7 +31,14 @@ const userController = {
       }
 
       const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
-      const userData = { account, name, email, password: hash, avatar, coverPhoto }
+      const userData = {
+        account,
+        name,
+        email,
+        password: hash,
+        avatar,
+        coverPhoto
+      }
       await User.create(userData)
       req.flash('success_messages', '您已成功註冊帳號！')
       // return res.render('signin')
@@ -81,13 +88,14 @@ const userController = {
       const role = helpers.getUser(req).role
       const queryUserId = Number(req.params.id)
       const queryUserData = await User.findByPk(queryUserId, {
-        include: [{
-          model: User,
-          as: 'Followings',
-          attributes: ['id', 'name', 'avatar', 'introduction'],
-          order: [['createdAt', 'DESC']]
-        },
-        { model: Tweet, attributes: ['id'] }
+        include: [
+          {
+            model: User,
+            as: 'Followings',
+            attributes: ['id', 'name', 'avatar', 'introduction'],
+            order: [['createdAt', 'DESC']]
+          },
+          { model: Tweet, attributes: ['id'] }
         ]
       })
       if (!queryUserData) throw new Error('使用者不存在 !')
@@ -104,7 +112,12 @@ const userController = {
         user.isSelf = user.id === userId
       })
       const topUser = await getTopUser(currentUser)
-      return res.render('users/user-followings', { queryUser, role, currentUser, topUser })
+      return res.render('users/user-followings', {
+        queryUser,
+        role,
+        currentUser,
+        topUser
+      })
     } catch (err) {
       next(err)
     }
@@ -116,13 +129,14 @@ const userController = {
       const role = helpers.getUser(req).role
       const queryUserId = Number(req.params.id)
       const queryUserData = await User.findByPk(queryUserId, {
-        include: [{
-          model: User,
-          as: 'Followers',
-          attributes: ['id', 'name', 'avatar', 'introduction'],
-          order: [['createdAt', 'DESC']]
-        },
-        { model: Tweet, attributes: ['id'] }
+        include: [
+          {
+            model: User,
+            as: 'Followers',
+            attributes: ['id', 'name', 'avatar', 'introduction'],
+            order: [['createdAt', 'DESC']]
+          },
+          { model: Tweet, attributes: ['id'] }
         ]
       })
       if (!queryUserData) throw new Error('使用者不存在 !')
@@ -139,7 +153,12 @@ const userController = {
         user.isSelf = user.id === userId
       })
       const topUser = await getTopUser(currentUser)
-      return res.render('users/user-followers', { queryUser, role, currentUser, topUser })
+      return res.render('users/user-followers', {
+        queryUser,
+        role,
+        currentUser,
+        topUser
+      })
     } catch (err) {
       next(err)
     }
@@ -156,7 +175,7 @@ const userController = {
             include: [
               { model: Like, attributes: ['id'] },
               { model: Reply, attributes: ['id'] },
-              { model: User, attributes: ['avatar'] },
+              { model: User, attributes: ['avatar'] }
             ]
           },
           { model: User, attributes: ['id'], as: 'Followers' },
@@ -169,7 +188,9 @@ const userController = {
       if (currentUser.Followings.some(fr => fr.id === profileUser.id)) {
         profileUser.isFollowed = true
       }
-      const likedTweetsId = profileUser?.Likes ? currentUser.Likes.map(lt => lt.TweetId) : []
+      const likedTweetsId = profileUser?.Likes
+        ? currentUser.Likes.map(lt => lt.TweetId)
+        : []
       profileUser.Tweets = profileUser.Tweets.map(tweets => ({
         ...tweets,
         isLiked: likedTweetsId.includes(tweets.id)
@@ -194,10 +215,7 @@ const userController = {
         include: [
           {
             model: Tweet,
-            include: [
-              { model: Like },
-              { model: Reply, attributes: ['id'] }
-            ]
+            include: [{ model: Like }, { model: Reply, attributes: ['id'] }]
           },
           { model: User, attributes: ['id'], as: 'Followers' },
           { model: User, attributes: ['id'], as: 'Followings' }
@@ -229,7 +247,6 @@ const userController = {
           ...tweet.toJSON()
         }
       }, likedTweets)
-      console.log(likedTweets)
       res.render('users/user-likes', {
         likedTweets,
         profileUser,
