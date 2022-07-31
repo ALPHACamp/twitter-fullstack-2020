@@ -11,6 +11,7 @@
   --secondary-purple: #A461D8;
   --secondary-pink: #FF9AD5;
   --white: #FFFFFF;
+  --dark: #171725;
 }
 
 body {
@@ -24,7 +25,17 @@ body {
 }
 
 * {
+  box-sizing: border-box;
   font-family: 'Noto Sans TC', 'Montserrat', 'Roboto';
+}
+
+a {
+  text-decoration: none;
+  color: var(--dark);
+}
+
+a:hover {
+  color: var(--dark);
 }
 
 .font-text {
