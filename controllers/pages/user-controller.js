@@ -193,6 +193,32 @@ const userConroller = {
         res.redirect('/tweets')
       })
       .catch(err => next(err))
+  },
+  getFollowings: (req, res, next) => {
+    const UserId = req.params.userId
+
+    return User.findByPk(UserId, {
+      attributes: {
+        include: [[sequelize.literal('(SELECT COUNT(`id`) FROM `Tweets` WHERE `UserId` = `User`.`id`)'), 'tweetCounts']]
+      },
+      include: [
+        { model: User, as: 'Followings' }
+      ]
+    })
+      .then(user => {
+        if (!user || isAdmin(user)) throw new Error('使用者不存在！')
+
+        user = user.toJSON()
+        const followings = user.Followings
+          .map(f => ({
+            ...f,
+            isFollowing: helpers.getUser(req).Followings.some(uf => uf.id === f.id)
+          }))
+          .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+
+        res.render('followship', { user, followings })
+      })
+      .catch(err => next(err))
   }
 }
 

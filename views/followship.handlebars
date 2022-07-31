@@ -1,0 +1,35 @@
+{{> user-header}}
+
+<ul class="d-flex mb-4 user-nav-tabs">
+  <li class="user-nav-item {{#if followers}}active{{/if}}">
+    <a class="user-nav-link" href="/users/{{user.id}}/followers">追隨者</a>
+  </li>
+  <li class="user-nav-item {{#if followings}}active{{/if}}">
+    <a class="user-nav-link" href="/users/{{user.id}}/followings">正在追隨</a>
+  </li>
+</ul>
+
+{{#each followings}}
+  <div class="reply d-flex">
+    <a href="/users/{{this.id}}/tweets">
+      <img src="{{checkAvatar this.avatar}}" class="rounded-circle reply-avatar">
+    </a>
+    <div>
+      <div>
+        <a href="/users/{{this.id}}/tweets" style="text-decoration:none;">
+          <span class="fw-bold reply-name">{{this.name}}</span>
+        </a>
+        {{#if this.isFollowing}}
+          <form action="/followships?_method=DELETE" method="POST" style="display: contents;">
+            <button type="submit" class="user-following">正在跟隨</button>
+          </form>
+        {{else}}
+          <form action="/followships" method="POST" style="display: contents;">
+            <button type="submit" class="user-unfollowing">跟隨</button>
+          </form>
+        {{/if}}
+      </div>
+      <p class="reply-comment">{{this.introduction}}</p>
+    </div>
+  </div>
+{{/each}}
