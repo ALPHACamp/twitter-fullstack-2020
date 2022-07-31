@@ -35,14 +35,14 @@
       <div class=" card-override">
         {{#each tweets}}
         <div class="tweet-card d-flex" style="margin:0px;">
-          <a class="" href="/users/:{{this.User.id}}/tweets">
+          <a class="" href="/users/{{this.User.id}}/tweets">
             <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
               alt="Picture" class="tweet-user-avatar">
           </a>
           <div>
             <div class="head d-flex">
-              <a class="name" href="/users/:{{this.User.id}}/tweets">{{this.User.name}}</a>
-              <a class="account" href="/users/:{{this.User.id}}/tweets">@{{this.User.account}}</a>
+              <a class="name" href="/users/{{this.User.id}}/tweets">{{this.User.name}}</a>
+              <a class="account" href="/users/{{this.User.id}}/tweets">@{{this.User.account}}</a>
               <div class="time">•{{momentNow this.createdAt}}</div>
             </div>
             <a href="/tweets/{{this.id}}/replies">
