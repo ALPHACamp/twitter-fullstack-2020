@@ -195,9 +195,14 @@ const userConroller = {
       .catch(err => next(err))
   },
   addFollowship: (req, res, next) => {
-    const { followingId } = req.body
-    const followerId = req.user.id
+    const { followingId } = Number(req.body)
+    const followerId = Number(req.user.id)
     const isFollowing = req.user.Followings.some(following => following.id === followingId)
+
+    if (followerId === followingId) {
+      req.flash('error_messages', '使用者禁止追蹤自己')
+      return res.redirect('back')
+    }
 
     if (!isFollowing) {
       return Followship
