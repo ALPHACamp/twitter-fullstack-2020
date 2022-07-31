@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
 const imgur = require('imgur')
 const { User, Tweet, Reply, Followship, Like } = require('../models')
-const sequelize = require('sequelize')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 imgur.setClientId(IMGUR_CLIENT_ID)
 
@@ -54,54 +53,96 @@ const userController = {
       .catch(err => next(err))
   },
   getUserTweets: (req, res, next) => {
-    const currentUser = helpers.getUser(req)
-    const id = currentUser.id
+    const id = req.params.id
     return Promise.all([
       User.findByPk(id, {
-        include: [
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' }
-        ]
+        include: [{ model: User, as: 'Followings' }, { model: User, as: 'Followers' }]
       }),
       Tweet.findAll({
         where: { userId: id },
         include: [Like, Reply],
         order: [['createdAt', 'desc']],
         nest: true
-      }),
-      Followship.findAll({
-        include: User,
-        group: 'followingId',
-        attributes: {
-          include: [[sequelize.fn('COUNT', sequelize.col('following_id')), 'count']]
-        },
-        order: [[sequelize.literal('count'), 'DESC']]
       })
     ])
-      .then(([targetUser, tweets, followship]) => {
+      .then(([targetUser, tweets]) => {
         if (!targetUser) throw new Error('使用者不存在！')
 
-        currentUser.isFollowed = currentUser.Followings.some(u => u.id === targetUser.id)
-
-        const users = followship
-          .map(data => ({
-            ...data.User.toJSON(),
-            isFollowed: currentUser.Followings.some(u => u.id === data.followingId)
-          }))
-          .slice(0, 10)
+        const user = helpers.getUser(req)
+        if (user) {
+          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        }
 
         const tweetsData = tweets
           .map(t => ({
             ...t.toJSON(),
             likedCount: t.Likes.length,
             repliedCount: t.Replies.length,
-            isLiked: t.Likes.some(like => like.UserId === currentUser.id)
+            isLiked: t.Likes.some(like => like.userId === user.id)
           }))
 
-        console.log(targetUser.toJSON())
-        console.log(currentUser)
         res.locals.tweetsLength = tweets.length
-        res.render('user', { targetUser: targetUser.toJSON(), tweets: tweetsData, currentUser, users })
+        res.render('user', { targetUser: targetUser.toJSON(), tweets: tweetsData, user })
+      })
+      .catch(err => next(err))
+  },
+  getUserReplies: (req, res, next) => {
+    const id = req.params.id
+    return Promise.all([
+      User.findByPk(id, {
+        include: [{ model: User, as: 'Followings' }, { model: User, as: 'Followers' }, Tweet]
+      }),
+      Reply.findAll({
+        where: { userId: id },
+        include: [{ model: Tweet, include: User }],
+        order: [['createdAt', 'desc']],
+        raw: true,
+        nest: true
+      })
+    ])
+      .then(([targetUser, replies]) => {
+        if (!targetUser) throw new Error('使用者不存在！')
+        const user = helpers.getUser(req)
+        if (user) {
+          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        }
+        res.locals.tweetsLength = targetUser.Tweets.length
+        res.render('user', { targetUser: targetUser.toJSON(), replies, user })
+      })
+      .catch(err => next(err))
+  },
+  getUserLikes: (req, res, next) => {
+    const id = req.params.id
+    return Promise.all([
+      User.findByPk(id, {
+        include: [{ model: User, as: 'Followings' }, { model: User, as: 'Followers' }, Tweet]
+      }),
+      Like.findAll({
+        where: { userId: id },
+        include: [
+          { model: Tweet, include: User },
+          { model: Tweet, include: Like },
+          { model: Tweet, include: Reply }
+        ],
+        order: [['createdAt', 'desc']],
+        nest: true
+      })
+    ])
+      .then(([targetUser, likes]) => {
+        if (!targetUser) throw new Error('使用者不存在！')
+        const user = helpers.getUser(req)
+        if (user) {
+          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        }
+        const likesData = likes
+          .map(l => ({
+            ...l.toJSON(),
+            likedCount: l.Tweet.Likes.length,
+            repliedCount: l.Tweet.Replies.length,
+            isLiked: user ? l.Tweet.Likes.some(like => like.UserId === user.id) : false
+          }))
+        res.locals.tweetsLength = targetUser.Tweets.length
+        res.render('user', { targetUser: targetUser.toJSON(), likes: likesData, user })
       })
       .catch(err => next(err))
   },
@@ -109,7 +150,7 @@ const userController = {
     const currentUserId = helpers.getUser(req) && helpers.getUser(req).id
 
     if (currentUserId !== Number(req.params.id)) {
-      req.flash('error_messages', '只能改自己的資料！')
+      req.flash('error_messages', '無法修改他人資料！')
       return res.redirect(`/users/${currentUserId}/setting`)
     }
 

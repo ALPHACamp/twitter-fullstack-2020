@@ -4,8 +4,8 @@
 
   <div class="container"
     style="margin:0px; padding:0px;  border-left: 1px solid rgb(209, 203, 203); border-right: 1px solid rgb(209, 203, 203); max-width:90%;">
-    <div class="mt-1 mb-3" style="height: 2%;">
-      <a class="d-flex" href="javascript:history.back()" style="align-items: center; text-decoration:none;">
+    <div class="mt-1 mb-3" style="height: 60px;">
+      <a class="d-flex" href="/tweets" style="align-items: center; text-decoration:none;">
         <img class="ms-3" src="https://upload.cc/i1/2022/07/29/bYiz5s.png" alt=""
           style="height: 30%; width: 4%; margin-right: 25px;">
         <div class="col">
@@ -27,7 +27,7 @@
       <div class="d-flex px-3" style="margin-top:-80px;z-index:100;position:relative">
         <img src="{{targetUser.avatar}}" class="me-auto rounded-circle border border-white border-5"
           style="width:150px;height:150px">
-        {{#ifCond targetUser.id currentUser.id}}
+        {{#ifCond targetUser.id user.id}}
         <div class="d-flex align-items-end">
           <button type="button" class="btn rounded-pill" id="edit-btn"
             style=" background-color: #FFFFFF;color: #FF6600;border:1px solid #FF6600;">
@@ -71,31 +71,115 @@
         </div>
       </div>
     </div>
-    {{>user-tabs route='tweets'}}
+
+    {{!-- 推文 --}}
     {{#if tweets}}
-    <table class="table align-middle">
-      <tbody>
-        {{#each tweets}}
-        <tr>
-          <td><img src="{{../targetUser.avatar}}" alt="" style="width: 300%; hight: 300%; border-radius: 50%;"></td>
-          <td>{{../targetUser.name}}
-            <small>@{{../targetUser.account}}．{{relativeTimeFromNow this.createdAt}}</small>
-            <p>{{this.description}}</p>
-            <div>
-              <small class="me-5">
-                <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="" style="width: 5%; hight: 5%">
-                {{this.repliedCount}}
-              </small>
-              <small>
-                <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="" style="width: 5%; hight: 5%">
-                {{this.likedCount}}
-              </small>
+    {{>user-tabs route='tweets'}}
+    <div>
+      {{#each tweets}}
+      <a href="/tweets/{{this.id}}/replies">
+        <div class="tweet">
+          <div>
+            <img class="avatar" src="{{../targetUser.avatar}}" alt="avatar">
+          </div>
+          <div class="content">
+            <div class="d-flex align-items-center" style="height: 26px;">
+              <span class="name">{{../targetUser.name}}</span>
+              <span class="account">@{{../targetUser.account}}•{{relativeTimeFromNow this.createdAt}}</span>
             </div>
-          </td>
-        </tr>
+            <div class="description">
+              {{this.description}}
+            </div>
+            <div class="footer">
+              <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="" style="width: 10px; hight: 10px">
+              {{this.repliedCount}}
+              <span style="margin-right: 41.3px;">{{this.repliedCount}}</span>
+              {{#if isLiked}}
+              <form action="/tweets/{{this.id}}/unlike" method="POST">
+                <button type="submit">
+                  <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="like" style="width: 10px; hight: 10px">
+                </button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{this.id}}/like" method="POST">
+                <button type="submit">
+                  <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="like" style="width: 10px; hight: 10px">
+                </button>
+              </form>
+              {{/if}}
+              <span>{{this.likedCount}}</span>
+            </div>
+          </div>
+        </div>
+      </a>
+      {{/each}}
+    </div>
+    {{/if}}
+
+    {{!-- 回覆 --}}
+    {{#if replies}}
+    {{>user-tabs route='replies'}}
+    <div>
+      {{#each replies}}
+      <div class="tweet">
+        <div>
+          <img class="avatar" src="{{../targetUser.avatar}}" alt="avatar" style="width: 10px; hight: 10px">
+        </div>
+        <div class="content">
+          <div class="d-flex align-items-center" style="height: 26px;">
+            <span class="name">{{../targetUser.name}}</span>
+            <span class="account">@{{../targetUser.account}}•{{relativeTimeFromNow this.createdAt}}</span>
+          </div>
+          <div class="reply-to">
+            <span class="reply">回復</span>
+            <span class="account">@{{this.Tweet.User.account}}</span>
+          </div>
+          <div class="description">
+            {{this.comment}}
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{/if}}
+
+    {{!-- 喜歡的內容 --}}
+    {{#if likes}}
+      {{>user-tabs route='likes'}}
+      <div class="scroll-container">
+        {{#each likes}}
+        <a href="/tweets/{{this.Tweet.id}}/replies">
+          <div class="tweet">
+            <div>
+              <img class="avatar" src="{{this.Tweet.User.avatar}}" alt="avatar">
+            </div>
+            <div class="content">
+              <div class="d-flex align-items-center" style="height: 26px;">
+                <span class="name">{{this.Tweet.User.name}}</span>
+                <span class="account">@{{this.Tweet.User.account}}•{{relativeTimeFromNow this.Tweet.createdAt}}</span>
+              </div>
+              <div class="description">
+                {{this.Tweet.description}}
+              </div>
+              <div class="footer">
+                <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="comment">
+                <span style="margin-right: 41.3px;">{{this.repliedCount}}</span>
+                {{#if isLiked}}
+                <form action="/tweets/{{this.Tweet.id}}/unlike" method="POST">
+                  <button type="submit"><img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="like"></button>
+                </form>
+                {{else}}
+                <form action="/tweets/{{this.Tweet.id}}/like" method="POST">
+                  <button type="submit"><img src="https://upload.cc/i1/2022/07/29/CaJuOl.png" alt="like"></button>
+                </form>
+                {{/if}}
+                <span>{{this.likedCount}}</span>
+              </div>
+            </div>
+          </div>
+        </a>
         {{/each}}
-      </tbody>
-    </table>
+      </div>
     {{/if}}
   </div>
 
