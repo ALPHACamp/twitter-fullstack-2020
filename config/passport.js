@@ -44,7 +44,7 @@ passport.deserializeUser((id, cb) => {
       if (user) {
         const userJSON = user.toJSON()
         if (userJSON.role === 'user') {
-          const [topFollowings] = await sequelize.query('SELECT COUNT(`Users`.`id`) AS`followerCount`, `Users`.`id`, `Users`.`name`, `Users`.`account`, `Users`.`avatar` FROM Users LEFT JOIN Followships ON`Users`.`id` = `Followships`.`followingId` GROUP BY`Users`.`id` ORDER BY`followerCount` DESC LIMIT 10;')
+          const [topFollowings] = await sequelize.query('SELECT COUNT(`Users`.`id`) AS`followerCount`, `Users`.`id`, `Users`.`name`, `Users`.`account`, `Users`.`avatar`, `Followships`.`createdAt` FROM Users LEFT JOIN Followships ON`Users`.`id` = `Followships`.`followingId` GROUP BY`Users`.`id` ORDER BY`followerCount` DESC, `Followships`.`createdAt` DESC LIMIT 10;')
           userJSON.topFollowings = [...topFollowings.map(item => {
             item.isFollowing = userJSON.Followings.some(following => following.id === item.id)
             return item
