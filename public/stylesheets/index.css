@@ -47,8 +47,6 @@ body {
 
 .left-nav {
   position: fixed;
-  /* top: 30px;
-  right: 5px; */
 }
 
 .user-header {
@@ -261,4 +259,8 @@ body {
 .reply-comment {
   font-size: 16px;
   line-height: 26px;
+}
+
+.limit-tweet-length {
+  word-break: break-all;
 }

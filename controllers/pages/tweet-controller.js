@@ -1,5 +1,6 @@
 const { Tweet, User, Reply, Like } = require('../../models')
 const helpers = require('../../_helpers')
+const dayjs = require('dayjs')
 
 const tweetController = {
   getTweets: (req, res, next) => {
@@ -8,13 +9,13 @@ const tweetController = {
       order: [['createdAt', 'DESC']]
     })
       .then(tweets => {
-        const tweetData = tweets.map(t => ({
+        const tweetsData = tweets.map(t => ({
           ...t.toJSON(),
           replyCounts: t.Replies.length,
           likeCounts: t.Likes.length,
           isLiked: req.user?.Likes.some(l => l.TweetId === t.id)
         }))
-        res.render('tweets', { tweetData })
+        res.render('tweets', { tweetsData })
       })
       .catch(err => next(err))
   },
@@ -78,6 +79,27 @@ const tweetController = {
         return like.destroy()
       })
       .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+  getReplies: (req, res, next) => {
+    const TweetId = req.params.tweetId
+    return Tweet.findByPk(TweetId, {
+      include: [
+        User,
+        { model: Reply, include: [User, { model: Tweet, include: [User] }] },
+        Like],
+      order: [[Reply, 'createdAt', 'DESC']]
+    })
+      .then(tweet => {
+        tweet = tweet.toJSON()
+        tweet.period = dayjs(`${tweet.createdAt}`).format('A') === 'AM' ? '上午' : '下午'
+        tweet.time = dayjs(`${tweet.createdAt}`).format('h:mm')
+        tweet.date = dayjs(`${tweet.createdAt}`).format('YYYY年M月DD')
+        tweet.replyCounts = tweet.Replies.length
+        tweet.likeCounts = tweet.Likes.length
+        tweet.isLiked = req.user?.Likes.some(l => l.TweetId === tweet.id)
+        res.render('tweet', { tweet })
+      })
       .catch(err => next(err))
   }
 }
