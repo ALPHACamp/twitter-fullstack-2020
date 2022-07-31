@@ -10,6 +10,8 @@ dataPanel.addEventListener('click', e => {
     showInfoModal(e.target.dataset.userid)
   } else if (e.target.matches('#post-info')) {
     postInfoForm(e.target)
+  } else if (e.target.matches('#remove-photo')) {
+    removeInputFile(e.target)
   }
 })
 
@@ -162,20 +164,29 @@ async function showInfoModal (uid) {
     }
     const existUser = res.data.existUser
     const infoCoverPhoto = document.querySelector('#info-cover-photo')
+    const removePhoto = document.querySelector('#remove-photo')
     const infoAvatar = document.querySelector('#info-avatar')
     const infoName = document.querySelector('#info-name')
     const nameLength = document.querySelector('#name-length')
     const infoIntro = document.querySelector('#info-intro')
     const introLength = document.querySelector('#intro-length')
     const submitBtn = document.querySelector('#post-info')
+    removePhoto.dataset.originPhoto = existUser.coverPhoto
     if (existUser.coverPhoto) {
       infoCoverPhoto.style.backgroundImage = `url(${existUser.coverPhoto})`
     }
     infoAvatar.src = existUser.avatar
+
     infoName.value = existUser.name
-    nameLength.textContent = `${existUser.name.length}/50`
+    nameLength.textContent = existUser.name
+      ? `${existUser.name.length}/50`
+      : '0/50'
+
     infoIntro.value = existUser.introduction
-    introLength.textContent = `${existUser.introduction.length}/160`
+    introLength.textContent = existUser.introduction
+      ? `${existUser.introduction.length}/160`
+      : '0/160'
+
     submitBtn.dataset.userid = existUser.id
   } catch (err) {
     console.log(err)
@@ -210,4 +221,10 @@ function showInputFile (target) {
       infoAvatar.src = '/pic/where_the_pic.png'
     }
   }
+}
+
+function removeInputFile (target) {
+  const infoCoverPhoto = document.querySelector('#info-cover-photo')
+  infoCoverPhoto.style.backgroundImage = `url('${target.dataset.originPhoto}')`
+  document.querySelector('#input-cover-photo').value = ''
 }
