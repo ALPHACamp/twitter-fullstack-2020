@@ -156,8 +156,11 @@ function infoIntroCheck (target) {
 async function showInfoModal (uid) {
   try {
     // eslint-disable-next-line no-undef
-    const data = await axios.get(`/api/users/${uid}`)
-    const existUser = data.data.existUser
+    const res = await axios.get(`/api/users/${uid}`)
+    if (res.data.status === 'error') {
+      return showErrorMessage(res.data.message)
+    }
+    const existUser = res.data.existUser
     const infoCoverPhoto = document.querySelector('#info-cover-photo')
     const infoAvatar = document.querySelector('#info-avatar')
     const infoName = document.querySelector('#info-name')
@@ -166,7 +169,7 @@ async function showInfoModal (uid) {
     const introLength = document.querySelector('#intro-length')
     const submitBtn = document.querySelector('#post-info')
     if (existUser.coverPhoto) {
-      infoCoverPhoto.style.backgroundImage = `url('${existUser.coverPhoto}')`
+      infoCoverPhoto.style.backgroundImage = `url(${existUser.coverPhoto})`
     }
     infoAvatar.src = existUser.avatar
     infoName.value = existUser.name
@@ -202,9 +205,9 @@ function showInputFile (target) {
     }
   } else {
     if (target.matches('#input-cover-photo')) {
-      infoCoverPhoto.style.backgroundImage = "url('/public/pic/NoPicture')"
+      infoCoverPhoto.style.backgroundImage = "url('/pic/where_the_pic.png')"
     } else if (target.matches('#input-avatar')) {
-      infoAvatar.src = '/public/pic/NoPicture'
+      infoAvatar.src = '/pic/where_the_pic.png'
     }
   }
 }
