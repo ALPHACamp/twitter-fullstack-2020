@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-
+const helpers = require('../_helpers')
 const { User } = require('../models')
 
 const userController = {
@@ -61,6 +61,10 @@ const userController = {
         res.render('profile', { user })
       })
       .catch(err => next(err))
+  },
+
+  getUserSetting: (req, res, next) => {
+    return res.render('setting', { user: helpers.getUser(req)?.toJSON() })
   }
 }
 

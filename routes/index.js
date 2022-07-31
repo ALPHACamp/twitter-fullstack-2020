@@ -18,6 +18,7 @@ router.use('/admin', admin)
 router.use('/api', authenticatedUser, api)
 router.use('/followships', authenticatedUser, followships)
 
+router.get('/users/:id/setting', authenticatedUser, userController.getUserSetting)
 router.get('/users/:userId', authenticatedUser, userController.getProfile)
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
