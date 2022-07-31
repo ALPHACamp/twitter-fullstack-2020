@@ -23,21 +23,21 @@
 
 {{#ifCond role "admin"}}
   <div class="menu vh-100 col-2 position-sticky top-0" id="menu">
-    <nav class="nav flex-column justify-content-start align-items-start mt-2">
-      <a href="/admin/tweets"><i class="logo ms-2 mb-2"></i></a>
+    <nav class="nav d-flex flex-column justify-content-start align-items-start mt-2">
+      <a href="/admin/tweets"><i class="logo ms-5 mb-2"></i></a>
       <a
         href="/admin/tweets"
-        class="btn border-0 ms-1 d-flex align-items-center pe-0 mb-3 {{#if tweets}}text-brand{{/if}}"
+        class="btn border-0 d-flex align-items-center ms-5 mb-3 {{#if tweets}}text-brand{{/if}}"
       ><i class="{{#if tweets}}home{{else}}outline-home{{/if}} ms-2"></i><h5
           class="mb-0 mt-1 ms-3"
         >推文清單</h5></a>
         <a
         href="/admin/users"
-        class="btn border-0 ms-1 d-flex align-items-center pe-0 mb-3 {{#if users}}text-brand{{/if}}"
+        class="btn border-0 d-flex align-items-center ms-5 mb-3 {{#if users}}text-brand{{/if}}"
       ><i class="{{#if users}}user{{else}}outline-user{{/if}} ms-2"></i><h5
           class="mb-0 mt-1 ms-3"
         >使用者列表</h5></a>
-        <a class="mt-auto" href="/admin/logout">
+        <a class="position-absolute bottom-0 ms-5"  href="/admin/logout">
         <i class="default-logout"></i>
       </a>
     </nav>

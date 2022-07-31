@@ -1,7 +1,7 @@
 <div class="row justify-content-center h-100 w-100 overflow-auto">
 {{> side-menu}}
 <div class="middle col-6">
-<div class="card rounded-0 position-sticky top-0" style="height:74px; z-index: 1200;">
+<div class="card rounded-0 position-sticky top-0" style="height:74px; z-index: 1000;">
   <div class="card-body row align-items-center">
     <h4 class="col-3 mb-0 fw-bold">使用者列表</h4>
   </div>
@@ -10,7 +10,7 @@
 {{#each users}}
         <div class="col" style="border-radius:10px;">
           <div class="card border-0 bg-secondary bg-opacity-10">
-            <img src="{{this.cover_photo}}" onerror="this.onerror='null';this.src='/pic/default_cover_photo.png'" class="card-img-top" alt="cover photo" style="height: 140px;">
+            <img src="{{this.coverPhoto}}" onerror="this.onerror='null';this.src='/pic/default_cover_photo.png'" class="card-img-top" alt="cover photo" style="height: 140px; object-fit:cover">
             <img src="{{this.avatar}}" onerror="this.onerror='null';this.src='/pic/default_avatar.png'" alt="avatar" class="admin-user-avatar border rounded-circle border-4 border-white m-auto mt-n6">
             <div class="card-body d-flex flex-column">
               <h5 class="card-title align-self-center">{{this.name}}</h5>
