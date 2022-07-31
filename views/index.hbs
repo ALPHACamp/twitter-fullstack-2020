@@ -87,15 +87,13 @@
 
           <div class="d-inline-block mb-1" style="padding-left: 35px;">
             {{#if isLiked}}
-            {{!-- this.User.id => 要改成該篇推文的id --}}
-            <form action="/tweets/{{this.User.id}}/unlike" method="POST" class="d-inline-block" >
+            <form action="/tweets/{{this.id}}/unlike" method="POST" class="d-inline-block" >
               <button type="submit" style="all: unset; cursor: pointer;">
                 <i class="fa-solid fa-heart me-2" style="font-size: 16px"></i>
               </button>
             </form>
             {{else}}
-            {{!-- this.User.id => 要改成該篇推文的id --}}
-            <form action="/tweets/{{this.User.id}}/like" method="POST" class="d-inline-block" >
+            <form action="/tweets/{{this.id}}/like" method="POST" class="d-inline-block" >
               <button type="submit" style="all: unset; cursor: pointer;">
                 <i class="fa-regular fa-heart me-2" style="font-size: 16px"></i>
               </button>
