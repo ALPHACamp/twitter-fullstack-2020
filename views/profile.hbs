@@ -88,10 +88,12 @@
                 'Content-Type': 'multipart/form-data'
               }
             }).then(response => {
-              history.go(0)              
+              history.go(0)
+              {{!-- document.querySelector('#edit-btn').click() --}}
             })
-
           })
+
+
         </script>
 
         <!-- Modal -->
@@ -122,7 +124,7 @@
                     <label class="form-label" for="coverImage"><img class="icon" src="/images/camera.png" alt="camera"
                         style="margin-right: 36px;"></label>
                     <input class="form-control" type="file" class="form-control-file" id="coverImage"
-                      style="display:none" name="coverImage">
+                      style="display:none" name="coverImage" onchange="previewCoverImage()">
                     <img src="/images/ventor_close_2.png" alt="cancel">
                   </div>
 
@@ -135,7 +137,7 @@
                     <label class="form-label" for="image"><img class="icon" src="/images/camera.png" alt="camera"
                         style="margin-right: 36px;"></label>
                     <input class="form-control" type="file" class="form-control-file" id="image" style="display:none"
-                      name="image">
+                      name="image" onchange="previewAvatarImage()">
                   </div>
 
                   {{!-- 名稱 --}}
@@ -191,6 +193,34 @@
                       status.classList.remove('warn')
                       status.classList.toggle('focus')
                       document.querySelector('.element-helper span').innerText = ''
+                    }
+                  }
+                  function previewAvatarImage () {
+                    const avatarImageDOM = document.querySelector('#image')
+                    const avatarImagefile = avatarImageDOM.files
+                    console.log('previewImage')
+                    if (avatarImagefile.length > 0) {
+                      const fileReader = new FileReader()
+
+                      fileReader.onload = function (event) {
+                        document.getElementById('avatar').setAttribute('src', event.target.result)
+                      }
+
+                      fileReader.readAsDataURL(avatarImagefile[0])
+                    }
+                  }
+                  function previewCoverImage () {
+                    const coverImageDOM = document.querySelector('#coverImage')
+                    const coverImagefile = coverImageDOM.files
+                    console.log('previewImage')
+                    if (coverImagefile.length > 0) {
+                      const fileReader = new FileReader()
+
+                      fileReader.onload = function (event) {
+                        document.getElementById('cover').setAttribute('src', event.target.result)
+                      }
+
+                      fileReader.readAsDataURL(coverImagefile[0])
                     }
                   }
                 </script>
