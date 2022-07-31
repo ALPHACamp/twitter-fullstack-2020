@@ -47,11 +47,17 @@ editModal.addEventListener('submit', function (event) {
 
 inputName.addEventListener('input', e => {
   const lengthOfName = inputName.value.length
-  if (lengthOfName > 50) {
+  nameLength.innerHTML = `${lengthOfName}/50`
+  if (lengthOfName > 5) {
     inputName.style.color = "red"
+    nameLength.style.color = "red"
+    nameLength.classList.add('is-invalid')
+
+
 
   } else {
     inputName.style.color = "green"
+    nameLength.classList.remove('is-invalid')
 
   }
 })
