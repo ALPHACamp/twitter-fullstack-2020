@@ -1,18 +1,19 @@
 <div class="container d-flex justify-content-center bg-white">
   <div class="col-5">
-    <div class="d-flex justify-content-center row login-logo">
-      <img src="https://upload.cc/i1/2022/07/29/g7ZiA1.png" alt="AC icon" style="height: 40px; width: 70px; border-radius: 0px;">
-      <h2 class="h3 font-weight-normal mb-3 fw-bold">登入 Alphitter</h2>
-      <p class="text-center mt-3 mb-3" style="font-size:23px">登入 Alphitter</p>
+    <div class="mt-2 mb-5 text-center">
+      <img class="sign-icon" src="https://upload.cc/i1/2022/07/29/g7ZiA1.png" alt="AC icon"
+        style="height: 10%; width: 10%; border-radius: 0px;">
+      <h2 class="h3 font-weight-normal mt-3 mb-3 fw-bold">登入 Alphitter</h2>
     </div>
     <form action="/signin" method="POST" style='width: 100%;'>
-      <div class="form-floating">
-        <input type="text" class="form-control" id="account" name="account" placeholder="請輸入帳號" required>
-        <label for="account">帳號</label>
+      <div class="form-row" style="background: #F5F8FA;">
+        <label for="account" style="margin:0; padding-left:15px;">帳號</label>
+        <input type="text" class="form-control" id="account" name="account" placeholder="請輸入帳號"
+        style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;" required autofocus>
       </div>
-      <div class="form-floating mt-4">
-        <input type="password" class="form-control" id="password" name="password" placeholder="請輸入密碼" required>
-        <label for="password">密碼</label>
+      <div class="form-row mt-4" style="background: #F5F8FA;">
+        <label for="password" style="margin:0; padding-left:15px;">密碼</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="請輸入密碼" style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;" required>
       </div>
       <div class="mt-4 mb-4 text-center">
         <button class="btn col-12 n-button" style="color: #FFFFFF; background: #FF6600; border-radius: 50px;" type="submit">登入</button>

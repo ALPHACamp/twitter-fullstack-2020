@@ -1,32 +1,36 @@
-<div class="container mx-auto mt-5" style="max-width: 575px;">
-  <div class="mb-4 text-center">
-    <img class="sign-icon" src="https://upload.cc/i1/2022/07/29/g7ZiA1.png" alt="AC icon" style="height: 40px; width: 70px; border-radius: 0px;">
-    <h1 class="h3 font-weight-normal mb-3 fw-bold">建立你的帳號</h1>
+<div class="container mx-auto" style="max-width: 575px;">
+  <div class="mt-2 text-center">
+    <img class="sign-icon" src="https://upload.cc/i1/2022/07/29/g7ZiA1.png" alt="AC icon"
+      style="height: 10%; width: 10%; border-radius: 0px;">
+    <h1 class="h3 font-weight-normal mt-3 fw-bold">建立你的帳號</h1>
   </div>
-  <form class="form-signup" action="/signup" method="POST" style="width: 100%;">
-    <div class="form-row mb-3">
-      <label class="form-label" for="account">帳號</label>
-      <input type="text" id="name" name="account" class="form-control" placeholder="請輸入帳號" value="{{account}}" required
-        autofocus>
+  <form class="form-signup" action="/signup" method="POST" style="width: 100%; padding:10% 10% 4% 10%">
+    <div class="form-row mb-4" style="background: #F5F8FA;">
+      <label class="form-label" for="account" style="margin:0; padding-left:15px;">帳號</label>
+      <input type="text" id="name" name="account" class="form-control" placeholder="請輸入帳號"
+      value="{{account}}" style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;" required autofocus>
     </div>
-    <div class="form-row mb-3">
-      <label class="form-label" for="name">名稱</label>
-      <input type="text" id="name" name="name" class="form-control" placeholder="請輸入使用者名稱" value="{{name}}" required>
+    <div class="form-row mb-4" style="background: #F5F8FA;">
+      <label class="form-label" for="name" style="margin:0; padding-left:15px;">名稱</label>
+      <input type="text" id="name" name="name" class="form-control" placeholder="請輸入使用者名稱"
+      value="{{name}}" style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;" required>
     </div>
-    <div class="form-row mb-3">
-      <label class="form-label" for="email">Email</label>
-      <input type="email" id="email" name="email" class="form-control" placeholder="請輸入Email" value="{{email}}" required>
+    <div class="form-row mb-4" style="background: #F5F8FA;">
+      <label class="form-label" for="email" style="margin:0; padding-left:15px;">Email</label>
+      <input type="email" id="email" name="email" class="form-control" placeholder="請輸入Email"
+      value="{{email}}" style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;" required>
     </div>
-    <div class="form-row mb-3">
-      <label class="form-label" for="password">密碼</label>
-      <input type="password" id="password" name="password" class="form-control" placeholder="請設定密碼" required>
+    <div class="form-row mb-4" style="background: #F5F8FA;">
+      <label class="form-label" for="password" style="margin:0; padding-left:15px;">密碼</label>
+      <input type="password" id="password" name="password" class="form-control" placeholder="請設定密碼"
+      style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;" required>
     </div>
-    <div class="form-row mb-3">
-      <label class="form-label" for="confirmPassword">密碼確認</label>
-      <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="請再次輸入密碼"
-        required>
+    <div class="form-row mb-4" style="background: #F5F8FA;">
+      <label class="form-label" for="checkPassword" style="margin:0; padding-left:15px;">密碼確認</label>
+      <input type="password" id="checkPassword" name="checkPassword" class="form-control" placeholder="請再次輸入密碼" style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;" required>
     </div>
-    <button class="btn col-12 mt-4 mb-3" type="submit" style="color: #FFFFFF; background: #FF6600; border-radius: 50px;">註冊</button>
+    <button class="btn col-12" type="submit"
+      style="color: #FFFFFF; background: #FF6600; border-radius: 50px;">註冊</button>
   </form>
   <div class="mb-5 text-center cancel-button">
     <p><a href="/">取消</a></p>

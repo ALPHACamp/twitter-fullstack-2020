@@ -1,77 +1,54 @@
 <div class="wrapper d-flex">
 
-  <!-- Sidebar -->
-  <nav id="left-sidebar" style="display:flex; align-items:stretch; width:15%;height:1200px; margin-left:130px;">
-    <ul class="list-unstyled" style="position:fixed ">
-      <img class="mt-2" src="https://upload.cc/i1/2022/07/29/g7ZiA1.png" alt="AC icon"
-        style="height: 40px; width: 70px; border-radius: 0px;">
-      <li style=" margin-bottom: 20px;">
-        <h6><a href="/tweets" style="text-decoration: none; color: inherit;"><i class="fa-solid fa-house"></i> 首頁</a>
-        </h6>
-      </li>
-      <li style=" margin-bottom: 20px;">
-        <h6><a href="/users/{{user.id}}" style="text-decoration: none; color: inherit;"><i
-              class="fa-solid fa-user-astronaut"></i> 個人資料</a></h6>
-      </li>
-      <li style=" margin-bottom: 20px;">
-        <h6><a href="/users/{{user.id}}/setting" style="text-decoration: none; color: inherit;"><i
-              class="fa-solid fa-gear"></i> 設定</a></h6>
-      </li>
-      {{!-- todo: 跳出modal --}}
-      <li style=" margin-bottom: 20px;">
-        <h6>
-          <a href="/tweets/modal" class="btn"
-            style="color: #FFFFFF; background: #FF6600; border-radius: 50px;">推文</a>
-        </h6>
-      </li>
-  </nav>
+  {{>left-content}}
 
   <div class="container"
-    style="margin:0px; padding:0px;  border-left: 2px solid rgb(209, 203, 203); border-right: 2px solid rgb(209, 203, 203); width:50%;">
+    style="margin:0px; padding:0px;  border-left: 1px solid rgb(209, 203, 203); border-right: 1px solid rgb(209, 203, 203); width:90%;">
     <div>
-      <h4 class="fw-bold" style="padding:15px; border-bottom:2px solid rgb(209, 203, 203); margin-bottom: 0rem;">
+      <h4 class="fw-bold" style="padding:15px; border-bottom:1px solid rgb(209, 203, 203); margin-bottom: 0rem;">
         <a href="/tweets" style="text-decoration: none; color: inherit;">帳戶設定</a>
       </h4>
-      <div class="card p-3" style="border-radius: 0%;">
-        <div class="col col-10" style="display: contents;">
-          <div class=' text-center login-container mt-3'>
+      <div class="card p-3" style="border: 0; border-radius: 0%;">
+        <div class="col" style="display: contents;">
+          <div class="test-start">
             <form action="/users/{{ user.id }}/setting?_method=PUT" method="POST" style='width: 100%;'>
-              <div class="form-group form-floating">
+              <div class="form-row mb-3" style="background: #F5F8FA;">
+                <label for="account" style="margin:0; padding-left:15px;">帳號</label>
                 <input type="text" name="account" class="form-control font-weight-bold" placeholder="帳號"
                   value="{{ user.account }}"
-                  style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+                  style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;"
                   id="account" required autofocus>
-                <label for="account">帳號</label>
               </div>
-              <div class="form-group mt-4 form-floating">
+              <div class="form-row mb-3" style="background: #F5F8FA;">
+                <label for="name" style="margin:0; padding-left:15px;">名稱</label>
                 <input type="text" name="name" class="form-control font-weight-bold" placeholder="名稱" maxlength="50"
                   value="{{ user.name }}"
-                  style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+                  style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;"
                   id="name" required autofocus>
-                <label for="name">名稱</label>
               </div>
-              <div class="form-group mt-4 form-floating">
+              <div class="form-row mb-3" style="background: #F5F8FA;">
+                <label for="email" style="margin:0; padding-left:15px;">Email</label>
                 <input type="email" name="email" class="form-control font-weight-bold" placeholder="Email"
                   value="{{ user.email }}"
-                  style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+                  style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;"
                   id="email" required autofocus>
-                <label for="email">Email</label>
               </div>
-              <div class="form-group mt-4 form-floating">
+              <div class="form-row mb-3" style="background: #F5F8FA;">
+                <label for="password" style="margin:0; padding-left:15px;">密碼</label>
                 <input type="password" name="password" class="form-control font-weight-bold" placeholder="請設定密碼"
-                  style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
+                  style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;"
                   id="password" required>
-                <label for="password">密碼</label>
               </div>
-              <div class="form-group mt-4 form-floating">
-                <input type="password" name="confirmPassword" class="form-control font-weight-bold"
+              <div class="form-row" style="background: #F5F8FA;">
+                <label for="checkPassword" style="margin:0; padding-left:15px;">密碼再確認</label>
+                <input type="password" name="checkPassword" class="form-control font-weight-bold"
                   placeholder="請再次輸入密碼"
-                  style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;"
-                  id="confirmPassword" required>
-                <label for="confirmPassword">密碼再確認</label>
+                  style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;"
+                  id="checkPassword" required>
               </div>
               <div class="mb-4 text-end">
-                <button class="btn btn-block mt-4 tweet_btn" style="color: #FFFFFF; background: #FF6600; border-radius: 50px;" type="submit">儲存</button>
+                <button class="btn btn-block mt-4 tweet_btn"
+                  style="color: #FFFFFF; background: #FF6600; border-radius: 50px;" type="submit">儲存</button>
               </div>
             </form>
           </div>
@@ -79,4 +56,8 @@
       </div>
     </div>
   </div>
+
+  <nav id="right-sidebar" style="display:flex; align-items:stretch; width:30%; margin-top:16px; margin-left:24px;">
+  </nav>
+
 </div>

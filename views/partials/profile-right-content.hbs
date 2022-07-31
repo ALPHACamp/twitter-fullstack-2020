@@ -1,0 +1,41 @@
+<nav style="display:flex; align-items:stretch; width:30%; margin:1% 0 0 2%;">
+  <div class="card text-bg-light mb-3" style="width: 20%; position:fixed; background: #FAFAFB; border-radius: 16px;">
+    <div class="card-header text-start" style="background: #FAFAFB; padding: 6% 0 0 6%; border-radius: 16px 16px 0 0;">
+      <P class="fw-bold" style="font-family: 'Noto Sans TC'; font-size: 24px; line-height: 26px;">推薦跟隨</P>
+    </div>
+    <div class="card-body" style="padding: 5px 0 0 0">
+      <ul style="padding: 0; list-style: none;">
+        {{#each users}}
+        <li>
+          <div class="d-flex align-items-center">
+            <a href="/users/{{this.id}}/tweets" style="text-decoration:none;">
+              <div class="d-flex">
+                <img src="{{#if this.avatar}}{{this.avatar}}{{else}}{{/if}}" alt=""
+                  style="width: 10%; hight: 10%; border-radius: 50%;">
+                <div class="d-flex flex-column">
+                  <p style="margin: 0; font-family: 'Noto Sans TC'; font-style: normal; font-weight: 700;font-size: 20px; color: #44444F;" class="text-dark position-left-text">{{this.name}}</p>
+                  <p style="margin: 0; font-family: 'Noto Sans TC'; font-style: normal; font-weight: 500; font-size: 15px; color: #6C757D;" class="text-black-50 position-left-text">@{{this.account}}</p>
+                </div>
+                {{#if this.isFollowed}}
+                <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+                  <button type="submit" class="btn btn-orange rounded-pill mt-1 user-follow-bottom" style=" background-color: #FF6600;color: #FFF;border:1px solid #FF6600;"
+                  <span>正在追隨</span>
+                  </button>
+                </form>
+                {{else}}
+                <form action="/followships/{{this.id}}" method="POST">
+                  <button type="submit" class="btn btn-white rounded-pill mt-1 user-follow-bottom" name="id"
+                    value={{this.id}} style=" background-color: #FFFFFF;color: #FF6600;border:1px solid #FF6600;">
+                    <span>追隨</span>
+                  </button>
+                </form>
+                {{/if}}
+              </div>
+            </a>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</nav>

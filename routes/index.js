@@ -16,7 +16,7 @@ router.post('/signup', userController.signUp)
 
 router.get('/users/:id/setting', authenticated, userController.getSetting)
 router.put('/users/:id/setting', authenticated, userController.putSetting)
-router.get('/users', authenticated, userController.getUsers)
+router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 
 router.post('/followships/:userId', authenticated, followshipController.addFollowing)
 router.delete('/followships/:userId', authenticated, followshipController.removeFollowing)

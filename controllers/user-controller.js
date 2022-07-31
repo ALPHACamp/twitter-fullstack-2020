@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
 const imgur = require('imgur')
-const { User } = require('../models')
+const { User, Tweet, Reply, Followship, Like } = require('../models')
+const sequelize = require('sequelize')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 imgur.setClientId(IMGUR_CLIENT_ID)
 
@@ -22,10 +23,10 @@ const userController = {
     res.render('signup')
   },
   signUp: (req, res, next) => {
-    const { account, name, email, password, confirmPassword } = req.body
+    const { account, name, email, password, checkPassword } = req.body
 
-    if (!name || !email || !password || !confirmPassword || !account) throw new Error('所有欄位都是必填。')
-    if (password !== confirmPassword) throw new Error('密碼 或 帳號 不正確！')
+    if (!name || !email || !password || !checkPassword || !account) throw new Error('所有欄位都是必填。')
+    if (password !== checkPassword) throw new Error('密碼 或 帳號 不正確！')
     if (name.length > 50) throw new Error('名稱上限為50字！')
 
     return Promise.all([
@@ -52,8 +53,57 @@ const userController = {
       })
       .catch(err => next(err))
   },
-  getUsers: (req, res) => {
-    return res.render('users')
+  getUserTweets: (req, res, next) => {
+    const currentUser = helpers.getUser(req)
+    const id = currentUser.id
+    return Promise.all([
+      User.findByPk(id, {
+        include: [
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' }
+        ]
+      }),
+      Tweet.findAll({
+        where: { userId: id },
+        include: [Like, Reply],
+        order: [['createdAt', 'desc']],
+        nest: true
+      }),
+      Followship.findAll({
+        include: User,
+        group: 'followingId',
+        attributes: {
+          include: [[sequelize.fn('COUNT', sequelize.col('following_id')), 'count']]
+        },
+        order: [[sequelize.literal('count'), 'DESC']]
+      })
+    ])
+      .then(([targetUser, tweets, followship]) => {
+        if (!targetUser) throw new Error('使用者不存在！')
+
+        currentUser.isFollowed = currentUser.Followings.some(u => u.id === targetUser.id)
+
+        const users = followship
+          .map(data => ({
+            ...data.User.toJSON(),
+            isFollowed: currentUser.Followings.some(u => u.id === data.followingId)
+          }))
+          .slice(0, 10)
+
+        const tweetsData = tweets
+          .map(t => ({
+            ...t.toJSON(),
+            likedCount: t.Likes.length,
+            repliedCount: t.Replies.length,
+            isLiked: t.Likes.some(like => like.UserId === currentUser.id)
+          }))
+
+        console.log(targetUser.toJSON())
+        console.log(currentUser)
+        res.locals.tweetsLength = tweets.length
+        res.render('user', { targetUser: targetUser.toJSON(), tweets: tweetsData, currentUser, users })
+      })
+      .catch(err => next(err))
   },
   getSetting: (req, res, next) => {
     const currentUserId = helpers.getUser(req) && helpers.getUser(req).id
@@ -73,10 +123,10 @@ const userController = {
   },
   putSetting: (req, res, next) => {
     const currentUser = helpers.getUser(req)
-    const { account, name, email, password, confirmPassword } = req.body
+    const { account, name, email, password, checkPassword } = req.body
 
-    if (!account || !name || !email || !password || !confirmPassword) throw new Error('所有欄位都是必填！')
-    if (password !== confirmPassword) throw new Error('密碼與確認密碼不相符！')
+    if (!account || !name || !email || !password || !checkPassword) throw new Error('所有欄位都是必填！')
+    if (password !== checkPassword) throw new Error('密碼與確認密碼不相符！')
     if (name.length > 50) throw new Error('字數超出上限！')
 
     return Promise.all([
@@ -105,7 +155,7 @@ const userController = {
       })
       .then(() => {
         req.flash('success_messages', '個人資料修改成功！')
-        return res.redirect('/tweets')
+        return res.redirect(`/users/${currentUser.id}/tweets`)
       })
       .catch(err => next(err))
   }

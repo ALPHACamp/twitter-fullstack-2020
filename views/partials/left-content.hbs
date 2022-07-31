@@ -1,0 +1,47 @@
+<!-- left-content -->
+<nav id="left-sidebar" style="display:flex; align-items:stretch; width: 30%; height: 700px; margin: 0 3% 0 0;">
+  <ul class="list-unstyled" style="position:fixed; width: 14%;">
+    <img class="mt-2 mb-3" src="https://upload.cc/i1/2022/07/29/g7ZiA1.png" alt="AC icon"
+      style="height: 20%; width: 20%; border-radius: 0px;">
+    <li style="margin-bottom: 20%;">
+      <h6>
+        <a href="/tweets" style="text-decoration: none; color: inherit;">
+          <img src="https://upload.cc/i1/2022/07/29/YZQVxJ.png" alt="" style="height:10%; width:10%; margin-right:3%;">
+          首頁
+        </a>
+      </h6>
+    </li>
+    <li style="margin-bottom: 20%;">
+      <h6>
+        <a href="/users/{{user.id}}/tweets" style="text-decoration: none; color: inherit;">
+          <img src="https://upload.cc/i1/2022/07/29/za0M5r.png" alt="" style="height:10%; width:10%; margin-right:3%;">
+          個人資料
+        </a>
+      </h6>
+    </li>
+    <li style="margin-bottom: 20%;">
+      <h6>
+        <a href="/users/{{user.id}}/setting" style="text-decoration: none; color: inherit;">
+          <img src="https://upload.cc/i1/2022/07/29/AQiCy4.png" alt="" style="height:10%; width:10%; margin-right:3%;">
+          設定
+        </a>
+      </h6>
+    </li>
+    {{!-- todo: 跳出modal --}}
+    <li style="margin-bottom: 90%;">
+      <h6>
+        <a href="/tweets/modal" class="btn" style="width: 178px; height: 46px; color: #FFFFFF; background: #FF6600; border-radius: 50px;">
+          推文
+        </a>
+      </h6>
+    </li>
+    <li>
+      <a style="text-decoration:none; "href="/logout">
+        <p style="font-family: 'Noto Sans TC'; font-style: normal; font-weight: 700;font-size: 18px; color: #44444F;">
+          <img src="https://upload.cc/i1/2022/07/29/i8J0Gd.png" alt="" style="height: 10%; width: 10%; margin-right: 4%;">
+          登出
+        </p>
+      </a>
+    </li>
+  </ul>
+</nav>
