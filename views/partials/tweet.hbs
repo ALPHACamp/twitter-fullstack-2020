@@ -4,7 +4,7 @@
   <div class="tweet-card" onclick="window.location='/tweets/{{this.id}}/replies'">
     {{/ifCond}}
     <a href="/users/{{this.User.id}}/tweets">
-      <img class="me-auto rounded-circle" src="{{this.User.avatar}}" alt="avatar">
+      <img class="me-auto rounded-circle" src="{{this.User.avatar}}" alt="avatar" style="width:50px;height:50px">
     </a>
     <a class="tweet-card-name" href="/users/{{this.User.id}}/tweets">
       <span class="font-name">{{this.User.name}}</span>

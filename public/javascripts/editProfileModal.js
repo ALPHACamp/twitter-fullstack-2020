@@ -9,6 +9,7 @@ const nameLength = document.querySelector('#nameLength')
 const introLength = document.querySelector('#introLength')
 const avatarValue = document.querySelector('#avatarValue')
 const coverValue = document.querySelector('#coverValue')
+const saveBtn = document.querySelector('#profileModalBtn')
 
 editButton.addEventListener('click', function (event) {
   const target = event.target
@@ -45,19 +46,48 @@ editModal.addEventListener('submit', function (event) {
     .catch(err => console.log(err))
 })
 
-inputName.addEventListener('input', e => {
+editModal.addEventListener('input', e => {
   const lengthOfName = inputName.value.length
+  const lengthOfIntro = inputIntroduction.value.length
   nameLength.innerHTML = `${lengthOfName}/50`
-  if (lengthOfName > 5) {
+  introLength.innerHTML = `${lengthOfIntro}/160`
+  if (lengthOfName > 50) {
     inputName.style.color = "red"
     nameLength.style.color = "red"
     nameLength.classList.add('is-invalid')
-
-
-
   } else {
     inputName.style.color = "green"
+    nameLength.style.color = "#696974"
     nameLength.classList.remove('is-invalid')
+  }
+  if (lengthOfIntro > 160) {
+    inputIntroduction.style.color = "red"
+    introLength.style.color = "red"
+    introLength.classList.add('is-invalid')
+  } else {
+    inputIntroduction.style.color = "green"
+    introLength.style.color = "#696974"
+    introLength.classList.remove('is-invalid')
+  }
 
+  if (lengthOfName > 50 || lengthOfIntro > 160) {
+    saveBtn.disabled = true
+  } else {
+    saveBtn.disabled = false
   }
 })
+
+inputAvatar.onchange = event => {
+  const [file] = inputAvatar.files
+  if (file) {
+    avatarValue.src = URL.createObjectURL(file)
+  }
+}
+
+inputCover.onchange = event => {
+  const [file] = inputCover.files
+  if (file) {
+    coverValue.src = URL.createObjectURL(file)
+    console.log(coverValue.src)
+  }
+}
