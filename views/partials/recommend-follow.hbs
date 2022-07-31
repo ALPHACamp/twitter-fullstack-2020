@@ -14,9 +14,9 @@
           <p class="list-user-account ellipsis fw-normal fs-6 text-start mb-0">@{{this.account}}</p>
         </div>
         {{#if this.isFollowed}}
-        <button class="following-btn follow-item btn btn-brand rounded-pill me-3 mt-3" data-userid="{{this.id}}" type="submit">正在跟隨</button>
+        <button class="following-btn follow-item btn btn-brand rounded-pill mt-3" data-userid="{{this.id}}" data-useraccount="{{this.account}}" type="submit">正在跟隨</button>
         {{else}}
-        <button class="follow-btn follow-item btn btn-brand rounded-pill me-3 mt-3" data-userid="{{this.id}}" type="submit">跟隨</button>
+        <button class="follow-btn follow-item btn btn-brand rounded-pill mt-3" data-userid="{{this.id}}" data-useraccount="{{this.account}}" type="submit">跟隨</button>
         {{/if}}
       </div>
       {{/if}}

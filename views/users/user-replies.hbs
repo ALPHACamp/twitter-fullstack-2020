@@ -24,11 +24,7 @@
               編輯個人資料
             </button>
             {{else}}
-              {{#if profileUser.isFollowed}}
-                <button id="follow" class="btn btn-brand rounded-pill me-3 mt-3">正在跟隨</button>
-              {{else}}
-                <button id="follow" class="btn btn-outline-brand rounded-pill me-3 mt-3">跟隨</button>
-              {{/if}}
+              {{> user-profil-follow-btn}}
           {{/ifCond}}
         </div>
       </div>
