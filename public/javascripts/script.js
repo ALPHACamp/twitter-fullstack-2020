@@ -85,6 +85,7 @@ async function postInfoForm (target) {
     const infoAvatar = document.querySelector('#profile-avatar')
     const infoName = document.querySelector('#profile-name')
     const infoIntro = document.querySelector('#profile-intro')
+    const avatars = document.querySelectorAll('.tweet-avatar')
     // 送出表單
     // eslint-disable-next-line no-undef
     const res = await axios({
@@ -100,6 +101,11 @@ async function postInfoForm (target) {
     infoAvatar.src = userInfo.avatar
     infoName.textContent = userInfo.name
     infoIntro.textContent = userInfo.introduction
+    for (let i = 0; i < avatars.length; i++) {
+      if (avatars[i].dataset.avatarUid === target.dataset.userid) {
+        avatars[i].src = userInfo.avatar
+      }
+    }
 
     target.dataset.bsDismiss = ''
   } catch (err) {

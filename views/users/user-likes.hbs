@@ -31,9 +31,9 @@
         </div>
       </div>
       <div class="text-start m-3 ms-3">
-        <p class="m-0 fw-bold fs-4">{{profileUser.name}}</p>
-        <p class="mb-2" style="color: #6C757D;">@{{profileUser.account}}</p>
-        <p class="mb-2" id="profile-intro">{{profileUser.introduction}}</p>
+        <p class="m-0 fw-bold fs-4" id="profile-name">{{profileUser.name}}</p>
+        <p class="mb-2" style="color: #6C757D;" id="profile-account">@{{profileUser.account}}</p>
+        <p class="mb-2" id="profile-intro" id="profile-intro">{{profileUser.introduction}}</p>
         <div>
           <a class="text-decoration-none" href="/users/{{profileUser.id}}/followings"><span
               class="text-black">{{profileUser.Followings.length}} 個</span><span style="color: #6C757D;">跟隨中</span></a>
@@ -53,8 +53,8 @@
           <div class="d-flex flex-nowrap ms-3 mt-3">
             <div class="avatar-container me-1">
               <a href="/users/{{this.Tweet.User.id}}/tweets">
-                <img src="{{this.Tweet.User.avatar}}" alt="" class="avatar-sm rounded-pill"
-                  id="tweet-avatar-{{this.Tweet.User.id}}">
+                <img src="{{this.Tweet.User.avatar}}" alt="" class="avatar-sm rounded-pill tweet-avatar"
+                  id="tweet-avatar-{{this.Tweet.User.id}}" data-avatar-uid="{{this.Tweet.User.id}}">
               </a>
             </div>
             <div class="user-description-container d-flex flex-column text-start ms-1 me-3 w-100">
