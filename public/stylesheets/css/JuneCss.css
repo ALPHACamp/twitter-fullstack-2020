@@ -60,6 +60,14 @@
   bottom: 35.9%;
   border: none;
 }
+#signup-region .input input::-moz-placeholder, #signin-region .input input::-moz-placeholder {
+  color: #B5B5BE;
+  font-size: 16px;
+}
+#signup-region .input input:-ms-input-placeholder, #signin-region .input input:-ms-input-placeholder {
+  color: #B5B5BE;
+  font-size: 16px;
+}
 #signup-region .input input::placeholder, #signin-region .input input::placeholder {
   color: #B5B5BE;
   font-size: 16px;
@@ -369,6 +377,9 @@
 }
 #profile-region #profile-middle .user-info #edit-profile-modal .modal-body {
   height: 100%;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .camera:hover {
+  cursor: pointer;
 }
 #profile-region #profile-middle .user-info #edit-profile-modal .modal-body .cover {
   width: 100%;
