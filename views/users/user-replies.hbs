@@ -3,42 +3,41 @@
   {{!-- 中央部分 --}}
   <div class="center-part border" id="center-part">
     <div class="border-bottom">
-      <div class="user-tweets-header text-start ms-3 my-2">
+      <div class="user-tweets-header text-start ms-3 mt-4 mb-3 d-flex align-items-center">
         <div class='d-flex flex-row align-items-center'>
-          <a href="/tweets"><i class="back"></i></a>
-          <div class="d-flex flex-column ms-3">
-            <span class="fw-bold fs-5">{{currentUser.name}}</span>
-            <span class="fs-6" style="color: #6C757D;">{{tweets.length}} 推文</span>
+          <a class="text-decoration-none" href="javascript:history.back(-1)"><i class="back"></i></a>
+          <div class="index-name-wrapper ms-3">
+            <h4 class="text-black fw-bold index-user-name mb-0">{{profileUser.name}}</h4>
+            <span class="count-tweet text-black-50 fw-bold fs-6" style="color: #6C757D;">{{profileUser.Tweets.length}} 推文</span>
           </div>
         </div>
       </div>
     </div>
     <div class="scroll-part scrollbar">
       <div class="banner position-relative">
-        <img src='{{profileUser.coverPhoto}}' width='100%' height='20%'/>
-        <img class="profile-avatar border border-5 border-white rounded-circle" src='{{profileUser.avatar}}'/>
+        <img src='{{profileUser.coverPhoto}}' width='100%' height='20%' />
+        <img class="profile-avatar border border-5 border-white rounded-circle" src='{{profileUser.avatar}}' />
         <div class="buttons d-flex justify-content-end align-items-center">
           {{#ifCond currentUser.id profileUser.id}}
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-outline-brand rounded-pill me-3 mt-3">
+            <button type="button" class="btn btn-outline-brand rounded-pill me-3 mt-3" data-bs-toggle="modal" data-bs-target="#edit-info" id="show-info-modal" data-userid="{{currentUser.id}}">
               編輯個人資料
             </button>
             {{else}}
-              {{#if profileUser.isFollowed}}
-                <button id="follow" class="btn btn-brand rounded-pill me-3 mt-3">正在跟隨</button>
-              {{else}}
-                <button id="follow" class="btn btn-outline-brand rounded-pill me-3 mt-3">跟隨</button>
-              {{/if}}
+              {{> user-profil-follow-btn}}
           {{/ifCond}}
         </div>
       </div>
       <div class="text-start m-3 ms-3">
         <p class="m-0 fw-bold fs-4">{{profileUser.name}}</p>
-        <p class="mb-2"  style="color: #6C757D;">@{{profileUser.account}}</p>
+        <p class="mb-2" style="color: #6C757D;">@{{profileUser.account}}</p>
         <p class="mb-2">{{profileUser.introduction}}</p>
         <div>
-          <span>{{profileUser.Followings.length}} 個</span><span  style="color: #6C757D;">跟隨中</span>
-          <span class="ms-3">{{profileUser.Followers.length}} 個</span><span style="color: #6C757D;">跟隨者</span>
+          <a class="text-decoration-none" href="/users/{{profileUser.id}}/followings"><span
+              class="text-black">{{profileUser.Followings.length}} 個</span><span style="color: #6C757D;">跟隨中</span></a>
+          <a class="text-decoration-none" href="/users/{{profileUser.id}}/followers"><span
+              class="ms-3 text-black">{{profileUser.Followers.length}} 位</span><span
+              style="color: #6C757D;">跟隨者</span></a>
         </div>
       </div>
       <div class="my-3">
@@ -46,7 +45,8 @@
       </div>
       {{!-- 推文卡片 --}}
       <div class="tweet-container">
-        {{#each tweets}}
+
+        {{#each repliedTweets}}
         <div class="tweet-card border-bottom border-1">
           <div class="d-flex flex-nowrap ms-3 mt-3">
             <div class="avatar-container me-1">
@@ -64,32 +64,17 @@
                   <span class="user-account fw-normal fs-6"
                     id="tweet-account-{{this.User.id}}">@{{this.User.account}}</span>
                 </a>
-                <span class="fw-normal fs-6" id="tweet-time-{{this.id}}">・{{relativeTimeFromNow this.createdAt}}</span>
+                <span class="fw-normal fs-6" id="tweet-time-{{this.Tweet.id}}">・{{relativeTimeFromNow this.createdAt}}</span>
+                <div class="fs-6 my-1">
+                  <span style="color: #657786;">回覆</span>
+                  <a href='/users/{{this.Tweet.User.id}}/tweets' style="color: #FF6600;">@{{this.Tweet.User.account}}</a>
+                </div>
               </div>
-              <a href="/tweets/{{this.id}}/replies" class="description-link">
-                <div class="description me-4" id="description-{{this.id}}">
-                  <p class="description-content">{{this.description}}</p>
+              <a href="/tweets/{{this.TweetId}}/replies" class="description-link">
+                <div class="description me-4" id="description-{{this.TweetId}}">
+                  <p class="description-content">{{this.comment}}</p>
                 </div>
               </a>
-              <div class="description-like-btn-container mb-3">
-                <button class="reply-btn d-flex align-items-center" data-bs-toggle="modal"
-                  data-bs-target="#reply-modal-{{this.id}}" data-tweetid="{{this.id}}" data-userid="{{this.User.id}}">
-                  <i class="reply"></i>
-                  <span class="reply-count ms-2">{{this.Replies.length}}</span>
-                </button>
-                {{#if this.isLiked}}
-                <button type="button" class="d-flex align-items-center like-submit-btn liked"
-                  data-tweetid="{{this.id}}">
-                  <i class="like"></i>
-                  <span class="like-count ms-2">{{ this.Likes.length}}</span>
-                </button>
-                {{else}}
-                <button type="button" class="d-flex align-items-center like-submit-btn" data-tweetid="{{this.id}}">
-                  <i class="like outline-like"></i>
-                  <span class="like-count ms-2">{{ this.Likes.length}}</span>
-                </button>
-                {{/if}}
-              </div>
             </div>
           </div>
         </div>
@@ -102,3 +87,4 @@
   {{!-- 中央部分結束 --}}
   {{> recommend-follow }}
 </div>
+{{> edit-info}}

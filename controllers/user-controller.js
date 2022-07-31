@@ -101,7 +101,7 @@ const userController = {
           .Followings.some(item => item.id === user.id)
         user.isSelf = user.id === userId
       })
-      const topUser = getTopUser(currentUser)
+      const topUser = await getTopUser(currentUser)
       return res.render('users/user-followings', { queryUser, role, currentUser, topUser })
     } catch (err) {
       next(err)
@@ -149,37 +149,33 @@ const userController = {
       const topUser = await getTopUser(currentUser)
       let profileUser = await User.findByPk(userId, {
         include: [
-          { model: User, as: 'Followers', attributes: ['id'] },
-          { model: User, as: 'Followings', attributes: ['id'] }
-        ]
+          {
+            model: Tweet,
+            include: [
+              { model: Like, attributes: ['id'] },
+              { model: Reply, attributes: ['id'] },
+              { model: User, attributes: ['avatar'] },
+            ]
+          },
+          { model: User, attributes: ['id'], as: 'Followers' },
+          { model: User, attributes: ['id'], as: 'Followings' }
+        ],
+        order: [[Tweet, 'createdAt', 'DESC']]
       })
       if (!profileUser) throw new Error("This user didn't exist!")
       profileUser = profileUser.toJSON()
       if (currentUser.Followings.some(fr => fr.id === profileUser.id)) {
         profileUser.isFollowed = true
       }
-      const userTweets = await Tweet.findAll({
-        where: { user_id: userId },
-        order: [['createdAt', 'DESC']],
-        attributes: ['id', 'description', 'createdAt'],
-        include: [
-          { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
-          { model: Reply, attributes: ['id'] },
-          { model: Like, attributes: ['id'] }
-        ]
-      })
-      const likedTweetsId = req.user?.Likes
-        ? currentUser.Likes.map(lt => lt.TweetId)
-        : []
-      const data = userTweets.map(tweets => ({
-        ...tweets.toJSON(),
+      const likedTweetsId = profileUser?.Likes ? currentUser.Likes.map(lt => lt.TweetId) : []
+      profileUser.Tweets = profileUser.Tweets.map(tweets => ({
+        ...tweets,
         isLiked: likedTweetsId.includes(tweets.id)
       }))
       res.render('users/user-tweets', {
-        tweets: data,
+        profileUser,
         role: currentUser.role,
         currentUser,
-        profileUser,
         topUser,
         tab: 'tweets'
       })
@@ -194,37 +190,49 @@ const userController = {
       const topUser = await getTopUser(currentUser)
       let profileUser = await User.findByPk(userId, {
         include: [
-          { model: User, as: 'Followers', attributes: ['id'] },
-          { model: User, as: 'Followings', attributes: ['id'] }
+          {
+            model: Tweet,
+            include: [
+              { model: Like },
+              { model: Reply, attributes: ['id'] }
+            ]
+          },
+          { model: User, attributes: ['id'], as: 'Followers' },
+          { model: User, attributes: ['id'], as: 'Followings' }
         ]
       })
       if (!profileUser) throw new Error("This user didn't exist!")
       profileUser = profileUser.toJSON()
-      if (profileUser.Followers.map(fr => fr.id === currentUser.id)) {
+      if (currentUser.Followings.some(fr => fr.id === profileUser.id)) {
         profileUser.isFollowed = true
       }
-      const userTweets = await Tweet.findAll({
-        where: { user_id: userId },
-        order: [['createdAt', 'DESC']],
-        attributes: ['id', 'description', 'createdAt'],
+      const likedTweets = await Like.findAll({
+        where: { UserId: userId },
+        attributes: ['id', 'createdAt'],
         include: [
-          { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
-          { model: Reply, attributes: ['id'] },
-          { model: Like, attributes: ['id'] }
-        ]
+          {
+            model: Tweet,
+            attributes: ['id', 'description', 'createdAt'],
+            include: [
+              { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
+              { model: Reply, attributes: ['id'] },
+              { model: Like, attributes: ['id'] }
+            ]
+          }
+        ],
+        order: [['createdAt', 'DESC']]
       })
-      const likedTweetsId = req.user?.Likes
-        ? currentUser.Likes.map(lt => lt.TweetId)
-        : []
-      const data = userTweets.map(tweets => ({
-        ...tweets.toJSON(),
-        isLiked: likedTweetsId.includes(tweets.id)
-      }))
-      res.render('users/user-tweets', {
-        tweets: data,
+      likedTweets.forEach(function (tweet, index) {
+        this[index] = {
+          ...tweet.toJSON()
+        }
+      }, likedTweets)
+      console.log(likedTweets)
+      res.render('users/user-likes', {
+        likedTweets,
+        profileUser,
         role: currentUser.role,
         currentUser,
-        profileUser,
         topUser,
         tab: 'likes'
       })
@@ -239,34 +247,42 @@ const userController = {
       const topUser = await getTopUser(currentUser)
       let profileUser = await User.findByPk(userId, {
         include: [
-          { model: User, as: 'Followers', attributes: ['id'] },
-          { model: User, as: 'Followings', attributes: ['id'] }
+          {
+            model: Tweet,
+            attributes: ['id'],
+            include: [
+              { model: Like, attributes: ['id'] },
+              { model: Reply, attributes: ['id'] }
+            ]
+          },
+          { model: User, attributes: ['id'], as: 'Followers' },
+          { model: User, attributes: ['id'], as: 'Followings' }
         ]
       })
       if (!profileUser) throw new Error("This user didn't exist!")
       profileUser = profileUser.toJSON()
-      if (profileUser.Followers.map(fr => fr.id === currentUser.id)) {
+      if (currentUser.Followings.some(fr => fr.id === profileUser.id)) {
         profileUser.isFollowed = true
       }
-      const userTweets = await Tweet.findAll({
-        where: { user_id: userId },
-        order: [['createdAt', 'DESC']],
-        attributes: ['id', 'description', 'createdAt'],
+      const repliedTweets = await Reply.findAll({
+        where: { UserId: userId },
         include: [
-          { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
-          { model: Reply, attributes: ['id'] },
-          { model: Like, attributes: ['id'] }
-        ]
+          {
+            model: User,
+            attributes: ['id', 'name', 'account', 'avatar']
+          },
+          {
+            model: Tweet,
+            include: [{ model: User, attributes: ['id', 'account'] }]
+          }
+        ],
+        order: [['createdAt', 'DESC']]
       })
-      const likedTweetsId = req.user?.Likes
-        ? currentUser.Likes.map(lt => lt.TweetId)
-        : []
-      const data = userTweets.map(tweets => ({
-        ...tweets.toJSON(),
-        isLiked: likedTweetsId.includes(tweets.id)
-      }))
-      res.render('users/user-tweets', {
-        tweets: data,
+      repliedTweets.forEach(function (reply, index) {
+        this[index] = { ...reply.toJSON() }
+      }, repliedTweets)
+      res.render('users/user-replies', {
+        repliedTweets,
         role: currentUser.role,
         currentUser,
         profileUser,

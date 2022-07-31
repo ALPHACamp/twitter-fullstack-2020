@@ -5,10 +5,11 @@
     <div class="border-bottom">
       <div class="user-tweets-header text-start ms-3 mt-4 mb-3 d-flex align-items-center">
         <div class='d-flex flex-row align-items-center'>
-          <a class="text-decoration-none" href="javascript:history.back(-1)"><i class="back"></i></a>
+          <a class="text-decoration-none" href="/tweets"><i class="back"></i></a>
           <div class="index-name-wrapper ms-3">
             <h4 class="text-black fw-bold index-user-name mb-0">{{profileUser.name}}</h4>
-            <span class="count-tweet text-black-50 fw-bold fs-6" style="color: #6C757D;">{{tweets.length}} 推文</span>
+            <span class="count-tweet text-black-50 fw-bold fs-6" style="color: #6C757D;">{{profileUser.Tweets.length}}
+              推文</span>
           </div>
         </div>
       </div>
@@ -24,86 +25,83 @@
               編輯個人資料
             </button>
             {{else}}
-              {{#if profileUser.isFollowed}}
-                <button id="follow" class="btn btn-brand rounded-pill me-3 mt-3">正在跟隨</button>
-              {{else}}
-                <button id="follow" class="btn btn-outline-brand rounded-pill me-3 mt-3">跟隨</button>
-              {{/if}}
+              {{> user-profil-follow-btn}}
           {{/ifCond}}
         </div>
       </div>
-      <div class="text-start m-3 ms-3">
-        <p class="m-0 fw-bold fs-4">{{profileUser.name}}</p>
-        <p class="mb-2" style="color: #6C757D;">@{{profileUser.account}}</p>
-        <p class="mb-2">{{profileUser.introduction}}</p>
-        <div>
-          <a class="text-decoration-none" href="/users/{{profileUser.id}}/followings"><span
-              class="text-black">{{profileUser.Followings.length}} 個</span><span style="color: #6C757D;">跟隨中</span></a>
-          <a class="text-decoration-none" href="/users/{{profileUser.id}}/followers"><span
-              class="ms-3 text-black">{{profileUser.Followers.length}} 位</span><span
-              style="color: #6C757D;">跟隨者</span></a>
-        </div>
-      </div>
-      <div class="my-3">
-        {{> user-tabs}}
-      </div>
-      {{!-- 推文卡片 --}}
-      <div class="tweet-container">
-
-        {{#each tweets}}
-        <div class="tweet-card border-bottom border-1">
-          <div class="d-flex flex-nowrap ms-3 mt-3">
-            <div class="avatar-container me-1">
-              <a href="/users/{{this.User.id}}/tweets">
-                <img src="{{this.User.avatar}}" alt="" class="avatar-sm rounded-pill"
-                  id="tweet-avatar-{{this.User.id}}">
-              </a>
+      <div class=" text-start m-3 ms-3">
+            <p class="m-0 fw-bold fs-4" id="profile-name">{{profileUser.name}}</p>
+            <p class="mb-2" style="color: #6C757D;" id="profile-account">@{{profileUser.account}}</p>
+            <p class="mb-2">{{profileUser.introduction}}</p>
+            <div>
+              <a class="text-decoration-none" href="/users/{{profileUser.id}}/followings"><span class="text-black"
+                  id="count-followings">{{profileUser.Followings.length}} 個</span><span
+                  style="color: #6C757D;">跟隨中</span></a>
+              <a class="text-decoration-none" href="/users/{{profileUser.id}}/followers"><span class="ms-3 text-black"
+                  id="count-followers">{{profileUser.Followers.length}} 位</span><span
+                  style="color: #6C757D;">跟隨者</span></a>
             </div>
-            <div class="user-description-container d-flex flex-column text-start ms-1 me-3 w-100">
-              <div class="user-name-account mb-2">
-                <a href="/users/{{this.User.id}}/tweets" class="name-link">
-                  <h6 class="user-name fw-bold fs-5 " id="tweet-name-{{this.User.id}}">{{this.User.name}}</h6>
+        </div>
+        <div class="my-3">
+          {{> user-tabs}}
+        </div>
+        {{!-- 推文卡片 --}}
+        <div class="tweet-container">
+          {{#each profileUser.Tweets}}
+          <div class="tweet-card border-bottom border-1">
+            <div class="d-flex flex-nowrap ms-3 mt-3">
+              <div class="avatar-container me-1">
+                <a href="/users/{{this.UserId}}/tweets">
+                  <img src="{{../profileUser.avatar}}" alt="" class="avatar-sm rounded-pill"
+                    id="tweet-avatar-{{this.UserId}}">
                 </a>
-                <a href="/users/{{this.User.id}}/tweets" class="account-link">
-                  <span class="user-account fw-normal fs-6"
-                    id="tweet-account-{{this.User.id}}">@{{this.User.account}}</span>
-                </a>
-                <span class="fw-normal fs-6" id="tweet-time-{{this.id}}">・{{relativeTimeFromNow this.createdAt}}</span>
               </div>
-              <a href="/tweets/{{this.id}}/replies" class="description-link">
-                <div class="description me-4" id="description-{{this.id}}">
-                  <p class="description-content">{{this.description}}</p>
+              <div class="user-description-container d-flex flex-column text-start ms-1 me-3 w-100">
+                <div class="user-name-account mb-2">
+                  <a href="/users/{{this.UserId}}/tweets" class="name-link">
+                    <h6 class="user-name fw-bold fs-5 " id="tweet-name-{{this.UserId}}">{{../profileUser.name}}</h6>
+                  </a>
+                  <a href="/users/{{this.UserId}}/tweets" class="account-link">
+                    <span class="user-account fw-normal fs-6"
+                      id="tweet-account-{{this.UserId}}">@{{../profileUser.account}}</span>
+                  </a>
+                  <span class="fw-normal fs-6" id="tweet-time-{{this.id}}">・{{relativeTimeFromNow
+                    this.createdAt}}</span>
                 </div>
-              </a>
-              <div class="description-like-btn-container mb-3">
-                <button class="reply-btn d-flex align-items-center" data-bs-toggle="modal"
-                  data-bs-target="#reply-modal-{{this.id}}" data-tweetid="{{this.id}}" data-userid="{{this.User.id}}">
-                  <i class="reply"></i>
-                  <span class="reply-count ms-2">{{this.Replies.length}}</span>
-                </button>
-                {{#if this.isLiked}}
-                <button type="button" class="d-flex align-items-center like-submit-btn liked"
-                  data-tweetid="{{this.id}}">
-                  <i class="like"></i>
-                  <span class="like-count ms-2">{{ this.Likes.length}}</span>
-                </button>
-                {{else}}
-                <button type="button" class="d-flex align-items-center like-submit-btn" data-tweetid="{{this.id}}">
-                  <i class="like outline-like"></i>
-                  <span class="like-count ms-2">{{ this.Likes.length}}</span>
-                </button>
-                {{/if}}
+                <a href="/tweets/{{this.id}}/replies" class="description-link">
+                  <div class="description me-4" id="description-{{this.id}}">
+                    <p class="description-content">{{this.description}}</p>
+                  </div>
+                </a>
+                <div class="description-like-btn-container mb-3">
+                  <button class="reply-btn d-flex align-items-center" data-bs-toggle="modal"
+                    data-bs-target="#reply-modal-{{this.id}}" data-tweetid="{{this.id}}" data-userid="{{this.UserId}}">
+                    <i class="reply"></i>
+                    <span class="reply-count ms-2">{{this.Replies.length}}</span>
+                  </button>
+                  {{#if this.isLiked}}
+                  <button type="button" class="d-flex align-items-center like-submit-btn liked"
+                    data-tweetid="{{this.id}}">
+                    <i class="like"></i>
+                    <span class="like-count ms-2">{{this.Likes.length}}</span>
+                  </button>
+                  {{else}}
+                  <button type="button" class="d-flex align-items-center like-submit-btn" data-tweetid="{{this.id}}">
+                    <i class="like outline-like"></i>
+                    <span class="like-count ms-2">{{this.Likes.length}}</span>
+                  </button>
+                  {{/if}}
+                </div>
               </div>
             </div>
           </div>
+          {{> reply-modal tweet=this user=../currentUser}}
+          {{/each}}
         </div>
-        {{> reply-modal tweet=this user=../currentUser}}
-        {{/each}}
+        {{!-- 推文卡片結束 --}}
       </div>
-      {{!-- 推文卡片結束 --}}
     </div>
+    {{!-- 中央部分結束 --}}
+    {{> recommend-follow }}
   </div>
-  {{!-- 中央部分結束 --}}
-  {{> recommend-follow }}
-</div>
-{{> edit-info}}
+  {{> edit-info}}
