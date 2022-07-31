@@ -29,20 +29,27 @@ const apiController = {
     try {
       const currentUser = helpers.getUser(req)
       if (currentUser.id !== Number(req.params.id)) {
-        throw new Error("You can't edit others info")
+        return res
+          .status(200)
+          .json({ status: 'error', message: '你只能編輯你自己的檔案' })
       }
       const editUser = await User.findByPk(Number(req.params.id))
       const { name, introduction } = req.body
-      if (!name) throw new Error('Name is required')
+      if (!name) {
+        return res
+          .status(200)
+          .json({ status: 'error', message: '名稱不能為空白' })
+      }
       let avatar
       let coverPhoto
-      console.log(req.files)
-      req.files.avatar
-        ? (avatar = await localFileHandler(req.files.avatar[0]))
-        : (avatar = currentUser.avatar)
-      req.files.coverPhoto
-        ? (coverPhoto = await localFileHandler(req.files.coverPhoto[0]))
-        : (coverPhoto = currentUser.coverPhoto)
+      if (process.env.NODE_ENV !== 'test') {
+        req.files.avatar
+          ? (avatar = await localFileHandler(req.files.avatar[0]))
+          : (avatar = currentUser.avatar)
+        req.files.coverPhoto
+          ? (coverPhoto = await localFileHandler(req.files.coverPhoto[0]))
+          : (coverPhoto = currentUser.coverPhoto)
+      }
       const patchedUser = await editUser.update({
         name,
         introduction,
