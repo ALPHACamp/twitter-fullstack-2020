@@ -7,32 +7,32 @@
 <div class="col-8">
   <h4 class="p-4 mb-0 border-bottom">帳戶設定</h4>
   <div class="mx-4">
-    <form action="signup" method="POST">
+    <form action="/api/users/{{user.id}}" method="POST">
       <div class="mt-4 signin-signup-page-input-change-backgroundcolor" style="margin-bottom: 32px;">
         <label class="form-label" for="account" style="margin-left: 10px; margin-bottom:-5px"><small>帳號</small></label>
         <input type="text" id="account" name="account" class="form-control only-underline-input"
-          value="{{user.account}}" placeholder="請輸入帳號" style="" required autofocus>
+          value="{{user.account}}" placeholder="請輸入帳號" autofocus>
       </div>
       <div class="signin-signup-page-input-change-backgroundcolor" style="margin-bottom: 32px;">
         <label class="form-label" for="name" style="margin-left: 10px; margin-bottom:-5px"><small>名稱</small></label>
         <input type="text" id="name" name="name" class="form-control only-underline-input" value="{{user.name}}"
-          placeholder="請輸入使用者名稱" required>
+          placeholder="請輸入使用者名稱">
       </div>
       <div class="signin-signup-page-input-change-backgroundcolor" style="margin-bottom: 32px;">
         <label class="form-label" for="email" style="margin-left: 10px; margin-bottom:-5px"><small>Email</small></label>
         <input type="email" id="email" name="email" class="form-control only-underline-input" value="{{user.email}}"
-          placeholder="請輸入 Email" required>
+          placeholder="請輸入 Email">
       </div>
       <div class="signin-signup-page-input-change-backgroundcolor" style="margin-bottom: 32px;">
         <label class="form-label" for="password" style="margin-left: 10px; margin-bottom:-5px"><small>密碼</small></label>
         <input type="password" id="password" name="password" class="form-control only-underline-input"
-          placeholder="請設定密碼" required>
+          placeholder="請設定密碼">
       </div>
       <div class="signin-signup-page-input-change-backgroundcolor" style="margin-bottom: 40px;">
         <label class="form-label" for="checkPassword"
           style="margin-left: 10px; margin-bottom:-5px"><small>密碼確認</small></label>
         <input type="password" id="checkPassword" name="checkPassword" class="form-control only-underline-input"
-          placeholder="請再次輸入密碼" required>
+          placeholder="請再次輸入密碼">
       </div>
       <div class="text-end">
         <button type="submit" class="btn btn-brand btn-lg radius50">儲存</button>
