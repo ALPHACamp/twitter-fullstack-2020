@@ -42,7 +42,8 @@ const replyController = {
         include: [User, Like],
       })
       const user = helpers.getUser(req)
-
+      likedTweetUsers = tweet.Likes.map(like => like.UserId)
+      user.isLiked = likedTweetUsers.includes(user.id)
       return res.render('replies', { tweet: tweet.toJSON(), replies, user })
     } catch (err) {
       next(err)
