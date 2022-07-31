@@ -8,6 +8,11 @@ const tweetDescriptionLength = document.querySelector("#description-length") || 
 
 if (tweetForm) {
   tweetTextArea.addEventListener('input', function (event) {
+    if (tweetTextArea.value.length === 0) {
+      tweetDescriptionLength.classList.remove('text-black-50')
+      tweetDescriptionLength.classList.add('text-error')
+      tweetDescriptionLength.textContent = '內容不可空白'
+    }
     if (tweetTextArea.value.length > 0) {
       tweetDescriptionLength.classList.add('text-black-50')
       tweetDescriptionLength.classList.remove('text-error')
@@ -28,7 +33,6 @@ if (tweetForm) {
       tweetDescriptionLength.classList.add('text-error')
       tweetDescriptionLength.textContent = '內容不可空白'
     }
-    tweetForm.classList.add('was-validated')
   })
 }
 
@@ -70,7 +74,7 @@ if (sideForm) {
   })
 }
 
-// 回復推文modal
+// 回復推文按鈕監聽跟modal
 const replyForm = document.querySelectorAll('.reply-form') || ''
 const replyTextArea = document.querySelectorAll(".reply-description-input") || ''
 const replyDescriptionLength = document.querySelectorAll(".reply-description-length") || ''
