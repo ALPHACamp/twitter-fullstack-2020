@@ -20,6 +20,7 @@ app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
+app.use(express.json())
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -32,8 +33,7 @@ app.use((req, res, next) => {
   res.locals.loginUser = helpers.getUser(req)
   next()
 })
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+
 app.use(routes)
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

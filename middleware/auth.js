@@ -19,7 +19,15 @@ const authenticatedAdmin = (req, res, next) => {
   req.flash('error_messages', '請登入管理者帳號')
   res.redirect('/admin/signin')
 }
+
+const authenticatedLimit = (req, res, next) => {
+  if (helpers.getUser(req).id === Number(req.params.id)) return next()
+  res.json({ status: 'error', data: '只能修改自己的資料' })
+  res.redirect(200, 'back')
+}
+
 module.exports = {
   authenticated,
-  authenticatedAdmin
+  authenticatedAdmin,
+  authenticatedLimit
 }

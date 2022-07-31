@@ -55,34 +55,23 @@ const userController = {
         include: [Like, Reply],
         order: [['createdAt', 'desc']],
         nest: true
-      }),
-      Followship.findAll({
-        include: User,
-        group: 'followingId',
-        attributes: {
-          include: [[sequelize.fn('COUNT', sequelize.col('following_id')), 'count']]
-        },
-        order: [[sequelize.literal('count'), 'DESC']]
       })
     ])
-      .then(([targetUser, tweets, followship]) => {
+      .then(([targetUser, tweets]) => {
         if (!targetUser) throw new Error("User didn't exist")
         const user = getUser(req)
-        user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
-        const users = followship
-          .map(data => ({
-            ...data.User.toJSON(),
-            isFollowed: user.Followings.some(u => u.id === data.followingId)
+        if (user) {
+          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        }
+        const tweetsData = tweets
+          .map(t => ({
+            ...t.toJSON(),
+            likedCount: t.Likes.length,
+            repliedCount: t.Replies.length,
+            isLiked: t.Likes.some(like => like.UserId === user.id)
           }))
-          .slice(0, 10)
-        const tweetsData = tweets.map(t => ({
-          ...t.toJSON(),
-          likedCount: t.Likes.length,
-          repliedCount: t.Replies.length,
-          isLiked: t.Likes.some(like => like.UserId === user.id)
-        }))
         res.locals.tweetsLength = tweets.length
-        res.render('profile', { targetUser: targetUser.toJSON(), tweets: tweetsData, user, users })
+        res.render('profile', { targetUser: targetUser.toJSON(), tweets: tweetsData, user })
       })
       .catch(err => next(err))
   },
@@ -98,28 +87,16 @@ const userController = {
         order: [['createdAt', 'desc']],
         raw: true,
         nest: true
-      }),
-      Followship.findAll({
-        include: User,
-        group: 'followingId',
-        attributes: {
-          include: [[sequelize.fn('COUNT', sequelize.col('following_id')), 'count']]
-        },
-        order: [[sequelize.literal('count'), 'DESC']]
       })
     ])
-      .then(([targetUser, replies, followship]) => {
+      .then(([targetUser, replies]) => {
         if (!targetUser) throw new Error("User didn't exist")
         const user = getUser(req)
-        user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
-        const users = followship
-          .map(data => ({
-            ...data.User.toJSON(),
-            isFollowed: user.Followings.some(u => u.id === data.followingId)
-          }))
-          .slice(0, 10)
+        if (user) {
+          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        }
         res.locals.tweetsLength = targetUser.Tweets.length
-        res.status(200).render('profile', { targetUser: targetUser.toJSON(), replies, user, users })
+        res.render('profile', { targetUser: targetUser.toJSON(), replies, user })
       })
       .catch(err => next(err))
   },
@@ -138,36 +115,23 @@ const userController = {
         ],
         order: [['createdAt', 'desc']],
         nest: true
-      }),
-      Followship.findAll({
-        include: User,
-        group: 'followingId',
-        attributes: {
-          include: [[sequelize.fn('COUNT', sequelize.col('following_id')), 'count']]
-        },
-        order: [[sequelize.literal('count'), 'DESC']]
       })
     ])
-      .then(([targetUser, likes, followship]) => {
+      .then(([targetUser, likes]) => {
         if (!targetUser) throw new Error("User didn't exist")
         const user = getUser(req)
-        user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
-        const users = followship
-          .map(data => ({
-            ...data.User.toJSON(),
-            isFollowed: user.Followings.some(u => u.id === data.followingId)
+        if (user) {
+          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        }
+        const likesData = likes
+          .map(l => ({
+            ...l.toJSON(),
+            likedCount: l.Tweet.Likes.length,
+            repliedCount: l.Tweet.Replies.length,
+            isLiked: user? l.Tweet.Likes.some(like => like.UserId === user.id) : false
           }))
-          .slice(0, 10)
-        const likesData = likes.map(l => ({
-          ...l.toJSON(),
-          likedCount: l.Tweet.Likes.length,
-          repliedCount: l.Tweet.Replies.length,
-          isLiked: l.Tweet.Likes.some(like => like.UserId === user.id)
-        }))
         res.locals.tweetsLength = targetUser.Tweets.length
-        res
-          .status(200)
-          .render('profile', { targetUser: targetUser.toJSON(), likes: likesData, user, users })
+        res.render('profile', { targetUser: targetUser.toJSON(), likes: likesData, user })
       })
       .catch(err => next(err))
   },
