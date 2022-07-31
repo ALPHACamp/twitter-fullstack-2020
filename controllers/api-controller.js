@@ -32,20 +32,15 @@ const apiController = {
       if (name.length > 50) return res.json({ status: 'error', message: '字數超出上限！' })
       if (introduction.length > 160) return res.json({ status: 'error', message: '字數超出上限！' })
 
-      console.log('req.body', req.body)
-      console.log('avatar', avatar)
-      console.log('uploadAvatar', uploadAvatar)
-
-
-
-
       const data = await user.update({
         name,
         introduction,
         avatar: uploadAvatar || user.avatar,
         cover: uploadCover || user.cover
       })
+      req.flash('success_messages', '個人資料更新成功！')
       res.json({ status: 'success', message: '已成功更新!', data })
+
 
     } catch (err) {
       next(err)
