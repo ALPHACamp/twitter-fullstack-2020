@@ -14,7 +14,7 @@ function showEditUserModal (data) {
     <div>
       <div class="input input-name">
         <label class="form-label" for="modal-input-name">名稱</label>
-        <input class="form-control" id="modal-input-name" name="name" value="${data.name}" oninput="countWord(this)">
+        <input type="text" class="form-control" id="modal-input-name" name="name" value="${data.name}" oninput="countWord(this)" maxlength="50">
       </div>
       <div class="d-flex justify-content-end word-count">
         <span id="name-count"></span>
@@ -25,7 +25,7 @@ function showEditUserModal (data) {
       <div class="input input-introduction">
         <label class="form-label" for="modal-input-introduction">自我介紹</label>
         <textarea class="form-control" style="height: 147px; resize: none;" id="modal-input-introduction"
-          name="introduction" oninput="countWord(this)">${data.introduction}</textarea>
+          name="introduction" oninput="countWord(this)" maxlength="160">${data.introduction}</textarea>
       </div>
       <div class="d-flex justify-content-end word-count">
         <span id="introduction-count"></span>
@@ -36,16 +36,16 @@ function showEditUserModal (data) {
 }
 
 function countWord (data) {
-  const res = []
-  const str = data.value.replace(/[\t\n\r\.\?\!]/gm, ' ').split(' ')
+  document.querySelector(`#${data.id}`)
+    .parentElement
+    .nextElementSibling
+    .children[0].innerHTML = String(data.value.length)
+}
 
-  str.map(s => {
-    const trimStr = s.trim()
-    if (trimStr.length > 0) {
-      res.push(trimStr)
-    }
-  })
-  document.querySelector(`#${data.id}`).parentElement.nextElementSibling.children[0].innerHTML = String(res.length)
+function previewImage (data) {
+  document.querySelector(`#${data.id}`)
+    .parentElement
+    .style.background = `linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url(${window.URL.createObjectURL(data.files[0])})`
 }
 
 editUser.addEventListener('click', event => {

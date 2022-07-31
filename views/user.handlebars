@@ -76,7 +76,7 @@
 
 {{!-- modal --}}
 <div class="modal fade" id="edit-user-modal" tabindex="-1" aria-labelledby="edit-user-ModalLabel" aria-hidden="true">
-  <form action="/api/users/" method="POST" id="user-modal-form">
+  <form action="/api/users/" method="POST" id="user-modal-form" enctype="multipart/form-data">
     <div class="modal-dialog">
       <div class="modal-content" style="height: 610px;">
         <div class="modal-header">
@@ -86,12 +86,20 @@
         </div>
   
         <div class="user-banner" id="user-modal-banner">
-          <img class="add-photo" src="/images/icon-white-add-photo.png">
-          <img class="remove-photo" src="/images/icon-white-close.png">
+          <label class="form-label" for="banner">
+            <img class="add-photo" src="/images/icon-white-add-photo.png">
+          </label>
+          <input class="form-control" style="display: none;" type="file" class="form-control-file" id="banner" name="banner" onchange="previewImage(this)">
+          
+          <img class="remove-photo" src="/images/icon-white-close.png" onclick="removeBanner">
         </div>
   
         <div class="user-avatar" id="user-modal-avatar" style="background-size: cover;">
-          <img class="add-photo" src="/images/icon-white-add-photo.png">
+          <label class="form-label" for="avatar">
+            <img class="add-photo" src="/images/icon-white-add-photo.png">
+          </label>
+          <input class="form-control" style="display: none;" type="file" class="form-control-file" id="avatar" name="avatar"
+              onchange="previewImage(this)">
         </div>
   
         <div class="modal-body" id="user-modal-body">
