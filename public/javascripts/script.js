@@ -7,6 +7,8 @@ dataPanel.addEventListener('click', e => {
     showReplyModel(e.target.dataset.tid)
   } else if (e.target.matches('#show-info-modal')) {
     showInfoModal(e.target.dataset.userid)
+  } else if (e.target.matches('#post-info')) {
+    postInfoForm(e.target)
   }
 })
 
@@ -19,16 +21,10 @@ dataPanel.addEventListener('input', e => {
 })
 
 const replyInputs = document.querySelector('#reply-input')
-const infoForm = document.querySelector('#info-form')
 
 if (replyInputs) {
   replyInputs.addEventListener('submit', e => {
     replyFormVerify(e)
-  })
-}
-if (infoForm) {
-  infoForm.addEventListener('submit', e => {
-    infoFormVerify(e)
   })
 }
 
@@ -61,16 +57,46 @@ function replyFormVerify (e) {
   }
 }
 
-function infoFormVerify (e) {
-  const infoName = document.querySelector('#info-name')
-  const infoIntro = document.querySelector('#info-intro')
-  if (
-    infoName.value.length === 0 ||
-    infoName.value.length > 50 ||
-    infoIntro.value.length > 160
-  ) {
-    e.preventDefault()
-    e.stopPropagation()
+async function postInfoForm (target) {
+  try {
+    const formName = document.querySelector('#info-name')
+    const formIntro = document.querySelector('#info-intro')
+    if (
+      formName.value.length === 0 ||
+      formName.value.length > 50 ||
+      formIntro.value.length > 160
+    ) {
+      return
+    }
+    target.dataset.bsDismiss = 'modal'
+    target.click()
+
+    // 建構表單
+    const infoForm = document.querySelector('#info-form')
+    const infoFormData = new FormData(infoForm)
+    const infoCoverPhoto = document.querySelector('#profile-cover-photo')
+    const infoAvatar = document.querySelector('#profile-avatar')
+    const infoName = document.querySelector('#profile-name')
+    const infoIntro = document.querySelector('#profile-intro')
+    // 送出表單
+    // eslint-disable-next-line no-undef
+    const res = await axios({
+      method: 'post',
+      url: `/api/users/${target.dataset.userid}`,
+      data: infoFormData,
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+    const userInfo = res.data.data
+
+    // 修改網頁顯示資料
+    infoCoverPhoto.src = userInfo.coverPhoto
+    infoAvatar.src = userInfo.avatar
+    infoName.textContent = userInfo.name
+    infoIntro.textContent = userInfo.introduction
+
+    target.dataset.bsDismiss = ''
+  } catch (err) {
+    console.log(err)
   }
 }
 
@@ -78,7 +104,11 @@ function infoNameCheck (target) {
   const nameLength = document.querySelector('#name-length')
   const nameMsg = document.querySelector('#name-error-msg')
   const length = target.value.length
-  if (length <= 50) {
+
+  if (length === 0) {
+    nameMsg.classList.add('text-error')
+    nameMsg.textContent = '名稱不可為空白'
+  } else if (length <= 50) {
     nameMsg.classList.remove('text-error')
     nameMsg.textContent = ''
   } else if (length > 50) {
@@ -87,6 +117,7 @@ function infoNameCheck (target) {
   }
   nameLength.textContent = `${length}/50`
 }
+
 function infoIntroCheck (target) {
   const introLength = document.querySelector('#intro-length')
   const introMsg = document.querySelector('#intro-error-msg')
@@ -101,16 +132,27 @@ function infoIntroCheck (target) {
   introLength.textContent = `${length}/160`
 }
 async function showInfoModal (uid) {
-  // eslint-disable-next-line no-undef
-  const data = await axios.get(`/api/users/${uid}`)
-  const existUser = data.data.existUser
-  const infoCoverPhoto = document.querySelector('#info-cover-photo')
-  const infoAvatar = document.querySelector('#info-avatar')
-  const infoName = document.querySelector('#info-name')
-  const infoIntro = document.querySelector('#info-intro')
-  infoCoverPhoto.style.backgroundImage = `url('${existUser.coverPhoto}')`
-  infoAvatar.src = existUser.avatar
-  infoName.value = existUser.name
-  infoIntro.value = existUser.introduction
-  infoForm.action = `/api/users/${uid}`
+  try {
+    // eslint-disable-next-line no-undef
+    const data = await axios.get(`/api/users/${uid}`)
+    const existUser = data.data.existUser
+    const infoCoverPhoto = document.querySelector('#info-cover-photo')
+    const infoAvatar = document.querySelector('#info-avatar')
+    const infoName = document.querySelector('#info-name')
+    const nameLength = document.querySelector('#name-length')
+    const infoIntro = document.querySelector('#info-intro')
+    const introLength = document.querySelector('#intro-length')
+    const submitBtn = document.querySelector('#post-info')
+    if (existUser.coverPhoto) {
+      infoCoverPhoto.style.backgroundImage = `url('${existUser.coverPhoto}')`
+    }
+    infoAvatar.src = existUser.avatar
+    infoName.value = existUser.name
+    nameLength.textContent = `${existUser.name.length}/50`
+    infoIntro.value = existUser.introduction
+    introLength.textContent = `${existUser.introduction.length}/160`
+    submitBtn.dataset.userid = existUser.id
+  } catch (err) {
+    console.log(err)
+  }
 }

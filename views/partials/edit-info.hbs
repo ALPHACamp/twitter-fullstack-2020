@@ -40,7 +40,12 @@
           >
             <div class="row justify-content-center align-items-center h-100">
               <label class="btn btn-outline border-0 col-1 upload-photo">
-                <input type="file" name="coverPhoto" class="d-none" />
+                <input
+                  type="file"
+                  name="coverPhoto"
+                  class="d-none"
+                  id="input-cover-photo"
+                />
                 <img
                   src="/stylesheets/svgs/outline-photo.svg"
                   alt="cover-photo"
@@ -79,7 +84,12 @@
               class="btn btn-outline border-0 upload-photo position-absolute p-0"
               style="top: -20%; left: 48%"
             >
-              <input type="file" name="avatar" class="d-none" />
+              <input
+                type="file"
+                name="avatar"
+                class="d-none"
+                id="input-avatar"
+              />
               <img
                 src="/stylesheets/svgs/outline-photo.svg"
                 alt="cover-photo"
@@ -109,7 +119,7 @@
             class="col-1 mt-1"
             id="name-length"
             style="font-size: 12px"
-          >0/50</small>
+          ></small>
           <div
             class="form-floating mt-3 ms-3 border-bottom border-dark border-2"
             style="width: calc(100% - 2rem)"
@@ -133,10 +143,11 @@
             class="col-1 mt-1"
             id="intro-length"
             style="font-size: 12px"
-          >0/160</small>
+          ></small>
           <button
-            type="submit"
-            id="post-comment"
+            type="button"
+            id="post-info"
+            {{! data-bs-dismiss="modal" }}
             class="btn btn-brand rounded-pill fw-light col-2 position-absolute"
             style="width: 60px; top: -7.5%; right: 3%"
           >
