@@ -10,6 +10,7 @@ const adminController = require('../../controllers/pages/admin-controller')
 const userController = require('../../controllers/pages/user-controller')
 
 const { authenticated, authenticatedAdmin } = require('../../middleware/auth')
+const { generalErrorHandler } = require('../../middleware/error-handler')
 
 // admin route
 router.get('/admin/signin', adminController.getSignin)
@@ -32,6 +33,6 @@ router.get('/logout', userController.logout)
 router.get('/setting', authenticated, userController.getSetting)
 router.put('/setting', authenticated, userController.editSetting)
 
-router.get('/', (req, res) => res.send('Hello World!'))
+router.get('/', generalErrorHandler)
 
 module.exports = router

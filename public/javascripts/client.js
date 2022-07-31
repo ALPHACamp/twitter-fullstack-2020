@@ -51,6 +51,6 @@ function previewImage (data) {
 editUser.addEventListener('click', event => {
   axios(`/api/users/${event.target.dataset.id}`)
     .then(res => {
-      showEditUserModal(res.data.user)
+      showEditUserModal(res.data)
     })
 })
