@@ -12,9 +12,8 @@ panel.addEventListener('click', event => {
 
   // 塞資料
   originUserAvatar.innerHTML = `
-    <img src="${tweet.dataset.useravatar}" alt="" style="width: 50px;" id="modal-avatar">
-    <div class="mt-2 mx-auto" style="border: 1px solid #B5B5BE; height: 100%">
-      <hr>
+    <div class="rounded-circle" style="height: 50px; width: 50px; background: url('${tweet.dataset.useravatar}'); background-size: cover; background-position: center;"></div>
+    <div class="mx-auto mt-1" style="border: 1px solid #B5B5BE; flex-grow: 1">
     </div>
   `
 
@@ -39,7 +38,7 @@ panel.addEventListener('click', event => {
   `
 
   loginUserAvatar.innerHTML = `
-    <img src="${tweet.dataset.loginuseravatar}" alt="" style="width: 50px;">
+    <div class="rounded-circle" style="height: 50px; width: 50px; background: url('${tweet.dataset.loginuseravatar}'); background-size: cover; background-position: center;"></div>
   `
 
   replyFormDiv.innerHTML = `
