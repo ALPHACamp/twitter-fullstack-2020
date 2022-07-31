@@ -28,7 +28,7 @@
     <hr>
     <div class="d-flex justify-content-start flex-grow-1">
       <div>
-        <button type="button" class="btn btn-outline-light me-3" data-bs-toggle="modal"
+        <button type="button" class="btn btn-outline-light me-2" data-bs-toggle="modal"
           data-bs-target="#tweet-reply-modal">
           <i class="far fa-comment me-1" style="color: #353535; width: 25px; height: 25px;"></i>
         </button>
@@ -54,7 +54,7 @@
   </div>
 </div>
 {{!-- 中間下半部 --}}
-{{#each tweet.replies}}
+{{#each tweet.Replies}}
   {{> reply-card}}
 {{/each}}
 

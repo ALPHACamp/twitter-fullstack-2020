@@ -98,9 +98,6 @@ const tweetController = {
         tweet.replyCounts = tweet.Replies.length
         tweet.likeCounts = tweet.Likes.length
         tweet.isLiked = req.user?.Likes.some(l => l.TweetId === tweet.id)
-        tweet.replies = tweet.Replies.map(reply => ({
-          ...reply
-        }))
         res.render('tweet', { tweet })
       })
       .catch(err => next(err))
