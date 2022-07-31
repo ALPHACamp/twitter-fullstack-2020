@@ -2,7 +2,7 @@
 <script>
   Swal.fire({
     toast: true,
-    position: 'top',
+    position: 'top-end',
     icon: 'error',
     title: '{{ error_messages }}',
     showConfirmButton: false,
@@ -15,12 +15,12 @@
 <script>
   Swal.fire({
     toast: true,
-    position: 'top',
+    position: 'top-end',
     icon: 'success',
     title: '{{ success_messages }}',
     showConfirmButton: false,
     timer: 3500,
-    timerProgressBar: true
+    timerProgressBar: true,
   })
 </script>
 {{/if}}
