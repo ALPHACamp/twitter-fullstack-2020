@@ -141,6 +141,8 @@ body {
   line-height: 24px;
   font-size: 16px;
   font-weight: 400;
+  position: absolute;
+  right: 30px;
 }
 
 .user-unfollowing {
@@ -152,6 +154,8 @@ body {
   border: var(--brand-main) solid 1px;
   line-height: 24px;
   font-size: 16px;
+  position: absolute;
+  right: 30px;
 }
 
 .user-name {
@@ -257,6 +261,7 @@ body {
 }
 
 .reply-comment {
+  width: 528px;
   font-size: 16px;
   line-height: 26px;
 }

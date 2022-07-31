@@ -10,26 +10,9 @@
 </ul>
 
 {{#each followings}}
-  <div class="reply d-flex">
-    <a href="/users/{{this.id}}/tweets">
-      <img src="{{checkAvatar this.avatar}}" class="rounded-circle reply-avatar">
-    </a>
-    <div>
-      <div>
-        <a href="/users/{{this.id}}/tweets" style="text-decoration:none;">
-          <span class="fw-bold reply-name">{{this.name}}</span>
-        </a>
-        {{#if this.isFollowing}}
-          <form action="/followships?_method=DELETE" method="POST" style="display: contents;">
-            <button type="submit" class="user-following">正在跟隨</button>
-          </form>
-        {{else}}
-          <form action="/followships" method="POST" style="display: contents;">
-            <button type="submit" class="user-unfollowing">跟隨</button>
-          </form>
-        {{/if}}
-      </div>
-      <p class="reply-comment">{{this.introduction}}</p>
-    </div>
-  </div>
+  {{> followship-card}}
+{{/each}}
+
+{{#each followers}}
+  {{> followship-card}}
 {{/each}}
