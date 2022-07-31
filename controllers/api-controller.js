@@ -1,8 +1,10 @@
 const helpers = require('../_helpers')
 const {
-  // localFileHandler
+  localFileHandler,
   imgurFileHandler
 } = require('../helpers/file-helpers')
+const fileHelper =
+  process.env.NODE_ENV === 'production' ? imgurFileHandler : localFileHandler
 
 const { User } = require('../models')
 
@@ -44,10 +46,10 @@ const apiController = {
       let coverPhoto
       if (process.env.NODE_ENV !== 'test') {
         req.files.avatar
-          ? (avatar = await imgurFileHandler(req.files.avatar[0]))
+          ? (avatar = await fileHelper(req.files.avatar[0]))
           : (avatar = currentUser.avatar)
         req.files.coverPhoto
-          ? (coverPhoto = await imgurFileHandler(req.files.coverPhoto[0]))
+          ? (coverPhoto = await fileHelper(req.files.coverPhoto[0]))
           : (coverPhoto = currentUser.coverPhoto)
       }
       const patchedUser = await editUser.update({
