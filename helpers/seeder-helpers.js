@@ -1,7 +1,7 @@
-const getNoRepeatRandomIndex = (randomRange, length, excludeIndex) => {
+const getNoRepeatRandomIndices = (randomRange, length, excludeIndex) => {
   // randomRange: Math.random 要乘的範圍值
   // length: 要輸出的 randomIndex 陣列長度
-  // excludeIndex: 要從 randomIndex 排除的值
+  // excludeIndices: 要從 randomIndex 排除的值
 
   const randomIndex = []
   // 若無輸入length則給隨機數，且若有excludeIndex會少1項，故要-1
@@ -18,5 +18,5 @@ const getNoRepeatRandomIndex = (randomRange, length, excludeIndex) => {
 }
 
 module.exports = {
-  getNoRepeatRandomIndex
+  getNoRepeatRandomIndices
 }

@@ -1,10 +1,10 @@
 'use strict'
-const { getNoRepeatRandomIndex } = require('../helpers/seeder-helpers')
+const { getNoRepeatRandomIndices } = require('../helpers/seeder-helpers')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const users = await queryInterface.sequelize.query(
-      'SELECT id FROM Users;',
+      'SELECT id FROM Users WHERE `role` <> "admin";',
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
     const tweets = await queryInterface.sequelize.query(
@@ -16,7 +16,7 @@ module.exports = {
       // 每位 user 隨機 like 10篇推文，不須排除自己
       users.reduce((acc, cur) => {
         return acc.concat(Array.from(
-          getNoRepeatRandomIndex(tweets.length, 10),
+          getNoRepeatRandomIndices(tweets.length, 10),
           (v, i) => ({
             UserId: cur.id,
             TweetId: tweets[v].id,

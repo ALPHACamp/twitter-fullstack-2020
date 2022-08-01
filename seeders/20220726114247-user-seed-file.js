@@ -4,8 +4,6 @@ const faker = require('faker')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const DEFAULT_INTRODUCTION_WORDS = 100 // 自我介紹字數上限160，預設100字
-
     await queryInterface.bulkInsert('Users',
       // 指定帳號: root, user1
       [{
@@ -13,9 +11,9 @@ module.exports = {
         name: 'root',
         email: 'root@example.com',
         password: await bcrypt.hash('12345678', 10),
-        avatar: 'https://loremflickr.com/320/240/people',
+        avatar: 'https://loremflickr.com/320/240/people?random=' + Math.ceil(Math.random() * 100),
         banner: 'https://loremflickr.com/640/240/sky',
-        introduction: faker.lorem.words(DEFAULT_INTRODUCTION_WORDS),
+        introduction: faker.lorem.sentences('.'),
         role: 'admin',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -24,9 +22,9 @@ module.exports = {
         name: 'user1',
         email: 'user1@example.com',
         password: await bcrypt.hash('12345678', 10),
-        avatar: 'https://loremflickr.com/320/240/people',
+        avatar: 'https://loremflickr.com/320/240/people?random=' + Math.ceil(Math.random() * 100),
         banner: 'https://loremflickr.com/640/240/sky',
-        introduction: faker.lorem.words(DEFAULT_INTRODUCTION_WORDS),
+        introduction: faker.lorem.sentences('.'),
         role: 'user',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -40,9 +38,9 @@ module.exports = {
             name: faker.name.findName(),
             email: `${account}@example.com`,
             password: bcrypt.hashSync(Math.random().toString(36).slice(-8), 10),
-            avatar: 'https://loremflickr.com/320/240/people',
+            avatar: 'https://loremflickr.com/320/240/people?random=' + Math.ceil(Math.random() * 100),
             banner: 'https://loremflickr.com/640/240/sky',
-            introduction: faker.lorem.words(DEFAULT_INTRODUCTION_WORDS),
+            introduction: faker.lorem.sentences('.'),
             role: 'user',
             createdAt: new Date(),
             updatedAt: new Date()
