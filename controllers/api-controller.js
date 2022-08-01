@@ -6,7 +6,7 @@ const {
 const fileHelper =
   process.env.NODE_ENV === 'production' ? imgurFileHandler : localFileHandler
 
-const { User, Followship } = require('../models')
+const { User, Followship, Reply } = require('../models')
 
 const apiController = {
   getUserInfo: async (req, res, next) => {
@@ -68,7 +68,6 @@ const apiController = {
       const UserId = Number(helpers.getUser(req).id)
       const followingId = Number(req.body.id)
       if (UserId === followingId) {
-        console.log('hey')
         return res.status(200).json({
           status: 'error',
           message: "You can't follow yourself"
@@ -101,6 +100,26 @@ const apiController = {
     } catch (err) {
       next(err)
     }
+  },
+  postTweetReply: async (req, res, next) => {
+    const UserId = helpers.getUser(req).id
+    const comment = req.body.comment
+    const TweetId = req.body.TweetId
+    const existTweet = Tweet.findByPk(TweetId)
+    if (!existTweet) {
+      return res.status(200).json({
+        status: 'error',
+        message: "這個推文已經不存在！"
+      })
+    }
+    if (!comment) {
+      return res.status(200).json({
+        status: 'error',
+        message: "內容不可空白！"
+      })
+    }
+    // return res.json({status: 'success', existTweet})
+    return await Reply.create({ UserId, TweetId, comment })
   }
 }
 

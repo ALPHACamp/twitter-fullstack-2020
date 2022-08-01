@@ -63,6 +63,7 @@ body {
 .current {
   box-sizing: border-box;
   border-bottom: 3px solid #FF6600;
+  margin: 0 0 -3px 0;
 }
 
 .follow-container {

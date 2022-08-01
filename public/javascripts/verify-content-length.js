@@ -8,6 +8,11 @@ const tweetDescriptionLength = document.querySelector("#description-length") || 
 
 if (tweetForm) {
   tweetTextArea.addEventListener('input', function (event) {
+    if (tweetTextArea.value.length === 0) {
+      tweetDescriptionLength.classList.remove('text-black-50')
+      tweetDescriptionLength.classList.add('text-error')
+      tweetDescriptionLength.textContent = '內容不可空白'
+    }
     if (tweetTextArea.value.length > 0) {
       tweetDescriptionLength.classList.add('text-black-50')
       tweetDescriptionLength.classList.remove('text-error')
@@ -28,7 +33,6 @@ if (tweetForm) {
       tweetDescriptionLength.classList.add('text-error')
       tweetDescriptionLength.textContent = '內容不可空白'
     }
-    tweetForm.classList.add('was-validated')
   })
 }
 
@@ -70,7 +74,7 @@ if (sideForm) {
   })
 }
 
-// 回復推文modal
+// 回復推文按鈕監聽跟modal
 const replyForm = document.querySelectorAll('.reply-form') || ''
 const replyTextArea = document.querySelectorAll(".reply-description-input") || ''
 const replyDescriptionLength = document.querySelectorAll(".reply-description-length") || ''
@@ -100,14 +104,31 @@ if (replyForm) {
   })
 
   replyForm.forEach((form, i) => {
-    replyForm[i].addEventListener('submit', e => {
-      if (replyTextArea[i].value.length <= 0) {
+    replyForm[i].addEventListener('click', async e => {
+      if (e.target.classList.contains('reply-btn-send')) {
         e.preventDefault()
         e.stopPropagation()
-        replyForm[i].classList.remove('text-black-50')
-        replyForm[i].classList.add('text-error')
-        replyForm[i].textContent = '內容不可空白'
+        let userId = e.target.dataset.userid
+        let tweetId = e.target.dataset.tweetid
+        let comment = document.querySelector(`#comment-${tweetId}`)
+        console.log(comment.value)
+        await axios.post(`/tweets/${tweetId}/replies`, {
+          UserId: userId,
+          TweetId: tweetId,
+          comment: comment.value
+        })
+        comment.value = ''
+        const count = document.querySelector(`#reply-count-${tweetId}`)
+        const amount = Number(count.textContent) + 1
+        count.textContent = amount
       }
+      // if (replyTextArea[i].value.length < 1) {
+      //   e.preventDefault()
+      //   e.stopPropagation()
+      //   replyForm[i].classList.remove('text-black-50')
+      //   replyForm[i].classList.add('text-error')
+      //   replyForm[i].textContent = '內容不可空白'
+      // }
     })
   })
 }
