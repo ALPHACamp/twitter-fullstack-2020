@@ -1,5 +1,5 @@
 const { User } = require('../models')
-const { localFileHandler } = require('../helpers/file-helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const apiController = {
   getUserInfo: (req, res, next) => {
@@ -23,11 +23,11 @@ const apiController = {
     let coverFilePath = user.dataValues.cover
 
     if (files?.image) {
-      avatarFilePath = await localFileHandler(...files.image)
+      avatarFilePath = await imgurFileHandler(...files.image)
     }
 
     if (files?.coverImage) {
-      coverFilePath = await localFileHandler(...files.coverImage)
+      coverFilePath = await imgurFileHandler(...files.coverImage)
     }
 
     if (!user) throw new Error("user didn't exist")
