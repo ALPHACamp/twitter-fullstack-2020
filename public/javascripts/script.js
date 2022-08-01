@@ -56,12 +56,14 @@ function showReplyModel (tid) {
   const account = document.querySelector(`#account-${tid}`).textContent
   const time = document.querySelector(`#time-${tid}`).textContent
   const description = document.querySelector(`#description-${tid}`).textContent
+  const replyTextArea = document.querySelector('#reply-comment')
 
   const replyAvatar = document.querySelector('#reply-tweet-avatar')
   const replyName = document.querySelector('#reply-tweet-name')
   const replyDescription = document.querySelector('#reply-tweet-description')
   const postReplyBtn = document.querySelector('#post-comment')
   const replyTo = document.querySelector('#reply-to')
+  replyTextArea.value = ''
   replyAvatar.src = avatar
   replyName.innerHTML = `${name} <small class="text-muted fw-light" id="reply-tweet-account" style="font-size: 14px;">${account}．${time}</small>`
   replyDescription.textContent = description
