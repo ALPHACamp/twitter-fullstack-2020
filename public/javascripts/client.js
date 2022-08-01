@@ -43,7 +43,7 @@ function changeUser (user) {
   const names = document.querySelectorAll('.user-name')
   const introduction = document.querySelector('.user-card .user-introduction')
 
-  banner.src = user.banner
+  banner.src = user.banner || '/images/user-defaultBanner.png'
   avatars.forEach(avatar => {
     avatar.src = user.avatar
   })
@@ -51,6 +51,16 @@ function changeUser (user) {
     name.innerHTML = user.name
   })
   introduction.innerHTML = user.introduction
+}
+
+function errorMessage (message) {
+  const messages = document.querySelector('.messages')
+  messages.innerHTML = `
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      ${message}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  `
 }
 
 function countWord (data) {
@@ -101,6 +111,9 @@ saveUser.addEventListener('click', event => {
   axios
     .post(`/api/users/${event.target.dataset.id}`, data)
     .then(res => {
+      if (res.data.status === 'error') {
+        return errorMessage(res.data.message)
+      }
       changeUser(res.data.user)
     })
 })
