@@ -248,7 +248,7 @@ const userConroller = {
   },
   addFollowship: (req, res, next) => {
     const user = helpers.getUser(req)
-    const followingId = Number(req.body.followingId)
+    const followingId = Number(req.body.id)
     const followerId = Number(user.id)
     const isFollowing = user.Followings.some(following => following.id === followingId)
 
@@ -275,7 +275,7 @@ const userConroller = {
     return Followship
       .findOne({
         where: {
-          followingId: req.body.followingId,
+          followingId: req.body.id,
           followerId: helpers.getUser(req).id
         }
       })
