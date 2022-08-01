@@ -1,6 +1,13 @@
 {{!--中間上半部 --}}
 <div class="d-flex flex-row justify-content-between card p-2" style="border-radius: 0px;">
   <div class="d-flex flex-column justify-content-start flex-grow-1">
+    <div class="d-flex flex-row align-items-center">
+      <a href="javascript:history.back()">
+        <i class="fas fa-arrow-left mx-2"></i>
+      </a>
+      <h5 class="text-start fw-bold m-0">推文</h5>
+    </div>
+    <hr>
     <div class="d-flex flex-row align-items-center mb-2">
       <a href="/users/{{tweet.UserId}}/tweets">
         <img src="{{checkAvatar tweet.User.avatar}}" class='rounded-circle me-2' width="50" height="50">
@@ -29,7 +36,7 @@
     <div class="d-flex justify-content-start flex-grow-1">
       <div>
         <button type="button" class="btn btn-outline-light me-2" data-bs-toggle="modal"
-          data-bs-target="#tweet-reply-modal">
+          data-bs-target="#tweet-reply-modal-{{tweet.id}}">
           <i class="far fa-comment me-1" style="color: #353535; width: 25px; height: 25px;"></i>
         </button>
       </div>
@@ -55,20 +62,8 @@
 </div>
 {{!-- 中間下半部 --}}
 {{#each tweet.Replies}}
-  {{> reply-card}}
+{{> reply-card}}
 {{/each}}
 
-<!-- 點擊留言時產生的 Modal，不過還沒開始動工 -->
-<div class="modal fade" id="tweet-reply-modal" tabindex="-1" aria-labelledby="tweet-reply-modalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content" style="width: 634px; height: 350px;">
-      <div class="modal-header">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form action="" method="">
-        {{> tweet-reply-form}}
-      </form>
-    </div>
-  </div>
-</div>
+{{!-- 點擊留言時產生的 Modal --}}
+{{> reply-modal}}
