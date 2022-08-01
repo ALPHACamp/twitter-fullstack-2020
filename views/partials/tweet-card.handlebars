@@ -1,19 +1,19 @@
 <tr>
   <td>
-    <div class="d-flex flex-row justfify-content-between">
+    <div class="d-flex flex-row justify-content-between">
       <a href="/users/{{this.UserId}}/tweets">
         <img src="{{checkAvatar this.User.avatar}}" class='rounded-circle me-2' width="50" height="50">
       </a>
       <div class="d-flex flex-column justify-content-start flex-grow-1">
         <div class="d-flex flex-row align-items-center">
           <a href="/users/{{this.UserId}}/tweets" style="text-decoration:none;">
-            <span class="fw-bold me-2" style="font-size: 16px;">{{this.User.name}}</span>
+            <span class="fw-bold me-2" style="font-size: 16px; color: black;">{{this.User.name}}</span>
           </a>
           <span style="color: #6C757D;font-size: 14px;">@{{this.User.account}}．{{relativeTimeFromNow
             this.createdAt}}</span>
         </div>
         <a href="/tweets/{{this.id}}/replies" style="color:#1C1C1C; text-decoration:none;">
-          <p style="font-size: 16px;">
+          <p style="font-size: 16px;" class="limit-tweet-length">
             {{this.description}}
           </p>
         </a>

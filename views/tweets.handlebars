@@ -1,5 +1,5 @@
 {{!--中間上半部 --}}
-<div class="card" style="height: 300px;">
+<div class="card" style="height: 300px; border-radius: 0px;">
   <div class="card-header bg-white">
     <h5 class="text-start fw-bold">首頁</h5>
   </div>
@@ -23,7 +23,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each tweetData}}
+    {{#each tweetsData}}
       {{> tweet-card}}
     {{/each}}
   </tbody>
