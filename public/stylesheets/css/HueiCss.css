@@ -111,7 +111,7 @@ section#Huei-region .btn-white {
   border-color: #FF6600;
 }
 section#Huei-region .tweets {
-  width: 639px;
+  width: 652px;
 }
 section#Huei-region .tweets .title {
   position: relative;
@@ -125,6 +125,13 @@ section#Huei-region .tweets .card-override {
   scrollbar-width: thin;
   overflow-x: hidden;
 }
+section#Huei-region .tweets .card-override::-webkit-scrollbar {
+  width: 6px;
+}
+section#Huei-region .tweets .card-override::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
 section#Huei-region .tweets .list-separate-top {
   position: relative;
   top: 40px;
@@ -137,14 +144,15 @@ section#Huei-region .tweets .list-separate-lg {
   position: relative;
   top: 190px;
   height: 10px;
-  width: 639px;
+  width: 650px;
   background-color: #E2E2EA;
 }
 section#Huei-region .tweets .list-separate-m {
   position: relative;
   top: 17px;
+  left: 6px;
   height: 1px;
-  width: 639px;
+  width: 645px;
   background-color: #E2E2EA;
   margin-bottom: 18px;
 }
@@ -302,6 +310,13 @@ section#Huei-region .card-override-reply {
   scrollbar-width: thin;
   overflow-x: hidden;
 }
+section#Huei-region .card-override-reply::-webkit-scrollbar {
+  width: 6px;
+}
+section#Huei-region .card-override-reply::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
 section#Huei-region .like-reply-number .number {
   display: inline;
   color: #000000;
@@ -345,4 +360,15 @@ section#Huei-region #loading-image {
   top: 100px;
   left: 240px;
   z-index: 100;
+}
+section#Huei-region .name-helper-tab {
+  text-align: right;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  color: #FC5A5A;
+  position: relative;
+  top: 255px;
+  right: 100px;
 }

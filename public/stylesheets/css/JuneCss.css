@@ -350,6 +350,7 @@
   width: 634px;
   height: 610px;
   border-radius: 14px;
+  overflow: hidden;
 }
 #profile-region #profile-middle .user-info #edit-profile-modal .modal-header {
   height: 57px;
@@ -442,14 +443,6 @@
   background: transparent;
   border: none;
   padding-left: 17.84px;
-}
-#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input input::-moz-placeholder {
-  color: #B5B5BE;
-  font-size: 16px;
-}
-#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input input:-ms-input-placeholder {
-  color: #B5B5BE;
-  font-size: 16px;
 }
 #profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input input::placeholder {
   color: #B5B5BE;

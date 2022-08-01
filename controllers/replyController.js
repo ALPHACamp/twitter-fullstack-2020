@@ -9,7 +9,7 @@ const replyController = {
             User, Like, Reply,
             { model: Reply, include: User }
           ],
-          order: [['createdAt', 'DESC']]
+          order: [[Reply, 'createdAt', 'DESC']]
         })
 
       let users = await User.findAll({
