@@ -16,7 +16,7 @@ module.exports = {
       // 每位 user 隨機 like 10篇推文，不須排除自己
       users.reduce((acc, cur) => {
         return acc.concat(Array.from(
-          getNoRepeatRandomIndices(tweets.length, [10]),
+          getNoRepeatRandomIndices(tweets.length, 10),
           (v, i) => ({
             UserId: cur.id,
             TweetId: tweets[v].id,
