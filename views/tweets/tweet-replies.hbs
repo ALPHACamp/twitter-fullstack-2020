@@ -76,7 +76,7 @@
 
 <!-- Reply Modal -->
 <div class="modal fade" id="replyTweet" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content" style="border-radius: 14px;">
         <div class="modal-header pb-1">
           <button id="close-reply-modal" type="button" class="btn border-0 p-0 ms-0" data-bs-dismiss="modal" aria-label="Close"><i class="noti-danger"></i></button>
@@ -107,12 +107,10 @@
   </div>
   {{!-- 回覆的推文資料結束 --}}
   <form id="reply-input" class="row g-0 mt-2" action="" method="post" enctype="multipart/form-data" >
-    <img id="reply-avatar" src="{{currentUser.avatar}}" alt="model-user-avatar" class="avatar-sm rounded-circle col-1">
-    <textarea id="reply-comment" name="comment" class="col-10 ms-3 border-0 overflow-hidden" maxlength="140" placeholder="推你的回覆" rows="6" style="resize: none;"></textarea>
-    <div id="reply-description-length" class="text-black-50 ms-auto me-3 fs-6 align-self-center" >
-    </div>
-    <small id="error-msg" class="offset-md-6 col-4 mt-2 me-3 text-error text-end"></small>
-    <p id="post-comment" class="btn btn-brand rounded-pill fw-light col-2 mb-0" style="width: 60px;" >回覆</p>
+    <img id="reply-avatar" src="{{currentUser.avatar}}" alt="model-user-avatar" class="avatar-sm rounded-circle col-1 ms-3">
+    <textarea id="reply-comment" name="comment" class="col-10 ms-3 mb-3 border-0 overflow-hidden" maxlength="140" placeholder="推你的回覆" style="resize: none; height:150px;"></textarea>
+    <small id="error-msg" class="offset-md-6 col-4 mt-2 me-4 text-error text-end"></small>
+    <p id="post-comment" class="btn btn-brand rounded-pill fw-light col-2 mb-0 ms-3" style="width: 60px;" >回覆</p>
   </form>
         </div>
           

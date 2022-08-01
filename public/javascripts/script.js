@@ -23,7 +23,7 @@ dataPanel.addEventListener('input', e => {
   } else if (e.target.matches('#info-intro')) {
     infoIntroCheck(e.target)
   } else if (e.target.matches('#reply-comment')) {
-    replyFormVerify(e)
+    replyFormCheck(e.target)
   }
 })
 
@@ -33,13 +33,6 @@ dataPanel.addEventListener('change', e => {
   }
 })
 
-const replyInputs = document.querySelector('#reply-input')
-
-if (replyInputs) {
-  replyInputs.addEventListener('submit', e => {
-    replyFormVerify(e)
-  })
-}
 // 接收後端傳來的錯誤訊息
 function showErrorMessage (message) {
   const div = document.querySelector('#messages-area')
@@ -118,31 +111,22 @@ async function postTweetReply (tid) {
   closeBtn.click()
 }
 
-function replyFormVerify (e) {
-  const replyTextArea = document.querySelector('#reply-comment')
+function replyFormCheck (target) {
   const errorMsg = document.querySelector('#error-msg')
-  if (e === 'submit') {
-    if (replyTextArea.value.length === 0 || replyTextArea.value.length > 140) {
-      e.preventDefault()
-      e.stopPropagation()
-      errorMsg.textContent = '內容不可空白'
-    }
-  }
-  if (replyTextArea.value.length === 0) {
+  if (target.value.length === 0) {
     errorMsg.classList.remove('text-black-50')
     errorMsg.classList.add('text-error')
-    errorMsg.textContent = '內容不可空白'
+    errorMsg.textContent = '內容不可空白 0/140'
   }
-  if (replyTextArea.value.length > 0 && replyTextArea.value.length < 140) {
+  if (target.value.length > 0 && target.value.length <= 140) {
     errorMsg.classList.add('text-black-50')
     errorMsg.classList.remove('text-error')
-    console.log(errorMsg.textContent.length)
-    errorMsg.textContent = replyTextArea.value.length + '/140'
+    errorMsg.textContent = `${target.value.length}/140`
   }
-  if (replyTextArea.value.length >= 140) {
+  if (target.value.length > 140) {
     errorMsg.classList.remove('text-black-50')
     errorMsg.classList.add('text-error')
-    errorMsg.textContent = '字數不可超過140字'
+    errorMsg.textContent = `字數不可超過140字 ${target.value.length}/140`
   }
 }
 

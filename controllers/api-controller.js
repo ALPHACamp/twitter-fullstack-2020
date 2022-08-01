@@ -104,7 +104,6 @@ const apiController = {
   postTweetReply: async (req, res, next) => {
     const User = helpers.getUser(req)
     const comment = req.body.comment
-    console.log(req.body)
     const TweetId = req.params.id
     const existTweet = await Tweet.findByPk(TweetId, { raw: true })
     if (!existTweet) {
@@ -121,7 +120,6 @@ const apiController = {
     }
     // return res.json({status: 'success', existTweet})
     const data = await Reply.create({ UserId: User.id, TweetId, comment })
-    console.log()
     return res.status(200).json({
       status: 'success',
       data: {
