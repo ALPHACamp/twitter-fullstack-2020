@@ -11,8 +11,28 @@
       使用者列表
     </a>
   </li>
-  <a class="d-flex logout" href="/admin/logout" onclick="return confirm(`確定要登出嗎？`)">
+  <btn class="btn d-flex logout" href="/admin/logout" id="logout">
     <img src="/images/icon/logout.png" style="width:22px;height:20px;margin:0px" alt="">
     登出
-  </a>
+  </btn>
 </ul>
+
+  <script type="text/javascript">
+    $('#logout').on('click', function () {
+      Swal.fire({
+        title: "你確定要登出嗎？",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#5cb85c',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '是，我要登出'
+        // cancelButtonText: "否",
+        // cancelButtonColor: "#6c757d",
+        // allowOutsideClick: false
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "/logout";
+        }
+      })
+    });
+  </script>
