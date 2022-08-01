@@ -247,7 +247,7 @@ const userConroller = {
       .catch(err => next(err))
   },
   addFollowship: (req, res, next) => {
-    const { followingId } = Number(req.body)
+    const followingId = Number(req.body.followingId)
     const followerId = Number(req.user.id)
     const isFollowing = req.user.Followings.some(following => following.id === followingId)
 
