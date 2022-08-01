@@ -55,14 +55,10 @@ const apiController = {
     // Promise.all 同時尋找email.id.account
     return Promise.all(asyncTasks)
       .then(([user, sameEmail, sameAccount, avatar, cover, newPassword]) => {
-        if (sameEmail) {
-          req.flash('error_messages', '無法使用與他人相同的email或account')
-          email = ''
+        if (sameEmail || sameAccount) {
+          throw new Error('error_messages', '無法使用與他人相同的email或account')
         }
-        if (sameAccount) {
-          req.flash('error_messages', '無法使用與他人相同的email或account')
-          account = ''
-        }
+
         if (!user) return res.json({ status: 'error', message: "user isn't existed!" })
 
         return user.update({
