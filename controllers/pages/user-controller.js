@@ -248,13 +248,13 @@ const userConroller = {
   },
   addFollowship: (req, res, next) => {
     const user = helpers.getUser(req)
-    const followingId = Number(req.body.id)
+    const followingId = Number(req.body.followingId) || Number(req.body.id)
     const followerId = Number(user.id)
     const isFollowing = user.Followings.some(following => following.id === followingId)
 
     if (followerId === followingId) {
       req.flash('error_messages', '使用者禁止追蹤自己')
-      return res.redirect('back')
+      return res.redirect(200, 'back')
     }
 
     if (!isFollowing) {
@@ -275,7 +275,7 @@ const userConroller = {
     return Followship
       .findOne({
         where: {
-          followingId: req.body.id,
+          followingId: req.params.followingId,
           followerId: helpers.getUser(req).id
         }
       })

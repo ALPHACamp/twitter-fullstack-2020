@@ -16,8 +16,7 @@
           <img class="notification" src="/images/icon-black-notification.png">
         </a>
         {{#if user.isFollowing}}
-          <form action="/followships?_method=DELETE" method="POST" style="display: contents;">
-            <input type="hidden" value="{{user.id}}" name="followingId">
+          <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: contents;">
             <button type="submit" class="user-following">正在跟隨</button>
           </form>
         {{else}}

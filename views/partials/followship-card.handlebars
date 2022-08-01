@@ -8,11 +8,12 @@
         <span class="fw-bold reply-name">{{this.name}}</span>
       </a>
       {{#if this.isFollowing}}
-      <form action="/followships?_method=DELETE" method="POST" style="display: contents;">
+      <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
         <button type="submit" class="user-following">正在跟隨</button>
       </form>
       {{else}}
       <form action="/followships" method="POST" class="follow-btn" style="display: contents;">
+        <input type="hidden" value="{{this.id}}" name="followingId">
         <button type="submit" class="user-unfollowing">跟隨</button>
       </form>
       {{/if}}
