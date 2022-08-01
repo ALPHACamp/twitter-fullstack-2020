@@ -85,7 +85,7 @@
   margin-bottom: 92px;
 }
 
-.user-avatar {
+.user-card .user-avatar {
   width: 141.1px;
   height: 140px;
   border: var(--white) solid 4px;
@@ -324,7 +324,9 @@
 .modal .user-avatar {
   height: 140px;
   width: 141.10406494140625px;
-
+  border: var(--white) solid 4px;
+  border-radius: 50%;
+  box-sizing: border-box;
   position: absolute;
   top: 181px;
   left: 16.13px;

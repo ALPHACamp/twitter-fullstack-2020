@@ -1,4 +1,5 @@
 const editUser = document.querySelector('#edit-user')
+const saveUser = document.querySelector('#user-modal-save')
 
 function showEditUserModal (data) {
   const modalForm = document.querySelector('#user-modal-form')
@@ -9,6 +10,7 @@ function showEditUserModal (data) {
   modalForm.action = `/api/users/${data.id}`
   modalBanner.style.background = `linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url(${data.banner})`
   modalAvatar.style.background = `linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url(${data.avatar})`
+  saveUser.dataset.id = data.id
 
   modalBody.innerHTML = `
     <div>
@@ -35,6 +37,22 @@ function showEditUserModal (data) {
   `
 }
 
+function changeUser (user) {
+  const banner = document.querySelector('.user-card .user-banner')
+  const avatars = document.querySelectorAll('.user-avatar')
+  const names = document.querySelectorAll('.user-name')
+  const introduction = document.querySelector('.user-card .user-introduction')
+
+  banner.src = user.banner
+  avatars.forEach(avatar => {
+    avatar.src = user.avatar
+  })
+  names.forEach(name => {
+    name.innerHTML = user.name
+  })
+  introduction.innerHTML = user.introduction
+}
+
 function countWord (data) {
   document.querySelector(`#${data.id}`)
     .parentElement
@@ -52,5 +70,24 @@ editUser.addEventListener('click', event => {
   axios(`/api/users/${event.target.dataset.id}`)
     .then(res => {
       showEditUserModal(res.data)
+    })
+})
+
+saveUser.addEventListener('click', event => {
+  const banner = document.querySelector('#edit-user-modal #banner')
+  const avatar = document.querySelector('#edit-user-modal #avatar')
+  const name = document.querySelector('#edit-user-modal #modal-input-name')
+  const introduction = document.querySelector('#edit-user-modal #modal-input-introduction')
+
+  const data = new FormData()
+  data.append('banner', banner.files[0])
+  data.append('avatar', avatar.files[0])
+  data.append('name', name.value)
+  data.append('introduction', introduction.value)
+
+  axios
+    .post(`/api/users/${event.target.dataset.id}`, data)
+    .then(res => {
+      changeUser(res.data.user)
     })
 })

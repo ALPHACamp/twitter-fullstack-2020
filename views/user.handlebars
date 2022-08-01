@@ -3,7 +3,7 @@
     <img class="user-arrow" src="/images/icon-black-back.png">
   </a>
   <div>
-    <h5 class="fw-bold user-header-name">{{user.name}}</h5>
+    <h5 class="fw-bold user-header-name user-name">{{user.name}}</h5>
     <p class="user-header-tweet">{{user.tweetCounts}}推文</p>
   </div>
 </div>
@@ -82,7 +82,7 @@
         <div class="modal-header">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           <h5 class="modal-title" id="edit-user-ModalLabel">編輯個人資料</h5>
-          <button type="submit" class="modal-save">儲存</button>
+          <button type="button" class="modal-save" data-bs-dismiss="modal" id="user-modal-save">儲存</button>
         </div>
   
         <div class="user-banner" id="user-modal-banner">

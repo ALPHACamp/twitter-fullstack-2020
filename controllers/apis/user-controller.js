@@ -14,8 +14,7 @@ const userController = {
       .then(user => {
         if (!user || isAdmin(user)) throw new Error('使用者不存在')
 
-        const { id, name, introduction, banner, avatar } = user
-        res.status(200).json({ id, name, introduction, banner, avatar })
+        res.status(200).json(user)
       })
       .catch(err => next(err))
   },
@@ -44,8 +43,7 @@ const userController = {
         })
       })
       .then(user => {
-        req.flash('success_messages', '使用者資料編輯成功')
-        res.redirect(200, `/users/${user.id}/tweets`)
+        res.status(200).json({ user })
       })
       .catch(err => next(err))
   }

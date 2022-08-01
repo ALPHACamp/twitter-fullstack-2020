@@ -1,8 +1,8 @@
 <div class="reply d-flex">
-  <img src="{{checkAvatar this.User.avatar}}" class="rounded-circle reply-avatar">
+  <img src="{{checkAvatar this.User.avatar}}" class="rounded-circle reply-avatar user-avatar">
   <div>
     <div class="reply-secondary">
-      <span class="fw-bold reply-name">{{this.User.name}}</span>
+      <span class="fw-bold reply-name user-name">{{this.User.name}}</span>
       <span>@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
     </div>
     <div class="reply-secondary">
