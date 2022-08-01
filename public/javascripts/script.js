@@ -29,16 +29,21 @@ dataPanel.addEventListener('change', e => {
   }
 })
 
-const replyInputs = document.querySelector('#reply-comment')
+const replyInputs = document.querySelector('#reply-Inputs')
 
 if (replyInputs) {
   replyInputs.addEventListener('submit', e => {
     replyFormVerify(e)
   })
-  replyInputs.addEventListener('input', e => {
-    replyFormVerify(e)
+}
+
+const replyComment = document.querySelector('#reply-comment')
+if (replyComment) {
+  replyComment.addEventListener('input', e => {
+    replyFormVerify(e)g
   })
 }
+
 // 接收後端傳來的錯誤訊息
 function showErrorMessage(message) {
   const div = document.querySelector('#messages-area')
