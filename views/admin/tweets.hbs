@@ -16,9 +16,9 @@
     <li class="list-group-item d-flex align-items-start" style="border: 1px solid #E6ECF0;">
       <div class="mt-2">
         {{#if this.User.avatar}}
-        <img src="{{this.User.avatar}}" alt="" style="width: 50px;" class="me-3">
+        <div class="mt-2 rounded-circle" style="height: 50px; width: 50px; margin-right: 12px; background: url('{{this.User.avatar}}'); background-size: cover; background-position: center;"></div>
         {{else}}
-        <img src="/images/img.png" alt="" style="width: 50px;" class="me-3">
+        <div class="mt-2 rounded-circle" style="height: 50px; width: 50px; margin-right: 12px; background: url('/images/img.png'); background-size: cover; background-position: center;"></div>
         {{/if}}
       </div>
 
