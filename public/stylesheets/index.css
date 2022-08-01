@@ -15,6 +15,7 @@
 }
 
 body {
+  margin-inline: auto;
   min-width: 960px;
   max-width: 960px;
 }

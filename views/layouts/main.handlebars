@@ -21,7 +21,7 @@
   <link href="/stylesheets/index.css" rel="stylesheet">
 </head>
 
-<body class="">
+<body>
   {{#if loginUser}}
   <div class="row justify-content-center">
     <div class="col-2">
@@ -33,13 +33,16 @@
       {{{body}}}
     </div>
     {{else}}
-    <div class="col-6 overflow-visible">
+    <div class="col-7 overflow-visible">
       {{> messages}}
       {{{body}}}
     </div>
-    <div class="col-3">
-      {{> right-nav}}
-    </div>
+      {{#ifCond path "/setting"}}
+      {{else}}
+      <div class="col-3">
+        {{> right-nav}}
+      </div>
+      {{/ifCond}}
     {{/if}}
   </div>
 
