@@ -66,6 +66,15 @@ function previewImage (data) {
     .style.background = `linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url(${window.URL.createObjectURL(data.files[0])})`
 }
 
+function removeBanner () {
+  const banner = document.querySelector('#banner')
+  const removeChecked = document.querySelector('#remove-checked')
+
+  banner.value = '' // 移除banner的file
+  banner.parentElement.style.background = 'linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url("/images/user-defaultBanner.png")'
+  removeChecked.checked = 'on'
+}
+
 editUser.addEventListener('click', event => {
   axios(`/api/users/${event.target.dataset.id}`)
     .then(res => {
@@ -78,12 +87,16 @@ saveUser.addEventListener('click', event => {
   const avatar = document.querySelector('#edit-user-modal #avatar')
   const name = document.querySelector('#edit-user-modal #modal-input-name')
   const introduction = document.querySelector('#edit-user-modal #modal-input-introduction')
+  const removeChecked = document.querySelector('#remove-checked')
 
   const data = new FormData()
   data.append('banner', banner.files[0])
   data.append('avatar', avatar.files[0])
   data.append('name', name.value)
   data.append('introduction', introduction.value)
+  if (removeChecked.value === 'on') {
+    data.append('removeChecked', removeChecked.value)
+  }
 
   axios
     .post(`/api/users/${event.target.dataset.id}`, data)

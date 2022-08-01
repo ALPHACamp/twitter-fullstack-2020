@@ -90,8 +90,10 @@
             <img class="add-photo" src="/images/icon-white-add-photo.png">
           </label>
           <input class="form-control" style="display: none;" type="file" class="form-control-file" id="banner" name="banner" onchange="previewImage(this)">
-          
-          <img class="remove-photo" src="/images/icon-white-close.png" onclick="removeBanner">
+          <label for="remove-checked">
+            <img class="remove-photo" src="/images/icon-white-close.png" onclick="removeBanner()">
+          </label>
+          <input type="checkbox" id="remove-checked" name="remove-checked" style="display: none;">
         </div>
   
         <div class="user-avatar" id="user-modal-avatar" style="background-size: cover;">

@@ -20,7 +20,7 @@ const userController = {
   },
   postUser: (req, res, next) => {
     const UserId = req.params.userId
-    const { name, introduction } = req.body
+    const { name, introduction, removeChecked } = req.body
     const banner = req.files?.banner || []
     const avatar = req.files?.avatar || []
 
@@ -38,7 +38,7 @@ const userController = {
         return user.update({
           name,
           introduction,
-          banner: bannerFilePath || user.banner,
+          banner: bannerFilePath || (removeChecked ? '' : user.banner), // 若有上傳檔案，使用新banner，若無，先確認使用者是否點選移除
           avatar: avatarFilePath || user.avatar
         })
       })
