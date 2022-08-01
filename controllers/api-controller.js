@@ -44,8 +44,10 @@ const apiController = {
     if (!name && !email && !password && !account && !introduction && !files) {
       throw new Error('Need to enter a field.')
     }
+    if (name?.length > 50) throw new Error('超過字數上限，name 上限 50 字')
+    if (introduction?.length > 160) throw new Error('超過字數上限，自我介紹數字上限 160 字')
 
-    const asyncTasks = [User.findByPk(req.params.id)]
+    const asyncTasks = [User.findByPk(Number(req.params.id))]
     email ? asyncTasks.push(User.findOne({ where: { email }, raw: true, nest: true })) : asyncTasks.push('')
     account ? asyncTasks.push(User.findOne({ where: { account } })) : asyncTasks.push('')
     files?.avatar ? asyncTasks.push(imgurFilesHandler(files.avatar)) : asyncTasks.push('')
@@ -55,10 +57,7 @@ const apiController = {
     // Promise.all 同時尋找email.id.account
     return Promise.all(asyncTasks)
       .then(([user, sameEmail, sameAccount, avatar, cover, newPassword]) => {
-        if (sameEmail || sameAccount) {
-          throw new Error('無法使用與他人相同的email或account')
-        }
-
+        if (sameEmail || sameAccount) throw new Error('無法使用與他人相同的email或account')
         if (!user) return res.json({ status: 'error', message: "user isn't existed!" })
 
         return user.update({
