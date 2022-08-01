@@ -1,43 +1,13 @@
 <div class="wrapper d-flex">
 
   {{> modals}}
-
-  <!-- Sidebar -->
-  <nav id="left-sidebar">
-    <ul class="list-unstyled" id="list">
-      <img src="https://upload.cc/i1/2022/07/29/g7ZiA1.png" alt="ac-logo" id="ac-logo">
-      <li>
-        <h4><a href="/tweets"><img src="https://upload.cc/i1/2022/07/29/YZQVxJ.png" alt="index" class="icon"> 首頁</a>
-        </h4>
-      </li>
-      <li>
-        <h4><a href="/users/{{user.id}}"><img src="https://upload.cc/i1/2022/07/29/za0M5r.png" alt="index" class="icon">
-            個人資料</a></h4>
-      </li>
-      <li>
-        <h4><a href="/users/{{user.id}}/setting"><img src="https://upload.cc/i1/2022/07/29/AQiCy4.png" alt="index"
-              class="icon"> 設定</a></h4>
-      </li>
-      {{!-- todo: 跳出modal --}}
-      <li>
-        <h4>
-          <button type="button" class="badge rounded-pill text-bg-warning tweet-button" data-bs-toggle="modal"
-            data-bs-target="#myModal">
-            推文
-          </button>
-        </h4>
-      </li>
-      <li id="logout">
-        <h3><a href="/logout"><img src="https://upload.cc/i1/2022/07/29/i8J0Gd.png" alt="index" class="icon">登出</a>
-        </h3>
-      </li>
-  </nav>
+  {{>left-content}}
 
   <div class="container">
     <div>
       <h4 id="header"><a href="/tweets">首頁</a>
       </h4>
-      <div class="mb-3" id="post-tweet">
+      <div class="mb-3 post-tweet">
         <a href="/users/{{user.id}}"><img src="{{user.avatar}}" alt="avatar" id="avatar"></a>
         <p id="placeholder" data-bs-toggle="modal" data-bs-target="#myModal">有什麼新鮮事 ?</p>
         <form method="POST" action="/tweets" data-bs-toggle="modal" data-bs-target="#myModal">
@@ -49,17 +19,24 @@
           </h4>
         </form>
       </div>
-      <table class="table">
+      <table class="table" id="postPanel">
         <tbody>
           {{#each tweets}}
           <tr class="post">
-            <td><img src="https://upload.cc/i1/2022/07/29/CW8Hu0.png" alt="post-icon" class="post-icon"></td>
-            <td>{{this.User.name}}
-              <small>@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</small>
-              <p>{{this.description}}</p>
+            <td><a href="/users/{{this.User.id}}/tweets"><img src="https://upload.cc/i1/2022/07/29/CW8Hu0.png"
+                  alt="post-icon" class="post-icon"></td>
+            <td>
+              <a href="/tweets/{{this.id}}/replies" class="post-link">
+                <span>{{this.User.name}}</span>
+                <small>@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</small>
+                <p>{{this.description}}</p>
+              </a>
               <div>
-                <small>{{this.Replies.length}} 回應</small>
-                <small>{{this.Likes.length}}xx喜歡</small>
+                <small> <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="
+                  reply" id="reply" class="btn-show-reply" data-bs-toggle="modal" data-bs-target="#replyModal"
+                    data-id="{{this.id}}">{{this.Replies.length}} 回應</small>
+                <small> <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes"
+                    id="likes">{{this.Likes.length}} 喜歡</small>
               </div>
             </td>
           </tr>

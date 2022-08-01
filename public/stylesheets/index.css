@@ -74,7 +74,7 @@ a {
   left: 60px;
 }
 
-#post-tweet {
+.post-tweet {
   border-bottom: 8px solid rgb(209, 203, 203);
   position: relative;
   margin: 0px;
@@ -88,6 +88,22 @@ textarea {
 
 .tweet-button {
   border: none;
+  width: 80px;
+  height: 40px;
+  color: #FFFFFF;
+  background: #FF6600;
+  border-radius: 50px;
 }
 
-/* modal樣式設定 */
+.post-link:hover {
+  color: rgb(83, 81, 81);
+}
+
+
+
+#reply,
+#likes {
+  width: 25px;
+  height: 25px;
+  margin: 0px 5px;
+}

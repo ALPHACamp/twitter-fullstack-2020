@@ -1,3 +1,4 @@
+{{#if user}}
 <!-- 新增貼文-->
 <div class="modal fade" id="myModal">
   <div class="modal-dialog">
@@ -26,3 +27,23 @@
     </div>
   </div>
 </div>
+
+{{!-- 查看單一貼文 --}}
+<div class="modal fade" id="replyModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body post-modal">
+        {{!-- todo: 帶入對應資料 --}}
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+{{/if}}

@@ -1,4 +1,4 @@
-const { Tweet, User, Reply } = require('../models')
+const { Tweet, User, Reply, Like } = require('../models')
 const helpers = require('../_helpers')
 
 const tweetController = {
@@ -6,7 +6,7 @@ const tweetController = {
     return Tweet.findAll({
       order: [['createdAt', 'DESC']],
       nest: true,
-      include: [User, Reply]
+      include: [User, Reply, Like]
     })
       .then(tweets => {
         const user = helpers.getUser(req)
@@ -42,8 +42,47 @@ const tweetController = {
         res.redirect('/tweets')
       })
       .catch(err => next(err))
+  },
+  getTweet: (req, res, next) => {
+    const tweetId = req.params.id
+    return Promise.all([Tweet.findByPk(tweetId, {
+      order: [['createdAt', 'DESC']],
+      raw: true,
+      nest: true,
+      include: [User, Reply, Like]
+    }),
+    Reply.findAll({
+      order: [['createdAt', 'DESC']],
+      raw: true,
+      nest: true,
+      include: User,
+      where: { tweet_id: tweetId }
+    }),
+    Like.findAll({
+      raw: true,
+      where: { tweet_id: tweetId }
+    })
+    ])
+      .then(([tweet, replies, likes]) => {
+        const data = replies.map(r => ({
+          ...r
+        }))
+        res.render('tweet', { tweet: tweet, replies: data, likes })
+      })
+      .catch(err => next(err))
+  },
+  postReply: (req, res) => {
+    // if (req.body.reply.length > 140) {
+    //   return res.redirect('back')
+    // }
+    Reply.create({
+      userId: helpers.getUser(req).id,
+      TweetId: req.params.id,
+      comment: req.body.reply
+    }).then(reply => {
+      res.redirect(`/tweets/${req.params.id}/replies`)
+    })
   }
-
 }
 
 module.exports = tweetController

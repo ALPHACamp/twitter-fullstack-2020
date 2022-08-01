@@ -62,7 +62,7 @@ module.exports = {
     }, {
       name: 'user5',
       account: 'user5',
-      email: 'user1@example.com',
+      email: 'user5@example.com',
       password: await bcrypt.hash('12345678', 10),
       avatar: 'https://randomuser.me/api/portraits/men/17.jpg',
       introduction: faker.lorem.text().substring(0, 160),

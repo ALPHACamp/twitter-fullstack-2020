@@ -1,0 +1,62 @@
+<div class="wrapper d-flex">
+
+  {{> modals}}
+  {{>left-content}}
+
+  <div class="container">
+    <h4 id="header"><a href="/tweets">
+        <img class="ms-3" src="https://upload.cc/i1/2022/07/29/bYiz5s.png" alt=""
+          style="height: 30%; width: 4%; margin-right: 25px;">
+        推文</a>
+    </h4>
+    {{!-- 推文 --}}
+    <div class="px-2 post-tweet table" id="tweet">
+      <a href="/users/{{tweet.User.id}}/tweets"><img src="https://upload.cc/i1/2022/07/29/CW8Hu0.png" alt="post-icon"
+          class="post-icon"></a>
+      <div>
+        <div>
+          <span>{{tweet.User.name}}</span>
+          <small>@{{tweet.User.account}}．{{relativeTimeFromNow tweet.createdAt}}</small>
+          <p class="description">{{tweet.description}}</p>
+        </div>
+        {{!-- 推文數據 --}}
+        <div class="d-flex mb-4">
+          <div style="margin-right: 20px;">
+            <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="reply" id="reply" class="btn-show-reply"
+              data-bs-toggle="modal" data-bs-target="#replyModal" data-id="{{tweet.id}}">
+            {{replies.length}} 回覆
+          </div>
+          <div>
+            {{!-- todo: like功能 --}}
+            <span class="second"><img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes" id="likes"><a
+                href="/users/{{targetUser.id}}/followers" style="text-decoration:none;color: #171725">{{likes.length}}
+                喜歡次數</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{!-- 貼文的回覆 --}}
+    <table class="table">
+      <tbody>
+        {{#each replies}}
+        <tr class="post">
+          <td><a href="/users/{{this.User.id}}/tweets"><img src="https://upload.cc/i1/2022/07/29/CW8Hu0.png"
+                alt="post-icon" class="post-icon"></td>
+          <td>{{this.User.name}}
+            <small>@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</small>
+            <p>回覆
+              {{!-- todo: 解bug --}}
+              <span>@ each內抓不到tweet資料{{tweet.User.account}}</span>
+            </p>
+            <p>{{this.comment}}</p>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+  </div>
+
+  {{>right-content}}
+
+</div>
