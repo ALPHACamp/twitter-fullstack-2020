@@ -4,7 +4,7 @@ const faker = require('faker')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const users = await queryInterface.sequelize.query(
-      'SELECT id FROM Users;',
+      'SELECT id FROM Users WHERE `role` <> "admin";',
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
     const tweets = await queryInterface.sequelize.query(
@@ -15,7 +15,7 @@ module.exports = {
     // 每篇推文隨機3個人留言
     await queryInterface.bulkInsert('Replies',
       Array.from({ length: tweets.length * 3 }, (_, i) => ({
-        comment: faker.lorem.text(),
+        comment: faker.lorem.sentence(Math.ceil(Math.random() * 25 + 4)),
         UserId: users[Math.floor(Math.random() * users.length)].id,
         TweetId: tweets[i % tweets.length].id,
         createdAt: new Date(),

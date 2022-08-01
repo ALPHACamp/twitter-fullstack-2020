@@ -1,15 +1,17 @@
-const getNoRepeatRandomIndex = (randomRange, length, excludeIndex) => {
+// const { sequelize } = require('../models')
+
+const getNoRepeatRandomIndices = (randomRange, length, excludeIndices = []) => {
   // randomRange: Math.random 要乘的範圍值
   // length: 要輸出的 randomIndex 陣列長度
-  // excludeIndex: 要從 randomIndex 排除的值
+  // excludeIndices: 要從 randomIndex 排除的值
 
   const randomIndex = []
   // 若無輸入length則給隨機數，且若有excludeIndex會少1項，故要-1
-  length = length || Math.ceil(Math.random() * (randomRange - (excludeIndex ? 1 : 0)))
+  length = length || Math.ceil(Math.random() * (randomRange - (excludeIndices.length ? 1 : excludeIndices.length)))
 
   while (randomIndex.length < length) {
     const data = Math.floor(Math.random() * randomRange)
-    if (!randomIndex.includes(data) && data !== excludeIndex) {
+    if (!randomIndex.includes(data) && !excludeIndices.includes(data)) {
       randomIndex.push(data)
     }
   }
@@ -18,5 +20,5 @@ const getNoRepeatRandomIndex = (randomRange, length, excludeIndex) => {
 }
 
 module.exports = {
-  getNoRepeatRandomIndex
+  getNoRepeatRandomIndices
 }
