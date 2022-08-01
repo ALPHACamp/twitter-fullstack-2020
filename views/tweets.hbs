@@ -73,8 +73,50 @@
             </div>
           </div>
         </div>
-        {{> reply-modal tweet=this user=../currentUser}}
         {{/each}}
+        {{!-- 每個人都有第一個管理員的推 --}}
+        <div class="tweet-cards border-bottom border-1 mb-2">
+          <div class="d-flex flex-nowrap ms-3 mt-3">
+            <div class="avatar-container me-1">
+              <a href="#">
+                <i class="logo avatar-sm rounded-pil"></i>
+              </a>
+            </div>
+            <div class="user-description-container d-flex flex-column text-start ms-1 me-3 w-100">
+              <div class="user-name-account mb-2">
+                <a href="#" class="name-link">
+                  <h6 class="user-name fw-bold fs-5 ">Alphitter</h6>
+                </a>
+                <a href="/tweets" class="account-link">
+                  <span class="user-account fw-normal fs-6">@Alphitter</span>
+                </a>
+              </div>
+              <a href="/tweets/{{this.id}}/replies" class="description-link">
+                <div class="description me-4" id="description-{{this.id}}">
+                  <ul>
+                    <li>
+                      <h5 class="description-content">歡迎使用Alphitter：</h1>
+                    </li>
+                    <li>此為預設說明 α 文，若想開始追蹤使用者推文，可以嘗試點擊右側推薦名單，並重新整理頁面，即可看到追蹤者的 α 文。</li>
+                    <li>您可以透過上方輸入框，輸入想說的話，來發出自己的第一則 α 文。</li>
+                    <li>左側推文按鈕則是可以讓你隨時隨地想發推就發推。</li>
+                    <li>追蹤後，可以透過回文按鈕來回覆 α 文，也可以透過點擊愛心，來加入喜歡的 α 文。</li>
+                    <li>左邊個人資料，可以看到自己的版面，自己的推文，自己的回覆，自己的喜歡 α 文。</li>
+                    <li>自己的版面點擊跟隨中文字以及跟隨者，能看到正在追隨清單和追隨者清單。</li>
+                    <li>自己的版面點擊編輯個人資料，可以編輯大頭照、背景圖、名稱、自我介紹。</li>
+                    <li>左邊設定為帳號相關設定，可以設定自己的帳號(不得和他人重複)、名稱、email(不得和他人重複)、重設密碼</li>
+                    <li>右側為熱門推薦使用者，可以瞧瞧他們 α 了什麼?<br></li>
+                    <li>點擊追蹤者或自己的推文，可以進到推文的回覆詳細頁面，來看看大家回應了些什麼<br></li>
+                    <li>您也可以在推文的回覆詳細頁面，點擊回覆按鈕來回覆，愛心按鈕加入喜歡<br></li>
+                    <li>您也可以觀看別人的版面，來瞧瞧別人都發了些什麼 α 文，回覆了那些內容，以及喜歡的 α 文<br></li>
+                    </p>
+                    </ol>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        {{> reply-modal tweet=this user=../currentUser}}
       </div>
       {{!-- 推文卡片結束 --}}
     </div>

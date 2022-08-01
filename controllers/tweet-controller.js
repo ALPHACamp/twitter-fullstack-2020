@@ -90,8 +90,10 @@ const tweetController = {
   getTweets: async (req, res, next) => {
     try {
       const currentUser = helpers.getUser(req)
+      const followingsId = currentUser.Followings.map(user => user.id)
       const topUser = await getTopUser(currentUser)
       const tweets = await Tweet.findAll({
+        where: { UserId: [...followingsId, currentUser.id] },
         order: [['createdAt', 'DESC']],
         attributes: ['id', 'description', 'createdAt'],
         include: [
