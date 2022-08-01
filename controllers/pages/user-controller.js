@@ -1,4 +1,4 @@
-const { User, Tweet, Reply, Like, sequelize } = require('../../models')
+const { User, Tweet, Reply, Like, Followship, sequelize } = require('../../models')
 const bcrypt = require('bcryptjs')
 const helpers = require('../../_helpers')
 
@@ -245,6 +245,46 @@ const userConroller = {
         res.render('followship', { user, followers })
       })
       .catch(err => next(err))
+  },
+  addFollowship: (req, res, next) => {
+    const { followingId } = Number(req.body)
+    const followerId = Number(req.user.id)
+    const isFollowing = req.user.Followings.some(following => following.id === followingId)
+
+    if (followerId === followingId) {
+      req.flash('error_messages', '使用者禁止追蹤自己')
+      return res.redirect('back')
+    }
+
+    if (!isFollowing) {
+      return Followship
+        .create({
+          followerId,
+          followingId
+        })
+        .then(() => {
+          res.redirect('back')
+        })
+        .catch(next)
+    }
+    req.flash('warning_messages', '已追蹤該名使用者')
+    return res.redirect('back')
+  },
+  deleteFollowship: (req, res, next) => {
+    return Followship
+      .findOne({
+        where: {
+          followingId: req.body.followingId,
+          followerId: req.user.id
+        }
+      })
+      .then(followship => {
+        return followship.destroy()
+      })
+      .then(() => {
+        res.redirect('back')
+      })
+      .catch(next)
   }
 }
 
