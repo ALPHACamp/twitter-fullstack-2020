@@ -439,4 +439,16 @@ section#Huei-region {
     left: 240px;
     z-index: 100;
   }
+
+  .name-helper-tab {
+    text-align: right;
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+    color: $errorColor;
+    position: relative;
+    top: 255px;
+    right: 100px;
+  }
 }

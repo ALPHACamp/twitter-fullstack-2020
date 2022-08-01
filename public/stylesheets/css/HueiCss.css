@@ -361,3 +361,14 @@ section#Huei-region #loading-image {
   left: 240px;
   z-index: 100;
 }
+section#Huei-region .name-helper-tab {
+  text-align: right;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  color: #FC5A5A;
+  position: relative;
+  top: 255px;
+  right: 100px;
+}
