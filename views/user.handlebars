@@ -25,10 +25,12 @@
         </a>
         {{#if user.isFollowing}}
           <form action="/followships?_method=DELETE" method="POST" style="display: contents;">
+            <input type="hidden" value="{{user.id}}" name="followingId">
             <button type="submit" class="user-following">正在跟隨</button>
           </form>
         {{else}}
           <form action="/followships" method="POST" style="display: contents;">
+            <input type="hidden" value="{{user.id}}" name="followingId">
             <button type="submit" class="user-unfollowing">跟隨</button>
           </form>
         {{/if}}
