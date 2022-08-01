@@ -13,7 +13,7 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const routes = require('./routes')
 const app = express()
-const port = 3000
+const port = 3000 || process.env.PORT
 
 const SESSION_SECRET = 'secret'
 
