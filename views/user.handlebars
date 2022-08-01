@@ -55,6 +55,7 @@
 
 {{#each tweets}}
   {{> tweet-card}}
+  {{> reply-modal tweet=this}}
 {{/each}}
 
 {{#each replies}}

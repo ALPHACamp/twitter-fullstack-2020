@@ -16,6 +16,7 @@ const tweetController = {
           isLiked: req.user?.Likes.some(l => l.TweetId === t.id)
         }))
         res.render('tweets', { tweetsData })
+        // res.json({ tweetsData })
       })
       .catch(err => next(err))
   },
@@ -99,6 +100,30 @@ const tweetController = {
         tweet.likeCounts = tweet.Likes.length
         tweet.isLiked = req.user?.Likes.some(l => l.TweetId === tweet.id)
         res.render('tweet', { tweet })
+        // res.json({ tweet })
+      })
+      .catch(err => next(err))
+  },
+  addReply: (req, res, next) => {
+    const UserId = helpers.getUser(req).id
+    const TweetId = req.params.tweetId
+    const comment = req.body.comment
+    if (!comment.trim()) {
+      req.flash('error_messages', '請輸入回覆內容')
+      return res.redirect('back')
+    }
+    if (comment.length > 140) {
+      req.flash('error_messages', '回覆內容不可超過140字')
+      return res.redirect('back')
+    }
+    return Reply.create({
+      UserId,
+      TweetId,
+      comment
+    })
+      .then(() => {
+        req.flash('tweet_success', '回覆發送成功')
+        res.redirect('back')
       })
       .catch(err => next(err))
   }
