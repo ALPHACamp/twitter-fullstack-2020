@@ -56,7 +56,7 @@ const apiController = {
     return Promise.all(asyncTasks)
       .then(([user, sameEmail, sameAccount, avatar, cover, newPassword]) => {
         if (sameEmail || sameAccount) {
-          throw new Error('error_messages', '無法使用與他人相同的email或account')
+          throw new Error('無法使用與他人相同的email或account')
         }
 
         if (!user) return res.json({ status: 'error', message: "user isn't existed!" })

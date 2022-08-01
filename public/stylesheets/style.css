@@ -112,3 +112,7 @@ textarea {
 .display-none {
   display: none;
 }
+
+.dark-80 {
+  color: #696974;
+}
