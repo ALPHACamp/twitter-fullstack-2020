@@ -41,6 +41,8 @@ app.use((req, res, next) => {
   res.locals.error_messages = req.flash('error_messages')
   res.locals.warning_messages = req.flash('warning_messages')
   res.locals.loginUser = helpers.getUser(req)
+  res.locals.path = req.path.startsWith('/users') ? '/users' : req.path
+  console.log(res.locals.path)
   next()
 })
 

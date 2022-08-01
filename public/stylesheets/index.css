@@ -11,20 +11,33 @@
   --secondary-purple: #A461D8;
   --secondary-pink: #FF9AD5;
   --white: #FFFFFF;
+  --dark: #171725;
 }
 
 body {
   min-width: 960px;
+  max-width: 960px;
 }
 
 @media (min-width: 1200px) {
   body {
     min-width: 1140px;
+    max-width: 1140px;
   }
 }
 
 * {
+  box-sizing: border-box;
   font-family: 'Noto Sans TC', 'Montserrat', 'Roboto';
+}
+
+a {
+  text-decoration: none;
+  color: var(--dark);
+}
+
+a:hover {
+  color: var(--dark);
 }
 
 .font-text {
