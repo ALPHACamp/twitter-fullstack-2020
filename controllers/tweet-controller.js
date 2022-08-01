@@ -6,26 +6,22 @@ const tweetController = {
   getTweets: async (req, res, next) => {
     try {
       const user = helpers.getUser(req)
-      const likedTweetsId = req.user?.Likes.map(like => like.TweetId)
       const tweets = await Tweet.findAll({
         include: [
-          User
+          User,
+          Reply,
+          Like
         ],
         order: [
           ['created_at', 'DESC'],
           ['id', 'ASC']
-        ],
-        raw: true,
-        nest: true
+        ]
       })
-      for (let i in tweets) {
-        const replies = await Reply.findAndCountAll({ where: { TweetId: tweets[i].id } })
-        const likes = await Like.findAndCountAll({ where: { TweetId: tweets[i].id } })
-        tweets[i].repliedCounts = replies.count
-        tweets[i].likedCounts = likes.count
-        tweets[i].isLiked = likedTweetsId?.includes(tweets[i].id)
-      }
-      return res.render('tweets', { tweets, user })
+      const tweetsList = tweets.map(tweet => ({
+        ...tweet.toJSON(),
+        isLiked: tweet.Likes.some(t => t.UserId === user.id)
+      }))
+      return res.render('tweets', { tweetsList, user })
     }
     catch (err) {
       next(err)

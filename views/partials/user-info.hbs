@@ -26,12 +26,12 @@
   <div class="card-followship ms-2">
     <div class="card-following">
       <a href="/users/{{user.id}}/followings">
-        {{user.followingCounts}} 個跟隨中
+        {{personal.Followings.length}} 個跟隨中
       </a>
     </div>
     <div class="card-follower">
       <a href="/users/{{user.id}}/followers">
-        {{user.followerCounts}} 個跟隨者
+        {{personal.Followers.length}} 個跟隨者
       </a>
     </div>
   </div>
@@ -80,12 +80,12 @@
   <div class="card-followship ms-2">
     <div class="card-following">
       <a href="/users/{{personal.id}}/followings">
-        {{personal.followingCounts}} 個跟隨中
+        {{personal.Followings.length}} 個跟隨中
       </a>
     </div>
     <div class="card-follower">
       <a href="/users/{{personal.id}}/followers">
-        {{personal.followerCounts}} 個跟隨者
+        {{personal.Followers.length}} 個跟隨者
       </a>
     </div>
   </div>

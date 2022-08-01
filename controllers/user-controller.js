@@ -124,36 +124,36 @@ const userController = {
   getPersonalTweets: async (req, res, next) => {
     try {
       const user = helpers.getUser(req)
-      const likedTweetsId = req.user?.Likes.map(like => like.TweetId)
       const personal = await User.findByPk(Number(req.params.id), {
         include: [
-          { model: Tweet }
-        ]
+          Tweet,
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+        ],
       })
+
       const tweets = await Tweet.findAll({
         where: {
           ...personal ? { UserId: personal.id } : {}
         },
         include: [
-          User
+          User,
+          Reply,
+          Like
         ],
         order: [
           ['created_at', 'DESC'],
           ['id', 'ASC']
-        ],
-        raw: true,
-        nest: true
+        ]
       })
-      for (let i in tweets) {
-        const replies = await Reply.findAndCountAll({ where: { TweetId: tweets[i].id } })
-        const likes = await Like.findAndCountAll({ where: { TweetId: tweets[i].id } })
-        tweets[i].repliedCounts = replies.count
-        tweets[i].likedCounts = likes.count
-        tweets[i].isLiked = likedTweetsId?.includes(tweets[i].id)
-      }
+
       const followingsId = user?.Followings?.map(f => f.id)
       user.isFollowed = (followingsId.includes(personal.id))
-      return res.render('profile', { tweets, user, personal: personal.toJSON() })
+      const tweetsList = tweets.map(tweet => ({
+        ...tweet.toJSON(),
+        isLiked: tweet.Likes.some(t => t.UserId === user.id)
+      }))
+      return res.render('profile', { tweetsList, user, personal: personal.toJSON() })
     }
     catch (err) {
       next(err)
@@ -194,35 +194,36 @@ const userController = {
       const user = helpers.getUser(req)
       const personal = await User.findByPk(Number(req.params.id), {
         include: [
-          { model: Tweet },
+          Tweet,
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
           { model: Like, as: Tweet }
         ]
       })
+
       const likedTweetsId = personal?.Likes.map(like => like.TweetId)
       const tweets = await Tweet.findAll({
         where: {
           ...likedTweetsId ? { id: likedTweetsId } : {}
         },
         include: [
-          User
+          User,
+          Reply,
+          Like
         ],
         order: [
           ['created_at', 'DESC'],
           ['id', 'ASC']
-        ],
-        raw: true,
-        nest: true
+        ]
       })
-      for (let i in tweets) {
-        const replies = await Reply.findAndCountAll({ where: { TweetId: tweets[i].id } })
-        const likes = await Like.findAndCountAll({ where: { TweetId: tweets[i].id } })
-        tweets[i].repliedCounts = replies.count
-        tweets[i].likedCounts = likes.count
-        tweets[i].isLiked = likedTweetsId?.includes(tweets[i].id)
-      }
+
       const followingsId = user?.Followings?.map(f => f.id)
       user.isFollowed = (followingsId.includes(personal.id))
-      return res.render('profile-like', { tweets, user, personal: personal.toJSON() })
+      const tweetsList = tweets.map(tweet => ({
+        ...tweet.toJSON(),
+        isLiked: true
+      }))
+      return res.render('profile-like', { tweetsList, user, personal: personal.toJSON() })
     }
     catch (err) {
       next(err)
@@ -233,28 +234,34 @@ const userController = {
       const user = helpers.getUser(req)
       const personal = await User.findByPk(Number(req.params.id), {
         include: [
-          { model: Tweet },
+          Tweet,
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+          { model: Like, as: Tweet }
         ]
       })
+
       const replies = await Reply.findAll({
         where: {
           ...personal ? { UserId: personal.id } : {}
         },
         include: [
           User,
-          { model: Tweet },
           { model: Tweet, include: User }
         ],
         order: [
           ['created_at', 'DESC'],
           ['id', 'ASC']
-        ],
-        raw: true,
-        nest: true
+        ]
       })
+
       const followingsId = user?.Followings?.map(f => f.id)
       user.isFollowed = (followingsId.includes(personal.id))
-      return res.render('profile-reply', { replies, user, personal: personal.toJSON() })
+      const repliesList = replies.map(reply => ({
+        ...reply.toJSON()
+      }))
+
+      return res.render('profile-reply', { repliesList, user, personal: personal.toJSON() })
     }
     catch (err) {
       next(err)
