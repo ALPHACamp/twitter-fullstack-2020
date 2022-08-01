@@ -1,13 +1,23 @@
-<div role="navigation my-5">
-  <ul class='nav nav-tabs'>
-    <li class='nav-item' style="width: 20%;">
-      <a class='nav-link {{#ifCond tab "tweets"}}active{{/ifCond}}' href='/users/{{profileUser.id}}/tweets'>推文</a>
+<ul class="nav nav-tabs mb-2 follow-tab">
+  <a class="text-decoration-none" href="/users/{{profileUser.id}}/tweets">
+    <li class="user-item-tab {{#ifCond tab 'tweets'}}current{{/ifCond}}">
+      <span class="profile-tweet-word fw-bold {{#ifCond tab 'tweets'}}text-brand{{/ifCond}}">
+        推文
+      </span>
     </li>
-    <li class='nav-item' style="width: 20%;">
-      <a class='nav-link {{#ifCond tab "replies"}}active{{/ifCond}}' href='/users/{{profileUser.id}}/replies'>回覆</a>
+  </a>
+  <a class="text-decoration-none" href="/users/{{profileUser.id}}/replies">
+    <li class="user-item-tab {{#ifCond tab 'replies'}}current{{/ifCond}}">
+      <span class="profile-reply-word fw-bold {{#ifCond tab 'replies'}}text-brand{{/ifCond}}">
+        回覆
+      </span>
     </li>
-    <li class='nav-item' style="width: 20%;">
-      <a class='nav-link {{#ifCond tab "likes"}}active{{/ifCond}}' href='/users/{{profileUser.id}}/likes'>喜歡的內容</a>
+  </a>
+  <a class="text-decoration-none" href='/users/{{profileUser.id}}/likes'>
+    <li class="user-item-tab {{#ifCond tab 'likes'}}current{{/ifCond}}">
+      <span class="profile-like-word fw-bold {{#ifCond tab 'likes'}}text-brand{{/ifCond}}">
+        回覆
+      </span>
     </li>
-  </ul>
-</div>
+  </a>
+</ul>

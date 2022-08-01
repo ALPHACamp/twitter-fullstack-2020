@@ -13,5 +13,7 @@ router.post(
   ]),
   apiController.postUserInfo
 )
+router.post('/followships', apiController.putFollow)
+router.post('/tweet/:id/replies', apiController.postTweetReply)
 
 module.exports = router

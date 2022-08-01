@@ -1,10 +1,12 @@
 const helpers = require('../_helpers')
 const {
-  localFileHandler
-  // imgurFileHandler
+  localFileHandler,
+  imgurFileHandler
 } = require('../helpers/file-helpers')
+const fileHelper =
+  process.env.NODE_ENV === 'production' ? imgurFileHandler : localFileHandler
 
-const { User } = require('../models')
+const { User, Followship, Reply, Tweet } = require('../models')
 
 const apiController = {
   getUserInfo: async (req, res, next) => {
@@ -29,20 +31,27 @@ const apiController = {
     try {
       const currentUser = helpers.getUser(req)
       if (currentUser.id !== Number(req.params.id)) {
-        throw new Error("You can't edit others info")
+        return res
+          .status(200)
+          .json({ status: 'error', message: '你只能編輯你自己的檔案' })
       }
       const editUser = await User.findByPk(Number(req.params.id))
       const { name, introduction } = req.body
-      if (!name) throw new Error('Name is required')
+      if (!name) {
+        return res
+          .status(200)
+          .json({ status: 'error', message: '名稱不能為空白' })
+      }
       let avatar
       let coverPhoto
-      console.log(req.files)
-      req.files.avatar
-        ? (avatar = await localFileHandler(req.files.avatar[0]))
-        : (avatar = currentUser.avatar)
-      req.files.coverPhoto
-        ? (coverPhoto = await localFileHandler(req.files.coverPhoto[0]))
-        : (coverPhoto = currentUser.coverPhoto)
+      if (process.env.NODE_ENV !== 'test') {
+        req.files.avatar
+          ? (avatar = await fileHelper(req.files.avatar[0]))
+          : (avatar = currentUser.avatar)
+        req.files.coverPhoto
+          ? (coverPhoto = await fileHelper(req.files.coverPhoto[0]))
+          : (coverPhoto = currentUser.coverPhoto)
+      }
       const patchedUser = await editUser.update({
         name,
         introduction,
@@ -53,6 +62,77 @@ const apiController = {
     } catch (err) {
       next(err)
     }
+  },
+  putFollow: async (req, res, next) => {
+    try {
+      const UserId = Number(helpers.getUser(req).id)
+      const followingId = Number(req.body.id)
+      if (UserId === followingId) {
+        return res.status(200).json({
+          status: 'error',
+          message: "You can't follow yourself"
+        })
+      }
+
+      const user = await User.findByPk(followingId)
+      if (!user) throw new Error("User didn't exist")
+      if (user.role === 'admin') {
+        return res.status(200).json({
+          status: 'error',
+          message: "You can't follow admin"
+        })
+      }
+
+      const isFollowed = await Followship.findOne({
+        where: { followerId: UserId, followingId }
+      })
+
+      if (isFollowed) {
+        await isFollowed.destroy()
+        return res.redirect('back')
+      }
+
+      await Followship.create({
+        followerId: UserId,
+        followingId
+      })
+      return res.redirect('/')
+    } catch (err) {
+      next(err)
+    }
+  },
+  postTweetReply: async (req, res, next) => {
+    const User = helpers.getUser(req)
+    const comment = req.body.comment
+    console.log(req.body)
+    const TweetId = req.params.id
+    const existTweet = await Tweet.findByPk(TweetId, { raw: true })
+    if (!existTweet) {
+      return res.status(200).json({
+        status: 'error',
+        message: '這個推文已經不存在！'
+      })
+    }
+    if (!comment) {
+      return res.status(200).json({
+        status: 'error',
+        message: '內容不可空白！'
+      })
+    }
+    // return res.json({status: 'success', existTweet})
+    const data = await Reply.create({ UserId: User.id, TweetId, comment })
+    console.log()
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        data,
+        uid: existTweet.UserId,
+        id: User.id,
+        name: User.name,
+        account: User.account,
+        avatar: User.avatar
+      }
+    })
   }
 }
 

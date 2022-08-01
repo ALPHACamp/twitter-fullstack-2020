@@ -12,7 +12,9 @@ const adminController = {
   signIn: async (req, res, next) => {
     try {
       req.flash('success_messages', '成功登入！')
-      res.redirect(302, '/admin/tweets')
+      res.statusCode = 302
+      res.location('/admin/tweets')
+      res.end('')
     } catch (err) {
       next(err)
     }
