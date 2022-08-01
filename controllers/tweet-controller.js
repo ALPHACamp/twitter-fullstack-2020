@@ -8,18 +8,14 @@ const tweetController = {
       const currentUser = helpers.getUser(req)
       const TweetId = req.params.id
       const tweet = await Tweet.findByPk(TweetId, {
-        include: [{ model: Reply, include: User }, User, Like]
+        include: [{ model: Reply, include: User }, User, Like],
+        order: [[Reply, 'createdAt', 'desc']]
       })
       if (!tweet) throw new Error("This tweet didn't exist!")
       const data = tweet.toJSON()
       const isLiked = data.Likes.some(t => t.UserId === currentUser.id)
       const topUser = await getTopUser(currentUser)
-      // let profileUser = await User.findByPk(userId, {
-      //   include: [
-      //     { model: User, as: 'Followers', attributes: ['id'] },
-      //     { model: User, as: 'Followings', attributes: ['id'] }
-      //   ]
-      // })
+
       return res.render('tweets/tweet-replies', {
         tweet: data,
         isLiked,

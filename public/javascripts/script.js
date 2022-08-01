@@ -4,7 +4,7 @@ window.URL = window.URL || window.webkitURL
 const dataPanel = document.querySelector('#data-panel')
 
 dataPanel.addEventListener('click', e => {
-  if (e.target.matches('.r-btn')) {
+  if (e.target.matches('#r-btn')) {
     showReplyModel(e.target.dataset.tid)
   } else if (e.target.matches('#show-info-modal')) {
     showInfoModal(e.target.dataset.userid)
@@ -12,6 +12,8 @@ dataPanel.addEventListener('click', e => {
     postInfoForm(e.target)
   } else if (e.target.matches('#remove-photo')) {
     removeInputFile(e.target)
+  } else if (e.target.matches('#post-comment')) {
+    postTweetReply(e.target.dataset.tid)
   }
 })
 
@@ -20,6 +22,8 @@ dataPanel.addEventListener('input', e => {
     infoNameCheck(e.target)
   } else if (e.target.matches('#info-intro')) {
     infoIntroCheck(e.target)
+  } else if (e.target.matches('#reply-comment')) {
+    replyFormCheck(e.target)
   }
 })
 
@@ -29,18 +33,8 @@ dataPanel.addEventListener('change', e => {
   }
 })
 
-const replyInputs = document.querySelector('#reply-comment')
-
-if (replyInputs) {
-  replyInputs.addEventListener('submit', e => {
-    replyFormVerify(e)
-  })
-  replyInputs.addEventListener('input', e => {
-    replyFormVerify(e)
-  })
-}
 // 接收後端傳來的錯誤訊息
-function showErrorMessage(message) {
+function showErrorMessage (message) {
   const div = document.querySelector('#messages-area')
   div.innerHTML = `<div class="alert alert-light alert-dismissible fade show fixed-top mx-auto mt-5 shadow-sm" role="alert" style="z-index:1200;">
   <div class="row align-items-center ps-5" data-bs-dismiss="alert" aria-label="Close"><p class="fs-6 col-10 mb-0 p-0">${message}</p><a class="col-1" >
@@ -49,54 +43,96 @@ function showErrorMessage(message) {
   fill="#FC5A5A"></path></svg></a></div></div>`
 }
 
-function showReplyModel(tid) {
+function relativeTimeFromNow (t) {
+  // eslint-disable-next-line no-undef
+  dayjs.extend(window.dayjs_plugin_relativeTime)
+  // eslint-disable-next-line no-undef
+  return dayjs(t).fromNow()
+}
+
+function showReplyModel (tid) {
   const avatar = document.querySelector(`#avatar-${tid}`).src
   const name = document.querySelector(`#name-${tid}`).textContent
   const account = document.querySelector(`#account-${tid}`).textContent
   const time = document.querySelector(`#time-${tid}`).textContent
   const description = document.querySelector(`#description-${tid}`).textContent
+  const replyTextArea = document.querySelector('#reply-comment')
 
   const replyAvatar = document.querySelector('#reply-tweet-avatar')
   const replyName = document.querySelector('#reply-tweet-name')
   const replyDescription = document.querySelector('#reply-tweet-description')
-  const replyInput = document.querySelector('#reply-input')
+  const postReplyBtn = document.querySelector('#post-comment')
   const replyTo = document.querySelector('#reply-to')
+  replyTextArea.value = ''
   replyAvatar.src = avatar
   replyName.innerHTML = `${name} <small class="text-muted fw-light" id="reply-tweet-account" style="font-size: 14px;">${account}．${time}</small>`
   replyDescription.textContent = description
-  replyInput.action = `/tweets/${tid}/replies`
   replyTo.textContent = account
+  postReplyBtn.dataset.tid = tid
 }
 
-function replyFormVerify(e) {
+async function postTweetReply (tid) {
   const replyTextArea = document.querySelector('#reply-comment')
-  const errorMsg = document.querySelector('#error-msg')
-  if (e === 'submit') {
-    if (replyTextArea.value.length === 0 || replyTextArea.value.length > 140) {
-      e.preventDefault()
-      e.stopPropagation()
-      errorMsg.textContent = '內容不可空白'
-    }
-  }
+  const replyArea = document.querySelector('#reply-area')
+  const theFirstChild = replyArea.firstChild
+  const userAccount = document.querySelector(`#account-${tid}`)
+  const newReply = document.createElement('div')
+  const closeBtn = document.querySelector('#close-reply-modal')
   if (replyTextArea.value.length === 0) {
+    return showErrorMessage('內容不可空白')
+  }
+  if (replyTextArea.value.length > 140) {
+    return showErrorMessage('字數不可超過140字')
+  }
+
+  // eslint-disable-next-line no-undef
+  const res = await axios.post(`/api/tweet/${tid}/replies`, {
+    comment: replyTextArea.value
+  })
+
+  newReply.className = 'card rounded-0 border-0 border-bottom'
+  newReply.innerHTML = `<div class="row g-0 mx-3"><div class="col-1 my-3 m-auto position-relative"><a href="/users/{{this.User.id}}/tweets">
+    <img src="${
+      res.data.data.avatar
+    }" onerror="this.onerror=null;this.src='/pic/no_pic.png';" class="avatar-sm rounded-circle position-absolute end-0" alt="avatar"/>
+    </a></div><div class="col-11"><div class="card-body"><a href="/users/${
+      res.data.data.id
+    }/tweets" class="text-decoration-none text-black">
+    <h5 class="card-title fw-bolder">${
+      res.data.data.name
+    } <small class="text-muted fw-light">@${
+    res.data.data.account
+  }・${relativeTimeFromNow(res.data.data.data.createdAt)}</small></h5></a>
+    <small class="d-block mt-2">回覆<a class="text-decoration-none text-brand ms-1" href="/users/${
+      res.data.data.uid
+    }/tweets">${userAccount.textContent}</a></small>
+    <p class="card-text mt-2">${
+      res.data.data.data.comment
+    }</p></div></div></div>`
+  replyArea.insertBefore(newReply, theFirstChild)
+  closeBtn.click()
+}
+
+function replyFormCheck (target) {
+  const errorMsg = document.querySelector('#error-msg')
+  if (target.value.length === 0) {
     errorMsg.classList.remove('text-black-50')
     errorMsg.classList.add('text-error')
-    errorMsg.textContent = '內容不可空白'
+    errorMsg.textContent = '內容不可空白 0/140'
   }
-  if (replyTextArea.value.length > 0) {
+  if (target.value.length > 0 && target.value.length <= 140) {
     errorMsg.classList.add('text-black-50')
     errorMsg.classList.remove('text-error')
-    console.log(errorMsg.textContent.length)
-    errorMsg.textContent = replyTextArea.value.length + '/140'
+    errorMsg.textContent = `${target.value.length}/140`
   }
-  if (replyTextArea.value.length >= 140) {
+  if (target.value.length > 140) {
     errorMsg.classList.remove('text-black-50')
     errorMsg.classList.add('text-error')
-    errorMsg.textContent = '字數不可超過140字'
+    errorMsg.textContent = `字數不可超過140字 ${target.value.length}/140`
   }
 }
 
-async function postInfoForm(target) {
+async function postInfoForm (target) {
   try {
     const formName = document.querySelector('#info-name')
     const formIntro = document.querySelector('#info-intro')
@@ -105,7 +141,7 @@ async function postInfoForm(target) {
       formName.value.length > 50 ||
       formIntro.value.length > 160
     ) {
-      return
+      return showErrorMessage('欄位字數不正確，請重新輸入')
     }
 
     // 建構表單
@@ -145,7 +181,7 @@ async function postInfoForm(target) {
   }
 }
 
-function infoNameCheck(target) {
+function infoNameCheck (target) {
   const nameLength = document.querySelector('#name-length')
   const nameMsg = document.querySelector('#name-error-msg')
   const length = target.value.length
@@ -163,7 +199,7 @@ function infoNameCheck(target) {
   nameLength.textContent = `${length}/50`
 }
 
-function infoIntroCheck(target) {
+function infoIntroCheck (target) {
   const introLength = document.querySelector('#intro-length')
   const introMsg = document.querySelector('#intro-error-msg')
   const length = target.value.length
@@ -176,7 +212,7 @@ function infoIntroCheck(target) {
   }
   introLength.textContent = `${length}/160`
 }
-async function showInfoModal(uid) {
+async function showInfoModal (uid) {
   try {
     // eslint-disable-next-line no-undef
     const res = await axios.get(`/api/users/${uid}`)
@@ -214,7 +250,7 @@ async function showInfoModal(uid) {
   }
 }
 
-function showInputFile(target) {
+function showInputFile (target) {
   const fileName = target.value
   const ext = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase()
   const infoCoverPhoto = document.querySelector('#info-cover-photo')
@@ -244,7 +280,7 @@ function showInputFile(target) {
   }
 }
 
-function removeInputFile(target) {
+function removeInputFile (target) {
   const infoCoverPhoto = document.querySelector('#info-cover-photo')
   infoCoverPhoto.style.backgroundImage = `url('${target.dataset.originPhoto}')`
   document.querySelector('#input-cover-photo').value = ''
