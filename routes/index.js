@@ -5,9 +5,9 @@ const passport = require('../config/passport')
 
 const admin = require('./modules/admin')
 const api = require('./modules/api')
+const tweets = require('./modules/tweets')
 
 const userController = require('../controllers/user-controller')
-const tweetController = require('../controllers/tweet-controller')
 const followships = require('./modules/followships')
 const likeController = require('../controllers/like-controller')
 
@@ -17,6 +17,7 @@ const { generalErrorHandler } = require('../middleware/error-handler')
 router.use('/admin', admin)
 router.use('/api', authenticatedUser, api)
 router.use('/followships', authenticatedUser, followships)
+router.use('/tweets', authenticatedUser, tweets)
 
 router.get('/users/:id/setting', authenticatedUser, userController.getUserSetting)
 router.get('/users/:userId', authenticatedUser, userController.getProfile)
@@ -27,11 +28,6 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/logout', authenticatedUser, userController.logout)
 
 router.get('/users/:id/likes', authenticatedUser, likeController.getUserLike)
-
-router.post('/tweets/:id/like', authenticatedUser, likeController.postLike)
-router.post('/tweets/:id/unlike', authenticatedUser, likeController.postUnlike)
-router.get('/tweets', authenticatedUser, tweetController.getTweets)
-router.post('/tweets', authenticatedUser, tweetController.postTweet)
 
 router.use('/', (req, res) => {
   res.redirect('/tweets')
