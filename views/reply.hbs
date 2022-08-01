@@ -3,15 +3,13 @@
 </div>
 
 <div class="col-8 nav-body" style="font-family: 'Noto Sans TC'; font-style: normal;">
-  <ul class="list-group" class="me-3">
-    <li class="list-group-item border-light">
-      <a type="button" href="/" style="margin-left:8px;">
-        <img src="/images/backArrow.png" alt="返回上一頁圖示" style="width: 17px; height:14px;" class="align-top me-3 mt-1">
+  <ul class="list-group" class="me-3 mt-3" style="">
+    <li class="list-group-item " style="border:#E6ECF0 solid 1px">
+      <a type="button" href="/" style="margin-left:8px; margin-top:5px;" class="m-0 p-0" style="width: 17px;"><img src="/images/backArrow.png" alt="返回上一頁圖示"  style="width: 27px; height:24px;" class="align-top me-3 mb-0">
       </a>
-      <h2 class="d-inline" style="font-size: 24px; font-family: 'Noto Sans TC';font-weight: 700;line-height: 26px;"
-        class="">推文</h2>
+      <h2 class="d-inline" style="font-size: 24px; font-family: 'Noto Sans TC';font-weight: 700;line-height: 26px;">推文</h2>
     </li>
-    <li class="list-group-item border-light" style="">
+    <li class="list-group-item" style="border:#E6ECF0 solid 1px">
       <a href="/users/{{userInfo.id}}" type="button">
         <img class="d-inline-block mb-4 me-3" src="{{userInfo.avatar}}" alt="主推文樓主頭像"
           style="width:50px; height:50px; border:#E6ECF0; border-radius:50%">
@@ -29,7 +27,7 @@
         tweet.createdAt
         "上午h:MM・YYYY年MM月DD日"}}</footer>
     </li>
-    <li class="list-group-item d-flex align-items-start border-light">
+    <li class="list-group-item d-flex align-items-start" style="border:#E6ECF0 solid 1px">
       <p style="width: 67px;height: 28px;font-family: 'Montserrat';font-weight: 700;
 font-size: 19px; margin: 0;" class="text-nowrap mt-1 me-4">{{tweet.Replies.length}}
         <span class="text-muted"> 回覆</span>
@@ -41,14 +39,14 @@ font-size: 19px; margin: 0;" class="text-nowrap mt-1">{{likesNum}}
     </li>
 
     {{!-- 第三橫列：reply & 按讚 --}}
-    <li class="list-group-item d-flex align-items-start border-light" id="tweets-panel">
+    <li class="list-group-item d-flex align-items-start" id="tweets-panel" style="border:#E6ECF0 solid 1px">
       <div style="font-size: 14px; color: #6C757D">
         <i class="fa-regular fa-comment me-5 pointer" style="font-size: 24px" data-bs-toggle="modal"
           data-bs-target="#post-reply" data-userid="{{userInfo.id}}" data-username="{{userInfo.name}}"
           data-useraccount="{{userInfo.account}}" data-tweetcreate="{{relativeTimeFromNow tweet.createdAt}}"
           data-tweetdescription="{{tweet.description}}" data-tweetid="{{tweet.id}}" {{#if
           userInfo.avatar}}data-useravatar="{{userInfo.avatar}}" {{else}}data-useravatar="/images/img.png" {{/if}} {{#if
-          currentUser.avatar}}data-loginuseravatar="{{currentUser.avatar}}"
+         user.avatar}}data-loginuseravatar="{{user.avatar}}"
           {{else}}data-loginuseravatar="/images/img.png" {{/if}}>
         </i>
         <span>{{tweet.numberOfReply}}</span>
@@ -72,7 +70,7 @@ font-size: 19px; margin: 0;" class="text-nowrap mt-1">{{likesNum}}
     </li>
 
     {{#each tweet.Replies}}
-    <li class="list-group-item d-flex align-items-start border-light">
+    <li class="list-group-item d-flex align-items-start " style="border:#E6ECF0 solid 1px">
       <a href="/users/{{this.User.id}}" type="button">
         <img src="{{this.User.avatar}}" alt="回覆人頭像" style="width:50px; height:50px; border:#E6ECF0; border-radius:50%"
           class="me-3">

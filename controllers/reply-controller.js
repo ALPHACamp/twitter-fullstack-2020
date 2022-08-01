@@ -29,10 +29,10 @@ const replyController = {
     ])
       .then(([tweet, users]) => {
         if (!tweet) throw new Error("tweet didn't exist!")
+        const user = helpers.getUser(req) ? JSON.parse(JSON.stringify(helpers.getUser(req))) : []
         tweet = JSON.parse(JSON.stringify(tweet))
         const likesNum = tweet.Likes.length
         const userInfo = tweet.User
-        const currentUser = helpers.getUser(req)
         const likedTweetsId = helpers.getUser(req)?.LikeTweets ? helpers.getUser(req).LikeTweets.map(lt => lt.id) : []
         userInfo.isLiked = likedTweetsId.includes(tweet.id) ? tweet.isLiked = likedTweetsId.includes(tweet.id) : false
 
@@ -44,7 +44,7 @@ const replyController = {
           user.isFollowed = followedUserId.includes(user.id)
         }
         users = users.sort((a, b) => b.numberOfFollowers - a.numberOfFollowers).slice(0, 10) // 只取排行前 10 的 users
-        res.render('reply', { users, tweet, userInfo, likesNum, currentUser })
+        res.render('reply', { users, tweet, userInfo, likesNum, user })
       })
       .catch(err => next(err))
   },
