@@ -59,11 +59,11 @@ section#Huei-region {
     background-color: $dark0;
 
     .color-mask {
-      color: $mainColor;
+      color: #FF6600;
     }
 
     .img-mask {
-      filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
+      filter: #FF6600;
     }
   }
 
@@ -139,7 +139,7 @@ section#Huei-region {
   }
 
   .tweets {
-    width: 639px;
+    width: 652px;
 
     .title {
       position: relative;
@@ -153,6 +153,16 @@ section#Huei-region {
       scrollbar-color: $dark30 $dark20;
       scrollbar-width: thin;
       overflow-x: hidden;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      // bar的樣式
+      &::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
     }
 
     .list-separate-top {
@@ -168,18 +178,31 @@ section#Huei-region {
       position: relative;
       top: 190px;
       height: 10px;
-      width: 639px;
+      width: 650px;
       background-color: $dark40;
     }
 
     .list-separate-m {
       position: relative;
       top: 17px;
+      left: 6px;
       height: 1px;
-      width: 639px;
+      width: 645px;
       background-color: $dark40;
       margin-bottom: 18px;
     }
+  }
+
+  .name-helper-tab {
+    text-align: right;
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+    color: $errorColor;
+    position: absolute;
+    top: 255px;
+    right: 100px;
   }
 
   .tweet-card {
@@ -315,18 +338,6 @@ section#Huei-region {
     }
   }
 
-  .name-helper {
-    text-align: right;
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
-    color: $errorColor;
-    position: relative;
-    top: 255px;
-    right: 100px;
-  }
-
   .a-number-check {
     position: absolute;
     top: 250px;
@@ -361,6 +372,16 @@ section#Huei-region {
     scrollbar-color: $dark30 $dark20;
     scrollbar-width: thin;
     overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    // bar的樣式
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
   }
 
   .like-reply-number {
@@ -417,5 +438,132 @@ section#Huei-region {
     top: 100px;
     left: 240px;
     z-index: 100;
+  }
+
+  .name-helper-tab {
+    text-align: right;
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+    color: $errorColor;
+    position: relative;
+    top: 255px;
+    right: 100px;
+  }
+
+  .flex-message-page {
+    display: flex;
+    margin: 0 auto;
+    max-width: 1200px;
+    min-width: 992px;
+
+    .public-message-user {
+
+      .ul-user-online {
+        height: 820px;
+        width: 415px;
+        margin: 0;
+        padding: 0;
+        border-left: 1px solid #E6ECF0;
+        border-right: 1px solid #E6ECF0;
+      }
+
+      .li-user-online {
+        width: 414px;
+        height: 81px;
+        border-bottom: 1px solid #E6ECF0;
+
+        .tweet-user-avatar {
+          margin-top: 16px;
+          margin-left: 15px;
+        }
+
+        .user-title-span {
+          position: relative;
+          top: 24px;
+          width: 158px;
+          height: 26px;
+          font-weight: 700;
+          font-size: 24px;
+          color: #171725;
+          margin-left: 23px;
+        }
+
+        .li-name {
+          position: relative;
+          top: 10px;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 26px;
+          color: #1C1C1C;
+        }
+
+        .li-account {
+          position: relative;
+          top: 10px;
+          left: 5px;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 26px;
+          color: #6C757D;
+        }
+      }
+    }
+
+    .public-message {
+      height: 815px;
+      width: 712px;
+      border-right: 1px solid #E6ECF0;
+
+      .public-message-title {
+        height: 81px;
+        width: 712px;
+        border-bottom: 1px solid #E6ECF0;
+
+        .title-span {
+          position: relative;
+          top: 24px;
+          width: 158px;
+          height: 26px;
+          font-weight: 700;
+          font-size: 24px;
+          color: #171725;
+          margin-left: 23px;
+        }
+      }
+
+      .public-message-middle {
+        .ul-public-message {
+          height: 670px;
+          width: 712px;
+          border-bottom: 1px solid #E6ECF0;
+        }
+      }
+
+      .public-message-footer {
+        width: 712px;
+        height: 64px;
+
+        .public-message-input {
+          position: relative;
+          top: 16px;
+          left: 16px;
+          height: 32px;
+          width: 641px;
+          border-radius: 50px;
+          background: #E6ECF0;
+          border: 1px solid #E6ECF0;
+          padding-left: 15px;
+        }
+
+        .send-btn {
+          position: relative;
+          top: 22px;
+          left: 22px;
+        }
+      }
+
+    }
   }
 }
