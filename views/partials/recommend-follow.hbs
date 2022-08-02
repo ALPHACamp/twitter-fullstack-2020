@@ -5,21 +5,40 @@
     </div>
     <div class="d-flex flex-column m-3 mt-0 pb-4" id="top-users-container">
       {{#each topUser}}
-      {{#if isAdminOrSelf}}
-      {{else}}
-      <div class="user-container d-flex align-items-center mt-2 mb-2">
-        <a href="/users/{{this.id}}/tweets"><img src="{{this.avatar}}" alt="" class="avatar-sm rounded-pill"></a>
-        <div class="name-account-wrapper ms-2 d-flex flex-column flex-grow-1 justify-content-start align-items-start">
-          <h6 class="list-user-name ellipsis fw-bold fs-5 text-start mb-0">{{this.name}}</h6>
-          <p class="list-user-account ellipsis fw-normal fs-6 text-start mb-0">@{{this.account}}</p>
-        </div>
-        {{#if this.isFollowed}}
-        <button class="following-btn follow-item btn btn-brand rounded-pill mt-3" data-userid="{{this.id}}" data-useraccount="{{this.account}}" type="submit">正在跟隨</button>
-        {{else}}
-        <button class="follow-btn follow-item btn btn-brand rounded-pill mt-3" data-userid="{{this.id}}" data-useraccount="{{this.account}}" type="submit">跟隨</button>
+        {{#if isAdminOrSelf}}{{else}}
+          <div class="user-container d-flex align-items-center mt-2 mb-2">
+            <a href="/users/{{this.id}}/tweets"><img
+                src="{{this.avatar}}"
+                alt=""
+                class="avatar-sm rounded-pill"
+              /></a>
+            <div
+              class="name-account-wrapper ms-2 d-flex flex-column flex-grow-1 justify-content-start align-items-start"
+            >
+              <h6
+                class="list-user-name ellipsis fw-bold fs-5 text-start mb-0"
+              >{{this.name}}</h6>
+              <p
+                class="list-user-account ellipsis fw-normal fs-6 text-start mb-0"
+              >@{{this.account}}</p>
+            </div>
+            {{#if this.isFollowed}}
+              <button
+                class="following-btn follow-item btn btn-brand rounded-pill mt-3 follow-id-{{this.id}}"
+                data-userid="{{this.id}}"
+                data-useraccount="{{this.account}}"
+                type="submit"
+              >正在跟隨</button>
+            {{else}}
+              <button
+                class="follow-btn follow-item btn btn-brand rounded-pill mt-3 follow-id-{{this.id}}"
+                data-userid="{{this.id}}"
+                data-useraccount="{{this.account}}"
+                type="submit"
+              >跟隨</button>
+            {{/if}}
+          </div>
         {{/if}}
-      </div>
-      {{/if}}
       {{/each}}
     </div>
   </div>

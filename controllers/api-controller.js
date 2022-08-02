@@ -88,15 +88,23 @@ const apiController = {
       })
 
       if (isFollowed) {
-        await isFollowed.destroy()
-        return res.redirect('back')
+        const destroyedFollowship = await isFollowed.destroy()
+        return res.status(200).json({
+          status: 'success',
+          message: 'followship destroyed',
+          followship: destroyedFollowship
+        })
       }
 
-      await Followship.create({
+      const newFollowship = await Followship.create({
         followerId: UserId,
         followingId
       })
-      return res.redirect('/')
+      return res.status(200).json({
+        status: 'success',
+        message: 'followship created',
+        followship: newFollowship
+      })
     } catch (err) {
       next(err)
     }
