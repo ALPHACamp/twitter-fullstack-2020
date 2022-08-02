@@ -1,0 +1,48 @@
+<div class="col-2 nav-left">
+  {{> nav-left}}
+</div>
+
+<div class="col-8 nav-body" style="font-family: 'Noto Sans TC'; font-style: normal;">
+  <ul class="list-group">
+
+    {{>profile-following-header route='follower'}}
+
+    {{#each userData.Followers}}
+    <li class="list-group-item" style="border:#E6ECF0 solid 1px;">
+      <div>
+        <a href="/users/{{this.id}}" style="text-decoration: none;">
+          <img class="d-inline-block" src="{{this.avatar}}" alt="追隨者頭像"
+            style="width:50px; height:50px; border:#E6ECF0; border-radius:50%">
+        </a>
+        <div class="d-inline-block">
+          <a href="/users/{{this.id}}" style="text-decoration: none; color:black; width:50px;">
+            <p class="mb-3 p-0" style="font-weight: 700;font-size: 16px;line-height:26px;">
+              {{this.name}}
+            </p>
+          </a>
+        </div>
+        {{#if this.Followship.match}}
+        <div style="display:inline-block; margin-left:500px">
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" name="id" value="{{this.id}}" class="btn btn-primary rounded-pill ms-5"
+              style="background-color: #FF6600;   width:96px; border:#E6ECF0 solid 1px;">正在跟隨</button>
+          </form>
+        </div>
+        {{else}}
+        <div style="display:inline-block; margin-left:500px">
+          <form action="/followships" method="POST">
+            <button type="submit" name="id" value="{{this.id}}" class="btn btn-primary rounded-pill ms-5"
+              style="background-color: #FFFFFF; color:#FF6600; border:#FF6600 solid 1px;  width:64px;">跟隨</button>
+          </form>
+        </div>
+        {{/if}}
+        <p class="ms-5" style="padding-left:5px; word-wrap:break-word;">{{this.introduction}} </p>
+      </div>
+    </li>
+    {{/each}}
+  </ul>
+</div>
+
+<div class="col-2 nav-right">
+  {{> nav-right}}
+</div>

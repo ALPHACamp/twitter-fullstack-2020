@@ -1,0 +1,46 @@
+<div class="col-2 nav-left">
+  {{> nav-left}}
+</div>
+
+<div class="col-8 nav-body" style="font-family: 'Noto Sans TC'; font-style: normal;">
+  <ul class="list-group">
+    {{>profile-header route='tweets'}}
+    {{!-- 推文版 --}}
+    {{#each userData.Tweets}}
+    <li class="list-group-item d-flex align-items-start" style="border:#E6ECF0 solid 1px;">
+      <a href="/users/{{this.User.id}}">
+        <img src="{{../user.avatar}}" alt="推文人頭像" style="width:50px; height:50px; border:#E6ECF0; border-radius:50%"
+          class="me-3">
+      </a>
+      <div>
+        <p style="font-weight: 700;font-size: 16px;line-height: 26px;">
+          <a href="/users/{{this.User.id}}" style="color:#171725; text-decoration:none;">
+            {{../userData.name}}
+          </a>
+          <span class="text-muted ms-2" style="color:#6C757D; font-weight: 400;font-size: 14px;line-height: 22px;">
+            @{{../userData.account}}・
+            <a href="/tweets/{{this.id}}/replies"
+              style="text-decoration:none;color:#6C757D; font-weight: 400;font-size: 14px;line-height: 22px;">
+              {{relativeTimeFromNow this.createdAt}}
+            </a>
+          </span>
+        </p>
+        <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color:black;">
+          <p class="width:200px; border:black 1px solid;">{{this.description}}</p>
+        </a>
+        <p>
+          <img class="me-2 pointer" src="/images/chat.png" data-bs-toggle="modal" data-bs-target="#post-reply"
+            alt="回文圖示" style="width: 13.17px; height:13.17px;">{{this.User.Replies.length}}
+          <img class="ms-4 me-2 pointer" src="/images/love.png" data-bs-toggle="modal" data-bs-target="#post-reply"
+            alt="喜歡圖示" style="width: 13.17px; height:13.17px;">
+          {{this.Likes.length}}
+        </p>
+      </div>
+    </li>
+    {{/each}}
+  </ul>
+</div>
+
+<div class="col-2 nav-right">
+  {{> nav-right}}
+</div>
