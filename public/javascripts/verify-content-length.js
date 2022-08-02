@@ -5,23 +5,27 @@
 const tweetForm = document.querySelector('#tweet-form') || ''
 const tweetTextArea = document.querySelector(".description-input") || ''
 const tweetDescriptionLength = document.querySelector("#description-length") || ''
+const tweetSendBtn = document.querySelector("#center-send-button") || ''
 
 if (tweetForm) {
-  tweetTextArea.addEventListener('input', function (event) {
+  tweetTextArea.addEventListener('keyup', function (event) {
     if (tweetTextArea.value.length === 0) {
+      tweetSendBtn.setAttribute('disabled', '')
       tweetDescriptionLength.classList.remove('text-black-50')
       tweetDescriptionLength.classList.add('text-error')
       tweetDescriptionLength.textContent = '內容不可空白'
     }
     if (tweetTextArea.value.length > 0) {
+      tweetSendBtn.removeAttribute('disabled')
       tweetDescriptionLength.classList.add('text-black-50')
       tweetDescriptionLength.classList.remove('text-error')
       tweetDescriptionLength.textContent = tweetTextArea.value.length + '/140'
     }
-    if (tweetTextArea.value.length >= 140) {
+    if (tweetTextArea.value.length > 140) {
+      tweetSendBtn.setAttribute('disabled', '')
       tweetDescriptionLength.classList.remove('text-black-50')
       tweetDescriptionLength.classList.add('text-error')
-      tweetDescriptionLength.textContent = '字數不可超過140字'
+      tweetDescriptionLength.textContent = '字數不可超過140字 , ' + tweetTextArea.value.length + '/140'
     }
   })
 
@@ -29,9 +33,10 @@ if (tweetForm) {
     if (tweetTextArea.value.length <= 0) {
       event.preventDefault()
       event.stopPropagation()
-      tweetDescriptionLength.classList.remove('text-black-50')
-      tweetDescriptionLength.classList.add('text-error')
-      tweetDescriptionLength.textContent = '內容不可空白'
+    }
+    if (tweetTextArea.value.length > 140) {
+      event.preventDefault()
+      event.stopPropagation()
     }
   })
 }
@@ -56,10 +61,11 @@ if (sideForm) {
       sideDescriptionLength.classList.remove('text-error')
       sideDescriptionLength.textContent = sideTextArea.value.length + '/140'
     }
-    if (sideTextArea.value.length >= 140) {
+    if (sideTextArea.value.length > 140) {
+      sideTweetBtn.setAttribute('disabled', '')
       sideDescriptionLength.classList.remove('text-black-50')
       sideDescriptionLength.classList.add('text-error')
-      sideDescriptionLength.textContent = '字數不可超過140字'
+      sideDescriptionLength.textContent = '字數不可超過140字 , ' + sideTextArea.value.length + '/140'
     }
   })
 
@@ -67,9 +73,6 @@ if (sideForm) {
     if (sideTextArea.value.length <= 0) {
       event.preventDefault()
       event.stopPropagation()
-      sideForm.classList.remove('text-black-50')
-      sideForm.classList.add('text-error')
-      sideForm.textContent = '內容不可空白'
     }
   })
 }
@@ -95,10 +98,11 @@ if (replyForm) {
         replyDescriptionLength[i].classList.remove('text-error')
         replyDescriptionLength[i].textContent = replyTextArea[i].value.length + '/140'
       }
-      if (replyTextArea[i].value.length >= 140) {
+      if (replyTextArea[i].value.length > 140) {
+        replyTweetBtn[i].setAttribute('disabled', '')
         replyDescriptionLength[i].classList.remove('text-black-50')
         replyDescriptionLength[i].classList.add('text-error')
-        replyDescriptionLength[i].textContent = '字數不可超過140字'
+        replyDescriptionLength[i].textContent = '字數不可超過140字 , ' + replyTextArea[i].value.length + '/140'
       }
     })
   })
