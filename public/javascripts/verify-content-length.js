@@ -122,13 +122,6 @@ if (replyForm) {
         const amount = Number(count.textContent) + 1
         count.textContent = amount
       }
-      // if (replyTextArea[i].value.length < 1) {
-      //   e.preventDefault()
-      //   e.stopPropagation()
-      //   replyForm[i].classList.remove('text-black-50')
-      //   replyForm[i].classList.add('text-error')
-      //   replyForm[i].textContent = '內容不可空白'
-      // }
     })
   })
 }
