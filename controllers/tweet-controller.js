@@ -81,7 +81,7 @@ const tweetController = {
       })
       .catch(err => next(err))
   },
-  postReply: (req, res) => {
+  postReply: (req, res, next) => {
     // if (req.body.reply.length > 140) {
     //   return res.redirect('back')
     // }
@@ -96,8 +96,9 @@ const tweetController = {
     }).then(reply => {
       res.redirect(`/tweets/${TweetId}/replies`)
     })
+      .catch(err => next(err))
   },
-  likePost: (req, res) => {
+  likePost: (req, res, next) => {
     const tweetId = req.params.id
     const userId = helpers.getUser(req).id
     // const
@@ -107,22 +108,23 @@ const tweetController = {
     }).then(like => {
       res.redirect('back')
     })
+      .catch(err => next(err))
   },
-  unlikePost: (req, res) => {
-    // const userId = helpers.getUser(req).id
+  unlikePost: (req, res, next) => {
     const TweetId = req.params.id
 
-    Like.findOne({
+    return Like.findOne({
       where: {
-        UserId: helpers.getUser(req) && helpers.getUser(req).id,
+        UserId: helpers.getUser(req).id,
         TweetId
       }
     }).then(like => {
-      like.destroy()
+      return like.destroy()
         .then(() => {
-          return res.redirect('back')
+          res.redirect('back')
         })
     })
+      .catch(err => next(err))
   }
 }
 
