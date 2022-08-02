@@ -62,18 +62,18 @@ const apiController = {
         if (!user) return res.json({ status: 'error', message: "user isn't existed!" })
         if (deleteCover === 'on') {
           return user.update({
-            name: name || user.name,
-            introduction: introduction || user.introduction,
+            name: name,
+            introduction: introduction,
             avatar: avatar || user.avatar,
             cover: null
           })
         }
 
         return user.update({
-          name: name || user.name,
+          name: name,
           email: email || user.email,
           account: account || user.account,
-          introduction: introduction || user.introduction,
+          introduction: introduction,
           avatar: avatar || user.avatar,
           cover: cover || user.cover,
           password: newPassword || user.password
