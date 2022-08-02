@@ -85,15 +85,15 @@
             .then(response => {
               const userInfo = response.data
               coverInput.src = userInfo.cover
-              avatarInput.src = userInfo.avatar
+              avatarInput.src = userInfo.avatar || '/images/avatar-default.jpg'
               nameInput.value = userInfo.name
               introductionInput.value = userInfo.introduction
               document.querySelector('.name-count span').innerText = userInfo.name.length + '/50'
-              document.querySelector('.introduction-count span').innerText = userInfo.introduction.length + '/160'
+              const userInfoLength = userInfo.introduction?.length || '0'
+              document.querySelector('.introduction-count span').innerText = userInfoLength + '/160'
               myModal.show()
             }).catch(err => console.warn(err))
           })
-
           saveBtn.addEventListener('click', () => {
             const formData = new FormData()
             const modalCloseBtn = document.querySelector('#modal-close-btn')
@@ -103,18 +103,14 @@
             formData.append("image", avatarImagefile.files[0])
             formData.append('name', nameInput.value)
             formData.append('introduction', introductionInput.value)
-
             axios.post('/api/users/{{user.id}}', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }
             }).then(response => {
               history.go(0)
-              {{!-- document.querySelector('#edit-btn').click() --}}
             })
           })
-
-
         </script>
 
         <!-- Modal -->
@@ -188,7 +184,7 @@
                   </div>
                 </form>
                 <script>
-                  function changeFocus (element) {
+                  function changeFocus(element) {
                     const target = document.querySelector('.' + element + '-status')
                     if (target.classList.contains('focus')) {
                       target.classList.remove('focus')
@@ -196,7 +192,7 @@
                     }
                     target.classList.toggle('focus')
                   }
-                  function counts (element) {
+                  function counts(element) {
                     let maxLength = 50
                     if (element === 'introduction') {
                       maxLength = 160
@@ -216,31 +212,27 @@
                       document.querySelector('.element-helper span').innerText = ''
                     }
                   }
-                  function previewAvatarImage () {
+                  function previewAvatarImage() {
                     const avatarImageDOM = document.querySelector('#image')
                     const avatarImagefile = avatarImageDOM.files
                     console.log('previewImage')
                     if (avatarImagefile.length > 0) {
                       const fileReader = new FileReader()
-
                       fileReader.onload = function (event) {
                         document.getElementById('avatar').setAttribute('src', event.target.result)
                       }
-
                       fileReader.readAsDataURL(avatarImagefile[0])
                     }
                   }
-                  function previewCoverImage () {
+                  function previewCoverImage() {
                     const coverImageDOM = document.querySelector('#coverImage')
                     const coverImagefile = coverImageDOM.files
                     console.log('previewImage')
                     if (coverImagefile.length > 0) {
                       const fileReader = new FileReader()
-
                       fileReader.onload = function (event) {
                         document.getElementById('cover').setAttribute('src', event.target.result)
                       }
-
                       fileReader.readAsDataURL(coverImagefile[0])
                     }
                   }
@@ -267,21 +259,25 @@
         </div>
       </div>
     </div>
-    {{#if tweets}}
+    {{#if tweet}}
     {{> profile-tabs route='tweets'}}
     <div class="scroll-container">
       {{#each tweets}}
       <a href="/tweets/{{this.id}}/replies">
-        <div class="tweet">
+        <div class="tweet tweet-card" style="width: 100%;">
           <div>
+            {{#if ../targetUser.avatar}}
             <img class="avatar" src="{{../targetUser.avatar}}" alt="avatar">
+            {{else}}
+            <img class="avatar" src="/images/avatar-default.jpg" alt="avatar">
+            {{/if}}
           </div>
           <div class="content">
             <div class="d-flex align-items-center" style="height: 26px;">
               <span class="name">{{../targetUser.name}}</span>
               <span class="account">@{{../targetUser.account}}•{{relativeTimeFromNow this.createdAt}}</span>
             </div>
-            <div class="description">
+            <div class="description" style="width: 100%; word-wrap: break-word;">
               {{this.description}}
             </div>
             <div class="footer">
@@ -304,11 +300,11 @@
       {{/each}}
     </div>
     {{/if}}
-    {{#if replies}}
+    {{#if reply}}
     {{> profile-tabs route='replies'}}
     <div class="scroll-container">
       {{#each replies}}
-      <div class="tweet">
+      <div class="tweet" style="width: 100%;">
         <div>
           <img class="avatar" src="{{../targetUser.avatar}}" alt="avatar">
         </div>
@@ -329,12 +325,12 @@
       {{/each}}
     </div>
     {{/if}}
-    {{#if likes}}
+    {{#if like}}
     {{> profile-tabs route='likes'}}
     <div class="scroll-container">
       {{#each likes}}
       <a href="/tweets/{{this.Tweet.id}}/replies">
-        <div class="tweet">
+        <div class="tweet tweet-card" style="width: 100%;">
           <div>
             <img class="avatar" src="{{this.Tweet.User.avatar}}" alt="avatar">
           </div>
@@ -343,7 +339,7 @@
               <span class="name">{{this.Tweet.User.name}}</span>
               <span class="account">@{{this.Tweet.User.account}}•{{relativeTimeFromNow this.Tweet.createdAt}}</span>
             </div>
-            <div class="description">
+            <div class="description" style="width: 100%; word-wrap: break-word;">
               {{this.Tweet.description}}
             </div>
             <div class="footer">
