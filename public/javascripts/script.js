@@ -2,6 +2,7 @@
 window.URL = window.URL || window.webkitURL
 
 const dataPanel = document.querySelector('#data-panel')
+const alert = document.querySelector('.alert')
 
 dataPanel.addEventListener('click', e => {
   if (e.target.matches('#r-btn')) {
@@ -50,6 +51,22 @@ const tools = {
     dayjs.extend(window.dayjs_plugin_relativeTime)
     // eslint-disable-next-line no-undef
     return dayjs(t).fromNow()
+  },
+  closeAlert () {
+    if (!alert) {
+      const div = document.querySelector('#messages-area')
+      div.style.height = '0%'
+      div.style.width = '0%'
+    }
+
+    if (alert) {
+      const div = document.querySelector('#messages-area')
+      div.addEventListener('click', e => {
+        const div = document.querySelector('#messages-area')
+        div.style.height = '0%'
+        div.style.width = '0%'
+      })
+    }
   }
 }
 
@@ -95,7 +112,7 @@ const repliesController = {
     })
 
     newReply.className = 'card rounded-0 border-0 border-bottom'
-    newReply.innerHTML = `<div class="row g-0 mx-3"><div class="col-1 my-3 m-auto position-relative"><a href="/users/{{this.User.id}}/tweets">
+    newReply.innerHTML = `<div id="my-alert" class="row g-0 mx-3"><div class="col-1 my-3 m-auto position-relative"><a href="/users/{{this.User.id}}/tweets">
     <img src="${
       res.data.data.avatar
     }" onerror="this.onerror=null;this.src='/pic/no_pic.png';" class="avatar-sm rounded-circle position-absolute end-0" alt="avatar"/>
@@ -356,3 +373,5 @@ const followshipController = {
     }
   }
 }
+
+tools.closeAlert()

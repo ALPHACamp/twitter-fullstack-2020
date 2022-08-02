@@ -306,3 +306,9 @@ body {
 #info-name:focus {
   outline: none;
 }
+
+#messages-area {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}

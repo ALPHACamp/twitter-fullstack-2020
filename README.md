@@ -41,7 +41,7 @@ cd twitter-fullstack-2020
 在 Terminal 輸入 npm install 指令
 ```
 
-4. 安裝 nodemon 套件 (若已再globle安裝則不須重新安裝)
+4. 安裝 nodemon 套件 (若已再global安裝則不須重新安裝)
 
 ```
 在 Terminal 輸入 npm install -g nodemon 指令
