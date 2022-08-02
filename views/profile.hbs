@@ -108,8 +108,10 @@
                 'Content-Type': 'multipart/form-data'
               }
             }).then(response => {
-              history.go(0)
-            })
+              if (response.data.status = 'success') {
+                history.go(0)
+              }
+            }).catch(err => console.warn(err))
           })
         </script>
 
@@ -215,7 +217,6 @@
                   function previewAvatarImage() {
                     const avatarImageDOM = document.querySelector('#image')
                     const avatarImagefile = avatarImageDOM.files
-                    console.log('previewImage')
                     if (avatarImagefile.length > 0) {
                       const fileReader = new FileReader()
                       fileReader.onload = function (event) {
@@ -227,7 +228,6 @@
                   function previewCoverImage() {
                     const coverImageDOM = document.querySelector('#coverImage')
                     const coverImagefile = coverImageDOM.files
-                    console.log('previewImage')
                     if (coverImagefile.length > 0) {
                       const fileReader = new FileReader()
                       fileReader.onload = function (event) {
