@@ -15,9 +15,8 @@
   </div>
 </li>
 
-<li class="list-group-item p-0 m-0 " style="height:483px ;border:#E6ECF0 solid 1px;">
+<li class="list-group-item p-0 m-0 " style="max-height:451px ;border:#E6ECF0 solid 1px;">
   {{!-- 點到別人的介面 --}}
-  {{!-- {{#ifCond this.Followship.followerId ../user.id}} --}}
   {{#if userData.cover}}
   <img class="d-block" src="{{userData.cover}}" alt="封面圖片" style="min-width:839px; max-height:200px;">
   {{else}}
@@ -26,10 +25,9 @@
   <div class="m-2 " style="float:right;">
     {{#if user.authSelfUser}}
     {{!-- 點到自己的介面 --}}
-    <form class="m-2" action="/users/{{user.id}}/setting" method="GET">
-      <button class="btn btn-lg rounded-pill mb-2 no-wrap p-0" type="submit"
-        style="color:black; border-color:#FF6600;width: 132px; height:39px; color:#FF6600;font-weight: 400;font-size: 16px;line-height: 24px; float:right margin-right:20px">編輯個人資料</button>
-    </form>
+      <button  data-bs-target="#personal-info-edit" data-bs-toggle="modal" value="{{user}}" 
+      class="btn btn-lg rounded-pill p-0 m-2" type="submit" style="color:black; border-color:#FF6600;width: 132px; height:39px; color:#FF6600;font-weight: 400;font-size: 16px;line-height: 24px; float:right margin-right:20px">編輯個人資料
+      </button>
     {{else}}
     <a class=" p-2 m-2 d-inline" type="button"
       style="width:40; height:39px; border:1px solid #FF6600; border-radius:50%;">
@@ -101,3 +99,5 @@
     </ul>
   </div>
 </li>
+
+{{> modal-profile}}
