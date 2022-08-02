@@ -117,14 +117,6 @@ textarea {
   color: #696974;
 }
 
-.profile-header,
-.profile-following-header {
-  color: #657786;
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 22px;
-}
-
 .profile-header, .profile-following-header {
   color: #657786;
   font-weight: 700;
