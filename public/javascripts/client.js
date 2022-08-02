@@ -88,6 +88,9 @@ function removeBanner () {
 editUser.addEventListener('click', event => {
   axios(`/api/users/${event.target.dataset.id}`)
     .then(res => {
+      if (res.data.status === 'error') {
+        return errorMessage(res.data.message)
+      }
       showEditUserModal(res.data)
     })
 })
