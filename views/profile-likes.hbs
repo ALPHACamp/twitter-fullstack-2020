@@ -20,13 +20,13 @@
           </a>
           <span class="text-muted"
             style="text-decoration:none;color:#6C757D;font-weight: 400;font-size: 14px;line-height: 22px;">@{{this.User.account}}・
-            <a href="/tweets/{{this.id}}/replies"
+            <a href="/tweets/{{this.Tweet.id}}/replies"
               style="text-decoration:none;color:#6C757D; font-weight: 400;font-size: 14px;line-height: 22px;">
               {{relativeTimeFromNow this.createdAt}}
             </a>
           </span>
         </small>
-        <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color:black;">
+        <a href="/tweets/{{this.Tweet.id}}/replies" style="text-decoration: none; color:black;">
           <p class="mt-2">
             {{this.Tweet.description}}
           </p>

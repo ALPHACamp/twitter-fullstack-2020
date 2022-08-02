@@ -18,7 +18,7 @@
             {{this.Tweet.User.name}}</p>
         </a>
         <small class="m-2" style="color:#6C757D;">@{{this.Tweet.User.account}}・
-          <a href="/tweets/{{this.id}}/replies"
+          <a href="/tweets/{{this.Tweet.id}}/replies"
             style="text-decoration:none;color:#6C757D;font-weight: 400;font-size: 14px;line-height: 22px;">
             {{relativeTimeFromNow this.createdAt}}
           </a>
@@ -27,7 +27,7 @@
           <small style="color:#FF6600;margin-left:2px;">@{{this.User.account}}</small>
 
         </span>
-        <a href="/tweets/{{this.id}}/replies" style="text-decoration:none;">
+        <a href="/tweets/{{this.Tweet.id}}/replies" style="text-decoration:none;">
           <p style="font-weight: 400;font-size: 16px;line-height: 26px; color: #171725;">
             {{this.comment}}
           </p>
