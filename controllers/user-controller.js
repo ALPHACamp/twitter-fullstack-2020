@@ -42,13 +42,11 @@ const userController = {
       })
       .then(hash => {
         if (hash) {
-          console.log('hash')
           return User.create({ account, name, email, password: hash, role: 'user' })
         }
       })
       .then(user => {
         if (user) {
-          console.log('user')
           req.flash('success_messages', '成功註冊帳號！')
           res.redirect('/signin')
         }
