@@ -44,7 +44,7 @@ const apiController = {
       }
       let avatar
       let coverPhoto
-      if (process.env.NODE_ENV !== 'test') {
+      if (req.files) {
         req.files.avatar
           ? (avatar = await fileHelper(req.files.avatar[0]))
           : (avatar = currentUser.avatar)
