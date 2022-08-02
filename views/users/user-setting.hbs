@@ -6,7 +6,7 @@
         <h4 class="fw-bold ">帳戶設定</h4>
       </div>
     </div>
-    <form class='form-signup needs-validation p-4 text-start' action='/users/{{currentUser.id}}/setting?_method=PATCH' method='POST' novalidate>
+    <form class='form-setting needs-validation p-4 text-start' action='/users/{{currentUser.id}}/setting?_method=PATCH' method='POST' novalidate>
       <div class='form-row mb-4' style='background-color: #F5F8FA'>
         <label class='form-label m-0 pt-1 ps-3' for='account' style='color: #696974'>帳號</label>
         <input type='text' id='account' name='account' class='form-control border-0 p-0 ps-3' style='margin: 0;'
@@ -58,7 +58,7 @@
 <script>
   (function () {
     'use strict'
-    const form = document.querySelector('.needs-validation')
+    const form = document.querySelector('.form-setting')
     form.addEventListener('submit', function (event) {
       if (!form.checkValidity()) {
         event.preventDefault()
