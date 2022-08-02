@@ -13,7 +13,7 @@ module.exports = {
         password: await bcrypt.hash('12345678', 10),
         avatar: 'https://loremflickr.com/320/240/people?random=' + Math.ceil(Math.random() * 100),
         banner: 'https://loremflickr.com/640/240/sky',
-        introduction: faker.lorem.sentences('.'),
+        introduction: faker.lorem.sentences(),
         role: 'admin',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -24,7 +24,7 @@ module.exports = {
         password: await bcrypt.hash('12345678', 10),
         avatar: 'https://loremflickr.com/320/240/people?random=' + Math.ceil(Math.random() * 100),
         banner: 'https://loremflickr.com/640/240/sky',
-        introduction: faker.lorem.sentences('.'),
+        introduction: faker.lorem.sentences(),
         role: 'user',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -40,7 +40,7 @@ module.exports = {
             password: bcrypt.hashSync(Math.random().toString(36).slice(-8), 10),
             avatar: 'https://loremflickr.com/320/240/people?random=' + Math.ceil(Math.random() * 100),
             banner: 'https://loremflickr.com/640/240/sky',
-            introduction: faker.lorem.sentences('.'),
+            introduction: faker.lorem.sentences(),
             role: 'user',
             createdAt: new Date(),
             updatedAt: new Date()
