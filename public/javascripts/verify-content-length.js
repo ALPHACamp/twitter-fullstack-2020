@@ -119,11 +119,13 @@ if (replyForm) {
         let userId = e.target.dataset.userid
         let tweetId = e.target.dataset.tweetid
         let comment = document.querySelector(`#comment-${tweetId}`)
+        tools.callLoading()
         await axios.post(`/tweets/${tweetId}/replies`, {
           UserId: userId,
           TweetId: tweetId,
           comment: comment.value
         })
+        tools.closeLoading()
         comment.value = ''
         const count = document.querySelector(`#reply-count-${tweetId}`)
         const amount = Number(count.textContent) + 1
