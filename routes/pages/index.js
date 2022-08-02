@@ -10,6 +10,7 @@ const adminController = require('../../controllers/pages/admin-controller')
 const userController = require('../../controllers/pages/user-controller')
 
 const { authenticated, authenticatedAdmin } = require('../../middleware/auth')
+const { generalErrorHandler } = require('../../middleware/error-handler')
 
 // admin route
 router.get('/admin/signin', adminController.getSignin)
@@ -37,5 +38,6 @@ router.delete('/followships/:followingId', authenticated, userController.deleteF
 
 // fallback route
 router.get('/', (req, res) => res.redirect('/tweets'))
+router.get('/', generalErrorHandler)
 
 module.exports = router
