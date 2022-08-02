@@ -206,15 +206,17 @@
   display: grid;
   grid-template-columns: 20% 54% 26%;
   padding: 0 55px;
+  margin-bottom: 30px;
+  height: 1200px;
   #profile-left {
     width: 178px;
-    height: 1200px;
+    height: 100%;
   }
   #profile-middle {
     max-width: 641px;
     border: 1px #E6ECF0 solid;
     padding-top: 16px;
-    height: 1200px;
+    height: 100%;
     .header {
       display: flex;
       height: 59px;
@@ -320,11 +322,14 @@
         position: relative;
         top: -70px;
         margin-left: 16.13px;
+        padding-right: 30px;
         margin-top: 6px;
         font-weight: 400;
         font-size: 14px;
         line-height: 22px;
         color: $dark100;
+        width: 100%;
+        word-wrap: break-word;
       }
       .follow {
         position: relative;
@@ -630,7 +635,7 @@
 
       .content {
         margin-top: 8px;
-        padding-right: 3rem;
+        width: 85%;
       }
     }
   }
@@ -645,6 +650,15 @@
     grid-template-columns: 23% 51% 26%;
     #profile-right {
       padding-left: 15px;
+    }
+    #profile-middle {
+      .scroll-container {
+        .tweet-card {
+          .content {
+            width: 80%;
+          }
+        }
+      }
     }
   }
 }

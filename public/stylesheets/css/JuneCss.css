@@ -204,16 +204,18 @@
   display: grid;
   grid-template-columns: 20% 54% 26%;
   padding: 0 55px;
+  margin-bottom: 30px;
+  height: 1200px;
 }
 #profile-region #profile-left {
   width: 178px;
-  height: 1200px;
+  height: 100%;
 }
 #profile-region #profile-middle {
   max-width: 641px;
   border: 1px #E6ECF0 solid;
   padding-top: 16px;
-  height: 1200px;
+  height: 100%;
 }
 #profile-region #profile-middle .header {
   display: flex;
@@ -318,11 +320,14 @@
   position: relative;
   top: -70px;
   margin-left: 16.13px;
+  padding-right: 30px;
   margin-top: 6px;
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
   color: #171725;
+  width: 100%;
+  word-wrap: break-word;
 }
 #profile-region #profile-middle .user-info .follow {
   position: relative;
@@ -443,6 +448,14 @@
   background: transparent;
   border: none;
   padding-left: 17.84px;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input input::-moz-placeholder {
+  color: #B5B5BE;
+  font-size: 16px;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input input:-ms-input-placeholder {
+  color: #B5B5BE;
+  font-size: 16px;
 }
 #profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input input::placeholder {
   color: #B5B5BE;
@@ -603,7 +616,7 @@
 }
 #profile-region #profile-middle .tweet-card .content {
   margin-top: 8px;
-  padding-right: 3rem;
+  width: 85%;
 }
 #profile-region #profile-right {
   width: 273px;
@@ -616,5 +629,8 @@
   }
   #profile-region #profile-right {
     padding-left: 15px;
+  }
+  #profile-region #profile-middle .scroll-container .tweet-card .content {
+    width: 80%;
   }
 }
