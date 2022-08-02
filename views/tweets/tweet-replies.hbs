@@ -23,10 +23,10 @@
         <small class="col-10">{{timeFormat tweet.createdAt}}</small>
         <p id="time-{{tweet.id}}" class="d-none">{{relativeTimeFromNow tweet.createdAt}}</p>
         <div class="border-top mt-2"></div>
-        <span class="col-10 ms-1 mt-3"><strong>{{tweet.Replies.length}}</strong> 回覆<strong class="ms-4">{{tweet.Likes.length}}</strong>喜歡次數</span>
+        <span class="col-10 ms-1 mt-3 text-secondary" style="font-size: 19px;"><strong class="text-black">{{tweet.Replies.length}}</strong> 回覆<strong class="ms-4 text-black">{{tweet.Likes.length}}</strong> 喜歡次數</span>
         <div class="border-top mt-3"></div>
-        <button class="bg-body border-0 col-1 mt-3 me-5 opacity-50">
-          <img src="/stylesheets/svgs/outline-reply.svg" alt="reply-icon" class="r-btn" data-tid="{{tweet.id}}" data-bs-toggle="modal" data-bs-target="#replyTweet" style="width: 25px; height:25px;">
+        <button class="bg-body border-0 col-1 mt-3 opacity-50" style="margin-right: 90px;">
+          <img src="/stylesheets/svgs/outline-reply.svg" alt="reply-icon" style="width: 25px; height:25px;" data-tid="{{tweet.id}}" data-bs-toggle="modal" data-bs-target="#replyTweet" id="r-btn">
         </button>
         {{#if isLiked}}
         <form action="/tweets/{{tweet.id}}/unlike" method="post" class="col-2 mt-3">
@@ -40,6 +40,7 @@
       </div>
     </div>
 
+<div id="reply-area">
 {{#each tweet.Replies}}
 <div class="card rounded-0 border-0 border-bottom">
   <div class="row g-0 mx-3">
@@ -61,23 +62,24 @@
           >@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</small>
         </h5>
         </a>
-        <small class="d-block mt-2">回覆<a class="text-decoration-none text-brand ms-1" href="/users/{{this.User.id}}/tweets">＠{{this.User.account}}</a></small>
+        <small class="d-block mt-2">回覆<a class="text-decoration-none text-brand ms-1" href="/users/{{../tweet.User.id}}/tweets">＠{{../tweet.User.account}}</a></small>
         <p class="card-text mt-2">{{this.comment}}</p>
       </div>
     </div>
   </div>
 </div>
 {{/each}}
+</div>
   </div>
   {{> recommend-follow }}
 </div>
 
 <!-- Reply Modal -->
 <div class="modal fade" id="replyTweet" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content" style="border-radius: 14px;">
         <div class="modal-header pb-1">
-          <button type="button" class="btn border-0 p-0 ms-0" data-bs-dismiss="modal" aria-label="Close"><i class="noti-danger"></i></button>
+          <button id="close-reply-modal" type="button" class="btn border-0 p-0 ms-0" data-bs-dismiss="modal" aria-label="Close"><i class="noti-danger"></i></button>
         </div>
         <div class="modal-body pt-0">
   {{!-- 回覆的推文資料 --}}
@@ -104,13 +106,11 @@
     </div>
   </div>
   {{!-- 回覆的推文資料結束 --}}
-  <form action="" method="post" class="row g-0 mt-2" id="reply-input">
-    <img src="{{currentUser.avatar}}" alt="model-user-avatar" class="avatar-sm rounded-circle col-1">
-    <textarea id="reply-comment" name="comment" class="col-10 ms-3 border-0 overflow-hidden" maxlength="140" placeholder="推你的回覆" rows="6" style="resize: none;"></textarea>
-    <div class="text-black-50 ms-auto me-3 fs-6 align-self-center" id="reply-description-length">
-    </div>
-    <small class="offset-md-6 col-4 mt-2 me-3 text-error text-end" id="error-msg"></small>
-    <button type="submit" id="post-comment" class="btn btn-brand rounded-pill fw-light col-2" style="width: 60px;">回覆</button>
+  <form id="reply-input" class="row g-0 mt-2" action="" method="post" enctype="multipart/form-data" >
+    <img id="reply-avatar" src="{{currentUser.avatar}}" alt="model-user-avatar" class="avatar-sm rounded-circle col-1 ms-3">
+    <textarea id="reply-comment" name="comment" class="col-10 ms-3 mb-3 border-0 overflow-hidden" maxlength="140" placeholder="推你的回覆" style="resize: none; height:150px;"></textarea>
+    <small id="error-msg" class="offset-md-6 col-4 mt-2 me-4 text-error text-end"></small>
+    <p id="post-comment" class="btn btn-brand rounded-pill fw-light col-2 mb-0 ms-3" style="width: 60px;" >回覆</p>
   </form>
         </div>
           

@@ -6,7 +6,7 @@ const {
 const fileHelper =
   process.env.NODE_ENV === 'production' ? imgurFileHandler : localFileHandler
 
-const { User, Followship, Reply } = require('../models')
+const { User, Followship, Reply, Tweet } = require('../models')
 
 const apiController = {
   getUserInfo: async (req, res, next) => {
@@ -88,38 +88,57 @@ const apiController = {
       })
 
       if (isFollowed) {
-        await isFollowed.destroy()
-        return res.redirect('back')
+        const destroyedFollowship = await isFollowed.destroy()
+        return res.status(200).json({
+          status: 'success',
+          message: 'followship destroyed',
+          followship: destroyedFollowship
+        })
       }
 
-      await Followship.create({
+      const newFollowship = await Followship.create({
         followerId: UserId,
         followingId
       })
-      return res.redirect('/')
+      return res.status(200).json({
+        status: 'success',
+        message: 'followship created',
+        followship: newFollowship
+      })
     } catch (err) {
       next(err)
     }
   },
   postTweetReply: async (req, res, next) => {
-    const UserId = helpers.getUser(req).id
+    const User = helpers.getUser(req)
     const comment = req.body.comment
-    const TweetId = req.body.TweetId
-    const existTweet = Tweet.findByPk(TweetId)
+    const TweetId = req.params.id
+    const existTweet = await Tweet.findByPk(TweetId, { raw: true })
     if (!existTweet) {
       return res.status(200).json({
         status: 'error',
-        message: "這個推文已經不存在！"
+        message: '這個推文已經不存在！'
       })
     }
     if (!comment) {
       return res.status(200).json({
         status: 'error',
-        message: "內容不可空白！"
+        message: '內容不可空白！'
       })
     }
     // return res.json({status: 'success', existTweet})
-    return await Reply.create({ UserId, TweetId, comment })
+    const data = await Reply.create({ UserId: User.id, TweetId, comment })
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        data,
+        uid: existTweet.UserId,
+        id: User.id,
+        name: User.name,
+        account: User.account,
+        avatar: User.avatar
+      }
+    })
   }
 }
 
