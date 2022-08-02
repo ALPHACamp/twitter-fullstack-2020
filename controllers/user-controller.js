@@ -266,7 +266,6 @@ const userController = {
         userData.followersLength = followers.Followers.length
         userData.followingsLength = followings.Followings.length
         user.authSelfUser = parseInt(req.params.uid) === parseInt(helpers.getUser(req).id) ? true : []
-        console.log('AAAAAAAA', userData.Likes[0].Tweets)
         // 整理 users 只留被追蹤數排行前 10 者，nav-right 使用
         const followedUserId = helpers.getUser(req)?.Followings ? helpers.getUser(req).Followings.map(fu => fu.id) : [] // 先確認 req.user 是否存在，若存在檢查 Followings (該user追蹤的人) 是否存在。如果 Followers 存在則執行 map 撈出 user id 。若上述兩個不存在，回傳空陣列
         users = JSON.parse(JSON.stringify(users))
@@ -314,7 +313,6 @@ const userController = {
           user.isFollowed = followedUserId.includes(user.id)
         }
         users = users.sort((a, b) => b.numberOfFollowers - a.numberOfFollowers).slice(0, 10) // 只取排行前 10 的 users
-        console.log(userData)
         user.Followings.map(data => {
           userData.Followings.map(dat => {
             if (data.Followship.followingId === (dat.Followship.followingId)) {
@@ -359,7 +357,6 @@ const userController = {
         // 整理 users 只留被追蹤數排行前 10 者，nav-right 使用
         const followedUserId = helpers.getUser(req)?.Followings ? helpers.getUser(req).Followings.map(fu => fu.id) : [] // 先確認 req.user 是否存在，若存在檢查 Followings (該user追蹤的人) 是否存在。如果 Followers 存在則執行 map 撈出 user id 。若上述兩個不存在，回傳空陣列
         users = JSON.parse(JSON.stringify(users))
-        console.log(userData)
         for (const user of users) { // 以迴圈跑每一筆 user ，每一筆新增 numberOfFollowers、isFollowed 資訊
           user.numberOfFollowers = user.Followers.length
           user.isFollowed = followedUserId.includes(user.id)
