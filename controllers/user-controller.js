@@ -140,6 +140,7 @@ const userController = {
         include: [
           {
             model: Reply,
+            attributes: ['id'],
             include: [{
               model: Tweet,
               include: User,
@@ -162,9 +163,17 @@ const userController = {
           as: 'Followers'
         }],
         nest: true
+      }),
+      User.findByPk(req.params.uid, {
+        attributes: ['id'],
+        include: [{ model: User, as: 'Followers' }]
+      }),
+      User.findByPk(req.params.uid, {
+        attributes: ['id'],
+        include: [{ model: User, as: 'Followings' }]
       })
     ])
-      .then(([userData, users]) => {
+      .then(([userData, users, followers, followings]) => {
         if (!userData) throw new Error("User didn't exist!")
         // 撈出loginUser，nav-left 使用
         const user = helpers.getUser(req) ? JSON.parse(JSON.stringify(helpers.getUser(req))) : []
@@ -172,6 +181,8 @@ const userController = {
           Number(data.Followship.followingId) === Number(req.params.uid)
         )
         userData = JSON.parse(JSON.stringify(userData))
+        userData.followersLength = followers.Followers.length
+        userData.followingsLength = followings.Followings.length
         user.authSelfUser = parseInt(req.params.uid) === parseInt(helpers.getUser(req).id) ? true : []
 
         // 整理 users 只留被追蹤數排行前 10 者，nav-right 使用
