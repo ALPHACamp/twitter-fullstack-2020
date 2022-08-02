@@ -23,10 +23,17 @@ const userConroller = {
   },
   signUp: (req, res, next) => {
     const { account, name, email, password, checkPassword } = req.body
+    const errors = []
     // 查看不符合的條件
-    if (!account || !name || !email || !password || !checkPassword) throw new Error('請填寫每個欄位')
-    if (password !== checkPassword) throw new Error('密碼與確認密碼不相符!')
-    if (name.length > 50) throw new Error('名稱長度超出上限 50 字！')
+    if (!account || !name || !email || !password || !checkPassword) {
+      errors.push({ message: '所有欄位都是必填。' })
+    }
+    if (password !== checkPassword) {
+      errors.push({ message: '密碼與確認密碼不相符！' })
+    }
+    if (name.length > 50) {
+      errors.push({ message: '名稱長度超出上限 50 字！' })
+    }
 
     // 並確認 email 與 account 不能重複
     return Promise.all([
@@ -34,21 +41,35 @@ const userConroller = {
       User.findOne({ where: { account } })
     ])
       .then(([userEmail, userAccount]) => {
-        if (userEmail) throw new Error('Email 已經存在!')
-        if (userAccount) throw new Error('Account 已經存在!')
+        if (userEmail) {
+          errors.push({ message: 'Email 已經存在了。' })
+        }
+        if (userAccount) {
+          errors.push({ message: 'Account 已經存在!' })
+        }
+        if (errors.length > 0) {
+          return res.render('signup', {
+            errors,
+            account,
+            name,
+            email
+          })
+        }
         return bcrypt.hash(password, 10)
+          .then(hash => {
+            return User.create({
+              account,
+              name,
+              email,
+              password: hash
+            })
+          })
+          .then(() => {
+            req.flash('success_messages', '成功註冊帳號！')
+            res.redirect('/signin')
+          })
+          .catch(err => next(err))
       })
-      .then(hash => User.create({
-        account,
-        name,
-        email,
-        password: hash
-      }))
-      .then(() => {
-        req.flash('success_messages', '成功註冊帳號！')
-        res.redirect('/signin')
-      })
-      .catch(err => next(err))
   },
   getTweets: (req, res, next) => {
     const UserId = req.params.userId

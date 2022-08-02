@@ -37,7 +37,7 @@ router.post('/followships', authenticated, userController.addFollowship)
 router.delete('/followships/:followingId', authenticated, userController.deleteFollowship)
 
 // fallback route
-router.get('/', (req, res) => res.redirect('/tweets'))
-router.get('/', generalErrorHandler)
+router.use('/', (req, res) => res.redirect('/tweets'))
+router.use('/', generalErrorHandler)
 
 module.exports = router

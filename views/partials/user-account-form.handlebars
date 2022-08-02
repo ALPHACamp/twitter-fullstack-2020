@@ -1,14 +1,14 @@
 <div class="form-row mb-3">
   <label class="form-label" for="account">帳號</label>
-  <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" required value="{{ user.account }}">
+  <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" required {{#if user}}value="{{ user.account }}"{{else}}value="{{ account }}"{{/if}}>
 </div>
 <div class="form-row mb-3">
   <label class="form-label" for="name">名稱</label>
-  <input type="text" id="name" name="name" class="form-control" maxlength="50" placeholder="請輸入名稱" required value="{{ user.name }}">
+  <input type="text" id="name" name="name" class="form-control" maxlength="50" placeholder="請輸入名稱" required {{#if user}}value="{{ user.name }}"{{else}}value="{{ name }}"{{/if}}>
 </div>
 <div class="form-row mb-3">
   <label class="form-label" for="email">Email</label>
-  <input type="text" id="email" name="email" class="form-control" placeholder="請輸入 Email" required value="{{ user.email }}">
+  <input type="text" id="email" name="email" class="form-control" placeholder="請輸入 Email" required {{#if user}}value="{{ user.email }}"{{else}}value="{{ email }}"{{/if}}>
 </div>
 <div class="form-row mb-3">
   <label class="form-label" for="password">密碼</label>
