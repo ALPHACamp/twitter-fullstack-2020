@@ -1,3 +1,10 @@
+*:focus {
+  border: 0 solid white !important;
+  outline: 0 !important;
+  box-shadow: none;
+}
+
+
 textarea:focus,
 input:focus,
 button:focus {
