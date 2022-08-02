@@ -74,6 +74,10 @@ if (sideForm) {
       event.preventDefault()
       event.stopPropagation()
     }
+    if (sideTextArea.value.length > 140) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
   })
 }
 
@@ -115,7 +119,6 @@ if (replyForm) {
         let userId = e.target.dataset.userid
         let tweetId = e.target.dataset.tweetid
         let comment = document.querySelector(`#comment-${tweetId}`)
-        console.log(comment.value)
         await axios.post(`/tweets/${tweetId}/replies`, {
           UserId: userId,
           TweetId: tweetId,
