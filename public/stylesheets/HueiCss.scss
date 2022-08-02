@@ -139,7 +139,7 @@ section#Huei-region {
   }
 
   .tweets {
-    width: 652px;
+    width: 639px;
 
     .title {
       position: relative;
@@ -153,16 +153,6 @@ section#Huei-region {
       scrollbar-color: $dark30 $dark20;
       scrollbar-width: thin;
       overflow-x: hidden;
-
-      &::-webkit-scrollbar {
-        width: 6px;
-      }
-
-      // bar的樣式
-      &::-webkit-scrollbar-thumb {
-        border-radius: 3px;
-        background-color: rgba(0, 0, 0, 0.1);
-      }
     }
 
     .list-separate-top {
@@ -178,16 +168,15 @@ section#Huei-region {
       position: relative;
       top: 190px;
       height: 10px;
-      width: 650px;
+      width: 639px;
       background-color: $dark40;
     }
 
     .list-separate-m {
       position: relative;
       top: 17px;
-      left: 6px;
       height: 1px;
-      width: 645px;
+      width: 639px;
       background-color: $dark40;
       margin-bottom: 18px;
     }
@@ -372,16 +361,6 @@ section#Huei-region {
     scrollbar-color: $dark30 $dark20;
     scrollbar-width: thin;
     overflow-x: hidden;
-
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    // bar的樣式
-    &::-webkit-scrollbar-thumb {
-      border-radius: 3px;
-      background-color: rgba(0, 0, 0, 0.1);
-    }
   }
 
   .like-reply-number {
@@ -438,17 +417,5 @@ section#Huei-region {
     top: 100px;
     left: 240px;
     z-index: 100;
-  }
-
-  .name-helper-tab {
-    text-align: right;
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
-    color: $errorColor;
-    position: relative;
-    top: 255px;
-    right: 100px;
   }
 }

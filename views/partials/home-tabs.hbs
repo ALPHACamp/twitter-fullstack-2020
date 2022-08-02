@@ -65,16 +65,15 @@
           </label>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="/tweets" method="POST" onsubmit="return checkformTab()">
+        <form action="/tweets" method="POST" onsubmit="return checkform()">
           <div class="modal-body d-flex">
             <img src="{{#if user.avatar}}{{user.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
               class="tweet-user-avatar" style="width:50px;height:50px;" alt="Picture">
             <textarea class="form" id="description" name="description" rows="4" maxlength="141" placeholder="有什麼新鮮事？"
-              oninput="countsTab()"
-              style="border:none; width:600px;position:relative; top:10px;resize:none;height:250px;"
+              oninput="counts()" style="border:none; width:600px;position:relative; top:10px;resize:none;height:250px;"
               required></textarea>
-            <div class="helper name-helper-tab"><span>內容不可空白</span></div>
-            <div class="count name-count-tab"><span>0/140</span></div>
+            <div class="helper name-helper"><span>內容不可空白</span></div>
+            <div class="count name-count"><span>0/140</span></div>
           </div>
           <button type="submit" class="btn btn-orange btn-tweets-models"
             style="border-radius: 50px;position:relative; left:550px;bottom:20px;">
@@ -87,21 +86,21 @@
   <!-- 新增 tweet Modal 結束 -->
 
   <script>
-    function countsTab() {
+    function counts() {
       const counts = document.querySelector('#description').value.length
-      document.querySelector('.name-count-tab span').innerText = counts + '/140'
+      document.querySelector('.name-count span').innerText = counts + '/140'
       if (counts > 140) {
-        document.querySelector('.name-helper-tab span').innerText = '字數超出上限！'
+        document.querySelector('.name-helper span').innerText = '字數超出上限！'
         return
       }
       if (counts > 0 && counts <= 140) {
-        document.querySelector('.name-helper-tab span').innerText = ''
+        document.querySelector('.name-helper span').innerText = ''
       }
       if (counts === 0) {
-        document.querySelector('.name-helper-tab span').innerText = '內容不可空白'
+        document.querySelector('.name-helper span').innerText = '內容不可空白'
       }
     }
-    function checkformTab() {
+    function checkform() {
       const counts = document.querySelector('#description').value.length
       if (counts > 140) {
         alert('字數超出上限！')
