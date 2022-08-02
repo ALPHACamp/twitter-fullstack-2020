@@ -5,11 +5,12 @@
 <div class="col-8 nav-body" style="font-family: 'Noto Sans TC'; font-style: normal;">
   <ul class="list-group">
     {{>profile-header route='tweets'}}
+
     {{!-- 推文版 --}}
     {{#each userData.Tweets}}
     <li class="list-group-item d-flex align-items-start" style="border:#E6ECF0 solid 1px;">
         <a href="/users/{{this.User.id}}">
-          <img src="{{../user.avatar}}" alt="推文人頭像" style="width:50px; height:50px; border:#E6ECF0; border-radius:50%"
+          <img src="{{this.User.avatar}}" alt="推文人頭像" style="width:50px; height:50px; border:#E6ECF0; border-radius:50%"
             class="me-3">
         </a>
         <div>

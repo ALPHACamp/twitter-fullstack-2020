@@ -8,18 +8,18 @@
     {{!-- 喜歡版 --}}
     {{#each userData.Likes}}
     <li class="list-group-item d-flex align-items-start" style="border:#E6ECF0 solid 1px;">
-      <a href="/users/{{this.User.id}}/likes">
-        <img src="{{../user.avatar}}" alt="推文人頭像" style="width:50px; height:50px; border:#E6ECF0; border-radius:50%"
+      <a href="/users/{{this.Tweet.User.id}}/likes">
+        <img src="{{this.Tweet.User.avatar}}" alt="推文人頭像" style="width:50px; height:50px; border:#E6ECF0; border-radius:50%"
           class="me-3">
       </a>
       <div class="m-0 p-0">
         <small>
-          <a class="me-2" href="/users/{{this.User.id}}/likes"
+          <a class="me-2" href="/users/{{this.Tweet.User.id}}/likes"
             style="font-weight: 700;font-size: 16px;line-height: 26px;color:#171725; text-decoration:none;">
-            {{this.User.name}}
+            {{this.Tweet.User.name}}
           </a>
           <span class="text-muted"
-            style="text-decoration:none;color:#6C757D;font-weight: 400;font-size: 14px;line-height: 22px;">@{{this.User.account}}・
+            style="text-decoration:none;color:#6C757D;font-weight: 400;font-size: 14px;line-height: 22px;">@{{this.Tweet.User.account}}・
             <a href="/tweets/{{this.Tweet.id}}/replies"
               style="text-decoration:none;color:#6C757D; font-weight: 400;font-size: 14px;line-height: 22px;">
               {{relativeTimeFromNow this.createdAt}}

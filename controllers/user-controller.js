@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
-const { User, Tweet, Reply, Like } = require('../models')
+const { User, Tweet, Reply, Like, Followship } = require('../models')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -184,26 +184,38 @@ const userController = {
         ],
         attributes: ['id', 'name', 'account', 'avatar', 'introduction', 'cover'],
         include: [
+          { model: User, as: 'Followers', attributes: ['id'] },
           {
             model: Like,
             attributes: ['id', 'createdAt'],
             include: [{
               model: Tweet,
               attributes: ['id', 'description'],
-              include: Like
+              include: [{ model: User, attributes: ['id', 'name', 'account'] }]
             }]
           },
           {
             model: Like,
-            attributes: ['id'],
+            attributes: ['id', 'createdAt'],
             include: [{
               model: Tweet,
-              attributes: ['id'],
-              include: Reply
+              attributes: ['id', 'description'],
+              include: [{ model: Reply, attributes: ['id'] }]
             }]
           },
-          { model: Tweet, attributes: ['id'] },
-          { model: Like, attributes: ['id'], include: User }
+          {
+            model: Like,
+            attributes: ['id', 'createdAt'],
+            include: [{
+              model: Tweet,
+              attributes: ['id', 'description'],
+              include: [{ model: Like, attributes: ['id'] }]
+            }]
+          },
+          { model: Tweet, attributes: ['id'] }
+          // { model: User, as: 'Followings', attributes: ['id'] }
+          // { model: User, as: 'Followings' }
+          // { model: Tweet, attributes: ['id'] }
         ]
       }),
       User.findAll({
@@ -215,6 +227,16 @@ const userController = {
           as: 'Followers'
         }],
         nest: true
+      }),
+      User.findByPk(req.params.uid, {
+        order: [
+          [Like, 'createdAt', 'desc']
+        ],
+        attributes: ['id', 'name', 'account', 'avatar', 'introduction', 'cover'],
+        include: [
+          { model: User, as: 'Followings' },
+          { model: Tweet, attributes: ['id'] }
+        ]
       })
     ])
       .then(([userData, users]) => {
@@ -226,6 +248,9 @@ const userController = {
         )
         userData = JSON.parse(JSON.stringify(userData))
         user.authSelfUser = parseInt(req.params.uid) === parseInt(helpers.getUser(req).id) ? true : []
+        console.log('AAAAAAAAA', userData.Followers[0].Followship)
+        // userData.Likes.map(f => console.log('AAAAAA', f.Tweet.Replies))
+        // console.log('AAAAAA', userData)
 
         // 整理 users 只留被追蹤數排行前 10 者，nav-right 使用
         const followedUserId = helpers.getUser(req)?.Followings ? helpers.getUser(req).Followings.map(fu => fu.id) : [] // 先確認 req.user 是否存在，若存在檢查 Followings (該user追蹤的人) 是否存在。如果 Followers 存在則執行 map 撈出 user id 。若上述兩個不存在，回傳空陣列
@@ -244,7 +269,8 @@ const userController = {
     Promise.all([
       User.findByPk(req.params.uid, {
         include: [
-          { model: User, as: 'Followings' }
+          { model: User, as: 'Followings' },
+          { model: Tweet }
         ],
         order: [
           [{ model: User, as: 'Followings' }, 'createdAt', 'desc']
