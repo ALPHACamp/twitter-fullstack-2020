@@ -1,11 +1,11 @@
 <div class="reply d-flex">
   <a href="/users/{{this.UserId}}/tweets">
-    <img src="{{checkAvatar this.User.avatar}}" class="rounded-circle reply-avatar">
+    <img src="{{checkAvatar this.User.avatar}}" class="rounded-circle reply-avatar user-avatar">
   </a>
   <div>
     <div class="reply-secondary">
       <a href="/users/{{this.UserId}}/tweets" style="text-decoration:none;">
-        <span class="fw-bold reply-name">{{this.User.name}}</span>
+        <span class="fw-bold reply-name user-name">{{this.User.name}}</span>
       </a>
       <span>@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
     </div>
