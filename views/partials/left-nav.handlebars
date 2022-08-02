@@ -8,14 +8,18 @@
     </div>
     <div class="ms-2 my-3">
       <a href="/admin/tweets" class="flex-grow-1 d-flex justify-content-start">
-        <img class="me-3" src="/images/nav-icon-mobile-home{{#ifCond path "/admin/tweets"}}-selected{{/ifCond}}.png" width="24" height="24">
-        <span class="fw-bold" style="font-size: 18px;{{#ifCond path "/admin/tweets"}}color: #FF6600;{{/ifCond}}">推文清單</span>
+        <img class="me-3" src="/images/nav-icon-mobile-home{{#ifCond path " /admin/tweets"}}-selected{{/ifCond}}.png"
+          width="24" height="24">
+        <span class="fw-bold" style="font-size: 18px;{{#ifCond path " /admin/tweets"}}color:
+          #FF6600;{{/ifCond}}">推文清單</span>
       </a>
     </div>
     <div class="ms-2 my-3 d-flex justify-content-center align-items-center align-items-center">
       <a href="/admin/users" class="flex-grow-1 d-flex justify-content-start">
-        <img class="me-3" src="/images/nav-icon-mobile-profile{{#ifCond path "/admin/users"}}-selected{{/ifCond}}.png" width="24" height="24">
-        <span class="fw-bold" style="font-size: 18px;{{#ifCond path "/admin/users"}}color: #FF6600;{{/ifCond}}">使用者列表</span>
+        <img class="me-3" src="/images/nav-icon-mobile-profile{{#ifCond path " /admin/users"}}-selected{{/ifCond}}.png"
+          width="24" height="24">
+        <span class="fw-bold" style="font-size: 18px;{{#ifCond path " /admin/users"}}color:
+          #FF6600;{{/ifCond}}">使用者列表</span>
       </a>
     </div>
   </div>
@@ -31,25 +35,28 @@
     </div>
     <div class="ms-2 my-3 d-flex justify-content-center align-items-center align-items-center">
       <a href="/tweets" class="flex-grow-1 d-flex justify-content-start">
-        <img class="me-3" src="/images/nav-icon-mobile-home{{#ifCond path "/tweets"}}-selected{{/ifCond}}.png" width="24" height="24">
-        <span class="fw-bold" style="font-size: 18px;{{#ifCond path "/tweets"}}color: #FF6600;{{/ifCond}}">首頁</span>
+        <img class="me-3" src="/images/nav-icon-mobile-home{{#ifCond path " /tweets"}}-selected{{/ifCond}}.png"
+          width="24" height="24">
+        <span class="fw-bold" style="font-size: 18px;{{#ifCond path " /tweets"}}color: #FF6600;{{/ifCond}}">首頁</span>
       </a>
     </div>
     <div class="ms-2 my-3 d-flex justify-content-center align-items-center align-items-center">
       <a href="/users/{{loginUser.id}}/tweets" class="flex-grow-1 d-flex justify-content-start">
-        <img class="me-3" src="/images/nav-icon-mobile-profile{{#ifCond path "/users"}}-selected{{/ifCond}}.png" width="24" height="24">
-        <span class="fw-bold" style="font-size: 18px;{{#ifCond path "/users"}}color: #FF6600;{{/ifCond}}">個人資料</span>
+        <img class="me-3" src="/images/nav-icon-mobile-profile{{#ifCond path " /users"}}-selected{{/ifCond}}.png"
+          width="24" height="24">
+        <span class="fw-bold" style="font-size: 18px;{{#ifCond path " /users"}}color: #FF6600;{{/ifCond}}">個人資料</span>
       </a>
     </div>
     <div class="ms-2 my-3 d-flex justify-content-center align-items-center">
       <a href="/setting" class="flex-grow-1 d-flex justify-content-start align-items-center">
-        <img class="me-3" src="/images/nav-icon-mobile-setting{{#ifCond path "/setting"}}-selected{{/ifCond}}.png" width="24" height="24">
-        <span class="fw-bold" style="font-size: 18px;{{#ifCond path "/setting"}}color: #FF6600;{{/ifCond}}">設定</span>
+        <img class="me-3" src="/images/nav-icon-mobile-setting{{#ifCond path " /setting"}}-selected{{/ifCond}}.png"
+          width="24" height="24">
+        <span class="fw-bold" style="font-size: 18px;{{#ifCond path " /setting"}}color: #FF6600;{{/ifCond}}">設定</span>
       </a>
     </div>
     <div>
       <button type="button" class="my-3 submit-btn" data-bs-toggle="modal" data-bs-target="#left-nav-Modal"
-        style="width: 150px">
+        style="width: 150px; height: 45px">
         推文
       </button>
     </div>
@@ -62,12 +69,14 @@
 <!-- Modal -->
 <div class="modal fade" id="left-nav-Modal" tabindex="-1" aria-labelledby="left-nav-ModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content" style="width: 634px; height: 350px;">
+    <div class="modal-content" style="width: 634px; height: 280px;">
       <div class="modal-header">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="/tweets" method="POST">
-        {{> tweet-reply-form}}
+        <div class="mt-2">
+          {{> post-tweet-form}}
+        </div>
       </form>
     </div>
   </div>
