@@ -33,6 +33,10 @@ router.get('/logout', userController.logout)
 router.get('/setting', authenticated, userController.getSetting)
 router.put('/setting', authenticated, userController.editSetting)
 
+router.post('/followships', authenticated, userController.addFollowship)
+router.delete('/followships/:followingId', authenticated, userController.deleteFollowship)
+
+router.get('/', (req, res) => res.redirect('/tweets'))
 router.get('/', generalErrorHandler)
 
 module.exports = router

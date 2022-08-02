@@ -1,12 +1,4 @@
-<div class="d-flex align-items-center user-header">
-  <a href="javascript:history.back()">
-    <img class="user-arrow" src="/images/icon-black-back.png">
-  </a>
-  <div>
-    <h5 class="fw-bold user-header-name user-name">{{user.name}}</h5>
-    <p class="user-header-tweet">{{user.tweetCounts}}推文</p>
-  </div>
-</div>
+{{> user-header}}
 
 {{!-- 使用者資料 --}}
 <div class="user-card">
@@ -25,11 +17,12 @@
           <img class="notification" src="/images/icon-black-notification.png">
         </a>
         {{#if user.isFollowing}}
-          <form action="/followships?_method=DELETE" method="POST" style="display: contents;">
+          <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: contents;">
             <button type="submit" class="user-following">正在跟隨</button>
           </form>
         {{else}}
           <form action="/followships" method="POST" style="display: contents;">
+            <input type="hidden" value="{{user.id}}" name="followingId">
             <button type="submit" class="user-unfollowing">跟隨</button>
           </form>
         {{/if}}
@@ -64,6 +57,7 @@
 
 {{#each tweets}}
   {{> tweet-card}}
+  {{> reply-modal tweet=this}}
 {{/each}}
 
 {{#each replies}}

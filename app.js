@@ -12,7 +12,7 @@ const passport = require('./config/passport')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const { pages, apis } = require('./routes')
 
-const SESSION_SECRET = process.env.SESSION_SECRET
+const SESSION_SECRET = process.env.SESSION_SECRET || 'twitterSECRET'
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -39,7 +39,9 @@ app.use('/upload', express.static(path.join(__dirname, 'upload')))
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
+  res.locals.warning_messages = req.flash('warning_messages')
   res.locals.loginUser = helpers.getUser(req)
+  res.locals.path = req.path.startsWith('/users') ? '/users' : req.path
   next()
 })
 

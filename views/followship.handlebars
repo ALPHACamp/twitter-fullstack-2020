@@ -1,0 +1,18 @@
+{{> user-header}}
+
+<ul class="d-flex mb-4 user-nav-tabs">
+  <li class="user-nav-item {{#if followers}}active{{/if}}">
+    <a class="user-nav-link" href="/users/{{user.id}}/followers">追隨者</a>
+  </li>
+  <li class="user-nav-item {{#if followings}}active{{/if}}">
+    <a class="user-nav-link" href="/users/{{user.id}}/followings">正在追隨</a>
+  </li>
+</ul>
+
+{{#each followings}}
+  {{> followship-card}}
+{{/each}}
+
+{{#each followers}}
+  {{> followship-card}}
+{{/each}}

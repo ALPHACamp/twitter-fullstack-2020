@@ -11,10 +11,34 @@
   --secondary-purple: #A461D8;
   --secondary-pink: #FF9AD5;
   --white: #FFFFFF;
+  --dark: #171725;
+}
+
+body {
+  margin-inline: auto;
+  min-width: 960px;
+  max-width: 960px;
+}
+
+@media (min-width: 1200px) {
+  body {
+    min-width: 1140px;
+    max-width: 1140px;
+  }
 }
 
 * {
+  box-sizing: border-box;
   font-family: 'Noto Sans TC', 'Montserrat', 'Roboto';
+}
+
+a {
+  text-decoration: none;
+  color: var(--dark);
+}
+
+a:hover {
+  color: var(--dark);
 }
 
 .font-text {
@@ -37,8 +61,6 @@
 
 .left-nav {
   position: fixed;
-  /* top: 30px;
-  right: 5px; */
 }
 
 .user-header {
@@ -142,6 +164,8 @@
   line-height: 24px;
   font-size: 16px;
   font-weight: 400;
+  position: absolute;
+  right: 30px;
 }
 
 .user-unfollowing {
@@ -153,6 +177,8 @@
   border: var(--brand-main) solid 1px;
   line-height: 24px;
   font-size: 16px;
+  position: absolute;
+  right: 30px;
 }
 
 .user-name {
@@ -259,6 +285,7 @@
 }
 
 .reply-comment {
+  width: 528px;
   font-size: 16px;
   line-height: 26px;
 }
@@ -388,4 +415,8 @@
   position: absolute;
   left: 53.23%;
   top: 50%;
+}
+
+.limit-tweet-length {
+  word-break: break-all;
 }

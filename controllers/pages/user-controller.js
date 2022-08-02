@@ -1,4 +1,4 @@
-const { User, Tweet, Reply, Like, sequelize } = require('../../models')
+const { User, Tweet, Reply, Like, Followship, sequelize } = require('../../models')
 const bcrypt = require('bcryptjs')
 const helpers = require('../../_helpers')
 
@@ -193,6 +193,99 @@ const userConroller = {
         res.redirect('/tweets')
       })
       .catch(err => next(err))
+  },
+  getFollowings: (req, res, next) => {
+    const UserId = req.params.userId
+
+    return User.findByPk(UserId, {
+      attributes: {
+        include: [[sequelize.literal('(SELECT COUNT(`id`) FROM `Tweets` WHERE `UserId` = `User`.`id`)'), 'tweetCounts']]
+      },
+      include: [
+        { model: User, as: 'Followings' }
+      ]
+    })
+      .then(user => {
+        if (!user || isAdmin(user)) throw new Error('使用者不存在！')
+
+        user = user.toJSON()
+        const followings = user.Followings
+          .map(f => ({
+            ...f,
+            isFollowing: helpers.getUser(req).Followings.some(uf => uf.id === f.id)
+          }))
+          .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+
+        res.render('followship', { user, followings })
+      })
+      .catch(err => next(err))
+  },
+  getFollowers: (req, res, next) => {
+    const UserId = req.params.userId
+
+    return User.findByPk(UserId, {
+      attributes: {
+        include: [[sequelize.literal('(SELECT COUNT(`id`) FROM `Tweets` WHERE `UserId` = `User`.`id`)'), 'tweetCounts']]
+      },
+      include: [
+        { model: User, as: 'Followers' }
+      ]
+    })
+      .then(user => {
+        if (!user || isAdmin(user)) throw new Error('使用者不存在！')
+
+        user = user.toJSON()
+        const followers = user.Followers
+          .map(f => ({
+            ...f,
+            isFollowing: helpers.getUser(req).Followings.some(uf => uf.id === f.id)
+          }))
+          .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+
+        res.render('followship', { user, followers })
+      })
+      .catch(err => next(err))
+  },
+  addFollowship: (req, res, next) => {
+    const user = helpers.getUser(req)
+    const followingId = Number(req.body.followingId) || Number(req.body.id)
+    const followerId = Number(user.id)
+    const isFollowing = user.Followings.some(following => following.id === followingId)
+
+    if (followerId === followingId) {
+      req.flash('error_messages', '使用者禁止追蹤自己')
+      return res.redirect(200, 'back')
+    }
+
+    if (!isFollowing) {
+      return Followship
+        .create({
+          followerId,
+          followingId
+        })
+        .then(() => {
+          res.redirect('back')
+        })
+        .catch(next)
+    }
+    req.flash('warning_messages', '已追蹤該名使用者')
+    return res.redirect('back')
+  },
+  deleteFollowship: (req, res, next) => {
+    return Followship
+      .findOne({
+        where: {
+          followingId: req.params.followingId,
+          followerId: helpers.getUser(req).id
+        }
+      })
+      .then(followship => {
+        return followship.destroy()
+      })
+      .then(() => {
+        res.redirect('back')
+      })
+      .catch(next)
   }
 }
 
