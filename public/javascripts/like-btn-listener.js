@@ -10,16 +10,12 @@ likeSubmitBtn.forEach((btn, i) => {
         likedNumbers[i].textContent--
         btn.classList.toggle('liked')
         likedIcon[i].classList.toggle('outline-like')
-        tools.callLoading()
         await axios.post(`/tweets/${tweetId}/unlike`)
-        tools.closeLoading()
       } else {
         likedNumbers[i].textContent++
         btn.classList.toggle('liked')
         likedIcon[i].classList.toggle('outline-like')
-        tools.callLoading()
         await axios.post(`/tweets/${tweetId}/like`)
-        tools.closeLoading()
       }
     } catch (err) {
       console.log(err)

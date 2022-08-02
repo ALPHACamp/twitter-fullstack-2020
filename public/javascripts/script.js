@@ -128,11 +128,9 @@ const repliesController = {
     }
 
     // eslint-disable-next-line no-undef
-    tools.callLoading()
     const res = await axios.post(`/api/tweet/${tid}/replies`, {
       comment: replyTextArea.value
     })
-    tools.closeLoading()
 
     newReply.className = 'card rounded-0 border-0 border-bottom'
     newReply.innerHTML = `<div class="row g-0 mx-3"><div class="col-1 my-3 m-auto position-relative"><a href="/users/{{this.User.id}}/tweets">
@@ -348,9 +346,7 @@ const followshipController = {
     const allFollowBtn = document.querySelectorAll(`.follow-id-${userId}`)
     const isCurrentUser = document.querySelector('#show-info-modal') || ''
     // eslint-disable-next-line no-undef
-    tools.callLoading()
     const res = await axios.post('/api/followships', { id: userId })
-    tools.closeLoading()
     if (res.data.status === 'error') {
       return tools.showErrorMessage(res.data.message)
     }
