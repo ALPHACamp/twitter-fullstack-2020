@@ -28,14 +28,28 @@ const userController = {
     }
     Promise.all([User.findOne({ where: { account } }), User.findOne({ where: { email } })])
       .then(([account, email]) => {
-        if (account) throw new Error('account 已重複註冊！')
-        if (email) throw new Error('email 已重複註冊！')
+        if (account) {
+          errors.push({ message: 'account 已重複註冊！' })
+        }
+        if (email) {
+          errors.push({ message: 'email 已重複註冊！' })
+        }
+        if (errors) {
+          res.render('signup', errorsMsg)
+          return null
+        }
         return bcrypt.hash(password, 10)
       })
-      .then(hash => User.create({ account, name, email, password: hash, role: 'user' }))
-      .then(() => {
-        req.flash('success_messages', '成功註冊帳號！')
-        res.redirect('/signin')
+      .then(hash => {
+        if (hash) {
+          return User.create({ account, name, email, password: hash, role: 'user' })
+        }
+      })
+      .then(user => {
+        if (user) {
+          req.flash('success_messages', '成功註冊帳號！')
+          res.redirect('/signin')
+        }
       })
       .catch(err => next(err))
   },
