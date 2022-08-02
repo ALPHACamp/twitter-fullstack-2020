@@ -285,7 +285,7 @@ const userController = {
       User.findByPk(req.params.uid, {
         attributes: ['id', 'name'],
         include: [
-          { model: User, as: 'Followings', attributes: ['id', 'account', 'name', 'avatar', 'introduction', 'createdAt'] },
+          { model: User, as: 'Followings' },
           { model: Tweet, attributes: ['id'] }
         ],
         order: [['Followings', Followship, 'createdAt', 'DESC']]
@@ -335,8 +335,8 @@ const userController = {
         attributes: ['id', 'name'],
         include: [
           { model: Tweet, attributes: ['id'] },
-          { model: User, as: 'Followers', attributes: ['id', 'account', 'name', 'avatar', 'introduction', 'createdAt'] },
-          { model: User, as: 'Followings', attributes: ['id', 'account', 'name', 'avatar', 'introduction', 'createdAt'] }
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
         ],
         order: [['Followers', Followship, 'createdAt', 'DESC']]
       }),
