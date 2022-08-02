@@ -28,11 +28,6 @@ const tweetController = {
     const userId = helpers.getUser(req).id
     const description = req.body.description
 
-    // todo: 錯誤訊息顯示在modal上面
-    if (!req.body.description) throw new Error('error_messages', '內容不可空白')
-    if (req.body.description.trim().length === 0) throw new Error('error_messages', '請輸入推文內容!')
-    if (req.body.description.length > 140) throw new Error('error_messages', '推文超過140字數限制')
-
     User.findByPk(userId, {
       raw: true,
       nest: true
@@ -76,15 +71,11 @@ const tweetController = {
           tweet: tweet,
           isLiked: tweet.likedUsers.id === userId
         }
-        console.log(post)
         res.render('tweet', { tweet: post, replies: data, likes })
       })
       .catch(err => next(err))
   },
   postReply: (req, res, next) => {
-    // if (req.body.reply.length > 140) {
-    //   return res.redirect('back')
-    // }
     const userId = helpers.getUser(req).id
     const TweetId = req.params.id
     const comment = req.body.reply
