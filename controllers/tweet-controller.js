@@ -3,12 +3,12 @@ const helpers = require('../_helpers')
 
 const tweetController = {
   getTweets: (req, res, next) => {
-    // const userId = helpers.getUser(req).id
+    const userId = helpers.getUser(req).id
 
     return Tweet.findAll({
       order: [['createdAt', 'DESC']],
       nest: true,
-      include: [User, Reply, Like]
+      include: [User, Reply, Like, { model: User, as: 'likedUsers' }]
     })
       .then(tweets => {
         const user = helpers.getUser(req)
@@ -16,7 +16,9 @@ const tweetController = {
           ...t.dataValues,
           description: t.description.substring(0, 50),
           User: t.User.dataValues,
-          user
+          user,
+          isLiked: t.likedUsers.some(item => item.id === userId)
+
         }))
         res.render('tweets', { tweets: data, user })
       })
@@ -47,11 +49,12 @@ const tweetController = {
   },
   getTweet: (req, res, next) => {
     const tweetId = req.params.id
+    const userId = helpers.getUser(req).id
     return Promise.all([Tweet.findByPk(tweetId, {
       order: [['createdAt', 'DESC']],
       raw: true,
       nest: true,
-      include: [User, Reply, Like]
+      include: [User, Reply, Like, { model: User, as: 'likedUsers' }]
     }),
     Reply.findAll({
       order: [['createdAt', 'DESC']],
@@ -69,7 +72,12 @@ const tweetController = {
         const data = replies.map(r => ({
           ...r
         }))
-        res.render('tweet', { tweet: tweet, replies: data, likes })
+        const post = {
+          tweet: tweet,
+          isLiked: tweet.likedUsers.id === userId
+        }
+        console.log(post)
+        res.render('tweet', { tweet: post, replies: data, likes })
       })
       .catch(err => next(err))
   },
@@ -97,7 +105,7 @@ const tweetController = {
       userId,
       tweetId
     }).then(like => {
-      res.redirect('/tweets')
+      res.redirect('back')
     })
   },
   unlikePost: (req, res) => {
