@@ -1,6 +1,17 @@
 const editUser = document.querySelector('#edit-user')
 const saveUser = document.querySelector('#user-modal-save')
 
+if (window.location.pathname === '/signup') {
+  addScript('/signup')
+}
+
+function addScript (route) {
+  const BODY = document.getElementsByTagName('body')[0]
+  const script = document.createElement('script')
+  script.src = `/javascripts${route}.js`
+  BODY.appendChild(script)
+}
+
 function showEditUserModal (data) {
   const modalForm = document.querySelector('#user-modal-form')
   const modalBanner = document.querySelector('#user-modal-banner')
