@@ -24,7 +24,7 @@
   <img class="d-block" src="/images/cover.png" alt="封面圖片" style="min-width:639px; width:100%;">
   {{/if}}
   <div class="m-2 " style="float:right;">
-    {{#if userData.authSelfUser}}
+    {{#if user.authSelfUser}}
     {{!-- 點到自己的介面 --}}
     <form class="m-2" action="/users/{{user.id}}/setting" method="GET">
       <button class="btn btn-lg rounded-pill mb-2 no-wrap p-0" type="submit"
