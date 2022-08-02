@@ -34,6 +34,7 @@ const apiController = {
     }
 
     const { name, password, introduction, checkPassword } = req.body
+    const deleteCover = req.body.delete_cover
     const { files } = req
     let email = req.body.email || ''
     let account = req.body.account || ''
@@ -59,12 +60,20 @@ const apiController = {
       .then(([user, sameEmail, sameAccount, avatar, cover, newPassword]) => {
         if (sameEmail || sameAccount) throw new Error('無法使用與他人相同的email或account')
         if (!user) return res.json({ status: 'error', message: "user isn't existed!" })
+        if (deleteCover === 'on') {
+          return user.update({
+            name: name,
+            introduction: introduction,
+            avatar: avatar || user.avatar,
+            cover: null
+          })
+        }
 
         return user.update({
-          name: name || user.name,
+          name: name,
           email: email || user.email,
           account: account || user.account,
-          introduction: introduction || user.introduction,
+          introduction: introduction,
           avatar: avatar || user.avatar,
           cover: cover || user.cover,
           password: newPassword || user.password
