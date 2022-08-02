@@ -15,7 +15,7 @@
   </div>
 </li>
 
-<li class="list-group-item p-0 m-0 " style="max-height:451px ;border:#E6ECF0 solid 1px;">
+<li class="list-group-item p-0 m-0 " style="height:435px ;border:#E6ECF0 solid 1px;">
   {{!-- 點到別人的介面 --}}
   {{#if userData.cover}}
   <img class="d-block" src="{{userData.cover}}" alt="封面圖片" style="min-width:839px; max-height:200px;">
@@ -59,14 +59,18 @@
     {{/if}}
   </div>
 
+  {{#if userData.avatar}}
   <img class="d-block" src="{{userData.avatar}}" alt="個人頭像"
-    style="border-radius:50%; position:relative; bottom:80px; left:15px; width:141.1px;height:140px; ">
+    style="border-radius:50%; position:relative; bottom:80px; left:15px; width:141.1px;height:140px;">
+  {{else}}
+  <img class="d-block" src="/images/person.png" alt="封面圖片" style="border-radius:50%; position:relative; bottom:80px; left:15px; width:141.1px;height:140px;">
+  {{/if}}
   <div class="m-3 mt-5" style="position:relative; bottom:120px;">
     <h4 style="font-weight: 700;font-size: 18px;line-height: 26px; color:#171725;">{{userData.name}}
       <small class="d-block"
         style="font-weight: 400;font-size: 14px;line-height: 22px; color:#6C757D;">@{{userData.account}}</small>
     </h4>
-    <p class="text-nowrap" style="font-weight: 400;font-size: 14px;line-height: 22px; height:22px width:200px; word-wrap:break-word; width:700px;">
+    <p class="text-nowrap p-0 m-0" style="font-weight: 400;font-size: 14px;line-height: 22px; height:22px width:200px; word-wrap:break-word; width:500px; height:22px;">
       {{userData.introduction}}</p>
     <div style="margin-bottom: 10px;">
       <p class="d-inline me-3" style="font-weight: 400;font-size: 14px;line-height: 22px; color:#171725">
