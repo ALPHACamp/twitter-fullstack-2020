@@ -17,7 +17,7 @@ module.exports = {
       comment: {
         type: Sequelize.TEXT
       },
-      created_at: {re
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
