@@ -5,7 +5,7 @@
       <div class="modal-header">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body row pt-1" style="height: 200px;">
+      <div class="modal-body row pt-2 pb-0" style="height: 200px;">
         <div class="d-flex flex-column col-1 me-3">
           <a href="/users/{{tweet.UserId}}/tweets">
             <img src="{{checkAvatar tweet.User.avatar}}" style="border-radius: 50px; width: 50px; height: 50px;">
@@ -23,7 +23,7 @@
           </div>
           <p style="font-size: 16px;" class="limit-tweet-length">{{tweet.description}}</p>
           <div class="reply-secondary">
-            <span style="color: #6C757D;font-size: 14px;">回覆給</span>
+            <span style="color: #6C757D;font-size: 10px;">回覆給</span>
             <a href="/users/{{tweet.UserId}}/tweets"
               class="text-decoration-none reply-account">@{{tweet.User.account}}</a>
           </div>
@@ -31,7 +31,7 @@
         </div>
       </div>
       <form action="/tweets/{{tweet.id}}/replies" method="POST">
-        {{> tweet-reply-form}}
+        {{> post-reply-form}}
       </form>
     </div>
   </div>
