@@ -35,8 +35,24 @@
                 <small> <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="
                   reply" id="reply" class="btn-show-reply" data-bs-toggle="modal" data-bs-target="#replyModal"
                     data-id="{{this.id}}">{{this.Replies.length}} 回應</small>
-                <small> <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes"
-                    id="likes">{{this.Likes.length}} 喜歡</small>
+                <small>
+                  {{#if isLiked}}
+                  <form action="/tweets/{{this.id}}/unlike" method="POST">
+                    <button type="submit">
+                      <img src="https://upload.cc/i1/2022/07/29/CaJuOl.png" alt="likes" id="likes">
+                    </button>
+                  </form>
+                  {{else}}
+                  <form action="/tweets/{{this.id}}/like" method="POST">
+                    <button type="submit">
+                      <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes" id="likes">
+                    </button>
+                  </form>
+                  {{/if}}
+
+                  {{this.Likes.length}}
+                  喜歡
+                </small>
               </div>
             </td>
           </tr>

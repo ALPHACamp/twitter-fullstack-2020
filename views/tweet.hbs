@@ -15,9 +15,9 @@
           class="post-icon"></a>
       <div>
         <div>
-          <span>{{tweet.User.name}}</span>
-          <small>@{{tweet.User.account}}．{{relativeTimeFromNow tweet.createdAt}}</small>
-          <p class="description">{{tweet.description}}</p>
+          <span>{{tweet.tweet.User.name}}</span>
+          <small>@{{tweet.tweet.User.account}}．{{relativeTimeFromNow tweet.tweet.createdAt}}</small>
+          <p class="description">{{tweet.tweet.description}}</p>
         </div>
         {{!-- 推文數據 --}}
         <div class="d-flex mb-4">
@@ -28,9 +28,19 @@
           </div>
           <div>
             {{!-- todo: like功能 --}}
-            <span class="second"><img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes" id="likes"><a
-                href="/users/{{targetUser.id}}/followers" style="text-decoration:none;color: #171725">{{likes.length}}
-                喜歡次數</a></span>
+            <span class="second">{{#if tweet.isLiked}}
+              <form action="/tweets/{{tweet.tweet.id}}/unlike" method="POST">
+                <button type="submit">
+                  <img src="https://upload.cc/i1/2022/07/29/CaJuOl.png" alt="likes" id="likes">
+                </button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{tweet.tweet.id}}/like" method="POST">
+                <button type="submit">
+                  <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes" id="likes">
+                </button>
+              </form>
+              {{/if}}<span>{{likes.length}}喜歡次數</span>
           </div>
         </div>
       </div>
