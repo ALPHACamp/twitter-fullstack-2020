@@ -1,5 +1,5 @@
 {{#if success_messages}}
-  <div class="alert alert-light alert-dismissible fade show fixed-top mx-auto mt-5 shadow-sm" role="alert">
+  <div id="my-alert" class="alert alert-light alert-dismissible fade show fixed-top mx-auto mt-5 shadow-sm" role="alert">
     <div class="row align-items-center ps-5" data-bs-dismiss="alert" aria-label="Close">
       <p class="fs-6 col-10 mb-0 p-0">{{success_messages}}</p>
       <a class="col-1" data-bs-dismiss="alert" aria-label="Close">
@@ -28,6 +28,7 @@
       </a>
     </div>
   </div>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" data-bs-target="#my-alert" aria-label="Close"></button>
 {{/if}}
 {{#if error_messages}}
   <div class="alert alert-light alert-dismissible fade show fixed-top mx-auto mt-5 shadow-sm" role="alert">
