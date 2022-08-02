@@ -41,27 +41,33 @@ cd twitter-fullstack-2020
 在 Terminal 輸入 npm install 指令
 ```
 
-4. 安裝 nodemon 套件 (若已再global安裝則不須重新安裝)
+5. 安裝 nodemon 套件 (若已再global安裝則不須重新安裝)
 
 ```
 在 Terminal 輸入 npm install -g nodemon 指令
 ```
 
-5. 匯入種子檔案
+6. 建立mySQL Table
+
+```
+執行 npx sequelize db:migrate
+```
+
+7. 匯入種子檔案
 
 ```
 執行 npx sequelize db:seed:all 產生測試用的初始資料
 ```
 
-6. 執行npm腳本，啟動伺服器
+8. 執行npm腳本，啟動伺服器
 
 ```
 在 Terminal 輸入 npm run dev 指令啟動伺服器
 ```
 
-7. 現在可以開啟任一瀏覽器瀏覽器輸入 [http://localhost:3000](http://localhost:3000) 開始使用Alphitter囉！
+9. 現在可以開啟任一瀏覽器瀏覽器輸入 [http://localhost:3000](http://localhost:3000) 開始使用Alphitter囉！
 
-8. 可以使用種子帳號來做測試：
+10. 可以使用種子帳號來做測試：
 
 提供管理者
 帳號：root
