@@ -44,7 +44,7 @@
     <div class="input">
       <label for="account">帳號</label>
       <input name="account" id="account" type="text" placeholder="請輸入帳號"
-      onfocus="changeFocus('account')" onblur="changeFocus('account')" required>
+      onfocus="changeFocus('account')" onblur="changeFocus('account')" value="{{account}}" required>
       <div class="status account-status"></div>
       <div class="helper"><span></span></div>
       <div class="count"><span></span></div>
@@ -53,7 +53,7 @@
     <div class="input">
       <label for="name">名稱</label>
       <input name="name" id="name" type="text" placeholder="請輸入使用者名稱"
-      onfocus="changeFocus('name')" onblur="changeFocus('name')" oninput="counts()" required>
+      onfocus="changeFocus('name')" onblur="changeFocus('name')" oninput="counts()" value="{{name}}" required>
       <div class="status name-status"></div>
       <div class="helper name-helper"><span></span></div>
       <div class="count name-count"><span>0/50</span></div>
@@ -62,7 +62,7 @@
     <div class="input">
       <label for="email">Email</label>
       <input name="email" id="email" type="email" placeholder="請輸入Email" onfocus="changeFocus('email')"
-        onblur="changeFocus('email')" required>
+        onblur="changeFocus('email')" value="{{email}}" required>
       <div class="status email-status"></div>
       <div class="helper"><span></span></div>
       <div class="count"><span></span></div>
@@ -71,7 +71,7 @@
     <div class="input">
       <label for="password">密碼</label>
       <input name="password" id="password" type="password" placeholder="請設定密碼" onfocus="changeFocus('password')"
-        onblur="changeFocus('password')" required>
+        onblur="changeFocus('password')" value="{{password}}" required>
       <div class="status password-status"></div>
       <div class="helper"><span></span></div>
       <div class="count"><span></span></div>
@@ -80,7 +80,7 @@
     <div class="input">
       <label for="checkPassword">密碼確認</label>
       <input name="checkPassword" id="checkPassword" type="password" placeholder="請再次輸入密碼" onfocus="changeFocus('checkPassword')"
-        onblur="changeFocus('checkPassword')" required>
+        onblur="changeFocus('checkPassword')" value="{{checkPassword}}" required>
       <div class="status checkPassword-status"></div>
       <div class="helper"><span></span></div>
       <div class="count"><span></span></div>
