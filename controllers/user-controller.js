@@ -1,7 +1,6 @@
-const { User, Tweet, Reply, Followship, Like } = require('../models')
+const { User, Tweet, Reply, Like } = require('../models')
 const { getUser } = require('../_helpers')
 const bcrypt = require('bcryptjs')
-const sequelize = require('sequelize')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -9,9 +8,24 @@ const userController = {
   },
   signUp: (req, res, next) => {
     const { account, name, email, password, checkPassword } = req.body
-    if (password !== checkPassword) throw new Error('密碼與密碼確認不相符!')
-    if (!account || !name || !email || !password || !checkPassword)
-      throw new Error('所有欄位為必填')
+    const errors = []
+    if (password !== checkPassword) {
+      errors.push({ message: '密碼與確認密碼不相符！' })
+    }
+    if (!account || !name || !email || !password || !checkPassword) {
+      errors.push({ message: '所有欄位都是必填。' })
+    }
+    const errorsMsg = {
+      errors,
+      account,
+      name,
+      email,
+      password,
+      checkPassword
+    }
+    if (errors.length) {
+      return res.render('signup', errorsMsg)
+    }
     Promise.all([User.findOne({ where: { account } }), User.findOne({ where: { email } })])
       .then(([account, email]) => {
         if (account) throw new Error('account 已重複註冊！')
@@ -128,7 +142,7 @@ const userController = {
             ...l.toJSON(),
             likedCount: l.Tweet.Likes.length,
             repliedCount: l.Tweet.Replies.length,
-            isLiked: user? l.Tweet.Likes.some(like => like.UserId === user.id) : false
+            isLiked: user ? l.Tweet.Likes.some(like => like.UserId === user.id) : false
           }))
         res.locals.tweetsLength = targetUser.Tweets.length
         res.render('profile', { targetUser: targetUser.toJSON(), likes: likesData, user, like: true })
