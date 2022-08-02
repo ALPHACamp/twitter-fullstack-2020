@@ -160,7 +160,7 @@ section#ys-admin-region .left-region-sidebar .side-bar a.active {
 }
 section#ys-admin-region .left-region-sidebar .side-bar .logout {
   position: absolute;
-  bottom: 0px;
+  bottom: 1rem;
 }
 section#ys-admin-region .right-region-tweet-list,
 section#ys-admin-region .right-region-users-list {
