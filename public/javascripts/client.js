@@ -1,7 +1,9 @@
 const editUser = document.querySelector('#edit-user')
 const saveUser = document.querySelector('#user-modal-save')
 
-if (window.location.pathname === '/signup') {
+const path = window.location.pathname
+
+if (path === '/signup' || path === '/setting') {
   addScript('/signup')
 }
 

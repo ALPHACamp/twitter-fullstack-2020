@@ -7,7 +7,11 @@ const COLOR_CODE = {
 }
 
 Array.from([inputAccount, inputName]).forEach(target => {
-  target.addEventListener('input', (e) => {
+  const currentCount = target.value.length
+  const countSpan = getCountElement(target)
+  countSpan.innerHTML = currentCount
+
+  target.addEventListener('input', () => {
     const currentCount = target.value.length
     const countSpan = getCountElement(target)
     countSpan.innerHTML = currentCount
