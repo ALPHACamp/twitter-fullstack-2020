@@ -3,6 +3,8 @@ const helpers = require('../_helpers')
 
 const tweetController = {
   getTweets: (req, res, next) => {
+    // const userId = helpers.getUser(req).id
+
     return Tweet.findAll({
       order: [['createdAt', 'DESC']],
       nest: true,
@@ -75,12 +77,43 @@ const tweetController = {
     // if (req.body.reply.length > 140) {
     //   return res.redirect('back')
     // }
+    const userId = helpers.getUser(req).id
+    const TweetId = req.params.id
+    const comment = req.body.reply
+
     Reply.create({
-      userId: helpers.getUser(req).id,
-      TweetId: req.params.id,
-      comment: req.body.reply
+      userId,
+      TweetId,
+      comment
     }).then(reply => {
-      res.redirect(`/tweets/${req.params.id}/replies`)
+      res.redirect(`/tweets/${TweetId}/replies`)
+    })
+  },
+  likePost: (req, res) => {
+    const tweetId = req.params.id
+    const userId = helpers.getUser(req).id
+    // const
+    Like.create({
+      userId,
+      tweetId
+    }).then(like => {
+      res.redirect('/tweets')
+    })
+  },
+  unlikePost: (req, res) => {
+    // const userId = helpers.getUser(req).id
+    const TweetId = req.params.id
+
+    Like.findOne({
+      where: {
+        UserId: helpers.getUser(req) && helpers.getUser(req).id,
+        TweetId
+      }
+    }).then(like => {
+      like.destroy()
+        .then(() => {
+          return res.redirect('back')
+        })
     })
   }
 }
