@@ -19,9 +19,9 @@
   {{!-- 點到別人的介面 --}}
   {{!-- {{#ifCond this.Followship.followerId ../user.id}} --}}
   {{#if userData.cover}}
-  <img class="d-block" src="{{userData.cover}}" alt="封面圖片" style="min-width:639px; width:100%;">
+  <img class="d-block" src="{{userData.cover}}" alt="封面圖片" style="min-width:839px; max-height:200px;">
   {{else}}
-  <img class="d-block" src="/images/cover.png" alt="封面圖片" style="min-width:639px; width:100%;">
+  <img class="d-block" src="/images/AC-cover.png" alt="封面圖片" style="min-width:839px; max-height:200px;">
   {{/if}}
   <div class="m-2 " style="float:right;">
     {{#if user.authSelfUser}}
