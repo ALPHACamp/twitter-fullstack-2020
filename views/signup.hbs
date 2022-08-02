@@ -1,0 +1,92 @@
+<div class="container" style="height: 1200px;">
+  <form action="/signup" id="signup-region" method="POST" onsubmit="return checkform()">
+    <div class="icon">
+      <img src="/images/alphacamp.png" alt="icon">
+    </div>
+    <h3 class="title">建立你的帳號</h3>
+
+    {{> message}}
+
+    <script>
+      function changeFocus(element) {
+        const target = document.querySelector('.' + element + '-status')
+        if (target.classList.contains('focus')) {
+          target.classList.remove('focus')
+          return
+        }
+        target.classList.toggle('focus')
+      }
+      function counts(){
+        const counts = document.querySelector('#name').value.length
+        document.querySelector('.name-count span').innerText = counts + '/50'
+        const status = document.querySelector('.name-status')
+        if (status.classList.contains('focus') && counts > 50) {
+          document.querySelector('.name-helper span').innerText = '字數超出上限！'
+          status.classList.remove('focus')
+          status.classList.toggle('warn')
+          return
+        }
+        if (status.classList.contains('warn') && counts <= 50) {
+          status.classList.remove('warn')
+          status.classList.toggle('focus')
+          document.querySelector('.name-helper span').innerText = ''
+        }
+      }
+      function checkform() {
+        const counts = document.querySelector('#name').value.length
+        if (counts > 50) {
+          alert('字數超出上限！')
+          return false
+        }
+      }
+    </script>
+
+    <div class="input">
+      <label for="account">帳號</label>
+      <input name="account" id="account" type="text" placeholder="請輸入帳號"
+      onfocus="changeFocus('account')" onblur="changeFocus('account')" required>
+      <div class="status account-status"></div>
+      <div class="helper"><span></span></div>
+      <div class="count"><span></span></div>
+    </div>
+
+    <div class="input">
+      <label for="name">名稱</label>
+      <input name="name" id="name" type="text" placeholder="請輸入使用者名稱"
+      onfocus="changeFocus('name')" onblur="changeFocus('name')" oninput="counts()" required>
+      <div class="status name-status"></div>
+      <div class="helper name-helper"><span></span></div>
+      <div class="count name-count"><span>0/50</span></div>
+    </div>
+
+    <div class="input">
+      <label for="email">Email</label>
+      <input name="email" id="email" type="email" placeholder="請輸入Email" onfocus="changeFocus('email')"
+        onblur="changeFocus('email')" required>
+      <div class="status email-status"></div>
+      <div class="helper"><span></span></div>
+      <div class="count"><span></span></div>
+    </div>
+
+    <div class="input">
+      <label for="password">密碼</label>
+      <input name="password" id="password" type="password" placeholder="請設定密碼" onfocus="changeFocus('password')"
+        onblur="changeFocus('password')" required>
+      <div class="status password-status"></div>
+      <div class="helper"><span></span></div>
+      <div class="count"><span></span></div>
+    </div>
+
+    <div class="input">
+      <label for="checkPassword">密碼確認</label>
+      <input name="checkPassword" id="checkPassword" type="password" placeholder="請再次輸入密碼" onfocus="changeFocus('checkPassword')"
+        onblur="changeFocus('checkPassword')" required>
+      <div class="status checkPassword-status"></div>
+      <div class="helper"><span></span></div>
+      <div class="count"><span></span></div>
+    </div>
+
+    <button type="submit" class="submit"><span>註冊</span></button>
+    <div class="cancle"><a href="/signin">取消</a></div>
+  </form>
+</div>

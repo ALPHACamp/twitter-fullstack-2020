@@ -1,0 +1,348 @@
+section#Huei-region body {
+  margin: 0;
+  padding: 0;
+}
+section#Huei-region #navbar {
+  color: #171725;
+  font-style: normal;
+  line-height: 26px;
+  letter-spacing: 0px;
+}
+section#Huei-region .flex-home-page {
+  display: flex;
+  margin: 0 auto;
+  max-width: 1200px;
+  min-width: 992px;
+}
+section#Huei-region .middle-region-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  width: 639px;
+}
+section#Huei-region .left-region-home {
+  display: flex;
+  width: 173px;
+  margin-left: 130px;
+}
+section#Huei-region .right-region-home {
+  display: flex;
+  width: 273px;
+  margin-right: 130px;
+}
+section#Huei-region .a-orange {
+  color: #FF6600;
+}
+section#Huei-region .btn-orange {
+  color: #FFFFFF;
+  background-color: #FF6600;
+  border-color: #FF6600;
+}
+section#Huei-region a {
+  color: #44444F;
+  background-color: #FFFFFF;
+}
+section#Huei-region a .color-mask {
+  color: #FF6600;
+}
+section#Huei-region a .img-mask {
+  filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
+}
+section#Huei-region .icon {
+  width: 50px;
+  height: 50px;
+}
+section#Huei-region .icon img {
+  width: 40px;
+  height: 40px;
+}
+section#Huei-region img {
+  width: 25px;
+  height: 25px;
+}
+section#Huei-region .logout {
+  position: absolute;
+  bottom: 0px;
+}
+section#Huei-region .nav-user {
+  width: 273px;
+  height: 820px;
+  background-color: #FAFAFB;
+  background: #FAFAFB;
+  border-radius: 16px;
+  padding-left: 10px;
+}
+section#Huei-region .nav-user-title {
+  position: relative;
+  top: 30px;
+  left: 10px;
+}
+section#Huei-region .circle {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+section#Huei-region .user-list {
+  position: relative;
+  top: 50px;
+}
+section#Huei-region .user-name-position {
+  position: absolute;
+  left: 60px;
+}
+section#Huei-region .user-follow-bottom {
+  border-radius: 50px;
+  position: absolute;
+  right: 6px;
+}
+section#Huei-region .list-separate {
+  position: relative;
+  top: 60px;
+  height: 1px;
+  margin: 9px 0;
+  background-color: #E2E2EA;
+}
+section#Huei-region .btn-white {
+  color: #FF6600;
+  background-color: #FFFFFF;
+  border-color: #FF6600;
+}
+section#Huei-region .tweets {
+  width: 639px;
+}
+section#Huei-region .tweets .title {
+  position: relative;
+  top: 24px;
+  right: 280px;
+}
+section#Huei-region .tweets .card-override {
+  height: 68vh;
+  overflow-y: scroll;
+  scrollbar-color: #F1F1F5 #FAFAFB;
+  scrollbar-width: thin;
+  overflow-x: hidden;
+}
+section#Huei-region .tweets .list-separate-top {
+  position: relative;
+  top: 40px;
+  height: 1px;
+  width: 639px;
+  background-color: #E2E2EA;
+  margin-bottom: 18px;
+}
+section#Huei-region .tweets .list-separate-lg {
+  position: relative;
+  top: 190px;
+  height: 10px;
+  width: 639px;
+  background-color: #E2E2EA;
+}
+section#Huei-region .tweets .list-separate-m {
+  position: relative;
+  top: 17px;
+  height: 1px;
+  width: 639px;
+  background-color: #E2E2EA;
+  margin-bottom: 18px;
+}
+section#Huei-region .tweet-card {
+  word-wrap: break-word;
+  position: relative;
+  top: 10px;
+  left: 15px;
+}
+section#Huei-region .tweet-card .account {
+  margin-left: 8px;
+  color: #6C757D;
+}
+section#Huei-region .tweet-card .name {
+  color: #171725;
+  font-weight: bold;
+}
+section#Huei-region .tweet-card .time {
+  color: #6C757D;
+}
+section#Huei-region .tweet-card .content {
+  margin-top: 8px;
+  width: 528px;
+  height: 78px;
+}
+section#Huei-region .tweet-card .p {
+  position: relative;
+  bottom: 5px;
+  font-size: 14px;
+  margin-right: 41.3px;
+  color: #6C757D;
+}
+section#Huei-region .tweet-card .tweet-user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin-right: 10px;
+}
+section#Huei-region .tweet-text {
+  position: relative;
+  top: 30px;
+  left: 75px;
+}
+section#Huei-region .tweet-text .description {
+  width: 526px;
+}
+section#Huei-region .tweet-text .btn-tweets-bottom {
+  position: relative;
+  right: 150px;
+  top: 100px;
+  width: 64px;
+  height: 40px;
+}
+section#Huei-region .tweet-user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin-right: 10px;
+}
+section#Huei-region .flex-nowrap-element {
+  white-space: nowrap;
+  width: 173px;
+}
+section#Huei-region .position-left {
+  position: relative;
+  left: 10px;
+}
+section#Huei-region .position-left-text {
+  position: relative;
+  left: 20px;
+}
+section#Huei-region .btn-tweets-models {
+  width: 64px;
+  height: 40px;
+}
+section#Huei-region .content {
+  margin-top: 8px;
+  width: 528px;
+  height: 78px;
+}
+section#Huei-region .color-secondaryColor {
+  color: #6C757D;
+}
+section#Huei-region .color-main {
+  color: #FF6600;
+}
+section#Huei-region .reply-separate-m {
+  position: relative;
+  left: 25px;
+  bottom: 130px;
+  height: 86px;
+  width: 2px;
+  background-color: #B5B5BE;
+}
+section#Huei-region .count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0px 0px;
+  position: absolute;
+  top: 270px;
+  right: 250px;
+  background: #FFFFFF;
+}
+section#Huei-region .count span {
+  font-weight: 500;
+  line-height: 20px;
+  text-align: right;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  color: #696974;
+}
+section#Huei-region .name-helper {
+  text-align: right;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  color: #FC5A5A;
+  position: relative;
+  top: 255px;
+  right: 100px;
+}
+section#Huei-region .a-number-check {
+  position: absolute;
+  top: 250px;
+  right: 200px;
+  color: #696974;
+  font-weight: 500;
+}
+section#Huei-region .c-number-check {
+  text-align: right;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  position: absolute;
+  top: 250px;
+  right: 80px;
+  color: #FC5A5A;
+}
+section#Huei-region .list-separate-lg {
+  position: relative;
+  top: 190px;
+  height: 10px;
+  width: 639px;
+  background-color: #E2E2EA;
+}
+section#Huei-region .card-override-reply {
+  height: 47vh;
+  overflow-y: scroll;
+  scrollbar-color: #F1F1F5 #FAFAFB;
+  scrollbar-width: thin;
+  overflow-x: hidden;
+}
+section#Huei-region .like-reply-number .number {
+  display: inline;
+  color: #000000;
+  font-size: 19px;
+}
+section#Huei-region .like-reply-number .word {
+  display: inline;
+  color: #6C757D;
+  font-size: 19px;
+}
+section#Huei-region .tweet-name-account .name {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+}
+section#Huei-region .tweet-name-account .account {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #6C757D;
+}
+section#Huei-region tweet-vector {
+  height: 14px;
+  width: 17px;
+  border-radius: 0px;
+}
+section#Huei-region #loading {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  text-align: center;
+  opacity: 0.7;
+  background-color: #fff;
+  z-index: 99;
+}
+section#Huei-region #loading-image {
+  position: absolute;
+  top: 100px;
+  left: 240px;
+  z-index: 100;
+}

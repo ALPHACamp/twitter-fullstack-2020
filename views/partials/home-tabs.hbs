@@ -1,0 +1,134 @@
+<section id="Huei-region">
+  <div class="" id="navbar">
+    <div class="col-auto">
+      <div class="d-flex flex-column align-items-start">
+        <ul class="nav flex-column nav-pills">
+          <li class="nav-item py-1">
+            <a class="nav-link text-dark" href="/tweets">
+              <div class="icon">
+                <img src="/images/alphacamp.png" alt="icon">
+              </div>
+            </a>
+          </li>
+          <li class="nav-item flex-nowrap-element">
+            <a class="nav-link text-dark" href="/tweets">
+              <div class="d-flex">
+                <img src="/images/home.png" alt="icon" class="{{#ifCond route 'home'}}img-mask{{/ifCond}}">
+                <span class="h5 h-orange {{#ifCond route 'home'}}color-mask{{/ifCond}}">&nbsp;&nbsp;&nbsp;首頁</span>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item py-2">
+            <a class="nav-link text-dark" href="/users/{{user.id}}/tweets">
+              <div class="d-flex flex-nowrap">
+                <img src="/images/user.png" alt="icon" class="{{#ifCond route 'tweet'}}img-mask{{/ifCond}}">
+                <span class="h5 h-orange {{#ifCond route 'tweet'}}color-mask{{/ifCond}}">&nbsp;&nbsp;&nbsp;個人資料</span>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item py-2">
+            <a class="nav-link text-dark" href="/users/{{user.id}}/setting">
+              <div class="d-flex flex-nowrap">
+                <img src="/images/set.png" alt="icon" class="{{#ifCond route 'setting'}}img-mask{{/ifCond}}">
+                <span class="h5 h-orange {{#ifCond route 'setting'}}color-mask{{/ifCond}}">&nbsp;&nbsp;&nbsp;設定</span>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item px-2">
+            <div class="head d-flex" data-bs-toggle="modal" data-bs-target="#home-model">
+              <button type="button" class="btn btn-orange rounded-pill mt-3"
+                style="border-radius: 30px 30px 30px 30px; width:178px;height:46px;">
+                <span class="h5">推文</span>
+              </button>
+            </div>
+          </li>
+          <li class="nav-item logout py-2">
+            <button class="nav-link text-dark" id="logout">
+              <div class="d-flex">
+                <img src="/images/logout.png" alt="icon">
+                <span class="h5 h-orange">&nbsp;&nbsp;登出</span>
+              </div>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 新增 tweet Modal -->
+  <div class="modal fade" id="home-model" tabindex="-1" aria-labelledby="home-model" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width:639px; position:relative; right:40px;">
+      <div class="modal-content" style="border-radius:16px">
+        <div class="modal-header" style="">
+          <label for="description" class="form-label">
+          </label>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="/tweets" method="POST" onsubmit="return checkform()">
+          <div class="modal-body d-flex">
+            <img src="{{#if user.avatar}}{{user.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+              class="tweet-user-avatar" style="width:50px;height:50px;" alt="Picture">
+            <textarea class="form" id="description" name="description" rows="4" maxlength="141" placeholder="有什麼新鮮事？"
+              oninput="counts()" style="border:none; width:600px;position:relative; top:10px;resize:none;height:250px;"
+              required></textarea>
+            <div class="helper name-helper"><span>內容不可空白</span></div>
+            <div class="count name-count"><span>0/140</span></div>
+          </div>
+          <button type="submit" class="btn btn-orange btn-tweets-models"
+            style="border-radius: 50px;position:relative; left:550px;bottom:20px;">
+            <span class="" style="font-size:16px;">推文</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- 新增 tweet Modal 結束 -->
+
+  <script>
+    function counts() {
+      const counts = document.querySelector('#description').value.length
+      document.querySelector('.name-count span').innerText = counts + '/140'
+      if (counts > 140) {
+        document.querySelector('.name-helper span').innerText = '字數超出上限！'
+        return
+      }
+      if (counts > 0 && counts <= 140) {
+        document.querySelector('.name-helper span').innerText = ''
+      }
+      if (counts === 0) {
+        document.querySelector('.name-helper span').innerText = '內容不可空白'
+      }
+    }
+    function checkform() {
+      const counts = document.querySelector('#description').value.length
+      if (counts > 140) {
+        alert('字數超出上限！')
+        return false
+      }
+    }
+  </script>
+
+
+
+  <script type="text/javascript">
+    $('#logout').on('click', function () {
+      Swal.fire({
+        title: "你確定要登出嗎？",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#5cb85c',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '是，我要登出'
+        // cancelButtonText: "否",
+        // cancelButtonColor: "#6c757d",
+        // allowOutsideClick: false
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "/logout";
+        }
+      })
+    });
+  </script>
+
+</section>
