@@ -9,7 +9,7 @@ router.get('/:uid/likes', userController.getLikes)
 router.get('/:uid/followings', userController.getFollowings)
 router.get('/:uid/followers', userController.getFollowers)
 router.get('/:uid/tweets', userController.getTweets)
-router.get('/:id/setting', userController.getUserSetting)
+router.get('/:uid/setting', userController.getUserSetting)
 router.get('/:uid', userController.getTweets)
 
 router.use('/', tweetController.getTweets)
