@@ -51,17 +51,6 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  getProfile: (req, res, next) => {
-    return User.findByPk(req.params.userId, {
-      nest: true,
-      raw: true
-    })
-      .then(user => {
-        if (!user) throw new Error("User didn't exist!")
-        res.render('profile', { user })
-      })
-      .catch(err => next(err))
-  },
 
   getUserSetting: (req, res, next) => {
     return res.render('setting', { user: helpers.getUser(req)?.toJSON() })
@@ -124,6 +113,7 @@ const userController = {
           user.numberOfFollowers = user.Followers.length
           user.isFollowed = followedUserId.includes(user.id)
         }
+        console.log(userData)
         users = users.sort((a, b) => b.numberOfFollowers - a.numberOfFollowers).slice(0, 10) // 只取排行前 10 的 users
         res.render('profile-tweets', { user, users, userData, profileIsFollowed })
       })
