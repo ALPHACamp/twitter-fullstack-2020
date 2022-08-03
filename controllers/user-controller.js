@@ -130,7 +130,7 @@ const userController = {
       .catch(err => next(err))
   },
 
-  getRepies: (req, res, next) => {
+  getReplies: (req, res, next) => {
     Promise.all([
       User.findByPk(req.params.uid, {
         order: [
