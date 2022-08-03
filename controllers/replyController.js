@@ -3,7 +3,7 @@ const { User, Reply, Tweet, Like } = require('../models')
 const replyController = {
   getReply: async (req, res, next) => {
     try {
-      let tweet = await Tweet.findByPk(req.params.tweet_id,
+      const tweet = await Tweet.findByPk(req.params.tweet_id,
         {
           include: [
             User, Like, Reply,
@@ -31,7 +31,6 @@ const replyController = {
       const likedCount = tweet.Likes.length
       const repliedCount = tweet.Replies.length
       const isLiked = likes.map(l => l.TweetId).includes(tweet.id)
-
 
       users = await users.map(user => ({
         ...user.toJSON(),
@@ -67,8 +66,7 @@ const replyController = {
       })
       req.flash('success_messages', '成功新增回覆！')
       return res.redirect(`/tweets/${req.params.tweet_id}/replies`)
-    }
-    catch (err) {
+    } catch (err) {
       next(err)
     }
   }
