@@ -6,11 +6,11 @@
   {{#each users}}
     <div class="card admin-user-card" >
       <div>
-        <img src="{{this.banner}}" class="banner">
+        <img src="{{checkBanner this.banner}}" class="banner">
       </div>
 
       <div class="card-center">
-        <img src="{{this.avatar}}" class="user-avatar">
+        <img src="{{checkAvatar this.avatar}}" class="user-avatar">
         <h5 class="card-title user-name">{{this.name}}</h5>
         <p class="user-account">@{{this.account}}</p>
       </div>
