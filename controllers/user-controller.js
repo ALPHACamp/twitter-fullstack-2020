@@ -199,7 +199,7 @@ const userController = {
     Promise.all([
       User.findByPk(req.params.uid, {
         order: [
-          [Like, 'createdAt', 'desc']
+          ['createdAt', 'desc']
         ],
         attributes: ['id', 'name', 'account', 'avatar', 'introduction', 'cover'],
         include: [
