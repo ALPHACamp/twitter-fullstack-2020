@@ -16,7 +16,6 @@ const tweetController = {
           isLiked: req.user?.Likes.some(l => l.TweetId === t.id)
         }))
         res.render('tweets', { tweetsData })
-        // res.json({ tweetsData })
       })
       .catch(err => next(err))
   },
@@ -100,7 +99,6 @@ const tweetController = {
         tweet.likeCounts = tweet.Likes.length
         tweet.isLiked = req.user?.Likes.some(l => l.TweetId === tweet.id)
         res.render('tweet', { tweet })
-        // res.json({ tweet })
       })
       .catch(err => next(err))
   },
