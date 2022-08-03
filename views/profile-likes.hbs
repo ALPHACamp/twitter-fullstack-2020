@@ -3,47 +3,85 @@
 </div>
 
 <div class="col-8 nav-body" style="font-family: 'Noto Sans TC'; font-style: normal;">
-  <ul class="list-group">
+  <ul class="list-group" style="border-radius: 0px;" id="tweets-panel">
     {{>profile-header route='likes'}}
+    
     {{!-- 喜歡版 --}}
     {{#each userData.Likes}}
     <li class="list-group-item d-flex align-items-start" style="border:#E6ECF0 solid 1px;">
-      <a href="/users/{{this.Tweet.User.id}}/likes">
-        <img src="{{this.Tweet.User.avatar}}" alt="推文人頭像" style="width:50px; height:50px; border:#E6ECF0; border-radius:50%"
-          class="me-3">
-      </a>
-      <div class="m-0 p-0">
-        <small>
-          <a class="me-2" href="/users/{{this.Tweet.User.id}}/likes"
-            style="font-weight: 700;font-size: 16px;line-height: 26px;color:#171725; text-decoration:none;">
-            {{this.Tweet.User.name}}
-          </a>
-          <span class="text-muted"
-            style="text-decoration:none;color:#6C757D;font-weight: 400;font-size: 14px;line-height: 22px;">@{{this.Tweet.User.account}}・
-            <a href="/tweets/{{this.Tweet.id}}/replies"
-              style="text-decoration:none;color:#6C757D; font-weight: 400;font-size: 14px;line-height: 22px;">
-              {{relativeTimeFromNow this.createdAt}}
-            </a>
-          </span>
-        </small>
-        <a href="/tweets/{{this.Tweet.id}}/replies" style="text-decoration: none; color:black;">
-          <p class="mt-2" style="word-wrap:break-word; width:700px;">
-            {{this.Tweet.description}}
-          </p>
+
+        {{!-- avatar （連結到該user個人頁面）--}}
+        <a href="/users/{{this.Tweet.User.id}}">
+          <div class="mt-2" style="height: 50px; width: 50px; margin-right: 12px">
+            {{#if this.Tweet.User.avatar}}
+            <div class="mt-2 rounded-circle" style="height: 50px; width: 50px; margin-right: 12px; background: url('{{this.Tweet.User.avatar}}'); background-size: cover; background-position: center;"></div>
+            {{else}}
+            <div class="mt-2 rounded-circle" style="height: 50px; width: 50px; margin-right: 12px; background: url('/images/img.png'); background-size: cover; background-position: center;"></div>
+            {{/if}}
+          </div>
         </a>
-        <p class="m-0 p-0">
-          <img class="me-2 pointer" src="/images/chat.png" data-bs-toggle="modal" data-bs-target="#post-reply"
-            alt="回文圖示" style="width: 13.17px; height:13.17px;">
-          {{this.Tweet.Replies.length}}
-          <img class="ms-4 me-2 pointer" src="/images/love-red.png" data-bs-toggle="modal" data-bs-target="#post-reply"
-            alt="喜歡圖示">
-          {{this.Tweet.Likes.length}}
-        </p>
-      </div>
+
+        {{!-- 推文區塊 --}}
+        <div class="mt-2" style="width: 100%;">
+          {{!-- 第一橫列：user information & create time --}}
+          <div>
+            <a style="text-decoration: none; color: #171725" href="/users/{{this.Tweet.User.id}}">
+              <span style="font-size: 16px"><b>{{this.Tweet.User.name}}</b></span>
+            </a>
+            <span style="font-size: 14px; padding-left: 8px; color: #6C757D">@{{this.Tweet.User.account}}・</span>
+            <a style="text-decoration: none; color: #6C757D" href="/tweets/{{this.Tweet.id}}/replies">
+              <span style="font-size: 14px">{{relativeTimeFromNow this.Tweet.createdAt}}</span>
+            </a>
+          </div>
+          
+          {{!-- 第二橫列：tweet content --}}
+          <a href="/tweets/{{this.Tweet.id}}/replies" style=" text-decoration: none; color: #171725">
+            <p class="mt-2">{{this.Tweet.description}}</p>
+          </a>
+          
+          {{!-- 第三橫列：reply & 按讚 --}}
+          <div style="font-size: 14px; color: #6C757D">
+            <i class="fa-regular fa-comment me-2 pointer" style="font-size: 16px" data-bs-toggle="modal" data-bs-target="#post-reply" 
+            data-userid="{{this.Tweet.User.id}}" 
+            data-username="{{this.Tweet.User.name}}" 
+            data-useraccount="{{this.Tweet.User.account}}" 
+            data-tweetcreate="{{relativeTimeFromNow this.Tweet.description}}" 
+            data-tweetdescription="{{this.Tweet.description}}" 
+            data-tweetid="{{this.Tweet.id}}" 
+            {{#if this.Tweet.User.avatar}}data-useravatar="{{this.Tweet.User.avatar}}"{{else}}data-useravatar="/images/img.png"{{/if}} 
+            {{#if ../user.avatar}}data-loginuseravatar="{{../user.avatar}}"{{else}}data-loginuseravatar="/images/img.png"{{/if}}>
+            </i>
+            <span>{{this.Tweet.Replies.length}}</span>
+
+
+            <div class="d-inline-block mb-1" style="padding-left: 35px;">
+              {{#if isLiked}}
+              <form action="/tweets/{{this.id}}/unlike" method="POST" class="d-inline-block" >
+                <button type="submit" style="all: unset; cursor: pointer;">
+                  <i class="fa-solid fa-heart me-2" style="font-size: 16px"></i>
+                </button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{this.id}}/like" method="POST" class="d-inline-block" >
+                <button type="submit" style="all: unset; cursor: pointer;">
+                  <i class="fa-regular fa-heart me-2" style="font-size: 16px"></i>
+                </button>
+              </form>
+              {{/if}}
+              <span>{{this.Tweet.Likes.length}}</span>
+            </div>
+          </div>
+        </div>
     </li>
     {{/each}}
+  </ul>
 </div>
 
 <div class="col-2 nav-right">
   {{> nav-right}}
 </div>
+
+{{> modal-reply}}
+
+<script src="/stylesheets/script.js">
+</script>
