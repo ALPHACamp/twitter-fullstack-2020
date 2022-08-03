@@ -1,4 +1,5 @@
-const { sequelize } = require('../../models')
+const { Op } = require('sequelize')
+const { User, Tweet, Like, sequelize } = require('../../models')
 
 const adminConroller = {
   getSignin: (req, res) => {
@@ -30,6 +31,35 @@ const adminConroller = {
         res.redirect('back')
       })
       .catch(next)
+  },
+  getUsers: (req, res, next) => {
+    return User.findAll({
+      attributes: {
+        include: [
+          [sequelize.literal('(SELECT COUNT(`followerId`) FROM `Followships` WHERE `followingId` = `User`.`id`)'), 'followerCounts'],
+          [sequelize.literal('(SELECT COUNT(`followingId`) FROM `Followships` WHERE `followerId` = `User`.`id`)'), 'followingCounts']
+        ]
+      },
+      include: [{ model: Tweet, attributes: ['id'], include: [Like] }],
+      where: {
+        role: {
+          [Op.not]: 'admin'
+        }
+      }
+    })
+      .then(users => {
+        users = users.map(u => ({
+          ...u.toJSON(),
+          tweetCounts: u.Tweets.length,
+          likeCounts: u.Tweets.reduce((acc, cur) => {
+            return acc + cur.Likes.length
+          }, 0)
+        }))
+          .sort((a, b) => b.tweetCounts - a.tweetCounts)
+
+        res.render('admin/users', { users })
+      })
+      .catch(err => next(err))
   }
 }
 

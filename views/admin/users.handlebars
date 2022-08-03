@@ -1,0 +1,43 @@
+<div class="admin-header">
+  <h4 class="title">使用者列表</h4>
+</div>
+
+<div class="admin-container">
+  {{#each users}}
+    <div class="card admin-user-card" >
+      <div>
+        <img src="{{this.banner}}" class="banner">
+      </div>
+
+      <div class="card-center">
+        <img src="{{this.avatar}}" class="user-avatar">
+        <h5 class="card-title user-name">{{this.name}}</h5>
+        <p class="user-account">@{{this.account}}</p>
+      </div>
+
+      <div class="card-body d-flex flex-column align-items-center" style="height: 100%;">
+        <div>
+          <span>
+            <img src="/images/icon-black-post.png">
+            {{this.tweetCounts}}
+          </span>
+          <span>
+            <img src="/images/icon-black-unlike.png">
+            {{this.likeCounts}}
+          </span>
+        </div>
+        
+        <div>
+          <span style="color: var(--secondary); ">
+            <strong style="color: #171725;">{{this.followingCounts}}個</strong>跟隨中
+          </span>
+
+          <span style="color: var(--secondary);">
+            <strong style="color: #171725; margin-left: 8px;">{{this.followerCounts}}位</strong>跟隨者
+          </span>
+        </div>
+      </div>
+
+    </div>
+  {{/each}}
+</div>
