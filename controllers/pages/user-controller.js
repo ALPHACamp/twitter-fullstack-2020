@@ -31,7 +31,7 @@ const userConroller = {
     if (password !== checkPassword) {
       errors.push({ message: '密碼與確認密碼不相符！' })
     }
-    if (name.length > 50) {
+    if (name.length > 50 || account.length > 50) {
       errors.push({ message: '名稱長度超出上限 50 字！' })
     }
 
