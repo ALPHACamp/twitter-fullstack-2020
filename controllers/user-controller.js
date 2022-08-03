@@ -26,8 +26,8 @@ const userController = {
         res.render('signup', { account, name, email })
       }
 
-      account = account.replace(/^\s+|\s+$/g, '')
-      name = name.replace(/[^\w_]/g, '')
+      account = account.replace(/[^\w_]/g, '')
+      name = name.replace(/^\s+|\s+$/g, '')
       password = password.replace(/[\u4e00-\u9fa5]/g, '')
       checkPassword = checkPassword.replace(/[\u4e00-\u9fa5]/g, '')
 
