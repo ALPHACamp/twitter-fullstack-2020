@@ -55,19 +55,11 @@
 
 
             <div class="d-inline-block mb-1" style="padding-left: 35px;">
-              {{#if isLiked}}
-              <form action="/tweets/{{this.id}}/unlike" method="POST" class="d-inline-block" >
+              <form action="/tweets/{{this.Tweet.id}}/unlike" method="POST" class="d-inline-block" >
                 <button type="submit" style="all: unset; cursor: pointer;">
                   <i class="fa-solid fa-heart me-2" style="font-size: 16px"></i>
                 </button>
               </form>
-              {{else}}
-              <form action="/tweets/{{this.id}}/like" method="POST" class="d-inline-block" >
-                <button type="submit" style="all: unset; cursor: pointer;">
-                  <i class="fa-regular fa-heart me-2" style="font-size: 16px"></i>
-                </button>
-              </form>
-              {{/if}}
               <span>{{this.Tweet.Likes.length}}</span>
             </div>
           </div>
