@@ -85,29 +85,25 @@
   introCounter.innerText = `${profileIntro.value.length}/${INTRO_LEN_LIMIT}`
 
   profileName.addEventListener('input', event => {
-    if (profileName.value.length > 0) {
-      nameCounter.innerText = `${profileName.value.length}/${NAME_LEN_LIMIT}`
-    } else {
+    if (profileName.value.length <= 0) {
       nameCounter.innerText = ''
-    }
-    if (profileName.value.length > NAME_LEN_LIMIT) {
+    } else if (profileName.value.length > NAME_LEN_LIMIT) {
+      nameCounter.innerText = ''
       nameValidateOver.classList.remove('display-none')
-      nameCounter.innerText = ''
     } else {
+      nameCounter.innerText = `${profileName.value.length}/${NAME_LEN_LIMIT}`
       nameValidateOver.classList.add('display-none')
     }
   })
 
   profileIntro.addEventListener('input', event => {
-    if (profileIntro.value.length > 0) {
-      introCounter.innerText = `${profileIntro.value.length}/${INTRO_LEN_LIMIT}`
-    } else {
+    if (profileIntro.value.length <= 0) {
       introCounter.innerText = ''
-    }
-    if (profileIntro.value.length > INTRO_LEN_LIMIT) {
+    } else if (profileIntro.value.length > INTRO_LEN_LIMIT) {
+      introCounter.innerText = ''
       introValidateOver.classList.remove('display-none')
-      introCounter.innerText = ''
     } else {
+      introCounter.innerText = `${profileIntro.value.length}/${INTRO_LEN_LIMIT}`
       introValidateOver.classList.add('display-none')
     }
   })
