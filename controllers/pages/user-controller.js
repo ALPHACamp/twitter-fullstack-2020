@@ -32,7 +32,7 @@ const userConroller = {
       errors.push({ message: '密碼與確認密碼不相符！' })
     }
     if (name.length > 50 || account.length > 50) {
-      errors.push({ message: '名稱長度超出上限 50 字！' })
+      errors.push({ message: '輸入長度超出上限 50 字！' })
     }
 
     // 並確認 email 與 account 不能重複
@@ -180,7 +180,7 @@ const userConroller = {
 
     if (!account || !name || !email) throw new Error('帳號、名稱、Email 不可空白!')
     if (password !== checkPassword) throw new Error('密碼與確認密碼不相符!')
-    if (name.length > 50) throw new Error('名稱長度超出上限 50 字！')
+    if (name.length > 50 || account.length > 50) throw new Error('輸入長度超出上限 50 字！')
 
     Promise.all([
       User.findByPk(id),
