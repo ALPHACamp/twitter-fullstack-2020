@@ -116,3 +116,15 @@ textarea {
 .dark-80 {
   color: #696974;
 }
+
+.profile-header, .profile-following-header {
+  color: #657786;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.profile-header.active, .profile-following-header.active {
+  color: #FF6600;
+  border-bottom: #FF6600 2px solid;
+}
