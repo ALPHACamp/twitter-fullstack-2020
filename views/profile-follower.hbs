@@ -1,5 +1,9 @@
 <div class="col-2 nav-left">
+  {{#ifCond user.id userData.id}}
+  {{> nav-left route='personal-info'}}
+  {{else}}
   {{> nav-left}}
+  {{/ifCond}}
 </div>
 
 <div class="col-8 nav-body" style="font-family: 'Noto Sans TC'; font-style: normal;">
