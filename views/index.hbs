@@ -7,8 +7,8 @@
 <div class="col-8 nav-body">
 
   {{!-- 表頭 --}}
-  <div style="border: 1px solid #E6ECF0;">
-    <h4 class="m-3"><b>首頁</b></h4>
+  <div class="d-flex align-items-center" style="border: 1px solid #E6ECF0; height: 74px">
+    <span style="font-size: 24px; font-weight: 700; line-height: 26px; padding-left: 20px"><b>首頁</b></span>
   </div>
 
   {{!-- 發文區 --}}
@@ -56,7 +56,7 @@
             <a style="text-decoration: none; color: #171725" href="/users/{{this.User.id}}">
               <span style="font-size: 16px"><b>{{this.User.name}}</b></span>
             </a>
-            <span style="font-size: 14px; padding-left: 8px">@{{this.User.account}}・</span>
+            <span style="font-size: 14px; padding-left: 8px; color: #6C757D">@{{this.User.account}}・</span>
             <a style="text-decoration: none; color: #6C757D" href="/tweets/{{this.id}}/replies">
               <span style="font-size: 14px">{{relativeTimeFromNow this.createdAt}}</span>
             </a>
