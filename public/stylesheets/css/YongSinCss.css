@@ -431,6 +431,14 @@ section#ys-FE-users-setting #setting-region .input input {
   bottom: 35.9%;
   border: none;
 }
+section#ys-FE-users-setting #setting-region .input input::-moz-placeholder {
+  color: #B5B5BE;
+  font-size: 16px;
+}
+section#ys-FE-users-setting #setting-region .input input:-ms-input-placeholder {
+  color: #B5B5BE;
+  font-size: 16px;
+}
 section#ys-FE-users-setting #setting-region .input input::placeholder {
   color: #B5B5BE;
   font-size: 16px;

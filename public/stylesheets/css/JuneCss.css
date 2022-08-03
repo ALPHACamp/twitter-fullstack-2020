@@ -404,6 +404,9 @@
   height: 24px;
   filter: brightness(150%);
 }
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .icons img:hover {
+  cursor: pointer;
+}
 #profile-region #profile-middle .user-info #edit-profile-modal .modal-body .avatar-icon .avatar {
   width: 141.1px;
   height: 140px;
@@ -423,6 +426,9 @@
   position: relative;
   top: -180px;
   right: -73px;
+}
+#profile-region #profile-middle .user-info #edit-profile-modal .modal-body .avatar-icon .icon:hover {
+  cursor: pointer;
 }
 #profile-region #profile-middle .user-info #edit-profile-modal .modal-body .input {
   position: relative;
