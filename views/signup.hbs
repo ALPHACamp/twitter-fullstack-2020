@@ -56,7 +56,8 @@
         event.stopPropagation()
       }
       form.classList.add('was-validated')
-      {{!-- tools.callLoading() --}}
+      tools.callLoading()
+      setTimeout(tools.closeLoading(), 500) 
     })
   })()
 
