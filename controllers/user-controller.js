@@ -18,16 +18,32 @@ const userController = {
       const avatar = '/pic/no_pic.png'
       const coverPhoto = '/pic/default_cover_photo.png'
       if (!account || !name || !email || !password) {
-        throw new Error('Please complete all required fields')
+        req.flash('error_messages', 'Please complete all required fields')
+        res.render('signup', { account, name, email })
       }
-      if (password !== checkPassword) throw new Error('Passwords do not match!')
+      if (password !== checkPassword) {
+        req.flash('error_messages', 'Passwords do not match!')
+        res.render('signup', { account, name, email })
+      }
+
+      account = account.replace(/^\s+|\s+$/g, '')
+      name = name.replace(/[^\w_]/g, '')
+      password = password.replace(/[\u4e00-\u9fa5]/g, '')
+      checkPassword = checkPassword.replace(/[\u4e00-\u9fa5]/g, '')
+
       const existAccount = await User.findOne({ where: { account } })
-      if (existAccount) throw new Error('Account already exists!')
+      if (existAccount) {
+        req.flash('error_messages', 'Account already exists!')
+        res.render('signup', { name, email })
+      }
       const existEmail = await User.findOne({ where: { email } })
-      if (existEmail) throw new Error('Email already exists!')
-      name = name.trim()
+      if (existEmail) {
+        req.flash('error_messages', 'Email already exists!')
+        res.render('signup', { account, name })
+      }
       if (name.length > 50) {
-        throw new Error("Name can't have too many characters.")
+        req.flash('error_messages', "Name can't have too many characters.")
+        res.render('signup', { account, email })
       }
 
       const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
@@ -41,10 +57,7 @@ const userController = {
       }
       await User.create(userData)
       req.flash('success_messages', '您已成功註冊帳號！')
-      // return res.render('signin')
       res.redirect(302, '/signin')
-      // delete userData.password
-      // return res.json(userData)
     } catch (err) {
       next(err)
     }
@@ -60,14 +73,6 @@ const userController = {
     try {
       req.flash('success_messages', '成功登入！')
       res.redirect('/tweets')
-      // const userData = req.user.toJSON()
-      // delete userData.password
-      // res.json({
-      //   status: 'success',
-      //   data: {
-      //     user: userData
-      //   }
-      // })
     } catch (err) {
       next(err)
     }
@@ -385,6 +390,11 @@ const userController = {
       }
 
       if (password !== checkPassword) throw new Error('Passwords do not match!')
+
+      account = account.replace(/[^\w_]/g, '')
+      name = name.replace(/^\s+|\s+$/g, '')
+      password = password.replace(/[\u4e00-\u9fa5]/g, '')
+      checkPassword = checkPassword.replace(/[\u4e00-\u9fa5]/g, '')
 
       const existAccount = await User.findOne({
         where: { account: account || null }
