@@ -117,14 +117,29 @@ textarea {
   color: #696974;
 }
 
-.profile-header, .profile-following-header {
+.profile-header,
+.profile-following-header {
   color: #657786;
   font-weight: 700;
   font-size: 15px;
   line-height: 22px;
 }
 
-.profile-header.active, .profile-following-header.active {
+.profile-header.active,
+.profile-following-header.active {
   color: #FF6600;
   border-bottom: #FF6600 2px solid;
+}
+
+.profile-edit-cover {
+  margin: -16px;
+  z-index: -1;
+  aspect-ratio: 640 / 200;
+}
+
+.profile-edit-avatar {
+  width: 140px;
+  height: 140px;
+  margin-top: -70px;
+  z-index: 10;
 }
