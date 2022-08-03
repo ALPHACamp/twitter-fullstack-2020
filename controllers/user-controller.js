@@ -51,17 +51,6 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  getProfile: (req, res, next) => {
-    return User.findByPk(req.params.userId, {
-      nest: true,
-      raw: true
-    })
-      .then(user => {
-        if (!user) throw new Error("User didn't exist!")
-        res.render('profile', { user })
-      })
-      .catch(err => next(err))
-  },
 
   getUserSetting: (req, res, next) => {
     return res.render('setting', { user: helpers.getUser(req)?.toJSON() })
@@ -114,6 +103,14 @@ const userController = {
           Number(data.Followship.followingId) === Number(req.params.uid)
         )
         userData = JSON.parse(JSON.stringify(userData))
+        userData.Tweets.forEach(data => {
+          data.isLiked = false
+          data.Likes.forEach(f => {
+            if (f.UserId === user.id) {
+              data.isLiked = true
+            }
+          })
+        })
         userData.followersLength = followers.Followers.length
         userData.followingsLength = followings.Followings.length
         user.authSelfUser = parseInt(req.params.uid) === parseInt(helpers.getUser(req).id) ? true : []
@@ -130,7 +127,7 @@ const userController = {
       .catch(err => next(err))
   },
 
-  getRepies: (req, res, next) => {
+  getReplies: (req, res, next) => {
     Promise.all([
       User.findByPk(req.params.uid, {
         order: [
