@@ -32,7 +32,7 @@ function showEditUserModal (data) {
         <input type="text" class="form-control" id="modal-input-name" name="name" value="${data.name}" oninput="countWord(this)" maxlength="50">
       </div>
       <div class="d-flex justify-content-end word-count">
-        <span id="name-count"></span>
+        <span id="name-count">${data.name.length}</span>
         <span>/50</span>
       </div>
     </div>
@@ -43,7 +43,7 @@ function showEditUserModal (data) {
           name="introduction" oninput="countWord(this)" maxlength="160">${data.introduction}</textarea>
       </div>
       <div class="d-flex justify-content-end word-count">
-        <span id="introduction-count"></span>
+        <span id="introduction-count">${data.introduction.length}</span>
         <span>/160</span>
       </div>
     </div>
