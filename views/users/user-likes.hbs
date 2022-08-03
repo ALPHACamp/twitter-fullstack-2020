@@ -17,7 +17,8 @@
     <div class="scroll-part scrollbar">
       <div class="banner position-relative">
         <img src='{{profileUser.coverPhoto}}' id="profile-cover-photo" />
-        <img class="profile-avatar border border-5 border-white rounded-circle" src='{{profileUser.avatar}}' id="profile-avatar" />
+        <img class="profile-avatar border border-5 border-white rounded-circle" src='{{profileUser.avatar}}'
+          id="profile-avatar" />
         <div class="buttons d-flex justify-content-end align-items-center">
           {{#ifCond currentUser.id profileUser.id}}
           <!-- Button trigger modal -->
@@ -35,10 +36,13 @@
         <p class="mb-2" style="color: #6C757D;" id="profile-account">@{{profileUser.account}}</p>
         <p class="mb-2" id="profile-intro" id="profile-intro">{{profileUser.introduction}}</p>
         <div>
-          <a class="text-decoration-none" href="/users/{{profileUser.id}}/followings"><span
-              class="text-black" id="count-followings" data-following-amount="{{profileUser.Followings.length}}">{{profileUser.Followings.length}} 個</span><span style="color: #6C757D;">跟隨中</span></a>
-          <a class="text-decoration-none" href="/users/{{profileUser.id}}/followers"><span
-              class="ms-3 text-black" id="count-followers-{{profileUser.id}}" data-follower-amount="{{profileUser.Followers.length}}">{{profileUser.Followers.length}} 位</span><span
+          <a class="text-decoration-none" href="/users/{{profileUser.id}}/followings"><span class="text-black"
+              id="count-followings"
+              data-following-amount="{{profileUser.Followings.length}}">{{profileUser.Followings.length}} 個</span><span
+              style="color: #6C757D;">跟隨中</span></a>
+          <a class="text-decoration-none" href="/users/{{profileUser.id}}/followers"><span class="ms-3 text-black"
+              id="count-followers-{{profileUser.id}}"
+              data-follower-amount="{{profileUser.Followers.length}}">{{profileUser.Followers.length}} 位</span><span
               style="color: #6C757D;">跟隨者</span></a>
         </div>
       </div>
@@ -47,7 +51,7 @@
       </div>
       {{!-- 推文卡片 --}}
       <div class="tweet-container">
-
+        {{#if likedTweets}}
         {{#each likedTweets}}
         <div class="tweet-card border-bottom border-1">
           <div class="d-flex flex-nowrap ms-3 mt-3">
@@ -92,6 +96,9 @@
         </div>
         {{> reply-modal tweet=this user=../currentUser}}
         {{/each}}
+        {{else}}
+        <h3 class="text-start m-3">嗯... 好像還不喜歡任何文...</h3>
+        {{/if}}
       </div>
       {{!-- 推文卡片結束 --}}
     </div>

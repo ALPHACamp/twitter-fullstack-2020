@@ -103,7 +103,9 @@ function infoIntroCheck (target) {
 }
 async function showInfoModal (uid) {
   // eslint-disable-next-line no-undef
+  tools.callLoading()
   const data = await axios.get(`/api/users/${uid}`)
+  tools.closeLoading()
   const existUser = data.data.existUser
   const infoCoverPhoto = document.querySelector('#info-cover-photo')
   const infoAvatar = document.querySelector('#info-avatar')

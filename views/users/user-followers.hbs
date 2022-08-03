@@ -3,7 +3,7 @@
   {{!-- 中央部分 --}}
   <div class="center-part border" id="center-part">
     <div class="text-index border-bottom" id="text-index">
-      <a class="text-decoration-none" href="/users/{{queryUser.id}}/tweets">
+      <a class="text-decoration-none" href="javascript:history.back(-1)">
         <div class="user-tweets-header text-start ms-3 mt-4 mb-3 d-flex align-items-center ">
           <i class="back"></i>
       </a>
@@ -47,7 +47,7 @@
       </div>
       {{/each}}
       {{else}}
-      <h3 class="text-start m-3">嘿! 還沒有任何人追蹤你</h3>
+      <h3 class="text-start m-3">嘿! 還沒有任何人追蹤</h3>
       {{/if}}
     </div>
     {{!-- 推文卡片結束 --}}

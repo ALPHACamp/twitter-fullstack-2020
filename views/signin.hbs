@@ -11,34 +11,26 @@
           type='text'
           id='account'
           name='account'
-          class='form-control border-0 p-0 ps-3'
+          class='form-control p-0 ps-3 shadow-none'
           style='margin: 0;'
           placeholder='請輸入帳號'
           onkeyup="this.value=this.value.replace(/[^\w_]/g,'')"
           required
           autofocus
         />
-        <hr
-          class='m-0'
-          style='background: #657786; border: 1px solid #657786; border-radius: 0px 0px 4px 4px;  opacity: 1;'
-        />
         <div class="invalid-feedback m-0" style='background-color: #ffffff'>Please enter your account.</div>
       </div>
       <div class='form-row mb-4' style='background-color: #F5F8FA'>
-        <label class='form-label m-0 pt-1 ps-3' for='password' style='color: #696974'>密碼</label>
+        <label class='form-label m-0 pt-1 ps-3 ' for='password' style='color: #696974;'>密碼</label>
         <input
           type='password'
           id='password'
           name='password'
-          class='form-control border-0 p-0 ps-3'
+          class='form-control p-0 ps-3 shadow-none'
           style='margin: 0;'
           placeholder='請輸入密碼'
           onkeyup="this.value=this.value.replace(/[\u4e00-\u9fa5]/g,'')"
           required
-        />
-        <hr
-          class='m-0'
-          style='background: #657786; border: 1px solid #657786; border-radius: 0px 0px 4px 4px;  opacity: 1;'
         />
         <div class="invalid-feedback m-0" style='background-color: #ffffff'>Please enter your password.</div>
       </div>
@@ -64,6 +56,7 @@
         event.stopPropagation()
       }
       form.classList.add('was-validated')
+      tools.callLoading()
     })
   })()
 </script>

@@ -8,7 +8,8 @@
           <a class="text-decoration-none" href="javascript:history.back(-1)"><i class="back"></i></a>
           <div class="index-name-wrapper ms-3">
             <h4 class="text-black fw-bold index-user-name mb-0">{{profileUser.name}}</h4>
-            <span class="count-tweet text-black-50 fw-bold fs-6" style="color: #6C757D;">{{profileUser.Tweets.length}} 推文</span>
+            <span class="count-tweet text-black-50 fw-bold fs-6" style="color: #6C757D;">{{profileUser.Tweets.length}}
+              推文</span>
           </div>
         </div>
       </div>
@@ -16,15 +17,17 @@
     <div class="scroll-part scrollbar">
       <div class="banner position-relative">
         <img src='{{profileUser.coverPhoto}}' id="profile-cover-photo" />
-        <img class="profile-avatar border border-5 border-white rounded-circle" src='{{profileUser.avatar}}' id="profile-avatar" />
+        <img class="profile-avatar border border-5 border-white rounded-circle" src='{{profileUser.avatar}}'
+          id="profile-avatar" />
         <div class="buttons d-flex justify-content-end align-items-center">
           {{#ifCond currentUser.id profileUser.id}}
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-outline-brand rounded-pill me-3 mt-3" data-bs-toggle="modal" data-bs-target="#edit-info" id="show-info-modal" data-userid="{{currentUser.id}}">
-              編輯個人資料
-            </button>
-            {{else}}
-              {{> user-profil-follow-btn}}
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-outline-brand rounded-pill me-3 mt-3" data-bs-toggle="modal"
+            data-bs-target="#edit-info" id="show-info-modal" data-userid="{{currentUser.id}}">
+            編輯個人資料
+          </button>
+          {{else}}
+          {{> user-profil-follow-btn}}
           {{/ifCond}}
         </div>
       </div>
@@ -33,10 +36,13 @@
         <p class="mb-2" style="color: #6C757D;" id="profile-account">@{{profileUser.account}}</p>
         <p class="mb-2" id="profile-intro" id="profile-intro">{{profileUser.introduction}}</p>
         <div>
-          <a class="text-decoration-none" href="/users/{{profileUser.id}}/followings"><span
-              class="text-black" id="count-followings" data-following-amount="{{profileUser.Followings.length}}">{{profileUser.Followings.length}} 個</span><span style="color: #6C757D;">跟隨中</span></a>
-          <a class="text-decoration-none" href="/users/{{profileUser.id}}/followers"><span
-              class="ms-3 text-black" id="count-followers-{{profileUser.id}}" data-follower-amount="{{profileUser.Followers.length}}">{{profileUser.Followers.length}} 位</span><span
+          <a class="text-decoration-none" href="/users/{{profileUser.id}}/followings"><span class="text-black"
+              id="count-followings"
+              data-following-amount="{{profileUser.Followings.length}}">{{profileUser.Followings.length}} 個</span><span
+              style="color: #6C757D;">跟隨中</span></a>
+          <a class="text-decoration-none" href="/users/{{profileUser.id}}/followers"><span class="ms-3 text-black"
+              id="count-followers-{{profileUser.id}}"
+              data-follower-amount="{{profileUser.Followers.length}}">{{profileUser.Followers.length}} 位</span><span
               style="color: #6C757D;">跟隨者</span></a>
         </div>
       </div>
@@ -45,7 +51,7 @@
       </div>
       {{!-- 推文卡片 --}}
       <div class="tweet-container">
-
+        {{#if repliedTweets}}
         {{#each repliedTweets}}
         <div class="tweet-card border-bottom border-1">
           <div class="d-flex flex-nowrap ms-3 mt-3">
@@ -64,10 +70,12 @@
                   <span class="user-account fw-normal fs-6"
                     id="tweet-account-{{this.User.id}}">@{{this.User.account}}</span>
                 </a>
-                <span class="fw-normal fs-6" id="tweet-time-{{this.Tweet.id}}">・{{relativeTimeFromNow this.createdAt}}</span>
+                <span class="fw-normal fs-6" id="tweet-time-{{this.Tweet.id}}">・{{relativeTimeFromNow
+                  this.createdAt}}</span>
                 <div class="fs-6 my-1">
                   <span style="color: #657786;">回覆</span>
-                  <a href='/users/{{this.Tweet.User.id}}/tweets' style="color: #FF6600;">@{{this.Tweet.User.account}}</a>
+                  <a href='/users/{{this.Tweet.User.id}}/tweets'
+                    style="color: #FF6600;">@{{this.Tweet.User.account}}</a>
                 </div>
               </div>
               <a href="/tweets/{{this.TweetId}}/replies" class="description-link">
@@ -80,6 +88,9 @@
         </div>
         {{> reply-modal tweet=this user=../currentUser}}
         {{/each}}
+        {{else}}
+        <h3 class="text-start m-3">嗯... 還沒回覆任何人的文呢!</h3>
+        {{/if}}
       </div>
       {{!-- 推文卡片結束 --}}
     </div>

@@ -67,6 +67,27 @@ const tools = {
         div.style.width = '0%'
       })
     }
+  },
+  callLoading () {
+    const div = document.querySelector('#messages-area')
+    div.style.height = '100%'
+    div.style.width = '100%'
+    div.style.background = 'black'
+    div.style.opacity = '50%'
+    div.style.zIndex = '1500'
+    div.style.color = 'white'
+    div.classList.add('d-flex', 'justify-content-center', 'align-items-center')
+    div.innerHTML = `Loading ...<img src = "https://i.stack.imgur.com/kOnzy.gif" style = "height:35px">`
+  },
+  closeLoading () {
+    const div = document.querySelector('#messages-area')
+    div.style.height = '0%'
+    div.style.width = '0%'
+    div.style.background = 'white'
+    div.style.opacity = '0%'
+    div.style.zIndex = '1'
+    div.classList.remove('d-flex', 'justify-content-center', 'align-items-center')
+    div.innerHTML = ''
   }
 }
 
@@ -179,12 +200,14 @@ const infoFormController = {
       const avatars = document.querySelectorAll('.tweet-avatar')
       // 送出表單
       // eslint-disable-next-line no-undef
+      tools.callLoading()
       const res = await axios({
         method: 'post',
         url: `/api/users/${target.dataset.userid}`,
         data: infoFormData,
         headers: { 'Content-Type': 'multipart/form-data' }
       })
+      tools.closeLoading()
       if (res.data.status === 'error') {
         return tools.showErrorMessage(res.data.message)
       }
@@ -240,7 +263,9 @@ const infoFormController = {
   showInfoModal: async uid => {
     try {
       // eslint-disable-next-line no-undef
+      tools.callLoading()
       const res = await axios.get(`/api/users/${uid}`)
+      tools.closeLoading()
       if (res.data.status === 'error') {
         return tools.showErrorMessage(res.data.message)
       }

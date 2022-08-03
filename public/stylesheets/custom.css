@@ -2075,12 +2075,13 @@ progress {
   color: #171725;
   background-color: #F5F8FA;
   background-clip: padding-box;
-  border: 1px solid #657786;
+  border: 0 solid white;
+  border-bottom: 2px solid #657786;
+  outline: 0;
+  box-shadow: 0 0 0 0;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  border-radius: 0.375rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 @media (prefers-reduced-motion: reduce) {
   .form-control {
