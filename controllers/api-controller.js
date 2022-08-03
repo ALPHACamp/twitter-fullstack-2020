@@ -126,7 +126,6 @@ const apiController = {
         message: '內容不可空白！'
       })
     }
-    // return res.json({status: 'success', existTweet})
     const data = await Reply.create({ UserId: User.id, TweetId, comment })
     return res.status(200).json({
       status: 'success',

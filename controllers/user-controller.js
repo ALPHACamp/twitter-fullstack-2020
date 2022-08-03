@@ -363,7 +363,6 @@ const userController = {
       if (!followship) throw new Error("You haven't follow this user")
       const destroyedFollowship = await followship.destroy()
       return res.status(302).json({ status: 'success', destroyedFollowship })
-      // res.json({ status: 'success', destroyedFollowship })
     } catch (err) {
       next(err)
     }
@@ -441,7 +440,6 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
       res.json({ status: 'success', topUser, currentUser })
-      // res.render('tweets', { topUser, currentUser })
     } catch (err) {
       next(err)
     }

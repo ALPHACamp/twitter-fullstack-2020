@@ -17,7 +17,7 @@
         </div>
         <div class="col-10 ms-2">
           <a href="/users/{{tweet.User.id}}/tweets" class="text-black text-decoration-none"><h5 class="card-title fw-bold mb-0" id="name-{{tweet.id}}">{{tweet.User.name}}</h5></a>
-          <a href="/users/{{tweet.User.id}}/tweets" class="text-decoration-none"><small class="text-muted fw-light" id="account-{{tweet.id}}">＠{{tweet.User.account}}</small></a>
+          <a href="/users/{{tweet.User.id}}/tweets" class="text-decoration-none"><small class="text-muted fw-light" id="account-{{tweet.id}}">@{{tweet.User.account}}</small></a>
         </div>
         <h4 class="col-12 mt-4" id="description-{{tweet.id}}">{{tweet.description}}</h4>
         <small class="col-10">{{timeFormat tweet.createdAt}}</small>
@@ -62,7 +62,7 @@
           >@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</small>
         </h5>
         </a>
-        <small class="d-block mt-2">回覆<a class="text-decoration-none text-brand ms-1" href="/users/{{../tweet.User.id}}/tweets">＠{{../tweet.User.account}}</a></small>
+        <small class="d-block mt-2">回覆<a class="text-decoration-none text-brand ms-1" href="/users/{{../tweet.User.id}}/tweets">@{{../tweet.User.account}}</a></small>
         <p class="card-text mt-2">{{this.comment}}</p>
       </div>
     </div>
