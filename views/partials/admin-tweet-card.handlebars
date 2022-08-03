@@ -14,7 +14,7 @@
         </p>
       </div>
       <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="post">
-        <button type="submit" class="btn-close" aria-label="Close"></button>
+        <button type="submit" class="btn-close" onclick="return confirm(`確定要刪除推文嗎？`)" aria-label="Close"></button>
       </form>
     </div>
   </td>
