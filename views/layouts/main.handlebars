@@ -39,12 +39,9 @@
       </div>
       {{{body}}}
     </div>
-      {{#ifCond path "/setting"}}
-      {{else}}
-      <div class="col-3">
-        {{> right-nav}}
-      </div>
-      {{/ifCond}}
+    <div class="col-3" {{#ifCond path "/setting"}}style="visibility: hidden"{{/ifCond}}>
+      {{> right-nav}}
+    </div>
     {{/if}}
   </div>
 
