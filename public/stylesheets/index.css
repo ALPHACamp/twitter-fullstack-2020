@@ -49,6 +49,10 @@ a:hover {
   font-family: 'Montserrat';
 }
 
+.form-control {
+  border: none;
+}
+
 .submit-btn {
   margin-block: 0.5rem;
   border: none;
@@ -360,15 +364,19 @@ a:hover {
   top: 56px;
 }
 
-#user-modal-body .input {
-  width: 602px;
-  padding: 0 17.84px;
-  margin-top: 8px;
-
+.input {
   border-bottom: #657786 solid 2px;
   border-radius: 2px;
 
   background: #F5F8FA;
+}
+
+.input:hover {
+  border-bottom: #50B5FF solid 2px;
+}
+
+.input:focus {
+  border-bottom: #50B5FF solid 2px;
 }
 
 .word-count {
@@ -378,27 +386,6 @@ a:hover {
   font-size: 12px;
   line-height: 20px;
   color: #696974;
-}
-
-#user-modal-body .form-label {
-  height: 22px;
-  width: 566.32px;
-  margin: 0;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 22px;
-  color: #696974;
-}
-
-#user-modal-body .form-control {
-  width: 566.32px;
-  color: #171725;
-  padding: 0;
-  border: none;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 26px;
-  background: #F5F8FA;
 }
 
 .add-photo {

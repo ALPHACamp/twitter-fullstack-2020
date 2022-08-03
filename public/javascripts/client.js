@@ -27,9 +27,9 @@ function showEditUserModal (data) {
 
   modalBody.innerHTML = `
     <div>
-      <div class="input input-name">
-        <label class="form-label" for="modal-input-name">名稱</label>
-        <input type="text" class="form-control" id="modal-input-name" name="name" value="${data.name}" oninput="countWord(this)" maxlength="50">
+      <div class="form-floating">
+        <input type="text" class="form-control input" id="modal-input-name" name="name" value="${data.name}" oninput="countWord(this)" maxlength="50">
+        <label for="modal-input-name">名稱</label>
       </div>
       <div class="d-flex justify-content-end word-count">
         <span id="name-count">${data.name.length}</span>
@@ -37,10 +37,10 @@ function showEditUserModal (data) {
       </div>
     </div>
     <div>
-      <div class="input input-introduction">
-        <label class="form-label" for="modal-input-introduction">自我介紹</label>
-        <textarea class="form-control" style="height: 147px; resize: none;" id="modal-input-introduction"
+      <div class="form-floating">
+        <textarea class="form-control input" style="height: 147px; resize: none;" id="modal-input-introduction"
           name="introduction" oninput="countWord(this)" maxlength="160">${data.introduction}</textarea>
+        <label for="modal-input-introduction">自我介紹</label>
       </div>
       <div class="d-flex justify-content-end word-count">
         <span id="introduction-count">${data.introduction.length}</span>
