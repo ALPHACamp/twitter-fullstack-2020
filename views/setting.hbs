@@ -5,7 +5,9 @@
 
 {{!-- 中間的tweets清單 --}}
 <div class="col-8 px-0 border" style="border: #E6ECF0; height: 100vh;">
-  <h4 class="p-4 mb-0 border-bottom" style="border: #E6ECF0;">帳戶設定</h4>
+  <div class="d-flex align-items-center border-bottom" style=" height: 74px">
+    <span style="font-size: 24px; font-weight: 700; line-height: 26px; padding-left: 20px"><b>帳戶設定</b></span>
+  </div>
   <div class="mx-4">
     <form action="/api/users/{{user.id}}" method="POST">
       <div class="mt-4 signin-signup-page-input-change-backgroundcolor" style="margin-bottom: 32px;">
