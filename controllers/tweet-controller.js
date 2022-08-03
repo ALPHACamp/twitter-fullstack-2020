@@ -40,7 +40,6 @@ const tweetController = {
       req.flash('error_messages', '內容不可空白')
       res.redirect('back')
     }
-    // return res.json({status: 'success', existTweet})
     await Reply.create({ UserId, TweetId, comment })
     return res.redirect('back')
   },
@@ -115,7 +114,6 @@ const tweetController = {
         currentUser,
         topUser
       })
-      // res.json({ status: 'success', tweets: data })
     } catch (err) {
       next(err)
     }
