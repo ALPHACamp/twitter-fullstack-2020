@@ -34,7 +34,7 @@
             </a>
             <span style="font-size: 14px; padding-left: 8px; color: #6C757D">@{{this.Tweet.User.account}}・</span>
             <a style="text-decoration: none; color: #6C757D" href="/tweets/{{this.Tweet.id}}/replies">
-              <span style="font-size: 14px">{{relativeTimeFromNow this.Tweet.createdAt}}</span>
+              <span style="font-size: 14px">{{relativeTimeFromNow this.createdAt}}</span>
             </a>
           </div>
           
@@ -59,11 +59,19 @@
 
 
             <div class="d-inline-block mb-1" style="padding-left: 35px;">
+              {{#if this.isLiked}}
               <form action="/tweets/{{this.Tweet.id}}/unlike" method="POST" class="d-inline-block" >
                 <button type="submit" style="all: unset; cursor: pointer;">
                   <i class="fa-solid fa-heart me-2" style="font-size: 16px"></i>
                 </button>
               </form>
+              {{else}}
+              <form action="/tweets/{{this.Tweet.id}}/like" method="POST" class="d-inline-block" >
+                <button type="submit" style="all: unset; cursor: pointer;">
+                  <i class="fa-regular fa-heart me-2" style="font-size: 16px"></i>
+                </button>
+              </form>
+              {{/if}}
               <span>{{this.Tweet.Likes.length}}</span>
             </div>
           </div>
