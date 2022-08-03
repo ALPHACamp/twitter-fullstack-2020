@@ -1,5 +1,9 @@
 <div class="col-2 nav-left">
-  {{> nav-left route="personal-info"}}
+  {{#ifCond user.id userData.id}}
+    {{> nav-left route='personal-info'}}
+    {{else}}
+      {{> nav-left}}
+  {{/ifCond}}
 </div>
 
 <div class="col-8 nav-body" style="font-family: 'Noto Sans TC'; font-style: normal;">
@@ -10,11 +14,13 @@
       <li class="list-group-item d-flex align-items-start py-3 px-4" style="border:#E6ECF0 solid 1px;">
         <a href="/users/{{this.User.id}}/replies">
           {{#if this.User.avatar}}
-            <img src="{{this.User.avatar}}" alt="回覆人頭像"
-              style="width:50px; height:50px; border:#E6ECF0; border-radius:50%" class="me-2">
+            <div class="me-2 border rounded-circle"
+              style="width:50px; height:50px; border:#E6ECF0; background: url('{{this.User.avatar}}'); background-size: cover; background-position: center;">
+            </div>
           {{else}}
-            <img src="/images/img.png" alt="回覆人頭像" style="width:50px; height:50px; border:#E6ECF0; border-radius:50%"
-              class="me-2">
+            <div class="me-2 border rounded-circle"
+              style="width:50px; height:50px; border:#E6ECF0; background: url('/images/img.png'); background-size: cover; background-position: center;">
+            </div>
           {{/if}}
         </a>
         <div>
