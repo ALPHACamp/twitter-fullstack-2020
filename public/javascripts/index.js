@@ -1,7 +1,6 @@
 const postPanel = document.querySelector('.table')
 const postModal = document.querySelector('.post-modal')
-
-// console.log(postPanel)
+const tweetModal = document.querySelector('.modal-body')
 
 // 特定貼文詳情
 postPanel.addEventListener('click', e => {
@@ -11,11 +10,6 @@ postPanel.addEventListener('click', e => {
   const userName = post.children[0].textContent
   const userAccount = post.children[1].textContent
   const description = post.children[2].textContent
-
-  console.log(tweetId)
-  console.log(userName)
-  console.log(userAccount)
-  console.log(post.children[2].textContent)
 
   const TweetInfo =
     `
@@ -32,8 +26,9 @@ postPanel.addEventListener('click', e => {
             <input name="reply" id="modal-reply" class="tweetTextarea" placeholder="推你的回覆" style="border:none;"></input>
         </div>
         </div>
+         <div id ="error-msg" class="alert-danger inline" role="alert"></div>
         <h4>
-          <button type="submit" class="badge rounded-pill text-bg-warning tweet-button">回覆</button>
+          <button type="submit" class="badge rounded-pill text-bg-warning tweet-button" id ="tweet-button">回覆</button>
         </h4>
         </div>
       </div>
@@ -43,12 +38,29 @@ postPanel.addEventListener('click', e => {
   postModal.innerHTML = TweetInfo
 })
 
-// if (e.target.matches('.btn-show-reply')) {
-//   console.log(e.target.dataset.id)
-// }
+// reply-modal驗證
+postModal.addEventListener('submit', e => {
+  const reply = e.target.children[0].children[0].children[0].children[5].children[2].value
+  console.log(`回覆字數: ${reply.length}`)
+  if (reply.length === 0) {
+    document.getElementById('error-msg').innerHTML = '內容不可空白'
+    e.preventDefault()
+  } else if (reply.length > 140) {
+    document.getElementById('error-msg').innerHTML = '限制140字數'
+    e.preventDefault()
+  }
+})
 
-// wrapper.addEventListener('click', e => {()}
-// const tweet = document.getElementById('modal-description').value
-
-// document.getElementById('error').innerHTML = '請輸入推文內容!'
-// document.getElementById('error').innerHTML = '內容不可空白'
+// tweet-modal驗證
+tweetModal.addEventListener('submit', e => {
+  const tweet = e.target.children[1].value
+  console.log(`回覆字數: ${tweet.length}`)
+  console.log(tweet)
+  if (tweet.length === 0) {
+    document.getElementById('error').innerHTML = '內容不可空白'
+    e.preventDefault()
+  } else if (tweet.length > 140) {
+    document.getElementById('error').innerHTML = '限制140字數'
+    e.preventDefault()
+  }
+})
