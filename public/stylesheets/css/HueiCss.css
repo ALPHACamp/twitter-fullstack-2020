@@ -49,7 +49,7 @@ section#Huei-region a .color-mask {
   color: #FF6600;
 }
 section#Huei-region a .img-mask {
-  filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
+  filter: #FF6600;
 }
 section#Huei-region .icon {
   width: 50px;
