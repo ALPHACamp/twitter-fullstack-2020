@@ -37,11 +37,13 @@
               <span style="font-size: 14px">{{relativeTimeFromNow this.createdAt}}</span>
             </a>
           </div>
-          
-          {{!-- 第二橫列：tweet content --}}
-          <a href="/tweets/{{this.id}}/replies" style=" text-decoration: none; color: #171725">
-            <p class="mt-2">{{this.description}}</p>
-          </a>
+    
+            {{!-- 第二橫列：tweet content --}}
+          <div style="width:100%; height:100%;word-break:break-word;">
+            <a href="/tweets/{{this.id}}/replies" style=" text-decoration: none; color: #171725">
+              <p class="mt-2">{{this.description}}</p>
+            </a>
+          </div>
           
           {{!-- 第三橫列：reply & 按讚 --}}
           <div style="font-size: 14px; color: #6C757D">

@@ -38,7 +38,7 @@
       {{!-- tweet description --}}
       <div class="mt-2">
         <span
-          style="word-wrap: break-word; width:578px; font-weight: 400; font-size: 24px; line-height: 36px; color:#171725; white-space:pre-wrap; text-decoration:none;">{{tweet.description}}</span>
+          style="word-wrap: break-word; width:100%; font-weight: 400; font-size: 24px; line-height: 36px; color:#171725; text-decoration:none;">{{tweet.description}}</span>
       </div>
 
       {{!-- create time --}}
@@ -115,7 +115,11 @@
               <small style="color:#FF6600;margin-left:2px;">@{{../userInfo.account}}</small>
             </a>
           </span>
-          <p style="font-weight: 400;font-size: 16px;line-height: 26px; color: #171725;">{{this.comment}}</p>
+
+          <div style="word-break:break-word; width:100%; height:100%;" class="mt-2">
+            <p style="font-weight: 400;font-size: 16px;line-height: 26px; color: #171725;">{{this.comment}}</p>
+          </div>
+
         </div>
 
       </div>

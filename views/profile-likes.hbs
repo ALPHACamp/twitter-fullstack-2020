@@ -39,10 +39,12 @@
           </div>
           
           {{!-- 第二橫列：tweet content --}}
-          <a href="/tweets/{{this.Tweet.id}}/replies" style=" text-decoration: none; color: #171725">
-            <p class="mt-2">{{this.Tweet.description}}</p>
-          </a>
-          
+          <div style="width:100%; height:100%;word-break:break-word;">
+            <a href="/tweets/{{this.Tweet.id}}/replies" style=" text-decoration: none; color: #171725">
+              <p class="mt-2">{{this.Tweet.description}}</p>
+            </a>
+          </div>
+
           {{!-- 第三橫列：reply & 按讚 --}}
           <div style="font-size: 14px; color: #6C757D">
             <i class="fa-regular fa-comment me-2 pointer" style="font-size: 16px" data-bs-toggle="modal" data-bs-target="#post-reply" 
