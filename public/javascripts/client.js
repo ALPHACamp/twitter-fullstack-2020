@@ -23,6 +23,8 @@ function showEditUserModal (data) {
   modalForm.action = `/api/users/${data.id}`
   modalBanner.style.background = `linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url(${data.banner})`
   modalAvatar.style.background = `linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url(${data.avatar})`
+  modalBanner.style.backgroundSize = 'cover'
+  modalAvatar.style.backgroundSize = 'cover'
   saveUser.dataset.id = data.id
 
   modalBody.innerHTML = `
