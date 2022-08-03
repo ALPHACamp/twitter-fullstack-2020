@@ -51,7 +51,6 @@ const adminController = {
       }))
       users.rows.sort((a, b) => b.Tweets.length - a.Tweets.length)
       res.render('admin/admin-users', { users: users.rows, role: admin.role })
-      // res.json({ users })
     } catch (err) {
       next(err)
     }
@@ -71,7 +70,6 @@ const adminController = {
       })
       const admin = helpers.getUser(req)
       res.render('admin/admin-tweets', { tweets, role: admin.role })
-      // res.json({ tweets })
     } catch (err) {
       next(err)
     }
@@ -82,7 +80,6 @@ const adminController = {
       if (!tweet) throw new Error("Tweet didn't exist")
       await tweet.destroy()
       res.redirect('/admin/tweets')
-      // res.json({ destroyTweet })
     } catch (err) {
       next(err)
     }

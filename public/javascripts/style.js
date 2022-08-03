@@ -33,7 +33,6 @@ if (infoForm) {
 }
 
 function showReplyModel (tid) {
-  console.log(tid)
   const avatar = document.querySelector(`#avatar-${tid}`).src
   const name = document.querySelector(`#name-${tid}`).textContent
   const account = document.querySelector(`#account-${tid}`).textContent

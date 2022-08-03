@@ -33,17 +33,17 @@ const userController = {
 
       const existAccount = await User.findOne({ where: { account } })
       if (existAccount) {
-        req.flash('error_messages', 'Account already exists!')
-        res.render('signup', { name, email })
+        const error_messages = 'Account already exists!'
+        return res.render('signup', { name, email, error_messages })
       }
       const existEmail = await User.findOne({ where: { email } })
       if (existEmail) {
-        req.flash('error_messages', 'Email already exists!')
-        res.render('signup', { account, name })
+        const error_messages = ('Email already exists!')
+        return res.render('signup', { account, name, error_messages })
       }
       if (name.length > 50) {
-        req.flash('error_messages', "Name can't have too many characters.")
-        res.render('signup', { account, email })
+        const error_messages = ("Name can't have too many characters.")
+        return res.render('signup', { account, email, error_messages })
       }
 
       const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
@@ -57,7 +57,7 @@ const userController = {
       }
       await User.create(userData)
       req.flash('success_messages', '您已成功註冊帳號！')
-      res.redirect(302, '/signin')
+      return res.redirect(302, '/signin')
     } catch (err) {
       next(err)
     }
@@ -363,7 +363,6 @@ const userController = {
       if (!followship) throw new Error("You haven't follow this user")
       const destroyedFollowship = await followship.destroy()
       return res.status(302).json({ status: 'success', destroyedFollowship })
-      // res.json({ status: 'success', destroyedFollowship })
     } catch (err) {
       next(err)
     }
@@ -441,7 +440,6 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
       res.json({ status: 'success', topUser, currentUser })
-      // res.render('tweets', { topUser, currentUser })
     } catch (err) {
       next(err)
     }

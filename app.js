@@ -41,9 +41,6 @@ app.use((req, res, next) => {
   next()
 })
 
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-
 app.use(routes)
 
 app.listen(port, () => {

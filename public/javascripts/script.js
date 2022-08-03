@@ -77,7 +77,8 @@ const tools = {
     div.style.zIndex = '1500'
     div.style.color = 'white'
     div.classList.add('d-flex', 'justify-content-center', 'align-items-center')
-    div.innerHTML = `Loading ...<img src = "https://i.stack.imgur.com/kOnzy.gif" style = "height:35px">`
+    div.innerHTML =
+      'Loading ...<img src = "https://i.stack.imgur.com/kOnzy.gif" style = "height:35px">'
   },
   closeLoading () {
     const div = document.querySelector('#messages-area')
@@ -86,7 +87,11 @@ const tools = {
     div.style.background = 'white'
     div.style.opacity = '0%'
     div.style.zIndex = '1'
-    div.classList.remove('d-flex', 'justify-content-center', 'align-items-center')
+    div.classList.remove(
+      'd-flex',
+      'justify-content-center',
+      'align-items-center'
+    )
     div.innerHTML = ''
   }
 }
@@ -199,8 +204,9 @@ const infoFormController = {
       const infoIntro = document.querySelector('#profile-intro')
       const avatars = document.querySelectorAll('.tweet-avatar')
       // 送出表單
-      // eslint-disable-next-line no-undef
+
       tools.callLoading()
+      // eslint-disable-next-line no-undef
       const res = await axios({
         method: 'post',
         url: `/api/users/${target.dataset.userid}`,
@@ -262,8 +268,8 @@ const infoFormController = {
   },
   showInfoModal: async uid => {
     try {
-      // eslint-disable-next-line no-undef
       tools.callLoading()
+      // eslint-disable-next-line no-undef
       const res = await axios.get(`/api/users/${uid}`)
       tools.closeLoading()
       if (res.data.status === 'error') {
