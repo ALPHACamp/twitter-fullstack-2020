@@ -98,12 +98,12 @@ a:hover {
 }
 
 .user-card {
-  width: 639px;
+  width: 100%;
   position: relative;
 }
 
 .user-banner {
-  width: 639px;
+  width: 100%;
   height: 200px;
   object-fit: cover;
   position: relative;
@@ -141,23 +141,31 @@ a:hover {
 }
 
 .user-option {
+  width: 208px;
   height: 40px;
-  line-height: 24px;
-  font-size: 16px;
+  padding: 0px;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
   position: absolute;
-  top: 216px;
   right: 16px;
+  top: 216px;
 }
 
 .message,
 .notification {
   width: 40px;
   height: 40px;
-  padding: 11px 10px;
-  margin: 0 8px;
+  margin-right: 16px;
+
+  background-color: var(--white);
   border: var(--brand-main) solid 1px;
-  color: var(--brand-main);
-  border-radius: 50px;
+  border-radius: 50%;
+
+  position: relative;
+  left: -5px;
 }
 
 .user-following {
@@ -172,6 +180,10 @@ a:hover {
   font-weight: 400;
   position: absolute;
   right: 30px;
+}
+
+.user-option .user-following {
+  right: 0;
 }
 
 .user-unfollowing {
@@ -221,10 +233,9 @@ a:hover {
 }
 
 .user-nav-tabs {
-  width: 639px;
   border-bottom: #E6ECF0 solid 1px;
   padding: 0;
-  margin-bottom: 18px;
+  margin-bottom: 0;
 }
 
 .user-nav-item {
@@ -258,9 +269,7 @@ a:hover {
 }
 
 .reply {
-  width: 639px;
-  border: #E6ECF0 solid 1px;
-  padding: 16px;
+  border-bottom: #E6ECF0 solid 1px;
 }
 
 .reply-avatar {

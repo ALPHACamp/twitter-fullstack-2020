@@ -61,9 +61,11 @@
   </div>
 </div>
 {{!-- 中間下半部 --}}
-{{#each tweet.Replies}}
-{{> reply-card}}
-{{/each}}
+<div class="border-start border-end">
+  {{#each tweet.Replies}}
+  {{> reply-card}}
+  {{/each}}
+</div>
 
 {{!-- 點擊留言時產生的 Modal --}}
 {{> reply-modal}}

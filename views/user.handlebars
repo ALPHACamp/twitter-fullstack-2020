@@ -1,73 +1,79 @@
-{{> user-header}}
+<div class="border-start border-end">
+  {{> user-header}}
 
-{{!-- 使用者資料 --}}
-<div class="user-card">
-  <img class="user-banner" src="{{checkBanner user.banner}}"> 
-  <div>
-    <img src="{{checkAvatar user.avatar}}" class="user-avatar">
-    {{#ifCond user.id loginUser.id}}
-      <button class="user-edit" id="edit-user" data-id="{{user.id}}"
-        data-bs-toggle="modal" data-bs-target="#edit-user-modal">編輯個人資料</button>
-    {{else}}
-      <div class="user-option" style="display: inline;">
-        <a class="text-decoration-none" href="#">
-          <img class="message" src="/images/icon-black-message.png">
-        </a>
-        <a class="text-decoration-none" href="#">
-          <img class="notification" src="/images/icon-black-notification.png">
-        </a>
-        {{#if user.isFollowing}}
-          <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: contents;">
-            <button type="submit" class="user-following">正在跟隨</button>
-          </form>
-        {{else}}
-          <form action="/followships" method="POST" style="display: contents;">
-            <input type="hidden" value="{{user.id}}" name="followingId">
-            <button type="submit" class="user-unfollowing">跟隨</button>
-          </form>
-        {{/if}}
-      </div>
-    {{/ifCond}}
+  {{!-- 使用者資料 --}}
+  <div class="user-card">
+    <img class="user-banner" src="{{checkBanner user.banner}}"> 
+    <div>
+      <img src="{{checkAvatar user.avatar}}" class="user-avatar">
+      {{#ifCond user.id loginUser.id}}
+        <button class="user-edit" id="edit-user" data-id="{{user.id}}"
+          data-bs-toggle="modal" data-bs-target="#edit-user-modal">編輯個人資料</button>
+      {{else}}
+        <div class="user-option" style="display: inline;">
+          <button class="text-decoration-none message">
+            <img src="/images/icon-orange-message.png">
+          </button>
+          <button class="text-decoration-none notification">
+            <img src="/images/icon-orange-notification.png">
+          </button>
+          {{#if user.isFollowing}}
+            <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: contents;">
+              <button type="submit" class="user-following">正在跟隨</button>
+            </form>
+          {{else}}
+            <form action="/followships" method="POST" style="display: contents;">
+              <input type="hidden" value="{{user.id}}" name="followingId">
+              <button type="submit" class="user-unfollowing">跟隨</button>
+            </form>
+          {{/if}}
+        </div>
+      {{/ifCond}}
+    </div>
+
+    <div class="user-info">
+      <h5 class="user-name fw-bold m-0">{{user.name}}</h5>
+      <p class="user-account">@{{user.account}}</p>
+      <p class="user-introduction">{{user.introduction}}</p>
+      <a class="text-decoration-none user-follow" href="/users/{{user.id}}/followings">
+        <span class="user-follow-number">{{user.followingCounts}} 個</span>追隨中
+      </a>
+      <a class="text-decoration-none user-follow" href="/users/{{user.id}}/followers">
+        <span class="user-follow-number">{{user.followerCounts}} 位</span>追隨者
+      </a>
+    </div>
   </div>
 
-  <div class="user-info">
-    <h5 class="user-name fw-bold m-0">{{user.name}}</h5>
-    <p class="user-account">@{{user.account}}</p>
-    <p class="user-introduction">{{user.introduction}}</p>
-    <a class="text-decoration-none user-follow" href="/users/{{user.id}}/followings">
-      <span class="user-follow-number">{{user.followingCounts}} 個</span>追隨中
-    </a>
-    <a class="text-decoration-none user-follow" href="/users/{{user.id}}/followers">
-      <span class="user-follow-number">{{user.followerCounts}} 位</span>追隨者
-    </a>
+  <ul class="d-flex user-nav-tabs">
+    <li class="user-nav-item {{#if tweets}}active{{/if}}">
+      <a class="user-nav-link" href="/users/{{user.id}}/tweets">推文</a>
+    </li>
+    <li class="user-nav-item {{#if replies}}active{{/if}}">
+      <a class="user-nav-link" href="/users/{{user.id}}/replies">回覆</a>
+    </li>
+    <li class="user-nav-item {{#if likedTweets}}active{{/if}}">
+      <a class="user-nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
+    </li>
+  </ul>
+
+  <div class="pt-2">
+    {{#each tweets}}
+      {{> tweet-card}}
+      <hr>
+      {{> reply-modal tweet=this}}
+    {{/each}}
+
+    {{#each replies}}
+      {{> reply-card}}
+    {{/each}}
+
+    {{#each likedTweets}}
+      {{> tweet-card}}
+      <hr>
+      {{> reply-modal tweet=this}}
+    {{/each}}
   </div>
 </div>
-
-<ul class="d-flex user-nav-tabs">
-  <li class="user-nav-item {{#if tweets}}active{{/if}}">
-    <a class="user-nav-link" href="/users/{{user.id}}/tweets">推文</a>
-  </li>
-  <li class="user-nav-item {{#if replies}}active{{/if}}">
-    <a class="user-nav-link" href="/users/{{user.id}}/replies">回覆</a>
-  </li>
-  <li class="user-nav-item {{#if likedTweets}}active{{/if}}">
-    <a class="user-nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
-  </li>
-</ul>
-
-{{#each tweets}}
-  {{> tweet-card}}
-  {{> reply-modal tweet=this}}
-{{/each}}
-
-{{#each replies}}
-  {{> reply-card}}
-{{/each}}
-
-{{#each likedTweets}}
-  {{> tweet-card}}
-  {{> reply-modal tweet=this}}
-{{/each}}
 
 {{!-- modal --}}
 <div class="modal fade" id="edit-user-modal" tabindex="-1" aria-labelledby="edit-user-ModalLabel" aria-hidden="true">
