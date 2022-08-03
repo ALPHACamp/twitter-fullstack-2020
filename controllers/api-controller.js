@@ -1,5 +1,5 @@
 const { User } = require('../models')
-const { localFileHandler, imgurFileHandler } = require('../helpers/file-helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const apiController = {
   getUserInfo: (req, res, next) => {

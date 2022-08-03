@@ -10,8 +10,7 @@ module.exports = {
   ifCondFalse: function (a, b, options) {
     return a !== b ? options.fn(this) : options.inverse(this)
   },
-  relativeTimeFromNow: a => dayjs(a).fromNow()
-  ,
+  relativeTimeFromNow: a => dayjs(a).fromNow(),
   // {{momentNow this.createdAt}}  ex.10小時前
   momentNow: function (timeNow) {
     moment.locale('zh-tw')
@@ -25,6 +24,6 @@ module.exports = {
   // {{momentDate tweet.createdAt}}  ex.2022年7月29日
   momentDate: function (date) {
     moment.locale('zh-tw')
-    return moment(date).format("LL")
+    return moment(date).format('LL')
   }
 }

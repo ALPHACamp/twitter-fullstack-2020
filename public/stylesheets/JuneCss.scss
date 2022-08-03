@@ -408,6 +408,9 @@
               height: 24px;
               filter: brightness(150%);
             }
+            img:hover {
+              cursor: pointer;
+            }
           }
           .avatar-icon {
             .avatar {
@@ -429,6 +432,9 @@
               position: relative;
               top: -180px;
               right: -73px;
+            }
+            .icon:hover {
+              cursor: pointer;
             }
           }
         .input {

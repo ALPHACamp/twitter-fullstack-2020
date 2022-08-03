@@ -43,8 +43,7 @@ const tweetController = {
         .slice(0, 10)
 
       return res.render('tweets', { tweets, users, user })
-    }
-    catch (err) {
+    } catch (err) {
       next(err)
     }
   },
@@ -81,8 +80,7 @@ const tweetController = {
       })
       req.flash('success_messages', '成功 Like!')
       return res.redirect('back')
-    }
-    catch (err) {
+    } catch (err) {
       next(err)
     }
   },
@@ -98,8 +96,7 @@ const tweetController = {
       await like.destroy()
       req.flash('success_messages', '成功 Unlike!')
       return res.redirect('back')
-    }
-    catch (err) {
+    } catch (err) {
       next(err)
     }
   }
