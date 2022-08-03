@@ -208,7 +208,7 @@ const userController = {
             attributes: ['id', 'createdAt'],
             include: [{
               model: Tweet,
-              attributes: ['id', 'description'],
+              attributes: ['id', 'description', 'createdAt'],
               include: [{ model: User, attributes: ['id', 'name', 'account', 'avatar'] }]
             }]
           },
@@ -227,7 +227,7 @@ const userController = {
             include: [{
               model: Tweet,
               attributes: ['id', 'description'],
-              include: [{ model: Like, attributes: ['id'] }]
+              include: [{ model: Like, attributes: ['id', 'UserId'] }]
             }]
           },
           { model: Tweet, attributes: ['id'] }
@@ -260,6 +260,14 @@ const userController = {
           Number(data.Followship.followingId) === Number(req.params.uid)
         )
         userData = JSON.parse(JSON.stringify(userData))
+        userData.Likes.forEach(data => {
+          data.isLiked = false
+          data.Tweet.Likes.forEach(f => {
+            if (f.UserId === user.id) {
+              data.isLiked = true
+            }
+          })
+        })
         userData.followersLength = followers.Followers.length
         userData.followingsLength = followings.Followings.length
         user.authSelfUser = parseInt(req.params.uid) === parseInt(helpers.getUser(req).id) ? true : []

@@ -34,7 +34,7 @@
             </a>
             <span style="font-size: 14px; padding-left: 8px; color: #6C757D">@{{this.Tweet.User.account}}・</span>
             <a style="text-decoration: none; color: #6C757D" href="/tweets/{{this.Tweet.id}}/replies">
-              <span style="font-size: 14px">{{relativeTimeFromNow this.createdAt}}</span>
+              <span style="font-size: 14px">{{relativeTimeFromNow this.Tweet.createdAt}}</span>
             </a>
           </div>
           
