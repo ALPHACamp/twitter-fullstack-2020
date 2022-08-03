@@ -65,12 +65,14 @@ const tweetController = {
     ])
       .then(([tweet, replies, likes]) => {
         const data = replies.map(r => ({
-          ...r
+          ...r,
+          author: tweet.User.account
         }))
         const post = {
           tweet: tweet,
           isLiked: tweet.likedUsers.id === userId
         }
+        console.log(data[0])
         res.render('tweet', { tweet: post, replies: data, likes })
       })
       .catch(err => next(err))

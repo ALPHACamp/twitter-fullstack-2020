@@ -8,7 +8,7 @@
       <h4 id="header"><a href="/tweets">首頁</a>
       </h4>
       <div class="mb-3 post-tweet">
-        <a href="/users/{{user.id}}"><img src="{{user.avatar}}" alt="avatar" id="avatar"></a>
+        <a href="/users/{{user.id}}/tweets"><img src="{{user.avatar}}" alt="avatar" class="avatar"></a>
         <p id="placeholder" data-bs-toggle="modal" data-bs-target="#myModal">有什麼新鮮事 ?</p>
         <form method="POST" action="/tweets" data-bs-toggle="modal" data-bs-target="#myModal">
           <textarea name="description" id="description" class="tweetTextarea" disabled></textarea>
@@ -23,8 +23,9 @@
         <tbody>
           {{#each tweets}}
           <tr class="post">
-            <td><a href="/users/{{this.User.id}}/tweets"><img src="https://upload.cc/i1/2022/07/29/CW8Hu0.png"
-                  alt="post-icon" class="post-icon"></td>
+            <td><a href="/users/{{this.User.id}}/tweets"><img src="{{this.User.avatar}}" alt="post-icon"
+                  class="post-avatar">
+            </td>
             <td>
               <a href="/tweets/{{this.id}}/replies" class="post-link">
                 <span>{{this.User.name}}</span>
@@ -37,14 +38,14 @@
                     data-id="{{this.id}}">{{this.Replies.length}} 回應</small>
                 <small>
                   {{#if isLiked}}
-                  <form action="/tweets/{{this.id}}/unlike" method="POST">
-                    <button type="submit">
-                      <img src="https://upload.cc/i1/2022/07/29/CaJuOl.png" alt="likes" id="likes">
+                  <form action="/tweets/{{this.id}}/unlike" method="POST" class="likes unlike">
+                    <button type="submit" class="likes">
+                      <img src="https://upload.cc/i1/2022/07/29/CaJuOl.png" alt="likes" id="likes" class="unlike">
                     </button>
                   </form>
                   {{else}}
-                  <form action="/tweets/{{this.id}}/like" method="POST">
-                    <button type="submit">
+                  <form action="/tweets/{{this.id}}/like" method="POST" class="likes">
+                    <button type="submit" class="likes">
                       <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes" id="likes">
                     </button>
                   </form>
