@@ -103,6 +103,14 @@ const userController = {
           Number(data.Followship.followingId) === Number(req.params.uid)
         )
         userData = JSON.parse(JSON.stringify(userData))
+        userData.Tweets.forEach(data => {
+          data.isLiked = false
+          data.Likes.forEach(f => {
+            if (f.UserId === user.id) {
+              data.isLiked = true
+            }
+          })
+        })
         userData.followersLength = followers.Followers.length
         userData.followingsLength = followings.Followings.length
         user.authSelfUser = parseInt(req.params.uid) === parseInt(helpers.getUser(req).id) ? true : []
@@ -113,7 +121,6 @@ const userController = {
           user.numberOfFollowers = user.Followers.length
           user.isFollowed = followedUserId.includes(user.id)
         }
-        console.log(userData)
         users = users.sort((a, b) => b.numberOfFollowers - a.numberOfFollowers).slice(0, 10) // 只取排行前 10 的 users
         res.render('profile-tweets', { user, users, userData, profileIsFollowed })
       })
