@@ -23,12 +23,19 @@
         <div class="head d-flex">
           <div class="" style="border-bottom:1px solid #E6ECF0;">
             <div style="position:relative;left:80px; top:20px;">
-              <img src="{{#if tweet.User.avatar}}{{tweet.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
-                class="tweet-user-avatar"
-                style="width:50px;height:50px;display:inline-block; position:relative;right:83px;" alt="Picture">
+              <a class="" href="/users/{{tweet.User.id}}/tweets">
+                <img src="{{#if tweet.User.avatar}}{{tweet.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+                  class="tweet-user-avatar"
+                  style="width:50px;height:50px;display:inline-block; position:relative;right:83px;" alt="Picture">
+              </a>
               <div style="position:relative;bottom:50px;right:20px;">
-                <p class="name">{{tweet.User.name}}</p>
-                <p class="account">@{{tweet.User.account}}</p>
+                <a class="" href="/users/{{tweet.User.id}}/tweets">
+                  <p class="name">{{tweet.User.name}}</p>
+                </a>
+                <a class="" href="/users/{{tweet.User.id}}/tweets">
+                  <p class="account">@{{tweet.User.account}}</p>
+                </a>
+
               </div>
             </div>
             <p
@@ -80,8 +87,10 @@
       top:25px; border-top:1px solid #E6ECF0;">
         {{#each tweet.Replies}}
         <div class=" tweet-card d-flex" style="margin:0px;">
-          <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}" alt="Picture"
-            class="tweet-user-avatar">
+          <a class="" href="/users/{{this.User.id}}/tweets">
+            <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+              alt="Picture" class="tweet-user-avatar">
+          </a>
           <div>
             <div class="head d-flex">
               <a class="name" href="/users/:{{this.User.id}}">{{this.User.name}}</a>
