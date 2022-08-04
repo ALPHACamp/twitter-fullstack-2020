@@ -23,7 +23,7 @@ const followshipController = {
           followingId
         })
       })
-      .then(createdFollowship => res.redirect('back'))
+      .then(() => res.redirect('back'))
       .catch(next)
   },
   removeFollowing: (req, res, next) => {
@@ -39,7 +39,7 @@ const followshipController = {
         if (!followship) throw new Error("You didn't follow this user!")
         return followship.destroy()
       })
-      .then(deletedFollowship => res.redirect('back'))
+      .then(() => res.redirect('back'))
       .catch(next)
   }
 }

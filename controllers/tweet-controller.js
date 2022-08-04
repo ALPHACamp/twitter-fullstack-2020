@@ -1,16 +1,25 @@
-const { Tweet, User, Reply, Like } = require('../models')
+const { Tweet, User, Reply, Like, Followship, sequelize } = require('../models')
 const helpers = require('../_helpers')
 
 const tweetController = {
   getTweets: (req, res, next) => {
     const userId = helpers.getUser(req).id
-
-    return Tweet.findAll({
-      order: [['createdAt', 'DESC']],
-      nest: true,
-      include: [User, Reply, Like, { model: User, as: 'likedUsers' }]
-    })
-      .then(tweets => {
+    return Promise.all([
+      Tweet.findAll({
+        order: [['createdAt', 'DESC']],
+        nest: true,
+        include: [User, Reply, Like, { model: User, as: 'likedUsers' }]
+      }),
+      Followship.findAll({
+        include: User,
+        group: 'followingId',
+        attributes: {
+          include: [[sequelize.fn('COUNT', sequelize.col('following_id')), 'count']]
+        },
+        order: [[sequelize.literal('count'), 'DESC']]
+      })
+    ])
+      .then(([tweets, followship]) => {
         const user = helpers.getUser(req)
         const data = tweets.map(t => ({
           ...t.dataValues,
@@ -20,7 +29,18 @@ const tweetController = {
           isLiked: t.likedUsers.some(item => item.id === userId)
 
         }))
-        res.render('tweets', { tweets: data, user })
+
+        const recommendFollower = followship
+          .map(data => {
+            return {
+              followingCount: data.dataValues.count,
+              ...data.User.toJSON(),
+              isFollowed: user?.Followings.some(u => u.id === data.followingId)
+            }
+          })
+          .slice(0, 10)
+
+        res.render('tweets', { tweets: data, user, recommendFollower })
       })
       .catch(err => next(err))
   },
@@ -61,9 +81,18 @@ const tweetController = {
     Like.findAll({
       raw: true,
       where: { tweet_id: tweetId }
+    }),
+    Followship.findAll({
+      include: User,
+      group: 'followingId',
+      attributes: {
+        include: [[sequelize.fn('COUNT', sequelize.col('following_id')), 'count']]
+      },
+      order: [[sequelize.literal('count'), 'DESC']]
     })
     ])
-      .then(([tweet, replies, likes]) => {
+      .then(([tweet, replies, likes, followship]) => {
+        const user = helpers.getUser(req)
         const data = replies.map(r => ({
           ...r,
           author: tweet.User.account
@@ -72,8 +101,18 @@ const tweetController = {
           tweet: tweet,
           isLiked: tweet.likedUsers.id === userId
         }
-        console.log(data[0])
-        res.render('tweet', { tweet: post, replies: data, likes })
+
+        const recommendFollower = followship
+          .map(data => {
+            return {
+              followingCount: data.dataValues.count,
+              ...data.User.toJSON(),
+              isFollowed: user?.Followings.some(u => u.id === data.followingId)
+            }
+          })
+          .slice(0, 10)
+
+        res.render('tweet', { tweet: post, replies: data, likes, recommendFollower })
       })
       .catch(err => next(err))
   },
@@ -94,7 +133,6 @@ const tweetController = {
   likePost: (req, res, next) => {
     const tweetId = req.params.id
     const userId = helpers.getUser(req).id
-    // const
     Like.create({
       userId,
       tweetId

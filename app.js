@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const express = require('express')
 const handlebars = require('express-handlebars')
 const flash = require('connect-flash')
@@ -7,6 +10,7 @@ const methodOverride = require('method-override')
 const helpers = require('./_helpers')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const routes = require('./routes')
+const path = require('path')
 
 const app = express()
 const port = 3000
@@ -23,6 +27,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use(methodOverride('_method'))
+app.use('/upload', express.static(path.join(__dirname, 'upload')))
 app.use(express.json())
 
 app.use(flash())
@@ -35,7 +40,6 @@ app.use((req, res, next) => {
 })
 
 app.use(routes)
-
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 module.exports = app

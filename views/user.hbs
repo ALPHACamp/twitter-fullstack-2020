@@ -1,51 +1,132 @@
 <div class="wrapper d-flex bg-white">
-
-  {{>left-content}}
+  
+  {{>profile-modals}}
+  {{>left-content-profile}}
 
   <div class="container"
-    style="margin:0px; padding:0px;  border-left: 1px solid rgb(209, 203, 203); border-right: 1px solid rgb(209, 203, 203); max-width:90%;">
-    <div class="mt-1 mb-3" style="height: 60px;">
-      <a class="d-flex" href="/tweets" style="align-items: center; text-decoration:none;">
-        <img class="ms-3" src="https://upload.cc/i1/2022/07/29/bYiz5s.png" alt=""
-          style="height: 30%; width: 4%; margin-right: 25px;">
-        <div class="col">
-          <span
-            style="margin: 0; font-family: 'Noto Sans TC'; font-style: normal; font-weight: 700;font-size: 30px; color: #44444F;">
-            {{targetUser.name}}
-          </span>
-          <p
-            style="margin: 0; font-family: 'Noto Sans TC'; font-style: normal; font-weight: 500; font-size: 15px; color: #6C757D;">
-            {{tweetsLength}} 推文
-          </p>
-        </div>
-      </a>
+    style="margin:0px; padding:0px;  border-left: 1px solid rgb(209, 203, 203); border-right: 1px solid rgb(209, 203, 203);">
+    <div class="d-flex mt-1 mb-3" style="height: 60px;">
+      <div class="d-flex" style="align-items: center; margin-right: 30px;">
+        <a href="javascript:history.back()" style="text-decoration:none;">
+          <img class="ms-3" src="https://upload.cc/i1/2022/07/29/bYiz5s.png" alt="" style="height: 16px; width: 24px;">
+        </a>
+      </div>
+      <div>
+        <a href="/users/{{targetUser.id}}/tweets" style="text-decoration:none;">
+          <div class="col">
+            <span
+              style="margin: 0; font-family: 'Noto Sans TC'; font-style: normal; font-weight: 700;font-size: 30px; color: #44444F;">
+              {{targetUser.name}}
+            </span>
+            <p
+              style="margin: 0; font-family: 'Noto Sans TC'; font-style: normal; font-weight: 500; font-size: 15px; color: #6C757D;">
+              {{tweetsLength}} 推文
+            </p>
+          </div>
+        </a>
+      </div>
     </div>
+
+    {{!-- 個人資料 --}}
     <div class="row m-0 p-0">
       <div style="height: 50%; padding: 0%;">
-        <img src="{{targetUser.banner}}" alt="cover" style="height:100%;width:100%; object-fit:cover">
+        <img src="{{targetUser.banner}}" alt="banner" style="height:250px;width:100%; object-fit:banner">
       </div>
-      <div class="d-flex px-3" style="margin-top:-80px;z-index:100;position:relative">
+      <div class="d-flex px-3" style="margin-top:-80px;position:relative">
         <img src="{{targetUser.avatar}}" class="me-auto rounded-circle border border-white border-5"
           style="width:150px;height:150px">
-        {{#ifCond targetUser.id user.id}}
+        {{#ifCond targetUser.id currentUser.id}}
         <div class="d-flex align-items-end">
-          <button type="button" class="btn rounded-pill" id="edit-btn"
-            style=" background-color: #FFFFFF;color: #FF6600;border:1px solid #FF6600;">
+          <button type="button" class="profile_btn btn rounded-pill" id="edit-btn" data-bs-toggle="modal"
+            data-bs-target="#edit-modal"
+            style=" background-color: #FFFFFF;color: #FF6600;border:1px solid #FF6600;z-index:1000">
             編輯個人資料
           </button>
         </div>
+        <!-- Movie Modal -->
+        <div class="modal fade" id="edit-modal" tabindex="-1" data-bs-backdrop="static"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content" style="width: 634px;">
+              <form action="/users/{{ currentUser.id }}/edit" method="POST" enctype="multipart/form-data"
+                style='width: 100%;'>
+                <div class="modal-header">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    style="margin: -0.5rem -0.5rem -0.5rem 0;"></button>
+                  <p style="margin: 0 300px 0 0; color: #1C1C1C;font-weight: 700;font-size: 25px;">
+                    編輯個人資料</p>
+                  <button type="submit"
+                    style="border: 3px solid #FF6600; color: #FFFFFF; background: #FF6600; border-radius: 50px;">儲存</button>
+                </div>
+                <div class="modal-body" id="movie-modal-body">
+                  {{!-- 背景 --}}
+                  <div class="form-row">
+                    <img id="bannerImg" src="{{targetUser.banner}}" alt="banner"
+                      style="width:632px; margin-left:-20px; height: 200px;margin-top:-20px ;position:relative">
+                    <label class="form-label" for="banner">
+                      <img style="position: absolute;left:270px; top:80px; z-index:3;width:35px;filter: invert(1);"
+                        src="https://upload.cc/i1/2022/07/29/PzDhp3.png" alt="upload">
+                      <img style="position: absolute;left:310px; top:85px; z-index:3;width:28px;filter: invert(1);"
+                        src="https://upload.cc/i1/2022/07/29/akXpZm.png" alt="">
+                    </label>
+                    <input class="form-control" type="file" class="form-control-file" id="banner" name="banner"
+                      style="display: none;">
+                  </div>
+
+                  {{!-- 頭像 --}}
+                  <div class="form-row">
+                    <img id="avatarImg" src="{{targetUser.avatar}}" alt="avatar"
+                      style="border: 4px solid white; height: 150px; width: 150px; margin-top: -110px; border-radius: 50%; position: relative;">
+                    <label class="form-label" for="avatar">
+                      <img style="position: absolute;left:77px; top:175px; z-index:3;width:35px; filter: invert(1);"
+                        src="https://upload.cc/i1/2022/07/29/PzDhp3.png" alt="upload">
+                    </label>
+                    <input class="form-control" type="file" class="form-control-file" id="avatar" name="avatar"
+                      style="display: none;">
+                  </div>
+
+                  {{!-- 名稱 --}}
+                  <div class="form-row">
+                    <label class="form-label" for="name" style="color: #696974;">名稱</label>
+                    <input class="form-control login-input" type="text" name="name" id="textname"
+                      onkeyup="validateName()" placeholder="Enter name" value="{{ targetUser.name }}" maxlength="50"
+                      required>
+                  </div>
+                  <p class="text-end" id="namecount" style="color: #696974;">
+                    <span id="textnamecount" style="color: #696974;">{{ targetUser.name.length }}</span> /50
+                  </p>
+
+                  {{!-- 自我介紹 --}}
+                  <div class="form-row">
+                    <label class="form-label" for="introduction" style="margin:0; color: #696974;">自我介紹</label>
+                    <textarea class="form-control login-input" name="introduction" id="introduction" row="5"
+                      onkeyup="validate()" maxlength="160" placeholder="輸入自介">{{ targetUser.introduction }}</textarea>
+                  </div>
+                  <p class="text-end" id="count" style="margin:0; color: #696974;">
+                    <span id="textcount" style="color: #696974;">{{ targetUser.introduction.length }}</span> /160
+                  </p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
         {{else}}
-        {{#if user.isFollowed}}
-        <form action="/followships/{{targetUser.id}}?_method=DELETE" method="POST">
-          <button type="submit" class="btn follow-bottom">正在跟隨</span>
-          </button>
-        </form>
+        {{#if currentUser.isFollowed}}
+        <div class="d-flex align-items-end">
+          <form action="/followships/{{targetUser.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn rounded-pill" style=" background-color: #FF6600;color: #FFF;">正在跟隨</span>
+            </button>
+          </form>
+        </div>
         {{else}}
-        <form action="/followships" method="POST">
-          <button type="submit" class="btn follow-bottom removefollow" name="id" value={{targetUser.id}}>
-            跟隨
-          </button>
-        </form>
+        <div class="d-flex align-items-end">
+          <form action="/followships/{{targetUser.id}}" method="POST">
+            <button type="submit" class="btn rounded-pill" name="id"
+              style=" background-color: #FFFFFF;color: #FF6600;border:1px solid #FF6600;">
+              跟隨
+            </button>
+          </form>
+        </div>
         {{/if}}
         {{/ifCond}}
       </div>
@@ -54,6 +135,8 @@
         <small class="text-secondary">@{{targetUser.account}}</small>
       </div>
     </div>
+
+    {{!-- 跟隨資訊 --}}
     <div class="row  mx-0 px-0 ">
       <div class="col" style="max-width: 100%;">
         <p class="fs-5 mb-0" style="word-wrap: break-word; word-break: normal;">{{targetUser.introduction}}</p>
@@ -77,37 +160,31 @@
     {{>user-tabs route='tweets'}}
     <div>
       {{#each tweets}}
-      <a href="/tweets/{{this.id}}/replies">
-        <div class="tweet">
+      <a href="/tweets/{{this.id}}/replies" style="text-decoration:none;">
+        <div class="tweet" style="border-bottom:1px solid #E6ECF0;margin-bottom:10px;padding-bottom:10px;">
           <div>
-            <img class="avatar" src="{{../targetUser.avatar}}" alt="avatar">
+            <img class="avatar" src="{{../targetUser.avatar}}" alt="avatar"
+              style="height: 50px; width:50px; border-radius: 50%; margin: 0 10px 0 20px;">
+            <span class="name"
+              style="font-family: 'Noto Sans TC'; font-style: normal; font-weight: 700; font-size: 25px; line-height: 26px; color: #171725; margin: 0;">{{../targetUser.name}}</span>
+            <span class="account" style="font-family: 'Noto Sans TC'; font-style: normal; font-weight: 400;
+              font-size: 15px; line-height: 22px; color: #6C757D;">@{{../targetUser.account}} • {{relativeTimeFromNow
+              this.createdAt}}</span>
           </div>
           <div class="content">
-            <div class="d-flex align-items-center" style="height: 26px;">
-              <span class="name">{{../targetUser.name}}</span>
-              <span class="account">@{{../targetUser.account}}•{{relativeTimeFromNow this.createdAt}}</span>
+            <div class="description" style="margin: 0 0 0 87px;">
+              <span
+                style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 20px;line-height: 26px;color: #171725;">
+                {{this.description}}</span>
             </div>
-            <div class="description">
-              {{this.description}}
-            </div>
-            <div class="footer">
-              <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="" style="width: 10px; hight: 10px">
-              {{this.repliedCount}}
-              <span style="margin-right: 41.3px;">{{this.repliedCount}}</span>
-              {{#if isLiked}}
-              <form action="/tweets/{{this.id}}/unlike" method="POST">
-                <button type="submit">
-                  <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="like" style="width: 10px; hight: 10px">
-                </button>
-              </form>
-              {{else}}
-              <form action="/tweets/{{this.id}}/like" method="POST">
-                <button type="submit">
-                  <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="like" style="width: 10px; hight: 10px">
-                </button>
-              </form>
-              {{/if}}
-              <span>{{this.likedCount}}</span>
+            <div class="footer" style="margin: 0 0 0 87px;">
+              <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="comment" style="width: 20px; hight: 20px">
+              <span
+                style="margin-right: 40px;font-family: 'Montserrat';font-style: normal;font-weight: 600;font-size: 20px;line-height: 14px;color: #6C757D;">{{this.repliedCount}}</span>
+
+              <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="like" style="width: 20px; hight: 20px">
+              <span
+                style="font-family: 'Montserrat';font-style: normal;font-weight: 600;font-size: 20px;line-height: 14px;color: #6C757D;">{{this.likedCount}}</span>
             </div>
           </div>
         </div>
@@ -121,20 +198,24 @@
     {{>user-tabs route='replies'}}
     <div>
       {{#each replies}}
-      <div class="tweet">
+      <div class="replies" style="border-bottom:1px solid #E6ECF0;margin-bottom:10px;padding-bottom:10px;">
         <div>
-          <img class="avatar" src="{{../targetUser.avatar}}" alt="avatar" style="width: 10px; hight: 10px">
+          <img class="avatar" src="{{../targetUser.avatar}}" alt="avatar"
+            style="height: 50px; width:50px; border-radius: 50%; margin: 0 10px 0 20px;">
+          <span class="name"
+            style="font-family: 'Noto Sans TC'; font-style: normal; font-weight: 700; font-size: 25px; line-height: 26px; color: #171725; margin: 0;">{{../targetUser.name}}</span>
+          <span class="account" style="font-family: 'Noto Sans TC'; font-style: normal; font-weight: 400;
+                      font-size: 15px; line-height: 22px; color: #6C757D;">@{{../targetUser.account}} •
+            {{relativeTimeFromNow this.createdAt}}</span>
         </div>
-        <div class="content">
-          <div class="d-flex align-items-center" style="height: 26px;">
-            <span class="name">{{../targetUser.name}}</span>
-            <span class="account">@{{../targetUser.account}}•{{relativeTimeFromNow this.createdAt}}</span>
-          </div>
-          <div class="reply-to">
-            <span class="reply">回復</span>
+        <div class="content" style="margin: 0 0 0 87px;">
+          <div class="reply-to"
+            style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 14px;line-height: 22px;color: #6C757D;">
+            <span class="reply">回覆</span>
             <span class="account">@{{this.Tweet.User.account}}</span>
           </div>
-          <div class="description">
+          <div class="comment"
+            style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 20px;line-height: 26px;color: #171725;">
             {{this.comment}}
           </div>
         </div>
@@ -145,44 +226,86 @@
 
     {{!-- 喜歡的內容 --}}
     {{#if likes}}
-      {{>user-tabs route='likes'}}
-      <div class="scroll-container">
-        {{#each likes}}
-        <a href="/tweets/{{this.Tweet.id}}/replies">
-          <div class="tweet">
-            <div>
-              <img class="avatar" src="{{this.Tweet.User.avatar}}" alt="avatar">
-            </div>
-            <div class="content">
-              <div class="d-flex align-items-center" style="height: 26px;">
-                <span class="name">{{this.Tweet.User.name}}</span>
-                <span class="account">@{{this.Tweet.User.account}}•{{relativeTimeFromNow this.Tweet.createdAt}}</span>
-              </div>
-              <div class="description">
-                {{this.Tweet.description}}
-              </div>
-              <div class="footer">
-                <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="comment">
-                <span style="margin-right: 41.3px;">{{this.repliedCount}}</span>
-                {{#if isLiked}}
-                <form action="/tweets/{{this.Tweet.id}}/unlike" method="POST">
-                  <button type="submit"><img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="like"></button>
-                </form>
-                {{else}}
-                <form action="/tweets/{{this.Tweet.id}}/like" method="POST">
-                  <button type="submit"><img src="https://upload.cc/i1/2022/07/29/CaJuOl.png" alt="like"></button>
-                </form>
-                {{/if}}
-                <span>{{this.likedCount}}</span>
-              </div>
+    {{>user-tabs route='likes'}}
+    <div>
+      {{#each likes}}
+      <div class="likes" style="border-bottom:1px solid #E6ECF0;margin-bottom:10px;padding-bottom:10px;">
+        <a href="/users/{{this.Tweet.User.id}}/tweets" style="text-decoration:none;">
+          <div>
+            <img class="avatar" src="{{this.Tweet.User.avatar}}" alt="avatar"
+              style="height: 50px; width:50px; border-radius: 50%; margin: 0 10px 0 20px;">
+            <span class="name"
+              style="font-family: 'Noto Sans TC'; font-style: normal; font-weight: 700; font-size: 25px; line-height: 26px; color: #171725; margin: 0;">{{this.Tweet.User.name}}</span>
+            <span class="account" style="font-family: 'Noto Sans TC'; font-style: normal; font-weight: 400;
+                    font-size: 15px; line-height: 22px; color: #6C757D;">@{{this.Tweet.User.account}} •
+              {{relativeTimeFromNow this.Tweet.createdAt}}</span>
+          </div>
+        </a>
+        <a href="/tweets/{{this.Tweet.id}}/replies" style="text-decoration:none;">
+          <div class="content">
+            <div class="description" style="margin: 0 0 0 87px;">
+              <span
+                style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 20px;line-height: 26px;color: #171725;">
+                {{this.Tweet.description}}</span>
             </div>
           </div>
         </a>
-        {{/each}}
+        <div class="footer d-flex" style="margin: 0 0 0 87px;">
+          <div>
+            <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="" style="width: 20px; height: 20px;">
+            <span
+              style="margin-right: 40px;font-family: 'Montserrat';font-style: normal;font-weight: 600;font-size: 20px;line-height: 14px;color: #6C757D;">{{this.repliedCount}}</span>
+          </div>
+          <div>
+            <form action="/tweets/{{this.Tweet.id}}/unlike" method="POST">
+            <button style="border:none;background-color:transparent;outline:none;">
+              <img src="https://upload.cc/i1/2022/08/02/XRW6ld.png" alt="" style="width: 20px; height: 20px;">
+            </button>
+              <span
+                style="font-family: 'Montserrat';font-style: normal;font-weight: 600;font-size: 20px;line-height: 14px;color: #6C757D;">{{this.likedCount}}</span>
+            </form>
+          </div>
+        </div>
+
       </div>
+      {{/each}}
+    </div>
     {{/if}}
   </div>
 
-  {{>profile-right-content}}
+
+  {{>right-content}}
 
 </div>
+
+<script>banner.onchange = evt => {
+    const [file] = banner.files
+    if (file) {
+      bannerImg.src = URL.createObjectURL(file)
+    }
+  }</script>
+
+<script>avatar.onchange = evt => {
+    const [file] = avatar.files
+    if (file) {
+      avatarImg.src = URL.createObjectURL(file)
+    }
+  }</script>
+
+<script>function validateName() {
+    const areatextarea = document.querySelector("#textname")
+    const areatext = document.querySelector("#textname").value.length
+    const textcount = document.querySelector("#textnamecount")
+    const wordcount = document.querySelector("#namecount")
+    textcount.innerHTML = areatext
+  }
+</script>
+
+<script>function validate() {
+    const areatextarea = document.querySelector("#introduction")
+    const areatext = document.querySelector("#introduction").value.length
+    const textcount = document.querySelector("#textcount")
+    const wordcount = document.querySelector("#count")
+    textcount.innerHTML = areatext
+  }
+</script>
