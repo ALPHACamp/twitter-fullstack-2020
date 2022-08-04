@@ -99,7 +99,7 @@ Heroku、本地種子資料操作帳號
 
 |    role    | account | password |
 | ---------- | ------- | -------- |
-| user       |   user1 | 12346578 |
+| user       |   user1 | 12345678 |
 | admin      |    root | 12345678 |
 
 ### 共同開發者
