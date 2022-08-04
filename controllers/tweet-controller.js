@@ -72,7 +72,7 @@ const tweetController = {
       order: [['createdAt', 'DESC']],
       raw: true,
       nest: true,
-      include: [User, Reply, Like, { model: User, as: 'likedUsers' }]
+      include: [User, Reply, Like]
     }),
     Reply.findAll({
       order: [['createdAt', 'DESC']],
@@ -102,9 +102,8 @@ const tweetController = {
         }))
         const post = {
           tweet: tweet,
-          isLiked: tweet.likedUsers.id === userId
+          isLiked: likes?.some(l => l.UserId === userId)
         }
-
         const recommendFollower = followship
           .map(data => {
             return {
@@ -134,12 +133,12 @@ const tweetController = {
       .catch(err => next(err))
   },
   likePost: (req, res, next) => {
-    const tweetId = req.params.id
-    const userId = helpers.getUser(req).id
+    const TweetId = req.params.id
+    const UserId = helpers.getUser(req).id
     Like.create({
-      userId,
-      tweetId
-    }).then(like => {
+      UserId,
+      TweetId
+    }).then(() => {
       res.redirect('back')
     })
       .catch(err => next(err))
