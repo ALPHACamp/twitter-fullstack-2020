@@ -6,7 +6,7 @@
 
 [heroku連結](https://twitter-epcg.herokuapp.com/signin)
 
-![demo](https://github.com/HuangYanHuei/twitter-fullstack-2020/blob/main/public/pic/twitter.png?raw=true)
+![demo](https://github.com/HuangYanHuei/twitter-fullstack-2020/blob/master/public/pic/twitter.png)
 
 ## 功能
 
