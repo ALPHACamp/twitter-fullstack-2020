@@ -87,7 +87,7 @@ function removeBanner () {
   removeChecked.checked = 'on'
 }
 
-editUser.addEventListener('click', event => {
+editUser?.addEventListener('click', event => {
   axios(`/api/users/${event.target.dataset.id}`)
     .then(res => {
       if (res.data.status === 'error') {
