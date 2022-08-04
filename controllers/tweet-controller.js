@@ -46,6 +46,14 @@ const tweetController = {
     const userId = helpers.getUser(req).id
     const description = req.body.description
 
+    if (!req.body.description) {
+      return res.redirect('/')
+    }
+
+    if (req.body.description.length > 140) {
+      return res.redirect('/')
+    }
+
     return Tweet.create({
       userId,
       description
