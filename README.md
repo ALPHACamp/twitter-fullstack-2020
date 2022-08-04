@@ -1,11 +1,12 @@
 # twitter-api-2020
 
+這是一個模擬 twitter 的多人協作專案
 
 ## Live demo
 
 [heroku連結](https://twitter-epcg.herokuapp.com/signin)
 
-![demo]()
+![demo](https://github.com/HuangYanHuei/twitter-fullstack-2020/blob/main/public/pic/twitter.png?raw=true)
 
 ## 功能
 
@@ -101,8 +102,9 @@ Heroku、本地種子資料操作帳號
 | user       |   user1 | 12346578 |
 | admin      |    root | 12345678 |
 
-### 後端協作者
+### 共同開發者
 |    name    | account |
 | ---------- | ------- | 
-| 永C | |
-| 君  | |
+| 永C | https://github.com/yongsin0129 |
+| 君  | https://github.com/JuneChen1 | 
+| EPCG | https://github.com/HuangYanHuei | 
