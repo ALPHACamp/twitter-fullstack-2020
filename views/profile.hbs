@@ -95,6 +95,11 @@
             }).catch(err => console.warn(err))
           })
           saveBtn.addEventListener('click', () => {
+            if (nameInput.value.length > 50 ||
+              introductionInput.value.length > 160) {
+              alert('字數超出上限')
+              return
+            }
             const formData = new FormData()
             const modalCloseBtn = document.querySelector('#modal-close-btn')
             const coverCloseBtn = document.querySelector('#cover-close-btn')
@@ -211,7 +216,7 @@
                     if (status.classList.contains('warn') && counts <= maxLength) {
                       status.classList.remove('warn')
                       status.classList.toggle('focus')
-                      document.querySelector('.element-helper span').innerText = ''
+                      document.querySelector('.' + element + '-helper span').innerText = ''
                     }
                   }
                   function previewAvatarImage() {
