@@ -26,7 +26,7 @@ postPanel.addEventListener('click', e => {
             <input name="reply" id="modal-reply" class="tweetTextarea" placeholder="推你的回覆" style="border:none;"></input>
         </div>
         </div>
-         <div id ="error-msg" class="alert-danger inline" role="alert"></div>
+         <div id ="error-msg" class="text-alert inline" role="alert"></div>
         <h4>
           <button type="submit" class="badge rounded-pill text-bg-warning tweet-button" id ="tweet-button">回覆</button>
         </h4>
