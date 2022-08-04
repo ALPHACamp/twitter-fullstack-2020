@@ -1,0 +1,55 @@
+{{#if currentUser}}
+<!-- 新增貼文-->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header" style="padding: 5px;">
+        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"
+          style="margin: 0px;border:none;"></button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body" style="padding: 10px;">
+        <form action="/tweets" method="POST">
+          <img src="{{currentUser.avatar}}" alt="" style="height: 50px; width:50px; border-radius: 50%;margin-top: -250px;">
+          <label for="description" class="form-label"></label>
+          <textarea name="description" id="modal-description" class="tweetTextarea" placeholder="有什麼新鮮事 ?"
+          style="height: 150px;width: 400px;border: none;"></textarea>
+          <div class="text-end">
+            <div id="error" class="text-danger inline" role="alert"></div>
+            <h4>
+              <button type="submit" class="badge rounded-pill" style="border:none;color: #FFFFFF; background: #FF6600;">
+                推文
+              </button>
+            </h4>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{{!-- 查看單一貼文 --}}
+<div class="modal fade" id="replyModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <!-- Modal body -->
+      <div class="text-right" style="border">
+        <div class="modal-body post-modal">
+          <div id="error" class="text-danger" role="alert"></div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+</div>
+
+{{/if}}

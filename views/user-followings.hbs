@@ -1,0 +1,68 @@
+<div class="wrapper d-flex bg-white">
+
+  {{>left-content-profile}}
+
+  <div class="container"
+    style="margin:0px; padding:0px;  border-left: 1px solid rgb(209, 203, 203); border-right: 1px solid rgb(209, 203, 203);">
+    <div class="d-flex mt-1 mb-3" style="height: 60px;">
+      <div class="d-flex" style="align-items: center; margin-right: 30px;">
+        <a href="javascript:history.back()" style="text-decoration:none;">
+          <img class="ms-3" src="https://upload.cc/i1/2022/07/29/bYiz5s.png" alt="" style="height: 16px; width: 24px;">
+        </a>
+      </div>
+      <div>
+        <a href="/users/{{user.id}}/tweets" style="text-decoration:none;">
+          <div class="col">
+            <span
+              style="margin: 0; font-family: 'Noto Sans TC'; font-style: normal; font-weight: 700;font-size: 30px; color: #44444F;">
+              {{user.name}}
+            </span>
+            <p
+              style="margin: 0; font-family: 'Noto Sans TC'; font-style: normal; font-weight: 500; font-size: 15px; color: #6C757D;">
+              {{tweetsLength}} 推文
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    {{#if followings.length}}
+    {{>followships-tabs route='followings'}}
+    {{#each followings}}
+    <div style="padding:20px 0 0 0;">
+      <div class="d-flex" style="margin: 0 0 20px 0; padding:0 0 0 10px;">
+        <a class="d-flex" href="/users/{{this.id}}/tweets" style="text-decoration:none;">
+          <img src="{{this.avatar}}" alt="avatar" style="height: 50px; width: 50px; border-radius: 50px; margin: 0 20px 0 0;">
+          <p class="name"
+            style="font-family: 'Noto Sans TC'; font-style: normal; font-weight: 700; font-size: 30px; line-height: 26px; color: #171725; margin: 0 360px 0 0;">
+            {{this.name}}</p>
+        </a>
+        {{#if isFollowed}}
+        <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+          <button type="submit" class="btn rounded-pill"
+            style="border-radius: 50px; background-color: #FF6600; color: #FFF;">正在跟隨</button>
+        </form>
+
+        {{else}}
+        <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
+          <button type="submit" class="btn rounded-pill"
+            style="height: 50px; width:100px; 50px; background-color: #FFF; color: #FF6600; border:1px solid #FF6600;"
+            name="id">跟隨</button>
+        </form>
+        {{/if}}
+      </div>
+
+      <div class="introduction" style="padding:0 0 20px 75px; border-bottom: 1px solid #d1cbcb;">
+        {{this.introduction}}
+      </div>
+    </div>
+    {{/each}}
+    {{else}}
+    {{>followships-tabs route='followings'}}
+    {{/if}}
+  </div>
+
+
+  {{>right-content}}
+
+</div>

@@ -1,0 +1,53 @@
+{{#if user}}
+<!-- 新增貼文-->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"
+          style="border: 2px solid black"></button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form action="/tweets" method="POST">
+          <label for="description" class="form-label"></label>
+          <textarea name="description" id="modal-description" class="tweetTextarea" placeholder="有什麼新鮮事 ?"></textarea>
+          <div class="text-end">
+            <div id="error" class="text-danger inline" role="alert"></div>
+            <h4>
+              <button type="submit" class="badge rounded-pill text-bg-warning tweet-button">
+                推文
+              </button>
+            </h4>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{{!-- 查看單一貼文 --}}
+<div class="modal fade" id="replyModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <!-- Modal body -->
+      <div class="text-right" style="border">
+        <div class="modal-body post-modal">
+          <div id="error" class="text-danger" role="alert"></div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+</div>
+
+{{/if}}

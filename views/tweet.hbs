@@ -1,0 +1,71 @@
+<div class="wrapper d-flex">
+
+  {{> modals}}
+  {{>left-content}}
+
+  <div class="container">
+    <h4 id="header"><a href="/tweets">
+        <img class="ms-3" src="https://upload.cc/i1/2022/07/29/bYiz5s.png" alt=""
+          style="height: 30%; width: 4%; margin-right: 25px;">
+        推文</a>
+    </h4>
+    {{!-- 推文 --}}
+    <div class="px-2 table" id="tweet">
+      <a href="/users/{{tweet.User.id}}/tweets"><img src="{{tweet.tweet.User.avatar}}" alt="post-icon"
+          class="tweet-avatar" class="post-icon"></a>
+      <div style="display:inline">
+        <div style="display: inline;">
+          <span>{{tweet.tweet.User.name}}</span>
+          <small>@{{tweet.tweet.User.account}}．</small>
+          <p class="description" style="margin: 0px;">{{tweet.tweet.description}}</p>
+          <small>{{tweet.tweet.createdAt}}</small>
+        </div>
+        {{!-- 推文數據 --}}
+        <div class="d-flex mb-4 dashboard">
+          <div style="margin-right: 20px;">
+            <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="reply" id="reply" class="btn-show-reply"
+              data-bs-toggle="modal" data-bs-target="#replyModal" data-id="{{tweet.id}}">
+            {{replies.length}} 回覆
+          </div>
+          <div>
+            {{#if tweet.isLiked}}
+            <form action="/tweets/{{tweet.tweet.id}}/unlike" method="POST" class="likes unlike">
+              <button type="submit" class="likes">
+                <img src="https://upload.cc/i1/2022/07/29/CaJuOl.png" alt="likes" id="likes" class="likes unlike">
+              </button>
+            </form>
+            {{else}}
+            <form action="/tweets/{{tweet.tweet.id}}/like" method="POST" class="likes">
+              <button type="submit" class="likes">
+                <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes" id="likes" class="likes">
+              </button>
+              {{/if}}<span>{{likes.length}}喜歡次數</span>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{!-- 貼文的回覆 --}}
+    <table class="table">
+      <tbody>
+        {{#each replies}}
+        <tr class="post">
+          <td><a href="/users/{{this.User.id}}/tweets"><img src="{{this.User.avatar}}" alt="post-icon"
+                class="post-icon post-avatar"></td>
+          <td>{{this.User.name}}
+            <small>@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</small>
+            <p>回覆
+              <span class="reply-author">@{{this.author}}</span>
+            </p>
+            <p>{{this.comment}}</p>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+  </div>
+
+  {{>right-content}}
+
+</div>

@@ -1,0 +1,146 @@
+#left-sidebar {
+  display: flex;
+  align-items: stretch;
+  min-width: 308px;
+  height: 1200px;
+}
+
+#list {
+  position: fixed;
+  left: 130px;
+}
+
+#ac-logo {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+li {
+  margin-bottom: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#ac-logo {
+  width: 52px;
+  height: 52px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.container {
+  margin: 0px;
+  padding: 0px;
+  border-left: 2px solid rgb(209, 203, 203);
+  border-right: 2px solid rgb(209, 203, 203);
+  width: 65%;
+}
+
+#header {
+  padding: 15px;
+  border-bottom: 2px solid rgb(209, 203, 203);
+  font-weight: bold;
+}
+
+.avatar {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.post-avatar {
+  top: 5px;
+  left: 5px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.post-tweet-button {
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
+}
+
+.likes {
+  display: inline;
+  border: none;
+  background-color: transparent;
+}
+
+.unlike {
+  filter: invert(100%);
+  -webkit-filter: invert(100%);
+}
+
+#placeholder {
+  position: absolute;
+  top: 15px;
+  left: 60px;
+}
+
+.post-tweet {
+  border-bottom: 8px solid rgb(209, 203, 203);
+  position: relative;
+  margin: 0px;
+}
+
+.description {
+  font-size: 24px;
+}
+
+.dashboard {
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  border: none;
+  background-color: transparent;
+  resize: none;
+}
+
+.tweet-button {
+  border: none;
+  width: 80px;
+  height: 40px;
+  color: #FFFFFF;
+  background: #FF6600;
+  border-radius: 50px;
+}
+
+.post-link:hover {
+  color: rgb(83, 81, 81);
+}
+
+
+
+#reply,
+#likes {
+  width: 25px;
+  height: 25px;
+  margin: 0px 5px;
+}
+
+.tweet-avatar {
+  top: 5px;
+  left: 5px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.reply-author {
+  color: #FF6600;
+}

@@ -1,14 +1,20 @@
 'use strict'
 const faker = require('faker')
+const { User } = require('../models')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    const usersIds = await User.findAll({
+      where: { role: 'user' },
+      attributes: ['id'],
+      raw: true
+    })
     await queryInterface.bulkInsert('Tweets',
-      Array.from({ length: 100 }).map((_, i) => ({
+      Array.from({ length: 100 }).map((_, index) => ({
+        user_id: usersIds[~~(index / 10)].id,
         description: faker.lorem.sentences(),
         created_at: faker.date.recent(),
-        updated_at: new Date(),
-        user_id: ~~(i / 10 + 1) // 商取整數
+        updated_at: new Date()
       })))
   },
 
@@ -16,9 +22,3 @@ module.exports = {
     await queryInterface.bulkDelete('Tweets', null, {})
   }
 }
-
-// or 從users種子資料撈id
-// const users = await queryInterface.sequelize.query(
-//   "SELECT id FROM Users WHERE role = 'user';",
-//   { type: queryInterface.sequelize.QueryTypes.SELECT }
-// )
