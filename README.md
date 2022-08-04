@@ -45,12 +45,8 @@ touch .env
     
 &nbsp;&nbsp;_If you don't have client id and secret for imgur, you can apply [here](https://api.imgur.com/oauth2/addclient)_
 
-### 4) Add a folder named 'temp'
-```bash
-mkdir temp
-```
 
-### 5) Create database connection and database according to the following
+### 4) Create database connection and database according to the following
 - connection:
 
 |parameter|value|
@@ -66,26 +62,26 @@ mkdir temp
 |development|ac_twitter_workspace|
 |test|ac_twitter_workspace_test|
 
-### 6) Create required table in database
+### 5) Create required table in database
 ```bash
 npx sequelize db:migrate
 ```
 
-### 7) Create seeds in database
+### 6) Create seeds in database
 ```bash
 npx sequelize db:seed:all
 ```
 
-### 8) start the server
+### 7) start the server
 ```bash
 npm run dev
 ```
 
-### 9) Open browser and navigate to https://localhost:3000
+### 8) Open browser and navigate to https://localhost:3000
 &nbsp;&nbsp;_You can use the following accounts to login_
 |role|account|password|
 |:-----:|:-------:|:--------:|
 |admin|root|12345678|
 |user|user1|12345678|
 
-### 10) Enjoy!
+### 9) Enjoy!
