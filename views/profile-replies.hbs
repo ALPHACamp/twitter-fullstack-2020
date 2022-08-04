@@ -1,8 +1,8 @@
 <div class="col-2 nav-left">
   {{#ifCond user.id userData.id}}
-    {{> nav-left route='personal-info'}}
-    {{else}}
-      {{> nav-left}}
+  {{> nav-left route='personal-info'}}
+  {{else}}
+  {{> nav-left}}
   {{/ifCond}}
 </div>
 
@@ -29,27 +29,21 @@
               {{this.User.name}}
             </p>
           </a>
-          <small class="m-2" style="color:#6C757D;">@{{this.User.account}}・
-            <a href="/tweets/{{this.Tweet.id}}/replies"
-              style="text-decoration:none;color:#6C757D;font-weight: 400;font-size: 14px;line-height: 22px;">
-              {{relativeTimeFromNow this.createdAt}}
-            </a>
-          </small>
-          <span class="d-block mt-1 mb-1" style="font-weight: 400;font-size: 14px;line-height: 22px; color:#6C757D;">回覆
-            <a href="/users/{{this.Tweet.User.id}}/replies" style="text-decoration:none;">
-              <small style="color:#FF6600;margin-left:2px;">@{{this.Tweet.User.account}}</small>
-            </a>
+        </small>
+        <span class="d-block mt-1 mb-1" style="font-weight: 400;font-size: 14px;line-height: 22px; color:#6C757D;">回覆
+          <a href="/users/{{this.Tweet.User.id}}/replies" style="text-decoration:none;">
+            <small style="color:#FF6600;margin-left:2px;">@{{this.Tweet.User.account}}</small>
+          </a>
+        </span>
 
-
-          </span>
+        <div style="word-break: break-word; width: 100%px; height: 100%;">
           <a href="/tweets/{{this.Tweet.id}}/replies" style="text-decoration:none;">
-            <p class="m-0 p-0"
-              style="font-weight: 400;font-size: 16px;line-height: 26px; color: #171725;word-wrap:break-word; width:700px;">
-              {{this.comment}}
-            </p>
+            <span class="m-0 p-0" style="font-weight: 400; font-size: 16px; line-height: 26px; color: #171725; width:700px;">{{this.comment}}</span>
           </a>
         </div>
-      </li>
+
+      </div>
+    </li>
     {{/each}}
   </ul>
 </div>
