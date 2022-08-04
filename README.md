@@ -16,15 +16,6 @@ Alphacamp 的期末分組挑戰：「用全端開發模式，建立類似 twitte
 - `MySQL` for database
 - `Heroku` for deployment
 
-## User Story
-- As a user, you can browse all tweets on the homepage
-- As a user, you can post a tweet
-- As a user, you can edit your info
-- As a user, you can reply to other people's tweet
-- As a user, you can like/unlike a tweet
-- As a user, you can follow/unfollow any people
-- As a user, you can browse other people's personal page
-
 ## Steps to start this project from scratch
 
 ### 1) Clone a local copy of this repo
