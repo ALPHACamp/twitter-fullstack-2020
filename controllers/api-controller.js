@@ -84,7 +84,7 @@ const apiController = {
         delete user.password
 
         req.flash('success_messages', '成功修改會員資料')
-        if (process.env.NODE_ENV === 'test') {
+        if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'travis') {
           res.json({ status: 'success', ...user })
         }
         res.redirect('back')

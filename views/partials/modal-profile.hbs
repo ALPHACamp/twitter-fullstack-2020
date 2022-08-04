@@ -13,25 +13,33 @@
         </div>
         <div class="modal-body">
           {{#if user.cover}}
-            <div class="d-flex justify-content-center align-items-center text-light" style="background: linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url('{{user.cover}}'); 
-            background-size: cover; margin: -16px; z-index: -1; aspect-ratio: 640/200; width: 100% + 32px;">
+            <div class="d-flex justify-content-center align-items-center text-light profile-edit-cover"
+              id="preview_cover"
+              style="background: linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url('{{user.cover}}'); background-size: cover;">
           {{else}}
-            <div class="d-flex justify-content-center align-items-center text-light" style="background: linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url('/images/AC-cover.png'); 
-            background-size: cover; margin: -16px; z-index: -1; aspect-ratio: 640/200; width: 100% + 32px;">
+            <div class="d-flex justify-content-center align-items-center text-light profile-edit-cover"
+              id="preview_cover"
+              style="background: linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url('/images/AC-cover.png'); background-size: cover;">
           {{/if}}
-          <input type="file" name="cover" id="cover" class="display-none">
+          <input type="file" name="cover" id="cover" class="display-none" onchange="readURL(this)"
+            target_id="preview_cover">
           <label for="cover"><i class="fa-solid fa-camera icon-size pointer me-4"></i></label>
           <input type="checkbox" name="delete_cover" id="delete-cover" class="display-none">
           <label for="delete-cover"><i class="fa-solid fa-xmark icon-size pointer"></i></label>
         </div>
         {{#if user.avatar}}
-          <div class="mb-3 border border-light border-3 rounded-circle d-flex justify-content-center align-items-center"
-            style="width: 140px; height: 140px; margin-top: -70px; background: url('{{user.avatar}}'), rgba(23, 23, 37, 0.6); background-size: cover; background-position: center; z-index: 10; background-blend-mode: multiply;">
+          <div
+            class="mb-3 border border-light border-3 rounded-circle d-flex justify-content-center align-items-center profile-edit-avatar"
+            id="preview_avatar"
+            style="background: url('{{user.avatar}}'), rgba(23, 23, 37, 0.6); background-size: cover; background-position: center; background-blend-mode: multiply;">
         {{else}}
-          <div class="mb-3 border border-light border-3 rounded-circle d-flex justify-content-center align-items-center"
-            style="width: 140px; height: 140px; margin-top: -70px; background: url('/images/avatar-example.jpeg'), rgba(23, 23, 37, 0.6); background-size: cover; background-position: center; z-index: 10; background-blend-mode: multiply;">
+          <div
+            class="mb-3 border border-light border-3 rounded-circle d-flex justify-content-center align-items-center profile-edit-avatar"
+            id="preview_avatar"
+            style="background: url('/images/avatar-example.jpeg'), rgba(23, 23, 37, 0.6); background-size: cover; background-position: center; background-blend-mode: multiply;">
         {{/if}}
-        <input type="file" name="avatar" id="avatar" class="display-none">
+        <input type="file" name="avatar" id="avatar" onchange="readURL(this)" target_id="preview_avatar"
+          class="display-none">
         <label for="avatar"><i class="fa-solid fa-camera icon-size text-light pointer"></i></label>
     </div>
     <div class="mb-3 signin-signup-page-input-change-backgroundcolor">
@@ -77,29 +85,25 @@
   introCounter.innerText = `${profileIntro.value.length}/${INTRO_LEN_LIMIT}`
 
   profileName.addEventListener('input', event => {
-    if (profileName.value.length > 0) {
-      nameCounter.innerText = `${profileName.value.length}/${NAME_LEN_LIMIT}`
-    } else {
+    if (profileName.value.length <= 0) {
       nameCounter.innerText = ''
-    }
-    if (profileName.value.length > NAME_LEN_LIMIT) {
+    } else if (profileName.value.length > NAME_LEN_LIMIT) {
+      nameCounter.innerText = ''
       nameValidateOver.classList.remove('display-none')
-      nameCounter.innerText = ''
     } else {
+      nameCounter.innerText = `${profileName.value.length}/${NAME_LEN_LIMIT}`
       nameValidateOver.classList.add('display-none')
     }
   })
 
   profileIntro.addEventListener('input', event => {
-    if (profileIntro.value.length > 0) {
-      introCounter.innerText = `${profileIntro.value.length}/${INTRO_LEN_LIMIT}`
-    } else {
+    if (profileIntro.value.length <= 0) {
       introCounter.innerText = ''
-    }
-    if (profileIntro.value.length > INTRO_LEN_LIMIT) {
+    } else if (profileIntro.value.length > INTRO_LEN_LIMIT) {
+      introCounter.innerText = ''
       introValidateOver.classList.remove('display-none')
-      introCounter.innerText = ''
     } else {
+      introCounter.innerText = `${profileIntro.value.length}/${INTRO_LEN_LIMIT}`
       introValidateOver.classList.add('display-none')
     }
   })
@@ -117,5 +121,41 @@
 
       form.classList.add('was-validated')
     }, false)
+  })
+
+  function readURL(input) {
+
+    if (input.files && input.files[0]) {
+      const imageTagId = input.getAttribute("target_id")
+      const reader = new FileReader()
+
+      reader.onload = e => {
+        const div = document.getElementById(imageTagId)
+        if (imageTagId === 'preview_cover') {
+          const styleContent = `background: linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url('${e.target.result}'); background-size: cover;`
+          div.setAttribute("style", styleContent)
+        }
+
+        if (imageTagId === 'preview_avatar') {
+          const styleContent = `background: url('${e.target.result}'), rgba(23, 23, 37, 0.6); background-size: cover; background-position: center; background-blend-mode: multiply;`
+          div.setAttribute("style", styleContent)
+        }
+      }
+
+      reader.readAsDataURL(input.files[0])
+
+    }
+
+  }
+
+  const deleteCover = document.querySelector('#delete-cover')
+  let deleteCounter = 0
+  deleteCover.addEventListener('click', e => {
+    deleteCounter++
+    if (deleteCounter % 2) {
+      deleteCover.parentElement.setAttribute("style", "background: linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url('/images/AC-cover.png'); background-size: cover;")
+    } else {
+      deleteCover.parentElement.setAttribute("style", "background: linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url('{{user.cover}}'); background-size: cover;")
+    }
   })
 </script>
