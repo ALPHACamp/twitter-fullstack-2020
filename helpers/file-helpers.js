@@ -1,6 +1,6 @@
 const fs = require('fs')
 const imgur = require('imgur')
-const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID || '76be4686b5bbd17'
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 imgur.setClientId(IMGUR_CLIENT_ID)
 
