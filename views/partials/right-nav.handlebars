@@ -8,11 +8,13 @@
     {{#each loginUser.topFollowings}}
     <li class="px-2 list-group-item bg-light">
       <div class="d-flex justify-content-between">
-        <img src="{{checkAvatar this.avatar}}" class="rounded-circle me-2" width="50" height="50">
-        <div class="d-flex flex-column flex-grow-1 me-1">
-          <span class="fw-bold" style="font-size: 16px;">{{this.name}}</span>
-          <span style="font-size: 14px; color: #6C757D">@{{this.account}}</span>
-        </div>
+        <a href="/users/{{this.id}}/tweets" class="d-flex flex-grow-1">
+          <img src="{{checkAvatar this.avatar}}" class="rounded-circle me-2" width="50" height="50">
+          <div class="d-flex flex-column flex-grow-1 me-1">
+            <span class="fw-bold" style="font-size: 16px;">{{this.name}}</span>
+            <span style="font-size: 14px; color: #6C757D">@{{this.account}}</span>
+          </div>
+        </a>
         <form class="d-flex" action="/followships{{#if this.isFollowing}}/{{this.id}}?_method=DELETE{{/if}}"
           method="post">
           <input type="hidden" value="{{this.id}}" name="followingId" />
