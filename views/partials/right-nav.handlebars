@@ -19,7 +19,6 @@
           method="post">
           <input type="hidden" value="{{this.id}}" name="followingId" />
           {{#ifCond this.id ../loginUser.id}}
-          <button type="button" class="px-3" style="font-size: 16px; border-radius: 50px; border: 1px solid #808080; color: #ffffff; background-color: #808080;" disabled>本人</button>
           {{else}}
           <button type="submit" class="px-3" style="font-size: 16px; border-radius: 50px; border: 1px solid #FF6600;
               {{#if this.isFollowing}}color: #FFFFFF; background-color: #FF6600;

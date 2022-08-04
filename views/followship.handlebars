@@ -10,11 +10,11 @@
     </li>
   </ul>
 
-  {{#each followings}}
-    {{> followship-card}}
-  {{/each}}
+  {{#if followings}}
+    {{> followship-card value=followings}}
+  {{/if}}
 
-  {{#each followers}}
-    {{> followship-card}}
-  {{/each}}
+  {{#if followers}}
+    {{> followship-card value=followers}}
+  {{/if}}
 </div>
