@@ -66,6 +66,12 @@ a:hover {
   position: fixed;
 }
 
+.user-name {
+  font-size: 18px;
+  line-height: 26px;
+  margin: 8px 0 0;
+}
+
 .user-header {
   width: 639px;
   height: 59px;
@@ -197,12 +203,6 @@ a:hover {
   font-size: 16px;
   position: absolute;
   right: 30px;
-}
-
-.user-name {
-  font-size: 18px;
-  line-height: 26px;
-  margin: 8px 0 0;
 }
 
 .user-account {
