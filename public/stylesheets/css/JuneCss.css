@@ -625,7 +625,7 @@
   width: 85%;
 }
 #profile-region #profile-right {
-  width: 273px;
+  width: 290px;
   padding-left: 28px;
 }
 
@@ -635,6 +635,7 @@
   }
   #profile-region #profile-right {
     padding-left: 15px;
+    width: 273px;
   }
   #profile-region #profile-middle .scroll-container .tweet-card .content {
     width: 80%;
