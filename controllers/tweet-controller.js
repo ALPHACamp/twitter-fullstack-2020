@@ -3,12 +3,11 @@ const helpers = require('../_helpers')
 
 const tweetController = {
   getTweets: (req, res, next) => {
-    const userId = helpers.getUser(req).id
     return Promise.all([
       Tweet.findAll({
         order: [['createdAt', 'DESC']],
         nest: true,
-        include: [User, Reply, Like, { model: User, as: 'likedUsers' }]
+        include: [User, Reply, Like]
       }),
       Followship.findAll({
         include: User,
@@ -26,10 +25,9 @@ const tweetController = {
           description: t.description.substring(0, 50),
           User: t.User.dataValues,
           user,
-          isLiked: t.likedUsers.some(item => item.id === userId)
+          isLiked: t.Likes.length > 0
 
         }))
-
         const recommendFollower = followship
           .map(data => {
             return {
@@ -48,15 +46,12 @@ const tweetController = {
     const userId = helpers.getUser(req).id
     const description = req.body.description
 
-    User.findByPk(userId, {
-      raw: true,
-      nest: true
-    })
     return Tweet.create({
       userId,
       description
     })
-      .then(() => {
+      .then(tweets => {
+        console.log(tweets)
         req.flash('success_messages', '成功發布推文')
         res.redirect('/tweets')
       })
