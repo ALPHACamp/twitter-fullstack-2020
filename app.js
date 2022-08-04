@@ -13,13 +13,14 @@ const path = require('path')
 const routes = require('./routes')
 const app = express()
 const port = process.env.PORT || 3000
+const secret = process.env.SESSION_SECRET || 'secret'
 
 app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 app.use(express.json())
-app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }))
+app.use(session({ secret: secret, resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
