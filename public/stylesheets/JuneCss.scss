@@ -646,7 +646,7 @@
     }
   }
   #profile-right {
-    width: 273px;
+    width: 290px;
     padding-left: 28px;
   }
 }
@@ -656,6 +656,7 @@
     grid-template-columns: 23% 51% 26%;
     #profile-right {
       padding-left: 15px;
+      width: 273px;
     }
     #profile-middle {
       .scroll-container {
