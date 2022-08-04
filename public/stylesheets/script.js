@@ -30,7 +30,9 @@ panel.addEventListener('click', event => {
       <span style="font-size: 14px">${tweet.dataset.tweetcreate}</span>
     </a>
 
-    <p class="mt-2">${tweet.dataset.tweetdescription}</p>
+    <div style="word-break: break-word; width: 100%px; height: 100%;">
+      <p class="mt-2">${tweet.dataset.tweetdescription}</p>
+    </div>
   `
 
   replyAccount.innerHTML = `
