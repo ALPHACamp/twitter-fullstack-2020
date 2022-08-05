@@ -28,7 +28,7 @@
 
       <div class="row-reaction">
         <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="reply" id="reply" class="btn-show-reply"
-          data-bs-toggle="modal" data-bs-target="#replyModal" data-id="{{tweet.id}}">
+          data-bs-toggle="modal" data-bs-target="#replyModal" data-id="{{tweet.tweet.id}}">
 
         {{#if tweet.isLiked}}
         <form action="/tweets/{{tweet.tweet.id}}/unlike" method="POST" class="likes unlike">

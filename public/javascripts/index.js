@@ -6,7 +6,7 @@ const tweetModal = document.querySelector('.add-post')
 const replyForm = document.querySelector('.reply-form')
 
 // tweet-modal驗證
-tweetModal.addEventListener('click', e => {
+tweetModal.addEventListener('submit', e => {
   const tweet = e.target.parentElement.parentElement.parentElement.children[2].value
   console.log(`回覆字數: ${tweet.length}`)
   if (tweet.length === 0) {
