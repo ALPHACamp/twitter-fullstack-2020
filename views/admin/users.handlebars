@@ -19,21 +19,21 @@
         <div>
           <span>
             <img src="/images/icon-black-post.png">
-            {{this.tweetCounts}}
+            {{numberformat this.tweetCounts}}
           </span>
           <span>
             <img src="/images/icon-black-unlike.png">
-            {{this.likeCounts}}
+            {{numberformat this.likeCounts}}
           </span>
         </div>
         
-        <div>
+        <div class="user-follow">
           <span style="color: var(--secondary); ">
-            <strong style="color: #171725;">{{this.followingCounts}}個</strong>跟隨中
+            <strong style="color: #171725;">{{numberformat this.followingCounts}}個</strong>跟隨中
           </span>
 
           <span style="color: var(--secondary);">
-            <strong style="color: #171725; margin-left: 8px;">{{this.followerCounts}}位</strong>跟隨者
+            <strong style="color: #171725; margin-left: 8px;">{{numberformat this.followerCounts}}位</strong>跟隨者
           </span>
         </div>
       </div>
