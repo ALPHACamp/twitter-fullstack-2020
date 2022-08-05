@@ -3,12 +3,12 @@ const helpers = require('../_helpers')
 
 const tweetController = {
   getTweets: (req, res, next) => {
-    const userId = helpers.getUser(req).id
+    const currentUser = helpers.getUser(req)
     return Promise.all([
       Tweet.findAll({
         order: [['createdAt', 'DESC']],
         nest: true,
-        include: [User, Reply, Like, { model: User, as: 'likedUsers' }]
+        include: [User, Reply, Like]
       }),
       Followship.findAll({
         include: User,
@@ -26,7 +26,7 @@ const tweetController = {
           description: t.description.substring(0, 50),
           User: t.User.dataValues,
           user,
-          isLiked: t.likedUsers.some(item => item.id === userId)
+          isLiked: t.Likes.length > 0
 
         }))
 
@@ -40,7 +40,7 @@ const tweetController = {
           })
           .slice(0, 10)
 
-        res.render('tweets', { tweets: data, user, recommendFollower })
+        res.render('tweets', { tweets: data, user, recommendFollower, currentUser })
       })
       .catch(err => next(err))
   },
@@ -48,10 +48,14 @@ const tweetController = {
     const userId = helpers.getUser(req).id
     const description = req.body.description
 
-    User.findByPk(userId, {
-      raw: true,
-      nest: true
-    })
+    if (!req.body.description) {
+      return res.redirect('/')
+    }
+
+    if (req.body.description.length > 140) {
+      return res.redirect('/')
+    }
+
     return Tweet.create({
       userId,
       description
@@ -63,13 +67,14 @@ const tweetController = {
       .catch(err => next(err))
   },
   getTweet: (req, res, next) => {
+    const currentUser = helpers.getUser(req)
     const tweetId = req.params.id
     const userId = helpers.getUser(req).id
     return Promise.all([Tweet.findByPk(tweetId, {
       order: [['createdAt', 'DESC']],
       raw: true,
       nest: true,
-      include: [User, Reply, Like, { model: User, as: 'likedUsers' }]
+      include: [User, Reply, Like]
     }),
     Reply.findAll({
       order: [['createdAt', 'DESC']],
@@ -100,7 +105,7 @@ const tweetController = {
 
         const post = {
           tweet: tweet,
-          isLiked: tweet.likedUsers.id === userId
+          isLiked: likes?.some(l => l.UserId === userId)
         }
 
         const recommendFollower = followship
@@ -113,7 +118,7 @@ const tweetController = {
           })
           .slice(0, 10)
 
-        res.render('tweet', { tweet: post, replies: data, likes, recommendFollower })
+        res.render('tweet', { tweet: post, replies: data, likes, recommendFollower, currentUser })
       })
       .catch(err => next(err))
   },
@@ -132,13 +137,13 @@ const tweetController = {
       .catch(err => next(err))
   },
   likePost: (req, res, next) => {
-    const tweetId = req.params.id
-    const userId = helpers.getUser(req).id
-    // const
+    const TweetId = req.params.id
+    const UserId = helpers.getUser(req).id
+
     Like.create({
-      userId,
-      tweetId
-    }).then(like => {
+      UserId,
+      TweetId
+    }).then(() => {
       res.redirect('back')
     })
       .catch(err => next(err))

@@ -40,14 +40,23 @@
       <!-- Modal body -->
       <div class="text-right" style="border">
         <div class="modal-body post-modal">
-          <div id="error" class="text-danger" role="alert"></div>
+          {{!-- 留言訊息 --}}
+
+          {{!-- above --}}
         </div>
+        <div class="d-flex m-3"><img src="{{user.avatar}}" alt="avatar">
+          <label for="reply" class="form-label"></label>
+          <input name="reply" id="modal-reply" class="tweetTextarea" placeholder="推你的回覆" style="border:none;"></input>
+        </div>
+        <form method="POST" class="reply-form">
+          <div id="error-msg" class="text-alert inline" role="alert"></div>
+          <h4>
+            <button type="submit" class="badge rounded-pill text-bg-warning tweet-button" id="tweet-button">回覆</button>
+          </h4>
+        </form>
       </div>
-
-
     </div>
   </div>
-
 </div>
 
 {{/if}}

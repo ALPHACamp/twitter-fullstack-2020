@@ -18,7 +18,7 @@ passport.use(new LocalStrategy(
         return bcrypt.compare(password, user.password)
           .then(isMatch => {
             if (!isMatch) {
-              return cb(null, false, req.flash('error_messages', '帳號不存在！'))
+              return cb(null, false, req.flash('error_messages', '密碼錯誤！'))
             }
             return cb(null, user)
           })

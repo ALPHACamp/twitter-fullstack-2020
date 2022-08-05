@@ -124,7 +124,7 @@ const userController = {
           .slice(0, 10)
 
         const tweetsLength = tweetsData.length
-        res.render('user', { targetUser: targetUser.toJSON(), tweets: tweetsData, currentUser, tweetsLength, recommendFollower })
+        res.render('user-tweets', { targetUser: targetUser.toJSON(), tweets: tweetsData, currentUser, tweetsLength, recommendFollower })
       })
       .catch(err => next(err))
   },
@@ -169,7 +169,7 @@ const userController = {
           .slice(0, 10)
 
         const tweetsLength = targetUser.Tweets.length
-        res.render('user', { targetUser: targetUser.toJSON(), replies, currentUser, tweetsLength, recommendFollower })
+        res.render('user-replies', { targetUser: targetUser.toJSON(), replies, currentUser, tweetsLength, recommendFollower })
       })
       .catch(err => next(err))
   },
@@ -225,7 +225,7 @@ const userController = {
           .slice(0, 10)
 
         const tweetsLength = targetUser.Tweets.length
-        res.render('user', { targetUser: targetUser.toJSON(), likes: likesData, currentUser, tweetsLength, recommendFollower })
+        res.render('user-likes', { targetUser: targetUser.toJSON(), likes: likesData, currentUser, tweetsLength, recommendFollower })
       })
       .catch(err => next(err))
   },
@@ -295,7 +295,7 @@ const userController = {
         return res.redirect(`/users/${currentUserId}/tweets`)
       }
 
-      if (introduction.length >= 160 || name.length >= 50) {
+      if (introduction.length > 160 || name.length > 50) {
         req.flash('error_messages', '字數超出上限！')
         return res.redirect(`/users/${currentUserId}/tweets`)
       }
@@ -383,7 +383,7 @@ const userController = {
           .slice(0, 10)
 
         const tweetsLength = user.Tweets.length
-        res.render('user-followers', { user: user.toJSON(), followers: result, tweetsLength, recommendFollower })
+        res.render('user-followers', { user: user.toJSON(), followers: result, tweetsLength, recommendFollower, currentUser })
       })
       .catch(err => next(err))
   },
@@ -425,7 +425,7 @@ const userController = {
           .slice(0, 10)
 
         const tweetsLength = user.Tweets.length
-        res.render('user-followings', { user: user.toJSON(), followings: result, tweetsLength, recommendFollower })
+        res.render('user-followings', { user: user.toJSON(), followings: result, tweetsLength, recommendFollower, currentUser })
       })
       .catch(err => next(err))
   }

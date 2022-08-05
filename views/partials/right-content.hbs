@@ -1,4 +1,4 @@
-<!-- right-content -->
+<!-- profile-right-content -->
 <nav style="display:flex; align-items:stretch; width:30%; margin:1% 0 0 2%;">
   <div class="card text-bg-light mb-3" style="width: 250px; position:fixed; background: #FAFAFB; border-radius: 16px;">
     <div class="card-header text-start" style="background: #FAFAFB; padding: 6% 0 0 6%; border-radius: 16px 16px 0 0;">
@@ -29,7 +29,7 @@
                     </button>
                   </form>
                   {{else}}
-                  <form action="/followships/{{this.id}}" method="POST">
+                  <form action="/followships" method="POST">
                     <button type="submit" class="btn btn-white rounded-pill mt-1 user-follow-bottom" name="id"
                       value={{this.id}}
                       style=" background-color: #FFFFFF;color: #FF6600;border:1px solid #FF6600;font-size: 15px;">

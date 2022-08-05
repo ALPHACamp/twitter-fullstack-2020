@@ -4,11 +4,15 @@ const passport = require('../config/passport')
 const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const upload = require('../middleware/multer')
+const admin = require('./modules/admin')
 
 const userController = require('../controllers/user-controller')
 const followshipController = require('../controllers/followship-controller')
 const tweetController = require('../controllers/tweet-controller')
 const apiController = require('../controllers/api-controller')
+
+// 管理者
+router.use('/admin', admin)
 
 // 使用者 登入/註冊
 router.get('/signin', userController.signInPage)
@@ -42,8 +46,8 @@ router.get('/api/users/:id', authenticated, apiController.editUser)
 router.post('/api/users/:id', authenticated, apiController.putUser)
 
 // 跟隨功能
-router.post('/followships/:userId', authenticated, followshipController.addFollowing)
-router.delete('/followships/:userId', authenticated, followshipController.removeFollowing)
+router.post('/followships', authenticated, followshipController.addFollowing)
+router.delete('/followships/:id', authenticated, followshipController.removeFollowing)
 
 router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)

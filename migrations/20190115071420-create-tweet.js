@@ -20,12 +20,10 @@ module.exports = {
         type: Sequelize.DATE
       },
       user_id: {
-        allowNull: false,
         type: Sequelize.INTEGER
       }
     })
   },
-
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Tweets')
   }
