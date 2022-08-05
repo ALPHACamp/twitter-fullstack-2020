@@ -54,20 +54,18 @@ const adminController = {
       .catch(next)
   },
   getUsers: (req, res, next) => {
-    const DEFAULT_LIMIT = 6
+    const DEFAULT_LIMIT = 10
     const page = Number(req.query.page) || 1
     const limit = Number(req.query.limit) || DEFAULT_LIMIT
     const offset = getOffsetAdminUsers(limit, page)
     return User.findAll({
-      // where: { role: 'user' }, 加上這一行跑測試檔不會過，真詭異！想不透！
-      attributes: {
-        include: [
-          [sequelize.literal('(SELECT COUNT(*) from Tweets AS Tweet WHERE Tweet.user_id = User.id)'), 'tweetsCount'],
-          [sequelize.literal('(SELECT COUNT(*) from Likes WHERE Likes.user_id = User.id)'), 'likesCount'],
-          [sequelize.literal('(SELECT COUNT(*) from Followships WHERE Followships.following_id = User.id)'), 'followingsCount'],
-          [sequelize.literal('(SELECT COUNT(*) from Followships WHERE Followships.follower_id = User.id)'), 'followersCount']
-        ]
-      },
+      where: { role: 'user' },
+      attributes: ['name', 'account', 'avatar', 'banner',
+        [sequelize.literal('(SELECT COUNT(*) from Tweets WHERE Tweets.user_id = User.id)'), 'tweetsCount'],
+        [sequelize.literal('(SELECT COUNT(*) from Likes WHERE Likes.user_id = User.id)'), 'likesCount'],
+        [sequelize.literal('(SELECT COUNT(*) from Followships WHERE Followships.following_id = User.id)'), 'followingsCount'],
+        [sequelize.literal('(SELECT COUNT(*) from Followships WHERE Followships.follower_id = User.id)'), 'followersCount']
+      ],
       order: [
         [sequelize.literal('tweetsCount'), 'DESC']
       ],
@@ -77,9 +75,8 @@ const adminController = {
       nest: true
     })
       .then(users => {
-        const normalUsers = users.filter(user => user.role !== 'admin')
-        res.render('admin/users', {
-          users: normalUsers,
+        return res.render('admin/users', {
+          users,
           pagination: getPaginationAAdminUsers(limit, page, users.count)
         })
       })

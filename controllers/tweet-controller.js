@@ -1,4 +1,4 @@
-const { Tweet, User, Reply, Like, Followship, sequelize } = require('../models')
+const { Tweet, User, Reply, Like } = require('../models')
 const helpers = require('../_helpers')
 
 const tweetController = {
@@ -10,16 +10,13 @@ const tweetController = {
         nest: true,
         include: [User, Reply, Like]
       }),
-      Followship.findAll({
-        include: User,
-        group: 'followingId',
-        attributes: {
-          include: [[sequelize.fn('COUNT', sequelize.col('following_id')), 'count']]
-        },
-        order: [[sequelize.literal('count'), 'DESC']]
+      User.findAll({
+        where: { role: 'user' },
+        include: [{ model: User, as: 'Followers' }],
+        attributes: ['id', 'name', 'account', 'avatar']
       })
     ])
-      .then(([tweets, followship]) => {
+      .then(([tweets, userData]) => {
         const user = helpers.getUser(req)
         const data = tweets.map(t => ({
           ...t.dataValues,
@@ -30,17 +27,14 @@ const tweetController = {
 
         }))
 
-        const recommendFollower = followship
-          .map(data => {
-            return {
-              followingCount: data.dataValues.count,
-              ...data.User.toJSON(),
-              isFollowed: user?.Followings.some(u => u.id === data.followingId)
-            }
-          })
-          .slice(0, 10)
+        const recommendFollow = userData.map(user => ({
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+          isFollowed: currentUser.Followings.some(f => f.id === user.id)
+        }))
+          .sort((a, b) => b.followerCount - a.followerCount)
 
-        res.render('tweets', { tweets: data, user, recommendFollower, currentUser })
+        res.render('tweets', { tweets: data, user, recommendFollow, currentUser })
       })
       .catch(err => next(err))
   },
@@ -70,34 +64,31 @@ const tweetController = {
     const currentUser = helpers.getUser(req)
     const tweetId = req.params.id
     const userId = helpers.getUser(req).id
-    return Promise.all([Tweet.findByPk(tweetId, {
-      order: [['createdAt', 'DESC']],
-      raw: true,
-      nest: true,
-      include: [User, Reply, Like]
-    }),
-    Reply.findAll({
-      order: [['createdAt', 'DESC']],
-      raw: true,
-      nest: true,
-      include: User,
-      where: { tweet_id: tweetId }
-    }),
-    Like.findAll({
-      raw: true,
-      where: { tweet_id: tweetId }
-    }),
-    Followship.findAll({
-      include: User,
-      group: 'followingId',
-      attributes: {
-        include: [[sequelize.fn('COUNT', sequelize.col('following_id')), 'count']]
-      },
-      order: [[sequelize.literal('count'), 'DESC']]
-    })
+    return Promise.all([
+      Tweet.findByPk(tweetId, {
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true,
+        include: [User, Reply, Like]
+      }),
+      Reply.findAll({
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true,
+        include: User,
+        where: { tweet_id: tweetId }
+      }),
+      Like.findAll({
+        raw: true,
+        where: { tweet_id: tweetId }
+      }),
+      User.findAll({
+        where: { role: 'user' },
+        include: [{ model: User, as: 'Followers' }],
+        attributes: ['id', 'name', 'account', 'avatar']
+      })
     ])
-      .then(([tweet, replies, likes, followship]) => {
-        const user = helpers.getUser(req)
+      .then(([tweet, replies, likes, userData]) => {
         const data = replies.map(r => ({
           ...r,
           author: tweet.User.account
@@ -108,17 +99,14 @@ const tweetController = {
           isLiked: likes?.some(l => l.UserId === userId)
         }
 
-        const recommendFollower = followship
-          .map(data => {
-            return {
-              followingCount: data.dataValues.count,
-              ...data.User.toJSON(),
-              isFollowed: user?.Followings.some(u => u.id === data.followingId)
-            }
-          })
-          .slice(0, 10)
+        const recommendFollow = userData.map(user => ({
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+          isFollowed: currentUser.Followings.some(f => f.id === user.id)
+        }))
+          .sort((a, b) => b.followerCount - a.followerCount)
 
-        res.render('tweet', { tweet: post, replies: data, likes, recommendFollower, currentUser })
+        res.render('tweet', { tweet: post, replies: data, likes, recommendFollow, currentUser })
       })
       .catch(err => next(err))
   },
