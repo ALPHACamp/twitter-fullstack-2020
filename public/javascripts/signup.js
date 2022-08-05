@@ -91,7 +91,7 @@ function checkAccount (e) {
       })
       .catch(displayError)
   }
-  displayCheckResult('')
+  displayCheckResult()
 }
 
 function displayError (err) {
@@ -104,7 +104,7 @@ function displayError (err) {
       `
 }
 
-function displayCheckResult (RESULT) {
+function displayCheckResult (RESULT = { MESSAGE: '', COLOR: COLOR_CODE.DARK }) {
   const msgContainer = document.querySelector('span.check-account-result')
   msgContainer.textContent = RESULT.MESSAGE
   msgContainer.style.color = RESULT.COLOR
