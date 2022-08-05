@@ -119,7 +119,10 @@ const userConroller = {
         if (!user || isAdmin(user)) throw new Error('使用者不存在')
 
         user.isFollowing = req.user?.Followings.some(following => following.id === user.id)
-        replies = replies.map(reply => reply.toJSON())
+        replies = replies.map(reply => ({
+          ...reply.toJSON(),
+          tweetUser: reply.toJSON().Tweet.User
+        }))
 
         res.render('user', { user, replies })
       })

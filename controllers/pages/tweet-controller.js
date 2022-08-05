@@ -86,7 +86,7 @@ const tweetController = {
     return Tweet.findByPk(TweetId, {
       include: [
         User,
-        { model: Reply, include: [User, { model: Tweet, include: [User] }] },
+        { model: Reply, include: [User] },
         Like],
       order: [[Reply, 'createdAt', 'DESC']]
     })
@@ -98,6 +98,10 @@ const tweetController = {
         tweet.replyCounts = tweet.Replies.length
         tweet.likeCounts = tweet.Likes.length
         tweet.isLiked = req.user?.Likes.some(l => l.TweetId === tweet.id)
+        tweet.Replies = tweet.Replies.map(r => ({
+          ...r,
+          tweetUser: tweet.User
+        }))
         res.render('tweet', { tweet })
       })
       .catch(err => next(err))
