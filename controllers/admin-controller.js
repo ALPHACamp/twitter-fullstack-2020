@@ -62,10 +62,10 @@ const adminController = {
       // where: { role: 'user' }, 加上這一行跑測試檔不會過，真詭異！想不透！
       attributes: {
         include: [
-          [sequelize.literal('(SELECT COUNT(*) from tweets AS tweet WHERE tweet.user_id = user.id)'), 'tweetsCount'],
-          [sequelize.literal('(SELECT COUNT(*) from likes WHERE likes.user_id = user.id)'), 'likesCount'],
-          [sequelize.literal('(SELECT COUNT(*) from followships WHERE followships.following_id = user.id)'), 'followingsCount'],
-          [sequelize.literal('(SELECT COUNT(*) from followships WHERE followships.follower_id = user.id)'), 'followersCount']
+          [sequelize.literal('(SELECT COUNT(*) from Tweets AS tweet WHERE tweet.user_id = user.id)'), 'tweetsCount'],
+          [sequelize.literal('(SELECT COUNT(*) from Likes WHERE likes.user_id = user.id)'), 'likesCount'],
+          [sequelize.literal('(SELECT COUNT(*) from Followships WHERE followships.following_id = user.id)'), 'followingsCount'],
+          [sequelize.literal('(SELECT COUNT(*) from Followships WHERE followships.follower_id = user.id)'), 'followersCount']
         ]
       },
       order: [
