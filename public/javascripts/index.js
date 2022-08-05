@@ -1,41 +1,62 @@
 const postPanel = document.querySelector('.table')
+const replyPanel = document.querySelector('.reply-panel')
 const postModal = document.querySelector('.post-modal')
 const tweetModal = document.querySelector('.modal-body')
+const replyForm = document.querySelector('.reply-form')
 
-// 特定貼文詳情
+// 特定貼文詳情: /tweets
 postPanel.addEventListener('click', e => {
-  // 取得貼文資料
   const post = e.target.parentElement.parentElement.parentElement.children[0]
   const tweetId = e.target.dataset.id
   const userName = post.children[0].textContent
   const userAccount = post.children[1].textContent
   const description = post.children[2].textContent
+  const avatar = post.parentElement.parentElement.children[0].children[0].children[0].src
 
   const TweetInfo =
     `
-    <form action="/tweets/${tweetId}/replies" method="POST">
-      <div class="btn-group me-0">
-        <div class="px-2 tweet">
-          <div class="reply-modal-tweet-right column mb-2">
-            <img src="https://upload.cc/i1/2022/07/29/CW8Hu0.png" alt="post-icon" class="post-icon"></td>
-            <a href="" class="user-name">${userName}  </a><span class="user-account">${userAccount}</span>
-        <div class="reply-modal-tweet-text m-2">${description}</div>
-         <span >回覆給${userAccount}</span>
-        <div class= "d-flex m-3"><img src="{{user.avatar}}" alt="avatar">
-            <label for="reply" class="form-label"></label>
-            <input name="reply" id="modal-reply" class="tweetTextarea" placeholder="推你的回覆" style="border:none;"></input>
-        </div>
-        </div>
-         <div id ="error-msg" class="text-alert inline" role="alert"></div>
-        <h4>
-          <button type="submit" class="badge rounded-pill text-bg-warning tweet-button" id ="tweet-button">回覆</button>
-        </h4>
+    <div class="btn-group me-0">
+      <div class="px-2 tweet">
+        <div class="reply-modal-tweet-right column mb-2">
+          <img src="${avatar}" alt="post-icon" class="post-icon"></td>
+          <a href="" class="user-name">${userName} </a><span class="user-account">${userAccount}</span>
+          <div class="reply-modal-tweet-text m-2">${description}</div>
+          <span>回覆給${userAccount}</span>
         </div>
       </div>
-    </form>
+    </div>
       `
 
   postModal.innerHTML = TweetInfo
+  replyForm.setAttribute('action', `/tweets/${tweetId}/replies`)
+})
+
+// 特定貼文詳情: /tweet
+replyPanel.addEventListener('click', e => {
+  const post = e.target.parentElement.parentElement.children[1]
+  const tweetId = e.target.dataset.id
+  const userName = post.children[0].textContent
+  const userAccount = post.children[1].textContent
+  const description = post.children[2].textContent
+
+  const avatar = e.target.parentElement.parentElement.children[0].children[0].src
+
+  const TweetInfo =
+    `
+    <div class="btn-group me-0">
+      <div class="px-2 tweet">
+        <div class="reply-modal-tweet-right column mb-2">
+          <img src="${avatar}" alt="post-icon" class="post-icon"></td>
+          <a href="" class="user-name">${userName} </a><span class="user-account">${userAccount}</span>
+          <div class="reply-modal-tweet-text m-2">${description}</div>
+          <span>回覆給${userAccount}</span>
+        </div>
+      </div>
+    </div>
+      `
+
+  postModal.innerHTML = TweetInfo
+  replyForm.setAttribute('action', `/tweets/${tweetId}/replies`)
 })
 
 // reply-modal驗證
