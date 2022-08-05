@@ -74,7 +74,6 @@ function checkAccount (e) {
     return axios
       .get(`/api/users/checkAccount/${account}`)
       .then(res => {
-        console.log(res)
         if (res.data.status === 'error') displayError(res)
         if (res.data.result === 'unique-account') displayCheckResult('帳號可以使用')
         if (res.data.result === 'duplicated-account') displayCheckResult('請使用另一個帳號')
