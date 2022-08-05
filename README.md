@@ -60,9 +60,11 @@
 "multer": "^1.0.2"
 ````
 ## 安裝與使用  
-1. 使用cmd，clone專案
+1. 使用cmd，clone專案 權限不足時改用下面一個指令
 ```
 git clone  git@github.com:HuangYanHuei/twitter-fullstack-2020.git
+
+https://github.com/HuangYanHuei/twitter-fullstack-2020.git
 ```
 2. 進入專案資料夾
 ```
