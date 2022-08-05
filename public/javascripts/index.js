@@ -18,10 +18,10 @@ postPanel.addEventListener('click', e => {
     <div class="btn-group me-0">
       <div class="px-2 tweet">
         <div class="reply-modal-tweet-right column mb-2">
-          <img src="${avatar}" alt="post-icon" class="post-icon"></td>
-          <a href="" class="user-name">${userName} </a><span class="user-account">${userAccount}</span>
+          <img src="${avatar}" alt="post-icon" style="border-radius: 50%; width: 50px; height: 50px;"></td>
+          <a href="" class="user-name" style="left">${userName} </a><span class="user-account" style="color: #6C757D;">${userAccount}</span>
           <div class="reply-modal-tweet-text m-2">${description}</div>
-          <span>回覆給${userAccount}</span>
+          <span style="color: #6C757D;">回覆給  <span style="color: #FF6600;">${userAccount}</span></span>
         </div>
       </div>
     </div>
@@ -46,10 +46,10 @@ replyPanel.addEventListener('click', e => {
     <div class="btn-group me-0">
       <div class="px-2 tweet">
         <div class="reply-modal-tweet-right column mb-2">
-          <img src="${avatar}" alt="post-icon" class="post-icon"></td>
-          <a href="" class="user-name">${userName} </a><span class="user-account">${userAccount}</span>
+          <img src="${avatar}" alt="post-icon" style="border-radius: 50%; width: 50px; height: 50px;"></td>
+          <a href="" class="user-name" style="left">${userName} </a><span class="user-account" style="color: #6C757D;">${userAccount}</span>
           <div class="reply-modal-tweet-text m-2">${description}</div>
-          <span>回覆給${userAccount}</span>
+          <span style="color: #6C757D;">回覆給  <span style="color: #FF6600;">${userAccount}</span></span>
         </div>
       </div>
     </div>
@@ -75,6 +75,7 @@ postModal.addEventListener('submit', e => {
 // tweet-modal驗證
 tweetModal.addEventListener('submit', e => {
   const tweet = e.target.children[1].value
+  console.log(e.target)
   console.log(`回覆字數: ${tweet.length}`)
   console.log(tweet)
   if (tweet.length === 0) {

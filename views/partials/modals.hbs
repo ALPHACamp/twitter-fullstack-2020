@@ -6,17 +6,20 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"
-          style="border: 2px solid black"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" style="width: 15px; margin-left: 0px;"></button>
       </div>
       <!-- Modal body -->
       <div class="modal-body">
-        <form action="/tweets" method="POST">
+        <form action="/tweets" method="POST" class="d-flex">
+          <img src="{{user.avatar}}" alt="avatar" style="border-radius: 50%; width: 50px; height: 50px;">
           <label for="description" class="form-label"></label>
-          <textarea name="description" id="modal-description" class="tweetTextarea" placeholder="有什麼新鮮事 ?"></textarea>
+          <textarea name="description" id="modal-description" class="tweetTextarea" placeholder="有什麼新鮮事 ?"
+            style="width: 100%; margin: 2px 0; height: 150px;"></textarea>
           <div class="text-end">
-            <div id="error" class="text-danger inline" role="alert"></div>
-            <h4>
+            <div id="error" class="text-danger inline" role="alert">
+              {{!-- 錯誤訊息 --}}
+            </div>
+            <h4 style="margin-top: 150px;">
               <button type="submit" class="badge rounded-pill text-bg-warning tweet-button">
                 推文
               </button>
@@ -35,7 +38,7 @@
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" style="width: 15px; margin-left: 0px;"></button>
       </div>
       <!-- Modal body -->
       <div class="text-right" style="border">
@@ -44,9 +47,11 @@
 
           {{!-- above --}}
         </div>
-        <div class="d-flex m-3"><img src="{{user.avatar}}" alt="avatar">
+        <div class="d-flex m-3"><img src="{{user.avatar}}" alt="avatar"
+            style="border-radius: 50%; width: 50px; height: 50px;">
           <label for="reply" class="form-label"></label>
-          <input name="reply" id="modal-reply" class="tweetTextarea" placeholder="推你的回覆" style="border:none;"></input>
+          <input name="reply" id="modal-reply" class="tweetTextarea" placeholder="推你的回覆"
+            style="border:none; height: 24px; margin: auto 0; margin-left: 5px; width: 220px;"></input>
         </div>
         <form method="POST" class="reply-form">
           <div id="error-msg" class="text-alert inline" role="alert"></div>
