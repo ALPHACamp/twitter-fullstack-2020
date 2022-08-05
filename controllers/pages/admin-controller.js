@@ -1,5 +1,5 @@
-const { Op } = require('sequelize')
-const { User, Tweet, Like, sequelize } = require('../../models')
+const { QueryTypes } = require('sequelize')
+const { sequelize } = require('../../models')
 
 const adminConroller = {
   getSignin: (req, res) => {
@@ -32,34 +32,17 @@ const adminConroller = {
       })
       .catch(next)
   },
-  getUsers: (req, res, next) => {
-    return User.findAll({
-      attributes: {
-        include: [
-          [sequelize.literal('(SELECT COUNT(`followerId`) FROM `Followships` WHERE `followingId` = `User`.`id`)'), 'followerCounts'],
-          [sequelize.literal('(SELECT COUNT(`followingId`) FROM `Followships` WHERE `followerId` = `User`.`id`)'), 'followingCounts']
-        ]
-      },
-      include: [{ model: Tweet, attributes: ['id'], include: [Like] }],
-      where: {
-        role: {
-          [Op.not]: 'admin'
-        }
-      }
-    })
-      .then(users => {
-        users = users.map(u => ({
-          ...u.toJSON(),
-          tweetCounts: u.Tweets.length,
-          likeCounts: u.Tweets.reduce((acc, cur) => {
-            return acc + cur.Likes.length
-          }, 0)
-        }))
-          .sort((a, b) => b.tweetCounts - a.tweetCounts)
-
-        res.render('admin/users', { users })
-      })
-      .catch(err => next(err))
+  getUsers: async (req, res, next) => {
+    try {
+      const users = await sequelize.query(
+      // Likes關聯Tweets取得每篇tweet的like數量並將table命名為tweetLikes，Users關聯Tweets和tweetLikes取得每位user的tweet總和，以及所有tweet的like總和
+        'SELECT `Users`.*, COUNT(`Tweets`.`id`) AS `tweetCounts`, SUM(`tweetLikes`.`likes`) AS `likeCounts`, (SELECT COUNT(`followerId`) FROM `Followships` WHERE `followingId` = `Users`.`id`) AS `followerCounts`, (SELECT COUNT(`followingId`) FROM `Followships` WHERE `followerId` = `Users`.`id`) AS `followingCounts` FROM `Users` LEFT JOIN `Tweets` ON `Tweets`.`UserId` = `Users`.`id` LEFT JOIN (SELECT `Tweets`.`id` AS `TweetId`, COUNT(`Likes`.`id`) AS `likes` FROM `Likes` LEFT JOIN `Tweets` ON `Likes`.`TweetId` = `Tweets`.`id` GROUP BY `Tweets`.`id`) AS `tweetLikes` ON `tweetLikes`.`TweetId` = `Tweets`.`id` WHERE `Users`.`role` != "admin" GROUP BY `Users`.`id` ORDER BY `tweetCounts` DESC;',
+        { type: QueryTypes.SELECT }
+      )
+      return res.render('admin/users', { users })
+    } catch (err) {
+      next(err)
+    }
   }
 }
 
