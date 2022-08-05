@@ -78,7 +78,7 @@ const adminController = {
     })
       .then(users => {
         const normalUsers = users.filter(user => user.role !== 'admin')
-        return res.render('admin/users', {
+        res.render('admin/users', {
           users: normalUsers,
           pagination: getPaginationAAdminUsers(limit, page, users.count)
         })
