@@ -77,7 +77,7 @@ npx sequelize db:seed:all
 
 1. Start server
 ```
-npm run star
+npm run start
 ```
 
 If you see  `Example app listening on port 3000!`  on terminal, it means the server is running successfully and you can start exploring [Simple Twitter](http://localhost:3000/) on your browser.
@@ -111,7 +111,7 @@ control + c
   **password**: 12345678
 
 
-* **account**: user3, user4, user5,......user14, user15
+* **account**: user3, user4, user5,......user14, user15  
   **passwords**: always *12345678*  
 
 <br/>
