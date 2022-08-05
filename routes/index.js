@@ -18,12 +18,12 @@ router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 
 // Tweets
-router.get('/tweets', authenticated, tweetController.getTweets)
-router.post('/tweets', authenticated, tweetController.postTweet)
-router.get('/tweets/:id/replies', tweetController.getTweet)
-router.post('/tweets/:id/replies', tweetController.postReply)
+router.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
+router.post('/tweets/:id/replies', authenticated, tweetController.postReply)
 router.post('/tweets/:id/like', authenticated, tweetController.likePost)
 router.post('/tweets/:id/unlike', authenticated, tweetController.unlikePost)
+router.get('/tweets', authenticated, tweetController.getTweets)
+router.post('/tweets', authenticated, tweetController.postTweet)
 
 // 使用者帳戶設定
 router.get('/users/:id/setting', authenticated, userController.getSetting)

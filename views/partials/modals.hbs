@@ -47,13 +47,13 @@
 
           {{!-- above --}}
         </div>
-        <div class="d-flex m-3"><img src="{{user.avatar}}" alt="avatar"
-            style="border-radius: 50%; width: 50px; height: 50px;">
-          <label for="reply" class="form-label"></label>
-          <input name="reply" id="modal-reply" class="tweetTextarea" placeholder="推你的回覆"
-            style="border:none; height: 24px; margin: auto 0; margin-left: 5px; width: 220px;"></input>
-        </div>
-        <form method="POST" class="reply-form">
+        <form action="/tweets/:id/replies" method="POST" class="reply-form">
+          <div class="d-flex m-3"><img src="{{user.avatar}}" alt="avatar"
+              style="border-radius: 50%; width: 50px; height: 50px;">
+            <label for="reply" class="form-label"></label>
+            <input name="reply" id="modal-reply" class="tweetTextarea" placeholder="推你的回覆"
+              style="border:none; height: 24px; margin: auto 0; margin-left: 5px; width: 220px;"></input>
+          </div>
           <div class="">
             <div id="error-msg" class="text-danger" role="alert" style="margin-left: 40px;"></div>
             <button type="submit" class="badge rounded-pill text-bg-warning tweet-button" id="tweet-button"
