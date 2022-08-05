@@ -1,0 +1,518 @@
+@import "./reset.scss";
+@import "./variableSheet.scss";
+
+
+@media screen and (min-width: 1200px) {
+  #ys-admin-region.container-ys {
+    width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+  #ys-admin-region.container-ys {
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+  }
+}
+
+section#ys-admin-region {
+  * {
+    // border: dotted 1px red;
+    color: $dark100;
+
+    .cancel-button {
+      padding: 0px;
+      font-size: 14px;
+      position: absolute;
+      right: 1rem;
+    }
+  }
+
+  // left-------------------------------------------------------------------------------------------
+  .left-region-sidebar {
+    width: 178px;
+    height: 100vh;
+
+    .side-bar {
+      display: flex;
+      flex-direction: column;
+
+      img {
+        margin-top: 8px;
+        margin-left: 8px;
+        margin-bottom: 14px;
+        width: 50px;
+        height: 50px;
+      }
+
+      a {
+        padding: 16px;
+        margin-bottom: 24x;
+        color: $dark90;
+
+        &.active {
+          // color: $mainColor;
+          filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
+        }
+      }
+
+      .logout {
+        position: absolute;
+        bottom: 1rem;
+      }
+    }
+  }
+
+  // right--------------------------------------------------------------------------------------------
+  .right-region-tweet-list,
+  .right-region-users-list {
+    height: 100vh;
+    flex: 1;
+    margin-left: 24px;
+    border-left: 1px solid #E6ECF0;
+    border-right: 1px solid #E6ECF0;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    .title {
+      margin-top: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #E6ECF0;
+    }
+
+    .scroll-container {
+      height: 85vh;
+      overflow-y: scroll;
+      scrollbar-color: $dark30 $dark20;
+      scrollbar-width: thin;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      // bar的樣式
+      &::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+
+      .tweet-card {
+        position: relative;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #E6ECF0;
+
+        .head {
+          align-items: center;
+        }
+
+        .name {
+          margin-right: 8px;
+          font-weight: 700;
+          font-size: 16px;
+
+        }
+
+        .account,
+        .time {
+          font-weight: 400;
+          font-size: 14px;
+          color: $secondaryColor;
+        }
+
+        .content {
+          margin-top: 8px;
+          padding-right: 3rem;
+        }
+      }
+    }
+  }
+
+  // users region ----------------------------------------
+  // &.container-ys.users-layout {
+  //   width: auto;
+  //   margin-left: 130px;
+  //   margin-right: 10px;
+  // }
+
+  .user-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .user-card-cover {
+      border-radius: 10px 10px 0px 0px;
+      height: 7rem;
+      width: 100%;
+    }
+
+    .name-photo {
+      position: relative;
+      top: 3%;
+      transform: translate(0%, -55%);
+
+      .user-card-avatar {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+        border: 0.25rem solid #FFFFFF;
+      }
+    }
+
+    .row-actions {
+      position: relative;
+      top: -3rem;
+      display: flex;
+
+      p {
+        margin-left: 0.75rem;
+        margin-right: 0.75rem;
+      }
+
+      img {
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin: 0.5rem
+      }
+    }
+
+    .follow {
+      position: relative;
+      top: -3rem;
+      display: flex;
+
+      p {
+        margin-left: 0.25rem;
+        margin-right: 0.25rem;
+      }
+
+      span {
+        color: $secondaryColor;
+      }
+    }
+  }
+
+}
+
+section#ys-FE-users-region {
+  &.temp-layout {
+    width: 45%;
+  }
+
+  &.followships-layout {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    border-left: 1px solid #E6ECF0;
+    border-right: 1px solid #E6ECF0;
+  }
+
+
+
+  .header {
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #E6ECF0;
+
+    img {
+      width: 16px;
+      height: 14px;
+    }
+
+    .name_tweets {
+      margin-left: 1rem;
+
+      p {
+        color: $secondaryColor;
+        font-size: 0.75rem;
+      }
+    }
+
+
+  }
+
+  .tab {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #E6ECF0;
+
+    a {
+      padding-top: 0.9rem;
+      padding-bottom: 0.9rem;
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+      color: $secondaryColor;
+
+      &.active {
+        // filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
+        border-bottom: 1px solid $mainColor;
+      }
+    }
+
+  }
+
+  .followers {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    height: 1000px;
+
+    &.scroll-container {
+      height: 85vh;
+      overflow-y: scroll;
+      scrollbar-color: $dark30 $dark20;
+      scrollbar-width: thin;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      // bar的樣式
+      &::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .tweets {
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #E6ECF0;
+      padding-bottom: 1rem;
+    }
+
+    .top {
+      align-items: center;
+
+      img {
+        margin-left: 1.5rem;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+      }
+
+      .name {
+        margin-left: 0.5rem;
+        font-weight: 700;
+      }
+
+      .follow-btn {
+        position: absolute;
+        right: 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        text-align: center;
+      }
+
+      .follow {
+        border: 1px solid $mainColor;
+        color: $mainColor;
+      }
+
+      .following {
+        background-color: $mainColor;
+        color: white
+      }
+    }
+
+    .context {
+      margin-left: 5rem;
+      overflow-wrap: break-word;
+    }
+
+  }
+}
+
+section#ys-FE-users-setting {
+  &.temp-layout {
+    width: 50%;
+  }
+
+  &.followships-layout {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    border-left: 1px solid #E6ECF0;
+    border-right: 1px solid #E6ECF0;
+    padding: 0rem 1.5rem;
+    width: 50%;
+  }
+
+  #setting-region {
+    background: $dark0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $dark100;
+
+    .title {
+      width: 100%;
+      padding: 1.5rem 0rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      line-height: 26px;
+    }
+
+    .input {
+      width: 100%;
+      height: 78px;
+      border-radius: 2px;
+      margin-bottom: 8px;
+      background: #F5F8FA;
+      position: relative;
+
+      label {
+        position: absolute;
+        left: 2.96%;
+        right: 2.96%;
+        top: 2.56%;
+        bottom: 69.23%;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+        height: 22px;
+        width: 334.9px;
+        color: $dark80;
+        background: transparent;
+      }
+
+      input {
+        width: 334.9px;
+        height: 26px;
+        background: transparent;
+        position: absolute;
+        left: 2.96%;
+        right: 2.96%;
+        top: 30.77%;
+        bottom: 35.9%;
+        border: none;
+      }
+
+      input::placeholder {
+        color: $dark60;
+        font-size: 16px;
+      }
+
+      .status {
+        position: absolute;
+        left: 0%;
+        right: 0%;
+        top: 66.67%;
+        bottom: 30.77%;
+        background: #657786;
+        border-radius: 0px 0px 4px 4px;
+        border: 1px #657786 solid;
+      }
+
+      .helper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 4px 0px 0px;
+        position: absolute;
+        background: $dark0;
+        left: 0%;
+        right: 50%;
+        top: 69.23%;
+        bottom: 0%;
+
+        span {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 20px;
+          flex: none;
+          order: 0;
+          align-self: stretch;
+          flex-grow: 0;
+          color: $errorColor;
+        }
+      }
+
+      .count {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 4px 0px 0px;
+        position: absolute;
+        left: 50%;
+        right: 0%;
+        top: 69.23%;
+        bottom: 0%;
+        background: $dark0;
+
+        span {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 20px;
+          text-align: right;
+          flex: none;
+          order: 0;
+          align-self: stretch;
+          flex-grow: 0;
+          color: $dark80;
+        }
+      }
+    }
+
+    .status.focus {
+      border-color: #50B5FF;
+    }
+
+    .status.warn {
+      border-color: $errorColor;
+    }
+
+    .submit {
+      display: flex;
+      justify-content: end;
+      margin-top: 8px;
+      width: 100%;
+
+      span {
+        padding: 8px 24px;
+        width: 88px;
+        height: 46px;
+        background: $mainColor;
+        border-radius: 50px;
+        color: $dark0;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 30px;
+      }
+    }
+
+    .signup-or-admin {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      width: 100%;
+      padding: 0 12px 0 0;
+      margin-top: 22px;
+
+      a {
+        text-decoration: underline;
+        color: #0062FF;
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      span {
+        width: 16px;
+        height: 24px;
+        margin: 0 12px;
+      }
+    }
+
+    .alert {
+      width: 100%;
+    }
+  }
+
+}

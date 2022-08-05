@@ -1,0 +1,35 @@
+{{#if error_messages}}
+<script>
+  Swal.fire({
+    toast: true,
+    position: 'top-end',
+    icon: 'error',
+    title: '{{ error_messages }}',
+    showConfirmButton: false,
+    timer: 5000,
+    timerProgressBar: true
+  })
+</script>
+{{/if}}
+{{#if success_messages}}
+<script>
+  Swal.fire({
+    toast: true,
+    position: 'top-end',
+    icon: 'success',
+    title: '{{ success_messages }}',
+    showConfirmButton: false,
+    timer: 5000,
+    timerProgressBar: true,
+  })
+</script>
+{{/if}}
+
+{{#if errors}}
+  {{#each errors}}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ this.message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {{/each}}
+{{/if}}

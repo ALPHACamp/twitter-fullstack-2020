@@ -1,0 +1,545 @@
+@charset "UTF-8";
+/* reset css */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0px;
+  padding: 0px;
+}
+
+ul,
+ol,
+li {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+a,
+a:hover,
+a:focus {
+  text-decoration: none;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.btn,
+button,
+button:focus,
+input:focus,
+textarea:focus,
+select,
+select:focus,
+a:focus {
+  outline: 0px !important;
+}
+
+button {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+button[disabled] {
+  pointer-events: none;
+}
+
+input {
+  padding: 0;
+}
+
+input:required {
+  box-shadow: none;
+}
+
+input:invalid {
+  box-shadow: none;
+}
+
+html,
+body {
+  /* 先套用 Noto Sans TC 這個 思源黑體，再來是 Montserrat 數字字體 */
+  font-family: "Noto Sans TC", "Montserrat", sans-serif;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 68px;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 42px;
+}
+
+h3 {
+  font-weight: 500;
+  font-size: 28px;
+}
+
+h4 {
+  font-weight: 500;
+  font-size: 24px;
+}
+
+h5 {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+p {
+  font-size: 16px;
+}
+
+@media screen and (min-width: 1200px) {
+  #ys-admin-region.container-ys {
+    width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+  }
+}
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+  #ys-admin-region.container-ys {
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+  }
+}
+section#ys-admin-region * {
+  color: #171725;
+}
+section#ys-admin-region * .cancel-button {
+  padding: 0px;
+  font-size: 14px;
+  position: absolute;
+  right: 1rem;
+}
+section#ys-admin-region .left-region-sidebar {
+  width: 178px;
+  height: 100vh;
+}
+section#ys-admin-region .left-region-sidebar .side-bar {
+  display: flex;
+  flex-direction: column;
+}
+section#ys-admin-region .left-region-sidebar .side-bar img {
+  margin-top: 8px;
+  margin-left: 8px;
+  margin-bottom: 14px;
+  width: 50px;
+  height: 50px;
+}
+section#ys-admin-region .left-region-sidebar .side-bar a {
+  padding: 16px;
+  margin-bottom: 24x;
+  color: #44444F;
+}
+section#ys-admin-region .left-region-sidebar .side-bar a.active {
+  filter: invert(48%) sepia(41%) saturate(6991%) hue-rotate(6deg) brightness(109%) contrast(102%);
+}
+section#ys-admin-region .left-region-sidebar .side-bar .logout {
+  position: absolute;
+  bottom: 1rem;
+}
+section#ys-admin-region .right-region-tweet-list,
+section#ys-admin-region .right-region-users-list {
+  height: 100vh;
+  flex: 1;
+  margin-left: 24px;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+section#ys-admin-region .right-region-tweet-list .title,
+section#ys-admin-region .right-region-users-list .title {
+  margin-top: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #E6ECF0;
+}
+section#ys-admin-region .right-region-tweet-list .scroll-container,
+section#ys-admin-region .right-region-users-list .scroll-container {
+  height: 85vh;
+  overflow-y: scroll;
+  scrollbar-color: #F1F1F5 #FAFAFB;
+  scrollbar-width: thin;
+}
+section#ys-admin-region .right-region-tweet-list .scroll-container::-webkit-scrollbar,
+section#ys-admin-region .right-region-users-list .scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+section#ys-admin-region .right-region-tweet-list .scroll-container::-webkit-scrollbar-thumb,
+section#ys-admin-region .right-region-users-list .scroll-container::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+section#ys-admin-region .right-region-tweet-list .scroll-container .tweet-card,
+section#ys-admin-region .right-region-users-list .scroll-container .tweet-card {
+  position: relative;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #E6ECF0;
+}
+section#ys-admin-region .right-region-tweet-list .scroll-container .tweet-card .head,
+section#ys-admin-region .right-region-users-list .scroll-container .tweet-card .head {
+  align-items: center;
+}
+section#ys-admin-region .right-region-tweet-list .scroll-container .tweet-card .name,
+section#ys-admin-region .right-region-users-list .scroll-container .tweet-card .name {
+  margin-right: 8px;
+  font-weight: 700;
+  font-size: 16px;
+}
+section#ys-admin-region .right-region-tweet-list .scroll-container .tweet-card .account,
+section#ys-admin-region .right-region-tweet-list .scroll-container .tweet-card .time,
+section#ys-admin-region .right-region-users-list .scroll-container .tweet-card .account,
+section#ys-admin-region .right-region-users-list .scroll-container .tweet-card .time {
+  font-weight: 400;
+  font-size: 14px;
+  color: #6C757D;
+}
+section#ys-admin-region .right-region-tweet-list .scroll-container .tweet-card .content,
+section#ys-admin-region .right-region-users-list .scroll-container .tweet-card .content {
+  margin-top: 8px;
+  padding-right: 3rem;
+}
+section#ys-admin-region .user-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+section#ys-admin-region .user-card .user-card-cover {
+  border-radius: 10px 10px 0px 0px;
+  height: 7rem;
+  width: 100%;
+}
+section#ys-admin-region .user-card .name-photo {
+  position: relative;
+  top: 3%;
+  transform: translate(0%, -55%);
+}
+section#ys-admin-region .user-card .name-photo .user-card-avatar {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  border: 0.25rem solid #FFFFFF;
+}
+section#ys-admin-region .user-card .row-actions {
+  position: relative;
+  top: -3rem;
+  display: flex;
+}
+section#ys-admin-region .user-card .row-actions p {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+section#ys-admin-region .user-card .row-actions img {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0.5rem;
+}
+section#ys-admin-region .user-card .follow {
+  position: relative;
+  top: -3rem;
+  display: flex;
+}
+section#ys-admin-region .user-card .follow p {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+section#ys-admin-region .user-card .follow span {
+  color: #6C757D;
+}
+
+section#ys-FE-users-region.temp-layout {
+  width: 45%;
+}
+section#ys-FE-users-region.followships-layout {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+}
+section#ys-FE-users-region .header {
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #E6ECF0;
+}
+section#ys-FE-users-region .header img {
+  width: 16px;
+  height: 14px;
+}
+section#ys-FE-users-region .header .name_tweets {
+  margin-left: 1rem;
+}
+section#ys-FE-users-region .header .name_tweets p {
+  color: #6C757D;
+  font-size: 0.75rem;
+}
+section#ys-FE-users-region .tab {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #E6ECF0;
+}
+section#ys-FE-users-region .tab a {
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  color: #6C757D;
+}
+section#ys-FE-users-region .tab a.active {
+  border-bottom: 1px solid #FF6600;
+}
+section#ys-FE-users-region .followers {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  height: 1000px;
+}
+section#ys-FE-users-region .followers.scroll-container {
+  height: 85vh;
+  overflow-y: scroll;
+  scrollbar-color: #F1F1F5 #FAFAFB;
+  scrollbar-width: thin;
+}
+section#ys-FE-users-region .followers.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+section#ys-FE-users-region .followers.scroll-container::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+section#ys-FE-users-region .followers .tweets {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #E6ECF0;
+  padding-bottom: 1rem;
+}
+section#ys-FE-users-region .followers .top {
+  align-items: center;
+}
+section#ys-FE-users-region .followers .top img {
+  margin-left: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+section#ys-FE-users-region .followers .top .name {
+  margin-left: 0.5rem;
+  font-weight: 700;
+}
+section#ys-FE-users-region .followers .top .follow-btn {
+  position: absolute;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  text-align: center;
+}
+section#ys-FE-users-region .followers .top .follow {
+  border: 1px solid #FF6600;
+  color: #FF6600;
+}
+section#ys-FE-users-region .followers .top .following {
+  background-color: #FF6600;
+  color: white;
+}
+section#ys-FE-users-region .followers .context {
+  margin-left: 5rem;
+  overflow-wrap: break-word;
+}
+
+section#ys-FE-users-setting.temp-layout {
+  width: 50%;
+}
+section#ys-FE-users-setting.followships-layout {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  padding: 0rem 1.5rem;
+  width: 50%;
+}
+section#ys-FE-users-setting #setting-region {
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #171725;
+}
+section#ys-FE-users-setting #setting-region .title {
+  width: 100%;
+  padding: 1.5rem 0rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  line-height: 26px;
+}
+section#ys-FE-users-setting #setting-region .input {
+  width: 100%;
+  height: 78px;
+  border-radius: 2px;
+  margin-bottom: 8px;
+  background: #F5F8FA;
+  position: relative;
+}
+section#ys-FE-users-setting #setting-region .input label {
+  position: absolute;
+  left: 2.96%;
+  right: 2.96%;
+  top: 2.56%;
+  bottom: 69.23%;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  height: 22px;
+  width: 334.9px;
+  color: #696974;
+  background: transparent;
+}
+section#ys-FE-users-setting #setting-region .input input {
+  width: 334.9px;
+  height: 26px;
+  background: transparent;
+  position: absolute;
+  left: 2.96%;
+  right: 2.96%;
+  top: 30.77%;
+  bottom: 35.9%;
+  border: none;
+}
+section#ys-FE-users-setting #setting-region .input input::-moz-placeholder {
+  color: #B5B5BE;
+  font-size: 16px;
+}
+section#ys-FE-users-setting #setting-region .input input:-ms-input-placeholder {
+  color: #B5B5BE;
+  font-size: 16px;
+}
+section#ys-FE-users-setting #setting-region .input input::placeholder {
+  color: #B5B5BE;
+  font-size: 16px;
+}
+section#ys-FE-users-setting #setting-region .input .status {
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 66.67%;
+  bottom: 30.77%;
+  background: #657786;
+  border-radius: 0px 0px 4px 4px;
+  border: 1px #657786 solid;
+}
+section#ys-FE-users-setting #setting-region .input .helper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0px 0px;
+  position: absolute;
+  background: #FFFFFF;
+  left: 0%;
+  right: 50%;
+  top: 69.23%;
+  bottom: 0%;
+}
+section#ys-FE-users-setting #setting-region .input .helper span {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  color: #FC5A5A;
+}
+section#ys-FE-users-setting #setting-region .input .count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0px 0px;
+  position: absolute;
+  left: 50%;
+  right: 0%;
+  top: 69.23%;
+  bottom: 0%;
+  background: #FFFFFF;
+}
+section#ys-FE-users-setting #setting-region .input .count span {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: right;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  color: #696974;
+}
+section#ys-FE-users-setting #setting-region .status.focus {
+  border-color: #50B5FF;
+}
+section#ys-FE-users-setting #setting-region .status.warn {
+  border-color: #FC5A5A;
+}
+section#ys-FE-users-setting #setting-region .submit {
+  display: flex;
+  justify-content: end;
+  margin-top: 8px;
+  width: 100%;
+}
+section#ys-FE-users-setting #setting-region .submit span {
+  padding: 8px 24px;
+  width: 88px;
+  height: 46px;
+  background: #FF6600;
+  border-radius: 50px;
+  color: #FFFFFF;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+}
+section#ys-FE-users-setting #setting-region .signup-or-admin {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  padding: 0 12px 0 0;
+  margin-top: 22px;
+}
+section#ys-FE-users-setting #setting-region .signup-or-admin a {
+  text-decoration: underline;
+  color: #0062FF;
+  font-size: 16px;
+  line-height: 24px;
+}
+section#ys-FE-users-setting #setting-region .signup-or-admin span {
+  width: 16px;
+  height: 24px;
+  margin: 0 12px;
+}
+section#ys-FE-users-setting #setting-region .alert {
+  width: 100%;
+}

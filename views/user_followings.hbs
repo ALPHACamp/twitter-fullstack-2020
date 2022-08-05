@@ -1,0 +1,47 @@
+<section id="Huei-region" class="">
+  <div class="flex-home-page">
+    <section class="left-region-sidebar">
+      {{> home-tabs route='home'}}
+    </section>
+
+    <section id="ys-FE-users-region" class="followships-layout">
+
+
+      {{>followships_nav route='followings'}}
+
+      <div class="followers scroll-container">
+
+        {{#each followings}}
+        <div class="tweets">
+          <div class="top d-flex">
+            <a class="top d-flex" href="/users/{{this.id}}/tweets">
+              <img src="{{this.avatar}}" alt="avatar">
+              <p class="name">{{this.name}}</p>
+            </a>
+
+            {{#if isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+              <button type="submit" class="follow-btn following">正在跟隨</button>
+            </form>
+
+            {{else}}
+            <form action="/followships" method="POST" style="display: contents;">
+              <button type="submit" class="follow-btn follow" name="id" value={{this.id}}>跟隨</button>
+            </form>
+            {{/if}}
+
+          </div>
+          <p class="context">{{this.introduction}}</p>
+        </div>
+        {{/each}}
+
+      </div>
+    </section>
+
+
+    <section class="right-region-sidebar">
+      {{> home-user-tabs-middleware-ByYS users=users user=user}}
+    </section>
+  </div>
+
+</section>

@@ -1,0 +1,199 @@
+<section id="Huei-region" class="">
+  <div class="flex-home-page">
+    <!--左側導覽列-->
+    <section class="left-region-sidebar">
+      {{> home-tabs route='home'}}
+    </section>
+    <!--推文頁-->
+    <div class="tweets middle-region-home">
+      <div style="position:relative;right:260px;top:20px;" class="d-flex">
+        <a href="/tweets">
+          <img src="/images/vector.png" alt="vector" class="tweet-vector" style="display:inline;margin-top:2px;">
+        </a>
+        <h4 style="display:inline;margin-left:10px">推文</h4>
+      </div>
+      <div style="position:relative;left:220px;bottom:10px;">
+        {{> message}}
+      </div>
+
+      <p class="list-separate-top"></p>
+      <!--推文-->
+      <div class="d-flex tweet-name-account" style="position:relative;
+      top:25px;height:230px;">
+        <div class="head d-flex">
+          <div class="" style="border-bottom:1px solid #E6ECF0;">
+            <div style="position:relative;left:80px; top:20px;">
+              <a class="" href="/users/{{tweet.User.id}}/tweets">
+                <img src="{{#if tweet.User.avatar}}{{tweet.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+                  class="tweet-user-avatar"
+                  style="width:50px;height:50px;display:inline-block; position:relative;right:83px;" alt="Picture">
+              </a>
+              <div style="position:relative;bottom:50px;right:20px;">
+                <a class="" href="/users/{{tweet.User.id}}/tweets">
+                  <p class="name">{{tweet.User.name}}</p>
+                </a>
+                <a class="" href="/users/{{tweet.User.id}}/tweets">
+                  <p class="account">@{{tweet.User.account}}</p>
+                </a>
+
+              </div>
+            </div>
+            <p
+              style="height:100px;width:600px; position:relative;bottom:10px;font-size:20px;line-height:36px;font-weight:400;word-wrap:break-word;">
+              {{tweet.description}}</p>
+            <p style="color:#6C757D;font-size:14px;">{{momentTime
+              tweet.createdAt}}．{{momentDate tweet.createdAt}}</p>
+          </div>
+          <div class="description"
+            style="border:none; padding-left: 10px; padding-top: 17px; padding-bottom: 50px; resize:none; height:190px;">
+          </div>
+        </div>
+      </div>
+      <!--tweet 結束-->
+      <div class="like-reply-number"
+        style="height:60px; width:606px;position:relative;top:25px;font-size:19px;font-weight: 700;line-height: 23px; border-bottom:1px solid #E6ECF0;">
+        <div style="position:relative;top:12px;">
+          <p class="number">{{repliedCount}}</p>
+          <p class="word">回覆&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+          <p class="number">{{likedCount}}</p>
+          <p class="word">喜歡次數</p>
+        </div>
+      </div>
+
+      <div style="height:60px; width:606px;position:relative;top:25px;">
+        <div class="d-flex" style="margin-top:16px;">
+          <button style="position:relative;bottom:5px;">
+            <img src="/images/comment.png" style="width:25px;height:25px;position:relative;top:5px;" alt="comment"
+              data-bs-toggle="modal" data-bs-target="#tweet-reply-model">
+          </button>
+          {{#if isLiked}}
+          <form action="/tweets/{{tweet.id}}/unlike" method="POST">
+            <button style="position:relative;left:90px; top:2px">
+              <img src="/images/redLove.png" style="width:25px;height:25px;" alt="like">
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{tweet.id}}/like" method="POST">
+            <button style="position:relative;left:90px;top:2px">
+              <img src="/images/like.png" style="width:25px;height:25px;" alt="unlike">
+            </button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+
+      <!--每一則 reply -->
+      <div class=" card-override-reply" style="position:relative;
+      top:25px; border-top:1px solid #E6ECF0;">
+        {{#each tweet.Replies}}
+        <div class=" tweet-card d-flex" style="margin:0px;">
+          <a class="" href="/users/{{this.User.id}}/tweets">
+            <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+              alt="Picture" class="tweet-user-avatar">
+          </a>
+          <div>
+            <div class="head d-flex">
+              <a class="name" href="/users/:{{this.User.id}}">{{this.User.name}}</a>
+              <a class="account" href="/users/:{{this.User.id}}">@{{this.User.account}}</a>
+              <div class="time">•{{momentNow this.createdAt}}</div>
+            </div>
+            <div class="content">
+              {{this.comment}}
+            </div>
+          </div>
+        </div>
+        <p class="list-separate-m"></p>
+        {{/each}}
+      </div>
+    </div>
+    <!--每一則 tweet 結束-->
+    <!-- 回覆 tweet Modal -->
+    <div class="modal fade" id="tweet-reply-model" tabindex="-1" aria-labelledby="home-model" aria-hidden="true">
+      <div class="modal-dialog modal-lg" style="width:639px; position:relative; right:40px;">
+        <div class="modal-content" style="border-radius:16px">
+          <div class="modal-header" style="">
+            <label for="description" class="form-label">
+            </label>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="container" style="height:500px;">
+            <div class="row" style="height:200px;">
+              <div class="col">
+                <!--回覆的那則tweet內容-->
+                <div class="d-flex" style="position:relative;top:10px;left:3px;">
+                  <img src="{{#if tweet.User.avatar}}{{tweet.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+                    alt="Picture" class="tweet-user-avatar" style="width:50px;height:50px;">
+                  <div class="head d-flex" style="position:relative;top:10px;">
+                    {{tweet.User.name}}&nbsp;&nbsp;
+                    <p class="color-secondaryColor">@{{tweet.User.account}}</p>
+                    <div class="time color-secondaryColor">•{{momentNow this.createdAt}}</div>
+                  </div>
+                </div>
+                <div class="content" style="position:relative; left:63px;word-wrap:break-word;">
+                  {{tweet.description}}
+                </div>
+                <div class="content" style="position:relative; left:63px;top:15px;">
+                  <p class="color-secondaryColor" style="display:inline">回覆給</p>
+                  <p class="color-main" style="display:inline">@{{tweet.User.account}}</p>
+                </div>
+                <p class="reply-separate-m"></p>
+              </div>
+            </div>
+            <!--要回覆的內容-->
+            <div class="row" style="height:200px;">
+              <div class="col">
+                <form action="/tweets/{{tweet.id}}/replies" method="POST" onsubmit="return checkformReply('b')">
+                  <div class="modal-body d-flex" style="position:relative;right:12px;">
+                    <img src="{{#if user.avatar}}{{user.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+                      class="tweet-user-avatar" style="width:50px;height:50px;" alt="Picture">
+                    <textarea class="form" id="b" name="comment" rows="3" maxlength="141" placeholder="推你的回覆"
+                      oninput="countsReply('a','b','c')"
+                      style="border:none; min-width:550px;position:relative; top:10px;resize:none;" required></textarea>
+                    <div id="c" class="c-number-check">內容不可空白</div>
+                    <div id="a" class="a-number-check">0/140</div>
+                  </div>
+                  <button type="submit" class="btn btn-orange btn-tweets-models"
+                    style="border-radius: 50px;position:relative; left:550px;top:130px;">
+                    <span class="" style="font-size:16px;">回覆</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 回覆 tweet Modal 結束 -->
+
+
+    <script>
+      function countsReply(id, id2, id3) {
+        const counts = document.getElementById(id2).value.length
+        document.getElementById(id).innerText = counts + '/140'
+        if (counts > 140) {
+          document.getElementById(id3).innerText = '字數超出上限！'
+          return
+        }
+        if (counts > 0 && counts <= 140) {
+          document.getElementById(id3).innerText = ''
+        }
+        if (counts === 0) {
+          document.getElementById(id3).innerText = '內容不可空白'
+        }
+      }
+      function checkformReply(id2) {
+        const counts = document.getElementById(id2).value.length
+        if (counts > 140) {
+          alert('字數超出上限！')
+          return false
+        }
+      }
+    </script>
+
+    <!--右側推薦追蹤清單-->
+    <section class="right-region-sidebar">
+      {{> home-user-tabs users=users user=user}}
+    </section>
+  </div>
+
+</section>
