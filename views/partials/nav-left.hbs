@@ -1,4 +1,4 @@
-<div class="nav nav-pills brand-color flex-column sticky-top" style="height: 92vh;">
+<div class="nav nav-pills brand-color flex-column sticky-top" style="height: 100vh;">
   <img src="/images/logo.png" alt="" style="width: 50px;" class="mx-2 mt-2 mb-4">
   <a class="nav-link mb-4 {{#ifCond route 'index'}}active{{/ifCond}}" href="/">
     <i class="fa-solid fa-house-chimney-window"></i>&nbsp;&nbsp;首頁
@@ -13,7 +13,7 @@
     <span style="font-size: 20px;">推文</span>
   </button>
 
-  <div class="position-absolute bottom-0 start-0 mb-3">
+  <div class="position-absolute bottom-0 start-0 mb-3" id="logout">
     <a class="header5 pointer dark-90" href="/logout" style=" text-decoration: none; padding-left: 19px">
       <i class="fa-solid fa-arrow-right-from-bracket"></i>&nbsp;&nbsp;登出
     </a>
@@ -41,9 +41,12 @@
           {{/if}}
           <div class="flex-fill text-end">
             <form action="/tweets" method="POST">
-              <textarea class="border border-0 form-control mb-3" id="description" name="description" maxlength="150" placeholder="有什麼新鮮事？" rows="5" required></textarea>
-              <span class="text-danger me-1" style="font-size: 15px; font-weight:500;" id="validate-empty-tweet">內容不可空白</span>
-              <span class="text-danger me-1 display-none" style="font-size: 15px; font-weight:500;" id="validate-over-tweet">字數不可超過140 字</span>
+              <textarea class="border border-0 form-control mb-3" id="description" name="description" maxlength="150"
+                placeholder="有什麼新鮮事？" rows="5" required></textarea>
+              <span class="text-danger me-1" style="font-size: 15px; font-weight:500;"
+                id="validate-empty-tweet">內容不可空白</span>
+              <span class="text-danger me-1 display-none" style="font-size: 15px; font-weight:500;"
+                id="validate-over-tweet">字數不可超過140 字</span>
               <button type="submit" class="btn btn-brand radius50 ms-3">送出</button>
             </form>
           </div>
@@ -72,4 +75,14 @@
       validateOverTweet.classList.add('display-none')
     }
   })
+
+  const logout = document.querySelector('#logout')
+  if (document.querySelector('.alert')) {
+    logout.setAttribute('style', 'padding-bottom: 130px;')
+    document.querySelector('.alert').addEventListener('click', e => {
+      logout.setAttribute('style', 'padding-bottom: 0;')
+    })
+  } else {
+    logout.setAttribute('style', 'padding-bottom: 0;')
+  }
 </script>
