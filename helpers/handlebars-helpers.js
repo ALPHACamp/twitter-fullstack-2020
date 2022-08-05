@@ -9,5 +9,9 @@ module.exports = {
   },
   checkBanner: banner => banner || '/images/user-defaultBanner.png',
   checkAvatar: avatar => avatar || '/images/user-defaultAvatar.png',
-  isAdmin: userRole => userRole === 'admin'
+  isAdmin: userRole => userRole === 'admin',
+  numberformat: number => {
+    if (number >= 1000) return `${Math.floor(number / 100) / 10}k`
+    return number
+  }
 }

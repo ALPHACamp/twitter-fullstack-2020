@@ -222,9 +222,13 @@ a:hover {
 }
 
 .user-follow {
-  height: 22px;
-  margin: 0 20px 31px 0;
   color: var(--secondary);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.user-info .user-follow {
+  margin: 0 20px 31px 0;
 }
 
 .user-follow-number {
