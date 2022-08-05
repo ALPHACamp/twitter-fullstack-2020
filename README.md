@@ -64,7 +64,7 @@
 ```
 git clone  git@github.com:HuangYanHuei/twitter-fullstack-2020.git
 
-https://github.com/HuangYanHuei/twitter-fullstack-2020.git
+git clone  https://github.com/HuangYanHuei/twitter-fullstack-2020.git
 ```
 2. 進入專案資料夾
 ```
