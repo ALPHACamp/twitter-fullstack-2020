@@ -60,7 +60,8 @@ const userController = {
     Promise.all([
       User.findByPk(req.params.uid, {
         order: [
-          [Tweet, 'createdAt', 'desc']
+          [Tweet, 'createdAt', 'desc'],
+          [Tweet, 'id', 'desc']
         ],
         attributes: ['id', 'name', 'account', 'avatar', 'introduction', 'cover'],
         include: [
@@ -199,7 +200,8 @@ const userController = {
     Promise.all([
       User.findByPk(req.params.uid, {
         order: [
-          ['createdAt', 'desc']
+          [Like, 'createdAt', 'desc'],
+          [Like, 'id', 'desc']
         ],
         attributes: ['id', 'name', 'account', 'avatar', 'introduction', 'cover'],
         include: [
