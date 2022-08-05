@@ -14,6 +14,8 @@ const COLOR_CODE = {
 inputPassword.addEventListener('input', verifyPassword)
 inputCheckPassword.addEventListener('input', verifyPassword)
 
+inputAccount.addEventListener('focusout', checkAccount)
+
 Array.from([inputAccount, inputName]).forEach(target => {
   const currentCount = target.value.length
   const countSpan = getCountElement(target)
@@ -64,4 +66,37 @@ function verifyPassword () {
     msgCheckPassword.textContent = '密碼驗證成功'
     msgCheckPassword.style.color = COLOR_CODE.GREEN
   }
+}
+
+function checkAccount (e) {
+  const account = inputAccount.value.trim()
+  if (account.length > 0) {
+    return axios
+      .get(`/api/users/checkAccount/${account}`)
+      .then(res => {
+        console.log(res)
+        if (res.data.status === 'error') displayError(res)
+        if (res.data.result === 'unique-account') displayCheckResult('帳號可以使用')
+        if (res.data.result === 'duplicated-account') displayCheckResult('請使用另一個帳號')
+      })
+      .catch(displayError)
+  }
+  displayCheckResult('')
+}
+
+function displayError (err) {
+  const messages = document.querySelector('div.messages')
+  messages.innerHTML = `
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          ${err.message}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      `
+}
+
+function displayCheckResult (displayMsg) {
+  const msgContainer = document.querySelector('span.check-account-result')
+  msgContainer.textContent = displayMsg
+  msgContainer.style.visibility = 'visible'
+  msgContainer.style.color = displayMsg === '帳號可以使用' ? COLOR_CODE.GREEN : COLOR_CODE.WARNING
 }

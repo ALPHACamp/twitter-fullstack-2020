@@ -46,6 +46,16 @@ const userController = {
         res.status(200).json({ user })
       })
       .catch(err => next(err))
+  },
+  checkAccount: (req, res, next) => {
+    const { account } = req.params
+    return User
+      .findOne({ where: { account } })
+      .then(user => {
+        if (!user) return res.json({ status: 'success', result: 'unique-account' })
+        res.json({ status: 'success', result: 'duplicated-account' })
+      })
+      .catch(next)
   }
 }
 
