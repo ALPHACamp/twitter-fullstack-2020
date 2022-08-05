@@ -20,7 +20,6 @@ tweetModal.addEventListener('click', e => {
 
 // reply-modal驗證
 replyPost.addEventListener('click', e => {
-  e.preventDefault()
   const reply = e.target.parentElement.parentElement.parentElement.children[1].children[2].value
   console.log(`回覆字數: ${reply.length}`)
   if (reply.length === 0) {
