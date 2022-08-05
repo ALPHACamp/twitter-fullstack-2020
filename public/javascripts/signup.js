@@ -10,6 +10,17 @@ const COLOR_CODE = {
   GREEN: '#82C43C'
 }
 
+const RESULT_MESSAGE = {
+  UNIQUE_ACCOUNT: {
+    MESSAGE: '帳號可以使用',
+    COLOR: COLOR_CODE.GREEN
+  },
+  DUPLICATED_ACCOUNT: {
+    MESSAGE: '請使用另一個帳號',
+    COLOR: COLOR_CODE.WARNING
+  }
+}
+
 // add event listeners
 inputPassword.addEventListener('input', verifyPassword)
 inputCheckPassword.addEventListener('input', verifyPassword)
@@ -75,8 +86,8 @@ function checkAccount (e) {
       .get(`/api/users/checkAccount/${account}`)
       .then(res => {
         if (res.data.status === 'error') displayError(res)
-        if (res.data.result === 'unique-account') displayCheckResult('帳號可以使用')
-        if (res.data.result === 'duplicated-account') displayCheckResult('請使用另一個帳號')
+        if (res.data.result === 'unique-account') displayCheckResult(RESULT_MESSAGE.UNIQUE_ACCOUNT)
+        if (res.data.result === 'duplicated-account') displayCheckResult(RESULT_MESSAGE.DUPLICATED_ACCOUNT)
       })
       .catch(displayError)
   }
@@ -93,9 +104,8 @@ function displayError (err) {
       `
 }
 
-function displayCheckResult (displayMsg) {
+function displayCheckResult (RESULT) {
   const msgContainer = document.querySelector('span.check-account-result')
-  msgContainer.textContent = displayMsg
-  msgContainer.style.visibility = 'visible'
-  msgContainer.style.color = displayMsg === '帳號可以使用' ? COLOR_CODE.GREEN : COLOR_CODE.WARNING
+  msgContainer.textContent = RESULT.MESSAGE
+  msgContainer.style.color = RESULT.COLOR
 }
