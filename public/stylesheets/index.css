@@ -1,97 +1,131 @@
-#left-sidebar {
-  display: flex;
-  align-items: stretch;
-  min-width: 308px;
-  height: 1200px;
-}
-
-#list {
-  position: fixed;
-  left: 130px;
-}
-
-#ac-logo {
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-li {
-  margin-bottom: 20px;
-}
-
 a {
   text-decoration: none;
   color: inherit;
 }
 
-#ac-logo {
-  width: 52px;
-  height: 52px;
+a:hover {
+  color: rgb(83, 81, 81);
 }
 
-.icon {
-  width: 24px;
-  height: 24px;
+
+/* 整體字型 =??? */
+html,
+body {
+  font-family: 'Montserrat';
 }
 
-.container {
-  margin: 0px;
+
+/* 中間index區域 */
+.index {
+  width: 652px;
+  left: 332px;
+  top: 1px;
+  border-left: 1px solid;
+  border: 1px solid #E6ECF0;
   padding: 0px;
-  border-left: 2px solid rgb(209, 203, 203);
-  border-right: 2px solid rgb(209, 203, 203);
-  width: 65%;
 }
+
 
 #header {
-  padding: 15px;
-  border-bottom: 2px solid rgb(209, 203, 203);
-  font-weight: bold;
+  margin-top: 25px;
+  margin-left: 0px;
+  padding-bottom: 25px;
+  padding-left: 25px;
+  border-bottom: 1px solid #E6ECF0;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 26px;
+  color: #171725;
 }
 
-.avatar {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  border-radius: 50%;
+.post-tweet {
+  /* width: 639px; */
+  height: 130px;
+}
+
+.user-avatar {
   width: 50px;
   height: 50px;
-}
-
-.post-avatar {
-  top: 5px;
-  left: 5px;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
-}
-
-.post-tweet-button {
-  position: absolute;
-  bottom: 20px;
-  right: 10px;
-}
-
-.likes {
-  display: inline;
-  border: none;
-  background-color: transparent;
-}
-
-.unlike {
-  filter: invert(100%);
-  -webkit-filter: invert(100%);
+  margin-left: 25px;
 }
 
 #placeholder {
   position: absolute;
   top: 15px;
-  left: 60px;
+  left: 83px;
 }
 
 .post-tweet {
-  border-bottom: 8px solid rgb(209, 203, 203);
   position: relative;
   margin: 0px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: #6C757D;
+  border-bottom: 8px solid rgb(209, 203, 203);
+}
+
+#tweet-button {
+  position: absolute;
+  bottom: 16px;
+  right: 25px;
+  color: #FFFFFF;
+  background: #FF6600;
+  width: 80px;
+  height: 40px;
+  border: none;
+}
+
+/* 全部推文內容 */
+#postPanel {
+  margin-top: 16px;
+  width: 639px;
+}
+
+.each-post {
+  width: 528px;
+  margin-bottom: 32px;
+
+}
+
+.avatar-block {
+  width: 62px;
+  padding: 0px;
+}
+
+.post-avatar {
+  margin-left: 12px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.user-name {
+  font-family: 'Noto Sans TC';
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.user-account {
+  font-family: 'Montserrat';
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.post-button {
+  color: #6C757D;
+}
+
+
+.likes {
+  display: inline;
+  border: none;
+  background-color: transparent;
 }
 
 .description {
@@ -120,10 +154,9 @@ textarea {
   border-radius: 50px;
 }
 
-.post-link:hover {
-  color: rgb(83, 81, 81);
+.tweet-button:hover {
+  color: #FFFFFF;
 }
-
 
 
 #reply,
