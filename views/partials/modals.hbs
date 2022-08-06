@@ -9,12 +9,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" style="width: 15px; margin-left: 0px;"></button>
       </div>
       <!-- Modal body -->
-      <div class="modal-body add-post">
-        <form action="/tweets" method="POST" class="d-flex">
-          <img src="{{user.avatar}}" alt="avatar" style="border-radius: 50%; width: 50px; height: 50px;">
-          <label for="description" class="form-label"></label>
-          <textarea name="description" id="modal-description" class="tweetTextarea" placeholder="有什麼新鮮事 ?"
-            style="width: 100%; margin: 2px 0; height: 150px;"></textarea>
+    <div class="modal-body add-post">
+      <form action="/tweets" method="POST" class="d-flex">
+        <img src="{{user.avatar}}" alt="avatar" style="border-radius: 50%; width: 50px; height: 50px;">
+        <label for="description" class="form-label"></label>
+          <textarea name="description" id="modal-description" class="tweetTextarea" placeholder="有什麼新鮮事 ?"></textarea>
           <div class="text-end">
             <div id="error" class="text-danger inline" role="alert">
               {{!-- 錯誤訊息 --}}
@@ -47,23 +46,19 @@
 
           {{!-- above --}}
         </div>
-        <form action="/tweets/:id/replies" method="POST" class="reply-form">
-          <div class="d-flex m-3"><img src="{{user.avatar}}" alt="avatar"
-              style="border-radius: 50%; width: 50px; height: 50px;">
-            <label for="reply" class="form-label"></label>
-            <input name="reply" id="modal-reply" class="tweetTextarea" placeholder="推你的回覆"
-              style="border:none; height: 24px; margin: auto 0; margin-left: 5px; width: 220px;"></input>
-          </div>
-          <div class="">
-            <div id="error-msg" class="text-danger" role="alert" style="margin-left: 40px;"></div>
-            <button type="submit" class="badge rounded-pill text-bg-warning tweet-button" id="tweet-button"
-              style="font-size: 16px;">回覆</button>
-          </div>
+        <div class="d-flex m-3"><img src="{{user.avatar}}" alt="avatar">
+          <label for="reply" class="form-label"></label>
+          <input name="reply" id="modal-reply" class="tweetTextarea" placeholder="推你的回覆" style="border:none;"></input>
+        </div>
+        <form method="POST" class="reply-form">
+          <div id="error-msg" class="text-alert inline" role="alert"></div>
+          <h4>
+            <button type="submit" class="badge rounded-pill text-bg-warning tweet-button" id="tweet-button">回覆</button>
+          </h4>
         </form>
       </div>
     </div>
   </div>
-
 </div>
 
 {{/if}}

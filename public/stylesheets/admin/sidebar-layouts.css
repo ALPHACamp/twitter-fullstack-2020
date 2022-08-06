@@ -1,0 +1,144 @@
+.adminSidebarOptionsContainer {
+  float: left;
+  position: absolute;
+  width: 178px;
+  height: 1200px;
+  left: 130px;
+  top: 60px;
+}
+
+#adminTweetsRoute {
+  position: absolute;
+  width: 172px;
+  height: 26px;
+  top: 84.78px;
+  bottom: 1092px;
+  left: 10px;
+  right: 50px;
+}
+
+#adminAlphitterLogo {
+  position: absolute;
+  top: 13px;
+  bottom: 1147px;
+  left: 13px;
+  right: 125px;
+  width: 50px;
+  height: 50px;
+}
+
+#adminTweetsListLogo {
+  position: absolute;
+  top: 2.47px;
+  bottom: 1094.97px;
+  left: 1px;
+  right: 138.9px;
+  background: #FFFFFF;
+  width: 27.2px;
+  height: 25.25px;
+  visibility: visible;
+}
+
+#adminTweetsListOrangeLogo {
+  position: absolute;
+  top: 2.47px;
+  bottom: 1094.97px;
+  left: 1px;
+  right: 138.9px;
+  background: #FFFFFF;
+  width: 27.2px;
+  height: 25.25px;
+  visibility: hidden;
+}
+
+#adminTweetsList {
+  position: absolute;
+  top: 2.47px;
+  bottom: 1094.97px;
+  left: 45px;
+  right: 50px;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: #44444F;
+}
+
+#adminUsersRoute {
+  position: absolute;
+  width: 172px;
+  height: 26px;
+  top: 148px;
+  bottom: 1026px;
+  left: 10px;
+  right: 56px;
+}
+
+#adminUsersListLogo {
+  position: absolute;
+  top: 2.66px;
+  bottom: 1029px;
+  left: 5px;
+  right: 141.65px;
+  background: #FFFFFF;
+  width: 16.7px;
+  height: 20.34px;
+  visibility: visible;
+}
+
+#adminUsersListOrangeLogo {
+  position: absolute;
+  top: 2.66px;
+  bottom: 1029px;
+  left: 5px;
+  right: 141.65px;
+  background: #FFFFFF;
+  width: 16.7px;
+  height: 20.34px;
+  visibility: hidden
+}
+
+#adminUsersList {
+  position: absolute;
+  top: 0.66px;
+  bottom: 1029px;
+  left: 45px;
+  right: 32px;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: #44444F;
+}
+
+#adminLogoutLogo {
+  position: absolute;
+  top: 1156px;
+  bottom: 20px;
+  left: 19px;
+  right: 141px;
+  width: 28px;
+  height: 28px;
+}
+
+#adminLogout {
+  position: absolute;
+  top: 1158px;
+  bottom: 16px;
+  left: 56px;
+  right: 86px;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: #44444F;
+  width: 36px;
+  height: 26px;
+}
+
+.active {
+  color: #FF6600;
+}

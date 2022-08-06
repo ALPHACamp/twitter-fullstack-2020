@@ -1,47 +1,36 @@
-const { User, Followship } = require('../models')
+const { Followship } = require('../models')
 const helpers = require('../_helpers')
-
 const followshipController = {
-  addFollowing: (req, res, next) => {
-    const followerId = (helpers.getUser(req) && helpers.getUser(req).id) || []
-    const followingId = Number(req.params.userId)
-    if (followerId === followingId) throw new Error('Not allow to follow yourself!')
-    return Promise.all([
-      User.findByPk(followerId),
-      Followship.findOne({
+  addFollowing: async (req, res, next) => {
+    try {
+      if (Number(helpers.getUser(req).id) === Number(req.body.id)) {
+        req.flash('error_messages', '不能追隨自己！')
+        return res.redirect(200, 'back')
+      }
+      await Followship.create({
+        followerId: helpers.getUser(req).id,
+        followingId: req.body.id
+      })
+      req.flash('success_messages', '追隨成功！')
+      return res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
+  },
+  removeFollowing: async (req, res, next) => {
+    try {
+      const followship = await Followship.findOne({
         where: {
-          followerId,
-          followingId
+          followerId: Number(helpers.getUser(req).id),
+          followingId: Number(req.params.id)
         }
       })
-    ])
-      .then(([user, followship]) => {
-        if (!user) throw new Error("User didn't exist!")
-        if (followship) throw new Error('You already followed this user!')
-        return Followship.create({
-          followerId,
-          followingId
-        })
-      })
-      .then(() => res.redirect('back'))
-      .catch(next)
-  },
-  removeFollowing: (req, res, next) => {
-    const followerId = (helpers.getUser(req) && helpers.getUser(req).id) || []
-    const followingId = req.params.userId
-    Followship.findOne({
-      where: {
-        followerId,
-        followingId
-      }
-    })
-      .then(followship => {
-        if (!followship) throw new Error("You didn't follow this user!")
-        return followship.destroy()
-      })
-      .then(() => res.redirect('back'))
-      .catch(next)
+      await followship.destroy()
+      req.flash('success_messages', '取消追隨成功！')
+      return res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
   }
 }
-
 module.exports = followshipController

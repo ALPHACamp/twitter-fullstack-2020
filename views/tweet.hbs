@@ -9,16 +9,40 @@
         推文</a>
     </h4>
     {{!-- 推文 --}}
-    <div class=" px-2 reply-panel" id="tweet">
+    <div class="px-2 reply-panel" id="tweet">
       <a href="/users/{{tweet.User.id}}/tweets"><img src="{{tweet.tweet.User.avatar}}" alt="post-icon"
-          class="tweet-avatar"></a>
-
+          class="tweet-avatar" class="post-icon"></a>
+      
       {{!-- post --}}
       <div style="display: inline;">
         <span>{{tweet.tweet.User.name}}</span>
-        <small class="reply-userAccount">@{{tweet.tweet.User.account}}</small>
+        <small>@{{tweet.tweet.User.account}}</small>
         <p class="description" style="margin: 0px;">{{tweet.tweet.description}}</p>
-        <small class="created-time">{{tweet.tweet.createdAt}}</small>
+        <small>{{tweet.tweet.createdAt}}</small>
+      </div>
+      
+      {{!-- 推文數據 --}}
+      <div style="margin-right: 20px;" class="dashboard">
+        <span> {{replies.length}} 回覆 {{likes.length}}喜歡次數</span>
+      </div>
+      
+      <div>
+        <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="reply" id="reply" class="btn-show-reply"
+          data-bs-toggle="modal" data-bs-target="#replyModal" data-id="{{tweet.id}}">
+      
+        {{#if tweet.isLiked}}
+        <form action="/tweets/{{tweet.tweet.id}}/unlike" method="POST" class="likes unlike">
+          <button type="submit" class="likes">
+            <img src="https://upload.cc/i1/2022/07/29/CaJuOl.png" alt="likes" id="likes" class="likes unlike">
+          </button>
+        </form>
+        {{else}}
+        <form action="/tweets/{{tweet.tweet.id}}/like" method="POST" class="likes">
+          <button type="submit" class="likes">
+            <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes" id="likes" class="likes">
+          </button>
+        </form>
+        {{/if}}
       </div>
 
       {{!-- 推文數據 --}}
