@@ -32,19 +32,22 @@
       </div>
 
       <div class="row-reaction" style="padding-top: 10px; padding-bottom: 10px;">
-        <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="reply" id="reply" class="btn-show-reply"
-          data-bs-toggle="modal" data-bs-target="#replyModal" data-id="{{tweet.tweet.id}} " style="margin-right: 80px;">
+        <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="reply" class="btn-show-reply" data-bs-toggle="modal"
+          data-bs-target="#replyModal" data-id="{{tweet.tweet.id}} "
+          style="margin-right: 80px; width: 25px; height: 25px;">
 
         {{#if tweet.isLiked}}
         <form action="/tweets/{{tweet.tweet.id}}/unlike" method="POST" class="likes unlike">
           <button type="submit" class="likes">
-            <img src="https://upload.cc/i1/2022/07/29/CaJuOl.png" alt="likes" id="likes" class="likes unlike">
+            <img src="https://upload.cc/i1/2022/07/29/CaJuOl.png" alt="likes" class="likes unlike"
+              style="width: 25px; height: 25px;">
           </button>
         </form>
         {{else}}
         <form action="/tweets/{{tweet.tweet.id}}/like" method="POST" class="likes">
           <button type="submit" class="likes">
-            <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes" id="likes" class="likes">
+            <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes" class="likes"
+              style="width: 25px; height: 25px;">
           </button>
         </form>
         {{/if}}
