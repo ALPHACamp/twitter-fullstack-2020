@@ -1,5 +1,5 @@
 <div class="wrapper d-flex bg-white">
-  
+
   {{>profile-modals}}
   {{>left-content-profile}}
 
@@ -86,21 +86,24 @@
                   </div>
 
                   {{!-- 名稱 --}}
-                  <div class="form-row">
-                    <label class="form-label" for="name" style="color: #696974;">名稱</label>
-                    <input class="form-control login-input" type="text" name="name" id="textname"
-                      onkeyup="validateName()" placeholder="Enter name" value="{{ targetUser.name }}" maxlength="50"
-                      required>
+                  <div class="form-row mt-2" style="background: #F5F8FA;">
+                    <label for="name" style="margin:0; padding-left:15px;">名稱</label>
+                    <input type="text" name="name" id="textname" onkeyup="validateName()"
+                      class="form-control font-weight-bold" placeholder="名稱" maxlength="50"
+                      value="{{ targetUser.name }}"
+                      style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;"
+                      id="name" required autofocus>
                   </div>
                   <p class="text-end" id="namecount" style="color: #696974;">
                     <span id="textnamecount" style="color: #696974;">{{ targetUser.name.length }}</span> /50
                   </p>
 
                   {{!-- 自我介紹 --}}
-                  <div class="form-row">
-                    <label class="form-label" for="introduction" style="margin:0; color: #696974;">自我介紹</label>
+                  <div class="form-row" style="background: #F5F8FA;">
+                    <label class="form-label" for="introduction" style="margin:0;padding-left:15px;">自我介紹</label>
                     <textarea class="form-control login-input" name="introduction" id="introduction" row="5"
-                      onkeyup="validate()" maxlength="160" placeholder="輸入自介">{{ targetUser.introduction }}</textarea>
+                      onkeyup="validate()" maxlength="160" placeholder="輸入自介"
+                      style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;">{{ targetUser.introduction }}</textarea>
                   </div>
                   <p class="text-end" id="count" style="margin:0; color: #696974;">
                     <span id="textcount" style="color: #696974;">{{ targetUser.introduction.length }}</span> /160
