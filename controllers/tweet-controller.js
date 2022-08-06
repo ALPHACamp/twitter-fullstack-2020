@@ -107,7 +107,7 @@ const tweetController = {
           dayOrNight = '下午'
         }
         const minutes = originalDate.getMinutes()
-        const createdAt = `${dayOrNight} ${hour}時${minutes}分．${year}年${month}月${date}日`
+        const createdAt = `${dayOrNight} ${hour}:${minutes}．${year}年${month}月${date}日`
         tweet.createdAt = createdAt
 
         const post = {

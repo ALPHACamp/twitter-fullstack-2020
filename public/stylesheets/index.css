@@ -11,7 +11,7 @@ a:hover {
 /* 整體字型 =??? */
 html,
 body {
-  font-family: 'Montserrat';
+  font-family: 'Noto Sans TC', 'Montserrat';
 }
 
 
@@ -169,8 +169,8 @@ textarea {
 
 #reply,
 #likes {
-  width: 25px;
-  height: 25px;
+  width: 15px;
+  height: 15px;
   margin: 0px 5px;
 }
 

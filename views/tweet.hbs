@@ -4,8 +4,9 @@
   {{>left-content-home}}
 
   <div class="container reply-index">
-    <h4 id="header"><a href="/tweets" style="font-weight: 700; font-size: 24px; line-height: 26px; margin-left: 0px;">
-        <img class=" ms-3" src="https://upload.cc/i1/2022/07/29/bYiz5s.png" alt="" style="width: 15px; height: 15px;">
+    <h4 id="header" style="padding-bottom: 24px; padding-top: 6px;"><a href="/tweets"
+        style="font-weight: 700; font-size: 24px; line-height: 26px;">
+        <img src="https://upload.cc/i1/2022/07/29/bYiz5s.png" alt="" style="width: 15px; height: 15px;">
         推文</a>
     </h4>
     {{!-- 推文 --}}
@@ -18,52 +19,34 @@
         <span>{{tweet.tweet.User.name}}</span>
         <small>@{{tweet.tweet.User.account}}</small>
         <p class="description" style="margin: 0px;">{{tweet.tweet.description}}</p>
-        <small>{{tweet.tweet.createdAt}}</small>
+        <small class="created-time"
+          style="font-weight: 500; font-size: 14px; line-height: 22px;">{{tweet.tweet.createdAt}}</small>
       </div>
-      
       {{!-- 推文數據 --}}
-      <div style="margin-right: 20px;" class="dashboard">
-        <span> {{replies.length}} 回覆 {{likes.length}}喜歡次數</span>
+      <div class="dashboard" style="padding-top: 10px;">
+        <span> <span style="font-family: 'Montserrat'; font-weight: 700; font-size: 19px;">{{replies.length}}</span>
+          <span style="font-weight:500; font-size: 19px; color: #6C757D">回覆</span><span
+            style="font-family: 'Montserrat'; font-weight: 700; font-size: 19px;">
+            {{likes.length}}</span> <span style="font-weight:500; font-size: 19px; color: #6C757D">喜歡次數</span></span>
       </div>
-      
-      <div>
-        <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="reply" id="reply" class="btn-show-reply"
-          data-bs-toggle="modal" data-bs-target="#replyModal" data-id="{{tweet.id}}">
-      
+
+      <div class="row-reaction" style="padding-top: 10px; padding-bottom: 10px;">
+        <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="reply" class="btn-show-reply" data-bs-toggle="modal"
+          data-bs-target="#replyModal" data-id="{{tweet.tweet.id}} "
+          style="margin-right: 80px; width: 25px; height: 25px;">
+
         {{#if tweet.isLiked}}
         <form action="/tweets/{{tweet.tweet.id}}/unlike" method="POST" class="likes unlike">
           <button type="submit" class="likes">
-            <img src="https://upload.cc/i1/2022/07/29/CaJuOl.png" alt="likes" id="likes" class="likes unlike">
+            <img src="https://upload.cc/i1/2022/07/29/CaJuOl.png" alt="likes" class="likes unlike"
+              style="width: 25px; height: 25px;">
           </button>
         </form>
         {{else}}
         <form action="/tweets/{{tweet.tweet.id}}/like" method="POST" class="likes">
           <button type="submit" class="likes">
-            <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes" id="likes" class="likes">
-          </button>
-        </form>
-        {{/if}}
-      </div>
-
-      {{!-- 推文數據 --}}
-      <div class="dashboard">
-        <span> {{replies.length}} 回覆 {{likes.length}}喜歡次數</span>
-      </div>
-
-      <div class="row-reaction">
-        <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="reply" id="reply" class="btn-show-reply"
-          data-bs-toggle="modal" data-bs-target="#replyModal" data-id="{{tweet.tweet.id}}">
-
-        {{#if tweet.isLiked}}
-        <form action="/tweets/{{tweet.tweet.id}}/unlike" method="POST" class="likes unlike">
-          <button type="submit" class="likes">
-            <img src="https://upload.cc/i1/2022/07/29/CaJuOl.png" alt="likes" id="likes" class="likes unlike">
-          </button>
-        </form>
-        {{else}}
-        <form action="/tweets/{{tweet.tweet.id}}/like" method="POST" class="likes">
-          <button type="submit" class="likes">
-            <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes" id="likes" class="likes">
+            <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes" class="likes"
+              style="width: 25px; height: 25px;">
           </button>
         </form>
         {{/if}}
