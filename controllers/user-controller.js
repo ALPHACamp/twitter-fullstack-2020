@@ -63,7 +63,7 @@ const userController = {
           [Tweet, 'createdAt', 'desc'],
           [Tweet, 'id', 'desc']
         ],
-        attributes: ['id', 'name', 'account', 'avatar', 'introduction', 'cover'],
+        attributes: ['id', 'name', 'account', 'avatar', 'introduction', 'cover', 'role'],
         include: [
           {
             model: Tweet,
@@ -98,6 +98,7 @@ const userController = {
     ])
       .then(([userData, users, followers, followings]) => {
         if (!userData) throw new Error("User didn't exist!")
+        if (userData?.role === 'admin') throw new Error("You can't watch admin User profile!")
         // 撈出loginUser，nav-left 使用
         const user = helpers.getUser(req) ? JSON.parse(JSON.stringify(helpers.getUser(req))) : []
         const profileIsFollowed = user.Followings.some(data =>
@@ -131,11 +132,12 @@ const userController = {
   getReplies: (req, res, next) => {
     Promise.all([
       User.findByPk(req.params.uid, {
+        where: { role: 'user' },
         order: [
           [Reply, 'createdAt', 'desc'],
           [Reply, 'id', 'desc']
         ],
-        attributes: ['id', 'name', 'account', 'avatar', 'introduction', 'cover'],
+        attributes: ['id', 'name', 'account', 'avatar', 'introduction', 'cover', 'role'],
         include: [
           {
             model: Reply,
@@ -174,6 +176,7 @@ const userController = {
     ])
       .then(([userData, users, followers, followings]) => {
         if (!userData) throw new Error("User didn't exist!")
+        if (userData?.role === 'admin') throw new Error("You can't watch admin User profile!")
         // 撈出loginUser，nav-left 使用
         const user = helpers.getUser(req) ? JSON.parse(JSON.stringify(helpers.getUser(req))) : []
         const profileIsFollowed = user.Followings.some(data =>
@@ -200,11 +203,12 @@ const userController = {
   getLikes: (req, res, next) => {
     Promise.all([
       User.findByPk(req.params.uid, {
+        where: { role: 'user' },
         order: [
           [Like, 'createdAt', 'desc'],
           [Like, 'id', 'desc']
         ],
-        attributes: ['id', 'name', 'account', 'avatar', 'introduction', 'cover'],
+        attributes: ['id', 'name', 'account', 'avatar', 'introduction', 'cover', 'role'],
         include: [
           {
             model: Like,
@@ -257,6 +261,7 @@ const userController = {
     ])
       .then(([userData, users, followers, followings]) => {
         if (!userData) throw new Error("User didn't exist!")
+        if (userData?.role === 'admin') throw new Error("You can't watch admin User profile!")
         // 撈出loginUser，nav-left 使用
         const user = helpers.getUser(req) ? JSON.parse(JSON.stringify(helpers.getUser(req))) : []
         const profileIsFollowed = user.Followings.some(data =>
@@ -290,7 +295,7 @@ const userController = {
   getFollowings: (req, res, next) => {
     Promise.all([
       User.findByPk(req.params.uid, {
-        attributes: ['id', 'name'],
+        attributes: ['id', 'name', 'role'],
         include: [
           { model: User, as: 'Followings' },
           { model: Tweet, attributes: ['id'] }
@@ -310,6 +315,7 @@ const userController = {
     ])
       .then(([userData, users]) => {
         if (!userData) throw new Error("User didn't exist!")
+        if (userData?.role === 'admin') throw new Error("You can't watch admin User profile!")
         // 撈出loginUser，nav-left 使用
         const user = helpers.getUser(req) ? JSON.parse(JSON.stringify(helpers.getUser(req))) : []
         userData = JSON.parse(JSON.stringify(userData))
@@ -338,7 +344,7 @@ const userController = {
   getFollowers: (req, res, next) => {
     Promise.all([
       User.findByPk(req.params.uid, {
-        attributes: ['id', 'name'],
+        attributes: ['id', 'name', 'role'],
         include: [
           { model: Tweet, attributes: ['id'] },
           { model: User, as: 'Followers' },
@@ -359,6 +365,7 @@ const userController = {
     ])
       .then(([userData, users]) => {
         if (!userData) throw new Error("User didn't exist!")
+        if (userData?.role === 'admin') throw new Error("You can't watch admin User profile!")
         // 撈出loginUser，nav-left 使用
         const user = helpers.getUser(req) ? JSON.parse(JSON.stringify(helpers.getUser(req))) : []
         userData = JSON.parse(JSON.stringify(userData))
