@@ -11,7 +11,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       avatar: 'https://randomuser.me/api/portraits/men/88.jpg',
       introduction: faker.lorem.text().substring(0, 140),
-      banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
+      banner: '/images/defaultBanner.png',
       role: 'admin',
       created_at: new Date(),
       updated_at: new Date()
@@ -22,7 +22,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       avatar: 'https://randomuser.me/api/portraits/men/4.jpg',
       introduction: faker.lorem.text().substring(0, 140),
-      banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
+      banner: '/images/defaultBanner.png',
       role: 'user',
       created_at: new Date(),
       updated_at: new Date()
@@ -33,7 +33,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       avatar: 'https://randomuser.me/api/portraits/women/17.jpg',
       introduction: faker.lorem.text().substring(0, 140),
-      banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
+      banner: '/images/defaultBanner.png',
       role: 'user',
       created_at: new Date(),
       updated_at: new Date()
@@ -44,7 +44,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       avatar: 'https://randomuser.me/api/portraits/women/19.jpg',
       introduction: faker.lorem.text().substring(0, 140),
-      banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
+      banner: '/images/defaultBanner.png',
       role: 'user',
       created_at: new Date(),
       updated_at: new Date()
@@ -55,7 +55,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       avatar: 'https://randomuser.me/api/portraits/women/20.jpg',
       introduction: faker.lorem.text().substring(0, 140),
-      banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
+      banner: '/images/defaultBanner.png',
       role: 'user',
       created_at: new Date(),
       updated_at: new Date()
@@ -66,7 +66,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       avatar: 'https://randomuser.me/api/portraits/men/17.jpg',
       introduction: faker.lorem.text().substring(0, 140),
-      banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
+      banner: '/images/defaultBanner.png',
       role: 'user',
       created_at: new Date(),
       updated_at: new Date()
@@ -77,7 +77,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       avatar: 'https://randomuser.me/api/portraits/men/30.jpg',
       introduction: faker.lorem.text().substring(0, 140),
-      banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
+      banner: '/images/defaultBanner.png',
       role: 'user',
       created_at: new Date(),
       updated_at: new Date()
@@ -88,7 +88,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       avatar: 'https://randomuser.me/api/portraits/men/46.jpg',
       introduction: faker.lorem.text().substring(0, 140),
-      banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
+      banner: '/images/defaultBanner.png',
       role: 'user',
       created_at: new Date(),
       updated_at: new Date()
@@ -99,7 +99,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       avatar: 'https://randomuser.me/api/portraits/women/51.jpg',
       introduction: faker.lorem.text().substring(0, 140),
-      banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
+      banner: '/images/defaultBanner.png',
       role: 'user',
       created_at: new Date(),
       updated_at: new Date()
@@ -110,7 +110,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       avatar: 'https://randomuser.me/api/portraits/women/2.jpg',
       introduction: faker.lorem.text().substring(0, 140),
-      banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
+      banner: '/images/defaultBanner.png',
       role: 'user',
       created_at: new Date(),
       updated_at: new Date()
@@ -121,7 +121,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       avatar: 'https://randomuser.me/api/portraits/men/80.jpg',
       introduction: faker.lorem.text().substring(0, 140),
-      banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png',
+      banner: '/images/defaultBanner.png',
       role: 'user',
       created_at: new Date(),
       updated_at: new Date()

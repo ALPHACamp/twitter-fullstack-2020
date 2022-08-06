@@ -33,20 +33,20 @@
                 <p>{{this.description}}</p>
               </a>
               <div class="post-button">
-                <small> <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="
+                <small> <img src="/images/reply.png" alt="
                     reply" id="reply" class="btn-show-reply" data-bs-toggle="modal" data-bs-target="#replyModal"
                     data-id="{{this.id}}">{{this.Replies.length}}</small>
                 <small>
                   {{#if isLiked}}
                   <form action="/tweets/{{this.id}}/unlike" method="POST" class="likes">
                     <button type="submit" class="likes">
-                      <img src="https://upload.cc/i1/2022/08/02/XRW6ld.png" alt="likes" id="likes">
+                      <img src="/images/redHeart.jpg" alt="likes" id="likes">
                     </button>
                   </form>
                   {{else}}
                   <form action="/tweets/{{this.id}}/like" method="POST" class="likes">
                     <button type="submit" class="likes">
-                      <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes" id="likes">
+                      <img src="/images/blackHeart.png" alt="likes" id="likes">
                     </button>
                   </form>
                   {{/if}}
