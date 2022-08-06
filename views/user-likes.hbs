@@ -124,7 +124,7 @@
         {{else}}
         <div class="d-flex align-items-end">
           <form action="/followships" method="POST">
-            <button type="submit" class="btn rounded-pill" name="id"
+            <button type="submit" class="btn rounded-pill" name="id" value={{targetUser.id}}
               style=" background-color: #FFFFFF;color: #FF6600;border:1px solid #FF6600;">
               跟隨
             </button>
@@ -191,6 +191,7 @@
               style="margin-right: 40px;font-family: 'Montserrat';font-style: normal;font-weight: 600;font-size: 20px;line-height: 14px;color: #6C757D;">{{this.repliedCount}}</span>
           </div>
           <div>
+            
             <form action="/tweets/{{this.Tweet.id}}/unlike" method="POST">
               <button style="border:none;background-color:transparent;outline:none;">
                 <img src="https://upload.cc/i1/2022/08/02/XRW6ld.png" alt="" style="width: 20px; height: 20px;">
@@ -198,6 +199,7 @@
               <span
                 style="font-family: 'Montserrat';font-style: normal;font-weight: 600;font-size: 20px;line-height: 14px;color: #6C757D;">{{this.likedCount}}</span>
             </form>
+
           </div>
         </div>
 
