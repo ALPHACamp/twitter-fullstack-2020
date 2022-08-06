@@ -7,7 +7,8 @@
 
       <form class="tweet-post" action="/tweets" method="POST">
         <a href="/users/{{user.id}}/tweets">
-          <img class='rounded-circle' src="{{user.avatar}}" alt="avatar">
+          <img class='rounded-circle' src="{{user.avatar}}" alt="avatar"
+            style="width: 50px;height: 50px; border-radius:50%">
         </a>
         <div class="text-box">
           <textarea type="text" name="description" placeholder="有什麼新鮮事？" rows="3" cols="70" maxlength="140"

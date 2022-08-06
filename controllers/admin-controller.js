@@ -22,6 +22,8 @@ const adminController = {
   getAdminUsers: async (req, res, next) => {
     try {
       const users = await User.findAll({
+        where: { role: 'user' },
+        attributes: { exclude: ['password'] },
         include: [
           { model: Tweet, include: [Like] },
           { model: User, as: 'Followers' },

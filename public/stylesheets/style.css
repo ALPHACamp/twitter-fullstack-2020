@@ -887,3 +887,73 @@
      opacity: 0;
    }
  }
+
+ .valid-button {
+   background-color: #FC5A5A;
+   font-size: 14px;
+ }
+
+ .valid-button:hover {
+   box-sizing: border-box;
+   background: #FFFFFF;
+   border: 1px solid #FC5A5A;
+   border-radius: 50px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 14px;
+   color: #FC5A5A;
+ }
+
+ /* 圓圈形loader */
+ /* .loader {
+   border: 5px solid #f3f3f3;
+   border-top: 5px solid #FC5A5A;
+   border-radius: 50%;
+   width: 25px;
+   height: 25px;
+   animation: spin 2s linear infinite;
+   background-color: white;
+ }
+
+ @keyframes spin {
+   0% {
+     transform: rotate(0deg);
+   }
+
+   100% {
+     transform: rotate(360deg);
+   }
+ } */
+
+
+ /* 讀取形loader */
+ .loader {
+   width: 8px;
+   height: 8px;
+   border-radius: 50%;
+   display: block;
+   margin: 15px auto;
+   position: relative;
+   background: #FFF;
+   box-shadow: -24px 0 #FFF, 24px 0 #FFF;
+   box-sizing: border-box;
+   animation: shadowPulse 2s linear infinite;
+ }
+
+ @keyframes shadowPulse {
+   33% {
+     background: #FFF;
+     box-shadow: -24px 0 #FF3D00, 24px 0 #FFF;
+   }
+
+   66% {
+     background: #FF3D00;
+     box-shadow: -24px 0 #FFF, 24px 0 #FFF;
+   }
+
+   100% {
+     background: #FFF;
+     box-shadow: -24px 0 #FFF, 24px 0 #FF3D00;
+   }
+ }

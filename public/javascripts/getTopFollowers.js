@@ -17,7 +17,7 @@ axios.get(getTopFollowers)
           <div class="d-flex justify-content-between align-items-center flex-row bd-highlight mb-3">
             <div class="bd-highlight">
               <a href="/users/${topFollowerUser.id}/tweets">
-                <img class="me-auto rounded-circle" src="${topFollowerUser.avatar}" alt="avatar">
+                <img class="me-auto rounded-circle" src="${topFollowerUser.avatar}" alt="avatar" style="width: 50px;height: 50px; border-radius:50%">
               </a>
             </div>
             <div class="name-container d-flex flex-column bd-highlight p-1">
@@ -41,7 +41,7 @@ axios.get(getTopFollowers)
           <div class="d-flex justify-content-between align-items-center flex-row bd-highlight mb-3">
             <div class="bd-highlight">
               <a href="/users/${topFollowerUser.id}/tweets">
-                <img class="me-auto rounded-circle" src="${topFollowerUser.avatar}" alt="avatar">
+                <img class="me-auto rounded-circle" src="${topFollowerUser.avatar}" alt="avatar" style="width: 50px;height: 50px; border-radius:50%">
               </a>
             </div>
             <div class="name-container d-flex flex-column bd-highlight p-1">
