@@ -10,19 +10,18 @@
         推文</a>
     </h4>
     {{!-- 推文 --}}
-    <div class=" px-2 reply-panel" id="tweet">
+    <div class="px-2 reply-panel" id="tweet">
       <a href="/users/{{tweet.User.id}}/tweets"><img src="{{tweet.tweet.User.avatar}}" alt="post-icon"
-          class="tweet-avatar"></a>
-
+          class="tweet-avatar" class="post-icon"></a>
+      
       {{!-- post --}}
       <div style="display: inline;">
         <span>{{tweet.tweet.User.name}}</span>
-        <small class="reply-userAccount">@{{tweet.tweet.User.account}}</small>
+        <small>@{{tweet.tweet.User.account}}</small>
         <p class="description" style="margin: 0px;">{{tweet.tweet.description}}</p>
         <small class="created-time"
           style="font-weight: 500; font-size: 14px; line-height: 22px;">{{tweet.tweet.createdAt}}</small>
       </div>
-
       {{!-- 推文數據 --}}
       <div class="dashboard" style="padding-top: 10px;">
         <span> <span style="font-family: 'Montserrat'; font-weight: 700; font-size: 19px;">{{replies.length}}</span>

@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
-const { User, Tweet, Reply, Like, Followship, sequelize } = require('../models')
+const { User, Tweet, Reply, Like } = require('../models')
 const imgur = require('imgur')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 imgur.setClientId(IMGUR_CLIENT_ID)
@@ -89,16 +89,13 @@ const userController = {
         order: [['createdAt', 'desc']],
         nest: true
       }),
-      Followship.findAll({
-        include: User,
-        group: 'followingId',
-        attributes: {
-          include: [[sequelize.fn('COUNT', sequelize.col('following_id')), 'count']]
-        },
-        order: [[sequelize.literal('count'), 'DESC']]
+      User.findAll({
+        where: { role: 'user' },
+        include: [{ model: User, as: 'Followers' }],
+        attributes: ['id', 'name', 'account', 'avatar']
       })
     ])
-      .then(([targetUser, tweets, followship]) => {
+      .then(([targetUser, tweets, userData]) => {
         if (!targetUser) throw new Error('使用者不存在！')
 
         if (currentUser) {
@@ -113,18 +110,15 @@ const userController = {
             isLiked: t.Likes.some(like => like.userId === currentUser.id)
           }))
 
-        const recommendFollower = followship
-          .map(data => {
-            return {
-              followingCount: data.dataValues.count,
-              ...data.User.toJSON(),
-              isFollowed: currentUser?.Followings.some(u => u.id === data.followingId)
-            }
-          })
-          .slice(0, 10)
+        const recommendFollow = userData.map(user => ({
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+          isFollowed: currentUser.Followings.some(f => f.id === user.id)
+        }))
+          .sort((a, b) => b.followerCount - a.followerCount)
 
         const tweetsLength = tweetsData.length
-        res.render('user', { targetUser: targetUser.toJSON(), tweets: tweetsData, currentUser, tweetsLength, recommendFollower })
+        res.render('user-tweets', { targetUser: targetUser.toJSON(), tweets: tweetsData, currentUser, tweetsLength, recommendFollow })
       })
       .catch(err => next(err))
   },
@@ -142,34 +136,28 @@ const userController = {
         raw: true,
         nest: true
       }),
-      Followship.findAll({
-        include: User,
-        group: 'followingId',
-        attributes: {
-          include: [[sequelize.fn('COUNT', sequelize.col('following_id')), 'count']]
-        },
-        order: [[sequelize.literal('count'), 'DESC']]
+      User.findAll({
+        where: { role: 'user' },
+        include: [{ model: User, as: 'Followers' }],
+        attributes: ['id', 'name', 'account', 'avatar']
       })
     ])
-      .then(([targetUser, replies, followship]) => {
+      .then(([targetUser, replies, userData]) => {
         if (!targetUser) throw new Error('使用者不存在！')
 
         if (currentUser) {
           currentUser.isFollowed = currentUser.Followings.some(u => u.id === targetUser.id)
         }
 
-        const recommendFollower = followship
-          .map(data => {
-            return {
-              followingCount: data.dataValues.count,
-              ...data.User.toJSON(),
-              isFollowed: currentUser?.Followings.some(u => u.id === data.followingId)
-            }
-          })
-          .slice(0, 10)
+        const recommendFollow = userData.map(user => ({
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+          isFollowed: currentUser.Followings.some(f => f.id === user.id)
+        }))
+          .sort((a, b) => b.followerCount - a.followerCount)
 
         const tweetsLength = targetUser.Tweets.length
-        res.render('user', { targetUser: targetUser.toJSON(), replies, currentUser, tweetsLength, recommendFollower })
+        res.render('user-replies', { targetUser: targetUser.toJSON(), replies, currentUser, tweetsLength, recommendFollow })
       })
       .catch(err => next(err))
   },
@@ -190,16 +178,13 @@ const userController = {
         order: [['createdAt', 'desc']],
         nest: true
       }),
-      Followship.findAll({
-        include: User,
-        group: 'followingId',
-        attributes: {
-          include: [[sequelize.fn('COUNT', sequelize.col('following_id')), 'count']]
-        },
-        order: [[sequelize.literal('count'), 'DESC']]
+      User.findAll({
+        where: { role: 'user' },
+        include: [{ model: User, as: 'Followers' }],
+        attributes: ['id', 'name', 'account', 'avatar']
       })
     ])
-      .then(([targetUser, likes, followship]) => {
+      .then(([targetUser, likes, userData]) => {
         if (!targetUser) throw new Error('使用者不存在！')
 
         if (currentUser) {
@@ -214,18 +199,15 @@ const userController = {
             isLiked: currentUser ? l.Tweet.Likes.some(like => like.UserId === currentUser.id) : false
           }))
 
-        const recommendFollower = followship
-          .map(data => {
-            return {
-              followingCount: data.dataValues.count,
-              ...data.User.toJSON(),
-              isFollowed: currentUser?.Followings.some(u => u.id === data.followingId)
-            }
-          })
-          .slice(0, 10)
+        const recommendFollow = userData.map(user => ({
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+          isFollowed: currentUser.Followings.some(f => f.id === user.id)
+        }))
+          .sort((a, b) => b.followerCount - a.followerCount)
 
         const tweetsLength = targetUser.Tweets.length
-        res.render('user', { targetUser: targetUser.toJSON(), likes: likesData, currentUser, tweetsLength, recommendFollower })
+        res.render('user-likes', { targetUser: targetUser.toJSON(), likes: likesData, currentUser, tweetsLength, recommendFollow })
       })
       .catch(err => next(err))
   },
@@ -295,7 +277,7 @@ const userController = {
         return res.redirect(`/users/${currentUserId}/tweets`)
       }
 
-      if (introduction.length >= 160 || name.length >= 50) {
+      if (introduction.length > 160 || name.length > 50) {
         req.flash('error_messages', '字數超出上限！')
         return res.redirect(`/users/${currentUserId}/tweets`)
       }
@@ -354,16 +336,13 @@ const userController = {
         nest: true,
         include: [Tweet, { model: User, as: 'Followers' }]
       }),
-      Followship.findAll({
-        include: User,
-        group: 'followingId',
-        attributes: {
-          include: [[sequelize.fn('COUNT', sequelize.col('following_id')), 'count']]
-        },
-        order: [[sequelize.literal('count'), 'DESC']]
+      User.findAll({
+        where: { role: 'user' },
+        include: [{ model: User, as: 'Followers' }],
+        attributes: ['id', 'name', 'account', 'avatar']
       })
     ])
-      .then(([user, followship]) => {
+      .then(([user, userData]) => {
         const result = user.Followers.map(user => {
           return {
             ...user.toJSON(),
@@ -372,18 +351,15 @@ const userController = {
         })
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
 
-        const recommendFollower = followship
-          .map(data => {
-            return {
-              followingCount: data.dataValues.count,
-              ...data.User.toJSON(),
-              isFollowed: currentUser?.Followings.some(u => u.id === data.followingId)
-            }
-          })
-          .slice(0, 10)
+        const recommendFollow = userData.map(user => ({
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+          isFollowed: currentUser.Followings.some(f => f.id === user.id)
+        }))
+          .sort((a, b) => b.followerCount - a.followerCount)
 
         const tweetsLength = user.Tweets.length
-        res.render('user-followers', { user: user.toJSON(), followers: result, tweetsLength, recommendFollower })
+        res.render('user-followers', { user: user.toJSON(), followers: result, tweetsLength, recommendFollow, currentUser })
       })
       .catch(err => next(err))
   },
@@ -396,16 +372,13 @@ const userController = {
         nest: true,
         include: [Tweet, { model: User, as: 'Followings' }]
       }),
-      Followship.findAll({
-        include: User,
-        group: 'followingId',
-        attributes: {
-          include: [[sequelize.fn('COUNT', sequelize.col('following_id')), 'count']]
-        },
-        order: [[sequelize.literal('count'), 'DESC']]
+      User.findAll({
+        where: { role: 'user' },
+        include: [{ model: User, as: 'Followers' }],
+        attributes: ['id', 'name', 'account', 'avatar']
       })
     ])
-      .then(([user, followship]) => {
+      .then(([user, userData]) => {
         const result = user.Followings.map(user => {
           return {
             ...user.toJSON(),
@@ -414,18 +387,15 @@ const userController = {
         })
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
 
-        const recommendFollower = followship
-          .map(data => {
-            return {
-              followingCount: data.dataValues.count,
-              ...data.User.toJSON(),
-              isFollowed: currentUser?.Followings.some(u => u.id === data.followingId)
-            }
-          })
-          .slice(0, 10)
+        const recommendFollow = userData.map(user => ({
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+          isFollowed: currentUser.Followings.some(f => f.id === user.id)
+        }))
+          .sort((a, b) => b.followerCount - a.followerCount)
 
         const tweetsLength = user.Tweets.length
-        res.render('user-followings', { user: user.toJSON(), followings: result, tweetsLength, recommendFollower })
+        res.render('user-followings', { user: user.toJSON(), followings: result, tweetsLength, recommendFollow, currentUser })
       })
       .catch(err => next(err))
   }

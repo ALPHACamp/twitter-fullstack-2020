@@ -11,6 +11,11 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   {{!-- notice: 導入public靜態檔案 --}}
   <link rel="stylesheet" href="/stylesheets/index.css">
+  <link rel="stylesheet" href="/stylesheets/admin/sidebar-layouts.css">
+  <link rel="stylesheet" href="/stylesheets/admin/signin.css">
+  <link rel="stylesheet" href="/stylesheets/admin/tweets.css">
+  <link rel="stylesheet" href="/stylesheets/admin/users.css">
+  <link rel="stylesheet" href="/stylesheets/admin/messages.css">
 </head>
 
 <body>
@@ -30,6 +35,26 @@
     crossorigin="anonymous"></script>
   {{!-- 導入public動態 --}}
   <script src="/javascripts/index.js"></script>
+  <script>
+    function functionOne() {
+      const adminTweetsListLogo = document.getElementById("adminTweetsListLogo");
+      const adminTweetsListOrangeLogo = document.getElementById("adminTweetsListOrangeLogo");
+      const adminTweetsList = document.getElementById("adminTweetsList");
+      adminTweetsListLogo.style.visibility = "hidden";
+      adminTweetsListOrangeLogo.style.visibility = "visible";
+      adminTweetsList.style.color = '#FF6600';
+    }
+  </script>
+  <script>
+    function functionTwo() {
+      const adminUsersListLogo = document.getElementById("adminUsersListLogo");
+      const adminUsersListOrangeLogo = document.getElementById("adminUsersListOrangeLogo");
+      const adminUsersList = document.getElementById("adminUsersList");
+      adminUsersListLogo.style.visibility = "hidden";
+      adminUsersListOrangeLogo.style.visibility = "visible";
+      adminUsersList.style.color = '#FF6600';
+    }
+  </script>
 </body>
 
 </html>
