@@ -957,3 +957,30 @@
      box-shadow: -24px 0 #FFF, 24px 0 #FF3D00;
    }
  }
+
+ /* 改變pagination顏色 */
+
+ .pagination>li>a {
+   background-color: white;
+   color: #FF6600;
+ }
+
+ .pagination>li>a:focus,
+ .pagination>li>a:hover,
+ .pagination>li>span:focus,
+ .pagination>li>span:hover {
+   color: #FF6600;
+   background-color: #eee;
+   border-color: #ddd;
+ }
+
+ .pagination>.active>a {
+   color: white;
+   background-color: #FF6600 !Important;
+   border: solid 1px #FF6600 !Important;
+ }
+
+ .pagination>.active>a:hover {
+   background-color: #FF6600 !Important;
+   border: solid 1px #FF6600;
+ }
