@@ -10,16 +10,18 @@
       </div>
       <!-- Modal body -->
       <div class="modal-body add-post">
-        <form action="/tweets" method="POST" class="d-flex">
-          <img src="{{user.avatar}}" alt="avatar" style="border-radius: 50%; width: 50px; height: 50px;">
+        <form action="/tweets" method="POST">
+          <img src="{{user.avatar}}" alt="avatar"
+            style="border-radius: 50%; width: 50px; height: 50px; position: absolute;">
           <label for="description" class="form-label"></label>
           <textarea name="description" id="modal-description" class="tweetTextarea" placeholder="有什麼新鮮事 ?"
-            style="width: 100%; margin: 2px 0; height: 150px;"></textarea>
-          <div class="text-end">
-            <div id="error" class="text-danger inline" role="alert">
+            style="margin: 2px 0; width: 400px; height: 120px; position: absolute; left: 70px; top: 25px;"></textarea>
+          <div class="text-end d-flex justify-content-end align-items-end" style="display: block; height: 168px;">
+            <div id="error" class="text-danger" role="alert"
+              style="margin-bottom: 15px; margin-right: 5px; font-weight: 500;font-size: 15px; line-height: 15px;">
               {{!-- 錯誤訊息 --}}
             </div>
-            <h4 style="margin-top: 150px;">
+            <h4>
               <button type="submit" class="badge rounded-pill text-bg-warning tweet-button">
                 推文
               </button>

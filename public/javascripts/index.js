@@ -13,7 +13,7 @@ tweetModal.addEventListener('click', e => {
     document.getElementById('error').innerHTML = '內容不可空白'
     e.preventDefault()
   } else if (tweet.length > 140) {
-    document.getElementById('error').innerHTML = '限制140字數'
+    document.getElementById('error').innerHTML = '字數不可超過140字'
     e.preventDefault()
   }
 })
@@ -26,7 +26,7 @@ replyPost.addEventListener('click', e => {
     document.getElementById('error-msg').innerHTML = '內容不可空白'
     e.preventDefault()
   } else if (reply.length > 140) {
-    document.getElementById('error-msg').innerHTML = '限制140字數'
+    document.getElementById('error-msg').innerHTML = '字數不可超過140字'
     e.preventDefault()
   }
 })
