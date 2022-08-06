@@ -2,6 +2,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const bcrypt = require('bcryptjs')
 const { User, Tweet, Like } = require('../models')
+const { Op } = require('sequelize')
 
 passport.use(new LocalStrategy(
   {
@@ -10,7 +11,14 @@ passport.use(new LocalStrategy(
     passReqToCallback: true
   },
   (req, account, password, cb) => {
-    User.findOne({ where: { account } })
+    User.findOne({
+      where: {
+        [Op.or]: [
+          { account: account },
+          { email: account }
+        ]
+      }
+    })
       .then(user => {
         if (!user) {
           return cb(null, false, req.flash('error_messages', '帳號不存在！'))

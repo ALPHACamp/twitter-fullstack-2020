@@ -1,12 +1,11 @@
 <div class="wrapper d-flex">
 
   {{> modals}}
-  {{>left-content}}
+  {{>left-content-home}}
 
-  <div class="container">
-    <h4 id="header"><a href="/tweets">
-        <img class="ms-3" src="https://upload.cc/i1/2022/07/29/bYiz5s.png" alt=""
-          style="height: 30%; width: 4%; margin-right: 25px;">
+  <div class="container reply-index">
+    <h4 id="header"><a href="/tweets" style="font-weight: 700; font-size: 24px; line-height: 26px; margin-left: 0px;">
+        <img class=" ms-3" src="https://upload.cc/i1/2022/07/29/bYiz5s.png" alt="" style="width: 15px; height: 15px;">
         推文</a>
     </h4>
     {{!-- 推文 --}}
@@ -45,6 +44,31 @@
         </form>
         {{/if}}
       </div>
+
+      {{!-- 推文數據 --}}
+      <div class="dashboard">
+        <span> {{replies.length}} 回覆 {{likes.length}}喜歡次數</span>
+      </div>
+
+      <div class="row-reaction">
+        <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="reply" id="reply" class="btn-show-reply"
+          data-bs-toggle="modal" data-bs-target="#replyModal" data-id="{{tweet.tweet.id}}">
+
+        {{#if tweet.isLiked}}
+        <form action="/tweets/{{tweet.tweet.id}}/unlike" method="POST" class="likes unlike">
+          <button type="submit" class="likes">
+            <img src="https://upload.cc/i1/2022/07/29/CaJuOl.png" alt="likes" id="likes" class="likes unlike">
+          </button>
+        </form>
+        {{else}}
+        <form action="/tweets/{{tweet.tweet.id}}/like" method="POST" class="likes">
+          <button type="submit" class="likes">
+            <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes" id="likes" class="likes">
+          </button>
+        </form>
+        {{/if}}
+      </div>
+
     </div>
 
     {{!-- 貼文的回覆 --}}
@@ -53,13 +77,13 @@
         {{#each replies}}
         <tr class="post">
           <td><a href="/users/{{this.User.id}}/tweets"><img src="{{this.User.avatar}}" alt="post-icon"
-                class="post-icon post-avatar"></td>
+                class="post-avatar"></td>
           <td>{{this.User.name}}
-            <small>@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</small>
-            <p>回覆
+            <small class="reply-title">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</small>
+            <p class="reply-title reply-reply">回覆
               <span class="reply-author">@{{this.author}}</span>
             </p>
-            <p>{{this.comment}}</p>
+            <p class="reply-description">{{this.comment}}</p>
           </td>
         </tr>
         {{/each}}
