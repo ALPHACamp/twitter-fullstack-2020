@@ -94,6 +94,21 @@ const tweetController = {
           author: tweet.User.account
         }))
 
+        const originalDate = tweet.createdAt
+
+        const date = originalDate.getDate()
+        const month = originalDate.getMonth()
+        const year = originalDate.getFullYear()
+        let dayOrNight = '上午'
+        let hour = originalDate.getHours()
+        if (hour > 12) {
+          hour = hour - 12
+          dayOrNight = '下午'
+        }
+        const minutes = originalDate.getMinutes()
+        const createdAt = `${dayOrNight} ${hour}:${minutes}．${year}年${month}月${date}日`
+        tweet.createdAt = createdAt
+
         const post = {
           tweet: tweet,
           isLiked: likes?.some(l => l.UserId === userId)
@@ -127,7 +142,6 @@ const tweetController = {
   likePost: (req, res, next) => {
     const TweetId = req.params.id
     const UserId = helpers.getUser(req).id
-
     Like.create({
       UserId,
       TweetId

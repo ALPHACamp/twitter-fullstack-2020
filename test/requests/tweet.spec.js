@@ -2,9 +2,9 @@ const chai = require('chai')
 const request = require('supertest')
 const sinon = require('sinon')
 const app = require('../../app')
-const helpers = require('../../_helpers');
-const should = chai.should();
-const expect = chai.expect;
+const helpers = require('../../_helpers')
+const should = chai.should()
+const expect = chai.expect
 const db = require('../../models')
 
 // 貼文功能測試
@@ -26,8 +26,8 @@ describe('# tweet request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .end(function(err, res) {
-            if (err) return done(err);
-            return done();
+            if (err) return done(err)
+            return done()
           });
       })
     })
@@ -41,7 +41,7 @@ describe('# tweet request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: [], role: 'user'});
+        ).returns({id: 1, Followings: [], role: 'user'})
         // 在測試資料庫中，新增 mock 資料
         await db.User.create({})
         await db.Tweet.create({UserId: 1, description: 'User1 的 Tweet1'})
@@ -58,18 +58,18 @@ describe('# tweet request', () => {
             if (err) return done(err);
             res.text.should.include('User1 的 Tweet1')
             res.text.should.include('User1 的 Tweet2')
-            return done();
+            return done()
           });
       })
 
       after(async () => {
         // 清除登入及測試資料庫資料 
-        this.ensureAuthenticated.restore();
-        this.getUser.restore();
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+        this.ensureAuthenticated.restore()
+        this.getUser.restore()
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true })
         await db.User.destroy({where: {},truncate: true, force: true})
         await db.Tweet.destroy({where: {},truncate: true, force: true})
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true })
       })
     })
   })
@@ -84,7 +84,7 @@ describe('# tweet request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: [], role: 'user'});
+        ).returns({id: 1, Followings: [], role: 'user'})
         // 在測試資料庫中，新增 mock 資料
         await db.User.create({})
       })
@@ -96,7 +96,7 @@ describe('# tweet request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .end(function(err, res) {
-            if (err) return done(err);
+            if (err) return done(err)
             done();
           });
       })
@@ -110,12 +110,12 @@ describe('# tweet request', () => {
 
       after(async () => {
         // 清除驗證資料以及測試 db 資料
-        this.ensureAuthenticated.restore();
+        this.ensureAuthenticated.restore()
         this.getUser.restore();
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true })
         await db.User.destroy({where: {},truncate: true, force: true})
         await db.Tweet.destroy({where: {},truncate: true, force: true})
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true })
       })
     })
 
@@ -132,8 +132,8 @@ describe('# tweet request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .end(function(err, res) {
-            if (err) return done(err);
-            done();
+            if (err) return done(err)
+            done()
           });
       })
 
@@ -151,7 +151,7 @@ describe('# tweet request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: [], role: 'user'});
+        ).returns({id: 1, Followings: [], role: 'user'})
         // 在測試資料庫中，新增 mock 資料
         await db.User.create({})
       })
@@ -163,26 +163,26 @@ describe('# tweet request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .end(function(err, res) {
-            if (err) return done(err);
-            done();
-          });
+            if (err) return done(err)
+            done()
+          })
       })
       it('cant create current users tweet', (done) => {
         // 檢查 db 會發現沒有新增的 tweet，表示太長的貼文不會新增成功
         db.Tweet.findAll({where: {UserId: 1}}).then(tweets => {
-          expect(tweets).to.be.an('array').that.is.empty;
+          expect(tweets).to.be.an('array').that.is.empty
           done()
         })
       })
 
       after(async () => {
         // 清除驗證資料以及測試 db 資料
-        this.ensureAuthenticated.restore();
-        this.getUser.restore();
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+        this.ensureAuthenticated.restore()
+        this.getUser.restore()
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true })
         await db.User.destroy({where: {},truncate: true, force: true})
         await db.Tweet.destroy({where: {},truncate: true, force: true})
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true })
       })
     })
   })
@@ -210,7 +210,7 @@ describe('# tweet request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .end(function(err, res) {
-            if (err) return done(err);
+            if (err) return done(err)
             done();
           });
       })
@@ -226,11 +226,11 @@ describe('# tweet request', () => {
         // 清除驗證資料以及測試 db 資料
         this.ensureAuthenticated.restore();
         this.getUser.restore();
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true })
         await db.User.destroy({where: {},truncate: true, force: true})
         await db.Tweet.destroy({where: {},truncate: true, force: true})
         await db.Like.destroy({where: {},truncate: true, force: true})
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true })
       })
     })
   })
@@ -245,7 +245,7 @@ describe('# tweet request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: [], role: 'user'});
+        ).returns({id: 1, Followings: [], role: 'user'})
         // 在測試資料庫中，新增 mock 資料
         await db.User.create({})
         await db.Tweet.create({UserId: 1, description: 'test'})
@@ -259,7 +259,7 @@ describe('# tweet request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .end(function(err, res) {
-            if (err) return done(err);
+            if (err) return done(err)
             done();
           });
       })
@@ -276,13 +276,13 @@ describe('# tweet request', () => {
         // 清除驗證資料以及測試 db 資料
         this.ensureAuthenticated.restore();
         this.getUser.restore();
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true })
         await db.User.destroy({where: {},truncate: true, force: true})
         await db.Tweet.destroy({where: {},truncate: true, force: true})
         await db.Like.destroy({where: {},truncate: true, force: true})
-        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
+        await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true })
       })
     })
   })
 
-});
+})

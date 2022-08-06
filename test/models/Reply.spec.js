@@ -1,7 +1,7 @@
-const chai = require('chai');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
-chai.use(require('sinon-chai'));
+const chai = require('chai')
+const sinon = require('sinon')
+const proxyquire = require('proxyquire')
+chai.use(require('sinon-chai'))
 
 const { expect } = require('chai')
 const {
@@ -37,8 +37,8 @@ describe('# Reply Model', () => {
     it('called Reply.init with the correct parameters', () => {
       expect(Reply.init).to.have.been.calledWithMatch(
         {
-          comment: DataTypes.TEXT,
-        },
+          comment: DataTypes.TEXT
+        }
       )
     })
   })
