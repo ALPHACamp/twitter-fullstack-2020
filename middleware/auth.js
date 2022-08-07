@@ -1,7 +1,10 @@
 const helpers = require('../_helpers')
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'admin') return res.redirect('/admin/tweets')
+    if (helpers.getUser(req).role === 'admin') {
+      req.flash('error_messages', '帳號不存在！')
+      return res.redirect('/admin/tweets')
+    }
     return next()
   }
   res.redirect('/signin')
@@ -9,9 +12,10 @@ const authenticated = (req, res, next) => {
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (helpers.getUser(req).role === 'admin') return next()
-    res.redirect('/')
-  } else {
-    res.redirect('/admin/signin')
+    if (helpers.getUser(req).role === 'user') {
+      req.flash('error_messages', '帳號不存在！')
+      return res.redirect('/admin/signin')
+    }
   }
 }
 
