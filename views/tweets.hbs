@@ -39,13 +39,13 @@
                 <small>
                   {{#if isLiked}}
                   <form action="/tweets/{{this.id}}/unlike" method="POST" class="likes">
-                    <button type="submit" class="likes">
+                    <button type="submit" class="likes" id="button-likes">
                       <img src="/images/redHeart.jpg" alt="likes" id="likes">
                     </button>
                   </form>
                   {{else}}
                   <form action="/tweets/{{this.id}}/like" method="POST" class="likes">
-                    <button type="submit" class="likes">
+                    <button type="submit" class="likes" id="button-likes">
                       <img src="/images/blackHeart.png" alt="likes" id="likes">
                     </button>
                   </form>
