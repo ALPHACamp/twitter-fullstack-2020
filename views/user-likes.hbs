@@ -191,6 +191,7 @@
               style="margin-right: 40px;font-family: 'Montserrat';font-style: normal;font-weight: 600;font-size: 20px;line-height: 14px;color: #6C757D;">{{this.repliedCount}}</span>
           </div>
           <div>
+            {{#if this.isLiked}}
             <form action="/tweets/{{this.Tweet.id}}/unlike" method="POST">
               <button style="border:none;background-color:transparent;outline:none;">
                 <img src="/images/redHeart.jpg" alt="" style="width: 20px; height: 20px;">
@@ -198,6 +199,15 @@
               <span
                 style="font-family: 'Montserrat';font-style: normal;font-weight: 600;font-size: 20px;line-height: 14px;color: #6C757D;">{{this.likedCount}}</span>
             </form>
+            {{else}}
+            <form action="/tweets/{{this.Tweet.id}}/like" method="POST">
+              <button style="border:none;background-color:transparent;outline:none;">
+                <img src="/images/blackHeart.png" alt="" style="width: 20px; height: 20px;">
+              </button>
+              <span
+                style="font-family: 'Montserrat';font-style: normal;font-weight: 600;font-size: 20px;line-height: 14px;color: #6C757D;">{{this.likedCount}}</span>
+            </form>
+            {{/if}}
           </div>
         </div>
 
