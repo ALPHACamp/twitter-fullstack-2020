@@ -1,0 +1,57 @@
+{{#ifCond route 'replies'}}
+<div class="tweet-card" onclick="window.location='/tweets/{{this.TweetId}}/replies'">
+  {{else}}
+  <div class="tweet-card" onclick="window.location='/tweets/{{this.id}}/replies'">
+    {{/ifCond}}
+    <a href="/users/{{this.User.id}}/tweets">
+      <img class="me-auto rounded-circle" src="{{this.User.avatar}}" alt="avatar" style="width:50px;height:50px">
+    </a>
+    <a class="tweet-card-name" href="/users/{{this.User.id}}/tweets">
+      <span class="font-name">{{this.User.name}}</span>
+      <span class="font-account">@{{this.User.account}}</span>
+      <span class="gray">・{{relativeTimeFromNow this.createdAt}}</span>
+    </a>
+    <div class="text-box">
+      {{#ifCond route 'replies'}}
+      <span class="font-account">回覆</span>
+      <a href="/users/{{this.Tweet.User.id}}/tweets">
+        <span class="font-account" style="color:#FF6600"> @{{this.Tweet.User.account}}</span>
+      </a>
+      <p class="space"></p>
+      {{/ifCond}}
+      <span>
+        {{#ifCond route 'tweets'}}{{this.description}}{{/ifCond}}
+        {{#ifCond route 'replies'}}{{this.comment}}{{/ifCond}}
+        {{#ifCond route 'tweets'}}
+        <form action="/tweets/{{this.id}}/replies" method="GET">
+          <div class="speech-bubble">
+            <button type="submit">
+              <img src="/images/icons/speech-bubble.png" alt="reply">
+            </button>
+            <div class="gray">{{this.Replies.length}}</div>
+          </div>
+        </form>
+
+        {{#if this.isLiked}}
+        <form action="/tweets/{{this.id}}/unlike" method="POST">
+          <div class="like-w">
+            <button type="submit">
+              <img src="/images/icons/like.png" alt="like">
+            </button>
+            <div class="gray">{{this.Likes.length}}</div>
+          </div>
+        </form>
+        {{else}}
+        <form action="/tweets/{{this.id}}/like" method="POST">
+          <div class="like-w">
+            <button type="submit">
+              <img src="/images/icons/like-w.png" alt="like">
+            </button>
+            <div class="gray">{{this.Likes.length}}</div>
+          </div>
+        </form>
+        {{/if}}
+        {{/ifCond}}
+      </span>
+    </div>
+  </div>

@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      account: {
+        type: Sequelize.TEXT
+      },
       email: {
         type: Sequelize.STRING
       },
@@ -15,9 +18,12 @@ module.exports = {
         type: Sequelize.STRING
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       avatar: {
+        type: Sequelize.STRING
+      },
+      cover: {
         type: Sequelize.STRING
       },
       introduction: {
@@ -26,12 +32,22 @@ module.exports = {
       role: {
         type: Sequelize.STRING
       },
-      createdAt: {
+      follower_counts: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
+      following_counts: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
+      created_at: {
         allowNull: false,
+        // field: 'created_at',
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
+        // field: 'updated_at',
         type: Sequelize.DATE
       }
     });

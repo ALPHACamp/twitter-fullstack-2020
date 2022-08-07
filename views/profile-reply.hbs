@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+    {{> left-side route='profile'}}
+    <div class="user-main col-6">
+      {{> user-header}}
+      {{!-- Cover、大頭貼、個人簡歷 --}}
+      {{> user-info}}
+
+      {{>tweet-tabs route='replies'}}
+      {{#each repliesList}}
+      {{> tweet route='replies'}}
+      {{/each}}
+
+    </div>
+    {{> right-side}}
+  </div>
+</div>

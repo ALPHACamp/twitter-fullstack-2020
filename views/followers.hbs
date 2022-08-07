@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+    {{> left-side route='tweets'}}
+    <div class="main col-6">
+    {{#if personal}}
+    {{> user-header route='followers'}}
+    {{>follow-tabs route='followers'}}
+    {{#each personal.Followers}}
+    <div class="tweet-card">
+      <a href="/users/{{this.id}}/tweets">
+        <img class="me-auto rounded-circle" src="{{this.avatar}}" alt="avatar">
+      </a>
+      <a class="tweet-card-name" href="/users/{{this.id}}/tweets">
+        <span class="font-name">{{this.name}}</span>
+        <span class="font-account">@{{this.account}}・{{relativeTimeFromNow this.createdAt}}</span>
+      </a>
+      <div class="text-box">{{this.introduction}}
+      </div>
+    </div>
+    {{/each}}
+    {{else}}
+    {{> user-header}}
+    {{>follow-tabs route='followers'}}
+    {{#each user.Followers}}
+    <div class="tweet-card">
+      <a href="/users/{{this.id}}/tweets">
+        <img class="me-auto rounded-circle" src="{{this.avatar}}" alt="avatar">
+      </a>
+      <a class="tweet-card-name" href="/users/{{this.id}}/tweets">
+        <span class="font-name">{{this.name}}</span>
+        <span class="font-account">@{{this.account}}・{{relativeTimeFromNow this.createdAt}}</span>
+      </a>
+      <div class="text-box">{{this.introduction}}
+      </div>
+    </div>
+    {{/each}}
+    {{/if}}
+    </div>
+    {{> right-side}}
+  </div>
+</div>
