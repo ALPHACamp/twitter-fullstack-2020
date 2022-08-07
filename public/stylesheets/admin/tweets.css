@@ -1,14 +1,14 @@
 .adminTweetsListContainer {
   position: absolute;
-  top: 80px;
+  top: 1px;
   left: 332px;
-  width: 700px;
+  width: 938px;
   height: 1200px;
 }
 
 .adminTweetsHeaderContainer {
   position: absolute;
-  width: 938px;
+  width: 800px;
   height: 74px;
   border: 0.3px solid #e9f2fa
 }
@@ -31,7 +31,7 @@
 
 .adminTweetContainer {
   position: relative;
-  width: 938px;
+  width: 800px;
   height: 119px;
   border: 0.3px solid #e9f2fa;
   top: 73px;
@@ -97,7 +97,7 @@
   height: 15px;
   top: 21.5px;
   bottom: 81.5px;
-  left: 912.63px;
+  left: 770px;
   right: 4.63px;
 }
 
@@ -113,8 +113,8 @@
 
 .adminTweetsPagination {
   position: absolute;
-  top: 1230px;
+  top: 1150px;
   bottom: 24px;
-  left: 560px;
+  left: 450px;
   right: 820.33px;
 }

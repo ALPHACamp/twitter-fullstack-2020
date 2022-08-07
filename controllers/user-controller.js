@@ -66,8 +66,8 @@ const userController = {
             email,
             password: hash,
             role: 'user',
-            avatar: 'https://upload.cc/i1/2022/07/29/CW8Hu0.png',
-            banner: 'https://upload.cc/i1/2022/07/26/CE3yXw.png'
+            avatar: '/images/blackACLogo.png',
+            banner: '/images/defaultBanner.png'
           }))
           .then(() => {
             req.flash('success_messages', '帳號註冊成功！')
@@ -212,6 +212,7 @@ const userController = {
       .catch(err => next(err))
   },
   getSetting: (req, res, next) => {
+    const currentUser = helpers.getUser(req)
     const currentUserId = helpers.getUser(req) && helpers.getUser(req).id
 
     if (currentUserId !== Number(req.params.id)) {
@@ -223,7 +224,7 @@ const userController = {
       raw: true
     })
       .then(user => {
-        res.render('setting', { user })
+        res.render('setting', { user, currentUser })
       })
       .catch(err => next(err))
   },

@@ -8,7 +8,7 @@
 
 .adminUsersHeaderContainer {
   position: absolute;
-  width: 810px;
+  width: 1075px;
   height: 74px;
   border: 0.3px solid #e9f2fa
 }
@@ -35,8 +35,8 @@
   bottom: 0px;
   left: 0px;
   right: 0px;
-  width: 810px;
-  height: 700px;
+  width: 1075px;
+  height: 1126px;
   border: 0.3px solid #e9f2fa;
   display: flex;
   flex-direction: row;

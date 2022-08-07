@@ -2,7 +2,7 @@ const helpers = require('../_helpers')
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (helpers.getUser(req).role === 'admin') {
-      req.flash('error_messages', '帳號不存在！')
+      req.flash('error_messages', '帳號不存在！管理者無法登入前台！')
       return res.redirect('/admin/tweets')
     }
     return next()

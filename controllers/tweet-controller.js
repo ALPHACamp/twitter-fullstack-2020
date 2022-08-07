@@ -23,7 +23,7 @@ const tweetController = {
           description: t.description.substring(0, 50),
           User: t.User.dataValues,
           user,
-          isLiked: t.Likes.length > 0
+          isLiked: t.Likes.some(f => f.userId === user.id)
 
         }))
 

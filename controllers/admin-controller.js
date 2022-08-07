@@ -7,11 +7,11 @@ const adminController = {
     res.render('admin/signin')
   },
   signIn: (req, res) => {
-    req.flash('success_messages', 'login successfully!')
+    req.flash('success_messages', '成功登入!')
     res.redirect('/admin/tweets')
   },
   logout: (req, res) => {
-    req.flash('success_messages', 'logout successfully!')
+    req.flash('success_messages', '成功登出!')
     req.logout()
     res.redirect('/admin/signin')
   },
@@ -21,10 +21,10 @@ const adminController = {
     const limit = Number(req.query.limit) || DEFAULT_LIMIT
     const offset = getOffsetAdminTweets(limit, page)
     return Tweet.findAll({
-      order: [['created_at', 'DESC']],
+      order: [['createdAt', 'DESC']],
       attributes: [
-        'id', 'created_at',
-        [sequelize.literal('substring(description,1,100)'), 'description']
+        'id', 'createdAt',
+        [sequelize.literal('substring(description,1,50)'), 'description']
       ],
       include: [{
         model: User,
@@ -47,7 +47,7 @@ const adminController = {
     const { id } = req.params
     return Tweet.findByPk(id)
       .then(tweet => {
-        if (!tweet) throw new Error("Restaurant didn't exist!")
+        if (!tweet) throw new Error('推文不存在!')
         return tweet.destroy()
       })
       .then(() => res.redirect('/admin/tweets'))

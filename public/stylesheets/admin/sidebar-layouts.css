@@ -1,10 +1,22 @@
-.adminSidebarOptionsContainer {
+#adminSidebarOptionsContainer {
   float: left;
   position: absolute;
   width: 178px;
   height: 1200px;
   left: 130px;
-  top: 60px;
+  top: 0px;
+}
+
+#adminTweetsListLogo {
+  position: absolute;
+  top: 2.47px;
+  bottom: 1094.97px;
+  left: 1px;
+  right: 138.9px;
+  background: #FFFFFF;
+  width: 27.2px;
+  height: 25.25px;
+  visibility: visible;
 }
 
 #adminTweetsRoute {
@@ -25,18 +37,6 @@
   right: 125px;
   width: 50px;
   height: 50px;
-}
-
-#adminTweetsListLogo {
-  position: absolute;
-  top: 2.47px;
-  bottom: 1094.97px;
-  left: 1px;
-  right: 138.9px;
-  background: #FFFFFF;
-  width: 27.2px;
-  height: 25.25px;
-  visibility: visible;
 }
 
 #adminTweetsListOrangeLogo {
@@ -137,8 +137,4 @@
   color: #44444F;
   width: 36px;
   height: 26px;
-}
-
-.active {
-  color: #FF6600;
 }
