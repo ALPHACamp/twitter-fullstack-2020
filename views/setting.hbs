@@ -1,5 +1,5 @@
 <div class="wrapper d-flex">
-
+  {{>modals}}
   {{>profile-modals}}
   {{>left-content-setting}}
 
@@ -24,15 +24,15 @@
                 <label for="name" style="margin:0; padding-left:15px;">名稱</label>
                 <input type="text" name="name" class="form-control font-weight-bold" placeholder="名稱" maxlength="50"
                   value="{{ user.name }}"
-                  style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;"
-                  id="name" required autofocus>
+                  style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;" id="name"
+                  required autofocus>
               </div>
               <div class="form-row mb-3" style="background: #F5F8FA;">
                 <label for="email" style="margin:0; padding-left:15px;">Email</label>
                 <input type="email" name="email" class="form-control font-weight-bold" placeholder="Email"
                   value="{{ user.email }}"
-                  style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;"
-                  id="email" required autofocus>
+                  style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;" id="email"
+                  required autofocus>
               </div>
               <div class="form-row mb-3" style="background: #F5F8FA;">
                 <label for="password" style="margin:0; padding-left:15px;">密碼</label>
@@ -42,8 +42,7 @@
               </div>
               <div class="form-row" style="background: #F5F8FA;">
                 <label for="checkPassword" style="margin:0; padding-left:15px;">密碼再確認</label>
-                <input type="password" name="checkPassword" class="form-control font-weight-bold"
-                  placeholder="請再次輸入密碼"
+                <input type="password" name="checkPassword" class="form-control font-weight-bold" placeholder="請再次輸入密碼"
                   style="background: #F5F8FA; border: 0; border-bottom: 2px solid #657786; border-radius:0;"
                   id="checkPassword" required>
               </div>

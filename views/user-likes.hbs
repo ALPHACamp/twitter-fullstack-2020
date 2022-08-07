@@ -1,5 +1,5 @@
 <div class="wrapper d-flex bg-white">
-
+  {{>modals}}
   {{>profile-modals}}
   {{>left-content-profile}}
 
@@ -243,7 +243,7 @@
     }
   }</script>
 
-<script>function validateName() {
+<script>function validateName () {
     const areatextarea = document.querySelector("#textname")
     const areatext = document.querySelector("#textname").value.length
     const textcount = document.querySelector("#textnamecount")
@@ -252,7 +252,7 @@
   }
 </script>
 
-<script>function validate() {
+<script>function validate () {
     const areatextarea = document.querySelector("#introduction")
     const areatext = document.querySelector("#introduction").value.length
     const textcount = document.querySelector("#textcount")

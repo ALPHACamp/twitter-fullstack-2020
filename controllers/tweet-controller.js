@@ -24,7 +24,6 @@ const tweetController = {
           User: t.User.dataValues,
           user,
           isLiked: t.Likes.some(f => f.userId === user.id)
-
         }))
 
         const recommendFollow = userData.map(user => ({
