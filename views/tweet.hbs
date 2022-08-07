@@ -1,63 +1,68 @@
 <div class="wrapper d-flex">
 
   {{> modals}}
-  {{>left-content}}
+  {{>left-content-home}}
 
-  <div class="container">
-    <h4 id="header"><a href="/tweets">
-        <img class="ms-3" src="https://upload.cc/i1/2022/07/29/bYiz5s.png" alt=""
-          style="height: 30%; width: 4%; margin-right: 25px;">
+  <div class="container reply-index">
+    <h4 id="header" style="padding-bottom: 24px; padding-top: 6px;"><a href="/tweets"
+        style="font-weight: 700; font-size: 24px; line-height: 26px;">
+        <img src="/images/leftButton.png" alt="" style="width: 15px; height: 15px;">
         推文</a>
     </h4>
     {{!-- 推文 --}}
-    <div class="px-2 post-tweet table" id="tweet">
-      <a href="/users/{{tweet.User.id}}/tweets"><img src="https://upload.cc/i1/2022/07/29/CW8Hu0.png" alt="post-icon"
-          class="post-icon"></a>
-      <div>
-        <div>
-          <span>{{tweet.tweet.User.name}}</span>
-          <small>@{{tweet.tweet.User.account}}．{{relativeTimeFromNow tweet.tweet.createdAt}}</small>
-          <p class="description">{{tweet.tweet.description}}</p>
-        </div>
-        {{!-- 推文數據 --}}
-        <div class="d-flex mb-4">
-          <div style="margin-right: 20px;">
-            <img src="https://upload.cc/i1/2022/07/29/Os3ojA.png" alt="reply" id="reply" class="btn-show-reply"
-              data-bs-toggle="modal" data-bs-target="#replyModal" data-id="{{tweet.id}}">
-            {{replies.length}} 回覆
-          </div>
-          <div>
-            <span class="second">{{#if tweet.isLiked}}
-              <form action="/tweets/{{tweet.tweet.id}}/unlike" method="POST">
-                <button type="submit">
-                  <img src="https://upload.cc/i1/2022/07/29/CaJuOl.png" alt="likes" id="likes">
-                </button>
-              </form>
-              {{else}}
-              <form action="/tweets/{{tweet.tweet.id}}/like" method="POST">
-                <button type="submit">
-                  <img src="https://upload.cc/i1/2022/07/29/15GUkZ.png" alt="likes" id="likes">
-                </button>
-              </form>
-              {{/if}}<span>{{likes.length}}喜歡次數</span>
-          </div>
-        </div>
+    <div class="px-2 reply-panel" id="tweet">
+      <a href="/users/{{tweet.User.id}}/tweets"><img src="{{tweet.tweet.User.avatar}}" alt="post-icon"
+          class="tweet-avatar" class="post-icon"></a>
+
+      {{!-- post --}}
+      <div style="display: inline;">
+        <span>{{tweet.tweet.User.name}}</span>
+        <small>@{{tweet.tweet.User.account}}</small>
+        <p class="description" style="margin: 0px;">{{tweet.tweet.description}}</p>
+        <small class="created-time"
+          style="font-weight: 500; font-size: 14px; line-height: 22px;">{{tweet.tweet.createdAt}}</small>
+      </div>
+      {{!-- 推文數據 --}}
+      <div class="dashboard" style="padding-top: 10px;">
+        <span> <span style="font-family: 'Montserrat'; font-weight: 700; font-size: 19px;">{{replies.length}}</span>
+          <span style="font-weight:500; font-size: 19px; color: #6C757D">回覆</span><span
+            style="font-family: 'Montserrat'; font-weight: 700; font-size: 19px;">
+            {{likes.length}}</span> <span style="font-weight:500; font-size: 19px; color: #6C757D">喜歡次數</span></span>
+      </div>
+
+      <div class="row-reaction" style="padding-top: 10px; padding-bottom: 10px;">
+        <img src="/images/reply.png" alt="reply" class="btn-show-reply" data-bs-toggle="modal"
+          data-bs-target="#replyModal" data-id="{{tweet.tweet.id}} "
+          style="margin-right: 80px; width: 25px; height: 25px;">
+
+        {{#if tweet.isLiked}}
+        <form action="/tweets/{{tweet.tweet.id}}/unlike" method="POST" class="likes unlike">
+          <button type="submit" class="likes">
+            <img src="/images/redHeart.jpg" alt="likes" class="likes unlike" style="width: 25px; height: 25px;">
+          </button>
+        </form>
+        {{else}}
+        <form action="/tweets/{{tweet.tweet.id}}/like" method="POST" class="likes">
+          <button type="submit" class="likes">
+            <img src="/images/blackHeart.png" alt="likes" class="likes" style="width: 25px; height: 25px;">
+          </button>
+        </form>
+        {{/if}}
       </div>
     </div>
+
     {{!-- 貼文的回覆 --}}
     <table class="table">
       <tbody>
         {{#each replies}}
         <tr class="post">
-          <td><a href="/users/{{this.User.id}}/tweets"><img src="https://upload.cc/i1/2022/07/29/CW8Hu0.png"
-                alt="post-icon" class="post-icon"></td>
+          <td class="avatar-block"><a href="/users/{{this.User.id}}/tweets"><img src="{{this.User.avatar}}" alt="post-icon" class="post-avatar"></td>
           <td>{{this.User.name}}
-            <small>@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</small>
-            <p>回覆
-              {{!-- todo: 解bug --}}
-              <span>@ each內抓不到tweet資料{{tweet.User.account}}</span>
+            <small class="reply-title">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</small>
+            <p class="reply-title reply-reply">回覆
+              <span class="reply-author">@{{this.author}}</span>
             </p>
-            <p>{{this.comment}}</p>
+            <p class="reply-description">{{this.comment}}</p>
           </td>
         </tr>
         {{/each}}

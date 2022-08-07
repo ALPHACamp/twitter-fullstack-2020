@@ -1,11 +1,14 @@
 const dayjs = require('dayjs')
 const relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
-// 時區不同，會少8小時
+require('dayjs/locale/zh-tw')
+
+// 時區與本地同步
+const timezoneOffset = dayjs().utcOffset()
 
 module.exports = {
   currentYear: () => dayjs().year(),
-  relativeTimeFromNow: a => dayjs(a).hour(12).fromNow(),
+  relativeTimeFromNow: a => dayjs(a).locale('zh-tw').add(timezoneOffset).fromNow(),
   ifCond: function (a, b, options) {
     return a === b ? options.fn(this) : options.inverse(this)
   }

@@ -5,9 +5,9 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate (models) {
-      User.hasMany(models.Reply)
-      User.hasMany(models.Tweet)
-      User.hasMany(models.Like)
+      User.hasMany(models.Reply, { foreignKey: 'userId' })
+      User.hasMany(models.Tweet, { foreignKey: 'userId' })
+      User.hasMany(models.Like, { foreignKey: 'userId' })
       User.belongsToMany(User, {
         through: models.Followship,
         foreignKey: 'followingId',
@@ -28,7 +28,11 @@ module.exports = (sequelize, DataTypes) => {
     avatar: DataTypes.STRING,
     introduction: DataTypes.TEXT,
     banner: DataTypes.STRING,
-    role: DataTypes.STRING
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: 'user'
+    }
+
   }, {
     sequelize,
     modelName: 'User',

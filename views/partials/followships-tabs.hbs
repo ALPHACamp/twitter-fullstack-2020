@@ -1,0 +1,17 @@
+<!-- followships-tabs -->
+<div class="d-flex mb-3" style="border-bottom: 1px solid #E6ECF0;">
+  <div class="d-flex justify-content-center" style="height: 50px;width: 160px;
+  {{#ifCond route 'followers'}}border-bottom:3px solid #FF6600;{{/ifCond}}">
+    <a style="text-decoration: none;" href="/users/{{user.id}}/followers">
+      <span style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 700;font-size: 20px;
+      line-height: 22px;color:{{#ifCond route 'followers'}}#FF6600{{else}}#657786{{/ifCond}}">追隨者</span>
+    </a>
+  </div>
+  <div class="d-flex justify-content-center" style="height: 50px;width: 160px;
+  {{#ifCond route 'followings'}}border-bottom:3px solid #FF6600;{{/ifCond}}">
+    <a style="text-decoration: none;" href="/users/{{user.id}}/followings">
+      <span style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 700;font-size: 20px;
+      line-height: 22px;color:{{#ifCond route 'followings'}}#FF6600{{else}}#657786{{/ifCond}}">正在追隨</span>
+    </a>
+  </div>
+</div>
