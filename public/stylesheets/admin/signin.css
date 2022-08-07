@@ -1,0 +1,98 @@
+.adminAcLogo {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  left: 675px;
+  top: 70px;
+}
+
+.adminSigninHeader {
+  position: absolute;
+  width: 112px;
+  height: 26px;
+  left: 644px;
+  top: 138px;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 26px;
+  color: #1C1C1C;
+}
+
+.adminSigninFormContainer {
+  position: absolute;
+  top: 204px;
+  bottom: 718px;
+  right: 522px;
+  left: 522px;
+}
+
+#adminFormGroupOne {
+  margin-bottom: 32px;
+}
+
+.form-floating>.form-control::placeholder {
+  color: revert;
+}
+
+.form-floating>.form-control:not(:focus)::placeholder {
+  color: transparent;
+}
+
+#adminAccountLabel,
+#adminPasswordLabel {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 12px;
+}
+
+#adminAccount,
+#adminPassword {
+  width: 356px;
+  height: 54px;
+  background: #F5F8FA;
+  border-radius: 2px;
+  border: none;
+  border-bottom: 2px solid #657786;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+#adminSubmitButton {
+  width: 356px;
+  height: 46px;
+  margin-top: 40px;
+  margin-bottom: 16px;
+  background: #FF6600;
+  border-radius: 50px;
+  font-family: Noto Sans TC;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  color: #FFFFFF;
+}
+
+.adminRedirectButtonContainer {
+  position: absolute;
+  width: 95px;
+  height: 36px;
+  top: 446px;
+  left: 780px;
+}
+
+#adminRedirectButton {
+  width: 117px;
+  height: 36px;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #0062FF;
+}

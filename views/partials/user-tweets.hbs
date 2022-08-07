@@ -1,0 +1,39 @@
+{{!-- 推文 --}}
+{{#if tweets.length}}
+{{>user-tabs route='tweets'}}
+<div>
+  {{#each tweets}}
+  <a href="/tweets/{{this.id}}/replies" style="text-decoration:none;">
+    <div class="tweet" style="border-bottom:1px solid #E6ECF0;margin-bottom:10px;padding-bottom:10px;">
+      <div>
+        <img class="avatar" src="{{../targetUser.avatar}}" alt="avatar"
+          style="height: 50px; width:50px; border-radius: 50%; margin: 0 10px 0 20px;">
+        <span class="name"
+          style="font-family: 'Noto Sans TC'; font-style: normal; font-weight: 700; font-size: 25px; line-height: 26px; color: #171725; margin: 0;">{{../targetUser.name}}</span>
+        <span class="account" style="font-family: 'Noto Sans TC'; font-style: normal; font-weight: 400;
+              font-size: 15px; line-height: 22px; color: #6C757D;">@{{../targetUser.account}} • {{relativeTimeFromNow
+          this.createdAt}}</span>
+      </div>
+      <div class="content">
+        <div class="description" style="margin: 0 0 0 87px;">
+          <span
+            style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 20px;line-height: 26px;color: #171725;">
+            {{this.description}}</span>
+        </div>
+        <div class="footer" style="margin: 0 0 0 87px;">
+          <img src="/images/reply.png" alt="comment" style="width: 20px; hight: 20px">
+          <span
+            style="margin-right: 40px;font-family: 'Montserrat';font-style: normal;font-weight: 600;font-size: 20px;line-height: 14px;color: #6C757D;">{{this.repliedCount}}</span>
+
+          <img src="/images/blackHeart.png" alt="like" style="width: 20px; hight: 20px">
+          <span
+            style="font-family: 'Montserrat';font-style: normal;font-weight: 600;font-size: 20px;line-height: 14px;color: #6C757D;">{{this.likedCount}}</span>
+        </div>
+      </div>
+    </div>
+  </a>
+  {{/each}}
+</div>
+{{else}}
+{{>user-tabs route='tweets'}}
+{{/if}}

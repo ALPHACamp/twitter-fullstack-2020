@@ -1,0 +1,51 @@
+<!-- left-content-profile -->
+<nav id="left-sidebar" style="display:flex; align-items:stretch; width: 30%; height: 630px; margin: 0 3% 0 0;">
+  <ul class="list-unstyled" style="position:fixed; width: 14%;">
+    <img class="mt-2 mb-3" src="/images/orangeACLogo.png" alt="AC icon"
+      style="height: 40px; width: 40px; border-radius: 0px;">
+    <li style="margin-bottom: 20%;">
+      <h6>
+        <a href="/tweets" style="text-decoration: none; color: inherit;">
+          <img src="/images/blackHome.png" alt="" 
+          style="height:24px; width:24px; margin-right:3%;">
+          <span>首頁</span>
+        </a>
+      </h6>
+    </li>
+    <li style="margin-bottom: 20%;">
+      <h6>
+        <a href="/users/{{user.id}}/tweets" style="text-decoration: none; color: inherit;">
+          <img src="/images/orangeProfile.png" alt="" 
+          style="height:24px; width:24px; margin-right:3%;">
+          <span style="color:#FF6600">個人資料</span>
+        </a>
+      </h6>
+    </li>
+    <li style="margin-bottom: 20%;">
+      <h6>
+        <a href="/users/{{user.id}}/setting" style="text-decoration: none; color: inherit;">
+          <img src="/images/blackSetting.png" alt="" 
+          style="height:24px; width:24px; margin-right:3%;">
+          設定
+        </a>
+      </h6>
+    </li>
+    <li style="margin-bottom: 297px;">
+      <h6>
+        <a href="/tweets/modal" class="btn tweet-button" data-bs-toggle="modal" data-bs-target="#myModal"
+          style="width: 180px; font-weight: 400; font-size: 20px;">
+          推文
+        </a>
+      </h6>
+    </li>
+    <li>
+      <a style="text-decoration:none; " href="/logout">
+        <p style="font-family: 'Noto Sans TC'; font-style: normal; font-weight: 700;font-size: 18px; color: #44444F;">
+          <img src="/images/logout.png" alt=""
+            style="height: 24px; width: 24px; margin-right: 4%;">
+          登出
+        </p>
+      </a>
+    </li>
+  </ul>
+</nav>

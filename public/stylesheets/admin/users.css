@@ -1,0 +1,207 @@
+.adminUsersListContainer {
+  position: absolute;
+  top: 1px;
+  left: 332px;
+  width: 938px;
+  height: 1200px;
+}
+
+.adminUsersHeaderContainer {
+  position: absolute;
+  width: 1075px;
+  height: 74px;
+  border: 0.3px solid #e9f2fa
+}
+
+.adminUsersHeader {
+  position: absolute;
+  top: 24px;
+  bottom: 24px;
+  left: 20.92px;
+  right: 819.33px;
+  width: 120px;
+  height: 26px;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.card-group-admin {
+  position: absolute;
+  top: 74px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  width: 1075px;
+  height: 1126px;
+  border: 0.3px solid #e9f2fa;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 16px;
+  row-gap: 16px;
+  align-content: flex-start;
+}
+
+.adminUserContainer {
+  position: relative;
+  width: 249px;
+  height: 314px;
+  border: 0.3px solid #e9f2fa;
+  top: 16px;
+  border-radius: 10px;
+  background: #F6F7F8;
+}
+
+.card-img-top {
+  position: absolute;
+  width: 249px;
+  height: 140px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.userAvatar {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  top: 64px;
+  bottom: 150px;
+  left: 73.99px;
+  right: 75.01px;
+  border: 4px solid #FFFFFF
+}
+
+.userNameOnCard {
+  position: absolute;
+  width: 100px;
+  height: 26px;
+  top: 172px;
+  bottom: 116px;
+  left: 73.99px;
+  right: 75.01px;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  text-align: center;
+  color: #171725
+}
+
+.userHandleOnCard {
+  position: absolute;
+  width: 90.54px;
+  height: 22px;
+  top: 196px;
+  bottom: 96px;
+  left: 75.34px;
+  right: 83.12px;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  text-align: center;
+  color: #6C757D;
+}
+
+.userTweetsCountIcon {
+  position: absolute;
+  width: 23.87px;
+  height: 21.6px;
+  top: 237.2px;
+  bottom: 55.2px;
+  left: 55px;
+  right: 70.13px;
+}
+
+.userTweetsCountOnCard {
+  position: absolute;
+  width: 29px;
+  height: 15px;
+  top: 239.5px;
+  bottom: 59.5px;
+  left: 87px;
+  right: 133px;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 15px;
+  color: #1C1C1C;
+}
+
+.userLikesCountIcon {
+  position: absolute;
+  width: 20.1px;
+  height: 18.91px;
+  top: 237.72px;
+  bottom: 57.36px;
+  left: 133.95px;
+  right: 94.95px;
+}
+
+.userLikesCountOnCard {
+  position: absolute;
+  width: 30px;
+  height: 26px;
+  top: 234px;
+  bottom: 54px;
+  left: 164px;
+  right: 55px;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.userFollowingsCountOnCard {
+  position: absolute;
+  width: 75px;
+  height: 22px;
+  top: 268px;
+  bottom: 24px;
+  left: 46.01px;
+  right: 127.99px;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #6C757D
+}
+
+.userFollowersCountOnCard {
+  position: absolute;
+  width: 75px;
+  height: 22px;
+  top: 268px;
+  bottom: 24px;
+  left: 129.01px;
+  right: 44.99px;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.strongOne,
+.strongTwo {
+  color: #171725
+}
+
+.adminUsersPagination {
+  position: absolute;
+  top: 1150px;
+  bottom: 24px;
+  left: 780px;
+  right: 820.33px;
+}

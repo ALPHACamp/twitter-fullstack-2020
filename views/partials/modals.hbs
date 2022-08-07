@@ -1,0 +1,73 @@
+{{#if user}}
+<!-- 新增貼文-->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" style="width: 15px; margin-left: 0px;"></button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body add-post">
+        <form action="/tweets" method="POST">
+          <img src="{{user.avatar}}" alt="avatar"
+            style="border-radius: 50%; width: 50px; height: 50px; position: absolute;">
+          <label for="description" class="form-label"></label>
+          <textarea name="description" id="modal-description" class="tweetTextarea" placeholder="有什麼新鮮事 ?"
+            style="margin: 2px 0; width: 400px; height: 120px; position: absolute; left: 70px; top: 25px; outline: none;"></textarea>
+          <div class="text-end d-flex justify-content-end align-items-end" style="display: block; height: 168px;">
+            <div id="error" class="text-danger" role="alert"
+              style="margin-bottom: 15px; margin-right: 5px; font-weight: 500;font-size: 15px; line-height: 15px;">
+              {{!-- 錯誤訊息 --}}
+            </div>
+            <h4>
+              <button type="submit" class="badge rounded-pill text-bg-warning tweet-button">
+                推文
+              </button>
+            </h4>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{{!-- 查看單一貼文 --}}
+<div class="modal fade" id="replyModal">
+  <div class="modal-dialog">
+    <div class="modal-content reply-the-post">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" style="width: 15px; margin-left: 0px;"></button>
+      </div>
+      <!-- Modal body -->
+      <div class="text-right" style="height: 450px;">
+        <div class=" modal-body post-modal">
+          {{!-- 留言訊息 --}}
+
+          {{!-- above --}}
+        </div>
+        <form action="/tweets/:id/replies" method="POST" class="reply-form">
+          <div class="d-flex" style="margin-left: 24px;"><img src="{{user.avatar}}" alt="avatar"
+              style="border-radius: 50%; width: 50px; height: 50px;">
+            <label for=" reply" class="form-label"></label>
+            <textarea name="reply" id="modal-reply" class="tweetTextarea" placeholder="推你的回覆"
+              style="border:none; height: 220px; margin-top:15px; margin-left: 8px; width: 360px; outline: none;"></textarea>
+          </div>
+          <div class="">
+            <div id="error-msg" class="text-danger" role="alert"
+              style="position: absolute; bottom: 24px; right: 100px;">
+              {{!-- 錯誤訊息 --}}
+            </div>
+            <button type="submit" class="badge rounded-pill text-bg-warning tweet-button" id="tweet-button"
+              style="font-size: 16px; width: 66px;">回覆</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{/if}}

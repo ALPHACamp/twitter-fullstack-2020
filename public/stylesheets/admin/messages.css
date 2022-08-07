@@ -1,0 +1,5 @@
+.alert {
+  position: relative;
+  text-align: center;
+  z-index: 1050;
+}
