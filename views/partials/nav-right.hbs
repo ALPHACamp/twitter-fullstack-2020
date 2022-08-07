@@ -1,0 +1,62 @@
+<div class="card border-light container mt-3 sticky-top m-0 p-0"
+  style="width: 18rem; font-family: 'Noto Sans TC'; font-style: normal; border-radius: 16px; margin-right:5px;">
+  <div class="card-header border-light">
+    <h5 class="mt-2" style="font-weight: bold; font-family:'Noto Sans TC', sans-serif;">推薦跟隨</h5>
+  </div>
+
+  <ul class="list-group list-group-flush " style="border:none;">
+
+    {{#each users}}
+    <li class="list-group-item border-light p-0 m-0" style="height: 70px; background-color:#FAFAFB;">
+      <div class="d-flex ms-3">
+        
+        {{!-- 頭像 --}}
+        <a href="/users/{{this.id}}" style="text-decoration: none;">
+          {{#if this.avatar}}
+          <div class="border border-light border-3 rounded-circle me-1" style="width: 50px; height: 50px; background: url('{{this.avatar}}'); background-size: cover; background-position: center;"></div>
+          {{else}}
+          <div class="border border-light border-3 rounded-circle me-1" style="width: 50px; height: 50px; background: url('/images/img.png'); background-size: cover; background-position: center;"></div>
+          {{/if}}
+        </a>
+
+        {{!-- 名字 --}}
+        {{#if this.isFollowed }}
+        <div class="d-flex flex-column">
+          <a href="/users/{{this.id}}" style="text-decoration: none; color:black; width:105px; height:22px;" class="mt-1">
+            <span style="font-weight: 700; font-size: 16px; line-height: 26px;">{{sliceUserInfo this.name '' this.isFollowed}}</span>
+          </a>
+          <span
+            style="font-weight: 500; font-size: 14px; line-height: 22px; color: #92929D ;width:105px; height:22px; ">@{{sliceUserInfo '' this.account this.isFollowed}}</span>
+        </div>
+        {{else}}
+        <div class="d-flex flex-column">
+          <a href="/users/{{this.id}}" style="text-decoration: none; color:black; width:123px; height:22px;" class="mt-1">
+            <span style="font-weight: 700; font-size: 16px; line-height: 26px;">{{sliceUserInfo this.name '' this.isFollowed}}</span>
+          </a>
+          <span
+            style="font-weight: 500; font-size: 14px; line-height: 22px; color: #92929D ;width:123px; height:22px; ">@{{sliceUserInfo '' this.account this.isFollowed}}</span>
+        </div>
+        {{/if}}
+
+        {{!-- 追蹤按鈕 --}}
+        <div class="m-0 p-0">
+          {{#if this.isFollowed }}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;" >
+            <button type="submit" name="id" value="{{this.id}}" class="btn btn-primary border border-light rounded-pill mt-1 ms-1 m-0 p-0"
+              style="background-color: #FF6600;  width:96px; height:43px;">正在跟隨
+            </button>
+          </form>
+          {{else}}
+          <form action="/followships" method="POST" style="display: contents;">
+            <button type="submit" name="id" value="{{this.id}}" class="btn btn-primary rounded-pill mt-1 ms-3"
+              style="background-color: #FFFFFF; color:#FF6600; border:#FF6600 solid 1px; width:64px; height:43px;">跟隨</button>
+          </form>
+          {{/if}}
+        </div>
+
+      </div>
+    </li>
+    {{/each}}
+
+  </ul>
+</div>

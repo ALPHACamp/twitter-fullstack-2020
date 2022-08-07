@@ -1,0 +1,58 @@
+<div class="col-2 nav-left">
+  {{#ifCond user.id userData.id}}
+  {{> nav-left route='personal-info'}}
+  {{else}}
+  {{> nav-left}}
+  {{/ifCond}}
+</div>
+
+<div class="col-8 nav-body" style="font-family: 'Noto Sans TC'; font-style: normal;">
+  <ul class="list-group">
+    {{>profile-header route='replies'}}
+    {{!-- 回覆版--}}
+    {{#each userData.Replies}}
+      <li class="list-group-item d-flex align-items-start py-3 px-4" style="border:#E6ECF0 solid 1px;">
+        <a href="/users/{{this.User.id}}/replies">
+          {{#if this.User.avatar}}
+            <div class="me-2 border rounded-circle"
+              style="width:50px; height:50px; border:#E6ECF0; background: url('{{this.User.avatar}}'); background-size: cover; background-position: center;">
+            </div>
+          {{else}}
+            <div class="me-2 border rounded-circle"
+              style="width:50px; height:50px; border:#E6ECF0; background: url('/images/img.png'); background-size: cover; background-position: center;">
+            </div>
+          {{/if}}
+        </a>
+        <div>
+          <a href="/users/{{this.User.id}}/replies" style="text-decoration:none;">
+            <p class="d-inline" style="font-weight: 700;font-size: 16px;line-height: 26px;color:#171725;">
+              {{this.User.name}}
+            </p>
+            <span class="ms-1"style="font-weight: 400;font-size: 14px;line-height: 22px;color:#6C757D;">
+              @{{this.User.account}}
+              ・{{relativeTimeFromNow this.createdAt}}
+            </span>
+          </a>
+        </small>
+        <span class="d-block mt-1 mb-1" style="font-weight: 400;font-size: 14px;line-height: 22px; color:#6C757D;">回覆
+          <a href="/users/{{this.Tweet.User.id}}/replies" style="text-decoration:none;">
+            <small style="color:#FF6600;margin-left:2px;">@{{this.Tweet.User.account}}</small>
+            <a style="text-decoration: none; color: #6C757D" href="/tweets/{{this.Tweet.id}}/replies">
+          </a>
+        </span>
+
+        <div style="word-break: break-word; width: 100%px; height: 100%;">
+          <a href="/tweets/{{this.Tweet.id}}/replies" style="text-decoration:none;">
+            <span class="m-0 p-0" style="font-weight: 400; font-size: 16px; line-height: 26px; color: #171725; width:700px;">{{this.comment}}</span>
+          </a>
+        </div>
+
+      </div>
+    </li>
+    {{/each}}
+  </ul>
+</div>
+
+<div class="col-2 nav-right">
+  {{> nav-right}}
+</div>

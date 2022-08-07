@@ -1,0 +1,31 @@
+{{#if error_messages}}
+  <div class="alert alert-success alert-dismissible fade show mt-3 mb-5" role="alert" 
+  style="background-color: #FFFFFF; border: 2px #ffffff solid; border-radius: 8px; box-shadow: 0px 4px 16px rgba(51, 51, 51, 0.08);">
+
+    <div class="d-flex justify-content-start align-items-center">
+      <span style="font-size: 20px; font-weight: 700; line-height: 28px;">
+        {{ error_messages }}
+      </span>
+      <div class="rounded-circle mx-4" style="height: 30px; width: 30px; border: 2px #FC5A5A solid; background: url('/images/red-cross.png'); background-size: 55%; background-repeat: no-repeat; background-position: center;">
+      </div>
+    </div>
+
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{{/if}}
+
+{{#if success_messages}}
+  <div class="alert alert-success alert-dismissible fade show mt-3 mb-5" role="alert" 
+  style="background-color: #FFFFFF; border: 2px #ffffff solid; border-radius: 8px; box-shadow: 0px 4px 16px rgba(51, 51, 51, 0.08);">
+
+    <div class="d-flex justify-content-start align-items-center">
+      <span style="font-size: 20px; font-weight: 700; line-height: 28px;">
+        {{ success_messages }}
+      </span>
+      <div class="rounded-circle mx-4" style="height: 30px; width: 30px; border: 2px #82C43C solid; background: url('/images/green-tick.png'); background-size: 55%; background-repeat: no-repeat; background-position: center;">
+      </div>
+    </div>
+
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{{/if}}

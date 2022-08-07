@@ -1,0 +1,33 @@
+<li class="list-group-item" style="height: 74px; border:#E6ECF0 solid 1px;">
+  <div>
+    <a href="/users/{{userData.id}}" style="text-decoration: none;">
+      <img class="d-inline-block mb-4 me-3" src="/images/backArrow.png" alt="返回按鍵" style="width: 27px; height: 24px">
+    </a>
+    <div class="d-inline-block">
+      <a href="/users/{{userData.id}}" style="text-decoration: none; color:black; ">
+        <span class="d-block pt-1"
+          style="width:700px; height:26px; font-weight: 700;font-size: 16px;line-height: 26px;min-width:200px overflow:hidden;">{{userData.name}}
+        </span>
+      </a>
+      <small class="d-block"
+        style="width:51px; height:21px; font-weight: 500;font-size: 14px;line-height: 22px;">{{userData.Tweets.length}}
+        推文
+      </small>
+    </div>
+  </div>
+</li>
+
+<li class="list-group-item" style="height: 52px; border:#E6ECF0 solid 1px; padding: 0; margin: 0">
+  <div class="d-flex align-items-end" style="height: 100%;">
+    <ul class="nav">
+      <li class="nav-item" style="width: 130px;">
+        <a class="nav-link profile-following-header {{#ifCond route 'follower'}}active{{/ifCond}}"
+          href="/users/{{userData.id}}/followers" style="text-align: center">追隨者</a>
+      </li>
+      <li class="nav-item" style="width: 130px;">
+        <a class="nav-link profile-following-header {{#ifCond route 'following'}}active{{/ifCond}}"
+          href="/users/{{userData.id}}/followings" style="text-align: center">正在追隨</a>
+      </li>
+    </ul>
+  </div>
+</li>

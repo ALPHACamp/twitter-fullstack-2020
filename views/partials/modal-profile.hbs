@@ -1,0 +1,161 @@
+<div class="modal fade" id="personal-info-edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data" class="needs-validation"
+        novalidate>
+        <div class="modal-header">
+          <button type="button" class="btn-close p-1 m-1" data-bs-dismiss="modal" aria-label="Close"
+            style="background: rgba(var(--bs-white-rgb),var(--bs-bg-opacity));">
+            <i class="fa-solid fa-xmark icon-size brand-color"></i>
+          </button>
+          <h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
+          <button type="submit" class="btn btn-brand">儲存</button>
+        </div>
+        <div class="modal-body">
+          {{#if user.cover}}
+            <div class="d-flex justify-content-center align-items-center text-light profile-edit-cover"
+              id="preview_cover"
+              style="background: linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url('{{user.cover}}'); background-size: cover;">
+          {{else}}
+            <div class="d-flex justify-content-center align-items-center text-light profile-edit-cover"
+              id="preview_cover"
+              style="background: linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url('/images/AC-cover.png'); background-size: cover;">
+          {{/if}}
+          <input type="file" name="cover" id="cover" class="display-none" onchange="readURL(this)"
+            target_id="preview_cover">
+          <label for="cover"><i class="fa-solid fa-camera icon-size pointer me-4"></i></label>
+          <input type="checkbox" name="delete_cover" id="delete-cover" class="display-none">
+          <label for="delete-cover"><i class="fa-solid fa-xmark icon-size pointer"></i></label>
+        </div>
+        {{#if user.avatar}}
+          <div
+            class="mb-3 border border-light border-3 rounded-circle d-flex justify-content-center align-items-center profile-edit-avatar"
+            id="preview_avatar"
+            style="background: url('{{user.avatar}}'), rgba(23, 23, 37, 0.6); background-size: cover; background-position: center; background-blend-mode: multiply;">
+        {{else}}
+          <div
+            class="mb-3 border border-light border-3 rounded-circle d-flex justify-content-center align-items-center profile-edit-avatar"
+            id="preview_avatar"
+            style="background: url('/images/img.png'), rgba(23, 23, 37, 0.6); background-size: cover; background-position: center; background-blend-mode: multiply;">
+        {{/if}}
+        <input type="file" name="avatar" id="avatar" onchange="readURL(this)" target_id="preview_avatar"
+          class="display-none">
+        <label for="avatar"><i class="fa-solid fa-camera icon-size text-light pointer"></i></label>
+    </div>
+    <div class="mb-3 signin-signup-page-input-change-backgroundcolor">
+      <label class="form-label" for="profile-name"
+        style="margin-left: 10px; margin-bottom:-5px"><small>名稱</small></label>
+      <input type="text" id="profile-name" name="name" class="form-control only-underline-input" value="{{user.name}}"
+        placeholder="請輸入使用者名稱" autofocus>
+      <div class="text-end bg-white">
+        <span class="text-danger me-1 display-none" style="font-size: 15px; font-weight:500;" id="validate-over">字數不可超過
+          50 字</span>
+        <span class="dark-80 mt-1" style="font-size: 12px;" id="name-count"></span>
+      </div>
+    </div>
+    <div class="my-3 signin-signup-page-input-change-backgroundcolor">
+      <label class="form-label" for="profile-introduction"
+        style="margin-left: 10px; margin-bottom:-5px"><small>自我介紹</small></label>
+      <textarea id="profile-introduction" name="introduction" class="form-control only-underline-input"
+        placeholder="請輸入自我介紹內容" rows="5">{{user.introduction}}</textarea>
+      <div class="text-end bg-white">
+        <span class="text-danger me-1 display-none" style="font-size: 15px; font-weight:500;" id="validate-over">字數不可超過
+          160 字</span>
+        <span class="dark-80 mt-1" style="font-size: 12px;" id="intro-count"></span>
+      </div>
+    </div>
+  </div>
+  </form>
+</div>
+</div>
+</div>
+
+<script>
+  const profileName = document.querySelector('#profile-name')
+  const nameValidateOver = profileName.parentElement.querySelector('#validate-over')
+  const nameCounter = profileName.parentElement.querySelector('#name-count')
+  const NAME_LEN_LIMIT = 50
+
+  const profileIntro = document.querySelector('#profile-introduction')
+  const introValidateOver = profileIntro.parentElement.querySelector('#validate-over')
+  const introCounter = profileIntro.parentElement.querySelector('#intro-count')
+  const INTRO_LEN_LIMIT = 160
+
+  nameCounter.innerText = `${profileName.value.length}/${NAME_LEN_LIMIT}`
+  introCounter.innerText = `${profileIntro.value.length}/${INTRO_LEN_LIMIT}`
+
+  profileName.addEventListener('input', event => {
+    if (profileName.value.length <= 0) {
+      nameCounter.innerText = ''
+    } else if (profileName.value.length > NAME_LEN_LIMIT) {
+      nameCounter.innerText = ''
+      nameValidateOver.classList.remove('display-none')
+    } else {
+      nameCounter.innerText = `${profileName.value.length}/${NAME_LEN_LIMIT}`
+      nameValidateOver.classList.add('display-none')
+    }
+  })
+
+  profileIntro.addEventListener('input', event => {
+    if (profileIntro.value.length <= 0) {
+      introCounter.innerText = ''
+    } else if (profileIntro.value.length > INTRO_LEN_LIMIT) {
+      introCounter.innerText = ''
+      introValidateOver.classList.remove('display-none')
+    } else {
+      introCounter.innerText = `${profileIntro.value.length}/${INTRO_LEN_LIMIT}`
+      introValidateOver.classList.add('display-none')
+    }
+  })
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+
+  function readURL(input) {
+
+    if (input.files && input.files[0]) {
+      const imageTagId = input.getAttribute("target_id")
+      const reader = new FileReader()
+
+      reader.onload = e => {
+        const div = document.getElementById(imageTagId)
+        if (imageTagId === 'preview_cover') {
+          const styleContent = `background: linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url('${e.target.result}'); background-size: cover;`
+          div.setAttribute("style", styleContent)
+        }
+
+        if (imageTagId === 'preview_avatar') {
+          const styleContent = `background: url('${e.target.result}'), rgba(23, 23, 37, 0.6); background-size: cover; background-position: center; background-blend-mode: multiply;`
+          div.setAttribute("style", styleContent)
+        }
+      }
+
+      reader.readAsDataURL(input.files[0])
+
+    }
+
+  }
+
+  const deleteCover = document.querySelector('#delete-cover')
+  let deleteCounter = 0
+  deleteCover.addEventListener('click', e => {
+    deleteCounter++
+    if (deleteCounter % 2) {
+      deleteCover.parentElement.setAttribute("style", "background: linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url('/images/AC-cover.png'); background-size: cover;")
+    } else {
+      deleteCover.parentElement.setAttribute("style", "background: linear-gradient(0deg, rgba(23, 23, 37, 0.5), rgba(23, 23, 37, 0.5)), url('{{user.cover}}'); background-size: cover;")
+    }
+  })
+</script>

@@ -1,0 +1,27 @@
+<div class="nav nav-pills brand-color flex-column sticky-top" style="height: 100vh;">
+  <img src="/images/logo.png" alt="" style="width: 50px;" class="mx-2 mt-2 mb-4">
+
+  <a class="nav-link mb-4 {{#ifCond route 'tweets'}}active{{/ifCond}}" href="/admin/tweets">
+    <i class="fa-solid fa-house-chimney-window"></i>&nbsp;&nbsp;推文清單
+  </a>
+  <a class="nav-link mb-4 {{#ifCond route 'users'}}active{{/ifCond}}" href="/admin/users">
+    <i class="fa-regular fa-user"></i>&nbsp;&nbsp;使用者列表
+  </a>
+
+  <div class="position-absolute bottom-0 start-0 mb-3" id="logout">
+    <a class="header5 pointer dark-90" href="/admin/logout" style=" text-decoration: none; padding-left: 19px">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>&nbsp;&nbsp;登出
+    </a>
+  </div>
+</div>
+<script>
+  const logout = document.querySelector('#logout')
+  if (document.querySelector('.alert')) {
+    logout.setAttribute('style', 'padding-bottom: 130px;')
+    document.querySelector('.alert').addEventListener('click', e => {
+      logout.setAttribute('style', 'padding-bottom: 0;')
+    })
+  } else {
+    logout.setAttribute('style', 'padding-bottom: 0;')
+  }
+</script>

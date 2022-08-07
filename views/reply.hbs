@@ -1,0 +1,140 @@
+<div class="col-2 nav-left">
+  {{> nav-left}}
+</div>
+
+<div class="col-8 nav-body" style="font-family: 'Noto Sans TC'; font-style: normal;">
+  <ul class="list-group me-3" style="border-radius: 0px;">
+    
+    {{!-- 表頭 --}}
+    <li class="list-group-item" style="height: 74px; border: 1px solid #E6ECF0">
+      <div class="d-flex align-items-center mt-2">
+        <a type="button" onclick="history.back()" style="margin: 5px 0 0 8px; width: 17px;">
+          <img src="/images/backArrow.png" alt="返回上一頁圖示"  style="width: 27px; height:24px;" class="align-top me-3 mb-0">
+        </a>
+        <span style="font-size: 24px; font-weight: 700; line-height: 26px; padding-left: 30px; margin-top: 5px">推文</span>
+      </div>
+      
+    </li>
+
+    {{!-- 原始 tweet  --}}
+    <li class="list-group-item" style="border: 1px solid #E6ECF0">
+
+      {{!-- avatar & name & account --}}
+      <div class="d-flex align-items-end">
+        <a href="/users/{{userInfo.id}}" type="button">
+          {{#if userInfo.avatar}}
+          <div class="mt-2 rounded-circle" style="height: 50px; width: 50px; margin-right: 12px; background: url('{{userInfo.avatar}}'); background-size: cover; background-position: center;"></div>
+          {{else}}
+          <div class="mt-2 rounded-circle" style="height: 50px; width: 50px; margin-right: 12px; background: url('/images/img.png'); background-size: cover; background-position: center;"></div>
+          {{/if}}
+        </a>
+        <div class="me-3">
+          <a href="/users/{{userInfo.id}}" class="d-block "
+            style="width:83px; font-weight: bold; white-space: nowrap; color:#171725; text-decoration:none;margin-left:2px;">{{userInfo.name}}</a>
+          <small class="d-block" style="width:88px; white-space: wrap; color:#6C757D; padding-top: 2px">@{{userInfo.account}}</small>
+        </div>
+      </div>
+
+      {{!-- tweet description --}}
+      <div class="mt-2">
+        <span
+          style="word-wrap: break-word; width:100%; font-weight: 400; font-size: 24px; line-height: 36px; color:#171725; text-decoration:none;">{{tweet.description}}</span>
+      </div>
+
+      {{!-- create time --}}
+      <footer class="mt-2" style="font-weight: 500; font-size: 14px;line-height: 22px; color:#6C757D">
+        {{dateFormat tweet.createdAt "上午h:MM・YYYY年MM月DD日"}}
+      </footer>
+
+      {{!-- reply & like 數量區 --}}
+      <div class="d-flex flex-column">
+        {{!-- 分隔線 --}}
+        <div style="border: 1px solid #E6ECF0; width: 100%; margin-top: 8px; margin-bottom: 16px"></div>
+
+        <div class="d-flex" style="margin-left: 3px">
+          <p style="width: 67px;height: 28px;font-family: 'Montserrat';font-weight: 700; font-size: 19px; margin: 0;" class="text-nowrap mt-1 me-4">
+          {{tweet.Replies.length}}
+          <span class="text-muted"> 回覆</span>
+          </p>
+          <p style="width: 67px; height: 28px; font-family: 'Montserrat'; font-weight: 700; font-size: 19px; margin: 0;" class="text-nowrap mt-1">
+            {{likesNum}}
+            <span class="text-muted"> 喜歡次數</span>
+          </p>
+        </div>
+      </div>
+
+      {{!-- reply & like 按鈕區 --}}
+      <div class="d-flex flex-column">
+        {{!-- 分隔線 --}}
+        <div style="border: 1px solid #E6ECF0; width: 100%; margin-top: 16px; margin-bottom: 22px"></div>
+
+        <div class="d-flex" style="color: #6C757D; margin-bottom: 20px; margin-left: 3px" id="tweets-panel">
+          <i class="fa-regular fa-comment me-5 pointer" style="font-size: 24px; padding-right: 40px" data-bs-toggle="modal" data-bs-target="#post-reply" data-userid="{{userInfo.id}}" data-username="{{userInfo.name}}" data-useraccount="{{userInfo.account}}" data-tweetcreate="{{relativeTimeFromNow tweet.createdAt}}" data-tweetdescription="{{tweet.description}}" data-tweetid="{{tweet.id}}"
+          {{#if userInfo.avatar}}data-useravatar="{{userInfo.avatar}}" {{else}}data-useravatar="/images/img.png" {{/if}} 
+          {{#if user.avatar}}data-loginuseravatar="{{user.avatar}}" {{else}}data-loginuseravatar="/images/img.png" {{/if}}></i>
+
+          {{#if userInfo.isLiked}}
+          <form action="/tweets/{{tweet.id}}/unlike" method="POST" class="d-inline-block">
+            <button type="submit" style="all: unset; cursor: pointer;">
+              <i class="fa-solid fa-heart ms-4" style="font-size: 24px"></i>
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{tweet.id}}/like" method="POST" class="d-inline-block">
+            <button type="submit" style="all: unset; cursor: pointer;">
+              <i class="fa-regular fa-heart ms-4" style="font-size: 24px"></i>
+            </button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+
+    </li>
+
+
+    {{#each tweet.Replies}}
+    <li class="list-group-item d-flex align-items-start" style="border: 1px solid #E6ECF0">
+      <div class="d-flex align-items-start">
+        <a href="/users/{{this.User.id}}" type="button">
+          {{#if this.User.avatar}}
+          <div class="mt-2 rounded-circle" style="height: 50px; width: 50px; margin-right: 12px; background: url('{{this.User.avatar}}'); background-size: cover; background-position: center;"></div>
+          {{else}}
+          <div class="mt-2 rounded-circle" style="height: 50px; width: 50px; margin-right: 12px; background: url('/images/img.png'); background-size: cover; background-position: center;"></div>
+          {{/if}}
+        </a>
+        
+        <div style="padding-top: 12px;">
+          <a href="/users/{{this.User.id}}"
+            style="text-decoration:none; font-weight: bold; white-space: nowrap; color:#171725; text-decoration:none;">
+            <p class="d-inline" style="font-weight: 700;font-size: 16px;line-height: 26px;color:#171725;">
+              {{this.User.name}}</p>
+          </a>
+          <small class="m-2" style="color:#6C757D;">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</small>
+          <span class="d-block mt-1 mb-1" style="font-weight: 400;font-size: 14px;line-height: 22px; color:#6C757D;">回覆
+            <a href="/users/{{../userInfo.id}}" style="text-decoration:none;">
+              <small style="color:#FF6600;margin-left:2px;">@{{../userInfo.account}}</small>
+            </a>
+          </span>
+
+          <div style="word-break:break-word; width:100%; height:100%;" class="mt-2">
+            <p style="font-weight: 400;font-size: 16px;line-height: 26px; color: #171725;">{{this.comment}}</p>
+          </div>
+
+        </div>
+
+      </div>
+      
+    </li>
+    {{/each}}
+
+  </ul>
+</div>
+
+<div class="col-2 nav-right">
+  {{> nav-right}}
+</div>
+
+{{> modal-reply}}
+
+<script src="/stylesheets/script.js">
+</script>

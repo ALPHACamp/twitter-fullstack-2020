@@ -1,0 +1,122 @@
+<li class="list-group-item" style="height: 74px; border:#E6ECF0 solid 1px;">
+  <div>
+    <a href="/" style="text-decoration: none;">
+      <img class="d-inline-block mb-4 me-3" src="/images/backArrow.png" alt="返回按鍵" style="width: 27px; height: 24px">
+    </a>
+    <div class="d-inline-block">
+      <span class="d-block pt-1"
+        style="min-width: 200px; height: 26px; font-weight: 700; font-size: 18px; line-height: 26px;">{{userData.name}}
+      </span>
+      <small class="d-block"
+        style="font-weight: 500; font-size: 13px; line-height: 19px; color: #6C757D; padding-top: 2px">{{userData.Tweets.length}}
+        推文
+      </small>
+    </div>
+  </div>
+</li>
+
+<li class="list-group-item p-0 m-0 " style="height:451px ;border:#E6ECF0 solid 1px;">
+  {{!-- 點到別人的介面 --}}
+  {{#if userData.cover}}
+  <div class="d-block"style="width: 100%; height: 200px; background: url('{{userData.cover}}'); background-size: cover; background-position:center;"></div>
+  {{else}}
+  <div class="d-block"style="width: 100%; height: 200px; background: url('/images/AC-cover.png'); background-size: cover; background-position:center;"></div>
+  {{/if}}
+
+  <div class="m-2 " style="float:right;">
+    {{#if user.authSelfUser}}
+    {{!-- 點到自己的介面 --}}
+    <button data-bs-target="#personal-info-edit" data-bs-toggle="modal" value="{{user}}"
+      class="btn btn-lg rounded-pill p-0 m-2" type="submit"
+      style="color:black; border-color:#FF6600;width: 132px; height:39px; color:#FF6600;font-weight: 400;font-size: 16px;line-height: 24px; float:right margin-right:20px">編輯個人資料
+    </button>
+    {{else}}
+    <a class=" p-2 m-2 d-inline" type="button"
+      style="width:40; height:39px; border:1px solid #FF6600; border-radius:50%;">
+      <img class="mb-2" src="/images/mail.png" alt="發訊息給該使用者"
+        style="border-color:#FF6600; padding-top:2px;padding-left:1px; margin-bottom:2px;">
+    </a>
+
+    {{!-- 是否已開啟通知 --}}
+    {{!-- <a class="p-2 m-2 d-inline" type="button"
+      style="padding: 0px 10px;width:40; height:40px; border-radius:50%; background-color: #FF6600; border:1px solid #FF6600;">
+      <img class="mb-2" src="/images/bell.png" alt="已開啟通知" style="padding:0px;">
+    </a> --}}
+    <a class="p-2 m-2 d-inline" type="button"
+      style="padding: 0px 10px;width:40; height:40px; border-radius:50%; border:1px solid #FF6600;">
+      <img class="mb-2" src="/images/bell-add.png" alt="未開啟通知" style="padding:0px;">
+    </a>
+
+    {{!-- 是否已跟隨 --}}
+    {{#if profileIsFollowed}}
+    <form action="/followships/{{userData.id}}?_method=DELETE" method="POST" class="d-inline">
+      <button class="btn btn-sm rounded-pill mb-2" type="submit"
+        style="background-color: #FF6600 ;width: 96px; height:40px; margin-left:5px; color:#FFFFFF;font-weight: 400;font-size: 16px;line-height: 24px;">正在跟隨</button>
+    </form>
+    {{else}}
+    <form action="/followships" method="POST" style="width:200px" class="d-inline">
+      <button class="btn btn-sm rounded-pill mb-2" type="submit" name="id" value="{{userData.id}}"
+        style="color:black; border-color:#FF6600;width: 96px; height:40px; margin-left:5px; color:#FF6600;font-weight: 400;font-size: 16px;line-height: 24px;">還未跟隨</button>
+    </form>
+    {{/if}}
+    
+    {{/if}}
+  </div>
+
+  {{#if userData.avatar}}
+  <div class="d-block rounded-circle"style="position:relative; bottom:80px; left:15px; width:141.1px;height:140px; background: url('{{userData.avatar}}'); background-size: cover; background-position:center;">
+  </div>
+  {{else}}
+  <div class="d-block rounded-circle" style="position:relative; bottom:80px; left:15px; width:141.1px;height:140px; background: url('/images/img.png'); background-size: cover; background-position:center;">
+  </div>
+  {{/if}}
+
+  <div class="m-3 mt-5" style="position:relative; bottom:120px;">
+    <h4 style="font-weight: 700;font-size: 18px;line-height: 26px; color:#171725;">{{userData.name}}
+      <small class="d-block"style="font-weight: 400;font-size: 14px;line-height: 22px; color:#6C757D;">@{{userData.account}}</small>
+    </h4>
+
+    <div class="text-wrap" style="width:100%; height:100%;word-break:break-word;">
+      <p class="p-0 m-0" style=" font-weight: 400;font-size: 14px; height:22px;">
+        {{userData.introduction}}</p>
+    </div>
+    
+    <div class="mt-3">
+      <p class="d-inline me-3" style="font-weight: 400;font-size: 14px;line-height: 22px; color:#171725">
+        <a href="/users/{{userData.id}}/followings" style="color:black; text-decoration:none;">
+          {{userData.followingsLength}}
+          <span class="text-muted" style="color:#171725;"> 個跟隨中</span>
+        </a>
+      </p>
+      
+      <p class="d-inline" style="font-weight: 400;font-size: 14px;line-height: 22px; color:#171725">
+        <a href="/users/{{userData.id}}/followers" style="color:black; text-decoration:none;">
+          {{userData.followersLength}}
+          <span class="text-muted" style="color:#6C757D;"> 位跟隨者</span>
+        </a>
+      </p>
+    </div>
+
+    {{!-- Profile-tabs --}}
+    <ul class="nav mt-4">
+      <li class="nav-item">
+        <a class="nav-link profile-header {{#ifCond route 'tweets'}}active{{/ifCond}}" href="/users/{{userData.id}}"
+          style="nav-link:hover:background-color:purple;">推文</a>
+      </li>
+      <li class="nav-item">
+        <a class="profile-header nav-link {{#ifCond route 'replies'}}active{{/ifCond}}"
+          href="/users/{{userData.id}}/replies">回覆</a>
+      </li>
+      <li class="nav-item">
+        <a class="profile-header nav-link {{#ifCond route 'likes'}}active{{/ifCond}}"
+          href="/users/{{userData.id}}/likes">喜歡內容</a>
+      </li>
+      <li class="nav-item">
+        <a class="profile-header nav-link {{#ifCond route 'followings'}}active{{/ifCond}}"
+          href="/users/{{userData.id}}/followers">追隨狀態</a>
+      </li>
+    </ul>
+  </div>
+</li>
+
+{{> modal-profile}}

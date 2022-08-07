@@ -1,0 +1,88 @@
+<div class="nav nav-pills brand-color flex-column sticky-top" style="height: 100vh;">
+  <img src="/images/logo.png" alt="" style="width: 50px;" class="mx-2 mt-2 mb-4">
+  <a class="nav-link mb-4 {{#ifCond route 'index'}}active{{/ifCond}}" href="/">
+    <i class="fa-solid fa-house-chimney-window"></i>&nbsp;&nbsp;首頁
+  </a>
+  <a class="nav-link mb-4 {{#ifCond route 'personal-info'}}active{{/ifCond}}" href="/users/{{user.id}}">
+    <i class="fa-regular fa-user"></i>&nbsp;&nbsp;個人資料
+  </a>
+  <a class="nav-link mb-4 {{#ifCond route 'setting'}}active{{/ifCond}}" href="/users/{{user.id}}/setting">
+    <i class="fa-solid fa-gear"></i>&nbsp;&nbsp;設定
+  </a>
+  <button class="btn btn-brand radius50" data-bs-toggle="modal" data-bs-target="#post-tweet">
+    <span style="font-size: 20px;">推文</span>
+  </button>
+
+  <div class="position-absolute bottom-0 start-0 mb-3" id="logout">
+    <a class="header5 pointer dark-90" href="/logout" style=" text-decoration: none; padding-left: 19px">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>&nbsp;&nbsp;登出
+    </a>
+  </div>
+</div>
+<div class="modal fade" id="post-tweet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close p-1 m-1" data-bs-dismiss="modal" aria-label="Close"
+          style="background: rgba(var(--bs-white-rgb),var(--bs-bg-opacity));">
+          <i class="fa-solid fa-xmark icon-size brand-color"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex">
+          {{#if user.avatar}}
+            <div class="border border-light border-3 rounded-circle me-3"
+              style="width: 50px; height: 50px; background: url('{{user.avatar}}'); background-size: cover; background-position: center;">
+            </div>
+          {{else}}
+            <div class="border border-light border-3 rounded-circle me-3"
+              style="width: 50px; height: 50px; background: url('/images/img.png'); background-size: cover; background-position: center;">
+            </div>
+          {{/if}}
+          <div class="flex-fill text-end">
+            <form action="/tweets" method="POST">
+              <textarea class="border border-0 form-control mb-3" id="description" name="description" maxlength="150"
+                placeholder="有什麼新鮮事？" rows="5" required></textarea>
+              <span class="text-danger me-1" style="font-size: 15px; font-weight:500;"
+                id="validate-empty-tweet">內容不可空白</span>
+              <span class="text-danger me-1 display-none" style="font-size: 15px; font-weight:500;"
+                id="validate-over-tweet">字數不可超過140 字</span>
+              <button type="submit" class="btn btn-brand radius50 ms-3">送出</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modalTweetTextarea = document.querySelector('#description')
+  const validateEmptyTweet = document.querySelector('#validate-empty-tweet')
+  const validateOverTweet = document.querySelector('#validate-over-tweet')
+
+  modalTweetTextarea.addEventListener('input', event => {
+    if (modalTweetTextarea.value.length > 0) {
+      validateEmptyTweet.classList.add('display-none')
+    }
+    if (modalTweetTextarea.value.length <= 0) {
+      validateEmptyTweet.classList.remove('display-none')
+    }
+    if (modalTweetTextarea.value.length > 140) {
+      validateOverTweet.classList.remove('display-none')
+    }
+    if (modalTweetTextarea.value.length <= 140) {
+      validateOverTweet.classList.add('display-none')
+    }
+  })
+
+  const logout = document.querySelector('#logout')
+  if (document.querySelector('.alert')) {
+    logout.setAttribute('style', 'padding-bottom: 130px;')
+    document.querySelector('.alert').addEventListener('click', e => {
+      logout.setAttribute('style', 'padding-bottom: 0;')
+    })
+  } else {
+    logout.setAttribute('style', 'padding-bottom: 0;')
+  }
+</script>
