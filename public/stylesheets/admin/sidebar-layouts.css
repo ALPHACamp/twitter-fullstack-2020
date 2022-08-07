@@ -1,6 +1,6 @@
 #adminSidebarOptionsContainer {
   float: left;
-  position: absolute;
+  position: fixed;
   width: 178px;
   height: 1200px;
   left: 130px;
@@ -115,7 +115,7 @@
 
 #adminLogoutLogo {
   position: absolute;
-  top: 1156px;
+  top: 860px;
   bottom: 20px;
   left: 19px;
   right: 141px;
@@ -125,7 +125,7 @@
 
 #adminLogout {
   position: absolute;
-  top: 1158px;
+  top: 860px;
   bottom: 16px;
   left: 56px;
   right: 86px;
