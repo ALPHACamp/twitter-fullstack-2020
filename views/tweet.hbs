@@ -13,7 +13,7 @@
     <div class="px-2 reply-panel" id="tweet">
       <a href="/users/{{tweet.User.id}}/tweets"><img src="{{tweet.tweet.User.avatar}}" alt="post-icon"
           class="tweet-avatar" class="post-icon"></a>
-
+      
       {{!-- post --}}
       <div style="display: inline;">
         <span>{{tweet.tweet.User.name}}</span>
@@ -38,13 +38,15 @@
         {{#if tweet.isLiked}}
         <form action="/tweets/{{tweet.tweet.id}}/unlike" method="POST" class="likes unlike">
           <button type="submit" class="likes">
-            <img src="/images/redHeart.jpg" alt="likes" class="likes unlike" style="width: 25px; height: 25px;">
+            <img src="/images/redHeart.jpg" alt="likes" class="likes unlike"
+              style="width: 25px; height: 25px;">
           </button>
         </form>
         {{else}}
         <form action="/tweets/{{tweet.tweet.id}}/like" method="POST" class="likes">
           <button type="submit" class="likes">
-            <img src="/images/blackHeart.png" alt="likes" class="likes" style="width: 25px; height: 25px;">
+            <img src="/images/blackHeart.png" alt="likes" class="likes"
+              style="width: 25px; height: 25px;">
           </button>
         </form>
         {{/if}}
