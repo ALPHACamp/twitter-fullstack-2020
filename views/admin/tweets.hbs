@@ -9,7 +9,7 @@
       {{#each tweets}}
       <form class="tweet-card" action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
         <div>
-          <img src="{{this.User.avatar}}" alt="avatar">
+          <img src="{{this.User.avatar}}" alt="avatar" style="width: 50px;height: 50px; border-radius:50%">
         </div>
         <a class="tweet-card-name">
           <span class="font-name">{{this.User.name}}</span>

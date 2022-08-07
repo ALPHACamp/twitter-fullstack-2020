@@ -46,12 +46,17 @@ editModal.addEventListener('submit', function (event) {
     .catch(err => console.log(err))
 })
 
+saveBtn.addEventListener('click', function () {
+  // saveBtn.innerHTML = `<div class="loader"></div>`  /* 圓圈形loader */
+  saveBtn.innerHTML = `<span class="loader"></span>`  /* 讀取形loader */
+})
+
 editModal.addEventListener('input', e => {
   const lengthOfName = inputName.value.length
   const lengthOfIntro = inputIntroduction.value.length
   nameLength.innerHTML = `${lengthOfName}/50`
   introLength.innerHTML = `${lengthOfIntro}/160`
-  if (lengthOfName > 50) {
+  if (lengthOfName > 50 || lengthOfName <= 0) {
     inputName.style.color = "red"
     nameLength.style.color = "red"
     nameLength.classList.add('is-invalid')
@@ -70,10 +75,14 @@ editModal.addEventListener('input', e => {
     introLength.classList.remove('is-invalid')
   }
 
-  if (lengthOfName > 50 || lengthOfIntro > 160) {
+  if (lengthOfName > 50 || lengthOfIntro > 160 || lengthOfName <= 0) {
     saveBtn.disabled = true
+    saveBtn.classList.add('valid-button')
+    saveBtn.innerText = '無法儲存'
   } else {
     saveBtn.disabled = false
+    saveBtn.classList.remove('valid-button')
+    saveBtn.innerText = '儲存'
   }
 })
 

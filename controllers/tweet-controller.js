@@ -1,10 +1,15 @@
 const assert = require('assert')
 const helpers = require("../_helpers")
 const { User, Tweet, Like, Reply } = require('../models')
+const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 const tweetController = {
   getTweets: async (req, res, next) => {
     try {
+      const DEFAULT_LIMIT = 10
+      const page = Number(req.query.page) || 1
+      const limit = Number(req.query.limit) || DEFAULT_LIMIT
+      const offset = getOffset(limit, page)
       const user = helpers.getUser(req)
       const tweets = await Tweet.findAll({
         include: [
@@ -15,13 +20,15 @@ const tweetController = {
         order: [
           ['created_at', 'DESC'],
           ['id', 'ASC']
-        ]
+        ],
+        limit,
+        offset,
       })
       const tweetsList = tweets.map(tweet => ({
         ...tweet.toJSON(),
         isLiked: tweet.Likes.some(t => t.UserId === user.id)
       }))
-      return res.render('tweets', { tweetsList, user })
+      return res.render('tweets', { tweetsList, user, pagination: getPagination(limit, page, tweetsList.count) })
     }
     catch (err) {
       next(err)

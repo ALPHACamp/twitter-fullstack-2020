@@ -60,6 +60,7 @@ const followController = {
     try {
       const user = helpers.getUser(req)
       const topFollowerUsers = await User.findAll({
+        where: { role: 'user' },
         order: [
           ['followerCounts', 'DESC'],
           ['id', 'ASC']

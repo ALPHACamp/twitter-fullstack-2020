@@ -22,15 +22,18 @@ const adminController = {
   getAdminUsers: async (req, res, next) => {
     try {
       const users = await User.findAll({
+        attributes: { exclude: ['password'] },
         include: [
           { model: Tweet, include: [Like] },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' },
         ]
       })
-      const results = users.map(user => ({
-        ...user.toJSON(),
-      }))
+      const results = users
+        .filter(user => user.role !== 'admin')
+        .map(user => ({
+          ...user.toJSON(),
+        }))
       results.forEach(r => {
         r.TweetsCount = r.Tweets.length
         r.FollowingsCount = r.Followings.length
