@@ -50,7 +50,7 @@ const adminController = {
         if (!tweet) throw new Error('推文不存在!')
         return tweet.destroy()
       })
-      .then(() => res.redirect('/admin/tweets'))
+      .then(deletedTweet => res.redirect('/admin/tweets'))
       .catch(next)
   },
   getUsers: (req, res, next) => {
