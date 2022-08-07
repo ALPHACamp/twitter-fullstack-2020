@@ -51,7 +51,6 @@
         </form>
         {{/if}}
       </div>
-
     </div>
 
     {{!-- 貼文的回覆 --}}
@@ -59,8 +58,7 @@
       <tbody>
         {{#each replies}}
         <tr class="post">
-          <td><a href="/users/{{this.User.id}}/tweets"><img src="{{this.User.avatar}}" alt="post-icon"
-                class="post-avatar"></td>
+          <td class="avatar-block"><a href="/users/{{this.User.id}}/tweets"><img src="{{this.User.avatar}}" alt="post-icon" class="post-avatar"></td>
           <td>{{this.User.name}}
             <small class="reply-title">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</small>
             <p class="reply-title reply-reply">回覆
