@@ -32,7 +32,7 @@ function showEditUserModal (data) {
         <label for="modal-input-introduction">自我介紹</label>
       </div>
       <div class="d-flex justify-content-end word-count">
-        <span id="introduction-count">${data.introduction?.length}</span>
+        <span id="introduction-count">${data.introduction?.length || 0}</span>
         <span>/160</span>
       </div>
     </div>
