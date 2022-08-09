@@ -28,11 +28,11 @@ function showEditUserModal (data) {
     <div>
       <div class="form-floating">
         <textarea class="form-control input" style="height: 147px; resize: none;" id="modal-input-introduction"
-          name="introduction" oninput="countWord(this)" maxlength="160">${data.introduction}</textarea>
+          name="introduction" oninput="countWord(this)" maxlength="160">${data.introduction || ''}</textarea>
         <label for="modal-input-introduction">自我介紹</label>
       </div>
       <div class="d-flex justify-content-end word-count">
-        <span id="introduction-count">${data.introduction.length}</span>
+        <span id="introduction-count">${data.introduction?.length || 0}</span>
         <span>/160</span>
       </div>
     </div>
