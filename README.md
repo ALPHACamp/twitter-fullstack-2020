@@ -9,6 +9,19 @@ Alphacamp 的期末分組挑戰：「用全端開發模式，建立類似 twitte
 - [Joseph]() as QA & Developer
 - [Wanching]() as QA & Developer
 
+## Additional Challenges
+There are challenges in addition to basic 'tweet & follow' features, which includes:
+- Public Chatroom
+- Private Chatroom
+- Push Notification
+
+These challenges are developed separatedly by each member, with a goal to truly equip ourselves with `Socket.io` knowledge.
+
+Check out respective branch to learn what we did in our own sprint.
+- Yu-Ming, [feat/chatroom/yuming](https://github.com/yumingchang1991/ac-twitter-fullstack-2022/tree/feat/chatroom/yuming)
+- Joseph, [to be added]()
+- Wanching, [to be added]()
+
 ## Core Technologies
 - `Express` for framework
 - `Passport` for authentication
