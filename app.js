@@ -14,9 +14,8 @@ app.engine('hbs', handlebars({ extname: '.hbs' }))
 // 設定使用 Handlebars 做為樣板引擎
 app.set('view engine', 'hbs')
 
-app.use(routes);
+app.use(routes)
 
-app.get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 module.exports = app
