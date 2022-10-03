@@ -1,5 +1,8 @@
 .DS_Store
 *.DS_Store
+.env
+temp/
+upload/
 
 # Logs
 logs
