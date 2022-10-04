@@ -12,6 +12,7 @@ router.get('/signup', userController.signUpPage)
 router.get('/signin', userController.signInPage)
 router.get('/setting', userController.getSetting)
 router.get('/modals/reply', userController.getReply)
+router.get('/modals/self', twitterController.getModalsTabs)
 router.get('/twitters', twitterController.getTwitters)
 
 router.use('/', (req, res) => res.redirect('/twitters'))
