@@ -5,6 +5,9 @@ const userController = {
   signInPage: (req, res) => {
     res.render('signin')
   },
+  getOtherPage: (req, res) => {
+    res.render('other')
+  },
   getSetting: (req, res) => {
     res.render('setting')
   },
