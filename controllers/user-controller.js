@@ -10,6 +10,9 @@ const userController = {
   },
   getUser: (req, res) => {
     res.render('user')
+  },
+  getReply: (req, res) => {
+    res.render('modals/reply')
   }
 }
 
