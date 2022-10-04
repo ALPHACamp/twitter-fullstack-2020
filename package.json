@@ -7,7 +7,10 @@
     "start": "NODE_ENV=development node app.js",
     "dev": "NODE_ENV=development nodemon app.js",
     "lint": "eslint \"**/*.js\" --fi",
-    "test": "mocha test --exit --recursive --timeout 5000"
+    "test": "mocha test --exit --recursive --timeout 5000",
+    "start-windows": "cross-env NODE_ENV=development node app.js",
+    "dev-windows": "cross-env NODE_ENV=development nodemon app.js",
+    "test-windows": "cross-env \"NODE_ENV=test\" && mocha test --exit --recursive --timeout 5000"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +19,7 @@
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "connect-flash": "^0.1.1",
+    "cross-env": "^7.0.3",
     "express": "^4.16.4",
     "express-handlebars": "^5.3.3",
     "express-session": "^1.15.6",
