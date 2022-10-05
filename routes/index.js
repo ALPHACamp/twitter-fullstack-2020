@@ -8,7 +8,10 @@ const userController = require('../controllers/user-controller')
 
 router.use('/admin', admin)
 router.get('/users', userController.getUser)
+
 router.get('/signup', userController.signUpPage)
+router.post('/signup', userController.signUp)
+
 router.get('/signin', userController.signInPage)
 router.get('/setting', userController.getSetting)
 router.get('/other', userController.getOtherPage)
