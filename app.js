@@ -1,9 +1,9 @@
 const express = require('express')
 const session = require('express-session')
-const passport = require('passport')
-const flash = require('connect-flash')
+const passport = require('./config/passport')
 const routes = require('./routes')
 const handlebars = require('express-handlebars')
+const flash = require('connect-flash')
 const helpers = require('./_helpers')
 
 const app = express()
