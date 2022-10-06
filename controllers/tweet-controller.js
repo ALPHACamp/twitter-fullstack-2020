@@ -1,15 +1,50 @@
-const { Tweet } = require('../models')
+const { Tweet, User, Like, Reply } = require('../models')
+const helpers = require('../_helpers')
 
 const tweetController = {
-  getTweets: (req, res, next) => {
-    Tweet.findAll({
-      raw: true,
-      order: [
-        ['created_at', 'DESC']
-      ]
-    })
-      .then(tweets => res.render('tweets', { tweets }))
-      .catch(err => next(err))
+  getTweets: async (req, res, next) => {
+    try {
+      let tweets = await Tweet.findAll({
+        include: [ User, Reply, Like ],
+        order: [['createdAt', 'DESC']] // 反序
+      })
+
+      let users = await User.findAll({
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+
+      const user = await User.findByPk(helpers.getUser(req).id,
+        {
+          raw: true,
+          nest: true
+        })
+
+      const likes = await Like.findAll({
+        where: { UserId: helpers.getUser(req).id }
+      })
+
+      tweets = await tweets.map(tweet => ({
+        ...tweet.toJSON(),
+        likedCount: tweet.Likes.length,
+        repliedCount: tweet.Replies.length,
+        isLiked: likes.map(l => l.TweetId).includes(tweet.id)
+      }))
+
+      users = await users.map(user => ({
+        ...user.toJSON(),
+        followerCount: user.Followers.length,
+        isFollowed: helpers.getUser(req).Followings.map(following => following.id).includes(user.id)
+      }))
+      users = users.sort((a, b) => b.followerCount - a.followerCount)
+        .slice(0, 10)
+
+      return res.render('tweets', { tweets, users, user })
+    } catch (err) {
+      next(err)
+    }
   },
   postTweet: (req, res, next) => {
     const { description } = req.body
@@ -26,6 +61,9 @@ const tweetController = {
         req.flash('success_messages', '成功推文')
         return res.redirect('tweets')
       })
+  },
+  getModalsTabs: (req, res) => {
+    res.render('modals/self')
   }
 }
 

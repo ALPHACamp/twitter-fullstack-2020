@@ -1,12 +1,56 @@
+{{#if error_messages}}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  {{ error_messages }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{{/if}}
+
 {{#if success_messages}}
- <div class="alert alert-success alert-dismissible fade show" role="alert">
+<div class="alert alert-success alert-dismissible fade show" role="alert">
   {{ success_messages }}
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
- </div>
+</div>
 {{/if}}
+
 {{#if warning_messages}}
- <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  {{ warning_messages }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
- </div>
+<div
+  class="alert alert-light alert-dismissible fade show col-6 shadow p-3 mb-5 bg-body rounded-4 d-flex justify-content-between align-items-center"
+  role="alert" style="margin-left:550px ; width: 600px;z-index:10">
+  <strong class='mr-auto' style='color: black;font-size: 20px; margin-left:60px'>{{ warning_messages }}</strong>
+  <img src="/images/icon/information-notice.png" alt="">
+</div>
 {{/if}}
+
+{{!--
+<div
+  class="alert alert-light alert-dismissible fade show col-6 shadow p-3 mb-5 bg-body rounded-4 d-flex justify-content-between align-items-center"
+  role="alert" style="margin-left:550px ; width: 600px;z-index:10">
+  <strong class='mr-auto' style='color: black;font-size: 20px; margin-left:60px'>通知訊息{{ warning_messages }}</strong>
+  <img src="/images/icon/information-notice.png" alt="">
+</div>
+
+<div
+  class="alert alert-light alert-dismissible fade show col-6 shadow p-3 mb-5 bg-body rounded-4 d-flex justify-content-between align-items-center"
+  role="alert" style="margin-left:550px ; width: 600px;z-index:10">
+  <strong class='mr-auto' style='color: black;font-size: 20px; margin-left:60px'>推文發送成功{{ warning_messages }}</strong>
+  <img src="/images/icon/reply-success.png" alt="">
+</div>
+<div
+  class="alert alert-light alert-dismissible fade show col-6 shadow p-3 mb-5 bg-body rounded-4 d-flex justify-content-between align-items-center"
+  role="alert" style="margin-left:550px ; width: 600px;z-index:10">
+  <strong class='mr-auto' style='color: black;font-size: 20px; margin-left:60px'>Email已重複註冊{{
+    warning_messages}}</strong>
+  <img src="/images/icon/email-duplicate.png" alt="">
+</div>
+<div
+  class="alert alert-light alert-dismissible fade show col-6 shadow p-3 mb-5 bg-body rounded d-flex justify-content-between align-items-center"
+  role="alert" style="margin-left:550px ; width: 600px;z-index:10">
+  <strong class='mr-auto' style='color: black;font-size: 20px; margin-left:60px'>網路連線中斷{{ warning_messages }}</strong>
+  <img src="/images/icon/internet-exclamation.png" alt="">
+</div>
+<div
+  class="alert alert-light alert-dismissible fade show col-6 shadow p-3 mb-5 bg-body rounded-4 d-flex justify-content-between align-items-center"
+  role="alert" style="margin-left:550px ; width: 600px;z-index:10">
+  <strong class='mr-auto' style='color: black;font-size: 20px; margin-left:60px'>收到新的推文{{ warning_messages }}</strong>
+  <img src="/images/icon/reply-new.png" alt="">
+</div> --}}
