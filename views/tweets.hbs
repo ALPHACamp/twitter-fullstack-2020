@@ -54,9 +54,9 @@
      <textarea class="form" id="description" name="description" rows="4" maxlength="141" placeholder="有什麼新鮮事？"
       style="border:none; width:600px;position:relative; top:10px;resize:none;height:250px;" required></textarea>
      <div class="" style="color:#FF0000;position: absolute;top: 270px;right: 120px;">
-      <span>內容不可空白</span>
+      <span id="insertEmptyMessage"></span>
      </div>
-     <div class=""><span>0/140</span></div>
+     <div class="" id="char_count"><span>140/140</span></div>
     </div>
     <button type="submit" class="btn btn-orange btn-tweets-models"
      style="border-radius: 50px;position:relative; left:550px;bottom:20px;">
@@ -68,3 +68,21 @@
 </div>
 {{!-- tweet Modal end --}}
 {{>right}}
+<script>
+ const textArea = document.getElementById( 'description' )
+ const charCount = document.getElementById( 'char_count' )
+ let insertEmptyMessage = document.getElementById( 'insertEmptyMessage' )
+ const maxNumOfCount = 140
+ const countCharacters = () => {
+  const numOfEnter = textArea.value.length
+  const counter = maxNumOfCount - numOfEnter
+  charCount.textContent = counter + '/140'
+  if ( numOfEnter === 0 ) {
+   insertEmptyMessage.innerText = '內容不可以是空白'
+  }
+  if ( counter < 0 || counter >= 140 ) {
+   charCount.style.color = 'red'
+  }
+ }
+ textArea.addEventListener( 'input', countCharacters )
+</script>
