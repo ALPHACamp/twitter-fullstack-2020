@@ -1,0 +1,48 @@
+{{!-- main --}}
+{{!-- nav side bar left --}}
+{{!-- check side bar 'left' top --}}
+{{!--
+(nav.side-bar-left>(.side.bar-left-top>(.link-group>img.ac-icon)+(.link-group>img.home-icon+a{home})+(.profile>a{profile})+(.setting>a{setting})+(btn{send}))+(.side.bar-left-button>(.link-group>img.logout-icon+a.{logout}))
+--}}
+<div class="left-column">
+  <div>
+    <a href=" /">
+      <img src="/images/alphacamp.png" alt="" class="ac-icon">
+    </a>
+  </div>
+  <ul class="navigation">
+    <li class="navigation-item">
+      <i class="far fa-home"></i>
+      <a href="/" class="navigation-item-text">
+        首頁
+      </a>
+    </li>
+    <li class="navigation-item">
+      <i class="far fa-home"></i>
+      <a href="/" class="navigation-item-text">
+        個人資料
+      </a>
+    </li>
+    <li class="navigation-item">
+      <i class="far fa-home"></i>
+      <a href="/" class="navigation-item-text">
+        設定
+      </a>
+    </li>
+    <li class="navigation-item">
+      <div class="d-flex" data-bs-toggle="modal" data-bs-target="#tweet-modal">
+        <button type="button" class="btn navigation-btn-color">
+          <span class="navigation-btn-text">推文</span>
+        </button>
+      </div>
+    </li>
+    <li class="navigation-item log-out">
+      <a class="">
+        <div class="d-flex">
+          <i class="far fa-home"></i>
+          <span class="navigation-item-text">登出</span>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>

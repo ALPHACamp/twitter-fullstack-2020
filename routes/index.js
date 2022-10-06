@@ -4,7 +4,7 @@ const router = express.Router()
 const admin = require('./modules/admin')
 const passport = require('../config/passport')
 
-const twitterController = require('../controllers/twitter-controller')
+const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
 
 router.use('/admin', admin)
@@ -19,8 +19,10 @@ router.get('/logout', userController.logout)
 router.get('/setting', userController.getSetting)
 router.get('/other', userController.getOtherPage)
 router.get('/modals/reply', userController.getReply)
-router.get('/modals/self', twitterController.getModalsTabs)
-router.get('/twitters', twitterController.getTwitters)
+router.get('/modals/self', tweetController.getModalsTabs)
+router.get('/tweets/:id', tweetController.getTweet)
+router.get('/tweets', tweetController.getTweets)
+router.post('/tweets', tweetController.postTweet)
 
 router.use('/', (req, res) => res.redirect('/twitters'))
 
