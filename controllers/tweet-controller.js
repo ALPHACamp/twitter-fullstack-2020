@@ -26,12 +26,6 @@ const tweetController = {
         req.flash('success_messages', '成功推文')
         return res.redirect('tweets')
       })
-  },
-  getTweet: (req, res, next) => {
-
-  },
-  getModalsTabs: (req, res) => {
-    res.render('modals/self')
   }
 }
 
