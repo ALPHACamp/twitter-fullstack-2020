@@ -46,6 +46,22 @@ const tweetController = {
       next(err)
     }
   },
+  postTweet: (req, res, next) => {
+    const { description } = req.body
+    if (description.trim() === '') {
+      req.flash('error_messages', 'Tweet 內容不能為空')
+      return res.redirect('back')
+    }
+    if (description.length > 140) {
+      req.flash('error_messages', 'Tweet ')
+      return res.redirect('back')
+    }
+    Tweet.create({ description })
+      .then(() => {
+        req.flash('success_messages', '成功推文')
+        return res.redirect('tweets')
+      })
+  },
   getModalsTabs: (req, res) => {
     res.render('modals/self')
   }
