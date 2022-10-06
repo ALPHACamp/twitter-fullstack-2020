@@ -1,19 +1,26 @@
-<div class="mb-4 text-center">
-  <h1 class="h3 font-weight-normal mb-3">Sign In</h1>
-</div>
-<form class="form-signin" action="/signin" method="POST">
-  <div class="form-row mb-3">
-    <label class="form-label" for="email">Email</label>
-    <input class="form-control" id="email" type="text" name="email" class="form-control" placeholder="Email" required
-      autofocus>
+<div class="container">
+  <div class="icon text-center">
+    <img src="/images/alphacamp.png" alt="icon">
   </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="password">Password</label>
-    <input class="form-control" id="password" type="password" name="password" class="form-control"
-      placeholder="Password" required>
+  <div class="mb-4 text-center">
+    <h1 class="h3 font-weight-normal mb-3">登入 Alphitter</h1>
   </div>
-  <button class="btn btn-primary btn-block" type="submit">Submit</button>
-</form>
-<div class="mb-4 text-center">
-  <p><a href="/signup">Sign Up</a></p>
+  <form action="/signin" method="POST">
+    <div class="form-row mb-3">
+      <label class="form-label" for="account">帳號</label>
+      <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" value="{{ account }}"
+        required autofocus>
+    </div>
+    <div class="form-row mb-3">
+      <label class="form-label" for="password">密碼</label>
+      <input type="password" id="password" name="password" class="form-control" placeholder="請輸入密碼"
+        value="{{ password }}" required>
+    </div>
+    <button class="btn btn-primary btn-block" type="submit">登入</button>
+  </form>
+  <div class="mb-4 text-center">
+    <a href="/signup">註冊</a>
+    <span>•</span>
+    <a href="/admin/signin">後台登入</a>
+  </div>
 </div>
