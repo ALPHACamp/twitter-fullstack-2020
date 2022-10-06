@@ -9,26 +9,22 @@ const userController = {
   signUp: (req, res, next) => {
     const { account, name, email, password, checkPassword } = req.body
     const errors = []
+    const errorsMsg = { errors, account, name, email, password, checkPassword }
+
     if (password !== checkPassword) {
       errors.push({ message: '密碼與確認密碼不相符！' })
     }
     if (!account || !name || !email || !password || !checkPassword) {
       errors.push({ message: '所有欄位都是必填。' })
     }
-    const errorsMsg = {
-      errors,
-      account,
-      name,
-      email,
-      password,
-      checkPassword
+    if (name.length > 50) {
+      errors.push({ message: '名稱上限為50字' })
     }
-    if (errors.length) {
-      return res.render('signup', errorsMsg)
-    }
+
     Promise.all([
       User.findOne({ where: { account } }),
-      User.findOne({ where: { email } })])
+      User.findOne({ where: { email } })
+    ])
       .then(([account, email]) => {
         if (account) {
           errors.push({ message: 'account 已重複註冊！' })
