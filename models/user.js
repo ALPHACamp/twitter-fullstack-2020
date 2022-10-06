@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
      */
 
     static associate (models) {
-      define association here
       User.hasMany(models.Reply)
       User.hasMany(models.Tweet)
       User.hasMany(models.Like)
