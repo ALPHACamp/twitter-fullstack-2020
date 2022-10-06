@@ -26,7 +26,9 @@ const userController = {
     if (errors.length) {
       return res.render('signup', errorsMsg)
     }
-    Promise.all([User.findOne({ where: { account } }), User.findOne({ where: { email } })])
+    Promise.all([
+      User.findOne({ where: { account } }),
+      User.findOne({ where: { email } })])
       .then(([account, email]) => {
         if (account) {
           errors.push({ message: 'account 已重複註冊！' })
@@ -57,6 +59,10 @@ const userController = {
     res.render('signin')
   },
   signIn: (req, res) => {
+    if (getUser(req).role === 'admin') {
+      req.flash('error_messages', '請前往後台登入')
+      return res.redirect('/signin')
+    }
     req.flash('success_messages', '成功登入！')
     res.redirect('/tweets')
   },
