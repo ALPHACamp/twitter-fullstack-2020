@@ -5,8 +5,8 @@ const tweetController = {
   getTweets: async (req, res, next) => {
     try {
       let tweets = await Tweet.findAll({
-        include: [ User, Reply, Like ],
-        order: [['createdAt', 'DESC']] // 反序
+        include: [User, Reply, Like],
+        order: [['created_at', 'DESC']] // 反序
       })
 
       let users = await User.findAll({
@@ -53,14 +53,18 @@ const tweetController = {
       return res.redirect('back')
     }
     if (description.length > 140) {
-      req.flash('error_messages', 'Tweet ')
+      req.flash('error_messages', 'Tweet 字數不能超過140字')
       return res.redirect('back')
     }
-    Tweet.create({ description })
+    Tweet.create({
+      description,
+      UserId: helpers.getUser(req).id
+    })
       .then(() => {
         req.flash('success_messages', '成功推文')
         return res.redirect('tweets')
       })
+      .catch(err => next(err))
   },
   getModalsTabs: (req, res) => {
     res.render('modals/self')
