@@ -9,9 +9,6 @@ const userController = require('../controllers/user-controller')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated } = require('../middleware/auth')
 
-router.use('/admin', admin)
-router.get('/users', userController.getUser)
-
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
@@ -25,6 +22,9 @@ router.get('/setting', userController.getSetting)
 router.get('/other', userController.getOtherPage)
 router.get('/modals/reply', userController.getReply)
 router.get('/modals/self', tweetController.getModalsTabs)
+
+router.use('/admin', admin)
+router.get('/users', userController.getUser)
 
 router.use('/', generalErrorHandler)
 router.use('/', authenticated, tweetController.getTweets)
