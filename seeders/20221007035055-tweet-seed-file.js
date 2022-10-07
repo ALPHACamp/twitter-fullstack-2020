@@ -8,9 +8,9 @@ module.exports = {
       'SELECT id FROM Users;',
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
-    await queryInterface.bulkInsert('Tweets', Array.from({ length: 30 }).map((_, i) => ({
-      user_id: user[Math.floor(Math.random() * user.length)].id,
-      description: faker.lorem.sentences(1),
+    await queryInterface.bulkInsert('Tweets', Array.from({ length: 200 }).map((_, i) => ({
+      user_id: user[Math.floor(i / 10)].id,
+      description: faker.lorem.sentences(2),
       created_at: new Date(),
       updated_at: new Date()
     })), {})
