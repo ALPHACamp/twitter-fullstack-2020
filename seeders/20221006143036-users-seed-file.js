@@ -5,7 +5,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const userSeed = Array.from({ length: 20 }).map((_, i) => ({
       name: `user${i + 1}`,
-      email: `user${i}@email.com`,
+      email: `user${i + 1}@email.com`,
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       account: `user${i + 1}`,
       avatar: faker.image.cats(),
