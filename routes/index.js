@@ -6,6 +6,7 @@ const passport = require('../config/passport')
 
 const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
+const followshipController = require('../controllers/followship-controller')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated } = require('../middleware/auth')
 
@@ -27,8 +28,8 @@ router.get('/other', userController.getOtherPage)
 router.get('/modals/reply', userController.getReply)
 router.get('/modals/self', tweetController.getModalsTabs)
 
-router.post('/followships/:id', userController.addFollowing)
-router.delete('/followships/:id', userController.removeFollowing)
+router.post('/followships', followshipController.addFollowing)
+router.delete('/followships/:id', followshipController.removeFollowing)
 
 router.use('/', generalErrorHandler)
 router.use('/', authenticated, tweetController.getTweets)
