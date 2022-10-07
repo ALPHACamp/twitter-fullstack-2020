@@ -16,7 +16,7 @@ const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (helpers.getUser(req).role === 'admin') return next()
   }
-  req.flash('error_messages', '請登入管理者帳號')
+  req.flash('error_messages', '請登入管理者帳號，或請由前台登入')
   res.redirect('/admin/signin')
 }
 
