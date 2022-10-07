@@ -26,7 +26,7 @@ router.get('/other', userController.getOtherPage)
 router.get('/modals/reply', userController.getReply)
 router.get('/modals/self', tweetController.getModalsTabs)
 
-router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
+router.use('/', authenticated, tweetController.getTweets)
 
 module.exports = router
