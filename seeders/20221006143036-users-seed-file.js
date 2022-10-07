@@ -3,30 +3,30 @@ const bcrypt = require('bcryptjs')
 const faker = require('faker')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Users',
-      Array.from({ length: 50 }).map((_, i) =>
-        ({
-          name: `user${i}`,
-          email: `user${i}@email.com`,
-          password: bcrypt.hash('12345678', 10),
-          account: `user${i}`,
-          avatar: faker.image.cats(),
-          cover: `https://loremflickr.com/630/200/landscape/?random=${Math.random() * 100}`,
-          introduction: faker.lorem.text(max_nb_chars = 80),
-          role: 'user',
-          created_at: new Date(),
-          updated_at: new Date()
-        }))
-      , {})
+    const userSeed = Array.from({ length: 20 }).map((_, i) => ({
+      name: `user${i + 1}`,
+      email: `user${i}@email.com`,
+      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+      account: `user${i + 1}`,
+      avatar: faker.image.cats(),
+      cover: `https://loremflickr.com/630/200/landscape/?random=${Math.random() * 20}`,
+      introduction: faker.lorem.text().substring(0, 140),
+      role: 'user',
+      created_at: new Date(),
+      updated_at: new Date()
+    }))
+    await queryInterface.bulkInsert('Users', [{
+      name: 'root',
+      email: 'root@email.com',
+      password: await bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+      account: 'root',
+      role: 'admin',
+      created_at: new Date(),
+      updated_at: new Date()
+    }, ...userSeed], {})
   },
 
-  down: (queryInterface, Sequelize) => {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkDelete('People', null, {});
-    */
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkDelete('Users', null, {})
   }
 }
