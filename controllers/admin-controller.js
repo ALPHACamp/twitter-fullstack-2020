@@ -52,19 +52,24 @@ const adminController = {
     return User.findAll({
       nest: true, // 資料庫拿回來的資料可以比較整齊
       include: [
-        { model: Tweet, include: Like },
+        { model: Tweet, include: [Like] },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }]
     })
       .then(data => {
-        const users = data.filter(user => user.role !== 'admin')
+        const users = data
+          .filter(user => user.role !== 'admin')
           .map(userData => {
             const userJson = userData.toJSON()
             delete userJson.password // 新增這裡，刪除密碼(移除敏感資料)
+
             return {
               ...userJson,
               tweetCounts: userData.Tweets.length,
-              likeCounts: userData.Tweets.reduce((acc, cur) => acc + cur.Likes.length, 0),
+              // TODO
+              likeCounts: userData.Tweets.reduce((acc, cur) => {
+                return acc + cur.Likes.length
+              }, 0),
               followerCounts: userData.Followers.length,
               followingCounts: userData.Followings.length
             }
