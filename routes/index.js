@@ -9,9 +9,8 @@ const userController = require('../controllers/user-controller')
 const followshipController = require('../controllers/followship-controller')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated } = require('../middleware/auth')
-
-router.use('/admin', admin)
-router.get('/users', userController.getUser)
+const { authenticatedLimit } = require('../middleware/auth')
+const upload = require('../middleware/multer')
 
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
@@ -23,14 +22,22 @@ router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
 router.get('/logout', userController.logout)
 
+router.get('/api/users/:id', authenticatedLimit, userController.getUser)
+
+router.post('/api/users/:id', authenticatedLimit, upload.fields([
+  { name: 'image', maxCount: 1 },
+  { name: 'coverImage', maxCount: 1 }
+]), userController.postUser)
+
 router.get('/setting', userController.getSetting)
 router.get('/other', userController.getOtherPage)
 router.get('/modals/reply', userController.getReply)
 router.get('/modals/self', tweetController.getModalsTabs)
-
 router.post('/followships', followshipController.addFollowing)
 router.delete('/followships/:id', followshipController.removeFollowing)
 
+router.use('/admin', admin)
+router.get('/users', userController.getUser)
 router.use('/', generalErrorHandler)
 router.use('/', authenticated, tweetController.getTweets)
 
