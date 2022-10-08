@@ -12,9 +12,6 @@ const { authenticated } = require('../middleware/auth')
 const { authenticatedLimit } = require('../middleware/auth')
 const upload = require('../middleware/multer')
 
-router.use('/admin', admin)
-router.get('/users', userController.getUser)
-
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
@@ -36,10 +33,11 @@ router.get('/setting', userController.getSetting)
 router.get('/other', userController.getOtherPage)
 router.get('/modals/reply', userController.getReply)
 router.get('/modals/self', tweetController.getModalsTabs)
-
 router.post('/followships', followshipController.addFollowing)
 router.delete('/followships/:id', followshipController.removeFollowing)
 
+router.use('/admin', admin)
+router.get('/users', userController.getUser)
 router.use('/', generalErrorHandler)
 router.use('/', authenticated, tweetController.getTweets)
 
