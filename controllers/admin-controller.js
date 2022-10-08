@@ -47,8 +47,23 @@ const adminController = {
     req.flash('success_messages', '登出成功！')
     req.logout()
     res.redirect('/admin/signin')
+  },
+  getUsers: (req, res, next) => {
+    User.findAll({
+      nest: true, // 資料庫拿回來的資料可以比較整齊
+      include: [{ model: Tweet }, { model: User }]
+    })
+      .then(data => {
+        const users = data.filter(user => user.role !== 'admin')
+          .map(userData => {
+            const user = userData.toJSON()
+            delete user.password // 新增這裡，刪除密碼(移除敏感資料)
+            res.json({ status: 'success', ...user })
+          })
+        res.render('admin/users', { users })
+      })
   }
-
+  
 }
 
 module.exports = adminController
