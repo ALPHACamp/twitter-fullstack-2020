@@ -3,7 +3,6 @@
 {{!--
 (.main-twitter-container>(.main-twitter-head>(.main-twitter-item>(a.back-link+h2.main-twitter-title))+(.main-twitter-item>img.user-avatar+(p.user-name+span.user-name))+(.main-twitter-item>(p.main-twitter-post+span.main-twitter-post))+(.main-twitter-item>span.twitter-post-comment-count*2)+(.main-twitter-item>i.twitter-post-comment-icon*2)+(.main-twitter-item>img.user-avatar+((p.user-name+span.user-name)+p.{@}+p.comment-text))))
 --}}
-
 {{!-- {{>left}} --}}
 <div class="main-twitter-container">
   <div class="main-twitter-head">
@@ -11,10 +10,14 @@
       <a href="" class="back-link"></a>
       <h2 class="main-twitter-title">推文</h2>
     </div>
-    <div class="main-twitter-item">
-      <img src="" alt="" class="user-avatar">
-      <p class="user-name"></p>
-      <span class="user-name"></span>
+    <div class="d-flex flex-column bd-highlight mt-3 ms-2">
+      <a href="/users/{{tweet.User.id}}/tweets">
+        <div class="font-name">{{tweet.User.name}}</div>
+        <div class="font-account">@{{tweet.User.account}}</div>
+      </a>
+    </div>
+    <div class="text-box p-3 pt-2 bd-highlight">
+      <p style="word-wrap:break-word; font-size:24px;">{{tweet.description}}</p>
     </div>
     <div class="main-twitter-item">
       <p class="main-twitter-post"></p>
@@ -24,16 +27,55 @@
         class="twitter-post-comment-count"></span></div>
     <div class="main-twitter-item"><i class="twitter-post-comment-icon"></i><i class="twitter-post-comment-icon"></i>
     </div>
+    <button class="me-5" type="submit">
+      <a href="" data-bs-toggle="modal" data-bs-target="#replyInputModal">
+        回覆
+      </a>
+    </button>
     <div class="main-twitter-item">
-      {{!-- {{#each}} --}}
-      <img src="" alt="" class="user-avatar">
-      <p class="user-name">Apple</p><span class="user-name">@apple</span>
-      <p class="">回覆@apple check</p>
-      <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum rutrum
-        sodales. Nullam mattis fermentum
-        libero, non volutpat.</p>
-      {{!-- {{/each}} --}}
+      {{#each replies}}
+        <img src="" alt="" class="user-avatar">
+        <p class="user-name"></p><span class="user-name">@apple</span>
+        <p class="">回覆@apple check</p>
+        <p class="comment-text">{{this.comment}}</p>
+      {{/each}}
     </div>
   </div>
 </div>
 {{!-- {{>right}} --}}
+{{!-- Modal --}}
+<div class="modal fade" id="replyInputModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="height:500px">
+      <div class="modal-header d-flex justify-content-start" style=" margin:0px">
+        <div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      </div>
+      <div>
+        <div class="col-2 ">
+          <img src="{{tweet.User.avatar}}" class="rounded-circle">
+        </div>
+        <div class="col px-0">
+          <span class="fw-bold fs-6">{{tweet.User.name}}</span><small>-@{{tweet.User.account}} ‧
+            <br />
+            <p class="my-2" style="word-wrap: break-word; word-break: normal;">{{tweet.description}}</p>
+            <small>回覆<span>@{{tweet.User.account}}</span></small>
+        </div>
+        <form action="/tweets/{{tweet.id}}/replies" method="POST">
+          <div class=" row mt-3">
+            <div class="col-2 me-0">
+              <img src="{{user.avatar}}" class="rounded-circle" />
+            </div>
+            <div class="col mx-0 px-0">
+              <textarea name="comment" type="text" placeholder="推你的回覆" required></textarea>
+            </div>
+          </div>
+          <div class="text-end mt-5">
+            <button type="submit" class="btn">回覆</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
