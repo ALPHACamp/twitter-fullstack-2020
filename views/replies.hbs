@@ -3,7 +3,6 @@
 {{!--
 (.main-twitter-container>(.main-twitter-head>(.main-twitter-item>(a.back-link+h2.main-twitter-title))+(.main-twitter-item>img.user-avatar+(p.user-name+span.user-name))+(.main-twitter-item>(p.main-twitter-post+span.main-twitter-post))+(.main-twitter-item>span.twitter-post-comment-count*2)+(.main-twitter-item>i.twitter-post-comment-icon*2)+(.main-twitter-item>img.user-avatar+((p.user-name+span.user-name)+p.{@}+p.comment-text))))
 --}}
-
 {{!-- {{>left}} --}}
 <div class="main-twitter-container">
   <div class="main-twitter-head">
@@ -11,10 +10,14 @@
       <a href="" class="back-link"></a>
       <h2 class="main-twitter-title">推文</h2>
     </div>
-    <div class="main-twitter-item">
-      <img src="" alt="" class="user-avatar">
-      <p class="user-name"></p>
-      <span class="user-name"></span>
+    <div class="d-flex flex-column bd-highlight mt-3 ms-2">
+      <a href="/users/{{tweet.User.id}}/tweets">
+        <div class="font-name">{{tweet.User.name}}</div>
+        <div class="font-account">@{{tweet.User.account}}</div>
+      </a>
+    </div>
+    <div class="text-box p-3 pt-2 bd-highlight">
+      <p style="word-wrap:break-word; font-size:24px;">{{tweet.description}}</p>
     </div>
     <div class="main-twitter-item">
       <p class="main-twitter-post"></p>
@@ -25,14 +28,12 @@
     <div class="main-twitter-item"><i class="twitter-post-comment-icon"></i><i class="twitter-post-comment-icon"></i>
     </div>
     <div class="main-twitter-item">
-      {{!-- {{#each}} --}}
-      <img src="" alt="" class="user-avatar">
-      <p class="user-name">Apple</p><span class="user-name">@apple</span>
-      <p class="">回覆@apple check</p>
-      <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum rutrum
-        sodales. Nullam mattis fermentum
-        libero, non volutpat.</p>
-      {{!-- {{/each}} --}}
+      {{#each replies}}
+        <img src="" alt="" class="user-avatar">
+        <p class="user-name"></p><span class="user-name">@apple</span>
+        <p class="">回覆@apple check</p>
+        <p class="comment-text">{{this.comment}}</p>
+      {{/each}}
     </div>
   </div>
 </div>
