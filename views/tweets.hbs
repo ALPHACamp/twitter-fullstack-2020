@@ -4,13 +4,13 @@
   {{!-- tweet --}}
   <div class="post-tweet" data-bs-toggle="modal" data-bs-target="#tweet-modal">
     <div style="">
-    <img src="" class="user-photo">
-    <span>有什麼新鮮事？</span>
+      <img src="" class="user-photo">
+      <span>有什麼新鮮事？</span>
     </div>
     <div class="tweet-btn-outline">
-    <button type="button" class="btn tweet-btn">
-      <span class="tweet-btn-text">推文</span>
-    </button>
+      <button type="button" class="btn tweet-btn">
+        <span class="tweet-btn-text">推文</span>
+      </button>
     </div>
   </div>
   <li class="nav-item">
@@ -21,53 +21,53 @@
   {{!-- tweet end --}}
   {{!-- feed --}}
   <div class="tweets-feed">
-  {{#each tweets}}
-    <div class="text-box d-flex" style="margin:0px;">
-    <a class="" href="">
-      <img src="" alt="" class="user-photo">
-    </a>
-    <div class="">
-      <div class="">
-      <a class="" href="/users/{{this.id}}/tweets">
-        <span class="user-name">Kirs</span>
-        <span class="user-account">@Kirs</span>
-      </a>
+    {{#each tweets}}
+      <div class="text-box d-flex" style="margin:0px;">
+        <a class="" href="">
+          <img src="" alt="" class="user-photo">
+        </a>
+        <div class="">
+          <div class="">
+            <a class="" href="/users/{{this.User.id}}/tweets">
+              <span class="user-name">{{this.User.name}}</span>
+              <span class="user-account">@{{this.User.account}}</span>
+            </a>
+          </div>
+          <a href="/tweets/{{this.id}}/replies" class="description" style="text-decoration: none">
+            <p class="description-text">
+              {{this.description}}
+            </p>
+          </a>
+        </div>
       </div>
-      <a href="/tweets/{{this.id}}" class="description" style="text-decoration: none">
-      <p class="description-text">
-        {{this.description}}
-      </p>
-      </a>
-    </div>
-    </div>
-  {{/each}}
-  {{!-- feed end --}}
+    {{/each}}
+    {{!-- feed end --}}
   </div>
 </div>
 {{!-- tweet Modal --}}
 <div class="modal fade" id="tweet-modal" tabindex="-1" aria-labelledby="tweet-modal" aria-hidden="true">
   <div class="modal-dialog modal-lg" style="width:639px; position:relative; right:40px;">
     <div class="modal-content" style="border-radius:16px">
-    <div class="" style="">
-      <label for="description" class="form-label">
-      </label>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <form action="/tweets" method="POST">
-      <div class="modal-body d-flex">
-      <img src="" class="bi pe-none me-2" style="width:50px;height:50px;">
-      <textarea class="form" id="description" name="description" rows="4" maxlength="141" placeholder="有什麼新鮮事？"
-        style="border:none; width:600px;position:relative; top:10px;resize:none;height:250px;" required></textarea>
-      <div class="" style="color:#FF0000;position: absolute;top: 270px;right: 120px;">
-        <span id="insertEmptyMessage"></span>
+      <div class="" style="">
+        <label for="description" class="form-label">
+        </label>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="" id="char_count"><span>140/140</span></div>
-      </div>
-      <button type="submit" class="btn btn-orange btn-tweets-models"
-      style="border-radius: 50px;position:relative; left:550px;bottom:20px;">
-      <span class="" style="font-size:16px;">推文</span>
-      </button>
-    </form>
+      <form action="/tweets" method="POST">
+        <div class="modal-body d-flex">
+          <img src="" class="bi pe-none me-2" style="width:50px;height:50px;">
+          <textarea class="form" id="description" name="description" rows="4" maxlength="141" placeholder="有什麼新鮮事？"
+            style="border:none; width:600px;position:relative; top:10px;resize:none;height:250px;" required></textarea>
+          <div class="" style="color:#FF0000;position: absolute;top: 270px;right: 120px;">
+            <span id="insertEmptyMessage"></span>
+          </div>
+          <div class="" id="char_count"><span>140/140</span></div>
+        </div>
+        <button type="submit" class="btn btn-orange btn-tweets-models"
+          style="border-radius: 50px;position:relative; left:550px;bottom:20px;">
+          <span class="" style="font-size:16px;">推文</span>
+        </button>
+      </form>
     </div>
   </div>
 </div>
@@ -79,15 +79,15 @@
   let insertEmptyMessage = document.getElementById( 'insertEmptyMessage' )
   const maxNumOfCount = 140
   const countCharacters = () => {
-  const numOfEnter = textArea.value.length
-  const counter = maxNumOfCount - numOfEnter
-  charCount.textContent = counter + '/140'
-  if ( numOfEnter === 0 ) {
-    insertEmptyMessage.innerText = '內容不可以是空白'
-  }
-  if ( counter < 0 || counter >= 140 ) {
-    charCount.style.color = 'red'
-  }
+    const numOfEnter = textArea.value.length
+    const counter = maxNumOfCount - numOfEnter
+    charCount.textContent = counter + '/140'
+    if ( numOfEnter === 0 ) {
+      insertEmptyMessage.innerText = '內容不可以是空白'
+    }
+    if ( counter < 0 || counter >= 140 ) {
+      charCount.style.color = 'red'
+    }
   }
   textArea.addEventListener( 'input', countCharacters )
 </script>
