@@ -49,21 +49,31 @@ const adminController = {
     res.redirect('/admin/signin')
   },
   getUsers: (req, res, next) => {
-    User.findAll({
+    return User.findAll({
       nest: true, // 資料庫拿回來的資料可以比較整齊
-      include: [{ model: Tweet }, { model: User }]
+      include: [
+        { model: Tweet, include: Like },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }]
     })
       .then(data => {
         const users = data.filter(user => user.role !== 'admin')
           .map(userData => {
-            const user = userData.toJSON()
-            delete user.password // 新增這裡，刪除密碼(移除敏感資料)
-            res.json({ status: 'success', ...user })
+            const userJson = userData.toJSON()
+            delete userJson.password // 新增這裡，刪除密碼(移除敏感資料)
+            return {
+              ...userJson,
+              tweetCounts: userData.Tweets.length,
+              likeCounts: userData.Tweets.reduce((acc, cur) => acc + cur.Likes.length, 0),
+              followerCounts: userData.Followers.length,
+              followingCounts: userData.Followings.length
+            }
           })
-        res.render('admin/users', { users })
+          .sort((a, b) => b.tweetCounts - a.tweetCounts)
+        return res.render('admin/users', { users })
       })
+      .catch(err => next(err))
   }
-  
 }
 
 module.exports = adminController
