@@ -1,4 +1,4 @@
-const { User, Tweet, Reply, Like } = require('../models')
+const { User, Tweet, Reply, Like, Followship } = require('../models')
 const { getUser } = require('../_helpers')
 const bcrypt = require('bcryptjs')
 const { imgurFileHandler } = require('../helpers/file-helpers')
@@ -78,10 +78,88 @@ const userController = {
     // doing ...
   },
   followers: (req, res, next) => {
-    // doing ...
+    const id = req.params.id
+    const currentUser = getUser(req)
+
+    return User.findByPk(id, {
+      nest: true,
+      include: [Tweet, { model: User, as: 'Followers' }]
+    })
+      .then(user => {
+        const result = user.Followers.map(user => {
+          return {
+            ...user.toJSON(),
+            isFollowed: currentUser?.Followings.some(f => f.id === user.id)
+          }
+        }).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        res.render('followers', { observedUser: user.toJSON(), followers: result })
+      })
+      .catch(err => next(err))
   },
   followings: (req, res, next) => {
-    // doing ...
+    const id = req.params.id
+    const currentUser = getUser(req)
+
+    return User.findByPk(id, {
+      nest: true,
+      include: [Tweet, { model: User, as: 'Followings' }]
+    })
+      .then(user => {
+        const followings = user.Followings.map(user => {
+          return {
+            ...user.toJSON(),
+            isFollowed: currentUser?.Followings.some(f => f.id === user.id)
+          }
+        }).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        res.render('followings', { user: user.toJSON(), followings })
+      })
+      .catch(err => next(err))
+  },
+  addFollowing: async (req, res, next) => {
+    const id = req.params.id
+    if (id === Number(req.body.id)) {
+      req.flash('error_messages', '不能追隨自己！')
+      return res.redirect(200, 'back')
+    }
+    Promise.all([
+      User.findByPk(id),
+      Followship.findOne({
+        where: {
+          followerId: req.user.id,
+          followingId: req.params.userId
+        }
+      })
+    ])
+      .then(([user, followship]) => {
+        if (!user) throw new Error("User didn't exist!")
+        if (followship) throw new Error('You are already following this user!')
+        return Followship.create({
+          followerId: req.user.id,
+          followingId: id
+        })
+      })
+      .then(() => {
+        req.flash('success_messages', '追隨成功！')
+        res.redirect('back')
+      })
+      .catch(err => next(err))
+  },
+  removeFollowing: (req, res, next) => {
+    Followship.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.userId
+      }
+    })
+      .then(followship => {
+        if (!followship) throw new Error("You haven't followed this user!")
+        return followship.destroy()
+      })
+      .then(() => {
+        req.flash('success_messages', '取消追隨成功！')
+        res.redirect('back')
+      })
+      .catch(err => next(err))
   },
   settingPage: (req, res) => {
     res.render('setting')
