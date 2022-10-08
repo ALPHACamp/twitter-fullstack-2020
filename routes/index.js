@@ -12,32 +12,40 @@ const { authenticated } = require('../middleware/auth')
 const { authenticatedLimit } = require('../middleware/auth')
 const upload = require('../middleware/multer')
 
+// 如果是 admin 就導到 /admin/... 的路徑
+router.use('/admin', admin)
+
+router.get('/api/users/:id', authenticatedLimit, userController.getUser)
+router.post('/api/users/:id', authenticatedLimit, upload.fields([
+  { name: 'image', count: 1 },
+  { name: 'coverImage', count: 1 }
+]), userController.postUser)
+
+router.get('/tweets/:id', authenticated, tweetController.getTweets)
+router.get('/tweets', authenticated, tweetController.getTweets)
+router.post('/tweets', authenticated, tweetController.postTweet)
+
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 
-router.get('/tweets/:id', tweetController.getTweets)
-router.get('/tweets', authenticated, tweetController.getTweets)
-router.post('/tweets', authenticated, tweetController.postTweet)
 router.get('/logout', userController.logout)
 
-router.get('/api/users/:id', authenticatedLimit, userController.getUser)
-
-router.post('/api/users/:id', authenticatedLimit, upload.fields([
-  { name: 'image', maxCount: 1 },
-  { name: 'coverImage', maxCount: 1 }
-]), userController.postUser)
-
-router.get('/setting', userController.getSetting)
-router.get('/other', userController.getOtherPage)
-router.get('/modals/reply', userController.getReply)
+router.get('/setting', userController.settingPage)
+router.post('/setting', userController.postSetting)
+router.get('/other', userController.otherPage)
+router.get('/modals/reply', userController.replies)
 router.get('/modals/self', tweetController.getModalsTabs)
 router.post('/followships', followshipController.addFollowing)
 router.delete('/followships/:id', followshipController.removeFollowing)
 
-router.use('/admin', admin)
+router.get('/users/:id/followers', authenticated, userController.followers)
+router.get('/users/:id/followings', authenticated, userController.followings)
+
 router.get('/users', userController.getUser)
+router.post('/users', userController.postUser)
+
 router.use('/', generalErrorHandler)
 router.use('/', authenticated, tweetController.getTweets)
 

@@ -68,17 +68,36 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  getOtherPage: (req, res) => {
-    res.render('other')
+  tweets: (req, res, next) => {
+    // doing ...
   },
-  getSetting: (req, res) => {
+  replies: (req, res, next) => {
+    // doing ...
+  },
+  likes: (req, res, next) => {
+    // doing ...
+  },
+  followers: (req, res, next) => {
+    // doing ...
+  },
+  followings: (req, res, next) => {
+    // doing ...
+  },
+  settingPage: (req, res) => {
     res.render('setting')
   },
-  getReply: (req, res) => {
-    res.render('modals/reply')
+  postSetting: (req, res) => {
+    const id = req.params.id
+    res.redirect(`/users/${id}/setting`)
   },
+  otherPage: (req, res) => {
+    res.render('other')
+  },
+  // api routes
   getUser: (req, res, next) => {
-    User.findByPk(getUser(req).id)
+    // User.findByPk(getUser(req).id) 這樣子寫不會過
+    const id = req.params.id
+    User.findByPk(id) // 要傳入 id test 才會過
       .then(userData => {
         if (!userData) throw new Error("user didn't exist")
 
@@ -89,17 +108,18 @@ const userController = {
       .catch(err => next(err))
   },
   postUser: async (req, res, next) => {
+    const id = req.params.id
     const { file } = req // 把檔案取出來
     const { name, introduction } = req.body
 
-    const user = await User.findByPk(getUser(req).id)
+    const user = await User.findByPk(id)
     if (!user) throw new Error("user didn't exist")
     let avatarFilePath = user.dataValues.avatar
     let coverFilePath = user.dataValues.cover
 
     // 檢查符號 ?. 前面這個 object 值存不存在
-    if (file?.image) {
-      avatarFilePath = await imgurFileHandler(...file.image)
+    if (file?.avatar) {
+      avatarFilePath = await imgurFileHandler(...file.avatar)
     }
 
     if (file?.coverImage) {
