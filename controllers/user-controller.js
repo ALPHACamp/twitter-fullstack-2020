@@ -129,7 +129,7 @@ const userController = {
     await user.update({ name, introduction, avatar: avatarFilePath, cover: coverFilePath })
       .then(() => {
         req.flash('success_messages', '個人資料已更新')
-        res.redirect(`/users/${req.params.id}`)
+        return res.json({ status: 'success', ...user.toJSON() })
       })
       .catch(err => next(err))
   }
