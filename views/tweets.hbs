@@ -13,36 +13,51 @@
       </button>
     </div>
   </div>
-  <li class="nav-item">
-    <a href="/logout">
-      <button class="btn btn-outline-success my-sm-0 my-2">Logout</button>
-    </a>
-  </li>
   {{!-- tweet end --}}
   {{!-- feed --}}
-  <div class="tweets-feed">
-    {{#each tweets}}
-      <div class="text-box d-flex" style="margin:0px;">
-        <a class="" href="">
-          <img src="" alt="" class="user-photo">
-        </a>
-        <div class="">
-          <div class="">
-            <a class="" href="/users/{{this.User.id}}/tweets">
-              <span class="user-name">{{this.User.name}}</span>
-              <span class="user-account">@{{this.User.account}}</span>
-            </a>
-          </div>
-          <a href="/tweets/{{this.id}}/replies" class="description" style="text-decoration: none">
-            <p class="description-text">
-              {{this.description}}
-            </p>
+  {{#each tweets}}
+    <div class="card mb-3 mx-auto" style="width: 639px;height: 153px;">
+      <div class="row g-0">
+        <div class="col-md-1" style="width: 50px; height: 50px;">
+          <a href="/users/{{this.User.id}}/tweets">
+            <img src="{{this.User.avatar}}" class="img-fluid rounded-circle" alt="User Photo">
           </a>
         </div>
+        <div class="col-md-11">
+          <div class="card-body">
+            <h5 class="card-text">{{this.User.name}}
+              <span class="fs-6 fw-lighter mr-1">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
+            </h5>
+            <p class="card-text">{{this.description}}</p>
+            <p class="card-text">
+            <form action="/tweets/{{this.id}}/replies" method="GET" style="display:inline">
+              <small class="text-muted">
+                <button type="submit" style="border:none;background: none;"><i
+                    class="fa-regular fa-comment-dots"></i></button>
+                <span>{{this.repliedCount}}</span>
+              </small>
+            </form>
+            {{#if this.isLiked}}
+              <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: inline">
+                <small class="text-muted">
+                  <i class="fa-regular fa-heart"></i>
+                  <span>{{this.likedCount}}</span>
+                </small>
+              </form>
+            {{else}}
+              <form action="/tweets/{{this.id}}/like" method="POST" style="display: inline">
+                <small class="text-muted">
+                  <i class="fa-solid fa-heart"></i>
+                  <span>{{this.likedCount}}</span>
+                </small>
+              </form>
+            {{/if}}
+            </p>
+          </div>
+        </div>
       </div>
-    {{/each}}
-    {{!-- feed end --}}
-  </div>
+    </div>
+  {{/each}}
 </div>
 {{!-- tweet Modal --}}
 <div class="modal fade" id="tweet-modal" tabindex="-1" aria-labelledby="tweet-modal" aria-hidden="true">
