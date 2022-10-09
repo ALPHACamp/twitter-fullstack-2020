@@ -1,4 +1,5 @@
-const { User, Tweet, Reply, Like, Followship } = require('../models')
+const { User, Tweet, Reply, Like } = require('../models')
+const helpers = require('../_helpers')
 const { getUser } = require('../_helpers')
 const bcrypt = require('bcryptjs')
 const { imgurFileHandler } = require('../helpers/file-helpers')
@@ -69,13 +70,156 @@ const userController = {
     res.redirect('/signin')
   },
   tweets: (req, res, next) => {
-    // doing ...
+    const id = req.params.id
+    return Promise.all([
+      User.findByPk(id, {
+        include: [
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' }
+        ]
+      }),
+      Tweet.findAll({
+        where: { UserId: id },
+        include: [Like, Reply],
+        order: [['createdAt', 'desc']],
+        nest: true
+      })
+    ])
+      .then(([targetUser, tweets]) => {
+        if (!targetUser) throw new Error("User didn't exist")
+        const user = getUser(req)
+        if (user) {
+          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        }
+        const tweetsData = tweets
+          .map(t => ({
+            ...t.toJSON(),
+            likedCount: t.Likes.length,
+            repliedCount: t.Replies.length,
+            isLiked: t.Likes.some(like => like.UserId === user.id)
+          }))
+        res.locals.tweetsLength = tweets.length
+        res.render('profile', { targetUser: targetUser.toJSON(), tweets: tweetsData, user, tweet: true })
+      })
+      .catch(err => next(err))
   },
   replies: (req, res, next) => {
-    // doing ...
+    const id = req.params.id
+    return Promise.all([
+      User.findByPk(id, {
+        include: [{ model: User, as: 'Followings' }, { model: User, as: 'Followers' }, Tweet]
+      }),
+      Reply.findAll({
+        where: { UserId: id },
+        include: [{ model: Tweet, include: User }],
+        order: [['createdAt', 'desc']],
+        raw: true,
+        nest: true
+      })
+    ])
+      .then(([targetUser, replies]) => {
+        if (!targetUser) throw new Error("User didn't exist")
+        const user = getUser(req)
+        if (user) {
+          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        }
+        res.locals.tweetsLength = targetUser.Tweets.length
+        res.render('profile', { targetUser: targetUser.toJSON(), replies, user, reply: true })
+      })
+      .catch(err => next(err))
   },
   likes: (req, res, next) => {
-    // doing ...
+    const id = req.params.id
+    return Promise.all([
+      User.findByPk(id, {
+        include: [{ model: User, as: 'Followings' }, { model: User, as: 'Followers' }, Tweet]
+      }),
+      Like.findAll({
+        where: { UserId: id },
+        include: [
+          { model: Tweet, include: User },
+          { model: Tweet, include: Like },
+          { model: Tweet, include: Reply }
+        ],
+        order: [['createdAt', 'desc']],
+        nest: true
+      })
+    ])
+      .then(([targetUser, likes]) => {
+        if (!targetUser) throw new Error("User didn't exist")
+        const user = getUser(req)
+        if (user) {
+          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
+        }
+        const likesData = likes
+          .map(l => ({
+            ...l.toJSON(),
+            likedCount: l.Tweet.Likes.length,
+            repliedCount: l.Tweet.Replies.length,
+            isLiked: user ? l.Tweet.Likes.some(like => like.UserId === user.id) : false
+          }))
+        res.locals.tweetsLength = targetUser.Tweets.length
+        res.render('profile', { targetUser: targetUser.toJSON(), likes: likesData, user, like: true })
+      })
+      .catch(err => next(err))
+  },
+  postTweet: async (req, res, next) => {
+    try {
+      const id = req.params.id
+      const { description } = req.body
+      if (description.trim() === '') {
+        req.flash('error_messages', 'Tweet 內容不能為空')
+        return res.redirect('back')
+      }
+      if (description.length > 140) {
+        req.flash('error_messages', 'Tweet 字數不能超過140字')
+        return res.redirect('back')
+      }
+      await Tweet.create({
+        description,
+        UserId: id
+      })
+        .then(() => {
+          req.flash('success_messages', '成功推文')
+          return res.redirect('/tweets')
+        })
+        .catch(err => next(err))
+    } catch (err) {
+      next(err)
+    }
+  },
+  postLike: async (req, res, next) => {
+    try {
+      const id = req.params.id
+      await Like.create({
+        UserId: id,
+        TweetId: req.params.tweet_id
+      })
+      req.flash('success_messages', 'success like!')
+      return res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
+  },
+  postUnlike: async (req, res, next) => {
+    try {
+      const id = req.params.id
+      return Promise.all([
+        Like.findOne({
+          where: {
+            UserId: id,
+            TweetId: req.params.tweet_id
+          }
+        })
+      ]).then(like => {
+        if (!like) return req.flash('error_messages', '你沒有like這個tweet!')
+        like.destroy()
+        req.flash('success_messages', 'success unlike!')
+        return res.redirect('back')
+      }).catch(err => next(err))
+    } catch (err) {
+      next(err)
+    }
   },
   followers: (req, res, next) => {
     const id = req.params.id
@@ -115,54 +259,9 @@ const userController = {
       })
       .catch(err => next(err))
   },
-  addFollowing: async (req, res, next) => {
-    const id = req.params.id
-    if (id === Number(req.body.id)) {
-      req.flash('error_messages', '不能追隨自己！')
-      return res.redirect(200, 'back')
-    }
-    Promise.all([
-      User.findByPk(id),
-      Followship.findOne({
-        where: {
-          followerId: req.user.id,
-          followingId: req.params.userId
-        }
-      })
-    ])
-      .then(([user, followship]) => {
-        if (!user) throw new Error("User didn't exist!")
-        if (followship) throw new Error('You are already following this user!')
-        return Followship.create({
-          followerId: req.user.id,
-          followingId: id
-        })
-      })
-      .then(() => {
-        req.flash('success_messages', '追隨成功！')
-        res.redirect('back')
-      })
-      .catch(err => next(err))
-  },
-  removeFollowing: (req, res, next) => {
-    Followship.findOne({
-      where: {
-        followerId: req.user.id,
-        followingId: req.params.userId
-      }
-    })
-      .then(followship => {
-        if (!followship) throw new Error("You haven't followed this user!")
-        return followship.destroy()
-      })
-      .then(() => {
-        req.flash('success_messages', '取消追隨成功！')
-        res.redirect('back')
-      })
-      .catch(err => next(err))
-  },
   settingPage: (req, res) => {
-    res.render('setting')
+    const user = getUser(req)
+    return res.render('setting', { user })
   },
   postSetting: (req, res) => {
     const id = req.params.id
