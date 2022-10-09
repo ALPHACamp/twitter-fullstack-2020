@@ -41,7 +41,7 @@ const tweetController = {
       users = users.sort((a, b) => b.followerCount - a.followerCount)
         .slice(0, 10)
 
-      return res.render('tweets', { tweets, users, user })
+      return res.render('tweets', { tweets, users, likes })
     } catch (err) {
       next(err)
     }
@@ -65,6 +65,34 @@ const tweetController = {
         return res.redirect('tweets')
       })
       .catch(err => next(err))
+  },
+  postLike: (req, res, next) => {
+    Promise.all([
+      Like.create({
+        UserId: helpers.getUser(req).id,
+        TweetId: req.params.tweet_id
+      })
+    ]).then(() => {
+      req.flash('success_messages', 'success like!')
+      return res.redirect('back')
+    }).catch(err => next(err))
+  },
+  postUnlike: async (req, res, next) => {
+    // 這邊用 Promise.all([]) test 不會過
+    try {
+      const like = await Like.findOne({
+        where: {
+          UserId: helpers.getUser(req).id,
+          TweetId: req.params.tweet_id
+        }
+      })
+      if (!like) return req.flash('error_messages', '你沒有like這個tweet!')
+      await like.destroy()
+      req.flash('success_messages', '成功 Unlike!')
+      return res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
   },
   getModalsTabs: (req, res) => {
     res.render('modals/self')

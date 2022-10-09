@@ -1,18 +1,37 @@
-{{!-- main --}}
-{{!-- nav side bar left --}}
-{{!-- check side bar 'left' top --}}
-{{!--
-(nav.side-bar-left>(.side.bar-left-top>(.link-group>img.ac-icon)+(.link-group>img.home-icon+a{home})+(.profile>a{profile})+(.setting>a{setting})+(btn{send}))+(.side.bar-left-button>(.link-group>img.logout-icon+a.{logout}))
---}}
-<nav class="nav side-bar-left">
-  <div class="side-bar-left-top">
-    <div class="link-group"><img src="" alt="" class="ac-icon"></div>
-    <div class="link-group"><img src="" alt="" class="home-icon"><a href="">home</a></div>
-    <div class="profile"><a href="">profile</a></div>
-    <div class="setting"><a href="">setting</a></div>
-    <button>send</button>
-  </div>
-  <div class="side-bar-left-button">
-    <div class="link-group"><img src="" alt="" class="logout-icon"><a href="" class="">logout</a></div>
+<nav class="nav side-bar-left" style="background-color:white;width:178px;height:1200px">
+  <div class="d-flex align-content-between flex-wrap">
+    <div class="col side-bar-left-top" style="witdh:178px;height:58px">
+      <div class="link-group m-3">
+        <img src="/images/logo.svg" alt="icon" style="width:40px;height:40px">
+      </div>
+      <div class="link-group m-3">
+        <img src="/images/home.svg" alt="" class="icon m-2" style="width:24px;height:24px">
+        <a href="/tweets" class="m-2 text-decoration-none"
+          style="color:{{#ifCond route 'tweets'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">
+          首頁
+        </a>
+      </div>
+      {{!-- <div class="link-group"><img src="/images/home-click.svg" alt="" class="home-icon"><a href="/"
+          style="color: white;">首頁</a>
+      </div> --}}
+      <div class="link-group m-3">
+        <img src="/images/user.svg" alt="" class="icon m-2" style="width:24px;height:24px">
+        <a href="/" class="m-2 text-decoration-none"
+          style="color:{{#ifCond route 'profile'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">個人資料</a>
+      </div>
+      <div class="link-group m-3">
+        <img src="/images/setting.svg" alt="" class="icon m-2" style="width:24px;height:24px">
+        <a href="/users/{{user.id}}/setting" class="m-2 text-decoration-none"
+          style="color:{{#ifCond route 'setting'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">設定</a>
+      </div>
+      <div class="mb-4 text-center m-3">
+        <button class="btn col-sm-2 m-2" type="submit"
+          style="color: white;background-color:#ff6600;border-radius: 20px;width:178px;height:46px">推文</button>
+      </div>
+    </div>
+    <div class="link-group m-2">
+      <img src="/images/logout.svg" alt="" class="icon m-2" style="width:24px;height:24px">
+      <a href="/logout" class="m-2 text-decoration-none" style="color: #44444f;font-size: 18px">logout</a>
+    </div>
   </div>
 </nav>
