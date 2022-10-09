@@ -45,6 +45,12 @@ const followshipController = {
     } catch (err) {
       next(err)
     }
+  },
+  getFollowers: (req, res) => {
+    res.render('followers')
+  },
+  getFollowing: (req, res) => {
+    res.render('followings')
   }
 }
 
