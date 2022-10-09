@@ -1,39 +1,40 @@
-<nav class="right-column" style="witdh:273px;height:731px">
-  <div class="side-bar-right-top" style="border-bottom: 1px solid	#E6ECF0;">
-    <h2 class=" news-feed-titl text-start m-3"><strong class="mr-auto"
-        style="color: #171725;font-size: 24px;">推薦跟隨</strong>
-    </h2>
-  </div>
-  <div class="side-bar-body d-flex justify-content-evenly">
-    {{!-- {{#each topUsers}} --}}
-    <div class="user-info-item d-flex">
-      <div class="d-flex align-items-center">
-        <a href="/users/tweets/{{this.id}}">
-          <img src="/images/logo.svg" alt="" class="user-avatar m-3" style="width:50px;height:50px">
-        </a>
-      </div>
-      <div class="align-self-center">
-        <a href="/users/tweets/{{this.id}}" style="text-decoration: none;">
-          <p class="user-name m-0" style="color: #171725;font-size: 16px;">Apple</p>
-        </a>
-        <p class="user-name m-0" style="color: #92929D;font-size: 14px;">@apple</p>
-      </div>
+<div class="col">
+  <nav class="side-bar-right" style="background-color:#FAFAFB;witdh:273px;height:731px">
+    <div class="side-bar-right-top" style="border-bottom: 1px solid	#E6ECF0;">
+      <p class="text-start m-3">
+        <strong style="color: #171725;font-size: 24px;">推薦跟隨</strong>
+      </p>
     </div>
-    {{!-- {{#if isFollowed}} --}}
-    <div class="follow_btn align-self-center">
-      <form action="/follower/{{this.id}}?_method=DELETE" method="POST">
-        <button type="submit" class="btn btn-primary"
-          style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px;">正在跟隨</button>
-      </form>
+    <div class="row side-bar-body">
+      {{!-- {{#each topUsers}} --}}
+      <div class="user-info-item d-flex">
+        <div class="image m-2">
+          <a href="/users/tweets/{{this.id}}">
+            <img src="/images/logo.svg" alt="logo" class="user-avatar" style="width:50px;height:50px">
+          </a>
+        </div>
+        <div class="mt-2">
+          <a href="/users/tweets/{{this.id}}" style="text-decoration: none;">
+            <p class="user-name m-0" style="color: #171725;font-size: 16px;">Apple</p>
+          </a>
+          <p class="user-name m-0" style="color: #92929D;font-size: 14px;">@apple</p>
+        </div>
+        {{!-- {{#if isFollowed}} --}}
+        <div class="follow_btn m-2">
+          <form action="/follower/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-primary"
+              style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px">正在跟隨</button>
+          </form>
+          {{!-- <form action="/follower/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-primary"
+              style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px">跟隨</button>
+          </form> --}}
+        </div>
+      </div>
+      {{!-- {{else}} --}}
+
+      {{!-- {{/if}} --}}
     </div>
-    {{!-- {{else}} --}}
-    {{!-- <div class="follow_btn align-self-center">
-      <form action="/follower/{{this.id}}" method="POST">
-        <button type="submit" class="btn btn-danger"
-          style="color: #ff6600;font-size: 16px;background-color:white;margin-left:60px; border-radius: 20px;">跟隨</button>
-      </form>
-    </div> --}}
-    {{!-- {{/if}} --}}
-  </div>
-  {{!-- {{/each}} --}}
-</nav>
+    {{!-- {{/each}} --}}
+  </nav>
+</div>
