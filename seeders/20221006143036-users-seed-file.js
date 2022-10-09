@@ -8,7 +8,7 @@ module.exports = {
       email: `user${i + 1}@email.com`,
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       account: `user${i + 1}`,
-      avatar: faker.image.cats(),
+      avatar: `https://loremflickr.com/150/150/avatar/?random=${Math.random() * 20}`,
       cover: `https://loremflickr.com/630/200/landscape/?random=${Math.random() * 20}`,
       introduction: faker.lorem.text().substring(0, 140),
       role: 'user',

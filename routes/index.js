@@ -44,11 +44,15 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 
 router.get('/logout', userController.logout)
 
-router.get('/setting', userController.settingPage)
-router.post('/setting', userController.postSetting)
+router.get('/users/:id/setting', userController.getSetting)
+router.put('/users/:id/setting', userController.putSetting)
 router.get('/other', userController.otherPage)
+
 router.get('/users/:id/replies', authenticated, userController.replies)
 router.get('/modals/self', tweetController.getModalsTabs)
+
+router.get('/tweets/:id/replies', authenticated, replyController.getReplies)
+router.post('/tweets/:id/replies', authenticated, replyController.postReplies)
 
 router.get('/users/:id/followers', authenticated, userController.followers)
 router.get('/users/:id/followings', authenticated, userController.followings)
