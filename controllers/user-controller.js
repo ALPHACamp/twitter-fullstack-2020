@@ -259,11 +259,63 @@ const userController = {
       })
       .catch(err => next(err))
   },
-  settingPage: (req, res) => {
-    const user = getUser(req)
-    return res.render('setting', { user })
+  addFollowing: async (req, res, next) => {
+    const id = req.params.id
+    if (id === Number(req.body.id)) {
+      req.flash('error_messages', '不能追隨自己！')
+      return res.redirect(200, 'back')
+    }
+    Promise.all([
+      User.findByPk(id),
+      Followship.findOne({
+        where: {
+          followerId: req.user.id,
+          followingId: req.params.userId
+        }
+      })
+    ])
+      .then(([user, followship]) => {
+        if (!user) throw new Error("User didn't exist!")
+        if (followship) throw new Error('You are already following this user!')
+        return Followship.create({
+          followerId: req.user.id,
+          followingId: id
+        })
+      })
+      .then(() => {
+        req.flash('success_messages', '追隨成功！')
+        res.redirect('back')
+      })
+      .catch(err => next(err))
   },
-  postSetting: (req, res) => {
+  removeFollowing: (req, res, next) => {
+    Followship.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.userId
+      }
+    })
+      .then(followship => {
+        if (!followship) throw new Error("You haven't followed this user!")
+        return followship.destroy()
+      })
+      .then(() => {
+        req.flash('success_messages', '取消追隨成功！')
+        res.redirect('back')
+      })
+      .catch(err => next(err))
+  },
+  // 暫時調整為getSetting，與下方命名規則相同
+  getSetting: async (req, res) => {
+    const id = req.params.id
+    const user = await User.findByPk(id,{
+      raw: true
+    })
+    if(user.id !== getUser(req).id) throw new Error('無法編輯其他人資料!')
+    res.render('setting',user)
+  },
+  // post -> 新增 | put -> 修改
+  putSetting: (req, res) => {
     const id = req.params.id
     res.redirect(`/users/${id}/setting`)
   },
