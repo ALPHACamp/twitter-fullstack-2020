@@ -1,4 +1,4 @@
-<div class="col">
+<div class="col-3">
   <nav class="side-bar-right" style="background-color:#FAFAFB;witdh:273px;height:731px">
     <div class="side-bar-right-top" style="border-bottom: 1px solid	#E6ECF0;">
       <p class="text-start m-3">
@@ -22,10 +22,10 @@
         {{!-- {{#if isFollowed}} --}}
         <div class="follow_btn m-2">
           <form action="/follower/{{this.id}}?_method=DELETE" method="POST">
-            <button type="submit" class="btn btn-primary"
-              style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px">正在跟隨</button>
+            <button type="submit" class="btn btn-primary" style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px
+;              margin-left:24px">正在跟隨</button>
           </form>
-          {{!-- <form action="/follower/{{this.id}}?_method=DELETE" method="POST">
+          {{!-- <form action="/follower/{{this.id}}" method="POST">
             <button type="submit" class="btn btn-primary"
               style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px">跟隨</button>
           </form> --}}
