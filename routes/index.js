@@ -30,8 +30,8 @@ router.get('/modals/self', tweetController.getModalsTabs)
 
 router.post('/followships', followshipController.addFollowing)
 router.delete('/followships/:id', followshipController.removeFollowing)
-router.get('/followers', followshipController.getFollowers)
-router.get('/following', followshipController.getFollowing)
+router.get('/user/:id/followers', followshipController.getFollowers)
+router.get('/user/:id/followings', followshipController.getFollowing)
 
 router.use('/', generalErrorHandler)
 router.use('/', authenticated, tweetController.getTweets)

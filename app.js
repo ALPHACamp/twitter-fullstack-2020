@@ -19,13 +19,12 @@ app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static('public')) // 設定共用檔案
 app.use(express.json())
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
 
 app.use(passport.initialize())
 app.use(passport.session())
-
+app.use(express.static('public')) // 設定共用檔案
 app.use(flash())
 app.use(methodOverride('_method'))
 app.use((req, res, next) => {
