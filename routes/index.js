@@ -59,6 +59,11 @@ router.get('/users/:id/followings', authenticated, userController.followings)
 router.get('/users', userController.getUser)
 router.post('/users', userController.postUser)
 
+// router.post('/followships', followshipController.addFollowing)
+// router.delete('/followships/:id', followshipController.removeFollowing)
+// router.get('/user/:id/followers', followshipController.getFollowers)
+// router.get('/user/:id/followings', followshipController.getFollowing)
+
 router.use('/', generalErrorHandler)
 router.use('/', authenticated, tweetController.getTweets)
 
