@@ -45,8 +45,8 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/logout', userController.logout)
 
 router.get('users/:id/tweets', authenticated, userController.tweets)
-router.get('/users/:id/setting', userController.getSetting)
-router.put('/users/:id/setting', userController.putSetting)
+router.get('/users/:id/setting', authenticated, userController.getSetting)
+router.put('/users/:id/setting', authenticated, userController.putSetting)
 router.get('/other', userController.otherPage)
 
 router.get('/users/:id/replies', authenticated, userController.replies)
@@ -58,7 +58,6 @@ router.post('/tweets/:id/replies', authenticated, replyController.postReplies)
 router.get('/users/:id/followers', authenticated, userController.followers)
 router.get('/users/:id/followings', authenticated, userController.followings)
 router.get('/users', userController.getUser)
-router.post('/users', userController.postUser)
 
 router.use('/', generalErrorHandler)
 router.use('/', authenticated, tweetController.getTweets)
