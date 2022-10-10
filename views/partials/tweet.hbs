@@ -15,6 +15,9 @@
         {{#ifCond route 'tweets'}}
           <p class="card-text">{{this.description}}</p>
         {{/ifCond}}
+        {{#ifCond route 'replies'}}
+          <p class="card-text">{{this.comment}}</p>
+        {{/ifCond}}
         {{#ifCond route 'tweets'}}
           <p class="card-text">
           <form action="/tweets/{{this.id}}/replies" method="GET" style="display:inline">
