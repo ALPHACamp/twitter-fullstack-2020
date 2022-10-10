@@ -32,11 +32,11 @@ const adminController = {
   },
   deleteTweet: async (req, res, next) => {
     try {
-      const tweetId = req.params.id
-      const tweet = await Tweet.findByPk(tweetId)
+      const TweetId = req.params.id
+      const tweet = await Tweet.findByPk(TweetId)
       await tweet.destroy()
-      await Reply.destroy({ where: { tweetId } })
-      await Like.destroy({ where: { tweetId } })
+      await Reply.destroy({ where: { TweetId } })
+      await Like.destroy({ where: { TweetId } })
 
       req.flash('success_messages', '成功刪除')
       res.redirect('/admin/tweets')
