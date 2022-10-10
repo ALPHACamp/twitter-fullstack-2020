@@ -1,26 +1,39 @@
-{{!-- followers --}}
-{{!--
-(.user-follower>(.user-follower-group>(.user-follower-group-block>(img.user-avatar+p.user-name)+().user-follower-group-block>a.user-follower-btn))+(.user-follower-group>p.user-info))
---}}
-
-<div class="user-follower">
-  <div class="user-follower-group">
-    <div class="user-follower-group-block">
-      <img src="" alt="" class="user-avatar">
-      <p class="user-name"></p>
-      <div class="user-follower-group-block"><a href="" class="user-follower-btn"></a></div>
+{{>left}}
+<div class="col-6">
+  <div class="col container">
+    {{!-- /user/self --}}
+    <div class=" card mb-3">
+      <div class="row back-bar m-3">
+        <div class="col-6 col-sm-1 back-image">
+          <a href="/">
+            <img src="/images/back.png" alt="back" style="width:17px;hegith:14px">
+          </a>
+        </div>
+        <div class="col-6 col-sm-1 back-user" style="width:100px;height:50px;">
+          <p class="user-name m-0" style="color: #171725;font-size: 18px;">
+            <string>Apple</string>
+          </p>
+          <p class="user-name m-0" style="color: #6C757D;font-size: 13px;">25推文</p>
+        </div>
+      </div>
+      <table class="table align-middle">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">追隨者</th>
+            <th scope="col">正在追隨</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{!-- {{#each users}} --}}
+          {{!-- {{/each}} --}}
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="user-follower-group">
     <p class="user-info"></p>
   </div>
 </div>
-
-
-
-
-
-
 <div>
   {{#each followers}}
     <div>
@@ -33,17 +46,14 @@
           <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
             <button type="submit">正在跟隨</button>
           </form>
-
         {{else}}
           <form action="/followships" method="POST">
             <button type="submit" name="id" value="{{this.id}}">跟隨</button>
           </form>
         {{/if}}
       </div>
-
       <p class="context">{{this.introduction}}</p>
     </div>
   {{/each}}
 </div>
-
-
+{{>right}}
