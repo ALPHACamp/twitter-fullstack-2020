@@ -6,7 +6,7 @@ const passport = require('../config/passport')
 
 const tweetController = require('../controllers/tweet-controller')
 const replyController = require('../controllers/reply-controller')
-const followshipController = require('../controllers/followshipController')
+const followshipController = require('../controllers/followship-controller')
 const userController = require('../controllers/user-controller')
 
 const { generalErrorHandler } = require('../middleware/error-handler')
@@ -38,14 +38,16 @@ router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
 
 router.get('/signup', userController.signUpPage)
+
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 
 router.get('/logout', userController.logout)
 
-router.get('/users/:id/setting', userController.getSetting)
-router.put('/users/:id/setting', userController.putSetting)
+router.get('users/:id/tweets', authenticated, userController.tweets)
+router.get('/users/:id/setting', authenticated, userController.getSetting)
+router.put('/users/:id/setting', authenticated, userController.putSetting)
 router.get('/other', userController.otherPage)
 
 router.get('/users/:id/replies', authenticated, userController.replies)
@@ -57,12 +59,6 @@ router.post('/tweets/:id/replies', authenticated, replyController.postReplies)
 router.get('/users/:id/followers', authenticated, userController.followers)
 router.get('/users/:id/followings', authenticated, userController.followings)
 router.get('/users', userController.getUser)
-router.post('/users', userController.postUser)
-
-// router.post('/followships', followshipController.addFollowing)
-// router.delete('/followships/:id', followshipController.removeFollowing)
-// router.get('/user/:id/followers', followshipController.getFollowers)
-// router.get('/user/:id/followings', followshipController.getFollowing)
 
 router.use('/', generalErrorHandler)
 router.use('/', authenticated, tweetController.getTweets)
