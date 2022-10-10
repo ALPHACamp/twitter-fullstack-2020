@@ -7,47 +7,23 @@
         </div>
         <div class="link-group m-3">
           <img src="/images/home.svg" alt="home" class="icon m-2" style="width:24px;height:24px">
-          <a href="/" class="m-2 text-decoration-none" style="color: #ff6600;font-size: 18px">首頁</a>
+          <a href="/" class="m-2 text-decoration-none"
+            style="color:{{#ifCond route 'tweets'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">首頁</a>
         </div>
-        {{!-- <div class="link-group"><img src="/images/home-click.svg" alt="" class="home-icon"><a href="/"
-            style="color: white;">首頁</a>
-        </div> --}}
         <div class="link-group m-3">
           <img src="/images/user.svg" alt="user" class="icon m-2" style="width:24px;height:24px">
-          <a href="/users" class="m-2 text-decoration-none" style="color: #44444f;font-size: 18px">profile</a>
+          <a href="/users" class="m-2 text-decoration-none"
+            style="color:{{#ifCond route 'profile'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">個人資料</a>
         </div>
         <div class="link-group m-3">
           <img src="/images/setting.svg" alt="setting" class="icon m-2" style="width:24px;height:24px">
-          <a href="/setting" class="m-2 text-decoration-none" style="color: #44444f;font-size: 18px">setting</a>
+          <a href="/users/{{user.id}}/setting" class="m-2 text-decoration-none"
+            style="color:{{#ifCond route 'setting'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">設定</a>
         </div>
         <div class="mb-4 text-center m-3" data-bs-toggle="modal" data-bs-target="#tweet-modal">
           <button class="btn col-sm-2 m-2" type="submit"
             style="color: white;background-color:#ff6600;border-radius: 20px;width:178px;height:46px">推文</button>
         </div>
-      </div>
-      <div class="link-group m-3">
-        <img src="/images/home.svg" alt="" class="icon m-2" style="width:24px;height:24px">
-        <a href="/tweets" class="m-2 text-decoration-none"
-          style="color:{{#ifCond route 'tweets'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">
-          首頁
-        </a>
-      </div>
-      {{!-- <div class="link-group"><img src="/images/home-click.svg" alt="" class="home-icon"><a href="/"
-          style="color: white;">首頁</a>
-      </div> --}}
-      <div class="link-group m-3">
-        <img src="/images/user.svg" alt="" class="icon m-2" style="width:24px;height:24px">
-        <a href="/" class="m-2 text-decoration-none"
-          style="color:{{#ifCond route 'profile'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">個人資料</a>
-      </div>
-      <div class="link-group m-3">
-        <img src="/images/setting.svg" alt="" class="icon m-2" style="width:24px;height:24px">
-        <a href="/users/{{user.id}}/setting" class="m-2 text-decoration-none"
-          style="color:{{#ifCond route 'setting'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">設定</a>
-      </div>
-      <div class="mb-4 text-center m-3">
-        <button class="btn col-sm-2 m-2" type="submit"
-          style="color: white;background-color:#ff6600;border-radius: 20px;width:178px;height:46px">推文</button>
       </div>
     </div>
     <div class="link-group m-2">

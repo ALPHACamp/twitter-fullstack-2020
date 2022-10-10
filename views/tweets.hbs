@@ -1,83 +1,69 @@
-<<<<<<< HEAD {{>left route='tweets'}}
-  <div class="main-middle">
-    =======
-    {{>left}}
-    <div class="col-6">
-      >>>>>>> views/user
-      <div class="header">首頁</div>
-      {{!-- tweet --}}
-      <div class="post-tweet" data-bs-toggle="modal" data-bs-target="#tweet-modal">
-        <div style="">
-          <img src="" class="user-photo">
-          <span>有什麼新鮮事？</span>
-        </div>
-        <div class="tweet-btn-outline">
-          <button type="button" class="btn tweet-btn">
-            <span class="tweet-btn-text">推文</span>
-          </button>
-        </div>
-      </div>
-      {{!-- tweet end --}}
-      {{#each tweets}}
-        {{>tweet route='tweets'}}
-      {{/each}}
+{{>left route='tweets'}}
+<div class="col-6">
+  <div class="header">首頁</div>
+  {{!-- tweet --}}
+  <div class="post-tweet" data-bs-toggle="modal" data-bs-target="#tweet-modal">
+    <div style="">
+      <img src="" class="user-photo">
+      <span>有什麼新鮮事？</span>
     </div>
-    {{!-- tweet Modal --}}
-    <div class="modal fade" id="tweet-modal" tabindex="-1" aria-labelledby="tweet-modal" aria-hidden="true">
-      <div class="modal-dialog modal-lg" style="width:639px; position:relative; right:40px;">
-        <div class="modal-content" style="border-radius:16px">
-          <div class="" style="">
-            <label for="description" class="form-label">
-            </label>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="tweet-btn-outline">
+      <button type="button" class="btn tweet-btn">
+        <span class="tweet-btn-text">推文</span>
+      </button>
+    </div>
+  </div>
+  {{!-- tweet end --}}
+  {{#each tweets}}
+    {{>tweet route='tweets'}}
+  {{/each}}
+</div>
+{{!-- tweet Modal --}}
+<div class="modal fade" id="tweet-modal" tabindex="-1" aria-labelledby="tweet-modal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" style="width:639px; position:relative; right:40px;">
+    <div class="modal-content" style="border-radius:16px">
+      <div class="" style="">
+        <label for="description" class="form-label">
+        </label>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/tweets" method="POST">
+        <div class="modal-body d-flex">
+          <img src="" class="bi pe-none me-2" style="width:50px;height:50px;">
+          <textarea class="form" id="description" name="description" rows="4" maxlength="141" placeholder="有什麼新鮮事？"
+            style="border:none; width:600px; top:10px;resize:none;height:250px;" required></textarea>
+          <div class="" style="color:#FF0000;top: 270px;right: 120px;">
+            <span id="insertEmptyMessage"></span>
           </div>
-          <form action="/tweets" method="POST">
-            <div class="modal-body d-flex">
-              <img src="" class="bi pe-none me-2" style="width:50px;height:50px;">
-              <textarea class="form" id="description" name="description" rows="4" maxlength="141" placeholder="有什麼新鮮事？"
-                style="border:none; width:600px;position:relative; top:10px;resize:none;height:250px;"
-                required></textarea>
-              <div class="" style="color:#FF0000;position: absolute;top: 270px;right: 120px;">
-                <span id="insertEmptyMessage"></span>
-              </div>
-              <div class="" id="char_count"><span>140/140</span></div>
-            </div>
-            <button type="submit" class="btn btn-orange btn-tweets-models"
-              style="border-radius: 50px;position:relative; left:550px;bottom:20px;">
-              <span class="" style="font-size:16px;">推文</span>
-            </button>
-          </form>
+          <div class="" id="char_count"><span>140/140</span></div>
         </div>
-      </div>
+        <button type="submit" class="btn btn-orange btn-tweets-models"
+          style="border-radius: 50px; left:550px;bottom:20px;">
+          <span class="" style="font-size:16px;">推文</span>
+        </button>
+      </form>
     </div>
-    {{!-- tweet Modal end --}}
-    {{>right}}
-    <script>
-      const textArea = document.getElementById( 'description' )
-      const charCount = document.getElementById( 'char_count' )
-      let insertEmptyMessage = document.getElementById( 'insertEmptyMessage' )
-      const maxNumOfCount = 140
-      const countCharacters = () => {
-        const numOfEnter = textArea.value.length
-        const counter = maxNumOfCount - numOfEnter
-        charCount.textContent = counter + '/140'
-<<<<<<< HEAD
-        if ( numOfEnter === 0 ) {
-          insertEmptyMessage.innerText = '內容不可以是空白'
-        }
-        if ( counter < 0 || counter >= 140 ) {
-          charCount.style.color = 'red'
-        }
-      }
-      textArea.addEventListener( 'input', countCharacters )
-=======
-    if (numOfEnter === 0) {
+  </div>
+</div>
+{{!-- tweet Modal end --}}
+{{>right}}
+<script>
+  const textArea = document.getElementById( 'description' )
+  const charCount = document.getElementById( 'char_count' )
+  let insertEmptyMessage = document.getElementById( 'insertEmptyMessage' )
+  const maxNumOfCount = 140
+  const countCharacters = () => {
+    const numOfEnter = textArea.value.length
+    const counter = maxNumOfCount - numOfEnter
+    charCount.textContent = counter + '/140'
+
+    if ( numOfEnter === 0 ) {
       insertEmptyMessage.innerText = '內容不可以是空白'
     }
-    if (counter < 0 || counter >= 140) {
+    if ( counter < 0 || counter >= 140 ) {
       charCount.style.color = 'red'
     }
   }
-  textArea.addEventListener('input', countCharacters)
->>>>>>> views/user
-    </script>
+  textArea.addEventListener( 'input', countCharacters )
+
+</script>
