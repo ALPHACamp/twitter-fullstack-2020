@@ -389,6 +389,9 @@ const userController = {
         return res.json({ status: 'success', ...user.toJSON() })
       })
       .catch(err => next(err))
+  },
+  getProfile: (req, res, next) => {
+    res.render('profile')
   }
 }
 module.exports = userController
