@@ -13,33 +13,33 @@
           </h5>
         </a>
         {{#ifCond route 'tweets'}}
-        <p class="card-text">{{this.description}}</p>
+          <p class="card-text">{{this.description}}</p>
         {{/ifCond}}
         {{#ifCond route 'tweets'}}
-        <p class="card-text">
-        <form action="/tweets/{{this.id}}/replies" method="GET" style="display:inline">
-          <small class="text-muted">
-            <button type="submit" style="border:none;background: none;"><i
-                class="fa-regular fa-comment-dots"></i></button>
-            <span>{{this.repliedCount}}</span>
-          </small>
-        </form>
-        {{#if this.isLiked}}
-        <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: inline">
-          <small class="text-muted">
-            <i class="fa-regular fa-heart"></i>
-            <span>{{this.likedCount}}</span>
-          </small>
-        </form>
-        {{else}}
-        <form action="/tweets/{{this.id}}/like" method="POST" style="display: inline">
-          <small class="text-muted">
-            <i class="fa-solid fa-heart"></i>
-            <span>{{this.likedCount}}</span>
-          </small>
-        </form>
-        {{/if}}
-        </p>
+          <p class="card-text">
+          <form action="/tweets/{{this.id}}/replies" method="GET" style="display:inline">
+            <small class="text-muted">
+              <button type="submit" style="border:none;background: none;"><i
+                  class="fa-regular fa-comment-dots"></i></button>
+              <span>{{this.repliedCount}}</span>
+            </small>
+          </form>
+          {{#if this.isLiked}}
+            <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: inline">
+              <small class="text-muted">
+                <i class="fa-regular fa-heart"></i>
+                <span>{{this.likedCount}}</span>
+              </small>
+            </form>
+          {{else}}
+            <form action="/tweets/{{this.id}}/like" method="POST" style="display: inline">
+              <small class="text-muted">
+                <i class="fa-solid fa-heart"></i>
+                <span>{{this.likedCount}}</span>
+              </small>
+            </form>
+          {{/if}}
+          </p>
         {{/ifCond}}
       </div>
     </div>

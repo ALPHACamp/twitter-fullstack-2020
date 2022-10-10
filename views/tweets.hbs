@@ -2,13 +2,7 @@
 <div class="col-6">
   {{!-- test --}}
   <div class="card">
-    <div class="row home-bar">
-      <div class="col-6 col-sm-1 back-user" style="width:100px;height:50px;">
-        <p class="user-name m-3" style="color: #171725;font-size: 18px;">
-          <strong>首頁</strong>
-        </p>
-      </div>
-    </div>
+    {{>user-header route='tweets'}}
     <div class="post-tweet" style="width:639px;height:153px;border-top: 1px solid	#E6ECF0;" data-bs-toggle="modal"
       data-bs-target="#tweet-modal">
       <div class="card-image m-3">
@@ -24,7 +18,7 @@
   </div>
   <div class="">
     {{#each tweets}}
-    {{>tweet route='tweets'}}
+      {{>tweet route='tweets'}}
     {{/each}}
   </div>
 </div>
@@ -58,22 +52,22 @@
 {{!-- tweet Modal end --}}
 {{>right}}
 <script>
-  const textArea = document.getElementById('description')
-  const charCount = document.getElementById('char_count')
-  let insertEmptyMessage = document.getElementById('insertEmptyMessage')
+  const textArea = document.getElementById( 'description' )
+  const charCount = document.getElementById( 'char_count' )
+  let insertEmptyMessage = document.getElementById( 'insertEmptyMessage' )
   const maxNumOfCount = 140
   const countCharacters = () => {
     const numOfEnter = textArea.value.length
     const counter = maxNumOfCount - numOfEnter
     charCount.textContent = counter + '/140'
 
-    if (numOfEnter === 0) {
+    if ( numOfEnter === 0 ) {
       insertEmptyMessage.innerText = '內容不可以是空白'
     }
-    if (counter < 0 || counter >= 140) {
+    if ( counter < 0 || counter >= 140 ) {
       charCount.style.color = 'red'
     }
   }
-  textArea.addEventListener('input', countCharacters)
+  textArea.addEventListener( 'input', countCharacters )
 
 </script>
