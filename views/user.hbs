@@ -1,26 +1,105 @@
-<div class="container">
- {{!-- /user/self --}}
- <div class="card mb-3">
-  <img src="https://loremflickr.com/639/200/nature" class="card-img-top" alt="...">
-  <div class="card-body">
-   <h5 class="card-title">Card title</h5>
-   <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This
-    content is a little bit longer.</p>
-   <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+{{>left}}
+<div class="col-6">
+  <div class="col container">
+    {{!-- /user/self --}}
+    <div class=" card mb-3">
+      <div class="row back-bar m-3">
+        <div class="col-6 col-sm-1 back-image">
+          <a href=" /">
+            <img src="/images/back.png" alt="back" style="width:17px;hegith:14px">
+          </a>
+        </div>
+        <div class="col-6 col-sm-1 back-user" style="width:100px;height:50px;">
+          <p class="user-name m-0" style="color: #171725;font-size: 18px;">
+            <string>Apple</string>
+          </p>
+          <p class="user-name m-0" style="color: #6C757D;font-size: 13px;">25推文</p>
+        </div>
+      </div>
+      <img src="https://loremflickr.com/639/200/nature" class="card-img-top position-relative" alt="...">
+      <div class="image position-absolute" style="top:200px">
+        <a href="/users">
+          <img src="/images/logo.svg" alt="logo" class="user-avatar rounded-circles" style="width:140px;height:140px">
+        </a>
+      </div>
+      <div class="editprofile d-flex justify-content-end m-3" data-bs-toggle="modal" data-bs-target="#edit-modal">
+        <button type="submit" class="btn btn-primary"
+          style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:128px;height:40px">編輯個人資料</button>
+      </div>
+      <div class="card-body" style="margin-top:8px">
+        <p class="user-name m-0" style="color: #171725;font-size: 18px;">
+          <string>Apple</string>
+        </p>
+        <p class="user-name m-0" style="color: #6C757D;font-size: 14px;">@apple</p>
+        <p class="card-text mt-3">This is a wider card with supporting text below as a natural lead-in to additional
+          content.
+          This
+          content is a little bit longer.</p>
+        <div class="row card-bottom">
+          <div class="col-3">
+            <a href="/user/:id/followings">
+              <p class="card-text" style="color: #6C757D;font-size: 14px;">
+                34個跟隨中</p>
+            </a>
+          </div>
+          <div class="col-3">
+            <a href="/user/:id/followers">
+              <p class="card-text" style="color: #6C757D;font-size: 14px;">
+                59個跟隨者</p>
+            </a>
+          </div>
+          </p>
+        </div>
+      </div>
+      <table class="table align-middle">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">推文</th>
+            <th scope="col">回覆</th>
+            <th scope="col">喜歡</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{!-- {{#each users}} --}}
+          {{!-- {{/each}} --}}
+        </tbody>
+      </table>
+    </div>
   </div>
- </div>
- <ul class="nav">
-  <li class="nav-item">
-   <a class="nav-link active" aria-current="page" href="#">Active</a>
-  </li>
-  <li class="nav-item">
-   <a class="nav-link" href="#">Link</a>
-  </li>
-  <li class="nav-item">
-   <a class="nav-link" href="#">Link</a>
-  </li>
-  <li class="nav-item">
-   <a class="nav-link disabled">Disabled</a>
-  </li>
- </ul>
+</div>
+{{>right}}
+<!-- Modal -->
+<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="edit-modal-label">編輯個人資料</h5>
+        <button type="submit" class="btn btn-primary" style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:64px;height:40px
+            ;margin-left:24px">儲存</button>
+      </div>
+      <div class="modal-body m-0">
+        <img src="https://loremflickr.com/639/200/nature" class="card-img-top position-relative" alt="...">
+        <div class="image position-absolute" style="top:100px">
+          <a href="/users">
+            <img src="/images/logo.svg" alt="logo" class="user-avatar rounded-circles" style="width:140px;height:140px">
+          </a>
+        </div>
+      </div>
+      <div class="form-group form-floating m-3">
+        <input type="text" name="name" id="name" class="form-control font-weight-bold" placeholder="名稱" value="{{name}}"
+          style="background-color:#F5F8FA; border-bottom: 2px solid #657786;width:440px;height:54px" required autofocus>
+        <label for="name">名稱</label>
+      </div>
+      <div class="form-group form-floating m-3">
+        <input type="text" name="text" id="text" class="form-control font-weight-bold" placeholder="名稱" value="{{name}}"
+          style="background-color:#F5F8FA; border-bottom: 2px solid #657786;width:440px;height:54px;height:147px"
+          required autofocus>
+        <label for="name">自我介紹</label>
+      </div>
+    </div>
+  </div>
 </div>

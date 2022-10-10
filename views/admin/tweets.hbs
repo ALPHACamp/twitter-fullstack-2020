@@ -1,35 +1,7 @@
-<div class="admin-tweet-list">
-  <h2 class="admin-twitters-title">
-    推文清單
-  </h2>
-  <li class="nav-item">
-    <a href="/logout">
-      <button class="btn btn-outline-success my-sm-0 my-2">Logout</button>
-    </a>
-  </li>
-  <div>
-    <div>
-      <img src="" alt="" class="user-avatar">
-    </div>
-    <div>
-      <div class="main col-9">
-        <div class="home-page font-lg-dark">
-          <a href="/admin/tweets">推文清單</a>
-        </div>
-        <div class="hr-line"></div>
-        {{#each tweets}}
-          <form class="tweet-card" action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
-            <div>
-              <img src="{{this.User.avatar}}" alt="avatar" style="width: 50px;height: 50px; border-radius:50%">
-            </div>
-            <a class="tweet-card-name">
-              <span class="font-name">{{this.User.name}}</span>
-              <span class="font-account">@{{this.User.account}}</span>
-            </a>
-            <div class="text-box">
-              <span>{{this.description}}</span>
-            </div>
-            <button type="submit" class="btn-close" aria-label="Close" onclick="return confirm(`確定要刪除此則推嗎？`)"></button>
-          </form>
-        {{/each}}
-      </div>
+{{> admin-left route='tweetsList'}}
+<div class="mt-3" style="width:938px;height:1200px;left:332px;top:1px;">
+  {{> header route='tweetsList'}}
+  {{#each tweets}}
+    {{>admin-tweet}}
+  {{/each}}
+</div>
