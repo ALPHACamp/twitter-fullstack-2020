@@ -4,6 +4,9 @@ const bcrypt = require('bcryptjs')
 const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
+  signInPage: (req, res) => {
+    res.render('signin')
+  },
   signUpPage: (req, res) => {
     res.render('signup')
   },
@@ -389,9 +392,6 @@ const userController = {
         return res.json({ status: 'success', ...user.toJSON() })
       })
       .catch(err => next(err))
-    signInPage: (req, res) => {
-      res.render('signin')
-    }
   }
 }
 module.exports = userController
