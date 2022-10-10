@@ -6,7 +6,7 @@ const passport = require('../config/passport')
 
 const tweetController = require('../controllers/tweet-controller')
 const replyController = require('../controllers/reply-controller')
-const followshipController = require('../controllers/followshipController')
+const followshipController = require('../controllers/followship-controller')
 const userController = require('../controllers/user-controller')
 
 const { generalErrorHandler } = require('../middleware/error-handler')
