@@ -389,7 +389,9 @@ const userController = {
         return res.json({ status: 'success', ...user.toJSON() })
       })
       .catch(err => next(err))
+    signInPage: (req, res) => {
+      res.render('signin')
+    }
   }
 }
-
 module.exports = userController
