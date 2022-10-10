@@ -39,7 +39,7 @@ const adminController = {
       await Like.destroy({ where: { tweetId } })
 
       req.flash('success_messages', '成功刪除')
-      res.redirect('back')
+      res.redirect('/admin/tweets')
     } catch (err) {
       next(err)
     }
