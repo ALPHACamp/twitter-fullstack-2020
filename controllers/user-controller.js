@@ -55,9 +55,6 @@ const userController = {
       })
       .catch(err => next(err))
   },
-  signInPage: (req, res) => {
-    res.render('signin')
-  },
   signIn: (req, res) => {
     if (getUser(req).role === 'admin') {
       req.flash('error_messages', '請前往後台登入')
