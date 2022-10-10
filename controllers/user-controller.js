@@ -1,5 +1,4 @@
-const { User, Tweet, Reply, Like } = require('../models')
-const helpers = require('../_helpers')
+const { User, Tweet, Reply, Like, Followship } = require('../models')
 const { getUser } = require('../_helpers')
 const bcrypt = require('bcryptjs')
 const { imgurFileHandler } = require('../helpers/file-helpers')
@@ -308,16 +307,45 @@ const userController = {
   // 暫時調整為getSetting，與下方命名規則相同
   getSetting: async (req, res) => {
     const id = req.params.id
-    const user = await User.findByPk(id,{
-      raw: true
-    })
-    if(user.id !== getUser(req).id) throw new Error('無法編輯其他人資料!')
-    res.render('setting',user)
+    const user = await User.findByPk(id, { raw: true })
+    if (user.id !== getUser(req).id) throw new Error('無法編輯其他人資料!')
+    res.render('setting', user)
   },
   // post -> 新增 | put -> 修改
-  putSetting: (req, res) => {
-    const id = req.params.id
-    res.redirect(`/users/${id}/setting`)
+  putSetting: async (req, res, next) => {
+    try {
+      const { editAccount, editName, editEmail, editPassword, editCheckPassword } = req.body
+      const { id, account, email } = getUser(req)
+
+      // 確認format
+      if (editPassword !== editCheckPassword) throw new Error('密碼與確認密碼不符！')
+      if (editName.length > 50 || editAccount.length > 50) throw new Error('字數超過限制')
+
+      // 有沒有修改->有修改->找有沒有重複的
+      if (account !== editAccount) {
+        const existAccount = await User.findOne({ where: { account: editAccount } })
+        if (existAccount) throw new Error('Account 已重複註冊')
+      }
+      if (email !== editEmail) {
+        const existEmail = await User.findOne({ where: { email: editEmail } })
+        if (existEmail) throw new Error('Email 已重複註冊')
+      }
+
+      // 新增
+      await User.findByPk(id)
+        .then(user => {
+          user.update({
+            account: editAccount,
+            name: editName,
+            email: editEmail,
+            password: bcrypt.hash(editPassword, 10)
+          })
+        })
+      req.flash('success_messages', '更新成功')
+      res.redirect(`/users/${id}/setting`)
+    } catch (err) {
+      next(err)
+    }
   },
   otherPage: (req, res) => {
     res.render('other')
