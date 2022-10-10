@@ -317,31 +317,23 @@ const userController = {
       const { editAccount, editName, editEmail, editPassword, editCheckPassword } = req.body
       const { id, account, email } = getUser(req)
 
-      // 確認format
-      if (editPassword !== editCheckPassword) throw new Error('密碼與確認密碼不符！')
-      if (editName.length > 50 || editAccount.length > 50) throw new Error('字數超過限制')
-
-      // 有沒有修改->有修改->找有沒有重複的
-      if (account !== editAccount) {
-        const existAccount = await User.findOne({ where: { account: editAccount } })
-        if (existAccount) throw new Error('Account 已重複註冊')
+      if (editPassword !== editCheckPassword) throw new Error('密碼與確認密碼不符')
+      if (editAccount !== account) {
+        const exitAccount = await User.findOne({ where: { account: editAccount } })
+        if (exitAccount) throw new Error(' 帳號已重複註冊！')
       }
-      if (email !== editEmail) {
-        const existEmail = await User.findOne({ where: { email: editEmail } })
-        if (existEmail) throw new Error('Email 已重複註冊')
+      if (editEmail !== email) {
+        const exitEmail = await User.findOne({ where: { email: editEmail } })
+        if (exitEmail) throw new Error('Email已重複註冊！')
       }
-
-      // 新增
-      await User.findByPk(id)
-        .then(user => {
-          user.update({
-            account: editAccount,
-            name: editName,
-            email: editEmail,
-            password: bcrypt.hash(editPassword, 10)
-          })
-        })
-      req.flash('success_messages', '更新成功')
+      const editUser = await User.findByPk(id)
+      await editUser.update({
+        account: editAccount,
+        name: editName,
+        email: editEmail,
+        password: await bcrypt.hash(editPassword, 10)
+      })
+      req.flash('success_messages', '成功更新！')
       res.redirect(`/users/${id}/setting`)
     } catch (err) {
       next(err)
