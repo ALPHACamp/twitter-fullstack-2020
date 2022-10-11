@@ -1,5 +1,7 @@
 const { User, Tweet, Like, Reply } = require('../models')
 const { getUser } = require('../_helpers')
+const { getOffset, getPagination } = require('../helpers/pagination-helper')
+
 const adminController = {
   signInPage: (req, res) => {
     return res.render('admin/signin')
@@ -13,20 +15,27 @@ const adminController = {
     res.redirect('/admin/tweets')
   },
   getTweets: (req, res, next) => {
-    Tweet.findAll({
+    const DEFAULT_LIMIT = 10
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || DEFAULT_LIMIT
+    const offset = getOffset(limit, page)
+
+    Tweet.findAndCountAll({
       include: [User],
+      limit,
+      offset,
       raw: true,
       nest: true,
       order: [['created_at', 'DESC']] // 反序
     })
       .then(tweets => {
-        const result = tweets.map(tweet => {
+        const result = tweets.rows.map(tweet => {
           return {
             ...tweet,
             description: tweet.description.substring(0, 50)
           }
         })
-        return res.render('admin/tweets', { tweets: result })
+        return res.render('admin/tweets', { tweets: result, pagination: getPagination(limit, page, tweets.count) })
       })
       .catch(err => next(err))
   },
@@ -53,19 +62,24 @@ const adminController = {
     return User.findAll({
       nest: true, // 資料庫拿回來的資料可以比較整齊
       include: [
-        { model: Tweet, include: Like },
+        { model: Tweet, include: [Like] },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }]
     })
       .then(data => {
-        const users = data.filter(user => user.role !== 'admin')
+        const users = data
+          .filter(user => user.role !== 'admin')
           .map(userData => {
             const userJson = userData.toJSON()
             delete userJson.password // 新增這裡，刪除密碼(移除敏感資料)
+
             return {
               ...userJson,
               tweetCounts: userData.Tweets.length,
-              likeCounts: userData.Tweets.reduce((acc, cur) => acc + cur.Likes.length, 0),
+              // TODO
+              likeCounts: userData.Tweets.reduce((acc, cur) => {
+                return acc + cur.Likes.length
+              }, 0),
               followerCounts: userData.Followers.length,
               followingCounts: userData.Followings.length
             }
