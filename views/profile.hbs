@@ -31,15 +31,15 @@
         </p>
         <p class="user-name m-0" style="color: #6C757D;font-size: 14px;">@{{user.name}}</p>
         <p class="card-text mt-3">{{user.introduction}}</p>
-        <div class="row card-bottom">
-          <div class="col-3">
-            <a href="/user/:id/followings">
+        <div class="d-flex flex-row card-bottom">
+          <div class="m-2">
+            <a href="/user/:id/followings" style="text-decoration:none;">
               <p class="card-text" style="color: #6C757D;font-size: 14px;">
                 34個跟隨中</p>
             </a>
           </div>
-          <div class="col-3">
-            <a href="/user/:id/followers">
+          <div class="m-2">
+            <a href="/user/:id/followers" style="text-decoration:none;">
               <p class="card-text" style="color: #6C757D;font-size: 14px;">
                 59個跟隨者</p>
             </a>
@@ -47,17 +47,24 @@
           </p>
         </div>
       </div>
-      <table class="table align-middle">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">推文</th>
-            <th scope="col">回覆</th>
-            <th scope="col">喜歡</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
+      <div class="d-flex flex-row group">
+        <div class="group-item mb-3">
+          <a class="text-decoration-none"
+            style="color:{{#ifCond route 'tweets'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px"
+            href="/">推文</a>
+        </div>
+        <div class="group-item mb-3">
+          <a class="text-decoration-none"
+            style="color:{{#ifCond route 'tweets'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px"
+            href="/">回覆</a>
+        </div>
+        <div class="group-item mb-3">
+          <a class="text-decoration-none"
+            style="color:{{#ifCond route 'tweets'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px"
+            href="
+            /">喜歡</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
