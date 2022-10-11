@@ -35,13 +35,15 @@
           <div class="m-2">
             <a href="/user/:id/followings" style="text-decoration:none;">
               <p class="card-text" style="color: #6C757D;font-size: 14px;">
-                34個跟隨中</p>
+                {{user.Followings.length}}個跟隨中
+              </p>
             </a>
           </div>
           <div class="m-2">
             <a href="/user/:id/followers" style="text-decoration:none;">
               <p class="card-text" style="color: #6C757D;font-size: 14px;">
-                59個跟隨者</p>
+                {{user.Followers.length}}個跟隨者
+              </p>
             </a>
           </div>
           </p>
@@ -51,16 +53,16 @@
         <div class="group-item mb-3">
           <a class="text-decoration-none"
             style="color:{{#ifCond route 'tweets'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px"
-            href="/">推文</a>
+            href="/users/{{users/}}">推文</a>
         </div>
         <div class="group-item mb-3">
           <a class="text-decoration-none"
-            style="color:{{#ifCond route 'tweets'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px"
+            style="color:{{#ifCond route 'replies'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px"
             href="/">回覆</a>
         </div>
         <div class="group-item mb-3">
           <a class="text-decoration-none"
-            style="color:{{#ifCond route 'tweets'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px"
+            style="color:{{#ifCond route 'likes'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px"
             href="
             /">喜歡</a>
         </div>
