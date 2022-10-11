@@ -11,24 +11,14 @@ module.exports = {
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
     await queryInterface.bulkInsert('Replies',
-      Array.from({ length: 600 }).map((_, i) => ({
-        user_id: user[(i % 20)].id,
+      Array.from({ length: 150 }).map((_, i) => ({
+        user_id: user[(i % 5)].id,
         tweet_id: tweet[Math.floor(i / 3)].id,
         comment: faker.lorem.sentences(1),
         created_at: new Date(),
         updated_at: new Date()
 
       })), {})
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkInsert('People', [{
-        name: 'John Doe',
-        isBetaMember: false
-      }], {});
-    */
   },
 
   down: async (queryInterface, Sequelize) => {

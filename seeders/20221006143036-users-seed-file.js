@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const faker = require('faker')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const userSeed = Array.from({ length: 20 }).map((_, i) => ({
+    const userSeed = Array.from({ length: 5 }).map((_, i) => ({
       name: `user${i + 1}`,
       email: `user${i + 1}@email.com`,
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
