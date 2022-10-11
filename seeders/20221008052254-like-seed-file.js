@@ -11,23 +11,25 @@ module.exports = {
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
     const likeArr = []
+    // 每一個使用者隨機按讚
 
-    for (let i = 0; i < tweets.length; i++) {
-      const randomNumbers = new Set()
+    // 使用者
+    users.forEach(user => {
+      // 展開tweet
+      const tweetArr = [...tweets]
 
-      while (randomNumbers.size < 3) {
-        randomNumbers.add(Math.ceil(Math.random() * (users.length - 1)))
+      for (let i = 0; i < users.length; i++) {
+        // 隨機數字->tweet
+        const randomNumber = Math.floor(Math.random() * tweetArr.length)
+        likeArr.push({
+          user_id: user.id,
+          tweet_id: tweetArr[randomNumber].id,
+          created_at: new Date(),
+          updated_at: new Date()
+        })
+        tweetArr.splice(randomNumber, 1)
       }
-      const noRepeatedUsers = [...randomNumbers]
-
-      const result = Array.from({ length: 3 }, (_, index) => ({
-        user_id: users[noRepeatedUsers[index]].id,
-        tweet_id: tweets[i].id,
-        created_at: new Date(),
-        updated_at: new Date()
-      }))
-      likeArr.push(...result)
-    }
+    })
     await queryInterface.bulkInsert('Likes', likeArr, {})
   },
 
