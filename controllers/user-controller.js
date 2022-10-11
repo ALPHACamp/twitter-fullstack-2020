@@ -2,6 +2,7 @@ const { User, Tweet, Reply, Like, Followship } = require('../models')
 const { getUser } = require('../_helpers')
 const bcrypt = require('bcryptjs')
 const { imgurFileHandler } = require('../helpers/file-helpers')
+const Helpers = require('faker/lib/helpers')
 
 const userController = {
   signInPage: (req, res) => {
@@ -68,39 +69,35 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  tweets: (req, res, next) => {
-    const id = req.params.id
-    return Promise.all([
-      User.findByPk(id, {
+  tweets: async (req, res, next) => {
+    try {
+      const user = getUser(req)
+      const id = req.params.id
+      const personal = await User.findByPk(id, {
         include: [
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' }
+          Tweet,
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
         ]
-      }),
-      Tweet.findAll({
-        where: { UserId: id },
-        include: [Like, Reply],
-        order: [['createdAt', 'desc']],
-        nest: true
       })
-    ])
-      .then(([targetUser, tweets]) => {
-        if (!targetUser) throw new Error("User didn't exist")
-        const user = getUser(req)
-        if (user) {
-          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
-        }
-        const tweetsData = tweets
-          .map(t => ({
-            ...t.toJSON(),
-            likedCount: t.Likes.length,
-            repliedCount: t.Replies.length,
-            isLiked: t.Likes.some(like => like.UserId === user.id)
-          }))
-        res.locals.tweetsLength = tweets.length
-        res.render('profile', { targetUser: targetUser.toJSON(), tweets: tweetsData, user, tweet: true })
+
+      const tweetsList = await Tweet.findAll({
+        where: { UserId: personal.id },
+        include: [User, Reply, Like],
+        order: [
+          ['created_at', 'DESC']
+        ]
       })
-      .catch(err => next(err))
+      const followingsId = user?.Followings?.map(f => f.id)
+      user.isFollowed = (followingsId.includes(personal.id))
+      const tweet = tweetsList.map(tweet => ({
+        ...tweet.toJSON(),
+        isLiked: tweet.Likes.some(t => t.UserId === user.id)
+      }))
+      return res.render('profile', { tweet, user, personal: personal.toJSON() })
+    } catch (err) {
+      next(err)
+    }
   },
   replies: (req, res, next) => {
     const id = req.params.id
@@ -111,7 +108,7 @@ const userController = {
       Reply.findAll({
         where: { UserId: id },
         include: [{ model: Tweet, include: User }],
-        order: [['createdAt', 'desc']],
+        order: [['created_at', 'desc']],
         raw: true,
         nest: true
       })

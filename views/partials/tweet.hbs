@@ -12,12 +12,19 @@
             <span class="fs-6 fw-lighter mr-1">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
           </h5>
         </a>
+        {{!-- /tweets --}}
         {{#ifCond route 'tweets'}}
           <p class="card-text">{{this.description}}</p>
         {{/ifCond}}
+        {{!-- /users/:id/tweets --}}
+        {{#ifCond route 'personal-tweets'}}
+          <p class="card-text">{{this.description}}</p>
+        {{/ifCond}}
+        {{!-- /tweets/:id/replies --}}
         {{#ifCond route 'replies'}}
           <p class="card-text">{{this.comment}}</p>
         {{/ifCond}}
+        {{!-- /tweets --}}
         {{#ifCond route 'tweets'}}
           <p class="card-text">
           <form action="/tweets/{{this.id}}/replies" method="GET" style="display:inline">
@@ -27,18 +34,54 @@
               <span>{{this.repliedCount}}</span>
             </small>
           </form>
+          {{!-- /tweets --}}
           {{#if this.isLiked}}
             <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: inline">
               <small class="text-muted">
-                <i class="fa-regular fa-heart"></i>
-                <span>{{this.likedCount}}</span>
+                <button type="submit" style="border:none;background: none;">
+                  <i class="fa-regular fa-heart"></i>
+                  <span>{{this.likedCount}}</span>
+                </button>
               </small>
             </form>
           {{else}}
             <form action="/tweets/{{this.id}}/like" method="POST" style="display: inline">
               <small class="text-muted">
-                <i class="fa-solid fa-heart"></i>
-                <span>{{this.likedCount}}</span>
+                <button type="submit" style="border:none;background: none;">
+                  <i class="fa-solid fa-heart"></i>
+                  <span>{{this.likedCount}}</span>
+                </button>
+              </small>
+            </form>
+          {{/if}}
+          </p>
+        {{/ifCond}}
+        {{!-- /users/:id/tweets --}}
+        {{#ifCond route 'personal-tweets'}}
+          <p class="card-text">
+          <form action="/tweets/{{this.id}}/replies" method="GET" style="display:inline">
+            <small class="text-muted">
+              <button type="submit" style="border:none;background: none;"><i
+                  class="fa-regular fa-comment-dots"></i></button>
+              <span>{{this.Replies.length}}</span>
+            </small>
+          </form>
+          {{#if this.isLiked}}
+            <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: inline">
+              <small class="text-muted">
+                <button type="submit" style="border:none;background: none;">
+                  <img src="/images/icon/like.png" alt="">
+                  <span>{{this.Likes.length}}</span>
+                </button>
+              </small>
+            </form>
+          {{else}}
+            <form action="/tweets/{{this.id}}/like" method="POST" style="display: inline">
+              <small class="text-muted">
+                <button type="submit" style="border:none;background: none;">
+                  <img src="/images/icon/unlike.png" alt="">
+                  <span>{{this.Likes.length}}</span>
+                </button>
               </small>
             </form>
           {{/if}}

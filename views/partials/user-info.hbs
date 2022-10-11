@@ -1,0 +1,34 @@
+<img src="{{user.cover}}" class="card-img-top position-relative" alt="...">
+<div class="image position-absolute" style="top:180px; margin:16px">
+ <a href="/users/{{user.id}}/profile">
+  <img src="{{user.avatar}}" alt="logo" class="user-avatar rounded-circles" style="width:140px;height:140px">
+ </a>
+</div>
+<div class="editprofile d-flex justify-content-end m-3" data-bs-toggle="modal" data-bs-target="#edit-modal">
+ <button type="submit" class="btn btn-primary"
+  style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:128px;height:40px">編輯個人資料</button>
+</div>
+<div class="card-body" style="margin-top:8px">
+ <p class="user-name m-0" style="color: #171725;font-size: 18px;">
+  <string>{{user.name}}</string>
+ </p>
+ <p class="user-name m-0" style="color: #6C757D;font-size: 14px;">@{{user.account}}</p>
+ <p class="card-text mt-3">{{user.introduction}}</p>
+ <div class="d-flex flex-row card-bottom">
+  <div class="m-2">
+   <a href="/user/{{user.id}}/followings" style="text-decoration:none;">
+    <p class="card-text" style="color: #6C757D;font-size: 14px;">
+     {{user.Followings.length}}個跟隨中
+    </p>
+   </a>
+  </div>
+  <div class="m-2">
+   <a href="/user/{{user.id}}/followers" style="text-decoration:none;">
+    <p class="card-text" style="color: #6C757D;font-size: 14px;">
+     {{user.Followers.length}}個跟隨者
+    </p>
+   </a>
+  </div>
+  </p>
+ </div>
+</div>

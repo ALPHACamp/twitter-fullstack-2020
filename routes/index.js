@@ -33,7 +33,7 @@ router.get('/tweets/:id/replies', authenticated, replyController.getReplies)
 router.post('/tweets/:id/replies', authenticated, replyController.postReplies)
 router.post('/tweets/:id/unlike', authenticated, tweetController.postUnlike)
 router.post('/tweets/:id/like', authenticated, tweetController.postLike)
-// router.get('/tweets/:id', authenticated, tweetController.getTweets)
+
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
 
@@ -45,13 +45,19 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 
 router.get('/logout', userController.logout)
 
-router.get('users/:id/tweets', authenticated, userController.tweets)
+// TODO
+// tweets
+router.get('/users/:id/tweets', authenticated, userController.tweets)
+// replies
+router.get('/users/:id/replies', authenticated, userController.replies)
+
+// likes
+router.get('/users/:id/likes', authenticated, userController.likes)
+
 router.get('/users/:id/setting', authenticated, userController.getSetting)
 router.put('/users/:id/setting', authenticated, userController.putSetting)
-router.get('/other', userController.otherPage)
 
-router.get('/users/:id/replies', authenticated, userController.replies)
-router.get('/users/:id/profile', authenticated, userController.getProfile)
+router.get('/other', userController.otherPage)
 
 router.get('/users/:id/followers', authenticated, userController.followers)
 router.get('/users/:id/followings', authenticated, userController.followings)

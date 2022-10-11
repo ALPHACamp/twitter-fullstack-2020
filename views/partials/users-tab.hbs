@@ -1,0 +1,17 @@
+<div class="d-flex flex-row group">
+  <div class="group-item mb-3">
+    <a class="text-decoration-none"
+      style="color:{{#ifCond route 'tweets'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px"
+      href="/users/{{user.id}}/tweets">推文</a>
+  </div>
+  <div class="group-item mb-3">
+    <a class="text-decoration-none"
+      style="color:{{#ifCond route 'replies'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px"
+      href="/users/{{user.id}}/replies">回覆</a>
+  </div>
+  <div class="group-item mb-3">
+    <a class="text-decoration-none"
+      style="color:{{#ifCond route 'likes'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px"
+      href="/users/{{user.id}}/likes">喜歡</a>
+  </div>
+</div>
