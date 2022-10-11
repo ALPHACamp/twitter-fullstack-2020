@@ -52,6 +52,7 @@ router.get('/other', userController.otherPage)
 
 router.get('/users/:id/replies', authenticated, userController.replies)
 router.get('/users/:id/profile', authenticated, userController.getProfile)
+router.put('/users/:id/profile', authenticated, userController.putProfile)
 
 router.get('/users/:id/followers', authenticated, userController.followers)
 router.get('/users/:id/followings', authenticated, userController.followings)
