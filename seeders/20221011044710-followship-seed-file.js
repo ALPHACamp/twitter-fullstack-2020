@@ -28,7 +28,7 @@ module.exports = {
     await queryInterface.bulkInsert('Followships', followshipArr, {})
   },
 
-  down: (queryInterface, Sequelize) => {
-
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkDelete('Followships', null, {})
   }
 }
