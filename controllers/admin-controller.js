@@ -1,5 +1,7 @@
 const { User, Tweet, Like, Reply } = require('../models')
 const { getUser } = require('../_helpers')
+const { getOffset, getPagination } = require('../helpers/pagination-helper')
+
 const adminController = {
   signInPage: (req, res) => {
     return res.render('admin/signin')
@@ -13,20 +15,27 @@ const adminController = {
     res.redirect('/admin/tweets')
   },
   getTweets: (req, res, next) => {
-    Tweet.findAll({
+    const DEFAULT_LIMIT = 10
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || DEFAULT_LIMIT
+    const offset = getOffset(limit, page)
+
+    Tweet.findAndCountAll({
       include: [User],
+      limit,
+      offset,
       raw: true,
       nest: true,
       order: [['created_at', 'DESC']] // 反序
     })
       .then(tweets => {
-        const result = tweets.map(tweet => {
+        const result = tweets.rows.map(tweet => {
           return {
             ...tweet,
             description: tweet.description.substring(0, 50)
           }
         })
-        return res.render('admin/tweets', { tweets: result })
+        return res.render('admin/tweets', { tweets: result, pagination: getPagination(limit, page, tweets.count) })
       })
       .catch(err => next(err))
   },
