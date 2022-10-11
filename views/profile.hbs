@@ -1,25 +1,24 @@
 {{>left}}
 <div class="col-6">
   <div class="col container">
-    {{!-- /user/self --}}
     <div class=" card mb-3">
       <div class="row back-bar m-3">
         <div class="col-6 col-sm-1 back-image">
-          <a href=" /">
+          <a href="/">
             <img src="/images/back.png" alt="back" style="width:17px;hegith:14px">
           </a>
         </div>
         <div class="col-6 col-sm-1 back-user" style="width:100px;height:50px;">
           <p class="user-name m-0" style="color: #171725;font-size: 18px;">
-            <string>Apple</string>
+            <string>{{user.name}}</string>
           </p>
           <p class="user-name m-0" style="color: #6C757D;font-size: 13px;">25推文</p>
         </div>
       </div>
-      <img src="https://loremflickr.com/639/200/nature" class="card-img-top position-relative" alt="...">
-      <div class="image position-absolute" style="top:200px">
-        <a href="/users">
-          <img src="/images/logo.svg" alt="logo" class="user-avatar rounded-circles" style="width:140px;height:140px">
+      <img src="{{user.cover}}" class="card-img-top position-relative" alt="...">
+      <div class="image position-absolute" style="top:180px; margin:16px">
+        <a href="/users/{{user.id}}/profile">
+          <img src="{{user.avatar}}" alt="logo" class="user-avatar rounded-circles" style="width:140px;height:140px">
         </a>
       </div>
       <div class="editprofile d-flex justify-content-end m-3" data-bs-toggle="modal" data-bs-target="#edit-modal">
@@ -28,13 +27,10 @@
       </div>
       <div class="card-body" style="margin-top:8px">
         <p class="user-name m-0" style="color: #171725;font-size: 18px;">
-          <string>Apple</string>
+          <string>{{user.name}}</string>
         </p>
-        <p class="user-name m-0" style="color: #6C757D;font-size: 14px;">@apple</p>
-        <p class="card-text mt-3">This is a wider card with supporting text below as a natural lead-in to additional
-          content.
-          This
-          content is a little bit longer.</p>
+        <p class="user-name m-0" style="color: #6C757D;font-size: 14px;">@{{user.name}}</p>
+        <p class="card-text mt-3">{{user.introduction}}</p>
         <div class="row card-bottom">
           <div class="col-3">
             <a href="/user/:id/followings">
@@ -60,8 +56,6 @@
           </tr>
         </thead>
         <tbody>
-          {{!-- {{#each users}} --}}
-          {{!-- {{/each}} --}}
         </tbody>
       </table>
     </div>

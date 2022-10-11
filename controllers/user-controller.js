@@ -383,7 +383,14 @@ const userController = {
       .catch(err => next(err))
   },
   getProfile: (req, res, next) => {
-    res.render('profile')
+    return User.findByPk(req.params.id, {
+      raw: true
+    })
+      .then(user => {
+        if (!user) throw new Error("User didn't exist!")
+        res.render('profile', { user })
+      })
+      .catch(err => next(err))
   }
 }
 module.exports = userController
