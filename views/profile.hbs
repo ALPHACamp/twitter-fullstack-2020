@@ -1,107 +1,112 @@
-<div class="container">
-  <div class="profile-header">
-    <div>X</div>
-    <button type="button" class="btn edit-profile" id="editProfile">
-      編輯個人資料
-    </button>
-    <div>
-      <Button class="save-profile" id="">儲存</Button>
+{{>left}}
+<div class="col-6">
+  <div class="col container">
+    <div class=" card mb-3">
+      <div class="row back-bar m-3">
+        <div class="col-6 col-sm-1 back-image">
+          <a href="/">
+            <img src="/images/back.png" alt="back" style="width:17px;hegith:14px">
+          </a>
+        </div>
+        <div class="col-6 col-sm-1 back-user" style="width:100px;height:50px;">
+          <p class="user-name m-0" style="color: #171725;font-size: 18px;">
+            <string>{{user.name}}</string>
+          </p>
+          <p class="user-name m-0" style="color: #6C757D;font-size: 13px;">25推文</p>
+        </div>
+      </div>
+      <img src="{{user.cover}}" class="card-img-top position-relative" alt="...">
+      <div class="image position-absolute" style="top:180px; margin:16px">
+        <a href="/users/{{user.id}}/profile">
+          <img src="{{user.avatar}}" alt="logo" class="user-avatar rounded-circles" style="width:140px;height:140px">
+        </a>
+      </div>
+      <div class="editprofile d-flex justify-content-end m-3" data-bs-toggle="modal" data-bs-target="#edit-modal">
+        <button type="submit" class="btn btn-primary" data-target=".bd-example-modal-lg"
+          style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:128px;height:40px">編輯個人資料</button>
+      </div>
+      <div class="card-body" style="margin-top:8px">
+        <p class="user-name m-0" style="color: #171725;font-size: 18px;">
+          <string>{{user.name}}</string>
+        </p>
+        <p class="user-name m-0" style="color: #6C757D;font-size: 14px;">@{{user.name}}</p>
+        <p class="card-text mt-3">{{user.introduction}}</p>
+        <div class="d-flex flex-row card-bottom">
+          <div class="m-2">
+            <a href="/user/:id/followings" style="text-decoration:none;">
+              <p class="card-text" style="color: #6C757D;font-size: 14px;">
+                34個跟隨中</p>
+            </a>
+          </div>
+          <div class="m-2">
+            <a href="/user/:id/followers" style="text-decoration:none;">
+              <p class="card-text" style="color: #6C757D;font-size: 14px;">
+                59個跟隨者</p>
+            </a>
+          </div>
+          </p>
+        </div>
+      </div>
+      <div class="d-flex flex-row group">
+        <div class="group-item mb-3">
+          <a class="text-decoration-none"
+            style="color:{{#ifCond route 'tweets'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px"
+            href="/">推文</a>
+        </div>
+        <div class="group-item mb-3">
+          <a class="text-decoration-none"
+            style="color:{{#ifCond route 'tweets'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px"
+            href="/">回覆</a>
+        </div>
+        <div class="group-item mb-3">
+          <a class="text-decoration-none"
+            style="color:{{#ifCond route 'tweets'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px"
+            href="
+            /">喜歡</a>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="background">
-    <img src="" alt="" class="profile-image">
-  </div>
-  <div class="avatar">user avatar</div>
-  <div>
-    <label for="">名稱</label>
-    <input type="text" class="form-label" placeholder="John Doe">
-    <div class="name-text">8/50</div>
-  <div>
-    <label for="">自我介紹</label>
-    <input type="text" class="form-label" placeholder="John Doe">
-    <div class="name-text">0/160</div>
-  </div>
 </div>
-
-
-{{!-- test passing --}}
-<button type="button" class="btn edit-profile" id="editProfile">
-  編輯個人資料
-</button>
-
-
-
-{{!-- Model --}}
-<form action="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data">
-  <div>
-    <Button class="save-profile" id="">儲存</Button>
-  </div>
-
-  {{!-- cover --}}
-  <img class="cover" id="cover" src="" alt="cover">
-
-  {{!-- cover icon --}}
-  <div>
-    {{!-- 主要是上傳 icon 用 --}}
-    <label class="form-label" for="image">Image</label>
-    <input class="form-control" type="file" class="form-control-file" id="coverImage" name="coverImage">
-  </div>
-
-  {{!-- 使用者大頭 --}}
-  <div>
-    <label class="form-label" for="avatar">avatar</label>
-    <input class="form-control" type="file" class="form-control-file" id="avatar" name="avatar">
-  </div>
-
-  {{!-- 使用者名稱 --}}
-  <div>
-    <label for="name">名稱</label>
-    <input name="name" id="name" type="text" placeholder="請輸入使用者名稱" required>
-  </div>
-
-  {{!-- 自我介紹 --}}
-  <div>
-    <label for="introduction">自我介紹</label>
-    <textarea name="introduction" id="introduction" type="text" placeholder="自我介紹"></textarea>
-  </div>
-</form>
-
-<script>
-
-  const editProfile = document.querySelector('.edit-profile')
-  const saveProfile = document.querySelector('.save-profile')
-  const cover = document.querySelector('#cover')
-  const avatar = document.querySelector('#avatar')
-  const username = document.querySelector('#name')
-  const introduction = document.querySelector('#introduction')
-
-  editProfile.addEventListener('click', () => {
-    axios.get('/api/users/' + {{ user.id }})
-    .then(res => {
-      const userInfo = res.data
-      cover.src = userInfo.cover
-      avatar.src = userInfo.avatar // 若使用者沒有上傳照片應該要顯示灰色假圖
-      username.value = userInfo.name
-      introduction.value = userInfo.introduction
-    })
-  }).catch (err => console.err(err))
-  
-  saveProfile.addEventListener('click', () => {
-    const formData = new FormData()
-    formData.append("cover", cover.files[0])
-    formData.append("avatar", avatar.files[0])
-    formData.append('name', name.value)
-    formData.append('introduction', introduction.value)
-    axios.post('/api/users/{{user.id}}', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }).then(res => {
-      if (res.data.status = 'success') {
-        console.log(data)
-        history.go(0)
-      }
-    }).catch(err => console.warn(err))
-  })
-  
-</script>
+{{>right}}
+<!-- Modal -->
+<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <form action="/user/{{user.id}}/profile?_method=PUT" method="POST">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title" id="edit-modal-label" style="margin-left:36px">編輯個人資料</h5>
+          <button type="submit" class="btn btn-primary" style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:64px;height:40px
+            ;margin-left:24px">儲存</button>
+        </div>
+        <div class="modal-body m-0">
+          <img src="{{user.cover}}" class="card-img-top position-relative" alt="...">
+          <div class="image position-absolute" style="top:100px">
+            <a href="/users">
+              <img src="{{user.avatar}}" alt="logo" class="user-avatar rounded-circles"
+                style="width:140px;height:140;top:140px;margin-left:16px">
+            </a>
+          </div>
+        </div>
+        <div class="form-group form-floating" style="margin-top:80px;margin-left:16px;margin-right:16px;">
+          <input type="text" name="name" id="name" class="form-control font-weight-bold" placeholder="名稱"
+            value="{{user.name}}"
+            style="background-color:#F5F8FA; border-bottom: 2px solid #657786;width:440px;height:54px" required
+            autofocus>
+          <label for="name">名稱</label>
+          <div class="text-end" id="char_count" style="font-size:12px"><span>0/50</span></div>
+        </div>
+        <div class="form-group form-floating m-3">
+          <input type="text" name="text" id="text" class="form-control font-weight-bold" placeholder="名稱"
+            value="{{user.introduction}}"
+            style="background-color:#F5F8FA; border-bottom: 2px solid #657786;width:440px;height:54px;height:147px"
+            required autofocus>
+          <label for="name">自我介紹</label>
+          <div class="text-end" id="char_count" style="font-size:12px"><span>0/160</span></div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

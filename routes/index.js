@@ -51,11 +51,12 @@ router.put('/users/:id/setting', authenticated, userController.putSetting)
 router.get('/other', userController.otherPage)
 
 router.get('/users/:id/replies', authenticated, userController.replies)
-router.get('/modals/self', tweetController.getModalsTabs)
+router.get('/users/:id/profile', authenticated, userController.getProfile)
+router.put('/users/:id/profile', authenticated, userController.putProfile)
 
 router.get('/users/:id/followers', authenticated, userController.followers)
 router.get('/users/:id/followings', authenticated, userController.followings)
-router.get('/users', userController.getUser)
+router.get('/users', authenticated, userController.getUser)
 
 router.use('/', generalErrorHandler)
 router.use('/', authenticated, tweetController.getTweets)
