@@ -1,31 +1,17 @@
-const { User, Followship } = require('../models')
-const { getUser } = require('../_helpers')
-
+const { Followship } = require('../models')
+const helpers = require('../_helpers')
 const followshipController = {
   addFollowing: async (req, res, next) => {
     try {
-      const id = req.params.id || req.body.id
-      const loginUserId = getUser(req) && getUser(req).id
-
-      if (id === loginUserId.toString()) {
-        return res.redirect('back')
+      if (helpers.getUser(req).id === Number(req.body.id)) {
+        req.flash('error_messages', '不能追隨自己！')
+        return res.redirect(200, 'back')
       }
-
-      const user = await User.findByPk(id)
-      if (!user) throw new Error("User didn't exist!")
-
-      const followship = await Followship.findOne({
-        where: {
-          followerId: loginUserId,
-          followingId: id
-        }
-      })
-      if (followship) throw new Error('You are already following this user!')
-
       await Followship.create({
-        followerId: loginUserId,
-        followingId: id
+        followerId: helpers.getUser(req).id,
+        followingId: req.body.id
       })
+      req.flash('success_messages', '追隨成功！')
       return res.redirect('back')
     } catch (err) {
       next(err)
@@ -35,12 +21,12 @@ const followshipController = {
     try {
       const followship = await Followship.findOne({
         where: {
-          followerId: getUser(req) && getUser(req).id,
+          followerId: helpers.getUser(req).id,
           followingId: req.params.id
         }
       })
-      if (!followship) throw new Error("You haven't followed this user!")
-      await followship.destroy()
+      await followship.destroy() // 重置資料庫
+      req.flash('success_messages', '取消追隨成功！')
       return res.redirect('back')
     } catch (err) {
       next(err)

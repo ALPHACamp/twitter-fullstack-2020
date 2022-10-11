@@ -18,27 +18,28 @@ const adminController = {
       raw: true,
       nest: true,
       order: [['created_at', 'DESC']] // 反序
-    }).then(tweets => {
-      const result = tweets.map(tweet => {
-        return {
-          ...tweet,
-          description: tweet.description.substring(0, 50)
-        }
-      })
-      return res.render('admin/tweets', { tweets: result })
     })
+      .then(tweets => {
+        const result = tweets.map(tweet => {
+          return {
+            ...tweet,
+            description: tweet.description.substring(0, 50)
+          }
+        })
+        return res.render('admin/tweets', { tweets: result })
+      })
       .catch(err => next(err))
   },
   deleteTweet: async (req, res, next) => {
     try {
-      const tweetId = req.params.id
-      const tweet = await Tweet.findByPk(req.params.id)
+      const TweetId = req.params.id
+      const tweet = await Tweet.findByPk(TweetId)
       await tweet.destroy()
-      await Reply.destroy({ where: { tweetId } })
-      await Like.destroy({ where: { tweetId } })
+      await Reply.destroy({ where: { TweetId } })
+      await Like.destroy({ where: { TweetId } })
 
       req.flash('success_messages', '成功刪除')
-      res.redirect('/admin/tweets')
+      res.redirect('back')
     } catch (err) {
       next(err)
     }

@@ -19,20 +19,19 @@ app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static('public')) // 設定共用檔案
 app.use(express.json())
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
 
 app.use(passport.initialize())
 app.use(passport.session())
-
+app.use(express.static('public')) // 設定共用檔案
 app.use(flash())
 app.use(methodOverride('_method'))
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages') // 設定 success 訊息
   res.locals.error_messages = req.flash('error_messages') // 設定 error 訊息
   res.locals.warning_messages = req.flash('warning_messages') // 設定 warning 訊息
-  res.locals.currentUser = helpers.getUser(req) // 設定currentUser讓view直接抓現在登入的使用者狀態
+  res.locals.user = helpers.getUser(req) // 設定currentUser讓view直接抓現在登入的使用者狀態
   next()
 })
 
