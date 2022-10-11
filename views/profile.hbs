@@ -22,7 +22,7 @@
         </a>
       </div>
       <div class="editprofile d-flex justify-content-end m-3" data-bs-toggle="modal" data-bs-target="#edit-modal">
-        <button type="submit" class="btn btn-primary"
+        <button type="submit" class="btn btn-primary" data-target=".bd-example-modal-lg"
           style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:128px;height:40px">編輯個人資料</button>
       </div>
       <div class="card-body" style="margin-top:8px">
@@ -83,23 +83,28 @@
             ;margin-left:24px">儲存</button>
       </div>
       <div class="modal-body m-0">
-        <img src="https://loremflickr.com/639/200/nature" class="card-img-top position-relative" alt="...">
+        <img src="{{user.cover}}" class="card-img-top position-relative" alt="...">
         <div class="image position-absolute" style="top:100px">
           <a href="/users">
-            <img src="/images/logo.svg" alt="logo" class="user-avatar rounded-circles" style="width:140px;height:140px">
+            <img src="{{user.avatar}}" alt="logo" class="user-avatar rounded-circles"
+              style="width:140px;height:140;top:140px;margin-left:16px">
           </a>
         </div>
       </div>
-      <div class="form-group form-floating m-3">
-        <input type="text" name="name" id="name" class="form-control font-weight-bold" placeholder="名稱" value="{{name}}"
+      <div class="form-group form-floating" style="margin-top:80px;margin-left:16px;margin-right:16px;">
+        <input type="text" name="name" id="name" class="form-control font-weight-bold" placeholder="名稱"
+          value="{{user.name}}"
           style="background-color:#F5F8FA; border-bottom: 2px solid #657786;width:440px;height:54px" required autofocus>
         <label for="name">名稱</label>
+        <div class="text-end" id="char_count" style="font-size:12px"><span>0/50</span></div>
       </div>
       <div class="form-group form-floating m-3">
-        <input type="text" name="text" id="text" class="form-control font-weight-bold" placeholder="名稱" value="{{name}}"
+        <input type="text" name="text" id="text" class="form-control font-weight-bold" placeholder="名稱"
+          value="{{user.introduction}}"
           style="background-color:#F5F8FA; border-bottom: 2px solid #657786;width:440px;height:54px;height:147px"
           required autofocus>
         <label for="name">自我介紹</label>
+        <div class="text-end" id="char_count" style="font-size:12px"><span>0/160</span></div>
       </div>
     </div>
   </div>
