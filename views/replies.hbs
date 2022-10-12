@@ -11,7 +11,7 @@
             </a>
           </div>
           <div class="col-md-11">
-            <div class="card-body">
+            <div class="card-body" style="margin:8p">
               <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;color: black">
                 <h5 class="card-text">{{tweet.User.name}}
                   <span class="fs-6 fw-lighter mr-1">@{{tweet.User.account}}．{{relativeTimeFromNow
@@ -39,21 +39,21 @@
                 </small>
               </form>
               {{#if tweet.Likes}}
-                <form action="/tweets/{{tweet.id}}/unlike" method="POST" style="display: inline">
-                  <small class="text-muted">
-                    <button type="submit" style="border:none;background: none;">
-                      <img src="/public/images/icon/like.png" alt="">
-                    </button>
-                  </small>
-                </form>
+              <form action="/tweets/{{tweet.id}}/unlike" method="POST" style="display: inline">
+                <small class="text-muted">
+                  <button type="submit" style="border:none;background: none;">
+                    <img src="/public/images/icon/like.png" alt="">
+                  </button>
+                </small>
+              </form>
               {{else}}
-                <form action="/tweets/{{tweet.id}}/like" method="POST" style="display: inline">
-                  <small class="text-muted">
-                    <button type="submit" style="border:none;background: none;">
-                      <img src="/images/icon/unlike.png" alt="">
-                    </button>
-                  </small>
-                </form>
+              <form action="/tweets/{{tweet.id}}/like" method="POST" style="display: inline">
+                <small class="text-muted">
+                  <button type="submit" style="border:none;background: none;">
+                    <img src="/images/icon/unlike.png" alt="">
+                  </button>
+                </small>
+              </form>
               {{/if}}
               </p>
             </div>
@@ -63,7 +63,7 @@
     </div>
   </div>
   {{#each replies}}
-    {{>tweet route='replies'}}
+  {{>tweet route='replies'}}
   {{/each}}
 </div>
 {{>right}}
