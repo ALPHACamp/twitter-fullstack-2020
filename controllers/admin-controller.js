@@ -76,7 +76,6 @@ const adminController = {
             return {
               ...userJson,
               tweetCounts: userData.Tweets.length,
-              // TODO
               likeCounts: userData.Tweets.reduce((acc, cur) => {
                 return acc + cur.Likes.length
               }, 0),

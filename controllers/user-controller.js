@@ -81,7 +81,7 @@ const userController = {
         ]
       })
       const tweetsList = await Tweet.findAll({
-        where: { UserId: personal.id },
+        where: { ...personal ? { UserId: personal.id } : {} },
         include: [User, Reply, Like],
         order: [
           ['created_at', 'DESC']
@@ -111,7 +111,7 @@ const userController = {
         ]
       })
       const repliesList = await Reply.findAll({
-        where: { UserId: personal.id },
+        where: { ...personal ? { UserId: personal.id } : {} },
         include: [
           User,
           { model: Tweet, include: User }],
