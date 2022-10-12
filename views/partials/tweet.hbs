@@ -7,11 +7,22 @@
     </div>
     <div class="col-md-11">
       <div class="card-body">
-        <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;color: black">
-          <h5 class="card-text">{{this.User.name}}
-            <span class="fs-6 fw-lighter mr-1">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
-          </h5>
-        </a>
+        {{!-- /tweets --}}
+        {{#ifCond route 'tweets'}}
+          <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;color: black">
+            <h5 class="card-text">{{this.User.name}}
+              <span class="fs-6 fw-lighter mr-1">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
+            </h5>
+          </a>
+        {{/ifCond}}
+        {{!-- /users/:id/tweets --}}
+        {{#ifCond route 'personal-tweets'}}
+          <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;color: black">
+            <h5 class="card-text">{{this.User.name}}
+              <span class="fs-6 fw-lighter mr-1">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
+            </h5>
+          </a>
+        {{/ifCond}}
         {{!-- /tweets --}}
         {{#ifCond route 'tweets'}}
           <p class="card-text">{{this.description}}</p>

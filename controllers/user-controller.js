@@ -72,15 +72,13 @@ const userController = {
   tweets: async (req, res, next) => {
     try {
       const user = getUser(req)
-      const id = req.params.id
-      const personal = await User.findByPk(id, {
+      const personal = await User.findByPk(Number(req.params.id), {
         include: [
           Tweet,
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
       })
-
       const tweetsList = await Tweet.findAll({
         where: { UserId: personal.id },
         include: [User, Reply, Like],
@@ -90,11 +88,11 @@ const userController = {
       })
       const followingsId = user?.Followings?.map(f => f.id)
       user.isFollowed = (followingsId.includes(personal.id))
-      const tweet = tweetsList.map(tweet => ({
+      const tweets = tweetsList.map(tweet => ({
         ...tweet.toJSON(),
         isLiked: tweet.Likes.some(t => t.UserId === user.id)
       }))
-      return res.render('profile', { tweet, user, personal: personal.toJSON() })
+      return res.render('profile', { tweets, user, personal: personal.toJSON() })
     } catch (err) {
       next(err)
     }
@@ -108,7 +106,7 @@ const userController = {
       Reply.findAll({
         where: { UserId: id },
         include: [{ model: Tweet, include: User }],
-        order: [['created_at', 'desc']],
+        order: [['createdAt', 'desc']],
         raw: true,
         nest: true
       })
@@ -404,4 +402,3 @@ const userController = {
   }
 }
 module.exports = userController
-
