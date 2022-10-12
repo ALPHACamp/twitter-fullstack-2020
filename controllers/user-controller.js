@@ -127,40 +127,44 @@ const userController = {
       next(err)
     }
   },
-  likes: (req, res, next) => {
-    const id = req.params.id
-    return Promise.all([
-      User.findByPk(id, {
-        include: [{ model: User, as: 'Followings' }, { model: User, as: 'Followers' }, Tweet]
-      }),
-      Like.findAll({
-        where: { UserId: id },
+  likes: async (req, res, next) => {
+    try {
+      const user = getUser(req)
+      const id = req.params.id
+      const personal = await User.findByPk(id, {
         include: [
-          { model: Tweet, include: User },
-          { model: Tweet, include: Like },
-          { model: Tweet, include: Reply }
+          Tweet,
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+          { model: Like, as: Tweet }
+        ]
+      })
+
+      const likedTweetsId = personal?.Likes.map(like => like.TweetId)
+      const tweetsList = await Tweet.findAll({
+        where: {
+          ...likedTweetsId ? { id: likedTweetsId } : {}
+        },
+        include: [
+          User,
+          Reply,
+          Like
         ],
-        order: [['createdAt', 'desc']],
-        nest: true
+        order: [
+          ['created_at', 'DESC']
+        ]
       })
-    ])
-      .then(([targetUser, likes]) => {
-        if (!targetUser) throw new Error("User didn't exist")
-        const user = getUser(req)
-        if (user) {
-          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
-        }
-        const likesData = likes
-          .map(l => ({
-            ...l.toJSON(),
-            likedCount: l.Tweet.Likes.length,
-            repliedCount: l.Tweet.Replies.length,
-            isLiked: user ? l.Tweet.Likes.some(like => like.UserId === user.id) : false
-          }))
-        res.locals.tweetsLength = targetUser.Tweets.length
-        res.render('profile', { targetUser: targetUser.toJSON(), likes: likesData, user, like: true })
-      })
-      .catch(err => next(err))
+
+      const followingsId = user?.Followings?.map(f => f.id)
+      user.isFollowed = (followingsId.includes(personal.id))
+      const tweets = tweetsList.map(tweet => ({
+        ...tweet.toJSON(),
+        isLiked: true
+      }))
+      return res.render('profile-like', { tweets, user, personal: personal.toJSON() })
+    } catch (err) {
+      next(err)
+    }
   },
   postTweet: async (req, res, next) => {
     try {

@@ -4,10 +4,10 @@
   <div class=" card mb-3">
    {{>user-header route='profile'}}
    {{>users-info}}
-   {{>users-tab route='reply'}}
+   {{>users-tab route='likes'}}
    <div class="">
-    {{#each replies}}
-     {{>tweet route='personal-reply'}}
+    {{#each tweets}}
+     {{>tweet route='personal-likes'}}
     {{/each}}
    </div>
   </div>
