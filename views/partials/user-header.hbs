@@ -1,11 +1,3 @@
-<div class="row home-bar">
- <div class="col-6 col-sm-1 back-user" style="width:100px;height:50px;">
-  <p class="user-name m-3" style="color: #171725;font-size: 18px;">
-   {{#ifCond route 'tweets'}}<strong>首頁</strong>{{/ifCond}}
-   {{#ifCond route 'replies'}}<strong>推文</strong>{{/ifCond}}
-  </p>
- </div>
-</div>
 {{#ifCond route 'profile'}}
  <div class="row back-bar m-3">
   <div class="col-6 col-sm-1 back-image">

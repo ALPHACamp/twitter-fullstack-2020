@@ -4,30 +4,6 @@
     <div class=" card mb-3">
       {{>user-header route='profile'}}
       {{>users-info route='profile'}}
-      <div class="card-body" style="margin-top:8px">
-        <p class="user-name m-0" style="color: #171725;font-size: 18px;">
-          <string>{{user.name}}</string>
-        </p>
-        <p class="user-name m-0" style="color: #6C757D;font-size: 14px;">@{{user.account}}</p>
-        <p class="card-text mt-3">{{user.introduction}}</p>
-        <div class="d-flex flex-row card-bottom">
-          <div class="m-2">
-            <a href="/user/{{user.id}}/followings" style="text-decoration:none;">
-              <p class="card-text" style="color: #6C757D;font-size: 14px;">
-                {{user.Followings.length}}個跟隨中
-              </p>
-            </a>
-          </div>
-          <div class="m-2">
-            <a href="/user/{{user.id}}/followers" style="text-decoration:none;">
-              <p class="card-text" style="color: #6C757D;font-size: 14px;">
-                {{user.Followers.length}}個跟隨者
-              </p>
-            </a>
-          </div>
-          </p>
-        </div>
-      </div>
       {{>users-tab route='tweets'}}
       {{#each tweets}}
         <div>
@@ -38,44 +14,3 @@
   </div>
 </div>
 {{>right}}
-<!-- Modal -->
-<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <form action="/user/{{user.id}}/profile?_method=PUT" method="POST">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
-          <h5 class="modal-title" id="edit-modal-label" style="margin-left:36px">編輯個人資料</h5>
-          <button type="submit" class="btn btn-primary" style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:64px;height:40px
-            ;margin-left:24px">儲存</button>
-        </div>
-        <div class="modal-body m-0">
-          <img src="{{user.cover}}" class="card-img-top position-relative" alt="...">
-          <div class="image position-absolute" style="top:100px">
-            <a href="/users">
-              <img src="{{user.avatar}}" alt="logo" class="user-avatar rounded-circles"
-                style="width:140px;height:140;top:140px;margin-left:16px;border-radius:50%;">
-            </a>
-          </div>
-        </div>
-        <div class="form-group form-floating" style="margin-top:80px;margin-left:16px;margin-right:16px;">
-          <input type="text" name="name" id="name" class="form-control font-weight-bold" placeholder="名稱"
-            value="{{user.name}}"
-            style="background-color:#F5F8FA; border-bottom: 2px solid #657786;width:440px;height:54px" required
-            autofocus>
-          <label for="name">名稱</label>
-          <div class="text-end" id="char_count" style="font-size:12px"><span>0/50</span></div>
-        </div>
-        <div class="form-group form-floating m-3">
-          <input type="text" name="text" id="text" class="form-control font-weight-bold" placeholder="名稱"
-            value="{{user.introduction}}"
-            style="background-color:#F5F8FA; border-bottom: 2px solid #657786;width:440px;height:54px;height:147px"
-            required autofocus>
-          <label for="name">自我介紹</label>
-          <div class="text-end" id="char_count" style="font-size:12px"><span>0/160</span></div>
-        </div>
-      </div>
-    </div>
-  </form>
-</div>

@@ -1,13 +1,7 @@
-{{!-- main/replylist --}}
-{{!-- check main-twitter-item --}}
-{{!--
-(.main-twitter-container>(.main-twitter-head>(.main-twitter-item>(a.back-link+h2.main-twitter-title))+(.main-twitter-item>img.user-avatar+(p.user-name+span.user-name))+(.main-twitter-item>(p.main-twitter-post+span.main-twitter-post))+(.main-twitter-item>span.twitter-post-comment-count*2)+(.main-twitter-item>i.twitter-post-comment-icon*2)+(.main-twitter-item>img.user-avatar+((p.user-name+span.user-name)+p.{@}+p.comment-text))))
---}}
-{{>left }}
+{{>left route='tweets'}}
 <div class="col-6">
-  {{!-- test --}}
   <div class="card">
-    {{>user-header route='replies'}}
+    {{>header route='replies'}}
     <div class="post-tweet" style="width:639px;height:153px;border-top: 1px solid	#E6ECF0;">
       <div class="card mb-3 mx-auto">
         <div class="row g-0">
@@ -38,7 +32,7 @@
                 <small class="text-muted">
                   <button class="me-5" type="submit" style="border:none;background: none;">
                     <a href="" data-bs-toggle="modal" data-bs-target="#replyModal">
-                      <i class="fa-regular fa-comment-dots"></i>
+                      <img src="/images/icon/speech-bubble.png" alt="">
                     </a>
                   </button>
                   <span>{{this.repliedCount}}</span>
@@ -47,15 +41,19 @@
               {{#if tweet.Likes}}
                 <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: inline">
                   <small class="text-muted">
-                    <i class="fa-regular fa-heart"></i>
-                    <span>{{this.likedCount}}</span>
+                    <button type="submit" style="border:none;background: none;">
+                      <img src="/public/images/icon/like.png" alt="">
+                      <span>{{this.likedCount}}</span>
+                    </button>
                   </small>
                 </form>
               {{else}}
                 <form action="/tweets/{{this.id}}/like" method="POST" style="display: inline">
                   <small class="text-muted">
-                    <i class="fa-solid fa-heart"></i>
-                    <span>{{this.likedCount}}</span>
+                    <button type="submit" style="border:none;background: none;">
+                      <img src="/images/icon/unlike.png" alt="">
+                      <span>{{this.likedCount}}</span>
+                    </button>
                   </small>
                 </form>
               {{/if}}
