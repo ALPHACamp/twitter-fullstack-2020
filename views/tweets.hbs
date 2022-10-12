@@ -40,21 +40,21 @@
       </div>
       <form action="/tweets" method="POST">
         <div class="modal-body d-flex">
-          {{#if user.avatar}}
-            <img src="{{user.avatar}}" class="bi pe-none me-2" style="width:50px;height:50px;border-radius:50%;">
+          {{#if users.avatar}}
+            <img src="{{users.avatar}}" class="bi pe-none me-2" style="width:50px;height:50px;border-radius:50%;">
           {{else}}
-            <img src="/images/avatar.png" class="bi pe-none me-2" style="width:50px;height:50px;border-radius:50%;>
+            <img src="/images/avatar.png" class="bi pe-none me-2" style="width:50px;height:50px;border-radius:50%;">
           {{/if}}
           <textarea class=" form" id="description" name="description" rows="4" maxlength="140" placeholder="有什麼新鮮事？"
-              style="border:none; width:600px; top:10px;resize:none;height:250px;" required></textarea>
-            <div class="" style="color:#FF0000;top: 270px;right: 120px;">
-              <span id="insertEmptyMessage"></span>
-            </div>
-            <div class="" id="char_count"><span>140/140</span></div>
+            style="border:none; width:600px; top:10px;resize:none;height:250px;" required></textarea>
+          <div class="" style="color:#FF0000;top: 270px;right: 120px;">
+            <span id="insertEmptyMessage"></span>
+          </div>
+          <div class="" id="char_count"><span>140/140</span></div>
         </div>
         <button type="submit" class="btn btn-orange btn-tweets-models"
           style="border-radius: 50px; left:550px;bottom:20px;">
-          <span class="" style="font-size:16px;">推文</span>
+          <span style="font-size:16px;">推文</span>
         </button>
       </form>
     </div>
