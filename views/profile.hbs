@@ -1,16 +1,79 @@
 {{>left route='profile'}}
 <div class="col-6">
-  <div class="col container">
-    <div class=" card mb-3">
-      {{>user-header route='profile'}}
-      {{>users-info route='profile'}}
-      {{>users-tab route='tweets'}}
-      {{#each tweets}}
-        <div>
-          {{>tweet route='personal-tweets'}}
-        </div>
-      {{/each}}
-    </div>
+  <div class=" card ">
+    {{>user-header route='profile'}}
+    {{>users-info route='profile'}}
+    {{>users-tab route='tweets'}}
+    {{#each tweets}}
+      <div>
+        {{>tweet route='personal-tweets'}}
+      </div>
+    {{/each}}
   </div>
 </div>
 {{>right}}
+<!-- Modal -->
+<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <form action="/user/{{user.id}}/profile?_method=PUT" method="POST">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-body d-flex justify-content-start">
+            <button type="button" class="btn-close m-0" id="modal-close-btn" data-bs-dismiss="modal"
+              aria-label="Close"></button>
+            <h5 class="modal-title" id="edit-modal-label" style="margin-left:36px">編輯個人資料</h5>
+          </div>
+          <button type="submit" class="btn btn-primary" id="save-btn" style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px;width:64px;height:40px
+            ;margin-left:24px">儲存</button>
+        </div>
+        <div class="modal-body m-0">
+          <img src="{{user.cover}}" class="card-img-top position-relative" alt="...">
+          <label class="form-labe position-absolute" style="left:330px;top:100px;z-index:1" for="image">
+            <img src="/images/camera.png" alt="camera" style="width:50px;height:50px;">
+          </label>
+          <img src="/images/close.png" alt="close" class="position-absolute" id="cover-close-btn"
+            style="width5:50px;height:50px;left:430px;top:100px;z-index:1">
+          <input class="form-control position-absolute" type="file" id="image" style="display:none" name="image"
+            onchange="previewAvatarImage()">
+          <div class="image position-absolute" style="top:190px">
+            {{#if targetUser.avatar}}
+              <img src="{{user.avatar}}" alt="logo" class="user-avatar rounded-circles"
+                style="width:140px;height:140;top:140px;margin-left:16px;border-radius:50%;border:4px solid white">
+              <label class="form-labe position-absolute" style="left:60px;top:50px;z-index:1" for="image">
+                <img src="/images/camera.png" alt="camera" style="width5:50px;height:50px;">
+              </label>
+            {{else}}
+              <img src="/images/avatar.png" alt="logo" class="user-avatar rounded-circles"
+                style="width:140px;height:140;top:140px;margin-left:16px;border-radius:50%;border:4px solid white">
+              <label class="form-labe position-absolute" style="left:60px;top:50px;z-index:1" for="image">
+                <img src="/images/camera.png" alt="camera" style="width5:50px;height:50px;">
+              </label>
+            {{/if}}
+          </div>
+        </div>
+        <div class="form-group form-floating" style="margin-top:80px;margin-left:16px;margin-right:16px;">
+          <input type="text" name="name" id="name" class="form-control font-weight-bold m-auto" placeholder="名稱"
+            value="{{user.name}}" style="background-color:#F5F8FA; border-bottom: 2px solid #657786;height:54px;"
+            required autofocus>
+          <label for="name">名稱</label>
+          <div class="text-end" id="char_count" style="font-size:12px"><span>0/50</span></div>
+        </div>
+        <div class="form-group form-floating m-3">
+          <input type="text" name="text" id="text" class="form-control font-weight-bold m-auto" placeholder="名稱"
+            value="{{user.introduction}}"
+            style="background-color:#F5F8FA; border-bottom: 2px solid #657786;height:147px;" required autofocus>
+          <label for="name">自我介紹</label>
+          <div class="text-end" id="char_count" style="font-size:12px"><span>0/160</span></div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{{!-- edit User info function --}}
+<script type="module">
+  const editBtn = document.querySelector( '#edit-btn' )
+  const saveBtn = document.querySelector( '#save-btn' )
+  const modalCloseBtn = document.querySelector( '#modal-close-btn' )
+  const coverCloseBtn = document.querySelector( '#cover-close-btn' )
+</script>
