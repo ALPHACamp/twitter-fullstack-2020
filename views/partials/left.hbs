@@ -63,20 +63,20 @@
 </div>
 {{!-- tweet Modal end --}}
 <script>
-  const textArea = document.getElementById('description')
-  const charCount = document.getElementById('char_count')
-  let insertEmptyMessage = document.getElementById('insertEmptyMessage')
+  const textArea = document.getElementById( 'description' )
+  const charCount = document.getElementById( 'char_count' )
+  let insertEmptyMessage = document.getElementById( 'insertEmptyMessage' )
   const maxNumOfCount = 140
   const countCharacters = () => {
     const numOfEnter = textArea.value.length
     const counter = maxNumOfCount - numOfEnter
     charCount.textContent = counter + '/140'
-    if (numOfEnter === 0) {
+    if ( numOfEnter === 0 ) {
       insertEmptyMessage.innerText = '內容不可以是空白'
     }
-    if (counter < 0 || counter >= 140) {
+    if ( counter < 0 || counter >= 140 ) {
       charCount.style.color = 'red'
     }
   }
-  textArea.addEventListener('input', countCharacters)
+  textArea.addEventListener( 'input', countCharacters )
 </script>

@@ -1,0 +1,16 @@
+{{>left route='profile'}}
+<div class="col-6">
+  <div class="col container">
+    <div class="content" style="border:1px solid #E6ECF0">
+      {{>user-header route='profile'}}
+      {{>users-info}}
+      {{>users-tab route='reply'}}
+      <div class="">
+        {{#each replies}}
+        {{>tweet route='personal-reply'}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>
+{{>right}}

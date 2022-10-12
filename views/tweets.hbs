@@ -2,24 +2,31 @@
 <div class="col-6">
   {{!-- test --}}
   <div class="card">
-    {{>user-header route='tweets'}}
-    <div class="post-tweet" style="width:639px;height:153px;border-top: 1px solid	#E6ECF0;" data-bs-toggle="modal"
-      data-bs-target="#tweet-modal">
-      <div class="card-image m-3">
-        <img src="{{user.avatar}}" class="user-photo" class="user-avatar rounded-circles"
-          style="width:50px;height:50px">
-        <span>有什麼新鮮事？</span>
-      </div>
-      <div class="d-flex justify-content-end m-4">
-        <button type="submit" class="btn btn-primary"
-          style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px;margin-left:24px">推文</button>
+    <div class="card-home" style="border-bottom: 18px solid	#E6ECF0;">
+      {{>header route='tweets'}}
+      <div class="post-tweet" style="width:639px;height:153px;border-top: 1px solid	#E6ECF0;" data-bs-toggle="modal"
+        data-bs-target="#tweet-modal">
+        <div class="card-image m-3">
+          {{#if user.avatar}}
+            <img src="{{user.avatar}}" class="user-photo" class="user-avatar"
+              style="width:50px;height:50px;border-radius:50%;">
+          {{else}}
+            <img src="/images/icon/user.png" class="user-photo" class="user-avatar"
+              style="width:50px;height:50px;border-radius:50%;">
+          {{/if}}
+          <span style="color:#6C757D;font-size: 18px;margin:8px;">有什麼新鮮事？</span>
+        </div>
+        <div class="d-flex justify-content-end m-4">
+          <button type="submit" class="btn btn-primary"
+            style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px;margin-left:24px">推文</button>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="">
-    {{#each tweets}}
-      {{>tweet route='tweets'}}
-    {{/each}}
+    <div class="">
+      {{#each tweets}}
+        {{>tweet route='tweets'}}
+      {{/each}}
+    </div>
   </div>
 </div>
 {{!-- tweet Modal --}}
@@ -33,13 +40,17 @@
       </div>
       <form action="/tweets" method="POST">
         <div class="modal-body d-flex">
-          <img src="{{user.avatar}}" class="bi pe-none me-2" style="width:50px;height:50px;">
-          <textarea class="form" id="description" name="description" rows="4" maxlength="141" placeholder="有什麼新鮮事？"
-            style="border:none; width:600px; top:10px;resize:none;height:250px;" required></textarea>
-          <div class="" style="color:#FF0000;top: 270px;right: 120px;">
-            <span id="insertEmptyMessage"></span>
-          </div>
-          <div class="" id="char_count"><span>140/140</span></div>
+          {{#if user.avatar}}
+            <img src="{{user.avatar}}" class="bi pe-none me-2" style="width:50px;height:50px;border-radius:50%;">
+          {{else}}
+            <img src="/images/avatar.png" class="bi pe-none me-2" style="width:50px;height:50px;border-radius:50%;>
+          {{/if}}
+          <textarea class=" form" id="description" name="description" rows="4" maxlength="140" placeholder="有什麼新鮮事？"
+              style="border:none; width:600px; top:10px;resize:none;height:250px;" required></textarea>
+            <div class="" style="color:#FF0000;top: 270px;right: 120px;">
+              <span id="insertEmptyMessage"></span>
+            </div>
+            <div class="" id="char_count"><span>140/140</span></div>
         </div>
         <button type="submit" class="btn btn-orange btn-tweets-models"
           style="border-radius: 50px; left:550px;bottom:20px;">

@@ -2,8 +2,12 @@
 <div class="col-6">
   <div class="col container">
     {{!-- /user/self --}}
+<<<<<<< HEAD
     {{#with user}}
     <div class="card">
+=======
+    <div class="content" style="border:1px solid #E6ECF0">
+>>>>>>> page/profile-tab
       <div class="row back-bar m-3">
         <div class="col-6 col-sm-1 back-image">
           <a href="/users/{{id}}/tweets">
@@ -18,6 +22,7 @@
         </div>
       </div>
     </div>
+<<<<<<< HEAD
     {{/with}}
 
     <div class=" card">
@@ -69,4 +74,32 @@
   </div>
 </div>
 
+=======
+  </div>
+  <div class="user-following-group">
+    <p class="user-info"></p>
+  </div>
+</div>
+{{!-- test passing --}}
+{{#each followings}}
+<div>
+  <div>
+    <a href="/users/{{this.id}}/tweets">
+      <img src="{{this.avatar}}" alt="avatar">
+      <p>{{this.name}}</p>
+    </a>
+    {{#if isFollowed}}
+    <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+      <button type="submit">正在跟隨</button>
+    </form>
+    {{else}}
+    <form action="/followships" method="POST">
+      <button type="submit" name="id" value={{this.id}}>跟隨</button>
+    </form>
+    {{/if}}
+  </div>
+  <p>{{this.introduction}}</p>
+</div>
+{{/each}}
+>>>>>>> page/profile-tab
 {{>right}}

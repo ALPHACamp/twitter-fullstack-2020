@@ -1,5 +1,6 @@
-<h4 style="font-size: 24px; line-height:26px;">
- {{#ifCond route 'tweetsList'}}<span>推文清單</span>{{/ifCond}}
- {{#ifCond route 'usersList'}}<span>使用者列表</span>{{/ifCond}}
-</h4>
-<div></div>
+<div class="card-title back-image mt-2">
+  <p class="user-name m-3" style="color: #171725;font-size: 18px; display: inline;">
+    {{#ifCond route 'tweets'}}<strong>首頁</strong>{{/ifCond}}
+    {{#ifCond route 'replies'}}<strong>推文</strong>{{/ifCond}}
+  </p>
+</div>

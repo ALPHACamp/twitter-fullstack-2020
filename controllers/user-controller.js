@@ -68,99 +68,102 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  tweets: (req, res, next) => {
-    const id = req.params.id
-    return Promise.all([
-      User.findByPk(id, {
+  tweets: async (req, res, next) => {
+    try {
+      const user = getUser(req)
+      const id = req.params.id
+      const personal = await User.findByPk(id, {
         include: [
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' }
+          Tweet,
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
         ]
-      }),
-      Tweet.findAll({
-        where: { UserId: id },
-        include: [Like, Reply],
-        order: [['createdAt', 'desc']],
-        nest: true
       })
-    ])
-      .then(([targetUser, tweets]) => {
-        if (!targetUser) throw new Error("User didn't exist")
-        const user = getUser(req)
-        if (user) {
-          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
-        }
-        const tweetsData = tweets
-          .map(t => ({
-            ...t.toJSON(),
-            likedCount: t.Likes.length,
-            repliedCount: t.Replies.length,
-            isLiked: t.Likes.some(like => like.UserId === user.id)
-          }))
-        res.locals.tweetsLength = tweets.length
-        res.render('profile', { targetUser: targetUser.toJSON(), tweets: tweetsData, user, tweet: true })
+      const tweetsList = await Tweet.findAll({
+        where: { ...personal ? { UserId: personal.id } : {} },
+        include: [User, Reply, Like],
+        order: [
+          ['created_at', 'DESC']
+        ]
       })
-      .catch(err => next(err))
+      const followingsId = user?.Followings?.map(f => f.id)
+      user.isFollowed = (followingsId.includes(personal.id))
+      const tweets = tweetsList.map(tweet => ({
+        ...tweet.toJSON(),
+        isLiked: tweet.Likes.some(t => t.UserId === user.id)
+      }))
+      return res.render('profile', { tweets, user, personal: personal.toJSON() })
+    } catch (err) {
+      next(err)
+    }
   },
-  replies: (req, res, next) => {
-    const id = req.params.id
-    return Promise.all([
-      User.findByPk(id, {
-        include: [{ model: User, as: 'Followings' }, { model: User, as: 'Followers' }, Tweet]
-      }),
-      Reply.findAll({
-        where: { UserId: id },
-        include: [{ model: Tweet, include: User }],
-        order: [['createdAt', 'desc']],
-        raw: true,
-        nest: true
-      })
-    ])
-      .then(([targetUser, replies]) => {
-        if (!targetUser) throw new Error("User didn't exist")
-        const user = getUser(req)
-        if (user) {
-          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
-        }
-        res.locals.tweetsLength = targetUser.Tweets.length
-        res.render('profile', { targetUser: targetUser.toJSON(), replies, user, reply: true })
-      })
-      .catch(err => next(err))
-  },
-  likes: (req, res, next) => {
-    const id = req.params.id
-    return Promise.all([
-      User.findByPk(id, {
-        include: [{ model: User, as: 'Followings' }, { model: User, as: 'Followers' }, Tweet]
-      }),
-      Like.findAll({
-        where: { UserId: id },
+  replies: async (req, res, next) => {
+    try {
+      const user = getUser(req)
+      const id = req.params.id
+      const personal = await User.findByPk(id, {
         include: [
-          { model: Tweet, include: User },
-          { model: Tweet, include: Like },
-          { model: Tweet, include: Reply }
+          Tweet,
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+          { model: Like, as: Tweet }
+        ]
+      })
+      const repliesList = await Reply.findAll({
+        where: { ...personal ? { UserId: personal.id } : {} },
+        include: [
+          User,
+          { model: Tweet, include: User }],
+        order: [['created_at', 'DESC']]
+      })
+      const followingsId = user?.Followings?.map(f => f.id)
+      user.isFollowed = (followingsId.includes(personal.id))
+      const replies = repliesList.map(reply => ({
+        ...reply.toJSON()
+      }))
+      return res.render('profile-reply', { replies, user, personal: personal.toJSON() })
+    } catch (err) {
+      next(err)
+    }
+  },
+  likes: async (req, res, next) => {
+    try {
+      const user = getUser(req)
+      const id = req.params.id
+      const personal = await User.findByPk(id, {
+        include: [
+          Tweet,
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+          { model: Like, as: Tweet }
+        ]
+      })
+
+      const likedTweetsId = personal?.Likes.map(like => like.TweetId)
+      const tweetsList = await Tweet.findAll({
+        where: {
+          ...likedTweetsId ? { id: likedTweetsId } : {}
+        },
+        include: [
+          User,
+          Reply,
+          Like
         ],
-        order: [['createdAt', 'desc']],
-        nest: true
+        order: [
+          ['created_at', 'DESC']
+        ]
       })
-    ])
-      .then(([targetUser, likes]) => {
-        if (!targetUser) throw new Error("User didn't exist")
-        const user = getUser(req)
-        if (user) {
-          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
-        }
-        const likesData = likes
-          .map(l => ({
-            ...l.toJSON(),
-            likedCount: l.Tweet.Likes.length,
-            repliedCount: l.Tweet.Replies.length,
-            isLiked: user ? l.Tweet.Likes.some(like => like.UserId === user.id) : false
-          }))
-        res.locals.tweetsLength = targetUser.Tweets.length
-        res.render('profile', { targetUser: targetUser.toJSON(), likes: likesData, user, like: true })
-      })
-      .catch(err => next(err))
+
+      const followingsId = user?.Followings?.map(f => f.id)
+      user.isFollowed = (followingsId.includes(personal.id))
+      const tweets = tweetsList.map(tweet => ({
+        ...tweet.toJSON(),
+        isLiked: true
+      }))
+      return res.render('profile-like', { tweets, user, personal: personal.toJSON() })
+    } catch (err) {
+      next(err)
+    }
   },
   postTweet: async (req, res, next) => {
     try {
@@ -339,9 +342,7 @@ const userController = {
       next(err)
     }
   },
-  otherPage: (req, res) => {
-    res.render('other')
-  },
+
   // api routes
   getUser: (req, res, next) => {
     // User.findByPk(getUser(req).id) 這樣子寫不會過
@@ -381,30 +382,6 @@ const userController = {
         return res.json({ status: 'success', ...user.toJSON() })
       })
       .catch(err => next(err))
-  },
-  getProfile: (req, res, next) => {
-    return User.findByPk(req.params.id, {
-      raw: true
-    })
-      .then(user => {
-        if (!user) throw new Error("User didn't exist!")
-        res.render('profile', { user })
-      })
-      .catch(err => next(err))
-  },
-  putProfile: (req, res, next) => {
-    const { cover, avatar, name, introduction } = req.body
-    const { id } = getUser(req)
-
-    if (!name) throw new Error('User name is required!')
-    return User.findByPk(req.params.id)
-      .then(user => {
-        if (!user) throw new Error("User doesn't exist!")
-        return user.update({ cover, avatar, name, introduction })
-      })
-      .then(() => res.redirect(`/users/${id}/profile`))
-      .catch(err => next(err))
   }
 }
 module.exports = userController
-

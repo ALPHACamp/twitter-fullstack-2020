@@ -41,7 +41,7 @@ const tweetController = {
       users = users.sort((a, b) => b.followerCount - a.followerCount)
         .slice(0, 10)
 
-      return res.render('tweets', { tweets, users, likes })
+      return res.render('tweets', { tweets, users, likes, user })
     } catch (err) {
       next(err)
     }
