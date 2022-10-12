@@ -346,6 +346,7 @@ const userController = {
   otherPage: (req, res) => {
     res.render('other')
   },
+  // TODO
   // api routes
   getUser: (req, res, next) => {
     // User.findByPk(getUser(req).id) 這樣子寫不會過
@@ -386,6 +387,8 @@ const userController = {
       })
       .catch(err => next(err))
   },
+
+  // TODO
   getProfile: (req, res, next) => {
     return User.findByPk(req.params.id, {
       raw: true

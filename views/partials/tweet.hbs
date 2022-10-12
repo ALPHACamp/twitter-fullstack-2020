@@ -54,11 +54,15 @@
         {{/ifCond}}
         {{!-- /users/:id/tweets --}}
         {{#ifCond route 'personal-tweets'}}
-          <p class="card-text">{{this.description}}</p>
+          <a href="/tweets/{{this.id}}/replies" style="text-decoration: none;color:black">
+            <p class="card-text">{{this.description}}</p>
+          </a>
         {{/ifCond}}
         {{!-- /users/:id/likes --}}
         {{#ifCond route 'personal-likes'}}
-          <p class="card-text">{{this.description}}</p>
+          <a href="/tweets/{{this.id}}/replies" style="text-decoration: none;color:black">
+            <p class="card-text">{{this.description}}</p>
+          </a>
         {{/ifCond}}
         {{!-- /tweets/:id/replies --}}
         {{#ifCond route 'replies'}}

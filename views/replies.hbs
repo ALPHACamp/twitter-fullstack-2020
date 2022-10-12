@@ -39,20 +39,18 @@
                 </small>
               </form>
               {{#if tweet.Likes}}
-                <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: inline">
+                <form action="/tweets/{{tweet.id}}/unlike" method="POST" style="display: inline">
                   <small class="text-muted">
                     <button type="submit" style="border:none;background: none;">
                       <img src="/public/images/icon/like.png" alt="">
-                      <span>{{this.likedCount}}</span>
                     </button>
                   </small>
                 </form>
               {{else}}
-                <form action="/tweets/{{this.id}}/like" method="POST" style="display: inline">
+                <form action="/tweets/{{tweet.id}}/like" method="POST" style="display: inline">
                   <small class="text-muted">
                     <button type="submit" style="border:none;background: none;">
                       <img src="/images/icon/unlike.png" alt="">
-                      <span>{{this.likedCount}}</span>
                     </button>
                   </small>
                 </form>

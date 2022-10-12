@@ -1,4 +1,4 @@
-const { Tweet, User, Reply } = require('../models')
+const { Tweet, User, Reply, Like } = require('../models')
 const helper = require('../_helpers')
 
 const replyController = {
@@ -10,15 +10,15 @@ const replyController = {
         where: { TweetId: req.params.id },
         include: [
           User,
-          { model: Tweet, include: [User] }
+          { model: Tweet, include: [User] },
+          { model: Tweet, include: [Like] }
         ],
-        order: [['createdAt', 'DESC']]
+        order: [['created_at', 'DESC']]
       })
       const tweet = await Tweet.findByPk(req.params.id, {
-        include: [User]
+        include: [User, Like]
       })
       const user = helper.getUser(req)
-      console.log(replies)
       return res.render('replies', { tweet: tweet.toJSON(), replies, user })
     } catch (err) {
       next(err)
