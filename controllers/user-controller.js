@@ -229,13 +229,13 @@ const userController = {
       include: [Tweet, { model: User, as: 'Followers' }]
     })
       .then(user => {
-        const result = user.Followers.map(user => {
+        const followers = user.Followers.map(user => {
           return {
             ...user.toJSON(),
             isFollowed: currentUser?.Followings.some(f => f.id === user.id)
           }
         }).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        res.render('followers', { observedUser: user.toJSON(), followers: result })
+        res.render('followers', { user: user.toJSON(), followers })
       })
       .catch(err => next(err))
   },
