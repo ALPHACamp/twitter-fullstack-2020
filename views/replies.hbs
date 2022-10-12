@@ -2,7 +2,7 @@
 <div class="col-6">
   <div class="card">
     {{>header route='replies'}}
-    <div class="post-tweet" style="width:639px;height:153px;border-top: 1px solid	#E6ECF0;">
+    <div class="post-tweet" style="width:639px;height:180px;border-top: 1px solid	#E6ECF0;">
       <div class="card mb-3 mx-auto">
         <div class="row g-0">
           <div class="col-md-1" style="width: 50px; height: 50px;">
@@ -64,11 +64,9 @@
       </div>
     </div>
   </div>
-  <div class="">
-    {{#each replies}}
-      {{>tweet route='replies'}}
-    {{/each}}
-  </div>
+  {{#each replies}}
+    {{>tweet route='replies'}}
+  {{/each}}
 </div>
 {{>right}}
 {{!-- Modal --}}
