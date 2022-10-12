@@ -72,7 +72,8 @@ const userController = {
   tweets: async (req, res, next) => {
     try {
       const user = getUser(req)
-      const personal = await User.findByPk(Number(req.params.id), {
+      const id = req.params.id
+      const personal = await User.findByPk(id, {
         include: [
           Tweet,
           { model: User, as: 'Followers' },
@@ -97,30 +98,34 @@ const userController = {
       next(err)
     }
   },
-  replies: (req, res, next) => {
-    const id = req.params.id
-    return Promise.all([
-      User.findByPk(id, {
-        include: [{ model: User, as: 'Followings' }, { model: User, as: 'Followers' }, Tweet]
-      }),
-      Reply.findAll({
-        where: { UserId: id },
-        include: [{ model: Tweet, include: User }],
-        order: [['createdAt', 'desc']],
-        raw: true,
-        nest: true
+  replies: async (req, res, next) => {
+    try {
+      const user = getUser(req)
+      const id = req.params.id
+      const personal = await User.findByPk(id, {
+        include: [
+          Tweet,
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+          { model: Like, as: Tweet }
+        ]
       })
-    ])
-      .then(([targetUser, replies]) => {
-        if (!targetUser) throw new Error("User didn't exist")
-        const user = getUser(req)
-        if (user) {
-          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
-        }
-        res.locals.tweetsLength = targetUser.Tweets.length
-        res.render('profile', { targetUser: targetUser.toJSON(), replies, user, reply: true })
+      const repliesList = await Reply.findAll({
+        where: { UserId: personal.id },
+        include: [
+          User,
+          { model: Tweet, include: User }],
+        order: [['created_at', 'DESC']]
       })
-      .catch(err => next(err))
+      const followingsId = user?.Followings?.map(f => f.id)
+      user.isFollowed = (followingsId.includes(personal.id))
+      const replies = repliesList.map(reply => ({
+        ...reply.toJSON()
+      }))
+      return res.render('profile-reply', { replies, user, personal: personal.toJSON() })
+    } catch (err) {
+      next(err)
+    }
   },
   likes: (req, res, next) => {
     const id = req.params.id

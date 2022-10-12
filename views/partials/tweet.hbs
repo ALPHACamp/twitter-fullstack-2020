@@ -35,6 +35,10 @@
         {{#ifCond route 'replies'}}
           <p class="card-text">{{this.comment}}</p>
         {{/ifCond}}
+        {{!-- /users/:id/replies --}}
+        {{#ifCond route 'personal-reply'}}
+          <p class="card-text">{{this.comment}}</p>
+        {{/ifCond}}
         {{!-- /tweets --}}
         {{#ifCond route 'tweets'}}
           <p class="card-text">
@@ -50,7 +54,7 @@
             <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: inline">
               <small class="text-muted">
                 <button type="submit" style="border:none;background: none;">
-                  <i class="fa-regular fa-heart"></i>
+                  <img src="/images/icon/like.png" alt="">
                   <span>{{this.likedCount}}</span>
                 </button>
               </small>
@@ -59,7 +63,7 @@
             <form action="/tweets/{{this.id}}/like" method="POST" style="display: inline">
               <small class="text-muted">
                 <button type="submit" style="border:none;background: none;">
-                  <i class="fa-solid fa-heart"></i>
+                  <img src="/images/icon/unlike.png" alt="">
                   <span>{{this.likedCount}}</span>
                 </button>
               </small>
@@ -72,8 +76,8 @@
           <p class="card-text">
           <form action="/tweets/{{this.id}}/replies" method="GET" style="display:inline">
             <small class="text-muted">
-              <button type="submit" style="border:none;background: none;"><i
-                  class="fa-regular fa-comment-dots"></i></button>
+              <button type="submit" style="border:none;background: none;">
+                <i class="fa-regular fa-comment-dots"></i></button>
               <span>{{this.Replies.length}}</span>
             </small>
           </form>
