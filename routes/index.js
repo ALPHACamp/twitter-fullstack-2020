@@ -52,14 +52,14 @@ router.get('/users/:id/likes', authenticated, userController.likes)
 router.get('/users/:id/setting', authenticated, userController.getSetting)
 router.put('/users/:id/setting', authenticated, userController.putSetting)
 
-router.get('/other', userController.otherPage)
-
 router.get('/users/:id/profile', authenticated, userController.getProfile)
 router.put('/users/:id/profile', authenticated, userController.putProfile)
 
 router.get('/users/:id/followers', authenticated, userController.followers)
 router.get('/users/:id/followings', authenticated, userController.followings)
 router.get('/users', authenticated, userController.getUser)
+
+router.get('/other', userController.otherPage)
 
 router.use('/', generalErrorHandler)
 router.use('/', authenticated, tweetController.getTweets)
