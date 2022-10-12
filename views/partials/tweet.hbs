@@ -27,6 +27,43 @@
         {{#ifCond route 'replies'}}
           <p>{{this.comment}}</p>
         {{/ifCond}}
+        {{#ifCond route 'tweets'}}
+          <a href="/tweets/{{this.id}}/replies" style="text-decoration: none;color:black" ;>
+            <p>{{this.description}}</p>
+          </a>
+        {{/ifCond}}
+        {{#ifCond route 'tweets'}}
+          <p class="card-text">
+          <form action="/tweets/{{this.id}}/replies" method="GET" style="display:inline">
+            <small class="text-muted">
+              <button type="submit" style="border:none;background: none;">
+                <img src="/images/icon/speech-bubble.png">
+              </button>
+              <span>{{this.Replies.length}}</span>
+            </small>
+          </form>
+          {{!-- /tweets --}}
+          {{#if this.isLiked}}
+            <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: inline">
+              <small class="text-muted">
+                <button type="submit" style="border:none;background: none;">
+                  <img src="/images/icon/like.png" alt="">
+                  <span>{{this.Likes.length}}</span>
+                </button>
+              </small>
+            </form>
+          {{else}}
+            <form action="/tweets/{{this.id}}/like" method="POST" style="display: inline">
+              <small class="text-muted">
+                <button type="submit" style="border:none;background: none;">
+                  <img src="/images/icon/unlike.png" alt="">
+                  <span>{{this.Likes.length}}</span>
+                </button>
+              </small>
+            </form>
+          {{/if}}
+          </p>
+        {{/ifCond}}
       </div>
     </div>
   </div>
