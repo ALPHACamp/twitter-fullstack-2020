@@ -1,16 +1,16 @@
-<div class="mx-auto" style="border-bottom:1px solid #E6ECF0">
+<div class="mx-auto" style="border:1px solid #E6ECF0">
   <div class="row g-0">
     {{!-- avatar --}}
-    <div class="col-md-1" style="width: 50px; height: 50px;">
+    <div class="col-md-2" style="width: 50px; height: 50px;">
       <a href="/users/{{this.User.id}}/tweets">
         {{#if this.User.avatar}}
-          <img src="{{this.User.avatar}}" class="img-fluid rounded-circle" alt="User Photo">
+          <img src="{{this.User.avatar}}" class="img-fluid rounded-circle m-3" alt="User Photo">
         {{else}}
           <img src="/images/icon/user.png" class="img-fluid rounded-circle" alt="User Photo">
         {{/if}}
       </a>
     </div>
-    <div class="col-md-11">
+    <div class="col-md-10">
       <div class="card-body" style="margin:8px">
         {{!-- name / account / time --}}
         <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;color: black">
@@ -18,8 +18,7 @@
             <span class="fs-6 fw-lighter mr-1">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
           </h5>
         </a>
-        {{#ifCond route 'replies'}}
-          <span>回覆</span>
+        {{#ifCond route 'replies' }} <span>回覆</span>
           <a href="/users/{{this.Tweet.User.id}}/tweets" style="text-decoration: none;color: black;">
             <span>@{{this.Tweet.User.account}}</span>
           </a>

@@ -2,57 +2,70 @@
 <div class="col-6">
   <div class="col container">
     {{!-- /user/self --}}
-    <div class=" card mb-3">
+    {{#with user}}
+    <div class="content" style="border:1px solid #E6ECF0">
       <div class="row back-bar m-3">
         <div class="col-6 col-sm-1 back-image">
-          <a href=" /">
+          <a href="/users/{{id}}/tweets">
             <img src="/images/back.png" alt="back" style="width:17px;hegith:14px">
           </a>
         </div>
         <div class="col-6 col-sm-1 back-user" style="width:100px;height:50px;">
           <p class="user-name m-0" style="color: #171725;font-size: 18px;">
-            <string>Apple</string>
+            <string>{{name}}</string>
           </p>
-          <p class="user-name m-0" style="color: #6C757D;font-size: 13px;">25推文</p>
+          <p class="user-name m-0" style="color: #6C757D;font-size: 13px;">{{Tweets.length}} 推文</p>
         </div>
       </div>
-      <table class="table align-middle">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">追隨者</th>
-            <th scope="col">正在追隨</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{!-- {{#each users}} --}}
-          {{!-- {{/each}} --}}
-        </tbody>
-      </table>
     </div>
-  </div>
-  <div class="user-following-group">
-    <p class="user-info"></p>
+    {{/with}}
+
+    <div class=" card">
+      <ul class="tab nav d-flex">
+        <li class="nav-item">
+          <a class="nav-link tab-btn follower {{#ifCond route 'followers'}} active {{/ifCond}}"
+            href="/users/{{user.id}}/followers"> 追隨者</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link tab-btn followings {{#ifCond route 'followings'}} active {{/ifCond}}"
+            href="/users/{{user.id}}/followings"> 正在追隨</a>
+        </li>
+      </ul>
+    </div>
+
+    {{#each followings}}
+    <div class="card followings">
+      <div class="d-flex">
+        <div class="col-3">
+          <a href="/users/{{this.id}}/tweets">
+            <img src="{{this.avatar}}" alt="avatar" style="width:50px;height:50px;border-radius:50%;">
+          </a>
+        </div>
+        <div class="col-6">
+          <p>{{this.name}}</p>
+          <p class="context">{{this.introduction}}</p>
+        </div>
+        <div class="col-2 justify-content-end">
+          {{#if isFollowed}}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit"
+              style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px;">
+              正在跟隨
+            </button>
+          </form>
+          {{else}}
+          <form action="/followships" method="POST">
+            <button type="submit" name="id" value="{{this.id}}"
+              style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px;">
+              跟隨
+            </button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    {{/each}}
+
   </div>
 </div>
-{{!-- test passing --}}
-{{#each followings}}
-  <div>
-    <div>
-      <a href="/users/{{this.id}}/tweets">
-        <img src="{{this.avatar}}" alt="avatar">
-        <p>{{this.name}}</p>
-      </a>
-      {{#if isFollowed}}
-        <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-          <button type="submit">正在跟隨</button>
-        </form>
-      {{else}}
-        <form action="/followships" method="POST">
-          <button type="submit" name="id" value={{this.id}}>跟隨</button>
-        </form>
-      {{/if}}
-    </div>
-    <p>{{this.introduction}}</p>
-  </div>
-{{/each}}
 {{>right}}

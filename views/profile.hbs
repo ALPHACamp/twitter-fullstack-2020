@@ -10,5 +10,10 @@
       </div>
     {{/each}}
   </div>
+  {{#each tweets}}
+    <div>
+      {{>tweet route='personal-tweets'}}
+    </div>
+  {{/each}}
 </div>
 {{>right}}
