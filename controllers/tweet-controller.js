@@ -49,7 +49,7 @@ const tweetController = {
     Promise.all([
       Like.create({
         UserId: helpers.getUser(req).id,
-        TweetId: req.params.tweet_id
+        TweetId: req.params.id
       })
     ]).then(() => {
       req.flash('success_messages', 'success like!')
@@ -57,7 +57,6 @@ const tweetController = {
     }).catch(err => next(err))
   },
   postUnlike: async (req, res, next) => {
-    // 這邊用 Promise.all([]) test 不會過
     try {
       const like = await Like.findOne({
         where: {
