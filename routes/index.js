@@ -30,7 +30,7 @@ router.post('/tweets/:id/replies', authenticated, replyController.postReplies)
 router.delete('/followships/:id', authenticated, followshipController.removeFollowing)
 router.post('/followships', authenticated, followshipController.addFollowing)
 
-router.get('/tweets', authenticated, tweetController.getTweets)
+router.get('/tweets', authenticated, getRecommendedUsers, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
 
 router.get('/users/:id/tweets', authenticated, getRecommendedUsers, userController.tweets)
