@@ -24,24 +24,14 @@ router.post('/tweets/:tweet_id/unlike', authenticated, tweetController.postUnlik
 router.post('/tweets/:id/unlike', authenticated, tweetController.postUnlike)
 router.post('/tweets/:id/like', authenticated, tweetController.postLike)
 
-router.get('/tweets/:id/replies', authenticated, replyController.getReplies)
-router.post('/tweets/:id/replies', authenticated, replyController.postReplies)
+router.get('/tweets/:id/replies', authenticated, getRecommendedUsers, replyController.getReplies)
+router.post('/tweets/:id/replies', authenticated, getRecommendedUsers, replyController.postReplies)
 
 router.delete('/followships/:id', authenticated, followshipController.removeFollowing)
 router.post('/followships', authenticated, followshipController.addFollowing)
 
 router.get('/tweets', authenticated, getRecommendedUsers, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
-
-router.get('/users/:id/tweets', authenticated, getRecommendedUsers, userController.tweets)
-router.get('/users/:id/replies', authenticated, getRecommendedUsers, userController.replies)
-router.get('/users/:id/likes', authenticated, getRecommendedUsers, userController.likes)
-
-router.get('/users/:id/setting', authenticated, userController.getSetting)
-router.put('/users/:id/setting', authenticated, userController.putSetting)
-
-router.get('/users/:id/followers', authenticated, getRecommendedUsers, userController.followers)
-router.get('/users/:id/followings', authenticated, getRecommendedUsers, userController.followings)
 
 // api
 router.get('/api/users/:id', authenticatedLimit, userController.getUser)
@@ -51,7 +41,7 @@ router.post('/api/users/:id', authenticatedLimit, upload.fields([
 ]), userController.postUser)
 
 router.use('/admin', admin)
-router.use('/users', authenticated, users)
+router.use('/users', authenticated, getRecommendedUsers, users)
 
 router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
