@@ -58,9 +58,9 @@
       <form action="/tweets" method="POST">
         <div class="modal-body d-flex">
           {{#if user.avatar}}
-          <img src="{{user.avatar}}" class="bi pe-none me-2" style="width:50px;height:50px;">
+          <img src="{{user.avatar}}" class="bi pe-none me-2" style="width:50px;height:50px;border-radius:50%;">
           {{else}}
-          <img src="/images/icon/user.png" class="bi pe-none me-2" style="width:50px;height:50px;">
+          <img src="/images/icon/user.png" class="bi pe-none me-2" style="width:50px;height:50px;border-radius:50%;">
           {{/if}}
           <textarea class="form" id="description" name="description" rows="4" maxlength="141" placeholder="有什麼新鮮事？"
             style="border:none; width:600px;position:relative; top:10px;resize:none;height:250px;" required></textarea>
