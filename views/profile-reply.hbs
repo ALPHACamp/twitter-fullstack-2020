@@ -5,11 +5,11 @@
       {{>user-header route='profile'}}
       {{>users-info}}
       {{>users-tab route='reply'}}
-      <div class="">
-        {{#each replies}}
-        {{>tweet route='personal-reply'}}
-        {{/each}}
-      </div>
+    </div>
+    <div class="profile-reply">
+      {{#each replies}}
+      {{>tweet route='personal-reply'}}
+      {{/each}}
     </div>
   </div>
 </div>
