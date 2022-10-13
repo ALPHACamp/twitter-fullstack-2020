@@ -1,11 +1,9 @@
 'use strict'
 const faker = require('faker')
+const { User } = require('../models')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const user = await queryInterface.sequelize.query(
-      'SELECT id FROM Users;',
-      { type: queryInterface.sequelize.QueryTypes.SELECT }
-    )
+    const user = await User.findAll({ where: { role: 'user' }, raw: true })
     const tweet = await queryInterface.sequelize.query(
       'SELECT id FROM Tweets;',
       { type: queryInterface.sequelize.QueryTypes.SELECT }
