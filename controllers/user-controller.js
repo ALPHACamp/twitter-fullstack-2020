@@ -2,6 +2,7 @@ const { User, Tweet, Reply, Like, Followship } = require('../models')
 const { getUser } = require('../_helpers')
 const bcrypt = require('bcryptjs')
 const { imgurFileHandler } = require('../helpers/file-helpers')
+const helpers = require('../_helpers')
 
 const userController = {
   signInPage: (req, res) => {
@@ -70,7 +71,7 @@ const userController = {
   },
   tweets: async (req, res, next) => {
     try {
-      const user = getUser(req)
+      const user = helpers.getUser(req)
       const id = req.params.id
       const personal = await User.findByPk(id, {
         include: [
@@ -128,7 +129,7 @@ const userController = {
   },
   likes: async (req, res, next) => {
     try {
-      const user = getUser(req)
+      const user = helpers.getUser(req)
       const id = req.params.id
       const personal = await User.findByPk(id, {
         include: [

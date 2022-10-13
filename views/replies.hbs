@@ -2,14 +2,14 @@
 <div class="col-6">
   <div class="card">
     {{>header route='replies'}}
-    <div class="card-home" style="border-bottom: 18px solid	#E6ECF0;">
+    <div class="card-home" style="border-bottom: 18px solid	#E6ECF0;border-top: 1px solid	#E6ECF0;">
       <div class="row g-0">
-        <div class="col-md-1" style="width: 50px; height: 50px;">
+        <div class="col-md-2 m-3" style="width: 50px; height: 50px;">
           <a href="/users/{{replies.User.id}}/tweets">
             <img src="{{tweet.User.avatar}}" class="img-fluid rounded-circle" alt="avatar">
           </a>
         </div>
-        <div class="col-md-11">
+        <div class="col-md-10">
           <div class="card-body" style="margin:8px">
             <a href="/users/{{tweet.User.id}}/tweets" style="text-decoration: none;color: black">
               <h5 class="card-text">{{tweet.User.name}}
@@ -39,21 +39,21 @@
               </small>
             </form>
             {{#if user.isLiked}}
-              <form action="/tweets/{{tweet.id}}/unlike" method="POST" style="display: inline">
-                <small class="text-muted">
-                  <button type="submit" style="border:none;background: none;">
-                    <img src="/images/icon/like.png">
-                  </button>
-                </small>
-              </form>
+            <form action="/tweets/{{tweet.id}}/unlike" method="POST" style="display: inline">
+              <small class="text-muted">
+                <button type="submit" style="border:none;background: none;">
+                  <img src="/images/icon/like.png">
+                </button>
+              </small>
+            </form>
             {{else}}
-              <form action="/tweets/{{tweet.id}}/like" method="POST" style="display: inline">
-                <small class="text-muted">
-                  <button type="submit" style="border:none;background: none;">
-                    <img src="/images/icon/unlike.png">
-                  </button>
-                </small>
-              </form>
+            <form action="/tweets/{{tweet.id}}/like" method="POST" style="display: inline">
+              <small class="text-muted">
+                <button type="submit" style="border:none;background: none;">
+                  <img src="/images/icon/unlike.png">
+                </button>
+              </small>
+            </form>
             {{/if}}
             </p>
           </div>
@@ -62,10 +62,10 @@
     </div>
   </div>
   {{#each replies}}
-    {{>tweet route='replies'}}
+  {{>tweet route='replies'}}
   {{/each}}
 </div>
-{{>right}}
+{{>right route='followers'}}
 {{!-- Modal --}}
 <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -89,7 +89,13 @@
         <form action="/tweets/{{tweet.id}}/replies" method="POST" style="border-top:1px solid #E6ECF0 ;">
           <div class="row mt-3">
             <div class="col-2 me-0">
-              <img src="{{user.avatar}}" class="rounded-circle" style="width:50px;height:50px">
+              {{#if user.avatar}}
+              <img src="{{user.avatar}}" class="user-photo" class="user-avatar"
+                style="width:50px;height:50px;border-radius:50%;">
+              {{else}}
+              <img src="/images/icon/user.png" class="user-photo" class="user-avatar"
+                style="width:50px;height:50px;border-radius:50%;">
+              {{/if}}
             </div>
             <div class="col mx-0 px-0">
               <textarea name="comment" class="border-0 mt-2 mx-0 px-0" type="text"

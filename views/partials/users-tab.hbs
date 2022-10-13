@@ -1,15 +1,18 @@
 <div class="d-flex flex-row group">
-      <div class="group-item mb-3" style="border-bottom:2 solid #FF6600;">
+      <div class="group-item" style="width:130px;height:40px;{{#ifCond route 'tweets' }}border-bottom:2px solid
+            #FF6600{{/ifCond}}">
             <a class="text-decoration-none"
                   style="color:{{#ifCond route 'tweets'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px;margin-right:50px;"
                   href="/users/{{personal.id}}/tweets">推文</a>
       </div>
-      <div class="group-item mb-3" style="border-bottom:2 solid #FF6600;">
+      <div class="group-item" style="width:130px;height:40px;{{#ifCond route 'replies' }}border-bottom:2px solid
+            #FF6600{{/ifCond}}">
             <a class="text-decoration-none"
                   style="color:{{#ifCond route 'replies'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px ;margin-right:50px;"
                   href="/users/{{personal.id}}/replies">回覆</a>
       </div>
-      <div class="group-item mb-3" style="border-bottom:2 solid #FF6600;">
+      <div class="group-item" style="width:130px;height:40px;{{#ifCond route 'likes' }}border-bottom:2px solid
+            #FF6600{{/ifCond}}">
             <a class="text-decoration-none"
                   style="color:{{#ifCond route 'likes'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px;margin-right:50px;"
                   href="/users/{{personal.id}}/likes">喜歡</a>
