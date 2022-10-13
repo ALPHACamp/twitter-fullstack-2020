@@ -2,12 +2,12 @@
 <div class="col-6">
  <div class="col container">
   <div class=" card mb-3">
-   {{>user-header route='profile'}}
+   {{>user-header}}
    {{>users-info}}
    {{>users-tab route='likes'}}
    <div class="">
     {{#each tweets}}
-     {{>tweet route='personal-likes'}}
+     {{>tweet route='tweets'}}
     {{/each}}
    </div>
   </div>
