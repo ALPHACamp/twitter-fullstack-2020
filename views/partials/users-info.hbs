@@ -1,49 +1,101 @@
-<div class="user-info">
-  <img id="profile-cover" src="{{user.cover}}" class="card-img-top position-relative" alt="cover">
-  {{#if user.avatar}}
+{{#ifCond personal.id user.id}}
+  <div class="user-info">
+    <img id="profile-cover" src="{{#if user.cover}}{{user.cover}}{{else}}/images/defaultCover.jpg{{/if}}"
+      class="card-img-top position-relative" alt="cover">
     <div class="image position-absolute" style="top:200px; margin:16px">
       <a href="/users/{{user.id}}/tweets">
-        <img src="{{user.avatar}}" alt="logo" class="avatar"
-          style="width:140px;height:140px;border-radius:50%;border:4px solid white">
+        {{#if user.avatar}}
+          <img src="{{user.avatar}}" alt="logo" class="avatar"
+            style="width:140px;height:140px;border-radius:50%;border:4px solid white">
+        {{else}}
+          <img src="/images/avatar.png" id="profile-avatar" alt="logo" class="avatar"
+            style="width:140px;height:140px;border-radius:50%;border:4px solid white">
+        {{/if}}
       </a>
     </div>
-  {{else}}
-    <div class="image position-absolute" style="top:200px; margin:16px">
-      <a href="/users/{{user.id}}/tweets">
-        <img src="/images/avatar.png" id="profile-avatar" alt="logo" class="avatar"
-          style="width:140px;height:140px;border-radius:50%;border:4px solid white">
-      </a>
-    </div>
-  {{/if}}
-</div>
-<div class="editprofile d-flex justify-content-end m-3" data-bs-toggle="modal" data-bs-target="#edit-modal">
-  <button type="submit" class="btn btn-primary" id="edit-btn" data-target=".bd-example-modal-lg"
-    style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:128px;height:40px">編輯個人資料</button>
-</div>
-<div class="card-body" style="margin-top:8px">
-  <p class="user-name m-0" style="color: #171725;font-size: 18px;">
-    <strong>{{user.name}}</strong>
-  </p>
-  <p class="user-name m-0" style="color: #6C757D;font-size: 14px;">@{{user.account}}</p>
-  <p class="card-text mt-2">{{user.introduction}}</p>
-  <div class="d-flex flex-row card-bottom">
-    <div class="m-2">
-      <a href="/users/{{user.id}}/followings" style="text-decoration:none;">
-        <p class="card-text" style="color: #6C757D;font-size: 14px;">
-          {{user.Followings.length}}個跟隨中
-        </p>
-      </a>
-    </div>
-    <div class="m-2">
-      <a href="/users/{{user.id}}/followers" style="text-decoration:none;">
-        <p class="card-text" style="color: #6C757D;font-size: 14px;">
-          {{user.Followers.length}}個跟隨者
-        </p>
-      </a>
-    </div>
-    </p>
   </div>
-</div>
+  <div class="editprofile d-flex justify-content-end m-3" data-bs-toggle="modal" data-bs-target="#edit-modal">
+    <button type="submit" class="btn btn-primary" id="edit-btn" data-target=".bd-example-modal-lg"
+      style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:128px;height:40px">編輯個人資料</button>
+  </div>
+  <div class="card-body" style="margin-top:8px">
+    <p class="user-name m-0" style="color: #171725;font-size: 18px;">
+      <strong>{{user.name}}</strong>
+    </p>
+    <p class="user-name m-0" style="color: #6C757D;font-size: 14px;">@{{user.account}}</p>
+    <p class="card-text mt-2">{{user.introduction}}</p>
+    <div class="d-flex flex-row card-bottom">
+      <div class="m-2">
+        <a href="/users/{{user.id}}/followings" style="text-decoration:none;">
+          <p class="card-text" style="color: #6C757D;font-size: 14px;">
+            {{personal.Followings.length}}個跟隨中
+          </p>
+        </a>
+      </div>
+      <div class="m-2">
+        <a href="/users/{{user.id}}/followers" style="text-decoration:none;">
+          <p class="card-text" style="color: #6C757D;font-size: 14px;">
+            {{personal.Followers.length}}個跟隨者
+          </p>
+        </a>
+      </div>
+      </p>
+    </div>
+  </div>
+  {{else}}
+    <div class="user-info">
+      <img id="profile-cover" src="{{#if personal.cover}}{{personal.cover}}{{else}}/images/defaultCover.jpg{{/if}}"
+        class="card-img-top position-relative" alt="cover">
+      <div class="image position-absolute" style="top:200px; margin:16px">
+        <a href="/users/{{personal.id}}/tweets">
+          {{#if personal.avatar}}
+            <img src="{{personal.avatar}}" alt="logo" class="avatar"
+              style="width:140px;height:140px;border-radius:50%;border:4px solid white">
+          {{else}}
+            <img src="/images/avatar.png" id="profile-avatar" alt="logo" class="avatar"
+              style="width:140px;height:140px;border-radius:50%;border:4px solid white">
+          {{/if}}
+        </a>
+      </div>
+    </div>
+    <div class="editprofile d-flex justify-content-end m-3">
+      {{#if user.isFollowed}}
+        <form action="/followships/{{personal.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-primary" id="edit-btn" data-target=".bd-example-modal-lg"
+            style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:128px;height:40px">正在跟隨</button>
+        </form>
+      {{else}}
+        <form action="/followships" method="POST">
+          <button type="submit" class="btn btn-primary" id="edit-btn"
+            style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:128px;height:40px">跟隨</button>
+        </form>
+      {{/if}}
+    </div>
+    <div class="card-body" style="margin-top:8px">
+      <p class="user-name m-0" style="color: #171725;font-size: 18px;">
+        <strong>{{personal.name}}</strong>
+      </p>
+      <p class="user-name m-0" style="color: #6C757D;font-size: 14px;">@{{personal.account}}</p>
+      <p class="card-text mt-2">{{personal.introduction}}</p>
+      <div class="d-flex flex-row card-bottom">
+        <div class="m-2">
+          <a href="/users/{{user.id}}/followings" style="text-decoration:none;">
+            <p class="card-text" style="color: #6C757D;font-size: 14px;">
+              {{personal.Followings.length}}個跟隨中
+            </p>
+          </a>
+        </div>
+        <div class="m-2">
+          <a href="/users/{{user.id}}/followers" style="text-decoration:none;">
+            <p class="card-text" style="color: #6C757D;font-size: 14px;">
+              {{personal.Followers.length}}個跟隨者
+            </p>
+          </a>
+        </div>
+        </p>
+      </div>
+    </div>
+{{/ifCond}}
 <!-- Modal -->
 <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
