@@ -38,11 +38,11 @@
                 <span>{{this.repliedCount}}</span>
               </small>
             </form>
-            {{#if user.isLikes}}
+            {{#if user.isLiked}}
               <form action="/tweets/{{tweet.id}}/unlike" method="POST" style="display: inline">
                 <small class="text-muted">
                   <button type="submit" style="border:none;background: none;">
-                    <img src="/public/images/icon/like.png">
+                    <img src="/images/icon/like.png">
                   </button>
                 </small>
               </form>
