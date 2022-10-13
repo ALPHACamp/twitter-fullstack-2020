@@ -8,17 +8,29 @@
           </a>
         </div>
         <div class="link-group m-3">
+          {{#ifCond route 'tweets'}}
+          <img src="/images/home-click.svg" alt="home-click" class="icon m-2" style="width:24px;height:24px">
+          {{else}}
           <img src="/images/home.svg" alt="home" class="icon m-2" style="width:24px;height:24px">
+          {{/ifCond}}
           <a href="/" class="m-2 text-decoration-none"
             style="color:{{#ifCond route 'tweets'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">首頁</a>
         </div>
         <div class="link-group m-3">
+          {{#ifCond route 'profile'}}
+          <img src="/images/user-click.svg" alt="user-click" class="icon m-2" style="width:24px;height:24px">
+          {{else}}
           <img src="/images/user.svg" alt="user" class="icon m-2" style="width:24px;height:24px">
-          <a href="/users/{{user.id}}/profile" class="m-2 text-decoration-none"
+          {{/ifCond}}
+          <a href="/users/{{user.id}}/tweets" class="m-2 text-decoration-none"
             style="color:{{#ifCond route 'profile'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">個人資料</a>
         </div>
         <div class="link-group m-3">
+          {{#ifCond route 'setting'}}
+          <img src="/images/setting-click.png" alt="setting" class="icon m-2" style="width:24px;height:24px">
+          {{else}}
           <img src="/images/setting.svg" alt="setting" class="icon m-2" style="width:24px;height:24px">
+          {{/ifCond}}
           <a href="/users/{{user.id}}/setting" class="m-2 text-decoration-none"
             style="color:{{#ifCond route 'setting'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">設定</a>
         </div>
@@ -45,7 +57,11 @@
       </div>
       <form action="/tweets" method="POST">
         <div class="modal-body d-flex">
-          <img src="" class="bi pe-none me-2" style="width:50px;height:50px;">
+          {{#if user.avatar}}
+          <img src="{{user.avatar}}" class="bi pe-none me-2" style="width:50px;height:50px;">
+          {{else}}
+          <img src="/images/icon/user.png" class="bi pe-none me-2" style="width:50px;height:50px;">
+          {{/if}}
           <textarea class="form" id="description" name="description" rows="4" maxlength="141" placeholder="有什麼新鮮事？"
             style="border:none; width:600px;position:relative; top:10px;resize:none;height:250px;" required></textarea>
           <div class="" style="color:#FF0000;position: absolute;top: 270px;right: 120px;">

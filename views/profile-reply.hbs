@@ -4,13 +4,13 @@
     <div class="content" style="border:1px solid #E6ECF0">
       {{>user-header}}
       {{>users-info}}
-      {{>users-tab route='tweets'}}
-      <div class="profile">
-        {{#each tweets}}
-        {{>tweet route='tweets'}}
+      {{>users-tab route='replies'}}
+      <div class="profile-replies">
+        {{#each replies}}
+        {{>tweet route='replies'}}
         {{/each}}
       </div>
     </div>
   </div>
 </div>
-{{>right route='followers'}}
+{{>right}}

@@ -4,44 +4,23 @@ const helpers = require('../_helpers')
 const tweetController = {
   getTweets: async (req, res, next) => {
     try {
-      let tweets = await Tweet.findAll({
-        include: [User, Reply, Like],
-        order: [['created_at', 'DESC']] // 反序
-      })
-
-      let users = await User.findAll({
+      const user = helpers.getUser(req)
+      const tweetsList = await Tweet.findAll({
         include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
+          User,
+          Reply,
+          Like
+        ],
+        order: [
+          ['created_at', 'DESC'],
+          ['id', 'ASC']
         ]
       })
-
-      const user = await User.findByPk(helpers.getUser(req).id,
-        {
-          raw: true,
-          nest: true
-        })
-
-      const likes = await Like.findAll({
-        where: { UserId: helpers.getUser(req).id }
-      })
-
-      tweets = await tweets.map(tweet => ({
+      const tweets = tweetsList.map(tweet => ({
         ...tweet.toJSON(),
-        likedCount: tweet.Likes.length,
-        repliedCount: tweet.Replies.length,
-        isLiked: likes.map(l => l.TweetId).includes(tweet.id)
+        isLiked: tweet.Likes.some(t => t.UserId === user.id)
       }))
-
-      users = await users.map(user => ({
-        ...user.toJSON(),
-        followerCount: user.Followers.length,
-        isFollowed: helpers.getUser(req).Followings.map(following => following.id).includes(user.id)
-      }))
-      users = users.sort((a, b) => b.followerCount - a.followerCount)
-        .slice(0, 10)
-
-      return res.render('tweets', { tweets, users, likes })
+      return res.render('tweets', { tweets, user })
     } catch (err) {
       next(err)
     }
@@ -70,7 +49,7 @@ const tweetController = {
     Promise.all([
       Like.create({
         UserId: helpers.getUser(req).id,
-        TweetId: req.params.tweet_id
+        TweetId: req.params.id
       })
     ]).then(() => {
       req.flash('success_messages', 'success like!')
@@ -78,7 +57,6 @@ const tweetController = {
     }).catch(err => next(err))
   },
   postUnlike: async (req, res, next) => {
-    // 這邊用 Promise.all([]) test 不會過
     try {
       const like = await Like.findOne({
         where: {
