@@ -2,6 +2,7 @@ const { User, Tweet, Reply, Like, Followship } = require('../models')
 const { getUser } = require('../_helpers')
 const bcrypt = require('bcryptjs')
 const { imgurFileHandler } = require('../helpers/file-helpers')
+const helpers = require('../_helpers')
 
 const userController = {
   signInPage: (req, res) => {
@@ -68,99 +69,102 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  tweets: (req, res, next) => {
-    const id = req.params.id
-    return Promise.all([
-      User.findByPk(id, {
+  tweets: async (req, res, next) => {
+    try {
+      const user = helpers.getUser(req)
+      const id = req.params.id
+      const personal = await User.findByPk(id, {
         include: [
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' }
+          Tweet,
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
         ]
-      }),
-      Tweet.findAll({
-        where: { UserId: id },
-        include: [Like, Reply],
-        order: [['createdAt', 'desc']],
-        nest: true
       })
-    ])
-      .then(([targetUser, tweets]) => {
-        if (!targetUser) throw new Error("User didn't exist")
-        const user = getUser(req)
-        if (user) {
-          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
-        }
-        const tweetsData = tweets
-          .map(t => ({
-            ...t.toJSON(),
-            likedCount: t.Likes.length,
-            repliedCount: t.Replies.length,
-            isLiked: t.Likes.some(like => like.UserId === user.id)
-          }))
-        res.locals.tweetsLength = tweets.length
-        res.render('profile', { targetUser: targetUser.toJSON(), tweets: tweetsData, user, tweet: true })
+      const tweetsList = await Tweet.findAll({
+        where: { ...personal ? { UserId: personal.id } : {} },
+        include: [User, Reply, Like],
+        order: [
+          ['created_at', 'DESC']
+        ]
       })
-      .catch(err => next(err))
+      const followingsId = user?.Followings?.map(f => f.id)
+      user.isFollowed = (followingsId.includes(personal.id))
+      const tweets = tweetsList.map(tweet => ({
+        ...tweet.toJSON(),
+        isLiked: tweet.Likes.some(t => t.UserId === user.id)
+      }))
+      return res.render('profile', { tweets, user, personal: personal.toJSON() })
+    } catch (err) {
+      next(err)
+    }
   },
-  replies: (req, res, next) => {
-    const id = req.params.id
-    return Promise.all([
-      User.findByPk(id, {
-        include: [{ model: User, as: 'Followings' }, { model: User, as: 'Followers' }, Tweet]
-      }),
-      Reply.findAll({
-        where: { UserId: id },
-        include: [{ model: Tweet, include: User }],
-        order: [['createdAt', 'desc']],
-        raw: true,
-        nest: true
-      })
-    ])
-      .then(([targetUser, replies]) => {
-        if (!targetUser) throw new Error("User didn't exist")
-        const user = getUser(req)
-        if (user) {
-          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
-        }
-        res.locals.tweetsLength = targetUser.Tweets.length
-        res.render('profile', { targetUser: targetUser.toJSON(), replies, user, reply: true })
-      })
-      .catch(err => next(err))
-  },
-  likes: (req, res, next) => {
-    const id = req.params.id
-    return Promise.all([
-      User.findByPk(id, {
-        include: [{ model: User, as: 'Followings' }, { model: User, as: 'Followers' }, Tweet]
-      }),
-      Like.findAll({
-        where: { UserId: id },
+  replies: async (req, res, next) => {
+    try {
+      const user = getUser(req)
+      const id = req.params.id
+      const personal = await User.findByPk(id, {
         include: [
-          { model: Tweet, include: User },
-          { model: Tweet, include: Like },
-          { model: Tweet, include: Reply }
+          Tweet,
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+          { model: Like, as: Tweet }
+        ]
+      })
+      const repliesList = await Reply.findAll({
+        where: { ...personal ? { UserId: personal.id } : {} },
+        include: [
+          User,
+          { model: Tweet, include: User }],
+        order: [['created_at', 'DESC']]
+      })
+      const followingsId = user?.Followings?.map(f => f.id)
+      user.isFollowed = (followingsId.includes(personal.id))
+      const replies = repliesList.map(reply => ({
+        ...reply.toJSON()
+      }))
+      return res.render('profile-reply', { replies, user, personal: personal.toJSON() })
+    } catch (err) {
+      next(err)
+    }
+  },
+  likes: async (req, res, next) => {
+    try {
+      const user = helpers.getUser(req)
+      const id = req.params.id
+      const personal = await User.findByPk(id, {
+        include: [
+          Tweet,
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+          { model: Like, as: Tweet }
+        ]
+      })
+
+      const likedTweetsId = personal?.Likes.map(like => like.TweetId)
+      const tweetsList = await Tweet.findAll({
+        where: {
+          ...likedTweetsId ? { id: likedTweetsId } : {}
+        },
+        include: [
+          User,
+          Reply,
+          Like
         ],
-        order: [['createdAt', 'desc']],
-        nest: true
+        order: [
+          ['created_at', 'DESC']
+        ]
       })
-    ])
-      .then(([targetUser, likes]) => {
-        if (!targetUser) throw new Error("User didn't exist")
-        const user = getUser(req)
-        if (user) {
-          user.isFollowed = user.Followings.some(u => u.id === targetUser.id)
-        }
-        const likesData = likes
-          .map(l => ({
-            ...l.toJSON(),
-            likedCount: l.Tweet.Likes.length,
-            repliedCount: l.Tweet.Replies.length,
-            isLiked: user ? l.Tweet.Likes.some(like => like.UserId === user.id) : false
-          }))
-        res.locals.tweetsLength = targetUser.Tweets.length
-        res.render('profile', { targetUser: targetUser.toJSON(), likes: likesData, user, like: true })
-      })
-      .catch(err => next(err))
+
+      const followingsId = user?.Followings?.map(f => f.id)
+      user.isFollowed = (followingsId.includes(personal.id))
+      const tweets = tweetsList.map(tweet => ({
+        ...tweet.toJSON(),
+        isLiked: true
+      }))
+      return res.render('profile-like', { tweets, user, personal: personal.toJSON() })
+    } catch (err) {
+      next(err)
+    }
   },
   postTweet: async (req, res, next) => {
     try {
@@ -229,13 +233,13 @@ const userController = {
       include: [Tweet, { model: User, as: 'Followers' }]
     })
       .then(user => {
-        const result = user.Followers.map(user => {
+        const followers = user.Followers.map(user => {
           return {
             ...user.toJSON(),
             isFollowed: currentUser?.Followings.some(f => f.id === user.id)
           }
         }).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        res.render('followers', { observedUser: user.toJSON(), followers: result })
+        res.render('followers', { user: user.toJSON(), followers })
       })
       .catch(err => next(err))
   },
@@ -317,39 +321,29 @@ const userController = {
       const { editAccount, editName, editEmail, editPassword, editCheckPassword } = req.body
       const { id, account, email } = getUser(req)
 
-      // 確認format
-      if (editPassword !== editCheckPassword) throw new Error('密碼與確認密碼不符！')
-      if (editName.length > 50 || editAccount.length > 50) throw new Error('字數超過限制')
-
-      // 有沒有修改->有修改->找有沒有重複的
-      if (account !== editAccount) {
-        const existAccount = await User.findOne({ where: { account: editAccount } })
-        if (existAccount) throw new Error('Account 已重複註冊')
+      if (editPassword !== editCheckPassword) throw new Error('密碼與確認密碼不符')
+      if (editAccount !== account) {
+        const exitAccount = await User.findOne({ where: { account: editAccount } })
+        if (exitAccount) throw new Error(' 帳號已重複註冊！')
       }
-      if (email !== editEmail) {
-        const existEmail = await User.findOne({ where: { email: editEmail } })
-        if (existEmail) throw new Error('Email 已重複註冊')
+      if (editEmail !== email) {
+        const exitEmail = await User.findOne({ where: { email: editEmail } })
+        if (exitEmail) throw new Error('Email已重複註冊！')
       }
-
-      // 新增
-      await User.findByPk(id)
-        .then(user => {
-          user.update({
-            account: editAccount,
-            name: editName,
-            email: editEmail,
-            password: bcrypt.hash(editPassword, 10)
-          })
-        })
-      req.flash('success_messages', '更新成功')
+      const editUser = await User.findByPk(id)
+      await editUser.update({
+        account: editAccount,
+        name: editName,
+        email: editEmail,
+        password: await bcrypt.hash(editPassword, 10)
+      })
+      req.flash('success_messages', '成功更新！')
       res.redirect(`/users/${id}/setting`)
     } catch (err) {
       next(err)
     }
   },
-  otherPage: (req, res) => {
-    res.render('other')
-  },
+
   // api routes
   getUser: (req, res, next) => {
     // User.findByPk(getUser(req).id) 這樣子寫不會過

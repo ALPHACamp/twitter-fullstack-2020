@@ -5,7 +5,6 @@ const adminController = require('../../controllers/admin-controller')
 const { authenticatedAdmin } = require('../../middleware/auth')
 
 router.delete('/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
-
 router.get('/signin', adminController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), authenticatedAdmin, adminController.signIn)
 router.get('/logout', adminController.logout)

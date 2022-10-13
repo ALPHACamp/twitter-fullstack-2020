@@ -4,8 +4,8 @@
     <div class="content" style="border:1px solid #E6ECF0">
       {{>user-header}}
       {{>users-info}}
-      {{>users-tab route='tweets'}}
-      <div class="profile">
+      {{>users-tab route='likes'}}
+      <div class="profile-like">
         {{#each tweets}}
         {{>tweet route='tweets'}}
         {{/each}}
@@ -13,4 +13,4 @@
     </div>
   </div>
 </div>
-{{>right route='followers'}}
+{{>right}}
