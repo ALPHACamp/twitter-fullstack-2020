@@ -1,216 +1,68 @@
 <div class="mx-auto" style="border:1px solid #E6ECF0">
   <div class="row g-0">
+    {{!-- avatar --}}
     <div class="col-md-2" style="width: 50px; height: 50px;">
-      {{#if this.User.avatar}}
       <a href="/users/{{this.User.id}}/tweets">
-        <img src="{{this.User.avatar}}" class="img-fluid rounded-circle m-3" alt="User Photo">
+        {{#if this.User.avatar}}
+          <img src="{{this.User.avatar}}" class="img-fluid rounded-circle m-3" alt="User Photo">
+        {{else}}
+          <img src="/images/icon/user.png" class="img-fluid rounded-circle" alt="User Photo">
+        {{/if}}
       </a>
-      {{else}}
-      <a href="/users/{{this.User.id}}/tweets">
-        <img src="/images/icon/user.png" class="img-fluid rounded-circle" alt="User Photo">
-      </a>
-      {{/if}}
     </div>
     <div class="col-md-10">
       <div class="card-body" style="margin:8px">
-        {{!-- /tweets --}}
-        {{#ifCond route 'tweets'}}
+        {{!-- name / account / time --}}
         <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;color: black">
           <h5 class="card-text">{{this.User.name}}
             <span class="fs-6 fw-lighter mr-1">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
           </h5>
         </a>
+        {{#ifCond route 'replies' }} <span>回覆</span>
+          <a href="/users/{{this.Tweet.User.id}}/tweets" style="text-decoration: none;color: black;">
+            <span>@{{this.Tweet.User.account}}</span>
+          </a>
         {{/ifCond}}
-        {{!-- /users/:id/tweets --}}
-        {{#ifCond route 'personal-tweets'}}
-        <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;color: black">
-          <h5 class="card-text">{{this.User.name}}
-            <span class="fs-6 fw-lighter mr-1">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
-          </h5>
-        </a>
-        {{/ifCond}}
-        {{!-- /tweets/:id/replies --}}
         {{#ifCond route 'replies'}}
-        <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;color: black">
-          <h5 class="card-text">{{this.User.name}}
-            <span class="fs-6 fw-lighter mr-1">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
-          </h5>
-          <span class="fs-6 fw-lighter mr-1">回覆@{{this.Tweet.User.account}}</span>
-        </a>
+          <p>{{this.comment}}</p>
         {{/ifCond}}
-        {{!-- /users/:id/likes --}}
-        {{#ifCond route 'personal-likes'}}
-        <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;color: black">
-          <h5 class="card-text">{{this.User.name}}
-            <span class="fs-6 fw-lighter mr-1">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
-          </h5>
-        </a>
-        {{/ifCond}}
-        {{!-- /tweets --}}
         {{#ifCond route 'tweets'}}
-        <a href="/tweets/{{this.id}}/replies" style="text-decoration: none;color:black">
-          <p class="card-text">{{this.description}}</p>
-        </a>
+          <a href="/tweets/{{this.id}}/replies" style="text-decoration: none;color:black" ;>
+            <p>{{this.description}}</p>
+          </a>
         {{/ifCond}}
-        {{!-- /users/:id/tweets --}}
-        {{#ifCond route 'personal-tweets'}}
-        <a href="/tweets/{{this.id}}/replies" style="text-decoration: none;color:black">
-          <p class="card-text">{{this.description}}</p>
-        </a>
-        {{/ifCond}}
-        {{!-- /users/:id/likes --}}
-        {{#ifCond route 'personal-likes'}}
-        <a href="/tweets/{{this.id}}/replies" style="text-decoration: none;color:black">
-          <p class="card-text">{{this.description}}</p>
-        </a>
-        {{/ifCond}}
-        {{!-- /tweets/:id/replies --}}
-        {{#ifCond route 'replies'}}
-        <p class="card-text">{{this.comment}}</p>
-        {{/ifCond}}
-        {{!-- /users/:id/replies --}}
-        {{#ifCond route 'personal-reply'}}
-        <p class="card-text">{{this.comment}}</p>
-        {{/ifCond}}
-        {{!-- /tweets --}}
         {{#ifCond route 'tweets'}}
-        <p class="card-text">
-        <form action="/tweets/{{this.id}}/replies" method="GET" style="display:inline">
-          <small class="text-muted">
-            <button type="submit" style="border:none;background: none;">
-              <a href="" data-bs-toggle="modal" data-bs-target="#replyModal">
-                <img src="/images/icon/speech-bubble.png" alt="">
-              </a>
-            </button>
-            <span>{{this.repliedCount}}</span>
-          </small>
-        </form>
-        {{!-- /tweets --}}
-        {{#if this.isLiked}}
-        <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: inline">
-          <small class="text-muted">
-            <button type="submit" style="border:none;background: none;">
-              <img src="/images/icon/like.png" alt="">
-              <span>{{this.likedCount}}</span>
-            </button>
-          </small>
-        </form>
-        {{else}}
-        <form action="/tweets/{{this.id}}/like" method="POST" style="display: inline">
-          <small class="text-muted">
-            <button type="submit" style="border:none;background: none;">
-              <img src="/images/icon/unlike.png" alt="">
-              <span>{{this.likedCount}}</span>
-            </button>
-          </small>
-        </form>
-        {{/if}}
-        </p>
+          <p class="card-text">
+          <form action="/tweets/{{this.id}}/replies" method="GET" style="display:inline">
+            <small class="text-muted">
+              <button type="submit" style="border:none;background: none;">
+                <img src="/images/icon/speech-bubble.png">
+              </button>
+              <span>{{this.Replies.length}}</span>
+            </small>
+          </form>
+          {{!-- /tweets --}}
+          {{#if this.isLiked}}
+            <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: inline">
+              <small class="text-muted">
+                <button type="submit" style="border:none;background: none;">
+                  <img src="/images/icon/like.png" alt="">
+                  <span>{{this.Likes.length}}</span>
+                </button>
+              </small>
+            </form>
+          {{else}}
+            <form action="/tweets/{{this.id}}/like" method="POST" style="display: inline">
+              <small class="text-muted">
+                <button type="submit" style="border:none;background: none;">
+                  <img src="/images/icon/unlike.png" alt="">
+                  <span>{{this.Likes.length}}</span>
+                </button>
+              </small>
+            </form>
+          {{/if}}
+          </p>
         {{/ifCond}}
-        {{!-- /users/:id/tweets --}}
-        {{#ifCond route 'personal-tweets'}}
-        <p class="card-text">
-        <form action="/tweets/{{this.id}}/replies" method="GET" style="display:inline">
-          <small class="text-muted">
-            <button type="submit" style="border:none;background: none;">
-              <a href="" data-bs-toggle="modal" data-bs-target="#replyModal">
-                <img src="/images/icon/speech-bubble.png" alt="">
-              </a>
-            </button>
-            <span>{{this.Replies.length}}</span>
-          </small>
-        </form>
-        {{#if this.isLiked}}
-        <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: inline">
-          <small class="text-muted">
-            <button type="submit" style="border:none;background: none;">
-              <img src="/images/icon/like.png" alt="">
-              <span>{{this.Likes.length}}</span>
-            </button>
-          </small>
-        </form>
-        {{else}}
-        <form action="/tweets/{{this.id}}/like" method="POST" style="display: inline">
-          <small class="text-muted">
-            <button type="submit" style="border:none;background: none;">
-              <img src="/images/icon/unlike.png" alt="">
-              <span>{{this.Likes.length}}</span>
-            </button>
-          </small>
-        </form>
-        {{/if}}
-        </p>
-        {{/ifCond}}
-        {{#ifCond route 'personal-likes'}}
-        <p class="card-text">
-        <form action="/tweets/{{this.id}}/replies" method="GET" style="display:inline">
-          <small class="text-muted">
-            <button type="submit" style="border:none;background: none;">
-              <img src="/images/icon/speech-bubble.png" alt=""></button>
-            <span>{{this.Replies.length}}</span>
-          </small>
-        </form>
-        {{#if this.isLiked}}
-        <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: inline">
-          <small class="text-muted">
-            <button type="submit" style="border:none;background: none;">
-              <img src="/images/icon/like.png" alt="">
-              <span>{{this.Likes.length}}</span>
-            </button>
-          </small>
-        </form>
-        {{else}}
-        <form action="/tweets/{{this.id}}/like" method="POST" style="display: inline">
-          <small class="text-muted">
-            <button type="submit" style="border:none;background: none;">
-              <img src="/images/icon/unlike.png" alt="">
-              <span>{{this.Likes.length}}</span>
-            </button>
-          </small>
-        </form>
-        {{/if}}
-        </p>
-        {{/ifCond}}
-      </div>
-    </div>
-  </div>
-</div>
-{{!-- Modal --}}
-<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content" style="height:500px">
-      <div class="modal-header d-flex justify-content-start" style=" margin:0px">
-        <div>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-      </div>
-      <div class="modal-body row mt-3" style=" margin-top:0px; top:0px">
-        <div class="col-2 " style="height:200px">
-          <img src="{{this.User.avatar}}" class="rounded-circle" style="width:50px;height:50px">
-        </div>
-        <div class="col px-0" style="max-width: 80%;height:200px">
-          <span class="fw-bold fs-6">{{this.User.name}}</span><small>-@{{this.User.account}} ‧
-          </small><span>{{relativeTimeFromNow tweet.updatedAt}}</span>
-          <br />
-          <p class="my-2" style="word-wrap: break-word; word-break: normal;">{{this.description}}</p>
-          <small>回覆給<span style="color:#FF6600">@{{this.User.account}}</span></small>
-        </div>
-        <form action="/tweets/{{tweet.id}}/replies" method="POST" style="border-top:1px solid #E6ECF0 ;">
-          <div class="row mt-3">
-            <div class="col-2 me-0">
-              <img src="{{this.User.avatar}}" class="rounded-circle" style="width:50px;height:50px">
-            </div>
-            <div class="col mx-0 px-0">
-              <textarea name="comment" class="border-0 mt-2 mx-0 px-0" type="text"
-                style="width:95%; border: none;outline: none;resize:none" placeholder="推你的回覆" id="floatingTextarea2"
-                rows="3" maxlength="140" required></textarea>
-            </div>
-          </div>
-          <div class="text-end mt-5">
-            <button type="submit" class="btn"
-              style="background-color:#FF6600;border-radius: 50px;color:white">回覆</button>
-          </div>
-        </form>
       </div>
     </div>
   </div>

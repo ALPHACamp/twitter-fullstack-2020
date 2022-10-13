@@ -1,16 +1,14 @@
 {{>left route='profile'}}
 <div class="col-6">
-  <div class="col container">
-    <div class="content" style="border:1px solid #E6ECF0">
-      {{>user-header route='profile'}}
-      {{>users-info route='profile'}}
-      {{>users-tab route='tweets'}}
-    </div>
-    <div class="profile">
-      {{#each tweets}}
-      {{>tweet route='personal-tweets'}}
-      {{/each}}
-    </div>
+  <div class=" card ">
+    {{>user-header}}
+    {{>users-info}}
+    {{>users-tab route='tweets'}}
+    {{#each tweets}}
+      <div>
+        {{>tweet route='tweets'}}
+      </div>
+    {{/each}}
   </div>
 </div>
 {{>right route='followers'}}

@@ -19,6 +19,8 @@ const replyController = {
         include: [User, Like]
       })
       const user = helper.getUser(req)
+      const likedTweetUsers = tweet.Likes.map(like => like.UserId)
+      user.isLiked = likedTweetUsers.includes(user.id)
       return res.render('replies', { tweet: tweet.toJSON(), replies, user })
     } catch (err) {
       next(err)
@@ -26,14 +28,22 @@ const replyController = {
   },
   postReplies: async (req, res, next) => {
     try {
-      const UserId = helper.getUser(req).id
-      const TweetId = req.params.id
-      const { comment } = req.body
-      if (comment.length <= 0) throw new Error('回覆不可空白')
-      if (comment.length > 140) throw new Error('超過140個字數限')
-      const reply = await Reply.create({ UserId, TweetId, comment })
-      if (!reply) throw new Error('回覆不成功')
-      res.redirect('back')
+      const comment = req.body.comment
+      if (!comment.length) {
+        req.flash('error_messages', '回覆不可以空白!')
+        return res.redirect('back')
+      }
+      if (comment.length > 140) {
+        req.flash('error_messages', '回覆不可超過140字!')
+        return res.redirect('back')
+      }
+      await Reply.create({
+        UserId: helper.getUser(req).id,
+        TweetId: req.params.id,
+        comment
+      })
+      req.flash('success_msg', '成功回覆')
+      return res.redirect('back')
     } catch (err) {
       next(err)
     }
