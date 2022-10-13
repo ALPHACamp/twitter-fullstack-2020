@@ -7,31 +7,36 @@
     </div>
     <div class="row side-bar-body">
       {{!-- {{#each topUsers}} --}}
+      {{#each recommendedUsers}}
+      {{#ifCondFalse this.id ../user.id}}
       <div class="user-info-item d-flex">
-        <div class="image m-2">
-          <a href="/users/tweets/{{this.id}}">
-            <img src="/images/logo.svg" alt="logo" class="user-avatar" style="width:50px;height:50px">
+        <div class="image m-2 col-2">
+          <a href="/users/{{this.id}}/tweets">
+            <img src="{{#if this.avatar}}{{this.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}" alt="" class="circle" style="border-radius:50%;width:50px;height:50px;">
           </a>
         </div>
-        <div class="mt-2">
-          <a href="/users/tweets/{{this.id}}" style="text-decoration: none;">
-            <p class="user-name m-0" style="color: #171725;font-size: 16px;">Apple</p>
+        <div class="mt-2 col-3">
+          <a href="/users/{{this.id}}/tweets" style="text-decoration: none;">
+            <p class="user-name m-0" style="color: #171725;font-size: 16px;">{{this.name}}</p>
           </a>
-          <p class="user-name m-0" style="color: #92929D;font-size: 14px;">@apple</p>
+          <p class="user-name m-0" style="color: #92929D;font-size: 14px;">@{{this.account}}</p>
         </div>
         {{!-- {{#if isFollowed}} --}}
-        <div class="follow_btn m-2">
-          <form action="/follower/{{this.id}}?_method=DELETE" method="POST">
-            <button type="submit" class="btn btn-primary" style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px
-;              margin-left:24px">正在跟隨</button>
-          </form>
-          {{!-- <form action="/follower/{{this.id}}" method="POST">
-            <button type="submit" class="btn btn-primary"
-              style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px">跟隨</button>
-          </form> --}}
+        <div class="follow_btn m-2 col-4">
+          {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-primary" style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px;">正在追隨</button>
+              </button>
+            </form>
+          {{else}}
+            <form action="/followships" method="POST">
+              <button type="submit" class="btn btn-primary" style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px">追隨</button>
+            </form>
+          {{/if}}
         </div>
       </div>
-      {{!-- {{else}} --}}
+      {{/ifCondFalse}}
+      {{/each}}
 
       {{!-- {{/if}} --}}
     </div>

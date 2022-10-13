@@ -43,10 +43,9 @@
           {{#if user.avatar}}
             <img src="{{user.avatar}}" class="bi pe-none me-2" style="width:50px;height:50px;border-radius:50%;">
           {{else}}
-            <img src="/images/avatar.png" class="bi pe-none me-2" style="width:50px;height:50px;border-radius:50%;>
+            <img src="/images/avatar.png" class="bi pe-none me-2" style="width:50px;height:50px;border-radius:50%;">
           {{/if}}
-          <textarea class=" form" id="description" name="description" rows="4" maxlength="140" placeholder="有什麼新鮮事？"
-              style="border:none; width:600px; top:10px;resize:none;height:250px;" required></textarea>
+          <textarea class=" form" id="description" name="description" rows="4" maxlength="140" placeholder="有什麼新鮮事？"style="border:none; width:600px; top:10px;resize:none;height:250px;" required></textarea>
             <div class="" style="color:#FF0000;top: 270px;right: 120px;">
               <span id="insertEmptyMessage"></span>
             </div>
@@ -61,7 +60,7 @@
   </div>
 </div>
 {{!-- tweet Modal end --}}
-{{>right}}
+{{>right route='followers'}}
 <script>
   const textArea = document.getElementById( 'description' )
   const charCount = document.getElementById( 'char_count' )
