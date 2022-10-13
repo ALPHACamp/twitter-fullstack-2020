@@ -7,7 +7,7 @@
   {{!-- pagination --}}
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
-      <li class="page-item {{#ifCond pagination.currentPage}}disabled{{/ifCond}}">
+      <li class="page-item {{#ifCond pagination.currentPage 1}}disabled{{/ifCond}}">
         <a class="page-link" href="/admin/tweets?page={{pagination.prev}}">Previous</a>
       </li>
       {{#each pagination.pages}}
