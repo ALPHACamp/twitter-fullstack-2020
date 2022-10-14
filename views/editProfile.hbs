@@ -16,92 +16,80 @@
     <label for="">名稱</label>
     <input type="text" class="form-label" placeholder="John Doe">
     <div class="name-text">8/50</div>
-  <div>
-    <label for="">自我介紹</label>
-    <input type="text" class="form-label" placeholder="John Doe">
-    <div class="name-text">0/160</div>
+    <div>
+      <label for="">自我介紹</label>
+      <input type="text" class="form-label" placeholder="John Doe">
+      <div class="name-text">0/160</div>
+    </div>
   </div>
-</div>
+  {{!-- test passing --}}
+  <button type="button" class="btn edit-profile" id="editProfile">
+    編輯個人資料
+  </button>
+  {{!-- Model --}}
+  <form action="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data">
+    <div>
+      <Button class="save-profile" id="">儲存</Button>
+    </div>
+    {{!-- cover --}}
+    <img class="cover" id="cover" src="" alt="cover">
+    {{!-- cover icon --}}
+    <div>
+      {{!-- 主要是上傳 icon 用 --}}
+      <label class="form-label" for="image">Image</label>
+      <input class="form-control" type="file" class="form-control-file" id="coverImage" name="coverImage">
+    </div>
+    {{!-- 使用者大頭 --}}
+    <div>
+      <label class="form-label" for="avatar">avatar</label>
+      <input class="form-control" type="file" class="form-control-file" id="avatar" name="avatar">
+    </div>
+    {{!-- 使用者名稱 --}}
+    <div>
+      <label for="name">名稱</label>
+      <input name="name" id="name" type="text" placeholder="請輸入使用者名稱" required>
+    </div>
+    {{!-- 自我介紹 --}}
+    <div>
+      <label for="introduction">自我介紹</label>
+      <textarea name="introduction" id="introduction" type="text" placeholder="自我介紹"></textarea>
+    </div>
+  </form>
+  <script>
 
+    const editProfile = document.querySelector( '.edit-profile' )
+    const saveProfile = document.querySelector( '.save-profile' )
+    const cover = document.querySelector( '#cover' )
+    const avatar = document.querySelector( '#avatar' )
+    const username = document.querySelector( '#name' )
+    const introduction = document.querySelector( '#introduction' )
 
-{{!-- test passing --}}
-<button type="button" class="btn edit-profile" id="editProfile">
-  編輯個人資料
-</button>
+    editProfile.addEventListener( 'click', () => {
+      axios.get( '/api/users/' + {{ user.id }} )
+      .then( res => {
+        const userInfo = res.data
+        cover.src = userInfo.cover
+        avatar.src = userInfo.avatar // 若使用者沒有上傳照片應該要顯示灰色假圖
+        username.value = userInfo.name
+        introduction.value = userInfo.introduction
+      } )
+  }).catch ( err => console.err( err ))
 
+    saveProfile.addEventListener( 'click', () => {
+      const formData = new FormData()
+      formData.append( "cover", cover.files[0] )
+      formData.append( "avatar", avatar.files[0] )
+      formData.append( 'name', name.value )
+      formData.append( 'introduction', introduction.value )
+      axios.post( '/api/users/{{user.id}}', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      } ).then( res => {
+        if ( res.data.status = 'success' ) {
+          history.go( 0 )
+        }
+      } ).catch( err => console.warn( err ) )
+    } )
 
-
-{{!-- Model --}}
-<form action="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data">
-  <div>
-    <Button class="save-profile" id="">儲存</Button>
-  </div>
-
-  {{!-- cover --}}
-  <img class="cover" id="cover" src="" alt="cover">
-
-  {{!-- cover icon --}}
-  <div>
-    {{!-- 主要是上傳 icon 用 --}}
-    <label class="form-label" for="image">Image</label>
-    <input class="form-control" type="file" class="form-control-file" id="coverImage" name="coverImage">
-  </div>
-
-  {{!-- 使用者大頭 --}}
-  <div>
-    <label class="form-label" for="avatar">avatar</label>
-    <input class="form-control" type="file" class="form-control-file" id="avatar" name="avatar">
-  </div>
-
-  {{!-- 使用者名稱 --}}
-  <div>
-    <label for="name">名稱</label>
-    <input name="name" id="name" type="text" placeholder="請輸入使用者名稱" required>
-  </div>
-
-  {{!-- 自我介紹 --}}
-  <div>
-    <label for="introduction">自我介紹</label>
-    <textarea name="introduction" id="introduction" type="text" placeholder="自我介紹"></textarea>
-  </div>
-</form>
-
-<script>
-
-  const editProfile = document.querySelector('.edit-profile')
-  const saveProfile = document.querySelector('.save-profile')
-  const cover = document.querySelector('#cover')
-  const avatar = document.querySelector('#avatar')
-  const username = document.querySelector('#name')
-  const introduction = document.querySelector('#introduction')
-
-  editProfile.addEventListener('click', () => {
-    axios.get('/api/users/' + {{ user.id }})
-    .then(res => {
-      const userInfo = res.data
-      cover.src = userInfo.cover
-      avatar.src = userInfo.avatar // 若使用者沒有上傳照片應該要顯示灰色假圖
-      username.value = userInfo.name
-      introduction.value = userInfo.introduction
-    })
-  }).catch (err => console.err(err))
-  
-  saveProfile.addEventListener('click', () => {
-    const formData = new FormData()
-    formData.append("cover", cover.files[0])
-    formData.append("avatar", avatar.files[0])
-    formData.append('name', name.value)
-    formData.append('introduction', introduction.value)
-    axios.post('/api/users/{{user.id}}', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }).then(res => {
-      if (res.data.status = 'success') {
-        console.log(data)
-        history.go(0)
-      }
-    }).catch(err => console.warn(err))
-  })
-  
-</script>
+  </script>
