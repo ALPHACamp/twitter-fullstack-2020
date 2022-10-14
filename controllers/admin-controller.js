@@ -6,13 +6,17 @@ const adminController = {
   signInPage: (req, res) => {
     return res.render('admin/signin')
   },
-  signIn: (req, res) => {
-    if (getUser(req).role === 'user') {
-      req.flash('error_messages', '請前往前台登入')
-      res.redirect('/admin/signin')
+  signIn: async (req, res, next) => {
+    try {
+      if (getUser(req).role === 'user') {
+        req.flash('error_messages', '請前往前台登入')
+        res.redirect('/admin/signin')
+      }
+      req.flash('success_messages', '成功登入！')
+      return res.redirect('/admin/tweets')
+    } catch (err) {
+      next(err)
     }
-    req.flash('success_messages', '成功登入！')
-    res.redirect('/admin/tweets')
   },
   getTweets: (req, res, next) => {
     const DEFAULT_LIMIT = 10
