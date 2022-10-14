@@ -20,32 +20,21 @@
     </div>
     {{/with}}
 
-    <div class=" card">
-      <ul class="tab nav d-flex">
-        <li class="nav-item">
-          <a class="nav-link tab-btn follower {{#ifCond route 'followers'}} active {{/ifCond}}"
-            href="/users/{{user.id}}/followers"> 追隨者</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link tab-btn followings {{#ifCond route 'followings'}} active {{/ifCond}}"
-            href="/users/{{user.id}}/followings"> 正在追隨</a>
-        </li>
-      </ul>
-    </div>
+    {{>followship-tab route='followings'}}
 
     {{#each followings}}
-    <div class="card followings">
+    <div class="followings" style="border:1px solid #E6ECF0">
       <div class="d-flex">
-        <div class="col-3">
+        <div class="col-1 m-3">
           <a href="/users/{{this.id}}/tweets">
             <img src="{{this.avatar}}" alt="avatar" style="width:50px;height:50px;border-radius:50%;">
           </a>
         </div>
-        <div class="col-6">
+        <div class="col-7 m-1">
           <p>{{this.name}}</p>
           <p class="context">{{this.introduction}}</p>
         </div>
-        <div class="col-2 justify-content-end">
+        <div class="col-2 justify-content-end m-3">
           {{#if isFollowed}}
           <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
             <button type="submit"
@@ -54,9 +43,9 @@
             </button>
           </form>
           {{else}}
-          <form action="/followships" method="POST">
+          <form action="/followships" method="POST" class="d-flex flex-row-reverse">
             <button type="submit" name="id" value="{{this.id}}"
-              style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px;">
+              style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:64px;height:40px;">
               跟隨
             </button>
           </form>
