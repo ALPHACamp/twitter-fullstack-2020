@@ -11,6 +11,7 @@ module.exports = {
     })
       .then(users => {
         const loginUser = getUser(req)
+        console.log(users)
         const recommendedUsers = users
           .map(user => ({
             ...user.toJSON(),
@@ -19,6 +20,7 @@ module.exports = {
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, 10)
+          .filter(user => user.role !== 'admin')
         res.locals.recommendedUsers = recommendedUsers
         next()
       })
