@@ -38,11 +38,11 @@
         {{#ifCond this ../pagination.currentPage}}
           <li class="page-item"><a class="page-link" href="#">{{this}}</a></li>
       {{else}}
-        <li class="page-item"><a class="page-link" href="/admin/tweets?page={{this}}">{{this}}</a></li>
+        <li class="page-item"><a class="page-link" href="/tweets?page={{this}}">{{this}}</a></li>
         {{/ifCond}}
       {{/each}}
       <li class="page-item {{#ifCond pagination.currentPage pagination.totalPage}}disabled{{/ifCond}}">
-        <a class="page-link " href="/admin/tweets?page={{pagination.next}}">Next</a>
+        <a class="page-link " href="/tweets?page={{pagination.next}}">Next</a>
       </li>
     </ul>
   </nav>
