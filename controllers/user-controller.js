@@ -16,6 +16,7 @@ const userController = {
 
     if (password !== checkPassword) {
       throw new Error('密碼與確認密碼不相符！')
+      // throw new Error('密碼與確認密碼不相符！')
     }
     if (!account || !name || !email || !password || !checkPassword) {
       throw new Error('所有欄位都是必填。')
