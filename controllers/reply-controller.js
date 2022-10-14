@@ -28,7 +28,7 @@ const replyController = {
   },
   postReplies: async (req, res, next) => {
     try {
-      const comment = req.body.comment
+      const comment = req.body.comment.trim()
       if (!comment.length) {
         req.flash('error_messages', '回覆不可以空白!')
         return res.redirect('back')
