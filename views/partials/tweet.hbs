@@ -24,11 +24,11 @@
           </a>
         {{/ifCond}}
         {{#ifCond route 'replies'}}
-          <p>{{this.comment}}</p>
+          <p class="text-break">{{this.comment}}</p>
         {{/ifCond}}
         {{#ifCond route 'tweets'}}
           <a href="/tweets/{{this.id}}/replies" style="text-decoration: none;color:black" ;>
-            <p>{{this.description}}</p>
+            <p class="text-break">{{this.description}}</p>
           </a>
         {{/ifCond}}
         {{#ifCond route 'tweets'}}
