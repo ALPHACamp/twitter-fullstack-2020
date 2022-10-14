@@ -46,7 +46,7 @@
 <div class="user-info">
   <img id="profile-cover" src="{{#if personal.cover}}{{personal.cover}}{{else}}/images/defaultCover.jpg{{/if}}"
     class="card-img-top position-relative" alt="cover">
-  <div class="image position-absolute" style="top:200px; margin:16px">
+  <div class="image position-absolute" style="top:190px; margin:16px">
     <a href="/users/{{personal.id}}/tweets">
       {{#if personal.avatar}}
       <img src="{{personal.avatar}}" alt="logo" class="avatar"
@@ -96,65 +96,7 @@
   </div>
 </div>
 {{/ifCond}}
-<!-- Modal -->
-<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <form action="/user/{{user.id}}/profile?_method=PUT" method="POST">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="modal-body d-flex justify-content-start">
-            <button type="button" class="btn-close m-0" id="modal-close-btn" data-bs-dismiss="modal"
-              aria-label="Close"></button>
-            <h5 class="modal-title" id="edit-modal-label" style="margin-left:36px">編輯個人資料</h5>
-          </div>
-          <button type="submit" class="btn btn-primary" id="save-btn" style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px;width:64px;height:40px
-            ;margin-left:24px">儲存</button>
-        </div>
-        <div class="modal-body m-0">
-          <img src="{{user.cover}}" class="card-img-top position-relative" alt="...">
-          <label class="form-labe position-absolute" style="left:330px;top:100px;z-index:1" for="image">
-            <img src="/images/camera.png" alt="camera" style="width:50px;height:50px;">
-          </label>
-          <img src="/images/close.png" alt="close" class="position-absolute" id="cover-close-btn"
-            style="width5:50px;height:50px;left:430px;top:100px;z-index:1">
-          <input class="form-control position-absolute" type="file" id="image" style="display:none" name="image"
-            onchange="previewAvatarImage()">
-          <div class="image position-absolute" style="top:190px">
-            {{#if user.avatar}}
-            <img src="{{user.avatar}}" alt="logo" class="user-avatar rounded-circles"
-              style="width:140px;height:140;top:140px;margin-left:16px;border-radius:50%;border:4px solid white">
-            <label class="form-labe position-absolute" style="left:60px;top:50px;z-index:1" for="image">
-              <img src="/images/camera.png" alt="camera" style="width5:50px;height:50px;">
-            </label>
-            {{else}}
-            <img src="/images/avatar.png" alt="logo" class="user-avatar rounded-circles"
-              style="width:140px;height:140;top:140px;margin-left:16px;border-radius:50%;border:4px solid white">
-            <label class="form-labe position-absolute" style="left:60px;top:50px;z-index:1" for="image">
-              <img src="/images/camera.png" alt="camera" style="width5:50px;height:50px;">
-            </label>
-            {{/if}}
-          </div>
-        </div>
-        <div class="form-group form-floating" style="margin-top:80px;margin-left:16px;margin-right:16px;">
-          <input type="text" name="name" id="name" class="form-control font-weight-bold m-auto" placeholder="名稱"
-            value="{{user.name}}" style="background-color:#F5F8FA; border-bottom: 2px solid #657786;height:54px;"
-            required autofocus>
-          <label for="name">名稱</label>
-          <div class="text-end" id="char_count" style="font-size:12px"><span>0/50</span></div>
-        </div>
-        <div class="form-group form-floating m-3">
-          <input type="text" name="text" id="text" class="form-control font-weight-bold m-auto" placeholder="名稱"
-            value="{{user.introduction}}"
-            style="background-color:#F5F8FA; border-bottom: 2px solid #657786;height:147px;" required autofocus>
-          <label for="name">自我介紹</label>
-          <div class="text-end" id="char_count" style="font-size:12px"><span>0/160</span></div>
-        </div>
-      </div>
-    </div>
-  </form>
-</div>
-{{!-- edit User info function --}}
+
 <script type="module">
 
   const editBtn = document.querySelector('#edit-btn')
@@ -162,4 +104,158 @@
   const modalCloseBtn = document.querySelector('#modal-close-btn')
   const coverCloseBtn = document.querySelector('#cover-close-btn')
 
+  const cover = document.querySelector('#cover')
+  const avatar = document.querySelector('#avatar')
+  const name = document.querySelector('#name')
+  const introduction = document.querySelector('#introduction')
+
+  const coverImagefile = document.querySelector('#coverImage')
+  const avatarImagefile = document.querySelector('#avatar')
+
+  modalCloseBtn.addEventListener('click', () => {
+    avatar.value = ""
+    cover.value = ""
+  })
+
+  coverCloseBtn.addEventListener('click', () => {
+    avatar.value = ""
+    cover.value = ""
+    document.querySelector('#edit-btn').click()
+  })
+
+  editBtn.addEventListener('click', () => {
+    axios.get('/api/users/' + {{ user.id }})
+    .then(response => {
+      const userInfo = response.data
+      cover.src = userInfo.cover
+      avatar.src = userInfo.avatar || '/images/avatar-default.jpg'
+      name.value = userInfo.name
+      introduction.value = userInfo.introduction
+      document.querySelector('.name-count span').innerText = userInfo.name.length + '/50'
+      const userInfoLength = userInfo.introduction?.length || '0'
+      document.querySelector('.introduction-count span').innerText = userInfoLength + '/160'
+      myModal.show()
+    }).catch(err => console.warn(err))
+          })
+  saveBtn.addEventListener('click', () => {
+    if (name.value.length > 50 || introduction.value.length > 160) {
+      alert('字數超出上限')
+      return
+    }
+    const formData = new FormData()
+    const modalCloseBtn = document.querySelector('#modal-close-btn')
+    const coverCloseBtn = document.querySelector('#cover-close-btn')
+
+    formData.append("coverImage", coverImagefile.files[0])
+    formData.append("image", avatarImagefile.files[0])
+    formData.append('name', name.value)
+    formData.append('introduction', introduction.value)
+    axios.post('/api/users/{{user.id}}', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(response => {
+      if (response.data.status = 'success') {
+        history.go(0)
+      }
+    }).catch(err => console.warn(err))
+  })
+</script>
+
+<!-- Modal -->
+<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<form action="/api/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data"></form>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-body d-flex justify-content-start">
+          <button type="button" class="btn-close m-0" id="modal-close-btn" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+          <h5 class="modal-title" id="edit-modal-label" style="margin-left:36px">編輯個人資料</h5>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="save-btn"
+          style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px;width:64px;height:40px;margin-left:24px;">儲存</button>
+      </div>
+
+      <div class="modal-body m-0">
+
+        {{!-- 表單開始 --}}
+        {{!-- COVER --}}
+        <img src="{{user.cover}}" class="card-img-top position-relative" alt="cover">
+        
+        {{!-- COVER 內的兩個 icons --}}
+        <div>
+          <label class="form-labe position-absolute" style="left:330px;top:100px;z-index:1;" for="coverImage">
+            <img src="/images/camera.png" alt="camera" style="width:50px;height:50px;">
+            <input class="form-control" type="file" class="form-control-file" id="coverImage" style="display:none" name="coverImage"
+              onchange="previewCoverImage()">
+          </label>
+            <img src="/images/close.png" alt="close" class="position-absolute" id="cover-close-btn"
+              style="width5:50px;height:50px;left:430px;top:100px;z-index:1;">
+        </div>
+          
+        {{!-- 大頭貼 --}}
+        <div class="image position-absolute" style="top:190px">
+          {{#if user.avatar}}
+          <img src="{{user.avatar}}" alt="logo" class="user-avatar rounded-circles" style="width:140px;height:140;top:140px;margin-left:16px;border-radius:50%;border:4px solid white">
+          <label class="form-labe position-absolute" style="left:60px;top:50px;z-index:1;" for="avatar">
+            <img src="/images/camera.png" alt="camera" style="width5:50px;height:50px;">
+          </label>
+          {{else}}
+          <img src="/images/avatar.png" alt="logo" class="user-avatar rounded-circles"
+            style="width:140px;height:140;top:140px;margin-left:16px;border-radius:50%;border:4px solid white">
+          <label class="form-labe position-absolute" style="left:60px;top:50px;z-index:1" for="avatar">
+            <img src="/images/camera.png" alt="camera" style="width5:50px;height:50px;">
+          </label>
+          {{/if}}
+          <input class="form-control" type="file" class="form-control-file" id="avatar" style="display:none"
+            name="avatar" onchange="previewAvatarImage()">
+        </div>
+
+        <div class="form-group form-floating" style="margin-top:80px;margin-left:16px;margin-right:16px;">
+          <input type="text" name="name" id="name" class="form-control font-weight-bold m-auto" placeholder="名稱"
+            value="{{user.name}}" style="background-color:#F5F8FA; border-bottom: 2px solid #657786;height:54px;"
+            required autofocus>
+          <label for="name">請輸入名稱</label>
+          <div class="text-end" id="char_count" style="font-size:12px"><span>0/50</span></div>
+        </div>
+        <div class="form-group form-floating m-3">
+          <textarea type="text" name="introduction" id="introduction" class="form-control font-weight-bold m-auto"
+            placeholder="請輸入自我介紹" style="background-color:#F5F8FA; border-bottom: 2px solid #657786;height:147px;"
+            required autofocus>{{user.introduction}}</textarea>
+          <label for="introduction">自我介紹</label>
+          <div class="text-end" id="char_count" style="font-size:12px"><span>0/160</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </form>
+</div>
+{{!-- edit User info function --}}
+<script > 
+  function previewAvatarImage() {
+    const avatarImageDOM = document.querySelector('#image')
+    const avatarImagefile = avatarImageDOM.files
+    if (avatarImagefile.length > 0) {
+      const fileReader = new FileReader()
+      fileReader.onload = function (event) {
+        document.getElementById('avatar').setAttribute('src', event.target.result)
+      }
+      fileReader.readAsDataURL(avatarImagefile[0])
+    }
+  }
+
+  function previewCoverImage() {
+    const coverImageDOM = document.querySelector('#coverImage')
+    const coverImagefile = coverImageDOM.files
+    if (coverImagefile.length > 0) {
+      const fileReader = new FileReader()
+      fileReader.onload = function (event) {
+        document.getElementById('cover').setAttribute('src', event.target.result)
+      }
+      fileReader.readAsDataURL(coverImagefile[0])
+    }
+  }
 </script>

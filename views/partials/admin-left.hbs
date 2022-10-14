@@ -1,7 +1,7 @@
 <div class="col-2">
   <nav class="nav side-bar-left" style="width:178px;height:1200px">
     <div class="d-flex align-content-between flex-wrap">
-      <div class="col side-bar-left-top" style="witdh:178px;height:58px">
+      <div class="col side-bar-left-top" style="width:178px;height:58px">
         <div class="link-group m-3">
           <img src="/images/logo.svg" alt="logo" style="width:40px;height:40px">
         </div>
@@ -23,49 +23,3 @@
     </div>
   </nav>
 </div>
-{{!-- tweet modal --}}
-<div class="modal fade" id="tweet-modal" tabindex="-1" aria-labelledby="tweet-modal" aria-hidden="true">
-  <div class="modal-dialog modal-lg" style="width:639px; position:relative; right:40px;">
-    <div class="modal-content" style="border-radius:16px">
-      <div class="" style="">
-        <label for="description" class="form-label">
-        </label>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form action="/tweets" method="POST">
-        <div class="modal-body d-flex">
-          <img src="" class="bi pe-none me-2" style="width:50px;height:50px;">
-          <textarea class="form" id="description" name="description" rows="4" maxlength="141" placeholder="有什麼新鮮事？"
-            style="border:none; width:600px;position:relative; top:10px;resize:none;height:250px;" required></textarea>
-          <div class="" style="color:#FF0000;position: absolute;top: 270px;right: 120px;">
-            <span id="insertEmptyMessage"></span>
-          </div>
-          <div class="" id="char_count"><span>140/140</span></div>
-        </div>
-        <button type="submit" class="btn btn-orange btn-tweets-models"
-          style="border-radius: 50px;position:relative; left:550px;bottom:20px;">
-          <span class="" style="font-size:16px;">推文</span>
-        </button>
-      </form>
-    </div>
-  </div>
-</div>
-{{!-- tweet Modal end --}}
-<script>
-  const textArea = document.getElementById( 'description' )
-  const charCount = document.getElementById( 'char_count' )
-  let insertEmptyMessage = document.getElementById( 'insertEmptyMessage' )
-  const maxNumOfCount = 140
-  const countCharacters = () => {
-    const numOfEnter = textArea.value.length
-    const counter = maxNumOfCount - numOfEnter
-    charCount.textContent = counter + '/140'
-    if ( numOfEnter === 0 ) {
-      insertEmptyMessage.innerText = '內容不可以是空白'
-    }
-    if ( counter < 0 || counter >= 140 ) {
-      charCount.style.color = 'red'
-    }
-  }
-  textArea.addEventListener( 'input', countCharacters )
-</script>

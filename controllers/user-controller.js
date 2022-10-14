@@ -345,7 +345,7 @@ const userController = {
   },
 
   // api routes
-  getUser: (req, res, next) => {
+  getUserInfo: (req, res, next) => {
     // User.findByPk(getUser(req).id) 這樣子寫不會過
     const id = req.params.id
     User.findByPk(id) // 要傳入 id test 才會過
@@ -359,30 +359,31 @@ const userController = {
       .catch(err => next(err))
   },
   postUser: async (req, res, next) => {
-    const id = req.params.id
-    const { file } = req // 把檔案取出來
+    const userId = req.params.id
+    const { files } = req
     const { name, introduction } = req.body
 
-    const user = await User.findByPk(id)
+    const user = await User.findByPk(userId)
     if (!user) throw new Error("user didn't exist")
     let avatarFilePath = user.dataValues.avatar
     let coverFilePath = user.dataValues.cover
 
-    // 檢查符號 ?. 前面這個 object 值存不存在
-    if (file?.avatar) {
-      avatarFilePath = await imgurFileHandler(...file.avatar)
+    if (files?.image) {
+      avatarFilePath = await imgurFileHandler(...files.image)
     }
 
-    if (file?.coverImage) {
-      coverFilePath = await imgurFileHandler(...file.coverImage)
+    if (files?.coverImage) {
+      coverFilePath = await imgurFileHandler(...files.coverImage)
     }
 
-    await user.update({ name, introduction, avatar: avatarFilePath, cover: coverFilePath })
-      .then(() => {
-        req.flash('success_messages', '個人資料已更新')
-        return res.json({ status: 'success', ...user.toJSON() })
-      })
-      .catch(err => next(err))
+    await user.update({
+      name,
+      introduction,
+      avatar: avatarFilePath,
+      cover: coverFilePath
+    })
+    req.flash('success_messages', '個人資料儲存成功 !')
+    return res.json({ status: 'success', ...user.toJSON() })
   }
 }
 module.exports = userController

@@ -6,7 +6,9 @@ const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const session = require('express-session')
 const passport = require('./config/passport')
 const flash = require('connect-flash')
+const path = require('path')
 const routes = require('./routes')
+
 // const { getUser } = require('./controllers/user-controller')
 const app = express()
 const port = process.env.PORT || 3000
@@ -27,6 +29,7 @@ app.use(passport.session())
 app.use(express.static('public')) // 設定共用檔案
 app.use(flash())
 app.use(methodOverride('_method'))
+app.use('/upload', express.static(path.join(__dirname, 'upload')))
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages') // 設定 success 訊息
   res.locals.error_messages = req.flash('error_messages') // 設定 error 訊息
