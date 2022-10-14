@@ -1,0 +1,16 @@
+<div class="tabs" style="border:1px solid #E6ECF0">
+  <div class="d-flex flex-row group mt-3">
+    <div class="group-item"
+      style="height:40px;{{#ifCond route 'followers' }} border-bottom:2px solid #FF6600;{{/ifCond}}">
+      <a class="text-decoration-none"
+        style="color:{{#ifCond route 'followers'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px;margin-right:50px;"
+        href="/users/{{user.id}}/followers">追隨者</a>
+    </div>
+    <div class="group-item"
+      style="height:40px;{{#ifCond route 'followings' }} border-bottom:2px solid #FF6600;{{/ifCond}}">
+      <a class="text-decoration-none"
+        style="color:{{#ifCond route 'followings'}} #ff6600 {{else}} #657786 {{/ifCond}};font-size: 15px;margin-left:50px;margin-right:50px;"
+        href="/users/{{user.id}}/followings">正在追隨</a>
+    </div>
+  </div>
+</div>
