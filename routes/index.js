@@ -34,7 +34,7 @@ router.get('/tweets', authenticated, getRecommendedUsers, tweetController.getTwe
 router.post('/tweets', authenticated, tweetController.postTweet)
 
 // api
-router.get('/api/users/:id', authenticatedLimit, userController.getUser)
+router.get('/api/users/:id', authenticatedLimit, userController.getUserInfo)
 router.post('/api/users/:id', authenticatedLimit, upload.fields([
   { name: 'image', count: 1 },
   { name: 'coverImage', count: 1 }
