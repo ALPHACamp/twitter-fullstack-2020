@@ -1,8 +1,9 @@
-const { User, Tweet, Reply, Like, Followship } = require('../models')
-const { getUser } = require('../_helpers')
-const bcrypt = require('bcryptjs')
-const { imgurFileHandler } = require('../helpers/file-helpers')
 const helpers = require('../_helpers')
+const bcrypt = require('bcryptjs')
+const { getUser } = require('../_helpers')
+const { User, Tweet, Reply, Like, Followship } = require('../models')
+const { imgurFileHandler } = require('../helpers/file-helpers')
+const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 const userController = {
   signInPage: (req, res) => {
@@ -65,6 +66,10 @@ const userController = {
   },
   tweets: async (req, res, next) => {
     try {
+      const DEFAULT_LIMIT = 5
+      const page = Number(req.query.page) || 1
+      const limit = Number(req.query.limit) || DEFAULT_LIMIT
+      const offset = getOffset(limit, page)
       const user = helpers.getUser(req)
       const id = req.params.id
       const personal = await User.findByPk(id, {
@@ -79,7 +84,9 @@ const userController = {
         include: [User, Reply, Like],
         order: [
           ['created_at', 'DESC']
-        ]
+        ],
+        limit,
+        offset
       })
       const followingsId = user?.Followings?.map(f => f.id)
       user.isFollowed = (followingsId.includes(personal.id))
@@ -87,7 +94,7 @@ const userController = {
         ...tweet.toJSON(),
         isLiked: tweet.Likes.some(t => t.UserId === user.id)
       }))
-      return res.render('profile', { tweets, user, personal: personal.toJSON() })
+      return res.render('profile', { tweets, user, personal: personal.toJSON(), pagination: getPagination(limit, page, tweets.count) })
     } catch (err) {
       next(err)
     }

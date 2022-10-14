@@ -1,0 +1,18 @@
+{{!-- pagination --}}
+<nav aria-label="Page navigation example">
+ <ul class="pagination justify-content-center">
+  <li class="page-item {{#ifCond pagination.currentPage 1}}disabled{{/ifCond}}">
+   <a class="page-link" href="/admin/tweets?page={{pagination.prev}}">Previous</a>
+  </li>
+  {{#each pagination.pages}}
+   {{#ifCond this ../pagination.currentPage}}
+    <li class="page-item"><a class="page-link" href="#">{{this}}</a></li>
+  {{else}}
+   <li class="page-item"><a class="page-link" href="/users/{{personal.id}}/tweets?page={{this}}">{{this}}</a></li>
+   {{/ifCond}}
+  {{/each}}
+  <li class="page-item {{#ifCond pagination.currentPage pagination.totalPage}}disabled{{/ifCond}}">
+   <a class="page-link " href="/users/{{personal.id}}/tweets?page={{pagination.next}}">Next</a>
+  </li>
+ </ul>
+</nav>
