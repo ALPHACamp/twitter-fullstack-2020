@@ -6,12 +6,14 @@
           <img src="/images/logo.svg" alt="logo" style="width:40px;height:40px">
         </div>
         <div class="link-group m-3">
-          <img src="/images/home.svg" alt="home" class="icon m-2" style="width:24px;height:24px">
+          <img src="{{#ifCond route 'tweetsList'}}/images/home-click.svg{{else}}/images/home.svg{{/ifCond}}" alt="home"
+            class="icon m-2" style="width:24px;height:24px">
           <a href="/admin/tweets" class="m-2 text-decoration-none"
             style="color:{{#ifCond route 'tweetsList'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">推文清單</a>
         </div>
         <div class="link-group m-3">
-          <img src="/images/user.svg" alt="user" class="icon m-2" style="width:24px;height:24px">
+          <img src="{{#ifCond route 'usersList'}}/images/user-click.svg{{else}}/images/user.svg{{/ifCond}}" alt="user"
+            class="icon m-2" style="width:24px;height:24px">
           <a href="/admin/users" class="m-2 text-decoration-none"
             style="color:{{#ifCond route 'usersList'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">使用者列表</a>
         </div>

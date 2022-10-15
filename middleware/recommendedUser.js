@@ -11,7 +11,6 @@ module.exports = {
     })
       .then(users => {
         const loginUser = getUser(req)
-        console.log(users)
         const recommendedUsers = users
           .map(user => ({
             ...user.toJSON(),

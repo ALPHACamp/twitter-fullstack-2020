@@ -32,7 +32,7 @@
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
       <li class="page-item {{#ifCond pagination.currentPage 1}}disabled{{/ifCond}}">
-        <a class="page-link" href="/admin/tweets?page={{pagination.prev}}">Previous</a>
+        <a class="page-link" href="/tweets?page={{pagination.prev}}">Previous</a>
       </li>
       {{#each pagination.pages}}
         {{#ifCond this ../pagination.currentPage}}
@@ -98,13 +98,6 @@
     }
     if ( counts === 0 ) {
       insertEmptyMessage.innerText = '內容不可空白'
-    }
-  }
-  function checkCount () {
-    const counts = document.getElementById( 'description' ).value.length
-    if ( counts > 140 ) {
-      alert( '字數超出上限！' )
-      return false
     }
   }
 </script>
