@@ -5,7 +5,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const userSeed = Array.from({ length: 5 }).map((_, i) => ({
       name: `user${i + 1}`,
-      email: `user${i + 1}@email.com`,
+      email: `user${i + 1}@example.com`,
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       account: `user${i + 1}`,
       avatar: `https://loremflickr.com/150/150/cat/?lock=${i}`,
@@ -17,7 +17,7 @@ module.exports = {
     }))
     await queryInterface.bulkInsert('Users', [{
       name: 'root',
-      email: 'root@email.com',
+      email: 'root@example.com',
       password: await bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       account: 'root',
       role: 'admin',
