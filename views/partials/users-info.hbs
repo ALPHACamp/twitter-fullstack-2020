@@ -1,165 +1,165 @@
 {{#ifCond personal.id user.id}}
-  <div class="user-info">
-    <img id="profile-cover" src="{{#if user.cover}}{{user.cover}}{{else}}/images/defaultCover.jpg{{/if}}"
-      class="card-img-top position-relative" alt="cover">
-    <div class="image position-absolute" style="top:180px; margin:16px">
-      <a href="/users/{{user.id}}/tweets">
-        {{#if user.avatar}}
-          <img src="{{user.avatar}}" alt="logo" class="avatar"
-            style="width:140px;height:140px;border-radius:50%;border:4px solid white">
-        {{else}}
-          <img src="/images/avatar.png" id="profile-avatar" alt="logo" class="avatar"
-            style="width:140px;height:140px;border-radius:50%;border:4px solid white">
-        {{/if}}
+<div class="user-info">
+  <img id="profile-cover" src="{{#if user.cover}}{{user.cover}}{{else}}/images/defaultCover.jpg{{/if}}"
+    class="card-img-top position-relative" alt="cover">
+  <div class="image position-absolute" style="top:180px; margin:16px">
+    <a href="/users/{{user.id}}/tweets">
+      {{#if user.avatar}}
+      <img src="{{user.avatar}}" alt="logo" class="avatar"
+        style="width:140px;height:140px;border-radius:50%;border:4px solid white">
+      {{else}}
+      <img src="/images/avatar.png" id="profile-avatar" alt="logo" class="avatar"
+        style="width:140px;height:140px;border-radius:50%;border:4px solid white">
+      {{/if}}
+    </a>
+  </div>
+</div>
+<div class="editprofile d-flex justify-content-end m-3" data-bs-toggle="modal" data-bs-target="#edit-modal">
+  <button type="submit" class="btn btn-primary" id="edit-btn" data-target=".bd-example-modal-lg"
+    style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:128px;height:40px">編輯個人資料</button>
+</div>
+<div class="card-body" style="margin-top:8px">
+  <p class="user-name m-0 " style="color: #171725;font-size: 18px;">
+    <strong>{{user.name}}</strong>
+  </p>
+  <p class="user-name m-0" style="color: #6C757D;font-size: 14px;">@{{user.account}}</p>
+  <p class="card-text mt-2 text-break">{{user.introduction}}</p>
+  <div class="d-flex flex-row card-bottom">
+    <div class="m-2">
+      <a href="/users/{{user.id}}/followings" style="text-decoration:none;">
+        <p class="card-text" style="color: #6C757D;font-size: 14px;">
+          {{personal.Followings.length}}個跟隨中
+        </p>
       </a>
     </div>
-  </div>
-  <div class="editprofile d-flex justify-content-end m-3" data-bs-toggle="modal" data-bs-target="#edit-modal">
-    <button type="submit" class="btn btn-primary" id="edit-btn" data-target=".bd-example-modal-lg"
-      style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:128px;height:40px">編輯個人資料</button>
-  </div>
-  <div class="card-body" style="margin-top:8px">
-    <p class="user-name m-0 " style="color: #171725;font-size: 18px;">
-      <strong>{{user.name}}</strong>
-    </p>
-    <p class="user-name m-0" style="color: #6C757D;font-size: 14px;">@{{user.account}}</p>
-    <p class="card-text mt-2 text-break">{{user.introduction}}</p>
-    <div class="d-flex flex-row card-bottom">
-      <div class="m-2">
-        <a href="/users/{{user.id}}/followings" style="text-decoration:none;">
-          <p class="card-text" style="color: #6C757D;font-size: 14px;">
-            {{personal.Followings.length}}個跟隨中
-          </p>
-        </a>
-      </div>
-      <div class="m-2">
-        <a href="/users/{{user.id}}/followers" style="text-decoration:none;">
-          <p class="card-text" style="color: #6C757D;font-size: 14px;">
-            {{personal.Followers.length}}個跟隨者
-          </p>
-        </a>
-      </div>
-      </p>
-    </div>
-  </div>
-  {{else}}
-    <div class="user-info">
-      <img id="profile-cover" src="{{#if personal.cover}}{{personal.cover}}{{else}}/images/defaultCover.jpg{{/if}}"
-        class="card-img-top position-relative" alt="cover">
-      <div class="image position-absolute" style="top:190px; margin:16px">
-        <a href="/users/{{personal.id}}/tweets">
-          {{#if personal.avatar}}
-            <img src="{{personal.avatar}}" alt="logo" class="avatar"
-              style="width:140px;height:140px;border-radius:50%;border:4px solid white">
-          {{else}}
-            <img src="/images/avatar.png" id="profile-avatar" alt="logo" class="avatar"
-              style="width:140px;height:140px;border-radius:50%;border:4px solid white">
-          {{/if}}
-        </a>
-      </div>
-    </div>
-    <div class="editprofile d-flex justify-content-end m-3">
-      {{#if user.isFollowed}}
-        <form action="/followships/{{personal.id}}?_method=DELETE" method="POST">
-          <button type="submit" class="btn btn-primary" id="edit-btn" data-target=".bd-example-modal-lg"
-            style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:128px;height:40px">正在跟隨</button>
-        </form>
-      {{else}}
-        <form action="/followships" method="POST">
-          <input type="text" name="id" value="{{personal.id}}" style="display: none">
-          <button type=" submit" class="btn btn-primary" id="edit-btn"
-            style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px;">跟隨</button>
-        </form>
-      {{/if}}
-    </div>
-    <div class="card-body" style="margin-top:8px">
-      <p class="user-name m-0" style="color: #171725;font-size: 18px;">
-        <strong>{{personal.name}}</strong>
-      </p>
-      <p class="user-name m-0" style="color: #6C757D;font-size: 14px;">@{{personal.account}}</p>
-      <p class="card-text mt-2">{{personal.introduction}}</p>
-      <div class="d-flex flex-row card-bottom">
-        <div class="m-2">
-          <a href="/users/{{user.id}}/followings" style="text-decoration:none;">
-            <p class="card-text" style="color: #6C757D;font-size: 14px;">
-              {{personal.Followings.length}}個跟隨中
-            </p>
-          </a>
-        </div>
-        <div class="m-2">
-          <a href="/users/{{user.id}}/followers" style="text-decoration:none;">
-            <p class="card-text" style="color: #6C757D;font-size: 14px;">
-              {{personal.Followers.length}}個跟隨者
-            </p>
-          </a>
-        </div>
+    <div class="m-2">
+      <a href="/users/{{user.id}}/followers" style="text-decoration:none;">
+        <p class="card-text" style="color: #6C757D;font-size: 14px;">
+          {{personal.Followers.length}}位跟隨者
         </p>
-      </div>
+      </a>
     </div>
+    </p>
+  </div>
+</div>
+{{else}}
+<div class="user-info">
+  <img id="profile-cover" src="{{#if personal.cover}}{{personal.cover}}{{else}}/images/defaultCover.jpg{{/if}}"
+    class="card-img-top position-relative" alt="cover">
+  <div class="image position-absolute" style="top:190px; margin:16px">
+    <a href="/users/{{personal.id}}/tweets">
+      {{#if personal.avatar}}
+      <img src="{{personal.avatar}}" alt="logo" class="avatar"
+        style="width:140px;height:140px;border-radius:50%;border:4px solid white">
+      {{else}}
+      <img src="/images/avatar.png" id="profile-avatar" alt="logo" class="avatar"
+        style="width:140px;height:140px;border-radius:50%;border:4px solid white">
+      {{/if}}
+    </a>
+  </div>
+</div>
+<div class="editprofile d-flex justify-content-end m-3">
+  {{#if user.isFollowed}}
+  <form action="/followships/{{personal.id}}?_method=DELETE" method="POST">
+    <button type="submit" class="btn btn-primary" id="edit-btn" data-target=".bd-example-modal-lg"
+      style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:128px;height:40px">正在跟隨</button>
+  </form>
+  {{else}}
+  <form action="/followships" method="POST">
+    <input type="text" name="id" value="{{personal.id}}" style="display: none">
+    <button type=" submit" class="btn btn-primary" id="edit-btn"
+      style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px;">跟隨</button>
+  </form>
+  {{/if}}
+</div>
+<div class="card-body" style="margin-top:8px">
+  <p class="user-name m-0" style="color: #171725;font-size: 18px;">
+    <strong>{{personal.name}}</strong>
+  </p>
+  <p class="user-name m-0" style="color: #6C757D;font-size: 14px;">@{{personal.account}}</p>
+  <p class="card-text mt-2">{{personal.introduction}}</p>
+  <div class="d-flex flex-row card-bottom">
+    <div class="m-2">
+      <a href="/users/{{user.id}}/followings" style="text-decoration:none;">
+        <p class="card-text" style="color: #6C757D;font-size: 14px;">
+          {{personal.Followings.length}}個跟隨中
+        </p>
+      </a>
+    </div>
+    <div class="m-2">
+      <a href="/users/{{user.id}}/followers" style="text-decoration:none;">
+        <p class="card-text" style="color: #6C757D;font-size: 14px;">
+          {{personal.Followers.length}}位跟隨者
+        </p>
+      </a>
+    </div>
+    </p>
+  </div>
+</div>
 {{/ifCond}}
 <script type="module">
 
-  const editBtn = document.querySelector( '#edit-btn' )
-  const saveBtn = document.querySelector( '#save-btn' )
-  const modalCloseBtn = document.querySelector( '#modal-close-btn' )
-  const coverCloseBtn = document.querySelector( '#cover-close-btn' )
+  const editBtn = document.querySelector('#edit-btn')
+  const saveBtn = document.querySelector('#save-btn')
+  const modalCloseBtn = document.querySelector('#modal-close-btn')
+  const coverCloseBtn = document.querySelector('#cover-close-btn')
 
-  const cover = document.querySelector( '#cover' )
-  const avatar = document.querySelector( '#avatar' )
-  const name = document.querySelector( '#name' )
-  const introduction = document.querySelector( '#introduction' )
+  const cover = document.querySelector('#cover')
+  const avatar = document.querySelector('#avatar')
+  const name = document.querySelector('#name')
+  const introduction = document.querySelector('#introduction')
 
-  const coverImagefile = document.querySelector( '#coverImage' )
-  const avatarImagefile = document.querySelector( '#avatar' )
+  const coverImagefile = document.querySelector('#coverImage')
+  const avatarImagefile = document.querySelector('#avatar')
 
-  modalCloseBtn.addEventListener( 'click', () => {
+  modalCloseBtn.addEventListener('click', () => {
     avatar.value = ""
     cover.value = ""
-  } )
+  })
 
-  coverCloseBtn.addEventListener( 'click', () => {
+  coverCloseBtn.addEventListener('click', () => {
     avatar.value = ""
     cover.value = ""
-    document.querySelector( '#edit-btn' ).click()
-  } )
+    document.querySelector('#edit-btn').click()
+  })
 
-  editBtn.addEventListener( 'click', () => {
-    axios.get( '/api/users/' + {{ user.id }} )
-    .then( response => {
+  editBtn.addEventListener('click', () => {
+    axios.get('/api/users/' + {{ user.id }})
+    .then(response => {
       const userInfo = response.data
       cover.src = userInfo.cover
       avatar.src = userInfo.avatar || '/images/avatar-default.jpg'
       name.value = userInfo.name
       introduction.value = userInfo.introduction
-      document.querySelector( '.name-count span' ).innerText = userInfo.name.length + '/50'
+      document.querySelector('.name-count span').innerText = userInfo.name.length + '/50'
       const userInfoLength = userInfo.introduction?.length || '0'
-      document.querySelector( '.introduction-count span' ).innerText = userInfoLength + '/160'
+      document.querySelector('.introduction-count span').innerText = userInfoLength + '/160'
       myModal.show()
-    } ).catch( err => console.warn( err ) )
+    }).catch(err => console.warn(err))
           })
-  saveBtn.addEventListener( 'click', () => {
-    if ( name.value.length > 50 || introduction.value.length > 160 ) {
-      alert( '字數超出上限' )
+  saveBtn.addEventListener('click', () => {
+    if (name.value.length > 50 || introduction.value.length > 160) {
+      alert('字數超出上限')
       return
     }
     const formData = new FormData()
-    const modalCloseBtn = document.querySelector( '#modal-close-btn' )
-    const coverCloseBtn = document.querySelector( '#cover-close-btn' )
+    const modalCloseBtn = document.querySelector('#modal-close-btn')
+    const coverCloseBtn = document.querySelector('#cover-close-btn')
 
-    formData.append( "coverImage", coverImagefile.files[0] )
-    formData.append( "image", avatarImagefile.files[0] )
-    formData.append( 'name', name.value )
-    formData.append( 'introduction', introduction.value )
-    axios.post( '/api/users/{{user.id}}', formData, {
+    formData.append("coverImage", coverImagefile.files[0])
+    formData.append("image", avatarImagefile.files[0])
+    formData.append('name', name.value)
+    formData.append('introduction', introduction.value)
+    axios.post('/api/users/{{user.id}}', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
-    } ).then( response => {
-      if ( response.data.status = 'success' ) {
-        history.go( 0 )
+    }).then(response => {
+      if (response.data.status = 'success') {
+        history.go(0)
       }
-    } ).catch( err => console.warn( err ) )
-  } )
+    }).catch(err => console.warn(err))
+  })
 </script>
 <!-- Modal -->
 <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -193,17 +193,17 @@
         {{!-- 大頭貼 --}}
         <div class="image position-absolute" style="top:190px">
           {{#if user.avatar}}
-            <img src="{{user.avatar}}" alt="logo" class="user-avatar rounded-circles"
-              style="width:140px;height:140;top:140px;margin-left:16px;border-radius:50%;border:4px solid white">
-            <label class="form-labe position-absolute" style="left:60px;top:50px;z-index:1;" for="avatar">
-              <img src="/images/camera.png" alt="camera" style="width5:50px;height:50px;">
-            </label>
+          <img src="{{user.avatar}}" alt="logo" class="user-avatar rounded-circles"
+            style="width:140px;height:140;top:140px;margin-left:16px;border-radius:50%;border:4px solid white">
+          <label class="form-labe position-absolute" style="left:60px;top:50px;z-index:1;" for="avatar">
+            <img src="/images/camera.png" alt="camera" style="width5:50px;height:50px;">
+          </label>
           {{else}}
-            <img src="/images/avatar.png" alt="logo" class="user-avatar rounded-circles"
-              style="width:140px;height:140;top:140px;margin-left:16px;border-radius:50%;border:4px solid white">
-            <label class="form-labe position-absolute" style="left:60px;top:50px;z-index:1" for="avatar">
-              <img src="/images/camera.png" alt="camera" style="width5:50px;height:50px;">
-            </label>
+          <img src="/images/avatar.png" alt="logo" class="user-avatar rounded-circles"
+            style="width:140px;height:140;top:140px;margin-left:16px;border-radius:50%;border:4px solid white">
+          <label class="form-labe position-absolute" style="left:60px;top:50px;z-index:1" for="avatar">
+            <img src="/images/camera.png" alt="camera" style="width5:50px;height:50px;">
+          </label>
           {{/if}}
           <input class="form-control" type="file" class="form-control-file" id="avatar" style="display:none"
             name="avatar" onchange="previewAvatarImage()">
@@ -229,42 +229,42 @@
 </div>
 {{!-- edit User info function --}}
 <script>
-  function previewAvatarImage () {
-    const avatarImageDOM = document.querySelector( '#image' )
+  function previewAvatarImage() {
+    const avatarImageDOM = document.querySelector('#image')
     const avatarImagefile = avatarImageDOM.files
-    if ( avatarImagefile.length > 0 ) {
+    if (avatarImagefile.length > 0) {
       const fileReader = new FileReader()
-      fileReader.onload = function( event ) {
-        document.getElementById( 'avatar' ).setAttribute( 'src', event.target.result )
+      fileReader.onload = function (event) {
+        document.getElementById('avatar').setAttribute('src', event.target.result)
       }
-      fileReader.readAsDataURL( avatarImagefile[0] )
+      fileReader.readAsDataURL(avatarImagefile[0])
     }
   }
 
-  function previewCoverImage () {
-    const coverImageDOM = document.querySelector( '#coverImage' )
+  function previewCoverImage() {
+    const coverImageDOM = document.querySelector('#coverImage')
     const coverImagefile = coverImageDOM.files
-    if ( coverImagefile.length > 0 ) {
+    if (coverImagefile.length > 0) {
       const fileReader = new FileReader()
-      fileReader.onload = function( event ) {
-        document.getElementById( 'cover' ).setAttribute( 'src', event.target.result )
+      fileReader.onload = function (event) {
+        document.getElementById('cover').setAttribute('src', event.target.result)
       }
-      fileReader.readAsDataURL( coverImagefile[0] )
+      fileReader.readAsDataURL(coverImagefile[0])
     }
   }
-  function counts () {
-    const countName = document.getElementById( 'name' ).value.trim().length
-    const countIntro = document.getElementById( 'introduction' ).value.trim().length
-    const countNameText = document.getElementById( 'char_count_name' )
-    const countIntroText = document.getElementById( 'char_count_intro' )
+  function counts() {
+    const countName = document.getElementById('name').value.trim().length
+    const countIntro = document.getElementById('introduction').value.trim().length
+    const countNameText = document.getElementById('char_count_name')
+    const countIntroText = document.getElementById('char_count_intro')
     countNameText.innerText = countName + '/50'
     countIntroText.innerText = countIntro + '/160'
-    if ( countName >= 50 ) {
+    if (countName >= 50) {
       countNameText.style.color = 'red'
     } else {
       countNameText.style.color = 'black'
     }
-    if ( countIntro >= 160 ) {
+    if (countIntro >= 160) {
       countIntroText.style.color = 'red'
     } else {
       countIntroText.style.color = 'black'
