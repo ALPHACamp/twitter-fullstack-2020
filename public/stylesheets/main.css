@@ -289,3 +289,9 @@
   background: #ffffff;
   border-radius: 14px;
 }
+.side-bar-left {
+  position: fixed;
+}
+.side-bar-right {
+  position: fixed;
+}
