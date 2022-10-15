@@ -4,9 +4,9 @@
     <div class="col-md-2" style="width: 50px; height: 50px;">
       <a href="/users/{{this.User.id}}/tweets">
         {{#if this.User.avatar}}
-          <img src="{{this.User.avatar}}" class="img-fluid rounded-circle m-3" alt="User Photo">
+        <img src="{{this.User.avatar}}" class="img-fluid rounded-circle m-3" alt="User Photo">
         {{else}}
-          <img src="/images/icon/user.png" class="img-fluid rounded-circle" alt="User Photo">
+        <img src="/images/avatar.png" class="img-fluid rounded-circle m-3" alt="User Photo">
         {{/if}}
       </a>
     </div>
@@ -19,49 +19,49 @@
           </h5>
         </a>
         {{#ifCond route 'replies' }} <span>回覆</span>
-          <a href="/users/{{this.Tweet.User.id}}/tweets" style="text-decoration: none;color: black;">
-            <span>@{{this.Tweet.User.account}}</span>
-          </a>
+        <a href="/users/{{this.Tweet.User.id}}/tweets" style="text-decoration: none;color: black;">
+          <span>@{{this.Tweet.User.account}}</span>
+        </a>
         {{/ifCond}}
         {{#ifCond route 'replies'}}
-          <p class="text-break">{{this.comment}}</p>
+        <p class="text-break">{{this.comment}}</p>
         {{/ifCond}}
         {{#ifCond route 'tweets'}}
-          <a href="/tweets/{{this.id}}/replies" style="text-decoration: none;color:black" ;>
-            <p class="text-break">{{this.description}}</p>
-          </a>
+        <a href="/tweets/{{this.id}}/replies" style="text-decoration: none;color:black" ;>
+          <p class="text-break">{{this.description}}</p>
+        </a>
         {{/ifCond}}
         {{#ifCond route 'tweets'}}
-          <p class="card-text">
-          <form action="/tweets/{{this.id}}/replies" method="GET" style="display:inline">
-            <small class="text-muted">
-              <button type="submit" style="border:none;background: none;">
-                <img src="/images/icon/speech-bubble.png">
-              </button>
-              <span>{{this.Replies.length}}</span>
-            </small>
-          </form>
-          {{!-- /tweets --}}
-          {{#if this.isLiked}}
-            <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: inline">
-              <small class="text-muted">
-                <button type="submit" style="border:none;background: none;">
-                  <img src="/images/icon/like.png" alt="">
-                  <span>{{this.Likes.length}}</span>
-                </button>
-              </small>
-            </form>
-          {{else}}
-            <form action="/tweets/{{this.id}}/like" method="POST" style="display: inline">
-              <small class="text-muted">
-                <button type="submit" style="border:none;background: none;">
-                  <img src="/images/icon/unlike.png" alt="">
-                  <span>{{this.Likes.length}}</span>
-                </button>
-              </small>
-            </form>
-          {{/if}}
-          </p>
+        <p class="card-text">
+        <form action="/tweets/{{this.id}}/replies" method="GET" style="display:inline">
+          <small class="text-muted">
+            <button type="submit" style="border:none;background: none;">
+              <img src="/images/icon/speech-bubble.png">
+            </button>
+            <span>{{this.Replies.length}}</span>
+          </small>
+        </form>
+        {{!-- /tweets --}}
+        {{#if this.isLiked}}
+        <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: inline">
+          <small class="text-muted">
+            <button type="submit" style="border:none;background: none;">
+              <img src="/images/icon/like.png" alt="">
+              <span>{{this.Likes.length}}</span>
+            </button>
+          </small>
+        </form>
+        {{else}}
+        <form action="/tweets/{{this.id}}/like" method="POST" style="display: inline">
+          <small class="text-muted">
+            <button type="submit" style="border:none;background: none;">
+              <img src="/images/icon/unlike.png" alt="">
+              <span>{{this.Likes.length}}</span>
+            </button>
+          </small>
+        </form>
+        {{/if}}
+        </p>
         {{/ifCond}}
       </div>
     </div>

@@ -8,11 +8,11 @@
         data-bs-target="#tweet-modal">
         <div class="card-image m-3">
           {{#if user.avatar}}
-            <img src="{{user.avatar}}" class="user-photo" class="user-avatar"
-              style="width:50px;height:50px;border-radius:50%;">
+          <img src="{{user.avatar}}" class="user-photo" class="user-avatar"
+            style="width:50px;height:50px;border-radius:50%;">
           {{else}}
-            <img src="/images/icon/user.png" class="user-photo" class="user-avatar"
-              style="width:50px;height:50px;border-radius:50%;">
+          <img src="/images/avatar.png" class="user-photo" class="user-avatar"
+            style="width:50px;height:50px;border-radius:50%;">
           {{/if}}
           <span style="color:#6C757D;font-size: 18px;margin:8px;">有什麼新鮮事？</span>
         </div>
@@ -24,22 +24,22 @@
     </div>
     <div>
       {{#each tweets}}
-        {{>tweet route='tweets'}}
+      {{>tweet route='tweets'}}
       {{/each}}
     </div>
   </div>
   {{!-- pagination --}}
-  <nav aria-label="Page navigation example">
+  <nav class="m-3" aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
       <li class="page-item {{#ifCond pagination.currentPage 1}}disabled{{/ifCond}}">
         <a class="page-link" href="/tweets?page={{pagination.prev}}">Previous</a>
       </li>
       {{#each pagination.pages}}
-        {{#ifCond this ../pagination.currentPage}}
-          <li class="page-item"><a class="page-link" href="#">{{this}}</a></li>
+      {{#ifCond this ../pagination.currentPage}}
+      <li class="page-item"><a class="page-link" href="#">{{this}}</a></li>
       {{else}}
-        <li class="page-item"><a class="page-link" href="/tweets?page={{this}}">{{this}}</a></li>
-        {{/ifCond}}
+      <li class="page-item"><a class="page-link" href="/tweets?page={{this}}">{{this}}</a></li>
+      {{/ifCond}}
       {{/each}}
       <li class="page-item {{#ifCond pagination.currentPage pagination.totalPage}}disabled{{/ifCond}}">
         <a class="page-link " href="/tweets?page={{pagination.next}}">Next</a>
