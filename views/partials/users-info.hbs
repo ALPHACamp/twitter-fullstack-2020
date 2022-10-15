@@ -66,8 +66,9 @@
         </form>
       {{else}}
         <form action="/followships" method="POST">
-          <button type="submit" class="btn btn-primary" id="edit-btn"
-            style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:128px;height:40px">跟隨</button>
+          <input type="text" name="id" value="{{personal.id}}" style="display: none">
+          <button type=" submit" class="btn btn-primary" id="edit-btn"
+            style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px;">跟隨</button>
         </form>
       {{/if}}
     </div>
