@@ -1,21 +1,28 @@
 <div class="card border-0 col-lg-3 col-sm-6 col" style="width: 15rem;">
- {{!-- cover --}}
- <img src="{{this.cover}}" class="card-img-top mt-3 rounded-top rounded-3"
-  style="height:140px;transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
- {{!-- avatar --}}
- <img src="{{this.avatar}}" class="border border-4  border-light rounded-circle" width="100px" height="100px"
-  style="transition: opacity 0.5s; opacity:0; margin-top: -80px;margin-left: 73.99px; z-index: 1;"
-  onload="this.style.opacity=1;" />
- <div class="card-body d-flex flex-column align-items-center" style="background-color: #F6F7F8; margin-top: -20px;">
-  <p class="card-text fw-bold mt-3 mb-0">{{this.name}}</p>
-  <p class="card-text text-secondary fw-bold">@{{this.account}}</p>
-  <p>
-   <i class="fas fa-comment text-secondary me-2"></i><span>{{this.tweetCounts}}</span>
-   <i class="far fa-heart text-secondary ms-3 me-2"></i><span>{{this.likeCounts}}</span>
-  </p>
-  <p>
-   <span>{{this.followingCounts}} 個</span><span class="text-secondary">跟隨中</span>
-   <span class="ms-2">{{this.followerCounts}} 位</span><span class="text-secondary">跟隨者</span>
-  </p>
- </div>
+  {{!-- cover --}}
+  <img src="{{this.cover}}" class="card-img-top mt-3 rounded-top rounded-3"
+    style="height:140px;transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
+  {{!-- avatar --}}
+  {{#if this.avatar}}
+  <img src="{{this.avatar}}" class="border border-4  border-light rounded-circle" width="100px" height="100px"
+    style="transition: opacity 0.5s; opacity:0; margin-top: -80px;margin-left:50px; z-index: 1;"
+    onload="this.style.opacity=1;" />
+  {{else}}
+  <img src="/images/avatar.png" class="border border-4  border-light rounded-circle" width="100px" height="100px"
+    style="transition: opacity 0.5s; opacity:0; margin-top: -80px;margin-left:50px; z-index: 1;"
+    onload="this.style.opacity=1;" />
+  {{/if}}
+  <div class="card-body d-flex flex-column align-items-center" style="background-color: #F6F7F8; margin-top: -20px;">
+    <p class="card-text fw-bold mt-3 mb-0">{{this.name}}</p>
+    <p class="card-text text-secondary fw-bold">@{{this.account}}</p>
+    <p>
+      <img src="/images/tweet.png" alt="tweet" class="m-1"
+        style="width=20px;height:20px"></i><span>{{this.tweetCounts}}</span>
+      <i class="far fa-heart text-secondary ms-3 me-2"></i><span>{{this.likeCounts}}</span>
+    </p>
+    <p>
+      <span>{{this.followingCounts}} 個</span><span class="text-secondary">跟隨中</span>
+      <span class="ms-2">{{this.followerCounts}} 位</span><span class="text-secondary">跟隨者</span>
+    </p>
+  </div>
 </div>

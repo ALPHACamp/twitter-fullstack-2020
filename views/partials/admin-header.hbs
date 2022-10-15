@@ -1,6 +1,7 @@
 {{!-- TODO 改成 admin header--}}
-<h4 style="font-size: 24px; line-height:26px;">
- {{#ifCond route 'tweetsList'}}<span>推文清單</span>{{/ifCond}}
- {{#ifCond route 'usersList'}}<span>使用者列表</span>{{/ifCond}}
-</h4>
-<div></div>
+<div style="border:1px solid #E6ECF0">
+  <h4 class="m-3" style="font-size: 24px; line-height:26px;">
+    {{#ifCond route 'tweetsList'}}<span>推文清單</span>{{/ifCond}}
+    {{#ifCond route 'usersList'}}<span>使用者列表</span>{{/ifCond}}
+  </h4>
+</div>

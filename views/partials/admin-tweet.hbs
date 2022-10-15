@@ -1,7 +1,11 @@
-<div class="card mb-3 mx-auto">
-  <div class="row g-0">
-    <div class="col-md-2" style="width: 50px; height: 50px;">
+<div class="mx-auto">
+  <div class="row g-0" style="border:1px solid #E6ECF0">
+    <div class=" col-md-2 m-2" style="width: 50px; height: 50px;">
+      {{#if this.User.avatar}}
       <img src="{{this.User.avatar}}" class="img-fluid rounded-circle" alt="User Photo">
+      {{else}}
+      <img src="/images/avatar.png" class="img-fluid rounded-circle" alt="User Photo">
+      {{/if}}
     </div>
     <div class="col-md-10">
       <div class="card-body">
@@ -13,7 +17,7 @@
         <p class="card-text">{{this.description}}</p>
       </div>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-1 text-end">
       <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
         <button type="submit" style="background: none;border: none;">
           <span style="height: 24px;width:24px"><i class="fa-solid fa-x"></i></span>
