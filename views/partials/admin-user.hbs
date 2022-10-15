@@ -7,8 +7,10 @@
   style="transition: opacity 0.5s; opacity:0; margin-top: -80px;margin-left: 73.99px; z-index: 1;"
   onload="this.style.opacity=1;" />
  <div class="card-body d-flex flex-column align-items-center" style="background-color: #F6F7F8; margin-top: -20px;">
-  <p class="card-text fw-bold mt-3 mb-0">{{this.name}}</p>
-  <p class="card-text text-secondary fw-bold">@{{this.account}}</p>
+  <p class="card-text fw-bold mt-3 mb-0 get-user-name text-break"><span>
+    {{this.name}}</span>
+  </p>
+  <p class="card-text text-secondary fw-bold get-user-account text-break"><span>@{{this.account}}</span></p>
   <p>
    <i class="fas fa-comment text-secondary me-2"></i><span>{{this.tweetCounts}}</span>
    <i class="far fa-heart text-secondary ms-3 me-2"></i><span>{{this.likeCounts}}</span>
