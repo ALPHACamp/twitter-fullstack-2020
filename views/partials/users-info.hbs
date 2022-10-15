@@ -19,11 +19,11 @@
       style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:128px;height:40px">編輯個人資料</button>
   </div>
   <div class="card-body" style="margin-top:8px">
-    <p class="user-name m-0" style="color: #171725;font-size: 18px;">
+    <p class="user-name m-0 " style="color: #171725;font-size: 18px;">
       <strong>{{user.name}}</strong>
     </p>
     <p class="user-name m-0" style="color: #6C757D;font-size: 14px;">@{{user.account}}</p>
-    <p class="card-text mt-2">{{user.introduction}}</p>
+    <p class="card-text mt-2 text-break">{{user.introduction}}</p>
     <div class="d-flex flex-row card-bottom">
       <div class="m-2">
         <a href="/users/{{user.id}}/followings" style="text-decoration:none;">
