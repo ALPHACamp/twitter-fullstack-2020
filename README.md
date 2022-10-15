@@ -79,38 +79,30 @@ git clone https://github.com/elliotcs30/twitter-fullstack-2020.git
   npm install bcryptjs@2.4.3
   npm install dotenv@8.2.0
   npm init @eslint/config
-  
-  npm install cross-env // windows env install
 ```
 
-4. windows environment need install
-
-```shell
-  npm install cross-env
-```
-
-5. Set environment variables in .env file according to .env.example
+4. Set environment variables in .env file according to .env.example
 
 ```
 touch .env
 ```
 
 
-6. Seed create your database 
+5. Seed create your database 
 
 ```
 npm run dbinit
 npm run seedinit
 ```
 
-7. Start the server
+6. Start the server
 
 ```
 npm run start         // for mac
 npm run start-windows // for windows
 ```
 
-8. Execute successfully if seeing following message
+7. Execute successfully if seeing following message
 
 ```
 Example app listening on port 3000!
