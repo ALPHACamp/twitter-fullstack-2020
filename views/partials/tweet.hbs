@@ -4,9 +4,11 @@
     <div class="col-md-2" style="width: 50px; height: 50px;">
       <a href="/users/{{this.User.id}}/tweets">
         {{#if this.User.avatar}}
-        <img src="{{this.User.avatar}}" class="img-fluid rounded-circle m-3" alt="User Photo">
+        <img src="{{this.User.avatar}}" class="img-fluid rounded-circle m-3" alt="User Photo"
+          style="width: 50px; height: 50px;">
         {{else}}
-        <img src="/images/avatar.png" class="img-fluid rounded-circle m-3" alt="User Photo">
+        <img src="/images/avatar.png" class="img-fluid rounded-circle m-3" alt="User Photo"
+          style="width: 50px; height: 50px;">
         {{/if}}
       </a>
     </div>
