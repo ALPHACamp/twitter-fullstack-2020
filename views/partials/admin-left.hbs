@@ -1,5 +1,5 @@
 <div class="col-3">
-  <nav class="nav side-bar-left" style="width:178px;height:1200px">
+  <nav class="nav side-bar-left" style="width:178px;height:100vh;">
     <div class="d-flex align-items-baseline flex-wrap">
       <div class="col side-bar-left-top" style="width:178px;height:58px;">
         <div class="link-group m-3">
@@ -7,18 +7,19 @@
         </div>
         <div class="link-group m-3">
           <img src="{{#ifCond route 'tweetsList'}}/images/home-click.svg{{else}}/images/home.svg{{/ifCond}}" alt="home"
-            class="icon m-2" style="width:24px;height:24px">
-          <a href="/admin/tweets" class="m-2 text-decoration-none"
+            class="icon m-1" style="width:24px;height:24px">
+          <a href="/admin/tweets" class="m-1 text-decoration-none"
             style="color:{{#ifCond route 'tweetsList'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">推文清單</a>
         </div>
         <div class="link-group m-3">
           <img src="{{#ifCond route 'usersList'}}/images/user-click.svg{{else}}/images/user.svg{{/ifCond}}" alt="user"
-            class="icon m-2" style="width:24px;height:24px">
-          <a href="/admin/users" class="m-2 text-decoration-none"
-            style="color:{{#ifCond route 'usersList'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">使用者列表</a>
+            class="icon m-1" style="width:24px;height:24px">
+          <a href="/admin/users" class="m-1 text-decoration-none"
+            style="color:{{#ifCond route 'usersList'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px;">使用者列表</a>
         </div>
       </div>
-      <div class="link-group m-2">
+      <div class="link-group m-2" style="
+    bottom: 1rem;">
         <img src="/images/logout.svg" alt="" class="icon m-2" style="width:24px;height:24px">
         <a href="/logout" class="m-2 text-decoration-none" style="color: #44444f;font-size: 18px">登出</a>
       </div>
