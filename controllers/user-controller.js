@@ -1,8 +1,8 @@
+const bcrypt = require('bcryptjs')
+const helpers = require('../_helpers')
 const { User, Tweet, Reply, Like, Followship } = require('../models')
 const { getUser } = require('../_helpers')
-const bcrypt = require('bcryptjs')
 const { imgurFileHandler } = require('../helpers/file-helpers')
-const helpers = require('../_helpers')
 
 const userController = {
   signInPage: (req, res) => {
@@ -13,17 +13,15 @@ const userController = {
   },
   signUp: (req, res, next) => {
     const { account, name, email, password, checkPassword } = req.body
-    const errors = []
-    const errorsMsg = { errors, account, name, email, password, checkPassword }
 
     if (password !== checkPassword) {
-      errors.push({ message: '密碼與確認密碼不相符！' })
+      throw new Error('密碼與確認密碼不相符！')
     }
     if (!account || !name || !email || !password || !checkPassword) {
-      errors.push({ message: '所有欄位都是必填。' })
+      throw new Error('所有欄位都是必填。')
     }
     if (name.length > 50) {
-      errors.push({ message: '名稱上限為50字' })
+      throw new Error('名稱上限為50字')
     }
 
     Promise.all([
@@ -32,14 +30,10 @@ const userController = {
     ])
       .then(([account, email]) => {
         if (account) {
-          errors.push({ message: 'account 已重複註冊！' })
+          throw new Error('account 已重複註冊！')
         }
         if (email) {
-          errors.push({ message: 'email 已重複註冊！' })
-        }
-        if (errors.length) {
-          res.render('signup', errorsMsg)
-          return null
+          throw new Error('email 已重複註冊！')
         }
         return bcrypt.hash(password, 10)
       })
@@ -198,7 +192,7 @@ const userController = {
         UserId: id,
         TweetId: req.params.tweet_id
       })
-      req.flash('success_messages', 'success like!')
+      req.flash('success_messages', '成功 like!')
       return res.redirect('back')
     } catch (err) {
       next(err)
@@ -217,7 +211,7 @@ const userController = {
       ]).then(like => {
         if (!like) return req.flash('error_messages', '你沒有like這個tweet!')
         like.destroy()
-        req.flash('success_messages', 'success unlike!')
+        req.flash('success_messages', '成功 unlike!')
         return res.redirect('back')
       }).catch(err => next(err))
     } catch (err) {
@@ -308,7 +302,7 @@ const userController = {
       })
       .catch(err => next(err))
   },
-  // 暫時調整為getSetting，與下方命名規則相同
+  // 暫時調整為get，與下方命名規則相同
   getSetting: async (req, res) => {
     const id = req.params.id
     const user = await User.findByPk(id, { raw: true })
@@ -322,6 +316,7 @@ const userController = {
       const { id, account, email } = getUser(req)
 
       if (editPassword !== editCheckPassword) throw new Error('密碼與確認密碼不符')
+      if (editName.length > 50) throw new Error('超過字數，字數要在50字以內')
       if (editAccount !== account) {
         const exitAccount = await User.findOne({ where: { account: editAccount } })
         if (exitAccount) throw new Error(' 帳號已重複註冊！')

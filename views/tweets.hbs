@@ -1,45 +1,47 @@
 {{>left route='tweets'}}
 <div class="col-6">
-  {{!-- test --}}
+  {{> messages}}
   <div class="card">
-    <div class="card-home" style="border-bottom: 18px solid	#E6ECF0;">
+    <div class="cards-home opacity-100" style="background-color:white;border-bottom: 18px solid #E6ECF0;">
       {{>header route='tweets'}}
-      <div class="post-tweet" style="width:639px;height:153px;border-top: 1px solid	#E6ECF0;" data-bs-toggle="modal"
+      <div class="post-tweet" style="width:634px;height:153px;border-top: 1px solid	#E6ECF0;" data-bs-toggle="modal"
         data-bs-target="#tweet-modal">
         <div class="card-image m-3">
           {{#if user.avatar}}
-            <img src="{{user.avatar}}" class="user-photo" class="user-avatar"
-              style="width:50px;height:50px;border-radius:50%;">
+          <img src="{{user.avatar}}" class="user-photo" class="user-avatar"
+            style="width:50px;height:50px;border-radius:50%;">
           {{else}}
-            <img src="/images/icon/user.png" class="user-photo" class="user-avatar"
-              style="width:50px;height:50px;border-radius:50%;">
+          <img src="/images/avatar.png" class="user-photo" class="user-avatar"
+            style="width:50px;height:50px;border-radius:50%;">
           {{/if}}
           <span style="color:#6C757D;font-size: 18px;margin:8px;">有什麼新鮮事？</span>
         </div>
-        <div class="d-flex justify-content-end m-4">
+        <div class="d-flex justify-content-end m-3">
           <button type="submit" class="btn btn-primary"
             style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px;margin-left:24px">推文</button>
         </div>
       </div>
     </div>
     <div>
-      {{#each tweets}}
+      <div class="tweets-home" style="margin-top:220px;">
+        {{#each tweets}}
         {{>tweet route='tweets'}}
-      {{/each}}
+        {{/each}}
+      </div>
     </div>
   </div>
   {{!-- pagination --}}
-  <nav aria-label="Page navigation example">
+  <nav class="m-3" aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
       <li class="page-item {{#ifCond pagination.currentPage 1}}disabled{{/ifCond}}">
-        <a class="page-link" href="/admin/tweets?page={{pagination.prev}}">Previous</a>
+        <a class="page-link" href="/tweets?page={{pagination.prev}}">Previous</a>
       </li>
       {{#each pagination.pages}}
-        {{#ifCond this ../pagination.currentPage}}
-          <li class="page-item"><a class="page-link" href="#">{{this}}</a></li>
+      {{#ifCond this ../pagination.currentPage}}
+      <li class="page-item"><a class="page-link" href="#">{{this}}</a></li>
       {{else}}
-        <li class="page-item"><a class="page-link" href="/tweets?page={{this}}">{{this}}</a></li>
-        {{/ifCond}}
+      <li class="page-item"><a class="page-link" href="/tweets?page={{this}}">{{this}}</a></li>
+      {{/ifCond}}
       {{/each}}
       <li class="page-item {{#ifCond pagination.currentPage pagination.totalPage}}disabled{{/ifCond}}">
         <a class="page-link " href="/tweets?page={{pagination.next}}">Next</a>
@@ -48,63 +50,3 @@
   </nav>
 </div>
 {{>right route='followers'}}
-{{!-- tweet Modal --}}
-<div class="modal fade" id="tweet-modal" tabindex="-1" aria-labelledby="tweet-modal" aria-hidden="true">
-  <div class="modal-dialog modal-lg" style="width:639px; position:relative; right:40px;">
-    <div class="modal-content" style="border-radius:16px">
-      <div class="" style="">
-        <label for="description" class="form-label">
-        </label>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form action="/tweets" method="POST">
-        <div class="modal-body d-flex flex-column">
-          <div>
-            {{#if user.avatar}}
-              <img src="{{user.avatar}}" class="bi pe-none me-2" style="width:50px;height:50px;border-radius:50%;">
-            {{else}}
-              <img src="/images/avatar.png" class="bi pe-none me-2" style="width:50px;height:50px;border-radius:50%;">
-            {{/if}}
-            <textarea class=" form" id="description" name="description" rows="4" maxlength="140" placeholder="有什麼新鮮事？"
-              style="border:none; width:600px; top:10px;resize:none;height:250px;" oninput="counts()"
-              required></textarea>
-          </div>
-          <div class="align-self-end">
-            <div style="color:#FF0000;top: 270px;right: 120px;display:inline;">
-              <span id="insertEmptyMessage"><span>內容不可空白</span></span>
-            </div>
-            <div id="char_count" style="display:inline;"><span>0/140</span></div>
-            <button type="submit" class="btn btn-primary"
-              style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px;margin-left:24px">推文</span>
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-{{!-- tweet Modal end --}}
-<script>
-  function counts () {
-    const counts = document.getElementById( 'description' ).value.length
-    const insertEmptyMessage = document.getElementById( 'insertEmptyMessage' )
-    document.getElementById( 'char_count' ).innerText = counts + '/140'
-    if ( counts > 140 ) {
-      insertEmptyMessage.innerText = '字數超出上限！'
-      return
-    }
-    if ( counts > 0 && counts <= 140 ) {
-      insertEmptyMessage.innerText = ''
-    }
-    if ( counts === 0 ) {
-      insertEmptyMessage.innerText = '內容不可空白'
-    }
-  }
-  function checkCount () {
-    const counts = document.getElementById( 'description' ).value.length
-    if ( counts > 140 ) {
-      alert( '字數超出上限！' )
-      return false
-    }
-  }
-</script>

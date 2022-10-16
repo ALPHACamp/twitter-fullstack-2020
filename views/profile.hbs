@@ -1,5 +1,6 @@
 {{>left route='profile'}}
 <div class="col-6">
+  {{>messages }}
   <div class="col container">
     <div class="content" style="border:1px solid #E6ECF0">
       {{>user-header}}
@@ -7,7 +8,7 @@
       {{>users-tab route='tweets'}}
       <div class="profile">
         {{#each tweets}}
-        {{>tweet route='tweets'}}
+          {{>tweet route='tweets'}}
         {{/each}}
       </div>
     </div>

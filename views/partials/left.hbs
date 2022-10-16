@@ -1,7 +1,7 @@
 <div class="col-2">
-  <nav class="nav side-bar-left" style="width:178px;height:1200px">
+  <nav class="nav side-bar-left" style="width:178px;height:100vh;">
     <div class="d-flex align-content-between flex-wrap">
-      <div class="col side-bar-left-top" style="width:178px;height:58px">
+      <div class="col side-bar-left-top" style="width:178px;height:58px;">
         <div class="link-group m-3">
           <a href="/">
             <img src="/images/logo.svg" alt="logo" style="width:40px;height:40px">
@@ -9,27 +9,27 @@
         </div>
         <div class="link-group m-3">
           {{#ifCond route 'tweets'}}
-            <img src="/images/home-click.svg" alt="home-click" class="icon m-2" style="width:24px;height:24px">
-            {{else}}
-              <img src="/images/home.svg" alt="home" class="icon m-2" style="width:24px;height:24px">
+          <img src="/images/home-click.svg" alt="home-click" class="icon m-2" style="width:24px;height:24px">
+          {{else}}
+          <img src="/images/home.svg" alt="home" class="icon m-2" style="width:24px;height:24px">
           {{/ifCond}}
           <a href="/" class="m-2 text-decoration-none"
             style="color:{{#ifCond route 'tweets'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">首頁</a>
         </div>
         <div class="link-group m-3">
           {{#ifCond route 'profile'}}
-            <img src="/images/user-click.svg" alt="user-click" class="icon m-2" style="width:24px;height:24px">
-            {{else}}
-              <img src="/images/user.svg" alt="user" class="icon m-2" style="width:24px;height:24px">
+          <img src="/images/user-click.svg" alt="user-click" class="icon m-2" style="width:24px;height:24px">
+          {{else}}
+          <img src="/images/user.svg" alt="user" class="icon m-2" style="width:24px;height:24px">
           {{/ifCond}}
           <a href="/users/{{user.id}}/tweets" class="m-2 text-decoration-none"
             style="color:{{#ifCond route 'profile'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">個人資料</a>
         </div>
         <div class="link-group m-3">
           {{#ifCond route 'setting'}}
-            <img src="/images/setting-click.png" alt="setting" class="icon m-2" style="width:24px;height:24px">
-            {{else}}
-              <img src="/images/setting.svg" alt="setting" class="icon m-2" style="width:24px;height:24px">
+          <img src="/images/setting-click.png" alt="setting" class="icon m-2" style="width:24px;height:24px">
+          {{else}}
+          <img src="/images/setting.svg" alt="setting" class="icon m-2" style="width:24px;height:24px">
           {{/ifCond}}
           <a href="/users/{{user.id}}/setting" class="m-2 text-decoration-none"
             style="color:{{#ifCond route 'setting'}} #ff6600 {{else}} #44444F {{/ifCond}};font-size: 18px">設定</a>
@@ -41,8 +41,62 @@
       </div>
       <div class="link-group m-2">
         <img src="/images/logout.svg" alt="" class="icon m-2" style="width:24px;height:24px">
-        <a href="/logout" class="m-2 text-decoration-none" style="color: #44444f;font-size: 18px">logout</a>
+        <a href="/logout" class="m-2 text-decoration-none" style="color: #44444f;font-size: 18px">登出</a>
       </div>
     </div>
   </nav>
 </div>
+{{!-- tweet Modal --}}
+<div class="modal fade" id="tweet-modal" tabindex="-1" aria-labelledby="tweet-modal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" style="width:639px; position:relative; right:40px;">
+    <div class="modal-content" style="border-radius:16px">
+      <div class="" style="">
+        <label for="description" class="form-label">
+        </label>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/tweets" method="POST">
+        <div class="modal-body d-flex flex-column">
+          <div>
+            {{#if user.avatar}}
+            <img src="{{user.avatar}}" class="bi pe-none me-2" style="width:50px;height:50px;border-radius:50%;">
+            {{else}}
+            <img src="/images/avatar.png" class="bi pe-none me-2" style="width:50px;height:50px;border-radius:50%;">
+            {{/if}}
+            <textarea class=" form" id="description" name="description" rows="4" maxlength="140" placeholder="有什麼新鮮事？"
+              style="border:none; width:600px; top:10px;resize:none;height:250px;" oninput="tweetsCounts()"
+              required></textarea>
+          </div>
+          <div class="align-self-end">
+            <div style="color:#FF0000;top: 270px;right: 120px;display:inline;">
+              <span id="insertEmptyMessage"><span>內容不可空白</span></span>
+            </div>
+            <div id="char_count" style="display:inline;"><span>0/140</span></div>
+            <button type="submit" class="btn btn-primary"
+              style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px;margin-left:24px;">推文</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{{!-- tweet Modal end --}}
+<script>
+  function tweetsCounts() {
+    const counts = document.getElementById('description').value.length
+    const insertEmptyMessage = document.getElementById('insertEmptyMessage')
+    const chatText = document.getElementById('char_count')
+    chatText.innerText = counts + '/140'
+    if (counts > 140) {
+      insertEmptyMessage.innerText = '字數超出上限！'
+      return
+    }
+    if (counts > 0 && counts <= 140) {
+      insertEmptyMessage.innerText = ''
+    }
+    if (counts === 0) {
+      insertEmptyMessage.innerText = '內容不可空白'
+    }
+  }
+</script>
