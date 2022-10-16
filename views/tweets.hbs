@@ -1,10 +1,10 @@
 {{>left route='tweets'}}
 <div class="col-6">
-  {{!-- test --}}
+  {{> messages}}
   <div class="card">
-    <div class="card-home" style="border-bottom: 18px solid	#E6ECF0;">
+    <div class="cards-home opacity-100" style="background-color:white;border-bottom: 18px solid #E6ECF0;">
       {{>header route='tweets'}}
-      <div class="post-tweet" style="width:639px;height:153px;border-top: 1px solid	#E6ECF0;" data-bs-toggle="modal"
+      <div class="post-tweet" style="width:634px;height:153px;border-top: 1px solid	#E6ECF0;" data-bs-toggle="modal"
         data-bs-target="#tweet-modal">
         <div class="card-image m-3">
           {{#if user.avatar}}
@@ -16,16 +16,18 @@
           {{/if}}
           <span style="color:#6C757D;font-size: 18px;margin:8px;">有什麼新鮮事？</span>
         </div>
-        <div class="d-flex justify-content-end m-4">
+        <div class="d-flex justify-content-end m-3">
           <button type="submit" class="btn btn-primary"
             style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px;margin-left:24px">推文</button>
         </div>
       </div>
     </div>
     <div>
-      {{#each tweets}}
-      {{>tweet route='tweets'}}
-      {{/each}}
+      <div class="tweets-home" style="margin-top:220px;">
+        {{#each tweets}}
+        {{>tweet route='tweets'}}
+        {{/each}}
+      </div>
     </div>
   </div>
   {{!-- pagination --}}

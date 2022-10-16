@@ -1,6 +1,6 @@
 <div class="col-3">
   <nav class="side-bar-right"
-    style="background-color:#FAFAFB;width:273px;height:731px; border-radius:20px;margin-top:16px;">
+    style="background-color:#FAFAFB;width:273px;height:1000px; border-radius:20px;margin-top:16px;">
     <div class="side-bar-right-top" style="border-bottom: 1px solid	#E6ECF0;">
       <p class="text-start m-3">
         <strong style="color: #171725;font-size: 24px;">推薦跟隨</strong>
@@ -11,6 +11,7 @@
       {{#each recommendedUsers}}
         {{#ifCondFalse this.id ../user.id}}
           <div class="user-info-item d-flex" style="margin-left:20px;">
+            
             <div class="image m-2 col-2">
               <a href="/users/{{this.id}}/tweets">
                 <img src="{{#if this.avatar}}{{this.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}" alt=""

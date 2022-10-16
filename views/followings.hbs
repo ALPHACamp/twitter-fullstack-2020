@@ -1,5 +1,6 @@
 {{>left}}
 <div class="col-6">
+  {{>messages }}
   <div class="col container">
     {{!-- /user/self --}}
     {{#with user}}
@@ -25,7 +26,11 @@
       <div class="d-flex">
         <div class="col-1 m-3">
           <a href="/users/{{this.id}}/tweets">
-            <img src="{{this.avatar}}" alt="avatar" style="width:50px;height:50px;border-radius:50%;">
+            {{#if this.avatar}}
+            <img src="{{this.avatar}}" class="border border-4  border-light rounded-circle" width="50px" height="50px" style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
+            {{else}}
+            <img src="/images/avatar.png" class="border border-4  border-light rounded-circle" width="50px" height="50px" style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
+            {{/if}}
           </a>
         </div>
         <div class="col-7 m-1">

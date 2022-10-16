@@ -42,7 +42,7 @@ const replyController = {
         TweetId: req.params.id,
         comment
       })
-      req.flash('success_msg', '成功回覆')
+      req.flash('success_messages', '成功回覆')
       return res.redirect('back')
     } catch (err) {
       next(err)

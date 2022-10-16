@@ -58,7 +58,7 @@ const tweetController = {
         TweetId: req.params.id
       })
     ]).then(() => {
-      req.flash('success_messages', 'success like!')
+      req.flash('success_messages', '成功 like!')
       return res.redirect('back')
     }).catch(err => next(err))
   },
@@ -77,9 +77,6 @@ const tweetController = {
     } catch (err) {
       next(err)
     }
-  },
-  getModalsTabs: (req, res) => {
-    res.render('modals/self')
   }
 }
 
