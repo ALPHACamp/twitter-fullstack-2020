@@ -302,7 +302,7 @@ const userController = {
       })
       .catch(err => next(err))
   },
-  // 暫時調整為getSetting，與下方命名規則相同
+  // 暫時調整為get，與下方命名規則相同
   getSetting: async (req, res) => {
     const id = req.params.id
     const user = await User.findByPk(id, { raw: true })
@@ -316,6 +316,7 @@ const userController = {
       const { id, account, email } = getUser(req)
 
       if (editPassword !== editCheckPassword) throw new Error('密碼與確認密碼不符')
+      if (editName.length > 50) throw new Error('超過字數，字數要在50字以內')
       if (editAccount !== account) {
         const exitAccount = await User.findOne({ where: { account: editAccount } })
         if (exitAccount) throw new Error(' 帳號已重複註冊！')
