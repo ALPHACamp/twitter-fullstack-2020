@@ -134,7 +134,7 @@
     .then(response => {
       const userInfo = response.data
       cover.src = userInfo.cover
-      avatar.src = userInfo.avatar || '/images/avatar-default.jpg'
+      avatar.src = userInfo.avatar || '../../images/avatar.png'
       name.value = userInfo.name
       introduction.value = userInfo.introduction
       document.querySelector('.name-count span').innerText = userInfo.name.length + '/50'
@@ -196,12 +196,12 @@
             style="width5:50px;height:50px;left:430px;top:100px;z-index:1;">
         </div>
         {{!-- 大頭貼 --}}
-        <div class="image position-absolute" style="top:190px;">
+        <div class="image position-absolute" style="top:150px; width:130px; height: 130px;">
           <img src="
             {{#if user.avatar}} 
               {{user.avatar}} 
             {{else}} 
-              /images/avatar.png
+              ../../images/avatar.png
             {{/if}}" alt="avatar" class="user-avatar rounded-circles" id="avatar" style="width:140px;height:140;top:140px;margin-left:16px;border-radius:50%;border:4px solid white;">
           
             <label class="form-labe position-absolute" style="left:60px;top:50px;z-index:1;" for="image">
@@ -211,7 +211,7 @@
             <input class="form-control" type="file" class="form-control-file" id="image" style="display:none"
               name="avatar" onchange="previewAvatarImage()">
         </div>
-        <div class="form-group form-floating" style="margin-top:80px;margin-left:16px;margin-right:16px;">
+        <div class="form-group form-floating" style="margin-top:100px;margin-left:16px;margin-right:16px;">
           <input type="text" name="name" id="name" class="form-control font-weight-bold m-auto" placeholder="名稱"
             value="{{user.name}}" style="background-color:#F5F8FA; border-bottom: 2px solid #657786;height:54px;"
             oninput="counts()" maxlength='50' required autofocus>
