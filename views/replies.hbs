@@ -28,7 +28,7 @@
                 <span>{{tweet.Likes.length}}</span>
                 <span>喜歡的次數</span>
               </small>
-            <form action="/tweets/{{this.id}}/replies" method="GET" style="display:inline">
+            <form action="/tweets/{{tweet.id}}/replies" method="GET" style="display:inline">
               <small class="text-muted">
                 <button class="me-5" type="submit" style="border:none;background: none;">
                   <a href="" data-bs-toggle="modal" data-bs-target="#replyModal">
