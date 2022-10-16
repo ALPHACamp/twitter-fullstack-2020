@@ -44,6 +44,8 @@ ALPHA Camp | 學期 3 | Simple Twitter | 自動化測試檔 (全端開發組)
 2. MySQL
 ```
   install MySQL
+  create database ac_twitter_workspace;
+  create database ac_twitter_workspace_test;
 ```
 
 3. windows environment need install file
@@ -62,24 +64,9 @@ git clone https://github.com/elliotcs30/twitter-fullstack-2020.git
 
 2. Install the required dependencies
 ```shell
-  npm install
+npm install
 ```
 
-3. Check package version
-
-```shell
-  npm install nodemon@2.0.19
-  npm install express@4.17.1
-  npm install express-handlebars@4.0.2
-  npm install body-parser@1.20.0
-  npm install method-override@3.0.0
-  npm install express-session@1.17.1
-  npm install passport@0.4.1 passport-local@1.0.0
-  npm install connect-flash@0.1.1
-  npm install bcryptjs@2.4.3
-  npm install dotenv@8.2.0
-  npm init @eslint/config
-```
 
 4. Set environment variables in .env file according to .env.example
 
