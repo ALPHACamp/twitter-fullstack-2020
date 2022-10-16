@@ -11,9 +11,10 @@
   top: 0px;
   background: #ffffff;
 }
+
 .navigation {
   display: flex;
-  :auto ;
+  : auto;
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
@@ -24,6 +25,7 @@
   left: 0px;
   top: 66px;
 }
+
 .ac-icon {
   position: absolute;
   width: 50px;
@@ -31,6 +33,7 @@
   left: 8px;
   top: 8px;
 }
+
 .navigation-item {
   width: 178px;
   height: 58px;
@@ -38,6 +41,7 @@
   order: 0;
   flex-grow: 0;
 }
+
 .navigation-item-text {
   width: 72px;
   height: 26px;
@@ -51,6 +55,7 @@
   order: 1;
   flex-grow: 0;
 }
+
 /* main-middle */
 .main-middle {
   position: absolute;
@@ -59,18 +64,21 @@
   left: 332px;
   top: 1px;
 }
+
 .header {
   width: 641px;
   height: 51px;
   left: 332px;
   top: 24px;
 }
+
 .post-tweet {
   width: 639px;
   height: 130px;
   left: 333px;
   top: 91px;
 }
+
 .post-input {
   display: flex;
   flex-direction: row;
@@ -85,6 +93,7 @@
   left: 357.19px;
   top: 91px;
 }
+
 .user-photo {
   /* Photo */
   width: 50px;
@@ -95,6 +104,7 @@
   order: 0;
   flex-grow: 0;
 }
+
 .text-box {
   display: flex;
   flex-direction: column;
@@ -107,6 +117,7 @@
   order: 0;
   flex-grow: 0;
 }
+
 .description {
   /* /tweet/base/content */
 
@@ -126,6 +137,7 @@
   order: 1;
   flex-grow: 0;
 }
+
 .description-text {
   width: 528px;
   height: 78px;
@@ -161,6 +173,7 @@
   right: 452.19px;
   top: calc(50% - 40px / 2 - 425px);
 }
+
 .tweet-btn {
   display: flex;
   flex-direction: column;
@@ -175,6 +188,7 @@
   order: 0;
   flex-grow: 0;
 }
+
 .tweet-btn-text {
   /* Text */
   width: 32px;
@@ -192,6 +206,7 @@
   order: 0;
   flex-grow: 0;
 }
+
 .tweets-feed {
   display: flex;
   flex-direction: column;
@@ -203,6 +218,7 @@
   left: 333px;
   top: 237px;
 }
+
 .right-column {
   position: absolute;
   width: 273px;
@@ -212,6 +228,7 @@
   background: #fafafb;
   border-radius: 16px;
 }
+
 .navigation-btn-color {
   /* _base */
   /* Auto layout */
@@ -231,6 +248,7 @@
   align-self: stretch;
   flex-grow: 0;
 }
+
 .navigation-btn-text {
   /* Text */
 
@@ -258,6 +276,7 @@
   order: 0;
   flex-grow: 0;
 }
+
 .log-out {
   position: absolute;
   width: 178px;
@@ -265,6 +284,7 @@
   left: 0px;
   top: 1142px;
 }
+
 /* tweet */
 .tweet-card {
   display: flex;
@@ -278,6 +298,7 @@
   order: 0;
   flex-grow: 0;
 }
+
 /* modal */
 .modal-box {
   position: absolute;
@@ -289,9 +310,15 @@
   background: #ffffff;
   border-radius: 14px;
 }
+
 .side-bar-left {
   position: fixed;
 }
+
 .side-bar-right {
+  position: fixed;
+}
+
+.cards-home {
   position: fixed;
 }
