@@ -135,7 +135,7 @@
     .then(response => {
       const userInfo = response.data
       cover.src = userInfo.cover
-      avatar.src = userInfo.avatar || '/images/avatar-default.jpg'
+      avatar.src = userInfo.avatar || '../../images/avatar.png'
       name.value = userInfo.name
       introduction.value = userInfo.introduction
       document.querySelector('.name-count span').innerText = userInfo.name.length + '/50'
@@ -187,48 +187,43 @@
           {{!-- COVER --}}
           <img src="{{user.cover}}" class="card-img-top position-relative" id="cover" alt="cover"
             style="width:100%; height:200px; filter:brightness(60%);opacity: 0.75;">
-
-          {{!-- COVER 內的兩個 icons --}}
-          <div>
-            <label class="form-labe position-absolute" style="left:330px;top:100px;z-index:1;" for="coverImage">
-              <img src="/images/camera.png" alt="camera" style="width:50px;height:50px;">
-            </label>
-            <input class="form-control" type="file" class="form-control-file" id="coverImage" style="display:none"
-              name="coverImage" onchange="previewCoverImage()">
-            <img src="/images/close.png" alt="close" class="position-absolute" id="cover-close-btn"
-              style="width5:50px;height:50px;left:430px;top:100px;z-index:1;">
-          </div>
-          {{!-- 大頭貼 --}}
-          <div class="image position-absolute" style="top:190px;">
-            <img src="
+        {{!-- COVER 內的兩個 icons --}}
+        <div>
+          <label class="form-labe position-absolute" style="left:330px;top:100px;z-index:1;" for="coverImage">
+            <img src="/images/camera.png" alt="camera" style="width:50px;height:50px;">
+          </label>
+          <input class="form-control" type="file" class="form-control-file" id="coverImage" style="display:none" name="coverImage" onchange="previewCoverImage()">
+          <img src="/images/close.png" alt="close" class="position-absolute" id="cover-close-btn"
+            style="width5:50px;height:50px;left:430px;top:100px;z-index:1;">
+        </div>
+        {{!-- 大頭貼 --}}
+        <div class="image position-absolute" style="top:150px; width:130px; height: 130px;">
+          <img src="
             {{#if user.avatar}} 
               {{user.avatar}} 
             {{else}} 
-              /images/avatar.png
-            {{/if}}" alt="avatar" class="user-avatar rounded-circles" id="avatar"
-              style="width:140px;height:140;top:140px;margin-left:16px;border-radius:50%;border:4px solid white;">
-
+              ../../images/avatar.png
+            {{/if}}" alt="avatar" class="user-avatar rounded-circles" id="avatar" style="width:140px;height:140;top:140px;margin-left:16px;border-radius:50%;border:4px solid white;">
             <label class="form-labe position-absolute" style="left:60px;top:50px;z-index:1;" for="image">
               <img src="/images/camera.png" alt="camera" style="width5:50px;height:50px;">
             </label>
 
             <input class="form-control" type="file" class="form-control-file" id="image" style="display:none"
               name="avatar" onchange="previewAvatarImage()">
-          </div>
-          <div class="form-group form-floating" style="margin-top:80px;margin-left:16px;margin-right:16px;">
-            <input type="text" name="name" id="name" class="form-control font-weight-bold m-auto" placeholder="名稱"
-              value="{{user.name}}" style="background-color:#F5F8FA; border-bottom: 2px solid #657786;height:54px;"
-              oninput="counts()" maxlength='50' required autofocus>
-            <label for="name">請輸入名稱</label>
-            <div class="text-end" id="char_count_name" style="font-size:12px"><span>0/50</span></div>
-          </div>
-          <div class="form-group form-floating m-3">
-            <textarea type="text" name="introduction" id="introduction" class="form-control font-weight-bold m-auto"
-              placeholder="請輸入自我介紹" style="background-color:#F5F8FA; border-bottom: 2px solid #657786;height:147px;"
-              maxlength="160" oninput="counts()" required autofocus>{{user.introduction}}</textarea>
-            <label for="introduction">自我介紹</label>
-            <div class="text-end" id="char_count_intro" style="font-size:12px"><span>0/160</span></div>
-          </div>
+        </div>
+        <div class="form-group form-floating" style="margin-top:100px;margin-left:16px;margin-right:16px;">
+          <input type="text" name="name" id="name" class="form-control font-weight-bold m-auto" placeholder="名稱"
+            value="{{user.name}}" style="background-color:#F5F8FA; border-bottom: 2px solid #657786;height:54px;"
+            oninput="counts()" maxlength='50' required autofocus>
+          <label for="name">請輸入名稱</label>
+          <div class="text-end" id="char_count_name" style="font-size:12px"><span>0/50</span></div>
+        </div>
+        <div class="form-group form-floating m-3">
+          <textarea type="text" name="introduction" id="introduction" class="form-control font-weight-bold m-auto"
+            placeholder="請輸入自我介紹" style="background-color:#F5F8FA; border-bottom: 2px solid #657786;height:147px;"
+            maxlength="160" oninput="counts()" required autofocus>{{user.introduction}}</textarea>
+          <label for="introduction">自我介紹</label>
+          <div class="text-end" id="char_count_intro" style="font-size:12px"><span>0/160</span></div>
         </div>
       </div>
     </div>
