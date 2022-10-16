@@ -1,5 +1,6 @@
 {{>left route='tweets'}}
 <div class="col-6">
+  {{>messages }}
   <div class="card">
     {{>header route='replies'}}
     <div class="card-home" style="border-bottom: 18px solid	#E6ECF0;border-top: 1px solid	#E6ECF0;">
@@ -100,15 +101,42 @@
             <div class="col mx-0 px-0">
               <textarea name="comment" class="border-0 mt-2 mx-0 px-0" type="text"
                 style="width:95%; border: none;outline: none;resize:none" placeholder="推你的回覆" id="floatingTextarea2"
-                rows="3" maxlength="140" required></textarea>
+                rows="3" maxlength="140" oninput="repliesCounts()" required></textarea>
             </div>
+            
           </div>
           <div class="text-end mt-5">
-            <button type="submit" class="btn"
-              style="background-color:#FF6600;border-radius: 50px;color:white">回覆</button>
+            <div class="align-self-end">
+              <div style="color:#FF0000;top: 270px;right: 120px; display:inline;">
+                <span id="repliesEmptyMessage"><span>內容不可空白</span></span>
+              </div>
+              <div id="repliesCharCount" style="display:inline;"><span>0/140</span></div>
+
+              <button type="submit" class="btn"
+                style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px;margin-left:24px;">回覆</button>
+            </div>
+            
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+<script>
+  function repliesCounts() {
+    const counts = document.getElementById('floatingTextarea2').value.length
+    const repliesEmptyMessage = document.getElementById('repliesEmptyMessage')
+    const chatText = document.getElementById('repliesCharCount')
+    chatText.innerText = counts + '/140'
+    if (counts > 140) {
+      repliesEmptyMessage.innerText = '字數超出上限！'
+      return
+    }
+    if (counts > 0 && counts <= 140) {
+      repliesEmptyMessage.innerText = ''
+    }
+    if (counts === 0) {
+      repliesEmptyMessage.innerText = '內容不可空白'
+    }
+  }
+</script>

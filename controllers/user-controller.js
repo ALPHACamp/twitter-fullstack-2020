@@ -192,7 +192,7 @@ const userController = {
         UserId: id,
         TweetId: req.params.tweet_id
       })
-      req.flash('success_messages', 'success like!')
+      req.flash('success_messages', '成功 like!')
       return res.redirect('back')
     } catch (err) {
       next(err)
@@ -211,7 +211,7 @@ const userController = {
       ]).then(like => {
         if (!like) return req.flash('error_messages', '你沒有like這個tweet!')
         like.destroy()
-        req.flash('success_messages', 'success unlike!')
+        req.flash('success_messages', '成功 unlike!')
         return res.redirect('back')
       }).catch(err => next(err))
     } catch (err) {
