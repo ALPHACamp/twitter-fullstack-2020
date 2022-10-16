@@ -8,6 +8,8 @@
     "dev": "NODE_ENV=development nodemon app.js",
     "lint": "eslint \"**/*.js\" --fi",
     "test": "mocha test --exit --recursive --timeout 5000",
+    "dbinit": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate",
+    "seedinit": "npx sequelize db:seed:undo:all && npx sequelize db:seed:all",
     "start-windows": "cross-env NODE_ENV=development node app.js",
     "dev-windows": "cross-env NODE_ENV=development nodemon app.js",
     "test-windows": "cross-env \"NODE_ENV=test\" && mocha test --exit --recursive --timeout 5000"
