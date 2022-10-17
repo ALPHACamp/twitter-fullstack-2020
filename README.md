@@ -43,7 +43,9 @@ ALPHA Camp | 學期 3 | Simple Twitter | 自動化測試檔 (全端開發組)
 
 2. MySQL
 ```
-  install MySQL
+  Downloads MySQL and install [Downloads](https://dev.mysql.com/downloads/mysql/)
+  Setting MySQL [reference](https://siddharam.com.tw/post/20190807/)
+  
   create database ac_twitter_workspace;
   create database ac_twitter_workspace_test;
 ```
@@ -59,38 +61,38 @@ ALPHA Camp | 學期 3 | Simple Twitter | 自動化測試檔 (全端開發組)
 1. Clone the project
 
 ```shell
-git clone https://github.com/elliotcs30/twitter-fullstack-2020.git
+  git clone https://github.com/elliotcs30/twitter-fullstack-2020.git
 ```
 
 2. Install the required dependencies
 ```shell
-npm install
+  npm install
 ```
 
 
 4. Set environment variables in .env file according to .env.example
 
-```
-touch .env
+```shell
+  touch .env
 ```
 
 
 5. Seed create your database 
 
-```
-npm run dbinit
-npm run seedinit
+```shell
+  npm run dbinit
+  npm run seedinit
 ```
 
 6. Start the server
 
-```
-npm run start         // for mac
-npm run start-windows // for windows
+```shell
+  npm run start         // for mac
+  npm run start-windows // for windows
 ```
 
 7. Execute successfully if seeing following message
 
-```
-Example app listening on port 3000!
+```shell
+  Example app listening on port 3000!
 ```
