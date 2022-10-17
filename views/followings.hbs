@@ -1,0 +1,62 @@
+{{>left}}
+<div class="col-6">
+  {{>messages }}
+  <div class="col container">
+    {{!-- /user/self --}}
+    {{#with user}}
+    <div class="content" style="border:1px solid #E6ECF0">
+      <div class="row back-bar m-3">
+        <div class="col-6 col-sm-1 back-image">
+          <a href="/users/{{id}}/tweets">
+            <img src="/images/back.png" alt="back" style="width:17px;hegith:14px">
+          </a>
+        </div>
+        <div class="col-6 col-sm-1 back-user" style="width:100px;height:50px;">
+          <p class="user-name m-0" style="color: #171725;font-size: 18px;">
+            <string>{{name}}</string>
+          </p>
+          <p class="user-name m-0" style="color: #6C757D;font-size: 13px;">{{Tweets.length}} 推文</p>
+        </div>
+      </div>
+    </div>
+    {{/with}}
+    {{>followship-tab route='followings'}}
+    {{#each followings}}
+    <div class="followings" style="border:1px solid #E6ECF0">
+      <div class="d-flex">
+        <div class="col-1 m-3">
+          <a href="/users/{{this.id}}/tweets">
+            {{#if this.avatar}}
+            <img src="{{this.avatar}}" class="border border-4  border-light rounded-circle" width="50px" height="50px" style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
+            {{else}}
+            <img src="/images/avatar.png" class="border border-4  border-light rounded-circle" width="50px" height="50px" style="transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;" />
+            {{/if}}
+          </a>
+        </div>
+        <div class="col-7 m-1">
+          <p>{{this.name}}</p>
+          <p class="context text-break">{{this.introduction}}</p>
+        </div>
+        <div class="col-2 justify-content-end m-3">
+          {{#if isFollowed}}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit"
+              style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;border-radius:20px; width:96px;height:40px;">
+              正在跟隨
+            </button>
+          </form>
+          {{else}}
+          <form action="/followships" method="POST" class="d-flex flex-row-reverse">
+            <button type="submit" name="id" value="{{this.id}}"
+              style="color: #ff6600;font-size: 16px;background-color:white;border: 1px solid #FF6600;border-radius:20px; width:64px;height:40px;">
+              跟隨
+            </button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+{{>right route='followers'}}

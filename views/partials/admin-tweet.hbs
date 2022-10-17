@@ -1,0 +1,30 @@
+<div class="mx-auto">
+  <div class="row g-0" style="border:1px solid #E6ECF0">
+    <div class=" col-md-2 m-2" style="width: 50px; height: 50px;">
+      {{#if this.User.avatar}}
+      <img src="{{this.User.avatar}}" class="img-fluid rounded-circle" alt="User Photo"
+        style="width: 50px; height: 50px;">
+      {{else}}
+      <img src="/images/avatar.png" class="img-fluid rounded-circle" alt="User Photo"
+        style="width: 50px; height: 50px;">
+      {{/if}}
+    </div>
+    <div class="col-md-10">
+      <div class="card-body">
+        <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;color: black">
+          <h5 class="card-text">{{this.User.name}}
+            <span class="fs-6 fw-lighter mr-1">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
+          </h5>
+        </a>
+        <p class="card-text">{{this.description}}</p>
+      </div>
+    </div>
+    <div class="col-md-1 text-end">
+      <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+        <button type="submit" style="background: none;border: none;">
+          <span style="height: 24px;width:24px"><i class="fa-solid fa-x"></i></span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

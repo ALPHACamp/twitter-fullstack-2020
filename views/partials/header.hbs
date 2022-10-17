@@ -1,0 +1,17 @@
+<div class="card-title back-image mt-2 m-3">
+  <div class="col-6 back-image">
+    <p class="user-name" style="color: #171725;font-size: 18px; display: inline;">
+      {{#ifCond route 'tweets'}}<strong>首頁</strong>{{/ifCond}}
+    </p>
+  </div>
+  <div class="col-6 back-image">
+    <p class="user-name m-2">
+      {{#ifCond route 'replies'}}
+      <a href="/" style="text-decoration: none;color:black;">
+        <img src="/images/back.png" alt="back" style="width:17px;height:14px">
+      </a>
+      <strong class="m-2">推文</strong>
+      {{/ifCond}}
+    </p>
+  </div>
+</div>
