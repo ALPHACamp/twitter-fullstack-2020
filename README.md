@@ -1,5 +1,5 @@
 ## Project Name
-[Alphitter](https://shielded-springs-90732.herokuapp.com/signin) deployed on Heroku
+Alphitter
 
 ## Description
 Alphacamp 的期末分組挑戰：「用全端開發模式，建立類似 twitter 的使用者論壇」
