@@ -1,0 +1,28 @@
+{{#each value}}
+<div class="reply d-flex px-4 py-3">
+  <a href="/users/{{this.id}}/tweets">
+    <img src="{{checkAvatar this.avatar}}" class="rounded-circle reply-avatar">
+  </a>
+  <div>
+    <div class="mb-4" style="position: relative;">
+      <a href="/users/{{this.id}}/tweets" style="text-decoration:none;">
+        <span class="fw-bold reply-name">{{this.name}}</span>
+      </a>
+      {{#ifCond ../loginUser.id this.id}}
+      {{else}}
+        {{#if this.isFollowing}}
+        <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+          <button type="submit" class="user-following">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="POST" class="follow-btn" style="display: contents;">
+          <input type="hidden" value="{{this.id}}" name="followingId">
+          <button type="submit" class="user-unfollowing">跟隨</button>
+        </form>
+        {{/if}}
+      {{/ifCond}}
+    </div>
+    <p class="reply-comment m-0">{{this.introduction}}</p>
+  </div>
+</div>
+  {{/each}}

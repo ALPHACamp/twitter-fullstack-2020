@@ -1,0 +1,114 @@
+<div class="border-start border-end">
+  {{> user-header}}
+
+  {{!-- 使用者資料 --}}
+  <div class="user-card">
+    <img class="user-banner" src="{{checkBanner user.banner}}"> 
+    <div>
+      <img src="{{checkAvatar user.avatar}}" class="user-avatar">
+      {{#ifCond user.id loginUser.id}}
+        <button class="user-edit" id="edit-user" data-id="{{user.id}}"
+          data-bs-toggle="modal" data-bs-target="#edit-user-modal">編輯個人資料</button>
+      {{else}}
+        <div class="user-option" style="display: inline;">
+          <button class="text-decoration-none message">
+            <img src="/images/icon-orange-message.png">
+          </button>
+          <button class="text-decoration-none notification">
+            <img src="/images/icon-orange-notification.png">
+          </button>
+          {{#if user.isFollowing}}
+            <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: contents;">
+              <button type="submit" class="user-following">正在跟隨</button>
+            </form>
+          {{else}}
+            <form action="/followships" method="POST" style="display: contents;">
+              <input type="hidden" value="{{user.id}}" name="followingId">
+              <button type="submit" class="user-unfollowing">跟隨</button>
+            </form>
+          {{/if}}
+        </div>
+      {{/ifCond}}
+    </div>
+
+    <div class="user-info">
+      <h5 class="user-name fw-bold m-0">{{user.name}}</h5>
+      <p class="user-account">@{{user.account}}</p>
+      <p class="user-introduction">{{user.introduction}}</p>
+      <a class="text-decoration-none user-follow" href="/users/{{user.id}}/followings">
+        <span class="user-follow-number">{{user.followingCounts}} 個</span>追隨中
+      </a>
+      <a class="text-decoration-none user-follow" href="/users/{{user.id}}/followers">
+        <span class="user-follow-number">{{user.followerCounts}} 位</span>追隨者
+      </a>
+    </div>
+  </div>
+
+  <ul class="d-flex user-nav-tabs">
+    <li class="user-nav-item {{#if tweets}}active{{/if}}">
+      <a class="user-nav-link" href="/users/{{user.id}}/tweets">推文</a>
+    </li>
+    <li class="user-nav-item {{#if replies}}active{{/if}}">
+      <a class="user-nav-link" href="/users/{{user.id}}/replies">回覆</a>
+    </li>
+    <li class="user-nav-item {{#if likedTweets}}active{{/if}}">
+      <a class="user-nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
+    </li>
+  </ul>
+
+  <div class="pt-2">
+    {{#each tweets}}
+      {{> tweet-card}}
+      <hr>
+      {{> reply-modal tweet=this}}
+    {{/each}}
+
+    {{#each replies}}
+      {{> reply-card}}
+    {{/each}}
+
+    {{#each likedTweets}}
+      {{> tweet-card}}
+      <hr>
+      {{> reply-modal tweet=this}}
+    {{/each}}
+  </div>
+</div>
+
+{{!-- modal --}}
+<div class="modal fade" id="edit-user-modal" tabindex="-1" aria-labelledby="edit-user-ModalLabel" aria-hidden="true">
+  <form action="/api/users/" method="POST" id="user-modal-form" enctype="multipart/form-data">
+    <div class="modal-dialog">
+      <div class="modal-content" style="height: 610px;">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title" id="edit-user-ModalLabel">編輯個人資料</h5>
+          <button type="button" class="modal-save" data-bs-dismiss="modal" id="user-modal-save">儲存</button>
+        </div>
+  
+        <div class="user-banner" id="user-modal-banner">
+          <label class="form-label" for="banner">
+            <img class="add-photo" src="/images/icon-white-add-photo.png">
+          </label>
+          <input class="form-control" style="display: none;" type="file" class="form-control-file" id="banner" name="banner" onchange="previewImage(this)">
+          <label for="remove-checked">
+            <img class="remove-photo" src="/images/icon-white-close.png" onclick="removeBanner()">
+          </label>
+          <input type="checkbox" id="remove-checked" name="remove-checked" style="display: none;">
+        </div>
+  
+        <div class="user-avatar" id="user-modal-avatar" style="background-size: cover;">
+          <label class="form-label" for="avatar">
+            <img class="add-photo" src="/images/icon-white-add-photo.png">
+          </label>
+          <input class="form-control" style="display: none;" type="file" class="form-control-file" id="avatar" name="avatar"
+              onchange="previewImage(this)">
+        </div>
+  
+        <div class="modal-body" id="user-modal-body">
+          {{!-- input user name & introduction --}}
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

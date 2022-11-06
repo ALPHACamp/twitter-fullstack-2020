@@ -1,0 +1,38 @@
+<div class="modal fade" id="tweet-reply-modal-{{tweet.id}}" tabindex="-1" aria-labelledby="tweet-reply-modalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 634px; height: 500px;">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body row pt-2 pb-0" style="height: 200px;">
+        <div class="d-flex flex-column col-1 me-3">
+          <a href="/users/{{tweet.UserId}}/tweets">
+            <img src="{{checkAvatar tweet.User.avatar}}" style="border-radius: 50px; width: 50px; height: 50px;">
+          </a>
+          <p class="position-absolute vertical-line"
+            style="width: 2px; height: 100px; left: 63px; top: 85px; background-color: #a9a9a9;"></p>
+        </div>
+        <div class="col-10">
+          <div class="">
+            <a href="/users/{{tweet.UserId}}/tweets" style="text-decoration:none;">
+              <span class="fw-bold me-2" style="font-size: 16px; color: black;">{{tweet.User.name}}</span>
+            </a>
+            <span style="color: #6C757D;font-size: 14px;">@{{tweet.User.account}}．{{relativeTimeFromNow
+              tweet.createdAt}}</span>
+          </div>
+          <p style="font-size: 16px;" class="limit-tweet-length">{{tweet.description}}</p>
+          <div class="reply-secondary">
+            <span style="color: #6C757D;font-size: 10px;">回覆給</span>
+            <a href="/users/{{tweet.UserId}}/tweets"
+              class="text-decoration-none reply-account">@{{tweet.User.account}}</a>
+          </div>
+          <p class="position-absolute vertical-line" style="z-index: 1;left: -13px; top: 70px;"></p>
+        </div>
+      </div>
+      <form action="/tweets/{{tweet.id}}/replies" method="POST">
+        {{> post-reply-form}}
+      </form>
+    </div>
+  </div>
+</div>
