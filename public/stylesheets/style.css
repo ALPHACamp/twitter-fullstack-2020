@@ -1,0 +1,72 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+.first-con{
+margin-top:69px;
+width:440px;
+text-align:center;
+}
+
+first-con img{
+display:block; 
+margin:auto;
+}
+
+#title {
+margin:40px;
+font-weight:700;
+font-size:28px;
+font-family:"Noto Sans TC";
+}
+
+form div {
+text-align: start;
+background-color:#F5F8FA;
+margin:40px 50px;
+width:356px;
+display: flex;
+flex-direction: column;
+font-family:"Noto Sans TC";
+height:54px;
+}
+
+label{
+font-size: 14px;
+padding:5px;
+}
+
+::placeholder{
+color:#B5B5BE;
+font-size:16px;
+}
+
+input{
+border:none;
+background-color:#F5F8FA;
+border-bottom: 2px solid #657786;
+font-size:16px;
+padding:5px;
+}
+
+input:hover{
+  border-bottom: 2px solid #50B5FF;
+}
+
+#button{
+border-radius:50px; 
+border:none;
+background-color:#FF6600;
+color:white;
+width:356px;
+height: 46px;
+font-size:20px;
+}
+
+.register{
+font-family:"Noto Sans TC";
+margin:8px;
+padding:12px 22px 0 0;
+font-size:16px;
+}
+.register span{
+margin: 10px;
+}
