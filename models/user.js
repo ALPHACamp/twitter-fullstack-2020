@@ -32,11 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     avatar: DataTypes.STRING,
     introduction: DataTypes.TEXT,
-    role: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: 'user'
-    }
+    role: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'User',
