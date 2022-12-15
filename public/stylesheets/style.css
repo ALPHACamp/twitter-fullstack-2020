@@ -1,4 +1,23 @@
-@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+/* @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css); */
+@import "@fontsource/Noto_Sans_TC";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+ 
+@font-face {
+  font-family: "Noto Sans TC";
+  src:local(Noto Sans TC);
+  unicode-range:	U+4E00-U+9FFF;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src:local(Montserrat);
+  unicode-range: U+2150-U+218F;
+} 
+
+/* body{
+  font-family: "Noto Sans TC"  !important ;
+} */
+
 
 .first-con{
 margin-top:69px;
@@ -15,7 +34,7 @@ margin:auto;
 margin:40px;
 font-weight:700;
 font-size:28px;
-font-family:"Noto Sans TC";
+font-family: "Noto Sans TC","Montserrat";
 }
 
 form div {
@@ -25,7 +44,7 @@ margin:40px 50px;
 width:356px;
 display: flex;
 flex-direction: column;
-font-family:"Noto Sans TC";
+/* font-family:"Noto Sans TC"; */
 height:54px;
 }
 
@@ -59,14 +78,131 @@ color:white;
 width:356px;
 height: 46px;
 font-size:20px;
+margin-left:15px;
 }
 
 .register{
-font-family:"Noto Sans TC";
+/* font-family:"Noto Sans TC"; */
 margin:8px;
 padding:12px 22px 0 0;
 font-size:16px;
 }
 .register span{
 margin: 10px;
+}
+
+.cancel{
+  margin-top:30px;
+  margin-left: 13px;
+  font-size: 16px;
+}
+
+/* .tab_css {
+display: flex;
+flex-wrap: wrap;
+justify-content: start;
+}
+
+.tab_css input {
+display: none
+}
+
+.tab_css label {
+margin: 0 5px 5px 0;
+padding: 10px 16px;
+cursor: pointer;
+font-weight: bold;
+color: #657786;
+width:150px;
+text-align: center;
+}
+
+.tab_content {
+order: 1;
+display: none;
+}
+
+.tab_css input:checked+label{
+  opacity: 1;
+font-weight: bold;
+color: #FF6600;
+border-bottom: 2px solid #FF6600;
+}
+
+.tab_css input:checked+label+.tab_content {
+display: initial;
+} */
+
+/* 貼文渲染 */
+.tweets{
+  width:100%;
+  border-top:1px solid  #E6ECF0;
+  border-left:1px solid  #E6ECF0 ;
+  border-right:1px solid  #E6ECF0 ;
+}
+.tweets-name{
+  font-size:16px;
+  font-weight: bold;
+}
+
+.tweets-account{
+  font-size:14px;color:#6C757D;
+}
+
+.tweets p{
+  height:100%;
+  margin-left:40px; 
+  font-size:16px;
+}
+
+.tweets-icons{
+  margin-left:40px;
+  font-size: 14px;
+}
+
+.tweets-icons img{
+  width:20px;
+}
+
+/* followings header */
+.tab-above{
+border-bottom:1px solid  #E6ECF0;
+display: flex;
+align-items: center;
+padding-left: 28px;
+}
+.tab-above div{
+  margin-top: 16px;
+  margin-left:18px;
+}
+.tab-above p{
+  font-size:13px;
+  color:#6C757D;
+}
+.personal-name{
+  font-size: 18px;
+  font-weight:700px;
+}
+
+/* followings tab */
+.tab-above,.following-tab,.following-main{
+border:1px solid  #E6ECF0;
+}
+
+nav .nav-tabs .nav-button{
+  border:none;    
+}
+nav .nav-tabs .nav-link{
+  border:none;
+  color:#6C757D;
+  width:100px;
+  height: 52px;
+  font-size: 15px;
+  font-weight: 700px;
+}
+nav .nav-tabs .nav-link.active{
+  opacity: 1;
+font-weight: bold;
+color: #FF6600;
+border-bottom: 2px solid #FF6600;
 }

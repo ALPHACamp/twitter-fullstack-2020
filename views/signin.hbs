@@ -2,20 +2,21 @@
   <div class="first-con">
     <img src="/images/icon/Icon.png" alt="main-icon">
     <div>
+      {{> message}}
       <h1 id="title">登入 Alphitter</h1>
       <form class="form-signin" action="/signin" method="POST">
         <div>
-          <label for=" name">帳號</label>
-          <input type="text" name="name" id="name" placeholder="請輸入帳號" aria-label="Username">
+          <label for="account">帳號</label>
+          <input type="text" name="account" id="account" placeholder="請輸入帳號" aria-label="User account" required>
         </div>
         <div>
           <label for="password">密碼</label>
-          <input type="text" name="password" placeholder="請輸入密碼" aria-label="Username">
+          <input type="password" name="password" id="password" placeholder="請輸入密碼" aria-label="User password" required>
         </div>
         <button id="button" type="submit">登入</button>
       </form>
       <div class="register inline text-end">
-        <a href=" /">註冊</a><span>‧</span><a href="/">後台登入</a>
+        <a href="/signup">註冊</a><span>‧</span><a href="/admin/signin">後台登入</a>
       </div>
     </div>
   </div>
