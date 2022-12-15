@@ -1,8 +1,7 @@
 const bcrypt = require('bcryptjs')
-const { User } = require('../models')
-
+const { Followship, Like, Reply, Tweet, User } = require('../models')
 const userController = {
-  signUpPage: (req, res) => {
+  signUpPage: (req, res, next) => {
     res.render('signup')
   },
   signUp: async (req, res, next) => {
@@ -36,8 +35,28 @@ const userController = {
       }
     } catch (err) { next(err) }
   },
-  signInPage: (req, res) => {
+  signInPage: (req, res, next) => {
     res.render('signin')
+  },
+  signIn: (req, res, next) => {
+  },
+  logout: (req, res, next) => {
+  },
+  getSetting: (req, res, next) => {
+  },
+  putSetting: (req, res, next) => {
+  },
+  getUserTweets: (req, res, next) => {
+  },
+  getUserReplies: (req, res, next) => {
+  },
+  getUserLikes: (req, res, next) => {
+  },
+  getUserFollowings: (req, res, next) => {
+  },
+  getUserFollowers: (req, res, next) => {
+  },
+  putProfile: (req, res, next) => {
   }
 }
 
