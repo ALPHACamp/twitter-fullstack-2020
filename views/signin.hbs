@@ -1,0 +1,19 @@
+<div class="mb-4 text-center">
+	<h1 class="h3 font-weight-normal mb-3">登入</h1>
+</div>
+<form class="form-signin" action="/signin" method="POST">
+	<div class="form-row mb-3">
+		<label class="form-label" for="account">帳號</label>
+		<input class="form-control" id="account" type="text" name="account" class="form-control" placeholder="請輸入帳號" required
+			autofocus>
+	</div>
+	<div class="form-row mb-3">
+		<label class="form-label" for="password">密碼</label>
+		<input class="form-control" id="password" type="password" name="password" class="form-control"
+			placeholder="請設定密碼" required>
+	</div>
+	<button class="btn btn-primary btn-block" type="submit">Submit</button>
+</form>
+<div class="mb-4 text-center">
+	<p><a href="/signup">註冊</a> - <a href="/admin/signin">後台登入</a></p>
+</div>

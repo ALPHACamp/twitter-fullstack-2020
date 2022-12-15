@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
+    isLike: DataTypes.BOOLEAN,
     UserId: DataTypes.INTEGER,
     TweetId: DataTypes.INTEGER,
     isLike: DataTypes.BOOLEAN
