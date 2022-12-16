@@ -785,18 +785,16 @@ svg {
   top: 16px;
   border: none
 }
-
 .top-follower-header {
   background: #FAFAFB;
-  height: 74px
+  height:74px
 }
-
 .top-follower-title {
   position: absolute;
-  width: 96px;
-  height: 26px;
-  left: 24px;
-  top: 24px;
+    width: 96px;
+    height: 26px;
+    left: 24px;
+    top: 24px;
   font-family: 'Noto Sans TC', sans-serif;
   font-style: normal;
   font-weight: 700;

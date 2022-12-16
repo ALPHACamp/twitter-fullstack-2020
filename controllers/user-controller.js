@@ -164,6 +164,60 @@ const userController = {
         res.redirect('back')
       })
       .catch(err => next(err))
+  },
+  editUserPage: (req, res, next) => {
+    return User.findByPk(helpers.getUser(req).id, { raw: true })
+      .then(user => {
+        if (!user) throw new Error("用戶不存在")
+        res.render('edit', { user })
+      })
+      .catch(err => next(err))
+  },
+  editUser: (req, res, next) => {
+    const { account, name, email, password, checkPassword } = req.body
+    if (!account || !name || !email || !password || !checkPassword) {
+      req.flash('error_messages', '所有內容都需要填寫')
+      return res.redirect('/edit')
+    }
+    if (password !== checkPassword) {
+      req.flash('error_messages', '密碼與密碼確認不相符')
+      return res.redirect('/edit')
+    }
+    if (!email.match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/)) {
+      req.flash('error_messages', 'email 輸入錯誤')
+      return res.redirect('/edit')
+    }
+    if (name.length > 50 || account.length > 50) {
+      req.flash('error_messages', '字數超出上限！')
+      return res.redirect('/edit')
+    }
+
+    return Promise.all([
+      User.findByPk(helpers.getUser(req).id),
+      User.findOne({ where: { email } }),
+      User.findOne({ where: { account } })
+    ])
+      .then(([user, userEmail, userAccount]) => {
+        if (userEmail) {
+          req.flash('error_messages', 'email 已有人使用！')
+          return res.redirect('/edit')
+        } else if (userAccount) {
+          req.flash('error_messages', 'account 已有人使用！')
+          return res.redirect('/edit')
+        } else {
+          user.update({
+            account,
+            name,
+            email,
+            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+          })
+            .then(() => {
+              req.flash('success_messages', '成功修改帳號！')
+              return res.redirect('/edit')
+            })
+            .catch(err => next(err))
+        }
+      })
   }
 }
 
