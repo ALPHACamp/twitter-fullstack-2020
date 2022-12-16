@@ -3,7 +3,7 @@ const helpers = require('../_helpers');
 const authenticated = (req, res, next) => {
 	if (helpers.ensureAuthenticated(req)) {
 		if (helpers.getUser(req).role === 'admin') {
-			req.flash('error_messages', '管理者無法使用前台頁面')
+			req.flash('error_messages', '帳號不存在')
 			return res.redirect('/signin')
 		} else { 
 			return next() 
@@ -17,7 +17,7 @@ const authenticatedAdmin = (req, res, next) => {
 		if (helpers.getUser(req).role === 'admin') {
 			return next()
 		} else { 
-			req.flash('error_messages', '無法使用後台頁面')
+			req.flash('error_messages', '帳號不存在')
 			return res.redirect('/admin/signin')
 		}
 	}
