@@ -3,8 +3,8 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express')
-const handlebars = require('express-handlebars')
 const helpers = require('./_helpers');
+const handlebars = require('express-handlebars')
 const flash = require('connect-flash')
 const session = require('express-session')
 const routes = require('./routes')
@@ -16,7 +16,9 @@ const SESSION_SECRET = 'secret'
 
 app.engine('hbs', handlebars({ extname: '.hbs' }))
 app.set('view engine', 'hbs')
+app.use(express.static('public'))
 
+const db = require('./models')
 app.use(express.urlencoded({ extended: true }))
 
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
@@ -24,7 +26,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 app.use((req, res, next) => {
-	res.locals.success_messages = req.flash('success_messages') 
+	res.locals.success_messages = req.flash('success_messages')
 	res.locals.error_messages = req.flash('error_messages')
 	next()
 })
@@ -36,6 +38,9 @@ app.use(express.static('public'))
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 app.use(routes)
+// app.get('/', (req, res) => res.send('Hello World!'))
+
+// app.get('/twitter', twitterController.getTwitters)
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

@@ -1,0 +1,11 @@
+<div class="middle right-line-2 left-line-2">
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+      <a class="nav-link {{#ifCond route 'tweet'}}active{{/ifCond}}" href="/tweets/{{tweets.User.id}}">推文</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {{#ifCond route ''}}active{{/ifCond}}" href="/">回復</a>
+    </li>
+  </ul>
+</div>
+
