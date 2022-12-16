@@ -1,0 +1,116 @@
+@import 
+url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+.ac-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  margin-top: 69px;
+  margin-bottom: 29px;
+}
+
+.title {
+  width: 185px;
+  height: 26px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+}
+
+h3 {
+font-style: normal;
+font-weight: 700;
+font-size: 28px;
+line-height: 26px;
+color: #1C1C1C;
+text-align: center;
+}
+
+.input-section {
+  background: #F5F8FA;
+  width: 356px;
+  height: 54px;
+  border-radius: 2px;
+  margin-bottom: 32px;
+  margin: 0 auto;
+  margin-bottom: 32px;
+}
+
+.label {
+  color: #696974;
+  background: #F5F8FA;
+  font-size: 14px;
+  width: 334.9px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  margin: 2px 10.55px 0 10.55px;
+}
+
+.input {
+  color: #B5B5BE;
+  background: #F5F8FA;
+  font-size: 16px;
+  width: 356px;
+  border: 0px;
+  line-height: 26px;
+  outline: none;
+  text-indent: 9px;
+  border-bottom: 2px solid #657786;
+}
+
+.input:hover {
+  border-bottom: 2px solid #50B5FF;
+}
+
+.input:focus {
+  border-bottom: 2px solid #50B5FF;
+}
+
+input::placeholder {
+  color: #B5B5BE;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.login-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
+  margin: 0 auto;
+  margin-top: 40px;
+  margin-bottom: 22px;
+  width: 356px;
+  height: 46px;
+  background: #FF6600;
+  border-radius: 50px;
+  border: none;
+  color: #FFFFFF;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.footer {
+  margin: 0 auto;
+  width: 356px;
+  font-size: 16px;
+}
+
+.dot {
+  margin-left: 12px;
+  margin-right: 12px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}

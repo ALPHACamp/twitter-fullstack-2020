@@ -1,0 +1,34 @@
+
+<div class="container">
+  <div class="ac-icon">
+    <img src="/images/icons/icon-logo.png" alt="">
+  </div>
+  <div class="title">
+    <h3>建立你的帳號</h3>
+  </div>
+  <form class="form-login" action="/signup" method="POST">
+    <div class="input-section">
+      <label class="label" for="account">帳號</label>
+      <input class="input" id="account" type="text" name="account" placeholder="請輸入帳號" required>
+    </div>
+    <div class="input-section">
+      <label class="label" for="name">名稱</label>
+      <input class="input" id="name" type="text" name="name" placeholder="請輸入使用者名稱" required>
+    </div>
+    <div class="input-section">
+      <label class="label" for="email">Email</label>
+      <input class="input" id="email" type="email" name="email" placeholder="請輸入 Email" required>
+    </div>
+    <div class="input-section">
+      <label class="label" for="password">密碼</label>
+      <input class="input" id="password" type="password" name="password" placeholder="請輸入密碼" required>
+    </div>
+    <div class="input-section">
+      <label class="label" for="checkPassword">密碼確認</label>
+      <input class="input" id="checkPassword" type="password" name="checkPassword" placeholder="請再次輸入密碼" required>
+    </div>
+    <button class="login-btn" type="submit">註冊</button>
+  </form>
+  <p class="footer d-flex justify-content-center"><a href="/signin">取消</a></p>
+  {{> messages}}
+</div>

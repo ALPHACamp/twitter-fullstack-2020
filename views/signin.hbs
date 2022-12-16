@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="ac-icon">
+    <img src="/images/icons/icon-logo.png" alt="">
+  </div>
+  <div class="title">
+    <h3>登入 Alphitter</h3>
+  </div>
+  <form class="form-login" action="/signin" method="POST">
+    <div class="input-section">
+      <label class="label" for="account">帳號</label>
+      <input class="input" id="account" type="text" name="account" placeholder="請輸入帳號" required>
+    </div>
+    <div class="input-section">
+      <label class="label" for="password">密碼</label>
+      <input class="input" id="password" type="password" name="password" placeholder="請輸入密碼" required>
+    </div>
+    <button class="login-btn" type="submit">登入</button>
+  </form>
+  <p class="footer d-flex justify-content-end"><a href="/signup">註冊</a> <span class="dot">‧</span> <a
+      href="/admin/signin">後台登入</a></p>
+</div>
+{{> messages}}
