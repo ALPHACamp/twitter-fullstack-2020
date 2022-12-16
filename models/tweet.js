@@ -1,13 +1,4 @@
 'use strict'
-<<<<<<< HEAD
-module.exports = (sequelize, DataTypes) => {
-  const Tweet = sequelize.define('Tweet', {
-  }, {})
-  Tweet.associate = function (models) {
-  }
-  return Tweet
-}
-=======
 const {
   Model
 } = require('sequelize')
@@ -46,4 +37,3 @@ module.exports = (sequelize, DataTypes) => {
   })
   return Tweet
 }
->>>>>>> fe99ea42a98a36c1b067f7d56776b8d43d2f57f4

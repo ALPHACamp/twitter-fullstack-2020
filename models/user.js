@@ -1,13 +1,4 @@
 'use strict'
-<<<<<<< HEAD
-module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-  }, {})
-  User.associate = function (models) {
-  }
-  return User
-}
-=======
 const {
   Model
 } = require('sequelize')
@@ -62,4 +53,3 @@ module.exports = (sequelize, DataTypes) => {
   })
   return User
 }
->>>>>>> fe99ea42a98a36c1b067f7d56776b8d43d2f57f4

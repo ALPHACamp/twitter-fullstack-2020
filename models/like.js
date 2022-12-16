@@ -1,13 +1,4 @@
 'use strict'
-<<<<<<< HEAD
-module.exports = (sequelize, DataTypes) => {
-  const Like = sequelize.define('Like', {
-  }, {})
-  Like.associate = function (models) {
-  }
-  return Like
-}
-=======
 const {
   Model
 } = require('sequelize')
@@ -36,4 +27,3 @@ module.exports = (sequelize, DataTypes) => {
   })
   return Like
 }
->>>>>>> fe99ea42a98a36c1b067f7d56776b8d43d2f57f4
