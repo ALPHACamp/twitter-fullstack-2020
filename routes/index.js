@@ -1,16 +1,20 @@
 const express = require('express')
 const router = express.Router()
+const passport = require('../config/passport')
 const admin = require('./modules/admin')
+
 const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
 const followshipController = require('../controllers/followship-controller')
+
+const { generalErrorHandler } = require('../middleware/error-handler')
 
 router.use('/admin', admin)
 
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
-router.post('/signin', userController.signIn)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 router.get('/logout', userController.logout)
 router.get('/settings', userController.getSetting)
 router.put('/settings', userController.putSetting)
@@ -33,5 +37,6 @@ router.delete('/followships/:id', followshipController.deleteFollowships)
 router.post('/followships', followshipController.postFollowships)
 
 router.get('/', (req, res) => res.redirect('/signin'))
+router.use('/', generalErrorHandler)
 
 module.exports = router
