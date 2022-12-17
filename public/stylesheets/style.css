@@ -1,0 +1,362 @@
+body {
+  margin: 0 50px;
+  padding: 0;
+
+  font-family: 'Noto Sans TC', serif;
+  /* background-color: #FF6600; */
+}
+
+.container {
+  width: 1200px;
+  position: relative;
+}
+
+.ac-img {
+  width: 40px;
+  height: 40px;
+  margin: 13px 0 31px 13px;
+}
+
+.ac-img-x {
+  width: 50px;
+  height: 50px;
+  margin: 16px 8px 16px 16px;
+}
+
+.icon-home:hover,
+.icon-user:hover,
+.icon-setting:hover,
+.leftbar-text:hover {
+  color: #FF6600
+}
+
+.home-img {
+  width: 22.2px;
+  height: 20.25px;
+  margin: 2px 16.9px 0px;
+}
+
+.icon-home:hover img {
+  width: 22.2px;
+  height: 20.25px;
+  margin: 2px 16.9px 0px;
+  content: url('../images/home_active@2x.png');
+}
+
+.user-img {
+  width: 16.7px;
+  height: 20.34px;
+  margin: 0 16.9px;
+  margin-top: 45px;
+}
+
+.icon-user:hover img {
+  width: 16.7px;
+  height: 20.34px;
+  margin: 2px 16.9px 0px;
+  margin-top: 45px;
+  content: url('../images/user_active@2x.png');
+}
+
+.setting-img {
+  width: 20.75px;
+  height: 20.75px;
+  margin: 2px 16.9px 0px;
+  margin-top: 45px;
+}
+
+.icon-setting:hover img {
+  width: 20.75px;
+  height: 20.75px;
+  margin: 2px 16.9px 0px;
+  margin-top: 45px;
+  content: url('../images/setting_active@2x.png');
+}
+
+.avatar-img {
+  width: 50px;
+  height: 50px;
+  margin: 16px 8px 0 27px;
+}
+
+.tweet-flow-img {
+  width: 13.4px;
+  height: 12.61px;
+  margin: 9px 9px 0 0px;
+}
+
+.tweetbtn {
+  width: 178px;
+  height: 146px;
+  padding: 8px 60px;
+  background: #FF6600;
+  border-radius: 50px;
+
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none;
+
+  align-items: center;
+}
+
+.tweetbtn-M {
+  width: 96px;
+  height: 40px;
+  padding: 8px 16px;
+  background: #FF6600;
+  border: 0px;
+  border-radius: 50px;
+
+  font-size: 16px;
+  font-size: 400;
+  color: #fff;
+  text-decoration: none;
+
+  margin: 21px 0 0 13px;
+
+  /* align-items: center;
+
+  right: 10px;
+  bottom: 10px; */
+}
+
+.tweetbtn-M-follow {
+  width: 64px;
+  height: 40px;
+  padding: 8px 16px;
+  background: #fff;
+  border: 1px solid #FF6600;
+  border-radius: 50px;
+
+  font-size: 14px;
+  font-size: 400;
+  text-decoration: none;
+
+  margin: 21px 0 0 45px;
+
+  /* align-items: center;
+
+  right: 10px;
+  bottom: 10px; */
+}
+
+.tweetbtn-s {
+  width: 70px;
+  height: 40px;
+  padding: 8px 16px;
+  background: #FF6600;
+  border: 0px;
+  border-radius: 50px;
+
+  font-size: 16px;
+  font-size: 400;
+  color: #fff;
+  text-decoration: none;
+
+  align-items: center;
+
+  right: 10px;
+  bottom: 10px;
+}
+
+.tweetbtn-MP {
+  margin: 27px 0 0 0;
+}
+
+.tweet-flow {
+  width: 565px;
+  height: 168px;
+}
+
+.leftbar-text {
+  font-size: 18px;
+  color: #44444F;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.left {
+  position: absolute;
+  width: 178px;
+  height: 1200px;
+  left: 180px;
+  top: 0px;
+
+  margin-right: 24px;
+  position: fixed;
+
+  /* background: #b33232; */
+}
+
+.right {
+  position: absolute;
+  width: 273px;
+  height: 1200px;
+  top: 0px;
+  left: 1047px;
+  position: fixed;
+}
+
+.right-follow-title {
+  width: 273px;
+  height: 74px;
+  padding: 6px 0 0 0;
+  margin-top: 16px;
+  background: #FAFAFB;
+  border-radius: 16px 16px 0 0;
+}
+
+.follow-flow {
+  width: 273px;
+  height: 84px;
+  height: px;
+  /* padding: 24px 24px 24px 0;
+  margin-top: 16px; */
+  background: #FAFAFB;
+}
+
+.middle {
+  position: absolute;
+  width: 641px;
+  height: 1200px;
+  top: 0px;
+  left: 332px;
+
+  margin-right: 24px;
+}
+
+.middle-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #171725;
+
+  margin: 24px 0 24px 23px;
+}
+
+.tweetbox {
+  width: 641px;
+  height: 136px;
+  /* margin-bottom: 18px; */
+}
+
+.tweetbox-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: #6C757D;
+}
+
+.tweetbox-input {
+  width: 526px;
+  height: 26px;
+  border: none;
+}
+
+.twitterbox-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #171725;
+  margin-right: 8px;
+}
+
+.twitterbox-time {
+  font-size: 14px;
+  font-weight: 400;
+  color: #6C757D;
+}
+
+.twitterbox-text {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-top: 10px;
+  color: #171725;
+}
+
+.tweet-flow-text {
+  width: 562px;
+  margin: 16px 0 0 8px;
+}
+
+.follow-flow-account {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  color: #171725;
+}
+
+.follow-flow-name {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 26px;
+  color: #92929D;
+  margin-top: -20px;
+}
+
+.top-line-2 {
+  border-top: 2px solid #E6ECF0;
+}
+
+.right-line-2 {
+  border-right: 2px solid #E6ECF0;
+}
+
+.left-line-2 {
+  border-left: 2px solid #E6ECF0;
+}
+
+.bottom-line-2 {
+  border-bottom: 2px solid #E6ECF0;
+}
+
+.bottom-line-f {
+  width: 641px;
+  border-bottom: 2px solid #E6ECF0;
+  margin-left: -60px;
+  margin-top: 17px;
+}
+
+.bottom-line-18 {
+  border-bottom: 18px solid #E6ECF0;
+}
+
+.mx-40 {
+  margin-right: 40px;
+}
+
+.rel {
+  position: relative;
+}
+
+.abs {
+  position: absolute;
+}
+
+.display-inline {
+  display: inline-block;
+}
+
+.fl {
+  float: left;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.vertical-center {
+  vertical-align: center;
+}
+
+.text-decoration-n {
+  text-decoration: none;
+}
+
+.font-color-wh {
+  color: #fff;
+}
+
+.font-color-or {
+  color: #FF6600;
+}
