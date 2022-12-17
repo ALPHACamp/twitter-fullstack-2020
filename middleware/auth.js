@@ -31,6 +31,7 @@ const authenticatedUser = (req, res, next) => {
     res.redirect('/signin')
   }
 }
+
 module.exports = {
   authenticated,
   authenticatedAdmin,
