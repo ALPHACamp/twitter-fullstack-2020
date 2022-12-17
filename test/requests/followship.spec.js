@@ -13,19 +13,19 @@ describe('# followship request', () => {
   context('#create', () => {
     // 可否讓 user1 追蹤 user 2
     describe('when user1 wants to follow user2', () => {
-      before(async() => {
+      before(async () => {
         // 模擬登入資料
         this.ensureAuthenticated = sinon.stub(
           helpers, 'ensureAuthenticated'
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: [], role: 'user'});
+        ).returns({ id: 1, Followings: [], role: 'user' });
 
         // 在測試資料庫中，新增 mock 資料
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
-        await db.User.destroy({where: {},truncate: true, force: true})
-        await db.Followship.destroy({where: {},truncate: true, force: true})
+        await db.User.destroy({ where: {}, truncate: true, force: true })
+        await db.Followship.destroy({ where: {}, truncate: true, force: true })
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
         await db.User.create({})
         await db.User.create({})
@@ -39,13 +39,15 @@ describe('# followship request', () => {
           .send('id=1') // 追蹤自己，所以送出資料為 id = 1
           .set('Accept', 'application/json')
           .expect(200)
-          .end(function(err, res) {
+          .end(function (err, res) {
             if (err) return done(err);
             // 查詢 user 1 的資料
-            db.User.findByPk(1,{include: [
+            db.User.findByPk(1, {
+              include: [
                 { model: db.User, as: 'Followers' },
-                { model: db.User, as: 'Followings' } 
-              ]}).then(user => {
+                { model: db.User, as: 'Followings' }
+              ]
+            }).then(user => {
               // 檢查是否沒有追蹤自己的資料
               user.Followings.length.should.equal(0)
               return done();
@@ -61,13 +63,15 @@ describe('# followship request', () => {
           .send('id=2') // 追蹤 user2，所以送出資料為 id = 2
           .set('Accept', 'application/json')
           .expect(302)
-          .end(function(err, res) {
+          .end(function (err, res) {
             if (err) return done(err);
             // 查詢 user 1 的資料
-            db.User.findByPk(1,{include: [
+            db.User.findByPk(1, {
+              include: [
                 { model: db.User, as: 'Followers' },
-                { model: db.User, as: 'Followings' } 
-              ]}).then(user => {
+                { model: db.User, as: 'Followings' }
+              ]
+            }).then(user => {
               // 檢查是否有多一筆資料
               user.Followings.length.should.equal(1)
               return done();
@@ -80,8 +84,8 @@ describe('# followship request', () => {
         this.ensureAuthenticated.restore();
         this.getUser.restore();
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
-        await db.User.destroy({where: {},truncate: true, force: true})
-        await db.Followship.destroy({where: {},truncate: true, force: true})
+        await db.User.destroy({ where: {}, truncate: true, force: true })
+        await db.Followship.destroy({ where: {}, truncate: true, force: true })
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
       })
     })
@@ -90,22 +94,22 @@ describe('# followship request', () => {
   context('#destroy', () => {
     // 可否讓 user1 取消追蹤 user 2
     describe('when user1 wants to unfollow user2', () => {
-      before(async() => {
+      before(async () => {
         // 模擬驗證資料   
         this.ensureAuthenticated = sinon.stub(
           helpers, 'ensureAuthenticated'
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: [], role: 'user'});
+        ).returns({ id: 1, Followings: [], role: 'user' });
         // 在測試資料庫中，新增 mock 資料
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
-        await db.User.destroy({where: {},truncate: true, force: true})
-        await db.Followship.destroy({where: {},truncate: true, force: true})
+        await db.User.destroy({ where: {}, truncate: true, force: true })
+        await db.Followship.destroy({ where: {}, truncate: true, force: true })
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
         await db.User.create({})
         await db.User.create({})
-        await db.Followship.create({followerId: 1, followingId: 2})
+        await db.Followship.create({ followerId: 1, followingId: 2 })
       })
 
       // 測試: 可以取消追蹤 user2
@@ -115,13 +119,15 @@ describe('# followship request', () => {
           .delete('/followships/2')  // 取消追蹤 user2
           .set('Accept', 'application/json')
           .expect(302)
-          .end(function(err, res) {
+          .end(function (err, res) {
             if (err) return done(err);
             // 查詢 user 1 的資料
-            db.User.findByPk(1,{include: [
+            db.User.findByPk(1, {
+              include: [
                 { model: db.User, as: 'Followers' },
-                { model: db.User, as: 'Followings' } 
-              ]}).then(user => {
+                { model: db.User, as: 'Followings' }
+              ]
+            }).then(user => {
               // 檢查是否清除了追蹤資料，因此 Followings 資料長度為 0
               user.Followings.length.should.equal(0)
               return done();
@@ -134,8 +140,8 @@ describe('# followship request', () => {
         this.ensureAuthenticated.restore();
         this.getUser.restore();
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', null, { raw: true });
-        await db.User.destroy({where: {},truncate: true, force: true})
-        await db.Followship.destroy({where: {},truncate: true, force: true})
+        await db.User.destroy({ where: {}, truncate: true, force: true })
+        await db.Followship.destroy({ where: {}, truncate: true, force: true })
         await db.sequelize.query('SET FOREIGN_KEY_CHECKS = 1', null, { raw: true });
       })
     })

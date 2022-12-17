@@ -1,9 +1,6 @@
 'use strict'
-const {
-  Model
-} = require('sequelize')
-
 module.exports = (sequelize, DataTypes) => {
+<<<<<<< HEAD
   class Like extends Model {
     static associate(models) {
       Like.belongsTo(models.User, { foreignKey: 'UserId'})
@@ -26,5 +23,11 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Like',
     tableName: 'Likes'
   })
+=======
+  const Like = sequelize.define('Like', {
+  }, {})
+  Like.associate = function (models) {
+  }
+>>>>>>> 6e335317cb2566ef50768591a6f7ea99269dd2fd
   return Like
 }
