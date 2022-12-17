@@ -30,10 +30,6 @@ app.use((req, res, next) => {
 })
 
 const db = require('./models')
-
-app.engine('hbs', handlebars.engine({ extname: '.hbs', helpers }))
-app.set('view engine', 'hbs')
-app.use(express.urlencoded({ extended: true }))
 // setting static file
 app.use(express.static('public'))
 // use helpers.getUser(req) to replace req.user
