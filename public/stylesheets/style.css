@@ -70,6 +70,12 @@ svg {
 .setting-img {
   width: 20.75px;
   height: 20.75px;
+  margin: 2px 19px 0px;
+}
+
+.logout-img {
+  width: 18px;
+  height: 18px;
   margin: 2px 16.9px 0px;
 }
 
@@ -366,4 +372,16 @@ svg {
 
 .font-color-or {
   color: #FF6600;
+}
+
+.bottom-16 {
+  bottom: 16;
+}
+
+.top-0 {
+  top: 0;
+}
+
+.left-19 {
+  left: 19;
 }
