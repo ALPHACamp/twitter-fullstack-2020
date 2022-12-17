@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: none;
+}
+
 body {
   margin: 0 50px;
   padding: 0;
@@ -23,6 +29,11 @@ body {
   margin: 16px 8px 16px 16px;
 }
 
+img,
+svg {
+  vertical-align: none;
+}
+
 .icon-home:hover,
 .icon-user:hover,
 .icon-setting:hover,
@@ -46,15 +57,13 @@ body {
 .user-img {
   width: 16.7px;
   height: 20.34px;
-  margin: 0 16.9px;
-  margin-top: 45px;
+  margin: 0 19px 0;
 }
 
 .icon-user:hover img {
   width: 16.7px;
   height: 20.34px;
-  margin: 2px 16.9px 0px;
-  margin-top: 45px;
+  margin: 0 19px 0;
   content: url('../images/user_active@2x.png');
 }
 
@@ -62,14 +71,12 @@ body {
   width: 20.75px;
   height: 20.75px;
   margin: 2px 16.9px 0px;
-  margin-top: 45px;
 }
 
 .icon-setting:hover img {
   width: 20.75px;
   height: 20.75px;
   margin: 2px 16.9px 0px;
-  margin-top: 45px;
   content: url('../images/setting_active@2x.png');
 }
 
@@ -179,7 +186,7 @@ body {
   position: absolute;
   width: 178px;
   height: 1200px;
-  left: 180px;
+  left: 210px;
   top: 0px;
 
   margin-right: 24px;
@@ -193,7 +200,7 @@ body {
   width: 273px;
   height: 1200px;
   top: 0px;
-  left: 1047px;
+  left: 1060px;
   position: fixed;
 }
 
@@ -220,7 +227,7 @@ body {
   width: 641px;
   height: 1200px;
   top: 0px;
-  left: 332px;
+  left: 240px;
 
   margin-right: 24px;
 }
@@ -317,8 +324,8 @@ body {
   margin-top: 17px;
 }
 
-.bottom-line-18 {
-  border-bottom: 18px solid #E6ECF0;
+.bottom-line-16 {
+  border-bottom: 16px solid #E6ECF0;
 }
 
 .mx-40 {
