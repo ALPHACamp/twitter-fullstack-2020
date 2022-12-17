@@ -23,7 +23,6 @@ passport.use(new LocalStrategy(
       })
   }
 ))
-
 passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
