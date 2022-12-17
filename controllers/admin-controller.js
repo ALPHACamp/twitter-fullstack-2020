@@ -1,11 +1,6 @@
 const adminController = {
-	getTweets: (req, res,next) => {
-		Tweet.findAll({
-			raw: true
-		})
-		.then(tweets =>{
-			return res.render('admin/tweets',{tweets})
-		})
+	getTweets: (req, res) => {
+		return res.render('/admin/tweets')
 	}
 }
 module.exports = adminController
