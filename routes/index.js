@@ -37,6 +37,7 @@ router.delete('/followships/:id', followshipController.deleteFollowships)
 router.post('/followships', followshipController.postFollowships)
 
 router.get('/', (req, res) => res.redirect('/signin'))
+
 router.use('/', generalErrorHandler)
 
 module.exports = router

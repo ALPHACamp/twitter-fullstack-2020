@@ -1,0 +1,28 @@
+<div style="height: 1200px;width:427px;">
+  <div class="popular-container">
+    <div class="popular-title">
+      <h4>推薦跟隨</h4>
+    </div>
+    <ul class="popular-list-group" style="display:inline">
+      {{#each users}}
+      {{!-- 正在跟隨 --}}
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="user-icon">
+          <img src="{{this.avatar}}" style="height: 50px;width:50px; border-radius:50%">
+        </div>
+        <div class="ms-2 me-auto">
+          <div class="popular-name">{{this.name}}</div>
+          <small class="small-account">@{{this.account}}</small>
+        </div>
+        <form action="#" method="POST">
+          {{!-- {{#if this.isFollowed }}
+          <button type="submit" class="following-btn">正在跟隨</button>
+          {{else}} --}}
+          <button type="submit" class="follow-btn">跟隨</button>
+          {{!-- {{/if}} --}}
+        </form>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
