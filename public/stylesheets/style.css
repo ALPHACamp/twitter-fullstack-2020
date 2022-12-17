@@ -114,3 +114,195 @@ input::placeholder {
   font-size: 16px;
   line-height: 24px;
 }
+
+/* Admin users css */
+.admin-container a {
+  text-decoration: none;
+  color: #171725;
+}
+
+.hr-line {
+  margin: 0px -12px;
+  border: 1px solid #E6ECF0;
+  top: 30%;
+  left: 30%;
+}
+
+.admin-container .d-flex .main{
+  max-width: 1050px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.tweets-list {
+  flex: 1;
+  overflow: hidden;
+}
+
+.admin-users-head {
+  margin: 24px 24px;
+}
+
+.row .main {
+  min-height: 100vh;
+  max-height: 100%
+}
+
+.card {
+  position: relative;
+  width: 249px;
+  height: 314px;
+  background: #f6f7f8;
+  border-radius: 10px;
+}
+
+.card-top {
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  width: 249px;
+  height: 140px;
+  background: url(.jpg), #c4c4c4;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.card-cover {
+  width: 249px;
+  height: 140px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.card-middle {
+  width: 100px;
+  height: 154px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 8px;
+  position: absolute;
+  left: 29.72%;
+  right: 30.12%;
+  top: 20.38%;
+  bottom: 30.57%;
+}
+
+.card-avatar-part {
+  width: 100px;
+  height: 100px;
+}
+
+.card-avatar {
+  width: 100px;
+  height: 100px;
+  border: 3px solid #ffffff;
+  border-radius: 50px;
+}
+
+.card-name {
+  margin: 0;
+  padding: 0;
+  width: 100px;
+  height: 26px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.card-account {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.card-tweet-like {
+  display: flex;
+  width: 140px;
+  height: 26px;
+  position: absolute;
+  left: 22.09%;
+  right: 22.09%;
+  top: 74.52%;
+  bottom: 17.2%;
+}
+
+.card-tweet,
+.card-like {
+  display: flex;
+  width: 50%;
+  height: 100%;
+}
+
+.card-followship {
+  display: flex;
+  justify-content: center;
+  width: 160px;
+  height: 22px;
+  gap: 3px;
+  position: absolute;
+  left: 18.48%;
+  right: 18.07%;
+  top: 85.35%;
+  bottom: 7.64%;
+}
+
+.card-following,
+.card-follower {
+  display: flex;
+  width: 50%;
+  height: 100%;
+  font-size: 14px;
+}
+
+.card-icon {
+  width: 20px;
+  height: 24px;
+}
+
+.card-num {
+  align-items: center;
+  font-size: 16px;
+  margin-left: 5px;
+  position: absolute;
+  top: 38%;
+  margin: -8px 0px 0px 25px;
+}
+
+
+
+/* admin-left */
+
+.admin-left-side-outline {
+  height: 100vh;
+}
+
+.admin-left-side {
+  height: 100vh;
+  min-width: 200px;
+  position: fixed;
+
+}
+
+
+.admin-left-side .logo {
+  margin: 13px 0 0px 13px;
+  padding-bottom: -4px;
+  width: 50px;
+  height: 50px;
+}
+
+.admin-left-side img {
+  margin-right: 10px;
+  padding-bottom: 4px;
+  width: 25px;
+  color: #FF6600;
+}
+
+
+.admin-left-side .logout {
+  margin-left: 17px;
+  position: absolute;
+  bottom: 20px;
