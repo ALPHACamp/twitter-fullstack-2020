@@ -625,3 +625,62 @@ h4 {
   color: #6c757d;
   margin-bottom: 8px;
 }
+
+/* tabs  */
+#tabs-section {
+  position: relative;
+  /* top: 469px; */
+}
+.nav-tabs {
+  position: relative;
+  left: 1px;
+  width: 639px;
+  height: 53px;
+}
+
+.nav-tabs .nav-item {
+  width: 130px;
+  height: 52px;
+}
+
+.nav-tabs .nav-item .nav-link {
+  position: relative;
+  top: 11px;
+  font-family: "Noto Sans TC";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 22px;
+  color: #657786;
+  text-align: center;
+}
+
+/* active時啟動 */
+.nav-tabs .nav-item .nav-link.active {
+  color: #ff6600;
+  border-color: #fff #fff #ff6600;
+  border-width: 2px;
+}
+
+.tabs-content {
+  position: relative;
+  left: 1px;
+  padding: 0px;
+  width: 639px;
+  border: 1px;
+  border-color: transparent #e6ecf0 #e6ecf0;
+}
+
+
+/* 此重複 */
+.each-tweet {
+  border: 1px solid #e6ecf0;
+}
+
+/* 此重複 */
+#tweet-right .header {
+  font-family: "Noto Sans TC";
+  font-style: normal;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
