@@ -73,29 +73,28 @@ svg {
   margin: 2px 19px 0px;
 }
 
+.icon-setting:hover img {
+  width: 20.75px;
+  height: 20.75px;
+  margin: 2px 19px 0px;
+  content: url('../images/setting_active@2x.png');
+}
+
 .logout-img {
   width: 18px;
   height: 18px;
   margin: 2px 16.9px 0px;
 }
 
-.icon-setting:hover img {
-  width: 20.75px;
-  height: 20.75px;
-  margin: 2px 16.9px 0px;
-  content: url('../images/setting_active@2x.png');
-}
-
 .avatar-img {
   width: 50px;
   height: 50px;
-  margin: 16px 8px 0 27px;
 }
 
 .tweet-flow-img {
   width: 13.4px;
   height: 12.61px;
-  margin: 9px 9px 0 0px;
+  margin: 0px 9px 0 0px;
 }
 
 .tweetbtn {
@@ -168,8 +167,8 @@ svg {
 
   align-items: center;
 
-  right: 10px;
-  bottom: 10px;
+  right: 20px;
+  bottom: 15px;
 }
 
 .tweetbtn-MP {
@@ -190,7 +189,7 @@ svg {
 
 .left {
   position: absolute;
-  width: 178px;
+  width: 20%;
   height: 1200px;
   left: 210px;
   top: 0px;
@@ -231,7 +230,7 @@ svg {
 .middle {
   position: absolute;
   width: 641px;
-  height: 1200px;
+  /* height: 1200px; */
   top: 0px;
   left: 240px;
 
@@ -260,8 +259,26 @@ svg {
 
 .tweetbox-input {
   width: 526px;
-  height: 26px;
-  border: none;
+  height: 30px;
+  /* border: transparent; */
+  border-style: none;
+  outline: none;
+}
+
+.modal-input {
+  width: 510px;
+  height: 160px;
+  /* border: transparent; */
+  border-style: none;
+  outline: none;
+}
+
+.modal-input-tweets {
+  width: 543px;
+  height: 59px;
+  /* border: transparent; */
+  border-style: none;
+  outline: none;
 }
 
 .twitterbox-name {
@@ -334,6 +351,10 @@ svg {
   border-bottom: 16px solid #E6ECF0;
 }
 
+.m16-8-0-27 {
+  margin: 16px 8px 0 27px;
+}
+
 .mx-40 {
   margin-right: 40px;
 }
@@ -384,4 +405,30 @@ svg {
 
 .left-19 {
   left: 19;
+}
+
+/* 複寫boostrap */
+.btn-close-re {
+  background: transparent url('../images/btn_close@2x.png') center/1em auto no-repeat;
+}
+
+.modal-dialog {
+  min-width: 634px;
+  height: 300px;
+}
+
+.modal-footer {
+  border-top: none;
+}
+
+.modal-body {
+  height: 180px;
+}
+
+.modal-content {
+  border-radius: 1rem;
+}
+
+.modal-body {
+  height: 222px;
 }

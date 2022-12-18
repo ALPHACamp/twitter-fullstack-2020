@@ -14,6 +14,7 @@ const authenticated = (req, res, next) => {
 }
 
 const authenticatedAdmin = (req, res, next) => {
+  console.log('helpers.getUser(req).role', helpers.getUser(req).role)
   if (helpers.getUser(req).role === 'admin') {
     return next()
   } else {

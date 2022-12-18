@@ -17,6 +17,7 @@
     "boostrap": "^2.0.0",
     "chai": "^4.2.0",
     "connect-flash": "^0.1.1",
+    "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
     "express": "^4.16.4",
     "express-handlebars": "^5.3.3",
