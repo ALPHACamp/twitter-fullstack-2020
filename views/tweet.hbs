@@ -1,22 +1,9 @@
 {{> leftbar}}
 
 <div class="middle right-line-2 left-line-2">
-  <div>
-    <p class="middle-title">首頁</p>
-  </div>
-  <div class="tweetbox top-line-2 rel">
-    <form action="/tweets" method="POST">
-      <img class="avatar-img m16-8-0-27 fl" src="/images/avatar@2x.png" alt="">
-      <span>
-        <textarea class="modal-input-tweets mt-3" type="description" name="description" id="description" cols="30"
-          rows="10" placeholder="有什麼新鮮事?" maxlength="140" required></textarea>
-        <input type="hidden" name="UserId" value="{{tweets.User.id}}" />
-      </span>
-      <button class="tweetbtn-s abs" type="submit">推文</button>
-    </form>
-  </div>
-  <div class="bottom-line-16 m-0 p-0"></div>
-
+  {{!-- <div class="middle-tab">
+    {{> tweet-tabs route='tweet'}}
+  </div> --}}
   {{#each tweets}}
   {{!-- 推文 start--}}
   <div>
@@ -38,6 +25,7 @@
   </div>
   {{!-- 推文 end--}}
   {{/each}}
+
   <!-- Modal -->
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -49,14 +37,14 @@
               aria-label="Close"></button>
           </div>
         </div>
-        <form action="/tweets" method="POST"></form>
+        <form action="/tweets/{{tweets.User.id}}" method="POST"></form>
         <div class="modal-body">
           <form action="/tweets" method="POST">
             <img class="avatar-img fl" src="/images/avatar@2x.png" alt="">
             <span>
-              <textarea class="modal-input-tweets mt-3 mb-3" type="description" name="description" id="description"
-                cols="30" rows="10" placeholder="有什麼新鮮事?" maxlength="140" required></textarea>
-                <input type="hidden" name="UserId" value="{{tweets.User.id}}" />
+              <textarea class="modal-input-tweets mt-3" type="description" name="description" id="description" cols="30"
+                rows="10" placeholder="有什麼新鮮事?" maxlength="140" required></textarea>
+              <input type="hidden" name="UserId" value="{{tweets.User.id}}" />
             </span>
             <button class="tweetbtn-s abs" type="submit">推文</button>
           </form>
@@ -65,4 +53,7 @@
       </div>
     </div>
   </div>
-  {{> rightbar}}
+
+</div>
+
+{{> rightbar}}

@@ -4,21 +4,22 @@ if (process.env.NODE_ENV !== 'production') {
 
 const express = require('express')
 const handlebars = require('express-handlebars')
-const helpers = require('./_helpers');
+const helpers = require('./_helpers')
 const flash = require('connect-flash')
 const session = require('express-session')
 const routes = require('./routes')
 const passport = require('./config/passport')
+const methodOverride = require('method-override')
 
 const app = express()
 const port = process.env.PORT || 3000
 const SESSION_SECRET = 'secret'
 
-app.engine('hbs', handlebars({ extname: '.hbs' }))
+app.engine('hbs', handlebars({ extname: '.hbs', helpers }))
 app.set('view engine', 'hbs')
 
 app.use(express.urlencoded({ extended: true }))
-
+app.use(methodOverride('_method'))
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -36,6 +37,7 @@ app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
 // setting static file
 app.use(express.static('public'))
+
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 

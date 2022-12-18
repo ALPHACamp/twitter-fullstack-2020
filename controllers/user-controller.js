@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
+const Tweet = db.Tweet
 const User = db.User
 const userController = {
   signUpPage: (req, res) => {
@@ -58,10 +59,32 @@ const userController = {
     req.flash('success_messages', '成功登入！')
     res.redirect('/tweets')
   },
-  logout: (req, res) => {
+  logout: (req, res, next) => {
     req.flash('success_messages', '登出成功！')
-    req.logout()
-    res.redirect('/signin')
+    // req.logout()
+    // res.redirect('/signin')
+    req.logout(function (err) {
+      if (err) { return next(err) }
+      res.redirect('/signin')
+    })
+  },
+  getTweets: (req, res, next) => {
+    // 個人頁面的推文抓取
+
+    return Tweet.findAll({
+      order: [['createdAt', 'DESC']],
+      where: { UserId: req.params.id },
+      include: [User],
+      raw: true,
+      nest: true
+    })
+      .then(tweets => {
+        if (!tweets) throw new Error("Restaurant didn't exist!")
+        return res.render('tweet', {
+          tweets
+        })
+      })
+      .catch(err => next(err))
   }
 }
 

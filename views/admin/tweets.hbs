@@ -1,1 +1,38 @@
-<div> admin twitters </div>
+<div class="middle right-line-2 left-line-2">
+  <div>
+    <p class="middle-title">後台</p>
+    <a href="/logout" class="icon-logout leftbar-text">
+      <img class="logout-img" src="/images/logout@2x.png" alt="">
+      <span><strong>登出</strong></span>
+    </a>
+  </div>
+
+  <div class="bottom-line-16 m-0 p-0"></div>
+
+  {{#each tweets}}
+  {{!-- 推文 start--}}
+  <div>
+    <div class="fl">
+      <img class="ac-img" src="/images/img@2x.png" alt="">
+    </div>
+    <div class="tweet-flow-text fl">
+      <span class="twitterbox-name">{{this.User.name}}</span>
+      <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
+      <p class="twitterbox-text">
+        {{this.description}}
+      </p>
+      <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">13</span>
+      <span class="twitterbox-time"><img class="tweet-flow-img" src="/images/like@2x.png" alt="">16</span>
+      <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="float-end">
+        <button class="btn btn-s btn btn-x btn-danger text-decoration-n font-color-wh"
+          onclick="return confirm(`確定要刪除嗎？`)">刪除
+        </button>
+      </form>
+      <div class="bottom-line-f"></div>
+    </div>
+  </div>
+  {{!-- 推文 end--}}
+  {{/each}}
+
+
+</div>
