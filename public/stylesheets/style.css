@@ -365,11 +365,12 @@ svg {
 
 .right {
   width: 273px;
-  height: 731px;
+  height: auto;
   top: 0px;
-  right: 130px;
+  left: 71%;
   position: fixed;
   background-color: #FAFAFB;
+  border-radius: 16px;
 }
 
 .right-follow-title {
@@ -395,7 +396,7 @@ svg {
   width: 52%;
   /* height: 1200px; */
   top: 0px;
-  left: 24%;
+  left: 21%;
 
   margin-right: 24px;
 }
@@ -540,8 +541,8 @@ svg {
   margin-top: 17px;
 }
 
-.bottom-line-16 {
-  border-bottom: 16px solid #E6ECF0;
+.bottom-line-10 {
+  border-bottom: 10px solid #E6ECF0;
 }
 
 .m16-8-0-27 {
@@ -737,7 +738,7 @@ svg {
 
   width: 70px;
   height: 70px;
-  left: 33%;
+  left: 30%;
   top: 30px;
   border: white 4px solid;
 }
@@ -1051,8 +1052,18 @@ a .nav-link:active,
   background: #FF6600;
   border-radius: 50px;
 }
+
 /* tabs */
 .click-on {
   color: #FF6600;
   border-bottom: 2px solid #FF6600;
+}
+
+/* messages */
+
+.message-img {
+  width: 40px;
+  height: 40px;
+  border-style: none;
+  background-color: #ffffff;
 }

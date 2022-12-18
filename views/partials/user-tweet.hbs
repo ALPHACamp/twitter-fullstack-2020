@@ -1,32 +1,32 @@
-<!-- Modal -->
+<!-- 彈跳推文 -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <div class=" fl">
-          <button type="button font-color-or" class="btn-close btn-close-re" data-bs-dismiss="modal" aria-label="Close"
-            onclick="javascript:history.back()"></button>
+          <button type="button font-color-or" class="btn-close btn-close-re" data-bs-dismiss="modal" aria-label="Close">
+          </button>
         </div>
       </div>
-      <form action="/tweets/{{tweets.User.id}}" method="POST"></form>
-      <div class="modal-body">
-        <form action="/tweets" method="POST" id="post-tweeet">
-          {{#if user.avatar}}
-          <img class="avatar-img fl" src="{{user.avatar}}" alt="" style="border-radius: 50%;">
-          {{else}}
-          <img class="avatar-img fl" src="https://fakeimg.pl/50x50/" alt="" style="border-radius: 50%;">
-          {{/if}}
-          <span>
-            <textarea class="modal-input-tweets mt-3 mx-2 tweetOne" type="description" name="description"
-              id="description" cols="30" rows="10" placeholder="有什麼新鮮事?" maxlength="140"></textarea>
-            <input type="hidden" name="UserId" value="{{tweets.User.id}}" />
-          </span>
-          <span class="hint abs" style="color: #FC5A5A;right:140px; bottom:27px"></span>
-          <button id="user-tweet" class="tweetbtn-s abs tweetOne-button" type="submit">推文</button>
-        </form>
-        </form>
-      </div>
+      <form action="/tweets/{{tweets.User.id}}" method="POST">
+        <div class="modal-body">
+          <form action="/tweets" method="POST" id="post-tweeet">
+            {{#if user.avatar}}
+            <img class="avatar-img fl" src="{{user.avatar}}" alt="" style="border-radius: 50%;">
+            {{else}}
+            <img class="avatar-img fl" src="https://fakeimg.pl/50x50/" alt="" style="border-radius: 50%;">
+            {{/if}}
+            <span>
+              <textarea class="modal-input-tweets mt-3 mx-2 tweetOne" type="description" name="description"
+                id="description" cols="30" rows="10" placeholder="有什麼新鮮事?" maxlength="140"></textarea>
+              <input type="hidden" name="UserId" value="{{tweets.User.id}}" />
+            </span>
+            <span class="hint abs" style="color: #FC5A5A;right:140px; bottom:27px"></span>
+            <button id="user-tweet" class="tweetbtn-s abs tweetOne-button" type="submit">推文</button>
+          </form>
+        </div> 
+      </form>
     </div>
   </div>
 </div>
