@@ -1,2 +1,80 @@
 {{> messages}}
-<h1>專案首頁</h1>
+<div class="d-flex" style="height: 1200px;width:1400px;margin: 0 auto;">
+  {{!-- sidebar --}}
+  <div style="height: 1200px;width:332px">
+    <div id="left-section">
+      <img id="logo" src="/images/icons/logo.png">
+      <ul id="left-navs" class="nav flex-column">
+        <li class="nav-item">
+          <a href="/tweets" class="nav-item-content">
+            <img src="/images/icons/orange-home.png" class="base-icon">
+            <span class="word-click">首頁</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/tweets" class="nav-item-content">
+            <img src="/images/icons/outlined-user.png" class="base-icon">
+            <span class="word">個人資料</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/settings" class="nav-item-content">
+            <img src="/images/icons/outlined-cog.png" class="base-icon">
+            <span class="word">設定</span>
+          </a>
+        </li>
+        <li class="nav-item d-flex justify-content-center" style="height: 46px;">
+          <button type="button" class="btn btn-primary"
+            style="border-radius:50px; width:100%; background:#FF6600; border-color:#FF6600;font-size:20px;font-weight:400"
+            data-toggle="modal" data-target="#tweetModal" data-toggle="modal">推文</button>
+        </li>
+      </ul>
+      <div id="logout">
+        <a href="/logout" style="margin-top:1.585vh; text-decoration: none; align-items: center; display:flex">
+          <img src="/images/icons/outlined-logout.png" style="height:24px; margin-left:16px;">
+          <span style="margin-left:16px; font-weight:700; font-size:18px; color:#44444F">登出</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  {{!-- tweets --}}
+  <div style="height: 1200px;width:641px">
+    <h1>推特貼文</h1>
+  </div>
+  {{!-- {{>popular}} --}}
+  <div style="height: 1200px;width:427px;">
+    <div class="popular-container">
+      <div class="popular-title">
+        <h4>推薦跟隨</h4>
+      </div>
+      <ul class="popular-list-group" style="display:inline">
+        {{!-- 正在跟隨 --}}
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="user-icon">
+            <img src="/images/icons/logo2.png" alt="">
+          </div>
+          <div class="ms-2 me-auto">
+            <div class="popular-name">Pizza Hut</div>
+            <small class="small-account">@pizzahut</small>
+          </div>
+          <form action="#" method="POST">
+            <button type="submit" class="following-btn">正在跟隨</button>
+          </form>
+        </li>
+        {{!-- 跟隨 --}}
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="user-icon">
+            <img src="/images/icons/logo2.png" alt="">
+          </div>
+          <div class="ms-2 me-auto">
+            <div class="popular-name">Bank of...</div>
+            <small class="small-account">@BankofA...</small>
+          </div>
+          <form action="#" method="POST">
+            <button type="submit" class="follow-btn">跟隨</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

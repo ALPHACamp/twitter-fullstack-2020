@@ -306,3 +306,272 @@ input::placeholder {
   margin-left: 17px;
   position: absolute;
   bottom: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* left  */
+#left-section {
+  position: relative;
+  width: 178px;
+  height: 1200px;
+  left: 134px;
+  top: 0px;
+  background: #FFFFFF;
+}
+
+#logo {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  left: 8px;
+  top: 8px;
+}
+
+#left-navs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 8px;
+  position: absolute;
+  width: 178px;
+  /* height: 244px; */
+  left: 0px;
+  top: 66px;
+}
+
+#left-navs .nav-item {
+  width: 178px;
+  height: 58px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+#logout {
+  position: absolute;
+  width: 178px;
+  height: 58px;
+  left: 0px;
+  top: 1142px;
+}
+
+#left-navs .nav-item .nav-item-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 16px;
+  position: relative;
+  height: 26px;
+  left: 16px;
+  top: 16px;
+}
+
+#left-navs .nav-item .nav-item-content .base-icon {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+#left-navs .nav-item .nav-item-content .word {
+  height: 26px;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: #44444F;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+/* right  */
+
+h4 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 26px;
+  padding-top: 24px;
+  margin-left: 24px;
+  margin-bottom: 24px;
+}
+
+.popular-container {
+  position: absolute;
+  width: 273px;
+  height: 731px;
+  margin-left: 24px;
+  top: 16px;
+  background: #FAFAFB;
+  border-radius: 16px;
+}
+
+.popular-title {
+  border-bottom: 1px solid #e6ecf0;
+}
+
+.popular-list-group li {
+  border: none;
+  background: #fafafb;
+  padding: 0;
+}
+
+.user-icon {
+  display: flex;
+  background: #c4c4c4;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-group-item {
+  margin: 0px 16px 30px 16px;
+  width: 241px;
+  height: 50px;
+}
+
+.popular-name {
+  height: 26px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+  margin-bottom: -3px;
+}
+
+.small-account {
+  height: 22px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: #92929d;
+}
+
+.following-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  width: 96px;
+  height: 40px;
+  background: #ff6600;
+  border-radius: 50px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+  padding: 0;
+  border: none;
+}
+
+.follow-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  width: 64px;
+  height: 40px;
+  background: #ffffff;
+  border: 1px solid #ff6600;
+  border-radius: 50px;
+  color: #ff6600;
+  padding: 0;
+}
+
+.setting-container {
+  width: 639px;
+  height: 1200px;
+  margin: 0 auto;
+  border-left: 2px solid #E6ECF0;
+  border-right: 2px solid #E6ECF0;
+}
+
+.setting-title {
+  width: 639px;
+  height: 74px;
+  border-bottom: 2px solid #E6ECF0;
+}
+
+.input-setting {
+  background: #F5F8FA;
+  width: 593px;
+  height: 54px;
+  border-radius: 2px;
+  margin-bottom: 32px;
+  border-bottom: 2px solid #657786;
+  margin: 0 auto;
+  margin-bottom: 32px;
+}
+
+.setting-input {
+  color: #B5B5BE;
+  background: #F5F8FA;
+  font-size: 16px;
+  width: 593px;
+  border: 0px;
+  line-height: 26px;
+  outline: none;
+  text-indent: 9px;
+  border-bottom: 2px solid #657786;
+}
+
+.setting-input:hover {
+  border-bottom: 2px solid #50B5FF;
+}
+
+.setting-input:focus {
+  border-bottom: 2px solid #50B5FF;
+}
+
+.setting-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
+  margin-top: 40px;
+  margin-left: 528px;
+  width: 88px;
+  height: 46px;
+  background: #FF6600;
+  border-radius: 50px;
+  border: none;
+  color: #FFFFFF;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.top {
+  margin-top: 24px;
+}
+
+.word-click {
+  height: 26px;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  color: #FF6600;
+}
