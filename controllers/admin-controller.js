@@ -12,10 +12,36 @@ const adminController = {
     req.logout()
     res.redirect('/admin/signin')
   },
-  getTweets: (req, res, next) => {
-    res.render('admin/admin-tweets')
+  getTweets: async (req, res, next) => {
+    try {
+      const tweets = await Tweet.findAll({
+        raw: true,
+        nest: true,
+        include: [User],
+        order: [['createdAt', 'DESC']]
+      })
+      const tweet = tweets.map(r => ({
+        ...r,
+        description: r.description.substring(0, 50)
+      }))
+      return res.render('admin/tweets', { tweets: tweet })
+    } catch (err) {
+      next(err)
+    }
   },
-  deleteTweet: (req, res, next) => {
+  deleteTweet: async (req, res, next) => {
+    try {
+      const TweetId = req.params.id
+      const tweet = await Tweet.findByPk(TweetId)
+      if (!tweet) throw new Error("Tweet didn't exist!")
+      await tweet.destroy()
+      await Reply.destroy({ where: { TweetId } })
+      await Like.destroy({ where: { TweetId } })
+      req.flash('success_messages', '成功刪除貼文及相關資訊！')
+      res.redirect('/admin/tweets')
+    } catch (err) {
+      next(err)
+    }
   },
   getUsers: async (req, res, next) => {
     try {
