@@ -1,0 +1,42 @@
+{{> messages}}
+
+<div class="admin-container">
+  <div class="d-flex justify-content-center">
+
+    {{> admin-left route='tweets'}}
+
+    <div class="tweets-main col-9 border">
+      <div class="admin-tweets-head">
+        <h4>推文清單</h4>
+      </div>
+
+      <div class="hr-line"></div>
+
+      <div class="tweets-list">
+        {{#each tweets}}
+          <div class="d-flex each-tweet border-bottom" style="padding: 8px 0">
+            <div id="tweet-icon">
+                <img src="{{this.User.avatar}}" alt="" width="50" height="50"
+                  class="rounded-circle" />
+            </div>
+            <div id="tweet-right" style="width: 970px">
+              <div class="header">
+                <span style="font-size: 16px">{{this.User.name}}</span>
+                <span style="font-size: 14px; height: 22px" class="text-muted">@{{this.User.account}}ㆍ{{relativeTimeFromNow this.createdAt}}</span>
+                  <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline">
+                    <button type="submit" class="btn-close float-end" 
+                      style="height: 15px;width: 15px;padding: 0;margin: 0 15px 0 0;" 
+                      onclick="return confirm(`確定要刪除此則推嗎？`)">
+                    </button>
+                  </form>
+              </div>
+              <div class="content-word">
+                <p style="margin-bottom: 8px;">{{this.description}}</p>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>

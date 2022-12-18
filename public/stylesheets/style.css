@@ -54,18 +54,70 @@ h4 {
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
-  line-height: 26px;
-  color: #171725;
-  margin-bottom: -3px;
+  line-height: 24px;
 }
 
-.small-account {
-  height: 22px;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 22px;
-  color: #92929d;
+
+/* Admin users css */
+
+.admin-container a {
+  text-decoration: none;
+  color: #171725;
+  
+}
+
+.hr-line {
+  margin: 0px -12px;
+  border: 1px solid #E6ECF0;
+  top: 30%;
+  left: 30%;
+}
+
+.admin-container .d-flex .main{
+  max-width: 1050px;
+  height: 100vh;
+  flex: 1;
+  overflow: hidden;
+}
+
+.tweets-list {
+  flex: 1;
+  overflow: hidden;
+}
+
+.admin-users-head,
+.admin-tweets-head {
+  margin: 24px 24px;
+}
+
+.row .main {
+  min-height: 100vh;
+  max-height: 100%
+}
+
+.card {
+  position: relative;
+  width: 249px;
+  height: 314px;
+  background: #f6f7f8;
+  border-radius: 10px;
+}
+
+.card-top {
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  width: 249px;
+  height: 140px;
+  background: url(.jpg), #c4c4c4;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.card-cover {
+  width: 249px;
+  height: 140px;
+  border-radius: 10px 10px 0px 0px;
 }
 
 .following-btn {
@@ -94,12 +146,94 @@ h4 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 8px 16px;
-  width: 64px;
-  height: 40px;
-  background: #ffffff;
-  border: 1px solid #ff6600;
-  border-radius: 50px;
-  color: #ff6600;
+  font-size: 16px;
+  margin-left: 5px;
+  position: absolute;
+  top: 38%;
+  margin: -8px 0px 0px 25px;
+}
+
+
+
+/* admin-left */
+
+.admin-left-side {
+  height: 100vh;
+  min-width: 200px;
+  position: fixed;
+  /* outline: solid red; */
+
+}
+
+
+.admin-left-side .logo {
+  margin: 13px 0 0px 13px;
+  padding-bottom: -4px;
+  width: 50px;
+  height: 50px;
+}
+
+.admin-left-side img {
+  margin-right: 10px;
+  padding-bottom: 4px;
+  width: 25px;
+  color: #FF6600;
+}
+
+
+.admin-left-side .logout {
+  margin-left: 17px;
+  position: absolute;
+  bottom: 20px;
+}
+
+
+
+/* admin-tweets */
+
+.tweets-main {
+  max-width: 937px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.each-tweet {
+  height: 103px;
+}
+
+#tweet-icon {
+  position: relative;
+  left: 24px;
+  width: 50px;
+  height: 50px;
+}
+
+#tweet-right {
+  position: relative;
+  left: 32px;
   padding: 0;
+}
+
+#tweet-right .header {
+  font-family: "Noto Sans TC";
+  font-style: normal;
+  font-weight: 700;
+  margin-bottom: 8px;
+  max-width: 860px;
+}
+
+#tweet-right .actions {
+  width: 120px;
+  height: 16px;
+  margin-bottom: 16px;
+}
+
+#tweet-right .reply-whom {
+  font-family: "Noto Sans TC";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #6c757d;
+  margin-bottom: 8px;
 }
