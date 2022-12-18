@@ -52,6 +52,36 @@ const userController = {
   putSetting: (req, res, next) => {
   },
   getUserTweets: (req, res, next) => {
+    return Promise.all([
+      User.findByPk(req.params.id, {
+        include: [
+          { model: Tweet, include: [Like, Reply] },
+          { model: Reply },
+          { model: Like },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ],
+        order: [[Tweet, 'createdAt', 'desc'], [Reply, 'createdAt', 'desc'], [Like, 'createdAt', 'desc']]
+      }),
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }],
+        where: { role: 'user' } // id: !req.user.id,待補
+      })
+    ])
+      .then(([user, users]) => {
+        if (!user) throw new Error("User doesn't exist!")
+        const userProfile = user.toJSON()
+        // console.log(userProfile)
+        const result = users
+          .map(user => ({
+            ...user.toJSON(),
+            followerCount: user.Followers.length
+            // isFollowed: req.user.Followings.some(f => f.id === user.id) //req.user還未設定、root不該出現
+          }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+        res.render('usertweets', { userProfile, users: result })
+      }
+      )
   },
   getUserReplies: (req, res, next) => {
   },

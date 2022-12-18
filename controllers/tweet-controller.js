@@ -1,7 +1,6 @@
 const { Followship, Like, Reply, Tweet, User } = require('../models')
 const tweetController = {
   getIndex: (req, res, next) => {
-    res.render('tweets')
   },
   postTweet: (req, res, next) => {
   },
