@@ -1,0 +1,34 @@
+{{!-- Header --}}
+<div class="d-flex" style="margin:16px 0; height:59px">
+  <a href="javascript:history.back()">
+    <img src="/images/icons/outlined-back.png" style="height:24px; margin-top:10px; margin-left:28px">
+  </a>
+  <div class="d-flex flex-column" style="margin-left:19px">
+    <span style="line-height: 26px; font-weight:700; font-size:18px">{{userProfile.name}}</span>
+    <span style="line-height: 19px; font-weight:500; font-size:13px">{{userProfile.Tweets.length}} 推文</span>
+  </div>
+</div>
+{{!-- card --}}
+<div style="height: 378px;">
+  <div style="height: 264px; position:relative;">
+    <img src="{{userProfile.cover}}" alt="cover"
+      style="height: 200px;width:639px; object-fit:cover;position:absolute;top:0;left:0">
+    <img src="{{userProfile.avatar}}" alt="avatar"
+      style="height:140px; width:140px; border: 4px solid #FFFFFF;position:absolute;bottom:0;left:16px; z-index:1; border-radius:50%">
+    <button type="button" class="btn btn-outline-warning float-end"
+      style="border-radius:50px;line-height: 24px; height:40px; width:128px; border-color:#FF6600;font-size:16px; font-weight:400;margin-top:216px;margin-right:16px; color:#FF6600">編輯個人資料</button>
+  </div>
+
+  <div class="d-flex flex-column" style="height:114px; margin-left:16px">
+    <span style="line-height: 26px; font-weight:700; font-size:18px">{{userProfile.name}}</span>
+    <span style="line-height: 22px; font-weight:400; font-size:14px; color:#6C757D">@{{userProfile.account}}</span>
+    <span style="line-height: 22px; font-weight:400; font-size:14px; margin-top:6px">{{userProfile.introduction}}</span>
+    <div class="d-flex align-items-center" style="line-height: 22px; font-weight:400; font-size:14px;margin-top:8px">
+      <span style="color: #171725;">{{userProfile.Followings.length}}個</span>
+      <span style="color: #6C757D;">跟隨中</span>
+      <span style="color: #171725;margin-left:20px ;">{{userProfile.Followers.length}}位</span>
+      <span style="color: #6C757D;">跟隨者</span>
+    </div>
+  </div>
+
+</div>
