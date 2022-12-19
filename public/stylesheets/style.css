@@ -641,7 +641,6 @@ h4 {
 }
 
 #tweet-icon {
-  margin-top: 16px;
   margin-left: 23.13px;
   margin-bottom: 52px;
   width: 50px;
@@ -653,18 +652,21 @@ h4 {
   padding: 0;
 }
 
-#tweet-right .header {
-  font-family: "Noto Sans TC";
-  font-style: normal;
-  margin-top: 17px;
+#tweet-right .header {  
   max-width: 860px;
+  margin-bottom: 8px;
+}
+
+#tweet-right .content-word {  
+  max-width: 860px;
+  margin-bottom: 8px;
 }
 
 #tweet-right .actions {
   width: 120px;
   height: 16px;
-  margin-bottom: 16px;
-}
+  margin-bottom: 8px;
+  }
 
 #tweet-right .reply-whom {
   font-family: "Noto Sans TC";
@@ -729,19 +731,9 @@ h4 {
   border-color: transparent #e6ecf0 #e6ecf0;
 }
 
-
-/* 此重複 */
 .each-tweet {
   border-bottom: 1px solid #e6ecf0;
-  max-height: 153px;
-}
-
-/* 此重複 */
-#tweet-right .header {
-  font-family: "Noto Sans TC";
-  font-style: normal;
-  font-weight: 700;
-  margin-bottom: 8px;
+  padding: 16px 0;
 }
 
 .tweets-mid {
@@ -766,4 +758,70 @@ h4 {
 .tweets-mid::-webkit-scrollbar-track {
   background-color: #FAFAFA;
   box-shadow: inset 1px 0px 0px #E8E8E8, inset -1px 0px 0px #F0F0F0;
+}
+
+/* index  */
+
+.index-post {
+  position: absolute;
+  width: 639px;
+  height: 130px;  
+  top: 91px;
+}
+
+.index-post .posting {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 8px;
+  position: relative;
+  width: 588.61px;
+  height: 61px;
+  left: 25px;
+}
+
+.index-post-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  width: 64.5px;
+  height: 40px;
+  background: #ff6600;
+  border-radius: 50px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+  padding: 0;
+  border: none;
+  position: absolute;  
+  right: 24px;
+  top: 80px;
+}
+
+.index-divider {
+  position: relative;
+  width: 639px;
+  height: 10px;  
+  top: 80px;
+  background: #E6ECF0;
+  transform: rotate(-180deg);  
+}
+
+.index-tweets {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;  
+  position: absolute;
+  width: 639px;
+  /* height: 998px; */
+  top: 237px;
 }

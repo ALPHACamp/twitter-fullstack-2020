@@ -117,7 +117,6 @@ const userController = {
       .then(([user, users]) => {
         if (!user) throw new Error("User doesn't exist!")
         const userProfile = user.toJSON()
-        // console.log(userProfile)
         const result = users
           .map(user => ({
             ...user.toJSON(),
@@ -125,13 +124,67 @@ const userController = {
             // isFollowed: req.user.Followings.some(f => f.id === user.id) //req.user還未設定、root不該出現
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('usertweets', { userProfile, users: result })
+        res.render('usertweets', { userProfile, users: result.slice(0, 10) })
       }
       )
   },
   getUserReplies: (req, res, next) => {
+    return Promise.all([
+      User.findByPk(req.params.id, {
+        include: [
+          { model: Reply, include: { model: Tweet, include: User } },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ],
+        order: [[Reply, 'createdAt', 'desc']]
+      }),
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }],
+        where: { role: 'user' } // id: !req.user.id,待補
+      })
+    ])
+      .then(([user, users]) => {
+        if (!user) throw new Error("User doesn't exist!")
+        const userProfile = user.toJSON()
+        const result = users
+          .map(user => ({
+            ...user.toJSON(),
+            followerCount: user.Followers.length
+            // isFollowed: req.user.Followings.some(f => f.id === user.id) //req.user還未設定、root不該出現
+          }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+        res.render('userreplies', { userProfile, users: result.slice(0, 10) })
+      }
+      )
   },
   getUserLikes: (req, res, next) => {
+    return Promise.all([
+      User.findByPk(req.params.id, {
+        include: [
+          { model: Like }, // 待補
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ],
+        order: [[Like, 'createdAt', 'desc']]
+      }),
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }],
+        where: { role: 'user' } // id: !req.user.id,待補
+      })
+    ])
+      .then(([user, users]) => {
+        if (!user) throw new Error("User doesn't exist!")
+        const userProfile = user.toJSON()
+        const result = users
+          .map(user => ({
+            ...user.toJSON(),
+            followerCount: user.Followers.length
+            // isFollowed: req.user.Followings.some(f => f.id === user.id) //req.user還未設定、root不該出現
+          }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+        res.render('userlikes', { userProfile, users: result.slice(0, 10) })
+      }
+      )
   },
   getUserFollowings: (req, res, next) => {
   },
