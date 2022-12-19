@@ -10,7 +10,7 @@ div,p,span,input{
 body, html{
   height: 100%;
   margin: 0;
-} 
+}
 /* 登入登出註冊 */
 .first-con{
 margin-top:69px;
@@ -54,7 +54,7 @@ padding:5px;
 }
 
 #login-button{
-border-radius:50px; 
+border-radius:50px;
 border:none;
 background-color:#FF6600;
 color:white;
@@ -74,9 +74,13 @@ font-size:16px;
 margin: 10px;
 }
 .cancel{
-  margin-top:30px;
-  margin-left: 13px;
-  font-size: 16px;
+margin-top:30px;
+margin-left: 13px;
+font-size: 16px;
+}
+.top{
+overflow-y: auto;
+overflow-x:hidden;
 }
 .top{
 overflow-y: auto;
@@ -99,7 +103,7 @@ overflow-x:hidden;
 /*卷軸背景*/
  .top::-webkit-scrollbar-track {
   background-color: #FAFAFA;
-} 
+}
 .home-header{
  font-family:"Noto Sans TC";
   font-size: 24px;
@@ -108,7 +112,7 @@ overflow-x:hidden;
   display: flex;
   align-items: center;
   border-bottom: 1px solid 	#E6ECF0;
-  padding-left:23px;  
+  padding-left:23px;
   position: relative;
 }
 .following-header{
@@ -132,9 +136,9 @@ background-color: white;
 }
 textarea{
     height: 136px;
-  width:100%; 
-  font-size: 13px; 
-  padding: 12px 16px; 
+  width:100%;
+  font-size: 13px;
+  padding: 12px 16px;
   border: none;
   outline: none;
 }
@@ -157,7 +161,7 @@ color: white;
 font-size: 16px;
 background-color:#ff6600;
 border: 1px solid #FF6600;
-border-radius:20px; 
+border-radius:20px;
 width:96px;
 height:40px;
 font-family: 'Noto Sans TC';
@@ -167,8 +171,8 @@ bottom: 0;
 }
 
 .main-bottom{
-  height: calc(100vh - 235px); 
-  max-height: calc(100vh - 235px); 
+  height: calc(100vh - 235px);
+  max-height: calc(100vh - 235px);
   /* overflow-y: auto; */
 }
 .card-home::-webkit-scrollbar {
@@ -178,14 +182,14 @@ bottom: 0;
 /* 主頁下方貼文 */
 .tweets-box{
 display: flex;
-  position: relative;
-  /* left: 16px; */
-  padding: 0;
-  border-bottom: 1px solid #E6ECF0;
+position: relative;
+/* left: 16px; */
+padding: 0;
+border-bottom: 1px solid #E6ECF0;
 }
 #toReply{
-  color:inherit;
-  text-decoration: none;
+color:inherit;
+text-decoration: none;
 }
 .tweets-box-main{
   position: relative;
@@ -193,53 +197,53 @@ display: flex;
   padding: 0;
 }
 .tweets-header{
-  font-style: normal;
-  font-weight: 700;
-  margin-bottom: 8px;
+font-style: normal;
+font-weight: 700;
+margin-bottom: 8px;
 }
 .tweets-header span{
-  font-size: 16px; 
+  font-size: 16px;
   line-height: 26px;
 }
 .tweets-account{
-  font-size: 14px; 
+  font-size: 14px;
   line-height: 22px;
   font-weight: 400;
   color:#6c757d;
 }
 .tweets-content{
-margin-bottom: 8px; 
+margin-bottom: 8px;
 line-height: 26px;
 font-weight: 400px;
 font-size: 16px;
 }
 .tweets-icons{
   display:flex;
-   justify-content: start;  
-   font-family: "Montserrat"; 
+   justify-content: start;
+   font-family: "Montserrat";
 }
 .tweets-icons a{
 font-size: 14px;
 margin-right: 40px;
 }
 .tweets-icons img{
- width:14px;
+width:14px;
 margin-right: 9px;
 }
 
 /* 貼文與回覆 */
 .replies-page{
-  border-bottom: 1px solid 	#E6ECF0;
+border-bottom: 1px solid 	#E6ECF0;
 }
 .tweetAndReply{
-  margin-left: 16px;
+margin-left: 16px;
 }
 .back-icon{
 width:20px;
 margin-right: 15px;
 }
 .tweets-box-sec{
-  display: flex; 
+  display: flex;
   align-items: center;
   position: relative;
   padding: 0;
@@ -258,57 +262,57 @@ margin-bottom: 0;
 }
 .tAR-account{
   padding: 0;
-  font-size: 14px; 
+  font-size: 14px;
   line-height: 22px;
   font-weight: 400;
   color:#6c757d;
 }
 .tweets-content-sec{
-  font-weight: 400; 
-  line-height: 36px; 
+  font-weight: 400;
+  line-height: 36px;
   color: #171725;
   font-size:24px;
   border-bottom:1px solid  #E6ECF0;
 }
 .tweets-mid{
-  display: flex;
-  justify-content: start;
-  align-items: center;
- border-bottom:1px solid  #E6ECF0;
- height: 60px;
+display: flex;
+justify-content: start;
+align-items: center;
+border-bottom:1px solid  #E6ECF0;
+height: 60px;
 }
 .tweets-mid p{
-  font-size: 19px; 
+  font-size: 19px;
   margin:16px 24px 16px 0;
   line-height: 27px;
   color:#6C757D;
 }
 .tweet-mid span{
-  font-weight: 700; 
+  font-weight: 700;
   color: #171725;
 }
 .tweets-icons-lar{
-  color:#6C757D;
-  border-bottom:1px solid  #E6ECF0;
-  height: 68px;
-  display: flex;
-  align-items: center;
+color:#6C757D;
+border-bottom:1px solid  #E6ECF0;
+height: 68px;
+display: flex;
+align-items: center;
 }
 .tweets-icons-lar img{
-  margin-right: 133px;
+margin-right: 133px;
 }
 
 .reply-box{
-  height: calc(100vh - 372px); 
-  max-height: calc(100vh - 372px); 
+  height: calc(100vh - 372px);
+  max-height: calc(100vh - 372px);
 }
 .reply-card{
-  display: flex;
-  margin: 23px;
- border-bottom:1px solid  #E6ECF0;
+display: flex;
+margin: 23px;
+border-bottom:1px solid  #E6ECF0;
 }
 
- /* followings*/
+/* followings*/
 /* header */
 .home-header-sec{
 border:1px solid #E6ECF0;
@@ -318,21 +322,21 @@ padding-left: 28px;
 height: 75px;
 }
 .text-secondary{
-  font-size:13px;
-  color:#6C757D;
-  margin-left:38px;
+font-size:13px;
+color:#6C757D;
+margin-left:38px;
 }
 .personal-name{
   font-size: 18px;
   font-weight:700px;
   line-height: 26px;
-} 
+}
 /* followings tab */
 .tab-above,.following-tab,.following-main{
 border:1px solid  #E6ECF0;
 }
 nav .nav-tabs .nav-button{
-  border:none;    
+  border:none;
 }
 
 .user-icon {
@@ -349,21 +353,21 @@ opacity: 1;
 font-weight: bold;
 color: #FF6600;
 border-bottom: 2px solid #FF6600;
-} 
+}
 .btn-position{
-  position: absolute;
-  right:0;
-  top:0;
-  margin:16px 30px;
+position: absolute;
+right:0;
+top:0;
+margin:16px 30px;
 }
 
 /* 個人和其他使用者profile */
 .profile-cover{
-  height: 200px;
+height: 200px;
 }
 .profile-cover img{
   height:100%;
-  width:100%; 
+  width:100%;
   object-fit:cover"
 }
 .profile-avatar {
@@ -371,55 +375,59 @@ border-bottom: 2px solid #FF6600;
   z-index:100;
   position:relative;
   display: flex;
-  justify-content:space-between; 
+  justify-content:space-between;
 }
 .profile-avatar img{
- width:140px;
- height:140px;
- border-radius: 50%;
- border: 5px solid white;
- margin-left: 16px;
+width:140px;
+height:140px;
+border-radius: 50%;
+border: 5px solid white;
+margin-left: 16px;
 }
 .profile-edit-btn {
-  width: 128px;
-  height: 40px;
-  background: #FFFFFF;
-  border: 1px solid #FF6600;
-  border-radius: 50px;
-  font-size: 16px;
-  color: #FF6600;
-  margin: 100px 16px 0 0 ;
+width: 128px;
+height: 40px;
+background: #FFFFFF;
+border: 1px solid #FF6600;
+border-radius: 50px;
+font-size: 16px;
+color: #FF6600;
+margin: 100px 16px 0 0 ;
 }
 .profile-edit-btn:hover {
-  background: #FF6600;
-  color: #FFFFFF;
+background: #FF6600;
+color: #FFFFFF;
 }
 .profile-context{
-  display: flex;
-  flex-direction: column;
-  border-bottom:1px solid  #E6ECF0;
-  margin-left: 10px;
+display: flex;
+flex-direction: column;
+border-bottom:1px solid  #E6ECF0;
+margin-left: 10px;
 }
 .profile-name{
- font-weight: 700;
-  font-size: 18px;
-  line-height: 26px;
-  color: #171725;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+font-weight: 700;
+font-size: 18px;
+line-height: 26px;
+color: #171725;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
 }
 .profile-intro{
-  font-size: 14px; 
+  font-size: 14px;
   line-height: 22px;
   font-weight: 400;
   color:#171725;
   margin-top: 6px;
 }
 .follow-ship {
-  width: 180px;
-  height: 22px;
- height: 60px;
+width: 180px;
+height: 22px;
+height: 60px;
+}
+.follow-ship a{
+color:inherit;
+text-decoration: none;
 }
 .follow-ship a{
     color:inherit;
@@ -427,18 +435,18 @@ border-bottom: 2px solid #FF6600;
 }
 .follow-ship a{
 display: flex;
-  justify-content: start;
-  align-items: center;
+justify-content: start;
+align-items: center;
 }
 .follow-ship p{
-  margin-right: 20px; 
-  font-size: 14px; 
+  margin-right: 20px;
+  font-size: 14px;
   line-height: 22px;
   font-weight: 400px;
   color:#6C757D;
 }
 .follow-ship p span{
-  color:#171725;
+color:#171725;
 }
 /* 移除超連結樣式 */
 /* a, a:hover, a:visited, a:link, a:active,a:focus{
@@ -447,38 +455,38 @@ display: flex;
 } */
 /* 個人主頁tab */
 .nav-tabs .nav-item {
-  width: 130px;
-  height: 52px;
+width: 130px;
+height: 52px;
 }
 .nav .nav-item a{
-  border:none;
+border:none;
 }
 .nav-tabs .nav-item .nav-link {
-  position: relative;
-  top: 11px;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 22px;
-  color: #657786;
-  text-align: center;
+position: relative;
+top: 11px;
+font-style: normal;
+font-weight: 700;
+font-size: 15px;
+line-height: 22px;
+color: #657786;
+text-align: center;
 }
 /* active時啟動 */
 .nav-tabs .nav-item .nav-link.active {
-  color: #ff6600;
-  border-color: #fff #fff #ff6600;
-  border-width: 2px;
+color: #ff6600;
+border-color: #fff #fff #ff6600;
+border-width: 2px;
 }
 /* 個人主頁tab內容 */
 .tabs-content{
   display: flex;
   flex-direction:column;
-   height: calc(100vh - 522px); 
-   max-height: calc(100vh - 522px); 
+   height: calc(100vh - 522px);
+   max-height: calc(100vh - 522px);
 }
 .tab-tweets{
-  display: flex;
- padding: 16px 0;
+display: flex;
+padding: 16px 0;
 }
 
 /* 帳戶設定 */
@@ -498,7 +506,7 @@ color: white;
 font-size: 16px;
 background-color:#ff6600;
 border: 1px solid #FF6600;
-border-radius:20px; 
+border-radius:20px;
 width:96px;
 height:40px;
 font-family: 'Noto Sans TC';
@@ -517,52 +525,52 @@ flex-direction: column ;
 margin-left: 100px;
 }
 .ac-icon{
-  width: 40px;
-  height:40px;
-  margin-top: 13px;
-  margin-bottom: 31.78px;
+width: 40px;
+height:40px;
+margin-top: 13px;
+margin-bottom: 31.78px;
 }
 .user-list-group{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 20px;
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-right: 20px;
 }
 .user-list-group a{
-  width: 200px;
-  height: 60px;
-  color:inherit;
-  text-decoration: none;
-  display: block;
+width: 200px;
+height: 60px;
+color:inherit;
+text-decoration: none;
+display: block;
 }
 .user-list-group li{
-  list-style-type: none;
+list-style-type: none;
 }
 .user-list-group .active{
 font-weight: bold;
 filter: invert(44%) sepia(66%) saturate(2603%) hue-rotate(359deg) brightness(99%) contrast(106%);
 }
 .user-list-group span{
-  font-size: 18px;
-  font-weight: 700px;
-  color: #44444F;
+font-size: 18px;
+font-weight: 700px;
+color: #44444F;
 }
 .left-sidebars_css .icon{
-  height:22.2px;
-  width:20.25px;
+height:22.2px;
+width:20.25px;
 }
 .sidebar-lb{
-  margin-right: 24px;
+margin-right: 24px;
 }
 #tweet-button{
-  border: none;
-  height: 40px;
-  color: #FFFFFF;
-  background: #FF6600;
-  border-radius: 50px;
-  width: 180px;
-  font-weight: 400;
-  font-size: 20px;
+border: none;
+height: 40px;
+color: #FFFFFF;
+background: #FF6600;
+border-radius: 50px;
+width: 180px;
+font-weight: 400;
+font-size: 20px;
 }
 .logout{
 margin-top: calc(100vh - 400px);
@@ -571,7 +579,7 @@ margin-top: calc(100vh - 400px);
 font-size:18px;
 }
 .logout-admin{
-  margin-top: calc(100vh - 280px);
+margin-top: calc(100vh - 280px);
 }
 /* admin */
 .admin-sidebar{
@@ -591,7 +599,7 @@ overflow-y: auto;
 }
 .admin-users::-webkit-scrollbar-track,.admin-tweets::-webkit-scrollbar-track{
   background-color: #FAFAFA;
-} 
+}
 .admin-tweets-box{
   height: calc(100vh - 76px); max-height: calc(100vh - 76px);
   text-align: start;
@@ -625,65 +633,65 @@ padding: 0;
   height: 15px;
 }
 .user-card{
-  height: calc(100vh - 76px); 
-  max-height: calc(100vh - 76px); 
+  height: calc(100vh - 76px);
+  max-height: calc(100vh - 76px);
   display: flex;
   align-items: start;
   padding: 15px;
 }
 .user-card-main{
-  height: 314px; 
+  height: 314px;
   margin-bottom:16px;
 }
 .user-border{
-  height: 100%; 
-  border-radius: 10px; 
+  height: 100%;
+  border-radius: 10px;
   background-color: #F6F7F8;
   border:1px solid #C4C4C4;
 }
 .user-border-img{
-  height: 140px;
-  background-size: cover;
-  background-image: url('https://www.canada-visa-online.org/uploads/image/0c5263e499924bc58c9e0161da177f76/maple-leaf.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  position: relative;
+height: 140px;
+background-size: cover;
+background-image: url('https://www.canada-visa-online.org/uploads/image/0c5263e499924bc58c9e0161da177f76/maple-leaf.jpg');
+background-position: center;
+background-repeat: no-repeat;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
+position: relative;
 }
 .user-border-avatar{
-  position: absolute;
-  border-radius: 50%;
-  left: 50%;
-  bottom: -24px;
-  transform: translate(-50%, 0);
-  width: 100px;
-  height: 100px;
-  background-size: cover;
-  background-image: url('https://media.newyorker.com/photos/5a8862150095ae7e55570156/16:9/w_1280,c_limit/Mead-Peter-Rabbit.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  border: 4px #ffffff solid;
+position: absolute;
+border-radius: 50%;
+left: 50%;
+bottom: -24px;
+transform: translate(-50%, 0);
+width: 100px;
+height: 100px;
+background-size: cover;
+background-image: url('https://media.newyorker.com/photos/5a8862150095ae7e55570156/16:9/w_1280,c_limit/Mead-Peter-Rabbit.jpg');
+background-position: center;
+background-repeat: no-repeat;
+border: 4px #ffffff solid;
 }
 .text-center{
   padding-top: 32px
 }
 .user-border .text-center .mb-0,.text-center-follow .mb-0{
-  font-weight: 700; 
-  line-height: 26px; 
+  font-weight: 700;
+  line-height: 26px;
   color: #171725;
   margin: 2px;
 }
 .user-border .text-center .mb-1{
-  font-size: 14px; 
-  line-height: 22px; 
-  color: #6C757D; 
+  font-size: 14px;
+  line-height: 22px;
+  color: #6C757D;
   margin-bottom: 20px
 }
 .text-center-info{
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
+display: flex;
+justify-content: center;
+margin-bottom: 10px;
 }
 .text-center-info img{
 width:24px;
@@ -692,8 +700,8 @@ margin-left: 9px;
 .text-center-follow {
   display: flex;
   justify-content: center;
-  margin-right: 8px; 
-  font-size: 14px; 
+  margin-right: 8px;
+  font-size: 14px;
   line-height: 22px
 }
 .text-center-follow span{
@@ -702,99 +710,101 @@ color: #6C757D;;
 
 /* right-sidebar */
 h4 {
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 26px;
-  padding-top: 24px;
-  margin-left: 24px;
-  margin-bottom: 24px;
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 26px;
+padding-top: 24px;
+margin-left: 24px;
+margin-bottom: 24px;
 }
 .popular-container {
-  width: 273px;
-  height: 731px;
-  background: #fafafb;
-  border-radius: 16px;
+width: 273px;
+height: 731px;
+background: #fafafb;
+border-radius: 16px;
 }
 .popular-title {
-  border-bottom: 1px solid #e6ecf0;
+border-bottom: 1px solid #e6ecf0;
 }
 .popular-list-group li {
-  border: none;
-  background: #fafafb;
-  padding: 0;
+border: none;
+background: #fafafb;
+padding: 0;
 }
 
 .user-icon {
-  display: flex;
-  background: #c4c4c4;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  justify-content: center;
-  align-items: center;
+display: flex;
+background: #c4c4c4;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+justify-content: center;
+align-items: center;
 }
 .list-group-item {
-  margin: 0px 16px 30px 16px;
-  width: 241px;
-  height: 50px;
+margin: 0px 16px 30px 16px;
+width: 241px;
+height: 50px;
 }
 .popular-name {
-  height: 26px;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 26px;
-  color: #171725;
-  margin-bottom: -3px;
+height: 26px;
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 26px;
+color: #171725;
+margin-bottom: -3px;
+overflow:hidden;
+text-overflow: ellipsis;
 }
 .small-account {
-  height: 22px;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 22px;
-  color: #92929d;
+height: 22px;
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 22px;
+color: #92929d;
 }
 .following-btn {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 8px 16px;
-  width: 96px;
-  height: 40px;
-  background: #ff6600;
-  border-radius: 50px;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #ffffff;
-  padding: 0;
-  border: none;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 8px 16px;
+width: 96px;
+height: 40px;
+background: #ff6600;
+border-radius: 50px;
+flex: none;
+order: 0;
+flex-grow: 0;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+color: #ffffff;
+padding: 0;
+border: none;
 }
 .follow-btn {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 8px 16px;
-  width: 64px;
-  height: 40px;
-  background: #ffffff;
-  border: 1px solid #ff6600;
-  border-radius: 50px;
-  color: #ff6600;
-  padding: 0;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 8px 16px;
+width: 64px;
+height: 40px;
+background: #ffffff;
+border: 1px solid #ff6600;
+border-radius: 50px;
+color: #ff6600;
+padding: 0;
 }
 
 /* 彈跳視窗格式 */
 .modal-content{
  border-radius: 14px;
- height: 302px; 
+ height: 302px;
 position: relative;
 }
 .post-main-top{
@@ -805,7 +815,7 @@ height: 234px;
 width:100%;
 }
 .modal-card-title{
- height: 56px; 
+ height: 56px;
 }
 .close-btn{
   height:56px;
@@ -817,8 +827,8 @@ width:100%;
   margin: 0;
 }
 .post-tweet-content{
- width:100%; 
-  font-size: 13px; 
+ width:100%;
+  font-size: 13px;
   border: none;
   outline: none;
    resize:none;
