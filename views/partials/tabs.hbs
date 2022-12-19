@@ -14,7 +14,7 @@
   <div class="d-flex flex-column tabs-content">
     <!-- if = 推文 -->
     {{#each userProfile.Tweets}}
-    <div class="d-flex each-tweet" style="padding: 8px 0">
+    <div class="d-flex each-tweet" style="padding: 8px 0;">
       <div id="tweet-icon">
         <a href="/users/{{this.UserId}}/tweets">
           <img src="{{.. /userProfile.avatar}}" alt="" width="50" height="50" class="rounded-circle" />
@@ -22,18 +22,18 @@
       </div>
       <div id="tweet-right" style="width: 528px">
         <div class="header">
-          <span style="font-size: 16px; line-height: 26px">{{.. /userProfile.name}}</span>
-          <span style="font-size: 14px; line-height: 22px" class="text-muted">
-            @{{.. /userProfile.account}}．{{relativeTimeFromNow this.createdAt}}</span>
+          <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">{{.. /userProfile.name}}</span>
+          <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D; margin-left:8px;" class="text-muted">
+            @{{.. /userProfile.account}}‧{{relativeTimeFromNow this.createdAt}}</span>
         </div>
-        <div class="content-word">
-          <p style="margin-bottom: 8px">
+        <div class="content-word"style="width: 528px;height: 78px;">
+          <p style="margin-bottom: 9.49px;">
             {{this.description}}
           </p>
         </div>
-        <div class="actions d-flex justify-content-between">
+        <div class="actions d-flex justify-content-between" style="margin-bottom: 16px;">
           <span>
-            <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px">
+            <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px;">
             <span
               style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Replies.length}}</span>
           </span>
