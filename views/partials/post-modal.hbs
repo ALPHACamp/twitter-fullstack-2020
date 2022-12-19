@@ -1,0 +1,29 @@
+{{!-- 以下是推文的 modal --}}
+<div class="modal fade" id="post-modal" type="position: fixed;" tabindex="-1" role="dialog"
+  aria-labelledby="postModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content" style="width:634px; height:300px;border-radius:14px;">
+
+      <div class="modal-header" style="width:634px; height:56px;">
+        <a data-bs-dismiss="modal">
+          <img src="/images/icons/icon-danger.png" alt="" style="width:25px;height:25px;">
+        </a>
+      </div>
+
+      <form class="modal-tweet-post" action="/tweets" method="POST">
+        <div class="modal-body d-flex" id="post-modal-body">
+          <div class="modal-avatar">
+            <img style="width:50px;height:50px;border-radius:25px;" src="{{user.avatar}}" alt="modal-avatar">
+          </div>
+          <div class="modal-input">
+            <textarea class=" border border-0 m-2" name="description" style="font-size: 16px;" id="description"
+              cols="65" rows="5" placeholder="有什麼新鮮事？" maxlength='140' required></textarea>
+          </div>
+        </div>
+        <button type="submit" class="setting-btn my-2" style="font-size: 18px">推文</button>
+      </form>
+    </div>
+
+  </div>
+</div>

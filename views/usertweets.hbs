@@ -1,43 +1,11 @@
 <div class="d-flex" style="height: 1200px;width:1400px;margin: 0 auto;">
-  <div style="height: 1200px;width:332px;">
-    <div id="left-section">
-      <img id="logo" src="/images/icons/logo.png">
-      <ul id="left-navs" class="nav flex-column">
-        <li class="nav-item">
-          <a href="/tweets" class="nav-item-content">
-            <img src="/images/icons/outlined-home.png" class="base-icon">
-            <span class="word">首頁</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="/users/{{user.id}}/tweets" class="nav-item-content">
-            <img src="/images/icons/orange-user.png" class="base-icon">
-            <span class="word-click">個人資料</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="/settings" class="nav-item-content">
-            <img src="/images/icons/outlined-cog.png" class="base-icon">
-            <span class="word">設定</span>
-          </a>
-        </li>
-        <li class="nav-item d-flex justify-content-center" style="height: 46px;">
-          <button type="button" class="btn btn-primary"
-            style="border-radius:50px; width:100%; background:#FF6600; border-color:#FF6600;font-size:20px;font-weight:400"
-            data-toggle="modal" data-target="#tweetModal" data-toggle="modal">推文</button>
-        </li>
-      </ul>
-      <div id="logout">
-        <a href="/logout" style="margin-top:1.585vh; text-decoration: none; align-items: center; display:flex">
-          <img src="/images/icons/outlined-logout.png" style="height:24px; margin-left:16px;">
-          <span style="margin-left:16px; font-weight:700; font-size:18px; color:#44444F">登出</span>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="tweets-mid d-flex flex-column" style="width:641px;">
+  {{>sidebar route='userProfile'}}
+  <div class="d-flex flex-column" style="width:641px; border-left: 1px solid #e6ecf0; border-right: 1px solid #e6ecf0">
     {{>profile}}
-    {{>tabs}}
+    {{>tabs route='tweets'}}
   </div>
   {{>popular}}
 </div>
+
+{{!-- 這是推文modal --}}
+{{>post-modal}}

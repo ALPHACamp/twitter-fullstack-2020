@@ -1,20 +1,21 @@
 <div id="tabs-section">
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link active" href="/users/:id/tweets">推文</a>
+      <a class="nav-link {{#ifCond route 'tweets'}}active{{/ifCond}}" href="/users/{{userProfile.id}}/tweets">推文</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/users/:id/replies">回覆</a>
+      <a class="nav-link {{#ifCond route 'replies'}}active{{/ifCond}}" href="/users/{{userProfile.id}}/replies">回覆</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/users/:id/likes">喜歡的內容</a>
+      <a class="nav-link {{#ifCond route 'likes'}}active{{/ifCond}}" href="/users/{{userProfile.id}}/likes">喜歡的內容</a>
     </li>
   </ul>
 
   <div class="d-flex flex-column tabs-content">
     <!-- if = 推文 -->
+    {{#ifCond route 'tweets'}}
     {{#each userProfile.Tweets}}
-    <div class="d-flex each-tweet" style="padding: 8px 0;">
+    <div class="d-flex each-tweet">
       <div id="tweet-icon">
         <a href="/users/{{this.UserId}}/tweets">
           <img src="{{.. /userProfile.avatar}}" alt="" width="50" height="50" class="rounded-circle" />
@@ -22,18 +23,18 @@
       </div>
       <div id="tweet-right" style="width: 528px">
         <div class="header">
-          <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">{{.. /userProfile.name}}</span>
-          <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D; margin-left:8px;" class="text-muted">
-            @{{.. /userProfile.account}}‧{{relativeTimeFromNow this.createdAt}}</span>
+          <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">{{..
+            /userProfile.name}}</span>
+          <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D; margin-left:8px;"
+            class="text-muted">
+            @{{.. /userProfile.account}}．{{relativeTimeFromNow this.createdAt}}</span>
         </div>
-        <div class="content-word"style="width: 528px;height: 78px;">
-          <p style="margin-bottom: 9.49px;">
-            {{this.description}}
-          </p>
+        <div class="content-word">
+          {{this.description}}
         </div>
-        <div class="actions d-flex justify-content-between" style="margin-bottom: 16px;">
+        <div class="actions d-flex justify-content-between">
           <span>
-            <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px;">
+            <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px">
             <span
               style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Replies.length}}</span>
           </span>
@@ -50,33 +51,41 @@
       </div>
     </div>
     {{/each}}
+    {{/ifCond}}
 
-    {{!-- <!-- if = 回覆 -->
-    <div class="d-flex each-tweet" style="padding: 8px 0">
+    <!-- if = 回覆 -->
+    {{#ifCond route 'replies'}}
+    {{#each userProfile.Replies}}
+    <div class="d-flex each-tweet">
       <div id="tweet-icon">
         <a href="/users/{{this.UserId}}/tweets">
-          <img src="https://via.placeholder.com/50" alt="" width="50" height="50" class="rounded-circle" />
+          <img src="{{.. /userProfile.avatar}}" alt="" width="50" height="50" class="rounded-circle" />
         </a>
       </div>
       <div id="tweet-right" style="width: 528px">
         <div class="header">
-          <span style="font-size: 16px; line-height: 26px">John Doe</span>
-          <span style="font-size: 14px; line-height: 22px" class="text-muted">
-            @heyjohn．3小時</span>
+          <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">{{..
+            /userProfile.name}}</span>
+          <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D; margin-left:8px;"
+            class="text-muted">
+            @{{.. /userProfile.account}}．{{relativeTimeFromNow this.createdAt}}</span>
         </div>
         <p class="reply-whom">
-          回覆 <span style="color: #ff6600">@apple</span>
+          回覆 <span style="color: #ff6600">@{{this.Tweet.User.account}}</span>
         </p>
         <div class="content-word">
           <p style="margin-bottom: 8px">
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-            amet sint.
+            {{this.comment}}
           </p>
         </div>
       </div>
     </div>
-    <!-- if = 喜歡的內容 -->
-    <div class="d-flex each-tweet" style="padding: 8px 0">
+    {{/each}}
+    {{/ifCond}}
+
+    <!-- if = 喜歡的內容 --> <!-- 待修改 -->
+    {{#ifCond route 'likes'}}
+    <div class="d-flex each-tweet" style="padding: 16px 0">
       <div id="tweet-icon">
         <a href="/users/{{this.UserId}}/tweets">
           <img src="https://via.placeholder.com/50" alt="" width="50" height="50" class="rounded-circle" />
@@ -84,8 +93,9 @@
       </div>
       <div id="tweet-right" style="width: 528px">
         <div class="header">
-          <span style="font-size: 16px; line-height: 26px">John Doe</span>
-          <span style="font-size: 14px; line-height: 22px" class="text-muted">
+          <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">John Doe</span>
+          <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D; margin-left:8px;"
+            class="text-muted">
             @heyjohn．3小時</span>
         </div>
         <div class="content-word">
@@ -97,15 +107,17 @@
         </div>
         <div class="actions d-flex justify-content-between">
           <span>
-            <i class="fa-regular fa-comment" style="height: 16px"></i>13
-            <!-- <i class="fa-solid fa-comment" style="color: red"></i>13 -->
+            <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px">
+            <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">13</span>
           </span>
           <span>
-            <!-- <i class="fa-regular fa-heart" style="height: 16px"></i>76 -->
-            <i class="fa-solid fa-heart" style="color: red"></i>76
+            <img src="/images/icons/filled-like.png" alt="replies" style="width:16px; height: 16px">
+            <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">76</span>
           </span>
         </div>
       </div>
-    </div> --}}
+    </div>
+    {{/ifCond}}
+
   </div>
 </div>
