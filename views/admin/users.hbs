@@ -1,19 +1,38 @@
-<div class="admin-container">
-  <div class="d-flex justify-content-md-center">
-    
-    {{> admin-left route='users'}}
-
-    <div class="main col-9 border">   
+{{> messages}}
+<div class="d-flex" style="height: 1200px;width:1400px;margin: 0 auto;">
+  <div style="height: 1200px;width:332px">
+    <div id="left-section">
+      <img id="logo" src="/images/icons/logo.png">
+      <ul id="left-navs" class="nav flex-column">
+        <li class="nav-item">
+          <a href="/admin/tweets" class="nav-item-content">
+            <img src="/images/icons/outlined-home.png" class="base-icon">
+            <span class="word">推文清單</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/users" class="nav-item-content">
+            <img src="/images/icons/orange-user.png" class="base-icon">
+            <span class="word-click">使用者列表</span>
+          </a>
+        </li>
+      </ul>
+      <div id="logout">
+        <a href="/admin/logout" style="margin-top:1.585vh; text-decoration: none; align-items: center; display:flex">
+          <img src="/images/icons/outlined-logout.png" style="height:24px; margin-left:16px;">
+          <span style="margin-left:16px; font-weight:700; font-size:18px; color:#44444F">登出</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div style="height: 1200px;width:1067px">
+    <div class="users-main">
       <div class="admin-users-head">
         <h4>使用者列表</h4>
       </div>
-
-      <div class="hr-line"></div>
-      
-      <div class="row mx-1">
-        
+      <div class="row mx-2">
         {{#each users}}
-        <div class="card mx-1 my-2">
+        <div class="card mx-2 my-2">
           <div class="card-top">
             <img class="card-cover" src="{{ this.cover }}" alt="card-cover">
           </div>
@@ -21,7 +40,7 @@
             <div class="card-avatar-part">
               <img class="card-avatar" src="{{ this.avatar }}" alt="card-avatar">
             </div>
-            <div class="">
+            <div>
               <p class="card-name">{{this.name}}</p>
               <p class="card-account">@{{this.account}}</p>
             </div>
@@ -29,23 +48,21 @@
           <div class="card-bottom">
             <div class="card-tweet-like">
               <div class="card-tweet">
-                <div><img class="card-icon" src="/images/icons/filled-post.png" alt="" style="height:20px"></div>
+                <div><img class="card-icon" src="/images/icons/gray-feather.png" alt="" style="height:24px;width:24px;"></div>
                 <div class="card-num">{{this.TweetsCount}}</div>
               </div>
               <div class="card-like">
-                <div><img class="card-icon" src="/images/icons/outlined-like.png" alt="" style="height:20px"></div>
+                <div><img class="card-icon" src="/images/icons/gray-heart.png" alt="" style="height:24px;width:24px;"></div>
                 <div class="card-num">{{this.TweetsLikedCount}}</div>
               </div>
             </div>
             <div class="card-followship">
-              <div class="card-following">{{this.FollowingsCount}}個跟隨中</div>
-              <div class="card-follower">{{this.FollowersCount}}位跟隨者</div>
+              <div class="card-following">{{this.FollowingsCount}} 個<span class="follow-word">跟隨中</span></div>
+              <div class="card-follower">{{this.FollowersCount}} 位<span class="follow-word">跟隨者</span></div>
             </div>
           </div>
         </div>
         {{/each}}
-
-      
       </div>
     </div>
   </div>

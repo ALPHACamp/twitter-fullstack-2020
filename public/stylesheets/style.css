@@ -117,6 +117,29 @@ input::placeholder {
 
 
 /* Admin users css */
+.users-main {
+  height: 1200px;
+  border-left: 2px solid #E6ECF0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-right: -30px;
+  }
+  
+  .tweets-main::-webkit-scrollbar {
+    width: 15px;
+    background-color: #FAFAFA;
+  }
+  
+  .tweets-main::-webkit-scrollbar-thumb {
+    background-color: #C1C1C1;
+    border-radius: 100px;
+  }
+  
+  .tweets-main::-webkit-scrollbar-track {
+    background-color: #FAFAFA;
+    box-shadow: inset 1px 0px 0px #E8E8E8, inset -1px 0px 0px #F0F0F0;
+  }
+
 
 .admin-container a {
   text-decoration: none;
@@ -124,28 +147,20 @@ input::placeholder {
   
 }
 
-.hr-line {
-  margin: 0px -12px;
-  border: 1px solid #E6ECF0;
-  top: 30%;
-  left: 30%;
-}
-
 .admin-container .d-flex .main{
   max-width: 1050px;
   height: 100vh;
-  flex: 1;
-  overflow: hidden;
 }
 
-.tweets-list {
-  flex: 1;
-  overflow: hidden;
+.admin-users-head {
+  width: 1067px;
+  border-bottom: 2px solid #E6ECF0;
 }
 
-.admin-users-head,
 .admin-tweets-head {
-  margin: 24px 24px;
+  width: 937px;
+  height: 74px;
+  border-bottom: 2px solid #E6ECF0;
 }
 
 .row .main {
@@ -206,6 +221,8 @@ input::placeholder {
 }
 
 .card-name {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
   margin: 0;
   padding: 0;
   width: 100px;
@@ -213,6 +230,8 @@ input::placeholder {
   text-align: center;
   font-size: 16px;
   line-height: 26px;
+  font-weight: 700;
+  color: #171725;
 }
 
 .card-account {
@@ -221,6 +240,8 @@ input::placeholder {
   text-align: center;
   font-size: 14px;
   color: #6c757d;
+  line-height: 22px;
+  font-weight: 400;
 }
 
 .card-tweet-like {
@@ -234,9 +255,12 @@ input::placeholder {
   bottom: 17.2%;
 }
 
-.card-tweet,
+.card-tweet {
+  width: 50%;
+  height: 100%;
+}
+
 .card-like {
-  display: flex;
   width: 50%;
   height: 100%;
 }
@@ -257,9 +281,16 @@ input::placeholder {
 .card-following,
 .card-follower {
   display: flex;
-  width: 50%;
-  height: 100%;
+  width: 75px;
+  height: 22px;
   font-size: 14px;
+  color: #171725;
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
+.follow-word {
+  color: #6C757D;
 }
 
 .card-icon {
@@ -268,12 +299,17 @@ input::placeholder {
 }
 
 .card-num {
+  font-family: 'Montserrat';
+  font-style: normal;
   align-items: center;
   font-size: 16px;
-  margin-left: 5px;
+  margin-left: 8px;
   position: absolute;
   top: 38%;
-  margin: -8px 0px 0px 25px;
+  font-weight: 500;
+  margin: -3px 18px 0px 35px;
+  line-height: 15px;
+  color: #1C1C1C;
 }
 
 
@@ -284,8 +320,6 @@ input::placeholder {
   height: 100vh;
   min-width: 200px;
   position: fixed;
-  /* outline: solid red; */
-
 }
 
 
@@ -580,33 +614,49 @@ h4 {
 /* admin-tweets */
 
 .tweets-main {
-  max-width: 937px;
-  flex: 1;
-  overflow: hidden;
+  height: 1200px;
+  border-left: 2px solid #E6ECF0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-right: -15px;
 }
 
-.each-tweet {
-  height: 103px;
+.tweets-main::-webkit-scrollbar {
+  width: 15px;
+  background-color: #FAFAFA;
+}
+
+.tweets-main::-webkit-scrollbar-thumb {
+  background-color: #C1C1C1;
+  border-radius: 100px;
+}
+
+.tweets-main::-webkit-scrollbar-track {
+  background-color: #FAFAFA;
+  box-shadow: inset 1px 0px 0px #E8E8E8, inset -1px 0px 0px #F0F0F0;
+}
+
+.admin-each-tweet {
+  height: 118px;
 }
 
 #tweet-icon {
-  position: relative;
-  left: 24px;
+  margin-top: 16px;
+  margin-left: 23.13px;
+  margin-bottom: 52px;
   width: 50px;
   height: 50px;
 }
 
 #tweet-right {
-  position: relative;
-  left: 32px;
+  margin-left: 8px;
   padding: 0;
 }
 
 #tweet-right .header {
   font-family: "Noto Sans TC";
   font-style: normal;
-  font-weight: 700;
-  margin-bottom: 8px;
+  margin-top: 17px;
   max-width: 860px;
 }
 
@@ -624,6 +674,14 @@ h4 {
   line-height: 22px;
   color: #6c757d;
   margin-bottom: 8px;
+}
+
+.tweets-description {
+  width: 855px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
 }
 
 /* tabs  */
@@ -674,7 +732,8 @@ h4 {
 
 /* 此重複 */
 .each-tweet {
-  border: 1px solid #e6ecf0;
+  border-bottom: 1px solid #e6ecf0;
+  max-height: 153px;
 }
 
 /* 此重複 */
@@ -683,4 +742,28 @@ h4 {
   font-style: normal;
   font-weight: 700;
   margin-bottom: 8px;
+}
+
+.tweets-mid {
+  border-left: 1px solid #e6ecf0;
+  border-right: 1px solid #e6ecf0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.tweets-mid::-webkit-scrollbar {
+  width: 15px;
+  background-color: #FAFAFA;
+}
+
+.tweets-mid::-webkit-scrollbar-thumb {
+  background-color: #C1C1C1;
+  min-height: 5px;
+  max-height: 10px;
+  border-radius: 100px;
+}
+
+.tweets-mid::-webkit-scrollbar-track {
+  background-color: #FAFAFA;
+  box-shadow: inset 1px 0px 0px #E8E8E8, inset -1px 0px 0px #F0F0F0;
 }
