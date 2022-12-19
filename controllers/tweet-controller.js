@@ -3,6 +3,7 @@ const { assert } = require('chai')
 const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
+const Like = db.Like
 const helpers = require('../_helpers')
 
 const tweetController = {
@@ -37,6 +38,35 @@ const tweetController = {
     } catch (err) {
       next(err)
     }
+  },
+  addLike: (req, res, next) => {
+    const UserId = helpers.getUser(req).id
+    const TweetId = req.params.id
+    return Like.findOrCreate({
+      where: {
+        UserId,
+        TweetId
+      }
+    })
+      .then((like) => {
+        return res.redirect('back')
+      })
+      .catch(err => next(err))
+  },
+  removeLike: (req, res, next) => {
+    const UserId = helpers.getUser(req).id
+    const TweetId = req.params.id
+    return Like.findOne({
+      where: {
+        UserId,
+        TweetId
+      }
+    })
+      .then((like) => {
+        return like.destroy()
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
   }
 }
 module.exports = tweetController
