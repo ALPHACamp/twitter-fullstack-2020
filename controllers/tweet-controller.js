@@ -1,9 +1,30 @@
+const helpers = require('../_helpers')
 const { Followship, Like, Reply, Tweet, User } = require('../models')
 const tweetController = {
   getIndex: (req, res, next) => {
     res.render('tweets')
   },
-  postTweet: (req, res, next) => {
+  postTweet: async (req, res, next) => {
+    try {
+      const { description } = req.body
+      if (description.length > 140) {
+        throw new Error('請以 140 字以內為限')
+      } else if (description.trim() === '') {
+        throw new Error('內容不可空白')
+      }
+      const UserId = helpers.getUser(req).id
+      const createdTweet = await Tweet.create({
+        UserId,
+        description
+      })
+      if (!createdTweet) {
+        throw new Error('發推失敗')
+      }
+      req.flash('success_messages', '發推成功！')
+      return res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
   },
   getTweet: (req, res, next) => {
   },
