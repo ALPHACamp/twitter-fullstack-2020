@@ -3,7 +3,7 @@
     {{>message}}
     {{>left-sidebar route="homepage"}}
     {{!-- 首頁/tweets --}}
-    <div class="col-6 " id="top-tweet-box">
+    <div class="col-6 top">
       <div class="card">
         <div class="card-home">
           <div class=" home-header">
@@ -11,9 +11,10 @@
           </div>
           <div class="main-top">
             <img src="/images/icon/User Photo.png" class="user-avatar">
-            <div class="post-tweet">
+            <div class="">
               <form action="/tweets" method="POST">
-                <input type="text" name="description" id="description" placeholder="有什麼新鮮事？" required>
+                <textarea style=" resize:none;" type="text" name="description" id="description" placeholder="有什麼新鮮事？"
+                  required></textarea>
                 <button type="submit" class="btn-sml">推文</button>
               </form>
             </div>
@@ -73,4 +74,7 @@
     <div class="col-6 " id="top-tweet-box">中間</div>
     <div class="col">右邊</div>
   </div>
+  <<<<<<< HEAD </div> --}}
+    =======
 </div> --}}
+>>>>>>> 42b77715ffc4f96f4d933e6553f757ba3f9b2aa7

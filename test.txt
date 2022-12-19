@@ -10,3 +10,149 @@
     "dev": "nodemon app.js",
     "test": " mocha test --exit --recursive --timeout 5000"
   },
+
+
+/* 個人和其他使用者profile */
+/* 
+a {
+  text-decoration: none;
+  color: #171725;
+}
+
+.profile-header {
+  width: 639px;
+  height: 75px;
+}
+
+.profile-body {
+  width: 639px;
+  height: 400px;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+.name-account-container {
+  width: auto;
+}
+
+.profile-intro {
+  font-size: 14px;
+  color: #171725;
+}
+
+.profile-edit-btn {
+  box-sizing: border-box;
+  width: 128px;
+  height: 40px;
+  background: #FFFFFF;
+  border: 1px solid #FF6600;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #FF6600;
+}
+
+.profile-edit-btn:hover {
+  background: #FF6600;
+  border: none;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #FFFFFF;
+}
+
+.follow-btn {
+  box-sizing: border-box;
+  width: 96px;
+  height: 40px;
+  background: #FFFFFF;
+  border: 1px solid #FF6600;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #FF6600;
+}
+
+.follow-btn:hover {
+  background: #FF6600;
+  border: none;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #FFFFFF;
+}
+
+.following-btn {
+  width: 96px;
+  height: 40px;
+  background: #FF6600;
+  border: none;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #FFFFFF;
+}
+
+.following-btn:hover {
+  box-sizing: border-box;
+  background: #FFFFFF;
+  border: 1px solid #FF6600;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #FF6600;
+}
+
+
+.profile-name {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: #171725;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-account{
+  font-size: 14px;
+  color: #92929D;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-name:hover , .profile-account:hover{
+  color: #FF6600;
+}
+
+
+.profile-avatar {
+  margin-top:-80px;
+  z-index:100;
+  position:relative;
+}
+
+.followship {
+  display: flex;
+  width: 180px;
+  height: 22px;
+  gap: 5px;
+} */

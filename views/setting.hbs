@@ -2,11 +2,12 @@
   <div class="row">
     {{> message}}
     {{> left-sidebar route="setting"}}
-    <div class="col-6">
-      <div class="card-home">
+    <div class="col-6 top" style="border-left:1px solid	#E6ECF0;">
+      <div>
         <div class=" home-header">帳戶設定</div>
         <div class="setting-main">
-          <form class="form-cog needs-validation" action="/users/{{user.id}}?_method=PUT" method="POST">
+          <form class="form-setting needs-validation" action="/users/{{user.id}}?_method=PUT" method="POST">
+
             <div>
               <label for="account">帳號</label>
               <input type="text" name="account" id="account" placeholder="請輸入帳號" aria-label="User account"
@@ -32,11 +33,10 @@
               <input type="password" name="checkPassword" id="checkPassword" placeholder="請輸再次輸入密碼"
                 aria-label="Confirm user password" required>
             </div>
-            <button type="submit" class="btn-sml">儲存</button>
+            <button type="submit">儲存</button>
           </form>
         </div>
       </div>
-
     </div>
     <div class="col-3 left">
     </div>

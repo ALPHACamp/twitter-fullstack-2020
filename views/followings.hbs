@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="row">
+    {{> left-sidebar}}
+    <div class="col-6 top">
+      <div class="home-header-sec">
+        <div class="following-header">
+          <a href="javascript:history.back()"><img src="/images/basic/back.svg" alt="" class="back-icon"></a>
+          <span class="personal-name">John Doe</span>
+          <p class="text-secondary">25 推文</p>
+        </div>
+      </div>
+      {{!-- tab切換 --}}
+      <div class="following-tab">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="followers-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+              type="button" role="tab" aria-controls="nav-home" aria-selected="true">追隨者</button>
+            <button class="nav-link" id="followings-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+              type="button" role="tab" aria-controls="nav-profile" aria-selected="false">正在追隨</button>
+          </div>
+        </nav>
+
+        <div class="following-main">
+          {{!-- 追蹤者 --}}
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="followers-tab">
+              <div class="card-body tweets-header-sec">
+                <img src="/images/icon/User Photo.png" class="user-avatar">
+                <span class="tAR-name">tweet.name{{tweet.name}}</span>
+                <div class="btn-position">
+                  {{!-- {{#if isFollowed}} --}}
+                  <form action="#" method="POST">
+                    <button type="submit" class="following-btn">正在跟隨</button>
+                  </form>
+                  {{!-- {{else}}
+                  <form action="#" method="POST">
+                    <button type="submit" class="follow-btn">跟隨</button>
+                  </form>
+                  {{/if}} --}}
+                </div>
+                <p class="tweets-content">
+                  >>>>user.tweet Some quick example text to
+                  build on the card title and make up the bulk of the card's content.Some quick example text to
+                  build on the card title and make up the bulk of the card's content.
+                </p>
+                <div class="tweets-icons">
+                  <a><img src="/images/basic/white/reply.svg">user.reply</a>
+                  <a><img src="/images/basic/white/like.svg">user.like</a>
+                </div>
+              </div>
+            </div>
+            {{!-- 正在追蹤 --}}
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="followings-tab">
+              <div class="card-body tweets-header-sec">
+                <img src="/images/icon/User Photo.png" class="user-avatar">
+                <span class="tAR-name">tweet.name{{tweet.name}}</span>
+                <div class="btn-position">
+                  {{!-- {{#if isFollowed}} --}}
+                  {{!-- <form action="#" method="POST">
+                    <button type="submit" class="following-btn">正在跟隨</button>
+                  </form>
+                  {{else}}--}}
+                  <form action="#" method="POST">
+                    <button type="submit" class="follow-btn">跟隨</button>
+                  </form>
+                  {{!--{{/if}} --}}
+                </div>
+                <p class="tweets-content">
+                  >>>>user.tweet this is following you.
+                </p>
+                <div class="tweets-icons">
+                  <a><img src="/images/basic/white/reply.svg">user.reply</a>
+                  <a><img src="/images/basic/white/like.svg">user.like</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{> right-sidebar}}
+  </div>
+</div>

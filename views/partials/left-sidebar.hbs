@@ -25,7 +25,8 @@
       </li>
 
       <div class="sidebar-lb">
-        <a href="/tweets/modal" class="btn tweet-button" id="tweet-button">
+        <a href="/tweets/modal" class="btn tweet-button" data-bs-toggle="modal" data-bs-target="#tweet-modal"
+          id="tweet-button">
           推文
         </a>
       </div>
@@ -39,3 +40,91 @@
     </ul>
   </div>
 </div>
+
+{{!-- tweet Modal --}}
+<div class="modal fade" id="tweet-modal" tabindex="-1" aria-labelledby="tweet-modal" aria-hidden="true">
+  <div class="modal-dialog" style="width:636px;">
+    <div class="modal-content">
+      <div class="modal-card-title">
+        <label for="description" class="form-label">
+        </label>
+        <a type="button" class="close-btn" aria-label="Close" data-bs-dismiss="modal" aria-label="Close"><img
+            src="/images/basic/close.svg" alt=""></a>
+        <hr style="margin: 2px 0px;">
+      </div>
+      <div class="post-main-top">
+        <img src="/images/icon/User Photo.png" class="user-avatar">
+        <div class="">
+          <form action="/tweets" method="POST">
+            <div class="post-tweet-main">
+              <textarea col="50" class="post-tweet-content" style="" type="text" name="description" id="description"
+                placeholder="有什麼新鮮事？" oninput="tweetsCounts()" required></textarea>
+            </div>
+            {{!-- <div class=" modal-description d-flex justify-content-sm-end align-items-center">
+              <div class="p-2 bd-highlight">
+                <span style="color:#FC5A5A;font-size:15px;line-height: 15px;" id="tweetEnterMessage">字數不可超過140字</span>
+              </div>
+              <div class="px-2 bd-highlight">
+                <div id="tweetschar_count" style="display:inline;font-weight: 500;font-size: 15px;"><span>0/140</span>
+                </div>
+              </div>
+            </div> --}}
+            <button type=" submit" class="btn-sml-sec">推文</button>
+          </form>
+        </div>
+      </div>
+      {{!-- <form action="/tweets" method="POST">
+        <div class="modal-post-tweet-body" style="padding-left: 20px;    padding-top: 20px;">
+          <div class="row g-0">
+            <div class="col-1 md-2">
+              {{#if user.avatar}}
+              <img src="{{user.avatar}}" class="col-md-4 ms-auto" style="width:50px;height:50px;Left:24px;">
+              {{else}}
+              <img src="/images/icon/User Photo.png" class="col-md-4 ms-auto" style="width:50px;height:50px">
+              {{/if}}
+            </div>
+            <div class="col-sm-11 col-md-20">
+              <textarea class="post-text-description"
+                style="width:100%; font-size: 13px; padding: 12px 16px; border: none;outline: none;resize:none"
+                id="description" name="description" rows="4" maxlength="140" placeholder="有什麼新鮮事？"
+                oninput="tweetsCounts()" required></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-description d-flex justify-content-sm-end align-items-center">
+          <div class="p-2 bd-highlight">
+            <span style="color:#FC5A5A;font-size:15px;line-height: 15px;" id="tweetEnterMessage">字數不可超過140字</span>
+          </div>
+          <div class="px-2 bd-highlight">
+            <div id="tweetschar_count" style="display:inline;font-weight: 500;font-size: 15px;"><span>0/140</span></div>
+          </div>
+          <div class="px-3 bd-highlight">
+            <button type="submit" class="btn btn-primary "
+              style="color: white;font-size: 16px;background-color:#ff6600;border: 1px solid #FF6600;font-family: 'Noto Sans TC';border-radius: 50px;width: 64px;height: 40px;">推文</button>
+          </div>
+        </div>
+      </form> --}}
+    </div>
+  </div>
+</div>
+
+
+{{!-- tweet Modal function --}}
+<script>
+  function tweetsCounts() {
+    const counts = document.getElementById('description').value.length
+    const EnterMessage = document.getElementById('tweetEnterMessage')
+    const chatText = document.getElementById('tweetschar_count')
+    chatText.innerText = counts + '/140'
+    if (counts > 140) {
+      tweetEnterMessage.innerText = '字數超出上限！'
+      return
+    }
+    if (counts > 0 && counts <= 140) {
+      tweetEnterMessage.innerText = ''
+    }
+    if (counts === 0) {
+      tweetEnterMessage.innerText = '內容不可空白'
+    }
+  }
+</script>

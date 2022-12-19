@@ -89,9 +89,8 @@ typings/
 package.json
 package-lock.json
 
-text.txt
-tweets.hbs
-following.hbs
-followings.hbs
-tweet.hbs
-tweets.hbs
+.test
+following(沒有要用).hbs
+
+controller/
+public/fontsource
