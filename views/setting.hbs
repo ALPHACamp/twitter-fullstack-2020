@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="row">
+    {{> message}}
+    {{> left-sidebar route="setting"}}
+    <div class="col-6">
+      <div class="card-home">
+        <div class=" home-header">帳戶設定</div>
+        <div class="setting-main">
+          <form class="form-cog needs-validation" action="/users/{{user.id}}?_method=PUT" method="POST">
+            <div>
+              <label for="account">帳號</label>
+              <input type="text" name="account" id="account" placeholder="請輸入帳號" aria-label="User account"
+                value="{{user.account}}" required>
+            </div>
+            <div>
+              <label for="name">名稱</label>
+              <input type="text" name="name" id="name" placeholder="請輸入使用者名稱" aria-label="User name" maxlength="50"
+                value="{{user.name}}" required>
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email" placeholder="請輸入Email" aria-label="User email"
+                value="{{user.email}}" required>
+            </div>
+            <div>
+              <label for="password">密碼</label>
+              <input type="password" name="password" id="password" placeholder="請設定密碼" aria-label="User password"
+                required>
+            </div>
+            <div>
+              <label for="checkPassword">密碼確認</label>
+              <input type="password" name="checkPassword" id="checkPassword" placeholder="請輸再次輸入密碼"
+                aria-label="Confirm user password" required>
+            </div>
+            <button type="submit" class="btn-sml">儲存</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-3 left">
+    </div>
+  </div>
+</div>

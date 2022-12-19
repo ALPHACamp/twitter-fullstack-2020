@@ -3,8 +3,8 @@
     <img src="/images/icon/Icon.png" alt="main-icon">
     <div>
       {{> message}}
-      <h1 id="title">登入 Alphitter</h1>
-      <form class="form-signin" action="/signin" method="POST">
+      <h1 id="title">後台登入</h1>
+      <form class="form-signin" action="/admin/signin" method="POST">
         <div>
           <label for="account">帳號</label>
           <input type="text" name="account" id="account" placeholder="請輸入帳號" aria-label="User account" required>
@@ -16,7 +16,7 @@
         <button id="login-button" type="submit">登入</button>
       </form>
       <div class="register inline text-end">
-        <a href="/signup">註冊</a><span>‧</span><a href="/admin/signin">後台登入</a>
+        <a href="/signin">前台登入</a>
       </div>
     </div>
   </div>

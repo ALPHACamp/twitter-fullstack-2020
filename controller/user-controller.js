@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Tweet, Reply, Like, Followship } = require('../models')
 const bcrypt = require('bcryptjs')
 
 const userController = {
@@ -44,11 +44,48 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  //我用來測試畫面的
-  // getTweets: (req, res) => {
-  //   res.render('followings')
-  // }
+  getUserTweets: (req, res, next) => {
+    const userId = req.params.id
+    return Promise.all([
+      User.findById(userId),
+      Tweet.find({ where: { userId } }),
+      Followship.find({ where: { userId } })
+    ])
+      .then(([user, tweets, followships]) => {
+        console.log(user)
+      })
+  },
+  getUserReplies: (req, res, next) => {
+    const userId = req.params.id
+    return Promise.all([
+      User.findById(userId),
+      Reply.find({ where: { userId } }),
+      Followship.find({ where: { userId } })
+    ])
+      .then(([user, replies, followships]) => {
+        console.log(user)
+      })
+  },
+  getUserLikes: (req, res, next) => {
+    const userId = req.params.id
+    return Promise.all([
+      User.findById(userId),
+      Like.find({ where: { userId } }),
+      Followship.find({ where: { userId } })
+    ])
+      .then(([user, likes, followships]) => {
+        console.log(user)
+      })
+  },
+  getUserPage: (req, res, next) => {
+    res.render('personal-page')
+  }
 }
+//我用來測試畫面的
+// getTweets: (req, res) => {
+//   res.render('followings')
+// }
+
 
 
 module.exports = userController

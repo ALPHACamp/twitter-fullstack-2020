@@ -1,28 +1,76 @@
 <div class="container">
-  <div style="margin: 100px;"></div>
   <div class="row">
-    <div class="col">
-      Column
-    </div>
-    <div class="card col-6" style="border:none;">
-      <div>
-        <div class="card-body tweets">
-          <img src="/images/icon/User Photo.png" alt="">
-          <span class="card-title tweets-name">user.name</span>
-          <span class="tweets-account"> @user.account ．Day.js</span>
-          <p class="card-text">
-            >>>>user.tweet Some quick example text to
-            build on the card title and make up the bulk of the card's content.
-          </p>
-          <div class="tweets-icons">
-            <a><img src="/images/basic/white/reply white.png">user.reply</a>
-            <a><img src="/images/basic/white/like white.png">user.like</a>
+    {{>message}}
+    {{>left-sidebar route="homepage"}}
+    {{!-- 首頁/tweets --}}
+    <div class="col-6 " id="top-tweet-box">
+      <div class="card">
+        <div class="card-home">
+          <div class=" home-header">
+            首頁
+          </div>
+          <div class="main-top">
+            <img src="/images/icon/User Photo.png" class="user-avatar">
+            <div class="post-tweet">
+              <form action="/tweets" method="POST">
+                <input type="text" name="description" id="description" placeholder="有什麼新鮮事？" required>
+                <button type="submit" class="btn-sml">推文</button>
+              </form>
+            </div>
+          </div>
+          <div class="main-bottom">
+            <div class="card-body tweets-box">
+              <img src="/images/icon/User Photo.png" alt="" class="user-avatar">
+              <div class="tweets-box-main">
+                <div class="tweets-header">
+                  <span class="card-title tweets-name">user.name</span>
+                  <span class="tweets-account"> @user.account ．Day.js</span>
+                </div>
+                <div class="tweets-content">
+                  <a href="users/replies" id="toReply" class="card-text">
+                    >>>>user.tweet Some quick example text to
+                    build on the card title and make up the bulk of the card's content.
+                  </a>
+                </div>
+                <div class="tweets-icons">
+                  <a><img src="/images/basic/white/reply.svg">user.reply</a>
+                  <a><img src="/images/basic/white/like.svg">user.like</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body tweets-box">
+              <img src="/images/icon/User Photo.png" alt="" class="user-avatar">
+              <div class="tweets-box-main">
+                <div class="tweets-header">
+                  <span class="card-title tweets-name">user.name</span>
+                  <span class="tweets-account"> @user.account ．Day.js</span>
+                </div>
+                <div class="tweets-content">
+                  <a href="/tweet" id="toReply" class="card-text">
+                    >>>>user.tweet Some quick example text to
+                    build on the card title and make up the bulk of the card's content.
+                  </a>
+                </div>
+                <div class="tweets-icons">
+                  <a><img src="/images/basic/white/reply.svg">user.reply</a>
+                  <a><img src="/images/basic/white/like.svg">user.like</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col">
-      Column
-    </div>
+    {{>right-sidebar}}
   </div>
 </div>
+
+
+{{!-- <div class="container">
+  <div class="row">
+    <div class="col">左邊</div>
+    <div class="col-6 " id="top-tweet-box">中間</div>
+    <div class="col">右邊</div>
+  </div>
+</div> --}}

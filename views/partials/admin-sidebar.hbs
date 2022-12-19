@@ -1,0 +1,29 @@
+<div class="col-3">
+  <div class="left-sidebars_css admin-sidebar">
+    <img class="ac-icon" src="/images/icon/Icon.png" alt="AC ICON">
+
+    <ul class="user-list-group">
+
+      <li>
+        <a href="/admin/tweets" class="{{#ifCond route 'tweets' }}active{{/ifCond}}">
+          <span><img class="icon" src="/images/basic/white/home.svg" alt="homepage">
+            推文清單</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="/admin/users" class="{{#ifCond route 'users' }}active{{/ifCond}}">
+          <img class=" icon" src="/images/basic/white/user.svg" alt="homepage">
+          <span>使用者列表</span>
+        </a>
+      </li>
+
+      <li class="logout-admin">
+        <a href="/logout">
+          <img class="icon" src="/images/basic/logout.svg" alt="logout">
+          <span>登出</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

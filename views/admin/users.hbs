@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    {{>admin-sidebar route="users"}}
+    <div class="admin-users col-9">
+      <div class=" home-header">
+        使用者列表
+      </div>
+      <div style="height: calc(100vh - 76px); max-height: calc(100vh - 76px); overflow-y: auto"
+      class="align-content-start">
+      {{#each users}}
+      <div class="user-card">
+        <div class="col-3 user-card-main">
+          <div class="user-border">
+            <div class="user-border-img">
+              <div class="user-border-avatar">
+              </div>
+            </div>
+            <div class="text-center">
+              <p class="mb-0">{{this.name}}</p>
+              <p class="mb-1">@{{this.account}}</p>
+              <div class="text-center-info">
+                <img src="/images/basic/black/post.svg">
+                <p class="mb-0">{{this.tweetsCount}}</p>
+                <img src="/images/basic/white/like.svg">
+                <p class="mb-0">{{this.likesCount}}</p>
+              </div>
+              <div class="text-center-follow">
+                <p class="mb-0">
+                {{this.followingCount}} 個<span>跟隨中</span>
+                </p>
+                <p class="mb-0">
+                {{this.followerCount}} 位<span>跟隨者</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      </div>
+    </div>
+  </div>
+</div>

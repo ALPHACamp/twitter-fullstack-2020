@@ -1,9 +1,10 @@
 // 後續做到 User, Reply, Like 記得加進來
 const { Tweet } = require('../models')
 const helpers = require('../_helpers')
+const tweet = require('./fake.json').results
 
 const tweetController = {
-  postTweet: (req, res) => { 
+  postTweet: (req, res) => {
 
     const UserId = helpers.getUser(req).id
     const description = req.body.description
@@ -24,6 +25,10 @@ const tweetController = {
         })
         .catch((error) => console.log(error))
     }
+  },
+  getTweet: (req, res) => {
+    console.log(tweet)
+    res.render('tweets', { tweet: tweet[0] })
   }
 }
 

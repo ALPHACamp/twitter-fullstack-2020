@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="row">
+    {{>left-sidebar}}
+    <div class="col-6 " id="replies-page">
+      <div class="card-home">
+        <div class=" home-header">
+          <a href="javascript:history.back()"><img src="/images/basic/back.svg" alt="" class="back-icon"></a>
+          推文
+        </div>
+        <div class="tweetAndReply">
+          <div class="tweets-box-sec">
+            {{!-- <img src="{{tweet.avatar}}" alt="{{tweet.name}}" /> --}}
+            <img src="/images/icon/User Photo.png" class="user-avatar">
+            <div class="tweets-header-sec">
+              <p class="tAR-name">tweet.name{{tweet.name}}</p>
+              <p class="tAR-account">@
+                tweet.account{{tweet.account}}
+              </p>
+            </div>
+          </div>
+          <div class="tweets-content-sec">
+            {{tweet.description}}
+            >>>>tweet.description Some quick example text to
+            build on the card title and make up the bulk of the card's content.Some quick example text to
+            build on the card title and make up the bulk of the card's content.
+            <p class="tweets-account">
+              上午 10:05・2021年11月10日
+              {{tweet.createdAt}}
+            </p>
+          </div>
+          <div class="tweets-mid">
+            <p><span>34{{tweet.reply}}</span>回覆</p>
+            <p><span>88{{tweet.like}}</span>喜歡次數</p>
+          </div>
+          <div class="tweets-icons-lar">
+            <a href=""><img src="/images/basic/white/reply.svg"></a>
+            {{!--like開關 --}}
+            <a href=""><img src="/images/basic/white/like.svg"></a>
+          </div>
+        </div>
+        <div class="reply-box">
+          {{!-- reply card --}}
+          <div class="reply-card">
+            <div>
+              <img src="/images/icon/User Photo.png" class="user-avatar">
+              {{!-- <img src="{{tweet.replierAvatar}}" alt="{{tweet.replierName}}" /> --}}
+            </div>
+            <div class="tweets-box-main">
+              <div class="tweets-header">
+                <span class="card-title tweets-name">tweet.replierName{{tweet.replierName}}</span>
+                <span class="tweets-account">
+                  tweet.replierAccount{{tweet.replierAccount}}・tweet.replierCreatedAt{{tweet.replierCreatedAt}}</span>
+                <p class="tweets-account">回覆
+                  <span style="color: #FF6600;">@ tweet.account{{tweet.account}}
+                  </span>
+                </p>
+              </div>
+              <div class="tweets-content">
+                <p>
+                  build on the card title and make up the bulk of the card's content.Some quick example text to
+                  build on the card title and make up the bulk of the card's content.
+                  {{tweet.replierComment}}
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    {{> right-sidebar}}
+  </div>
+</div>

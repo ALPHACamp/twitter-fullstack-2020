@@ -1,0 +1,41 @@
+<div class="col-3">
+  <div class=" left-sidebars_css">
+    <img class="ac-icon" src="/images/icon/Icon.png" alt="AC ICON">
+
+    <ul class="user-list-group">
+
+      <li>
+        <a href="/tweets" class="{{#ifCond route 'homepage' }}active{{/ifCond}}">
+          <img class="icon" src="/images/basic/white/home.svg" alt="homepage">
+          <span>首頁</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="/users/tweets" class="{{#ifCond route 'personal' }}active{{/ifCond}}">
+          <img class="icon" src="/images/basic/white/user.svg" alt="personal">
+          <span>個人資料</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="/users/{{user.id}}/edit" class="{{#ifCond route 'setting' }}active{{/ifCond}}">
+          <img class="icon" src="/images/basic/white/cog.svg" alt="cog"><span>設定</span>
+        </a>
+      </li>
+
+      <div class="sidebar-lb">
+        <a href="/tweets/modal" class="btn tweet-button" id="tweet-button">
+          推文
+        </a>
+      </div>
+
+      <li class="logout">
+        <a href="/logout">
+          <img class="icon" src="/images/basic/logout.svg" alt="logout">
+          <span>登出</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
