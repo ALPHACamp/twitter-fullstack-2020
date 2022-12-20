@@ -1,4 +1,3 @@
-const helpers = require('../_helpers')
 const { Followship, Like, Reply, Tweet, User } = require('../models')
 const helpers = require('../_helpers')
 const tweetController = {
@@ -50,6 +49,7 @@ const tweetController = {
     }
   },
   getTweet: (req, res, next) => {
+    res.render('tweet')
   },
   postLike: (req, res, next) => {
   },
