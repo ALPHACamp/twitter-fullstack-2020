@@ -15,6 +15,8 @@
     <!-- if = 推文 -->
     {{#ifCond route 'tweets'}}
     {{#each userProfile.Tweets}}
+    {{!-- 這是modal-reply --}}
+    {{>reply-modal user=../userProfile User=../currentUser}}
     <div class="d-flex each-tweet">
       <div id="tweet-icon">
         <a href="/users/{{this.UserId}}/tweets">
@@ -34,10 +36,12 @@
         </div>
         <div class="actions d-flex justify-content-between">
           <span>
-            <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px">
-            <span
-              style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Replies.length}}</span>
-          </span>
+            <a data-bs-toggle="modal" data-bs-target="#reply-modal-{{this.id}}">
+              <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px">
+              <span
+                style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Replies.length}}</span>
+              </span>
+            </a>
           <span>
             {{#if this.Likes.length}}
             <img src="/images/icons/filled-like.png" alt="replies" style="width:16px; height: 16px">
@@ -106,10 +110,12 @@
           </p>
         </div>
         <div class="actions d-flex justify-content-between">
-          <span>
-            <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px">
-            <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">13</span>
-          </span>
+          <a data-bs-toggle="modal" data-bs-target="#reply-modal">
+            <span>
+              <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px">
+              <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">13</span>
+            </span>
+          </a>
           <span>
             <img src="/images/icons/filled-like.png" alt="replies" style="width:16px; height: 16px">
             <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">76</span>

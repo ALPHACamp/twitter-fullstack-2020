@@ -98,6 +98,7 @@ const userController = {
     } catch (err) { next(err) }
   },
   getUserTweets: (req, res, next) => {
+    const currentUser = helpers.getUser(req)
     return Promise.all([
       User.findByPk(req.params.id, {
         include: [
@@ -124,7 +125,7 @@ const userController = {
             // isFollowed: req.user.Followings.some(f => f.id === user.id) //req.user還未設定、root不該出現
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('usertweets', { userProfile, users: result.slice(0, 10) })
+        res.render('usertweets', { userProfile, currentUser, users: result.slice(0, 10) })
       }
       )
   },

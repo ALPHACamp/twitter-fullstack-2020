@@ -1,6 +1,5 @@
 const helpers = require('../_helpers')
 const { Followship, Like, Reply, Tweet, User } = require('../models')
-const helpers = require('../_helpers')
 const tweetController = {
   getIndex: (req, res, next) => {
     return Promise.all([
@@ -55,9 +54,22 @@ const tweetController = {
   },
   postUnlike: (req, res, next) => {
   },
-  postReply: (req, res, next) => {
+  postReply: async (req, res, next) => {
+    const UserId = helpers.getUser(req).id
+    const comment = req.body.comment
+    const TweetId = req.params.id
+    const existTweet = Tweet.findByPk(TweetId)
+    if (!existTweet) {
+      req.flash('error_messages', '這個推文已經不存在！')
+      res.redirect('/')
+    }
+    if (!comment) {
+      req.flash('error_messages', '內容不可空白')
+      res.redirect('back')
+    }
+    await Reply.create({ UserId, TweetId, comment })
+    return res.redirect('back')
   }
-
 }
 
 module.exports = tweetController
