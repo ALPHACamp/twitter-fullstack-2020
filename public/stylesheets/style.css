@@ -553,3 +553,20 @@ svg {
   font-weight: 400;
   height: 8px;
 }
+
+.alert-style {
+  position: absolute;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.prompt-text {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+}
