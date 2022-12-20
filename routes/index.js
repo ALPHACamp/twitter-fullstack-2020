@@ -22,20 +22,17 @@ router.get('/logout', userController.logout)
 //register
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
-//followings
-router.get('/users/followings', userController.getFollower)
 
-//personal
-router.get('/users/tweets', userController.getPerson)
-//使用者帳戶資訊，驗證不要忘記阻擋非user
-router.get('/users/:id/edit', userController.editSetting)
-router.put('/users/:id', userController.putSetting)
-//replies
-router.get('/users/replies', userController.reply)
+//users
+router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
+router.get('/users/:id/replies', authenticated, userController.getUserReplies)
+router.get('/users/:id/likes', authenticated, userController.getUserLikes)
+
+
 //tweets
-router.get('/tweets', userController.getTweets)
-router.get('/tweet', userController.getTweet)
-router.post('/tweets', tweetController.postTweet)
+router.get('/tweets', authenticated, tweetController.getTweets)
+router.get('/tweet', authenticated, tweetController.getTweet)
+router.post('/tweets', authenticated, tweetController.postTweet)
 
 // //fallback
 router.get('/', (req, res) => { res.redirect('/tweets') })

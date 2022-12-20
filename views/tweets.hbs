@@ -20,45 +20,26 @@
             </div>
           </div>
           <div class="main-bottom">
+            {{#each Tweets}}
             <div class="card-body tweets-box">
               <img src="/images/icon/User Photo.png" alt="" class="user-avatar">
               <div class="tweets-box-main">
                 <div class="tweets-header">
-                  <span class="card-title tweets-name">user.name</span>
-                  <span class="tweets-account"> @user.account ．Day.js</span>
+                  <span class="card-title tweets-name">{{this.User.name}}</span>
+                  <span class="tweets-account"> @{{this.User.account}} ．{{relativeTimeFromNow this.createdAt}}</span>
                 </div>
                 <div class="tweets-content">
-                  <a href="users/{{user.id}}/replies" id="toReply" class="card-text">
-                    >>>>user.tweet Some quick example text to
-                    build on the card title and make up the bulk of the card's content.
+                  <a href="users/replies" id="toReply" class="card-text">
+                    {{this.description}}
                   </a>
                 </div>
                 <div class="tweets-icons">
-                  <a><img src="/images/basic/white/reply.svg">user.reply</a>
-                  <a><img src="/images/basic/white/like.svg">user.like</a>
+                  <a><img src="/images/basic/white/reply.svg">{{this.repliesCount}}</a>
+                  <a><img src="/images/basic/white/like.svg">{{this.likesCount}}</a>
                 </div>
               </div>
             </div>
-
-            <div class="card-body tweets-box">
-              <img src="/images/icon/User Photo.png" alt="" class="user-avatar">
-              <div class="tweets-box-main">
-                <div class="tweets-header">
-                  <span class="card-title tweets-name">user.name</span>
-                  <span class="tweets-account"> @user.account ．Day.js</span>
-                </div>
-                <div class="tweets-content">
-                  <a href="/tweet" id="toReply" class="card-text">
-                    >>>>user.tweet Some quick example text to
-                    build on the card title and make up the bulk of the card's content.
-                  </a>
-                </div>
-                <div class="tweets-icons">
-                  <a><img src="/images/basic/white/reply.svg">user.reply</a>
-                  <a><img src="/images/basic/white/like.svg">user.like</a>
-                </div>
-              </div>
-            </div>
+            {{/each}}
           </div>
         </div>
       </div>

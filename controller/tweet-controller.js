@@ -1,7 +1,8 @@
 // 後續做到 User, Reply, Like 記得加進來
-const { Tweet } = require('../models')
+const { User, Tweet, Reply, Like, Followship } = require('../models')
+const sequelize = require('sequelize')
+const { Op } = require('sequelize')
 const helpers = require('../_helpers')
-const tweet = require('./fake.json').results
 
 const tweetController = {
   postTweet: (req, res) => {
@@ -28,7 +29,41 @@ const tweetController = {
   },
   getTweet: (req, res) => {
     console.log(tweet)
-    res.render('tweets', { tweet: tweet[0] })
+    res.render('replies')
+  },
+  getTweets: async (req, res, next) => {
+    const loginUser = helpers.getUser(req).id
+    // const followedUser = await Followship.findAll({
+    //   attributes: ['followingId'],
+    //   where: {
+    //     followerId: helpers.getUser(req).id
+    //   },
+    //   nest: true,
+    //   raw: true
+    // })
+    // console.log(followedUser)
+    return Tweet.findAll({
+      attributes: {
+        include: [
+          [sequelize.literal(`(SELECT COUNT(*) FROM Replies WHERE tweet_id = Tweet.id)`), 'repliesCount'],
+          [sequelize.literal(`(SELECT COUNT(*) FROM Likes WHERE tweet_id = Tweet.id)`), 'likesCount'],
+          [sequelize.literal(`(SELECT (COUNT(*)>0) FROM Likes WHERE user_id = ${loginUser} AND tweet_id = Tweet.id)`), 'isliked']
+        ]
+      },
+      // where: { UserId: { [Op.or]: [followedUser.following_id] } },
+      include: { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
+      order: [['createdAt', 'DESC']],
+      nest: true,
+      raw: true
+    })
+      .then(tweets => {
+        const data = tweets.map(tweet => ({
+          ...tweet,
+          isLiked: Boolean(tweet.isLiked),
+        }))
+        res.render('tweets', { Tweets: data })
+      })
+      .catch(err => next(err))
   }
 }
 
