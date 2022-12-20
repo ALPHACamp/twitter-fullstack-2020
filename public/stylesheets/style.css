@@ -660,6 +660,7 @@ h4 {
 #tweet-right .content-word {  
   max-width: 860px;
   margin-bottom: 8px;
+  word-break: break-word;
 }
 
 #tweet-right .actions {

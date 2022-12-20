@@ -95,7 +95,7 @@
     {{/each}}
     {{/ifCond}}
 
-    <!-- if = 喜歡的內容 --> 
+    <!-- if = 喜歡的內容 -->
     {{#ifCond route "likes"}}
     {{#each userProfile.Likes}}
     <div class="d-flex each-tweet">
@@ -124,29 +124,19 @@
               style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Tweet.Replies.length}}</span>
           </div>
           <div class="d-flex like">
-            {{#ifCond ../userProfile.id ../currentUser}}
-            <form action="/tweets/{{this.id}}/unlike" method="post">
-              <button type="submit">
-                <img src=" /images/icons/filled-like.png" alt="like" style="width:16px; height: 16px">
-              </button>
-            </form>
-            {{/ifCond}}
-            {{!-- 應該要判斷isLiked --}}
-            {{#ifNotCond ../userProfile.id ../currentUser}}
             {{#if this.Tweet.isLiked}}
-            <form action="/tweets/{{this.id}}/unlike" method="post">
+            <form action="/tweets/{{this.Tweet.id}}/unlike" method="post">
               <button type="submit">
                 <img src=" /images/icons/filled-like.png" alt="like" style="width:16px; height: 16px">
               </button>
             </form>
             {{else}}
-            <form action="/tweets/{{this.id}}/like" method="post">
+            <form action="/tweets/{{this.Tweet.id}}/like" method="post">
               <button type="submit">
                 <img src=" /images/icons/outlined-like.png" alt="like" style="width:16px; height: 16px">
               </button>
             </form>
             {{/if}}
-            {{/ifNotCond}}
             <span
               style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Tweet.Likes.length}}</span>
           </div>
@@ -155,6 +145,5 @@
     </div>
     {{/each}}
     {{/ifCond}}
-
   </div>
 </div>
