@@ -29,19 +29,28 @@
         {{this.description}}
       </div>
       <div class="actions d-flex justify-content-between">
-        <span>
-          <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px">
-          <span
-            style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Replies.length}}</span>
-        </span>
-        <span>
-          {{#if this.Likes.length}}
-          <img src="/images/icons/filled-like.png" alt="replies" style="width:16px; height: 16px">
+        <div class="d-flex reply">
+          <button type="submit">
+            <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px">
+          </button>
+          <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.replyCount}}</span>
+        </div>
+        <div class="d-flex like">
+          {{#if this.isLiked}}
+          <form action="/tweets/{{this.id}}/unlike" method="post">
+            <button type="submit">
+              <img src=" /images/icons/filled-like.png" alt="like" style="width:16px; height: 16px">
+            </button>
+          </form>
           {{else}}
-          <img src="/images/icons/outlined-like.png" alt="replies" style="width:16px; height: 16px">
+          <form action="/tweets/{{this.id}}/like" method="post">
+            <button type="submit">
+              <img src=" /images/icons/outlined-like.png" alt="like" style="width:16px; height: 16px">
+            </button>
+          </form>
           {{/if}}
-          <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Likes.length}}</span>
-        </span>
+          <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.likeCount}}</span>
+        </div>
       </div>
     </div>
   </div>

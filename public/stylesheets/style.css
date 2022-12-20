@@ -665,8 +665,24 @@ h4 {
 #tweet-right .actions {
   width: 120px;
   height: 16px;
-  margin-bottom: 8px;
-  }
+  margin-bottom: 8px;  
+}
+
+#tweet-right .actions button {
+  padding: 0; 
+  border: 0;
+  background-color: #fff;
+}
+
+#tweet-right .actions .reply {
+  gap:8px;
+  align-items: center;
+}
+
+#tweet-right .actions .like {
+  gap:8px;
+  align-items: center;
+}
 
 #tweet-right .reply-whom {
   font-family: "Noto Sans TC";
@@ -825,6 +841,7 @@ h4 {
   /* height: 998px; */
   top: 237px;
 }
+
 
 /* single-tweets */
 #single-tweets-icon {
