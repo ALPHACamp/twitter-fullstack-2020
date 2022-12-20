@@ -108,14 +108,19 @@ const userController = {
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ],
-        order: [[Tweet, 'createdAt', 'desc'], [Reply, 'createdAt', 'desc'], [Like, 'createdAt', 'desc']]
+        order: [[Tweet, 'createdAt', 'desc'], [Reply, 'createdAt', 'desc'], [Like, 'createdAt', 'desc'], [Tweet, 'id', 'desc']]
       }),
       User.findAll({
         include: [{ model: User, as: 'Followers' }],
         where: { role: 'user' } // id: !req.user.id,待補
+      }),
+      Like.findAll({
+        attributes: ['id', 'UserId', 'TweetId'],
+        raw: true,
+        nest: true
       })
     ])
-      .then(([user, users]) => {
+      .then(([user, users, likes]) => {
         if (!user) throw new Error("User doesn't exist!")
         const userProfile = user.toJSON()
         const result = users
@@ -125,6 +130,9 @@ const userController = {
             // isFollowed: req.user.Followings.some(f => f.id === user.id) //req.user還未設定、root不該出現
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
+        userProfile.Tweets.forEach(tweet => {
+          tweet.isLiked = likes.some(l => (l.UserId === helpers.getUser(req).id) && (l.TweetId === tweet.id))
+        })
         res.render('usertweets', { userProfile, currentUser, users: result.slice(0, 10) })
       }
       )
@@ -162,7 +170,7 @@ const userController = {
     return Promise.all([
       User.findByPk(req.params.id, {
         include: [
-          { model: Like }, // 待補
+          { model: Like, include: { model: Tweet, include: [User, Reply, Like] } },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ],
@@ -175,6 +183,7 @@ const userController = {
     ])
       .then(([user, users]) => {
         if (!user) throw new Error("User doesn't exist!")
+        const currentUser = helpers.getUser(req).id
         const userProfile = user.toJSON()
         const result = users
           .map(user => ({
@@ -183,7 +192,10 @@ const userController = {
             // isFollowed: req.user.Followings.some(f => f.id === user.id) //req.user還未設定、root不該出現
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('userlikes', { userProfile, users: result.slice(0, 10) })
+        userProfile.Likes.forEach(like => {
+          like.Tweet.isLiked = like.Tweet.Likes.some(l => (l.UserId === currentUser))
+        })
+        res.render('userlikes', { userProfile, users: result.slice(0, 10), currentUser })
       }
       )
   },
