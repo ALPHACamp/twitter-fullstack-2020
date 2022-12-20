@@ -5,31 +5,31 @@
       {{> message}}
       <h1 id="title">建立你的帳號</h1>
       <form class="form-signup needs-validation" action="/signup" method="POST">
-        <div>
+        <div class="div">
           <label for="account">帳號</label>
           <input type="text" name="account" id="account" placeholder="請輸入帳號" aria-label="User account" required>
         </div>
-        <div>
+        <div class="div">
           <label for="name">名稱</label>
           <input type="text" name="name" id="name" placeholder="請輸入使用者名稱" aria-label="User name" maxlength="50"
             required>
         </div>
-        <div>
+        <div class="div">
           <label for="email">Email</label>
           <input type="email" name="email" id="email" placeholder="請輸入Email" aria-label="User email" required>
         </div>
-        <div>
+        <div class="div">
           <label for="password">密碼</label>
           <input type="password" name="password" id="password" placeholder="請設定密碼" aria-label="User password" required>
         </div>
-        <div>
+        <div class="div">
           <label for="checkPassword">密碼確認</label>
           <input type="password" name="checkPassword" id="checkPassword" placeholder="請輸再次輸入密碼"
             aria-label="Confirm user password" required>
         </div>
         <button id="login-button" type="submit">註冊</button>
       </form>
-      <div class="cancel text-center">
+      <div class="div cancel text-center">
         <a href="/signin">取消</a>
       </div>
     </div>

@@ -89,8 +89,6 @@ typings/
 package.json
 package-lock.json
 
-.test
-following(沒有要用).hbs
+test.txt
 
-controller/
 public/fontsource

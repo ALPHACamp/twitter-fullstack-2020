@@ -97,13 +97,15 @@ const userController = {
   getUserReplies: (req, res, next) => {
     const userId = req.params.id
     return Promise.all([
-      User.findById(userId),
-      Reply.find({ where: { userId } }),
-      Followship.find({ where: { userId } })
+      User.findByPk(userId),
+      Reply.findAll({ where: { UserId: userId } }),
+      Followship.findAll({ where: { UserId: userId } })
     ])
       .then(([user, replies, followships]) => {
-        console.log(user)
+        // console.log(user)
+        res.render('replies', { user, replies, followships })
       })
+      .catch(err => next(err))
   },
   getUserLikes: (req, res, next) => {
     const userId = req.params.id

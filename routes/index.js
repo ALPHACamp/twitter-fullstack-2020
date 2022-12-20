@@ -1,8 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
-const admin = require('./modules/admin')
-
+const { generalErrorHandler } = require('../middleware/error-handler')
 // 載入controller
 const userController = require('../controller/user-controller')
 const tweetController = require('../controller/tweet-controller')

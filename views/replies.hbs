@@ -1,76 +1,161 @@
 <div class="container">
   <div class="row">
     {{>left-sidebar}}
-    <<<<<<< HEAD <div class="col-6 top">
-      =======
-      <div class="col-6 " id="replies-page">
-        >>>>>>> 42b77715ffc4f96f4d933e6553f757ba3f9b2aa7
-        <div class="card-home">
-          <div class=" home-header">
-            <a href="javascript:history.back()"><img src="/images/basic/back.svg" alt="" class="back-icon"></a>
-            推文
+    <div class="col-6 top">
+      <div class="card-home">
+        <div class=" home-header">
+          <a href="javascript:history.back()"><img src="/images/basic/back.svg" alt="" class="back-icon"></a>
+          推文
+        </div>
+        <div class="tweetAndReply">
+          <div class="tweets-box-sec">
+            {{!-- <img src="{{tweet.avatar}}" alt="{{tweet.name}}" /> --}}
+            <img src="/images/icon/User Photo.png" class="user-avatar">
+            <div class="tweets-header-sec">
+              <p class="tAR-name">tweet.name{{tweet.name}}</p>
+              <p class="tAR-account">@
+                tweet.account{{tweet.account}}
+              </p>
+            </div>
           </div>
-          <div class="tweetAndReply">
-            <div class="tweets-box-sec">
-              {{!-- <img src="{{tweet.avatar}}" alt="{{tweet.name}}" /> --}}
+          <div class="tweets-content-sec">
+            {{tweet.description}}
+            >>>>tweet.description Some quick example text to
+            build on the card title and make up the bulk of the card's content.Some quick example text to
+            build on the card title and make up the bulk of the card's content.
+            <p class="tweets-account">
+              上午 10:05・2021年11月10日
+              {{tweet.createdAt}}
+            </p>
+          </div>
+          <div class="tweets-mid">
+            <p><span style="font-family: Montserrat; font-weight:bold;">34{{tweet.reply}}</span>回覆</p>
+            <p><span style="font-family: Montserrat; font-weight:bold;">88{{tweet.like}}</span>喜歡次數</p>
+          </div>
+          <div class="tweets-icons-lar">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#reply-Modal" id="reply-button"><img
+                src="/images/basic/white/reply.svg"></a>
+            {{!--like開關 --}}
+            <a href=""><img src="/images/basic/white/like.svg"></a>
+          </div>
+        </div>
+        <div class="reply-box">
+          {{!-- reply card --}}
+          <div class="reply-card">
+            <div>
               <img src="/images/icon/User Photo.png" class="user-avatar">
-              <div class="tweets-header-sec">
-                <p class="tAR-name">tweet.name{{tweet.name}}</p>
-                <p class="tAR-account">@
-                  tweet.account{{tweet.account}}
+              {{!-- <img src="{{tweet.replierAvatar}}" alt="{{tweet.replierName}}" /> --}}
+            </div>
+            <div class="tweets-box-main">
+              <div class="tweets-header">
+                <span class="card-title tweets-name">tweet.replierName{{tweet.replierName}}</span>
+                <span class="tweets-account">
+                  tweet.replierAccount{{tweet.replierAccount}}・tweet.replierCreatedAt{{tweet.replierCreatedAt}}</span>
+                <p class="tweets-account">回覆
+                  <span style="color: #FF6600;">@ tweet.account{{tweet.account}}
+                  </span>
+                </p>
+              </div>
+              <div class="tweets-content">
+                <p>
+                  build on the card title and make up the bulk of the card's content.Some quick example text to
+                  build on the card title and make up the bulk of the card's content.
+                  {{tweet.replierComment}}
                 </p>
               </div>
             </div>
-            <div class="tweets-content-sec">
-              {{tweet.description}}
-              >>>>tweet.description Some quick example text to
-              build on the card title and make up the bulk of the card's content.Some quick example text to
-              build on the card title and make up the bulk of the card's content.
-              <p class="tweets-account">
-                上午 10:05・2021年11月10日
-                {{tweet.createdAt}}
-              </p>
-            </div>
-            <div class="tweets-mid">
-              <p><span style="font-family: Montserrat; font-weight:bold;">34{{tweet.reply}}</span>回覆</p>
-              <p><span style="font-family: Montserrat; font-weight:bold;">88{{tweet.like}}</span>喜歡次數</p>
-            </div>
-            <div class="tweets-icons-lar">
-              <a href=""><img src="/images/basic/white/reply.svg"></a>
-              {{!--like開關 --}}
-              <a href=""><img src="/images/basic/white/like.svg"></a>
-            </div>
-          </div>
-          <div class="reply-box">
-            {{!-- reply card --}}
-            <div class="reply-card">
-              <div>
-                <img src="/images/icon/User Photo.png" class="user-avatar">
-                {{!-- <img src="{{tweet.replierAvatar}}" alt="{{tweet.replierName}}" /> --}}
-              </div>
-              <div class="tweets-box-main">
-                <div class="tweets-header">
-                  <span class="card-title tweets-name">tweet.replierName{{tweet.replierName}}</span>
-                  <span class="tweets-account">
-                    tweet.replierAccount{{tweet.replierAccount}}・tweet.replierCreatedAt{{tweet.replierCreatedAt}}</span>
-                  <p class="tweets-account">回覆
-                    <span style="color: #FF6600;">@ tweet.account{{tweet.account}}
-                    </span>
-                  </p>
-                </div>
-                <div class="tweets-content">
-                  <p>
-                    build on the card title and make up the bulk of the card's content.Some quick example text to
-                    build on the card title and make up the bulk of the card's content.
-                    {{tweet.replierComment}}
-                  </p>
-                </div>
-              </div>
 
-            </div>
           </div>
         </div>
       </div>
-      {{> right-sidebar}}
+    </div>
+    {{> right-sidebar}}
   </div>
 </div>
+
+<div class="modal fade" id="reply-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="height: 500px;">
+      <div class="modal-card-title">
+        <label for="description" class="form-label">
+        </label>
+        <a type="button" class="close-btn" aria-label="Close" data-bs-dismiss="modal" aria-label="Close"><img
+            src="/images/basic/close.svg" alt=""></a>
+      </div>
+      <div class="modal-body" style="padding: 15px 5px;">
+        {{!-- tweet reply--}}
+        <div class="row g-0">
+          <div class="col-2" style="width: 50px;height: 50px;margin-left: 10px;">
+            {{#if this.User.avatar}}
+            <img src="{{this.User.avatar}}" class="user-avatar" alt="User Photo">
+            {{else}}
+            <img src="/images/icon/User Photo.png" class="user-avatar" alt="User Photo">
+            {{!-- 垂直線。要隨內容增加長高或縮短 --}}
+            <p class="Vertical-line"></p>
+            {{/if}}
+          </div>
+          <div class="col-0" style="width: 536px;min-height:100px;margin:10px;">
+            <span class="fw-bold fs-6">Apple{{tweet.User.name}} </span>
+            <span class="tweets-account">@apple{{tweet.User.account}}</span>
+            <span>{{relativeTimeFromNow tweet.updatedAt}}
+            </span>
+            <br />
+            <p class="tweets-content">
+              >>>>user.tweet Some quick example text to
+              build on the card title and make up the bulk of the card's content..tweet Some quick example
+              build on the card title and make up the bulk of the card's content.text to
+              build on the card title and make up the bulk of the card's content..tweet Some quick example text to
+              {{tweet.description}}
+            </p>
+            <span class="tweets-account">回覆給
+              <span style="color:#FF6600"> @MITSU{{tweet.User.account}}
+              </span>
+            </span>
+          </div>
+          {{!-- user reply--}}
+          <div class="form-box">
+            <div class="" style="width: 50px;height: 50px;margin-left: 10px;">
+              {{#if user.avatar}}
+              <img src="{{user.avatar}}" class="user-avatar">
+              {{else}}
+              <img src="/images/icon/User Photo.png" class="user-avatar">
+              {{/if}}
+            </div>
+            <form action="/tweets" method="POST">
+              <textarea cols="65" class="post-tweet-content" type="text" style="height:180px;" name="description"
+                id="replyDescription" placeholder="推你的回覆..." oninput="replyCounts()" required></textarea>
+              <span id="replyEnterMessage">
+                {{!-- 字數不可超過50字 --}}
+              </span>
+              <span id="repliesChar_count">
+                0/50
+              </span>
+              <button type="submit" class="btn-sml-thr">推文</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- tweet Modal function --}}
+{{!-- 字跟字中間的空白可能要後端幫忙刪除? --}}
+<script>
+  function replyCounts() {
+    const counts = document.getElementById('replyDescription').value.trim().length
+    const repliesEnterMessage = document.getElementById('replyEnterMessage')
+    const chatText = document.getElementById('repliesChar_count')
+    chatText.innerText = counts + '/50'
+    if (counts > 50) {
+      repliesEnterMessage.innerText = '字數超出上限！'
+      return
+    }
+    if (counts > 0 && counts <= 50) {
+      repliesEnterMessage.innerText = ''
+    }
+    if (counts === 0) {
+      repliesEnterMessage.innerText = '內容不可空白'
+    }
+  }
+</script>

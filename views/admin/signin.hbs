@@ -5,17 +5,17 @@
       {{> message}}
       <h1 id="title">後台登入</h1>
       <form class="form-signin" action="/admin/signin" method="POST">
-        <div>
+        <div class="div">
           <label for="account">帳號</label>
           <input type="text" name="account" id="account" placeholder="請輸入帳號" aria-label="User account" required>
         </div>
-        <div>
+        <div class="div">
           <label for="password">密碼</label>
           <input type="password" name="password" id="password" placeholder="請輸入密碼" aria-label="User password" required>
         </div>
         <button id="login-button" type="submit">登入</button>
       </form>
-      <div class="register inline text-end">
+      <div class="div register inline text-end">
         <a href="/signin">前台登入</a>
       </div>
     </div>
