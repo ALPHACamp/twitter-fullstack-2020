@@ -30,10 +30,12 @@ passport.serializeUser((user, cb) => {
 passport.deserializeUser((id, cb) => {
   User.findByPk(id, {
     include: [
-      // { model: Tweet, as: 'LikedUsers' }
-    ]
+      { model: User, as: 'Followers' },
+      { model: User, as: 'Followings' }
+    ], nest: true
   }).then(user => {
     user = user.toJSON()
+    console.log(user)
     return cb(null, user)
   })
 })
