@@ -1,19 +1,19 @@
 <div id="tabs-section">
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link {{#ifCond route 'tweets'}}active{{/ifCond}}" href="/users/{{userProfile.id}}/tweets">推文</a>
+      <a class="nav-link {{#ifCond route "tweets"}}active{{/ifCond}}" href="/users/{{userProfile.id}}/tweets">推文</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link {{#ifCond route 'replies'}}active{{/ifCond}}" href="/users/{{userProfile.id}}/replies">回覆</a>
+      <a class="nav-link {{#ifCond route "replies"}}active{{/ifCond}}" href="/users/{{userProfile.id}}/replies">回覆</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link {{#ifCond route 'likes'}}active{{/ifCond}}" href="/users/{{userProfile.id}}/likes">喜歡的內容</a>
+      <a class="nav-link {{#ifCond route "likes"}}active{{/ifCond}}" href="/users/{{userProfile.id}}/likes">喜歡的內容</a>
     </li>
   </ul>
 
   <div class="d-flex flex-column tabs-content">
     <!-- if = 推文 -->
-    {{#ifCond route 'tweets'}}
+    {{#ifCond route "tweets"}}
     {{#each userProfile.Tweets}}
     <div class="d-flex each-tweet">
       <div id="tweet-icon">
@@ -54,7 +54,7 @@
     {{/ifCond}}
 
     <!-- if = 回覆 -->
-    {{#ifCond route 'replies'}}
+    {{#ifCond route "replies"}}
     {{#each userProfile.Replies}}
     <div class="d-flex each-tweet">
       <div id="tweet-icon">
@@ -84,7 +84,7 @@
     {{/ifCond}}
 
     <!-- if = 喜歡的內容 --> <!-- 待修改 -->
-    {{#ifCond route 'likes'}}
+    {{#ifCond route "likes"}}
     <div class="d-flex each-tweet" style="padding: 16px 0">
       <div id="tweet-icon">
         <a href="/users/{{this.UserId}}/tweets">
