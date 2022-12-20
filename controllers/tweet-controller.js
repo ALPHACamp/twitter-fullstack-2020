@@ -11,13 +11,15 @@ const tweetController = {
   getTweets: (req, res, next) => {
     Tweet.findAll({
       order: [['createdAt', 'DESC']],
-      include: [User],
+      include: [User, Like],
       raw: true,
       nest: true
     })
       .then((tweets) => {
+        // if (!tweets.Likes) throw new Error("tweets didn't exist!")
+        const isLiked = tweets.Likes.some(t => t.UserId === helpers.getUser(req).id)
         res.render('tweets', {
-          tweets
+          tweets, isLiked
         })
       })
       .catch(err => next(err))
@@ -46,7 +48,9 @@ const tweetController = {
       where: {
         UserId,
         TweetId
-      }
+      },
+      raw: true,
+      nest: true
     })
       .then((like) => {
         return res.redirect('back')
@@ -60,7 +64,9 @@ const tweetController = {
       where: {
         UserId,
         TweetId
-      }
+      },
+      raw: true,
+      nest: true
     })
       .then((like) => {
         return like.destroy()
