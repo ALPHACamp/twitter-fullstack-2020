@@ -18,13 +18,16 @@
             <small class="small-account">@{{this.account}}</small>
           </a>
         </div>
-        <form action="#" method="POST">
-          {{!-- {{#if this.isFollowed }}
+        {{#if this.isFollowed }}
+        <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
           <button type="submit" class="following-btn">正在跟隨</button>
-          {{else}} --}}
-          <button type="submit" class="follow-btn">跟隨</button>
-          {{!-- {{/if}} --}}
         </form>
+        {{else}}
+        <form action="/followships" method="POST" style="display: contents;">
+          <input type="text" name="id" value="{{this.id}}" style="display: none;">
+          <button type="submit" class="follow-btn">跟隨</button>
+        </form>
+        {{/if}}
       </li>
       {{/each}}
     </ul>
