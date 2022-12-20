@@ -1,38 +1,65 @@
-<div class="middle right-line-2 left-line-2">
-  <div>
-    <p class="middle-title">後台</p>
-    <a href="/logout" class="icon-logout leftbar-text">
-      <img class="logout-img" src="/images/logout@2x.png" alt="">
-      <span><strong>登出</strong></span>
-    </a>
-  </div>
-
-  <div class="bottom-line-16 m-0 p-0"></div>
-
-  {{#each tweets}}
-  {{!-- 推文 start--}}
-  <div>
-    <div class="fl">
-      <img class="ac-img" src="/images/img@2x.png" alt="">
+<div class="container-fluid">
+  <div class="row flex-nowrap justify-content-between mr-3">
+    <div class="admin-left">
+      <a href=""><img class="ac-img" src="/images/ac@2x.png" alt=""></a>
+      <div class="">
+        <a href="/admin/tweets" class="icon-home  leftbar-text">
+          <img class="home-img" src="/images/home@2x.png" alt="">
+          <span><strong>推文清單</strong></span>
+        </a>
+      </div>
+      <div class="mt-4 mb-1">
+        <a href="/admin/users" class="icon-user leftbar-text">
+          <img class="user-img" src="/images/user@2x.png" alt="">
+          <span><strong>使用者列表</strong></span>
+        </a>
+      </div>
+      <div class="mt-4 mb-1">
+        <a href="/logout" class="icon-logout leftbar-text">
+          <img class="logout-img" src="/images/logout@2x.png" alt="">
+          <span><strong>登出</strong></span>
+        </a>
+      </div>
     </div>
-    <div class="tweet-flow-text fl">
-      <span class="twitterbox-name">{{this.User.name}}</span>
-      <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
-      <p class="twitterbox-text">
-        {{this.description}}
-      </p>
-      <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">13</span>
-      <span class="twitterbox-time"><img class="tweet-flow-img" src="/images/like@2x.png" alt="">16</span>
-      <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="float-end">
-        <button class="btn btn-s btn btn-x btn-danger text-decoration-n font-color-wh"
-          onclick="return confirm(`確定要刪除嗎？`)">刪除
-        </button>
-      </form>
-      <div class="bottom-line-f"></div>
+
+    <div class="col-9 mt-3">
+
+      <div class="card-header" style="font-size: 18px; font-weight: 700; background-color:white; border: 0">
+        推文清單
+      </div>
+
+      <div class="d-flex flex-row">
+        <div class="row">
+          {{#each tweets}} 
+          <div>
+            
+            <div class="fl">
+              <img class="ac-img" src="/images/img@2x.png" alt="">
+            </div>
+
+            <div class="tweet-flow-text fl">
+              <span class="twitterbox-name">{{this.User.name}}</span>
+              <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
+              <p class="twitterbox-text">
+                {{this.description}}
+              </p>
+              <div class="bottom-line-f"></div>
+            </div>
+
+          <div class="m-2">
+            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="d-flex">
+              <button class="btn-close" onclick="return confirm(`確定要刪除嗎？`)">
+              </button>
+            </form>
+          </div>
+            
+
+
+
+          </div>
+          {{/each}}
+        </div>
+      </div>
     </div>
   </div>
-  {{!-- 推文 end--}}
-  {{/each}}
-
-
 </div>

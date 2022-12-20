@@ -502,3 +502,54 @@ svg {
 .modal-body {
   height: 222px;
 }
+
+.admin-left {
+  width: 200px;
+}
+
+.admin-user-background {
+  position:absolute;
+  width: 100%;
+  z-index: 0;
+}
+
+.admin-user-avatar {
+  position:absolute; 
+  border-radius:100%;
+
+  width: 70px;
+  height: 70px;
+  left: 33%;
+  top: 30px;
+  border: white 4px solid;
+}
+
+.admin-tweet-name {
+  text-align: center;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 700;
+  height: 8px;
+}
+
+.admin-tweet-account {
+  text-align: center;
+  color: #6c757d;
+  font-size: 14px;
+  font-weight: 400;
+  height: 8px;
+}
+
+.admin-tweet-flow-img {
+  width: 15px;
+  height: 15px;
+  margin: 0px 5px 5px 5px;
+}
+
+.admin-tweet-flow {
+  text-align: center;
+  color: #6c757d;
+  font-size: 14px;
+  font-weight: 400;
+  height: 8px;
+}

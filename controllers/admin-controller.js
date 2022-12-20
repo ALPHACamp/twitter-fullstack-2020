@@ -38,6 +38,31 @@ const adminController = {
         res.redirect('/admin/tweets')
       )
       .catch(err => next(err))
-  }
+  },
+  getUsers: (req, res, next) => {
+    // res.render('admin/users')
+    return User.findAll({
+      attributes: [
+        'id', 'name', 'email', 'avatar', 'account', 'background'
+      ],
+      include: [
+        { model: Tweet },
+        { model: Tweet, as: 'LikedTweets' },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ],
+    }).then(users => {
+      users = users.map(user => ({
+        ...user.dataValues,
+        tweetCount: user.dataValues.tweetCount,
+        likeCount: user.dataValues.likeCount,
+        followingCount: user.Followings.length,
+        followerCount: user.Followers.length
+      }))
+      users = users.sort((a, b) => b.tweetCount - a.tweetCount)
+      return res.render('admin/users', { users: users })
+    })
+      .catch(next)
+  },
 }
 module.exports = adminController
