@@ -23,7 +23,7 @@
     <div class="fl">
       <a href="/users/{{this.User.id}}"><img class="ac-img" src="/images/img@2x.png" alt=""></a>
     </div>
-    <div class="tweet-flow-text fl">
+        <div class="tweet-flow-text fl" onclick="location.href='/tweets/{{this.id}}/replies';">
       <a href="/users/{{this.User.id}}" class="text-decoration-n">
         <span class="twitterbox-name">{{this.User.name}}</span>
       </a>
