@@ -1,13 +1,13 @@
 <div id="tabs-section">
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link {{#ifCond route 'tweets'}}active{{/ifCond}}" href="/users/{{userProfile.id}}/tweets">推文</a>
+      <a class="nav-link {{#ifCond route "tweets"}}active{{/ifCond}}" href="/users/{{userProfile.id}}/tweets">推文</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link {{#ifCond route 'replies'}}active{{/ifCond}}" href="/users/{{userProfile.id}}/replies">回覆</a>
+      <a class="nav-link {{#ifCond route "replies"}}active{{/ifCond}}" href="/users/{{userProfile.id}}/replies">回覆</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link {{#ifCond route 'likes'}}active{{/ifCond}}" href="/users/{{userProfile.id}}/likes">喜歡的內容</a>
+      <a class="nav-link {{#ifCond route "likes"}}active{{/ifCond}}" href="/users/{{userProfile.id}}/likes">喜歡的內容</a>
     </li>
   </ul>
 
@@ -93,7 +93,7 @@
     {{/each}}
     {{/ifCond}}
 
-    <!-- if = 喜歡的內容 --> <!-- 待修改 -->
+    <!-- if = 喜歡的內容 --> 
     {{#ifCond route "likes"}}
     {{#each userProfile.Likes}}
     <div class="d-flex each-tweet">
