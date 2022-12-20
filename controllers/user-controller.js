@@ -98,6 +98,7 @@ const userController = {
     } catch (err) { next(err) }
   },
   getUserTweets: (req, res, next) => {
+    const currentUser = helpers.getUser(req)
     return Promise.all([
       User.findByPk(req.params.id, {
         include: [
@@ -132,7 +133,7 @@ const userController = {
         userProfile.Tweets.forEach(tweet => {
           tweet.isLiked = likes.some(l => (l.UserId === helpers.getUser(req).id) && (l.TweetId === tweet.id))
         })
-        res.render('usertweets', { userProfile, users: result.slice(0, 10) })
+        res.render('usertweets', { userProfile, currentUser, users: result.slice(0, 10) })
       }
       )
   },
