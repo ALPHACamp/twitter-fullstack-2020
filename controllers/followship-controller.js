@@ -2,15 +2,14 @@ const helpers = require('../_helpers')
 const { Followship, Like, Reply, Tweet, User } = require('../models')
 const followshipController = {
   postFollowships: (req, res, next) => {
-    // const followingId = Number(req.body.id)
-    const id = Number(req.params.id)
-    if (helpers.getUser(req).id === id) throw new Error('Cannot follow yourself!')
+    const followingId = Number(req.body.id)
+    if (helpers.getUser(req).id === followingId) throw new Error('Cannot follow yourself!')
     Promise.all([
-      User.findByPk(id),
+      User.findByPk(followingId),
       Followship.findOne({
         where: {
           followerId: helpers.getUser(req).id,
-          followingId: id
+          followingId: followingId
         }
       })
     ])
@@ -19,7 +18,7 @@ const followshipController = {
         if (followship) throw new Error('You have already followed this user!')
         return Followship.create({
           followerId: helpers.getUser(req).id,
-          followingId: id
+          followingId: followingId
         })
       })
       .then(() => res.redirect('back'))

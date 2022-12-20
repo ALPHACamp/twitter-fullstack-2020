@@ -23,8 +23,9 @@
           <button type="submit" class="following-btn">正在跟隨</button>
         </form>
         {{else}}
-        <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
-          <button type="submit" class="follow-btn" name="{{this.id}}">跟隨</button>
+        <form action="/followships" method="POST" style="display: contents;">
+          <input type="text" name="id" value="{{this.id}}" style="display: none;">
+          <button type="submit" class="follow-btn">跟隨</button>
         </form>
         {{/if}}
       </li>

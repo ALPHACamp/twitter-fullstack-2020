@@ -1,5 +1,6 @@
 const helpers = require('../_helpers')
 const { Followship, Like, Reply, Tweet, User } = require('../models')
+const { Op } = require('sequelize')
 const tweetController = {
   getIndex: (req, res, next) => {
     const currentUser = helpers.getUser(req)
