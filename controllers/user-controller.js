@@ -1,8 +1,9 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const _helpers = require('../_helpers')
+const helpers = require('../_helpers')
 const Tweet = db.Tweet
 const User = db.User
+const Like = db.Like
 const userController = {
   signUpPage: (req, res) => {
     res.render('signup')
@@ -71,18 +72,28 @@ const userController = {
   },
   getTweets: (req, res, next) => {
     // 個人頁面的推文抓取
-
-    return Tweet.findAll({
-      order: [['createdAt', 'DESC']],
-      where: { UserId: req.params.id },
-      include: [User],
-      raw: true,
-      nest: true
-    })
-      .then(tweets => {
-        if (!tweets) throw new Error("Restaurant didn't exist!")
-        return res.render('tweet', {
-          tweets
+    return Promise.all([
+      Tweet.findAll({
+        order: [['createdAt', 'DESC']],
+        where: { UserId: req.params.id },
+        include: [User, Like],
+        nest: true
+      }),
+      User.findAll({
+        where: { role: 'user' }
+      })
+    ])
+      .then(([tweets, userData]) => {
+        const user = helpers.getUser(req)
+        const data = tweets.map(t => ({
+          ...t.dataValues,
+          description: t.description.substring(0, 140),
+          User: t.User.dataValues,
+          user,
+          isLiked: t.Likes.some(f => f.UserId === user.id)
+        }))
+        res.render('tweet', {
+          tweets: data, user
         })
       })
       .catch(err => next(err))

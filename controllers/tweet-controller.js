@@ -9,17 +9,27 @@ const helpers = require('../_helpers')
 const tweetController = {
   // 首頁的推文抓取
   getTweets: (req, res, next) => {
-    Tweet.findAll({
-      order: [['createdAt', 'DESC']],
-      include: [User, Like],
-      raw: true,
-      nest: true
-    })
-      .then((tweets) => {
-        // if (!tweets.Likes) throw new Error("tweets didn't exist!")
-        const isLiked = tweets.Likes.some(t => t.UserId === helpers.getUser(req).id)
+    return Promise.all([
+      Tweet.findAll({
+        order: [['createdAt', 'DESC']],
+        include: [User, Like],
+        nest: true
+      }),
+      User.findAll({
+        where: { role: 'user' }
+      })
+    ])
+      .then(([tweets, userData]) => {
+        const user = helpers.getUser(req)
+        const data = tweets.map(t => ({
+          ...t.dataValues,
+          description: t.description.substring(0, 140),
+          User: t.User.dataValues,
+          user,
+          isLiked: t.Likes.some(f => f.UserId === user.id)
+        }))
         res.render('tweets', {
-          tweets, isLiked
+          tweets: data, user
         })
       })
       .catch(err => next(err))
@@ -42,36 +52,30 @@ const tweetController = {
     }
   },
   addLike: (req, res, next) => {
-    const UserId = helpers.getUser(req).id
     const TweetId = req.params.id
-    return Like.findOrCreate({
-      where: {
-        UserId,
-        TweetId
-      },
-      raw: true,
-      nest: true
+    const UserId = helpers.getUser(req).id
+    Like.create({
+      UserId,
+      TweetId
+    }).then(() => {
+      res.redirect('back')
     })
-      .then((like) => {
-        return res.redirect('back')
-      })
       .catch(err => next(err))
   },
   removeLike: (req, res, next) => {
-    const UserId = helpers.getUser(req).id
     const TweetId = req.params.id
+
     return Like.findOne({
       where: {
-        UserId,
+        UserId: helpers.getUser(req).id,
         TweetId
-      },
-      raw: true,
-      nest: true
+      }
+    }).then(like => {
+      return like.destroy()
+        .then(() => {
+          res.redirect('back')
+        })
     })
-      .then((like) => {
-        return like.destroy()
-      })
-      .then(() => res.redirect('back'))
       .catch(err => next(err))
   }
 }
