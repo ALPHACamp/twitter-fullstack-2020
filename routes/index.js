@@ -35,7 +35,7 @@ router.get('/tweets', authenticated, tweetController.getIndex)
 router.post('/tweets', authenticated, tweetController.postTweet)
 
 router.delete('/followships/:id', authenticated, followshipController.deleteFollowships)
-router.post('/followships', authenticated, followshipController.postFollowships)
+router.post('/followships/:id', authenticated, followshipController.postFollowships)
 
 router.get('/', (req, res) => res.redirect('/signin'))
 

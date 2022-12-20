@@ -126,8 +126,8 @@ const userController = {
         const result = users
           .map(user => ({
             ...user.toJSON(),
-            followerCount: user.Followers.length
-            // isFollowed: req.user.Followings.some(f => f.id === user.id) //req.user還未設定、root不該出現
+            followerCount: user.Followers.length,
+            isFollowed: user.Followers.some(follower => follower.id === currentUser.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
         userProfile.Tweets.forEach(tweet => {
@@ -138,6 +138,7 @@ const userController = {
       )
   },
   getUserReplies: (req, res, next) => {
+    const currentUser = helpers.getUser(req)
     return Promise.all([
       User.findByPk(req.params.id, {
         include: [
@@ -158,8 +159,8 @@ const userController = {
         const result = users
           .map(user => ({
             ...user.toJSON(),
-            followerCount: user.Followers.length
-            // isFollowed: req.user.Followings.some(f => f.id === user.id) //req.user還未設定、root不該出現
+            followerCount: user.Followers.length,
+            isFollowed: user.Followers.some(follower => follower.id === currentUser.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
         res.render('userreplies', { userProfile, users: result.slice(0, 10) })
@@ -188,8 +189,8 @@ const userController = {
         const result = users
           .map(user => ({
             ...user.toJSON(),
-            followerCount: user.Followers.length
-            // isFollowed: req.user.Followings.some(f => f.id === user.id) //req.user還未設定、root不該出現
+            followerCount: user.Followers.length,
+            isFollowed: user.Followers.some(follower => follower.id === currentUser)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
         userProfile.Likes.forEach(like => {
