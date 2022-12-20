@@ -3,7 +3,7 @@ const { Followship, Like, Reply, Tweet, User } = require('../models')
 const followshipController = {
   postFollowships: (req, res, next) => {
     // const followingId = Number(req.body.id)
-    const { id } = req.params
+    const id = Number(req.params.id)
     if (helpers.getUser(req).id === id) throw new Error('Cannot follow yourself!')
     Promise.all([
       User.findByPk(id),

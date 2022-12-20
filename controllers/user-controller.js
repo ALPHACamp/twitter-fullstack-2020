@@ -112,7 +112,7 @@ const userController = {
       }),
       User.findAll({
         include: [{ model: User, as: 'Followers' }],
-        where: { role: 'user' } // id: !req.user.id,待補
+        where: { role: 'user', id: { [Op.ne]: currentUser.id } }
       }),
       Like.findAll({
         attributes: ['id', 'UserId', 'TweetId'],
@@ -150,7 +150,7 @@ const userController = {
       }),
       User.findAll({
         include: [{ model: User, as: 'Followers' }],
-        where: { role: 'user' } // id: !req.user.id,待補
+        where: { role: 'user', id: { [Op.ne]: currentUser.id } }
       })
     ])
       .then(([user, users]) => {
@@ -179,7 +179,7 @@ const userController = {
       }),
       User.findAll({
         include: [{ model: User, as: 'Followers' }],
-        where: { role: 'user' } // id: !req.user.id,待補
+        where: { role: 'user', id: { [Op.ne]: currentUser.id } }
       })
     ])
       .then(([user, users]) => {
