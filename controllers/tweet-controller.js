@@ -1,22 +1,36 @@
-const helpers = require('../_helpers')
 const { Followship, Like, Reply, Tweet, User } = require('../models')
 const helpers = require('../_helpers')
 const tweetController = {
   getIndex: (req, res, next) => {
     return Promise.all([
       Tweet.findAll({
-        include: [{ model: User }],
+        include: [{
+          model: User,
+          attributes: {
+            exclude: ['password']
+          }
+        }],
         where: { UserId: helpers.getUser(req).id },
-        order: [['createdAt', 'desc']],
+        order: [['createdAt', 'desc'], ['id', 'desc']],
         raw: true,
         nest: true
       }),
       User.findAll({
         include: [{ model: User, as: 'Followers' }],
         where: { role: 'user' } // id: !req.user.id,待補
+      }),
+      Like.findAll({
+        attributes: ['id', 'UserId', 'TweetId'],
+        raw: true,
+        nest: true
+      }),
+      Reply.findAll({
+        attributes: ['id', 'UserId', 'TweetId'],
+        raw: true,
+        nest: true
       })
     ])
-      .then(([tweets, users]) => {
+      .then(([tweets, users, likes, replies]) => {
         const result = users
           .map(user => ({
             ...user.toJSON(),
@@ -24,8 +38,15 @@ const tweetController = {
             // isFollowed: req.user.Followings.some(f => f.id === user.id) //req.user還未設定、root不該出現
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('tweets', { tweets, users: result.slice(0, 10) })
+        const newTweets = tweets.map(tweet => ({
+          ...tweet,
+          isLiked: likes.some(l => (l.UserId === helpers.getUser(req).id) && (l.TweetId === tweet.id)),
+          likeCount: likes.filter(like => like.TweetId === tweet.id).length,
+          replyCount: replies.filter(reply => reply.TweetId === tweet.id).length
+        }))
+        res.render('tweets', { tweets: newTweets, users: result.slice(0, 10) })
       })
+      .catch(err => next(err))
   },
   postTweet: async (req, res, next) => {
     try {
@@ -50,10 +71,45 @@ const tweetController = {
     }
   },
   getTweet: (req, res, next) => {
+    res.render('tweet')
   },
   postLike: (req, res, next) => {
+    const TweetId = req.params.id
+    return Promise.all([
+      Tweet.findByPk(TweetId),
+      Like.findOne({
+        where: {
+          UserId: helpers.getUser(req).id,
+          TweetId
+        }
+      })
+    ])
+      .then(([tweet, like]) => {
+        if (!tweet) throw new Error("Tweet doesn't exist!")
+        // if (like?.toJSON().UserId === helpers.getUser(req).id) throw new Error('Cannot like your own tweets!')
+        if (like) throw new Error('You have liked this!')
+        return Like.create({
+          UserId: helpers.getUser(req).id,
+          TweetId
+        })
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
   },
   postUnlike: (req, res, next) => {
+    const TweetId = req.params.id
+    return Like.findOne({
+      where: {
+        UserId: helpers.getUser(req).id,
+        TweetId
+      }
+    })
+      .then(like => {
+        if (!like) throw new Error("You haven't liked this tweet.")
+        return like.destroy()
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
   },
   postReply: (req, res, next) => {
   }

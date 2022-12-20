@@ -13,7 +13,7 @@
 
   <div class="d-flex flex-column tabs-content">
     <!-- if = 推文 -->
-    {{#ifCond route 'tweets'}}
+    {{#ifCond route "tweets"}}
     {{#each userProfile.Tweets}}
     <div class="d-flex each-tweet">
       <div id="tweet-icon">
@@ -33,20 +33,30 @@
           {{this.description}}
         </div>
         <div class="actions d-flex justify-content-between">
-          <span>
-            <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px">
+          <div class="d-flex reply">
+            <button type="submit">
+              <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px">
+            </button>
             <span
               style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Replies.length}}</span>
-          </span>
-          <span>
-            {{#if this.Likes.length}}
-            <img src="/images/icons/filled-like.png" alt="replies" style="width:16px; height: 16px">
+          </div>
+          <div class="d-flex like">
+            {{#if this.isLiked}}
+            <form action="/tweets/{{this.id}}/unlike" method="post">
+              <button type="submit">
+                <img src=" /images/icons/filled-like.png" alt="like" style="width:16px; height: 16px">
+              </button>
+            </form>
             {{else}}
-            <img src="/images/icons/outlined-like.png" alt="replies" style="width:16px; height: 16px">
+            <form action="/tweets/{{this.id}}/like" method="post">
+              <button type="submit">
+                <img src=" /images/icons/outlined-like.png" alt="like" style="width:16px; height: 16px">
+              </button>
+            </form>
             {{/if}}
             <span
               style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Likes.length}}</span>
-          </span>
+          </div>
         </div>
       </div>
     </div>
@@ -54,7 +64,7 @@
     {{/ifCond}}
 
     <!-- if = 回覆 -->
-    {{#ifCond route 'replies'}}
+    {{#ifCond route "replies"}}
     {{#each userProfile.Replies}}
     <div class="d-flex each-tweet">
       <div id="tweet-icon">
@@ -84,39 +94,64 @@
     {{/ifCond}}
 
     <!-- if = 喜歡的內容 --> <!-- 待修改 -->
-    {{#ifCond route 'likes'}}
-    <div class="d-flex each-tweet" style="padding: 16px 0">
+    {{#ifCond route "likes"}}
+    {{#each userProfile.Likes}}
+    <div class="d-flex each-tweet">
       <div id="tweet-icon">
-        <a href="/users/{{this.UserId}}/tweets">
-          <img src="https://via.placeholder.com/50" alt="" width="50" height="50" class="rounded-circle" />
+        <a href="/users/{{this.Tweet.UserId}}/tweets">
+          <img src="{{this.Tweet.User.avatar}}" alt="" width="50" height="50" class="rounded-circle" />
         </a>
       </div>
       <div id="tweet-right" style="width: 528px">
         <div class="header">
-          <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">John Doe</span>
+          <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">{{this.Tweet.User.name
+            }}</span>
           <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D; margin-left:8px;"
             class="text-muted">
-            @heyjohn．3小時</span>
+            @{{this.Tweet.User.account}}．{{relativeTimeFromNow this.Tweet.createdAt}}</span>
         </div>
         <div class="content-word">
-          <p style="margin-bottom: 8px">
-            Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis
-            ullamco cillum dolor. Voluptate exercitation incididunt aliquip
-            deserunt reprehenderit elit laborum.
-          </p>
+          {{this.Tweet.description}}
         </div>
         <div class="actions d-flex justify-content-between">
-          <span>
-            <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px">
-            <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">13</span>
-          </span>
-          <span>
-            <img src="/images/icons/filled-like.png" alt="replies" style="width:16px; height: 16px">
-            <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">76</span>
-          </span>
+          <div class="d-flex reply">
+            <button type="submit">
+              <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px">
+            </button>
+            <span
+              style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Tweet.Replies.length}}</span>
+          </div>
+          <div class="d-flex like">
+            {{#ifCond ../userProfile.id ../currentUser}}
+            <form action="/tweets/{{this.id}}/unlike" method="post">
+              <button type="submit">
+                <img src=" /images/icons/filled-like.png" alt="like" style="width:16px; height: 16px">
+              </button>
+            </form>
+            {{/ifCond}}
+            {{!-- 應該要判斷isLiked --}}
+            {{#ifNotCond ../userProfile.id ../currentUser}}
+            {{#if this.Tweet.isLiked}}
+            <form action="/tweets/{{this.id}}/unlike" method="post">
+              <button type="submit">
+                <img src=" /images/icons/filled-like.png" alt="like" style="width:16px; height: 16px">
+              </button>
+            </form>
+            {{else}}
+            <form action="/tweets/{{this.id}}/like" method="post">
+              <button type="submit">
+                <img src=" /images/icons/outlined-like.png" alt="like" style="width:16px; height: 16px">
+              </button>
+            </form>
+            {{/if}}
+            {{/ifNotCond}}
+            <span
+              style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Tweet.Likes.length}}</span>
+          </div>
         </div>
       </div>
     </div>
+    {{/each}}
     {{/ifCond}}
 
   </div>

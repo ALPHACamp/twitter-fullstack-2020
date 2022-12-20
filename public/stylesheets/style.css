@@ -665,8 +665,24 @@ h4 {
 #tweet-right .actions {
   width: 120px;
   height: 16px;
-  margin-bottom: 8px;
-  }
+  margin-bottom: 8px;  
+}
+
+#tweet-right .actions button {
+  padding: 0; 
+  border: 0;
+  background-color: #fff;
+}
+
+#tweet-right .actions .reply {
+  gap:8px;
+  align-items: center;
+}
+
+#tweet-right .actions .like {
+  gap:8px;
+  align-items: center;
+}
 
 #tweet-right .reply-whom {
   font-family: "Noto Sans TC";
@@ -825,3 +841,75 @@ h4 {
   /* height: 998px; */
   top: 237px;
 }
+
+
+/* single-tweets */
+#single-tweets-icon {
+  background: #C4C4C4;
+  margin: 0 8px 8px 0px;
+  width: 50px; height: 50px;
+  border-radius: 100%;
+}
+
+#single-tweets-top {
+  width: 109px;
+  height: 50px;
+  padding: 0;
+}
+
+#single-tweets-content-word {
+  width: 578px;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 36px;
+  padding: 0;
+  margin: 0;
+}
+
+#single-tweets-time {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: #6C757D;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e6ecf0;
+}
+
+#single-tweets-status {
+  height: 28px;
+  width: 300px;
+  padding: 0;
+  margin: 16px 412.5px 0 -58px;
+}
+
+#statu {
+  height: 28px;
+  width: 602px;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 23px;
+  margin: 32px 43.05px 16px -58px;
+}
+
+#single-tweets-replies {
+  width: 639px;
+  min-height: 138px;
+  border-bottom: 1px solid #e6ecf0;
+  padding-top: 16px;
+}
+
+#single-tweet {
+  width: 100%;
+  margin: 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e6ecf0;
+}
+
+#single-tweet-reply-word {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+  width: 528px;
