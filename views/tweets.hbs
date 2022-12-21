@@ -10,40 +10,91 @@
             首頁
           </div>
           <div class="main-top">
-            <img src="{{#if user.avatar}} {{user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" class="user-avatar">
+            <img src="{{#if user.avatar}} {{user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
+              class="user-avatar">
             <div class="">
               <form action="/tweets" method="POST">
-                <textarea style=" resize:none;" type="text" name="description" id="description" placeholder="有什麼新鮮事？"
-                  required></textarea>
-                <button type="submit" class="btn-sml">推文</button>
+                <textarea style="resize:none;width:400px;" type="text" name="description" id="description"
+                  placeholder="有什麼新鮮事？" oninput="checkLength(this)" required></textarea>
+                <div class="text-end">
+                  <span id="limit-count" style="color:#C4C4C4;">
+                    0/140
+                  </span>
+                  <span id="limit-word" style="color:red;">
+                    {{!-- 字數不可超過140字 --}}
+                  </span>
+                  <button type="submit" class="btn-sml">推文</button>
               </form>
             </div>
           </div>
-          <div class="main-bottom">
-            {{#each Tweets}}
-            <div class="card-body tweets-box">
-              <img src="{{#if this.User.avatar}} {{this.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" alt="" class="user-avatar">
-              <div class="tweets-box-main">
-                <div class="tweets-header">
-                  <a class="card-title tweets-name" href="/users/{{this.User.id}}/tweets">{{this.User.name}}</a>
-                  <span class="tweets-account"> @{{this.User.account}} ．{{relativeTimeFromNow this.createdAt}}</span>
-                </div>
-                <div class="tweets-content">
-                  <a href="tweets/{{this.id}}" id="toReply" class="card-text">
-                    {{this.description}}
-                  </a>
-                </div>
-                <div class="tweets-icons">
-                  <a><img src="/images/basic/white/reply.svg">{{this.repliesCount}}</a>
-                  <a><img src="/images/basic/white/like.svg">{{this.likesCount}}</a>
-                </div>
+        </div>
+        <div class="main-bottom">
+          {{#each Tweets}}
+          <div class="card-body tweets-box">
+
+            {{#if this.User.avatar}}
+            <img src="{{this.User.avatar}}" alt="avatar" class="user-avatar">
+            {{else}}
+            <img src="/images/icon/User Photo.png" alt="avatar" class="user-avatar">
+            {{/if}}
+
+
+            {{!-- <img src="/images/icon/User Photo.png" alt="" class="user-avatar"> --}}
+            <div class="tweets-box-main">
+              <div class="tweets-header">
+                <span class="card-title tweets-name">{{this.User.name}}</span>
+                <span class="tweets-account"> @{{this.User.account}} ．{{relativeTimeFromNow this.createdAt}}</span>
+              </div>
+              <div class="tweets-content">
+                <a href="/tweets/{{this.User.id}}" id="toReply" class="card-text">
+                  <span
+                    style="white-space: pre-line;overflow:hidden;word-break:keep-all;margin-right:10px;">{{this.description}}</span>
+                </a>
+              </div>
+              <div class="tweets-icons">
+                <a><img src="/images/basic/white/reply.svg">{{this.repliesCount}}</a>
+                <a>
+                  {{#if isliked}}
+                  <img src="/images/basic/isliked.svg">
+                  {{else}}
+                  <img src="/images/basic/white/like.svg">
+                  {{/if}}
+                  {{this.likesCount}}</a>
               </div>
             </div>
-            {{/each}}
           </div>
+          {{/each}}
         </div>
       </div>
     </div>
-    {{>right-sidebar}}
+  </div>
+  <div class="col-3 border-start" style="height: 100vh">
+    <div class="popular-container">
+      <div class="popular-title">
+        <h4>推薦跟隨</h4>
+      </div>
+      <ul class="popular-list-group p-3">
+        {{#each result}}
+        {{>right-sidebar}}
+        {{/each}}
+      </ul>
+    </div>
   </div>
 </div>
+
+<script>
+  function checkLength(which) {
+    const maxChars = 140
+    const inputValue = which.value.trim().length
+    const limitWord = document.getElementById("limit-word")
+    const limitCount = document.getElementById("limit-count")
+    limitCount.innerText = inputValue + "/140"
+    if (inputValue > maxChars) {
+      limitWord.innerText = "字數不可超過140字"
+      which.value = which.value.substring(0, maxChars);
+    }
+    if (inputValue === 0) {
+      limitWord.innerText = "內容不可空白"
+    }
+  }
+</script>

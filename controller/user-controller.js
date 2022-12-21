@@ -129,6 +129,69 @@ const userController = {
       .then(([user, tweets]) => {
         res.render('user-tweets', { user, tweets })
       })
+      .catch(err => next(err))
+    // return User.findByPk(id, { include: [{ model: User, as: 'Followers' }, { model: User, as: 'Followings' }] })
+    //   .then((user) => {
+    //   if (user.id === getUser(req).id) throw new Error("You can't follow yourself!")
+    //   if (!user) throw new Error("User didn't exist!")
+    //   if (followship) throw new Error('You are already following this user!')
+    //   return Followship.create({
+    //     followerId: getUser(req).id, followingId: id
+    //   })
+    // })
+    // .then(() => res.redirect('back'))
+    // .catch(err => next(err))
+  },
+  addFollowing: (req, res, next) => {
+    const id = req.body.id
+    return Promise.all([User.findByPk(id), Followship.findOne({ where: { followerId: getUser(req).id, followingId: id } })])
+      .then(([user, followship]) => {
+        if (user.id === getUser(req).id) throw new Error("You can't follow yourself!")
+        if (!user) throw new Error("User didn't exist!")
+        if (followship) throw new Error('You are already following this user!')
+        return Followship.create({
+          followerId: req.user.id, followingId: id
+        })
+          .then(() => res.redirect('back'))
+          .catch(err => next(err))
+      })
+    // return User.findByPk(id, { include: [{ model: User, as: 'Followers' }, { model: User, as: 'Followings' }] })
+    //   .then((user) => {
+    //   if (user.id === getUser(req).id) throw new Error("You can't follow yourself!")
+    //   if (!user) throw new Error("User didn't exist!")
+    //   if (followship) throw new Error('You are already following this user!')
+    //   return Followship.create({
+    //     followerId: getUser(req).id, followingId: id
+    //   })
+    // })
+    // .then(() => res.redirect('back'))
+    // .catch(err => next(err))
+  },
+  removeFollowing: (req, res, next) => {
+    const id = req.body.id
+    return Followship.findOne({ where: { followerId: getUser(req).id, followingId: id } })
+      .then(async (followship) => {
+        if (!followship) throw new Error("You haven't followed this user!")
+        await followship.destroy()
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+    // 尚未完成
+    // const id = req.body.id
+    // console.log(id)
+    // return User.findByPk(id, { include: [{ model: User, as: 'Followers' }, { model: User, as: 'Followings' }] })
+    //   .then(async (user) => {
+    //     console.log('user', user.id)
+    //     // 正在追隨
+    //     console.log('aaaaa', user.Followers.User.dataValue)
+    //     // 尚未追隨
+    //     console.log('bbbbbb', user.Followings.id)
+    //     if (!user) throw new Error("User didn't exist!")
+
+    //     await user.Followers.destroy()
+    //   })
+    //   .then(() => res.redirect('back'))
+    //   .catch(err => next(err))
   },
   getUserReplies: (req, res, next) => {
     const loginUserId = getUser(req).id
@@ -190,7 +253,6 @@ const userController = {
     ])
       .then(([user, likes]) => {
         res.render('user-likes', { user, likes })
-        console.log(likes)
       })
   },
   getUserFollowing: (req, res, next) => {

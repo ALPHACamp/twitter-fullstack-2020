@@ -2,12 +2,12 @@
 const { User, Tweet, Reply, Like, Followship } = require('../models')
 const sequelize = require('sequelize')
 const { Op } = require('sequelize')
-const helpers = require('../_helpers')
+const { getUser } = require('../_helpers')
 
 const tweetController = {
   postTweet: (req, res) => {
 
-    const UserId = helpers.getUser(req).id
+    const UserId = getUser(req).id
     const description = req.body.description
 
     if (!description.trim()) {
@@ -27,39 +27,43 @@ const tweetController = {
         .catch((error) => console.log(error))
     }
   },
-  getTweets: async (req, res, next) => {
-    const loginUser = helpers.getUser(req).id
-    // const followedUser = await Followship.findAll({
-    //   attributes: ['followingId'],
-    //   where: {
-    //     followerId: helpers.getUser(req).id
-    //   },
-    //   nest: true,
-    //   raw: true
-    // })
-    // console.log(followedUser)
-    return Tweet.findAll({
-      attributes: {
-        include: [
-          [sequelize.literal(`(SELECT COUNT(*) FROM Replies WHERE tweet_id = Tweet.id)`), 'repliesCount'],
-          [sequelize.literal(`(SELECT COUNT(*) FROM Likes WHERE tweet_id = Tweet.id)`), 'likesCount'],
-          [sequelize.literal(`(SELECT (COUNT(*)>0) FROM Likes WHERE user_id = ${loginUser} AND tweet_id = Tweet.id)`), 'isliked']
-        ]
-      },
-      // where: { UserId: { [Op.or]: [followedUser.following_id] } },
-      include: { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
-      order: [['createdAt', 'DESC']],
-      nest: true,
-      raw: true
-    })
-      .then(tweets => {
-        const data = tweets.map(tweet => ({
+  getTweets: (req, res, next) => {
+    const loginUser = getUser(req).id
+    return Promise.all(
+      [Tweet.findAll({
+        attributes: {
+          include: [
+            [sequelize.literal(`(SELECT COUNT(*) FROM Replies WHERE tweet_id = Tweet.id)`), 'repliesCount'],
+            [sequelize.literal(`(SELECT COUNT(*) FROM Likes WHERE tweet_id = Tweet.id)`), 'likesCount'],
+            [sequelize.literal(`(SELECT (COUNT(*)>0) FROM Likes WHERE user_id = ${loginUser} AND tweet_id = Tweet.id)`), 'isliked']
+          ],
+        },
+        // where: { UserId: { [Op.or]: [followedUser.following_id] } },
+        include: { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
+        order: [['createdAt', 'DESC']],
+        nest: true,
+        raw: true
+      }), User.findAll({
+        include: [{ model: User, as: 'Followers' }]
+      })])
+      .then(async ([tweets, users]) => {
+        const data = await tweets.map(tweet => ({
           ...tweet,
           isLiked: Boolean(tweet.isLiked),
         }))
-        res.render('tweets', { Tweets: data })
+        const result = await users
+          .map(user => ({
+            ...user.toJSON(),
+            followCount: user.Followers.length,
+            isFollowed: getUser(req).Followings.some(f => f.id === user.id)
+          }))
+          .sort((a, b) => b.followCount - a.followCount)
+        res.render('tweets', { Tweets: data, result })
       })
       .catch(err => next(err))
+  },
+  getReplies: (req, res, next) => {
+    res.render('replies')
   }
 }
 

@@ -1,5 +1,7 @@
 const dayjs = require('dayjs') // 載入 dayjs 套件
 const relativeTime = require('dayjs/plugin/relativeTime')// 引入dayjs的plugin
+require('dayjs/locale/zh-tw');
+dayjs.locale('zh-tw');
 dayjs.extend(relativeTime)
 
 module.exports = {

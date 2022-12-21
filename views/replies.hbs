@@ -10,7 +10,8 @@
         <div class="tweetAndReply">
           <div class="tweets-box-sec">
             {{!-- <img src="{{tweet.avatar}}" alt="{{tweet.name}}" /> --}}
-            <img src="{{#if tweet.User.avatar}} {{tweet.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" class="user-avatar">
+            <img src="{{#if tweet.User.avatar}} {{tweet.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
+              class="user-avatar">
             <div class="tweets-header-sec">
               <p class="tAR-name">{{tweet.User.name}}</p>
               <p class="tAR-account">
@@ -40,7 +41,8 @@
           {{#each replies}}
           <div class="reply-card">
             <div>
-              <img src="{{#if this.User.avatar}} {{this.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" class="user-avatar">
+              <img src="{{#if this.User.avatar}} {{this.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
+                class="user-avatar">
               {{!-- <img src="{{tweet.replierAvatar}}" alt="{{tweet.replierName}}" /> --}}
             </div>
             <div class="tweets-box-main">
