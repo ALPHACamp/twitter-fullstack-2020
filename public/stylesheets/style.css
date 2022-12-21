@@ -97,12 +97,85 @@ svg {
   height: 200px;
 }
 
+.selfavatarbg-img {
+  width: 100%;
+  height: 200px;
+  opacity: 0.4;
+}
+
 .selfavatar-img {
   width: 141px;
   height: 140px;
   margin: 0px 0px -64px 16px;
   top: -64px;
   z-index: 1;
+}
+
+.selfavatar-op-img {
+  width: 141px;
+  height: 140px;
+  margin: 0px 0px -64px 16px;
+  top: -64px;
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.selfavatar-op {
+  width: 141px;
+  height: 140px;
+  /* z-index: 5; */
+  background-color: #121212;
+  margin: -64px 0px -64px 16px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+}
+
+.selfcamera-img {
+  width: 20px;
+  height: 20px;
+  top: -16px;
+  margin: 0px 0px -64px 16px;
+  left: 67px px;
+  z-index: 10;
+}
+
+.selfcamera-re-img {
+  width: 20px;
+  height: 20px;
+  top: -4px;
+  left: 75px;
+  z-index: 10;
+}
+
+.selfcamera-mountain-img {
+  width: 20px;
+  height: 20px;
+  top: 149px;
+  left: 277px;
+  z-index: 10;
+}
+
+.selfclose-mountain-img {
+  width: 15px;
+  height: 15px;
+  top: 152px;
+  left: 325px;
+  z-index: 10;
+}
+
+.selfavatarshot-img {
+  width: 141px;
+  height: 140px;
+  margin: 0px 0px -64px 16px;
+  top: -64px;
+  z-index: 1;
+  opacity: 0.4;
+  background: #171725;
+
+}
+
+.selfeditavatar-img {
+  background: linear-gradient(0deg, rgb(52 52 52 / 70%), rgb(34 34 65 / 70%));
 }
 
 .avatar-img {
@@ -204,11 +277,50 @@ svg {
   bottom: 10%;
 }
 
+.selftweetbtn-s {
+  width: 70px;
+  height: 40px;
+  padding: 8px 16px;
+  background: #FF6600;
+  border: 0px;
+  border-radius: 50px;
+
+  font-size: 16px;
+  font-size: 400;
+  color: #fff;
+  text-decoration: none;
+
+  align-items: center;
+
+  right: 2%;
+  bottom: 12%;
+}
+
 .selftab {
   width: 100%;
   margin: 0 0 0 -3%;
   padding: 13px 0px 0 0;
   height: 61px;
+}
+
+.selfbg {
+  background: #F5F8FA;
+  height: 7px;
+  margin-top: -37px;
+}
+
+.selfintro {
+  background: #F5F8FA;
+  height: 121px;
+  margin-top: -37px;
+}
+
+.selfname {
+  padding: 7px px 0 0 16px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #696974;
 }
 
 .tweetbtn-MP {
@@ -391,6 +503,24 @@ svg {
   border-bottom: 2px solid #E6ECF0;
 }
 
+.form-name {
+  width: 602px;
+  height: 54px;
+  background: #F5F8FA;
+  /* border-radius: 14px; */
+  border-bottom: 2px solid #657786;
+  margin: 90px 0 0 16px;
+}
+
+.form-intro {
+  width: 602px;
+  height: 147px;
+  background: #F5F8FA;
+  /* border-radius: 14px; */
+  border-bottom: 2px solid #657786;
+  margin: 32px 0 0 16px;
+}
+
 .bottom-line-f {
   /* width: 641px; */
   width: 120%;
@@ -466,6 +596,10 @@ svg {
 
 .left-19 {
   left: 19%;
+}
+
+.height-61 {
+  height: 610px;
 }
 
 .logo {
@@ -665,4 +799,8 @@ a .nav-link:active,
   color: #FF6600;
   border-bottom: 3px solid #FF6600;
   z-index: 2;
+}
+
+.form-control {
+  border-bottom: none;
 }

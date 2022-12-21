@@ -23,7 +23,8 @@
     </div>
     <div class="wid-100">
       <button class="tweetbtn-ol m-3 float-end">
-        <a href="" class="text-decoration-n font-color-or">編輯個人資料</a>
+        <a href="" class="text-decoration-n font-color-or" data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop-self">編輯個人資料</a>
       </button>
     </div>
     <div class="col fl mt-2 wid-80 ms-3">
@@ -130,33 +131,47 @@
     </div>
   </div>
 
-   <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop-self" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class=" fl">
-            <button type="button font-color-or" class="btn-close btn-close-re" data-bs-dismiss="modal"
+      <div class="modal-content height-61">
+        <div class="modal-header rel">
+          <form action="" method="POST">
+            <button type="button font-color-or abs" class="btn-close btn-close-re" data-bs-dismiss="modal"
               aria-label="Close"></button>
-          </div>
+            <button class="selftweetbtn-s abs  flow-end" type="submit">儲存</button>
         </div>
-        <form action="/tweets" method="POST"></form>
-        <div class="modal-body">
-          <form action="/tweets" method="POST">
-            <img class="avatar-img fl" src="/images/avatar@2x.png" alt="">
-            <span>
-              <textarea class="modal-input-tweets mt-3 mb-3" type="description" name="description" id="description"
-                cols="30" rows="10" placeholder="有什麼新鮮事?" maxlength="140" required></textarea>
-              <input type="hidden" name="UserId" value="{{tweets.User.id}}" />
-            </span>
-            <button class="tweetbtn-s abs" type="submit">推文</button>
-          </form>
-          </form>
+        <div class="selfeditavatar-img">
+          <img class="selfavatarbg-img" src="/images/unsplash_cO9_joZ1FdA@2x.png" alt="">
+          <a href="">
+            <img class="selcamera-img selfcamera-mountain-img abs " src="/images/camera.png" alt="">
+          </a>
+          <a href="">
+            <img class="selcamera-img selfclose-mountain-img abs " src="/images/btn_close_wh@2x.png" alt="">
+          </a>
+        </div>
+        <div class="rel">
+          <a class="" href="">
+            <img class="selfavatar-op-img abs " src="/images/Photo@2x.png" alt="">
+            <div class="selfavatar-op"></div>
+            <img class="selcamera-img selfcamera-re-img abs " src="/images/camera.png" alt="">
+          </a>
+        </div>
+        <div class="form-name p-2">
+          <p class="selfname">名稱</p>
+          <textarea class="form-control selfbg" placeholder="" id="floatingTextarea"></textarea>
+        </div>
+        <div class="form-intro p-2">
+          <p class="selfname">自我介紹</p>
+          <textarea class="form-control selfintro" placeholder="" id="floatingTextarea"></textarea>
         </div>
       </div>
+      </form>
     </div>
-
+  </div>
+</div>
+</div>
 </div>
 
 {{> rightbar}}
