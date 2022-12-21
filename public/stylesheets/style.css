@@ -570,6 +570,35 @@ svg {
   font-size: 20px;
   line-height: 28px;
 }
+/* top-follower */
+.top-follower-card {
+  width: 273px;
+  height: 731px;
+  background: #FAFAFB;
+  border-radius: 16px;
+  left: 997px;
+  top: 16px;
+  border: none
+}
+
+.top-follower-header {
+  background: #FAFAFB;
+  height: 74px
+}
+
+.top-follower-title {
+  position: absolute;
+  width: 96px;
+  height: 26px;
+  left: 24px;
+  top: 24px;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 26px;
+  color: #171725;
+}
 
 /* follower */
 .follower-card {
@@ -622,6 +651,52 @@ svg {
   font-size: 16px;
   line-height: 24px;
   color: #FFFFFF;
+}
+.follow-tabs {
+  position:absolute;
+  left:332px;
+  height:52px;
+  width:639px;
+  top:74px;
+  color:#FF6600
+}
+.viewUser-nav {
+  position: absolute;
+  width: 639px;
+  height: 75px;
+  left: 332px;
+  background: #FFFFFF;
+  /* color/border */
+  border: 1px solid #E6ECF0;
+  text-align: center;
+}
+
+.viewUser {
+  margin-left: 28px
+}
+
+.viewUser-icon {
+  margin-right: 19px
+}
+
+.viewUser-name {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: #171725;
+  margin: 0
+}
+
+.viewUser-tweet-number {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 19px;
+  color: #6C757D;
+  margin: 0
 }
 /* replies */
 .dash-nav {
