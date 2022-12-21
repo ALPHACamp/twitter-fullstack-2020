@@ -201,8 +201,10 @@ const userController = {
       )
   },
   getUserFollowings: (req, res, next) => {
+    res.render('followings')
   },
   getUserFollowers: (req, res, next) => {
+    res.render('followers')
   },
   putProfile: (req, res, next) => {
   }

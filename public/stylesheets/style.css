@@ -843,7 +843,6 @@ h4 {
   top: 237px;
 }
 
-
 /* single-tweets */
 #single-tweets-icon {
   background: #C4C4C4;
@@ -883,7 +882,7 @@ h4 {
   margin: 16px 412.5px 0 -58px;
 }
 
-#statu {
+#status {
   height: 28px;
   width: 602px;
   font-family: 'Montserrat';
@@ -914,4 +913,63 @@ h4 {
   line-height: 26px;
   color: #171725;
   width: 528px;
+}
+
+/* follow-page */
+#follow-icon {
+  height: 50px;
+  width: 50px;
+  background-color: #C4C4C4;
+  border-radius: 100%;
+  margin-right: 8px;
+  margin-left: 23px;
+}
+
+#single-follow-user {
+  width: 639px;
+  padding-top: 16px;
+}
+
+#follow-user-top {
+  width: 46px;
+  height: 26px;
+}
+
+.following-user-btn {
+  padding: 8px 16px;
+  width: 96px;
+  height: 40px;
+  background: #FF6600;
+  border-radius: 50px;
+  align-items: center;
+  text-align: center;
+  color: #FFFFFF;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  border: none;
+  margin-bottom: 8px;
+}
+#follow-user-info {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+  height: 78px;
+}
+
+.nofollow-user-btn {
+  padding: 8px 16px;
+  width: 66px;
+  height: 40px;
+  background: #FFFFFF;
+  border: 1px solid #FF6600;
+  border-radius: 50px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FF6600;
+  display: flex;
+  align-items: center;
+  text-align: center;
 }
