@@ -10,27 +10,23 @@
         <div class="tweetAndReply">
           <div class="tweets-box-sec">
             {{!-- <img src="{{tweet.avatar}}" alt="{{tweet.name}}" /> --}}
-            <img src="/images/icon/User Photo.png" class="user-avatar">
+            <img src="{{#if tweet.User.avatar}} {{tweet.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" class="user-avatar">
             <div class="tweets-header-sec">
-              <p class="tAR-name">tweet.name{{tweet.name}}</p>
-              <p class="tAR-account">@
-                tweet.account{{tweet.account}}
+              <p class="tAR-name">{{tweet.User.name}}</p>
+              <p class="tAR-account">
+                @{{tweet.User.account}}
               </p>
             </div>
           </div>
           <div class="tweets-content-sec">
             {{tweet.description}}
-            >>>>tweet.description Some quick example text to
-            build on the card title and make up the bulk of the card's content.Some quick example text to
-            build on the card title and make up the bulk of the card's content.
             <p class="tweets-account">
-              上午 10:05・2021年11月10日
-              {{tweet.createdAt}}
+              {{relativeTimeFromNow tweet.createdAt}}
             </p>
           </div>
           <div class="tweets-mid">
-            <p><span style="font-family: Montserrat; font-weight:bold;">34{{tweet.reply}}</span>回覆</p>
-            <p><span style="font-family: Montserrat; font-weight:bold;">88{{tweet.like}}</span>喜歡次數</p>
+            <p><span style="font-family: Montserrat; font-weight:bold;">{{tweet.repliesCount}}</span> 回覆</p>
+            <p><span style="font-family: Montserrat; font-weight:bold;">{{tweet.likesCount}}</span> 喜歡次數</p>
           </div>
           <div class="tweets-icons-lar">
             <a href="#" data-bs-toggle="modal" data-bs-target="#reply-Modal" id="reply-button"><img
@@ -41,31 +37,30 @@
         </div>
         <div class="reply-box">
           {{!-- reply card --}}
+          {{#each replies}}
           <div class="reply-card">
             <div>
-              <img src="/images/icon/User Photo.png" class="user-avatar">
+              <img src="{{#if this.User.avatar}} {{this.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" class="user-avatar">
               {{!-- <img src="{{tweet.replierAvatar}}" alt="{{tweet.replierName}}" /> --}}
             </div>
             <div class="tweets-box-main">
               <div class="tweets-header">
-                <span class="card-title tweets-name">tweet.replierName{{tweet.replierName}}</span>
+                <span class="card-title tweets-name">{{this.User.name}}</span>
                 <span class="tweets-account">
-                  tweet.replierAccount{{tweet.replierAccount}}・tweet.replierCreatedAt{{tweet.replierCreatedAt}}</span>
+                  @ {{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</span>
                 <p class="tweets-account">回覆
-                  <span style="color: #FF6600;">@ tweet.account{{tweet.account}}
+                  <span style="color: #FF6600;">@ {{../tweet.User.account}}
                   </span>
                 </p>
               </div>
               <div class="tweets-content">
                 <p>
-                  build on the card title and make up the bulk of the card's content.Some quick example text to
-                  build on the card title and make up the bulk of the card's content.
-                  {{tweet.replierComment}}
+                  {{this.comment}}
                 </p>
               </div>
             </div>
-
           </div>
+          {{/each}}
         </div>
       </div>
     </div>
@@ -86,8 +81,8 @@
         {{!-- tweet reply--}}
         <div class="row g-0">
           <div class="col-2" style="width: 50px;height: 50px;margin-left: 10px;">
-            {{#if this.User.avatar}}
-            <img src="{{this.User.avatar}}" class="user-avatar" alt="User Photo">
+            {{#if tweet.User.avatar}}
+            <img src="{{tweet.User.avatar}}" class="user-avatar" alt="User Photo">
             {{else}}
             <img src="/images/icon/User Photo.png" class="user-avatar" alt="User Photo">
             {{!-- 垂直線。要隨內容增加長高或縮短 --}}
@@ -95,20 +90,16 @@
             {{/if}}
           </div>
           <div class="col-0" style="width: 536px;min-height:100px;margin:10px;">
-            <span class="fw-bold fs-6">Apple{{tweet.User.name}} </span>
-            <span class="tweets-account">@apple{{tweet.User.account}}</span>
+            <span class="fw-bold fs-6">{{tweet.User.name}} </span>
+            <span class="tweets-account">@{{tweet.User.account}}</span>
             <span>{{relativeTimeFromNow tweet.updatedAt}}
             </span>
             <br />
             <p class="tweets-content">
-              >>>>user.tweet Some quick example text to
-              build on the card title and make up the bulk of the card's content..tweet Some quick example
-              build on the card title and make up the bulk of the card's content.text to
-              build on the card title and make up the bulk of the card's content..tweet Some quick example text to
               {{tweet.description}}
             </p>
             <span class="tweets-account">回覆給
-              <span style="color:#FF6600"> @MITSU{{tweet.User.account}}
+              <span style="color:#FF6600"> @{{tweet.User.account}}
               </span>
             </span>
           </div>

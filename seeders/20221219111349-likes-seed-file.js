@@ -16,7 +16,7 @@ module.exports = {
           return {
             user_id: user.id,
             tweet_id: tweets[Math.floor(Math.random() * tweets.length)].id,
-            is_unlike: true,
+            is_like: true,
             created_at: new Date(),
             updated_at: new Date()
           }

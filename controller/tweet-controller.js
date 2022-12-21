@@ -27,10 +27,6 @@ const tweetController = {
         .catch((error) => console.log(error))
     }
   },
-  getTweet: (req, res) => {
-    console.log(tweet)
-    res.render('replies')
-  },
   getTweets: async (req, res, next) => {
     const loginUser = helpers.getUser(req).id
     // const followedUser = await Followship.findAll({
