@@ -19,6 +19,8 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/logout', userController.logout)
 
 router.get('/users/:id', authenticated, userController.getTweets)
+router.get('/tweets/:id/replies', authenticated, tweetController.getReplies)
+router.post('/tweets/:id/replies', authenticated, tweetController.createReply)
 router.post('/tweets/:id/like', authenticated, tweetController.addLike)
 router.post('/tweets/:id/unlike', authenticated, tweetController.removeLike)
 router.post('/tweets', authenticated, tweetController.postTweet)
