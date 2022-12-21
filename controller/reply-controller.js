@@ -29,7 +29,7 @@ const replyController = {
       .then(([tweet, replies]) =>
         res.render('replies', { tweet, replies })
       )
-
+      .catch(err => next(err))
   }
 }
 

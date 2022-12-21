@@ -1,0 +1,64 @@
+{{!-- tab切換 --}}
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route "follower"}}active{{/ifCond}}" href="/users/{{user.id}}/follower">追蹤者</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route "following"}}active{{/ifCond}}" href="/users/{{user.id}}/following">正在追蹤</a>
+  </li>
+</ul>
+
+<div class="following-main">
+  {{!-- 追蹤者 --}}
+  <div class="tab-content" id="nav-tabContent">
+    {{#ifCond route "follower"}}
+    {{#each followers}}
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="followers-tab">
+      <div class="card-body tweets-header-sec">
+        <img src="{{#if this.Followers.avatar}} {{this.Followers.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" class="user-avatar">
+        <span class="tAR-name">{{this.Followers.name}}</span>
+        <div class="btn-position">
+          {{!-- {{#if isFollowed}} --}}
+          <form action="#" method="POST">
+            <button type="submit" class="following-btn">正在跟隨</button>
+          </form>
+          {{!-- {{else}}
+          <form action="#" method="POST">
+            <button type="submit" class="follow-btn">跟隨</button>
+          </form>
+          {{/if}} --}}
+        </div>
+        <p class="tweets-content">
+          {{this.Followers.introduction}}
+        </p>
+      </div>
+    </div>
+    {{/each}}
+    {{/ifCond}}
+    {{!-- 正在追蹤 --}}
+    {{#ifCond route "following"}}
+    {{#each followings}}
+    <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="followings-tab">
+      <div class="card-body tweets-header-sec">
+        <img src="{{#if this.Followings.avatar}} {{this.Followings.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" class="user-avatar">
+        <span class="tAR-name">{{this.Followings.name}}</span>
+        <div class="btn-position">
+          {{!-- {{#if isFollowed}} --}}
+          {{!-- <form action="#" method="POST">
+            <button type="submit" class="following-btn">正在跟隨</button>
+          </form>
+          {{else}}--}}
+          <form action="#" method="POST">
+            <button type="submit" class="follow-btn">跟隨</button>
+          </form>
+          {{!--{{/if}} --}}
+        </div>
+        <p class="tweets-content">
+          {{this.Followings.introduction}}
+        </p>
+      </div>
+    </div>
+    {{/each}}
+    {{/ifCond}}
+  </div>
+</div>

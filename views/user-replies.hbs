@@ -6,123 +6,38 @@
         <div class="home-header-sec">
           <div class="following-header">
             <a href="javascript:history.back()"><img src="/images/basic/back.svg" class="back-icon" alt=""></a>
-            <span class="personal-name">崎玉</span>
-            <p class="text-secondary">22 推文</p>
+            <span class="personal-name">{{user.name}}</span>
+            <p class="text-secondary">{{user.tweetsCount}} 推文</p>
           </div>
         </div>
         <div class="profile-body">
           <div class="profile-cover">
             <img
-              src="https://media.istockphoto.com/photos/beautiful-sky-with-white-clouds-picture-id182412483?b=1&k=20&m=182412483&s=612x612&w=0&h=rP2i77z5CxtQ4rK0qkN_TqNlm3aMwzP4XNsg5KVN-4I="
+              src="{{#if user.cover}} {{user.cover}} {{else}}/images/modal-cover.png{{/if}}"
               alt="cover">
           </div>
           <div class="profile-avatar">
-            <img src="https://i02piccdn.sogoucdn.com/75af42a6664f155b">
+            <img src="{{#if user.avatar}} {{user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}">
             <button type="button" class="profile-edit-btn" id="editButton" data-bs-toggle="modal"
               data-bs-target="#edit-modal">編輯個人資料</button>
           </div>
           <div class="profile-context">
-            <span class="profile-name">崎玉</span>
-            <span class="tweets-account">@yahoo</span>
+            <span class="profile-name">{{user.name}}</span>
+            <span class="tweets-account">@{{user.account}}</span>
             <p class="profile-intro">
-              原為一個失業的普通上班族，在遇到怪人蟹爪蘭蒂並且打敗他救了孩子之後，決定成為英雄。
+              {{user.introduction}}
             </p>
             <div class="follow-ship">
-              <a href="/users/followings">
-                <p><span>34{{follower}}個</span>跟隨</p>
-                <p><span>88{{following}}</span>正在跟隨</p>
+              <a href="/users/{{user.id}}/following">
+                <p><span>{{user.followingCount}}個</span>跟隨中</p>
+              </a>
+              <a href="/users/{{user.id}}/follower">
+                <p><span>{{user.followerCount}}位</span>跟隨者</p>
               </a>
             </div>
           </div>
         </div>
-
-        <ul class="nav nav-tabs">
-          <li class="nav-item">
-            <a class="nav-link active" href="/users/:id/tweets">推文</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/users/:id/replies">回覆</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/users/:id/likes">喜歡的內容</a>
-          </li>
-        </ul>
-
-        <div class="tabs-content">
-          <!-- if = 推文 -->
-          <div class="tab-tweets">
-            <div class="card-body tweets-box">
-              <img src="/images/icon/User Photo.png" alt="" class="user-avatar">
-              <div class="tweets-box-main">
-                <div class="tweets-header">
-                  <span class="card-title tweets-name">user.name</span>
-                  <span class="tweets-account"> @user.account ．Day.js</span>
-                </div>
-                <div class="tweets-content">
-                  >>>>user.tweet Some quick example text to
-                  build on the card title and make up the bulk of the card's content.
-                </div>
-                <div class="tweets-icons">
-                  <a><img src="/images/basic/white/reply.svg">user.reply</a>
-                  <a><img src="/images/basic/white/like.svg">user.like</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- if = 回覆 -->
-          <div class="tab-tweets">
-            <div class="reply-box">
-              {{!-- reply card --}}
-              <div class="reply-card">
-                <div>
-                  <img src="/images/icon/User Photo.png" class="user-avatar">
-                  {{!-- <img src="{{tweet.replierAvatar}}" alt="{{tweet.replierName}}" /> --}}
-                </div>
-                <div class="tweets-box-main">
-                  <div class="tweets-header">
-                    <span class="card-title tweets-name">tweet.replierName{{tweet.replierName}}</span>
-                    <span class="tweets-account">
-                      tweet.replierAccount{{tweet.replierAccount}}・tweet.replierCreatedAt{{tweet.replierCreatedAt}}</span>
-                    <p class="tweets-account">回覆
-                      <span style="color: #FF6600;">@ tweet.account{{tweet.account}}
-                      </span>
-                    </p>
-                  </div>
-                  <div class="tweets-content">
-                    <p>
-                      build on the card title and make up the bulk of the card's content.Some quick example text to
-                      build on the card title and make up the bulk of the card's content.
-                      {{tweet.replierComment}}
-                    </p>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-          <!-- if = 喜歡的內容 -->
-          <div class="tab-tweets">
-            <div class="card-body tweets-box">
-              <img src="/images/icon/User Photo.png" alt="" class="user-avatar">
-              <div class="tweets-box-main">
-                <div class="tweets-header">
-                  <span class="card-title tweets-name">user.name</span>
-                  <span class="tweets-account"> @user.account ．Day.js</span>
-                </div>
-                <div class="tweets-content">
-                  <a href="/tweet" id="toReply" class="card-text">
-                    >>>>user.tweet Some quick example text to
-                    build on the card title and make up the bulk of the card's content.
-                  </a>
-                </div>
-                <div class="tweets-icons">
-                  <a><img src="/images/basic/white/reply.svg">user.reply</a>
-                  <a><img src="/images/basic/white/like.svg">user.like</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      {{> user-content route="replies"}}
       </div>
     </div>
     {{> right-sidebar}}

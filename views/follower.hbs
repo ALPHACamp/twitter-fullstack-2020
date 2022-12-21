@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    {{> left-sidebar}}
+    <div class="col-6 top">
+      <div class="home-header-sec">
+        <div class="following-header">
+          <a href="javascript:history.back()"><img src="/images/basic/back.svg" alt="" class="back-icon"></a>
+          <span class="personal-name">{{user.name}}</span>
+          <p class="text-secondary">{{user.tweetsCount}} 推文</p>
+        </div>
+      </div>
+      {{> follow-content route="follower"}}
+    </div>
+    {{> right-sidebar}}
+  </div>
+</div>

@@ -10,7 +10,7 @@ font-family: "Noto Sans TC";
 body, html{
 height: 100%;
 margin: 0;
-} 
+}
 /* 登入登出註冊 */
 .first-con{
 margin-top:69px;
@@ -54,7 +54,7 @@ border-bottom: 2px solid #50B5FF;
 }
 
 #login-button{
-border-radius:50px; 
+border-radius:50px;
 border:none;
 background-color:#FF6600;
 color:white;
@@ -98,7 +98,7 @@ width:6px;
 /*卷軸背景*/
 .top::-webkit-scrollbar-track {
 background-color: #FAFAFA;
-} 
+}
 .home-header{
 font-family:"Noto Sans TC";
 font-size: 24px;
@@ -107,7 +107,7 @@ height: 74px;
 display: flex;
 align-items: center;
 border-bottom: 1px solid 	#E6ECF0;
-padding-left:23px;  
+padding-left:23px;
 position: relative;
 }
 .following-header{
@@ -131,9 +131,9 @@ background-color: white;
 }
 textarea{
     height: 136px;
-  width:100%; 
-  font-size: 13px; 
-  padding: 12px 16px; 
+  width:100%;
+  font-size: 13px;
+  padding: 12px 16px;
   border: none;
   outline: none;
 }
@@ -156,7 +156,7 @@ color: white;
 font-size: 16px;
 background-color:#ff6600;
 border: 1px solid #FF6600;
-border-radius:20px; 
+border-radius:20px;
 width:96px;
 height:40px;
 font-family: 'Noto Sans TC';
@@ -166,8 +166,8 @@ bottom: 0;
 }
 
 .main-bottom{
-height: calc(100vh - 235px); 
-max-height: calc(100vh - 235px); 
+height: calc(100vh - 235px);
+max-height: calc(100vh - 235px);
 /* overflow-y: auto; */
 }
 
@@ -194,25 +194,25 @@ font-weight: 700;
 margin-bottom: 8px;
 }
 .tweets-header span{
-font-size: 16px; 
+font-size: 16px;
 line-height: 26px;
 }
 .tweets-account{
-font-size: 14px; 
+font-size: 14px;
 line-height: 22px;
 font-weight: 400;
 color:#6c757d;
 }
 .tweets-content{
-margin-bottom: 8px; 
+margin-bottom: 8px;
 line-height: 26px;
 font-weight: 400px;
 font-size: 16px;
 }
 .tweets-icons{
 display:flex;
-justify-content: start;  
-font-family: "Montserrat"; 
+justify-content: start;
+font-family: "Montserrat";
 }
 .tweets-icons a{
 font-size: 14px;
@@ -235,7 +235,7 @@ width:20px;
 margin-right: 15px;
 }
 .tweets-box-sec{
-display: flex; 
+display: flex;
 align-items: center;
 position: relative;
 padding: 0;
@@ -254,14 +254,14 @@ margin-bottom: 0;
 }
 .tAR-account{
 padding: 0;
-font-size: 14px; 
+font-size: 14px;
 line-height: 22px;
 font-weight: 400;
 color:#6c757d;
 }
 .tweets-content-sec{
-font-weight: 400; 
-line-height: 36px; 
+font-weight: 400;
+line-height: 36px;
 color: #171725;
 font-size:24px;
 border-bottom:1px solid  #E6ECF0;
@@ -274,13 +274,13 @@ border-bottom:1px solid  #E6ECF0;
 height: 60px;
 }
 .tweets-mid p{
-font-size: 19px; 
+font-size: 19px;
 margin:16px 24px 16px 0;
 line-height: 27px;
 color:#6C757D;
 }
 .tweet-mid span{
-font-weight: 700; 
+font-weight: 700;
 color: #171725;
 }
 .tweets-icons-lar{
@@ -295,8 +295,11 @@ margin-right: 133px;
 }
 
 .reply-box{
-height: calc(100vh - 372px); 
-max-height: calc(100vh - 372px); 
+  display: flex;
+  position: relative;
+  /* left: 16px; */
+  padding: 0;
+  border-bottom: 1px solid #E6ECF0;
 }
 .reply-card{
 display: flex;
@@ -322,13 +325,13 @@ margin-left:38px;
 font-size: 18px;
 font-weight:700px;
 line-height: 26px;
-} 
+}
 /* followings tab */
 .tab-above,.following-tab,.following-main{
 border:1px solid  #E6ECF0;
 }
 nav .nav-tabs .nav-button{
-border:none;    
+border:none;
 }
 
 .user-icon {
@@ -345,7 +348,7 @@ opacity: 1;
 font-weight: bold;
 color: #FF6600;
 border-bottom: 2px solid #FF6600;
-} 
+}
 .btn-position{
 position: absolute;
 right:0;
@@ -359,7 +362,7 @@ height: 200px;
 }
 .profile-cover img{
 height:100%;
-width:100%; 
+width:100%;
 object-fit:cover"
 }
 .profile-avatar {
@@ -367,7 +370,7 @@ margin-top:-80px;
 z-index:100;
 position:relative;
 display: flex;
-justify-content:space-between; 
+justify-content:space-between;
 }
 .profile-avatar img{
 width:140px;
@@ -406,14 +409,14 @@ text-overflow: ellipsis;
 white-space: nowrap;
 }
 .profile-intro{
-font-size: 14px; 
+font-size: 14px;
 line-height: 22px;
 font-weight: 400;
 color:#171725;
 margin-top: 6px;
 }
 .follow-ship {
-width: 180px;
+width: 200px;
 height: 22px;
 height: 60px;
 }
@@ -427,8 +430,8 @@ justify-content: start;
 align-items: center;
 }
 .follow-ship p{
-margin-right: 20px; 
-font-size: 14px; 
+margin-right: 20px;
+font-size: 14px;
 line-height: 22px;
 font-weight: 400px;
 color:#6C757D;
@@ -469,8 +472,8 @@ border-width: 2px;
 .tabs-content{
 display: flex;
 flex-direction:column;
-height: calc(100vh - 522px); 
-max-height: calc(100vh - 522px); 
+height: calc(100vh - 522px);
+max-height: calc(100vh - 522px);
 }
 .tab-tweets{
 display: flex;
@@ -494,7 +497,7 @@ color: white;
 font-size: 16px;
 background-color:#ff6600;
 border: 1px solid #FF6600;
-border-radius:20px; 
+border-radius:20px;
 width:96px;
 height:40px;
 font-family: 'Noto Sans TC';
@@ -587,7 +590,7 @@ background-color: rgba(0, 0, 0, 0.1);
 }
 .admin-users::-webkit-scrollbar-track,.admin-tweets::-webkit-scrollbar-track{
 background-color: #FAFAFA;
-} 
+}
 .admin-tweets-box{
 height: calc(100vh - 76px); max-height: calc(100vh - 76px);
 text-align: start;
@@ -621,19 +624,19 @@ width:15px;
 height: 15px;
 }
 .user-card{
-height: calc(100vh - 76px); 
-max-height: calc(100vh - 76px); 
+height: calc(100vh - 76px);
+max-height: calc(100vh - 76px);
 display: flex;
 align-items: start;
 padding: 15px;
 }
 .user-card-main{
-height: 314px; 
+height: 314px;
 margin-bottom:16px;
 }
 .user-border{
-height: 100%; 
-border-radius: 10px; 
+height: 100%;
+border-radius: 10px;
 background-color: #F6F7F8;
 border:1px solid #C4C4C4;
 }
@@ -665,15 +668,15 @@ border: 4px #ffffff solid;
 padding-top: 32px
 }
 .user-border .text-center .mb-0,.text-center-follow .mb-0{
-font-weight: 700; 
-line-height: 26px; 
+font-weight: 700;
+line-height: 26px;
 color: #171725;
 margin: 2px;
 }
 .user-border .text-center .mb-1{
-font-size: 14px; 
-line-height: 22px; 
-color: #6C757D; 
+font-size: 14px;
+line-height: 22px;
+color: #6C757D;
 margin-bottom: 20px
 }
 .text-center-info{
@@ -688,8 +691,8 @@ margin-left: 9px;
 .text-center-follow {
 display: flex;
 justify-content: center;
-margin-right: 8px; 
-font-size: 14px; 
+margin-right: 8px;
+font-size: 14px;
 line-height: 22px
 }
 .text-center-follow span{
@@ -796,7 +799,7 @@ padding: 0;
 }
 .modal-content{
 border-radius: 14px;
-height: 302px; 
+height: 302px;
 position: relative;
 }
 .post-main-top{
@@ -807,7 +810,7 @@ height: 234px;
 width:100%;
 }
 .modal-card-title{
-height: 56px; 
+height: 56px;
 border-bottom: 2px solid 	#E6ECF0;
 }
 .close-btn{
@@ -968,12 +971,12 @@ position: relative;
 }
 #cover-close-button{
   position:absolute;
-  left:350px ; 
+  left:350px ;
   top: 95px;
 }
 #cover-update-button{
     position:absolute;
-  right:50px ; 
+  right:50px ;
   top: 7px;
 }
 .avatar-update{

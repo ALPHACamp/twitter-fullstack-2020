@@ -1,4 +1,5 @@
 const { User, Tweet, Reply, Like, Followship } = require('../models')
+const sequelize = require('sequelize')
 const bcrypt = require('bcryptjs')
 const { getUser } = require('../_helpers')
 
@@ -84,62 +85,158 @@ const userController = {
     // 修改成功資訊
   },
   getUserTweets: (req, res, next) => {
-    const userId = req.params.id
+    const loginUserId = getUser(req).id
+    const queryUserId = req.params.id
     return Promise.all([
-      User.findById(userId),
-      Tweet.find({ where: { userId } }),
-      Followship.find({ where: { userId } })
+      User.findByPk(queryUserId, {
+        attributes: {
+          include: [
+            [sequelize.literal(`(SELECT COUNT(*) FROM Followships WHERE following_id = User.id)`), 'followerCount'],
+            [sequelize.literal('(SELECT COUNT(*) FROM Followships WHERE follower_id = User.id)'), 'followingCount'],
+            [sequelize.literal('(SELECT COUNT(*) FROM Tweets WHERE user_id = User.id)'), 'tweetsCount']
+          ]
+        },
+        nest: true,
+        raw: true
+      }),
+      Tweet.findAll({
+        attributes: {
+          include: [
+            [sequelize.literal(`(SELECT COUNT(*) FROM Replies WHERE tweet_id = Tweet.id)`), 'repliesCount'],
+            [sequelize.literal(`(SELECT COUNT(*) FROM Likes WHERE tweet_id = Tweet.id)`), 'likesCount'],
+            [sequelize.literal(`(SELECT (COUNT(*)>0) FROM Likes WHERE user_id = ${loginUserId} AND tweet_id = Tweet.id)`), 'isliked']
+          ]
+        },
+        where: { UserId: queryUserId },
+        nest: true,
+        raw: true
+      })
     ])
-      .then(([user, tweets, followships]) => {
-        console.log(user)
+      .then(([user, tweets]) => {
+        res.render('user-tweets', { user, tweets })
       })
   },
   getUserReplies: (req, res, next) => {
-    const userId = req.params.id
+    const loginUserId = getUser(req).id
+    const queryUserId = req.params.id
     return Promise.all([
-      User.findByPk(userId),
-      Reply.findAll({ where: { UserId: userId } }),
-      Followship.findAll({ where: { UserId: userId } })
-    ])
-      .then(([user, replies, followships]) => {
-        // console.log(user)
-        res.render('replies', { user, replies, followships })
+      User.findByPk(queryUserId, {
+        attributes: {
+          include: [
+            [sequelize.literal(`(SELECT COUNT(*) FROM Followships WHERE following_id = User.id)`), 'followerCount'],
+            [sequelize.literal('(SELECT COUNT(*) FROM Followships WHERE follower_id = User.id)'), 'followingCount'],
+            [sequelize.literal('(SELECT COUNT(*) FROM Tweets WHERE user_id = User.id)'), 'tweetsCount']
+          ]
+        },
+        nest: true,
+        raw: true
+      }),
+      Reply.findAll({
+        where: { UserId: queryUserId },
+        include: [{ model: Tweet, include: [User] }],
+        nest: true,
+        raw: true
       })
-      .catch(err => next(err))
+    ])
+      .then(([user, replies]) => {
+        res.render('user-replies', { user, replies })
+      })
   },
   getUserLikes: (req, res, next) => {
-    const userId = req.params.id
+    const loginUserId = getUser(req).id
+    const queryUserId = req.params.id
     return Promise.all([
-      User.findById(userId),
-      Like.find({ where: { userId } }),
-      Followship.find({ where: { userId } })
+      User.findByPk(queryUserId, {
+        attributes: {
+          include: [
+            [sequelize.literal(`(SELECT COUNT(*) FROM Followships WHERE following_id = User.id)`), 'followerCount'],
+            [sequelize.literal('(SELECT COUNT(*) FROM Followships WHERE follower_id = User.id)'), 'followingCount'],
+            [sequelize.literal('(SELECT COUNT(*) FROM Tweets WHERE user_id = User.id)'), 'tweetsCount']
+          ]
+        },
+        nest: true,
+        raw: true
+      }),
+      Like.findAll({
+        where: { UserId: queryUserId },
+        include: [{
+          model: Tweet,
+          include: [User],
+          attributes: {
+            include: [
+              [sequelize.literal(`(SELECT COUNT(*) FROM Replies WHERE tweet_id = Tweet.id)`), 'repliesCount'],
+              [sequelize.literal(`(SELECT COUNT(*) FROM Likes WHERE tweet_id = Tweet.id)`), 'likesCount'],
+              [sequelize.literal(`(SELECT (COUNT(*)>0) FROM Likes WHERE user_id = ${loginUserId} AND tweet_id = Tweet.id)`), 'isliked']
+            ]
+          }
+        }],
+        nest: true,
+        raw: true
+      })
     ])
-      .then(([user, likes, followships]) => {
-        console.log(user)
+      .then(([user, likes]) => {
+        res.render('user-likes', { user, likes })
+        console.log(likes)
       })
   },
-  getUserPage: (req, res, next) => {
-    res.render('personal-page')
+  getUserFollowing: (req, res, next) => {
+    const loginUserId = getUser(req).id
+    const queryUserId = req.params.id
+    return Promise.all([
+      User.findByPk(queryUserId, {
+        attributes: ['id', 'name',
+          [sequelize.literal('(SELECT COUNT(*) FROM Tweets WHERE user_id = User.id)'), 'tweetsCount']],
+        nest: true,
+        raw: true
+      }),
+      Followship.findAll({
+        include: [{
+          model: User,
+          as: 'Followings',
+          attributes: ['id', 'account', 'name', 'avatar', 'introduction',
+            // [sequelize.literal(`(SELECT (COUNT(*) > 0) FROM Followships WHERE Followships.followerId = ${loginUserId} AND Followships.followingId=Followers.id)`), 'isFollowed']
+          ]
+        }],
+        where: { followerId: queryUserId },
+        order: [['createdAt', 'DESC']],
+        nest: true,
+        raw: true
+      })
+    ])
+      .then(([user, followings]) =>
+        res.render('following', { user, followings })
+      )
+      .catch(err => next(err))
   },
-  //我用來測試畫面的
-  getTweets: (req, res) => {
-    res.render('tweets')
+  getUserFollower: (req, res) => {
+    const loginUserId = getUser(req).id
+    const queryUserId = req.params.id
+    return Promise.all([
+      User.findByPk(queryUserId, {
+        attributes: ['id', 'name',
+          [sequelize.literal('(SELECT COUNT(*) FROM Tweets WHERE user_id = User.id)'), 'tweetsCount']],
+        nest: true,
+        raw: true
+      }),
+      Followship.findAll({
+        include: [{
+          model: User,
+          as: 'Followers',
+          attributes: ['id', 'account', 'name', 'avatar', 'introduction',
+            // [sequelize.literal(`(SELECT (COUNT(*) > 0) FROM Followships WHERE Followships.followerId = ${loginUserId} AND Followships.followingId=Followers.id)`), 'isFollowed']
+          ]
+        }],
+        where: { followingId: queryUserId },
+        order: [['createdAt', 'DESC']],
+        nest: true,
+        raw: true
+      })
+    ])
+      .then(([user, followers]) =>
+        res.render('follower', { user, followers })
+      )
+      .catch(err => next(err))
   },
-  getSetting: (req, res) => {
-    res.render('setting')
-  },
-  getPerson: (req, res) => {
-    res.render('personal-page')
-  },
-  reply: (req, res) => {
-    res.render('replies')
-  },
-  getFollower: (req, res) => {
-    res.render('followings')
-  },
-  getTweet: (req, res) => {
-    res.render('tweet')
-  }
 }
 
 

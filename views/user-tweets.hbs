@@ -1,0 +1,186 @@
+<div class="container">
+  <div class="row">
+    {{> left-sidebar route="personal"}}
+    <div class="col-6 top">
+      <div class="card-home" style="border-left: 1px solid 	#E6ECF0;">
+        <div class="home-header-sec">
+          <div class="following-header">
+            <a href="javascript:history.back()"><img src="/images/basic/back.svg" class="back-icon" alt=""></a>
+            <span class="personal-name">{{user.name}}</span>
+            <p class="text-secondary">{{user.tweetsCount}} 推文</p>
+          </div>
+        </div>
+        <div class="profile-body">
+          <div class="profile-cover">
+            <img
+              src="{{#if user.cover}} {{user.cover}} {{else}}/images/modal-cover.png{{/if}}"
+              alt="cover">
+          </div>
+          <div class="profile-avatar">
+            <img src="{{#if user.avatar}} {{user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}">
+            <button type="button" class="profile-edit-btn" id="editButton" data-bs-toggle="modal"
+              data-bs-target="#edit-modal">編輯個人資料</button>
+          </div>
+          <div class="profile-context">
+            <span class="profile-name">{{user.name}}</span>
+            <span class="tweets-account">@{{user.account}}</span>
+            <p class="profile-intro">
+              {{user.introduction}}
+            </p>
+            <div class="follow-ship">
+              <a href="/users/{{user.id}}/following">
+                <p><span>{{user.followingCount}}個</span>跟隨中</p>
+              </a>
+              <a href="/users/{{user.id}}/follower">
+                <p><span>{{user.followerCount}}位</span>跟隨者</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      {{> user-content route="tweets"}}
+      </div>
+    </div>
+    {{> right-sidebar}}
+  </div>
+</div>
+
+
+{{!-- user profile Modal --}}
+<div class="modal fade" id="edit-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <form action="/api/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content prof">
+        <div class="pro-form-header">
+          <a type="button" class="close-btn" id="modal-close-button" aria-label="Close" data-bs-dismiss="modal"
+            aria-label="Close"><img src="/images/basic/close.svg" alt=""></a>
+          <h5 class="pro-form-title">編輯個人資料</h5>
+          <button type="submit" id="save-btn">儲存</button>
+        </div>
+        {{!--
+        <hr style="margin: 0px 0px;"> --}}
+        <div class="modal-body">
+          {{!-- cover --}}
+          <div>
+            {{#if user.cover}}
+            <img src="{{user.cover}}" class="card-img-top" id="cover" alt="cover">
+            {{else}}
+            <img src="/images/modal-cover.png" class="card-img-top position-relative" id="cover" alt="cover">
+            {{/if}}
+            {{!-- cover icons --}}
+            <label class="form-labe position-absolute" for="coverImage">
+              <img src="/images/basic/addphoto.svg" alt="camera" class="add-icon" id="cover-update-button">
+            </label>
+            <input class="form-control" type="file" class="form-control-file" id="coverImage" style="display:none"
+              name="coverImage" onchange="previewCoverImage()">
+            <img src="/images/basic/close.svg" alt="close" class="add-icon" id="cover-close-button">
+          </div>
+          {{!-- user.avatar --}}
+          <div class="image position-absolute" style="top:120px; width:130px; height: 130px;">
+            {{#if user.avatar}}
+            <img src="{{user.avatar}}" alt="avatar" class="update-avatar" id="avatar">
+            {{else}}
+            <img src="/images/icon/User Photo.png" alt="avatar" class="update-avatar" id="avatar">
+            {{/if}}
+            <label class="form-labe position-absolute" style="left:58px;top:54px;z-index:1;" for="image">
+              <span><img src="/images/basic/addphoto.svg" alt="camera" class="add-icon avatar-update"></span>
+            </label>
+            <input class="form-control" type="file" class="form-control-file" id="image" style="display:none"
+              name="avatar" onchange="previewAvatarImage()">
+          </div>
+          <div class="form-group form-floating" style=" margin-top: 80px;">
+            <label for="name">名稱</label>
+            <input type="text" name="name" id="name" class="form-control font-weight-bold m-auto" placeholder="名稱"
+              value="{{user.name}}"
+              style="background-color:#F5F8FA; border-bottom: 2px solid #657786;height:74px;padding-top:40px"
+              oninput="counts()" maxlength='50' required autofocus>
+            <div class="text-end" id="charcount_name" style="font-size:12px"><span>0/50</span></div>
+          </div>
+          <div class="form-group form-floating" style=" margin-top: 10px;">
+            <label for="introduction" style="margin:0px;">自我介紹</label>
+            <textarea type="text" name="introduction" id="introduction" class="form-control font-weight-bold"
+              placeholder="請輸入自我介紹"
+              style="background-color:#F5F8FA;border-bottom: 2px solid #657786;height:120px;resize:none;padding-top:40px;"
+              maxlength="160" oninput="counts()" required autofocus>{{user.introduction}}</textarea>
+            <div class="text-end" id="charcount_intro" style="font-size:12px"><span>0/160</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+
+{{!-- edit User info function --}}
+
+<script>
+
+  // 編輯 user avatar and background img
+  const modalCloseBtn = document.querySelector('#modal-close-button')
+  const coverCloseBtn = document.querySelector('#cover-close-button')
+
+
+  const cover = document.querySelector('#cover')
+  const avatar = document.querySelector('#avatar')
+  const userCover = '/images/icon/User Photo.png'
+  const coverImg = '/images/icon/modal-cover.png'
+
+
+  modalCloseBtn.addEventListener('click', e => {
+    avatar.value = " "
+    cover.value = " "
+  })
+
+  coverCloseBtn.addEventListener('click', e => {
+    avatar.src = userCover
+    cover.src = coverImg
+    document.querySelector('#edit-btn').click()
+  })
+
+
+  //  function previewAvatarImage
+  function previewAvatarImage() {
+    const avatarImageDOM = document.querySelector('#image')
+    const avatarImagefile = avatarImageDOM.files
+    if (avatarImagefile.length > 0) {
+      const fileReader = new FileReader()
+      fileReader.onload = function (event) {
+        document.getElementById('avatar').setAttribute('src', event.target.result)
+      }
+      fileReader.readAsDataURL(avatarImagefile[0])
+    }
+  }
+
+  function previewCoverImage() {
+    const coverImageDOM = document.querySelector('#coverImage')
+    const coverImagefile = coverImageDOM.files
+    if (coverImagefile.length > 0) {
+      const fileReader = new FileReader()
+      fileReader.onload = function (event) {
+        document.getElementById('cover').setAttribute('src', event.target.result)
+      }
+      fileReader.readAsDataURL(coverImagefile[0])
+    }
+  }
+
+  // function counts
+  function counts() {
+    const countName = document.getElementById('name').value.trim().length
+    const countIntro = document.getElementById('introduction').value.trim().length
+    const countNameText = document.getElementById('charcount_name')
+    const countIntroText = document.getElementById('charcount_intro')
+    countNameText.innerText = countName + '/50'
+    countIntroText.innerText = countIntro + '/160'
+    if (countName >= 50) {
+      countNameText.style.color = 'red'
+    } else {
+      countNameText.style.color = 'black'
+    }
+    if (countIntro >= 160) {
+      countIntroText.style.color = 'red'
+    } else {
+      countIntroText.style.color = 'black'
+    }
+  }
+</script>

@@ -28,8 +28,9 @@ router.post('/signup', userController.signUp)
 router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 router.get('/users/:id/replies', authenticated, userController.getUserReplies)
 router.get('/users/:id/likes', authenticated, userController.getUserLikes)
-router.get('/users/:id/followings', authenticated, userController.getUserLikes)
-router.get('/users/:id/follower', authenticated, userController.getUserLikes)
+router.get('/users/:id/following', userController.getUserFollowing)
+router.get('/users/:id/follower', userController.getUserFollower)
+
 
 //reply
 router.get('/tweets/:id', authenticated, replyController.getReplies)

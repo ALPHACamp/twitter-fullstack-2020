@@ -1,0 +1,85 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route "tweets"}}active{{/ifCond}}" href="/users/{{user.id}}/tweets">推文</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route "replies"}}active{{/ifCond}}" href="/users/{{user.id}}/replies">回覆</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route "likes"}}active{{/ifCond}}" href="/users/{{user.id}}/likes">喜歡的內容</a>
+  </li>
+</ul>
+
+<div class="tabs-content">
+  <!-- if = 推文 -->
+  {{#ifCond route "tweets"}}
+  {{#each tweets}}
+  <div class="tab-tweets">
+    <div class="card-body tweets-box">
+      <img src="{{#if ../user.avatar}} {{../user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" alt="" class="user-avatar">
+      <div class="tweets-box-main">
+        <div class="tweets-header">
+          <span class="card-title tweets-name">{{../user.name}}</span>
+          <span class="tweets-account"> @{{../user.account}} ．{{relativeTimeFromNow this.createdAt}}</span>
+        </div>
+        <div class="tweets-content">
+          {{this.description}}
+        </div>
+        <div class="tweets-icons">
+          <a><img src="/images/basic/white/reply.svg">{{this.repliesCount}}</a>
+          <a><img src="/images/basic/white/like.svg">{{this.likesCount}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+  {{/ifCond}}
+  <!-- if = 回覆 -->
+  {{#ifCond route "replies"}}
+  {{#each replies}}
+  <div class="tab-tweets">
+    <div class="card-body tweets-box">
+      <img src="{{#if ../user.avatar}} {{../user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" alt="" class="user-avatar">
+      <div class="tweets-box-main">
+        <div class="tweets-header">
+          <span class="card-title tweets-name">{{../user.name}}</span>
+          <span class="tweets-account"> @{{../user.account}} ．{{relativeTimeFromNow this.createdAt}}</span>
+              <p class="tweets-account">回覆
+              <span style="color: #FF6600;">@ {{this.Tweet.User.name}}
+              </span>
+            </p>
+        </div>
+        <div class="tweets-content">
+          {{this.comment}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+  {{/ifCond}}
+  <!-- if = 喜歡的內容 -->
+  {{#ifCond route "likes"}}
+  {{#each likes}}
+  <div class="tab-tweets">
+    <div class="card-body tweets-box">
+      <img src="{{#if this.Tweet.User.avatar}} {{this.Tweet.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" alt="" class="user-avatar">
+      <div class="tweets-box-main">
+        <div class="tweets-header">
+          <span class="card-title tweets-name">{{this.Tweet.User.name}}</span>
+          <span class="tweets-account"> @{{this.Tweet.User.account}} ．{{relativeTimeFromNow this.Tweet.createdAt}}</span>
+        </div>
+        <div class="tweets-content">
+          <a href="/tweet" id="toReply" class="card-text">
+            {{this.Tweet.description}}
+          </a>
+        </div>
+        <div class="tweets-icons">
+          <a><img src="/images/basic/white/reply.svg">{{this.Tweet.repliesCount}}</a>
+          <a><img src="/images/basic/white/like.svg">{{this.Tweet.likesCount}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+  {{/ifCond}}
+</div>

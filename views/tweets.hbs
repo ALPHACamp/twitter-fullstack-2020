@@ -25,7 +25,7 @@
               <img src="{{#if this.User.avatar}} {{this.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" alt="" class="user-avatar">
               <div class="tweets-box-main">
                 <div class="tweets-header">
-                  <span class="card-title tweets-name">{{this.User.name}}</span>
+                  <a class="card-title tweets-name" href="/users/{{this.User.id}}/tweets">{{this.User.name}}</a>
                   <span class="tweets-account"> @{{this.User.account}} ．{{relativeTimeFromNow this.createdAt}}</span>
                 </div>
                 <div class="tweets-content">
