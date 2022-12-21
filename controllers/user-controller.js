@@ -103,13 +103,13 @@ const userController = {
     const userId = req.params.id
     const followingList = helpers.getUser(req) && helpers.getUser(req).Followings.map(following => following.id)
     Promise.all([
-      User.findByPk(userId, { 
-        include: [{ model: User, as: 'Followings' }], 
-        nest: true 
+      User.findByPk(userId, {
+        include: [{ model: User, as: 'Followings' }],
+        nest: true
       }),
-      User.findAll({ 
-        include: [{ model: User, as: 'Followers' }], 
-        nest: true 
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }],
+        nest: true
       })
     ])
       .then(([viewUser, allUsers]) => {
@@ -122,7 +122,7 @@ const userController = {
         })
         const topFollowings = allUsers
           .sort((a, b) => {
-           b.Followers.length - a.Followers.length 
+            b.Followers.length - a.Followers.length
           })
           .slice(0, 10)
           .map(topFollowing => {
@@ -131,12 +131,12 @@ const userController = {
               isFollowed: followingList.includes(topFollowing.id)
             }
           })
-        return res.render('followship', { 
-          user: viewUser.toJSON(), 
-          followings, 
+        return res.render('followship', {
+          user: viewUser.toJSON(),
+          followings,
           topFollowings,
           route: 'following'
-         })
+        })
       })
       .catch(err => next(err))
   },
@@ -144,13 +144,13 @@ const userController = {
     const userId = req.params.id
     const followingList = helpers.getUser(req) && helpers.getUser(req).Followings.map(following => following.id)
     Promise.all([
-      User.findByPk(userId, { 
-        include: [{ model: User, as: 'Followers' }], 
-        nest: true 
+      User.findByPk(userId, {
+        include: [{ model: User, as: 'Followers' }],
+        nest: true
       }),
-      User.findAll({ 
-        include: [{ model: User, as: 'Followers' }], 
-        nest: true 
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }],
+        nest: true
       })
     ])
       .then(([viewUser, allUsers]) => {
@@ -160,10 +160,10 @@ const userController = {
             ...follower.toJSON(),
             isFollowed: followingList.includes(follower.id)
           }
-        })  
+        })
         const topFollowing = allUsers
-          .sort((a, b) => { 
-            b.Followers.length - a.Followers.length 
+          .sort((a, b) => {
+            b.Followers.length - a.Followers.length
           })
           .slice(0, 10)
           .map(topFollowing => {
@@ -172,9 +172,9 @@ const userController = {
               isFollowed: followingList.includes(topFollowing.id)
             }
           })
-        return res.render('followship', { 
-          user: viewUser.toJSON(), 
-          followings, 
+        return res.render('followship', {
+          user: viewUser.toJSON(),
+          followings,
           topFollowings,
           route: 'follower'
         })
@@ -187,32 +187,31 @@ const userController = {
       req.flash('error_messages', '不得追蹤自己')
       return res.redirect(200, 'back')
     }
-    Followship.create({ 
-      followerId: helpers.getUser(req).id, 
+    Followship.create({
+      followerId: helpers.getUser(req).id,
       followingId
     })
-    .then(() => {
+      .then(() => {
         res.redirect('back')
-    })
+      })
       .catch(err => next(err))
-},
-removeFollowship: (req, res, next) => {
-  const unfollowingId = req.params.id
-  return Followship.findOne({ 
-    where: { 
-      followerId: helpers.getUser(req).id,
-      followingId: unfollowingId 
-    } 
-  })
-  .then(followship => {
-      return followship.destroy()
-  })
-  .then(() => { 
-    res.redirect('back') 
-  })
-  .catch(err => next(err))
- }
+  },
+  removeFollowship: (req, res, next) => {
+    const unfollowingId = req.params.id
+    return Followship.findOne({
+      where: {
+        followerId: helpers.getUser(req).id,
+        followingId: unfollowingId
+      }
+    })
+      .then(followship => {
+        return followship.destroy()
+      })
+      .then(() => {
+        res.redirect('back')
+      })
+      .catch(err => next(err))
+  }
 }
-
 
 module.exports = userController
