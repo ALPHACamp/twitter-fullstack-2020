@@ -1,9 +1,11 @@
-
 {{> leftbar}}
 {{!-- user-nav --}}
 <div class="follower-list d-flex flex-column">
   <div>
     {{> user-nav}}
+  </div>
+  <div>
+    {{> followship-tabs route="{{route}}"}}
   </div>
 {{!-- follower cards --}}
 <div class="d-flex flex-column">

@@ -134,7 +134,8 @@ const userController = {
         return res.render('followship', { 
           user: viewUser.toJSON(), 
           followings, 
-          topFollowings
+          topFollowings,
+          route: 'following'
          })
       })
       .catch(err => next(err))
@@ -174,7 +175,8 @@ const userController = {
         return res.render('followship', { 
           user: viewUser.toJSON(), 
           followings, 
-          topFollowings
+          topFollowings,
+          route: 'follower'
         })
       })
       .catch(err => next(err))

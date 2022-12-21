@@ -652,6 +652,14 @@ svg {
   line-height: 24px;
   color: #FFFFFF;
 }
+.follow-tabs {
+  position:absolute;
+  left:332px;
+  height:52px;
+  width:639px;
+  top:74px;
+  color:#FF6600
+}
 .viewUser-nav {
   position: absolute;
   width: 639px;
