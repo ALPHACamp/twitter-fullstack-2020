@@ -2,38 +2,58 @@
   <div class="row">
     {{> message}}
     {{> left-sidebar route="setting"}}
-    <div class="col-6 top" style="border-left:1px solid	#E6ECF0;">
+    <div class="col-6 top" onclick="submitCheck()" style="border-left:1px solid	#E6ECF0;">
       <div>
         <div class=" home-header">帳戶設定</div>
         <div class="setting-main">
-          <form class="form-setting needs-validation" action="/users/{{user.id}}?_method=PUT" method="POST">
+          <form class="form-setting needs-validation" action="/users/{{user.id}}?_method=PUT" name="formSetting"
+            method="POST">
 
             <div class="div">
               <label for="account">帳號</label>
-              <input type="text" name="account" id="account" placeholder="請輸入帳號" aria-label="User account"
-                value="{{user.account}}" required>
+              <input type="text" name="editAccount" id="account" placeholder="請輸入帳號" oninput="accountCounts()"
+                aria-label="User account" value="{{user.account}}" required>
+              <div class="p-0 bd-highlight" id="accountEnterMessage" style="color:#FC5A5A;font-size:12px">
+                <span>請輸入帳號</span>
+              </div>
             </div>
             <div class="div">
               <label for="name">名稱</label>
-              <input type="text" name="name" id="name" placeholder="請輸入使用者名稱" aria-label="User name" maxlength="50"
-                value="{{user.name}}" required>
+              <input type="text" name="editName" id="name" placeholder="請輸入使用者名稱" oninput="userNameCounts()"
+                aria-label="User name" maxlength="50" value="{{user.name}}" required>
+              <div class="d-flex bd-highlight">
+                <div class="p-0 bd-highlight" id="nameEnterMessage" style="color:#FC5A5A;font-size:12px">
+                  <span>請輸入名稱</span>
+                </div>
+                <div class="p-0 bd-highlight" id="nameLengthCount"
+                  style="color:#696974;font-size:12px;width: 20px;margin-right: 10px;"><span>0/50</span></div>
+              </div>
             </div>
             <div class="div">
               <label for="email">Email</label>
-              <input type="email" name="email" id="email" placeholder="請輸入Email" aria-label="User email"
+              <input type="email" name="editEmail" id="email" placeholder="請輸入Email" aria-label="User email"
                 value="{{user.email}}" required>
+              <div class="p-0 bd-highlight" id="emailEnterMessage" style="color:#FC5A5A;font-size:12px">
+                <span>請輸入Email</span>
+              </div>
             </div>
             <div class="div">
               <label for="password">密碼</label>
-              <input type="password" name="password" id="password" placeholder="請設定密碼" aria-label="User password"
-                required>
+              <input type="password" name="editPassword" id="password" placeholder="請輸入密碼" onclick="passwordCheck()"
+                aria-label="User password" required>
+              <div class="p-0 bd-highlight" id="passwordEnterMessage" style="color:#FC5A5A;font-size:12px">
+                <span>請輸入密碼</span>
+              </div>
             </div>
             <div class="div">
               <label for="checkPassword">密碼確認</label>
-              <input type="password" name="checkPassword" id="checkPassword" placeholder="請輸再次輸入密碼"
-                aria-label="Confirm user password" required>
+              <input type="password" name="editCheckPassword" id="checkPassword" placeholder="請再次輸入密碼"
+                 aria-label="Confirm user password"  required>
+              <div class="p-0 bd-highlight" id="checkPasswordEnterMessage" style="color:#FC5A5A;font-size:12px">
+                <span>請再次輸入密碼</span>
+              </div>
             </div>
-            <button type="submit">儲存</button>
+            <button type="submit" >儲存</button>
           </form>
         </div>
       </div>
@@ -42,3 +62,110 @@
     </div>
   </div>
 </div>
+
+
+{{!-- setting function --}}
+{{!-- 以下還沒設定完成 還在測試 --}}
+<script>
+
+  // 使用者帳號
+  function accountCounts() {
+    const counts = document.getElementById('account').value.length
+    const accountEnterMessage = document.getElementById('accountEnterMessage')
+    accountEnterMessage.innerText = counts + '/'
+    if (counts > 0) {
+      accountEnterMessage.innerText = ''
+      return
+    }
+    if (counts === 0) {
+      accountEnterMessage.innerText = '內容不可空白'
+    }
+  }
+
+
+  // 使用者名稱 字數限制 50字
+  function userNameCounts() {
+    const counts = document.getElementById('name').value.length
+    const nameEnterMessage = document.getElementById('nameEnterMessage')
+    const nameLength = document.getElementById('nameLengthCount')
+    nameLength.innerText = counts + '/50'
+    if (counts > 50) {
+      nameEnterMessage.innerText = '字數超出上限！'
+      return
+    }
+    if (counts > 0 && counts <= 50) {
+      nameEnterMessage.innerText = ''
+    }
+    if (counts === 0) {
+      nameEnterMessage.innerText = '內容不可空白'
+    }
+  }
+
+  // 使用者Email
+  function emailCounts() {
+    const Counts = document.getElementById('email').value.length
+    const emailEnterMessage = document.getElementById('emailEnterMessage')
+    emailEnterMessage.innerText = counts + '/500'
+    if (counts > 0) {
+      emailEnterMessage.innerText = ''
+      return
+    }
+    if (counts === 0) {
+      emailEnterMessage.innerText = '內容不可空白'
+    }
+  }
+
+
+  //密碼錯誤驗證
+  function submitCheck() {
+    EditPassword = document.formSetting.editPassword.value;
+    EditCheckPassword = document.formSetting.editCheckPassword.value;
+    if (EditPassword === EditCheckPassword) {
+      if (EditPassword.length > 0 && EditCheckPassword.length > 0) { return true; }
+      else { alert("請輸入密碼"); return false; }
+    }
+    else {
+      alert("輸入的密碼不相符");
+      return false;
+    }
+  }
+
+
+  function passwordCheck() {
+    const passwordEnterMessage = document.getElementById('passwordEnterMessage')
+    EditPassword = document.formSetting.editPassword.value;
+    if (EditPassword.length > 0) {
+      passwordEnterMessage.style.visibility = 'hidden'
+      return;
+    } else {
+      passwordEnterMessage.style.visibility = 'visible'
+    }
+  }
+
+  function editpasswordCheck() {
+    document.getElementById('checkPasswordEnterMessage').style.visibility = 'hidden'
+  }
+
+
+</script>
+
+{{!--
+// function counts
+function counts() {
+const countName = document.getElementById('name').value.trim().length
+const countIntro = document.getElementById('introduction').value.trim().length
+const countNameText = document.getElementById('charcount_name')
+const countIntroText = document.getElementById('charcount_intro')
+countNameText.innerText = countName + '/50'
+countIntroText.innerText = countIntro + '/160'
+if (countName >= 50) {
+countNameText.style.color = 'red'
+} else {
+countNameText.style.color = 'black'
+}
+if (countIntro >= 160) {
+countIntroText.style.color = 'red'
+} else {
+countIntroText.style.color = 'black'
+}
+} --}}
