@@ -3,7 +3,10 @@ const { Followship, Like, Reply, Tweet, User } = require('../models')
 const followshipController = {
   postFollowships: (req, res, next) => {
     const followingId = Number(req.body.id)
-    if (helpers.getUser(req).id === followingId) throw new Error('Cannot follow yourself!')
+    if (helpers.getUser(req).id === followingId) {
+      req.flash('error_messages', 'Cannot follow yourself!')
+      return res.redirect(200, 'back')
+    }
     Promise.all([
       User.findByPk(followingId),
       Followship.findOne({
