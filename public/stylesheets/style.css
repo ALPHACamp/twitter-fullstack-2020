@@ -86,6 +86,25 @@ svg {
   margin: 2px 16.9px 0px;
 }
 
+.backarrow-img {
+  width: 17px;
+  height: 14px;
+  margin: 25px 16px 26px 24px;
+}
+
+.avatarbg-img {
+  width: 100%;
+  height: 200px;
+}
+
+.selfavatar-img {
+  width: 141px;
+  height: 140px;
+  margin: 0px 0px -64px 16px;
+  top: -64px;
+  z-index: 1;
+}
+
 .avatar-img {
   width: 50px;
   height: 50px;
@@ -95,6 +114,20 @@ svg {
   width: 13.4px;
   height: 12.61px;
   margin: 0px 9px 0 0px;
+}
+
+.tweetbtn-ol {
+  width: 128px;
+  height: 40px;
+  background: #fff;
+  border-radius: 50px;
+  border: 1px solid #FF6600;
+
+  font-size: 16px;
+  color: #FF6600;
+  text-decoration: none;
+
+  align-items: center;
 }
 
 .tweetbtn {
@@ -169,6 +202,13 @@ svg {
 
   right: 10%;
   bottom: 10%;
+}
+
+.selftab {
+  width: 100%;
+  margin: 0 0 0 -3%;
+  padding: 13px 0px 0 0;
+  height: 61px;
 }
 
 .tweetbtn-MP {
@@ -288,6 +328,13 @@ svg {
   margin-right: 8px;
 }
 
+.selftwitterbox-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #171725;
+  margin-right: 8px;
+}
+
 .twitterbox-time {
   font-size: 14px;
   font-weight: 400;
@@ -306,7 +353,7 @@ svg {
 
 .tweet-flow-text {
   width: 82%;
-  margin: 2% 0 0 3%;
+  margin: 2% 0 0 2%;
 }
 
 .follow-flow-account {
@@ -322,6 +369,10 @@ svg {
   line-height: 26px;
   color: #92929D;
   margin-top: -20px;
+}
+
+.border-none {
+  border: none;
 }
 
 .top-line-2 {
@@ -396,16 +447,25 @@ svg {
   color: #FF6600;
 }
 
+.following-color {
+  color: #6C757D;
+  margin-right: 20px;
+}
+
+.follow-color {
+  color: #6C757D;
+}
+
 .bottom-16 {
-  bottom: 16;
+  bottom: 16%;
 }
 
 .top-0 {
-  top: 0;
+  top: 0%;
 }
 
 .left-19 {
-  left: 19;
+  left: 19%;
 }
 
 .logo {
@@ -476,6 +536,17 @@ svg {
   height: 36px;
 }
 
+.wid-12 {
+  width: 12%;
+}
+
+.wid-80 {
+  width: 80%;
+}
+
+.wid-100 {
+  width: 100%;
+}
 
 /* 複寫boostrap */
 .btn-close-re {
@@ -508,14 +579,14 @@ svg {
 }
 
 .admin-user-background {
-  position:absolute;
+  position: absolute;
   width: 100%;
   z-index: 0;
 }
 
 .admin-user-avatar {
-  position:absolute; 
-  border-radius:100%;
+  position: absolute;
+  border-radius: 100%;
 
   width: 70px;
   height: 70px;
@@ -569,4 +640,29 @@ svg {
   font-weight: 700;
   font-size: 20px;
   line-height: 28px;
+}
+
+.nav-item a:active,
+.active {
+  color: #FF6600;
+}
+
+.nav-link {
+  color: #657786;
+}
+
+.nav-item {
+  color: #657786;
+}
+
+a :hover {
+  border: none;
+  color: #657786;
+}
+
+a .nav-link:active,
+.active {
+  color: #FF6600;
+  border-bottom: 3px solid #FF6600;
+  z-index: 2;
 }
