@@ -9,7 +9,6 @@ const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 
 router.use('/admin', admin)
-
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
@@ -29,8 +28,8 @@ router.post('/tweets/:id/unlike', authenticated, tweetController.removeLike)
 // router.put('/edit', authenticated, userController.editUser)
 router.post('/followships', authenticated, userController.addFollowship)
 router.delete('/followships/:id', authenticated, userController.removeFollowship)
-// router.post('/tweets', authenticated, tweetController.postTweet)
-// router.get('/tweets', authenticated, tweetController.getTweets)
+router.post('/tweets', authenticated, tweetController.postTweet)
+router.get('/tweets', authenticated, tweetController.getTweets)
 router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
 
