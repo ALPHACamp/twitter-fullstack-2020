@@ -36,7 +36,7 @@ router.get('/tweets', authenticated, tweetController.getIndex)
 router.post('/tweets', authenticated, tweetController.postTweet)
 
 router.delete('/followships/:id', authenticated, followshipController.deleteFollowships)
-router.post('/followships', authenticated, followshipController.postFollowships)
+router.post('/followships/', authenticated, followshipController.postFollowships)
 
 router.get('api/users/:id', apiController.getUserInfo)
 router.post('api/users/:id', apiController.postUserInfo)

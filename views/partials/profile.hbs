@@ -1,11 +1,12 @@
 {{!-- Header --}}
-<div class="d-flex" style="margin:16px 0; height:59px">
+<div class="d-flex" style="margin:16px 0;">
   <a href="javascript:history.back()">
     <img src="/images/icons/outlined-back.png" style="height:24px; margin-top:10px; margin-left:28px">
   </a>
   <div class="d-flex flex-column" style="margin-left:19px">
-    <span style="line-height: 26px; font-weight:700; font-size:18px">{{userProfile.name}}</span>
-    <span style="line-height: 19px; font-weight:500; font-size:13px">{{userProfile.Tweets.length}} 推文</span>
+    <span style="line-height: 26px; font-weight:700; font-size:18px; color:#171725">{{userProfile.name}}</span>
+    <span style="line-height: 19px; font-weight:500; font-size:13px; color:#6C757D">{{userProfile.Tweets.length}}
+      推文</span>
   </div>
 </div>
 {{!-- card --}}
@@ -26,10 +27,14 @@
     <span style="line-height: 22px; font-weight:400; font-size:14px; color:#6C757D">@{{userProfile.account}}</span>
     <span style="line-height: 22px; font-weight:400; font-size:14px; margin-top:6px">{{userProfile.introduction}}</span>
     <div class="d-flex align-items-center" style="line-height: 22px; font-weight:400; font-size:14px;margin-top:8px">
-      <span style="color: #171725;">{{userProfile.Followings.length}} 個</span>
-      <span style="color: #6C757D;">跟隨中</span>
-      <span style="color: #171725;margin-left:20px ;">{{userProfile.Followers.length}} 位</span>
-      <span style="color: #6C757D;">跟隨者</span>
+      <a href="/users/{{userProfile.id}}/followings">
+        <span style="color: #171725;">{{userProfile.Followings.length}} 個</span>
+        <span style="color: #6C757D;">跟隨中</span>
+      </a>
+      <a href="/users/{{userProfile.id}}/followers">
+        <span style="color: #171725;margin-left:20px ;">{{userProfile.Followers.length}} 位</span>
+        <span style="color: #6C757D;">跟隨者</span>
+      </a>
     </div>
   </div>
 

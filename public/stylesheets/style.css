@@ -636,13 +636,13 @@ h4 {
   box-shadow: inset 1px 0px 0px #E8E8E8, inset -1px 0px 0px #F0F0F0;
 }
 
-.admin-each-tweet {
+/* .admin-each-tweet {
   height: 118px;
-}
+} */
 
 #tweet-icon {
   margin-left: 23.13px;
-  margin-bottom: 52px;
+  /* margin-bottom: 52px; */
   width: 50px;
   height: 50px;
 }
@@ -660,6 +660,7 @@ h4 {
 #tweet-right .content-word {  
   max-width: 860px;
   margin-bottom: 8px;
+  word-break: break-word;
 }
 
 #tweet-right .actions {
@@ -705,6 +706,7 @@ h4 {
 /* tabs  */
 #tabs-section {
   position: relative;
+  margin-top: 16px;
   /* top: 469px; */
 }
 .nav-tabs {
@@ -842,7 +844,6 @@ h4 {
   top: 237px;
 }
 
-
 /* single-tweets */
 #single-tweets-icon {
   background: #C4C4C4;
@@ -882,7 +883,7 @@ h4 {
   margin: 16px 412.5px 0 -58px;
 }
 
-#statu {
+#status {
   height: 28px;
   width: 602px;
   font-family: 'Montserrat';
@@ -913,6 +914,63 @@ h4 {
   line-height: 26px;
   color: #171725;
   width: 528px;
+}
+
+
+/* follow-page */
+#follow-icon {
+  height: 50px;
+  width: 50px;
+  background-color: #C4C4C4;
+  border-radius: 100%;
+  margin-right: 8px;
+  margin-left: 23px;
+}
+
+#single-follow-user {
+  width: 639px;
+  padding-top: 16px;
+}
+
+#follow-user-top {
+  width: 46px;
+  height: 26px;
+}
+
+.following-user-btn {
+  padding: 8px 16px;
+  width: 96px;
+  height: 40px;
+  background: #FF6600;
+  border-radius: 50px;
+  align-items: center;
+  text-align: center;
+  border: none;
+  margin-bottom: 8px;
+}
+
+#follow-user-info {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+  height: 78px;
+}
+
+.nofollow-user-btn {
+  padding: 8px 16px;
+  width: 66px;
+  height: 40px;
+  background: #FFFFFF;
+  border: 1px solid #FF6600;
+  border-radius: 50px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FF6600;
+  display: flex;
+  align-items: center;
+  text-align: center;
 }
 
 
@@ -999,3 +1057,4 @@ h4 {
 .modal-intro-input-section:hover {
   border-bottom: 2px solid #50B5FF;
 }
+
