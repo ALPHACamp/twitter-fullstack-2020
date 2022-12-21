@@ -1,0 +1,124 @@
+{{> leftbar}}
+<div class="middle right-line-2 left-line-2">
+  <div class="d-flex align-items-center" style="border:1px solid #E6ECF0; height:74px">
+    <p class="middle-title"><a href="/tweets"><img src="/images/Vector.png" class="me-3"></a>推文</p>
+  </div>
+  {{!-- 推文 start--}}
+  <div style="border:1px solid #E6ECF0;">
+    <div class="d-flex align-items-center mt-1">
+      <div style="width:50px; height:50px">
+        <a href="/users/{{tweet.User.id}}"><img class="ac-img" src="/images/img@2x.png" alt=""></a>
+      </div>
+      <div class="ms-2">
+        <a href="/users/{{tweet.User.id}}" class="text-decoration-n">
+          <span class="twitterbox-name d-block">{{tweet.User.name}}</span>
+        </a>
+        <span class="twitterbox-time d-block">@{{tweet.User.account}}</span>
+      </div>
+    </div>
+    <div class="ms-3 mt-1 me-3">
+      <p class="mb-1" style="font-weight: 400;line-height: 36px;font-size: 24px;">
+        {{tweet.description}}
+      </p>
+      <div>
+      </div>
+      <span class="twitterbox-time d-block mb-1">{{relativetimeFromNNow tweet.createdAt}} </span>
+      <div class="d-flex align-items-center dash-nav">
+        <span class="twitterbox-time" style="margin-right:24px "><span style="color:black">28 </span> 回覆</span>
+        <span class="twitterbox-time "><span style="color:black">34 </span>喜歡次數</span>
+      </div>
+      <div style="height:68px;" class="d-flex align-items-center">
+        <span class="twitterbox-time mx-40" style="margin-right:133.3px"><img width="24.69px" height="24.69px"
+            src="/images/reply@2x.png" alt="" data-bs-target="#staticBackdrop" data-bs-toggle="modal"></span>
+        <span class="twitterbox-time"><img width="24.69px" height="24.69px" src="/images/like@2x.png" alt=""></span>
+      </div>
+    </div>
+  </div>
+  {{!-- 推文 end--}}
+  {{#each tweet.Replies}}
+  {{!-- 留言 start--}}
+  <div>
+    <div class="fl">
+      <a href="/users/{{this.User.id}}"><img class="ac-img" src="/images/img@2x.png" alt=""></a>
+    </div>
+    <div class="tweet-flow-text fl">
+      <a href="/users/{{this.User.id}}" class="text-decoration-n">
+        <span class="twitterbox-name">{{this.User.name}}</span>
+      </a>
+      <span class="twitterbox-time">@{{this.User.account}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
+      <div>
+        <span class="twitterbox-time">回覆 <span style="color: #FF6600">@ {{../tweet.User.account}}</span></span>
+      </div>
+      <p class="twitterbox-text">
+        {{this.comment}}
+      </p>
+      <div class="bottom-line-f"></div>
+    </div>
+  </div>
+  {{!-- 留言 end--}}
+  {{/each}}
+</div>
+{{> rightbar}}
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="height:500px">
+      <div class="modal-header">
+        <div class=" fl">
+          <button type="button font-color-or" class="btn-close btn-close-re" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="modal-body">
+        {{!-- 要留言的推文 --}}
+        {{!-- 留言 start--}}
+        <div class="d-flex">
+          <div>
+            <a href="/users/{{tweet.User.id}}"><img class="ac-img" src="/images/img@2x.png" alt=""></a>
+          </div>
+          <div class="tweet-flow-text fl">
+            <a href="/users/{{tweet.User.id}}" class="text-decoration-n">
+              <span class="twitterbox-name">{{tweet.User.name}}</span>
+            </a>
+            <span class="twitterbox-time">@{{tweet.User.account}} ‧ {{relativetimeFromNNow tweet.createdAt}} </span>
+            <p class="twitterbox-text">
+              {{tweet.description}}
+            </p>
+            <div class="mt-1">
+              <span class="twitterbox-time">回覆給 <span style="color: #FF6600">@ {{tweet.User.account}}</span></span>
+            </div>
+          </div>
+        </div>
+        {{!-- 貼文 end--}}
+        <div class="strip"></div>
+        {{!-- 留言 --}}
+        <form action="/tweets/{{tweet.id}}/replies" method="POST" class="mt-3" method="POST">
+          <div class="d-flex align-items-center">
+            <img class="ac-img fl" src="/images/avatar@2x.png" alt="">
+            <div class="mt-3 ms-2">
+              <textarea class="modal-input-tweets reply" type="description" name="comment" id="comment" cols="30"
+                rows="10" placeholder="推你的回覆" maxlength="528px" required></textarea>
+              <input type="hidden" name="TweetId" value="{{tweet.id}}" />
+            </div>
+          </div>
+          <span class="hint abs" style="color: #FC5A5A;right:101px; bottom:27px"></span>
+          <button class="tweetbtn-s abs reply-button" type="submit">回覆</button>
+        </form>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const replyButton = document.querySelector('.reply-button')
+    const reply = document.querySelector('.reply')
+    const hint = document.querySelector('.hint')
+    replyButton.addEventListener('click', (e) => {
+      if (reply.innerText === '') {
+        e.preventDefault()
+        hint.innerText = '內容不可空白'
+      }
+    })
+  </script>
