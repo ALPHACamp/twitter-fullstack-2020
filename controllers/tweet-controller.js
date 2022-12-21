@@ -4,6 +4,7 @@ const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
 const Like = db.Like
+const Reply = db.Reply
 const helpers = require('../_helpers')
 
 const tweetController = {
@@ -77,6 +78,34 @@ const tweetController = {
         })
     })
       .catch(err => next(err))
-  }
-}
+  },
+  getReplies: (req, res, next) => {
+    Tweet.findByPk(req.params.id, {
+      include: [User, { model: Reply, include: User }],
+      nest: true
+    })
+      .then(tweet => {
+        if (!tweet) throw new Error("貼文不存在")
+        res.render('replies', {
+          tweet: tweet.toJSON()
+        })
+      })
+      .catch(err => next(err))
+  },
+  createReply: async (req, res, next) => {
+    try {
+      const { comment, TweetId } = req.body
+      assert((comment.trim() !== ''), '內容不能空白')
+      const UserId = helpers.getUser(req).id
+      await Reply.create({
+        UserId,
+        TweetId,
+        comment
+      })
+      return res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
+ }
+} 
 module.exports = tweetController

@@ -15,15 +15,18 @@ router.post('/signup', userController.signUp)
 
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
-
 router.get('/logout', userController.logout)
-
+router.get('/users/:id/followings', authenticated, userController.getFollowings)
+router.get('/users/:id/followers', authenticated, userController.getFollowers)
 router.get('/users/:id', authenticated, userController.getTweets)
+router.get('/tweets/:id/replies', authenticated, tweetController.getReplies)
+router.post('/tweets/:id/replies', authenticated, tweetController.createReply)
 router.post('/tweets/:id/like', authenticated, tweetController.addLike)
 router.post('/tweets/:id/unlike', authenticated, tweetController.removeLike)
 router.post('/tweets', authenticated, tweetController.postTweet)
 router.get('/tweets', authenticated, tweetController.getTweets)
-
+router.post('/followships', authenticated, userController.addFollowship)
+router.delete('/followships/:id', authenticated, userController.removeFollowship)
 router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
 

@@ -1,5 +1,5 @@
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
+	require('dotenv').config()
 }
 
 const express = require('express')
@@ -17,6 +17,7 @@ const SESSION_SECRET = 'secret'
 
 app.engine('hbs', handlebars({ extname: '.hbs', helpers }))
 app.set('view engine', 'hbs')
+app.use(express.static('public'))
 
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
@@ -25,16 +26,12 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 app.use((req, res, next) => {
-  res.locals.success_messages = req.flash('success_messages')
-  res.locals.error_messages = req.flash('error_messages')
-  next()
+	res.locals.success_messages = req.flash('success_messages')
+	res.locals.error_messages = req.flash('error_messages')
+	next()
 })
 
 const db = require('./models')
-
-app.engine('hbs', handlebars({ extname: '.hbs', helpers }))
-app.set('view engine', 'hbs')
-app.use(express.urlencoded({ extended: true }))
 // setting static file
 app.use(express.static('public'))
 

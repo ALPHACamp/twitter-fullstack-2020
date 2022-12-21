@@ -4,6 +4,7 @@ const helpers = require('../_helpers')
 const Tweet = db.Tweet
 const User = db.User
 const Like = db.Like
+const Followship = db.Followship
 const userController = {
   signUpPage: (req, res) => {
     res.render('signup')
@@ -97,7 +98,109 @@ const userController = {
         })
       })
       .catch(err => next(err))
-  }
+  },
+  getFollowings: async (req, res, next) => {
+    try {
+      const userId = req.params.id
+      const followingList = helpers.getUser(req) && helpers.getUser(req).Followings.map(following => following.id)
+      const viewUser = await User.findByPk(userId, {    
+        include: [{ model: User, as: 'Followings' }], 
+        nest: true 
+      })
+      const allUsers = await User.findAll({ 
+        include: [{ model: User, as: 'Followers' }], 
+        nest: true
+      })
+      assert(!viewUser, '該用戶不存在')
+      const followings = viewUser.Followings.map(following => {
+        return {
+          ...following.toJSON(),
+          isFollowed: followingList.includes(following.id)
+        }
+      })
+      const topFollowings = allUsers
+        .sort((a, b) => { 
+          b.Followers.length - a.Followers.length 
+        })
+        .slice(0, 10)
+        .map(topFollowing => {
+          return {
+            ...topFollowing.toJSON(),
+            isFollowed: followingList.includes(topFollowing.id)
+          }
+      })
+      return res.render('followship', { user: viewUser.toJSON(), followings, topFollowings })
+    } catch (error) {
+      next(error)
+    }
+  },
+  getFollowers: async (req, res, next) => {
+    try {
+      const userId = req.params.id
+      const followingList = helpers.getUser(req) && helpers.getUser(req).Followings.map(following => { return following.id })
+      const viewUser = await User.findByPk(userId, { 
+        include: [{ model: User, as: 'Followers' }], 
+        nest: true
+       })
+      const allUsers = await User.findAll({ 
+        include: [{ model: User, as: 'Followers' }], 
+        nest: true 
+      })
+      assert(!viewUser, '該用戶不存在')
+      const followings = viewUser.Followers.map(follower => {
+        return {
+          ...follower.toJSON(),
+          isFollowed: followingList.includes(follower.id)
+        }
+      })
+      const topFollowings = allUsers
+        .sort((a, b) => {
+          b.Followers.length - a.Followers.length 
+        })
+        .slice(0, 10)
+        .map(topFollowing => {
+          return {
+            ...topFollowing.toJSON(),
+            isFollowed: followingList.includes(topFollowing.id)
+          }
+        })
+      return res.render('followship', { user: viewUser.toJSON(), followings, topFollowings })
+    } catch (error) {
+      next(error)
+    }
+  },
+  addFollowship: (req, res, next) => {
+    const followingId = req.body.id
+    if (Number(followingId) === Number(helpers.getUser(req).id)) {
+      req.flash('error_messages', '不得追蹤自己')
+      return res.redirect(200, 'back')
+    }
+    Followship.create({ 
+      followerId: helpers.getUser(req).id, 
+      followingId
+    })
+    .then(() => {
+        res.redirect('back')
+    })
+      .catch(err => next(err))
+},
+removeFollowship: (req, res, next) => {
+  const unfollowingId = req.params.id
+  return Followship.findOne({ 
+    where: { 
+      followerId: helpers.getUser(req).id,
+      followingId: unfollowingId 
+    } 
+  })
+  .then(followship => {
+      return followship.destroy()
+  })
+  .then(() => { 
+    res.redirect('back') 
+  })
+  .catch(err => next(err))
+ }
 }
+
 
 module.exports = userController
