@@ -641,8 +641,8 @@ svg {
   color: #696974;
 }
 
-.form-control {
-  color: #B5B5BE;
+.form-control-style {
+  color: black;
   border-radius: 0%;
   border-style: none;
   border-bottom: solid #657786;
@@ -832,7 +832,8 @@ a .nav-link:active,
 
 .form-control {
   border-bottom: none;
-=======
+}
+
 /* follower */
 .follower-card {
   padding: 16px;
@@ -948,4 +949,40 @@ a .nav-link:active,
   left: 48px;
   top: 80px;
   background: #B5B5BE;
+}
+
+/* edit-page */
+
+.edit-form-style {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.title-edit {
+  height: 26px;
+}
+
+.edit-form-content {
+  position: relative;
+  bottom: 30px;
+  width: 593px;
+  height: 78px;
+  margin: 10px;
+
+  border-top: 2px;
+}
+
+.edit-submit {
+  margin-left: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
+
+  width: 88px;
+  height: 46px;
+  background: #FF6600;
+  border-radius: 50px;
 }

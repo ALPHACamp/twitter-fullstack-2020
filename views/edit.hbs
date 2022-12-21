@@ -1,0 +1,42 @@
+{{> leftbar}}
+
+<div class="content-fluid middle mt-5">
+	<form class="edit-form-style justify-content-center" action="/edit?_method=PUT" method="POST">
+		{{!-- 帳戶設定 --}}
+		<div class="tittle-text title-edit mb-5">
+			<h1 class="h3">帳戶設定</h1>
+		</div>
+		{{!-- 帳號 --}}
+		<div class="edit-form-content mb-2 row align-content-end ">
+			<label class="form-label mb-0 p-2 pb-0" for="account">帳號</label>
+			<input class="form-control-style p-2 pb-0 pt-0 tb" id="account" type="text" name="account" placeholder="請輸入帳號" required
+				autofocus>
+		</div>
+		{{!-- 名稱 --}}
+		<div class="edit-form-content mb-2 row align-content-end">
+			<label class="form-label mb-0 p-2 pb-0 " for="name">名稱</label>
+			<input class="form-control-style p-2 pb-0 pt-0" id="name" type="text" name="name" placeholder="請輸入使用者名稱" required
+				autofocus>
+		</div>
+		{{!-- email --}}
+		<div class="edit-form-content mb-2 row align-content-end">
+			<label class="form-label mb-0 p-2 pb-0" for="email">Email</label>
+			<input class="form-control-style p-2 pb-0 pt-0" id="email" type="text" name="email" placeholder="請輸入Email" required
+				autofocus>
+		</div>
+		{{!-- 密碼 --}}
+		<div class="edit-form-content mb-2 row align-content-end">
+			<label class="form-label mb-0 p-2 pb-0" for="password">密碼</label>
+			<input class="form-control-style p-2 pb-0 pt-0" id="password" type="password" name="password" placeholder="請輸入密碼"
+				required>
+		</div>
+		{{!-- 密碼 --}}
+		<div class="edit-form-content mb-0 row align-content-end">
+			<label class="form-label mb-0 p-2 pb-0" for="checkPassword">密碼再確認</label>
+			<input class="form-control-style p-2 pb-0 pt-0" id="checkPassword" type="password" name="checkPassword"
+				placeholder="請再次輸入密碼" required>
+		</div>
+		{{!-- 儲存 --}}
+		<button class="edit-submit btn btn-primary btn-block " type="submit">儲存</button>
+	</form>
+</div>
