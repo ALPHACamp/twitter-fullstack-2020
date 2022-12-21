@@ -21,17 +21,17 @@
   {{!-- 推文 start--}}
   <div>
     <div class="fl">
-      <a href="/users/{{this.User.id}}"><img class="ac-img" src="/images/img@2x.png" alt=""></a>
+      <a href="/users/{{this.User.id}}/followings"><img class="ac-img" src="/images/img@2x.png" alt=""></a>
     </div>
         <div class="tweet-flow-text fl" onclick="location.href='/tweets/{{this.id}}/replies';">
-      <a href="/users/{{this.User.id}}" class="text-decoration-n">
+      <a href="/users/{{this.User.id}}/followings" class="text-decoration-n">
         <span class="twitterbox-name">{{this.User.name}}</span>
       </a>
       <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
       <p class="twitterbox-text">
         {{this.description}}
       </p>
-      <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt=""data-bs-target="#replyBackdrop" data-bs-toggle="modal">13</span>
+      <span class="twitterbox-time mx-40" data-bs-target="#replyBackdrop" data-bs-toggle="modal"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">13</span>
 
       {{!-- isLiked --}}
       {{#if isLiked}}
