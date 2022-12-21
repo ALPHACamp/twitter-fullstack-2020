@@ -42,24 +42,32 @@
             {{!-- <img src="/images/icon/User Photo.png" alt="" class="user-avatar"> --}}
             <div class="tweets-box-main">
               <div class="tweets-header">
-                <span class="card-title tweets-name">{{this.User.name}}</span>
+                <a class="card-title tweets-name" href="/users/{{this.User.id}}/tweets">{{this.User.name}}</a>
                 <span class="tweets-account"> @{{this.User.account}} ．{{relativeTimeFromNow this.createdAt}}</span>
               </div>
               <div class="tweets-content">
-                <a href="/tweets/{{this.User.id}}" id="toReply" class="card-text">
+                <a href="/tweets/{{this.id}}" id="toReply" class="card-text">
                   <span
                     style="white-space: pre-line;overflow:hidden;word-break:keep-all;margin-right:10px;">{{this.description}}</span>
                 </a>
               </div>
               <div class="tweets-icons">
                 <a><img src="/images/basic/white/reply.svg">{{this.repliesCount}}</a>
-                <a>
-                  {{#if isliked}}
-                  <img src="/images/basic/isliked.svg">
-                  {{else}}
-                  <img src="/images/basic/white/like.svg">
-                  {{/if}}
-                  {{this.likesCount}}</a>
+                {{#ifCond this.isLiked false}}
+                <form action="/tweets/{{this.id}}/like" method="POST">
+                  <label for="" style="display:inline-flex;">
+                    <input type="image" style="width:14px" src="/images/basic/white/like.svg">
+                  </label>
+                </form>
+                {{else}}
+                <form action="/tweets/{{this.id}}/unlike" method="POST">
+                  <label for="" style="display:inline-flex;">
+                    <input type="image" style="width:13.4px;text-align=center;" src="/images/basic/isliked.svg">
+                  </label>
+                </form>
+                {{/ifCond}}
+                {{this.likesCount}}
+
               </div>
             </div>
           </div>
@@ -68,19 +76,9 @@
       </div>
     </div>
   </div>
-  <div class="col-3 border-start" style="height: 100vh">
-    <div class="popular-container">
-      <div class="popular-title">
-        <h4>推薦跟隨</h4>
-      </div>
-      <ul class="popular-list-group p-3">
-        {{#each result}}
-        {{>right-sidebar}}
-        {{/each}}
-      </ul>
-    </div>
-  </div>
+  {{>right-sidebar}}
 </div>
+
 
 <script>
   function checkLength(which) {

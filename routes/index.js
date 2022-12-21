@@ -10,6 +10,7 @@ const tweetController = require('../controller/tweet-controller')
 const replyController = require('../controller/reply-controller')
 const admin = require('./modules/admin')
 
+router.use('/admin', admin)
 //signin, logout
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
@@ -41,8 +42,12 @@ router.post('/tweets', authenticated, tweetController.postTweet)
 router.post('/followships', authenticated, userController.addFollowing)
 router.delete('/followships', authenticated, userController.removeFollowing)
 
+//like
+router.post('/tweets/:id/unlike', tweetController.removeLike)
+router.post('/tweets/:id/like', tweetController.addLike)
+
 // //fallback
 router.get('/', (req, res) => { res.redirect('/tweets') })
-// router.use('/', generalErrorHandler)
+router.use('/', generalErrorHandler)
 
 module.exports = router

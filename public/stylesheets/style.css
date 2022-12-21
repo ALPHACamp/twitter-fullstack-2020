@@ -598,10 +598,10 @@ color:#6C757D;
 }
 
 /* 移除超連結樣式 */
-/* a, a:hover, a:visited, a:link, a:active,a:focus{
+a, a:hover, a:visited, a:link, a:active,a:focus{
 color:inherit;
 text-decoration: none;
-} */
+}
 /* 個人主頁tab */
 .nav-tabs .nav-item {
   width: 130px;

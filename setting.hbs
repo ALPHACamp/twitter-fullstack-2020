@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="row">
+    {{> message}}
+    {{> left-sidebar route="setting"}}
+    <div class="col-6 top" onclick="submitCheck()" style="border-left:1px solid	#E6ECF0;">
+      <div>
+        <div class=" home-header">帳戶設定</div>
+        <div class="setting-main">
+          <form class="form-setting needs-validation" action="/users/{{user.id}}?_method=PUT" name="formSetting"
+            method="POST">
+
+            <div class="div">
+              <label for="account">帳號</label>
+              <input type="text" name="editAccount" id="account" placeholder="請輸入帳號" aria-label="User account"
+                value="{{user.account}}" style="border-bottom: 2px solid #657786;" required>
+            </div>
+            <div class="div">
+              <label for="name">名稱</label>
+              <input type="text" name="editName" id="name" placeholder="請輸入使用者名稱" oninput="userNameCounts()"
+                aria-label="User name" maxlength="50" value="{{user.name}}" required>
+              <div class="d-flex justify-content-end">
+                <div class="text count" id="nameLengthCount"
+                  style="color:#696974;font-size:12px;width: 20px;margin-right: 10px;"><span>0/50</span></div>
+              </div>
+            </div>
+            <div class="div">
+              <label for="email">Email</label>
+              <input type="email" name="editEmail" id="email" placeholder="請輸入Email" aria-label="User email"
+                value="{{user.email}}" required>
+            </div>
+            <div class="div">
+              <label for="password">密碼</label>
+              <input type="password" name="editPassword" id="password" placeholder="請輸入密碼" aria-label="User password"
+                required>
+            </div>
+            <div class="div">
+              <label for="checkPassword">密碼確認</label>
+              <input type="password" name="editCheckPassword" id="checkPassword" placeholder="請再次輸入密碼"
+                aria-label="Confirm user password" required>
+            </div>
+            <button type="submit">儲存</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 left">
+    </div>
+  </div>
+</div>
+
+
+{{!-- setting function --}}
+<script>
+
+  // 使用者名稱 字數限制 50字
+  function userNameCounts() {
+    const counts = document.getElementById('name').value.length
+    const nameLength = document.getElementById('nameLengthCount')
+    nameLength.innerText = counts + '/50'
+  }
+
+</script>

@@ -312,7 +312,7 @@ const userController = {
         res.render('follower', { user, followers })
       )
       .catch(err => next(err))
-  },
+  }
 }
 
 

@@ -1,27 +1,37 @@
-<li class="list-group-item d-flex justify-content-between m-0 mb-4">
-  <div class="user-icon">
-    {{#if this.avatar}}
-    <img src="{{this.avatar}}" alt="avatar" class="user-avatar">
-    {{else}}
-    <img src="/images/icon/User Photo.png" alt="avatar" class="user-avatar">
-    {{/if}}
+<div class="col-3 border-start" style="height: 100vh">
+  <div class="popular-container">
+    <div class="popular-title">
+      <h4>推薦跟隨</h4>
+    </div>
+    <ul class="popular-list-group p-3">
+      {{#each result}}
+      <li class="list-group-item d-flex justify-content-between m-0 mb-4">
+        <div class="user-icon">
+          {{#if this.avatar}}
+          <img src="{{this.avatar}}" alt="avatar" class="user-avatar">
+          {{else}}
+          <img src="/images/icon/User Photo.png" alt="avatar" class="user-avatar">
+          {{/if}}
+        </div>
+        <div class="ms-2" style="width: auto; margin-right: 8px">
+          <div class="popular-name">{{this.name}}</div>
+          <small class="small-account single-line-ellipsis">@{{this.account}}</small>
+        </div>
+        <div>
+          {{#if this.isFollowed}}
+          <form action="/followships?_method=DELETE" method="POST">
+            <button type="submit" name="id" value="{{this.id}}" class="following-btn">正在跟隨</button>
+            {{!-- <span class="followCount" style="">人數:{{this.followCount}}</span> --}}
+          </form>
+          {{else}}
+          <form action="/followships" method="POST">
+            <button type="submit" name="id" value="{{this.id}}" class="follow-btn">跟隨</button>
+            {{!-- <span class="followCount">人數:{{this.followCount}}</span> --}}
+          </form>
+          {{/if}}
+        </div>
+      </li>
+      {{/each}}
+    </ul>
   </div>
-  <div class="ms-2" style="width: auto; margin-right: 8px">
-    <div class="popular-name">{{this.name}}</div>
-    <small class="small-account single-line-ellipsis">@{{this.account}}</small>
-  </div>
-  <div>
-    {{#if this.isFollowed}}
-    <form action="/followships?_method=DELETE" method="POST">
-      <button type="submit" name="id" value="{{this.id}}" class="following-btn">正在跟隨</button>
-      <span class="followCount" style="">人數:{{this.followCount}}</span>
-    </form>
-    {{else}}
-    <form action="/followships" method="POST">
-      <button type="submit" name="id" value="{{this.id}}" class="follow-btn">跟隨</button>
-      <span class="followCount">人數:{{this.followCount}}</span>
-    </form>
-    {{/if}}
-  </div>
-
-</li>
+</div>
