@@ -636,7 +636,7 @@ svg {
 .strip {
   position: absolute;
   width: 2px;
-  height: 86px;
+  height: 60px;
   left: 48px;
   top: 80px;
   background: #B5B5BE;
