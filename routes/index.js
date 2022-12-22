@@ -6,6 +6,7 @@ const admin = require('./modules/admin')
 const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
 const followshipController = require('../controllers/followship-controller')
+const apiController = require('../controllers/apis/user-controller')
 
 const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
@@ -36,6 +37,9 @@ router.post('/tweets', authenticated, tweetController.postTweet)
 
 router.delete('/followships/:id', authenticated, followshipController.deleteFollowships)
 router.post('/followships/', authenticated, followshipController.postFollowships)
+
+router.get('api/users/:id', apiController.getUserInfo)
+router.post('api/users/:id', apiController.postUserInfo)
 
 router.get('/', (req, res) => res.redirect('/signin'))
 
