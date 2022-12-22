@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
 const admin = require('./modules/admin')
+const upload = require('../middleware/multer')
 
 const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
@@ -38,8 +39,8 @@ router.post('/tweets', authenticated, tweetController.postTweet)
 router.delete('/followships/:id', authenticated, followshipController.deleteFollowships)
 router.post('/followships/', authenticated, followshipController.postFollowships)
 
-router.get('api/users/:id', apiController.getUserInfo)
-router.post('api/users/:id', apiController.postUserInfo)
+router.get('/api/users/:id', apiController.getUserInfo)
+router.post('/api/users/:id', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), authenticated, apiController.postUserInfo)
 
 router.get('/', (req, res) => res.redirect('/signin'))
 
