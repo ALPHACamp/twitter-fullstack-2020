@@ -1,3 +1,4 @@
+{{> messages}}
 <div class="d-flex" style="height: 1200px;width:1400px;margin: 0 auto;">
   {{>sidebar route="settings"}}
   {{!-- 帳戶設定 --}}
@@ -6,37 +7,74 @@
       <div class="setting-title">
         <h4>帳戶設定</h4>
       </div>
-      <form class="form-setting" action="/settings?_method=PUT" method="POST">
+      <form class="form-setting" action="/settings?_method=PUT" method="POST" id="form" novalidate>
         <div class="input-setting top">
           <label class="label" for="account">帳號</label>
-          <input class="setting-input" id="account" type="text" name="account" placeholder="請輸入帳號" value="{{account}}"
-            required>
+          <input class="setting-input" id="account" type="text" name="account" placeholder="請輸入帳號" value="{{account}}" required>
+            <div class="invalid-feedback">
+              請輸入帳號
+            </div>
         </div>
         <div class="input-setting">
           <label class="label" for="name">名稱</label>
-          <input class="setting-input" id="name" type="text" name="name" placeholder="請輸入使用者名稱" value="{{name}}"
-            required>
+          <input class="setting-input" id="name" type="text" name="name" placeholder="請輸入使用者名稱" value="{{name}}" maxlength="50" onkeyup="wordsTotal()" required>
+          <div class="invalid-feedback" style="inline-block">
+            名稱不得超過50字
+          </div>
+          <span id="text-count"></span>
         </div>
         <div class="input-setting">
           <label class="label" for="email">Email</label>
-          <input class="setting-input" id="email" type="email" name="email" placeholder="請輸入 Email" value="{{email}}"
-            required>
+          <input class="setting-input" id="email" type="email" name="email" placeholder="請輸入 Email" value="{{email}}" required>
+          <div class="invalid-feedback">
+            請輸入正確的信箱
+          </div>
         </div>
         <div class="input-setting">
           <label class="label" for="password">密碼</label>
           <input class="setting-input" id="password" type="password" name="password" placeholder="請輸入密碼" required>
+          <div class="invalid-feedback">
+            密碼和密碼確認需一致
+          </div>
         </div>
         <div class="input-setting">
           <label class="label" for="checkPassword">密碼確認</label>
-          <input class="setting-input" id="checkPassword" type="password" name="checkPassword" placeholder="請再次輸入密碼"
-            required>
+          <input class="setting-input" id="checkPassword" type="password" name="checkPassword" placeholder="請再次輸入密碼" required>
+          <div class="invalid-feedback">
+            密碼和密碼確認需一致
+          </div>
         </div>
-        <button class="setting-btn" type="submit">儲存</button>
+        <button class="setting-btn" type="submit" id="submit-btn">儲存</button>
       </form>
-      {{> messages}}
     </div>
   </div>
-  {{!-- {{>popular}} --}}
+  {{!-- 表單驗證 --}}
+  <script>
+    const name = document.querySelector('#name')
+    const form = document.querySelector('#form')
+    const submitButton = document.querySelector('#submit-btn')
+
+    function wordsTotal() {
+      let total = document.getElementById('name').value.trim().length
+      document.getElementById('text-count').innerHTML = total + '/50'
+      if (total >= 50) {
+        name.classList.add("disabled")
+      } else {
+        name.classList.remove("disabled")
+      }
+    }
+
+    submitButton.addEventListener('click', function onSubmitButtonClicked(event) {
+      form.classList.add('was-validated')
+    })
+
+    form.addEventListener('submit', function onFormSubmit(event) {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+    })
+  </script>
 </div>
 
 {{!-- 這是推文modal --}}

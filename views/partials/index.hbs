@@ -10,7 +10,7 @@
   <div class="index-divider"></div>
 </div>
 
-<div class="index-tweets d-flex justify-content-center">
+<div class="index-tweets d-flex justify-content-center" >
   {{#each tweets}}
   {{!-- 這是modal-reply --}}
   {{>reply-modal user=this.User}}
@@ -20,7 +20,7 @@
         <img src="{{this.User.avatar}}" alt="" width="50" height="50" class="rounded-circle" />
       </a>
     </div>
-    <div id="tweet-right" style="width: 528px">
+    <div id="tweet-right" style="width: 528px;">
       <div class="header">
         <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">{{this.User.name}}</span>
         <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D; margin-left:8px;"
