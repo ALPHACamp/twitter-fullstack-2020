@@ -16,9 +16,8 @@
     {{#ifCond route "tweets"}}
     {{#each userProfile.Tweets}}
     {{!-- 這是modal-reply --}}
-    {{>reply-modal user=../userProfile User=../currentUser}}
-    <div class="d-flex each-tweet" onclick="window.open('/tweets/{{this.id}}/replies','_self');"
-      style="cursor: pointer;">
+    {{>reply-modal tweet=this user=../userProfile User=../currentUser}}
+    <div class="d-flex each-tweet">
       <div id="tweet-icon">
         <a href="/users/{{this.UserId}}/tweets">
           <img src="{{.. /userProfile.avatar}}" alt="" width="50" height="50" class="rounded-circle" />
@@ -99,6 +98,8 @@
     <!-- if = 喜歡的內容 -->
     {{#ifCond route "likes"}}
     {{#each userProfile.Likes}}
+    {{!-- 這是modal-reply --}}
+    {{>reply-modal tweet=this.Tweet User=../userProfile user=this.Tweet.User}}
     <div class="d-flex each-tweet">
       <div id="tweet-icon">
         <a href="/users/{{this.Tweet.UserId}}/tweets">
@@ -118,7 +119,7 @@
         </div>
         <div class="actions d-flex justify-content-between">
           <div class="d-flex reply">
-            <button data-bs-toggle="modal" data-bs-target="#reply-modal">
+            <button data-bs-toggle="modal" data-bs-target="#reply-modal-{{this.Tweet.id}}">
               <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px">
             </button>
             <span

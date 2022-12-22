@@ -42,7 +42,7 @@
   </div>
   <div class="row-actions d-flex"
     style="padding: 21.52px 0 21.52px 16px; border-bottom: 1px solid #e6ecf0; margin-left:3.49px;">
-    <button data-bs-toggle="modal" data-bs-target="#reply-modal-{{this.id}}"
+    <button  data-bs-toggle="modal" data-bs-target="#reply-modal-{{tweet.id}}"
       style="margin-right: 133.13px; padding: 0; border: 0; background-color: #fff;">
       <img src="/images/icons/outlined-reply.png" alt="" width="30px" height="30px" />
     </button>
@@ -90,3 +90,6 @@
   </div>
   {{/each}}
 </div>
+
+{{!-- 這是modal-reply --}}
+{{>reply-modal user=tweet.User User=currentUser}}

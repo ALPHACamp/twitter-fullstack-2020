@@ -1,5 +1,5 @@
 {{!-- 以下是reply 的 modal --}}
-<div class="modal fade" id="reply-modal-{{this.id}}" tabindex="-1" role="dialog"
+<div class="modal fade" id="reply-modal-{{tweet.id}}" tabindex="-1" role="dialog"
   aria-labelledby="replyModalLabel" aria-hidden="true">
   <div class="modal-dialog">
 
@@ -17,20 +17,20 @@
         </div>
         <div class="modal-reply-tweet-text" style="max-width:90%;margin-left:13px;">
           <span class="modal-reply-tweet-name" style="font-size:16px; font-weight:700;line-height:26px margin-right:8px;">{{user.name}}</span>
-          <span style="font-size:14px;font-weight:400"> @{{user.account}}．{{relativeTimeFromNow this.createdAt}}</span>
+          <span style="font-size:14px;font-weight:400"> @{{user.account}}．{{relativeTimeFromNow tweet.createdAt}}</span>
           <br />
-          <p class="modal-reply-tweet-description" style="word-wrap: break-word; word-break: normal;margin-top:10px;font-size:16px; font-weight:400">{{this.description}}</p>
+          <p class="modal-reply-tweet-description" style="word-wrap: break-word; word-break: normal;margin-top:10px;font-size:16px; font-weight:400">{{tweet.description}}</p>
           <small>回覆給<span style="color:#FF6600">@{{user.account}}</span></small>
         </div>
       </div>
       {{!-- 回文部分 --}}
-      <form class="modal-tweet-post" action="/tweets/{{this.id}}/replies" method="POST">
+      <form class="modal-tweet-post" action="/tweets/{{tweet.id}}/replies" method="POST">
         <div class="modal-body d-flex" id="post-modal-body">
           <div class="modal-avatar">
             <img style="width:50px;height:50px;border-radius:25px;" src="{{User.avatar}}" alt="modal-avatar">
           </div>
           <div class="modal-input">
-            <textarea class=" border border-0 m-2" name="comment" style="font-size: 16px;" id="comment-{{this.id}}" type="text"
+            <textarea class=" border border-0 m-2" name="comment" style="font-size: 16px;" id="comment-{{tweet.id}}" type="text"
               cols="65" rows="5" placeholder="推你的回覆" maxlength='140' required></textarea>
           </div>
         </div>
