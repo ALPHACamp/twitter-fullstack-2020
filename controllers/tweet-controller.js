@@ -46,7 +46,7 @@ const tweetController = {
           likeCount: likes.filter(like => like.TweetId === tweet.id).length,
           replyCount: replies.filter(reply => reply.TweetId === tweet.id).length
         }))
-        res.render('tweets', { tweets: newTweets, users: result.slice(0, 10) })
+        res.render('tweets', { currentUser, tweets: newTweets, users: result.slice(0, 10) })
       })
       .catch(err => next(err))
   },
@@ -98,7 +98,7 @@ const tweetController = {
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
         tweetINDIV.isLiked = tweetINDIV.Likes.map(like => Object.values(like)[1]).some(e => e === currentUser.id)
-        res.render('tweet', { tweet: tweetINDIV, users: result.slice(0, 10) })
+        res.render('tweet', { currentUser, tweet: tweetINDIV, users: result.slice(0, 10) })
       }
       )
   },
