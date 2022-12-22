@@ -1,10 +1,10 @@
 {{!-- 以下是 編輯個人頁面的modal --}}
-<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog"
+<div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog"
   aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content" style="width:634px; height:610px;border-radius:14px;">
 
-      <form action="" method="post" data-id="{{user.id}}" enctype="multipart/form-data" novalidate>
+      <form action="/api/users/{{user.id}}" data-id="{{user.id}}" enctype="multipart/form-data">
 
         <div class="modal-header justify-content-between" style="height:57px;" >
             <div class="d-flex">
@@ -32,9 +32,9 @@
 
           <div class="avatar-section">
             <img id="modal-avatar" src="{{user.avatar}}" alt="" style="height:140px; width:140px; border: 4px solid #FFFFFF;position:absolute;bottom:0;left:16px; z-index:1; border-radius:50%;-webkit-filter:brightness(.7);object-fit:cover">
-            <label class="change-avatar">
+            <label class="change-avatar" for="avatar">
               <img src="/images/icons/white-camera.png" alt="" style="height:20px; width:20px; position:absolute;bottom:60px;left:75px; z-index:1">
-              <input name="avatar" type="file" id="uploadAvatar">
+              <input name="avatar" type="file" id="avatar">
             </label>
           </div>
         </div>
@@ -48,7 +48,7 @@
           <div class="modal-intro-input-section">
             <label class="modal-intro-label" for="intro">自我介紹</label>
             <textarea class="modal-intro-input border-0" name="intro" style="font-size: 16px;outline: none;resize:none;"
-              id="intro" cols="65" rows="5"  maxlength="160" required>{{user.introduction}}</textarea>
+              id="introduction" cols="65" rows="5"  maxlength="160" required>{{user.introduction}}</textarea>
           </div>
         </div>
 
