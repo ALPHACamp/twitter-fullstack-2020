@@ -106,6 +106,6 @@ const tweetController = {
     } catch (err) {
       next(err)
     }
- }
-} 
+  }
+}
 module.exports = tweetController

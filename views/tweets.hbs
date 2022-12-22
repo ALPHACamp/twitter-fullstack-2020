@@ -14,7 +14,7 @@
       </a>
     </div>
     <div class="mt-4 mb-1">
-      <a href="/tweets" class="icon-setting leftbar-text">
+      <a href="/edit" class="icon-setting leftbar-text">
         <img class="setting-img" src="/images/setting@2x.png" alt="">
         <span><strong>設定</strong></span>
       </a>
@@ -43,14 +43,12 @@
       <img class="avatar-img m16-8-0-27 fl" src="/images/avatar@2x.png" alt="">
       <span>
         <textarea class="modal-input-tweets mt-3" type="description" name="description" id="description" cols="30"
-          rows="10" placeholder="有什麼新鮮事?" maxlength="140" required></textarea>
+          rows="10" placeholder="有什麼新鮮事?" maxlength="140"></textarea>
         <input type="hidden" name="UserId" value="{{tweets.User.id}}" />
       </span>
       <div>
-        <span>錯誤訊息</span>
         <button class="tweetbtn-s abs" type="submit">推文</button>
       </div>
-
     </form>
   </div>
   <div class="bottom-line-16 m-0 p-0"></div>
@@ -59,17 +57,15 @@
   {{!-- 推文 start--}}
   <div>
     <div class="fl">
-      <a href="/users/{{this.User.id}}/followings"><img class="ac-img" src="/images/img@2x.png" alt=""></a>
+      <img class="ac-img" src="/images/img@2x.png" alt="">
     </div>
-        <div class="tweet-flow-text fl" onclick="location.href='/tweets/{{this.id}}/replies';">
-      <a href="/users/{{this.User.id}}/followings" class="text-decoration-n">
-        <span class="twitterbox-name">{{this.User.name}}</span>
-      </a>
+    <div class="tweet-flow-text fl">
+      <span class="twitterbox-name">{{this.User.name}}</span>
       <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
       <p class="twitterbox-text">
         {{this.description}}
       </p>
-      <span class="twitterbox-time mx-40" data-bs-target="#replyBackdrop" data-bs-toggle="modal"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">13</span>
+      <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">13</span>
 
       {{!-- isLiked --}}
       {{#if isLiked}}
@@ -114,7 +110,7 @@
             <img class="avatar-img fl" src="/images/avatar@2x.png" alt="">
             <span>
               <textarea class="modal-input-tweets mt-3 mb-3" type="description" name="description" id="description"
-                cols="30" rows="10" placeholder="有什麼新鮮事?" maxlength="140" required></textarea>
+                cols="30" rows="10" placeholder="有什麼新鮮事?" maxlength="140"></textarea>
               <input type="hidden" name="UserId" value="{{tweets.User.id}}" />
             </span>
             <button class="tweetbtn-s abs" type="submit">推文</button>

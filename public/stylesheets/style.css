@@ -8,8 +8,19 @@ body {
   margin: 0 50px;
   padding: 0;
 
-  font-family: 'Noto Sans TC', serif;
+  /* font-family: 'Noto Sans TC', serif; */
   /* background-color: #FF6600; */
+}
+
+textarea {
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+p {
+  width: 100%;
+  /* border: 1px solid red; */
+  word-break: break-all;
 }
 
 .container {
@@ -775,6 +786,7 @@ svg {
   font-size: 20px;
   line-height: 28px;
 }
+
 /* top-follower */
 .top-follower-card {
   width: 273px;
@@ -839,12 +851,14 @@ a .nav-link:active,
   padding: 16px;
   text-align: center;
 }
+
 .follower-avatar {
   border-radius: 50%;
   transition: opacity 0.5s;
   opacity: 0;
   margin-right: 8px;
 }
+
 .follower-name {
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -853,6 +867,7 @@ a .nav-link:active,
   line-height: 26px;
   color: #171725;
 }
+
 .follower-account {
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -861,6 +876,7 @@ a .nav-link:active,
   line-height: 22px;
   color: #92929D;
 }
+
 .follow-button {
   width: 64px;
   height: 40px;
@@ -874,6 +890,7 @@ a .nav-link:active,
   line-height: 24px;
   color: #FF6600;
 }
+
 .unFollow-button {
   width: 96px;
   height: 40px;
@@ -886,14 +903,16 @@ a .nav-link:active,
   line-height: 24px;
   color: #FFFFFF;
 }
+
 .follow-tabs {
-  position:absolute;
-  left:332px;
-  height:52px;
-  width:639px;
-  top:74px;
-  color:#FF6600
+  position: absolute;
+  left: 332px;
+  height: 52px;
+  width: 639px;
+  top: 74px;
+  color: #FF6600
 }
+
 .viewUser-nav {
   position: absolute;
   width: 639px;
@@ -932,6 +951,7 @@ a .nav-link:active,
   color: #6C757D;
   margin: 0
 }
+
 /* replies */
 .dash-nav {
   font-weight: 700;
