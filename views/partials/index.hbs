@@ -10,11 +10,12 @@
   <div class="index-divider"></div>
 </div>
 
-<div class="index-tweets d-flex justify-content-center" >
+<div class="index-tweets d-flex justify-content-center">
   {{#each tweets}}
   {{!-- 這是modal-reply --}}
   {{>reply-modal user=this.User}}
-  <div class="d-flex each-tweet" style="padding: 16px 0;width: 639px;">
+  <div class="d-flex each-tweet" style="padding: 16px 0;width: 639px; cursor: pointer;"
+    onclick="window.open('/tweets/{{this.id}}/replies','_self');">
     <div id="tweet-icon">
       <a href="/users/{{this.UserId}}/tweets">
         <img src="{{this.User.avatar}}" alt="" width="50" height="50" class="rounded-circle" />
