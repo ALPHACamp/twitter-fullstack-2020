@@ -44,6 +44,7 @@ const tweetController = {
         nest: true,
         raw: true
       }), User.findAll({
+        where: { role: 'user' },
         include: [{ model: User, as: 'Followers' }]
       })])
       .then(async ([tweets, users]) => {

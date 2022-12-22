@@ -1,10 +1,10 @@
 {{!-- tab切換 --}}
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link {{#ifCond route " follower"}}active{{/ifCond}}" href="/users/{{user.id}}/follower">追蹤者</a>
+    <a class="nav-link {{#ifCond route 'follower'}}active{{/ifCond}}" href="/users/{{user.id}}/followers">追蹤者</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link {{#ifCond route " following"}}active{{/ifCond}}" href="/users/{{user.id}}/following">正在追蹤</a>
+    <a class="nav-link {{#ifCond route 'following'}}active{{/ifCond}}" href="/users/{{user.id}}/followings">正在追蹤</a>
   </li>
 </ul>
 
@@ -20,14 +20,16 @@
         <span class="tAR-name">{{this.Followers.name}}</span>
         <div class="btn-position">
           {{!-- {{#if isFollowed}} --}}
-          <form action="#" method="POST">
-            <button type="submit" class="following-btn">正在跟隨</button>
+
+          {{#if this.isFollowed}}
+          <form action="/followships/{{this.Followers.id}}?_method=DELETE" method="POST">
+            <button type="submit" name="id" value="{{this.Followers.id}}" class="following-btn">正在跟隨</button>
           </form>
-          {{!-- {{else}}
-          <form action="#" method="POST">
-            <button type="submit" class="follow-btn">跟隨</button>
+          {{else}}
+          <form action="/followships" method="POST">
+            <button type="submit" name="id" value="{{this.Followers.id}}" class="follow-btn">跟隨</button>
           </form>
-          {{/if}} --}}
+          {{/if}}
         </div>
         <p class="tweets-content">
           {{this.Followers.introduction}}
@@ -45,15 +47,15 @@
           class="user-avatar">
         <span class="tAR-name">{{this.Followings.name}}</span>
         <div class="btn-position">
-          {{!-- {{#if isFollowed}} --}}
-          {{!-- <form action="#" method="POST">
-            <button type="submit" class="following-btn">正在跟隨</button>
+          {{#if this.isFollowed}}
+          <form action="/followships/{{this.Followings.id}}?_method=DELETE" method="POST">
+            <button type="submit" name="id" value="{{this.Followings.id}}" class="following-btn">正在跟隨</button>
           </form>
-          {{else}}--}}
-          <form action="#" method="POST">
-            <button type="submit" class="follow-btn">跟隨</button>
+          {{else}}
+          <form action="/followships" method="POST">
+            <button type="submit" name="id" value="{{this.Followings.id}}" class="follow-btn">跟隨</button>
           </form>
-          {{!--{{/if}} --}}
+          {{/if}}
         </div>
         <p class="tweets-content">
           {{this.Followings.introduction}}

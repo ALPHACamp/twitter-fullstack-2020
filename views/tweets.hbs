@@ -4,7 +4,7 @@
     {{>left-sidebar route="homepage"}}
     {{!-- 首頁/tweets --}}
     <div class="col-6 top">
-      <div class="card">
+      <div>
         <div class="card-home">
           <div class=" home-header">
             首頁
@@ -13,7 +13,7 @@
             <img src="{{#if user.avatar}} {{user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
               class="user-avatar">
             <div class="">
-              <form action="/tweets" method="POST">
+              <form action="/tweets" method="POST" class="form">
                 <textarea style="resize:none;width:400px;" type="text" name="description" id="description"
                   placeholder="有什麼新鮮事？" oninput="checkLength(this)" required></textarea>
                 <div class="text-end">
@@ -67,7 +67,6 @@
                 </form>
                 {{/ifCond}}
                 {{this.likesCount}}
-
               </div>
             </div>
           </div>
@@ -86,7 +85,14 @@
     const inputValue = which.value.trim().length
     const limitWord = document.getElementById("limit-word")
     const limitCount = document.getElementById("limit-count")
+    const btn = document.querySelector('.btn-sml')
+    const form = document.querySelector('.form')
+
     limitCount.innerText = inputValue + "/140"
+
+    btn.addEventListener('click', function onSubmit(event) {
+      form.classList.add('was-validated')
+    })
     if (inputValue > maxChars) {
       limitWord.innerText = "字數不可超過140字"
       which.value = which.value.substring(0, maxChars);

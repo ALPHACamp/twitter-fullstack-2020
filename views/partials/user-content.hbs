@@ -1,12 +1,12 @@
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link {{#ifCond route "tweets"}}active{{/ifCond}}" href="/users/{{user.id}}/tweets">推文</a>
+    <a class="nav-link {{#ifCond route 'tweets'}}active{{/ifCond}}" href="/users/{{user.id}}/tweets">推文</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link {{#ifCond route "replies"}}active{{/ifCond}}" href="/users/{{user.id}}/replies">回覆</a>
+    <a class="nav-link {{#ifCond route 'replies'}}active{{/ifCond}}" href="/users/{{user.id}}/replies">回覆</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link {{#ifCond route "likes"}}active{{/ifCond}}" href="/users/{{user.id}}/likes">喜歡的內容</a>
+    <a class="nav-link {{#ifCond route 'likes'}}active{{/ifCond}}" href="/users/{{user.id}}/likes">喜歡的內容</a>
   </li>
 </ul>
 
@@ -16,7 +16,8 @@
   {{#each tweets}}
   <div class="tab-tweets">
     <div class="card-body tweets-box">
-      <img src="{{#if ../user.avatar}} {{../user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" alt="" class="user-avatar">
+      <img src="{{#if ../user.avatar}} {{../user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" alt=""
+        class="user-avatar">
       <div class="tweets-box-main">
         <div class="tweets-header">
           <span class="card-title tweets-name">{{../user.name}}</span>
@@ -27,7 +28,20 @@
         </div>
         <div class="tweets-icons">
           <a><img src="/images/basic/white/reply.svg">{{this.repliesCount}}</a>
-          <a><img src="/images/basic/white/like.svg">{{this.likesCount}}</a>
+          {{#ifCond this.isliked 0}}
+          <form action="/tweets/{{this.id}}/like" method="POST">
+            <label for="" style="display:inline-flex;">
+              <input type="image" style="width:14px" src="/images/basic/white/like.svg">
+            </label>
+          </form>
+          {{else}}
+          <form action="/tweets/{{this.id}}/unlike" method="POST">
+            <label for="" style="display:inline-flex;">
+              <input type="image" style="width:13.4px;text-align=center;" src="/images/basic/isliked.svg">
+            </label>
+          </form>
+          {{/ifCond}}
+          {{this.likesCount}}
         </div>
       </div>
     </div>
@@ -39,15 +53,16 @@
   {{#each replies}}
   <div class="tab-tweets">
     <div class="card-body tweets-box">
-      <img src="{{#if ../user.avatar}} {{../user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" alt="" class="user-avatar">
+      <img src="{{#if ../user.avatar}} {{../user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" alt=""
+        class="user-avatar">
       <div class="tweets-box-main">
         <div class="tweets-header">
           <span class="card-title tweets-name">{{../user.name}}</span>
           <span class="tweets-account"> @{{../user.account}} ．{{relativeTimeFromNow this.createdAt}}</span>
-              <p class="tweets-account">回覆
-              <span style="color: #FF6600;">@ {{this.Tweet.User.name}}
-              </span>
-            </p>
+          <p class="tweets-account">回覆
+            <span style="color: #FF6600;">@ {{this.Tweet.User.name}}
+            </span>
+          </p>
         </div>
         <div class="tweets-content">
           {{this.comment}}
@@ -62,11 +77,13 @@
   {{#each likes}}
   <div class="tab-tweets">
     <div class="card-body tweets-box">
-      <img src="{{#if this.Tweet.User.avatar}} {{this.Tweet.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" alt="" class="user-avatar">
+      <img src="{{#if this.Tweet.User.avatar}} {{this.Tweet.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
+        alt="" class="user-avatar">
       <div class="tweets-box-main">
         <div class="tweets-header">
           <span class="card-title tweets-name">{{this.Tweet.User.name}}</span>
-          <span class="tweets-account"> @{{this.Tweet.User.account}} ．{{relativeTimeFromNow this.Tweet.createdAt}}</span>
+          <span class="tweets-account"> @{{this.Tweet.User.account}} ．{{relativeTimeFromNow
+            this.Tweet.createdAt}}</span>
         </div>
         <div class="tweets-content">
           <a href="/tweet" id="toReply" class="card-text">
@@ -75,7 +92,20 @@
         </div>
         <div class="tweets-icons">
           <a><img src="/images/basic/white/reply.svg">{{this.Tweet.repliesCount}}</a>
-          <a><img src="/images/basic/white/like.svg">{{this.Tweet.likesCount}}</a>
+          {{#ifCond this.Tweet.isliked false}}
+          <form action="/tweets/{{this.Tweet.id}}/like" method="POST">
+            <label for="" style="display:inline-flex;">
+              <input type="image" style="width:14px" src="/images/basic/white/like.svg">
+            </label>
+          </form>
+          {{else}}
+          <form action="/tweets/{{this.Tweet.id}}/unlike" method="POST">
+            <label for="" style="display:inline-flex;">
+              <input type="image" style="width:13.4px;text-align=center;" src="/images/basic/isliked.svg">
+            </label>
+          </form>
+          {{/ifCond}}
+          {{this.Tweet.likesCount}}
         </div>
       </div>
     </div>

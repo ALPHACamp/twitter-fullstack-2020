@@ -238,6 +238,7 @@ border:none;
   /* left: 16px; */
   padding: 0;
   border-bottom: 1px solid #E6ECF0;
+  border-left: 1px solid #E6ECF0;
 }
 
 #toReply {

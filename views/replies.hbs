@@ -33,7 +33,22 @@
             <a href="#" data-bs-toggle="modal" data-bs-target="#reply-Modal" id="reply-button"><img
                 src="/images/basic/white/reply.svg"></a>
             {{!--like開關 --}}
-            <a href=""><img src="/images/basic/white/like.svg"></a>
+            {{#ifCond tweet.isliked 0}}
+            <form action="/tweets/{{tweet.id}}/like" method="POST">
+              <label for="" style="display:inline-flex;font-size:25px">
+                <input type="image" style="width:26px;" src="/images/basic/white/like.svg">
+                {{!-- style="width:14px" --}}
+              </label>
+            </form>
+            {{else}}
+            <form action="/tweets/{{tweet.id}}/unlike" method="POST">
+              <label for="" style="display:inline-flex;font-size:25px;">
+                <input type="image" style="width:26px;" src="/images/basic/isliked.svg">
+                {{!-- style="width:13.4px;text-align=center;" --}}
+              </label>
+            </form>
+            {{/ifCond}}
+            {{this.likesCount}}
           </div>
         </div>
         <div class="reply-box">
