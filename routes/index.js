@@ -32,7 +32,7 @@ router.put('/users/:id/setup_profile', authenticated, userController.putProfile)
 router.post('/tweets/:id/like', authenticated, tweetController.postLike)
 router.post('/tweets/:id/unlike', authenticated, tweetController.postUnlike)
 router.post('/tweets/:id/replies', authenticated, tweetController.postReply)
-router.get('/tweet', authenticated, tweetController.getTweet) // 待改回 /:id
+router.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
 router.get('/tweets', authenticated, tweetController.getIndex)
 router.post('/tweets', authenticated, tweetController.postTweet)
 

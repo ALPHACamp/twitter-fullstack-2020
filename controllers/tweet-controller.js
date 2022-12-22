@@ -73,7 +73,34 @@ const tweetController = {
     }
   },
   getTweet: (req, res, next) => {
-    res.render('tweet')
+    const currentUser = helpers.getUser(req)
+    return Promise.all([
+      Tweet.findByPk(req.params.id, {
+        include: [
+          User,
+          { model: Reply, include: User },
+          { model: Like }],
+        order: [[Reply, 'createdAt', 'desc']]
+      }),
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }],
+        where: { role: 'user', id: { [Op.ne]: currentUser.id } }
+      })
+    ])
+      .then(([tweet, users]) => {
+        if (!tweet) throw new Error("Tweet doesn't exist!")
+        const tweetINDIV = tweet.toJSON()
+        const result = users
+          .map(user => ({
+            ...user.toJSON(),
+            followerCount: user.Followers.length,
+            isFollowed: user.Followers.some(follower => follower.id === currentUser.id)
+          }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+        tweetINDIV.isLiked = tweetINDIV.Likes.map(like => Object.values(like)[1]).some(e => e === currentUser.id)
+        res.render('tweet', { tweet: tweetINDIV, users: result.slice(0, 10) })
+      }
+      )
   },
   postLike: (req, res, next) => {
     const TweetId = req.params.id
