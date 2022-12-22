@@ -1,6 +1,7 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+const path = require('path')
 const express = require('express')
 const helpers = require('./_helpers')
 const handlebars = require('express-handlebars')
@@ -18,6 +19,7 @@ const port = process.env.PORT || 3000
 app.engine('hbs', handlebars({ defaultLayout: 'main', extname: 'hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
+app.use('/upload', express.static(path.join(__dirname, 'upload')))
 app.use(express.static('public'))
 
 app.use(session({
