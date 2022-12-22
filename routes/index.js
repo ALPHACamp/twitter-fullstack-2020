@@ -6,6 +6,7 @@ const admin = require('./modules/admin')
 const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
 const followshipController = require('../controllers/followship-controller')
+const apiController = require('../controllers/apis/user-controller')
 
 const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
@@ -22,10 +23,8 @@ router.put('/settings', authenticated, userController.putSetting)
 
 router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 router.get('/users/:id/replies', authenticated, userController.getUserReplies)
-router.get('/users/followings', authenticated, userController.getUserFollowings)
-// 待改回/users/:id/followings
-router.get('/users/followers', authenticated, userController.getUserFollowers)
-// 待改回/users/:id/followers
+router.get('/users/:id/followings', authenticated, userController.getUserFollowings)
+router.get('/users/:id/followers', authenticated, userController.getUserFollowers)
 router.get('/users/:id/likes', authenticated, userController.getUserLikes)
 router.put('/users/:id/setup_profile', authenticated, userController.putProfile)
 
@@ -38,6 +37,9 @@ router.post('/tweets', authenticated, tweetController.postTweet)
 
 router.delete('/followships/:id', authenticated, followshipController.deleteFollowships)
 router.post('/followships/', authenticated, followshipController.postFollowships)
+
+router.get('api/users/:id', apiController.getUserInfo)
+router.post('api/users/:id', apiController.postUserInfo)
 
 router.get('/', (req, res) => res.redirect('/signin'))
 

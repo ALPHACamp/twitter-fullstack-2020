@@ -16,7 +16,7 @@ const authenticated = (req, res, next) => {
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role !== 'admin') {
     req.flash('error_messages', '無權限登入後台，已跳轉到 Alphitter 首頁。')
-    return res.redirect('/tweets')
+    return res.redirect('/admin/signin')
   }
   if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role === 'admin') {
     return next()
