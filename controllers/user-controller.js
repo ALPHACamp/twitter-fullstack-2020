@@ -161,7 +161,7 @@ const userController = {
             isFollowed: followingList.includes(follower.id)
           }
         })
-        const topFollowing = allUsers
+        const topFollowings = allUsers
           .sort((a, b) => {
             b.Followers.length - a.Followers.length
           })
