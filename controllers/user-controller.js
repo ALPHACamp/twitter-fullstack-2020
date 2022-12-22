@@ -28,6 +28,8 @@ const userController = {
           account,
           name,
           email,
+          avatar: 'https://i.imgur.com/cB7ZT9k.jpg',
+          cover: 'https://i.imgur.com/lswsX4e.png',
           password: hash
         })
         req.flash('success_messages', '成功註冊帳號！')
