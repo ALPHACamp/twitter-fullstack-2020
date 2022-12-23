@@ -1,7 +1,12 @@
 const db = require('../models')
 const User = db.User
 const Followship = db.Followship
+const Reply = db.Reply
+const Like = db.Like
+const Tweet = db.Tweet
 const imgur = require('imgur')
+const helpers = require('../_helpers')
+const services = require('../_services')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 imgur.setClientId(IMGUR_CLIENT_ID)
 

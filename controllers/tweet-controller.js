@@ -1,6 +1,7 @@
 
 const { assert } = require('chai')
 const db = require('../models')
+const Followship = db.Followship
 const Tweet = db.Tweet
 const User = db.User
 const Like = db.Like
