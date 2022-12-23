@@ -42,7 +42,7 @@ module.exports = {
       nest: true
     }) || []
     const data = tweets.map(t => ({
-      ...t.dataValues,
+      ...t.toJSON(),
       description: t.description.substring(0, 140),
       User: t.User.dataValues,
       user,
