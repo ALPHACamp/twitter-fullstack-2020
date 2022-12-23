@@ -8,8 +8,19 @@ body {
   margin: 0 50px;
   padding: 0;
 
-  font-family: 'Noto Sans TC', serif;
+  /* font-family: 'Noto Sans TC', serif; */
   /* background-color: #FF6600; */
+}
+
+textarea {
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+p {
+  width: 100%;
+  /* border: 1px solid red; */
+  word-break: break-all;
 }
 
 .container {
@@ -175,7 +186,7 @@ svg {
 }
 
 .selfeditavatar-img {
-  background: linear-gradient(0deg, rgb(52 52 52 / 70%), rgb(34 34 65 / 70%));
+  /* background: linear-gradient(0deg, rgb(52 52 52 / 70%), rgb(34 34 65 / 70%)); */
 }
 
 .avatar-img {
@@ -340,25 +351,25 @@ svg {
 }
 
 .left {
-  position: fixed;
+  position: absolute;
   width: 16%;
   height: 100%;
-  left: 130px;
+  left: 12%;
   /* top: 0px; */
 
   /* margin-right: 24px; */
-
+  position: fixed;
 
   /* background: #b33232; */
 }
 
 .right {
-  width: 273px;
-  height: 731px;
+  position: absolute;
+  width: 11%;
+  height: 100%;
   top: 0px;
-  right: 130px;
+  right: 15%;
   position: fixed;
-  background-color: #FAFAFB;
 }
 
 .right-follow-title {
@@ -641,8 +652,8 @@ svg {
   color: #696974;
 }
 
-.form-control {
-  color: #B5B5BE;
+.form-control-style {
+  color: black;
   border-radius: 0%;
   border-style: none;
   border-bottom: solid #657786;
@@ -775,6 +786,7 @@ svg {
   font-size: 20px;
   line-height: 28px;
 }
+
 /* top-follower */
 .top-follower-card {
   width: 273px;
@@ -785,16 +797,18 @@ svg {
   top: 16px;
   border: none
 }
+
 .top-follower-header {
   background: #FAFAFB;
-  height:74px
+  height: 74px
 }
+
 .top-follower-title {
   position: absolute;
-    width: 96px;
-    height: 26px;
-    left: 24px;
-    top: 24px;
+  width: 96px;
+  height: 26px;
+  left: 24px;
+  top: 24px;
   font-family: 'Noto Sans TC', sans-serif;
   font-style: normal;
   font-weight: 700;
@@ -831,24 +845,23 @@ a .nav-link:active,
 .form-control {
   border-bottom: none;
 }
+
 /* follower */
-.click-on{
-  color:#FF6600;
-  border-bottom:2px solid #FF6600;
-}
-.follower-list {
-  margin-left: 332px;
-}
 .follower-card {
-  padding: 16px;
+  width:639px;
+  left: 332px;
+  background: #FFFFFF;
   text-align: center;
+  border: 1px solid #E6ECF0;
 }
+
 .follower-avatar {
   border-radius: 50%;
   transition: opacity 0.5s;
   opacity: 0;
   margin-right: 8px;
 }
+
 .follower-name {
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -857,6 +870,7 @@ a .nav-link:active,
   line-height: 26px;
   color: #171725;
 }
+
 .follower-account {
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -865,6 +879,7 @@ a .nav-link:active,
   line-height: 22px;
   color: #92929D;
 }
+
 .follow-button {
   width: 64px;
   height: 40px;
@@ -878,11 +893,11 @@ a .nav-link:active,
   line-height: 24px;
   color: #FF6600;
 }
+
 .unFollow-button {
   width: 96px;
   height: 40px;
-  background-color: #FF6600;
-  border:none;
+  background: #FF6600;
   border-radius: 50px;
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -892,20 +907,31 @@ a .nav-link:active,
   color: #FFFFFF;
 }
 
-.viewUser-nav {
-  /* color/border */
-  border: 1px solid #FAFAFB;
-  text-align: center;
+.follow-tabs {
+  position: absolute;
+  left: 332px;
+  height: 52px;
+  width: 639px;
+  top: 74px;
+  color: #FF6600
 }
 
+.viewUser-nav {
+  position: absolute;
+    width: 639px;
+    height: 75px;
+    left: 332px;
+    background: #FFFFFF;
+    /* color/border */
+    border: 1px solid #E6ECF0;
+    text-align: center;
+}
 .viewUser {
   margin-left: 28px
 }
-
 .viewUser-icon {
   margin-right: 19px
 }
-
 .viewUser-name {
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -915,16 +941,16 @@ a .nav-link:active,
   color: #171725;
   margin: 0
 }
-
 .viewUser-tweet-number {
   font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 19px;
-  color: #6C757D;
-  margin: 0
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 19px;
+    color: #6C757D;
+    margin: 0
 }
+
 /* replies */
 .dash-nav {
   font-weight: 700;
@@ -943,6 +969,7 @@ a .nav-link:active,
   top: 80px;
   background: #B5B5BE;
 }
+
 /* edit-page */
 
 .edit-form-style {

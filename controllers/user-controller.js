@@ -1,12 +1,10 @@
-const bcrypt = require('bcryptjs')
 const db = require('../models')
-const helpers = require('../_helpers')
-const services = require('../_services')
-const Tweet = db.Tweet
 const User = db.User
-const Like = db.Like
-const Reply = db.Reply
 const Followship = db.Followship
+const imgur = require('imgur')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+imgur.setClientId(IMGUR_CLIENT_ID)
+
 const userController = {
   signUpPage: (req, res) => {
     res.render('signup')
@@ -76,27 +74,27 @@ const userController = {
   getTweets: async (req, res, next) => {
     // 個人頁面的推文抓取
     const user = helpers.getUser(req)
-    try{
+    try {
       const data = await services.getTweets(req)
       const topFollowings = await services.getTopUsers(req)
       res.render('tweet', {
-        tweets: data, 
+        tweets: data,
         user,
         topFollowings
       })
     }
-    catch(err){ next(err) }
+    catch (err) { next(err) }
   },
   getFollowings: async (req, res, next) => {
     const userId = req.params.id
     const followingList = helpers.getUser(req) && helpers.getUser(req).Followings.map(following => following.id)
-    try{
+    try {
       const user = await services.getUser(req)
       if (!user) throw new Error('該用戶不存在')
       const viewUserFollow = await Followship.findAll({
         where: { followerId: userId },
         order: [['createdAt', 'DESC']],
-        nest:true
+        nest: true
       })
       const followings = viewUserFollow.map(following => {
         return {
@@ -104,19 +102,19 @@ const userController = {
           isFollowed: followingList.includes(following.id)
         }
       })
-      const topFollowings = await services.getTopUsers (req)
+      const topFollowings = await services.getTopUsers(req)
       return res.render('following', {
         user: user.toJSON(),
         followings,
         topFollowings
       })
-    }  
-    catch(err){ next(err) }
+    }
+    catch (err) { next(err) }
   },
   getFollowers: async (req, res, next) => {
     const userId = req.params.id
     const followingList = helpers.getUser(req) && helpers.getUser(req).Followings.map(following => following.id)
-    try{
+    try {
       const user = await services.getUser(req)
       if (!user) throw new Error('該用戶不存在')
       const viewUserFollow = await Followship.findAll({
@@ -143,7 +141,7 @@ const userController = {
     const followingId = req.body.id
     if (Number(followingId) === Number(helpers.getUser(req).id)) {
       req.flash('error_messages', '不得追蹤自己')
-      return res.redirect(200,'back') 
+      return res.redirect(200, 'back')
     }
     Followship.create({
       followerId: helpers.getUser(req).id,
@@ -227,13 +225,13 @@ const userController = {
   getReplies: async (req, res, next) => {
     // 個人頁面的回覆抓取
     const UserId = req.params.id || ''
-    try{
+    try {
       const user = await services.getUser(req)
       if (!user) throw new Error('該用戶不存在')
       const replies = await Reply.findAll({
         where: { UserId },
         order: [['createdAt', 'DESC']],
-        include: [{ model: Tweet, include: User}],
+        include: [{ model: Tweet, include: User }],
         nest: true,
         raw: true
       }) || []
@@ -244,8 +242,64 @@ const userController = {
         topFollowings
       })
     }
-    catch(err){ next(err) }
+    catch (err) { next(err) }
+  },
+  selfeditUser: async (req, res, next) => {
+    try {
+      const UserId = helpers.getUser(req) && helpers.getUser(req).id
+      const { name, introduction } = req.body
+
+      if (!name) {
+        req.flash('error_messages', '名稱是必填！')
+        return res.redirect(`/users/${UserId}/tweets`)
+      }
+
+      if (introduction.length > 165 || name.length > 50) {
+        req.flash('error_messages', '字數超出上限！')
+        return res.redirect(`/users/${UserId}/tweets`)
+      }
+      const rawFiles = JSON.stringify(req.files)
+      const files = JSON.parse(rawFiles)
+      let imgurBackground
+      let imgurAvatar
+      if (Object.keys(files).length === 0) {
+        imgurBackground = 0
+        imgurAvatar = 0
+      } else if (
+        typeof files.background === 'undefined' &&
+        typeof files.avatar !== 'undefined'
+      ) {
+        imgurBackground = 0
+        imgurAvatar = await imgur.uploadFile(files.avatar[0].path)
+      } else if (
+        typeof files.background !== 'undefined' &&
+        typeof files.avatar === 'undefined'
+      ) {
+        imgurAvatar = 0
+        imgurBackground = await imgur.uploadFile(files.background[0].path)
+      } else {
+        imgurBackground = await imgur.uploadFile(files.background[0].path)
+        imgurAvatar = await imgur.uploadFile(files.background[0].path)
+      }
+
+      await User.update(
+        {
+          name,
+          introduction,
+          background: imgurBackground?.link || User.background,
+          avatar: imgurAvatar?.link || User.avatar
+        },
+        {
+          where: {
+            id: UserId
+          }
+        }
+      )
+      req.flash('success_messages', '個人資料修改成功！')
+      return res.redirect(`/users/${UserId}/tweets`)
+    } catch (err) {
+      next(err)
+    }
   }
 }
-
 module.exports = userController
