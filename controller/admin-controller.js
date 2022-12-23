@@ -23,7 +23,11 @@ const adminController = {
       raw: true
     })
       .then(tweets => {
-        res.render('admin/tweets', { tweets })
+        const data = tweets.map(r => ({
+          ...r,
+          description: r.description.substring(0, 50)
+        }))
+        res.render('admin/tweets', { tweets: data })
       })
       .catch(err => next(err))
   },
@@ -43,7 +47,6 @@ const adminController = {
       raw: true
     })
       .then(users => {
-        // console.log(users)
         res.render('admin/users', { users })
       })
       .catch(err => next(err))

@@ -24,11 +24,22 @@ const replyController = {
       include: { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
       nest: true,
       raw: true
+    }),
+    User.findAll({
+      where: { role: 'user' },
+      include: [{ model: User, as: 'Followers' }]
     })
     ])
-      .then(([tweet, replies]) =>
-        res.render('replies', { tweet, replies })
-      )
+      .then(([tweet, replies, users]) => {
+        const result = users
+          .map(user => ({
+            ...user.toJSON(),
+            followCount: user.Followers.length,
+            isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
+          }))
+          .sort((a, b) => b.followCount - a.followCount)
+        res.render('replies', { tweet, replies, result })
+      })
       .catch(err => next(err))
   },
   postReplies: (req, res, next) => {
