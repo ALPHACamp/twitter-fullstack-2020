@@ -1,51 +1,40 @@
+{{!-- 推薦跟隨 start--}}
 <div class="right">
-  <div class="right-follow-title bottom-line-2">
+  <div class="right-follow-title bottom-line-2 d-flex align-items-center">
     <p class="middle-title">推薦跟隨</p>
   </div>
-  {{!-- 推薦跟隨 start--}}
-  <div class="follow-flow fl">
-    <div>
-      <div class="fl">
-        <a href="">
-          <img class="ac-img-x" src="/images/img@2x.png" alt="">
-        </a>
+  <div class="follow-flow fl" >
+    {{#each topFollowings}}
+    <div class="d-flex align-items-center justify-content-between">
+      <div>
+        <div class="fl">
+          <a href="">
+            <img class="ac-img-x" src="{{this.avatar}}" alt="">
+          </a>
+        </div>
+        <div class="fl follow-flow-d pt-3">
+          <a href="" class="text-decoration-n">
+            <p class="follow-flow-account">{{this.name}}</p>
+          </a>
+          <p class="follow-flow-name">@{{this.account}}</p>
+        </div>
       </div>
-      <div class="fl follow-flow-d  pt-3">
-        <a href="" class="text-decoration-n">
-          <p class="follow-flow-account">Pizza Hut</p>
-        </a>
-        <p class="follow-flow-name">@pizzahut</p>
-      </div>
-      <div class="fl">
-        <button class="tweetbtn-M">
-          <a href="" class="text-decoration-n font-color-wh">正在跟隨</a>
-        </button>
-      </div>
-    </div>
-  </div>
-  {{!-- 推薦跟隨 end--}}
-
-  {{!-- 推薦跟隨 start--}}
-  <div class="follow-flow fl">
-    <div>
-      <div class="fl">
-        <a href="">
-          <img class="ac-img-x" src="/images/img@2x.png" alt="">
-        </a>
-      </div>
-      <div class="fl follow-flow-d pt-3">
-        <a href="" class="text-decoration-n">
-          <p class="follow-flow-account">Pizza Hut</p>
-        </a>
-        <p class="follow-flow-name">@pizzahut</p>
-      </div>
-      <div class="fl">
-        <button class="tweetbtn-M-follow">
-          <a href="" class="text-decoration-n font-color-or">跟隨</a>
-        </button>
+      <div class="me-3">
+        {{#if this.isFollowed}}
+        <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+        <button type="submit" class="unFollow-button"
+          style=" width: 96px;height: 40px;background-color: #FF6600; border:none; border-radius: 50px; font-family: 'Noto Sans TC';font-style: normal; font-weight: 400;font-size: 16px;line-height: 24px;color: #FFFFFF;">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="POST" style="display: contents;">
+          <input type="hidden" name="id" value="{{this.id}}" />
+        <button type="submit" class="btn follow-button"
+          style="width: 64px;height: 40px;background: #FFFFFF;border: 1px solid #FF6600;border-radius: 50px;font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 16px;line-height: 24px;color: #FF6600;">跟隨</button>
+        </form>
+        {{/if}}
       </div>
     </div>
+    {{/each}}
   </div>
   {{!-- 推薦跟隨 end--}}
-
 </div>

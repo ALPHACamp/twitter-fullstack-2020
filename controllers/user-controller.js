@@ -1,9 +1,11 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const helpers = require('../_helpers')
+const services = require('../_services')
 const Tweet = db.Tweet
 const User = db.User
 const Like = db.Like
+const Reply = db.Reply
 const Followship = db.Followship
 const userController = {
   signUpPage: (req, res) => {
@@ -71,121 +73,77 @@ const userController = {
       res.redirect('/signin')
     })
   },
-  getTweets: (req, res, next) => {
+  getTweets: async (req, res, next) => {
     // 個人頁面的推文抓取
-    return Promise.all([
-      Tweet.findAll({
+    const user = helpers.getUser(req)
+    try{
+      const data = await services.getTweets(req)
+      const topFollowings = await services.getTopUsers(req)
+      res.render('tweet', {
+        tweets: data, 
+        user,
+        topFollowings
+      })
+    }
+    catch(err){ next(err) }
+  },
+  getFollowings: async (req, res, next) => {
+    const userId = req.params.id
+    const followingList = helpers.getUser(req) && helpers.getUser(req).Followings.map(following => following.id)
+    try{
+      const user = await services.getUser(req)
+      if (!user) throw new Error('該用戶不存在')
+      const viewUserFollow = await Followship.findAll({
+        where: { followerId: userId },
         order: [['createdAt', 'DESC']],
-        where: { UserId: req.params.id },
-        include: [User, Like],
-        nest: true
-      }),
-      User.findAll({
-        where: { role: 'user' }
+        nest:true
       })
-    ])
-      .then(([tweets, userData]) => {
-        const user = helpers.getUser(req)
-        const data = tweets.map(t => ({
-          ...t.dataValues,
-          description: t.description.substring(0, 140),
-          User: t.User.dataValues,
-          user,
-          isLiked: t.Likes.some(f => f.UserId === user.id)
-        }))
-        res.render('tweet', {
-          tweets: data, user
-        })
+      const followings = viewUserFollow.map(following => {
+        return {
+          ...following.toJSON(),
+          isFollowed: followingList.includes(following.id)
+        }
       })
-      .catch(err => next(err))
+      const topFollowings = await services.getTopUsers (req)
+      return res.render('following', {
+        user: user.toJSON(),
+        followings,
+        topFollowings
+      })
+    }  
+    catch(err){ next(err) }
   },
-  getFollowings: (req, res, next) => {
+  getFollowers: async (req, res, next) => {
     const userId = req.params.id
     const followingList = helpers.getUser(req) && helpers.getUser(req).Followings.map(following => following.id)
-    Promise.all([
-      User.findByPk(userId, {
-        include: [{ model: User, as: 'Followings' }],
-        nest: true
-      }),
-      User.findAll({
-        include: [{ model: User, as: 'Followers' }],
-        nest: true
-      })
-    ])
-      .then(([viewUser, allUsers]) => {
-        if (!viewUser) throw new Error('該用戶不存在')
-        const followings = viewUser.Followings.map(following => {
-          return {
-            ...following.toJSON(),
-            isFollowed: followingList.includes(following.id)
-          }
-        })
-        const topFollowings = allUsers
-          .sort((a, b) => {
-            b.Followers.length - a.Followers.length
-          })
-          .slice(0, 10)
-          .map(topFollowing => {
-            return {
-              ...topFollowing.toJSON(),
-              isFollowed: followingList.includes(topFollowing.id)
-            }
-          })
-        return res.render('followship', {
-          user: viewUser.toJSON(),
-          followings,
-          topFollowings,
-          route: 'following'
-        })
-      })
-      .catch(err => next(err))
-  },
-  getFollowers: (req, res, next) => {
-    const userId = req.params.id
-    const followingList = helpers.getUser(req) && helpers.getUser(req).Followings.map(following => following.id)
-    Promise.all([
-      User.findByPk(userId, {
-        include: [{ model: User, as: 'Followers' }],
-        nest: true
-      }),
-      User.findAll({
-        include: [{ model: User, as: 'Followers' }],
+    try{
+      const user = await services.getUser(req)
+      if (!user) throw new Error('該用戶不存在')
+      const viewUserFollow = await Followship.findAll({
+        where: { followingId: userId },
+        order: [['createdAt', 'DESC']],
         nest: true
       })
-    ])
-      .then(([viewUser, allUsers]) => {
-        if (!viewUser) throw new Error('該用戶不存在')
-        const followings = viewUser.Followers.map(follower => {
-          return {
-            ...follower.toJSON(),
-            isFollowed: followingList.includes(follower.id)
-          }
-        })
-        const topFollowing = allUsers
-          .sort((a, b) => {
-            b.Followers.length - a.Followers.length
-          })
-          .slice(0, 10)
-          .map(topFollowing => {
-            return {
-              ...topFollowing.toJSON(),
-              isFollowed: followingList.includes(topFollowing.id)
-            }
-          })
-        return res.render('followship', {
-          user: viewUser.toJSON(),
-          followings,
-          topFollowings,
-          route: 'follower'
-        })
+      const followings = viewUserFollow.map(follower => {
+        return {
+          ...follower.toJSON(),
+          isFollowed: followingList.includes(follower.id)
+        }
       })
-      .catch(err => next(err))
+      const topFollowings = await services.getTopUsers(req)
+      return res.render('follower', {
+        user: user.toJSON(),
+        followings,
+        topFollowings
+      })
+    }
+    catch (err) { next(err) }
   },
   addFollowship: (req, res, next) => {
     const followingId = req.body.id
     if (Number(followingId) === Number(helpers.getUser(req).id)) {
       req.flash('error_messages', '不得追蹤自己')
-      return res.redirect(200, 'back')
+      return res.redirect(200,'back') 
     }
     Followship.create({
       followerId: helpers.getUser(req).id,
@@ -265,6 +223,28 @@ const userController = {
             .catch(err => next(err))
         }
       })
+  },
+  getReplies: async (req, res, next) => {
+    // 個人頁面的回覆抓取
+    const UserId = req.params.id || ''
+    try{
+      const user = await services.getUser(req)
+      if (!user) throw new Error('該用戶不存在')
+      const replies = await Reply.findAll({
+        where: { UserId },
+        order: [['createdAt', 'DESC']],
+        include: [{ model: Tweet, include: User}],
+        nest: true,
+        raw: true
+      }) || []
+      const topFollowings = await services.getTopUsers(req)
+      res.render('reply', {
+        user: user.toJSON(),
+        replies,
+        topFollowings
+      })
+    }
+    catch(err){ next(err) }
   }
 }
 

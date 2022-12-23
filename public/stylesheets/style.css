@@ -340,25 +340,25 @@ svg {
 }
 
 .left {
-  position: absolute;
+  position: fixed;
   width: 16%;
   height: 100%;
-  left: 12%;
+  left: 130px;
   /* top: 0px; */
 
   /* margin-right: 24px; */
-  position: fixed;
+
 
   /* background: #b33232; */
 }
 
 .right {
-  position: absolute;
-  width: 11%;
-  height: 100%;
+  width: 273px;
+  height: 731px;
   top: 0px;
-  right: 15%;
+  right: 130px;
   position: fixed;
+  background-color: #FAFAFB;
 }
 
 .right-follow-title {
@@ -641,8 +641,8 @@ svg {
   color: #696974;
 }
 
-.form-control-style {
-  color: black;
+.form-control {
+  color: #B5B5BE;
   border-radius: 0%;
   border-style: none;
   border-bottom: solid #657786;
@@ -785,18 +785,16 @@ svg {
   top: 16px;
   border: none
 }
-
 .top-follower-header {
   background: #FAFAFB;
-  height: 74px
+  height:74px
 }
-
 .top-follower-title {
   position: absolute;
-  width: 96px;
-  height: 26px;
-  left: 24px;
-  top: 24px;
+    width: 96px;
+    height: 26px;
+    left: 24px;
+    top: 24px;
   font-family: 'Noto Sans TC', sans-serif;
   font-style: normal;
   font-weight: 700;
@@ -833,8 +831,14 @@ a .nav-link:active,
 .form-control {
   border-bottom: none;
 }
-
 /* follower */
+.click-on{
+  color:#FF6600;
+  border-bottom:2px solid #FF6600;
+}
+.follower-list {
+  margin-left: 332px;
+}
 .follower-card {
   padding: 16px;
   text-align: center;
@@ -877,7 +881,8 @@ a .nav-link:active,
 .unFollow-button {
   width: 96px;
   height: 40px;
-  background: #FF6600;
+  background-color: #FF6600;
+  border:none;
   border-radius: 50px;
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -886,22 +891,10 @@ a .nav-link:active,
   line-height: 24px;
   color: #FFFFFF;
 }
-.follow-tabs {
-  position:absolute;
-  left:332px;
-  height:52px;
-  width:639px;
-  top:74px;
-  color:#FF6600
-}
+
 .viewUser-nav {
-  position: absolute;
-  width: 639px;
-  height: 75px;
-  left: 332px;
-  background: #FFFFFF;
   /* color/border */
-  border: 1px solid #E6ECF0;
+  border: 1px solid #FAFAFB;
   text-align: center;
 }
 
@@ -950,7 +943,6 @@ a .nav-link:active,
   top: 80px;
   background: #B5B5BE;
 }
-
 /* edit-page */
 
 .edit-form-style {

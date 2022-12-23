@@ -1,66 +1,5 @@
 {{> leftbar}}
-
-<div class="content-fluid middle right-line-2 left-line-2">
-  <div class="row">
-    <div>
-      <div class="fl wid-12">
-        <a href="/tweets">
-          <img class="backarrow-img" src="/images/back_arrow@2x.png" alt="">
-        </a>
-      </div>
-      <div class="col fl mt-2 wid-80">
-        <span class="selftwitterbox-name">User1</span>
-        <p class="twitterbox-time">25推文</p>
-      </div>
-    </div>
-    <div>
-      <img class="avatarbg-img" src="/images/unsplash_cO9_joZ1FdA@2x.png" alt="">
-    </div>
-    <div class="rel">
-      <a class="float-start" href="">
-        <img class="selfavatar-img abs " src="/images/Photo@2x.png" alt="">
-      </a>
-    </div>
-    <div class="wid-100">
-      <button class="tweetbtn-ol m-3 float-end">
-        <a href="" class="text-decoration-n font-color-or" data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop-self">編輯個人資料</a>
-      </button>
-    </div>
-    <div class="col fl mt-2 wid-80 ms-3">
-      <div>
-        <span class="selftwitterbox-name">User1</span>
-        <p class="twitterbox-time">@User1</p>
-      </div>
-      <div>
-        <p class="twitterbox-time text-dark">
-          Saepe esse error quas sed aperiam ea. Voluptatem voluptatibus nihil ut officia sed.
-        </p>
-      </div>
-      <div>
-        <span class="twitterbox-time text-dark">34個
-          <a class="text-decoration-n following-color" href="">跟隨中</a>
-        </span>
-        <span class="twitterbox-time text-dark">59位
-          <a class="text-decoration-n follow-color" href="">跟隨者</a>
-        </span>
-      </div>
-      <div class="selftab border-none bottom-line-2">
-        <ul class="nav mb-4">
-          <li class="nav-item">
-            <a class="nav-link active{{#ifCond route 'tweet'}}active{{/ifCond}}" href="">推文</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{#ifCond route ''}}active{{/ifCond}}" href="">回復</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{#ifCond route ''}}active{{/ifCond}}" href="">喜歡的內容</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
+{{> user-profile}}
   {{#each tweets}}
   {{!-- 推文 start--}}
   <div>
@@ -77,7 +16,7 @@
       </p>
       <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">13</span>
 
-      {{#if isLiked}}
+      {{#if this.isLiked}}
       <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
         <span class="twitterbox-time">
           <button type="submit" class="btn">
