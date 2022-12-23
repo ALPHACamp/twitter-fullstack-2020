@@ -206,7 +206,7 @@ const userController = {
   getUserFollowers: (req, res, next) => {
     res.render('followers')
   },
-  putProfile: (req, res, next) => {
+  postUserInfo: (req, res, next) => {
   }
 }
 
