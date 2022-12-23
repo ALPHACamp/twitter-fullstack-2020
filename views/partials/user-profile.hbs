@@ -7,16 +7,21 @@
         </a>
       </div>
       <div class="col fl mt-2 wid-80">
+<<<<<<< HEAD
         <span class="selftwitterbox-name">{{user.account}}</span>
         <p class="twitterbox-time">{{twitterslength}}推文</p>
+=======
+        <span class="selftwitterbox-name">{{user.name}}</span>
+        <p class="twitterbox-time">{{tweetsLength}}推文</p>
+>>>>>>> caaecd43fa318d4ab8909d872693b89d7e06d385
       </div>
     </div>
     <div>
-      <img class="avatarbg-img" src="/images/unsplash_cO9_joZ1FdA@2x.png" alt="">
+      <img class="avatarbg-img" src="{{user.background}}" alt="">
     </div>
     <div class="rel">
       <a class="float-start" href="">
-        <img class="selfavatar-img abs " src="/images/Photo@2x.png" alt="">
+        <img class="selfavatar-img abs " style="border-radius: 50%;" src="{{user.avatar}}" alt="">
       </a>
     </div>
     <div class="wid-100">
@@ -27,32 +32,47 @@
     </div>
     <div class="col fl mt-2 wid-80 ms-3">
       <div>
-        <span class="selftwitterbox-name">User1</span>
-        <p class="twitterbox-time">@User1</p>
+        <span class="selftwitterbox-name">{{user.name}}</span>
+        <p class="twitterbox-time">@{{user.account}}</p>
       </div>
       <div>
         <p class="twitterbox-time text-dark">
-          Saepe esse error quas sed aperiam ea. Voluptatem voluptatibus nihil ut officia sed.
+          {{user.introduction}}
         </p>
       </div>
       <div>
+<<<<<<< HEAD
         <span class="twitterbox-time text-dark">34個
           <a class="text-decoration-n following-color" href="/users/{{user.id}}/followings">跟隨中</a>
         </span>
         <span class="twitterbox-time text-dark">59位
           <a class="text-decoration-n follow-color" href="/users/{{user.id}}/followers">跟隨者</a>
+=======
+        <span class="twitterbox-time text-dark">{{user.Followers.length}}個
+          <a class="text-decoration-n following-color" href="users/{{user.id}}/followings">跟隨中</a>
+        </span>
+        <span class="twitterbox-time text-dark">{{user.Followings.length}}位
+          <a class="text-decoration-n follow-color" href="users/{{user.id}}//followers">跟隨者</a>
+>>>>>>> caaecd43fa318d4ab8909d872693b89d7e06d385
         </span>
       </div>
       <div class="selftab border-none bottom-line-2">
         <ul class="nav mb-4">
           <li class="nav-item">
+<<<<<<< HEAD
             <a class="nav-link active{{#ifCond route 'tweets'}}active{{/ifCond}}" href="/users/:id/tweets">推文</a>
           </li>
           <li class="nav-item">
             <a class="nav-link {{#ifCond route 'reply'}}active{{/ifCond}}" href="/users/{{user.id}}/reply">回覆</a>
+=======
+            <a class="nav-link active{{#ifCond route 'tweet'}}active{{/ifCond}}" href="/users/{{user.id}}/tweets">推文</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{#ifCond route ''}}active{{/ifCond}}" href="">喜歡的內容</a>
+            <a class="nav-link {{#ifCond route ''}}active{{/ifCond}}" href="/users/{{user.id}}/replies">回復</a>
+>>>>>>> caaecd43fa318d4ab8909d872693b89d7e06d385
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{#ifCond route ''}}active{{/ifCond}}" href="/users/{{user.id}}/likes">喜歡的內容</a>
           </li>
         </ul>
       </div>

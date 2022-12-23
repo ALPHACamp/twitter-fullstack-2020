@@ -1,5 +1,8 @@
 {{> leftbar}}
+<<<<<<< HEAD
 
+=======
+>>>>>>> caaecd43fa318d4ab8909d872693b89d7e06d385
 <div class="middle right-line-2 left-line-2">
   <div>
     <p class="middle-title">首頁</p>
@@ -18,15 +21,18 @@
     </form>
   </div>
   <div class="bottom-line-16 m-0 p-0"></div>
-
+ 
   {{#each tweets}}
   {{!-- 推文 start--}}
   <div>
     <div class="fl">
-      <img class="ac-img" src="/images/img@2x.png" alt="">
+      <img class="ac-img" src="{{this.User.avatar}}" alt="">
     </div>
+    <div class="tweet-flow-text fl" onclick="location.href='/tweets/{{this.id}}/replies';">
     <div class="tweet-flow-text fl">
+      <a href="/users/{{this.User.id}}/tweets" class="text-decoration-n">
       <span class="twitterbox-name">{{this.User.name}}</span>
+      </a>
       <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
       <p class="twitterbox-text">
         {{this.description}}
@@ -55,6 +61,7 @@
       {{/if}}
 
       <div class="bottom-line-f"></div>
+    </div>
     </div>
   </div>
   {{!-- 推文 end--}}
