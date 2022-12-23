@@ -9,13 +9,13 @@
         {{#each users}}
         <div class="col-3 user-card-main">
           <div class="user-border">
-            <div class="user-border-img">
-              <div class="user-border-avatar">
+            <div class="user-border-img" style="background-image: url({{#if this.cover}} {{this.cover}} {{else}}/images/modal-cover.png{{/if}});">
+              <div class="user-border-avatar" style="background-image: url({{#if this.avatar}} {{this.avatar}} {{else}}/images/icon/User Photo.png{{/if}});">
               </div>
             </div>
-            <div class="text-center">
-              <p class="mb-0">John Doe</p>
-              <p class="mb-1">@heyjohn</p>
+            <div class="text-center" style="padding-top: 32px">
+              <p class="mb-0">{{this.name}}</p>
+              <p class="mb-1">@{{this.account}}</p>
               <div class="text-center-info">
                 <img src="/images/basic/black/post.svg">
                 <p class="mb-0" style="font-family: Montserrat;">{{this.tweetsCount}}</p>
@@ -24,10 +24,10 @@
               </div>
               <div class="text-center-follow">
                 <p class="mb-0">
-                  34個<span>跟隨中</span>
+                  {{this.followingCount}}個<span>跟隨中</span>
                 </p>
                 <p class="mb-0">
-                  59 位<span>跟隨者</span>
+                  {{this.followerCount}} 位<span>跟隨者</span>
                 </p>
               </div>
             </div>

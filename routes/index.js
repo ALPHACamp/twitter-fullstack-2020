@@ -31,18 +31,16 @@ router.post('/signup', userController.signUp)
 router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 router.get('/users/:id/replies', authenticated, userController.getUserReplies)
 router.get('/users/:id/likes', authenticated, userController.getUserLikes)
-router.get('/users/:id/followings', userController.getUserFollowing)
-router.get('/users/:id/followers', userController.getUserFollower)
+router.get('/users/:id/followings', authenticated, userController.getUserFollowing)
+router.get('/users/:id/followers', authenticated, userController.getUserFollower)
 
-router.get('/api/users/:id', apiController.getUserAPI)
-router.post('/api/users/:id', apiController.postUserAPI)
-
-// router.get('/api/users/:id', userController.getUserAPI)
-// router.post('/api/users/:id', userController.postUserAPI)
+// API使用者帳戶資訊
+router.get('/api/users/:id', authenticated, apiController.getUserAPI)
+router.post('/api/users/:id', authenticated, apiController.postUserAPI)
 
 //使用者帳戶資訊，驗證不要忘記阻擋非user
-router.get('/users/:id/edit', userController.getSetting)
-router.put('/users/:id', userController.putSetting)
+router.get('/users/:id/edit', authenticated, userController.getSetting)
+router.put('/users/:id', authenticated, userController.putSetting)
 
 //reply
 router.get('/tweets/:id/replies', authenticated, replyController.getReplies)
@@ -57,8 +55,8 @@ router.post('/followships', authenticated, userController.addFollowing)
 router.delete('/followships/:id', authenticated, userController.removeFollowing)
 
 //like
-router.post('/tweets/:id/unlike', tweetController.removeLike)
-router.post('/tweets/:id/like', tweetController.addLike)
+router.post('/tweets/:id/unlike', authenticated, tweetController.removeLike)
+router.post('/tweets/:id/like', authenticated, tweetController.addLike)
 
 //fallback
 router.get('/', (req, res) => { res.redirect('/tweets') })
