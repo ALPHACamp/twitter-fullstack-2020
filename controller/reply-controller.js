@@ -40,10 +40,10 @@ const replyController = {
 
     if (comment.length <= 0) {
       req.flash('error_messages', '回覆不可以空白!')
-      return res.redirect('back')
+      res.redirect('back')
     } else if (comment.length > 50) {
       req.flash('error_messages', '回覆不可超過50字!')
-      return res.redirect('back')
+      res.redirect('back')
     } else {
       return Reply.create({
         UserId,
