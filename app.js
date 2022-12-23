@@ -32,9 +32,6 @@ app.use((req, res, next) => {
 })
 
 const db = require('./models')
-// setting static file
-app.use(express.static('public'))
-
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
