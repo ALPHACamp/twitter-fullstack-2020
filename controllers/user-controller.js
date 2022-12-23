@@ -5,6 +5,10 @@ const Tweet = db.Tweet
 const User = db.User
 const Like = db.Like
 const Followship = db.Followship
+const imgur = require('imgur')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+imgur.setClientId(IMGUR_CLIENT_ID)
+
 const userController = {
   signUpPage: (req, res) => {
     res.render('signup')
@@ -45,7 +49,9 @@ const userController = {
             account,
             name,
             email,
-            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
+            avatar: '/images/Photo@2x.png',
+            background: '/images/background@2x.png'
           })
             .then(() => {
               req.flash('success_messages', '成功註冊帳號！')
@@ -87,14 +93,15 @@ const userController = {
       .then(([tweets, userData]) => {
         const user = helpers.getUser(req)
         const data = tweets.map(t => ({
-          ...t.dataValues,
+          ...t.toJSON(),
           description: t.description.substring(0, 140),
           User: t.User.dataValues,
           user,
           isLiked: t.Likes.some(f => f.UserId === user.id)
         }))
+        const tweetsLength = data.length
         res.render('tweet', {
-          tweets: data, user
+          tweets: data, user, tweetsLength
         })
       })
       .catch(err => next(err))
@@ -215,7 +222,7 @@ const userController = {
   editUserPage: (req, res, next) => {
     return User.findByPk(helpers.getUser(req).id, { raw: true })
       .then(user => {
-        if (!user) throw new Error("用戶不存在")
+        if (!user) throw new Error('用戶不存在')
         res.render('edit', { user })
       })
       .catch(err => next(err))
@@ -265,6 +272,63 @@ const userController = {
             .catch(err => next(err))
         }
       })
+  },
+  selfeditUser: async (req, res, next) => {
+    try {
+      const UserId = helpers.getUser(req) && helpers.getUser(req).id
+      const { name, introduction } = req.body
+
+      if (!name) {
+        req.flash('error_messages', '名稱是必填！')
+        return res.redirect(`/users/${UserId}/tweets`)
+      }
+
+      if (introduction.length > 165 || name.length > 50) {
+        req.flash('error_messages', '字數超出上限！')
+        return res.redirect(`/users/${UserId}/tweets`)
+      }
+      const rawFiles = JSON.stringify(req.files)
+      const files = JSON.parse(rawFiles)
+      let imgurBackground
+      let imgurAvatar
+      if (Object.keys(files).length === 0) {
+        imgurBackground = 0
+        imgurAvatar = 0
+      } else if (
+        typeof files.background === 'undefined' &&
+        typeof files.avatar !== 'undefined'
+      ) {
+        imgurBackground = 0
+        imgurAvatar = await imgur.uploadFile(files.avatar[0].path)
+      } else if (
+        typeof files.background !== 'undefined' &&
+        typeof files.avatar === 'undefined'
+      ) {
+        imgurAvatar = 0
+        imgurBackground = await imgur.uploadFile(files.background[0].path)
+      } else {
+        imgurBackground = await imgur.uploadFile(files.background[0].path)
+        imgurAvatar = await imgur.uploadFile(files.background[0].path)
+      }
+
+      await User.update(
+        {
+          name,
+          introduction,
+          background: imgurBackground?.link || User.background,
+          avatar: imgurAvatar?.link || User.avatar
+        },
+        {
+          where: {
+            id: UserId
+          }
+        }
+      )
+      req.flash('success_messages', '個人資料修改成功！')
+      return res.redirect(`/users/${UserId}/tweets`)
+    } catch (err) {
+      next(err)
+    }
   }
 }
 

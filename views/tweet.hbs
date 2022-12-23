@@ -44,15 +44,15 @@
       </div>
       <div class="col fl mt-2 wid-80">
         <span class="selftwitterbox-name">User1</span>
-        <p class="twitterbox-time">25推文</p>
+        <p class="twitterbox-time">{{tweetsLength}}推文</p>
       </div>
     </div>
     <div>
-      <img class="avatarbg-img" src="/images/unsplash_cO9_joZ1FdA@2x.png" alt="">
+      <img class="avatarbg-img" src="{{user.background}}" alt="">
     </div>
     <div class="rel">
       <a class="float-start" href="">
-        <img class="selfavatar-img abs " src="/images/Photo@2x.png" alt="">
+        <img class="selfavatar-img abs " style="border-radius: 50%;" src="{{user.avatar}}" alt="">
       </a>
     </div>
     <div class="wid-100">
@@ -63,19 +63,19 @@
     </div>
     <div class="col fl mt-2 wid-80 ms-3">
       <div>
-        <span class="selftwitterbox-name">User1</span>
-        <p class="twitterbox-time">@User1</p>
+        <span class="selftwitterbox-name">{{user.name}}</span>
+        <p class="twitterbox-time">@{{user.account}}</p>
       </div>
       <div>
         <p class="twitterbox-time text-dark">
-          Saepe esse error quas sed aperiam ea. Voluptatem voluptatibus nihil ut officia sed.
+          {{user.introduction}}
         </p>
       </div>
       <div>
-        <span class="twitterbox-time text-dark">34個
+        <span class="twitterbox-time text-dark">{{user.Followers.length}}個
           <a class="text-decoration-n following-color" href="">跟隨中</a>
         </span>
-        <span class="twitterbox-time text-dark">59位
+        <span class="twitterbox-time text-dark">{{user.Followings.length}}位
           <a class="text-decoration-n follow-color" href="">跟隨者</a>
         </span>
       </div>
@@ -143,13 +143,13 @@
         <div class="modal-header">
           <div class=" fl">
             <button type="button font-color-or" class="btn-close btn-close-re" data-bs-dismiss="modal"
-              aria-label="Close"></button>
+              aria-label="Close" onclick="javascript:history.back()"></button>
           </div>
         </div>
         <form action="/tweets/{{tweets.User.id}}" method="POST"></form>
         <div class="modal-body">
           <form action="/tweets" method="POST">
-            <img class="avatar-img fl" src="/images/avatar@2x.png" alt="">
+            <img class="avatar-img fl" src="{{user.avatar}}" alt="">
             <span>
               <textarea class="modal-input-tweets mt-3 tweetOne" type="description" name="description" id="description"
                 cols="30" rows="10" placeholder="有什麼新鮮事?" maxlength="140"></textarea>
@@ -170,40 +170,53 @@
     <div class="modal-dialog">
       <div class="modal-content height-61">
         <div class="modal-header rel">
-          <form action="" method="POST">
+          <form action="/users/{{ user.id }}/edit" method="POST" enctype="multipart/form-data">
             <button type="button font-color-or abs" class="btn-close btn-close-re" data-bs-dismiss="modal"
               aria-label="Close"></button>
-            <button class="selftweetbtn-s abs  flow-end" type="submit">儲存</button>
+            <button class="selftweetbtn-s abs flow-end" type="submit">儲存</button>
         </div>
+
         <div class="selfeditavatar-img">
-          <img class="selfavatarbg-img" src="/images/unsplash_cO9_joZ1FdA@2x.png" alt="">
-          <a href="">
-            <img class="selcamera-img selfcamera-mountain-img abs " src="/images/camera.png" alt="">
-          </a>
-          <a href="">
-            <img class="selcamera-img selfclose-mountain-img abs " src="/images/btn_close_wh@2x.png" alt="">
-          </a>
+          <div class="form-row">
+            <img id="bannerImg" src="{{user.background}}" alt="background"
+              style="width:632px; margin-left:0px; height: 200px;margin-top:0px ;position:relative">
+            <label class="form-label" for="background">
+              <img style="position: absolute;left:269px; top:143px; z-index:3;width:35px;" src="/images/camera.png"
+                alt="upload">
+              <img style="position: absolute;left:366px; top:144px; z-index:3;width:28px;"
+                src="/images/btn_close_wh@2x.png" alt="">
+            </label>
+            <input class="form-control" type="file" class="form-control-file" id="background" name="background"
+              style="display: none;">
+          </div>
+
+          {{!-- 頭像 --}}
+          <div class="form-row">
+            <img id="avatarImg" src="{{user.avatar}}" alt="avatar"
+              style="border: 4px solid white; height: 150px; width: 150px; margin: -110px 0 0 45px; border-radius: 50%; position: relative;">
+            <label class="form-label" for="avatar">
+              <img style="position: absolute;left:101px; top:225px; z-index:3;width:35px;" src="/images/camera.png"
+                alt="upload">
+            </label>
+            <input class="form-control" type="file" class="form-control-file" id="avatar" name="avatar"
+              style="display: none;">
+          </div>
+          <div class="form-name p-2" style="margin-top: 20px;">
+            <p class="selfname">名稱</p>
+            <textarea class="form-control selfbg" placeholder="" name="name" id="name" maxlength="50"
+              style="padding: 15px 0 0 0;" value="{{user.name}}">{{user.name}}</textarea>
+          </div>
+          <div class="form-intro p-2">
+            <p class="selfname">自我介紹</p>
+            <textarea class="form-control selfintro" placeholder="" name="introduction" id="introduction"
+              maxlength="160" style="padding: 15px 0 0 0;"
+              value="{{user.introduction}}">{{user.introduction}}</textarea>
+          </div>
         </div>
-        <div class="rel">
-          <a class="" href="">
-            <img class="selfavatar-op-img abs " src="/images/Photo@2x.png" alt="">
-            <div class="selfavatar-op"></div>
-            <img class="selcamera-img selfcamera-re-img abs " src="/images/camera.png" alt="">
-          </a>
-        </div>
-        <div class="form-name p-2">
-          <p class="selfname">名稱</p>
-          <textarea class="form-control selfbg" placeholder="" id="floatingTextarea"></textarea>
-        </div>
-        <div class="form-intro p-2">
-          <p class="selfname">自我介紹</p>
-          <textarea class="form-control selfintro" placeholder="" id="floatingTextarea"></textarea>
-        </div>
+        </form>
       </div>
-      </form>
     </div>
   </div>
-</div>
 </div>
 </div>
 

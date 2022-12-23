@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV !== 'production') {
-	require('dotenv').config()
+  require('dotenv').config()
 }
-
+const path = require('path')
 const express = require('express')
 const handlebars = require('express-handlebars')
 const helpers = require('./_helpers')
@@ -24,11 +24,12 @@ app.use(methodOverride('_method'))
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
+app.use('/upload', express.static(path.join(__dirname, 'upload')))
 app.use(flash())
 app.use((req, res, next) => {
-	res.locals.success_messages = req.flash('success_messages')
-	res.locals.error_messages = req.flash('error_messages')
-	next()
+  res.locals.success_messages = req.flash('success_messages')
+  res.locals.error_messages = req.flash('error_messages')
+  next()
 })
 
 const db = require('./models')

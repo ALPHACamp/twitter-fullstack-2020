@@ -40,7 +40,7 @@
   </div>
   <div class="tweetbox top-line-2 rel">
     <form action="/tweets" method="POST">
-      <img class="avatar-img m16-8-0-27 fl" src="/images/avatar@2x.png" alt="">
+      <img class="avatar-img m16-8-0-27 fl" src="{{user.avatar}}" alt="">
       <span>
         <textarea class="modal-input-tweets mt-3" type="description" name="description" id="description" cols="30"
           rows="10" placeholder="有什麼新鮮事?" maxlength="140"></textarea>
@@ -107,7 +107,7 @@
         <form action="/tweets" method="POST"></form>
         <div class="modal-body">
           <form action="/tweets" method="POST">
-            <img class="avatar-img fl" src="/images/avatar@2x.png" alt="">
+            <img class="avatar-img fl" src="{{user.avatar}}" alt="">
             <span>
               <textarea class="modal-input-tweets mt-3 mb-3" type="description" name="description" id="description"
                 cols="30" rows="10" placeholder="有什麼新鮮事?" maxlength="140"></textarea>
