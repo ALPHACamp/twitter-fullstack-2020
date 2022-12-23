@@ -1,6 +1,5 @@
 const helpers = require('../_helpers')
 const { Followship, Like, Reply, Tweet, User } = require('../models')
-const { Op } = require('sequelize')
 const tweetController = {
   getIndex: (req, res, next) => {
     const currentUser = helpers.getUser(req)
@@ -12,14 +11,14 @@ const tweetController = {
             exclude: ['password']
           }
         }],
-        where: { UserId: helpers.getUser(req).id },
+        where: { UserId: currentUser.id },
         order: [['createdAt', 'desc'], ['id', 'desc']],
         raw: true,
         nest: true
       }),
       User.findAll({
         include: [{ model: User, as: 'Followers' }],
-        where: { role: 'user', id: { [Op.ne]: currentUser.id } }
+        where: { role: 'user' }
       }),
       Like.findAll({
         attributes: ['id', 'UserId', 'TweetId'],
@@ -37,12 +36,13 @@ const tweetController = {
           .map(user => ({
             ...user.toJSON(),
             followerCount: user.Followers.length,
-            isFollowed: user.Followers.some(follower => follower.id === currentUser.id)
+            isFollowed: user.Followers.some(follower => follower.id === currentUser.id),
+            isCurrentUser: user.id === currentUser.id
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
         const newTweets = tweets.map(tweet => ({
           ...tweet,
-          isLiked: likes.some(l => (l.UserId === helpers.getUser(req).id) && (l.TweetId === tweet.id)),
+          isLiked: likes.some(l => (l.UserId === currentUser.id) && (l.TweetId === tweet.id)),
           likeCount: likes.filter(like => like.TweetId === tweet.id).length,
           replyCount: replies.filter(reply => reply.TweetId === tweet.id).length
         }))
@@ -84,7 +84,7 @@ const tweetController = {
       }),
       User.findAll({
         include: [{ model: User, as: 'Followers' }],
-        where: { role: 'user', id: { [Op.ne]: currentUser.id } }
+        where: { role: 'user' }
       })
     ])
       .then(([tweet, users]) => {
@@ -94,7 +94,8 @@ const tweetController = {
           .map(user => ({
             ...user.toJSON(),
             followerCount: user.Followers.length,
-            isFollowed: user.Followers.some(follower => follower.id === currentUser.id)
+            isFollowed: user.Followers.some(follower => follower.id === currentUser.id),
+            isCurrentUser: user.id === currentUser.id
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
         tweetINDIV.isLiked = tweetINDIV.Likes.map(like => Object.values(like)[1]).some(e => e === currentUser.id)

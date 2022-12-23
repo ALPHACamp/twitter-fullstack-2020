@@ -70,7 +70,7 @@
     const errInfo = document.querySelector('#err-info')
     const form = document.querySelector('#form')
     const submitButton = document.querySelector('#submit-btn')
-
+    
     function wordsTotal() {
       let total = name.value.trim().length
       document.getElementById('text-count').innerHTML = total + '/50'
@@ -82,7 +82,7 @@
         errName.classList.add("err-sec")
       }
     }
-
+    
     function infosTotal() {
       let introductionTotal = document.getElementById('introduction').value.trim().length
           document.getElementById('text-count-info').innerHTML = introductionTotal + '/160'
@@ -94,18 +94,16 @@
             errInfo.classList.add("err-sec")
           }
         }
-
+        
     submitButton.addEventListener('click', function onSubmitButtonClicked(event) {
       form.classList.add('was-validated')
     })
-
+    
     form.addEventListener('submit', function onFormSubmit(event) {
       if (!form.checkValidity()) {
         event.preventDefault()
         event.stopPropagation()
-
       }
     })
   </script>
 </div>
-
