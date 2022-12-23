@@ -17,9 +17,7 @@ const userController = {
   },
   signUp: (req, res, next) => {
     const { account, name, email, password, checkPassword } = req.body
-    // 使用req.flash會跳回signin
-    // if (password !== checkPassword) req.flash('error_messages', '密碼不相符!ヽ(#`Д´)ﾉ')
-    // if (name.length > 50) req.flash('error_messages', '字數超出上限ヽ(#`Д´)ﾉ')
+    if (!account.trim() || !name.trim() || !email.trim() || !password.trim() || !checkPassword.trim()) throw new Error('輸入項目不完整!')
     if (password !== checkPassword) throw new Error('密碼不相符!ヽ(#`Д´)ﾉ')
     if (name.length > 50) throw new Error('字數超出上限ヽ(#`Д´)ﾉ')
     //const { Op } = require('sequelize')
@@ -57,46 +55,56 @@ const userController = {
       .catch(err => next(err))
   },
   //註冊修改頁面驗證
-  putSetting: async (req, res, next) => {
-    try {
-      const { editAccount, editName, editEmail, editPassword, editCheckPassword } = req.body
-      const { id, account, email } = helpers.getUser(req)
+  putSetting: (req, res, next) => {
+    const loginUser = helpers.getUser(req)
+    const editUserId = req.params.id
+    const { editAccount, editName, editEmail, editPassword, editCheckPassword } = req.body
 
-      if (editPassword !== editCheckPassword) {
-        req.flash('error_messages', '密碼不相符!ヽ(#`Д´)ﾉ請重新輸入')
-        return res.redirect('back')
-      }
-      if (editName.length > 50) {
-        req.flash('error_messages', '字數超出上限ヽ(#`Д´)ﾉ字數要在50字以內')
-        return res.redirect('back')
-      }
-
-      if (editAccount === account) {
-        const exitAccount = await User.findOne({ where: { account } })
-        if (exitAccount) {
-          req.flash('error_messages', ' 帳號已重複註冊！')
-          return res.redirect('back')
-        }
-      }
-      if (editEmail === email) {
-        const exitEmail = await User.findOne({ where: { email } })
-        if (exitEmail) {
-          req.flash('error_messages', 'Email已重複註冊！')
-          return res.redirect('back')
-        }
-      }
-      const editUser = await User.findByPk(id)
-      await editUser.update({
-        account: editAccount,
-        name: editName,
-        email: editEmail,
-        password: await bcrypt.hash(editPassword, 10)
-      })
-      req.flash('success_messages', '成功更新！')
-      res.redirect('/tweets')
-    } catch (err) {
-      next(err)
+    if (loginUser.id.toString() !== editUserId.toString()) {
+      console.log(loginUser.id, editUserId)
+      req.flash('error_messages', '不可以改別人的資料!')
+      return res.redirect('back')
     }
+    if (!editAccount.trim() || !editName.trim() || !editEmail.trim() || !editPassword.trim() || !editCheckPassword.trim()) {
+      req.flash('error_messages', '輸入項目不完整!')
+      return res.redirect('back')
+    }
+    if (editPassword !== editCheckPassword) {
+      req.flash('error_messages', '密碼不相符!ヽ(#`Д´)ﾉ請重新輸入')
+      return res.redirect('back')
+    }
+    if (editName.length > 50) {
+      req.flash('error_messages', '字數超出上限ヽ(#`Д´)ﾉ字數要在50字以內')
+      return res.redirect('back')
+    }
+
+    Promise.all([
+      User.findOne({
+        where: {
+          [Op.and]: [{ account: editAccount }, { account: { [Op.notLike]: loginUser.account } }]
+        }
+      }),
+      User.findOne({
+        where: {
+          [Op.and]: [{ email: editEmail }, { email: { [Op.notLike]: loginUser.email } }]
+        }
+      }),
+      User.findByPk(editUserId)
+    ])
+      .then(([checkAccount, checkEmail, user]) => {
+        if (checkAccount) throw new Error("帳戶名稱已被其他人使用!")
+        if (checkEmail) throw new Error("email已被其他人使用!")
+        const hash = bcrypt.hashSync(editPassword, 10)
+        user.update({
+          account: editAccount,
+          name: editName,
+          email: editEmail,
+          password: hash
+        })
+        req.flash('success_messages', '成功更新！')
+        res.redirect('/tweets')
+      })
+      .catch(err => next(err))
   },
   getUserTweets: (req, res, next) => {
     const loginUserId = helpers.getUser(req).id
