@@ -19,20 +19,21 @@ const apiController = {
     const loginUserId = Number(helpers.getUser(req).id)
     const editUserId = Number(req.params.id)
     const { name, introduction } = req.body
-    const { file } = req
+    const { files } = req
     if (editUserId !== loginUserId) throw new Error("You can't edit other's profile!")
     if (!name) throw new Error('User name is required!')
     return Promise.all([
       User.findByPk(editUserId),
-      imgurFileHandler(file)
+      imgurFileHandler(files?.avatar && files.avatar[0]),
+      imgurFileHandler(files?.coverImage && files.coverImage[0])
     ])
-      .then(([user, filePath]) => {
+      .then(([user, avatar, imageCover]) => {
         if (!user) throw new Error("User didn't exist!")
         return user.update({
           name,
           introduction,
-          avatar: filePath || user.avatar,
-          cover: filePath || user.cover,
+          avatar: avatar || user.avatar,
+          cover: imageCover || user.cover,
         })
           .then(() => res.redirect(200, 'back'))
           .catch(err => next(err))

@@ -15,7 +15,7 @@ const apiController = require('../controller/api-controller')
 
 
 
-// const upload = require('../middleware/multer')
+const upload = require('../middleware/multer')
 
 router.use('/admin', admin)
 //signin, logout
@@ -36,7 +36,7 @@ router.get('/users/:id/followers', authenticated, userController.getUserFollower
 
 // API使用者帳戶資訊
 router.get('/api/users/:id', authenticated, apiController.getUserAPI)
-router.post('/api/users/:id', authenticated, apiController.postUserAPI)
+router.post('/api/users/:id', authenticated, upload.fields([{ name: 'coverImage', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), apiController.postUserAPI)
 
 //使用者帳戶資訊，驗證不要忘記阻擋非user
 router.get('/users/:id/edit', authenticated, userController.getSetting)

@@ -44,7 +44,7 @@
 
 {{!-- user profile Modal --}}
 <div class="modal" id="edit-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <form action="/api/users/{{user.id}}" method="POST" id="edit-modal-form">
+  <form action="/api/users/{{user.id}}" method="POST" id="edit-modal-form" enctype="multipart/form-data">
     <div class="modal-dialog modal-lg" id="edit-modal-content" role="document"></div>
   </form>
 </div>

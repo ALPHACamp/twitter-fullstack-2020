@@ -13,6 +13,7 @@ const passport = require('./config/passport')
 const routes = require('./routes')
 const app = express()
 const port = process.env.PORT || 3000
+const SESSION_SECRET = 'Alphitter'
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
@@ -23,9 +24,9 @@ app.use('/upload', express.static(path.join(__dirname, 'upload')))
 app.use(express.static('public'))
 
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: SESSION_SECRET,
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: false
 }))
 app.use(passport.initialize())
 app.use(passport.session())
