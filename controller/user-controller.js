@@ -101,9 +101,10 @@ const userController = {
   getUserTweets: (req, res, next) => {
     const loginUserId = helpers.getUser(req).id
     const queryUserId = req.params.id
+    // [Category, { model: Comment, include: User }, { model: User, as: 'FavoritedUsers' }, { model: User, as: 'LikedUsers' }],
     return Promise.all([
       User.findByPk(queryUserId, {
-        include: Like,
+        include: [Like, { model: User, as: 'Followers' }],
         attributes: {
           include: [
             [sequelize.literal(`(SELECT COUNT(*) FROM Followships WHERE following_id = User.id)`), 'followerCount'],
@@ -134,13 +135,13 @@ const userController = {
       })
     ])
       .then(([user, tweets, users]) => {
-        const results = tweets.map(t => ({
-          ...t,
-          // isLiked: req.user.Likes.some(l => l.UserId === queryUserId)
-        }))
-        // console.log(results)
-        // console.log('user', user.Likes)
-        // console.log('tweets', tweets)
+        const currentUser = helpers.getUser(req)
+        const currentFollower = user.Followers.id
+        if (currentUser.id === currentFollower) {
+          user['isFollowed'] = true
+        } else {
+          user['isFollowed'] = false
+        }
         const result = users
           .map(user => ({
             ...user.toJSON(),
@@ -148,7 +149,7 @@ const userController = {
             isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
           }))
           .sort((a, b) => b.followCount - a.followCount)
-        res.render('user-tweets', { user, tweets, result })
+        res.render('user-tweets', { user, tweets, result, currentUser })
       })
       .catch(err => next(err))
   },

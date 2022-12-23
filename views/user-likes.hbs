@@ -15,27 +15,47 @@
             <img src="{{#if user.cover}} {{user.cover}} {{else}}/images/modal-cover.png{{/if}}" alt="cover">
           </div>
           <div class="profile-avatar">
-            <img src="{{#if user.avatar}} {{user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}">
-            <button type="button" class="profile-edit-btn" id="editButton" onclick="handleEditClick({{{user.id}}})">編輯個人資料</button>
-          </div>
-          <div class="profile-context">
-            <span class="profile-name">{{user.name}}</span>
-            <span class="tweets-account">@{{user.account}}</span>
-            <p class="profile-intro">
-              {{user.introduction}}
-            </p>
-            <div class="follow-ship">
-              <a href="/users/{{user.id}}/followings">
-                <p><span>{{user.followingCount}}個</span>跟隨中</p>
-              </a>
-              <a href="/users/{{user.id}}/followers">
-                <p><span>{{user.followerCount}}位</span>跟隨者</p>
-              </a>
+            <img src="{{#if user.avatar}} {{user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
+              class="profileImg">
+            {{#ifCond user.id currentUser.id}}
+            <button type="button" class="profile-edit-btn" id="editButton"
+              onclick="handleEditClick({{{user.id}}})">編輯個人資料</button>
+            {{else}}
+            <div class="profile-items">
+              <div class="profile-icons">
+                <a href="#" class="iconForOthers"><img src="/images/basic/white/message.svg" class="iconImg" alt=""></a>
+                <a href="#" class="iconForOthers"><img src="/images/basic/white/noti.svg" class="iconImg"></a>
+              </div>
+              {{#if user.isFollowed}}
+              <form action="/followships/{{user.id}}?_method=DELETE" method="POST">
+                <button type="submit" name="id" value="{{user.id}}" class="following-btn">正在跟隨</button>
+              </form>
+              {{else}}
+              <form action="/followships" method="POST">
+                <button type="submit" name="id" value="{{user.id}}" class="follow-btn">跟隨</button>
+              </form>
+              {{/if}}
             </div>
+            {{/ifCond}}
           </div>
         </div>
-        {{> user-content route="likes"}}
+        <div class="profile-context">
+          <span class="profile-name">{{user.name}}</span>
+          <span class="tweets-account">@{{user.account}}</span>
+          <p class="profile-intro">
+            {{user.introduction}}
+          </p>
+          <div class="follow-ship">
+            <a href="/users/{{user.id}}/followings">
+              <p><span>{{user.followingCount}}個</span>跟隨中</p>
+            </a>
+            <a href="/users/{{user.id}}/followers">
+              <p><span>{{user.followerCount}}位</span>跟隨者</p>
+            </a>
+          </div>
+        </div>
       </div>
+      {{> user-content route="likes"}}
     </div>
     {{> right-sidebar}}
   </div>
@@ -64,8 +84,8 @@
   const userCover = '/images/icon/User Photo.png'
   const coverImg = '/images/icon/modal-cover.png'
 
-  function handleEditClick (userId) {
-    $.get( `/api/users/${userId}`, function(detail) {
+  function handleEditClick(userId) {
+    $.get(`/api/users/${userId}`, function (detail) {
       const modalContent = document.querySelector('#edit-modal-content');
       const detail_content = `
         <div class="modal-content prof">
@@ -78,8 +98,8 @@
           <div class="modal-body">
             <div>
               ${detail.cover ?
-              `<img src="${detail.cover}" class="card-img-top" id="cover" alt="cover">` :
-              '<img src="/images/modal-cover.png" class="card-img-top position-relative" id="cover" alt="cover">'}
+          `<img src="${detail.cover}" class="card-img-top" id="cover" alt="cover">` :
+          '<img src="/images/modal-cover.png" class="card-img-top position-relative" id="cover" alt="cover">'}
               <label class="form-labe position-absolute" for="coverImage">
                 <img src="/images/basic/addphoto.svg" alt="camera" class="add-icon" id="cover-update-button">
               </label>
@@ -89,8 +109,8 @@
             </div>
             <div class="image position-absolute" style="top:120px; width:130px; height: 130px;">
               ${detail.avatar ?
-              `<img src="${detail.avatar}" alt="avatar" class="update-avatar" id="avatar">` :
-              '<img src="/images/icon/User Photo.png" alt="avatar" class="update-avatar" id="avatar">'}
+          `<img src="${detail.avatar}" alt="avatar" class="update-avatar" id="avatar">` :
+          '<img src="/images/icon/User Photo.png" alt="avatar" class="update-avatar" id="avatar">'}
               <label class="form-labe position-absolute" style="left:58px;top:54px;z-index:1;" for="image">
                 <span><img src="/images/basic/addphoto.svg" alt="camera" class="add-icon avatar-update"></span>
               </label>

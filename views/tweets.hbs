@@ -1,6 +1,5 @@
 <div class="container">
   <div class="row">
-    {{>message}}
     {{>left-sidebar route="homepage"}}
     {{!-- 首頁/tweets --}}
     <div class="col-6 top">
@@ -28,10 +27,9 @@
             </div>
           </div>
         </div>
+        {{#each Tweets}}
         <div class="main-bottom">
-          {{#each Tweets}}
           <div class="card-body tweets-box">
-
             {{#if this.User.avatar}}
             <img src="{{this.User.avatar}}" alt="avatar" class="user-avatar">
             {{else}}
@@ -70,8 +68,8 @@
               </div>
             </div>
           </div>
-          {{/each}}
         </div>
+        {{/each}}
       </div>
     </div>
   </div>

@@ -19,8 +19,6 @@
           class="user-avatar">
         <span class="tAR-name">{{this.Followers.name}}</span>
         <div class="btn-position">
-          {{!-- {{#if isFollowed}} --}}
-
           {{#if this.isFollowed}}
           <form action="/followships/{{this.Followers.id}}?_method=DELETE" method="POST">
             <button type="submit" name="id" value="{{this.Followers.id}}" class="following-btn">正在跟隨</button>
