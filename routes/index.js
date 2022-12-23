@@ -27,7 +27,7 @@ router.get('/users/:id/replies', authenticated, userController.getUserReplies)
 router.get('/users/:id/followings', authenticated, userController.getUserFollowings)
 router.get('/users/:id/followers', authenticated, userController.getUserFollowers)
 router.get('/users/:id/likes', authenticated, userController.getUserLikes)
-router.put('/users/:id/setup_profile', authenticated, userController.putProfile)
+// router.put('/users/:id/setup_profile', authenticated, userController.putProfile)
 
 router.post('/tweets/:id/like', authenticated, tweetController.postLike)
 router.post('/tweets/:id/unlike', authenticated, tweetController.postUnlike)

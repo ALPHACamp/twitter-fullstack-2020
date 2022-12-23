@@ -271,7 +271,7 @@ const userController = {
       }
       )
   },
-  putProfile: (req, res, next) => {
+  postUserInfo: (req, res, next) => {
   }
 }
 
