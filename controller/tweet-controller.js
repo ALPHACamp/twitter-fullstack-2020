@@ -8,7 +8,7 @@ const tweetController = {
   postTweet: (req, res) => {
 
     // const UserId = helper.getUser(req).id
-    const description = req.body.description
+    const description = String(req.body.description)
 
     if (!description.trim()) {
       req.flash('error_messages', '推文不可空白')
