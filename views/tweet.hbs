@@ -77,7 +77,7 @@
       </p>
       <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">13</span>
 
-      {{#if isLiked}}
+      {{#if this.isLiked}}
       <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
         <span class="twitterbox-time">
           <button type="submit" class="btn">

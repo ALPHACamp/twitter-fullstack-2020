@@ -832,10 +832,13 @@ a .nav-link:active,
 
 .form-control {
   border-bottom: none;
-=======
+}
 /* follower */
+.click-on{
+  color:#FF6600;
+  border-bottom:2px solid #FF6600;
+}
 .follower-list {
-  
   margin-left: 332px;
 }
 .follower-card {

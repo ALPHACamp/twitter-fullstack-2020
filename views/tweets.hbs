@@ -37,10 +37,10 @@
       <p class="twitterbox-text">
         {{this.description}}
       </p>
-      <span class="twitterbox-time mx-40" data-bs-target="#replyBackdrop" data-bs-toggle="modal"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">13</span>
+      <span class="twitterbox-time mx-40" data-bs-target="#replyBackdrop" data-bs-toggle="modal"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">{{this.Replies.length}}</span>
 
       {{!-- isLiked --}}
-      {{#if isLiked}}
+      {{#if this.isLiked}}
       <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
         <span class="twitterbox-time">
           <button type="submit" class="btn">
