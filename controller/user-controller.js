@@ -127,17 +127,28 @@ const userController = {
         order: [['createdAt', 'DESC']],
         nest: true,
         raw: true
+      }),
+      User.findAll({
+        where: { role: 'user' },
+        include: [{ model: User, as: 'Followers' }]
       })
     ])
-      .then(([user, tweets]) => {
+      .then(([user, tweets, users]) => {
         const results = tweets.map(t => ({
           ...t,
           // isLiked: req.user.Likes.some(l => l.UserId === queryUserId)
         }))
         // console.log(results)
-        console.log('user', user.Likes)
+        // console.log('user', user.Likes)
         // console.log('tweets', tweets)
-        res.render('user-tweets', { user, tweets })
+        const result = users
+          .map(user => ({
+            ...user.toJSON(),
+            followCount: user.Followers.length,
+            isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
+          }))
+          .sort((a, b) => b.followCount - a.followCount)
+        res.render('user-tweets', { user, tweets, result })
       })
       .catch(err => next(err))
   },
@@ -205,10 +216,21 @@ const userController = {
         order: [['createdAt', 'DESC']],
         nest: true,
         raw: true
+      }),
+      User.findAll({
+        where: { role: 'user' },
+        include: [{ model: User, as: 'Followers' }]
       })
     ])
-      .then(([user, replies]) => {
-        res.render('user-replies', { user, replies })
+      .then(([user, replies, users]) => {
+        const result = users
+          .map(user => ({
+            ...user.toJSON(),
+            followCount: user.Followers.length,
+            isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
+          }))
+          .sort((a, b) => b.followCount - a.followCount)
+        res.render('user-replies', { user, replies, result })
       })
       .catch(err => next(err))
   },
@@ -242,10 +264,21 @@ const userController = {
         }], order: [[Tweet, 'createdAt', 'DESC']],
         nest: true,
         raw: true
+      }),
+      User.findAll({
+        where: { role: 'user' },
+        include: [{ model: User, as: 'Followers' }]
       })
     ])
-      .then(([user, likes]) => {
-        res.render('user-likes', { user, likes })
+      .then(([user, likes, users]) => {
+        const result = users
+          .map(user => ({
+            ...user.toJSON(),
+            followCount: user.Followers.length,
+            isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
+          }))
+          .sort((a, b) => b.followCount - a.followCount)
+        res.render('user-likes', { user, likes, result })
       })
       .catch(err => next(err))
   },
@@ -271,16 +304,26 @@ const userController = {
         order: [['createdAt', 'DESC']],
         nest: true,
         raw: true
+      }),
+      User.findAll({
+        where: { role: 'user' },
+        include: [{ model: User, as: 'Followers' }]
       })
     ])
-      .then(([user, followings]) => {
+      .then(([user, followings, users]) => {
         const results = followings.map(f => ({
           ...f,
           isFollowed: true
         }))
-        res.render('following', { user, followings: results })
-      }
-      )
+        const result = users
+          .map(user => ({
+            ...user.toJSON(),
+            followCount: user.Followers.length,
+            isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
+          }))
+          .sort((a, b) => b.followCount - a.followCount)
+        res.render('following', { user, followings: results, result })
+      })
       .catch(err => next(err))
   },
   getUserFollower: (req, res, next) => {
@@ -312,37 +355,30 @@ const userController = {
         order: [['createdAt', 'DESC']],
         nest: true,
         raw: true
+      }),
+      User.findAll({
+        where: { role: 'user' },
+        include: [{ model: User, as: 'Followers' }]
       })
     ])
-      .then(([user, followers]) => {
+      .then(([user, followers, users]) => {
         const followerUser = (req.user && req.user.Followings.map(fr => fr.id)) || []
         const followingUser = followers.filter(follower => follower.followingId === req.user.id)
         const results = followingUser.map(follower => ({
           ...follower,
           isFollowed: followerUser.includes(follower.Followers.id)
         }))
-        res.render('follower', { user, followers: results })
+        const result = users
+          .map(user => ({
+            ...user.toJSON(),
+            followCount: user.Followers.length,
+            isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
+          }))
+          .sort((a, b) => b.followCount - a.followCount)
+        res.render('follower', { user, followers: results, result })
       })
       .catch(err => next(err))
   },
-  // getUserAPI: (req, res, next) => {
-  //   const loginUserId = helpers.getUser(req).id
-  //   const editUserId = req.params.id
-  //   if (editUserId !== loginUserId) {
-  //     req.flash('error_messages', "You can't edit other's profile!")
-  //     return res.redirect(200, 'back')
-  //   }
-  //   return User.findByPk(editUserId, {
-  //     attributes: ['name', 'introduction', 'avatar', 'cover']
-  //   })
-  //     .then(user => res.json(user.toJSON()))
-  //     .catch(err => next(err))
-  // },
-  // postUserAPI: (req, res, next) => {
-  //   const loginUserId = helpers.getUser(req).id
-  //   const editUserId = req.params.id
-  //   if (editUserId !== loginUserId) throw new Error("You can't edit other's profile!")
-  // }
 }
 
 
