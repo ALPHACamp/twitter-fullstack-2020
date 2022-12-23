@@ -35,10 +35,8 @@ const replyController = {
     const UserId = helpers.getUser(req).id
     const TweetId = req.params.id
     const comment = String(req.body.description)
-    // const commentCounts = Number('comment.length <=0')
-    // const commentOverCounts = Number('comment.length > 50')
 
-    if (comment.length <= 0) {
+    if (!comment.trim()) {
       req.flash('error_messages', '回覆不可以空白!')
       res.redirect('back')
     } else if (comment.length > 50) {
