@@ -34,11 +34,11 @@ const replyController = {
   postReplies: (req, res, next) => {
     const UserId = helpers.getUser(req).id
     const TweetId = req.params.id
-    const comment = req.body.description
+    const comment = String(req.body.description)
     // const commentCounts = Number('comment.length <=0')
-    // const commentOverCounts = Number('comment.length > 50') 
+    // const commentOverCounts = Number('comment.length > 50')
 
-    if (comment.length <= 0 ) {
+    if (comment.length <= 0) {
       req.flash('error_messages', '回覆不可以空白!')
       res.redirect('back')
     } else if (comment.length > 50) {
@@ -56,8 +56,8 @@ const replyController = {
         })
         .catch(err => next(err))
     }
-    
-  } 
+
+  }
 }
 
 module.exports = replyController
