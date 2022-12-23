@@ -327,7 +327,7 @@ const userController = {
       .catch(err => next(err))
   },
   getUserFollower: (req, res, next) => {
-    // const loginUserId = helpers.getUser(req).id
+    const loginUserId = helpers.getUser(req).id
     const queryUserId = req.params.id
     return Promise.all([
       User.findByPk(queryUserId, {
@@ -362,8 +362,9 @@ const userController = {
       })
     ])
       .then(([user, followers, users]) => {
+        if (!user) throw new Error("User doesn't exist!")
         const followerUser = (req.user && req.user.Followings.map(fr => fr.id)) || []
-        const followingUser = followers.filter(follower => follower.followingId === req.user.id)
+        const followingUser = followers.filter(follower => follower.followingId === loginUserId)
         const results = followingUser.map(follower => ({
           ...follower,
           isFollowed: followerUser.includes(follower.Followers.id)
@@ -376,7 +377,8 @@ const userController = {
           }))
           .sort((a, b) => b.followCount - a.followCount)
         res.render('follower', { user, followers: results, result })
-      })
+      }
+      )
       .catch(err => next(err))
   },
 }

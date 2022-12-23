@@ -5,7 +5,7 @@ const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (helpers.getUser(req).role === 'user') { return next() } //是 user 往下走
     else if (helpers.getUser(req).role === 'admin') {
-      res.redirect('/admin/signin') //後台使用者，丟到後台登入
+      res.redirect('/admin/tweets') //後台使用者，丟到後台登入
     }
   } else {
     res.redirect('/signin') // 沒登入，把user丟回 signin 畫面
