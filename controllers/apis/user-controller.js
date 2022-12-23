@@ -38,6 +38,7 @@ const apiController = {
       const newData = newUserInfo.toJSON()
       delete newData.password
       res.status(200).json({ user: newData })
+      console.log(newData)
     } catch (err) {
       next(err)
     }

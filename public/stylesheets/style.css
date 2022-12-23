@@ -1011,6 +1011,16 @@ form.was-validated .input:invalid ~ .invalid-feedback {
   color: #696974;
 }
 
+#text-count-info {
+  float: right;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  color: #696974;
+}
+
 .disabled {
   border-bottom: 2px solid #D5D5DC;
 }

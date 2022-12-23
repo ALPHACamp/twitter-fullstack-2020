@@ -1,9 +1,10 @@
 {{!-- 以下是reply 的 modal --}}
-<div class="modal fade" id="reply-modal-{{tweet.id}}" tabindex="-1" role="dialog"
-  aria-labelledby="replyModalLabel" aria-hidden="true">
+<div class="modal fade" id="reply-modal-{{tweet.id}}" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" style="position:relative;">
 
-    <div class="modal-content" style="width:634px; height:500px;border-radius:14px;position: absolute;top: 30px;left: -119px;">
+    <div class="modal-content"
+      style="width:634px; height:500px;border-radius:14px;position: absolute;top: 30px;left: -119px;">
 
       <div class="modal-header" style="width:634px; height:56px;">
         <a data-bs-dismiss="modal">
@@ -17,11 +18,16 @@
           <hr style="width: 2px;height: 86px;border-right: solid #B5B5BE;position: absolute;left: 39px;top: 116px;">
         </div>
         <div class="modal-reply-tweet-text" style="max-width:90%;margin-left:13px;">
-          <span class="modal-reply-tweet-name" style="font-size:16px; font-weight:700;line-height:26px margin-right:8px;">{{user.name}}</span>
-          <span style="font-size:14px;font-weight:400;line-height: 22px;color: #6C757D;"> @{{user.account}}‧{{relativeTimeFromNow tweet.createdAt}}</span>
+          <span class="modal-reply-tweet-name"
+            style="font-size:16px; font-weight:700;line-height:26px margin-right:8px;">{{user.name}}</span>
+          <span style="font-size:14px;font-weight:400;line-height: 22px;color: #6C757D;">
+            @{{user.account}}‧{{relativeTimeFromNow tweet.createdAt}}</span>
           <br />
-          <p class="modal-reply-tweet-description" style="word-wrap: break-word; word-break: normal;margin-top:10px;font-size:16px; font-weight:400;color: #171725;">{{tweet.description}}</p>
-          <small style="font-weight: 400;font-size: 14px;line-height: 22px;color: #6C757D;">回覆給 <span style="color:#FF6600">@{{user.account}}</span></small>
+          <p class="modal-reply-tweet-description"
+            style="word-wrap: break-word; word-break: normal;margin-top:10px;font-size:16px; font-weight:400;color: #171725;">
+            {{tweet.description}}</p>
+          <small style="font-weight: 400;font-size: 14px;line-height: 22px;color: #6C757D;">回覆給 <span
+              style="color:#FF6600">@{{user.account}}</span></small>
         </div>
       </div>
       {{!-- 回文部分 --}}
@@ -31,7 +37,10 @@
             <img style="width:50px;height:50px;border-radius:25px;" src="{{User.avatar}}" alt="modal-avatar">
           </div>
           <div class="modal-input">
-            <textarea class="textarea border border-0 m-2" name="comment" style="font-size: 16px;resize:none;height: 192px;outline: none;color: #6C757D;line-height: 26px;font-weight: 400;" id="comment-{{tweet.id}}" type="text"cols="65" rows="5" placeholder="推你的回覆" maxlength='140' onkeyup="wordsTotal()" required></textarea>
+            <textarea class="textarea border border-0 m-2" name="comment"
+              style="font-size: 16px;resize:none;height: 192px;outline: none;color: #6C757D;line-height: 26px;font-weight: 400;"
+              id="comment-{{tweet.id}}" type="text" cols="65" rows="5" placeholder="推你的回覆" maxlength='140'
+              onkeyup="wordsTotal()" required></textarea>
           </div>
         </div>
         <div class="d-flex" style="align-items: center;position: relative;">
@@ -43,10 +52,8 @@
             </span>
           </div>
           <button type="submit" class="setting-btn my-2" id="#submit-btn"
-            style="display: inline-block;font-weight: 400;font-size: 16px;
-                line-height: 24px;border: none;width: 64px;height: 40px;background: #FF6600;border-radius: 50px;padding: 10px 15px;margin-left: 16px;margin-right: 16px;position: absolute;top: -25px;left: 530px;">回覆</button>
+            style="display: inline-block;font-weight: 400;font-size: 16px;line-height: 24px;border: none;width: 64px;height: 40px;background: #FF6600;border-radius: 50px;padding: 10px 15px;margin-left: 16px;margin-right: 16px;position: absolute;top: -25px;left: 530px;">回覆</button>
         </div>
-        {{!-- <button type="submit" class="modal-post-btn" style="margin-left: 555px; margin-top:-20px;font-weight: 400;font-size: 16px;line-height: 24px;color: #FFFFFF;align-items: center;text-align: center;">回覆</button> --}}
       </form>
     </div>
   </div>
@@ -57,11 +64,9 @@
     const errSection = document.getElementById('err-section')
     const errText = document.getElementById('err-text')
     const textarea = document.querySelector('.textarea')
-
     textarea.addEventListener('keydown', function keydown(event) {
       errSection.classList.add("err-sec")
     })
-
     form.addEventListener('submit', function onFormSubmit(event) {
       if (!form.checkValidity()) {
         event.preventDefault()
