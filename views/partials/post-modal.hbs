@@ -22,14 +22,16 @@
               rows="5" placeholder="有什麼新鮮事？" maxlength="140" onkeyup="wordsTotal()" required></textarea>
           </div>
         </div>
-        <div id="err-section" class="err-sec" style="display: inline-block;margin-left: 380px;margin-right: 20px;align-items: center;">
+        <div class="d-flex" style="align-items: center;position: relative;">
+          <div id="err-section" class="err-sec" style="display: inline-block;margin-left: 360px;margin-right: 20px;align-items: center;position: absolute;top: 19px;left: 40px;">
           <span class="invalid-feedback-modal" id="err-text" style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 500;font-size: 15px;line-height: 15px;color: #FC5A5A;">
             字數不可超過140字
           </span>
         </div>
         <button type="submit" class="setting-btn my-2" id="#submit-btn"
           style="display: inline-block;font-weight: 400;font-size: 16px;
-        line-height: 24px;border: none;width: 64px;height: 40px;background: #FF6600;border-radius: 50px;padding: 10px 15px;margin-left: 0;margin-right: 0;">推文</button>
+        line-height: 24px;border: none;width: 64px;height: 40px;background: #FF6600;border-radius: 50px;padding: 10px 15px;margin-left: 16px;margin-right: 16px;position: absolute;top: 3px;left: 538px;">推文</button>
+        </div>
       </form>
     </div>
   </div>
@@ -55,7 +57,7 @@
       if (!form.checkValidity()) {
         event.preventDefault()
         event.stopPropagation()
-        errText.innerHTML = '內容不可空白'
+        errText.innerHTML = '        內容不可空白'
         errSection.classList.remove("err-sec")
       }
     })

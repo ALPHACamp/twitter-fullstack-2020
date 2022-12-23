@@ -758,7 +758,7 @@ h4 {
 }
 
 .tweets-mid {
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
 }
 
@@ -780,10 +780,11 @@ h4 {
 /* index  */
 
 .index-post {
-  position: absolute;
+  /* position: absolute; */
   width: 639px;
   height: 130px;  
-  top: 91px;
+  /* top: 91px; */
+  margin-top: 16px;
 }
 
 .index-post .posting {
@@ -792,10 +793,8 @@ h4 {
   align-items: center;
   padding: 0px;
   gap: 8px;
-  position: relative;
   width: 588.61px;
-  height: 61px;
-  left: 25px;
+  margin-left: 26.49px;
 }
 
 .index-post-btn {
@@ -817,16 +816,12 @@ h4 {
   color: #ffffff;
   padding: 0;
   border: none;
-  position: absolute;  
-  right: 24px;
-  top: 80px;
+  margin: 20px 24.69px 16px 550.31px;
 }
 
 .index-divider {
-  position: relative;
   width: 639px;
   height: 10px;  
-  top: 80px;
   background: #E6ECF0;
   transform: rotate(-180deg);  
 }
@@ -837,9 +832,8 @@ h4 {
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;  
-  position: absolute;
   width: 639px;
-  /* height: 998px; */
+  margin-top: 16px;
   top: 237px;
 }
 
