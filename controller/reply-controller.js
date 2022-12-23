@@ -1,11 +1,11 @@
 const { User, Tweet, Reply, Like, Followship } = require('../models')
 const sequelize = require('sequelize')
 const bcrypt = require('bcryptjs')
-const { getUser } = require('../_helpers')
+const helpers = require('../_helpers')
 
 const replyController = {
   getReplies: (req, res, next) => {
-    const loginUser = getUser(req).id
+    const loginUser = helpers.getUser(req).id
     const tweetId = req.params.id
     return Promise.all([Tweet.findByPk(tweetId, {
       attributes: {
@@ -30,7 +30,34 @@ const replyController = {
         res.render('replies', { tweet, replies })
       )
       .catch(err => next(err))
-  }
+  },
+  postReplies: (req, res, next) => {
+    const UserId = helpers.getUser(req).id
+    const TweetId = req.params.id
+    const comment = req.body.description
+    // const commentCounts = Number('comment.length <=0')
+    // const commentOverCounts = Number('comment.length > 50') 
+
+    if (comment.length <= 0 ) {
+      req.flash('error_messages', '回覆不可以空白!')
+      res.redirect('back')
+    } else if (comment.length > 50) {
+      req.flash('error_messages', '回覆不可超過50字!')
+      res.redirect('back')
+    } else {
+      return Reply.create({
+        UserId,
+        TweetId,
+        comment
+      })
+        .then(() => {
+          req.flash('success_messages', '成功回覆')
+          res.redirect(`/tweets/${TweetId}/replies`)
+        })
+        .catch(err => next(err))
+    }
+    
+  } 
 }
 
 module.exports = replyController
