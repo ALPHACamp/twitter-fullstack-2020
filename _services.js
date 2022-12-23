@@ -6,6 +6,7 @@ const Tweet = db.Tweet
 const Like = db.Like
 const Reply = db.Reply
 module.exports = {
+  // 推薦追蹤用戶
   getTopUsers: async (req) => {
     const user = helpers.getUser(req)
     const followingList = user && user.Followings.map(following => following.id)
@@ -30,6 +31,7 @@ module.exports = {
       })
     return topFollowings  
   },
+  // 貼文抓取
   getTweets: async (req) => {
     const user = helpers.getUser(req)
     const UserId = req.params.id || ''
@@ -48,6 +50,7 @@ module.exports = {
     }))
     return data
   },
+  // 單一貼文回覆抓取
   getReplies: async (req) => {
     const TweetId = req.params.id || ''
     const replies = await Reply.findAll({
@@ -58,5 +61,14 @@ module.exports = {
      raw: true
     }) || []
     return replies
+  },
+  // 抓取個人檔案用戶
+  getUser: async (req) => {
+    const userId = req.params.id
+    const user = await User.findByPk(userId, {
+      include: [Tweet],
+      nest: true
+    })
+    return user
   }
 }

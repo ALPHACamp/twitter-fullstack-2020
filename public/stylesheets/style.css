@@ -943,3 +943,38 @@ a .nav-link:active,
   top: 80px;
   background: #B5B5BE;
 }
+/* edit-page */
+
+.edit-form-style {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.title-edit {
+  height: 26px;
+}
+
+.edit-form-content {
+  position: relative;
+  bottom: 30px;
+  width: 593px;
+  height: 78px;
+  margin: 10px;
+
+  border-top: 2px;
+}
+
+.edit-submit {
+  margin-left: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
+
+  width: 88px;
+  height: 46px;
+  background: #FF6600;
+  border-radius: 50px;
+}

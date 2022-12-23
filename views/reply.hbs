@@ -1,0 +1,26 @@
+{{> leftbar}}
+{{> user-profile}}
+{{#each replies}}
+{{!-- 留言 start--}}
+<div>
+  <div class="fl">
+    <a href="/users/{{../user.id}}"><img class="ac-img" src="{{../user.avatar}}" alt=""></a>
+  </div>
+  <div class="tweet-flow-text fl">
+    <a href="/users/{{../user.id}}" class="text-decoration-n">
+      <span class="twitterbox-name">{{../user.name}}</span>
+    </a>
+    <span class="twitterbox-time">@{{../user.account}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
+    <div>
+      <span class="twitterbox-time">回覆 <span style="color: #FF6600">@ {{this.Tweet.User.account}}</span></span>
+    </div>
+    <p class="twitterbox-text">
+      {{this.comment}}
+    </p>
+    <div class="bottom-line-f"></div>
+  </div>
+</div>
+{{!-- 留言 end--}}
+{{/each}}
+</div>
+{{> rightbar}}
