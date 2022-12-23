@@ -1,4 +1,5 @@
 const db = require('../models')
+const bcrypt = require('bcryptjs')
 const User = db.User
 const Followship = db.Followship
 const Reply = db.Reply
