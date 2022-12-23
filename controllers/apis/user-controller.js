@@ -20,25 +20,35 @@ const apiController = {
   },
   postUserInfo: async (req, res, next) => {
     try {
-      const { name, introduction } = req.body
-      const { files } = req
+      const logInUserId = helpers.getUser(req).id
+      const UserId = req.params.id
+      const { name } = req.body
+      const introduction = req.body.introduction || ''
+      const avatar = req.files ? req.files.avatar : ''
+      const cover = req.files ? req.files.cover : ''
 
-      if (!name || name.length > 50) throw new Error('名稱為必填，且限50字內')
-      if (introduction?.length > 160) throw new Error('字數限160字以內')
+      let uploadAvatar = ''
+      let uploadCover = ''
+      if (avatar) {
+        uploadAvatar = await imgurFileHandler(avatar[0])
+      }
+      if (cover) {
+        uploadCover = await imgurFileHandler(cover[0])
+      }
+      const user = await User.findByPk(UserId)
 
-      const user = await User.findByPk(req.params.id)
-      const avatar = await imgurFileHandler(files?.avatar && files.avatar[0])
-      const cover = await imgurFileHandler(files?.cover && files.cover[0])
-      const newUserInfo = await user.update({
+      if (user.id !== Number(logInUserId)) return res.json({ status: 'error', message: '不可編輯其他使用者資料！' })
+      if (!name) return res.json({ status: 'error', message: '名稱不可空白！' })
+      if (name.length > 50) return res.json({ status: 'error', message: '字數超出上限！' })
+      if (introduction.length > 160) return res.json({ status: 'error', message: '字數超出上限！' })
+
+      const data = await user.update({
         name,
         introduction,
-        avatar: avatar || user.avatar,
-        cover: cover || user.cover
+        avatar: uploadAvatar || user.avatar,
+        cover: uploadCover || user.cover
       })
-      const newData = newUserInfo.toJSON()
-      delete newData.password
-      res.status(200).json({ user: newData })
-      console.log(newData)
+      res.json({ status: 'success', message: '已成功更新!', data })
     } catch (err) {
       next(err)
     }

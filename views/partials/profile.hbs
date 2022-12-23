@@ -51,8 +51,129 @@
   </div>
 </div>
 
-{{!-- 這是編輯個人頁面資料的modal --}}
-{{>edit-info-modal user=currentUser}}
 
 <script src="/javascripts/editModal.js"></script>
-<script src="/javascripts/ajax.js"></script>
+
+{{!-- 以下是 編輯個人頁面的modal --}}
+<div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content"
+      style="width:634px; height:610px;border-radius:14px;top: 31px;left: -117px;">
+
+      <form action="/api/users/{{currentUser.id}}" method="POST" data-id="{{currentUser.id}}" enctype="multipart/form-data" id="form">
+
+        <div class="modal-header justify-content-between" style="height:57px;">
+          <div class="d-flex">
+            <a data-bs-dismiss="modal">
+              <img src="/images/icons/icon-danger.png" alt="" style="width:25px;height:25px;">
+            </a>
+            <h5
+              style="margin-left:36px;margin-top:4px;font-family: 'Noto Sans TC';font-style: normal;font-weight: 700;font-size: 18px;line-height: 26px;color: #1C1C1C;">
+              編輯個人資料</h5>
+          </div>
+          <div>
+            <button type="submit" class="modal-post-btn my-1 mx-1"
+              style="font-weight: 400;font-size: 16px;line-height: 24px;border: none;color: #FFFFFF;"
+              id="submit-btn">儲存</button>
+          </div>
+        </div>
+
+        <div class="modal-cover-avatar" style="height: 264px; position:relative;">
+          <img id="modal-cover" src="{{user.cover}}" alt="cover"
+            style="height: 200px;width:631px; object-fit:cover;position:absolute;top:0;left:0;-webkit-filter:brightness(.7)">
+          <button class="change-cover">
+            <img src="/images/icons/white-camera.png" alt=""
+              style="height:24px; width:24px; position:absolute;bottom:155px;left:279px; z-index:1">
+          </button>
+          <button class="remove-cover">
+            <img src="/images/icons/white-X.png" alt=""
+              style="height:24px; width:24px; position:absolute;bottom:155px;left:337px; z-index:1">
+          </button>
+
+          <div class="avatar-section">
+            <img id="modal-avatar" src="{{user.avatar}}" alt=""
+              style="height:140px; width:140px; border: 4px solid #FFFFFF;position:absolute;bottom:0;left:16px; z-index:1; border-radius:50%;-webkit-filter:brightness(.7);object-fit:cover">
+            <label class="change-avatar" for="avatar">
+              <img src="/images/icons/white-camera.png" alt=""
+                style="height:24px; width:24px; position:absolute;bottom:60px;left:75px; z-index:1">
+              <input class="d-none" name="avatar" type="file" id="avatar">
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-name-intro">
+          <div class="modal-name-input-section">
+            <label class="modal-name-label" for="name"
+              style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 14px;line-height: 22px;color: #696974;">名稱</label>
+            <input class="modal-name-input" id="name" type="text" name="name" maxlength="50" placeholder="請輸入使用者名稱..."
+              style="font-weight: 400;font-size: 16px;line-height: 26px;color: #171725;" value="{{user.name}}"
+              onkeyup="wordsTotal()" required>
+            <div style="inline-block;font-weight: 500;font-size: 12px;line-height: 20px;color: #FC5A5A;">
+              <span id="err-name" class="err-sec">字數超出上限!</span>
+              <span id="text-count">0/50</span>
+            </div>
+          </div>
+
+          <div class="modal-intro-input-section">
+            <label class="modal-intro-label" for="intro"
+              style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 14px;line-height: 22px;color: #696974;">自我介紹</label>
+            <textarea class="modal-intro-input border-0" name="introduction"
+              style="font-size: 16px;outline: none;resize:none;height:120px;font-weight: 400;line-height: 26px;color: #171725;"
+              id="introduction" cols="65" rows="5" maxlength="160" onkeyup="infosTotal()"
+              required>{{user.introduction}}</textarea>
+          </div>
+          <div
+            style="inline-block;max-width: 600px;margin-left: 15px;font-weight: 500;font-size: 12px;line-height: 20px;color: #FC5A5A;">
+            <span id="err-info" class="err-sec">字數超出上限!</span>
+            <span id="text-count-info">0/160</span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  {{!-- 表單驗證 --}}
+  <script>
+    const name = document.querySelector('.modal-name-input')
+    const info = document.querySelector('.modal-intro-input')
+    const errName = document.querySelector('#err-name')
+    const errInfo = document.querySelector('#err-info')
+    const form = document.querySelector('#form')
+    const submitButton = document.querySelector('#submit-btn')
+
+    function wordsTotal() {
+      let total = name.value.trim().length
+      document.getElementById('text-count').innerHTML = total + '/50'
+      if (total >= 50) {
+        name.classList.add("disabled")
+        errName.classList.remove("err-sec")
+      } else {
+        name.classList.remove("disabled")
+        errName.classList.add("err-sec")
+      }
+    }
+
+    function infosTotal() {
+      let introductionTotal = document.getElementById('introduction').value.trim().length
+      document.getElementById('text-count-info').innerHTML = introductionTotal + '/160'
+      if (introductionTotal >= 160) {
+        info.classList.add("disabled")
+        errInfo.classList.remove("err-sec")
+      } else {
+        info.classList.remove("disabled")
+        errInfo.classList.add("err-sec")
+      }
+    }
+
+    submitButton.addEventListener('click', function onSubmitButtonClicked(event) {
+      form.classList.add('was-validated')
+    })
+
+    form.addEventListener('submit', function onFormSubmit(event) {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+    })
+  </script>
+</div>

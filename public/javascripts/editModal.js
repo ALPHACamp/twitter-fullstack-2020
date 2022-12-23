@@ -3,6 +3,7 @@ const inputName = document.querySelector('#name')
 const inputIntroduction = document.querySelector('#introduction')
 const inputCover = document.querySelector('#cover')
 const inputAvatar = document.querySelector('#avatar')
+require('axios')
 
 // 儲存modal資訊，刷新頁面
 editModal.addEventListener('submit', function (event) {
@@ -19,7 +20,7 @@ editModal.addEventListener('submit', function (event) {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
     .then(res => {
-      history.go(0) // 刷新本頁
+      res.redirect('/tweets')
     })
     .catch(err => console.log(err))
 })
