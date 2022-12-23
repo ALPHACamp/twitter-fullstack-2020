@@ -16,8 +16,7 @@
           </div>
           <div class="profile-avatar">
             <img src="{{#if user.avatar}} {{user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}">
-            <button type="button" class="profile-edit-btn" id="editButton" data-bs-toggle="modal"
-              data-bs-target="#edit-modal">編輯個人資料</button>
+            <button type="button" class="profile-edit-btn" id="editButton" onclick="handleEditClick({{{user.id}}})">編輯個人資料</button>
           </div>
           <div class="profile-context">
             <span class="profile-name">{{user.name}}</span>
@@ -44,66 +43,9 @@
 
 
 {{!-- user profile Modal --}}
-<div class="modal fade" id="edit-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <form action="/api/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content prof">
-        <div class="pro-form-header">
-          <a type="button" class="close-btn" id="modal-close-button" aria-label="Close" data-bs-dismiss="modal"
-            aria-label="Close"><img src="/images/basic/close.svg" alt=""></a>
-          <h5 class="pro-form-title">編輯個人資料</h5>
-          <button type="submit" id="save-btn">儲存</button>
-        </div>
-        {{!--
-        <hr style="margin: 0px 0px;"> --}}
-        <div class="modal-body">
-          {{!-- cover --}}
-          <div>
-            {{#if user.cover}}
-            <img src="{{user.cover}}" class="card-img-top" id="cover" alt="cover">
-            {{else}}
-            <img src="/images/modal-cover.png" class="card-img-top position-relative" id="cover" alt="cover">
-            {{/if}}
-            {{!-- cover icons --}}
-            <label class="form-labe position-absolute" for="coverImage">
-              <img src="/images/basic/addphoto.svg" alt="camera" class="add-icon" id="cover-update-button">
-            </label>
-            <input class="form-control" type="file" class="form-control-file" id="coverImage" style="display:none"
-              name="coverImage" onchange="previewCoverImage()">
-            <img src="/images/basic/close.svg" alt="close" class="add-icon" id="cover-close-button">
-          </div>
-          {{!-- user.avatar --}}
-          <div class="image position-absolute" style="top:120px; width:130px; height: 130px;">
-            {{#if user.avatar}}
-            <img src="{{user.avatar}}" alt="avatar" class="update-avatar" id="avatar">
-            {{else}}
-            <img src="/images/icon/User Photo.png" alt="avatar" class="update-avatar" id="avatar">
-            {{/if}}
-            <label class="form-labe position-absolute" style="left:58px;top:54px;z-index:1;" for="image">
-              <span><img src="/images/basic/addphoto.svg" alt="camera" class="add-icon avatar-update"></span>
-            </label>
-            <input class="form-control" type="file" class="form-control-file" id="image" style="display:none"
-              name="avatar" onchange="previewAvatarImage()">
-          </div>
-          <div class="form-group form-floating" style=" margin-top: 80px;">
-            <label for="name">名稱</label>
-            <input type="text" name="name" id="name" class="form-control font-weight-bold m-auto" placeholder="名稱"
-              value="{{user.name}}"
-              style="background-color:#F5F8FA; border-bottom: 2px solid #657786;height:74px;padding-top:40px"
-              oninput="counts()" maxlength='50' required autofocus>
-            <div class="text-end" id="charcount_name" style="font-size:12px"><span>0/50</span></div>
-          </div>
-          <div class="form-group form-floating" style=" margin-top: 10px;">
-            <label for="introduction" style="margin:0px;">自我介紹</label>
-            <textarea type="text" name="introduction" id="introduction" class="form-control font-weight-bold"
-              placeholder="請輸入自我介紹"
-              style="background-color:#F5F8FA;border-bottom: 2px solid #657786;height:120px;resize:none;padding-top:40px;"
-              maxlength="160" oninput="counts()" required autofocus>{{user.introduction}}</textarea>
-            <div class="text-end" id="charcount_intro" style="font-size:12px"><span>0/160</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="modal" id="edit-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <form action="/api/users/{{user.id}}" method="POST" id="edit-modal-form">
+    <div class="modal-dialog modal-lg" id="edit-modal-content" role="document"></div>
   </form>
 </div>
 
@@ -111,23 +53,76 @@
 
 
 {{!-- edit User info function --}}
-
 <script>
 
   // 編輯 user avatar and background img
   const modalCloseBtn = document.querySelector('#modal-close-button')
   const coverCloseBtn = document.querySelector('#cover-close-button')
 
-
   const cover = document.querySelector('#cover')
   const avatar = document.querySelector('#avatar')
   const userCover = '/images/icon/User Photo.png'
   const coverImg = '/images/icon/modal-cover.png'
 
+  function handleEditClick (userId) {
+    $.get( `/api/users/${userId}`, function(detail) {
+      const modalContent = document.querySelector('#edit-modal-content');
+      const detail_content = `
+        <div class="modal-content prof">
+          <div class="pro-form-header">
+            <a type="button" class="close-btn" id="modal-close-button" aria-label="Close" data-bs-dismiss="modal"
+              aria-label="Close"><img src="/images/basic/close.svg" alt=""></a>
+            <h5 class="pro-form-title">編輯個人資料</h5>
+            <button type="submit" id="save-btn">儲存</button>
+          </div>
+          <div class="modal-body">
+            <div>
+              ${detail.cover ?
+              `<img src="${detail.cover}" class="card-img-top" id="cover" alt="cover">` :
+              '<img src="/images/modal-cover.png" class="card-img-top position-relative" id="cover" alt="cover">'}
+              <label class="form-labe position-absolute" for="coverImage">
+                <img src="/images/basic/addphoto.svg" alt="camera" class="add-icon" id="cover-update-button">
+              </label>
+              <input class="form-control" type="file" class="form-control-file" id="coverImage" style="display:none"
+                name="coverImage" onchange="previewCoverImage()">
+              <img src="/images/basic/close.svg" alt="close" class="add-icon" id="cover-close-button">
+            </div>
+            <div class="image position-absolute" style="top:120px; width:130px; height: 130px;">
+              ${detail.avatar ?
+              `<img src="${detail.avatar}" alt="avatar" class="update-avatar" id="avatar">` :
+              '<img src="/images/icon/User Photo.png" alt="avatar" class="update-avatar" id="avatar">'}
+              <label class="form-labe position-absolute" style="left:58px;top:54px;z-index:1;" for="image">
+                <span><img src="/images/basic/addphoto.svg" alt="camera" class="add-icon avatar-update"></span>
+              </label>
+              <input class="form-control" type="file" class="form-control-file" id="image" style="display:none"
+                name="avatar" onchange="previewAvatarImage()">
+            </div>
+            <div class="form-group form-floating" style=" margin-top: 80px;">
+              <label for="name">名稱</label>
+              <input type="text" name="name" id="name" class="form-control font-weight-bold m-auto" placeholder="名稱"
+                value="${detail.name}"
+                style="background-color:#F5F8FA; border-bottom: 2px solid #657786;height:74px;padding-top:40px"
+                oninput="counts()" maxlength='50' required autofocus>
+              <div class="text-end" id="charcount_name" style="font-size:12px"><span>0/50</span></div>
+            </div>
+            <div class="form-group form-floating" style=" margin-top: 10px;">
+              <label for="introduction" style="margin:0px;">自我介紹</label>
+              <textarea type="text" name="introduction" id="introduction" class="form-control font-weight-bold"
+                placeholder="請輸入自我介紹"
+                style="background-color:#F5F8FA;border-bottom: 2px solid #657786;height:120px;resize:none;padding-top:40px;"
+                maxlength="160" oninput="counts()" required autofocus>${detail.introduction}</textarea>
+              <div class="text-end" id="charcount_intro" style="font-size:12px"><span>0/160</span></div>
+            </div>
+          </div>
+        </div>
+      `;
+      modalContent.innerHTML = detail_content
+      $('#edit-modal').modal('show')
+    });
+  };
 
   modalCloseBtn.addEventListener('click', e => {
-    avatar.value = " "
-    cover.value = " "
+    $('#edit-modal').modal('hide')
   })
 
   coverCloseBtn.addEventListener('click', e => {
