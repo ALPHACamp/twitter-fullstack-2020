@@ -6,29 +6,72 @@
   <div class="title">
     <h3>建立你的帳號</h3>
   </div>
-  <form class="form-login" action="/signup" method="POST">
+  <form class="form-signup" action="/signup" method="POST" id="form" novalidate>
     <div class="input-section">
       <label class="label" for="account">帳號</label>
       <input class="input" id="account" type="text" name="account" placeholder="請輸入帳號" required>
+      <div class="invalid-feedback">
+        請輸入帳號
+      </div>
     </div>
     <div class="input-section">
       <label class="label" for="name">名稱</label>
-      <input class="input" id="name" type="text" name="name" placeholder="請輸入使用者名稱" required>
+      <input class="input" id="name" type="text" name="name" placeholder="請輸入使用者名稱" maxlength="50" onkeyup="wordsTotal()" required>
+      <div class="invalid-feedback" style="inline-block">
+        名稱不得超過50字 
+      </div>
+      <span id="text-count">0/50</span>
     </div>
     <div class="input-section">
       <label class="label" for="email">Email</label>
       <input class="input" id="email" type="email" name="email" placeholder="請輸入 Email" required>
+      <div class="invalid-feedback">
+        請輸入正確的信箱
+      </div>
     </div>
     <div class="input-section">
       <label class="label" for="password">密碼</label>
       <input class="input" id="password" type="password" name="password" placeholder="請輸入密碼" required>
+      <div class="invalid-feedback">
+        密碼和密碼確認需一致
+      </div>
     </div>
     <div class="input-section">
       <label class="label" for="checkPassword">密碼確認</label>
       <input class="input" id="checkPassword" type="password" name="checkPassword" placeholder="請再次輸入密碼" required>
+      <div class="invalid-feedback">
+        密碼和密碼確認需一致
+      </div>
     </div>
-    <button class="login-btn" type="submit">註冊</button>
+    <button class="login-btn" type="submit" id="submit-btn">註冊</button>
   </form>
   <p class="footer d-flex justify-content-center"><a href="/signin">取消</a></p>
   {{> messages}}
+  {{!-- 表單驗證 --}}
+  <script>
+    const name = document.querySelector('#name')
+    const form = document.querySelector('#form')
+    const submitButton = document.querySelector('#submit-btn')
+
+    function wordsTotal() {
+      let total = document.getElementById('name').value.trim().length
+      document.getElementById('text-count').innerHTML = total + '/50'
+      if (total >= 50) {
+        name.classList.add("disabled")
+      } else {
+        name.classList.remove("disabled")
+      }
+    }
+
+    submitButton.addEventListener('click', function onSubmitButtonClicked(event) {
+      form.classList.add('was-validated')
+    })
+
+    form.addEventListener('submit', function onFormSubmit(event) {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+    })
+  </script>
 </div>

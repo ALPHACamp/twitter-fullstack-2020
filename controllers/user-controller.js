@@ -28,6 +28,8 @@ const userController = {
           account,
           name,
           email,
+          avatar: 'https://i.imgur.com/cB7ZT9k.jpg',
+          cover: 'https://i.imgur.com/lswsX4e.png',
           password: hash
         })
         req.flash('success_messages', '成功註冊帳號！')
@@ -142,6 +144,7 @@ const userController = {
     return Promise.all([
       User.findByPk(req.params.id, {
         include: [
+          { model: Tweet },
           { model: Reply, include: { model: Tweet, include: User } },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
@@ -168,9 +171,11 @@ const userController = {
       )
   },
   getUserLikes: (req, res, next) => {
+    const currentUser = helpers.getUser(req)
     return Promise.all([
       User.findByPk(req.params.id, {
         include: [
+          { model: Tweet },
           { model: Like, include: { model: Tweet, include: [User, Reply, Like] } },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
@@ -201,10 +206,70 @@ const userController = {
       )
   },
   getUserFollowings: (req, res, next) => {
-    res.render('followings')
+    const currentUser = helpers.getUser(req)
+    return Promise.all([
+      User.findByPk(req.params.id, {
+        include: [
+          { model: Tweet },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ],
+        order: [['Followings', Followship, 'createdAt', 'desc'], ['Followers', Followship, 'createdAt', 'desc']]
+      }),
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }],
+        where: { role: 'user', id: { [Op.ne]: currentUser.id } }
+      }),
+      Followship.findAll({ where: { followerId: currentUser.id }, attributes: ['followingId'], raw: true, nest: true })
+    ])
+      .then(([user, users, Followed]) => {
+        if (!user) throw new Error("User doesn't exist!")
+        const userProfile = user.toJSON()
+        const result = users
+          .map(user => ({
+            ...user.toJSON(),
+            followerCount: user.Followers.length,
+            isFollowed: user.Followers.some(follower => follower.id === currentUser.id)
+          }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+        const followList = Followed.map(e => Object.values(e)[0])
+        userProfile.Followings.forEach(following => { following.isFollowed = followList.some(i => i === following.id) })
+        res.render('userfollowings', { userProfile, users: result.slice(0, 10) })
+      }
+      )
   },
   getUserFollowers: (req, res, next) => {
-    res.render('followers')
+    const currentUser = helpers.getUser(req)
+    return Promise.all([
+      User.findByPk(req.params.id, {
+        include: [
+          { model: Tweet },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ],
+        order: [['Followers', Followship, 'createdAt', 'desc'], ['Followings', Followship, 'createdAt', 'desc']]
+      }),
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }],
+        where: { role: 'user', id: { [Op.ne]: currentUser.id } }
+      }),
+      Followship.findAll({ where: { followerId: currentUser.id }, attributes: ['followingId'], raw: true, nest: true })
+    ])
+      .then(([user, users, Followed]) => {
+        if (!user) throw new Error("User doesn't exist!")
+        const userProfile = user.toJSON()
+        const result = users
+          .map(user => ({
+            ...user.toJSON(),
+            followerCount: user.Followers.length,
+            isFollowed: user.Followers.some(follower => follower.id === currentUser.id)
+          }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+        const followList = Followed.map(e => Object.values(e)[0])
+        userProfile.Followers.forEach(follower => { follower.isFollowed = followList.some(i => i === follower.id) })
+        res.render('userfollowers', { userProfile, users: result.slice(0, 10) })
+      }
+      )
   },
   postUserInfo: (req, res, next) => {
   }

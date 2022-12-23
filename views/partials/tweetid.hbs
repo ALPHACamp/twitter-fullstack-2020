@@ -1,0 +1,95 @@
+<div class="d-flex" style="height:74px;border-bottom: 1px solid #e6ecf0;">
+  <a href="javascript:history.back()">
+    <img src="/images/icons/outlined-back.png" style="height:24px; margin-top:24px; margin-left:28px">
+  </a>
+  <div style="margin-left:16px;margin-top: 24px;padding: 0;">
+    <span
+      style="width: 48px;height: 26px;font-weight: 700;font-size: 24px;line-height: 26px;color: #171725;margin-top: 0;padding: 0;">推文</span>
+  </div>
+</div>
+<div class="tweet-reply-main">
+  <div class="MainReplyTweet" style="margin: 16px;">
+    <div class="post-user d-flex" style="gap: 8px;">
+      <div>
+        <a href="/users/{{tweet.User.id}}/tweets">
+          <img src="{{tweet.User.avatar}}" alt="" width="50px" height="50px" class="rounded-circle" />
+        </a>
+      </div>
+      <div>
+        <a href="/users/{{tweet.User.id}}/tweets">
+          <div class="popular-name">{{tweet.User.name}}</div>
+          <small class="small-account">@{{tweet.User.account}}</small>
+        </a>
+      </div>
+    </div>
+    <div style="margin-top: 8px;">
+      <p id="single-tweets-content-word">
+        {{tweet.description}}
+      </p>
+    </div>
+    <div style="margin-top: 8px;">
+      <p id="single-tweets-time" style="padding-bottom: 8px;">
+        {{momentTime tweet.createdAt}}・{{momentDate tweet.createdAt}}
+      </p>
+    </div>
+  </div>
+  <div class="number-followers"
+    style="font-size:19px; font-weight:700; color:#171725; margin-left:16px;border-bottom: 1px solid #e6ecf0;padding-bottom:16px">
+    <span>{{tweet.Replies.length}}</span>
+    <span style="color: #6C757D;">回覆</span>
+    <span style="margin-left: 24px;">{{tweet.Likes.length}}</span>
+    <span style="color: #6C757D;">喜歡次數</span>
+  </div>
+  <div class="row-actions d-flex"
+    style="padding: 21.52px 0 21.52px 16px; border-bottom: 1px solid #e6ecf0; margin-left:3.49px;">
+    <button  data-bs-toggle="modal" data-bs-target="#reply-modal-{{tweet.id}}"
+      style="margin-right: 133.13px; padding: 0; border: 0; background-color: #fff;">
+      <img src="/images/icons/outlined-reply.png" alt="" width="30px" height="30px" />
+    </button>
+    {{#if tweet.isLiked}}
+    <form action="/tweets/{{tweet.id}}/unlike" method="post">
+      <button type="submit" style="padding: 0; border: 0; background-color: #fff;">
+        <img src="/images/icons/filled-like.png" alt="" width="30px" height="30px" style="" />
+      </button>
+    </form>
+    {{else}}
+    <form action="/tweets/{{tweet.id}}/like" method="post" style="align-items: center; display: flex;">
+      <button type="submit" style="padding: 0; border: 0; background-color: #fff;">
+        <img src="/images/icons/outlined-like.png" alt="" width="30px" height="30px" style="" />
+      </button>
+    </form>
+    {{/if}}
+  </div>
+
+</div>
+{{!-- replies --}}
+<div class="d-flex flex-column" style="width: 641px;">
+  {{#each tweet.Replies}}
+  <div class="d-flex each-tweet">
+    <div id="tweet-icon">
+      <a href="/users/{{this.User.id}}/tweets">
+        <img src="{{this.User.avatar}}" alt="" width="50" height="50" class="rounded-circle" />
+      </a>
+    </div>
+    <div id="tweet-right" style="width: 528px">
+      <div class="header">
+        <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">{{this.User.name}}</span>
+        <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D; margin-left:8px;"
+          class="text-muted">
+          @{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
+      </div>
+      <p class="reply-whom">
+        回覆 <span style="color: #ff6600">@{{../tweet.User.account}}</span>
+      </p>
+      <div class="content-word">
+        <p style="margin-bottom: 8px">
+          {{this.comment}}
+        </p>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+{{!-- 這是modal-reply --}}
+{{>reply-modal user=tweet.User User=currentUser}}
