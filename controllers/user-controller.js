@@ -1,7 +1,12 @@
 const db = require('../models')
 const User = db.User
 const Followship = db.Followship
+const Tweet = db.Tweet
+const Reply = db.Reply
+const helpers = require('../_helpers')
+const services = require('../_services')
 const imgur = require('imgur')
+const bcrypt = require('bcryptjs')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 imgur.setClientId(IMGUR_CLIENT_ID)
 
@@ -82,8 +87,7 @@ const userController = {
         user,
         topFollowings
       })
-    }
-    catch (err) { next(err) }
+    } catch (err) { next(err) }
   },
   getFollowings: async (req, res, next) => {
     const userId = req.params.id
@@ -108,8 +112,7 @@ const userController = {
         followings,
         topFollowings
       })
-    }
-    catch (err) { next(err) }
+    } catch (err) { next(err) }
   },
   getFollowers: async (req, res, next) => {
     const userId = req.params.id
@@ -134,8 +137,7 @@ const userController = {
         followings,
         topFollowings
       })
-    }
-    catch (err) { next(err) }
+    } catch (err) { next(err) }
   },
   addFollowship: (req, res, next) => {
     const followingId = req.body.id
@@ -171,7 +173,7 @@ const userController = {
   editUserPage: (req, res, next) => {
     return User.findByPk(helpers.getUser(req).id, { raw: true })
       .then(user => {
-        if (!user) throw new Error("用戶不存在")
+        if (!user) throw new Error('用戶不存在')
         res.render('edit', { user })
       })
       .catch(err => next(err))
@@ -241,8 +243,7 @@ const userController = {
         replies,
         topFollowings
       })
-    }
-    catch (err) { next(err) }
+    } catch (err) { next(err) }
   },
   selfeditUser: async (req, res, next) => {
     try {

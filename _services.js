@@ -1,4 +1,4 @@
-const { Op } = require("sequelize")
+const { Op } = require('sequelize')
 const helpers = require('./_helpers')
 const db = require('./models')
 const User = db.User
@@ -11,7 +11,7 @@ module.exports = {
     const user = helpers.getUser(req)
     const followingList = user && user.Followings.map(following => following.id)
     const allUsers = await User.findAll({
-      where: { 
+      where: {
         role: 'user',
         id: { [Op.not]: Number(helpers.getUser(req).id) }
       },
@@ -29,7 +29,7 @@ module.exports = {
           isFollowed: followingList.includes(topFollowing.id)
         }
       })
-    return topFollowings  
+    return topFollowings
   },
   // 貼文抓取
   getTweets: async (req) => {
@@ -54,11 +54,11 @@ module.exports = {
   getReplies: async (req) => {
     const TweetId = req.params.id || ''
     const replies = await Reply.findAll({
-     where: { TweetId },
-     order: [['createdAt', 'DESC']],
-     include: [ User ],
-     nest: true,
-     raw: true
+      where: { TweetId },
+      order: [['createdAt', 'DESC']],
+      include: [User],
+      nest: true,
+      raw: true
     }) || []
     return replies
   },

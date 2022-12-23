@@ -7,8 +7,8 @@
         </a>
       </div>
       <div class="col fl mt-2 wid-80">
-        <span class="selftwitterbox-name">User1</span>
-        <p class="twitterbox-time">25推文</p>
+        <span class="selftwitterbox-name">{{user.account}}</span>
+        <p class="twitterbox-time">{{twitterslength}}推文</p>
       </div>
     </div>
     <div>
@@ -37,19 +37,19 @@
       </div>
       <div>
         <span class="twitterbox-time text-dark">34個
-          <a class="text-decoration-n following-color" href="/users/3/followings">跟隨中</a>
+          <a class="text-decoration-n following-color" href="/users/{{user.id}}/followings">跟隨中</a>
         </span>
         <span class="twitterbox-time text-dark">59位
-          <a class="text-decoration-n follow-color" href="/users/3/followers">跟隨者</a>
+          <a class="text-decoration-n follow-color" href="/users/{{user.id}}/followers">跟隨者</a>
         </span>
       </div>
       <div class="selftab border-none bottom-line-2">
         <ul class="nav mb-4">
           <li class="nav-item">
-            <a class="nav-link active{{#ifCond route 'tweet'}}active{{/ifCond}}" href="">推文</a>
+            <a class="nav-link active{{#ifCond route 'tweets'}}active{{/ifCond}}" href="/users/:id/tweets">推文</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{#ifCond route ''}}active{{/ifCond}}" href="/users/3/replies">回覆</a>
+            <a class="nav-link {{#ifCond route 'reply'}}active{{/ifCond}}" href="/users/{{user.id}}/reply">回覆</a>
           </li>
           <li class="nav-item">
             <a class="nav-link {{#ifCond route ''}}active{{/ifCond}}" href="">喜歡的內容</a>
@@ -58,3 +58,4 @@
       </div>
     </div>
   </div>
+</div>
