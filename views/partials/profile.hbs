@@ -16,10 +16,22 @@
       style="height: 200px;width:639px; object-fit:cover;position:absolute;top:0;left:0">
     <img src="{{userProfile.avatar}}" alt="avatar"
       style="height:140px; width:140px; border: 4px solid #FFFFFF;position:absolute;bottom:0;left:16px; z-index:1; border-radius:50%">
+    {{#if userProfile.isCurrentUser }}
     <button type="button" class="btn btn-outline-warning float-end" id="editButton"
       style="border-radius:50px;line-height: 24px; height:40px; width:128px; border-color:#FF6600;font-size:16px; font-weight:400;margin-top:216px;margin-right:16px; color:#FF6600"
       data-id="{{currentUser.id}}" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-      編輯個人資料</button>
+      編輯個人資料
+    </button>
+    {{else if userProfile.isFollowed }}
+    <form action="/followships/{{userProfile.id}}?_method=DELETE" method="POST" style="display: contents;">
+      <button type="submit" class="following-btn float-end" style="margin-top: 216px; margin-right: 16px;">正在跟隨</button>
+    </form>
+    {{else}}
+    <form action="/followships" method="POST" style="display: contents;">
+      <input type="text" name="id" value="{{userProfile.id}}" style="display: none;">
+      <button type="submit" class="follow-btn float-end" style="margin-top: 216px; margin-right: 16px;">跟隨</button>
+    </form>
+    {{/if}}
   </div>
 
   <div class="d-flex flex-column" style="height:114px; margin-left:16px">

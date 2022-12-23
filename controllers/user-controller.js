@@ -114,7 +114,7 @@ const userController = {
       }),
       User.findAll({
         include: [{ model: User, as: 'Followers' }],
-        where: { role: 'user', id: { [Op.ne]: currentUser.id } }
+        where: { role: 'user' }
       }),
       Like.findAll({
         attributes: ['id', 'UserId', 'TweetId'],
@@ -129,12 +129,15 @@ const userController = {
           .map(user => ({
             ...user.toJSON(),
             followerCount: user.Followers.length,
-            isFollowed: user.Followers.some(follower => follower.id === currentUser.id)
+            isFollowed: user.Followers.some(follower => follower.id === currentUser.id),
+            isCurrentUser: user.id === currentUser.id
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
         userProfile.Tweets.forEach(tweet => {
           tweet.isLiked = likes.some(l => (l.UserId === helpers.getUser(req).id) && (l.TweetId === tweet.id))
         })
+        userProfile.isCurrentUser = userProfile.id === currentUser.id
+        userProfile.isFollowed = userProfile.Followers.map(follower => Object.values(follower)[0]).some(id => id === currentUser.id)
         res.render('usertweets', { userProfile, currentUser, users: result.slice(0, 10) })
       }
       )
@@ -153,7 +156,7 @@ const userController = {
       }),
       User.findAll({
         include: [{ model: User, as: 'Followers' }],
-        where: { role: 'user', id: { [Op.ne]: currentUser.id } }
+        where: { role: 'user' }
       })
     ])
       .then(([user, users]) => {
@@ -163,9 +166,12 @@ const userController = {
           .map(user => ({
             ...user.toJSON(),
             followerCount: user.Followers.length,
-            isFollowed: user.Followers.some(follower => follower.id === currentUser.id)
+            isFollowed: user.Followers.some(follower => follower.id === currentUser.id),
+            isCurrentUser: user.id === currentUser.id
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
+        userProfile.isCurrentUser = userProfile.id === currentUser.id
+        userProfile.isFollowed = userProfile.Followers.map(follower => Object.values(follower)[0]).some(id => id === currentUser.id)
         res.render('userreplies', { userProfile, users: result.slice(0, 10) })
       }
       )
@@ -184,23 +190,25 @@ const userController = {
       }),
       User.findAll({
         include: [{ model: User, as: 'Followers' }],
-        where: { role: 'user', id: { [Op.ne]: currentUser.id } }
+        where: { role: 'user' }
       })
     ])
       .then(([user, users]) => {
         if (!user) throw new Error("User doesn't exist!")
-        const currentUser = helpers.getUser(req).id
         const userProfile = user.toJSON()
         const result = users
           .map(user => ({
             ...user.toJSON(),
             followerCount: user.Followers.length,
-            isFollowed: user.Followers.some(follower => follower.id === currentUser)
+            isFollowed: user.Followers.some(follower => follower.id === currentUser.id),
+            isCurrentUser: user.id === currentUser.id
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
         userProfile.Likes.forEach(like => {
-          like.Tweet.isLiked = like.Tweet.Likes.some(l => (l.UserId === currentUser))
+          like.Tweet.isLiked = like.Tweet.Likes.some(l => (l.UserId === currentUser.id))
         })
+        userProfile.isCurrentUser = userProfile.id === currentUser.id
+        userProfile.isFollowed = userProfile.Followers.map(follower => Object.values(follower)[0]).some(id => id === currentUser.id)
         res.render('userlikes', { userProfile, users: result.slice(0, 10), currentUser })
       }
       )
@@ -218,7 +226,7 @@ const userController = {
       }),
       User.findAll({
         include: [{ model: User, as: 'Followers' }],
-        where: { role: 'user', id: { [Op.ne]: currentUser.id } }
+        where: { role: 'user' }
       }),
       Followship.findAll({ where: { followerId: currentUser.id }, attributes: ['followingId'], raw: true, nest: true })
     ])
@@ -229,7 +237,8 @@ const userController = {
           .map(user => ({
             ...user.toJSON(),
             followerCount: user.Followers.length,
-            isFollowed: user.Followers.some(follower => follower.id === currentUser.id)
+            isFollowed: user.Followers.some(follower => follower.id === currentUser.id),
+            isCurrentUser: user.id === currentUser.id
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
         const followList = Followed.map(e => Object.values(e)[0])
@@ -251,7 +260,7 @@ const userController = {
       }),
       User.findAll({
         include: [{ model: User, as: 'Followers' }],
-        where: { role: 'user', id: { [Op.ne]: currentUser.id } }
+        where: { role: 'user' }
       }),
       Followship.findAll({ where: { followerId: currentUser.id }, attributes: ['followingId'], raw: true, nest: true })
     ])
@@ -262,7 +271,8 @@ const userController = {
           .map(user => ({
             ...user.toJSON(),
             followerCount: user.Followers.length,
-            isFollowed: user.Followers.some(follower => follower.id === currentUser.id)
+            isFollowed: user.Followers.some(follower => follower.id === currentUser.id),
+            isCurrentUser: user.id === currentUser.id
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
         const followList = Followed.map(e => Object.values(e)[0])
