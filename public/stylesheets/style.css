@@ -999,8 +999,8 @@ height: 50px;
 }
 
 .popular-name {
-width:calc(100%/6);
-      white-space: nowrap;
+width: calc(100vh - 765px);
+white-space: pre-wrap;
 height: 26px;
 font-style: normal;
 font-weight: 700;

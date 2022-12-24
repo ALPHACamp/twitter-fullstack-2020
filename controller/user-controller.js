@@ -61,7 +61,6 @@ const userController = {
     const { editAccount, editName, editEmail, editPassword, editCheckPassword } = req.body
 
     if (loginUser.id.toString() !== editUserId.toString()) {
-      console.log(loginUser.id, editUserId)
       req.flash('error_messages', '不可以改別人的資料!')
       return res.redirect('back')
     }
@@ -124,7 +123,6 @@ const userController = {
         raw: true
       }),
       Tweet.findAll({
-        include: Like,
         attributes: {
           include: [
             [sequelize.literal(`(SELECT COUNT(*) FROM Replies WHERE tweet_id = Tweet.id)`), 'repliesCount'],
