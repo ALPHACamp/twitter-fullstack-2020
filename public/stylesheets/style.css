@@ -716,8 +716,11 @@ svg {
   height: 222px;
 }
 
-.admin-left {
-  width: 200px;
+.admin-right {
+  position: absolute;
+  /* height: 1200px; */
+  top: 0px;
+  left: 24%;
 }
 
 .admin-user-background {
