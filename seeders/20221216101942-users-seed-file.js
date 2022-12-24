@@ -10,6 +10,8 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       introduction: faker.lorem.text().substring(0, 50),
       role: 'admin',
+      avatar:'/images/avatar@2x.png',
+      background:"/images/unsplash_cO9_joZ1FdA@2x.png",
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -19,6 +21,8 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       introduction: faker.lorem.text().substring(0, 50),
       role: 'user',
+      avatar: '/images/avatar@2x.png',
+      background: "/images/unsplash_cO9_joZ1FdA@2x.png",
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -28,6 +32,8 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       introduction: faker.lorem.text().substring(0, 50),
       role: 'user',
+      avatar: '/images/avatar@2x.png',
+      background: "/images/unsplash_cO9_joZ1FdA@2x.png",
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -37,6 +43,8 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       introduction: faker.lorem.text().substring(0, 50),
       role: 'user',
+      avatar: '/images/avatar@2x.png',
+      background: "/images/unsplash_cO9_joZ1FdA@2x.png",
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -46,6 +54,8 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       introduction: faker.lorem.text().substring(0, 50),
       role: 'user',
+      avatar: '/images/avatar@2x.png',
+      background: "/images/unsplash_cO9_joZ1FdA@2x.png",
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -55,6 +65,8 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       introduction: faker.lorem.text().substring(0, 50),
       role: 'user',
+      avatar: '/images/avatar@2x.png',
+      background: "/images/unsplash_cO9_joZ1FdA@2x.png",
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -64,6 +76,8 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       introduction: faker.lorem.text().substring(0, 50),
       role: 'user',
+      avatar: '/images/avatar@2x.png',
+      background: "/images/unsplash_cO9_joZ1FdA@2x.png",
       createdAt: new Date(),
       updatedAt: new Date()
     }], {})
