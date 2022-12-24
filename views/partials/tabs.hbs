@@ -25,11 +25,14 @@
       </div>
       <div id="tweet-right" style="width: 528px">
         <div class="header" onclick="window.open('/tweets/{{this.id}}/replies','_self');" style="cursor: pointer;">
-          <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">{{..
-            /userProfile.name}}</span>
-          <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D; margin-left:8px;"
-            class="text-muted">
-            @{{.. /userProfile.account}}．{{relativeTimeFromNow this.createdAt}}</span>
+          <a href="/users/{{this.UserId}}/tweets">
+            <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">{{..
+              /userProfile.name}}</span>
+            <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D; margin-left:8px;"
+              class="text-muted">@{{.. /userProfile.account}}</span>
+          </a>
+          <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D;"
+            class="text-muted">．{{relativeTimeFromNow this.createdAt}}</span>
         </div>
         <div class="content-word" onclick="window.open('/tweets/{{this.id}}/replies','_self');"
           style="cursor: pointer;">
@@ -77,20 +80,25 @@
       </div>
       <div id="tweet-right" style="width: 528px">
         <div class="header">
-          <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">{{..
-            /userProfile.name}}</span>
-          <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D; margin-left:8px;"
-            class="text-muted">
-            @{{.. /userProfile.account}}．{{relativeTimeFromNow this.createdAt}}</span>
+          <a href="/users/{{this.UserId}}/tweets">
+            <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">{{..
+              /userProfile.name}}</span>
+            <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D; margin-left:8px;"
+              class="text-muted">@{{.. /userProfile.account}}</span>
+          </a>
+          <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D;"
+            class="text-muted">．{{relativeTimeFromNow this.createdAt}}</span>
         </div>
-        <p class="reply-whom">
-          回覆 <span style="color: #ff6600">@{{this.Tweet.User.account}}</span>
-        </p>
-        <div class="content-word">
-          <p style="margin-bottom: 8px">
-            {{this.comment}}
+        <a href="/tweets/{{this.Tweet.id}}/replies" style="text-decoration: none;color: #6c757d;">
+          <p class="reply-whom">
+            回覆 <span style="color: #ff6600">@{{this.Tweet.User.account}}</span>
           </p>
-        </div>
+          <div class="content-word">
+            <p style="margin-bottom: 8px; color: #171725;">
+              {{this.comment}}
+            </p>
+          </div>
+        </a>
       </div>
     </div>
     {{/each}}
@@ -110,11 +118,14 @@
       <div id="tweet-right" style="width: 528px">
         <div class="header" onclick="window.open('/tweets/{{this.Tweet.id}}/replies','_self');"
           style="cursor: pointer;">
-          <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">{{this.Tweet.User.name
-            }}</span>
-          <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D; margin-left:8px;"
-            class="text-muted">
-            @{{this.Tweet.User.account}}．{{relativeTimeFromNow this.Tweet.createdAt}}</span>
+          <a href="/users/{{this.Tweet.UserId}}/tweets">
+            <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">{{this.Tweet.User.name
+              }}</span>
+            <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D; margin-left:8px;"
+              class="text-muted">@{{this.Tweet.User.account}}</span>
+          </a>
+          <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D;"
+            class="text-muted">．{{relativeTimeFromNow this.Tweet.createdAt}}</span>
         </div>
         <div class="content-word" onclick="window.open('/tweets/{{this.Tweet.id}}/replies','_self');"
           style="cursor: pointer;">
