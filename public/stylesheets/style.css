@@ -151,17 +151,17 @@ overflow-x: hidden;
 .card-home{
 border-left:1px solid	#E6ECF0;
 }
-.top::-webkit-scrollbar{
+.top::-webkit-scrollbar,.home::-webkit-scrollbar{
 width: 6px;
 }
 /* 卷軸正在動 */
-.top::-webkit-scrollbar-thumb{
+.top::-webkit-scrollbar-thumb,.home::-webkit-scrollbar-thumb{
 background-color: #C1C1C1;
 border-radius: 100px;
 width: 6px;
 }
 /*卷軸背景*/
-.top::-webkit-scrollbar-track{
+.top::-webkit-scrollbar-track,.home::-webkit-scrollbar-track{
 background-color: #FAFAFA;
 }
 .home-header{
@@ -208,9 +208,9 @@ padding: 12px 16px;
 border: none;
 outline: none;
 display: block;
-/* white-space: pre-wrap;
-word-break: normal;
-overflow: hidden; */
+/* white-space: pre-wrap; */
+word-break: break-word;
+/* overflow: hidden; */
 }
 
 .delPosition{
@@ -1112,10 +1112,6 @@ bottom:0;
 right:0;
 margin:10px;
 }
-.notice{
-background-color:white;
-height:10px;
-}
 #tweetEnterMessage{
 color:#FC5A5A;
 font-size:15px;
@@ -1132,6 +1128,14 @@ font-size: 15px;
 align-items: reverse;
 border:none;
 color:#C4C4C4;
+}
+#enterMessage{
+margin-left: 380px;
+margin: 20px 90px;
+color:#FC5A5A;
+font-size:15px;
+line-height: 15px;
+border:none;
 }
 .Vertical-line{
 width: 25px;

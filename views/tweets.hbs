@@ -3,7 +3,7 @@
     {{>left-sidebar route="homepage"}}
     {{!-- 首頁/tweets --}}
     <div class="col-6 top">
-      <div>
+      <div class="home" style="overflow-y:auto;  max-height: calc(100vh - 24px);">
         <div class="card-home">
           <div class=" home-header">
             首頁
@@ -18,9 +18,6 @@
                 <div class="text-end">
                   <span id="limit-count" style="color:#C4C4C4;">
                     0/140
-                  </span>
-                  <span id="limit-word" style="color:red;">
-                    {{!-- 字數不可超過140字 --}}
                   </span>
                   <button type="submit" class="btn-sml">推文</button>
               </form>
@@ -92,7 +89,7 @@
       form.classList.add('was-validated')
     })
     if (inputValue > maxChars) {
-      limitWord.innerText = "字數不可超過140字"
+      limitCount.innerHTML = '<span id="limit-word" style="color:red;">字數不可超過140字</span>'
       which.value = which.value.substring(0, maxChars);
     }
     if (inputValue === 0) {

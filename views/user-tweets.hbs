@@ -28,11 +28,13 @@
               </div>
               {{#if user.isFollowed}}
               <form action="/followships/{{user.id}}?_method=DELETE" method="POST">
-                <button type="submit" name="id" value="{{user.id}}" class="following-btn">正在跟隨</button>
+                <button type="submit" name="id" value="{{user.id}}" style="margin-right:5px;"
+                  class="following-btn">正在跟隨</button>
               </form>
               {{else}}
               <form action="/followships" method="POST">
-                <button type="submit" name="id" value="{{user.id}}" class="follow-btn">跟隨</button>
+                <button type="submit" name="id" value="{{user.id}}" style="margin-right:5px;"
+                  class="follow-btn">跟隨</button>
               </form>
               {{/if}}
             </div>
@@ -189,11 +191,13 @@
     countIntroText.innerText = countIntro + '/160'
     if (countName >= 50) {
       countNameText.style.color = 'red'
+      countNameText.innerHTML = `<span>字數已達上限!<span>`
     } else {
       countNameText.style.color = 'black'
     }
     if (countIntro >= 160) {
       countIntroText.style.color = 'red'
+      countIntroText.innerHTML = `<span>字數已達上限!<span>`
     } else {
       countIntroText.style.color = 'black'
     }

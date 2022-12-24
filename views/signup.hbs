@@ -29,8 +29,9 @@
         <div class="div">
           <label for="checkPassword">密碼確認</label>
           <input type="password" name="checkPassword" id="checkPassword" placeholder="請輸再次輸入密碼"
-            aria-label="Confirm user password" required>
+            aria-label="Confirm user password" onkeyup="validPassword()" required>
           <span class="invalid-feedback">內容不可空白</span>
+          <span id="passwordFalse"></span>
         </div>
         <button id="login-button" type="submit" onclick="validTest()">註冊</button>
       </form>
@@ -48,7 +49,7 @@
     const nameLength = document.getElementById('nameLengthCount')
     nameLength.innerText = counts + '/50'
     if (counts === 50) {
-      nameLength.innerHTML = `<span style="color:red;">字數超出上限</span>`
+      nameLength.innerHTML = '<span id = "limit-word" style = "color:red;"> 字數不可超過140字</span> '
     }
   }
   //輸入不可為空白
@@ -66,5 +67,17 @@
         event.preventDefault()
       }
     })
+  }
+
+  //密碼是否相符
+  function validPassword() {
+    const pd = document.querySelector('#password').value
+    const cPd = document.querySelector('#checkPassword').value
+    const passwordFalse = document.querySelector('#passwordFalse')
+    if (pd !== cPd) {
+      passwordFalse.innerHTML = '<span style="color:red;">兩次密碼輸入不正確!</span>'
+    } else {
+      passwordFalse.classList.add('d-none')
+    }
   }
 </script>

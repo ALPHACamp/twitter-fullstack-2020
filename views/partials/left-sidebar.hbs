@@ -54,16 +54,12 @@
         <img src="/images/icon/User Photo.png" class="user-avatar">
         <div class="textarea-body">
           <form action="/tweets" method="POST">
-            <textarea cols="65" class="post-tweet-content" type="text" name="description" id="description"
+            <textarea cols="65" style="resize:none;" type="text" name="description" id="description"
               placeholder="有什麼新鮮事？" oninput="tweetsCounts()" required></textarea>
-            <span id="tweetschar_count">
-              0/140
+            <span id="tweetschar_count" style="margin-left: 400px;">0/140</span>
+            <span id="enterMessage">
+              {{!-- 字數不可超過140字 --}}
             </span>
-            <div class="notice">
-              <span id="tweetEnterMessage">
-                {{!-- 字數不可超過140字 --}}
-              </span>
-            </div>
             <button type=" submit" class="btn-sml-sec">推文</button>
           </form>
         </div>
@@ -78,18 +74,19 @@
 <script>
   function tweetsCounts() {
     const counts = document.getElementById('description').value.trim().length
-    const tweetEnterMessage = document.getElementById('tweetEnterMessage')
+    const tweetEnterMessage = document.getElementById('enterMessage')
     const chatText = document.getElementById('tweetschar_count')
     chatText.innerText = counts + '/140'
+
     if (counts > 140) {
-      tweetEnterMessage.innerText = '字數超出上限！'
+      tweetEnterMessage.innerHTML = '<span id="enterMessage" style="position:absolute;right:0;">字數不可超過140字!</span >'
       return
     }
     if (counts > 0 && counts <= 140) {
       tweetEnterMessage.innerText = ''
     }
     if (counts === 0) {
-      tweetEnterMessage.innerText = '內容不可空白'
+      tweetEnterMessage.innerHTML = '<span id="enterMessage" style="position:absolute;right:0;">內容不可空白!</span >'
     }
   }
 </script>

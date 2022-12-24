@@ -28,11 +28,13 @@
               </div>
               {{#if user.isFollowed}}
               <form action="/followships/{{user.id}}?_method=DELETE" method="POST">
-                <button type="submit" name="id" value="{{user.id}}" class="following-btn">正在跟隨</button>
+                <button type="submit" name="id" value="{{user.id}}" style="margin-right:5px;"
+                  class="following-btn">正在跟隨</button>
               </form>
               {{else}}
               <form action="/followships" method="POST">
-                <button type="submit" name="id" value="{{user.id}}" class="follow-btn">跟隨</button>
+                <button type="submit" name="id" value="{{user.id}}" style="margin-right:5px;"
+                  class="follow-btn">跟隨</button>
               </form>
               {{/if}}
             </div>

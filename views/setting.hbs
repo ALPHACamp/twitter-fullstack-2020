@@ -38,7 +38,7 @@
                 aria-label="Confirm user password" onkeyup="validPassword()" required>
 
               <span class="invalid-feedback">內容不可空白</span>
-              {{!-- <span id="passwordFalse">內容不可空白</span> --}}
+              <span id="passwordFalse"></span>
             </div>
 
             <button type="submit" id="submitBtn" onclick="validTest()">儲存</button>
@@ -82,9 +82,11 @@
   function validPassword() {
     const pd = document.querySelector('#password').value
     const cPd = document.querySelector('#checkPassword').value
-    const passwordFalse = document.querySelector('.passwordFalse')
-    if (pd.value !== cPd.value) {
-      passwordFalse.innerHTML = `<span style="color:red;">兩次密碼輸入不正確!</span>`
+    const passwordFalse = document.querySelector('#passwordFalse')
+    if (pd !== cPd) {
+      passwordFalse.innerHTML = '<span style="color:red;">兩次密碼輸入不正確!</span>'
+    } else {
+      passwordFalse.classList.add('d-none')
     }
   }
 </script>

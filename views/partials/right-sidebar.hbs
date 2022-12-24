@@ -7,7 +7,7 @@
       {{#each result}}
       <li class="list-group-item d-flex justify-content-between m-0 mb-4">
         <div class="user-icon">
-          <a class="card-title tweets-name" href="/users/{{this.id}}/tweets"> {{#if this.avatar}}
+          <a class="tweets-name" href="/users/{{this.id}}/tweets"> {{#if this.avatar}}
             <img src="{{this.avatar}}" alt="avatar" class="user-avatar">
             {{else}}
             <img src="/images/icon/User Photo.png" alt="avatar" class="user-avatar">
