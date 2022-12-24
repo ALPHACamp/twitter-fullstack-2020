@@ -10,8 +10,8 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       introduction: faker.lorem.text().substring(0, 50),
       role: 'admin',
-      avatar:'/images/avatar@2x.png',
-      background:"/images/background@2x.png",
+      avatar: `https://loremflickr.com/250/250/avatar/?lock=${Math.random() * 100}`,
+      background: `https://loremflickr.com/250/250/background/?lock=${Math.random() * 100}`,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -21,8 +21,8 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       introduction: faker.lorem.text().substring(0, 50),
       role: 'user',
-      avatar: '/images/avatar@2x.png',
-      background: "/images/background@2x.png",
+      avatar: `https://loremflickr.com/250/250/avatar/?lock=${Math.random() * 100}`,
+      background: `https://loremflickr.com/250/250/background/?lock=${Math.random() * 100}`,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -32,8 +32,8 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       introduction: faker.lorem.text().substring(0, 50),
       role: 'user',
-      avatar: '/images/avatar@2x.png',
-      background: "/images/background@2x.png",
+      avatar: `https://loremflickr.com/250/250/avatar/?lock=${Math.random() * 100}`,
+      background: `https://loremflickr.com/250/250/background/?lock=${Math.random() * 100}`,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -43,8 +43,8 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       introduction: faker.lorem.text().substring(0, 50),
       role: 'user',
-      avatar: '/images/avatar@2x.png',
-      background: "/images/background@2x.png",
+      avatar: `https://loremflickr.com/250/250/avatar/?lock=${Math.random() * 100}`,
+      background: `https://loremflickr.com/250/250/background/?lock=${Math.random() * 100}`,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -54,8 +54,8 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       introduction: faker.lorem.text().substring(0, 50),
       role: 'user',
-      avatar: '/images/avatar@2x.png',
-      background: "/images/background@2x.png",
+      avatar: `https://loremflickr.com/250/250/avatar/?lock=${Math.random() * 100}`,
+      background: `https://loremflickr.com/250/250/background/?lock=${Math.random() * 100}`,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -65,8 +65,8 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       introduction: faker.lorem.text().substring(0, 50),
       role: 'user',
-      avatar: '/images/avatar@2x.png',
-      background: "/images/background@2x.png",
+      avatar: `https://loremflickr.com/250/250/avatar/?lock=${Math.random() * 100}`,
+      background: `https://loremflickr.com/250/250/background/?lock=${Math.random() * 100}`,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -76,8 +76,8 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       introduction: faker.lorem.text().substring(0, 50),
       role: 'user',
-      avatar: '/images/avatar@2x.png',
-      background: "/images/background@2x.png",
+      avatar: `https://loremflickr.com/250/250/avatar/?lock=${Math.random() * 100}`,
+      background: `https://loremflickr.com/250/240/Landscape/?lock=${Math.random() * 100}`,
       createdAt: new Date(),
       updatedAt: new Date()
     }], {})
