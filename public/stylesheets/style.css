@@ -172,6 +172,7 @@ height: 74px;
 display: flex;
 align-items: center;
 border-bottom: 1px solid 	#E6ECF0;
+border-right: 1px solid 	#E6ECF0;
 padding-left:23px;
 position: relative;
 }
@@ -1305,7 +1306,7 @@ padding: 0;
 margin: 10px;
 position: absolute;
 z-index: 1;
-right:0;
+left:680px;
 }
 .notiMes{
 border-radius: 8px;
@@ -1318,6 +1319,7 @@ font-family: 'Roboto';
 display: flex;
 justify-content: center;
 align-items: center;
+background-color: white;
 }
 .notiMes img{
 margin-right: 30px;
