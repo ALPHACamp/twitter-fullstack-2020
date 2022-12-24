@@ -92,8 +92,8 @@ const userController = {
       User.findByPk(editUserId)
     ])
       .then(([checkAccount, checkEmail, user]) => {
-        if (checkAccount) throw new Error("帳戶名稱已被其他人使用!")
-        if (checkEmail) throw new Error("email已被其他人使用!")
+        if (checkAccount) throw new Error("account 已重複註冊！")
+        if (checkEmail) throw new Error("email 已重複註冊！")
         const hash = bcrypt.hashSync(editPassword, 10)
         user.update({
           account: editAccount,
@@ -279,7 +279,7 @@ const userController = {
               [sequelize.literal(`(SELECT (COUNT(*)>0) FROM Likes WHERE user_id = ${loginUserId} AND tweet_id = Tweet.id)`), 'isliked']
             ]
           }
-        }], order: [[Tweet, 'createdAt', 'DESC']],
+        }], order: [['createdAt', 'DESC']],
         nest: true,
         raw: true
       }),

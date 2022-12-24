@@ -21,7 +21,7 @@ const apiController = {
     const { name, introduction } = req.body
     const { files } = req
     if (editUserId !== loginUserId) throw new Error("You can't edit other's profile!")
-    if (!name) throw new Error('User name is required!')
+    if (!name.trim()) throw new Error('User name is required!')
     return Promise.all([
       User.findByPk(editUserId),
       imgurFileHandler(files?.avatar && files.avatar[0]),
