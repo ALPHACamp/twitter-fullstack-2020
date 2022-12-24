@@ -177,3 +177,16 @@
     })
   </script>
 </div>
+
+{{!-- 以下是圖片暫存在瀏覽器 --}}
+<script>
+  const input = document.getElementById("avatar")
+  const avatar = document.getElementById("modal-avatar")
+
+  input.addEventListener('change', upload)
+
+  function upload(e) {
+    let uploadAvatar = e.target.files || e.dataTransfer.files;
+    avatar.src = window.URL.createObjectURL(uploadAvatar[0])
+  }
+</script>
