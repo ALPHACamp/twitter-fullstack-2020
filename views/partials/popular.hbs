@@ -15,8 +15,12 @@
           </div>
           <div class="ms-2 me-auto">
             <a href="/users/{{this.id}}/tweets">
-              <div class="popular-name">{{this.name}}</div>
-              <small class="small-account">@{{this.account}}</small>
+              <div class="popular-name" style="text-overflow:ellipsis; overflow:hidden; width:4.5rem">
+                {{this.name}}
+              </div>
+              <small class="small-account"
+                style="text-overflow:ellipsis; overflow:hidden; width:4.5rem">@{{this.account}}
+              </small>
             </a>
           </div>
           {{#if isCurrentUser }}
