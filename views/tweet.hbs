@@ -1,55 +1,60 @@
 {{> leftbar}}
-{{> leftbar}}
+
 <div class="middle right-line-2 left-line-2">
   <div>
     <div class="row">
       {{> user-nav}}
-{{> user-profile route="tweet"}}
-  {{#each tweets}}
-  {{!-- 推文 start--}}
-  <div>
-    <div class="fl">
-      <img class="ac-img" src="{{this.User.avatar}}"style="border-radius: 50%" alt="">
-    </div>
-    <div class="tweet-flow-text fl">
-      <a href="/users/{{../user.id}}/tweets" class="text-decoration-n">
-        <span class="twitterbox-name">{{this.User.name}}</span>
-      </a>
-      <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
-      <a href="/users/{{../user.id}}/replies" class="text-decoration-n">
-        <p class="twitterbox-text">
-          {{this.description}}
-        </p>
-      </a>
-      <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt=""
-          data-bs-target="#staticBackdrop{{this.id}}" data-bs-toggle="modal">{{this.Replies.length}}</span>
-  
-      {{#if this.isLiked}}
-      <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
-        <span class="twitterbox-time">
-          <button type="submit" class="btn">
-            <img class="tweet-flow-img" src="/images/like@2x.png" alt="">
-            {{this.Likes.length}}
-          </button>
-        </span>
-      </form>
-      {{else}}
-      <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
-        <span class="twitterbox-time">
-          <button type="submit" class="btn">
-            <img class="tweet-flow-img" src="/images/unlike@2x.png" alt="">
-            {{this.Likes.length}}
-          </button>
-        </span>
-      </form>
-      {{/if}}
-  
-      <div class="bottom-line-f"></div>
+      {{> user-profile route="tweet"}}
+      {{#each tweets}}
+      {{!-- 推文 start--}}
+      <div>
+        <div class="fl">
+          <img class="ac-img" src="/images/img@2x.png" alt="">
+        </div>
+        <div class="tweet-flow-text fl">
+          <a href="/users/{{../user.id}}/tweets" class="text-decoration-n">
+            <span class="twitterbox-name">{{this.User.name}}</span>
+          </a>
+          <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
+          <a href="/users/{{../user.id}}/replies" class="text-decoration-n">
+            <p class="twitterbox-text">
+              {{this.description}}
+            </p>
+          </a>
+          <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt=""
+              data-bs-target="#staticBackdrop{{this.id}}" data-bs-toggle="modal">13</span>
+
+          {{#if this.isLiked}}
+          <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
+            <span class="twitterbox-time">
+              <button type="submit" class="btn">
+                <img class="tweet-flow-img" src="/images/like@2x.png" alt="">
+                {{this.Likes.length}}
+              </button>
+            </span>
+          </form>
+          {{else}}
+          <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
+            <span class="twitterbox-time">
+              <button type="submit" class="btn">
+                <img class="tweet-flow-img" src="/images/unlike@2x.png" alt="">
+                {{this.Likes.length}}
+              </button>
+            </span>
+          </form>
+          {{/if}}
+
+          <div class="bottom-line-f"></div>
+        </div>
+      </div>
+      {{!-- 推文 end--}}
+      {{/each}}
+      {{> user-put}}
+      {{> user-tweet}}
+      {{> reply-modal}}
+
+
     </div>
   </div>
-  {{!-- 推文 end--}}
-  {{/each}}
-{{> reply-modal}}
-{{> user-put}}
+</div>
 {{> rightbar}}
-
