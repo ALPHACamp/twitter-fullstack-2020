@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     UserId: DataTypes.INTEGER,
     TweetId: DataTypes.INTEGER,
-    isLike: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Like',

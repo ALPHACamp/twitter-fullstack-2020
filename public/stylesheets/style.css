@@ -673,10 +673,7 @@ svg {
 }
 
 .sub-login {
-  display: flex;
-  justify-content: end;
-  align-items: end;
-
+  text-align: end;
   width: 360px;
   height: 36px;
 }
@@ -767,7 +764,7 @@ svg {
   color: #6c757d;
   font-size: 14px;
   font-weight: 400;
-  height: 8px;
+  /* height: 8px; */
 }
 
 .alert-style {
