@@ -8,7 +8,7 @@
   <div style="border:1px solid #E6ECF0;">
     <div class="d-flex align-items-center mt-1">
       <div style="width:50px; height:50px">
-        <a href="/users/{{tweet.User.id}}"><img class="ac-img" src="{{tweet.User.avatar}}" alt=""></a>
+        <a href="/users/{{tweet.User.id}}"><img class="ac-img" src="{{tweet.User.avatar}}" style="border-radius: 50%" alt=""></a>
       </div>
       <div class="ms-2">
         <a href="/users/{{tweet.User.id}}" class="text-decoration-n">
@@ -21,44 +21,44 @@
       <p class="mb-1" style="font-weight: 400;line-height: 36px;font-size: 24px;">
         {{tweet.description}}
       </p>
-      <div>
-      </div>
       <span class="twitterbox-time d-block mb-1">{{relativetimeFromNNow tweet.createdAt}} </span>
       <div class="d-flex align-items-center " style="height:60px; border-top:2px solid #E6ECF0;font-weight: 700; font-family: 'Montserrat';font-size: 19px; ">
         <span class="twitterbox-time" style="margin-right:24px "><span style="color:black">{{replies.length}}</span> 回覆</span>
         <span class="twitterbox-time "><span style="color:black">{{tweet.Likes.length}} </span>喜歡次數</span>
       </div>
       <div style="height:68px; border-top:2px solid #E6ECF0" class="d-flex align-items-center">
-        {{!-- reply --}}
+
         <span class="twitterbox-time mx-40" style="margin-right:133.3px"><img width="24.69px" height="24.69px"
             src="/images/reply@2x.png" alt="" data-bs-target="#staticBackdrop" data-bs-toggle="modal"></span>
-            {{!-- isLiked --}}
-            {{#if tweet.isLiked}}
-            <form action="/tweets/{{tweet.id}}/unlike" method="POST" style="display: contents;">
-              <span class="twitterbox-time">
-                <button type="submit" class="btn">
-                  <img width="24.69px" height="24.69px"src="/images/like@2x.png" alt="">
-                </button>
-              </span>
-            </form>
-            {{else}}
-            <form action="/tweets/{{tweet.id}}/like" method="POST" style="display: contents;">
-              <span class="twitterbox-time">
-                <button type="submit" class="btn">
-                  <img width="24.69px" height="24.69px" src="/images/unlike@2x.png" alt="">
-                </button>
-              </span>
-            </form>
-            {{/if}}
+
+        {{#if tweet.isLiked}}
+        <form action="/tweets/{{tweet.id}}/unlike" method="POST" style="display: contents;">
+          <span class="twitterbox-time">
+            <button type="submit" class="btn">
+              <img width="24.69px" height="24.69px"src="/images/like@2x.png" alt="">
+            </button>
+          </span>
+        </form>
+        {{else}}
+        <form action="/tweets/{{tweet.id}}/like" method="POST" style="display: contents;">
+          <span class="twitterbox-time">
+            <button type="submit" class="btn">
+              <img width="24.69px" height="24.69px" src="/images/unlike@2x.png" alt="">
+            </button>
+          </span>
+        </form>
+        {{/if}}
+
       </div>
     </div>
   </div>
   {{!-- 推文 end--}}
+
   {{#each replies}}
   {{!-- 留言 start--}}
   <div>
     <div class="fl">
-      <a href="/users/{{this.User.id}}"><img class="ac-img" src="{{this.User.avatar}}" alt=""></a>
+      <a href="/users/{{this.User.id}}"><img class="ac-img" src="{{this.User.avatar}}" style="border-radius: 50%" alt=""></a>
     </div>
     <div class="tweet-flow-text fl">
       <a href="/users/{{this.User.id}}" class="text-decoration-n">
@@ -76,9 +76,10 @@
   </div>
   {{!-- 留言 end--}}
   {{/each}}
+
 </div>
-{{> rightbar}}
-<!-- Modal -->
+
+{{!-- 彈跳留言回覆 --}}
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -119,30 +120,23 @@
           <div class="bottom-line-f"></div>
         </div>
       </div>
-      {{!-- 推文 end--}}
-      {{/each}}
     </div>
   </div>
 </div>
 
-<div>
-  <!-- Modal -->
-  {{> user-tweet}}
-  <!-- Modal -->
-  {{> user-put}}
-</div>
-
+{{> user-tweet}}
+{{> user-put}}
 {{> rightbar}}
 
-  <script>
-    const replyButton = document.querySelector('.reply-button')
-    const reply = document.querySelector('.reply')
-    const hint = document.querySelector('.hint')
-    replyButton.addEventListener('click', (e) => {
-      if (reply.innerText === '') {
-        e.preventDefault()
-        hint.innerText = '內容不可空白'
-      }
-    })
-  </script>
+<script>
+  const replyButton = document.querySelector('.reply-button')
+  const reply = document.querySelector('.reply')
+  const hint = document.querySelector('.hint')
+  replyButton.addEventListener('click', (e) => {
+    if (reply.innerText === '') {
+      e.preventDefault()
+      hint.innerText = '內容不可空白'
+    }
+  })
+</script>
 

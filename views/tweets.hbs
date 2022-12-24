@@ -19,7 +19,7 @@
   </div>
   <div class="bottom-line-16 m-0 p-0"></div>
 
-  {{!-- 推文 start--}}
+
   {{#each tweets}}
   <div>
     <div class="fl">
@@ -36,7 +36,6 @@
             {{this.description}}
           </p>
         </a>
-
         <div>
           <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt=""
               data-bs-target="#staticBackdrop{{this.id}}" data-bs-toggle="modal">{{this.Replies.length}}</span>
@@ -60,16 +59,12 @@
             </span>
           </form>
           {{/if}}
-
         </div>
         <div class="bottom-line-f"></div>
       </div>
-
     </div>
-    {{!-- 推文 end--}}
   </div>
   {{/each}}
-  <!-- 推文 end -->
 
   {{> user-tweet}}
   {{> reply-modal}}
