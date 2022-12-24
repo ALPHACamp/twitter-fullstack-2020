@@ -33,6 +33,7 @@
       {{/if}}
     </div>
     <div class="tweet-flow-text fl" onclick="location.href='/tweets/{{this.id}}/replies';">
+
       <div class="tweet-flow-text fl">
         <a href="/users/{{this.User.id}}/tweets" class="text-decoration-n">
           <span class="twitterbox-name">{{this.User.name}}</span>
@@ -67,9 +68,11 @@
         <div class="bottom-line-f"></div>
       </div>
     </div>
+
   </div>
   {{!-- 推文 end--}}
   {{/each}}
   <!-- Modal -->
+
   {{> user-tweet}}
   {{> rightbar}}
