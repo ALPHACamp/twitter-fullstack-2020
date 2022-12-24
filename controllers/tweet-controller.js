@@ -11,7 +11,6 @@ const tweetController = {
             exclude: ['password']
           }
         }],
-        where: { UserId: currentUser.id },
         order: [['createdAt', 'desc'], ['id', 'desc']],
         raw: true,
         nest: true
