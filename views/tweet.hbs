@@ -1,13 +1,13 @@
 {{> leftbar}}
+
 <div class="middle right-line-2 left-line-2">
   <div>
     <div class="row">
-
-
       {{> user-nav}}
       {{> user-profile route="tweet"}}
-      {{#each tweets}}
+
       {{!-- 推文 start--}}
+      {{#each tweets}}
       <div>
         <div class="fl">
           <img class="ac-img" src="/images/img@2x.png" alt="">
@@ -48,11 +48,15 @@
           <div class="bottom-line-f"></div>
         </div>
       </div>
-      {{!-- 推文 end--}}
       {{/each}}
+      {{!-- 推文 end--}}
+
+      {{> user-put}}
+      {{> user-tweet}}
+      {{> reply-modal}}
+
     </div>
   </div>
 </div>
+
 {{> rightbar}}
-{{> reply-modal}}
-{{> user-put}}

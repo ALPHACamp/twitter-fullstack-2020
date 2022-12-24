@@ -1,13 +1,17 @@
 {{#if error_messages}}
 <div class="alert alert-danger alert-dismissible fade show alert-style d-flex prompt-text" role="alert">
 		{{ error_messages }}
-	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	<button type="button" data-bs-dismiss="alert" aria-label="Close">
+		<img class="message-img" src="/images/background@2x (2).png">
+	</button>
 </div>
 {{/if}}
 {{#if success_messages}}
 	<div class="alert alert-success alert-dismissible fade show alert-style d-flex prompt-text" role="alert">
 		{{ success_messages }}
-		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		<button type="button" data-bs-dismiss="alert" aria-label="Close">
+			<img class="message-img" src="/images/background-nice@2x.png">
+		</button>
 	</div>
 {{/if}}
 {{#if warning_msg}}

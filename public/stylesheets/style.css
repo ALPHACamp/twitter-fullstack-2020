@@ -365,9 +365,9 @@ svg {
 
 .right {
   width: 273px;
-  height: 731px;
+  height: 140px;
   top: 0px;
-  right: 130px;
+  left: 71%;
   position: fixed;
   background-color: #FAFAFB;
 }
@@ -395,7 +395,7 @@ svg {
   width: 52%;
   /* height: 1200px; */
   top: 0px;
-  left: 24%;
+  left: 21%;
 
   margin-right: 24px;
 }
@@ -737,7 +737,7 @@ svg {
 
   width: 70px;
   height: 70px;
-  left: 33%;
+  left: 30%;
   top: 30px;
   border: white 4px solid;
 }
@@ -1051,8 +1051,17 @@ a .nav-link:active,
   background: #FF6600;
   border-radius: 50px;
 }
+
 /* tabs */
 .click-on {
   color: #FF6600;
   border-bottom: 2px solid #FF6600;
+}
+
+/* messages */
+
+.message-img {
+  width: 40px;
+  height: 40px;
+  border-style: hidden;
 }

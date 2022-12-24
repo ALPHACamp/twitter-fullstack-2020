@@ -1,3 +1,5 @@
+{{!-- 個人頁面中間 --}}
+{{!-- 背景 --}}
 <div>
   {{#if user.background}}
   <img class="avatarbg-img" src="{{user.background}}" alt="">
@@ -5,6 +7,7 @@
   <img class="avatarbg-img" src="https://fakeimg.pl/610x200/f6f7f8" alt="">
   {{/if}}
 </div>
+{{!-- 頭貼 --}}
 <div class="rel">
   {{#if user.avatar}}
   <img class="selfavatar-img abs " style="border-radius: 50%;" src="{{user.avatar}}" alt="">
@@ -12,12 +15,14 @@
   <img class="selfavatar-img abs " style="border-radius: 50%;" src="https://fakeimg.pl/140x141/" alt="">
   {{/if}}
 </div>
+{{!-- 編輯個人資料 --}}
 <div class="wid-100">
   <button class="tweetbtn-ol m-3 float-end">
     <a href="" class="text-decoration-n font-color-or" data-bs-toggle="modal"
       data-bs-target="#staticBackdrop-self">編輯個人資料</a>
   </button>
 </div>
+{{!-- 個人內文 追隨 推文回復喜歡TAB--}}
 <div class="col fl mt-2 wid-80 ms-3">
   <div>
     <span class="selftwitterbox-name">{{user.name}}</span>
@@ -30,10 +35,10 @@
   </div>
   <div>
     <span class="twitterbox-time text-dark">{{user.Followers.length}}個
-      <a class="text-decoration-n following-color" href="users/{{user.id}}/followings">跟隨中</a>
+      <a class="text-decoration-n following-color" href="/users/{{user.id}}/followings">跟隨中</a>
     </span>
     <span class="twitterbox-time text-dark">{{user.Followings.length}}位
-      <a class="text-decoration-n follow-color" href="users/{{user.id}}//followers">跟隨者</a>
+      <a class="text-decoration-n follow-color" href="/users/{{user.id}}//followers">跟隨者</a>
     </span>
   </div>
   <div class="selftab border-none bottom-line-2">

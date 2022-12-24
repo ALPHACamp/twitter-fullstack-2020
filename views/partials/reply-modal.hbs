@@ -1,4 +1,4 @@
-<!-- Modal -->
+<!-- 貼文留言 -->
 {{#each tweets}}
 <div class="modal fade" id="staticBackdrop{{this.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -49,15 +49,17 @@
       </div>
     </div>
   </div>
+</div>  
 {{/each}}
-  <script>
-    const replyButton = document.querySelector('.reply-button')
-    const reply = document.querySelector('.reply')
-    const hint = document.querySelector('.hint')
-    replyButton.addEventListener('click', (e) => {
-      if (reply.innerText === '') {
-        e.preventDefault()
-        hint.innerText = '內容不可空白'
-      }
-    })
-  </script>
+
+<script>
+  const replyButton = document.querySelector('.reply-button')
+  const reply = document.querySelector('.reply')
+  const hint = document.querySelector('.hint')
+  replyButton.addEventListener('click', (e) => {
+    if (reply.innerText === '') {
+      e.preventDefault()
+      hint.innerText = '內容不可空白'
+    }
+  })
+</script>

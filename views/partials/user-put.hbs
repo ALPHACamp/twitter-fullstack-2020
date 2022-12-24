@@ -1,60 +1,60 @@
+{{!-- 編輯個人資料頁面 --}}
 <div class="modal fade" id="staticBackdrop-self" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content height-61">
-      <div class="modal-header rel">
-        <form action="/users/{{ user.id }}/edit" method="POST" enctype="multipart/form-data">
+      <form action="/users/{{ user.id }}/edit" method="POST" enctype="multipart/form-data">
+        <div class="modal-header rel">
           <button type="button font-color-or abs" class="btn-close btn-close-re" data-bs-dismiss="modal"
             aria-label="Close"></button>
           <button class="selftweetbtn-s abs flow-end" type="submit">儲存</button>
-      </div>
-
-      <div class="selfeditavatar-img">
-        <div class="form-row">
-          {{#if user.background}}
-          <img id="bannerImg" src="{{user.background}}" alt="background"
-            style="width:632px; margin-left:0px; height: 200px;margin-top:0px ;position:relative">
-          {{else}}
-          <img id="bannerImg" src="https://fakeimg.pl/632x200/ff6347/121212" alt="background"
-            style="width:632px; margin-left:0px; height: 200px;margin-top:0px ;position:relative">
-          {{/if}}
-          <label class="form-label" for="background">
-            <img style="position: absolute;left:269px; top:143px; z-index:3;width:35px;" src="/images/camera.png"
-              alt="upload">
-            <img style="position: absolute;left:366px; top:144px; z-index:3;width:28px;"
-              src="/images/btn_close_wh@2x.png" alt="">
-          </label>
-          <input class="form-control" type="file" class="form-control-file" id="background" name="background"
-            style="display: none;">
         </div>
-
-        {{!-- 頭像 --}}
-        <div class="form-row">
-          {{#if user.avatar}}
-          <img id="avatarImg" src="{{user.avatar}}" alt="avatar"
-            style="border: 4px solid white; height: 150px; width: 150px; margin: -110px 0 0 45px; border-radius: 50%; position: relative;">
-          {{else}}
-          <img id="avatarImg" src="https://fakeimg.pl/150/" alt="avatar"
-            style="border: 4px solid white; height: 150px; width: 150px; margin: -110px 0 0 45px; border-radius: 50%; position: relative;">
-          {{/if}}
-          <label class="form-label" for="avatar">
-            <img style="position: absolute;left:101px; top:225px; z-index:3;width:35px;" src="/images/camera.png"
-              alt="upload">
-          </label>
-          <input class="form-control" type="file" class="form-control-file" id="avatar" name="avatar"
-            style="display: none;">
+        <div class="selfeditavatar-img">
+          {{!-- 背景 --}}
+          <div class="form-row">
+            {{#if user.background}}
+            <img id="bannerImg" src="{{user.background}}" alt="background"
+              style="width:632px; margin-left:0px; height: 200px;margin-top:0px ;position:relative">
+            {{else}}
+            <img id="bannerImg" src="https://fakeimg.pl/632x200/ff6347/121212" alt="background"
+              style="width:632px; margin-left:0px; height: 200px;margin-top:0px ;position:relative">
+            {{/if}}
+            <label class="form-label" for="background">
+              <img style="position: absolute;left:269px; top:143px; z-index:3;width:35px;" src="/images/camera.png"
+                alt="upload">
+              <img style="position: absolute;left:366px; top:144px; z-index:3;width:28px;"
+                src="/images/btn_close_wh@2x.png" alt="">
+            </label>
+            <input class="form-control" type="file" class="form-control-file" id="background" name="background"
+              style="display: none;">
+          </div>
+          {{!-- 頭像 --}}
+          <div class="form-row">
+            {{#if user.avatar}}
+            <img id="avatarImg" src="{{user.avatar}}" alt="avatar"
+              style="border: 4px solid white; height: 150px; width: 150px; margin: -110px 0 0 45px; border-radius: 50%; position: relative;">
+            {{else}}
+            <img id="avatarImg" src="https://fakeimg.pl/150/" alt="avatar"
+              style="border: 4px solid white; height: 150px; width: 150px; margin: -110px 0 0 45px; border-radius: 50%; position: relative;">
+            {{/if}}
+            <label class="form-label" for="avatar">
+              <img style="position: absolute;left:101px; top:225px; z-index:3;width:35px;" src="/images/camera.png"
+                alt="upload">
+            </label>
+            <input class="form-control" type="file" class="form-control-file" id="avatar" name="avatar"
+              style="display: none;">
+          </div>
+          <div class="form-name p-2" style="margin-top: 20px;">
+            <p class="selfname">名稱</p>
+            <textarea class="form-control selfbg" placeholder="" name="name" id="name" maxlength="50"
+              style="padding: 15px 0 0 0;" value="{{user.name}}">{{user.name}}</textarea>
+          </div>
+          <div class="form-intro p-2">
+            <p class="selfname">自我介紹</p>
+            <textarea class="form-control selfintro" placeholder="" name="introduction" id="introduction" maxlength="160"
+              style="padding: 15px 0 0 0;" value="{{user.introduction}}">{{user.introduction}}</textarea>
+          </div>
         </div>
-        <div class="form-name p-2" style="margin-top: 20px;">
-          <p class="selfname">名稱</p>
-          <textarea class="form-control selfbg" placeholder="" name="name" id="name" maxlength="50"
-            style="padding: 15px 0 0 0;" value="{{user.name}}">{{user.name}}</textarea>
-        </div>
-        <div class="form-intro p-2">
-          <p class="selfname">自我介紹</p>
-          <textarea class="form-control selfintro" placeholder="" name="introduction" id="introduction" maxlength="160"
-            style="padding: 15px 0 0 0;" value="{{user.introduction}}">{{user.introduction}}</textarea>
-        </div>
-      </div>
       </form>
     </div>
   </div>
