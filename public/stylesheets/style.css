@@ -365,9 +365,9 @@ svg {
 
 .right {
   width: 273px;
-  height: 731px;
+  height: 140px;
   top: 0px;
-  right: 130px;
+  left: 71%;
   position: fixed;
   background-color: #FAFAFB;
 }
@@ -395,7 +395,7 @@ svg {
   width: 52%;
   /* height: 1200px; */
   top: 0px;
-  left: 24%;
+  left: 21%;
 
   margin-right: 24px;
 }
@@ -1051,6 +1051,7 @@ a .nav-link:active,
   background: #FF6600;
   border-radius: 50px;
 }
+
 /* tabs */
 .click-on {
   color: #FF6600;
