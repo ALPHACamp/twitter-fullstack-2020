@@ -79,20 +79,23 @@ const userController = {
   },
   getTweets: async (req, res, next) => {
     // 個人頁面的推文抓取
-    const user = helpers.getUser(req)
+    const viewUser = helpers.getUser(req)
     try {
+      const user = await services.getUser(req)
       const data = await services.getTweets(req)
       const topFollowings = await services.getTopUsers(req)
       const tweetslength = data.length
       res.render('tweet', {
+        viewUser,
         tweets: data,
-        user,
+        user: user.toJSON(),
         topFollowings,
         tweetslength
       })
     } catch (err) { next(err) }
   },
-  getFollowings: async (req, res, next) => {
+  getFollowings: async (req, res, next) =>{ 
+    const viewUser = helpers.getUser(req) 
     const userId = req.params.id
     const followingList = helpers.getUser(req) && helpers.getUser(req).Followings.map(following => following.id)
     try {
@@ -106,6 +109,7 @@ const userController = {
       })
       const topFollowings = await services.getTopUsers(req)
        res.render('following', {
+        viewUser,
         user: user.toJSON(),
         followings,
         topFollowings
@@ -113,6 +117,7 @@ const userController = {
     } catch (err) { next(err) }
   },
   getFollowers: async (req, res, next) => {
+    const viewUser = helpers.getUser(req) 
     const userId = req.params.id
     const followingList = helpers.getUser(req) && helpers.getUser(req).Followings.map(following => following.id)
     try {
@@ -126,6 +131,7 @@ const userController = {
       })
       const topFollowings = await services.getTopUsers(req)
       return res.render('follower', {
+        viewUser,
         user: user.toJSON(),
         followings,
         topFollowings
@@ -219,6 +225,7 @@ const userController = {
   },
   getReplies: async (req, res, next) => {
     // 個人頁面的回覆抓取
+    const viewUser = helpers.getUser(req) 
     const UserId = req.params.id || ''
     try {
       const user = await services.getUser(req)
@@ -233,6 +240,7 @@ const userController = {
       const topFollowings = await services.getTopUsers(req)
       const repliesLength = replies.length
       res.render('reply', {
+        viewUser,
         user: user.toJSON(),
         replies,
         topFollowings,
@@ -299,7 +307,7 @@ const userController = {
   },
   getLikes: async (req, res, next) => {
     // 個人頁面喜歡的內容抓取
-    const self = helpers.getUser(req)
+    const viewUser = helpers.getUser(req)
     const UserId = req.params.id || ''
     try {
       const user = await User.findByPk(UserId, {
@@ -316,10 +324,11 @@ const userController = {
         description: t.description.substring(0, 140),
         User: t.User.dataValues,
         user,
-        isLiked: t.Likes.some(f => f.UserId === self.id)
+        isLiked: t.Likes.some(f => f.UserId === viewUser.id)
       }))
       const topFollowings = await services.getTopUsers(req)
       res.render('like', {
+        viewUser,
         user: user.toJSON(),
         tweets,
         topFollowings

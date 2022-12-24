@@ -21,7 +21,7 @@
       {{this.description}}
     </p>
     </a>
-    <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="" data-bs-target="#staticBackdrop{{this.id}}" data-bs-toggle="modal">13</span>
+    <span class="twitterbox-time mx-40"><button class="btn" data-bs-target="#replyModal{{this.id}}" data-bs-toggle="modal"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="" >{{this.Replies.length}}</button></span>
 
     {{#if this.isLiked}}
     <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
@@ -47,10 +47,10 @@
   </div>
 </div>
 {{!-- 推文 end--}}
+{{reply-modal}}
 {{/each}}
-
+  {{> user-tweet}}
 {{> user-put }}
-{{> reply-modal}}
 {{> rightbar}}
 
 

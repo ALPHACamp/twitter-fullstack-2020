@@ -5,7 +5,7 @@
   </div>
   <div class="tweetbox top-line-2 rel">
     <form action="/tweets" method="POST">
-      <img class="avatar-img m16-8-0-27 fl" src="{{user.avatar}}" alt=""style="border-radius: 50%">
+      <img class="avatar-img m16-8-0-27 fl" src="{{viewUser.avatar}}" alt=""style="border-radius: 50%">
       <span>
         <textarea class="modal-input-tweets mt-3" type="description" name="description" id="description" cols="30"
           rows="10" placeholder="有什麼新鮮事?" maxlength="140"></textarea>
@@ -35,9 +35,9 @@
         {{this.description}}
       </p>
       </a>
-
       <div>
-      <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt=""data-bs-target="#staticBackdrop{{this.id}}" data-bs-toggle="modal">{{this.Replies.length}}</span>
+        {{!-- reply icon --}}
+      <span class="twitterbox-time mx-40"><button class="btn" data-bs-target="#replyModal{{this.id}}" data-bs-toggle="modal" ><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">{{this.Replies.length}}</button></span>
       {{!-- isLiked --}}
       {{#if this.isLiked}}
       <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
@@ -61,38 +61,13 @@
       </div>
       <div class="bottom-line-f"></div>
     </div>
-    
   </div>
-  {{!-- 推文 end--}}
+    {{reply-modal}}
   {{/each}}
-  <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class=" fl">
-            <button type="button font-color-or" class="btn-close btn-close-re" data-bs-dismiss="modal"
-              aria-label="Close"></button>
-          </div>
-        </div>
-        <form action="/tweets" method="POST"></form>
-        <div class="modal-body">
-          <form action="/tweets" method="POST">
-            <img class="avatar-img fl" src="{{user.avatar}}" alt="">
-            <span>
-              <textarea class="modal-input-tweets mt-3 mb-3" type="description" name="description" id="description"
-                cols="30" rows="10" placeholder="有什麼新鮮事?" maxlength="140"></textarea>
-              <input type="hidden" name="UserId" value="{{tweets.User.id}}" />
-            </span>
-            <button class="tweetbtn-s abs" type="submit">推文</button>
-          </form>
-          </form>
         </div>
       </div>
-    </div>
-  </div>
   
+  {{> user-tweet}}
   {{> rightbar}}
 
   <script>

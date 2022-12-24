@@ -1,5 +1,4 @@
 {{> leftbar}}
-{{> leftbar}}
 <div class="middle right-line-2 left-line-2">
   <div>
     <div class="row">
@@ -16,13 +15,13 @@
         <span class="twitterbox-name">{{this.User.name}}</span>
       </a>
       <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
-      <a href="/users/{{../user.id}}/replies" class="text-decoration-n">
+      <a href="/tweets/{{../user.id}}/replies" class="text-decoration-n">
         <p class="twitterbox-text">
           {{this.description}}
         </p>
       </a>
-      <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt=""
-          data-bs-target="#staticBackdrop{{this.id}}" data-bs-toggle="modal">{{this.Replies.length}}</span>
+      {{!-- reply icon --}}
+      <span class="twitterbox-time mx-40"><button class="btn" data-bs-target="#replyModal{{this.id}}" data-bs-toggle="modal"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">{{this.Replies.length}}</button></span>
   
       {{#if this.isLiked}}
       <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
@@ -48,8 +47,20 @@
     </div>
   </div>
   {{!-- 推文 end--}}
+{{reply-modal}}
   {{/each}}
-{{> reply-modal}}
+{{> user-tweet}}
 {{> user-put}}
 {{> rightbar}}
 
+<script>
+  const replyButton = document.querySelector('.reply-button')
+  const reply = document.querySelector('.reply')
+  const hint = document.querySelector('.hint')
+  replyButton.addEventListener('click', (e) => {
+    if (reply.innerText === '') {
+      e.preventDefault()
+      hint.innerText = '內容不可空白'
+    }
+  })
+</script>

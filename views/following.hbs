@@ -2,13 +2,11 @@
 <div class="middle right-line-2 left-line-2">
   <div>
     <div class="row">
-      {{user-nav}}
-      {{> followship-tabs route='follower'}}
+      {{> user-nav}}
+      {{> followship-tabs route='following'}}
 {{!-- follower cards --}}
-
-<div class="d-flex flex-column middle"
-  style="margin-left:2px; width:639px; margin-left:90px; margin-top:127px; border:2px solid #E6ECF0">
-  {{#each followings}}
+{{#each followings}}
+<div>
   <div style="border-bottom:2px solid #E6ECF0; padding:16px 23px;">
     <div class="d-flex justify-content-between align-items-center">
       <div class="d-flex">
@@ -31,6 +29,7 @@
     <div style=" margin-left:60px" style="font-weight:400px; font-size:16px">{{this.introduction}}</div>
   </div>
   {{/each}}
+</div>
 </div>
 </div>
 </div>

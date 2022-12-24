@@ -9,8 +9,8 @@ const Followship = db.Followship
 module.exports = {
   // 推薦追蹤用戶
   getTopUsers: async (req) => {
-    const user = helpers.getUser(req)
-    const followingList = user && user.Followings.map(following => following.id)
+    const viewUser = helpers.getUser(req)
+    const followingList = viewUser && viewUser.Followings.map(following => following.id)
     const allUsers = await User.findAll({
       where: {
         role: 'user',
@@ -34,7 +34,7 @@ module.exports = {
   },
   // 貼文抓取
   getTweets: async (req) => {
-    const user = helpers.getUser(req)
+    const viewUser = helpers.getUser(req)
     const UserId = req.params.id || ''
     const tweets = await Tweet.findAll({
       where: UserId ? { UserId } : {},
@@ -46,8 +46,7 @@ module.exports = {
       ...t.toJSON(),
       description: t.description.substring(0, 140),
       User: t.User.dataValues,
-      user,
-      isLiked: t.Likes.some(f => f.UserId === user.id)
+      isLiked: t.Likes.some(f => f.UserId === viewUser.id)
     }))
     return data
   },
