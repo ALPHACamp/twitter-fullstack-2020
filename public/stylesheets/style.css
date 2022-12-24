@@ -364,12 +364,12 @@ svg {
 }
 
 .right {
-  position: absolute;
-  width: 11%;
-  height: 100%;
+  width: 273px;
+  height: 731px;
   top: 0px;
-  right: 15%;
+  right: 130px;
   position: fixed;
+  background-color: #FAFAFB;
 }
 
 .right-follow-title {
@@ -725,7 +725,9 @@ svg {
 
 .admin-user-background {
   position: absolute;
+  border-radius: 5% 5% 0% 0%;
   width: 100%;
+  height: 100px;
   z-index: 0;
 }
 
@@ -1004,4 +1006,9 @@ a .nav-link:active,
   height: 46px;
   background: #FF6600;
   border-radius: 50px;
+}
+/* tabs */
+.click-on {
+  color: #FF6600;
+  border-bottom: 2px solid #FF6600;
 }

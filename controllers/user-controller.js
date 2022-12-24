@@ -97,19 +97,14 @@ const userController = {
     try {
       const user = await services.getUser(req)
       if (!user) throw new Error('該用戶不存在')
-      const viewUserFollow = await Followship.findAll({
-        where: { followerId: userId },
-        order: [['createdAt', 'DESC']],
-        nest: true
-      })
-      const followings = viewUserFollow.map(following => {
+      const followings = user.Followings.map(following => {
         return {
           ...following.toJSON(),
           isFollowed: followingList.includes(following.id)
         }
       })
       const topFollowings = await services.getTopUsers(req)
-      return res.render('following', {
+       res.render('following', {
         user: user.toJSON(),
         followings,
         topFollowings
@@ -123,15 +118,10 @@ const userController = {
     try {
       const user = await services.getUser(req)
       if (!user) throw new Error('該用戶不存在')
-      const viewUserFollow = await Followship.findAll({
-        where: { followingId: userId },
-        order: [['createdAt', 'DESC']],
-        nest: true
-      })
-      const followings = viewUserFollow.map(follower => {
+      const followings = user.Followers.map(following => {
         return {
-          ...follower.toJSON(),
-          isFollowed: followingList.includes(follower.id)
+          ...following.toJSON(),
+          isFollowed: followingList.includes(following.id)
         }
       })
       const topFollowings = await services.getTopUsers(req)
