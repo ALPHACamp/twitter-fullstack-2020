@@ -1,26 +1,105 @@
 {{> leftbar}}
-{{> user-profile}}
-{{#each replies}}
-{{!-- 留言 start--}}
-<div>
-  <div class="fl">
-    <a href="/users/{{../user.id}}"><img class="ac-img" src="{{../user.avatar}}" alt=""></a>
-  </div>
-  <div class="tweet-flow-text fl">
-    <a href="/users/{{../user.id}}" class="text-decoration-n">
-      <span class="twitterbox-name">{{../user.name}}</span>
-    </a>
-    <span class="twitterbox-time">@{{../user.account}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
-    <div>
-      <span class="twitterbox-time">回覆 <span style="color: #FF6600">@ {{this.Tweet.User.account}}</span></span>
+<div class="content-fluid">
+  <div class="content-fluid middle right-line-2 left-line-2">
+    <div class="row">
+      {{!-- {{> user-nav}} --}}
+      <div>
+        <div class="fl wid-12">
+          <a href="/tweets">
+            <img class="backarrow-img" src="/images/back_arrow@2x.png" alt="">
+          </a>
+        </div>
+        <div class="col fl mt-2 wid-80">
+          <span class="selftwitterbox-name">{{user.name}}</span>
+          <p class="twitterbox-time">{{repliesLength}}回文</p>
+        </div>
+      </div>
+      {{!-- {{> user-profile}} --}}
+      <div>
+        {{#if user.background}}
+        <img class="avatarbg-img" src="{{user.background}}" alt="">
+        {{else}}
+        <img class="avatarbg-img" src="https://fakeimg.pl/610x200/f6f7f8" alt="">
+        {{/if}}
+      </div>
+      <div class="rel">
+        {{#if user.avatar}}
+        <img class="selfavatar-img abs " style="border-radius: 50%;" src="{{user.avatar}}" alt="">
+        {{else}}
+        <img class="selfavatar-img abs " style="border-radius: 50%;" src="https://fakeimg.pl/140x141/" alt="">
+        {{/if}}
+      </div>
+      <div class="wid-100">
+        <button class="tweetbtn-ol m-3 float-end">
+          <a href="" class="text-decoration-n font-color-or" data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop-self">編輯個人資料</a>
+        </button>
+      </div>
+      <div class="col fl mt-2 wid-80 ms-3">
+        <div>
+          <span class="selftwitterbox-name">{{user.name}}</span>
+          <p class="twitterbox-time">@{{user.account}}</p>
+        </div>
+        <div>
+          <p class="twitterbox-time text-dark">
+            {{user.introduction}}
+          </p>
+        </div>
+        <div>
+          <span class="twitterbox-time text-dark">{{user.Followers.length}}個
+            <a class="text-decoration-n following-color" href="users/{{user.id}}/followings">跟隨中</a>
+          </span>
+          <span class="twitterbox-time text-dark">{{user.Followings.length}}位
+            <a class="text-decoration-n follow-color" href="users/{{user.id}}//followers">跟隨者</a>
+          </span>
+        </div>
+        <div class="selftab border-none bottom-line-2">
+          <ul class="nav mb-4">
+            <li class="nav-item">
+              <a class="nav-link active{{#ifCond route 'tweet'}}active{{/ifCond}}"
+                href="/users/{{user.id}}/tweets">推文</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{#ifCond route ''}}active{{/ifCond}}" href="/users/{{user.id}}/replies">回復</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{#ifCond route ''}}active{{/ifCond}}" href="/users/{{user.id}}/likes">喜歡的內容</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      {{#each replies}}
+      {{!-- 留言 start--}}
+      <div>
+        <div class="fl">
+          <a href="/users/{{../user.id}}">
+            {{#if ../user.avatar}}
+            <img class="ac-img" src="{{../user.avatar}}" alt="" style="border-radius: 50%;">
+            {{else}}
+            <img class="ac-img" src="https://fakeimg.pl/40x40/" alt="" style="border-radius: 50%;">
+            {{/if}}
+          </a>
+        </div>
+        <div class="tweet-flow-text fl">
+          <a href="/users/{{../user.id}}" class="text-decoration-n">
+            <span class="twitterbox-name">{{../user.name}}</span>
+          </a>
+          <span class="twitterbox-time">@{{../user.account}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
+          <div>
+            <span class="twitterbox-time">回覆 <span style="color: #FF6600">@ {{this.Tweet.User.account}}</span></span>
+          </div>
+          <p class="twitterbox-text">
+            {{this.comment}}
+          </p>
+          <div class="bottom-line-f"></div>
+        </div>
+      </div>
+      {{!-- 留言 end--}}
+      {{/each}}
     </div>
-    <p class="twitterbox-text">
-      {{this.comment}}
-    </p>
-    <div class="bottom-line-f"></div>
   </div>
 </div>
-{{!-- 留言 end--}}
-{{/each}}
-</div>
+{{> user-tweet}}
+{{> user-put}}
 {{> rightbar}}

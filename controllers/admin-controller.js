@@ -1,6 +1,8 @@
 const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
+const Like = db.Like
+const Reply = db.Reply
 
 const adminController = {
   signInPage: (req, res) => {
@@ -19,12 +21,14 @@ const adminController = {
     // 管理者頁面的推文抓取
     Tweet.findAll({
       order: [['createdAt', 'DESC']],
-      include: [User],
+      include: [User, Like, Reply],
       raw: true,
       nest: true
     })
       .then(tweets => {
-        return res.render('admin/tweets', { tweets })
+        return res.render('admin/tweets', {
+          tweets
+        })
       })
       .catch(err => next(err))
   },
@@ -49,8 +53,8 @@ const adminController = {
         { model: Tweet },
         { model: Tweet, as: 'LikedTweets' },
         { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' },
-      ],
+        { model: User, as: 'Followings' }
+      ]
     }).then(users => {
       users = users.map(user => ({
         ...user.dataValues,
@@ -60,9 +64,12 @@ const adminController = {
         followerCount: user.Followers.length
       }))
       users = users.sort((a, b) => b.tweetCount - a.tweetCount)
-      return res.render('admin/users', { users: users })
+      console.log(users.tweetCount)
+      return res.render('admin/users', {
+        users
+      })
     })
       .catch(next)
-  },
+  }
 }
 module.exports = adminController

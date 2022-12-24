@@ -3,13 +3,17 @@
   <div class="right-follow-title bottom-line-2 d-flex align-items-center">
     <p class="middle-title">推薦跟隨</p>
   </div>
-  <div class="follow-flow fl" >
+  <div class="follow-flow fl">
     {{#each topFollowings}}
-    <div class="d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center justify-content-between" style="background: #FAFAFB;">
       <div>
         <div class="fl">
           <a href="">
-            <img class="ac-img-x" src="{{this.avatar}}" alt="">
+            {{#if this.avatar}}
+            <img class="ac-img-x" src="{{this.avatar}}" alt="" style="border-radius: 50%">
+            {{else}}
+            <img class="ac-img-x" src="https://fakeimg.pl/50/" alt="" style="border-radius: 50%">
+            {{/if}}
           </a>
         </div>
         <div class="fl follow-flow-d pt-3">
@@ -22,14 +26,14 @@
       <div class="me-3">
         {{#if this.isFollowed}}
         <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-        <button type="submit" class="unFollow-button"
-          style=" width: 96px;height: 40px;background-color: #FF6600; border:none; border-radius: 50px; font-family: 'Noto Sans TC';font-style: normal; font-weight: 400;font-size: 16px;line-height: 24px;color: #FFFFFF;">正在跟隨</button>
+          <button type="submit" class="unFollow-button"
+            style=" width: 96px;height: 40px;background-color: #FF6600; border:none; border-radius: 50px; font-family: 'Noto Sans TC';font-style: normal; font-weight: 400;font-size: 16px;line-height: 24px;color: #FFFFFF;">正在跟隨</button>
         </form>
         {{else}}
         <form action="/followships" method="POST" style="display: contents;">
           <input type="hidden" name="id" value="{{this.id}}" />
-        <button type="submit" class="btn follow-button"
-          style="width: 64px;height: 40px;background: #FFFFFF;border: 1px solid #FF6600;border-radius: 50px;font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 16px;line-height: 24px;color: #FF6600;">跟隨</button>
+          <button type="submit" class="btn follow-button"
+            style="width: 64px;height: 40px;background: #FFFFFF;border: 1px solid #FF6600;border-radius: 50px;font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 16px;line-height: 24px;color: #FF6600;">跟隨</button>
         </form>
         {{/if}}
       </div>
