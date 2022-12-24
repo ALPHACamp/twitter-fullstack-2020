@@ -16,7 +16,7 @@ editButton.addEventListener('click', function (event) {
       console.log(res)
       inputName.value = res.data.name
       inputIntroduction.value = res.data.introduction
-      inputCover.src = res.data.cover || 'https://i.imgur.com/lswsX4e.png'
+      inputCover.src = res.data.cover
       inputAvatar.src = res.data.avatar
     })
     .catch(err => console.log(err))
@@ -30,7 +30,7 @@ profileModalForm.addEventListener('submit', function (event) {
   const formData = new FormData()
   formData.append('name', inputName.value)
   formData.append('introduction', inputIntroduction.value)
-  formData.append('cover', coverBtn.files[0] || 'https://i.imgur.com/lswsX4e.png')
+  formData.append('cover', coverBtn.files[0])
   formData.append('avatar', avatarBtn.files[0])
 
   axios
