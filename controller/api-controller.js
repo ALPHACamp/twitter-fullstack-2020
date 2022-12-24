@@ -22,8 +22,6 @@ const apiController = {
     const { files } = req
     if (editUserId !== loginUserId) throw new Error("You can't edit other's profile!")
     if (!name.trim()) throw new Error('User name is required!')
-    if (name.length > 50) throw new Error('暱稱字數超過上限!')
-    if (introduction.length > 160) throw new Error('自我介紹字數超過上限!')
     return Promise.all([
       User.findByPk(editUserId),
       imgurFileHandler(files?.avatar && files.avatar[0]),
