@@ -8,7 +8,7 @@
       <div class="admin-main align-content-start">
         {{#each tweets}}
         <div class="card-body tweets-box" style="border-left:1px solid #E6ECF0;border-right:1px solid #E6ECF0;">
-          <img src="/images/icon/User Photo.png" alt="" class="user-avatar">
+          <img src="{{#if this.User.avatar}} {{this.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" alt="" class="user-avatar">
           <div class="tweets-box-main">
             <div class="tweets-header">
               <span class="card-title tweets-name">{{this.User.name}}</span>
