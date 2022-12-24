@@ -5,6 +5,7 @@ const User = db.User
 const Tweet = db.Tweet
 const Like = db.Like
 const Reply = db.Reply
+const Followship = db.Followship
 module.exports = {
   // 推薦追蹤用戶
   getTopUsers: async (req) => {
@@ -66,7 +67,11 @@ module.exports = {
   getUser: async (req) => {
     const userId = req.params.id
     const user = await User.findByPk(userId, {
-      include: [Tweet],
+      include: [
+        Tweet,
+        { model: User, as: 'Followings', order: [[Followship, 'createdAt', 'DESC']]},
+        { model: User, as: 'Followers', order: [[Followship, 'createdAt', 'DESC']] }
+      ],
       nest: true
     })
     return user
