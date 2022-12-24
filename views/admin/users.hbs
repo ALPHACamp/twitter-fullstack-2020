@@ -43,7 +43,7 @@
 									<img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://fakeimg.pl/70/{{/if}}"
 										class="admin-user-avatar mt-4" alt="face">
 								</div>
-								<div class="card-body bg-light" style="padding-top: 70%;">
+								<div class="card-body bg-light" style="padding-top: 80%;">
 									<h5 class="card-title admin-tweet-name">{{this.name}}</h5>
 									<h5 class="card-title admin-tweet-account">@{{this.account}}</h5>
 									<div class="text-center mt-3">
@@ -56,14 +56,15 @@
 											<img class="admin-tweet-flow-img " src="/images/vector@2x.png" alt="tweetCount">0
 											{{/if}}
 										</span>
+
 										<span class="twitterbox-time" style="color:#171725;">
 											{{#if this.likeCount}}
 											<img class="admin-tweet-flow-img " src="/images/like@2x.png"
-												alt="tweetLikeCount">{{this.likeCount}}</span>
-										{{else}}
-										<img class="admin-tweet-flow-img " src="/images/unlike@2x.png" alt="tweetLikeCount">0</span>
-										{{/if}}
-
+												alt="tweetLikeCount">{{this.likeCount}}
+											{{else}}
+											<img class="admin-tweet-flow-img " src="/images/unlike@2x.png" alt="tweetLikeCount">0
+											{{/if}}
+										</span>
 									</div>
 									<div class="admin-tweet-flow mt-2">
 										<span><strong style="color:#171725;">{{this.followingCount}}個</strong>跟隨中</span>
