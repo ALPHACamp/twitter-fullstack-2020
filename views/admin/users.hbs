@@ -1,28 +1,29 @@
-<div class="container-fluid">
-	<div class="row flex-nowrap justify-content-between mr-3">
-		<div class="admin-left">
-			<a href=""><img class="ac-img" src="/images/ac@2x.png" alt=""></a>
-			<div class="">
-				<a href="/admin/tweets" class="icon-home  leftbar-text">
-					<img class="home-img" src="/images/home@2x.png" alt="">
-					<span><strong>推文清單</strong></span>
-				</a>
-			</div>
-			<div class="mt-4 mb-1">
-				<a href="/admin/users" class="icon-user leftbar-text">
-					<img class="user-img" src="/images/user@2x.png" alt="">
-					<span><strong>使用者列表</strong></span>
-				</a>
-			</div>
-			<div class="mt-4 mb-1">
-				<a href="/logout" class="icon-logout leftbar-text">
-					<img class="logout-img" src="/images/logout@2x.png" alt="">
-					<span><strong>登出</strong></span>
-				</a>
-			</div>
-		</div>
 
-		<div class="col-9 mt-3">
+<div class="left d-flex align-items-start flex-column">
+	<a href=""><img class="ac-img" src="/images/ac@2x.png" alt=""></a>
+	<div class="">
+		<a href="/admin/tweets" class="icon-home  leftbar-text">
+			<img class="home-img" src="/images/home@2x.png" alt="">
+			<span><strong>推文清單</strong></span>
+		</a>
+	</div>
+	<div class="mt-4 mb-1">
+		<a href="/admin/users" class="icon-user leftbar-text">
+			<img class="user-img" src="/images/user@2x.png" alt="">
+			<span><strong>使用者列表</strong></span>
+		</a>
+	</div>
+	<div class="mt-auto mb-1">
+		<a href="/logout" class="icon-logout leftbar-text">
+			<img class="logout-img" src="/images/logout@2x.png" alt="">
+			<span><strong>登出</strong></span>
+		</a>
+	</div>
+</div>
+
+<div class="admin-right">
+	<div class="row flex-nowrap justify-content-between mr-3">
+		<div class="mt-3">
 
 			<div class="card-header" style="font-size: 18px; font-weight: 700; background-color:white; border: 0">
 				使用者列表
@@ -41,12 +42,12 @@
 										class="admin-user-avatar mt-4"
 										alt="face">
 								</div>
-								<div class="card-body bg-light" style="padding-top: 80%;">
+								<div class="card-body bg-light" style="padding-top: 70%;">
 									<h5 class="card-title admin-tweet-name">{{this.name}}</h5>
 									<h5 class="card-title admin-tweet-account" >@{{this.account}}</h5>
 									<div class="text-center mt-3">
-										<span class="twitterbox-time" style="color:#171725;"><img class="admin-tweet-flow-img " src="/images/vector@2x.png" alt="tweetCount">{{this.tweetCount}}1.5k</span>
-										<span class="twitterbox-time" style="color:#171725;"><img class="admin-tweet-flow-img " src="/images/like@2x.png" alt="tweetLikeCount">{{this.tweetLikeCount}}20k</span>
+										<span class="twitterbox-time" style="color:#171725;"><img class="admin-tweet-flow-img " src="/images/post_tweets.png" alt="tweetCount">{{this.tweetCount}}</span>
+										<span class="twitterbox-time" style="color:#171725;"><img class="admin-tweet-flow-img " src="/images/unlike@2x.png" alt="tweetLikeCount">{{this.likeCount}}</span>
 									</div>
 									<div class="admin-tweet-flow mt-2">
 										<span><strong style="color:#171725;">{{this.followingCount}}個</strong>跟隨中</span>

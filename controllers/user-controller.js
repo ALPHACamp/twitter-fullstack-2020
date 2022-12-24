@@ -96,19 +96,14 @@ const userController = {
     try {
       const user = await services.getUser(req)
       if (!user) throw new Error('該用戶不存在')
-      const viewUserFollow = await Followship.findAll({
-        where: { followerId: userId },
-        order: [['createdAt', 'DESC']],
-        nest: true
-      })
-      const followings = viewUserFollow.map(following => {
+      const followings = user.Followings.map(following => {
         return {
           ...following.toJSON(),
           isFollowed: followingList.includes(following.id)
         }
       })
       const topFollowings = await services.getTopUsers(req)
-      return res.render('following', {
+       res.render('following', {
         user: user.toJSON(),
         followings,
         topFollowings
@@ -121,15 +116,10 @@ const userController = {
     try {
       const user = await services.getUser(req)
       if (!user) throw new Error('該用戶不存在')
-      const viewUserFollow = await Followship.findAll({
-        where: { followingId: userId },
-        order: [['createdAt', 'DESC']],
-        nest: true
-      })
-      const followings = viewUserFollow.map(follower => {
+      const followings = user.Followers.map(following => {
         return {
-          ...follower.toJSON(),
-          isFollowed: followingList.includes(follower.id)
+          ...following.toJSON(),
+          isFollowed: followingList.includes(following.id)
         }
       })
       const topFollowings = await services.getTopUsers(req)
@@ -302,6 +292,36 @@ const userController = {
     } catch (err) {
       next(err)
     }
+  },
+  getLikes: async (req, res, next) => {
+    // 個人頁面喜歡的內容抓取
+    const self = helpers.getUser(req)
+    const UserId = req.params.id || ''
+    try {
+      const user = await User.findByPk(UserId, {
+        include: [
+          Tweet,
+          { model: User, as: 'Followings', order: [[Followship, 'createdAt', 'DESC']] },
+          { model: User, as: 'Followers', order: [[Followship, 'createdAt', 'DESC']] },
+          { model: Tweet, as: 'LikedTweets', include: [User, Like], order: [[Like, 'createAt', 'DESC']] }
+        ],
+        nest: true
+      })
+      const tweets = user.LikedTweets.map(t => ({
+        ...t.toJSON(),
+        description: t.description.substring(0, 140),
+        User: t.User.dataValues,
+        user,
+        isLiked: t.Likes.some(f => f.UserId === self.id)
+      }))
+      const topFollowings = await services.getTopUsers(req)
+      res.render('like', {
+        user: user.toJSON(),
+        tweets,
+        topFollowings
+      })
+    }
+    catch (err) { next(err) }
   }
 }
 module.exports = userController
