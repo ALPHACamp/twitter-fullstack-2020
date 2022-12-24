@@ -3,7 +3,7 @@
     <img src="/images/icon/Icon.png" alt="main-icon">
     <div>
       <h1 id="title">建立你的帳號</h1>
-      <form class="form-signup needs-validation" action="/signup" method="POST" id="formSetting" novalidate>
+      <form class="form-signup" action="/signup" method="POST" id="formSetting" novalidate>
         <div class="div">
           <label for="account">帳號</label>
           <input type="text" name="account" id="account" placeholder="請輸入帳號" aria-label="User account" required>
@@ -49,7 +49,7 @@
     const nameLength = document.getElementById('nameLengthCount')
     nameLength.innerText = counts + '/50'
     if (counts === 50) {
-      nameLength.innerHTML = '<span id = "limit-word" style = "color:red;"> 字數不可超過140字</span> '
+      nameLength.innerHTML = '<span id = "limit-word" style = "color:red;"> 字數不可超過50字</span> '
     }
   }
   //輸入不可為空白

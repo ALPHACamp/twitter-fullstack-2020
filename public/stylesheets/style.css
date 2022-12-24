@@ -172,7 +172,6 @@ height: 74px;
 display: flex;
 align-items: center;
 border-bottom: 1px solid 	#E6ECF0;
-border-right: 1px solid 	#E6ECF0;
 padding-left:23px;
 position: relative;
 }
@@ -1000,6 +999,8 @@ height: 50px;
 }
 
 .popular-name {
+width:calc(100%/6);
+      white-space: nowrap;
 height: 26px;
 font-style: normal;
 font-weight: 700;
