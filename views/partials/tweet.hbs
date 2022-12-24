@@ -1,0 +1,165 @@
+{{> leftbar}}
+
+<div class="content-fluid">
+  <div class="content-fluid middle right-line-2 left-line-2">
+    <div class="row">
+      {{> user-profile}}
+      {{#each tweets}}
+      {{!-- 推文 start--}}
+      <div>
+        <div class="fl">
+          {{#if this.User.avatar}}
+          <img class="ac-img" src="{{this.User.avatar}}" alt="" style="border-radius: 50%">
+          {{else}}
+          <img class="ac-img" src="https://fakeimg.pl/40x40/" alt="" style="border-radius: 50%">
+          {{/if}}
+        </div>
+        <div class="tweet-flow-text fl">
+          <span class="twitterbox-name">{{this.User.name}}</span>
+          <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
+          <p class="twitterbox-text">
+            {{this.description}}
+          </p>
+          <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">13</span>
+
+          {{#if isLiked}}
+          <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
+            <span class="twitterbox-time">
+              <button type="submit" class="btn">
+                <img class="tweet-flow-img" src="/images/like@2x.png" alt="">
+                {{this.Likes.length}}
+              </button>
+            </span>
+          </form>
+          {{else}}
+          <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
+            <span class="twitterbox-time">
+              <button type="submit" class="btn">
+                <img class="tweet-flow-img" src="/images/unlike@2x.png" alt="">
+                {{this.Likes.length}}
+              </button>
+            </span>
+          </form>
+          {{/if}}
+
+          <div class="bottom-line-f"></div>
+        </div>
+      </div>
+      {{!-- 推文 end--}}
+      {{/each}}
+    </div>
+  </div>
+</div>
+<div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class=" fl">
+            <button type="button font-color-or" class="btn-close btn-close-re" data-bs-dismiss="modal"
+              aria-label="Close" onclick="javascript:history.back()"></button>
+          </div>
+        </div>
+        <form action="/tweets/{{tweets.User.id}}" method="POST"></form>
+        <div class="modal-body">
+          <form action="/tweets" method="POST">
+            <img class="avatar-img fl" src="{{user.avatar}}" alt="">
+            <span>
+              <textarea class="modal-input-tweets mt-3 tweetOne" type="description" name="description" id="description"
+                cols="30" rows="10" placeholder="有什麼新鮮事?" maxlength="140"></textarea>
+              <input type="hidden" name="UserId" value="{{tweets.User.id}}" />
+            </span>
+            <span class="hint abs" style="color: #FC5A5A;right:140px; bottom:27px"></span>
+            <button class="tweetbtn-s abs tweetOne-button" type="submit">推文</button>
+          </form>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop-self" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content height-61">
+        <div class="modal-header rel">
+          <form action="/users/{{ user.id }}/edit" method="POST" enctype="multipart/form-data">
+            <button type="button font-color-or abs" class="btn-close btn-close-re" data-bs-dismiss="modal"
+              aria-label="Close"></button>
+            <button class="selftweetbtn-s abs flow-end" type="submit">儲存</button>
+        </div>
+
+        <div class="selfeditavatar-img">
+          <div class="form-row">
+            {{#if user.background}}
+            <img id="bannerImg" src="{{user.background}}" alt="background"
+              style="width:632px; margin-left:0px; height: 200px;margin-top:0px ;position:relative">
+            {{else}}
+            <img id="bannerImg" src="https://fakeimg.pl/632x200/ff6347/121212" alt="background"
+              style="width:632px; margin-left:0px; height: 200px;margin-top:0px ;position:relative">
+            {{/if}}
+            <label class="form-label" for="background">
+              <img style="position: absolute;left:269px; top:143px; z-index:3;width:35px;" src="/images/camera.png"
+                alt="upload">
+              <img style="position: absolute;left:366px; top:144px; z-index:3;width:28px;"
+                src="/images/btn_close_wh@2x.png" alt="">
+            </label>
+            <input class="form-control" type="file" class="form-control-file" id="background" name="background"
+              style="display: none;">
+          </div>
+
+          {{!-- 頭像 --}}
+          <div class="form-row">
+            {{#if user.avatar}}
+            <img id="avatarImg" src="{{user.avatar}}" alt="avatar"
+              style="border: 4px solid white; height: 150px; width: 150px; margin: -110px 0 0 45px; border-radius: 50%; position: relative;">
+            {{else}}
+            <img id="avatarImg" src="https://fakeimg.pl/150/" alt="avatar"
+              style="border: 4px solid white; height: 150px; width: 150px; margin: -110px 0 0 45px; border-radius: 50%; position: relative;">
+            {{/if}}
+            <label class="form-label" for="avatar">
+              <img style="position: absolute;left:101px; top:225px; z-index:3;width:35px;" src="/images/camera.png"
+                alt="upload">
+            </label>
+            <input class="form-control" type="file" class="form-control-file" id="avatar" name="avatar"
+              style="display: none;">
+          </div>
+          <div class="form-name p-2" style="margin-top: 20px;">
+            <p class="selfname">名稱</p>
+            <textarea class="form-control selfbg" placeholder="" name="name" id="name" maxlength="50"
+              style="padding: 15px 0 0 0;" value="{{user.name}}">{{user.name}}</textarea>
+          </div>
+          <div class="form-intro p-2">
+            <p class="selfname">自我介紹</p>
+            <textarea class="form-control selfintro" placeholder="" name="introduction" id="introduction"
+              maxlength="160" style="padding: 15px 0 0 0;"
+              value="{{user.introduction}}">{{user.introduction}}</textarea>
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{{> rightbar}}
+
+
+<script>
+  const tweetOneButton = document.querySelector('.tweetOne-button')
+  const tweet = document.querySelector('.tweetOne')
+  const hint = document.querySelector('.hint')
+  tweetOneButton.addEventListener('click', (e) => {
+    if (tweet.innerText === '') {
+      e.preventDefault()
+      console.log(hint.innerText)
+      hint.innerText = '內容不可空白'
+    }
+  })
+</script>

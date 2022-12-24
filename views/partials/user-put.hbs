@@ -59,16 +59,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  const tweetOneButton = document.querySelector('.tweetOne-button')
-  const tweet = document.querySelector('.tweetOne')
-  const hint = document.querySelector('.hint')
-  tweetOneButton.addEventListener('click', (e) => {
-    if (tweet.innerText === '') {
-      e.preventDefault()
-      console.log(hint.innerText)
-      hint.innerText = '內容不可空白'
-    }
-  })
-</script>
