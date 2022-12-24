@@ -2,22 +2,42 @@
   <div class="first-con">
     <img src="/images/icon/Icon.png" alt="main-icon">
     <div>
-      {{> message}}
       <h1 id="title">登入 Alphitter</h1>
-      <form class="form-signin" action="/signin" method="POST">
+      <form class="form-signin" action="/signin" method="POST" id="formSetting" novalidate>
         <div class="div">
           <label for="account">帳號</label>
           <input type="text" name="account" id="account" placeholder="請輸入帳號" aria-label="User account" required>
+          <span class="invalid-feedback">內容不可空白</span>
         </div>
         <div class="div">
           <label for="password">密碼</label>
           <input type="password" name="password" id="password" placeholder="請輸入密碼" aria-label="User password" required>
+          <span class="invalid-feedback">內容不可空白</span>
         </div>
-        <button id="login-button" type="submit">登入</button>
+        <button id="login-button" type="submit" onclick="validTest()">登入</button>
       </form>
-      <div class="div register inline text-end">
+      <div class=" div register inline text-end">
         <a href="/signup">註冊</a><span>‧</span><a href="/admin/signin">後台登入</a>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  //輸入不可為空白
+  function validTest() {
+    const form = document.querySelector('#formSetting')
+    const submitButton = document.querySelector('#login-button')
+
+    submitButton.addEventListener('click', function onSubmitButtonClicked(event) {
+      form.classList.add('was-validated')
+    })
+
+    form.addEventListener('submit', function onFormSubmitted(event) {
+      if (!form.checkValidity()) {
+        event.stopPropagation()
+        event.preventDefault()
+      }
+    })
+  }
+</script>

@@ -209,6 +209,7 @@ const userController = {
     const queryUserId = req.params.id
     return Promise.all([
       User.findByPk(queryUserId, {
+        include: [{ model: User, as: 'Followers' }],
         attributes: {
           include: [
             [sequelize.literal(`(SELECT COUNT(*) FROM Followships WHERE following_id = User.id)`), 'followerCount'],
@@ -232,6 +233,13 @@ const userController = {
       })
     ])
       .then(([user, replies, users]) => {
+        const currentUser = helpers.getUser(req)
+        const currentFollower = user.Followers.id
+        if (currentUser.id === currentFollower) {
+          user['isFollowed'] = true
+        } else {
+          user['isFollowed'] = false
+        }
         const result = users
           .map(user => ({
             ...user.toJSON(),
@@ -239,7 +247,7 @@ const userController = {
             isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
           }))
           .sort((a, b) => b.followCount - a.followCount)
-        res.render('user-replies', { user, replies, result })
+        res.render('user-replies', { user, replies, result, currentUser })
       })
       .catch(err => next(err))
   },
@@ -248,6 +256,7 @@ const userController = {
     const queryUserId = req.params.id
     return Promise.all([
       User.findByPk(queryUserId, {
+        include: [{ model: User, as: 'Followers' }],
         attributes: {
           include: [
             [sequelize.literal(`(SELECT COUNT(*) FROM Followships WHERE following_id = User.id)`), 'followerCount'],
@@ -280,6 +289,13 @@ const userController = {
       })
     ])
       .then(([user, likes, users]) => {
+        const currentUser = helpers.getUser(req)
+        const currentFollower = user.Followers.id
+        if (currentUser.id === currentFollower) {
+          user['isFollowed'] = true
+        } else {
+          user['isFollowed'] = false
+        }
         const result = users
           .map(user => ({
             ...user.toJSON(),
@@ -287,7 +303,7 @@ const userController = {
             isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
           }))
           .sort((a, b) => b.followCount - a.followCount)
-        res.render('user-likes', { user, likes, result })
+        res.render('user-likes', { user, likes, result, currentUser })
       })
       .catch(err => next(err))
   },

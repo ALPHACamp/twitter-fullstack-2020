@@ -28,19 +28,19 @@
           </div>
         </div>
         {{#each Tweets}}
-        <div class="main-bottom">
+        <div class="main-bottom ">
           <div class="card-body tweets-box">
-            {{#if this.User.avatar}}
-            <img src="{{this.User.avatar}}" alt="avatar" class="user-avatar">
-            {{else}}
-            <img src="/images/icon/User Photo.png" alt="avatar" class="user-avatar">
-            {{/if}}
+            <a class="card-title tweets-name" href="/users/{{this.User.id}}/tweets"> {{#if this.User.avatar}}
+              <img src="{{this.User.avatar}}" alt="avatar" class="user-avatar">
+              {{else}}
+              <img src="/images/icon/User Photo.png" alt="avatar" class="user-avatar">
+              {{/if}}</a>
 
 
             {{!-- <img src="/images/icon/User Photo.png" alt="" class="user-avatar"> --}}
             <div class="tweets-box-main">
               <div class="tweets-header">
-                <a class="card-title tweets-name" href="/users/{{this.User.id}}/tweets">{{this.User.name}}</a>
+                {{this.User.name}}
                 <span class="tweets-account"> @{{this.User.account}} ．{{relativeTimeFromNow this.createdAt}}</span>
               </div>
               <div class="tweets-content">

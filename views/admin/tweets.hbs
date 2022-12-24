@@ -5,37 +5,30 @@
       <div class="home-header">
         推文清單
       </div>
-      <div style="height: calc(100vh - 76px); max-height: calc(100vh - 76px); overflow-y: auto"
-      class="align-content-start">
-      {{#each tweets}}
-      <div class="card-body tweets-box">
-        <img src="/images/icon/User Photo.png" alt="" class="user-avatar">
-        <div class="tweets-box-main">
-          <div class="tweets-header">
-            <span class="card-title tweets-name">{{this.User.name}}</span>
-            <span class="tweets-account"> @{{this.User.account}} ．{{relativeTimeFromNow this.createdAt}}</span>
+      <div class="admin-main align-content-start">
+        {{#each tweets}}
+        <div class="card-body tweets-box" style="border-left:1px solid #E6ECF0;border-right:1px solid #E6ECF0;">
+          <img src="/images/icon/User Photo.png" alt="" class="user-avatar">
+          <div class="tweets-box-main">
+            <div class="tweets-header">
+              <span class="card-title tweets-name">{{this.User.name}}</span>
+              <span class="tweets-account"> @{{this.User.account}} ．{{relativeTimeFromNow this.createdAt}}</span>
+            </div>
+            <div class="tweets-content">
+              <p>
+                {{this.description}}
+              </p>
+            </div>
           </div>
-          <div class="tweets-content">
-            <p>
-              {{this.description}}
-            </p>
+          <div class="delPosition">
+            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+              <button type="submit" class="btn btn-link link-danger" onclick="return confirm(`確定要刪除嗎？`)">
+                <img src="/images/basic/close.svg" width="15px" height="15px" alt="">
+              </button>
+            </form>
           </div>
         </div>
-        <form
-            action="/admin/tweets/{{this.id}}?_method=DELETE"
-            method="POST"
-            style="display: inline;"
-          >
-            <button
-              type="submit"
-              class="btn btn-link link-danger"
-              onclick="return confirm(`確定要刪除嗎？`)"
-            >
-            <img src="/images/basic/close.svg" width="15px" height="15px" alt="">
-            </button>
-          </form>
-      </div>
-      {{/each}}
+        {{/each}}
       </div>
     </div>
   </div>

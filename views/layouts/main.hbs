@@ -12,8 +12,14 @@
 </head>
 
 <body>
-  {{>message}}
-  {{{body}}}
+  <div style="position: relative;">
+    <div class="mes-alert">
+      {{>message}}
+    </div>
+
+    {{{body}}}
+  </div>
+
 
   <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"

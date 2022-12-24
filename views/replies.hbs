@@ -1,6 +1,5 @@
 <div class="container">
   <div class="row">
-    {{> message}}
     {{>left-sidebar}}
     <div class="col-6 top">
       <div class="card-home">
@@ -23,7 +22,7 @@
           <div class="tweets-content-sec">
             {{tweet.description}}
             <p class="tweets-account">
-              {{relativeTimeFromNow tweet.createdAt}}
+              {{relativeTimeOtherType tweet.createdAt}}
             </p>
           </div>
           <div class="tweets-mid">

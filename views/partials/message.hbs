@@ -1,17 +1,20 @@
 {{#if error_messages}}
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
+<div class="alert alert-dismissible fade show notiMes" role="alert">
+  <img src="/images/basic/noti/danger.svg" alt="">
   {{ error_messages }}
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {{/if}}
 {{#if success_messages}}
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+<div class="alert alert-dismissible fade show notiMes" role="alert">
+  <img src="/images/basic/noti/success.svg" alt="">
   {{ success_messages }}
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {{/if}}
 {{#if warning_msg}}
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
+<div class="alert alert-dismissible fade show notiMes" role="alert">
+  <img src="/images/basic/noti/warning.svg" alt="">
   {{ warning_msg }}
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
