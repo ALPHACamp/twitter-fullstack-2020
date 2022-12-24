@@ -76,14 +76,16 @@
         </div>
 
         <div class="modal-cover-avatar" style="height: 264px; position:relative;">
-          <img id="modal-cover" src="" alt="cover"
-            style="height: 200px;width:631px; object-fit:cover;position:absolute;top:0;left:0;-webkit-filter:brightness(.7)">
-          <label class="change-avatar" for="cover-btn">
-            <img src="/images/icons/white-camera.png" alt=""
-              style="height:24px; width:24px; position:absolute;bottom:155px;left:279px; z-index:1; cursor:pointer">
-            <input name="cover" type="file" id="cover-btn">
-          </label>
 
+          <div class="cover-section">
+            <img id="modal-cover" src="" alt="cover"
+              style="height: 200px;width:631px; position:absolute;top:0;left:0; object-fit:cover;-webkit-filter:brightness(.7)">
+            <label class="change-cover" for="cover-btn">
+              <img src="/images/icons/white-camera.png" alt=""
+                style="height:24px; width:24px; position:absolute;bottom:155px;left:279px; z-index:1; cursor:pointer">
+              <input name="cover" type="file" id="cover-btn">
+            </label>
+          </div>
           <button class="remove-cover" type="button" id="default-cover">
             <img src="/images/icons/white-X.png" alt=""
               style="height:24px; width:24px; position:absolute;bottom:155px;left:337px; z-index:1">
@@ -91,7 +93,7 @@
 
           <div class="avatar-section">
             <img id="modal-avatar" src="" alt="avatar"
-              style="height:140px; width:140px; border: 4px solid #FFFFFF;position:absolute;bottom:0;left:16px; z-index:1; border-radius:50%;-webkit-filter:brightness(.7);object-fit:cover;">
+              style="height:140px; width:140px; border: 4px solid #FFFFFF;position:absolute;bottom:0;left:16px; border-radius:50%;-webkit-filter:brightness(.7)">
             <label class="change-avatar" for="avatar-btn">
               <img src="/images/icons/white-camera.png" alt=""
                 style="height:24px; width:24px; position:absolute;bottom:60px;left:75px; z-index:1; cursor:pointer">
@@ -211,25 +213,19 @@
 <script>
   const inputAva = document.getElementById("avatar-btn")
   const avatar = document.getElementById("modal-avatar")
-
   inputAva.addEventListener('change', uploadAva)
-
   function uploadAva(e) {
     let uploadAvatar = e.target.files || e.dataTransfer.files;
-    console.log('22', avatar.alt)
     avatar.src = window.URL.createObjectURL(uploadAvatar[0])
   }
 </script>
 
 <script>
-  const inputCover = document.getElementById("cover-btn")
+  const inputCov = document.getElementById("cover-btn")
   const cover = document.getElementById("modal-cover")
-
-  inputCover.addEventListener('change', uploadCov)
-
+  inputCov.addEventListener('change', uploadCov)
   function uploadCov(e) {
     let uploadCover = e.target.files || e.dataTransfer.files;
-    console.log('22', cover.alt)
     cover.src = window.URL.createObjectURL(uploadCover[0])
   }
 </script>
