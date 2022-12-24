@@ -1,4 +1,3 @@
-<!-- Modal -->
 <div class="modal fade" id="staticBackdrop-self" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -12,8 +11,13 @@
 
       <div class="selfeditavatar-img">
         <div class="form-row">
+          {{#if user.background}}
           <img id="bannerImg" src="{{user.background}}" alt="background"
             style="width:632px; margin-left:0px; height: 200px;margin-top:0px ;position:relative">
+          {{else}}
+          <img id="bannerImg" src="https://fakeimg.pl/632x200/ff6347/121212" alt="background"
+            style="width:632px; margin-left:0px; height: 200px;margin-top:0px ;position:relative">
+          {{/if}}
           <label class="form-label" for="background">
             <img style="position: absolute;left:269px; top:143px; z-index:3;width:35px;" src="/images/camera.png"
               alt="upload">
@@ -26,8 +30,13 @@
 
         {{!-- 頭像 --}}
         <div class="form-row">
+          {{#if user.avatar}}
           <img id="avatarImg" src="{{user.avatar}}" alt="avatar"
             style="border: 4px solid white; height: 150px; width: 150px; margin: -110px 0 0 45px; border-radius: 50%; position: relative;">
+          {{else}}
+          <img id="avatarImg" src="https://fakeimg.pl/150/" alt="avatar"
+            style="border: 4px solid white; height: 150px; width: 150px; margin: -110px 0 0 45px; border-radius: 50%; position: relative;">
+          {{/if}}
           <label class="form-label" for="avatar">
             <img style="position: absolute;left:101px; top:225px; z-index:3;width:35px;" src="/images/camera.png"
               alt="upload">
@@ -49,8 +58,6 @@
       </form>
     </div>
   </div>
-</div>
-</div>
 </div>
 
 <script>
