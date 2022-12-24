@@ -725,7 +725,9 @@ svg {
 
 .admin-user-background {
   position: absolute;
+  border-radius: 5% 5% 0% 0%;
   width: 100%;
+  height: 100px;
   z-index: 0;
 }
 
