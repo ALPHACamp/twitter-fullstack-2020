@@ -60,40 +60,12 @@ const tweetController = {
           }))
           .sort((a, b) => b.followCount - a.followCount)
         // console.log(data)
-        res.render('tweets', { Tweets: data, result })
+        res.render('tweets', { Tweets: data, result: result.slice(0, 10) })
       })
       .catch(err => next(err))
   },
   getReplies: (req, res, next) => {
     res.render('replies')
-  },
-  getUserFollower: (req, res) => {
-    const queryUserId = req.params.id
-    return Promise.all([
-      User.findByPk(queryUserId, {
-        attributes: ['id', 'name',
-          [sequelize.literal('(SELECT COUNT(*) FROM Tweets WHERE user_id = User.id)'), 'tweetsCount']],
-        nest: true,
-        raw: true
-      }),
-      Followship.findAll({
-        include: [{
-          model: User,
-          as: 'Followers',
-          attributes: ['id', 'account', 'name', 'avatar', 'introduction',
-            // [sequelize.literal(`(SELECT (COUNT(*) > 0) FROM Followships WHERE Followships.followerId = ${helper.getUser(req).id} AND Followships.followingId=Followers.id)`), 'isFollowed']
-          ]
-        }],
-        where: { followingId: queryUserId },
-        order: [['createdAt', 'DESC']],
-        nest: true,
-        raw: true
-      })
-    ])
-      .then(([user, followers]) =>
-        res.render('follower', { user, followers })
-      )
-      .catch(err => next(err))
   },
   addLike: (req, res, next) => {
     const id = req.params.id

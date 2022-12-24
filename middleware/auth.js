@@ -20,7 +20,7 @@ const authenticatedAdmin = (req, res, next) => {
       res.redirect('/signin') //一般使用者，丟到前台登入
     }
   } else {
-    res.redirect('/admin/signin') // 是admin 丟到 admin signin 畫面
+    res.redirect('/admin/tweets') // 是admin 丟到 admin signin 畫面
   }
 }
 module.exports = {
