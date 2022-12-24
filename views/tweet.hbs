@@ -1,76 +1,50 @@
 {{> leftbar}}
 
-<div class="content-fluid">
-  <div class="content-fluid middle right-line-2 left-line-2">
-    <div class="row">
-      {{> user-nav}}
-      {{> user-profile}}
-      {{#each tweets}}
-      {{!-- 推文 start--}}
-      <div>
-        <div class="fl">
-          {{#if this.User.avatar}}
-          <img class="ac-img" src="{{this.User.avatar}}" alt="" style="border-radius: 50%">
-          {{else}}
-          <img class="ac-img" src="https://fakeimg.pl/40x40/" alt="" style="border-radius: 50%">
-          {{/if}}
-        </div>
-        <div class="tweet-flow-text fl">
-          <span class="twitterbox-name">{{this.User.name}}</span>
-          <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
-          <p class="twitterbox-text">
-            {{this.description}}
-          </p>
-          <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">13</span>
+{{> user-profile route="tweet"}}
+  {{#each tweets}}
+  {{!-- 推文 start--}}
+  <div>
+    <div class="fl">
+      <img class="ac-img" src="/images/img@2x.png" alt="">
+    </div>
+    <div class="tweet-flow-text fl">
+      <a href="/users/{{../user.id}}/tweets" class="text-decoration-n">
+      <span class="twitterbox-name">{{this.User.name}}</span>
+      </a>
+      <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
+      <a href="/users/{{../user.id}}/replies"class="text-decoration-n">
+      <p class="twitterbox-text">
+        {{this.description}}
+      </p>
+      </a>
+      <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="" data-bs-target="#staticBackdrop{{this.id}}" data-bs-toggle="modal">13</span>
 
-          {{#if isLiked}}
-          <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
-            <span class="twitterbox-time">
-              <button type="submit" class="btn">
-                <img class="tweet-flow-img" src="/images/like@2x.png" alt="">
-                {{this.Likes.length}}
-              </button>
-            </span>
-          </form>
-          {{else}}
-          <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
-            <span class="twitterbox-time">
-              <button type="submit" class="btn">
-                <img class="tweet-flow-img" src="/images/unlike@2x.png" alt="">
-                {{this.Likes.length}}
-              </button>
-            </span>
-          </form>
-          {{/if}}
+      {{#if this.isLiked}}
+      <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
+        <span class="twitterbox-time">
+          <button type="submit" class="btn">
+            <img class="tweet-flow-img" src="/images/like@2x.png" alt="">
+            {{this.Likes.length}}
+          </button>
+        </span>
+      </form>
+      {{else}}
+      <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
+        <span class="twitterbox-time">
+          <button type="submit" class="btn">
+            <img class="tweet-flow-img" src="/images/unlike@2x.png" alt="">
+            {{this.Likes.length}}
+          </button>
+        </span>
+      </form>
+      {{/if}}
 
-          <div class="bottom-line-f"></div>
-        </div>
-      </div>
-      {{!-- 推文 end--}}
-      {{/each}}
+      <div class="bottom-line-f"></div>
     </div>
   </div>
-</div>
-
-<div>
-  <!-- Modal -->
-  {{> user-tweet}}
-  <!-- Modal -->
-  {{> user-put}}
-</div>
-
+  {{!-- 推文 end--}}
+  {{/each}}
+{{> reply-modal}}
+{{> user-put}}
 {{> rightbar}}
 
-{{!--
-<script>
-  const tweetOneButton = document.querySelector('.tweetOne-button')
-  const tweet = document.querySelector('.tweetOne')
-  const hint = document.querySelector('.hint')
-  tweetOneButton.addEventListener('click', (e) => {
-    if (tweet.innerText === '') {
-      e.preventDefault()
-      console.log(hint.innerText)
-      hint.innerText = '內容不可空白'
-    }
-  })
-</script> --}}

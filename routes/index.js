@@ -22,7 +22,7 @@ router.get('/logout', userController.logout)
 router.get('/users/:id/followings', authenticated, userController.getFollowings)
 router.get('/users/:id/followers', authenticated, userController.getFollowers)
 router.get('/users/:id/replies', authenticated, userController.getReplies)
-// router.get('/users/:id/likes', authenticated, userController.getLikes)
+router.get('/users/:id/likes', authenticated, userController.getLikes)
 router.get('/users/:id/tweets', authenticated, userController.getTweets)
 router.post('/users/:id/edit', authenticated, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'background', maxCount: 1 }]), userController.selfeditUser)
 
