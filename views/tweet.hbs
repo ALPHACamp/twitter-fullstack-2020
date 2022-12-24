@@ -15,7 +15,7 @@
         <span class="twitterbox-name">{{this.User.name}}</span>
       </a>
       <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
-      <a href="/tweets/{{../user.id}}/replies" class="text-decoration-n">
+      <a href="/tweets/{{this.id}}/replies" class="text-decoration-n">
         <p class="twitterbox-text">
           {{this.description}}
         </p>
