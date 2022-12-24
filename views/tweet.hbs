@@ -2,8 +2,6 @@
 <div class="middle right-line-2 left-line-2">
   <div>
     <div class="row">
-
-
       {{> user-nav}}
       {{> user-profile route="tweet"}}
       {{#each tweets}}
@@ -50,9 +48,11 @@
       </div>
       {{!-- 推文 end--}}
       {{/each}}
+      {{> user-put}}
+      {{> user-tweet}}
+      {{> reply-modal}}
+
     </div>
   </div>
 </div>
 {{> rightbar}}
-{{> reply-modal}}
-{{> user-put}}
