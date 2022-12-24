@@ -51,7 +51,9 @@ const userController = {
             account,
             name,
             email,
-            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
+            avatar: `https://loremflickr.com/250/250/avatar/?lock=${Math.random() * 100}`,
+            background: `https://loremflickr.com/250/250/background/?lock=${Math.random() * 100}`,
           })
             .then(() => {
               req.flash('success_messages', '成功註冊帳號！')

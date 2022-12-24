@@ -365,11 +365,12 @@ svg {
 
 .right {
   width: 273px;
-  height: 140px;
+  height: auto;
   top: 0px;
   left: 71%;
   position: fixed;
   background-color: #FAFAFB;
+  border-radius: 16px;
 }
 
 .right-follow-title {
@@ -540,8 +541,8 @@ svg {
   margin-top: 17px;
 }
 
-.bottom-line-16 {
-  border-bottom: 16px solid #E6ECF0;
+.bottom-line-10 {
+  border-bottom: 10px solid #E6ECF0;
 }
 
 .m16-8-0-27 {
@@ -1063,5 +1064,6 @@ a .nav-link:active,
 .message-img {
   width: 40px;
   height: 40px;
-  border-style: hidden;
+  border-style: none;
+  background-color: #ffffff;
 }
