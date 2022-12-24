@@ -673,10 +673,7 @@ svg {
 }
 
 .sub-login {
-  display: flex;
-  justify-content: end;
-  align-items: end;
-
+  text-align: end;
   width: 360px;
   height: 36px;
 }
@@ -719,8 +716,11 @@ svg {
   height: 222px;
 }
 
-.admin-left {
-  width: 200px;
+.admin-right {
+  position: absolute;
+  /* height: 1200px; */
+  top: 0px;
+  left: 24%;
 }
 
 .admin-user-background {
@@ -769,7 +769,7 @@ svg {
   color: #6c757d;
   font-size: 14px;
   font-weight: 400;
-  height: 8px;
+  /* height: 8px; */
 }
 
 .alert-style {
