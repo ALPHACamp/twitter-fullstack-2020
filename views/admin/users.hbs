@@ -1,4 +1,5 @@
 
+
 <div class="left d-flex align-items-start flex-column">
 	<a href=""><img class="ac-img" src="/images/ac@2x.png" alt=""></a>
 	<div class="">
@@ -32,22 +33,37 @@
 			<div class="d-flex flex-row">
 				<div class="row">
 					{{#each users}}
-					<div class="d-flex col-3" >
+					<div class="d-flex col-3">
 						<div>
 							<div class="card my-3">
 								<div class="position-relative">
-									<img src="{{#if this.background}}{{this.background}}{{else}}/images/background@2x.png{{/if}}"
+									<img
+										src="{{#if this.background}}{{this.background}}{{else}}https://fakeimg.pl/245x140/ff6347/121212{{/if}}"
 										class="admin-user-background m-0" alt="background">
-									<img src="{{#if this.avatar}}{{this.avatar}}{{else}}/images/avatar@2x.png{{/if}}"
-										class="admin-user-avatar mt-4"
-										alt="face">
+									<img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://fakeimg.pl/70/{{/if}}"
+										class="admin-user-avatar mt-4" alt="face">
 								</div>
 								<div class="card-body bg-light" style="padding-top: 70%;">
 									<h5 class="card-title admin-tweet-name">{{this.name}}</h5>
-									<h5 class="card-title admin-tweet-account" >@{{this.account}}</h5>
+									<h5 class="card-title admin-tweet-account">@{{this.account}}</h5>
 									<div class="text-center mt-3">
-										<span class="twitterbox-time" style="color:#171725;"><img class="admin-tweet-flow-img " src="/images/post_tweets.png" alt="tweetCount">{{this.tweetCount}}</span>
-										<span class="twitterbox-time" style="color:#171725;"><img class="admin-tweet-flow-img " src="/images/unlike@2x.png" alt="tweetLikeCount">{{this.likeCount}}</span>
+
+										<span class="twitterbox-time" style="color:#171725;">
+											{{#if this.tweetCount}}
+											<img class="admin-tweet-flow-img " src="/images/vector@2x.png"
+												alt="tweetCount">{{this.tweetCount}}
+											{{else}}
+											<img class="admin-tweet-flow-img " src="/images/vector@2x.png" alt="tweetCount">0
+											{{/if}}
+										</span>
+										<span class="twitterbox-time" style="color:#171725;">
+											{{#if this.likeCount}}
+											<img class="admin-tweet-flow-img " src="/images/like@2x.png"
+												alt="tweetLikeCount">{{this.likeCount}}</span>
+										{{else}}
+										<img class="admin-tweet-flow-img " src="/images/unlike@2x.png" alt="tweetLikeCount">0</span>
+										{{/if}}
+
 									</div>
 									<div class="admin-tweet-flow mt-2">
 										<span><strong style="color:#171725;">{{this.followingCount}}個</strong>跟隨中</span>

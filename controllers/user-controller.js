@@ -83,10 +83,12 @@ const userController = {
     try {
       const data = await services.getTweets(req)
       const topFollowings = await services.getTopUsers(req)
+      const tweetslength = data.length
       res.render('tweet', {
         tweets: data,
         user,
-        topFollowings
+        topFollowings,
+        tweetslength
       })
     } catch (err) { next(err) }
   },
@@ -229,10 +231,12 @@ const userController = {
         raw: true
       }) || []
       const topFollowings = await services.getTopUsers(req)
+      const repliesLength = replies.length
       res.render('reply', {
         user: user.toJSON(),
         replies,
-        topFollowings
+        topFollowings,
+        repliesLength
       })
     } catch (err) { next(err) }
   },

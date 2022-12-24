@@ -7,21 +7,20 @@ const User = db.User
 const Like = db.Like
 const Reply = db.Reply
 const helpers = require('../_helpers')
-const services =require('../_services')
+const services = require('../_services')
 const tweetController = {
   // 首頁的推文抓取
   getTweets: async (req, res, next) => {
     const user = helpers.getUser(req)
-    try{
+    try {
       const data = await services.getTweets(req)
       const topFollowings = await services.getTopUsers(req)
       res.render('tweets', {
-        tweets: data, 
+        tweets: data,
         user,
         topFollowings
       })
-    }
-    catch (err) { next(err) }
+    } catch (err) { next(err) }
   },
   postTweet: async (req, res, next) => {
     try {
@@ -69,16 +68,16 @@ const tweetController = {
   },
   getReplies: async (req, res, next) => {
     const user = helpers.getUser(req)
-    try{
+    try {
       const tweet = await Tweet.findByPk(req.params.id, {
         include: [User, Like],
         nest: true
       })
-      if (!tweet) throw new Error("貼文不存在")
-      const data = { 
+      if (!tweet) throw new Error('貼文不存在')
+      const data = {
         ...tweet.toJSON(),
         isLiked: tweet && tweet.Likes.some(f => f.UserId === user.id)
-      }  
+      }
       const replies = await services.getReplies(req)
       const topFollowings = await services.getTopUsers(req)
       res.render('replies', {
@@ -86,8 +85,7 @@ const tweetController = {
         replies,
         topFollowings
       })
-    }
-    catch(err) { next(err) }
+    } catch (err) { next(err) }
   },
   createReply: async (req, res, next) => {
     try {

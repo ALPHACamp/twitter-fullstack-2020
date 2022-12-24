@@ -773,7 +773,10 @@ svg {
 }
 
 .alert-style {
+  width: 350px;
+  height: 86px;
   position: absolute;
+  left: 35%;
   justify-content: space-between;
   align-items: center;
   text-align: center;
@@ -782,11 +785,48 @@ svg {
 }
 
 .prompt-text {
-  font-family: 'Roboto';
+  /* font-family: 'Roboto'; */
   font-style: normal;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 28px;
+}
+
+.alert-danger {
+  color: #000000;
+  background-color: #ffffff;
+  /* border-color: #f5c2c7; */
+  box-shadow: 0px 4px 4px rgb(51 51 51 / 4%), 0px 4px 16px rgb(51 51 51 / 8%);
+  border-radius: 8px;
+}
+
+.alert-success {
+  color: #000000;
+  background-color: #ffffff;
+  /*border-color: #badbcc;*/
+  box-shadow: 0px 4px 4px rgb(51 51 51 / 4%), 0px 4px 16px rgb(51 51 51 / 8%);
+  border-radius: 8px;
+  /* background-image: url('../images/background@2x (2).png'); */
+}
+
+.btn-close-success {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  padding: 1.25rem 1rem;
+  /* background-image: url('../images/background@2x-nice.png'); */
+}
+
+.alert-dismissible .btn-close {
+  position: relative;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  padding: 1.25rem 1rem;
+  /* background-image: url('../images/background@2x (2).png'); */
 }
 
 /* top-follower */
@@ -850,7 +890,7 @@ a .nav-link:active,
 
 /* follower */
 .follower-card {
-  width:639px;
+  width: 639px;
   left: 332px;
   background: #FFFFFF;
   text-align: center;
@@ -920,20 +960,23 @@ a .nav-link:active,
 
 .viewUser-nav {
   position: absolute;
-    width: 639px;
-    height: 75px;
-    left: 332px;
-    background: #FFFFFF;
-    /* color/border */
-    border: 1px solid #E6ECF0;
-    text-align: center;
+  width: 639px;
+  height: 75px;
+  left: 332px;
+  background: #FFFFFF;
+  /* color/border */
+  border: 1px solid #E6ECF0;
+  text-align: center;
 }
+
 .viewUser {
   margin-left: 28px
 }
+
 .viewUser-icon {
   margin-right: 19px
 }
+
 .viewUser-name {
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -943,14 +986,15 @@ a .nav-link:active,
   color: #171725;
   margin: 0
 }
+
 .viewUser-tweet-number {
   font-family: 'Noto Sans TC';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 19px;
-    color: #6C757D;
-    margin: 0
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 19px;
+  color: #6C757D;
+  margin: 0
 }
 
 /* replies */

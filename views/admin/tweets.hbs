@@ -31,9 +31,9 @@
 
       <div class="d-flex flex-row">
         <div class="row">
-          {{#each tweets}} 
+          {{#each tweets}}
           <div>
-            
+
             <div class="fl">
               <img class="ac-img" src="/images/img@2x.png" alt="">
             </div>
@@ -47,13 +47,13 @@
               <div class="bottom-line-f"></div>
             </div>
 
-          <div class="m-2">
-            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="d-flex">
-              <button class="btn-close" onclick="return confirm(`確定要刪除嗎？`)">
-              </button>
-            </form>
-          </div>
-            
+            <div class="m-2">
+              <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="d-flex">
+                <button class="btn-close" onclick="return confirm(`確定要刪除嗎？`)">
+                </button>
+              </form>
+            </div>
+
 
 
 
