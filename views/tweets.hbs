@@ -30,11 +30,13 @@
       <span class="twitterbox-name">{{this.User.name}}</span>
       </a>
       <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
+      <a href="/tweets/{{this.id}}/replies" class="text-decoration-n">
       <p class="twitterbox-text">
         {{this.description}}
       </p>
+      </a>
       </div>
-      <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">13</span>
+      <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt=""data-bs-target="#staticBackdrop{{this.id}}" data-bs-toggle="modal">13</span>
 
       {{!-- isLiked --}}
       {{#if isLiked}}
