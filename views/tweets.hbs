@@ -1,4 +1,5 @@
 {{> leftbar}}
+
 <div class="middle right-line-2 left-line-2">
   <div>
     <p class="middle-title">首頁</p>
@@ -18,8 +19,8 @@
   </div>
   <div class="bottom-line-16 m-0 p-0"></div>
 
-  {{#each tweets}}
   {{!-- 推文 start--}}
+  {{#each tweets}}
   <div>
     <div class="fl">
       <img class="ac-img" src="{{this.User.avatar}}" alt="" style="border-radius: 50%">
@@ -68,12 +69,15 @@
     {{!-- 推文 end--}}
   </div>
   {{/each}}
-  <!-- Modal -->
-  {{> user-tweet}}
+  <!-- 推文 end -->
 
-  {{> rightbar}}
+  {{> user-tweet}}
+  {{> reply-modal}}
+  
 </div>
-</div>
+
+{{> rightbar}}
+
 <script>
   const replyButton = document.querySelector('.reply-button')
   const reply = document.querySelector('.reply')
