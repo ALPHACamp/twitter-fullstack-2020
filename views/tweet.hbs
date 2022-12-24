@@ -6,11 +6,11 @@
       {{> user-nav}}
       {{> user-profile route="tweet"}}
 
-      {{!-- 推文 start--}}
+  
       {{#each tweets}}
       <div>
         <div class="fl">
-          <img class="ac-img" src="/images/img@2x.png" alt="">
+          <img class="ac-img" src="{{this.User.avatar}}" style="border-radius: 50%" alt="">
         </div>
         <div class="tweet-flow-text fl">
           <a href="/users/{{../user.id}}/tweets" class="text-decoration-n">
@@ -23,7 +23,7 @@
             </p>
           </a>
           <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt=""
-              data-bs-target="#staticBackdrop{{this.id}}" data-bs-toggle="modal">13</span>
+              data-bs-target="#staticBackdrop{{this.id}}" data-bs-toggle="modal">{{this.Replies.length}}</span>
 
           {{#if this.isLiked}}
           <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
@@ -49,7 +49,7 @@
         </div>
       </div>
       {{/each}}
-      {{!-- 推文 end--}}
+
 
       {{> user-put}}
       {{> user-tweet}}
