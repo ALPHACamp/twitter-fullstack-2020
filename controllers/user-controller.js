@@ -280,8 +280,6 @@ const userController = {
         res.render('userfollowers', { userProfile, users: result.slice(0, 10) })
       }
       )
-  },
-  postUserInfo: (req, res, next) => {
   }
 }
 
