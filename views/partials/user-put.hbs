@@ -48,15 +48,56 @@
             <p class="selfname">名稱</p>
             <textarea class="form-control selfbg" placeholder="" name="name" id="name" maxlength="50"
               style="padding: 15px 0 0 0; border-style: hidden;" value="{{user.name}}">{{user.name}}</textarea>
+            <div class="mt-2 text-end">
+              <span id="name-alert" class="flow-end mt-2" style="color: #696974;"></span>
+            </div>
           </div>
           <div class="form-intro p-2">
             <p class="selfname">自我介紹</p>
             <textarea class="form-control selfintro" placeholder="" name="introduction" id="introduction"
               maxlength="160" style="padding: 15px 0 0 0; border-style: hidden;"
               value="{{user.introduction}}">{{user.introduction}}</textarea>
+            <div class="mt-3 text-end">
+              <span id="introduction-alert" style="color: #696974;right:101px; bottom:27px"></span>
+            </div>
           </div>
         </div>
       </form>
     </div>
   </div>
 </div>
+
+
+<script>
+  const nameInput = document.getElementById('name')
+  const name = document.getElementById('name').value.trim()
+  const nameAlert = document.getElementById('name-alert')
+  const introductionInput = document.getElementById('introduction')
+  const introduction = document.getElementById('introduction').value.trim()
+  const introductionAlert = document.getElementById('introduction-alert')
+
+  nameAlert.innerHTML = `${name.length}/50`
+  introductionAlert.innerHTML = `${introduction.length}/160`
+
+  nameInput.addEventListener('input', NInput)
+  introductionInput.addEventListener('input', IInput)
+
+  function NInput(e) {
+    const nameCurrent = e.target.value
+    if (nameCurrent.length) {
+      nameAlert.innerText = `${nameCurrent.length}/50`
+    } else if (name.length > 50) {
+      nameAlert.innerHTML = '字數超出上限!'
+    }
+  }
+
+  function IInput(e) {
+    const introCurrent = e.target.value
+    console.log(introCurrent)
+    if (introCurrent.length) {
+      introductionAlert.innerText = `${introCurrent.length}/160`
+    } else if (name.length > 50) {
+      introductionAlert.innerHTML = '字數超出上限!'
+    }
+  }
+</script>
