@@ -64,7 +64,7 @@ const userController = {
       const hash = await bcrypt.hash(password, salt)
       if (!account || !name || !email || !password || !checkPassword) {
         throw new Error('所有資料都是必填!')
-      } else if (name.length >= 50) {
+      } else if (name.length > 50) {
         throw new Error('姓名不得超過50字!')
       } else if (password !== checkPassword) {
         throw new Error('密碼和確認密碼不一致!')
