@@ -317,7 +317,7 @@ const userController = {
           Tweet,
           { model: User, as: 'Followings', order: [[Followship, 'createdAt', 'DESC']] },
           { model: User, as: 'Followers', order: [[Followship, 'createdAt', 'DESC']] },
-          { model: Tweet, as: 'LikedTweets', include: [User, Like], order: [[Like, 'createAt', 'DESC']] }
+          { model: Tweet, as: 'LikedTweets', include: [User, Like, Reply], order: [[Like, 'createAt', 'DESC']] }
         ],
         nest: true
       })
@@ -338,5 +338,6 @@ const userController = {
     }
     catch (err) { next(err) }
   }
+
 }
 module.exports = userController

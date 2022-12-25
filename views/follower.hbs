@@ -25,9 +25,26 @@
       {{/if}}
   </div>
       <div style=" margin-left:60px" style="font-weight:400px; font-size:16px">{{this.introduction}}</div>
+        </div>
+  </div>
   </div>
   {{/each}}
       </div>
   </div>
 </div>
+</div>
+{{> user-tweet}}
 {{> rightbar}}
+
+<script>
+const tweetOneButton = document.querySelector('.tweetOne-button')
+const tweet = document.querySelector('.tweetOne')
+const hint = document.querySelector('.hint')
+tweetOneButton.addEventListener('click', (e) => {
+if (tweet.innerText === '') {
+e.preventDefault()
+console.log(hint.innerText)
+hint.innerText = '內容不可空白'
+}
+})
+</script>

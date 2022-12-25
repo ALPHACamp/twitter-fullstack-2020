@@ -47,10 +47,13 @@
     </div>
   </div>
   {{!-- 推文 end--}}
-{{reply-modal}}
+{{> reply-modal}}
   {{/each}}
-{{> user-tweet}}
 {{> user-put}}
+{{> user-tweet}}
+</div>
+</div>
+</div>
 {{> rightbar}}
 
 <script>
@@ -60,6 +63,16 @@
   replyButton.addEventListener('click', (e) => {
     if (reply.innerText === '') {
       e.preventDefault()
+      hint.innerText = '內容不可空白'
+    }
+  })
+  const tweetOneButton = document.querySelector('.tweetOne-button')
+  const tweet = document.querySelector('.tweetOne')
+  const hint = document.querySelector('.hint')
+  tweetOneButton.addEventListener('click', (e) => {
+    if (tweet.innerText === '') {
+      e.preventDefault()
+      console.log(hint.innerText)
       hint.innerText = '內容不可空白'
     }
   })

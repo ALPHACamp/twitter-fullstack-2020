@@ -1,33 +1,4 @@
-<div class="left rl">
-  <a href=""><img class="ac-img" src="/images/ac@2x.png" alt=""></a>
-  <div>
-    <a href="/tweets" class="icon-home leftbar-text">
-      <img class="home-img" src="/images/home@2x.png" alt="">
-      <span><strong>首頁</strong></span>
-    </a>
-  </div>
-  <div class="mt-4 mb-1">
-    <a href="/users/1/followings" class="icon-user leftbar-text">
-      <img class="user-img" src="/images/user@2x.png" alt="">
-      <span><strong>個人資料</strong></span>
-    </a>
-  </div>
-  <div class="mt-4 mb-1">
-    <a href="/tweets" class="icon-setting leftbar-text">
-      <img class="setting-img" src="/images/setting@2x.png" alt="">
-      <span><strong>設定</strong></span>
-    </a>
-  </div>
-  <div class="tweetbtn-MP">
-    <a class="tweetbtn" style="" href="/tweets/new" method="">推文</a>
-  </div>
-  <div class="mt-4 mb-1">
-    <a href="/tweets" class="icon-setting leftbar-text">
-      <img class="logout-img" src="/images/logout@2x.png" alt="">
-      <span><strong>登出</strong></span>
-    </a>
-  </div>
-</div>
+{{> leftbar}}
 
 <div class="middle right-line-2 left-line-2">
   <div>
@@ -35,7 +6,7 @@
   </div>
   <div class="tweetbox top-line-2 rel">
     <form action="/tweets" method="POST">
-      <img class="avatar-img m16-8-0-27 fl" src="{{viewUser.avatar}}" alt=""style="border-radius: 50%">
+      <img class="avatar-img m16-8-0-27 fl" src="{{user.avatar}}" alt="" style="border-radius: 50%">
       <span>
         <textarea class="modal-input-tweets mt-3" type="description" name="description" id="description" cols="30"
           rows="10" placeholder="有什麼新鮮事?" maxlength="140"></textarea>
@@ -46,94 +17,64 @@
       </div>
     </form>
   </div>
-  <div class="bottom-line-16 m-0 p-0"></div>
-  {{!-- 推文 start--}}
-  <div class="bottom-line-2">
+  <div class="bottom-line-10 m-0 p-0"></div>
+
+
+  {{#each tweets}}
+  <div>
     <div class="fl">
-      <a href=""><img class="ac-img" src="/images/img@2x.png" alt=""></a>
+      <img class="ac-img" src="{{this.User.avatar}}" alt="" style="border-radius: 50%">
     </div>
-    <div class="tweet-flow-text fl">
-      <a href="" class="text-decoration-n">
-        <span class="twitterbox-name">Apple</span>
-      </a>
-      <span class="twitterbox-time">@apple ‧ 3小時</span>
-      <p class="twitterbox-text">
-        Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation
-        incididunt
-        aliquip deserunt reprehenderit elit laborum.
-      </p>
-      <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">13</span>
-      <span class="twitterbox-time"><img class="tweet-flow-img" src="/images/like@2x.png" alt="">16</span>
-      <div class="bottom-line-f"></div>
-    </div>
-  </div>
-  {{!-- 推文 end--}}
-  {{!-- 推文 start--}}
-  <div class="bottom-line-2">
-    <div class="fl">
-      <a href=""><img class="ac-img" src="/images/img@2x.png" alt=""></a>
-    </div>
-    <div class="tweet-flow-text fl">
-      <a href="" class="text-decoration-n">
-        <span class="twitterbox-name">Apple</span>
-      </a>
-      <span class="twitterbox-time">@apple ‧ 3小時</span>
-      <p class="twitterbox-text">
-        Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation
-        incididunt
-        aliquip deserunt reprehenderit elit laborum.
-      </p>
-      <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">13</span>
-      <span class="twitterbox-time"><img class="tweet-flow-img" src="/images/like@2x.png" alt="">16</span>
-      <div class="bottom-line-f"></div>
-    </div>
-  </div>
-  {{!-- 推文 end--}}
-  {{!-- 推文 start--}}
-  <div class="bottom-line-2">
-    <div class="fl">
-      <a href=""><img class="ac-img" src="/images/img@2x.png" alt=""></a>
-    </div>
-    <div class="tweet-flow-text fl">
-      <a href="" class="text-decoration-n">
-        <span class="twitterbox-name">Apple</span>
-      </a>
-      <div>
-        {{!-- reply icon --}}
-      <span class="twitterbox-time mx-40"><button class="btn" data-bs-target="#replyModal{{this.id}}" data-bs-toggle="modal" ><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">{{this.Replies.length}}</button></span>
-      {{!-- isLiked --}}
-      {{#if this.isLiked}}
-      <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
-        <span class="twitterbox-time">
-          <button type="submit" class="btn">
-            <img class="tweet-flow-img" src="/images/like@2x.png" alt="">
-            {{this.Likes.length}}
-          </button>
+    <div class="tweet-flow-text fl" onclick="location.href='/tweets/{{this.id}}/replies';">
+      <div class="tweet-flow-text fl">
+        <a href="/users/{{this.User.id}}/tweets" class="text-decoration-n">
+          <span class="twitterbox-name">{{this.User.name}}</span>
+        </a>
+        <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
+        <a href="/tweets/{{this.id}}/replies" class="text-decoration-n">
+          <p class="twitterbox-text">
+            {{this.description}}
+          </p>
+        </a>
+        <span class="twitterbox-time mx-40">
+          <button class="btn" data-bs-target="#replyModal{{this.id}}" data-bs-toggle="modal"></button><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">{{this.Replies.length}}</span><button>
         </span>
-      </form>
-      {{else}}
-      <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
-        <span class="twitterbox-time">
-          <button type="submit" class="btn">
-            <img class="tweet-flow-img" src="/images/unlike@2x.png" alt="">
-            {{this.Likes.length}}
-          </button>
-        </span>
-      </form>
-      {{/if}}
+        {{!-- isLiked --}}
+        {{#if this.isLiked}}
+        <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
+          <span class="twitterbox-time">
+            <button type="submit" class="btn">
+              <img class="tweet-flow-img" src="/images/like@2x.png" alt="">
+              {{this.Likes.length}}
+            </button>
+          </span>
+        </form>
+        {{else}}
+        <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
+          <span class="twitterbox-time">
+            <button type="submit" class="btn">
+              <img class="tweet-flow-img" src="/images/unlike@2x.png" alt="">
+              {{this.Likes.length}}
+            </button>
+          </span>
+        </form>
+        {{/if}}
+        <div class="bottom-line-f"></div>
       </div>
-      <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="">13</span>
-      <span class="twitterbox-time"><img class="tweet-flow-img" src="/images/like@2x.png" alt="">16</span>
-      <div class="bottom-line-f"></div>
     </div>
   </div>
-    {{reply-modal}}
+  {{> reply-modal}}
   {{/each}}
-        </div>
-      </div>
-  
+
   {{> user-tweet}}
-  {{> rightbar}}
+  
+
+</div>
+
+{{> rightbar}}
+
+
+
 
   <script>
     const replyButton = document.querySelector('.reply-button')
@@ -145,4 +86,14 @@
         hint.innerText = '內容不可空白'
       }
     })
+    const tweetOneButton = document.querySelector('.tweetOne-button')
+      const tweet = document.querySelector('.tweetOne')
+      const hint = document.querySelector('.hint')
+      tweetOneButton.addEventListener('click', (e) => {
+        if (tweet.innerText === '') {
+          e.preventDefault()
+          console.log(hint.innerText)
+          hint.innerText = '內容不可空白'
+        }
+      })
   </script>

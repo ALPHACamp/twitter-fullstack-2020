@@ -20,8 +20,6 @@
       <p class="mb-1" style="font-weight: 400;line-height: 36px;font-size: 24px;">
         {{tweet.description}}
       </p>
-      <div>
-      </div>
       <span class="twitterbox-time d-block mb-1">{{relativetimeFromNNow tweet.createdAt}} </span>
       <div class="d-flex align-items-center "
         style="height:60px; border-top:2px solid #E6ECF0;font-weight: 700; font-family: 'Montserrat';font-size: 19px; ">
@@ -78,9 +76,10 @@
   {{!-- 留言 end--}}
   {{/each}}
 </div>
-{{> rightbar}}
 {{> user-tweet}}
-<!-- Modal -->
+{{> rightbar}}
+
+{{!-- 彈跳留言回覆 --}}
 <div class="modal fade" id="replyBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -141,4 +140,14 @@
         hint.innerText = '內容不可空白'
       }
     })
+    const tweetOneButton = document.querySelector('.tweetOne-button')
+      const tweet = document.querySelector('.tweetOne')
+      const hint = document.querySelector('.hint')
+      tweetOneButton.addEventListener('click', (e) => {
+        if (tweet.innerText === '') {
+          e.preventDefault()
+          console.log(hint.innerText)
+          hint.innerText = '內容不可空白'
+        }
+      })
   </script>
