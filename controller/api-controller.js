@@ -37,7 +37,10 @@ const apiController = {
           avatar: avatar || user.avatar,
           cover: coverImage || user.cover,
         })
-          .then(() => res.redirect(200, 'back'))
+          .then(() => {
+            req.flash('success_messages', '資料修改成功!')
+            res.redirect(200, 'back')
+          })
           .catch(err => next(err))
       })
   }
