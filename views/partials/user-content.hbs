@@ -92,19 +92,19 @@
         </div>
         <div class="tweets-icons">
           <a><img src="/images/basic/white/reply.svg">{{this.Tweet.repliesCount}}</a>
-          {{#ifCond this.Tweet.isliked false}}
-          <form action="/tweets/{{this.Tweet.id}}/like" method="POST">
-            <label for="" style="display:inline-flex;">
-              <input type="image" style="width:14px" src="/images/basic/white/like.svg">
-            </label>
-          </form>
-          {{else}}
+          {{#if this.Tweet.isliked}}
           <form action="/tweets/{{this.Tweet.id}}/unlike" method="POST">
             <label for="" style="display:inline-flex;">
               <input type="image" style="width:13.4px;text-align=center;" src="/images/basic/isliked.svg">
             </label>
           </form>
-          {{/ifCond}}
+          {{else}}
+          <form action="/tweets/{{this.Tweet.id}}/like" method="POST">
+            <label for="" style="display:inline-flex;">
+              <input type="image" style="width:14px" src="/images/basic/white/like.svg">
+            </label>
+          </form>
+          {{/if}}
           {{this.Tweet.likesCount}}
         </div>
       </div>

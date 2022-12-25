@@ -52,7 +52,7 @@
             src="/images/basic/close.svg" alt=""></a>
       </div>
       <div class="post-main-top">
-        <img src="/images/icon/User Photo.png" class="user-avatar">
+        <img src="{{#if user.avatar}} {{user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" class="user-avatar">
         <div class="textarea-body">
           <form action="/tweets" method="POST">
             <textarea cols="65" style="resize:none;" type="text" name="description" id="description"
