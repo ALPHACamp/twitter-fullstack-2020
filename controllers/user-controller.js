@@ -172,7 +172,7 @@ const userController = {
           .sort((a, b) => b.followerCount - a.followerCount)
         userProfile.isCurrentUser = userProfile.id === currentUser.id
         userProfile.isFollowed = userProfile.Followers.map(follower => Object.values(follower)[0]).some(id => id === currentUser.id)
-        res.render('userreplies', { userProfile, users: result.slice(0, 10) })
+        res.render('userreplies', { currentUser, userProfile, users: result.slice(0, 10) })
       }
       )
   },
