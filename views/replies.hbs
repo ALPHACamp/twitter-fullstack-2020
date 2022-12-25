@@ -1,5 +1,5 @@
 {{> leftbar}}
-{{> rightbar}}
+
 <div class="middle right-line-2 left-line-2">
   <div class="d-flex align-items-center" style="border:1px solid #E6ECF0; height:74px">
     <p class="middle-title"><a href="/tweets"><img src="/images/Vector.png" class="me-3"></a>推文</p>
@@ -22,10 +22,8 @@
         {{tweet.description}}
       </p>
       <span class="twitterbox-time d-block mb-1">{{relativetimeFromNNow tweet.createdAt}} </span>
-      <div class="d-flex align-items-center "
-        style="height:60px; border-top:2px solid #E6ECF0;font-weight: 700; font-family: 'Montserrat';font-size: 19px; ">
-        <span class="twitterbox-time" style="margin-right:24px "><span style="color:black">{{replies.length}}</span>
-          回覆</span>
+      <div class="d-flex align-items-center " style="height:60px; border-top:2px solid #E6ECF0;font-weight: 700; font-family: 'Montserrat';font-size: 19px; ">
+        <span class="twitterbox-time" style="margin-right:24px "><span style="color:black">{{replies.length}}</span> 回覆</span>
         <span class="twitterbox-time "><span style="color:black">{{tweet.Likes.length}} </span>喜歡次數</span>
       </div>
       <div style="height:68px; border-top:2px solid #E6ECF0" class="d-flex align-items-center">
@@ -52,6 +50,7 @@
           </span>
         </form>
         {{/if}}
+
       </div>
     </div>
   </div>
@@ -149,15 +148,3 @@
   })
 </script>
 
-{{!--
-<script>
-  const replyButton = document.querySelector('.reply-button')
-  const reply = document.querySelector('.reply')
-  const hint = document.querySelector('.hint')
-  replyButton.addEventListener('click', (e) => {
-    if (reply.innerText === '') {
-      e.preventDefault()
-      hint.innerText = '內容不可空白'
-    }
-  })
-</script> --}}

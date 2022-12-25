@@ -10,13 +10,13 @@ const services = require('../_services')
 const tweetController = {
   // 首頁的推文抓取
   getTweets: async (req, res, next) => {
-    const user = helpers.getUser(req)
+    const viewUser = helpers.getUser(req)
     try {
       const data = await services.getTweets(req)
       const topFollowings = await services.getTopUsers(req)
       res.render('tweets', {
         tweets: data,
-        user,
+        viewUser,
         topFollowings
       })
     } catch (err) { next(err) }
@@ -66,7 +66,7 @@ const tweetController = {
       .catch(err => next(err))
   },
   getReplies: async (req, res, next) => {
-    const user = helpers.getUser(req)
+    const viewUser = helpers.getUser(req)
     try {
       const tweet = await Tweet.findByPk(req.params.id, {
         include: [User, Like],
@@ -75,11 +75,12 @@ const tweetController = {
       if (!tweet) throw new Error('貼文不存在')
       const data = {
         ...tweet.toJSON(),
-        isLiked: tweet && tweet.Likes.some(f => f.UserId === user.id)
+        isLiked: tweet && tweet.Likes.some(f => f.UserId === viewUser.id)
       }
       const replies = await services.getReplies(req)
       const topFollowings = await services.getTopUsers(req)
       res.render('replies', {
+        viewUser,
         tweet: data,
         replies,
         topFollowings

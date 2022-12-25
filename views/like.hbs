@@ -1,61 +1,81 @@
-{{> leftbar}}
 
+{{> leftbar}}
 <div class="middle right-line-2 left-line-2">
   <div>
     <div class="row">
       {{> user-nav}}
-      {{> user-profile route="like"}}
+{{> user-profile route="like"}}
+{{#each tweets}}
+{{!-- 推文 start--}}
+<div>
+  <div class="fl">
+    <img class="ac-img" src="{{this.User.avatar}}"style="border-radius: 50%" alt="">
+  </div>
+  <div class="tweet-flow-text fl">
+    <a href="/users/{{../user.id}}/tweets" class="text-decoration-n">
+    <span class="twitterbox-name">{{this.User.name}}</span>
+    </a>
+    <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
+    <a href="/tweets/{{this.id}}/replies" class="text-decoration-n">
+    <p class="twitterbox-text">
+      {{this.description}}
+    </p>
+    </a>
+    <span class="twitterbox-time mx-40"><button class="btn" data-bs-target="#replyModal{{this.id}}" data-bs-toggle="modal"><img class="tweet-flow-img" src="/images/reply@2x.png" alt="" >{{this.Replies.length}}</button></span>
 
-      {{!-- 推文 start--}}
-      {{#each tweets}}
-      <div>
-        <div class="fl">
-          <img class="ac-img" src="{{this.User.avatar}}"style="border-radius: 50%" alt="">
-        </div>
-        <div class="tweet-flow-text fl">
-          <a href="/users/{{../user.id}}/tweets" class="text-decoration-n">
-            <span class="twitterbox-name">{{this.User.name}}</span>
-          </a>
-          <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
-          <a href="/tweets/{{this.id}}/replies" class="text-decoration-n">
-          <p class="twitterbox-text">
-            {{this.description}}
-          </p>
-          </a>
-          <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt=""
-              data-bs-target="#staticBackdrop{{this.id}}" data-bs-toggle="modal">{{this.Replies.length}}</span>
+    {{#if this.isLiked}}
+    <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
+      <span class="twitterbox-time">
+        <button type="submit" class="btn">
+          <img class="tweet-flow-img" src="/images/like@2x.png" alt="">
+          3
+        </button>
+      </span>
+    </form>
+    {{else}}
+    <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
+      <span class="twitterbox-time">
+        <button type="submit" class="btn">
+          <img class="tweet-flow-img" src="/images/unlike@2x.png" alt="">
+          {{this.Likes.length}}
+        </button>
+      </span>
+    </form>
+    {{/if}}
 
-          {{#if this.isLiked}}
-          <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
-            <span class="twitterbox-time">
-              <button type="submit" class="btn">
-                <img class="tweet-flow-img" src="/images/like@2x.png" alt="">
-              </button>
-            </span>
-          </form>
-          {{else}}
-          <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
-            <span class="twitterbox-time">
-              <button type="submit" class="btn">
-                <img class="tweet-flow-img" src="/images/unlike@2x.png" alt="">
-                {{this.Likes.length}}
-              </button>
-            </span>
-          </form>
-          {{/if}}
-
-          <div class="bottom-line-f"></div>
-        </div>
-      </div>
-      {{/each}}
-      {{!-- 推文 end--}}
-
-      {{> user-put}}
-      {{> user-tweet}}
-      {{> reply-modal}}
-        
+    <div class="bottom-line-f"></div>
+  </div>
+</div>
+{{!-- 推文 end--}}
+{{> reply-modal}}
+{{/each}}
+  {{> user-tweet}}
+{{> user-put }}
     </div>
   </div>
 </div>
-
 {{> rightbar}}
+
+<script>
+  const replyButton = document.querySelector('.reply-button')
+  const reply = document.querySelector('.reply')
+  const hint = document.querySelector('.hint')
+  replyButton.addEventListener('click', (e) => {
+    if (reply.innerText === '') {
+      e.preventDefault()
+      hint.innerText = '內容不可空白'
+    }
+  })
+  const tweetOneButton = document.querySelector('.tweetOne-button')
+  const tweet = document.querySelector('.tweetOne')
+  const hint = document.querySelector('.hint')
+  tweetOneButton.addEventListener('click', (e) => {
+    if (tweet.innerText === '') {
+      e.preventDefault()
+      console.log(hint.innerText)
+      hint.innerText = '內容不可空白'
+    }
+  })
+</script>
+
+

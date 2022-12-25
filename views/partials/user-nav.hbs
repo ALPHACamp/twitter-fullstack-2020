@@ -1,12 +1,12 @@
 {{!-- 個人頁面上面 --}}
 <div>
   <div class="fl wid-12">
-    <a href="/tweets">
+    <a href="javascript:history.back()">
       <img class="backarrow-img" src="/images/back_arrow@2x.png" alt="">
     </a>
   </div>
   <div class="col fl mt-2 wid-80">
     <span class="selftwitterbox-name">{{user.name}}</span>
-    <p class="twitterbox-time">{{tweetslength}}推文</p>
+    <p class="twitterbox-time">{{user.Tweets.length}}推文</p>
   </div>
 </div>
