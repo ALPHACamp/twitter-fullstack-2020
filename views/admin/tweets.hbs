@@ -1,21 +1,22 @@
 
 <div class="left d-flex align-items-start flex-column">
-  <a href=""><img class="ac-img" src="/images/ac@2x.png" alt=""></a>
+  <a href="javascript:history.back()"><img class="mb-3" width="50px" height="50px"
+      src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" alt="" /></a>
   <div class="">
     <a href="/admin/tweets" class="icon-home  leftbar-text">
-      <img class="home-img" src="/images/home@2x.png" alt="">
+      <i class="fas fa-home " style="font-size: 1.2em;"></i>
       <span><strong>推文清單</strong></span>
     </a>
   </div>
   <div class="mt-4 mb-1">
     <a href="/admin/users" class="icon-user leftbar-text">
-      <img class="user-img" src="/images/user@2x.png" alt="">
+      <i class="far fa-user" style="font-size: 1.2em;"></i>
       <span><strong>使用者列表</strong></span>
     </a>
   </div>
   <div class="mt-auto mb-1">
     <a href="/logout" class="icon-logout leftbar-text">
-      <img class="logout-img" src="/images/logout@2x.png" alt="">
+    <i class="fas fa-sign-out-alt" style="color: #000000; font-size: 1.2em;"></i>
       <span><strong>登出</strong></span>
     </a>
   </div>
@@ -35,7 +36,7 @@
           <div>
 
             <div class="fl">
-              <img class="ac-img" src="/images/img@2x.png" alt="">
+              <img class="ac-img" src="{{this.User.avatar}}" style="border-radius:50%" alt="">
             </div>
 
             <div class="tweet-flow-text fl">

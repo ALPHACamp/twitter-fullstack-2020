@@ -1067,3 +1067,7 @@ a .nav-link:active,
   border-style: none;
   background-color: #ffffff;
 }
+/* icon */
+.a-tomato {
+  color: #FF6600;
+}

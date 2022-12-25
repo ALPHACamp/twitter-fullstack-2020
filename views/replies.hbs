@@ -2,7 +2,7 @@
 
 <div class="middle right-line-2 left-line-2">
   <div class="d-flex align-items-center" style="border:1px solid #E6ECF0; height:74px">
-    <p class="middle-title"><a href="/tweets"><img src="/images/Vector.png" class="me-3"></a>推文</p>
+    <p class="middle-title"><a href="/tweets"><i class="fa fa-arrow-left mt-3 me-2" style="font-size: 18px;color:black"></i></a>推文</p>
   </div>
   {{!-- 推文 start--}}
   <div style="border:1px solid #E6ECF0;">
@@ -29,15 +29,14 @@
       <div style="height:68px; border-top:2px solid #E6ECF0" class="d-flex align-items-center">
 
         <span class="twitterbox-time mx-40" style="margin-right:133.3px">
-          <img width="24.69px" height="24.69px"
-            src="/images/reply@2x.png" alt="" data-bs-target="#staticBackdrop" data-bs-toggle="modal">
+          <i class="far fa-comment" style="color: navy;width:25px;height:18px;"data-bs-target="#staticBackdrop" data-bs-toggle="modal"></i>
         </span>
 
         {{#if tweet.isLiked}}
         <form action="/tweets/{{tweet.id}}/unlike" method="POST" style="display: contents;">
           <span class="twitterbox-time">
             <button type="submit" class="btn">
-              <img width="24.69px" height="24.69px"src="/images/like@2x.png" alt="">
+              <i class="fas fa-heart" style="color: red;width:25px;height:18px;"></i>
             </button>
           </span>
         </form>
@@ -45,7 +44,7 @@
         <form action="/tweets/{{tweet.id}}/like" method="POST" style="display: contents;">
           <span class="twitterbox-time">
             <button type="submit" class="btn">
-              <img width="24.69px" height="24.69px" src="/images/unlike@2x.png" alt="">
+              <i class="fa-regular fa-heart" style="width:25px;height:18px;"></i>
             </button>
           </span>
         </form>

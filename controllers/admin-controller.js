@@ -26,6 +26,10 @@ const adminController = {
       nest: true
     })
       .then(tweets => {
+        tweets.map(t => ({
+          ...t,
+          description: t.description.substring(0, 50)
+        }))
         return res.render('admin/tweets', {
           tweets
         })
