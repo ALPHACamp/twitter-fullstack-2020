@@ -47,7 +47,7 @@ const userController = {
 
   //註冊修改頁面
   getSetting: (req, res, next) => {
-    return User.findByPk(req.params.id, { raw: true })
+    return User.findByPk(helpers.getUser(req).id, { raw: true })
       .then(user => {
         if (!user) throw new Error("User didn't exist!")
         return res.render('setting', { user })
@@ -316,10 +316,6 @@ const userController = {
       })
     ])
       .then(([user, followings, users]) => {
-        // const results = followings.map(f => ({
-        //   ...f,
-        //   isFollowed: true
-        // }))
         const result = users
           .map(user => ({
             ...user.toJSON(),

@@ -375,7 +375,6 @@ margin-right: 133px;
 position: relative;
 /* left: 16px; */
 padding: 0;
-border-bottom: 1px solid #E6ECF0;
 }
 
 .back-icon {
@@ -726,6 +725,7 @@ margin-right: 10px;
 display: flex;
 flex-direction: column;
 margin-left: 100px;
+position: relative;
 }
 
 .ac-icon {
@@ -970,10 +970,12 @@ width: 273px;
 height: 731px;
 background: #fafafb;
 border-radius: 16px;
+position: relative;
 }
 
 .popular-title {
 border-bottom: 1px solid #e6ecf0;
+position: relative;
 }
 
 .popular-list-group li {
@@ -999,8 +1001,8 @@ height: 50px;
 }
 
 .popular-name {
-width: calc(100vh - 765px);
-white-space: pre-wrap;
+/* width: calc(100vh - 765px); */
+/* white-space: pre-wrap; */
 height: 26px;
 font-style: normal;
 font-weight: 700;
