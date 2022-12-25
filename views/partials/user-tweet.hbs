@@ -22,11 +22,27 @@
                 id="description" cols="30" rows="10" placeholder="有什麼新鮮事?" maxlength="140"></textarea>
               <input type="hidden" name="UserId" value="{{tweets.User.id}}" />
             </span>
-            <span class="hint abs" style="color: #FC5A5A;right:140px; bottom:27px"></span>
-            <button id="user-tweet" class="tweetbtn-s abs tweetOne-button" type="submit">推文</button>
+            <span id="description-alert" class="abs" style="color: #FC5A5A;right:140px; bottom:27px"></span>
+            <button id="user-tweet description" class="tweetbtn-s abs tweetOne-button" type="submit">推文</button>
           </form>
-        </div> 
+        </div>
       </form>
     </div>
   </div>
 </div>
+
+<script>
+  const descriptionInput = document.getElementById('description')
+  const description = document.getElementById('description').value.trim()
+  const descriptionAlert = document.getElementById('description-alert')
+
+  descriptionAlert.innerHTML = '請輸入內容'
+  descriptionInput.addEventListener('click', (e) => {
+    if (description.innerText === '') {
+      e.preventDefault()
+      descriptionAlert.innerText = '內容不可空白'
+    }
+  })
+
+
+</script>
