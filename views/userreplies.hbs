@@ -1,0 +1,11 @@
+<div class="d-flex" style="height: 1200px;width:1400px;margin: 0 auto;">
+  {{>sidebar route='userProfile'}}
+  <div class="tweets-mid d-flex flex-column" style="width:641px; border-left: 1px solid #e6ecf0; border-right: 1px solid #e6ecf0">
+    {{>profile}}
+    {{>tabs route='replies'}}
+  </div>
+  {{>popular}}
+</div>
+
+{{!-- 這是推文modal --}}
+{{>post-modal}}

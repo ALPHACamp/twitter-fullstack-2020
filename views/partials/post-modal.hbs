@@ -1,0 +1,65 @@
+{{!-- 以下是推文的 modal --}}
+<div class="modal fade" id="post-modal" tabindex="-1" role="dialog"
+  aria-labelledby="postModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="position: relative;">
+
+    <div class="modal-content" style="width:634px; height:300px;border-radius:14px;top: 24px;left: -118px;">
+
+      <div class="modal-header" style="width:634px; height:56px;">
+        <a data-bs-dismiss="modal">
+          <img src="/images/icons/icon-danger.png" alt="" style="width:25px;height:25px;">
+        </a>
+      </div>
+
+      <form class="modal-tweet-post" action="/tweets" method="POST" id="modal-post-form" novalidate>
+        <div class="modal-body d-flex" id="post-modal-body">
+          <div class="modal-avatar">
+            <img style="width:50px;height:50px;border-radius:25px;" src="{{user.avatar}}"
+              alt="modal-avatar">
+          </div>
+          <div class="modal-input">
+            <textarea class=" border border-0 m-2" name="description" style="font-size: 16px;outline: none;resize:none;color: #9197A3;" id="description" cols="65"
+              rows="5" placeholder="有什麼新鮮事？" maxlength="140" onkeyup="wordsTotal()" required></textarea>
+          </div>
+        </div>
+        <div class="d-flex" style="align-items: center;position: relative;">
+          <div id="post-err-section" class="err-sec" style="display: inline-block;margin-left: 360px;margin-right: 20px;align-items: center;position: absolute;top: 19px;left: 40px;">
+          <span class="invalid-feedback-modal" id="post-err-text" style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 500;font-size: 15px;line-height: 15px;color: #FC5A5A;">
+            字數不可超過140字
+          </span>
+        </div>
+        <button type="submit" class="setting-btn my-2" id="#post-submit-btn"
+          style="display: inline-block;font-weight: 400;font-size: 16px;
+        line-height: 24px;border: none;width: 64px;height: 40px;background: #FF6600;border-radius: 50px;padding: 10px 15px;margin-left: 16px;margin-right: 16px;position: absolute;top: 3px;left: 538px;">推文</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  {{!-- 表單驗證 --}}
+  <script>
+    const modalPostForm = document.getElementById('modal-post-form')
+    const postSubmitButton = document.querySelector('#post-submit-btn')
+    const postErrSection = document.getElementById('post-err-section')
+    const postErrText = document.getElementById('post-err-text')
+
+    function wordsTotal() {
+        const descriptionTotal = document.getElementById('description').value.trim().length
+        if (descriptionTotal === 140) {
+          postErrText.innerHTML = '字數不可超過140字'
+          postErrSection.classList.remove("err-sec")
+        } else {
+          postErrText.innerHTML = '字數不可超過140字'
+          postErrSection.classList.add("err-sec")
+        }
+      }
+
+    modalPostForm.addEventListener('submit', function onFormSubmit(event) {
+        if (!modalPostForm.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+          postErrText.innerHTML = '內容不可空白!'
+          postErrSection.classList.remove("err-sec")
+        }
+      })
+  </script>
+</div>

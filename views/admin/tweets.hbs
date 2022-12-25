@@ -1,0 +1,62 @@
+<div class="d-flex" style="height: 1200px;width:1400px;margin: 0 auto;">
+  <div style="height: 1200px;width:332px">
+    <div id="left-section">
+      <img id="logo" src="/images/icons/logo.png">
+      <ul id="left-navs" class="nav flex-column">
+        <li class="nav-item">
+          <a href="/admin/tweets" class="nav-item-content">
+            <img src="/images/icons/orange-home.png" class="base-icon">
+            <span class="word-click">推文清單</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/users" class="nav-item-content">
+            <img src="/images/icons/outlined-user.png" class="base-icon">
+            <span class="word">使用者列表</span>
+          </a>
+        </li>
+      </ul>
+      <div id="logout">
+        <a href="/admin/logout" style="margin-top:1.585vh; text-decoration: none; align-items: center; display:flex">
+          <img src="/images/icons/outlined-logout.png" style="height:24px; margin-left:16px;">
+          <span style="margin-left:16px; font-weight:700; font-size:18px; color:#44444F">登出</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div style="height: 1200px;width:937px">
+    <div class="tweets-main">
+      <div class="admin-tweets-head">
+        <h4>推文清單</h4>
+      </div>
+      <div class="tweets-list">
+        {{#each tweets}}
+        <div class="d-flex admin-each-tweet border-bottom" style="padding: 16px 0;">
+          <div id="tweet-icon">
+            <img src="{{this.User.avatar}}" alt="" width="50" height="50" class="rounded-circle" />
+          </div>
+          <div id="tweet-right" style="width: 970px">
+            <div class="header">
+              <span style="font-size: 16px;margin-top: 16px;font-weight: 700;">{{this.User.name}}</span>
+              <span style="font-size: 14px; height: 22px;font-weight: 400;margin-top: 18px;"
+                class="text-muted">@{{this.User.account}}‧{{relativeTimeFromNow
+                this.createdAt}}</span>
+              <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline">
+                <button type="submit" class="btn-close float-end"
+                  style="height: 15px;width: 15px;padding: 0;margin: 0 15px 0 0;"
+                  onclick="return confirm(`確定要刪除此則推文嗎？`)">
+                </button>
+              </form>
+            </div>
+            <div class="content-word">
+              <p class="tweets-description" style="margin-top: 10px;">{{this.description}}</p>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <div style="height: 1200px;width:130px">
+  </div>
+</div>

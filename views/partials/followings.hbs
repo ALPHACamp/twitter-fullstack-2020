@@ -1,0 +1,50 @@
+{{!-- header --}}
+<div class="d-flex" style="height:74px;border-bottom: 1px solid #e6ecf0;">
+  <a href="javascript:history.back()">
+    <img src="/images/icons/outlined-back.png" style="height:24px; margin-top:24px; margin-left:28px">
+  </a>
+  <div class="d-flex flex-column" style="margin-left:19px;margin-top: 16px;margin-bottom: 16px;">
+    <span style="line-height: 26px; font-weight:700; font-size:18px; color:#171725">{{userProfile.name}}</span>
+    <span style="line-height: 19px; font-weight:500; font-size:13px; color:#6C757D">{{userProfile.Tweets.length}}
+      推文</span>
+  </div>
+</div>
+{{!-- tab --}}
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'followers'}}active{{/ifCond}}" href="/users/{{userProfile.id}}/followers"
+      style="padding: 13px 0;top:0">追隨者</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'followings'}}active{{/ifCond}}" href="/users/{{userProfile.id}}/followings"
+      style="padding: 13px 0;top:0">正在追隨</a>
+  </li>
+</ul>
+{{!-- users --}}
+{{#each userProfile.Followings}}
+<div class="d-flex each-tweet">
+  <div id="tweet-icon">
+    <a href="/users/{{this.id}}/tweets">
+      <img src="{{this.avatar}}" alt="" width="50" height="50" class="rounded-circle" />
+    </a>
+  </div>
+  <div id="tweet-right" style="width: 528px">
+    <div class="header d-flex justify-content-between">
+      <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">{{this.name}}</span>
+      {{#if this.isFollowed }}
+      <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+        <button type="submit" class="following-btn">正在跟隨</button>
+      </form>
+      {{else}}
+      <form action="/followships" method="POST" style="display: contents;">
+        <input type="text" name="id" value="{{this.id}}" style="display: none;">
+        <button type="submit" class="follow-btn">跟隨</button>
+      </form>
+      {{/if}}
+    </div>
+    <div class="content-word" style="margin:0">
+      {{this.introduction}}
+    </div>
+  </div>
+</div>
+{{/each}}

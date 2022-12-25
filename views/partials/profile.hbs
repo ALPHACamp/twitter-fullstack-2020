@@ -1,0 +1,161 @@
+{{!-- Header --}}
+<div class="d-flex" style="margin:16px 0;">
+  <a href="/tweets">
+    <img src="/images/icons/outlined-back.png" style="height:24px; margin-top:10px; margin-left:28px">
+  </a>
+  <div class="d-flex flex-column" style="margin-left:19px">
+    <span style="line-height: 26px; font-weight:700; font-size:18px; color:#171725">{{userProfile.name}}</span>
+    <span style="line-height: 19px; font-weight:500; font-size:13px; color:#6C757D">{{userProfile.Tweets.length}}
+      推文</span>
+  </div>
+</div>
+{{!-- card --}}
+<div style="height: 378px;">
+  <div style="height: 264px; position:relative;">
+    <img src="{{userProfile.cover}}" alt="cover"
+      style="height: 200px;width:639px; object-fit:cover;position:absolute;top:0;left:0">
+    <img src="{{userProfile.avatar}}" alt="avatar"
+      style="height:140px; width:140px; border: 4px solid #FFFFFF;position:absolute;bottom:0;left:16px; z-index:1; border-radius:50%">
+    {{#if userProfile.isCurrentUser }}
+    <button type="button" class="btn btn-outline-warning float-end" id="edit-button"
+      style="border-radius:50px;line-height: 24px; height:40px; width:128px; border-color:#FF6600;font-size:16px; font-weight:400;margin-top:216px;margin-right:16px; color:#FF6600"
+      data-id="{{currentUser.id}}" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+      編輯個人資料
+    </button>
+    {{else if userProfile.isFollowed }}
+    <form action="/followships/{{userProfile.id}}?_method=DELETE" method="POST" style="display: contents;">
+      <button type="submit" class="following-btn float-end" style="margin-top: 216px; margin-right: 16px;">正在跟隨</button>
+    </form>
+    {{else}}
+    <form action="/followships" method="POST" style="display: contents;">
+      <input type="text" name="id" value="{{userProfile.id}}" style="display: none;">
+      <button type="submit" class="follow-btn float-end" style="margin-top: 216px; margin-right: 16px;">跟隨</button>
+    </form>
+    {{/if}}
+  </div>
+
+  <div class="d-flex flex-column" style="height:114px; margin-left:16px">
+    <span style="line-height: 26px; font-weight:700; font-size:18px">{{userProfile.name}}</span>
+    <span style="line-height: 22px; font-weight:400; font-size:14px; color:#6C757D">@{{userProfile.account}}</span>
+    <div class="profile-intro" style="word-wrap: normal; text-overflow:ellipsis; overflow:hidden;">
+      {{userProfile.introduction}}
+      <span class="tooltiptext"
+        style="line-height: 22px; font-weight:400; font-size:14px; margin-top:6px">{{userProfile.introduction}}</span>
+    </div>
+    <div class="d-flex align-items-center" style="line-height: 22px; font-weight:400; font-size:14px;margin-top:8px">
+      <a href="/users/{{userProfile.id}}/followings">
+        <span style="color: #171725;">{{userProfile.Followings.length}} 個</span>
+        <span style="color: #6C757D;">跟隨中</span>
+      </a>
+      <a href="/users/{{userProfile.id}}/followers">
+        <span style="color: #171725;margin-left:20px ;">{{userProfile.Followers.length}} 位</span>
+        <span style="color: #6C757D;">跟隨者</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+{{!-- 以下是 編輯個人頁面的modal --}}
+<div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" style="position: relative;">
+    <div class="modal-content"
+      style="position: absolute;width:634px; height:610px;border-radius:14px;top: 31px;left: -118px;">
+
+
+      <form data-id="{{currentUser.id}}" enctype="multipart/form-data" id="profile-modal-form" novalidate>
+        <div class="modal-header justify-content-between" style="height:57px;">
+          <div class="d-flex">
+            <a data-bs-dismiss="modal">
+              <img src="/images/icons/icon-danger.png" alt="" style="width:25px;height:25px;margin-top: 6.5px;">
+            </a>
+            <h5
+              style="margin-left:36px;margin-top:4px;font-family: 'Noto Sans TC';font-style: normal;font-weight: 700;font-size: 18px;line-height: 26px;color: #1C1C1C;">
+              編輯個人資料</h5>
+          </div>
+          <div>
+            <button type="submit" class="modal-post-btn my-1 mx-1"
+              style="font-weight: 400;font-size: 16px;line-height: 24px;border: none;color: #FFFFFF;"
+              id="submit-btn">儲存</button>
+          </div>
+        </div>
+
+        <div class="modal-cover-avatar" style="height: 264px; position:relative;">
+
+          <div class="cover-section">
+            <img id="modal-cover" src="" alt="cover"
+              style="height: 200px;width:631px; position:absolute;top:0;left:0; object-fit:cover;-webkit-filter:brightness(.7)">
+            <label class="change-cover" for="cover-btn">
+              <img src="/images/icons/white-camera.png" alt=""
+                style="height:24px; width:24px; position:absolute;bottom:155px;left:279px; z-index:1; cursor:pointer">
+              <input name="cover" type="file" id="cover-btn">
+            </label>
+          </div>
+          <button class="remove-cover" type="button" data-bs-dismiss="modal">
+            <img src="/images/icons/white-X.png" alt=""
+              style="height:24px; width:24px; position:absolute;bottom:155px;left:337px; z-index:1">
+          </button>
+
+          <div class="avatar-section">
+            <img id="modal-avatar" src="" alt="avatar"
+              style="height:140px; width:140px; border: 4px solid #FFFFFF;position:absolute;bottom:0;left:16px; border-radius:50%;-webkit-filter:brightness(.7)">
+            <label class="change-avatar" for="avatar-btn">
+              <img src="/images/icons/white-camera.png" alt=""
+                style="height:24px; width:24px; position:absolute;bottom:60px;left:75px; z-index:1; cursor:pointer">
+              <input name="avatar" type="file" id="avatar-btn">
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-name-intro">
+          <div class="modal-name-input-section">
+            <label class="modal-name-label" for="name"
+              style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 14px;line-height: 22px;color: #696974;">名稱</label>
+            <input class="modal-name-input" id="name" type="text" name="name" maxlength="50" placeholder="請輸入使用者名稱..."
+              style="font-weight: 400;font-size: 16px;line-height: 26px;color: #171725;" value="" required>
+            <div style="inline-block;font-weight: 500;font-size: 12px;line-height: 20px;color: #FC5A5A;">
+              <span id="err-name" class="err-sec">字數超出上限!</span>
+              <span id="text-count"></span>
+            </div>
+          </div>
+
+          <div class="modal-intro-input-section">
+            <label class="modal-intro-label" for="intro"
+              style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 14px;line-height: 22px;color: #696974;">自我介紹</label>
+            <textarea class="modal-intro-input border-0" name="introduction"
+              style="font-size: 16px;outline: none;resize:none;height:120px;font-weight: 400;line-height: 26px;color: #171725;"
+              id="introduction" cols="65" rows="5" maxlength="160" required></textarea>
+          </div>
+          <div
+            style="inline-block;max-width: 600px;margin-left: 15px;font-weight: 500;font-size: 12px;line-height: 20px;color: #FC5A5A;">
+            <span id="err-intro" class="err-sec">字數超出上限!</span>
+            <span id="text-count-info"></span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/javascripts/editModal.js"></script>
+
+{{!-- 以下是圖片暫存在瀏覽器 --}}
+<script>
+  const inputAva = document.getElementById("avatar-btn")
+  const avatar = document.getElementById("modal-avatar")
+  inputAva.addEventListener('change', uploadAva)
+  function uploadAva(e) {
+    let uploadAvatar = e.target.files || e.dataTransfer.files;
+    avatar.src = window.URL.createObjectURL(uploadAvatar[0])
+  }
+</script>
+
+<script>
+  const inputCov = document.getElementById("cover-btn")
+  const cover = document.getElementById("modal-cover")
+  inputCov.addEventListener('change', uploadCov)
+  function uploadCov(e) {
+    let uploadCover = e.target.files || e.dataTransfer.files;
+    cover.src = window.URL.createObjectURL(uploadCover[0])
+  }
+</script>

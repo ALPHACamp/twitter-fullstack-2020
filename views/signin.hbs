@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="ac-icon">
+    <img src="/images/icons/icon-logo.png" alt="">
+  </div>
+  <div class="title">
+    <h3>登入 Alphitter</h3>
+  </div>
+  <form class="form-login" action="/signin" method="POST" id="form" novalidate>
+    <div class="input-section">
+      <label class="label" for="account">帳號</label>
+      <input class="input" id="account" type="text" name="account" placeholder="請輸入帳號" required>
+      <div class="invalid-feedback">
+        請輸入使用者帳號
+      </div>
+    </div>
+    <div class="input-section">
+      <label class="label" for="password">密碼</label>
+      <input class="input" id="password" type="password" name="password" placeholder="請輸入密碼" required>
+      <div class="invalid-feedback">
+        請輸入使用者密碼
+      </div>
+    </div>
+    <button class="login-btn" type="submit" id="submit-btn">登入</button>
+  </form>
+  <p class="footer d-flex justify-content-end"><a href="/signup">註冊</a> <span class="dot">‧</span> <a
+      href="/admin/signin">後台登入</a></p>
+  {{!-- 表單驗證 --}}
+  <script>
+    const form = document.querySelector('#form')
+    const submitButton = document.querySelector('#submit-btn')
+
+    submitButton.addEventListener('click', function onSubmitButtonClicked(event) {
+      form.classList.add('was-validated')
+    })
+
+    form.addEventListener('submit', function onFormSubmit(event) {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+    })
+  </script>
+</div>

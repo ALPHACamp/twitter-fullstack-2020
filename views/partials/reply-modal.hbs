@@ -1,0 +1,82 @@
+{{!-- 以下是reply 的 modal --}}
+<div class="modal fade" id="reply-modal-{{tweet.id}}" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" style="position:relative;">
+
+    <div class="modal-content" style="width:634px; border-radius:14px;position: absolute;top: 30px;left: -119px;">
+
+      <div class="modal-header" style="width:634px; height:56px;">
+        <a data-bs-dismiss="modal">
+          <img src="/images/icons/icon-danger.png" alt="" style="width:25px;height:25px;">
+        </a>
+      </div>
+      {{!-- 原推文部分 --}}
+      <div class="modal-reply-tweet-main d-flex m-3" style="">
+        <div class="modal-reply-tweet-avatar">
+          <img src="{{user.avatar}}" class="rounded-circle" style="width:50px;height:50px">
+          <hr style="width: 2px;height: 86px;border-right: solid #B5B5BE;position: absolute;left: 39px;top: 116px;">
+        </div>
+        <div class="modal-reply-tweet-text" style="max-width:90%;margin-left:13px;">
+          <span class="modal-reply-tweet-name"
+            style="font-size:16px; font-weight:700;line-height:26px margin-right:8px;">{{user.name}}</span>
+          <span style="font-size:14px;font-weight:400;line-height: 22px;color: #6C757D;">
+            @{{user.account}}‧{{relativeTimeFromNow tweet.createdAt}}</span>
+          <br />
+          <p class="modal-reply-tweet-description"
+            style="word-wrap: break-word; word-break: normal;margin-top:10px;font-size:16px; font-weight:400;color: #171725;">
+            {{tweet.description}}</p>
+          <small style="font-weight: 400;font-size: 14px;line-height: 22px;color: #6C757D;">回覆給 <span
+              style="color:#FF6600">@{{user.account}}</span></small>
+        </div>
+      </div>
+      {{!-- 回文部分 --}}
+      <form class="modal-tweet-post" action="/tweets/{{tweet.id}}/replies" method="POST" id="reply-user-modal"
+        novalidate>
+        <div class="modal-body d-flex" id="post-modal-body">
+          <div class="modal-avatar">
+            <img style="width:50px;height:50px;border-radius:25px;margin-top: -30px;" src="{{User.avatar}}"
+              alt="modal-avatar">
+          </div>
+          <div class="modal-input">
+            <textarea class="textarea border border-0 m-2" id="reply-textarea" name="comment"
+              style="font-size: 16px;resize:none;height: 192px;outline: none;color: #6C757D;line-height: 26px;font-weight: 400;"
+              id="comment-{{tweet.id}}" type="text" cols="65" rows="5" placeholder="推你的回覆" maxlength='140'
+              onkeyup="wordsTotal()" required></textarea>
+          </div>
+        </div>
+        <div class="d-flex" style="align-items: center;position: relative;">
+          <div id="reply-err-section" class="err-sec"
+            style="display: inline-block;margin-left: 360px;margin-right: 20px;align-items: center;position: absolute;top: -8px;left: 74px;">
+            <span class="invalid-feedback-modal" id="reply-err-text"
+              style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 500;font-size: 15px;line-height: 15px;color: #FC5A5A;">
+              內容不可空白
+            </span>
+          </div>
+          <div>
+            <button type="submit" class="setting-btn my-2" id="#submit-btn"
+              style="display: inline-block;font-weight: 400;font-size: 16px;line-height: 24px;border: none;width: 64px;height: 40px;background: #FF6600;border-radius: 50px;padding: 10px 15px;margin-left: 16px;margin-right: 16px;position: relative;left: 530px;">回覆</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  {{!-- 表單驗證 --}}
+  <script>
+    const replyUserModal = document.getElementById('reply-user-modal')
+    const replyErrSection = document.getElementById('reply-err-section')
+    const replyTextarea = document.getElementById('reply-textarea')
+
+    replyTextarea.addEventListener('keydown', function keydown(event) {
+      replyErrSection.classList.add("err-sec")
+    })
+
+    replyUserModal.addEventListener('submit', function onFormSubmit(event) {
+      const replyUserModal = document.getElementById('reply-user-modal')
+      if (!replyUserModal.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+        replyErrSection.classList.remove("err-sec")
+      }
+    })
+  </script>
+</div>

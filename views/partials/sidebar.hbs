@@ -1,0 +1,54 @@
+<div style="height: 1200px;width:332px">
+  <div id="left-section">
+    <a href="/tweets"><img id="logo" src="/images/icons/logo.png"></a>
+    <ul id="left-navs" class="nav flex-column">
+      <li class="nav-item">
+        <a href="/tweets" class="nav-item-content">
+          {{#ifNotCond route "home"}}
+          <img src="/images/icons/outlined-home.png" class="base-icon">
+          <span class="word">首頁</span>
+          {{/ifNotCond}}
+          {{#ifCond route "home"}}
+          <img src="/images/icons/filled-home.png" class="base-icon">
+          <span class="word" style="color: #FF6600;">首頁</span>
+          {{/ifCond}}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/users/{{user.id}}/tweets" class="nav-item-content">
+          {{#ifNotCond route "userProfile"}}
+          <img src="/images/icons/outlined-user.png" class="base-icon">
+          <span class="word">個人資料</span>
+          {{/ifNotCond}}
+          {{#ifCond route "userProfile"}}
+          <img src="/images/icons/filled-user.png" class="base-icon">
+          <span class="word" style="color: #FF6600;">個人資料</span>
+          {{/ifCond}}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/settings" class="nav-item-content">
+          {{#ifNotCond route "settings"}}
+          <img src="/images/icons/outlined-cog.png" class="base-icon">
+          <span class="word">設定</span>
+          {{/ifNotCond}}
+          {{#ifCond route "settings"}}
+          <img src="/images/icons/filled-cog.png" class="base-icon">
+          <span class="word" style="color: #FF6600;">設定</span>
+          {{/ifCond}}
+        </a>
+      </li>
+      <li class="nav-item d-flex justify-content-center" style="height: 46px;">
+        <button type="button" class="btn btn-primary"
+          style="border-radius:50px; width:100%; background:#FF6600; border-color:#FF6600;font-size:20px;font-weight:400"
+          data-bs-toggle="modal" data-bs-target="#post-modal">推文</button>
+      </li>
+    </ul>
+    <div id="logout">
+      <a href="/logout" style="margin-top:1.585vh; text-decoration: none; align-items: center; display:flex">
+        <img src="/images/icons/outlined-logout.png" style="height:24px; margin-left:16px;">
+        <span style="margin-left:16px; font-weight:700; font-size:18px; color:#44444F">登出</span>
+      </a>
+    </div>
+  </div>
+</div>

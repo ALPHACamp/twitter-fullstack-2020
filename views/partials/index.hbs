@@ -1,0 +1,63 @@
+<div style="margin-top: 24px;height:51px;border-bottom: 1px solid #e6ecf0;">
+  <span style="font-weight: 700;font-size: 24px;line-height: 26px;color: #171725; margin-left: 24px">首頁</span>
+</div>
+<div class="index-post">
+  <div class="posting">
+    <img src="{{user.avatar}}" style="height:50px; width:50px; border-radius:50%">
+    <span style="font-weight: 700;font-size: 18px;line-height: 26px;color: #6C757D;">有什麼新鮮事？</span>
+  </div>
+  <button type="submit" class="index-post-btn" data-bs-toggle="modal" data-bs-target="#post-modal">推文</button>
+  <div class="index-divider"></div>
+</div>
+
+<div class="index-tweets d-flex justify-content-center">
+  {{#each tweets}}
+  {{!-- 這是modal-reply --}}
+  {{>reply-modal user=this.User tweet=this User=../currentUser}}
+  <div class="d-flex each-tweet" style="padding: 16px 0;width: 639px;">
+    <div id="tweet-icon">
+      <a href="/users/{{this.UserId}}/tweets">
+        <img src="{{this.User.avatar}}" alt="" width="50" height="50" class="rounded-circle" />
+      </a>
+    </div>
+    <div id="tweet-right" style="width: 528px;">
+      <div class="header" onclick="window.open('/tweets/{{this.id}}/replies','_self');" style="cursor: pointer;">
+        <a href="/users/{{this.UserId}}/tweets">
+          <span style="font-size: 16px; line-height: 26px; font-weight: 700;color: #171725;">{{this.User.name}}</span>
+          <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D; margin-left:8px;"
+            class="text-muted"> @{{this.User.account}}</span>
+        </a>
+        <span style="font-size: 14px; line-height: 22px; font-weight: 400;color: #6C757D;"
+          class="text-muted">．{{relativeTimeFromNow this.createdAt}}</span>
+      </div>
+      <div class="content-word" onclick="window.open('/tweets/{{this.id}}/replies','_self');" style="cursor: pointer;">
+        {{this.description}}
+      </div>
+      <div class="actions d-flex justify-content-between">
+        <div class="d-flex reply">
+          <button data-bs-toggle="modal" data-bs-target="#reply-modal-{{this.id}}">
+            <img src="/images/icons/outlined-reply.png" alt="replies" style="width:16px; height: 16px">
+          </button>
+          <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.replyCount}}</span>
+        </div>
+        <div class="d-flex like">
+          {{#if this.isLiked}}
+          <form action="/tweets/{{this.id}}/unlike" method="post">
+            <button type="submit">
+              <img src=" /images/icons/filled-like.png" alt="like" style="width:16px; height: 16px">
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{this.id}}/like" method="post">
+            <button type="submit">
+              <img src=" /images/icons/outlined-like.png" alt="like" style="width:16px; height: 16px">
+            </button>
+          </form>
+          {{/if}}
+          <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.likeCount}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
