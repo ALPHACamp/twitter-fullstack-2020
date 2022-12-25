@@ -41,7 +41,7 @@ router.post('/followships/', authenticated, followshipController.postFollowships
 router.get('/api/users/:id', apiController.getUserInfo)
 router.post('/api/users/:id', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), authenticated, apiController.postUserInfo)
 
-router.get('/', (req, res) => res.redirect('/signin'))
+router.get('/', (req, res) => res.redirect('/tweets'))
 
 router.use('/', generalErrorHandler)
 

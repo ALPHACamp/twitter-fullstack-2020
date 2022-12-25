@@ -1,5 +1,5 @@
 const helpers = require('../_helpers')
-const { Followship, Like, Reply, Tweet, User } = require('../models')
+const { Like, Reply, Tweet, User } = require('../models')
 const tweetController = {
   getIndex: (req, res, next) => {
     const currentUser = helpers.getUser(req)
@@ -115,7 +115,6 @@ const tweetController = {
     ])
       .then(([tweet, like]) => {
         if (!tweet) throw new Error("Tweet doesn't exist!")
-        // if (like?.toJSON().UserId === helpers.getUser(req).id) throw new Error('Cannot like your own tweets!')
         if (like) throw new Error('You have liked this!')
         return Like.create({
           UserId: helpers.getUser(req).id,

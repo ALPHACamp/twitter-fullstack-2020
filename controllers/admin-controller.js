@@ -1,4 +1,4 @@
-const { Followship, Like, Reply, Tweet, User } = require('../models')
+const { Like, Reply, Tweet, User } = require('../models')
 const adminController = {
   signInPage: (req, res, next) => {
     res.render('admin/admin-signin')

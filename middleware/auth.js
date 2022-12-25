@@ -10,7 +10,7 @@ const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role !== 'admin') {
     return next()
   }
-  return res.redirect('/tweets')
+  return res.redirect('/signin')
 }
 
 const authenticatedAdmin = (req, res, next) => {

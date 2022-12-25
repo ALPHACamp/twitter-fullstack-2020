@@ -1,5 +1,5 @@
 const helpers = require('../_helpers')
-const { Followship, Like, Reply, Tweet, User } = require('../models')
+const { Followship, User } = require('../models')
 const followshipController = {
   postFollowships: (req, res, next) => {
     const followingId = Number(req.body.id)
