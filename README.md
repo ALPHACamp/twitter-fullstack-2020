@@ -8,8 +8,10 @@ ALPHA Camp | 學期 3 | Simple Twitter | 自動化測試檔 (全端開發組)
 
 2.Install "MySQL Workbench", build a local connection, then create a query tab entering following order and operate
 
-`drop database if exists ac_twitter_workspace;
-create database ac_twitter_workspace;`
+```
+drop database if exists ac_twitter_workspace;
+create database ac_twitter_workspace;
+```
 
 3. Open terminal enter following order to copy the repository to local
 
@@ -25,13 +27,15 @@ create database ac_twitter_workspace;`
 
 6.Make shure the config.json is suited to your local database's username and password
 
-`"development": {
+```
+"development": {
     "username": "<your username>",
     "password": "<your password>",
     "database": "ac_twitter_workspace",
     "host": "127.0.0.1",
     "dialect": "mysql"
-}`
+}
+```
 
 7. Install operating environment
 
