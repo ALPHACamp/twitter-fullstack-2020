@@ -22,8 +22,8 @@
                 id="description" cols="30" rows="10" placeholder="有什麼新鮮事?" maxlength="140" required></textarea>
               <input type="hidden" name="UserId" value="{{tweets.User.id}}" />
             </span>
-            <span id="description-alert" class="abs" style="color: #FC5A5A;right:140px; bottom:27px"></span>
-            <button id="user-tweet description" class="tweetbtn-s abs tweetOne-button" type="submit"
+            <span id="description-alert-medal" class="abs" style="color: #FC5A5A;right:140px; bottom:27px"></span>
+            <button id="user-tweet" class="tweetbtn-s abs tweetOne-button" type="submit"
               onclick="return verify()">推文</button>
           </form>
         </div>
@@ -32,21 +32,23 @@
   </div>
 </div>
 
+{{!--
 <script>
   const descriptionInput = document.getElementById('description')
   const description = document.getElementById('description').value.trim()
-  const descriptionAlert = document.getElementById('description-alert')
-  const descriptionButton = document.getElementById('description-button')
+  const descriptionAlertMedal = document.getElementById('description-alert-medal')
 
-  descriptionInput.addEventListener('input', TInput)
-  descriptionAlert.innerHTML = '內容不可空白'
+  descriptionInput.addEventListener('input', AInput)
 
-  function TInput(e) {
-    const desCurrent = e.target.value
+  function AInput(event) {
+    const desCurrent = event.target.value
+    console.log(desCurrent)
     if (!desCurrent.length) {
-      descriptionAlert.innerHTML = '內容不可空白'
-    } else if (name.length > 50) {
-      nameAlert.innerHTML = '字數超出上限!'
+      descriptionAlertMedal.innerHTML = "內容不可空白"
+    } else if (desCurrent.length > 0 && desCurrent.length < 160) {
+      descriptionAlertMedal.innerHTML = `${desCurrent.length}/140`
+    } else if (desCurrent.length > 160) {
+      descriptionAlertMedal.innerHTML = '字數超出上限!'
     }
   }
-</script>
+</script> --}}

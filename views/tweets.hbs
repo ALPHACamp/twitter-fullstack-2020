@@ -79,6 +79,23 @@
 
 
 <script>
+  const descriptionInput = document.getElementById('description')
+  const description = document.getElementById('description').value.trim()
+  const descriptionAlert = document.getElementById('description-alert')
+
+  descriptionInput.addEventListener('input', TInput)
+
+  function TInput(e) {
+    const desCurrent = e.target.value
+    if (!desCurrent.length) {
+      descriptionAlert.innerHTML = "內容不可空白"
+    } else if (desCurrent.length > 0 && desCurrent.length < 160) {
+      descriptionAlert.innerHTML = `${desCurrent.length}/140`
+    } else if (desCurrent.length > 160) {
+      descriptionAlert.innerHTML = '字數超出上限!'
+    }
+  }
+
   const replyButton = document.querySelector('.reply-button')
   const reply = document.querySelector('.reply')
   const hint = document.querySelector('.hint')
@@ -88,20 +105,4 @@
       hint.innerText = '內容不可空白'
     }
   })
-
-  const descriptionInput = document.getElementById('description')
-  const description = document.getElementById('description').value.trim()
-  const descriptionAlert = document.getElementById('description-alert')
-  const descriptionButton = document.getElementById('description-button')
-
-  descriptionInput.addEventListener('input', TInput)
-
-  function TInput(e) {
-    const desCurrent = e.target.value
-    if (!desCurrent.length) {
-      descriptionAlert.innerHTML = '內容不可空白'
-    } else if (name.length > 50) {
-      nameAlert.innerHTML = '字數超出上限!'
-    }
-  }
 </script>
