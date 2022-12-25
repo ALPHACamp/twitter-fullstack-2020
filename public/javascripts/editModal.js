@@ -11,7 +11,7 @@ editButton.addEventListener('click', function (event) {
   const target = event.target
   const UserId = target.dataset.id
   axios
-    .get(`http://localhost:3000/api/users/${UserId}.json`)
+    .get(`/api/users/${UserId}.json`)
     .then(res => {
       console.log(res)
       inputName.value = res.data.name
@@ -23,8 +23,8 @@ editButton.addEventListener('click', function (event) {
 })
 
 // 儲存modal資訊，刷新頁面
-profileModalForm.addEventListener('submit', function (event) {  
-  event.preventDefault() 
+profileModalForm.addEventListener('submit', function (event) {
+  event.preventDefault()
   const target = event.target
   const UserId = target.dataset.id
   const formData = new FormData()
@@ -34,7 +34,7 @@ profileModalForm.addEventListener('submit', function (event) {
   formData.append('avatar', avatarBtn.files[0])
 
   axios
-    .post(`http://localhost:3000/api/users/${UserId}.json`, formData, {
+    .post(`/api/users/${UserId}.json`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
     .then(res => {
