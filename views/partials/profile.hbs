@@ -54,15 +54,15 @@
 {{!-- 以下是 編輯個人頁面的modal --}}
 <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content" style="width:634px; height:610px;border-radius:14px;top: 31px;left: -117px;">
+  <div class="modal-dialog" style="position: relative;">
+    <div class="modal-content" style="position: absolute;width:634px; height:610px;border-radius:14px;top: 31px;left: -118px;">
 
 
       <form data-id="{{currentUser.id}}" enctype="multipart/form-data" id="profile-modal-form" novalidate>
         <div class="modal-header justify-content-between" style="height:57px;">
           <div class="d-flex">
             <a data-bs-dismiss="modal">
-              <img src="/images/icons/icon-danger.png" alt="" style="width:25px;height:25px;">
+              <img src="/images/icons/icon-danger.png" alt="" style="width:25px;height:25px;margin-top: 6.5px;">
             </a>
             <h5
               style="margin-left:36px;margin-top:4px;font-family: 'Noto Sans TC';font-style: normal;font-weight: 700;font-size: 18px;line-height: 26px;color: #1C1C1C;">
@@ -107,11 +107,10 @@
             <label class="modal-name-label" for="name"
               style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 14px;line-height: 22px;color: #696974;">名稱</label>
             <input class="modal-name-input" id="name" type="text" name="name" maxlength="50" placeholder="請輸入使用者名稱..."
-              style="font-weight: 400;font-size: 16px;line-height: 26px;color: #171725;" value="" onkeyup="wordsTotal()"
-              required>
+              style="font-weight: 400;font-size: 16px;line-height: 26px;color: #171725;" value="" required>
             <div style="inline-block;font-weight: 500;font-size: 12px;line-height: 20px;color: #FC5A5A;">
               <span id="err-name" class="err-sec">字數超出上限!</span>
-              <span id="text-count">0/50</span>
+              <span id="text-count"></span>
             </div>
           </div>
 
@@ -120,12 +119,12 @@
               style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 14px;line-height: 22px;color: #696974;">自我介紹</label>
             <textarea class="modal-intro-input border-0" name="introduction"
               style="font-size: 16px;outline: none;resize:none;height:120px;font-weight: 400;line-height: 26px;color: #171725;"
-              id="introduction" cols="65" rows="5" maxlength="160" onkeyup="infosTotal()" required></textarea>
+              id="introduction" cols="65" rows="5" maxlength="160" required></textarea>
           </div>
           <div
             style="inline-block;max-width: 600px;margin-left: 15px;font-weight: 500;font-size: 12px;line-height: 20px;color: #FC5A5A;">
-            <span id="err-info" class="err-sec">字數超出上限!</span>
-            <span id="text-count-info">0/160</span>
+            <span id="err-intro" class="err-sec">字數超出上限!</span>
+            <span id="text-count-info"></span>
           </div>
         </div>
       </form>
@@ -133,80 +132,6 @@
   </div>
 </div>
 
-{{!-- 表單驗證 --}}
-{{!--
-<script>
-  const name = document.querySelector('.modal-name-input')
-  const info = document.querySelector('.modal-intro-input')
-  const errName = document.querySelector('#err-name')
-  const errInfo = document.querySelector('#err-info')
-  const form = document.querySelector('#form')
-  const submitButton = document.querySelector('#submit-btn')
-
-  function wordsTotal() {
-    let total = name.value.trim().length
-    document.getElementById('text-count').innerHTML = total + '/50'
-    if (total >= 50) {
-      name.classList.add("disabled")
-      errName.classList.remove("err-sec")
-    } else {
-      name.classList.remove("disabled")
-      errName.classList.add("err-sec")
-    }
-  }
-
-  function infosTotal() {
-    let introductionTotal = document.getElementById('introduction').value.trim().length
-    document.getElementById('text-count-info').innerHTML = introductionTotal + '/160'
-    if (introductionTotal >= 160) {
-      info.classList.add("disabled")
-      errInfo.classList.remove("err-sec")
-    } else {
-      info.classList.remove("disabled")
-      errInfo.classList.add("err-sec")
-    }
-  }
-
-  submitButton.addEventListener('click', function onSubmitButtonClicked(event) {
-    form.classList.add('was-validated')
-  })
-
-  form.addEventListener('submit', function onFormSubmit(event) {
-    if (!form.checkValidity()) {
-      event.preventDefault()
-      event.stopPropagation()
-    }
-  })
-</script> --}}
-
-
-
-
-
-{{!--
-<script>
-  const defaultCover = document.querySelector("#default-cover");
-  defaultCover.addEventListener("click", function (event) {
-    event.preventDefault()
-    const target = event.target
-    console.log(target)
-    const UserId = 3
-    const formData = new FormData()
-    formData.append('cover', 'https://i.imgur.com/lswsX4e.png')
-
-    axios
-      .post(`http://localhost:3000/api/users/${UserId}.json`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      })
-      .then(res => {
-        console.log('hi')
-        history.go(0)
-      })
-      .catch(err => console.log(err))
-  }
-  );
-
-</script> --}}
 <script src="/javascripts/editModal.js"></script>
 
 {{!-- 以下是圖片暫存在瀏覽器 --}}

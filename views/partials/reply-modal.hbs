@@ -31,47 +31,48 @@
         </div>
       </div>
       {{!-- 回文部分 --}}
-      <form class="modal-tweet-post" action="/tweets/{{tweet.id}}/replies" method="POST" id="form" novalidate>
+      <form class="modal-tweet-post" action="/tweets/{{tweet.id}}/replies" method="POST" id="reply-user-modal" novalidate>
         <div class="modal-body d-flex" id="post-modal-body">
           <div class="modal-avatar">
-            <img style="width:50px;height:50px;border-radius:25px;" src="{{User.avatar}}" alt="modal-avatar">
+            <img style="width:50px;height:50px;border-radius:25px;margin-top: -30px;" src="{{User.avatar}}" alt="modal-avatar">
           </div>
           <div class="modal-input">
-            <textarea class="textarea border border-0 m-2" name="comment"
+            <textarea class="textarea border border-0 m-2" id="reply-textarea" name="comment"
               style="font-size: 16px;resize:none;height: 192px;outline: none;color: #6C757D;line-height: 26px;font-weight: 400;"
               id="comment-{{tweet.id}}" type="text" cols="65" rows="5" placeholder="推你的回覆" maxlength='140'
               onkeyup="wordsTotal()" required></textarea>
           </div>
         </div>
         <div class="d-flex" style="align-items: center;position: relative;">
-          <div id="err-section" class="err-sec"
+          <div id="reply-err-section" class="err-sec"
             style="display: inline-block;margin-left: 360px;margin-right: 20px;align-items: center;position: absolute;top: -8px;left: 74px;">
-            <span class="invalid-feedback-modal" id="err-text"
+            <span class="invalid-feedback-modal" id="reply-err-text"
               style="font-family: 'Noto Sans TC';font-style: normal;font-weight: 500;font-size: 15px;line-height: 15px;color: #FC5A5A;">
               內容不可空白
             </span>
           </div>
-          <button type="submit" class="setting-btn my-2" id="#submit-btn"
-            style="display: inline-block;font-weight: 400;font-size: 16px;line-height: 24px;border: none;width: 64px;height: 40px;background: #FF6600;border-radius: 50px;padding: 10px 15px;margin-left: 16px;margin-right: 16px;position: absolute;top: -25px;left: 530px;">回覆</button>
+          <button type="submit" class="setting-btn my-2" id="#reply-submit-btn"
+            style="display: inline-block;font-weight: 400;font-size: 16px;line-height: 24px;border: none;width: 64px;height: 40px;background: #FF6600;border-radius: 50px;padding: 10px 15px;margin-left: 16px;margin-right: 16px;position: absolute;top: -37px;left: 530px;">回覆</button>
         </div>
       </form>
     </div>
   </div>
   {{!-- 表單驗證 --}}
   <script>
-    const form = document.querySelector('#form')
-    const submitButton = document.querySelector('#submit-btn')
-    const errSection = document.getElementById('err-section')
-    const errText = document.getElementById('err-text')
-    const textarea = document.querySelector('.textarea')
-    textarea.addEventListener('keydown', function keydown(event) {
-      errSection.classList.add("err-sec")
+    const replyUserModal = document.getElementById('reply-user-modal')
+    const replyErrSection = document.getElementById('reply-err-section')
+    const replyTextarea = document.getElementById('reply-textarea')
+
+    replyTextarea.addEventListener('keydown', function keydown(event) {
+      replyErrSection.classList.add("err-sec")
     })
-    form.addEventListener('submit', function onFormSubmit(event) {
-      if (!form.checkValidity()) {
+
+    replyUserModal.addEventListener('submit', function onFormSubmit(event) {
+      const replyUserModal = document.getElementById('reply-user-modal')
+      if (!replyUserModal.checkValidity()) {
         event.preventDefault()
         event.stopPropagation()
-        errSection.classList.remove("err-sec")
+        replyErrSection.classList.remove("err-sec")
       }
     })
   </script>

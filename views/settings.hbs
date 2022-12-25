@@ -15,14 +15,14 @@
             請輸入帳號
           </div>
         </div>
-        <div class="input-setting">
+        <div class="input-setting" style="position: relative;">
           <label class="label" for="name">名稱</label>
           <input class="setting-input" id="name" type="text" name="name" placeholder="請輸入使用者名稱" value="{{name}}"
             maxlength="50" onkeyup="wordsTotal()" required>
           <div class="invalid-feedback" style="inline-block">
             名稱不得超過50字
           </div>
-          <span id="text-count"></span>
+          <span id="text-count"style="position: absolute;top: 56px;left: 568px;"></span>
         </div>
         <div class="input-setting">
           <label class="label" for="email">Email</label>
