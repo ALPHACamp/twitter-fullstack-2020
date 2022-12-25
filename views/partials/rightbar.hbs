@@ -3,12 +3,13 @@
   <div class="bottom-line-2 d-flex align-items-center">
     <p class="middle-title">推薦跟隨</p>
   </div>
-  <div class="follow-flow fl">
+  <div class="follow-flow fl" style="border-radius: 12px;
+    background: #FAFAFB;">
     {{#each topFollowings}}
-    <div class="d-flex align-items-center justify-content-between" style="background: #FAFAFB;">
+    <div class="d-flex align-items-center justify-content-between" style="">
       <div>
         <div class="fl">
-          <a href="">
+          <a href="/users/{{this.id}}/tweets">
             {{#if this.avatar}}
             <img class="ac-img-x" src="{{this.avatar}}" alt="" style="border-radius: 50%">
             {{else}}
