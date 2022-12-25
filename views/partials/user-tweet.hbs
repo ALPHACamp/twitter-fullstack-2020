@@ -32,16 +32,21 @@
   </div>
 </div>
 
-{{!-- <script>
+<script>
   const descriptionInput = document.getElementById('description')
   const description = document.getElementById('description').value.trim()
   const descriptionAlert = document.getElementById('description-alert')
   const descriptionButton = document.getElementById('description-button')
 
-  descriptionButton.addEventListener('click', (e) => {
-    if (!description) {
-      e.preventDefault()
-      descriptionAlert.innerText = '內容不可空白'
+  descriptionInput.addEventListener('input', TInput)
+  descriptionAlert.innerHTML = '內容不可空白'
+
+  function TInput(e) {
+    const desCurrent = e.target.value
+    if (!desCurrent.length) {
+      descriptionAlert.innerHTML = '內容不可空白'
+    } else if (name.length > 50) {
+      nameAlert.innerHTML = '字數超出上限!'
     }
-  })
-</script> --}}
+  }
+</script>
