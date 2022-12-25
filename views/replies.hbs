@@ -102,11 +102,10 @@
             <img src="{{tweet.User.avatar}}" class="user-avatar" alt="User Photo">
             {{else}}
             <img src="/images/icon/User Photo.png" class="user-avatar" alt="User Photo">
-            {{!-- 垂直線。要隨內容增加長高或縮短 --}}
-            <p class="Vertical-line"></p>
             {{/if}}
+            <hr id="v-line">
           </div>
-          <div class="col-0" style="width: 536px;min-height:100px;margin:10px;">
+          <div class="col-0" style="width: 536px;max-height:135px;margin:10px;position:relative;">
             <span class="fw-bold fs-6">{{tweet.User.name}} </span>
             <span class="tweets-account">@{{tweet.User.account}}</span>
             <span>{{relativeTimeFromNow tweet.updatedAt}}
@@ -134,12 +133,14 @@
               <textarea cols="65" class="post-tweet-content" type="text" style="height:180px;" name="description"
                 id="replyDescription" placeholder="推你的回覆..." oninput="replyCounts()" onclick="replyCheck()"
                 required></textarea>
-              <span id="replyMessage">
-                {{!-- 字數不可超過50字 --}}
-              </span>
-              <span id="repliesChar_count" style="position:absolute;right:100px;bottom:80px">
-                0/50
-              </span>
+              <div style="position:relative;">
+                <span id="replyMessage">
+                  {{!-- 字數不可超過50字 --}}
+                </span>
+                <span id="repliesChar_count" style="position:absolute;right:100px;bottom:10px">
+                  0/50
+                </span>
+              </div>
               <button type="submit" class="btn-sml-thr">回覆</button>
             </form>
           </div>

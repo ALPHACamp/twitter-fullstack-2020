@@ -1347,3 +1347,10 @@ position: absolute;
 right: 90px;
 bottom: 25px;
 }
+#v-line{
+width: 2px;
+height: 80px;
+color:rgba(204, 214, 221, 1);
+margin-left: 24px;
+margin-top:20px;
+}
