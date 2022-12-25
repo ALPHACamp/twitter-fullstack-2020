@@ -6,12 +6,10 @@ ALPHA Camp | 學期 3 | Simple Twitter | 自動化測試檔 (全端開發組)
 
 1. Make shure that you have installed node.js and npm
 
-2.Install "MySQL Workbench", build a local connection, then create a query tab entering follow order and operate
+2.Install "MySQL Workbench", build a local connection, then create a query tab entering following order and operate
 
-`drop database if exists ac_twitter_workspace;`
-`create database ac_twitter_workspace;`
-`drop database if exists ac_twitter_workspace_test;`
-`create database ac_twitter_workspace_test;`
+`drop database if exists ac_twitter_workspace;
+create database ac_twitter_workspace;`
 
 3. Open terminal enter following order to copy the repository to local
 
@@ -25,26 +23,36 @@ ALPHA Camp | 學期 3 | Simple Twitter | 自動化測試檔 (全端開發組)
 
 `IMGUR_CLIENT_ID=SKIP`
 
-6. Install operating environment
+6.Make shure the config.json is suited to your local database's username and password
+
+`"development": {
+    "username": "<your username>",
+    "password": "<your password>",
+    "database": "ac_twitter_workspace",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+}`
+
+7. Install operating environment
 
 `npm install`
 
-7. Construct database
+8. Construct database
 
 `npx sequelize db:migrate`
 
-8. Create Seed data
+9. Create Seed data
 
 `npx sequelize db:seed:all`
 
-9. Run website
+10. Run website
 
 `npm run dev`
 
-10. if operating successfully, the terminal will display following sentence:
+11. if operating successfully, the terminal will display following sentence:
 
 `Example app listening on port 3000!`
 
-11. Stop running:
+12. Stop running:
 
 press 'ctrl' + 'c'
