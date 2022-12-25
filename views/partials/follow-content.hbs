@@ -20,7 +20,7 @@ border-right:1px solid #E6ECF0;">
           class="user-avatar">
         <span class="tAR-name">{{this.Followers.name}}</span>
         <div class="btn-position">
-          {{#if this.isFollowed}}
+          {{#if this.Followers.isFollowed}}
           <form action="/followships/{{this.Followers.id}}?_method=DELETE" method="POST">
             <button type="submit" name="id" value="{{this.Followers.id}}" class="following-btn">正在跟隨</button>
           </form>
@@ -46,7 +46,7 @@ border-right:1px solid #E6ECF0;">
           class="user-avatar">
         <span class="tAR-name">{{this.Followings.name}}</span>
         <div class="btn-position">
-          {{#if this.isFollowed}}
+          {{#if this.Followings.isFollowed}}
           <form action="/followships/{{this.Followings.id}}?_method=DELETE" method="POST">
             <button type="submit" name="id" value="{{this.Followings.id}}" class="following-btn">正在跟隨</button>
           </form>

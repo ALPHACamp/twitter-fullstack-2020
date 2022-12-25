@@ -302,7 +302,7 @@ const userController = {
           model: User,
           as: 'Followings',
           attributes: ['id', 'account', 'name', 'avatar', 'introduction',
-            // [sequelize.literal(`(SELECT (COUNT(*) > 0) FROM Followships WHERE Followships.followerId = ${loginUserId} AND Followships.followingId=Followers.id)`), 'isFollowed']
+            [sequelize.literal(`(SELECT (COUNT(*) > 0) FROM Followships WHERE follower_id = ${loginUserId} AND following_id=Followings.id)`), 'isFollowed']
           ]
         }],
         where: { followerId: queryUserId },
@@ -316,10 +316,10 @@ const userController = {
       })
     ])
       .then(([user, followings, users]) => {
-        const results = followings.map(f => ({
-          ...f,
-          isFollowed: true
-        }))
+        // const results = followings.map(f => ({
+        //   ...f,
+        //   isFollowed: true
+        // }))
         const result = users
           .map(user => ({
             ...user.toJSON(),
@@ -327,36 +327,29 @@ const userController = {
             isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
           }))
           .sort((a, b) => b.followCount - a.followCount)
-        res.render('following', { user, followings: results, result: result.slice(0, 10) })
+        res.render('following', { user, followings, result: result.slice(0, 10) })
       })
       .catch(err => next(err))
   },
-  getUserFollower: (req, res, next) => {
+  getUserFollower: (req, res) => {
     const loginUserId = helpers.getUser(req).id
     const queryUserId = req.params.id
     return Promise.all([
       User.findByPk(queryUserId, {
         attributes: ['id', 'name',
           [sequelize.literal('(SELECT COUNT(*) FROM Tweets WHERE user_id = User.id)'), 'tweetsCount']],
-        include: [{ model: User, as: 'Followers' }],
         nest: true,
         raw: true
       }),
       Followship.findAll({
-        attributes: ['followingId'],
-        where: {
-          [Op.or]: [
-            { followingId: queryUserId },
-            { followerId: queryUserId }
-          ]
-        },
         include: [{
           model: User,
           as: 'Followers',
           attributes: ['id', 'account', 'name', 'avatar', 'introduction',
-            // [sequelize.literal(`(SELECT (COUNT(*) > 0) FROM Followships WHERE Followships.followerId = ${loginUserId} AND Followships.followingId=Followers.id)`), 'isFollowed']
+            [sequelize.literal(`(SELECT (COUNT(*) > 0) FROM Followships WHERE follower_id = ${loginUserId} AND Followships.following_id=Followers.id)`), 'isFollowed']
           ]
         }],
+        where: { followingId: queryUserId },
         order: [['createdAt', 'DESC']],
         nest: true,
         raw: true
@@ -368,12 +361,6 @@ const userController = {
     ])
       .then(([user, followers, users]) => {
         if (!user) throw new Error("User doesn't exist!")
-        const followerUser = (req.user && req.user.Followings.map(fr => fr.id)) || []
-        const followingUser = followers.filter(follower => follower.followingId === loginUserId)
-        const results = followingUser.map(follower => ({
-          ...follower,
-          isFollowed: followerUser.includes(follower.Followers.id)
-        }))
         const result = users
           .map(user => ({
             ...user.toJSON(),
@@ -381,13 +368,11 @@ const userController = {
             isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
           }))
           .sort((a, b) => b.followCount - a.followCount)
-        res.render('follower', { user, followers: results, result: result.slice(0, 10) })
-      }
-      )
+        res.render('follower', { user, followers, result: result.slice(0, 10) })
+      })
       .catch(err => next(err))
-  },
+  }
 }
-
 
 
 module.exports = userController
