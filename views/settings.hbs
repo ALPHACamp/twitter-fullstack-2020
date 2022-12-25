@@ -6,7 +6,7 @@
       <div class="setting-title">
         <h4>帳戶設定</h4>
       </div>
-      <form class="form-setting" action="/settings?_method=PUT" method="POST" id="form" novalidate>
+      <form class="form-setting" action="/settings?_method=PUT" method="POST" id="settings-form" novalidate>
         <div class="input-setting top">
           <label class="label" for="account">帳號</label>
           <input class="setting-input" id="account" type="text" name="account" placeholder="請輸入帳號" value="{{account}}"
@@ -15,14 +15,14 @@
             請輸入帳號
           </div>
         </div>
-        <div class="input-setting">
+        <div class="input-setting" style="position: relative;">
           <label class="label" for="name">名稱</label>
-          <input class="setting-input" id="name" type="text" name="name" placeholder="請輸入使用者名稱" value="{{name}}"
-            maxlength="50" onkeyup="wordsTotal()" required>
+          <input class="setting-input" id="settings-name" type="text" name="name" placeholder="請輸入使用者名稱" value="{{name}}"
+            maxlength="50" onkeyup="settingsWordsTotal()" required>
           <div class="invalid-feedback" style="inline-block">
             名稱不得超過50字
           </div>
-          <span id="text-count"></span>
+          <span id="text-count"style="position: absolute;top: 56px;left: 568px;"></span>
         </div>
         <div class="input-setting">
           <label class="label" for="email">Email</label>
@@ -47,32 +47,32 @@
             密碼和密碼確認需一致
           </div>
         </div>
-        <button class="setting-btn" type="submit" id="submit-btn">儲存</button>
+        <button class="setting-btn" type="submit" id="settings-submit-btn">儲存</button>
       </form>
     </div>
   </div>
   {{!-- 表單驗證 --}}
   <script>
-    const name = document.querySelector('#name')
-    const form = document.querySelector('#form')
-    const submitButton = document.querySelector('#submit-btn')
+    const settingsName = document.querySelector('#settings-name')
+    const settingsForm = document.querySelector('#settings-form')
+    const settingsSubmitBtn = document.querySelector('#settings-submit-btn')
 
-    function wordsTotal() {
-      let total = document.getElementById('name').value.trim().length
-      document.getElementById('text-count').innerHTML = total + '/50'
-      if (total >= 50) {
-        name.classList.add("disabled")
+    function settingsWordsTotal() {
+      let totalName = document.getElementById('settings-name').value.trim().length
+      document.getElementById('text-count').innerHTML = totalName + '/50'
+      if (totalName >= 50) {
+        settingsName.classList.add("disabled")
       } else {
-        name.classList.remove("disabled")
+        settingsName.classList.remove("disabled")
       }
     }
 
-    submitButton.addEventListener('click', function onSubmitButtonClicked(event) {
-      form.classList.add('was-validated')
+    settingsSubmitBtn.addEventListener('click', function onSubmitButtonClicked(event) {
+      settingsForm.classList.add('was-validated')
     })
 
-    form.addEventListener('submit', function onFormSubmit(event) {
-      if (!form.checkValidity()) {
+    settingsForm.addEventListener('submit', function onFormSubmit(event) {
+      if (!settingsForm.checkValidity()) {
         event.preventDefault()
         event.stopPropagation()
       }
