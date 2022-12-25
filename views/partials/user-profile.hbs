@@ -16,12 +16,33 @@
   {{/if}}
 </div>
 {{!-- 編輯個人資料 --}}
+{{#ifCond viewUser.id user.id}}
 <div class="wid-100">
   <button class="tweetbtn-ol m-3 float-end">
     <a href="" class="text-decoration-n font-color-or" data-bs-toggle="modal"
       data-bs-target="#staticBackdrop-self">編輯個人資料</a>
   </button>
 </div>
+
+{{else}}
+{{#if this.isFollowed}}
+<div class="wid-100">
+  <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+    <button type="submit" class="unFollow-button m-3 float-end"
+      style="margin-left: 200px;; width: 96px;height: 40px;background-color: #FF6600; border:none; border-radius: 50px; font-family: 'Noto Sans TC';font-style: normal; font-weight: 400;font-size: 16px;line-height: 24px;color: #FFFFFF;">正在跟隨</button>
+  </form>
+</div>
+{{else}}
+<div class="wid-100">
+  <form action="/followships" method="POST" style="display: contents;">
+    <input type="hidden" name="id" value="{{this.id}}" />
+    <button type="submit" class="btn follow-button m-3 float-end"
+      style="width: 64px;height: 40px;background: #FFFFFF;border: 1px solid #FF6600;border-radius: 50px;font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 16px;line-height: 24px;color: #FF6600;">跟隨</button>
+  </form>
+</div>
+{{/if}}
+
+{{/ifCond}}
 {{!-- 個人內文 追隨 推文回復喜歡TAB--}}
 <div class="col fl mt-2 wid-80 ms-3">
   <div>

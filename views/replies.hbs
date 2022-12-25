@@ -96,7 +96,7 @@
         {{!-- 留言 start--}}
         <div class="d-flex">
           <div>
-            <a href="/users/{{tweet.User.id}}"><img class="ac-img" src="{{tweet.User.avatar}}" alt=""></a>
+            <a href="/users/{{tweet.User.id}}"><img class="ac-img" src="{{tweet.User.avatar}}" alt=""style="border-radius: 50%"></a>
           </div>
           <div class="tweet-flow-text fl">
             <a href="/users/{{tweet.User.id}}" class="text-decoration-n">
@@ -114,16 +114,16 @@
         {{!-- 貼文 end--}}
         <div class="strip"></div>
         {{!-- 留言 --}}
-        <form action="/tweets/{{this.id}}/replies" method="POST" class="mt-3" method="POST">
+        <form action="/tweets/{{tweet.id}}/replies" method="POST" class="mt-3" method="POST">
           <div class="d-flex align-items-center">
-            <img class="ac-img fl" src="{{this.User.avatar}}" alt="">
+            <img class="ac-img fl" src="{{viewUser.avatar}}" alt="" style="border-radius: 50%">
             <div class="mt-3 ms-2">
               <textarea class="modal-input-tweets reply" type="description" name="comment" id="comment" cols="30"
                 rows="10" placeholder="推你的回覆" maxlength="528px" required></textarea>
-              <input type="hidden" name="TweetId" value="{{this.id}}" />
+              <input type="hidden" name="TweetId" value="{{tweet.id}}" />
             </div>
           </div>
-          <span class="hint abs" style="color: #FC5A5A;right:101px; bottom:27px"></span>
+          <span class="hint abs" style="color: #FC5A5A;right: 150px; bottom:27px"></span>
           <button class="tweetbtn-s abs reply-button" type="submit">回覆</button>
         </form>
       </div>
@@ -134,16 +134,3 @@
 {{> user-tweet}}
 {{> user-put}}
 {{> rightbar}}
-
-<script>
-  const replyButton = document.querySelector('.reply-button')
-  const reply = document.querySelector('.reply')
-  const hint = document.querySelector('.hint')
-  replyButton.addEventListener('click', (e) => {
-    if (reply.innerText === '') {
-      e.preventDefault()
-      hint.innerText = '內容不可空白'
-    }
-  })
-</script>
-
