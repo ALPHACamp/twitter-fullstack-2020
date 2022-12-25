@@ -23,11 +23,8 @@ editButton.addEventListener('click', function (event) {
 })
 
 // 儲存modal資訊，刷新頁面
-profileModalForm.addEventListener('submit', function (event) {
-  if (!profileModalForm.checkValidity()) {
-    event.preventDefault()
-    event.stopPropagation()
-  }
+profileModalForm.addEventListener('submit', function (event) {  
+  event.preventDefault() 
   const target = event.target
   const UserId = target.dataset.id
   const formData = new FormData()

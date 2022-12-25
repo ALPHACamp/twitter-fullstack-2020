@@ -40,8 +40,10 @@
               <img class="card-avatar" src="{{ this.avatar }}" alt="card-avatar">
             </div>
             <div>
-              <p class="card-name">{{this.name}}</p>
-              <p class="card-account">@{{this.account}}</p>
+              <div class="card-name" style="word-wrap: normal;">{{this.name}}
+                <span class="tooltiptext">{{this.name}}</span>
+              </div>
+              <div class="card-account">@{{this.account}}</div>
             </div>
           </div>
           <div class="card-bottom">

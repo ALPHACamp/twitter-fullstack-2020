@@ -235,6 +235,25 @@ input::placeholder {
   line-height: 26px;
   font-weight: 700;
   color: #171725;
+  text-overflow:ellipsis; 
+  overflow:hidden;
+}
+
+.card-name .tooltiptext {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px ;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.card-name:hover .tooltiptext {
+  visibility: visible;
 }
 
 .card-account {
@@ -1109,3 +1128,37 @@ form.was-validated .input:invalid ~ .invalid-feedback {
   border-bottom: 2px solid #50B5FF;
 }
 
+.alert.alert-dismissible.fade.show {
+  z-index: 10;
+  border-radius: 8px;
+  border: 2px solid;
+  box-shadow: 0px 4px 16px 0px rgba(51, 51, 51, 0.08);
+  width: 350px;
+  height: 96px;
+  background: #FFFFFF;
+  font-size:20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 38%;
+  right: 50%;
+  top: 1%;
+}
+
+.profile-intro .tooltiptext {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px ;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.profile-intro:hover .tooltiptext {
+  visibility: visible;
+}
