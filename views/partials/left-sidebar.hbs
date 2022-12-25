@@ -56,7 +56,7 @@
         <div class="textarea-body">
           <form action="/tweets" method="POST">
             <textarea cols="65" style="resize:none;width:500px;" type="text" name="description" id="description"
-              placeholder="有什麼新鮮事？" oninput="tweetsCounts()" required></textarea>
+              placeholder="有什麼新鮮事？" oninput="tweetsCounts(this)" required></textarea>
             <span id="tweetschar_count_modal">0/140</span>
             <span id="enterMessage">
               {{!-- 字數不可超過140字 --}}
@@ -73,15 +73,16 @@
 {{!-- tweet Modal function --}}
 {{!-- 字跟字中間的空白可能要後端幫忙刪除? --}}
 <script>
-  function tweetsCounts() {
-    const counts = document.getElementById('description').value.trim().length
+  function tweetsCounts(which) {
+    const maxChars = 140
+    const counts = which.value.trim().length
     const tweetEnterMessage = document.getElementById('enterMessage')
     const chatText = document.getElementById('tweetschar_count_modal')
     chatText.innerText = counts + '/140'
 
-    if (counts > 140) {
-      tweetEnterMessage.innerHTML = '<span id="enterMessage" style="position:absolute;right:0;">字數不可超過140字!</span >'
-      return
+    if (counts > maxChars) {
+      chatText.innerHTML = '<span style="color:red;">字數不可超過140字!</span >'
+      which.value = which.value.substring(0, maxChars);
     }
     if (counts > 0 && counts <= 140) {
       tweetEnterMessage.innerText = ''
