@@ -45,7 +45,6 @@ const apiController = {
     req.flash('success_messages', '個人資料儲存成功 !')
     return res.json({ status: 'success', ...user.toJSON() })
   }
-
 }
 
 module.exports = apiController
