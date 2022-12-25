@@ -13,7 +13,8 @@
         <input type="hidden" name="UserId" value="{{tweets.User.id}}" />
       </span>
       <div>
-        <button class="tweetbtn-s abs" type="submit">推文</button>
+        <span id="description-alert" class="abs" style="color: #FC5A5A;right:140px; bottom:27px"></span>
+        <button id="description-button" class="tweetbtn-s abs" type="submit">推文</button>
       </div>
     </form>
   </div>
@@ -37,7 +38,8 @@
           </p>
         </a>
         <span class="twitterbox-time mx-40">
-          <button class="btn" data-bs-target="#replyModal{{this.id}}" data-bs-toggle="modal"><i class="far fa-comment" style="color: navy;width:25px;height:18px;"></i>{{this.Replies.length}}</button></span>
+          <button class="btn" data-bs-target="#replyModal{{this.id}}" data-bs-toggle="modal"><i class="far fa-comment"
+              style="color: navy;width:25px;height:18px;"></i>{{this.Replies.length}}</button></span>
         </span>
         {{!-- isLiked --}}
         {{#if this.isLiked}}
@@ -67,7 +69,7 @@
   {{/each}}
 
   {{> user-tweet}}
-  
+
 
 </div>
 
@@ -76,24 +78,28 @@
 
 
 
-  <script>
-    const replyButton = document.querySelector('.reply-button')
-    const reply = document.querySelector('.reply')
-    const hint = document.querySelector('.hint')
-    replyButton.addEventListener('click', (e) => {
-      if (reply.innerText === '') {
-        e.preventDefault()
-        hint.innerText = '內容不可空白'
-      }
-    })
-    const tweetOneButton = document.querySelector('.tweetOne-button')
-      const tweet = document.querySelector('.tweetOne')
-      const hint = document.querySelector('.hint')
-      tweetOneButton.addEventListener('click', (e) => {
-        if (tweet.innerText === '') {
-          e.preventDefault()
-          console.log(hint.innerText)
-          hint.innerText = '內容不可空白'
-        }
-      })
-  </script>
+<script>
+  const replyButton = document.querySelector('.reply-button')
+  const reply = document.querySelector('.reply')
+  const hint = document.querySelector('.hint')
+  replyButton.addEventListener('click', (e) => {
+    if (reply.innerText === '') {
+      e.preventDefault()
+      hint.innerText = '內容不可空白'
+    }
+  })
+</script>
+{{!-- <script>
+  const descriptionInput = document.getElementById('description')
+  const description = document.getElementById('description').value.trim()
+  const descriptionAlert = document.getElementById('description-alert')
+  const descriptionButton = document.getElementById('description-button')
+
+  descriptionButton.addEventListener('click', (e) => {
+    if (!description) {
+      e.preventDefault()
+      descriptionAlert.innerText = '內容不可空白'
+    }
+  })
+
+</script> --}}

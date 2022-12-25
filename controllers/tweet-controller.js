@@ -21,22 +21,15 @@ const tweetController = {
       })
     } catch (err) { next(err) }
   },
-  postTweet: async (req, res, next) => {
-    try {
-      const { description } = req.body
-      assert(description.length <= 140, '字數140內')
-      assert((description.trim() !== ''), '內容不能空白')
-      const UserId = helpers.getUser(req).id
-      const createdTweet = await Tweet.create({
-        UserId,
-        description
-      })
-      assert(createdTweet, 'Failed to create tweet!')
-      req.flash('success_messages', '成功推文!')
-      return res.redirect('back')
-    } catch (err) {
-      next(err)
-    }
+  postTweet: (req, res, next) => {
+    const userId = Number(helpers.getUser(req).id)
+    const { description } = req.body
+    if (!description) throw new Error('內容不能空白')
+    if (description.length > 140) throw new Error('字數超過140')
+
+    return Tweet.create({ UserId: userId, description })
+      .then(() => res.redirect('/'))
+      .catch(err => next(err))
   },
   addLike: (req, res, next) => {
     const TweetId = req.params.id

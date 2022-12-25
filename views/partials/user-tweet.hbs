@@ -23,7 +23,8 @@
               <input type="hidden" name="UserId" value="{{tweets.User.id}}" />
             </span>
             <span id="description-alert" class="abs" style="color: #FC5A5A;right:140px; bottom:27px"></span>
-            <button id="user-tweet description" class="tweetbtn-s abs tweetOne-button" type="submit">推文</button>
+            <button id="user-tweet description" class="tweetbtn-s abs tweetOne-button" type="submit"
+              onclick="return verify()">推文</button>
           </form>
         </div>
       </form>
@@ -31,18 +32,16 @@
   </div>
 </div>
 
-<script>
+{{!-- <script>
   const descriptionInput = document.getElementById('description')
   const description = document.getElementById('description').value.trim()
   const descriptionAlert = document.getElementById('description-alert')
+  const descriptionButton = document.getElementById('description-button')
 
-  descriptionAlert.innerHTML = '請輸入內容'
-  descriptionInput.addEventListener('click', (e) => {
-    if (description.innerText === '') {
+  descriptionButton.addEventListener('click', (e) => {
+    if (!description) {
       e.preventDefault()
       descriptionAlert.innerText = '內容不可空白'
     }
   })
-
-
-</script>
+</script> --}}
