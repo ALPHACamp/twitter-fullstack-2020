@@ -15,7 +15,7 @@
         {{!-- 留言 start--}}
         <div class="d-flex">
           <div>
-            <a href="/users/{{this.User.id}}"><img class="ac-img" src="/images/img@2x.png" alt=""></a>
+            <a href="/users/{{this.User.id}}"><img class="ac-img" src="{{this.User.avatar}}" alt=""></a>
           </div>
           <div class="tweet-flow-text fl">
             <a href="/users/{{this.User.id}}" class="text-decoration-n">
@@ -35,7 +35,7 @@
         {{!-- 留言 --}}
         <form action="/tweets/{{this.id}}/replies" method="POST" class="mt-3" method="POST">
           <div class="d-flex align-items-center">
-            <img class="ac-img fl" src="/images/avatar@2x.png" alt="">
+            <img class="ac-img fl" src="{{this.avatar}}" alt="">
             <div class="mt-3 ms-2">
               <textarea class="modal-input-tweets reply" type="description" name="comment" id="comment" cols="30"
                 rows="10" placeholder="推你的回覆" maxlength="528px" required></textarea>
