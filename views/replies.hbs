@@ -3,16 +3,16 @@
     {{>left-sidebar}}
     <div class="col-6 top">
       <div class="card-home">
-        <div class=" home-header">
+        <div class=" home-header" style="border-right:1px solid #E6ECF0;">
           <a href="javascript:history.back()"><img src="/images/basic/back.svg" alt="" class="back-icon"></a>
           推文
         </div>
-        <div class="tweetAndReply">
+        <div class="tweetAndReply" style="border-right:1px solid #E6ECF0;">
           <div class="tweets-box-sec">
             {{!-- <img src="{{tweet.avatar}}" alt="{{tweet.name}}" /> --}}
             <img src="{{#if tweet.User.avatar}} {{tweet.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
               class="user-avatar">
-            <div class="tweets-header-sec">
+            <div class="tweets-header-thrd">
               <p class="tAR-name">{{tweet.User.name}}</p>
               <p class="tAR-account">
                 @{{tweet.User.account}}
@@ -51,7 +51,7 @@
             {{this.likesCount}}
           </div>
         </div>
-        <div class="reply-box">
+        <div class="reply-box" style="border-right:1px solid #E6ECF0;">
           {{!-- reply card --}}
           {{#each replies}}
           <div class="reply-card">
@@ -134,13 +134,13 @@
               <textarea cols="65" class="post-tweet-content" type="text" style="height:180px;" name="description"
                 id="replyDescription" placeholder="推你的回覆..." oninput="replyCounts()" onclick="replyCheck()"
                 required></textarea>
-              <span id="replyEnterMessage">
+              <span id="replyMessage">
                 {{!-- 字數不可超過50字 --}}
               </span>
-              <span id="repliesChar_count">
+              <span id="repliesChar_count" style="position:absolute;right:100px;bottom:80px">
                 0/50
               </span>
-              <button type="submit" onclick="submitCheck()" class="btn-sml-thr">回覆</button>
+              <button type="submit" class="btn-sml-thr">回覆</button>
             </form>
           </div>
         </div>
@@ -150,11 +150,10 @@
 </div>
 
 {{!-- tweet Modal function --}}
-{{!-- 字跟字中間的空白可能要後端幫忙刪除? --}}
 <script>
   function replyCounts() {
     const counts = document.getElementById('replyDescription').value.trim().length
-    const repliesEnterMessage = document.getElementById('replyEnterMessage')
+    const repliesEnterMessage = document.getElementById('replyMessage')
     const chatText = document.getElementById('repliesChar_count')
     chatText.innerText = counts + '/50'
     if (counts > 50) {
@@ -169,31 +168,3 @@
     }
   }
 </script>
-
-{{!-- // debug用 還未完成
-// 前端警告視窗
-function replyCheck() {
-const replyEditModal = document.querySelector('#reply-Modal')
-const replyModalName = document.querySelector('#replyDescription')
-const replyModalNameCounts = document.querySelector('#repliesChar_count')
-
-replyEditModal.addEventListener('keyup', e => {
-const target = e.target
-const inputValue = target.value || ''
-
-if (target.matches('#replyDescription')) {
-if (inputValue.length > 50) alert('回覆不可超過50字!')
-replyModalNameCounts.innerText = inputValue.length
-}; return false;
-})
-}
-
-
-function submitCheck() {
-const replyCounts = document.getElementById('#replyDescription').value.trim().length
-if (replyCounts > 50 ) {
-alert("回覆不可超過50字!"); return false;
-} else (replyCounts < 50 && replyCounts> 0 ) {
-  alert("成功回覆!"); return true;
-  }
-  } --}}

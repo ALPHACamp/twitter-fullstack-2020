@@ -1001,8 +1001,7 @@ height: 50px;
 }
 
 .popular-name {
-/* width: calc(100vh - 765px); */
-/* white-space: pre-wrap; */
+white-space: pre-wrap;
 height: 26px;
 font-style: normal;
 font-weight: 700;
@@ -1330,4 +1329,17 @@ background-color: white;
 }
 .notiMes img{
 margin-right: 30px;
+}
+
+/* 新增修改的內容 */
+#replyMessage{
+color: #FC5A5A;
+font-size: 15px;
+border: none;
+position: absolute;
+right:90px;
+}
+.tweet-header.thrd{
+margin-left: 8px;
+position: relative;
 }
