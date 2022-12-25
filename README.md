@@ -25,11 +25,11 @@
 
 ## 畫面預覽
 
-![login](/images/tweets-login.jpg)
+![login](/public/images/tweets-login.jpg)
 
-![index](/images/tweets-index.jpg)
+![index](/public/images/tweets-index.jpg)
 
-![admin](/images/admin.jpg)
+![admin](/public/images/admin.jpg)
 
 ## 安裝流程
 
