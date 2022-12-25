@@ -9,7 +9,6 @@
         </div>
         <div class="tweetAndReply" style="border-right:1px solid #E6ECF0;">
           <div class="tweets-box-sec">
-            {{!-- <img src="{{tweet.avatar}}" alt="{{tweet.name}}" /> --}}
             <img src="{{#if tweet.User.avatar}} {{tweet.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
               class="user-avatar">
             <div class="tweets-header-thrd">
@@ -37,14 +36,12 @@
             <form action="/tweets/{{tweet.id}}/like" method="POST">
               <label for="" style="display:inline-flex;font-size:25px">
                 <input type="image" style="width:26px;" src="/images/basic/white/like.svg">
-                {{!-- style="width:14px" --}}
               </label>
             </form>
             {{else}}
             <form action="/tweets/{{tweet.id}}/unlike" method="POST">
               <label for="" style="display:inline-flex;font-size:25px;">
                 <input type="image" style="width:26px;" src="/images/basic/isliked.svg">
-                {{!-- style="width:13.4px;text-align=center;" --}}
               </label>
             </form>
             {{/ifCond}}
@@ -56,9 +53,10 @@
           {{#each replies}}
           <div class="reply-card">
             <div>
-              <img src="{{#if this.User.avatar}} {{this.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
-                class="user-avatar">
-              {{!-- <img src="{{tweet.replierAvatar}}" alt="{{tweet.replierName}}" /> --}}
+              <a class="card-title tweets-name" href="/users/{{this.User.id}}/tweets">
+                <img src="{{#if this.User.avatar}} {{this.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
+                  class="user-avatar">
+              </a>
             </div>
             <div class="tweets-box-main">
               <div class="tweets-header">
@@ -66,8 +64,10 @@
                 <span class="tweets-account">
                   @ {{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</span>
                 <p class="tweets-account">回覆
-                  <span style="color: #FF6600;">@ {{../tweet.User.account}}
-                  </span>
+                  <a class="card-title tweets-name" href="/users/{{../tweet.User.id}}/tweets">
+                    <span style="color: #FF6600;">@ {{../tweet.User.account}}
+                    </span>
+                  </a>
                 </p>
               </div>
               <div class="tweets-content">

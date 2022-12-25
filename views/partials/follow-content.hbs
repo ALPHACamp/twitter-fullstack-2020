@@ -16,8 +16,10 @@ border-right:1px solid #E6ECF0;">
     {{#each followers}}
     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="followers-tab">
       <div class="card-body tweets-header-sec">
-        <img src="{{#if this.Followers.avatar}} {{this.Followers.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
-          class="user-avatar">
+        <a class="card-title tweets-name" href="/users/{{this.Followers.id}}/tweets">
+          <img src="{{#if this.Followers.avatar}} {{this.Followers.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
+            class="user-avatar">
+        </a>
         <span class="tAR-name">{{this.Followers.name}}</span>
         <div class="btn-position">
           {{#if this.Followers.isFollowed}}
@@ -42,8 +44,11 @@ border-right:1px solid #E6ECF0;">
     {{#each followings}}
     <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="followings-tab">
       <div class="card-body tweets-header-sec">
-        <img src="{{#if this.Followings.avatar}} {{this.Followings.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
-          class="user-avatar">
+        <a class="card-title tweets-name" href="/users/{{this.Followings.id}}/tweets">
+          <img
+            src="{{#if this.Followings.avatar}} {{this.Followings.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
+            class="user-avatar">
+        </a>
         <span class="tAR-name">{{this.Followings.name}}</span>
         <div class="btn-position">
           {{#if this.Followings.isFollowed}}

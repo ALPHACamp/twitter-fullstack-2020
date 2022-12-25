@@ -626,16 +626,10 @@ line-height: 22px;
 font-weight: 400px;
 color:#6C757D;
 }
-
 .follow-ship p span {
 color: #171725;
 }
 
-/* 移除超連結樣式 */
-/* a, a:hover, a:visited, a:link, a:active,a:focus{
-color:inherit;
-text-decoration: none;
-} */
 /* 個人主頁tab */
 #personal-tab{
 border-left:1px solid #E6ECF0;
@@ -851,6 +845,8 @@ margin-left: 8px;
 .tweets-name {
 font-size: 16px;
 font-weight: bold;
+color:inherit;
+text-decoration: none;
 }
 
 .tweets-content-thr {
@@ -1132,8 +1128,7 @@ border:none;
 color:#C4C4C4;
 }
 #enterMessage{
-margin-left: 380px;
-margin: 20px 90px;
+margin: 60px 89px;
 color:#FC5A5A;
 font-size:15px;
 line-height: 15px;
@@ -1342,4 +1337,13 @@ right:90px;
 .tweet-header.thrd{
 margin-left: 8px;
 position: relative;
+}
+#tweetschar_count_modal{
+font-weight: 500;
+font-size: 15px;
+border:none;
+color:#C4C4C4;
+position: absolute;
+right: 90px;
+bottom: 25px;
 }

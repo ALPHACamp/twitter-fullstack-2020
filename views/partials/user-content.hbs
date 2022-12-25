@@ -60,8 +60,10 @@
           <span class="card-title tweets-name">{{../user.name}}</span>
           <span class="tweets-account"> @{{../user.account}} ．{{relativeTimeFromNow this.createdAt}}</span>
           <p class="tweets-account">回覆
-            <span style="color: #FF6600;">@ {{this.Tweet.User.name}}
-            </span>
+            <a class="card-title tweets-name" href="/users/{{this.Tweet.User.id}}/tweets">
+              <span style="color: #FF6600;">@ {{this.Tweet.User.name}}
+              </span>
+            </a>
           </p>
         </div>
         <div class="tweets-content">
@@ -77,8 +79,10 @@
   {{#each likes}}
   <div class="tab-tweets">
     <div class="card-body tweets-box">
-      <img src="{{#if this.Tweet.User.avatar}} {{this.Tweet.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
-        alt="" class="user-avatar">
+      <a class="card-title tweets-name" href="/users/{{this.Tweet.User.id}}/tweets">
+        <img src="{{#if this.Tweet.User.avatar}} {{this.Tweet.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
+          alt="" class="user-avatar">
+      </a>
       <div class="tweets-box-main">
         <div class="tweets-header">
           <span class="card-title tweets-name">{{this.Tweet.User.name}}</span>
@@ -86,7 +90,7 @@
             this.Tweet.createdAt}}</span>
         </div>
         <div class="tweets-content">
-          <a href="/tweet" id="toReply" class="card-text">
+          <a href="/tweets/{{this.Tweet.User.id}}/replies" id="toReply" class="card-text">
             {{this.Tweet.description}}
           </a>
         </div>

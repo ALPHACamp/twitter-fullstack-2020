@@ -55,9 +55,9 @@
         <img src="{{#if user.avatar}} {{user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}" class="user-avatar">
         <div class="textarea-body">
           <form action="/tweets" method="POST">
-            <textarea cols="65" style="resize:none;" type="text" name="description" id="description"
+            <textarea cols="65" style="resize:none;width:500px;" type="text" name="description" id="description"
               placeholder="有什麼新鮮事？" oninput="tweetsCounts()" required></textarea>
-            <span id="tweetschar_count" style="margin-left: 400px;">0/140</span>
+            <span id="tweetschar_count_modal">0/140</span>
             <span id="enterMessage">
               {{!-- 字數不可超過140字 --}}
             </span>
@@ -76,7 +76,7 @@
   function tweetsCounts() {
     const counts = document.getElementById('description').value.trim().length
     const tweetEnterMessage = document.getElementById('enterMessage')
-    const chatText = document.getElementById('tweetschar_count')
+    const chatText = document.getElementById('tweetschar_count_modal')
     chatText.innerText = counts + '/140'
 
     if (counts > 140) {
