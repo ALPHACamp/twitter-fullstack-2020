@@ -4,35 +4,35 @@
     <div class="row">
       {{> user-nav}}
       {{> followship-tabs route='following'}}
-{{!-- follower cards --}}
-{{#each followings}}
-<div>
-  <div style="border-bottom:2px solid #E6ECF0; padding:16px 23px;">
-    <div class="d-flex justify-content-between align-items-center">
-      <div class="d-flex">
-        <img class="follower-avatar" src="{{this.avatar}}" width="50px" height="50px" onload="this.style.opacity=1;">
-        <div class="follower-name p-2" style="font-weight: 700;">{{this.name}}</div>
+      {{!-- follower cards --}}
+      {{#each followings}}
+      <div>
+        <div style="border-bottom:2px solid #E6ECF0; padding:16px 23px;">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex">
+              <img class="follower-avatar" src="{{this.avatar}}" width="50px" height="50px"
+                onload="this.style.opacity=1;">
+              <div class="follower-name p-2" style="font-weight: 700;">{{this.name}}</div>
+            </div>
+            {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+              <button type="submit" class="unFollow-button"
+                style=" width: 96px;height: 40px;background-color: #FF6600; border:none; border-radius: 50px; font-family: 'Noto Sans TC';font-style: normal; font-weight: 400;font-size: 16px;line-height: 24px;color: #FFFFFF;">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/followships" method="POST" style="display: contents;">
+              <input type="hidden" name="id" value="{{this.id}}" />
+              <button type="submit" class="btn follow-button"
+                style="width: 64px;height: 40px;background: #FFFFFF;border: 1px solid #FF6600;border-radius: 50px;font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 16px;line-height: 24px;color: #FF6600;">跟隨</button>
+            </form>
+            {{/if}}
+          </div>
+          <div style=" margin-left:60px" style="font-weight:400px; font-size:16px">{{this.introduction}}</div>
+        </div>
+        {{/each}}
       </div>
-      {{#if this.isFollowed}}
-      <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-        <button type="submit" class="unFollow-button"
-          style=" width: 96px;height: 40px;background-color: #FF6600; border:none; border-radius: 50px; font-family: 'Noto Sans TC';font-style: normal; font-weight: 400;font-size: 16px;line-height: 24px;color: #FFFFFF;">正在跟隨</button>
-      </form>
-      {{else}}
-      <form action="/followships" method="POST" style="display: contents;">
-        <input type="hidden" name="id" value="{{this.id}}" />
-        <button type="submit" class="btn follow-button"
-          style="width: 64px;height: 40px;background: #FFFFFF;border: 1px solid #FF6600;border-radius: 50px;font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 16px;line-height: 24px;color: #FF6600;">跟隨</button>
-      </form>
-      {{/if}}
     </div>
-    <div style=" margin-left:60px" style="font-weight:400px; font-size:16px">{{this.introduction}}</div>
   </div>
-</div>
-  {{/each}}
-</div>
-</div>
-</div>
 </div>
 {{> user-tweet}}
 {{> rightbar}}
