@@ -1,4 +1,3 @@
-
 const { assert } = require('chai')
 const db = require('../models')
 const Followship = db.Followship

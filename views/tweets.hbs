@@ -17,15 +17,15 @@
       </div>
     </form>
   </div>
-  <div class="bottom-line-16 m-0 p-0"></div>
+  <div class="bottom-line-10 m-0 p-0"></div>
 
-  {{!-- 推文 start--}}
+
   {{#each tweets}}
   <div>
     <div class="fl">
       <img class="ac-img" src="{{this.User.avatar}}" alt="" style="border-radius: 50%">
     </div>
-    <div class="tweet-flow-text fl" onclick="location.href='/tweets/{{this.id}}/replies';">
+    <div class="tweet-flow-text fl">
       <div class="tweet-flow-text fl">
         <a href="/users/{{this.User.id}}/tweets" class="text-decoration-n">
           <span class="twitterbox-name">{{this.User.name}}</span>
@@ -36,10 +36,10 @@
             {{this.description}}
           </p>
         </a>
-
-        <div>
-          <span class="twitterbox-time mx-40"><img class="tweet-flow-img" src="/images/reply@2x.png" alt=""
-              data-bs-target="#staticBackdrop{{this.id}}" data-bs-toggle="modal">{{this.Replies.length}}</span>
+          <span class="twitterbox-time mx-40">
+            <img class="tweet-flow-img" src="/images/reply@2x.png" alt=""
+              data-bs-target="#staticBackdrop{{this.id}}" data-bs-toggle="modal">{{this.Replies.length}}
+          </span>
           {{!-- isLiked --}}
           {{#if this.isLiked}}
           <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
@@ -60,16 +60,11 @@
             </span>
           </form>
           {{/if}}
-
-        </div>
         <div class="bottom-line-f"></div>
       </div>
-
     </div>
-    {{!-- 推文 end--}}
   </div>
   {{/each}}
-  <!-- 推文 end -->
 
   {{> user-tweet}}
   {{> reply-modal}}

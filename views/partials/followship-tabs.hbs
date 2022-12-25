@@ -1,11 +1,12 @@
+{{> user-nav}}
 {{!-- 追隨頁面 --}}
 <div class="fl">
-  <ul class="nav align-items-center d-flex" style="width:639px; height:52px; border:2px solid #E6ECF0">
+  <ul class="nav align-items-center d-flex" style="border-top:2px solid #E6ECF0 ;border-bottom:2px solid #E6ECF0">
     <li class="nav-item" style="margin-left:42px">
-      <a class="nav-link {{#ifCond route 'follower' }}click-on{{/ifCond}}" href="/users/{{user.id}}/followers" >追隨者</a>
+      <a class="nav-link {{#ifCond route 'follower' }}active{{/ifCond}}" href="/users/{{user.id}}/followers" >追隨者</a>
     </li>
     <li class="nav-item" style="margin-left:70px">
-      <a class="nav-link {{#ifCond route 'following' }}click-on{{/ifCond}}" href="/users/{{user.id}}/followings">正在跟隨</a>
+      <a class="nav-link {{#ifCond route 'following' }}active{{/ifCond}}" href="/users/{{user.id}}/followings">正在跟隨</a>
     </li>
   </ul>
 </div>
