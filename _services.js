@@ -67,7 +67,7 @@ module.exports = {
     const user = await User.findByPk(userId, {
       include: [
         Tweet,
-        { model: User, as: 'Followings', order: [[Followship, 'createdAt', 'DESC']]},
+        { model: User, as: 'Followings', order: [[Followship, 'createdAt', 'DESC']] },
         { model: User, as: 'Followers', order: [[Followship, 'createdAt', 'DESC']] }
       ],
       nest: true

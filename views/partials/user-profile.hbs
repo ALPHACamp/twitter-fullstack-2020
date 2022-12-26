@@ -17,10 +17,26 @@
 </div>
 {{!-- 編輯個人資料 --}}
 <div class="wid-100">
+  {{#ifCond viewUser.id user.id}}
   <button class="tweetbtn-ol m-3 float-end">
     <a href="" class="text-decoration-n font-color-or" data-bs-toggle="modal"
       data-bs-target="#staticBackdrop-self">編輯個人資料</a>
   </button>
+  {{else}}
+  {{#if this.isfollowed}}
+  <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+    <button class="tweetbtn-ol m-3 float-end">
+      正在跟隨</a>
+    </button>
+  </form>
+  {{else}}
+  <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+    <button class="tweetbtn-ol m-3 float-end">
+      跟隨</a>
+    </button>
+  </form>
+  {{/if}}
+  {{/ifCond}}
 </div>
 {{!-- 個人內文 追隨 推文回復喜歡TAB--}}
 <div class="col fl mt-2 wid-80 ms-3">

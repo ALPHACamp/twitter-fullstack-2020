@@ -53,7 +53,7 @@ const userController = {
             email,
             password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
             avatar: `https://loremflickr.com/250/250/avatar/?lock=${Math.random() * 100}`,
-            background: `https://loremflickr.com/250/250/background/?lock=${Math.random() * 100}`,
+            background: `https://loremflickr.com/250/250/background/?lock=${Math.random() * 100}`
           })
             .then(() => {
               req.flash('success_messages', '成功註冊帳號！')
@@ -87,17 +87,26 @@ const userController = {
       const data = await services.getTweets(req)
       const topFollowings = await services.getTopUsers(req)
       const tweetslength = data.length
+      const followingList = helpers.getUser(req) && helpers.getUser(req).Followings.map(following => following.id)
+      const followings = user.Followings.map(following => {
+        return {
+          ...following.toJSON(),
+          isFollowed: followingList.includes(following.id)
+        }
+      })
+      console.log(followings)
       res.render('tweet', {
         viewUser,
         tweets: data,
         user: user.toJSON(),
         topFollowings,
-        tweetslength
+        tweetslength,
+        followings
       })
     } catch (err) { next(err) }
   },
-  getFollowings: async (req, res, next) =>{ 
-    const viewUser = helpers.getUser(req) 
+  getFollowings: async (req, res, next) => {
+    const viewUser = helpers.getUser(req)
     const userId = req.params.id
     const followingList = helpers.getUser(req) && helpers.getUser(req).Followings.map(following => following.id)
     try {
@@ -110,7 +119,7 @@ const userController = {
         }
       })
       const topFollowings = await services.getTopUsers(req)
-       res.render('following', {
+      res.render('following', {
         viewUser,
         user: user.toJSON(),
         followings,
@@ -119,7 +128,7 @@ const userController = {
     } catch (err) { next(err) }
   },
   getFollowers: async (req, res, next) => {
-    const viewUser = helpers.getUser(req) 
+    const viewUser = helpers.getUser(req)
     const userId = req.params.id
     const followingList = helpers.getUser(req) && helpers.getUser(req).Followings.map(following => following.id)
     try {
@@ -227,7 +236,7 @@ const userController = {
   },
   getReplies: async (req, res, next) => {
     // 個人頁面的回覆抓取
-    const viewUser = helpers.getUser(req) 
+    const viewUser = helpers.getUser(req)
     const UserId = req.params.id || ''
     try {
       const user = await services.getUser(req)
@@ -335,8 +344,7 @@ const userController = {
         tweets,
         topFollowings
       })
-    }
-    catch (err) { next(err) }
+    } catch (err) { next(err) }
   }
 
 }
