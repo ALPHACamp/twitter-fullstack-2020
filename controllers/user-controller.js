@@ -105,14 +105,14 @@ const userController = {
       if (!user) throw new Error('該用戶不存在')
       const followings = user.Followings.map(following => {
         return {
-          ...following.toJSON(),
+          ...following,
           isFollowed: followingList.includes(following.id)
         }
       })
       const topFollowings = await services.getTopUsers(req)
        res.render('following', {
         viewUser,
-        user: user,
+        user,
         followings,
         topFollowings
       })
@@ -127,14 +127,14 @@ const userController = {
       if (!user) throw new Error('該用戶不存在')
       const followings = user.Followers.map(following => {
         return {
-          ...following.toJSON(),
+          ...following,
           isFollowed: followingList.includes(following.id)
         }
       })
       const topFollowings = await services.getTopUsers(req)
       return res.render('follower', {
         viewUser,
-        user: user,
+        user,
         followings,
         topFollowings
       })
@@ -326,7 +326,6 @@ const userController = {
         ...t.toJSON(),
         description: t.description.substring(0, 140),
         User: t.User.dataValues,
-        user,
         isLiked: t.Likes.some(f => f.UserId === viewUser.id)
       }))
       const user = {
