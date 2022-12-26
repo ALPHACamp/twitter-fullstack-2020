@@ -1,0 +1,72 @@
+{{!-- tab切換 --}}
+<ul class="nav nav-tabs" style="border-left:1px solid #E6ECF0;
+border-right:1px solid #E6ECF0;">
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'follower'}}active{{/ifCond}}" href="/users/{{user.id}}/followers">追蹤者</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'following'}}active{{/ifCond}}" href="/users/{{user.id}}/followings">正在追蹤</a>
+  </li>
+</ul>
+
+<div class="following-main">
+  {{!-- 追蹤者 --}}
+  <div class="tab-content" id="nav-tabContent">
+    {{#ifCond route "follower"}}
+    {{#each followers}}
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="followers-tab">
+      <div class="card-body tweets-header-sec">
+        <a class="card-title tweets-name" href="/users/{{this.Followers.id}}/tweets">
+          <img src="{{#if this.Followers.avatar}} {{this.Followers.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
+            class="user-avatar">
+        </a>
+        <span class="tAR-name">{{this.Followers.name}}</span>
+        <div class="btn-position">
+          {{#if this.Followers.isFollowed}}
+          <form action="/followships/{{this.Followers.id}}?_method=DELETE" method="POST">
+            <button type="submit" name="id" value="{{this.Followers.id}}" class="following-btn">正在跟隨</button>
+          </form>
+          {{else}}
+          <form action="/followships" method="POST">
+            <button type="submit" name="id" value="{{this.Followers.id}}" class="follow-btn">跟隨</button>
+          </form>
+          {{/if}}
+        </div>
+        <p class="tweets-content">
+          {{this.Followers.introduction}}
+        </p>
+      </div>
+    </div>
+    {{/each}}
+    {{/ifCond}}
+    {{!-- 正在追蹤 --}}
+    {{#ifCond route "following"}}
+    {{#each followings}}
+    <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="followings-tab">
+      <div class="card-body tweets-header-sec">
+        <a class="card-title tweets-name" href="/users/{{this.Followings.id}}/tweets">
+          <img
+            src="{{#if this.Followings.avatar}} {{this.Followings.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
+            class="user-avatar">
+        </a>
+        <span class="tAR-name">{{this.Followings.name}}</span>
+        <div class="btn-position">
+          {{#if this.Followings.isFollowed}}
+          <form action="/followships/{{this.Followings.id}}?_method=DELETE" method="POST">
+            <button type="submit" name="id" value="{{this.Followings.id}}" class="following-btn">正在跟隨</button>
+          </form>
+          {{else}}
+          <form action="/followships" method="POST">
+            <button type="submit" name="id" value="{{this.Followings.id}}" class="follow-btn">跟隨</button>
+          </form>
+          {{/if}}
+        </div>
+        <p class="tweets-content">
+          {{this.Followings.introduction}}
+        </p>
+      </div>
+    </div>
+    {{/each}}
+    {{/ifCond}}
+  </div>
+</div>

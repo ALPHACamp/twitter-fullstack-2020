@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="row">
+    {{>left-sidebar route="homepage"}}
+    {{!-- 首頁/tweets --}}
+    <div class="col-6 top">
+      <div class="home" style="overflow-y:auto;overflow-x:hidden;  max-height: calc(100vh - 24px);">
+        <div class="card-home">
+          <div class=" home-header">
+            首頁
+          </div>
+          <div class="main-top">
+            <img src="{{#if user.avatar}} {{user.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
+              class="user-avatar">
+            <div class="">
+              <form action="/tweets" method="POST" class="form">
+                <textarea style="resize:none;width:400px;" type="text" name="description" id="description"
+                  placeholder="有什麼新鮮事？" oninput="checkLength(this)" required></textarea>
+                <div class="text-end">
+                  <span id="limit-count" style="color:#C4C4C4;">
+                    0/140
+                  </span>
+                  <button type="submit" class="btn-sml">推文</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        {{#each Tweets}}
+        <div class="main-bottom ">
+          <div class="card-body tweets-box">
+            <a class="card-title tweets-name" href="/users/{{this.User.id}}/tweets"> {{#if this.User.avatar}}
+              <img src="{{this.User.avatar}}" alt="avatar" class="user-avatar">
+              {{else}}
+              <img src="/images/icon/User Photo.png" alt="avatar" class="user-avatar">
+              {{/if}}</a>
+            <div class="tweets-box-main">
+              <div class="tweets-header" style="white-space:pre-line">
+                {{this.User.name}}
+                <span class="tweets-account"> @{{this.User.account}} ．{{relativeTimeFromNow this.createdAt}}</span>
+              </div>
+              <div class="tweets-content">
+                <a href="/tweets/{{this.id}}/replies" id="toReply" class="card-text">
+                  <span
+                    style="white-space: pre-line;overflow:hidden;word-break:keep-all;margin-right:10px;">{{this.description}}</span>
+                </a>
+              </div>
+              <div class="tweets-icons">
+                <a><img src="/images/basic/white/reply.svg">{{this.repliesCount}}</a>
+                {{#ifCond this.isLiked false}}
+                <form action="/tweets/{{this.id}}/like" method="POST">
+                  <label for="" style="display:inline-flex;">
+                    <input type="image" style="width:14px" src="/images/basic/white/like.svg">
+                  </label>
+                </form>
+                {{else}}
+                <form action="/tweets/{{this.id}}/unlike" method="POST">
+                  <label for="" style="display:inline-flex;">
+                    <input type="image" style="width:13.4px;text-align=center;" src="/images/basic/isliked.svg">
+                  </label>
+                </form>
+                {{/ifCond}}
+                {{this.likesCount}}
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  {{>right-sidebar}}
+</div>
+
+
+<script>
+  function checkLength(which) {
+    const maxChars = 140
+    const inputValue = which.value.trim().length
+    const limitWord = document.getElementById("limit-word")
+    const limitCount = document.getElementById("limit-count")
+    const btn = document.querySelector('.btn-sml')
+    const form = document.querySelector('.form')
+
+    limitCount.innerText = inputValue + "/140"
+
+    btn.addEventListener('click', function onSubmit(event) {
+      form.classList.add('was-validated')
+    })
+    if (inputValue > maxChars) {
+      limitCount.innerHTML = '<span id="limit-word" style="color:red;">字數不可超過140字</span>'
+      which.value = which.value.substring(0, maxChars);
+    }
+      if (inputValue === 0) {
+      limitCount.innerHTML = '<span id="limit-word" style="color:red;">內容不可空白</span>'
+    }
+  }
+</script>

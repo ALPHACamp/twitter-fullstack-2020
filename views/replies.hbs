@@ -1,0 +1,171 @@
+<div class="container">
+  <div class="row">
+    {{>left-sidebar}}
+    <div class="col-6 top">
+      <div class="card-home">
+        <div class=" home-header" style="border-right:1px solid #E6ECF0;">
+          <a href="javascript:history.back()"><img src="/images/basic/back.svg" alt="" class="back-icon"></a>
+          推文
+        </div>
+        <div class="tweetAndReply" style="border-right:1px solid #E6ECF0;">
+          <div class="tweets-box-sec">
+            <img src="{{#if tweet.User.avatar}} {{tweet.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
+              class="user-avatar">
+            <div class="tweets-header-thrd">
+              <p class="tAR-name">{{tweet.User.name}}</p>
+              <p class="tAR-account">
+                @{{tweet.User.account}}
+              </p>
+            </div>
+          </div>
+          <div class="tweets-content-sec">
+            {{tweet.description}}
+            <p class="tweets-account">
+              {{relativeTimeOtherType tweet.createdAt}}
+            </p>
+          </div>
+          <div class="tweets-mid">
+            <p><span style="font-family: Montserrat; font-weight:bold;">{{tweet.repliesCount}}</span> 回覆</p>
+            <p><span style="font-family: Montserrat; font-weight:bold;">{{tweet.likesCount}}</span> 喜歡次數</p>
+          </div>
+          <div class="tweets-icons-lar">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#reply-Modal" id="reply-button"><img
+                src="/images/basic/white/reply.svg"></a>
+            {{!--like開關 --}}
+            {{#ifCond tweet.isliked 0}}
+            <form action="/tweets/{{tweet.id}}/like" method="POST">
+              <label for="" style="display:inline-flex;font-size:25px">
+                <input type="image" style="width:26px;" src="/images/basic/white/like.svg">
+              </label>
+            </form>
+            {{else}}
+            <form action="/tweets/{{tweet.id}}/unlike" method="POST">
+              <label for="" style="display:inline-flex;font-size:25px;">
+                <input type="image" style="width:26px;" src="/images/basic/isliked.svg">
+              </label>
+            </form>
+            {{/ifCond}}
+            {{this.likesCount}}
+          </div>
+        </div>
+        <div class="reply-box" style="border-right:1px solid #E6ECF0;">
+          {{!-- reply card --}}
+          {{#each replies}}
+          <div class="reply-card">
+            <div>
+              <a class="card-title tweets-name" href="/users/{{this.User.id}}/tweets">
+                <img src="{{#if this.User.avatar}} {{this.User.avatar}} {{else}}/images/icon/User Photo.png{{/if}}"
+                  class="user-avatar">
+              </a>
+            </div>
+            <div class="tweets-box-main">
+              <div class="tweets-header">
+                <span class="card-title tweets-name">{{this.User.name}}</span>
+                <span class="tweets-account">
+                  @ {{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</span>
+                <p class="tweets-account">回覆
+                  <a class="card-title tweets-name" href="/users/{{../tweet.User.id}}/tweets">
+                    <span style="color: #FF6600;">@ {{../tweet.User.account}}
+                    </span>
+                  </a>
+                </p>
+              </div>
+              <div class="tweets-content">
+                <p>
+                  {{this.comment}}
+                </p>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    {{> right-sidebar}}
+  </div>
+</div>
+
+<div class="modal fade" id="reply-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="height: 500px;">
+      <div class="modal-card-title">
+        <label for="description" class="form-label">
+        </label>
+        <a type="button" class="close-btn" aria-label="Close" data-bs-dismiss="modal" aria-label="Close"><img
+            src="/images/basic/close.svg" alt=""></a>
+      </div>
+      <div class="modal-body" style="padding: 15px 5px;">
+        {{!-- tweet reply--}}
+        <div class="row g-0">
+          <div class="col-2" style="width: 50px;height: 50px;margin-left: 10px;">
+            {{#if tweet.User.avatar}}
+            <img src="{{tweet.User.avatar}}" class="user-avatar" alt="User Photo">
+            {{else}}
+            <img src="/images/icon/User Photo.png" class="user-avatar" alt="User Photo">
+            {{/if}}
+            <hr id="v-line">
+          </div>
+          <div class="col-0" style="width: 536px;max-height:135px;margin:10px;position:relative;">
+            <span class="fw-bold fs-6">{{tweet.User.name}} </span>
+            <span class="tweets-account">@{{tweet.User.account}}</span>
+            <span>{{relativeTimeFromNow tweet.updatedAt}}
+            </span>
+            <br />
+            <p class="tweets-content">
+              {{tweet.description}}
+            </p>
+            <span class="tweets-account">回覆給
+              <span style="color:#FF6600"> @{{tweet.User.account}}
+              </span>
+            </span>
+          </div>
+          {{!-- user reply--}}
+          <div class="form-box">
+            <div class="" style="width: 50px;height: 50px;margin-left: 10px;">
+              {{#if user.avatar}}
+              <img src="{{user.avatar}}" class="user-avatar">
+              {{else}}
+              <img src="/images/icon/User Photo.png" class="user-avatar">
+              {{/if}}
+            </div>
+            <form action="/tweets/{{tweet.id}}/replies" method="POST">
+              <label for="description" class="form-label"></label>
+              <textarea cols="65" class="post-tweet-content" type="text" style="height:180px;" name="description"
+                id="replyDescription" placeholder="推你的回覆..." oninput="replyCounts()" onclick="replyCheck()"
+                required></textarea>
+              <div style="position:relative;">
+                <span id="replyMessage">
+                  {{!-- 字數不可超過50字 --}}
+                </span>
+                <span id="repliesChar_count" style="position:absolute;right:100px;bottom:10px">
+                  0/50
+                </span>
+              </div>
+              <button type="submit" class="btn-sml-thr">回覆</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- tweet Modal function --}}
+<script>
+  function replyCounts() {
+    const counts = document.getElementById('replyDescription').value.trim().length
+    const repliesEnterMessage = document.getElementById('replyMessage')
+    const chatText = document.getElementById('repliesChar_count')
+    chatText.innerText = counts + '/50'
+    if (counts > 50) {
+      repliesEnterMessage.innerText = '字數超出上限！'
+      return
+    }
+    if (counts > 0 && counts <= 50) {
+      repliesEnterMessage.innerText = ''
+    }
+    if (counts === 0) {
+      repliesEnterMessage.innerText = '內容不可空白'
+    }
+  }
+</script>

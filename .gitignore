@@ -85,3 +85,10 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+package.json
+package-lock.json
+
+test.txt
+
+public/fontsource
