@@ -12,7 +12,7 @@
   {{#if user.avatar}}
   <img class="selfavatar-img abs " style="border-radius: 50%;" src="{{user.avatar}}" alt="">
   {{else}}
-  <img class="selfavatar-img abs " style="border-radius: 50%;" src="https://fakeimg.pl/140x141/" alt="">
+  <img class="selfavatar-img abs " style="border-radius: 50%;" src="https://i.imgur.com/X4wfKrq.png" alt="">
   {{/if}}
 </div>
 {{!-- 編輯個人資料 --}}
@@ -25,7 +25,20 @@
 </div>
 {{else}}
 <div class="wid-100">
-  <div class="elsetweet">
+  <div class="me-3">
+    {{#if user.isFollowed}}
+    <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: contents;">
+      <button type="submit" class="unFollow-button tweetbtn-ol m-3 float-end"
+        style=" width: 96px;height: 40px;background-color: #FF6600; border:none; border-radius: 50px; font-family: 'Noto Sans TC';font-style: normal; font-weight: 400;font-size: 16px;line-height: 24px;color: #FFFFFF;">正在跟隨</button>
+    </form>
+    {{else}}
+    <form action="/followships" method="POST" style="display: contents;">
+      <input type="hidden" name="id" value="{{user.id}}" />
+      <button type="submit" class="btn follow-button tweetbtn-ol m-3 float-end"
+        style="width: 64px;height: 40px;background: #FFFFFF;border: 1px solid #FF6600;border-radius: 50px;font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 16px;line-height: 24px;color: #FF6600;">跟隨</button>
+    </form>
+    {{/if}}
+    </div>
   </div>
 </div>
 {{/ifCond}}

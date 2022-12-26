@@ -90,7 +90,7 @@ const userController = {
       res.render('tweet', {
         viewUser,
         tweets: data,
-        user: user.toJSON(),
+        user: user,
         topFollowings,
         tweetslength
       })
@@ -243,7 +243,7 @@ const userController = {
       const repliesLength = replies.length
       res.render('reply', {
         viewUser,
-        user: user.toJSON(),
+        user,
         replies,
         topFollowings,
         repliesLength
@@ -331,7 +331,7 @@ const userController = {
       const topFollowings = await services.getTopUsers(req)
       res.render('like', {
         viewUser,
-        user: user.toJSON(),
+        user,
         tweets,
         topFollowings
       })
