@@ -22,7 +22,8 @@ const adminController = {
     Tweet.findAll({
       order: [['createdAt', 'DESC']],
       include: [User, Like, Reply],
-      nest: true
+      nest: true,
+      raw: true
     })
       .then(tweets => {
         const data = tweets.map(r => ({
