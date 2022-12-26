@@ -22,17 +22,14 @@ const adminController = {
     Tweet.findAll({
       order: [['createdAt', 'DESC']],
       include: [User, Like, Reply],
-      raw: true,
       nest: true
     })
       .then(tweets => {
-        tweets.map(t => ({
-          ...t,
-          description: t.description.substring(0, 50)
+        const data = tweets.map(r => ({
+          ...r,
+          description: r.description.substring(0, 50)
         }))
-        return res.render('admin/tweets', {
-          tweets
-        })
+        res.render('admin/tweets', { tweets: data })
       })
       .catch(err => next(err))
   },
