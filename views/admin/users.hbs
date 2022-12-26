@@ -1,0 +1,81 @@
+
+
+<div class="left d-flex align-items-start flex-column">
+	<a href="javascript:history.back()"><img class="mb-3"width="50px" height="50px"src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" alt="" /></a>
+	<div class="">
+		<a href="/admin/tweets" class="icon-home  leftbar-text">
+			<i class="fas fa-home " style="font-size: 1.2em;"></i>
+			<span><strong>推文清單</strong></span>
+		</a>
+	</div>
+	<div class="mt-4 mb-1">
+		<a href="/admin/users" class="icon-user leftbar-text">
+			<i class="far fa-user" style="font-size: 1.2em;"></i>
+			<span><strong>使用者列表</strong></span>
+		</a>
+	</div>
+	<div class="mt-auto mb-1">
+		<a href="/logout" class="icon-logout leftbar-text">
+			<i class="fas fa-sign-out-alt" style="color: #000000; font-size: 1.2em;"></i>
+			<span><strong>登出</strong></span>
+		</a>
+	</div>
+</div>
+
+<div class="admin-right">
+	<div class="row flex-nowrap justify-content-between mr-3">
+		<div class="mt-3">
+
+			<div class="card-header" style="font-size: 18px; font-weight: 700; background-color:white; border: 0">
+				使用者列表
+			</div>
+
+			<div class="d-flex flex-row">
+				<div class="row">
+					{{#each users}}
+					<div class="d-flex col-3">
+						<div>
+							<div class="card my-3">
+								<div class="position-relative">
+									<img
+										src="{{#if this.background}}{{this.background}}{{else}}https://fakeimg.pl/245x140/ff6347/121212{{/if}}"
+										class="admin-user-background m-0" alt="background">
+									<img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://fakeimg.pl/70/{{/if}}"
+										class="admin-user-avatar mt-4" alt="face">
+								</div>
+								<div class="card-body bg-light" style="padding-top: 80%;">
+									<h5 class="card-title admin-tweet-name">{{this.name}}</h5>
+									<h5 class="card-title admin-tweet-account">@{{this.account}}</h5>
+									<div class="text-center mt-3">
+
+										<span class="twitterbox-time" style="color:#171725;">
+											{{#if this.tweetCount}}
+											<i class="fa-solid fa-pencil"></i>
+												{{this.tweetCount}}
+											{{else}}
+											<i class="fa-solid fa-pencil"></i>0
+											{{/if}}
+										</span>
+
+										<span class="twitterbox-time" style="color:#171725;">
+											{{#if this.likeCount}}
+											<i class="far fa-heart"></i>{{this.likeCount}}
+											{{else}}
+											<i class="far fa-heart"></i>0
+											{{/if}}
+										</span>
+									</div>
+									<div class="admin-tweet-flow mt-2">
+										<span><strong style="color:#171725;">{{this.followingCount}}個</strong>跟隨中</span>
+										<span><strong style="color:#171725;">{{this.followerCount}}位</strong>跟隨者</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					{{/each}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

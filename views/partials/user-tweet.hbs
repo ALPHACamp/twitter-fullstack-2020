@@ -1,0 +1,54 @@
+<!-- 彈跳推文 -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class=" fl">
+          <button type="button font-color-or" class="btn-close btn-close-re" data-bs-dismiss="modal" aria-label="Close">
+          </button>
+        </div>
+      </div>
+      <form action="/tweets/{{tweets.User.id}}" method="POST">
+        <div class="modal-body">
+          <form action="/tweets" method="POST" id="post-tweeet">
+            {{#if viewUser.avatar}}
+            <img class="avatar-img fl" src="{{viewUser.avatar}}" alt="" style="border-radius: 50%;">
+            {{else}}
+            <img class="avatar-img fl" src="https://fakeimg.pl/50x50/" alt="" style="border-radius: 50%;">
+            {{/if}}
+            <span>
+              <textarea class="modal-input-tweets mt-3 mx-2 tweetOne" type="description" name="description"
+                id="description" cols="30" rows="10" placeholder="有什麼新鮮事?" maxlength="140" required></textarea>
+              <input type="hidden" name="UserId" value="{{tweets.User.id}}" />
+            </span>
+            <span id="description-alert" class="abs" style="color: #FC5A5A;right:140px; bottom:27px"></span>
+            <button id="user-tweet" class="tweetbtn-s abs tweetOne-button" type="submit"
+              onclick="return verify()">推文</button>
+          </form>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{{!--
+<script>
+  const descriptionInput = document.getElementById('description')
+  const description = document.getElementById('description').value.trim()
+  const descriptionAlertMedal = document.getElementById('description-alert-medal')
+
+  descriptionInput.addEventListener('input', AInput)
+
+  function AInput(event) {
+    const desCurrent = event.target.value
+    console.log(desCurrent)
+    if (!desCurrent.length) {
+      descriptionAlertMedal.innerHTML = "內容不可空白"
+    } else if (desCurrent.length > 0 && desCurrent.length < 160) {
+      descriptionAlertMedal.innerHTML = `${desCurrent.length}/140`
+    } else if (desCurrent.length > 160) {
+      descriptionAlertMedal.innerHTML = '字數超出上限!'
+    }
+  }
+</script> --}}

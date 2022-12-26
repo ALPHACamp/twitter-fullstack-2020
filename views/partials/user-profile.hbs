@@ -1,0 +1,76 @@
+{{!-- 個人頁面中間 --}}
+{{!-- 背景 --}}
+<div>
+  {{#if user.background}}
+  <img class="avatarbg-img" src="{{user.background}}" alt="">
+  {{else}}
+  <img class="avatarbg-img" src="https://i.imgur.com/X4wfKrq.png" alt="">
+  {{/if}}
+</div>
+{{!-- 頭貼 --}}
+<div class="rel">
+  {{#if user.avatar}}
+  <img class="selfavatar-img abs " style="border-radius: 50%;" src="{{user.avatar}}" alt="">
+  {{else}}
+  <img class="selfavatar-img abs " style="border-radius: 50%;" src="https://i.imgur.com/X4wfKrq.png" alt="">
+  {{/if}}
+</div>
+{{!-- 編輯個人資料 --}}
+{{#ifCond viewUser.id user.id}}
+<div class="wid-100">
+  <button class="tweetbtn-ol m-3 float-end">
+    <a href="" class="text-decoration-n font-color-or" data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop-self">編輯個人資料</a>
+  </button>
+</div>
+{{else}}
+<div class="wid-100">
+  <div class="me-3">
+    {{#if user.isFollowed}}
+    <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: contents;">
+      <button type="submit" class="unFollow-button tweetbtn-ol m-3 float-end"
+        style=" width: 96px;height: 40px;background-color: #FF6600; border:none; border-radius: 50px; font-family: 'Noto Sans TC';font-style: normal; font-weight: 400;font-size: 16px;line-height: 24px;color: #FFFFFF;">正在跟隨</button>
+    </form>
+    {{else}}
+    <form action="/followships" method="POST" style="display: contents;">
+      <input type="hidden" name="id" value="{{user.id}}" />
+      <button type="submit" class="btn follow-button tweetbtn-ol m-3 float-end"
+        style="width: 64px;height: 40px;background: #FFFFFF;border: 1px solid #FF6600;border-radius: 50px;font-family: 'Noto Sans TC';font-style: normal;font-weight: 400;font-size: 16px;line-height: 24px;color: #FF6600;">跟隨</button>
+    </form>
+    {{/if}}
+  </div>
+</div>
+{{/ifCond}}
+{{!-- 個人內文 追隨 推文回復喜歡TAB--}}
+<div class="col fl mt-2 wid-80 ms-3" style="width: 90%;">
+  <div>
+    <span class="selftwitterbox-name">{{user.name}}</span>
+    <p class="twitterbox-time">@{{user.account}}</p>
+  </div>
+  <div>
+    <p class="twitterbox-time text-dark">
+      {{user.introduction}}
+    </p>
+  </div>
+  <div>
+    <span class="twitterbox-time text-dark">{{user.Followings.length}}個
+      <a class="text-decoration-n following-color" href="/users/{{user.id}}/followings">跟隨中</a>
+    </span>
+    <span class="twitterbox-time text-dark">{{user.Followers.length}}位
+      <a class="text-decoration-n follow-color" href="/users/{{user.id}}/followers">跟隨者</a>
+    </span>
+  </div>
+  <div class="selftab border-none bottom-line-2">
+    <ul class="nav mb-4">
+      <li class="nav-item">
+        <a class="nav-link {{#ifCond route 'tweet'}}active{{/ifCond}}" href="/users/{{user.id}}/tweets">推文</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{#ifCond route 'reply'}}active{{/ifCond}}" href="/users/{{user.id}}/replies">回覆</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{#ifCond route 'like'}}active{{/ifCond}}" href="/users/{{user.id}}/likes">喜歡的內容</a>
+      </li>
+    </ul>
+  </div>
+</div>

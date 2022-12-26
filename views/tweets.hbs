@@ -1,0 +1,149 @@
+{{> leftbar}}
+
+<div class="middle right-line-2 left-line-2">
+  <div>
+    <p class="middle-title">首頁</p>
+  </div>
+  <div class="tweetbox top-line-2 rel">
+    <form action="/tweets" method="POST">
+      <img class="avatar-img m16-8-0-27 fl" src="{{viewUser.avatar}}" alt="" style="border-radius: 50%">
+      <span>
+        <textarea class="modal-input-tweets mt-3" type="description" name="description" id="description" cols="30"
+          rows="10" placeholder="有什麼新鮮事?" maxlength="140" required></textarea>
+        <input type="hidden" name="UserId" value="{{tweets.User.id}}" />
+      </span>
+      <div>
+        <span id="description-alert" class="abs" style="color: #FC5A5A;right:140px; bottom:27px"></span>
+        <button id="description-button" class="tweetbtn-s abs" type="submit">推文</button>
+      </div>
+    </form>
+  </div>
+  <div class="bottom-line-10 m-0 p-0"></div>
+
+
+  {{#each tweets}}
+  <div>
+    <div class="fl">
+      <img class="ac-img" src="{{this.User.avatar}}" alt="" style="border-radius: 50%">
+    </div>
+    <div class="tweet-flow-text fl">
+      <div class="tweet-flow-text fl">
+        <a href="/users/{{this.User.id}}/tweets" class="text-decoration-n">
+          <span class="twitterbox-name">{{this.User.name}}</span>
+        </a>
+        <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
+        <a href="/tweets/{{this.id}}/replies" class="text-decoration-n">
+          <p class="twitterbox-text">
+            {{this.description}}
+          </p>
+        </a>
+        <span class="twitterbox-time mx-40">
+          <button class="btn" data-bs-target="#replyModal{{this.id}}" data-bs-toggle="modal"><i class="far fa-comment"
+              style="color: navy;width:25px;height:18px;"></i>{{this.Replies.length}}</button></span>
+        </span>
+        {{!-- isLiked --}}
+        {{#if this.isLiked}}
+        <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
+          <span class="twitterbox-time">
+            <button type="submit" class="btn">
+              <i class="fas fa-heart" style="color: red;width:25px;height:18px;"></i>
+              {{this.Likes.length}}
+            </button>
+          </span>
+        </form>
+        {{else}}
+        <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
+          <span class="twitterbox-time">
+            <button type="submit" class="btn">
+              <i class="fa-regular fa-heart" style="width:25px;height:18px;"></i>
+              {{this.Likes.length}}
+            </button>
+          </span>
+        </form>
+        {{/if}}
+        <div class="bottom-line-f"style="width: 148%; margin-left: -70px;"></div>
+      </div>
+    </div>
+  </div>
+  <!-- 貼文彈跳留言 -->
+  <div class="modal fade" id="replyModal{{this.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="height:500px">
+        <div class="modal-header">
+          <div class=" fl">
+            <button type="button font-color-or" class="btn-close btn-close-re" data-bs-dismiss="modal"
+              aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="modal-body">
+          {{!-- 要留言的推文 --}}
+          {{!-- 留言 start--}}
+          <div class="d-flex">
+            <div>
+              <a href="/users/{{this.User.id}}"><img class="ac-img" src="{{this.User.avatar}}" alt=""
+                  style="border-radius: 50%"></a>
+            </div>
+            <div class="tweet-flow-text fl">
+              <a href="/users/{{this.User.id}}" class="text-decoration-n">
+                <span class="twitterbox-name">{{this.User.name}}</span>
+              </a>
+              <span class="twitterbox-time">@{{this.User.account}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
+              <p class="twitterbox-text">
+                {{this.description}}
+              </p>
+              <div class="mt-1">
+                <span class="twitterbox-time">回覆給 <span style="color: #FF6600">@ {{this.User.account}}</span></span>
+              </div>
+            </div>
+          </div>
+          {{!-- 貼文 end--}}
+          <div class="strip"></div>
+          {{!-- 留言 --}}
+          <form action="/tweets/{{this.id}}/replies" method="POST" class="mt-3" method="POST">
+            <div class="d-flex align-items-center">
+              <img class="ac-img fl" src="{{../viewUser.avatar}}" alt="" style="border-radius: 50%">
+              <div class="mt-3 ms-2">
+                <textarea class="modal-input-tweets reply" type="description" name="comment" id="comment" cols="30"
+                  rows="10" placeholder="推你的回覆" maxlength="528px" required></textarea>
+                <input type="hidden" name="TweetId" value="{{this.id}}" />
+              </div>
+            </div>
+            <span class="hint abs" style="color: #FC5A5A;right:101px; bottom:27px"></span>
+            <button class="tweetbtn-s abs reply-button" type="submit">回覆</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+
+  {{> user-tweet}}
+
+
+</div>
+
+{{> rightbar}}
+
+
+
+
+<script>
+  const descriptionInput = document.getElementById('description')
+  const description = document.getElementById('description').value.trim()
+  const descriptionAlert = document.getElementById('description-alert')
+
+  descriptionInput.addEventListener('input', TInput)
+
+  function TInput(e) {
+    const desCurrent = e.target.value
+    if (!desCurrent.length) {
+      descriptionAlert.innerHTML = "內容不可空白"
+    } else if (desCurrent.length > 0 && desCurrent.length < 160) {
+      descriptionAlert.innerHTML = `${desCurrent.length}/140`
+    } else if (desCurrent.length > 160) {
+      descriptionAlert.innerHTML = '字數超出上限!'
+    }
+  }
+
+</script>

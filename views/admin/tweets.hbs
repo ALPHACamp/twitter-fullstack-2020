@@ -1,0 +1,67 @@
+
+<div class="left d-flex align-items-start flex-column">
+  <a href="javascript:history.back()"><img class="mb-3" width="50px" height="50px"
+      src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" alt="" /></a>
+  <div class="">
+    <a href="/admin/tweets" class="icon-home  leftbar-text">
+      <i class="fas fa-home " style="font-size: 1.2em;"></i>
+      <span><strong>推文清單</strong></span>
+    </a>
+  </div>
+  <div class="mt-4 mb-1">
+    <a href="/admin/users" class="icon-user leftbar-text">
+      <i class="far fa-user" style="font-size: 1.2em;"></i>
+      <span><strong>使用者列表</strong></span>
+    </a>
+  </div>
+  <div class="mt-auto mb-1">
+    <a href="/logout" class="icon-logout leftbar-text">
+    <i class="fas fa-sign-out-alt" style="color: #000000; font-size: 1.2em;"></i>
+      <span><strong>登出</strong></span>
+    </a>
+  </div>
+</div>
+
+<div class="admin-right">
+  <div class="row justify-content-between mr-3">
+    <div class="mt-3">
+
+      <div class="card-header" style="font-size: 18px; font-weight: 700; background-color:white; border: 0">
+        推文清單
+      </div>
+
+      <div class="d-flex flex-row">
+        <div class="row">
+          {{#each tweets}}
+          <div>
+
+            <div class="fl">
+              <img class="ac-img" src="{{this.User.avatar}}" style="border-radius:50%" alt="">
+            </div>
+
+            <div class="tweet-flow-text fl">
+              <span class="twitterbox-name">{{this.User.name}}</span>
+              <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>
+              <p class="twitterbox-text">
+                {{this.description}}
+              </p>
+              <div class="bottom-line-f"></div>
+            </div>
+
+            <div class="m-2">
+              <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="d-flex">
+                <button class="btn-close" onclick="return confirm(`確定要刪除嗎？`)">
+                </button>
+              </form>
+            </div>
+
+
+
+
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
