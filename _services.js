@@ -64,7 +64,9 @@ module.exports = {
   // 抓取個人檔案用戶
   getUser: async (req) => {
     const userId = req.params.id
-    const user = await User.findByPk(userId, {
+    const viewUser = helpers.getUser(req)
+    const followingList = viewUser && viewUser.Followings.map(following => following.id)
+    const findUser = await User.findByPk(userId, {
       include: [
         Tweet,
         { model: User, as: 'Followings', order: [[Followship, 'createdAt', 'DESC']]},
@@ -72,6 +74,10 @@ module.exports = {
       ],
       nest: true
     })
+    const user = {
+      ...findUser.toJSON(),
+      isFollowed: followingList.includes(findUser.id)
+    }
     return user
   }
 }
