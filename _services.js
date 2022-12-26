@@ -45,6 +45,7 @@ module.exports = {
     const data = tweets.map(t => ({
       ...t.toJSON(),
       User: t.User.dataValues,
+      description: t.description.substring(0, 140),
       isLiked: t.Likes.some(f => f.UserId === viewUser.id)
     }))
     return data
