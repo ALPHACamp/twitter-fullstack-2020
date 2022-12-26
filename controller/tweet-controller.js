@@ -48,6 +48,7 @@ const tweetController = {
         include: [{ model: User, as: 'Followers' }]
       })])
       .then(async ([tweets, users]) => {
+        const currentUser = helper.getUser(req)
         const data = await tweets.map(tweet => ({
           ...tweet,
           isLiked: Boolean(tweet.isLiked),
@@ -60,7 +61,7 @@ const tweetController = {
           }))
           .sort((a, b) => b.followCount - a.followCount)
         // console.log(data)
-        res.render('tweets', { Tweets: data, result: result.slice(0, 10) })
+        res.render('tweets', { Tweets: data, result: result.slice(0, 10), currentUser })
       })
       .catch(err => next(err))
   },

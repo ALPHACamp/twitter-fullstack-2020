@@ -49,8 +49,9 @@ const userController = {
   getSetting: (req, res, next) => {
     return User.findByPk(helpers.getUser(req).id, { raw: true })
       .then(user => {
+        const currentUser = helpers.getUser(req)
         if (!user) throw new Error("User didn't exist!")
-        return res.render('setting', { user })
+        return res.render('setting', { user, currentUser })
       })
       .catch(err => next(err))
   },
@@ -316,6 +317,7 @@ const userController = {
       })
     ])
       .then(([user, followings, users]) => {
+        const currentUser = helpers.getUser(req)
         const result = users
           .map(user => ({
             ...user.toJSON(),
@@ -323,7 +325,7 @@ const userController = {
             isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
           }))
           .sort((a, b) => b.followCount - a.followCount)
-        res.render('following', { user, followings, result: result.slice(0, 10) })
+        res.render('following', { user, followings, result: result.slice(0, 10), currentUser })
       })
       .catch(err => next(err))
   },
@@ -357,6 +359,7 @@ const userController = {
     ])
       .then(([user, followers, users]) => {
         if (!user) throw new Error("User doesn't exist!")
+        const currentUser = helpers.getUser(req)
         const result = users
           .map(user => ({
             ...user.toJSON(),
@@ -364,7 +367,7 @@ const userController = {
             isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
           }))
           .sort((a, b) => b.followCount - a.followCount)
-        res.render('follower', { user, followers, result: result.slice(0, 10) })
+        res.render('follower', { user, followers, result: result.slice(0, 10), currentUser })
       })
       .catch(err => next(err))
   }

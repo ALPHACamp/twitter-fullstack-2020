@@ -31,6 +31,7 @@ const replyController = {
     })
     ])
       .then(([tweet, replies, users]) => {
+        const currentUser = helpers.getUser(req)
         const result = users
           .map(user => ({
             ...user.toJSON(),
@@ -38,7 +39,7 @@ const replyController = {
             isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
           }))
           .sort((a, b) => b.followCount - a.followCount)
-        res.render('replies', { tweet, replies, result })
+        res.render('replies', { tweet, replies, result, currentUser })
       })
       .catch(err => next(err))
   },
