@@ -112,7 +112,7 @@ const userController = {
       const topFollowings = await services.getTopUsers(req)
        res.render('following', {
         viewUser,
-        user: user.toJSON(),
+        user: user,
         followings,
         topFollowings
       })
@@ -134,7 +134,7 @@ const userController = {
       const topFollowings = await services.getTopUsers(req)
       return res.render('follower', {
         viewUser,
-        user: user.toJSON(),
+        user: user,
         followings,
         topFollowings
       })
@@ -310,9 +310,10 @@ const userController = {
   getLikes: async (req, res, next) => {
     // 個人頁面喜歡的內容抓取
     const viewUser = helpers.getUser(req)
+    const followingList = viewUser && viewUser.Followings.map(following => following.id)
     const UserId = req.params.id || ''
     try {
-      const user = await User.findByPk(UserId, {
+      const findUser = await User.findByPk(UserId, {
         include: [
           Tweet,
           { model: User, as: 'Followings', order: [[Followship, 'createdAt', 'DESC']] },
@@ -321,13 +322,17 @@ const userController = {
         ],
         nest: true
       })
-      const tweets = user.LikedTweets.map(t => ({
+      const tweets = findUser.LikedTweets.map(t => ({
         ...t.toJSON(),
         description: t.description.substring(0, 140),
         User: t.User.dataValues,
         user,
         isLiked: t.Likes.some(f => f.UserId === viewUser.id)
       }))
+      const user = {
+        ...findUser.toJSON(),
+        isFollowed: followingList.includes(findUser.id)
+      }
       const topFollowings = await services.getTopUsers(req)
       res.render('like', {
         viewUser,
