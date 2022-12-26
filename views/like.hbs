@@ -12,7 +12,7 @@
     <img class="ac-img" src="{{this.User.avatar}}"style="border-radius: 50%" alt="">
   </div>
   <div class="tweet-flow-text fl">
-    <a href="/users/{{../user.id}}/tweets" class="text-decoration-n">
+    <a href="/users/{{this.User.id}}/tweets" class="text-decoration-n">
     <span class="twitterbox-name">{{this.User.name}}</span>
     </a>
     <span class="twitterbox-time">@{{this.User.name}} ‧ {{relativetimeFromNNow this.createdAt}} </span>

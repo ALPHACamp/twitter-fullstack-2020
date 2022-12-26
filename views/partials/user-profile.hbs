@@ -16,12 +16,19 @@
   {{/if}}
 </div>
 {{!-- 編輯個人資料 --}}
+{{#ifCond viewUser.id user.id}}
 <div class="wid-100">
   <button class="tweetbtn-ol m-3 float-end">
     <a href="" class="text-decoration-n font-color-or" data-bs-toggle="modal"
       data-bs-target="#staticBackdrop-self">編輯個人資料</a>
   </button>
 </div>
+{{else}}
+<div class="wid-100">
+  <div class="elsetweet">
+  </div>
+</div>
+{{/ifCond}}
 {{!-- 個人內文 追隨 推文回復喜歡TAB--}}
 <div class="col fl mt-2 wid-80 ms-3">
   <div>

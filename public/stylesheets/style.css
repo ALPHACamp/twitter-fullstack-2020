@@ -1071,3 +1071,8 @@ a .nav-link:active,
 .a-tomato {
   color: #FF6600;
 }
+
+.elsetweet {
+  width: 128px;
+  height: 70px;
+}
