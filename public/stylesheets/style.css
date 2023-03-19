@@ -1,0 +1,64 @@
+a {
+  text-decoration: none;
+  color: black;
+}
+a:hover {
+  color: gray;
+}
+.avatar-img {
+  border-radius: 50%
+}
+
+.left-bar-tweetbtn ,.follow-btn{
+  width: 125px;
+  height: 40px;
+  padding: 8px 16px;
+  background: #FF6600;
+  border: 0px;
+  border-radius: 50px;
+
+  font-size: 16px;
+  font-size: 400;
+  color: #fff;
+  text-decoration: none;
+
+  align-items: center;
+
+  right: 10%;
+  bottom: 10%;
+}
+
+.tweetbtn {
+  width: 70px;
+  height: 40px;
+  padding: 8px 16px;
+  background: #FF6600;
+  border: 0px;
+  border-radius: 50px;
+
+  font-size: 16px;
+  font-size: 400;
+  color: #fff;
+  text-decoration: none;
+
+  align-items: center;
+
+  right: 10%;
+  bottom: 10%;
+}
+
+.modal-input-tweets {
+  width: 70%;
+  height: 80px;
+  /* border: transparent; */
+  border-style: none;
+  outline: none;
+}
+
+.fl {
+  float: left;
+}
+
+.position-absolute {
+  position: absolute;
+}
