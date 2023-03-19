@@ -1,0 +1,8 @@
+切換到測試環境，如果在等號後加其他的字串，則會切到其他的環境
+export NODE_ENV=test
+
+印出目前使用的環境
+echo $NODE_ENV
+
+開發模式
+export NODE_ENV=development
