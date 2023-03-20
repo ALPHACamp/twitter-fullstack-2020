@@ -47,6 +47,10 @@ a:hover {
   bottom: 10%;
 }
 
+.left-bar-icon {
+  width: 35px;
+  height: 35px;
+}
 .modal-input-tweets {
   width: 70%;
   height: 80px;
