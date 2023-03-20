@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="/user-left-style.css">
+<div class="container p-0 my-0 mx-auto">
+  <div class="row gx-0">
+    <div class="left col-2 position-sticky vh-100">
+      <div class="nav nav-pills flex-column vh-100" role="tablist">
+        {{>logo}}
+        <a class="nav-link active" data-bs-toggle="tab" href="/home" role="tab" >{{>home}}首頁</a>
+        <a class="nav-link " data-bs-toggle="tab" href="/profile" role="tab">{{>user}}個人資料</a>
+        <a class="nav-link" data-bs-toggle="tab" href="/setting" role="tab"> {{>setting}}設定</a>
+        <button type="button" class="btn btn-primary">推文</button>
+        <a class="nav-link mt-auto">{{>logout}}登出</a>
+      </div>
+    </div>
+    <div class="col-7 overflow-auto">
+      Content for middle column
+    </div>
+    <div class="col-3 position-sticky">
+      Content for right column
+    </div>
+  </div>
+</div>

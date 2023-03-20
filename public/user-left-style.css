@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+
+* {
+  font-family: 'Noto Sans TC', sans-serif;
+  box-sizing: border-box;
+}
+
+body,html {
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+}
+
+svg {
+margin: auto 16px auto 16px;
+}
+
+svg.logo {
+  margin: 8px auto 13px 8px;
+  width: 40px;
+  height: 40px;
+
+}
+
+
+.nav-pills .nav-link {
+  padding: 0;
+  color: black;
+  height: 58px;
+  line-height: 58px;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.nav-pills .nav-link.active {
+  background-color: white;
+  color: #FF6600;
+  
+}
+.nav-pills .nav-link.active path{
+  fill: #FF6600;
+}
+
+.nav-pills .btn {
+  background-color: #FF6600;
+  color: #white;
+  border-radius: 50px;
+  height: 46px;
+  font-weight: 400;
+  font-size: 20px;
+}
