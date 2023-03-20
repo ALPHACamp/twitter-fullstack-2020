@@ -1,0 +1,46 @@
+<div class="followship mt-3" style="width: 273px;height: 731px;background-color:#F1F1F5; border-radius: 16px;">
+  <div class="title pt-3 ps-3">
+    <h4 style="font-weight: 700;">推薦跟隨</h4>
+  </div>
+  <hr>
+  <div class="follower" >
+    {{!-- {{#each followship}} --}}
+    <div class="users d-flex flex-row flex-nowrap justify-content-between mt-4">
+      <div class="user-info d-flex">
+        <div class="avatar" style="width: 50px;height: 50px">
+          <a href="/tweets/{{user.id}}">
+            <img src="{{user.avatar}}" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+          </a>
+        </div>
+        <div class="name">
+          <p class="user-name m-0 ms-1" style="font-weight: 700;">Lorem Ipsum{{this.name}}</p>
+          <p class="user-account m-0 ms-1" style="color: #C4C4C4;">@Lorem Ipsum{{this.account}}</p>
+        </div>
+      </div>
+      <div class="follow-btn" style="width: 96px;height: 40px">
+        <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn" style="background: #FF6600;border-radius: 100px;color:#ffffff;">正在跟隨</button>
+        </form>
+      </div>
+    </div>
+    {{!-- {{/each}} --}}
+    <div class="users d-flex flex-row flex-nowrap justify-content-between mt-4">
+      <div class="user-name d-flex">
+        <div class="avatar" style="width: 50px;height: 50px">
+          <a href="/tweets/{{user.id}}">
+            <img src="{{user.avatar}}" class="rounded-circle mr-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+          </a>
+        </div>
+        <div class="name">
+          <p class="user-name m-0 ms-1" style="font-weight: 700;">Lorem Ipsum{{this.name}}</p>
+          <p class="user-account m-0 ms-1" style="color: #C4C4C4;">@Lorem Ipsum{{this.account}}</p>
+        </div>
+      </div>
+      <div class="follow-btn d-flex flex-row-reverse" style="width: 96px;height: 40px">
+        <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn mt-2 me-2" style="background: #FFFFFF;border-radius: 100px;border:1px solid #FF6600;color:#FF6600">跟隨</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
