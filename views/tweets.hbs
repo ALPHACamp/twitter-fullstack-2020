@@ -1,0 +1,101 @@
+<div class="row">
+  {{> leftbar}}
+  <div class="col-7">
+    <div class="main-page">
+      <h4>首頁</h4>
+    </div>
+  
+    <hr>
+  
+    <div class="tweet-post" data-bs-toggle="modal" data-bs-target="#mm">
+      {{!-- {{#if this.image}} --}}
+      {{!-- <img src="" width="100px" height="100px" style="transition: opacity 0.5s; opacity:0; border-radius:50%;"
+        onload="this.style.opacity=1;" /> --}}
+      {{!-- {{else}} --}}
+      <img src="https://fakeimg.pl/50/" class="fl" width="50px" height="50px" style="border-radius:50%;" />
+      {{!-- {{/if}} --}}
+      <div class="tweet-box">
+        <form action="">
+          <textarea class="modal-input-tweets" placeholder="有什麼新鮮事？" name="" id="" maxlength="140" rows="3" cols="100"></textarea>
+        </form>
+        <div class="d-flex flex-row-reverse mb-1">
+          <button class="tweetbtn">推文</button>
+        </div>
+      </div>
+      <div class="modal" tabindex="-1" id="mm">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">User name</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+              <div class="d-flex flex-row-reverse mb-1">
+                <button class="tweetbtn" type="submit">推文</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        {{!-- {{#each tweets}} --}}
+        <div data-bs-toggle="modal" data-bs-target="#user-modal">
+          <a href="/users/{{this.id}}">
+            {{!-- {{#if this.image}} --}}
+            {{!-- <img src="" width="100px" height="100px" style="transition: opacity 0.5s; opacity:0; border-radius:50%;"
+              onload="this.style.opacity=1;" /> --}}
+            {{!-- {{else}} --}}
+            <img src="https://fakeimg.pl/50/" width="50px" height="50px" style="border-radius:50%;" />
+            {{!-- {{/if}} --}}
+            Apple
+          </a>
+          <span>@apple‧3小時</span>
+          <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign</p>
+          <div class="d-flex">
+            <form action="/reply /:id" method="POST">
+              <button type="submit"><i class="fa-sharp fa-regular fa-comment"></i></button>
+              <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.replyCount}}</span>
+            </form>
+            {{!-- {{#if isLiked}} --}}
+            {{!-- <form action="/like/:id?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-danger m-1">Unlike</button>
+            </form> --}}
+            {{!-- {{else}} --}}
+            <form action="/like/:id" method="POST">
+              <button type="submit"><i class="fa-regular fa-heart"></i></button>
+              <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.likeCount}}</span>
+            </form>
+            {{!-- {{/if}} --}}
+          </div>
+          <hr>
+        </div>
+        {{!--  回覆彈跳視窗  --}}
+        <div class="modal" tabindex="-1" id="user-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">User name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>User description</p>
+              </div>
+              <div class="modal-footer">
+                <div class="d-flex flex-row-reverse mb-1">
+                  <button class="tweetbtn" type="submit">回覆</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{!-- {{/each}} --}}
+      </div>
+    </div>
+  </div>
+  {{> rightbar}}
+</div>
