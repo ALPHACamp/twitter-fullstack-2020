@@ -4,6 +4,9 @@ const adminController = {
   },
   getTweets: (req, res) => {
     res.render('admin/tweets')
+  },
+  getUsers: (req, res) => {
+    res.render('admin/users')
   }
 }
 
