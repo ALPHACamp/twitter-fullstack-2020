@@ -14,5 +14,6 @@ router.get('/signin', userController.signInPage)
 router.get('/tweets', tweetController.getTweets)
 
 router.get("/users",userController.getUser) // 個人頁面測試用畫面 路由先不加:id
+router.get('/users/:id/setting', userController.getSetting)
 
 module.exports = router

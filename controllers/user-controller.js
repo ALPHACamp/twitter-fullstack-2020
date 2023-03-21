@@ -7,7 +7,11 @@ const userController = {
   },
   getUser: (req,res) => { //取得個人資料頁面
     return res.render('users')
+  },
+  getSetting: (req, res) => {// 取得個人帳戶設定頁面
+    return res.render('setting')
   }
+
 }
 
 module.exports = userController
