@@ -66,3 +66,21 @@ a:hover {
 .position-absolute {
   position: absolute;
 }
+
+textarea {
+  resize: none;
+}
+
+.reply-modal-hr-line {
+  height: 120px;
+  border-left: 2px solid gray;
+  position: relative;
+  top: 5px;
+  left: 23px;
+  margin-bottom: 10px;
+}
+
+.tweet-flow-text {
+  width: 82%;
+  margin: 2% 0 0 2%;
+}
