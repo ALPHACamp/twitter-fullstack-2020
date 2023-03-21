@@ -1,0 +1,86 @@
+<div class="container d-flex">
+  <div class="col-2 nav">
+    {{> nav}}
+  </div>
+
+  <div class="col-7 tweets">
+    <div class="tweets-container"
+      style="width: 639px;height:1200px;border-right:1px solid #C4C4C4; border-left:1px solid #C4C4C4;">
+
+      <div class="card-header col-12 row m-0" style="max-height: 55px;">
+        <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
+          class="col-auto d-flex align-items-center">
+          <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
+        </a>
+        <a href="/users/{{users.id}}/tweets"
+          class="col-auto d-flex flex-column align-items-start justify-content-center link-dark">
+          <span class="h5"
+            style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{users.name}}Elizabeth</span>
+          <span style="color: #657786; font-size: 0.95em; font-size: 13px; line-height: 15px">{{tweetCount}}
+            111推文</span>
+        </a>
+      </div>
+
+      <div class="card-body col-12 m-0 p-0 position-relative">
+        <div class="bg-holder" style="height: 280px;">
+          <img src="{{#if users.cover}}{{users.cover}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+            class="card-img-top" alt="..." class="img-fluid" id="bgImage"
+            style="height:100%;width:100%;object-fit:cover">
+        </div>
+
+        <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+          class="rounded-circle" alt="user_Aavtor" height="130px" width="130px"
+          style="border: 2px solid white; position: absolute; object-fit: cover; top: 63%; left: 3%;">
+
+        <div class="card-body col-12 d-flex justify-content-end">
+          <button type="submit" class="btn tweet-button"
+            style="background: #FFFFFF; border-radius: 100px; border:1px solid #FF6600;">
+            <span style="color: #FF6600;">編輯個人資料</span></button>
+        </div>
+      </div>
+
+      <div class="card-body col-12">
+        <div class="card-text ps-2">
+          <h4 style="font-weight: 900; line-height: 18px">{{users.name}}Elizabeth</h4>
+          <span class="text-muted" style="font-size: 0.93em; line-height: 18px;">@user1{{users.account}}</span>
+          <p class="my-2" style="font-size: 0.96em; line-height: 25px">{{#if
+            users.introduction}}{{users.introduction}}{{else}}Lorem example text example text for AC simple twitter
+            project practice{{/if}}</p>
+          <a href="/users/{{users.id}}/followers" style="text-decoration:none;">
+            <span class="fw-bold text-dark">{{followingscount}} 11個</span><span
+              class="text-muted text-dark me-3">跟隨中</span>
+          </a>
+          <a href="/users/{{users.id}}/followings" style="text-decoration:none;">
+            <span class="fw-bold text-dark">{{followerscount}} 111位</span><span class="text-muted">跟隨者</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="profile-head col-12">
+        <nav>
+          <div class="nav nav-tabs " id="nav-tab" role="tablist">
+            <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+              style="color: #FF6600; border: none; border-bottom: 1px solid #ff6600;" role="tab"
+              aria-controls="nav-home" aria-selected="true">推文 </a>
+            <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+              style="color: #657786; border: none;" role="tab" aria-controls="nav-profile"
+              aria-selected="false">推文與回覆</a>
+            <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+              style="color: #657786; border: none;" role="tab" aria-controls="nav-contact"
+              aria-selected="false">喜歡的內容</a>
+          </div>
+        </nav>
+      </div>
+
+
+      <div class="tweets-container">
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-3 followship">
+    {{> followship}}
+  </div>
+</div>

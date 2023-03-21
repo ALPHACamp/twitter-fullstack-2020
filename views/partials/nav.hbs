@@ -1,0 +1,76 @@
+<div class="d-flex flex-column justify-content-between mt-3" style="width: 178px;height: 1200px;">
+  <div class="top-side">
+    <div class="AC-icon">
+      <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89-300x300.png"
+        style="width:75px">
+    </div>
+
+    <br>
+
+    <div class="home d-flex align-items-center ps-3 mb-2" name="home" style="width: 178px;height: 58px;">
+      <a class="home-page" href="/tweets"
+        style="text-decoration: none; font-size: 18Px;font-weight:700;color:#FF6600;"><i
+          class="fas fa-home"></i>&ensp;首頁</a>
+    </div>
+
+    <div class="profile d-flex align-items-center ps-3 mb-2" name="profile" style="width: 178px;height: 58px;">
+      <a class="profile-page" href="/users/{{user.id}}"
+        style="text-decoration: none;font-size: 18Px;font-weight:700;color:#44444F;"><i
+          class="far fa-user"></i>&ensp;個人資料</a>
+    </div>
+
+    <div class="setting d-flex align-items-center ps-3 mb-2" name="setting" style="width: 178px;height: 58px;">
+      <a class="setting-page" href="/users/{{user.id}}/edit"
+        style="text-decoration: none;font-size: 18Px;font-weight:700;color:#44444F;"><i
+          class="fas fa-cog"></i>&ensp;設定</a>
+    </div>
+
+    <button type="button" class="tweet-btn btn" data-bs-toggle="modal" data-bs-target="#tweetModal"
+      style="background-color: #FF6600;width: 178px;height: 46px;border-radius: 50px;">
+      <span style="color: #FFFFFF;">推文</span>
+    </button>
+  </div>
+
+  <div class="down-side">
+    <div class="logout d-flex align-items-center ps-3">
+      <a href="/logout" class="logout-page" style="text-decoration: none;width: 178px;height: 58px;"><i
+          class="fas fa-sign-out-alt"></i>&ensp;LogOut</a>
+    </div>
+  </div>
+  {{!-- modal --}}
+  <div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="tweet-title btn"><button type="button" class="btn-close" data-bs-dismiss="modal"
+              aria-label="Close" style="color: #FF6600;"></button></div>
+        </div>
+        <div class="modal-body" class="d-flex">
+          <div class="body-avatar d-flex align-items-stretch">
+            <div class="left">
+              <a href="/tweets/{{user.id}}">
+                <img src="{{user.avatar}}" class="rounded-circle mr-3"
+                  style="width: 50px;height: 50px;background: #C4C4C4;">
+              </a>
+            </div>
+            <div class="right">
+              <form method="POST" action="/tweets/{{user.id}}">
+                <div class="textarea ms-2 mt-2">
+                  <textarea name="description" cols="40" rows="10"
+                    style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;"
+                    placeholder="有什麼新鮮事?"></textarea>
+                </div>
+                <div class="button d-flex justify-content-end">
+                  <button type="submit" class="btn" style="background: #FF6600;border-radius: 50px;">
+                    <span style="color: #FFFFFF;">推文</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
