@@ -42,7 +42,8 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <div class="tweet-title btn"><button type="button" class="btn-close" data-bs-dismiss="modal"
+          <div class="tweet-title btn">
+            <button type="button" class="btn-close" data-bs-dismiss="modal"
               aria-label="Close" style="color: #FF6600;"></button></div>
         </div>
         <div class="modal-body" class="d-flex">
@@ -57,7 +58,8 @@
               <form method="POST" action="/tweets/{{user.id}}">
                 <div class="textarea ms-2 mt-2">
                   <textarea name="description" cols="40" rows="10"
-                    style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;" placeholder="有什麼新鮮事?"></textarea>
+                    style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;"
+                    placeholder="有什麼新鮮事?"></textarea>
                 </div>
                 <div class="button d-flex justify-content-end">
                   <button type="submit" class="btn" style="background: #FF6600;border-radius: 50px;">
