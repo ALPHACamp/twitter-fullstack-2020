@@ -1,6 +1,6 @@
 const tweetController = {
   getTweets:(req,res,next)=>{
-    res.render('index')
+    res.render('tweets')
   }
 }
 
