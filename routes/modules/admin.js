@@ -3,8 +3,9 @@ const router = express.Router()
 
 const adminController = require('../../controllers/admin-controller')
 
-router.get('/signin', adminController.signInPage)
-router.get('/tweets', adminController.getTweets)
-router.get('/users', adminController.getUsers)
+router.get('/signin', adminController.signInPage) // 登入路由
+router.get('/logout', adminController.logout) // 登出路由
+router.get('/tweets', adminController.getTweets) // 後台清單列表路由
+router.get('/users', adminController.getUsers) // 後台使用者列表路由
 
 module.exports = router
