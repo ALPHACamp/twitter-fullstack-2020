@@ -3,12 +3,12 @@
     {{> leftbar}}
     <div class="col-7">
       <div class="main-page">
-        <h4>首頁</h4>
+        <h4><strong>首頁</strong></h4>
       </div>
-  
+
       <hr>
-  
-      <div class="tweet-post" >
+
+      <div class="tweet-post">
         {{> user-avatar}}
         <div class="tweet-box" data-bs-toggle="modal" data-bs-target="#user-tweet-modal">
           <form action="">
@@ -37,14 +37,16 @@
               <div class="modal-footer">
                 <div class="d-flex flex-row-reverse mb-1">
                   <button class="tweetbtn" type="submit">推文</button>
+                  <p class="user-tweet-alertMsg">字數不可超過 140 字</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-body">
+      <div style="border: 2px solid #B5B5B5;"></div>
+      <div class="mt-5">
+        {{!-- <div class=""> --}}
           {{!-- {{#each tweets}} --}}
           <div data-bs-toggle="modal" data-bs-target="#reply-modal">
             <div class="row">
@@ -53,12 +55,12 @@
               </div>
               <div class="col-11">
                 <div>
-                  <a href="/users/{{this.id}}">Apple</a>
+                  <a href="/users/{{this.id}}"><strong>Apple</strong></a>
                   <span>@apple‧3小時</span>
                 </div>
                 <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign merjc idblid
                   ngijsnli gririr leirhielr gli g grgiur
-                  hghbgn ign merjc idblid ngijsnli gririr leirhielr 
+                  hghbgn ign merjc idblid ngijsnli gririr leirhielr
                   gli g grgiur hghbgn ign</p>
               </div>
             </div>
@@ -96,20 +98,25 @@
                   <div class="row">
                     <div class="col-2">
                       {{> following-avatar}}
-                      <div class="reply-modal-hr-line"></div>
+                      <div class="reply-modal-vr-line"></div>
                     </div>
-                    {{!--  --}}
+                    {{!-- --}}
                     <div class="col-10">
                       <div>
-                        <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign merjc idblid ngijsnli gririr leirhielr gli g grgiur
+                        <a href="/users/{{this.id}}"><strong>Apple</strong></a>
+                        <span>@apple‧3小時</span>
+                      </div>
+                      <div>
+                        <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign merjc idblid ngijsnli gririr
+                          leirhielr gli g grgiur
                           hghbgn ign merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign</p>
                         <span>回覆給<span class="ms-1" style="color: #FF6600;">@mitsubishi</span></span>
                       </div>
-                      
+
                     </div>
-                    
+
                   </div>
-                  
+
                   {{> user-avatar}}
                   <form action="">
                     <textarea class="modal-input-tweets" placeholder="推你的回覆" name="" id="" maxlength="140" rows="3"
@@ -119,13 +126,15 @@
                 <div class="modal-footer">
                   <div class="d-flex flex-row-reverse mb-1">
                     <button class="tweetbtn" type="submit">回覆</button>
+                    <p class="user-reply-alertMsg">內容不可空白</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           {{!-- {{/each}} --}}
-        </div>
+          {{!--
+        </div> --}}
       </div>
     </div>
     {{> rightbar}}

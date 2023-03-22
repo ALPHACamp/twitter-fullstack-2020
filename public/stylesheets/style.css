@@ -75,7 +75,7 @@ textarea {
   resize: none;
 }
 
-.reply-modal-hr-line {
+.reply-modal-vr-line {
   height: 120px;
   border-left: 2px solid gray;
   position: relative;
@@ -87,4 +87,13 @@ textarea {
 .tweet-flow-text {
   width: 82%;
   margin: 2% 0 0 2%;
+}
+
+.user-tweet-alertMsg,
+.user-reply-alertMsg {
+  position: relative;
+  top: 10px;
+  right: 5px;
+  font-size: small;
+  color: red;
 }
