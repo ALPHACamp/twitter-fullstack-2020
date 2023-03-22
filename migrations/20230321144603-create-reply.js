@@ -8,24 +8,24 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      UserId: {
+      User_id: {
         type: Sequelize.INTEGER
       },
-      TweetId: {
+      Tweet_id: {
         type: Sequelize.INTEGER
       },
-      ReplyId: {
+      Reply_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
       comment: {
         type: Sequelize.TEXT
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }

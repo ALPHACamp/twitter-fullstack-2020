@@ -30,7 +30,7 @@ module.exports = {
       introduction: {
         type: Sequelize.TEXT,
       },
-      isAdmin: {
+      is_admin: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
       },
@@ -38,11 +38,11 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue: 'https://imgur.com/pxnjHp2.png',
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },

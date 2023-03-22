@@ -9,25 +9,25 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      UserId: DataTypes.INTEGER,
+      User_id: DataTypes.INTEGER,
       Position: DataTypes.STRING,
-      PositionId: DataTypes.INTEGER,
-      isLike: DataTypes.BOOLEAN,
-      TweetId: DataTypes.INTEGER,
+      Position_id: DataTypes.INTEGER,
+      is_like: DataTypes.BOOLEAN,
+      Tweet_id: DataTypes.INTEGER,
     },
     {},
   );
   Like.associate = function (models) {
     Like.belongsTo(models.User);
     Like.belongsTo(models.Tweet, {
-      foreignKey: 'PositionId',
+      foreignKey: 'Position_id',
       constraints: false,
       scope: {
         Position: 'tweet',
       },
     });
     Like.belongsTo(models.Reply, {
-      foreignKey: 'PositionId',
+      foreignKey: 'Position_id',
       constraints: false,
       scope: {
         Position: 'reply',

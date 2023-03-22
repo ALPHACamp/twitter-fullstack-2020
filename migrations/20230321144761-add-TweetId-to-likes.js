@@ -9,13 +9,13 @@ module.exports = {
       Example:
       return queryInterface.createTable('users', { id: Sequelize.INTEGER });
     */
-    return queryInterface.addColumn('Likes', 'TweetId', {
+    return queryInterface.addColumn('Likes', 'Tweet_id', {
       type: Sequelize.INTEGER,
     });
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.removeColumn('Likes', 'TweetId');
+    return queryInterface.removeColumn('Likes', 'Tweet_id');
     /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.
