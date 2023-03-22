@@ -3,7 +3,6 @@
   <div class="col-2 nav">
     {{> nav}}
   </div>
-
   <!--middle bar-->
   <div class="col-7 user-profile">
     <div class="tweets-container"
@@ -180,7 +179,7 @@
               </button>
               <span class="modal-title h5 fw-bold ps-3" id="ModalLabel">編輯個人資料</span>
             </div>
-            <button type="submit" class="badge btn rounded-pill" style="font-size:0.9rem; background: #FF6600;">
+            <button type="submit" class="badge btn rounded-pill" style="font-size:1.0rem; background: #FF6600;">
               <span style="color: #FFFFFF;">儲存</span>
             </button>
           </div>
@@ -207,30 +206,27 @@
               </label>
             </div>
             <div class="col-12" style="background-color:#f4f8fb;">
-              <label for="name" style="margin-bottom: -30px; margin-left: 8px; font-size: 0.3em">名稱</label>
+              <label for="name" style="margin-bottom: -30px; margin-left: 8px; font-size: 0.8em">名稱</label>
               <input type="text" class="form-control" id="name" name="name" maxlength="50"
-                style="border:none; border-bottom:1px solid rgb(75, 82, 85); outline: none; background-color:#f4f8fb; font-size:0.3em"
+                style="border:none; border-bottom:1px solid rgb(75, 82, 85); outline: none; background-color:#f4f8fb; font-size:0.8em"
                 aria-describedby="nameHelp" value="{{users.name}}Michael" />
-              <p class="text-end text-muted now1" style="font-size: 0.3em;">0/50</p>
+              <p class="text-end text-muted now1" style="font-size: 0.8em;">0/50</p>
             </div>
             <div class="col-12 mb-3 mt-4" style="background-color:#f4f8fb;">
-              <label for="introduction" style="margin-left: 8px; font-size: 0.3em;">自我介紹</label>
+              <label for="introduction" style="margin-left: 8px; font-size: 0.8em;">自我介紹</label>
               <textarea class="form-control" id="introduction" name="introduction"
-                style="border:none; border-bottom:1px solid rgb(75, 82, 85); outline: none; background-color:#f4f8fb; font-size:0.3em;"
+                style="border:none; border-bottom:1px solid rgb(75, 82, 85); outline: none; background-color:#f4f8fb; font-size:0.8em;"
                 maxlength="160"
                 aria-describedby="descriptionHelp">{{users.introduction}}Hello my name is Michael not Micky.</textarea>
-              <p class="text-end text-muted now2" style="font-size: 0.3em;">0/160</p>
+              <p class="text-end text-muted now2" style="font-size: 0.8em;">0/160</p>
             </div>
           </div>
         </form>
       </div>
     </div>
   </div>
-</div>
-</div>
-
-<!--right bar-->
-<div class="col-3 followship">
-  {{> followship}}
-</div>
+  <!--right bar-->
+  <div class="col-3 followship">
+    {{> followship}}
+  </div>
 </div>

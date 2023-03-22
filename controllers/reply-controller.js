@@ -3,5 +3,4 @@ const replyController = {
     res.render('reply')
   }
 }
-
 module.exports = replyController
