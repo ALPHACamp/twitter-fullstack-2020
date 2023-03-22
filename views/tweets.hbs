@@ -21,7 +21,7 @@
         </div>
         {{!-- user推文彈跳視窗 --}}
         <div class="modal" tabindex="-1" id="user-tweet-modal">
-          <div class="modal-dialog">
+          <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
                 {{!-- <h5 class="modal-title">User name</h5> --}}
@@ -30,14 +30,14 @@
               <div class="modal-body">
                 {{> user-avatar}}
                 <form action="">
-                  <textarea class="modal-input-tweets" placeholder="有什麼新鮮事？" name="" id="" maxlength="140" rows="3"
+                  <textarea class="modal-input-tweets" placeholder="有什麼新鮮事？" name="user-tweet-description" id="user-tweet-description" maxlength="200" rows="3"
                     cols="100"></textarea>
                 </form>
               </div>
               <div class="modal-footer">
                 <div class="d-flex flex-row-reverse mb-1">
                   <button class="tweetbtn" type="submit">推文</button>
-                  <p class="user-tweet-alertMsg">字數不可超過 140 字</p>
+                  <p id="description-alert" class="user-tweet-alertMsg">字數不可超過 140 字</p>
                 </div>
               </div>
             </div>
@@ -88,7 +88,7 @@
           </div>
           {{!-- 回覆彈跳視窗 --}}
           <div class="modal" tabindex="-1" id="reply-modal">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
                   {{!-- <h5 class="modal-title">User name</h5> --}}
