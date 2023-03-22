@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 
 const userController = require('../controllers/user-controller')
-const adminController = require('../controllers/admin-controller')
 const tweetController = require ('../controllers/tweet-controller')
 const replyController = require('../controllers/reply-controller')
 const likesController = require('../controllers/likes-contriller')
@@ -26,5 +25,6 @@ router.get('/users/:id/followers',userController.getFollower)
 router.get('/users/:id/followings', userController.getFollowing)
 
 router.get("/users",userController.getUser) // 個人頁面測試用畫面 路由先不加:id
+router.get('/users/:id/setting', userController.getSetting)
 
 module.exports = router
