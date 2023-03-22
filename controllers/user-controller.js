@@ -10,8 +10,14 @@ const userController = {
   },
   getSetting: (req, res) => {// 取得個人帳戶設定頁面
     return res.render('setting')
+  }, 
+  getFollower: (req,res,next)=>{
+    res.render('follower')
+  },
+  getFollowing: (req,res,next)=>{
+    res.render('following')
   }
-
 }
 
 module.exports = userController
+

@@ -64,23 +64,22 @@
         <nav>
           <div class="nav nav-tabs " id="nav-tab" role="tablist">
             <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="/tweets/1{{user.id}}"
-              style="color: #FF6600; border: none; border-bottom: 1px solid #ff6600;" role="tab"
-              aria-controls="nav-home" aria-selected="true">推文 </a>
+              style="color: #FF6600; border: none; border-bottom: 1px solid #ff6600;" role="tab" aria-controls="nav-home"
+              aria-selected="true">推文 </a>
             <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="/reply/1{{user.id}}"
-              style="color: #657786; border: none;" role="tab" aria-controls="nav-profile"
-              aria-selected="false">推文與回覆</a>
+              style="color: #657786; border: none;" role="tab" aria-controls="nav-profile" aria-selected="false">推文與回覆</a>
             <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="/likes/1{{user.id}} "
-              style="color: #657786; border: none;" role="tab" aria-controls="nav-contact"
-              aria-selected="false">喜歡的內容</a>
+              style="color: #657786; border: none;" role="tab" aria-controls="nav-contact" aria-selected="false">喜歡的內容</a>
           </div>
         </nav>
       </div>
 
       <!--tweet reply likeContent-->
       <div class="tweets-container">
-
-        <!--tweet reply likeContent-->
-        {{!-- {{#each tweets }} --}}
+        
+        <!-- likeContent-->
+        {{!-- {{#ifcond req.body reply}} --}}
+        {{!-- {{#each comments }} --}}
         <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
           <div class="avatar ps-3">
             <a href="/tweets/{{user.id}}" style="text-decoration:none;">
@@ -95,25 +94,25 @@
                 style="font-size: 14px;color:#C4C4C4">@FakeAccount{{comments.user.account}}．3小時{{comments.times}}</span>
             </div>
             <div class="content mt-3">
-              推文頁面專用
+              喜歡頁面專用
             </div>
             <div class="footer d-flex">
               <div class="replies d-flex align-items-center">
-                <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal" data-bs-target="#tweetReplyModal{{this.id}}">
+                <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal" data-bs-target="#likeContentModal">
                   <i class="far fa-comment"></i>&ensp;10{{this.Replies.length}}
                 </button>
               </div>
               <div class="likes d-flex align-items-center">
                 <form action="/likes" method="post">
-                  <button type="submit" class="btn"><i
-                      class="fa-regular fa-heart">&ensp;66{{this.likes.length}}</i></button>
+                  <button type="submit" class="btn"><i class="fa-solid fa-heart"
+                      style="color: #fc5a5a;"></i>&ensp;66{{this.likes.length}}</i></button>
                 </form>
               </div>
             </div>
           </div>
         </div>
-        {{!--tweetReply modal --}}
-        <div class="modal fade" id="tweetReplyModal{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+        {{!--likeContent modal --}}
+        <div class="modal fade" id="likeContentModal" tabindex="-1" aria-labelledby="exampleModalLabel"
           aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -135,7 +134,7 @@
                       style="font-size: 14px;color:#C4C4C4">@FakeAccount{{comments.user.account}}．3小時{{comments.times}}</span>
                   </div>
                   <div class="content mt-3">
-                    推文頁面專用
+                    喜歡頁面專用
                   </div>
                   <p style="color: #657786;">回覆給<strong style="color:#FF6600;">@FakeAccount{{this.account}}</strong></p>
                 </div>
@@ -167,6 +166,7 @@
           </div>
         </div>
         {{!-- {{/each}} --}}
+        {{!-- {{/ifcond}} --}}
       </div>
 
       <!--Edit modal-->
