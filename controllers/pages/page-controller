@@ -1,0 +1,46 @@
+const { User, Tweet, reply, Followship, Like } = require('../../models')
+const pageController = {
+
+
+  getHome: (req, res, next) => {
+    const FollowedUsers = topTenFollowed()
+    const user = 
+    const tweets =   // query所有追蹤中User的tweet，再依照時間排序並回傳
+
+    res.render('home', { user, tweets, FollowedUsers })
+  },
+
+  getUserTweets: (req, res, next) => {
+    const FollowedUsers = topTenFollowed()
+    const user = 
+    const tweets = 
+    res.render('/user-tweets', { user, tweets, FollowedUsers })
+  },
+
+  getUserReplies: (req, res, next) => {
+    const FollowedUsers = topTenFollowed()
+    const user = 
+    const replies = 
+    res.render('/user-replies', { user, replies, FollowedUsers })
+  },
+
+  getUserLikes: (req, res, next) => {
+    const FollowedUsers = topTenFollowed()
+    const user = 
+    const likes = 
+    res.render('/user-likes', { user, likes, FollowedUsers })
+
+  },
+
+
+  getSetting: (req, res, next) => {
+    const FollowedUsers = topTenFollowed()
+  },
+
+}
+
+function topTenFollowed() {
+
+  return FollowedUsers
+}
+module.exports = pageController

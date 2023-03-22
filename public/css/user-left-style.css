@@ -1,15 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
 
-* {
-  font-family: 'Noto Sans TC', sans-serif;
-  box-sizing: border-box;
-}
 
-body,html {
-  height: 100vh;
-  width: 100%;
-  margin: 0;
-}
+
+
 
 svg {
 margin: auto 16px auto 16px;
@@ -28,7 +21,7 @@ svg.logo {
   color: black;
   height: 58px;
   line-height: 58px;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 18px;
   margin-bottom: 8px;
 }
