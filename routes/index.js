@@ -4,4 +4,5 @@ const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
 router.get('/signin', userController.login_page)
 router.get('/tweets', tweetController.getTweets)
+router.get('/users/1/tweets', userController.getUser)
 module.exports = router
