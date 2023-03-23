@@ -22,5 +22,5 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'Replies',
     underscored: true
   })
-  return User
+  return Reply
 }
