@@ -1,0 +1,98 @@
+<div class="container d-flex">
+  <div class="col-2 nav">
+    {{> nav}}
+  </div>
+  <div class="col-7 tweet">
+    <div class="tweet-container" style="width: 639px;height:1200px;border:1px solid #C4C4C4;">
+      <!--head-->
+      <div class="card-header col-12 row m-0" style="max-height: 55px;">
+        <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
+          class="col-auto d-flex align-items-center">
+          <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
+        </a>
+        <a href="/users/{{users.id}}/tweets"
+          class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
+          style="text-decoration: none;">
+          <span class="h5"
+            style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{users.name}}Elizabeth</span>
+          <span style="color: #657786; font-size: 13px; line-height: 15px;">{{tweetCount}}
+            111推文</span>
+        </a>
+      </div>
+      {{!-- user --}}
+      <div class="tweets d-flex mt-3">
+        <div class="avatar ps-3">
+          <a href="/tweets/{{user.id}}" style="text-decoration:none;">
+            <img src="{{user.avatar}}" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+          </a>
+        </div>
+        <div class="tweet-content d-flex flex-column justify-content-between">
+          <div class="name-container">
+            <div class="name">
+              <span style="font-size: 16px;font-weight:700;">666{{this.User.name}}</span>
+            </div>
+            <div class="account">
+              <span style="font-size: 14px;color:#C4C4C4">666@{{this.User.account}}．3小時{{comments.times}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{!-- content --}}
+      <div class="content-container ps-3" style="border-bottom: 1px solid #C4C4C4;">
+        <div class="content mt-3" style="font-size: 24px;">
+          Lorem example text example text for AC simple twitter project practice{{this.description}}
+        </div>
+        <div class="time mt-2" style="height: 25px;">
+          <p style="color:#6C757D;font-size: 14px;">上午 10:05・2021年11月10日{{time}}</p>
+        </div>
+      </div>
+      {{!--reply-like --}}
+      <div class="reply-like-container d-flex align-items-center" style="height: 60px;border-bottom: 1px solid #C4C4C4;">
+        <div class="reply-counts me-3 ms-3" style="font-weight: 700;">
+          34{{reply.length}}回覆
+        </div>
+        <div class="like-counts" style="font-weight: 700;">
+          666{{like.length}}喜歡次數
+        </div>
+      </div>
+      {{!-- icon --}}
+      <div class="icon-container d-flex" style="height: 60px;border-bottom: 1px solid #C4C4C4;">
+        <div class="replies d-flex align-items-center ms-3 me-5">
+          <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal" data-bs-target="#replyModal{{this.id}}">
+            <i class="far fa-comment"></i>
+          </button>
+        </div>
+        <div class="likes d-flex align-items-center ms-5">
+          <form action="/likes" method="post">
+            <button type="submit" class="btn"><i class="fa-regular fa-heart"></i></button>
+          </form>
+        </div>
+      </div>
+      {{!-- reply content --}}
+      {{!-- {{#each}} --}}
+      <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
+        <div class="avatar ps-3">
+          <a href="/tweets/{{user.id}}" style="text-decoration:none;">
+            <img src="{{user.avatar}}" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+          </a>
+        </div>
+        <div class="tweet-content">
+          <div class="name">
+            <span style="font-size: 16px;font-weight:700;">FakeName{{comments.user.name}}</span>
+            <span style="font-size: 14px;color:#C4C4C4">@FakeAccount{{comments.user.account}}．3小時{{comments.times}}</span>
+          </div>
+          <div class="reply-to mt-3">
+            <p style="color: #657786;">回覆給<strong style="color:#FF6600;">@FakeAccount{{this.account}}</strong></p>
+          </div>
+          <div class="content mt-3 mb-3">
+            推文及回覆頁面專用
+          </div>
+        </div>
+      </div>
+      {{!-- {{/each}} --}}
+    </div>
+  </div>
+  <div class="col-3 followship">
+    {{> followship}}
+  </div>
+</div>
