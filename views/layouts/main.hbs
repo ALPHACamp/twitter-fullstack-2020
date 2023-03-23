@@ -10,6 +10,7 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="/css/main-style.css">
   <link rel="stylesheet" href="/css/user-left-style.css">
+  <link rel="stylesheet" href="/css/user-right-style.css">
   <link rel="stylesheet" href="/css/tweet-style.css">
   <link rel="stylesheet" href="/css/home-style.css">
 
@@ -18,19 +19,19 @@
 <body class="h-100">
 
   <div class="container p-0 my-0 mx-auto">
-    <div class="row gx-4">
+    <div class="d-flex gx-4">
       {{!-- left --}}
-      <div class="left col-2 position-sticky vh-100">
+      <div class="left  position-sticky vh-100">
         {{>user-left}}
       </div>
       {{!-- middle --}}
-      <div class="col-7">
-        <div class="middle container border-end border-start p-0 m-0 w-100 vh-100 ">
+      <div class=" vh-100">
+        <div class="middle container border-end border-start mx-4 vh-100 ">
         {{{body}}}
         </div>
       </div>
       {{!-- left --}}
-      <div class=" right col-3 position-sticky" >
+      <div class=" right position-sticky vh-100" >
    {{>user-right}}
       </div>
     </div>

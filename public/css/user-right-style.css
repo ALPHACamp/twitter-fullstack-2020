@@ -1,0 +1,44 @@
+.most-followed{
+  border-radius:16px;
+  background: #FAFAFB;
+}
+.most-followed hr{
+  margin: 0
+}
+
+.top-ten-window .avatar{
+  width:50px;
+}
+
+.top-ten-window .name {
+  width: 90px;
+}
+
+.top-ten-window .button {
+  width: 96px;
+}
+
+.top-ten-window .name span{
+display: inline-block;
+}
+
+.top-ten-window .name span.name {
+  font-size:16px;
+  font-weight:700;
+  color: #92929D
+}
+
+.top-ten-window .name span.account {
+  font-size: 14px;
+    font-weight: 500;
+}
+
+.top-ten-window button {
+  width: 96px;
+  height: 40px;
+  border: none;
+  color: white;
+  background: #FF6600;
+  border-radius: 50px;
+
+}
