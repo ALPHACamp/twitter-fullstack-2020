@@ -22,7 +22,7 @@ users.unshift({ //建立固定的admin資料
   introduction: faker.lorem.text(),
   role: 'admin',
   account: 'root',
-  cover:'https://loremflickr.com/250/240/landscape/?lock=19' ,
+  cover:'https://loremflickr.com/250/240/landscape/?lock=33' ,
   createdAt: new Date(),
   updatedAt: new Date()
 })
