@@ -1,26 +1,18 @@
 'use strict';
+const faker = require('faker')
+
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkInsert('People', [{
-        name: 'John Doe',
-        isBetaMember: false
-      }], {});
-    */
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkInsert('Tweets',Array.from({ length: 50 }).map((d, i) => ({
+      UserId: [Math.floor(i / 10)],
+      description: faker.lorem.text(),
+      createdAt: new Date(),
+      updatedAt: new Date()
+    })), {})
   },
-
-  down: (queryInterface, Sequelize) => {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkDelete('People', null, {});
-    */
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkDelete('Tweets', null, { truncate: true, restartIdentity: true })
   }
 };
+

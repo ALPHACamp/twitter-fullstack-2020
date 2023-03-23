@@ -1,7 +1,8 @@
 'use strict'
 const bcrypt = require('bcryptjs')
 const { faker } = require('@faker-js/faker') //原套件faker壞了
-const users = Array.from({ length: 5}).map((d, i)  => ({
+
+const users = Array.from({ length: 5}).map((d, i)  => ({ //建立5個種子資料
   email: `user${i + 1}@example.com`,
   password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
   name:  `user${i + 1}`,
@@ -13,7 +14,7 @@ const users = Array.from({ length: 5}).map((d, i)  => ({
   createdAt: new Date(),
   updatedAt: new Date()
 }))
-users.unshift({
+users.unshift({ //建立固定的admin資料
   email: 'root@example.com',
   password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
   name:  'root',
@@ -26,7 +27,7 @@ users.unshift({
   updatedAt: new Date()
 })
 
-module.exports = {
+module.exports = { //從上面的users撈下來用
   up: async(queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Users', users,{})
   },
