@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="row">
+    {{> leftbar}}
+    <div class="col-7">
+      <div class="replies-page" style="display: flex; height: 37.9px">
+        <a href="/tweets"><img src="/images/back@2x.png" alt="back" style="width: 30px; height: 30px"></a>
+        <h4><strong>推文</strong></h4>
+      </div>
+      <hr>
+      <div class="row user-description">
+        <div class="col-2">
+          {{> following-avatar}}
+        </div>
+
+        <div class="col-10">
+          <a href="/users/{{this.id}}"><strong>Apple</strong></a>
+          <p>@apple</p>
+        </div>
+
+        <div class="tweet-content ps-3 px-3 ">
+          <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign merjc idblid
+            ngijsnli gririr leirhielr gli g grgiur
+            hghbgn ign merjc idblid ngijsnli gririr leirhielr
+            gli g grgiur hghbgn ign
+          </p>
+        </div>
+
+        <div class="tweet-time">
+          <p style="color: #6C757D; font-size:smaller;">上午10:05 ‧ 2023年3月23日</p>
+          <div style="border-bottom: 1px solid #E6ECF0"></div>
+        </div>
+
+        <div class="replies-and-likes-counts p-3">
+          <span class="px-2" style="color: #6C757D;"><strong style="color: #000000;">34</strong>回覆</span>
+          <spanp style="color: #6C757D;"><strong style="color: #000000;">808</strong>次喜歡</span>
+          <div class="p-2 replies-page-border-bottom"></div>
+        </div>
+
+        <div class="reply-and-like-btn d-flex replies-page-border-bottom">
+          <form action="/reply /:id" method="POST">
+            <button type="submit" class="btn"><img class="left-bar-icon" src="/images/reply-outlined@2x.png"
+                alt="reply"></button>
+          </form>
+          <form action="/like/:id" method="POST">
+            <button type="submit" class="btn"><img class="left-bar-icon" src="/images/like-outlined@2x.png"
+                alt="like"></button>
+          </form>
+        </div>
+
+      </div>
+      <div class="user-replies pt-3">
+        {{!-- {{#each}} --}}
+        <div class="user-reply p-3 replies-page-border-bottom">
+          <div class="row">
+            <div class="col-2">
+              {{> following-avatar}}
+            </div>
+            <div class="col-10">
+              <div>
+                <a href="/users/{{this.id}}"><strong>Bear</strong></a>
+                <span>@apple‧3小時</span>
+              </div>
+              <p>回覆<span style="color: #FF6600;">@apple</span></p>
+              <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign merjc idblid
+                ngijsnli gririr leirhielr gli g grgiur
+                hghbgn ign merjc idblid ngijsnli gririr leirhielr
+                gli g grgiur hghbgn ign</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="user-reply p-3 replies-page-border-bottom">
+          <div class="row">
+            <div class="col-2">
+              {{> following-avatar}}
+            </div>
+            <div class="col-10">
+              <div>
+                <a href="/users/{{this.id}}"><strong>Bear</strong></a>
+                <span>@apple‧3小時</span>
+              </div>
+              <p>回覆<span style="color: #FF6600;">@apple</span></p>
+              <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign merjc idblid
+                ngijsnli gririr leirhielr gli g grgiur
+                hghbgn ign merjc idblid ngijsnli gririr leirhielr
+                gli g grgiur hghbgn ign</p>
+            </div>
+          </div>
+        </div>
+        {{!-- {{/each}} --}}
+      </div>
+    </div>
+    {{> rightbar}}
+  </div>
+</div>

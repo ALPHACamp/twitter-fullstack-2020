@@ -1,16 +1,23 @@
 'use strict';
+const {
+  Model
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-  const Public = sequelize.define(
-    'Public',
-    {
-      UserId: DataTypes.INTEGER,
-      message: DataTypes.STRING,
-    },
-    {},
-  );
-  Public.associate = function (models) {
-    Public.belongsTo(models.User);
-    // associations can be defined here
+  class Public extends Model {
+    static associate(models) {
+      Public.belongsTo(models.User);
+    };
   };
+  Public.init({
+    UserId: DataTypes.INTEGER,
+    message: DataTypes.STRING,
+  },
+    {
+      sequelize,
+      modelName: 'Public',
+      tableName: 'Publics',
+      underscored: true
+    },
+  );
   return Public;
 };
