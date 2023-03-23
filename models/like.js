@@ -13,13 +13,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Like.init({
-    UserId: DataTypes.INTEGER,
-    TweetId: DataTypes.INTEGER
+    userId: DataTypes.INTEGER,
+    tweetId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Like',
     tableName: 'Likes',
     underscored: true
   })
-  return User
+  return Like
 }
