@@ -4,8 +4,8 @@ const faker = require('faker')
 module.exports = {
   up: async (queryInterface, Sequelize) => { 
     await queryInterface.bulkInsert('Replies', Array.from({ length: 50 }).map((d, i) => ({
-      UserId: [Math.floor(i / 10)],
-      TweetId: [Math.floor(i / 10)],
+      User_id: [Math.floor(i / 10)],
+      Tweet_id: [Math.floor(i / 10)],
       comment: faker.lorem.text(),
       created_at: new Date(),
       updated_at: new Date()
