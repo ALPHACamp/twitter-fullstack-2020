@@ -9,25 +9,24 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Tweet);
       User.hasMany(models.Like);
       User.hasMany(models.Public);
-      // User.belongsToMany(models.User);
       User.belongsToMany(models.User, {
         through: models.Followship,
-        foreignKey: 'following_id',
+        foreignKey: 'followingId',
         as: 'Followers',
       });
       User.belongsToMany(models.User, {
         through: models.Followship,
-        foreignKey: 'follower_id',
+        foreignKey: 'followerId',
         as: 'Followings',
       });
       User.belongsToMany(models.Tweet, {
         through: models.Like,
-        foreignKey: 'User_id',
+        foreignKey: 'UserId',
         as: 'LikeTweets',
       });
       User.belongsToMany(models.Reply, {
         through: models.Like,
-        foreignKey: 'User_id',
+        foreignKey: 'UserId',
         as: 'LikeReplies',
       });
     }
@@ -40,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     cover: DataTypes.STRING,
     avatar: DataTypes.STRING,
     introduction: DataTypes.TEXT,
-    is_admin: DataTypes.BOOLEAN,
+    isAdmin: DataTypes.BOOLEAN,
     role: DataTypes.STRING,
   }, {
     sequelize,

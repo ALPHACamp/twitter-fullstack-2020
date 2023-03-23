@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Public = sequelize.define(
     'Public',
     {
-      User_id: DataTypes.INTEGER,
+      UserId: DataTypes.INTEGER,
       message: DataTypes.STRING,
     },
     {},

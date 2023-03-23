@@ -8,13 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      User_id: {
+      user_id: {
         type: Sequelize.INTEGER,
       },
-      Position: {
+      position: {
         type: Sequelize.STRING,
       },
-      Position_id: {
+      position_id: {
         type: Sequelize.INTEGER,
       },
       is_like: {

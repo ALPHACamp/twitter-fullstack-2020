@@ -3,9 +3,9 @@ module.exports = (sequelize, DataTypes) => {
   const Reply = sequelize.define(
     'Reply',
     {
-      User_id: DataTypes.INTEGER,
-      Tweet_id: DataTypes.INTEGER,
-      Reply_id: DataTypes.INTEGER,
+      UserId: DataTypes.INTEGER,
+      TweetId: DataTypes.INTEGER,
+      ReplyId: DataTypes.INTEGER,
       comment: DataTypes.TEXT,
     },
     {},
@@ -13,15 +13,15 @@ module.exports = (sequelize, DataTypes) => {
   Reply.associate = function (models) {
     Reply.belongsTo(models.User);
     Reply.belongsTo(models.Tweet);
-    Reply.hasMany(models.Like, { foreignKey: 'Position_id' });
+    Reply.hasMany(models.Like, { foreignKey: 'PositionId' });
     Reply.hasMany(models.Reply, {
       as: 'followingByReply',
-      foreignKey: 'Reply_id',
+      foreignKey: 'ReplyId',
       useJunctionTable: false,
     });
     Reply.belongsToMany(models.User, {
       through: models.Like,
-      foreignKey: 'Position_id',
+      foreignKey: 'PositionId',
       as: 'LikedByUsers',
     });
   };
