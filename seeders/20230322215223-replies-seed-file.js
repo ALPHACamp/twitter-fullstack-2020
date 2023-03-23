@@ -7,8 +7,8 @@ module.exports = {
       UserId: [Math.floor(i / 10)],
       TweetId: [Math.floor(i / 10)],
       comment: faker.lorem.text(),
-      createdAt: new Date(),
-      updatedAt: new Date()
+      created_at: new Date(),
+      updated_at: new Date()
     })), {})
   },
 

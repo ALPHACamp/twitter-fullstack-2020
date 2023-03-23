@@ -7,8 +7,8 @@ module.exports = {
     await queryInterface.bulkInsert('Tweets',Array.from({ length: 50 }).map((d, i) => ({
       UserId: [Math.floor(i / 10)],
       description: faker.lorem.text(),
-      createdAt: new Date(),
-      updatedAt: new Date()
+      created_at: new Date(),
+      updated_at: new Date()
     })), {})
   },
   down: async (queryInterface, Sequelize) => {
