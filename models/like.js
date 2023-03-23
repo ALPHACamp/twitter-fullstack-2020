@@ -21,5 +21,5 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'Likes',
     underscored: true
   })
-  return User
+  return Like
 }
