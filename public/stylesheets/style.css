@@ -12,8 +12,7 @@ a:hover {
 .avatar-img {
   border-radius: 50%
 }
-
-.left-bar-tweetbtn ,.follow-btn{
+.left-bar-tweetbtn, .follow-btn{
   width: 125px;
   height: 40px;
   padding: 8px 16px;
@@ -67,10 +66,6 @@ a:hover {
   float: left;
 }
 
-.position-absolute {
-  position: absolute;
-}
-
 textarea {
   resize: none;
 }
@@ -100,4 +95,12 @@ textarea {
 
 .replies-page-border-bottom {
   border-bottom: 1px solid #E6ECF0;
+}
+.fix-bar {
+  position: fixed;
+}
+
+.logout {
+  position: absolute;
+  bottom: 15px;
 }
