@@ -9,9 +9,10 @@ module.exports = {
 
     await queryInterface.bulkInsert('Tweets',Array.from({ length: 50 }).map((d, i) => ({
       UserId: users[Math.floor(i / 10)].id, // 平均分給5個使用者
+      User_id: [Math.floor(i / 10)],
       description: faker.lorem.text(),
-      createdAt: new Date(),
-      updatedAt: new Date()
+      created_at: new Date(),
+      updated_at: new Date()
     })), {})
   },
   down: async (queryInterface, Sequelize) => { // truncate偵錯到錯誤馬上暫停並顯示原因
