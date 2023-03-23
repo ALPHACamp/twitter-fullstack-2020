@@ -1,11 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
-
-
-
-
-
 svg {
-margin: auto 16px auto 16px;
+  margin: auto 16px auto 16px;
 }
 
 svg.logo {
@@ -29,15 +23,16 @@ svg.logo {
 .nav-pills .nav-link.active {
   background-color: white;
   color: #FF6600;
-  
+
 }
-.nav-pills .nav-link.active path{
+
+.nav-pills .nav-link.active path {
   fill: #FF6600;
 }
 
 .nav-pills .btn {
   background-color: #FF6600;
-  color: #white;
+  color: white;
   border-radius: 50px;
   height: 46px;
   font-weight: 400;
