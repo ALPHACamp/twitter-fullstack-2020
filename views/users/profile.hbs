@@ -1,0 +1,109 @@
+<div class="container">
+  <div class="row">
+    {{> leftbar}}
+    <div class="col-7">
+      <div class="user-profile-page">
+        <div class="user-header d-flex align-items-center mt-3">
+          <div class="user-profile-header-back flex-shrink-0">
+            <a href="/tweets">
+              <img src="/images/back@2x.png" alt="home">
+            </a>
+          </div>
+          <div class="user-profile-header-info flex-grow-1">
+            <a href="/user/tweets">
+              <div class="user-profile-header-nickname">
+                <h5 class="mb-0">John Doe</h5>
+              </div>
+              <div class="user-profile-header-tweets">
+                <p class="mb-0">25 推文</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="user-profile">
+          <div class="user-profile-cover">
+            <div class="cover-image">
+              <img src="/images/john-cover@2x.png" alt="Cover Image">
+            </div>
+          </div>
+          <div class="user-profile-about">
+            <div class="user-profile-image">
+              <img src="/images/john-photo@2x.png" alt="Profile Image">
+            </div>
+            <button type="button" class="user-profile-edit-btn" data-bs-toggle="modal"
+              data-bs-target="#editProfileModal">編輯個人資料</button>
+            {{!-- User profile edit modal --}}
+            <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content user-profile-edit">
+                  {{!-- Modal header --}}
+                  <div class="modal-header user-profile-edit d-flex">
+                    <div class="p-2">
+                      <img src="/images/edit-profile-close@2x.png" class="close-image user-profile-edit"
+                        data-bs-dismiss="modal" alt="Close">
+                    </div>
+                    <div class="p-2 flex-grow-1">
+                      <b class="modal-title user-profile-edit mb-0" id="editProfileModalLabel">編輯個人資料</b>
+                    </div>
+                    <div class="p-2">
+                      <button type="button" class="btn custom-save">儲存</button>
+                    </div>
+                  </div>
+                  <div class="modal-body user-profile-edit">
+                    <div class="user-profile-edit-cover">
+                      <img src="/images/john-cover@2x.png" alt="Cover Image">
+                    </div>
+                    <div class="user-profile-edit-image">
+                      <img src="/images/john-photo@2x.png" alt="Profile Image">
+                    </div>
+                    <!-- Name input -->
+                    <div class="user-profile-edit-form">
+                      <label for="name" class="user-profile-edit-form-label">名稱</label>
+                      <input type="text" class="user-profile-edit-form-control" id="name" maxlength="50"
+                        placeholder="John Doe">
+                    </div>
+                    <span class="form-text float-end" id="name-char-count">0 / 50</span>
+                    <br>
+                    <!-- Self-introduction input -->
+                    <div class="user-profile-edit-form">
+                      <label for="self-introduction" class="user-profile-edit-form-label">自我介紹</label>
+                      <textarea class="user-profile-edit-form-control" id="self-introduction" rows="4" maxlength="160"
+                        placeholder="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint."></textarea>
+                    </div>
+                    <span class="form-text float-end" id="self-introduction-char-count">0 / 160</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="user-profile-about-nickname">
+              <h5 class="mb-0">John Doe</h5>
+            </div>
+            <div class="user-profile-about-name">
+              <p class="mb-0">@heyjohn</p>
+            </div>
+            <div class="user-profile-about-description">
+              <p class="mt-2">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</p>
+            </div>
+            <div class="user-profile-about-follow">
+              <p><span class="user-profile-follow-count">34 個</span>跟隨中</p>
+              <P><span class="user-profile-follow-count">59 位</span>跟隨者</P>
+            </div>
+          </div>
+        </div>
+        {{> users-tab}}
+      </div>
+    </div>
+    {{> rightbar}}
+  </div>
+</div>
+
+<script>
+  document.getElementById('name').addEventListener('input', function () {
+    document.getElementById('name-char-count').textContent = this.value.length + ' / 50';
+  });
+
+  document.getElementById('self-introduction').addEventListener('input', function () {
+    document.getElementById('self-introduction-char-count').textContent = this.value.length + ' / 160';
+  });
+</script>
