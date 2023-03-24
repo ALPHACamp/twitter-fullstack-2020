@@ -11,8 +11,8 @@ const users = Array.from({ length: 5 }).map((d, i)  => ({ //建立5個種子資�
   role: 'user',
   account: `user${i + 1}`,
   cover:`https://loremflickr.com/250/240/landscape/?lock=${i}` ,
-  created_at: new Date(),
-  updated_at: new Date()
+  createdAt: new Date(),
+  updatedAt: new Date()
 }))
 users.unshift({ //建立固定的管理員資料
   email: 'root@example.com',
@@ -23,8 +23,8 @@ users.unshift({ //建立固定的管理員資料
   role: 'admin',
   account: 'root',
   cover:'https://loremflickr.com/250/240/landscape/?lock=33' ,
-  created_at: new Date(),
-  updated_at: new Date()
+  createdAt: new Date(),
+  updatedAt: new Date()
 })
 
 module.exports = { //從上面的users撈下來用

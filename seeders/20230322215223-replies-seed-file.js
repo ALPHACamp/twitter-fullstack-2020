@@ -4,13 +4,28 @@ const { User, Tweet } = require('../models') // import User&Tweet model 因為�
 
 module.exports = {
   up: async (queryInterface, Sequelize) => { 
-    await queryInterface.bulkInsert('Replies', Array.from({ length: 50 }).map((d, i) => ({
-      User_id: [Math.floor(i / 10)],
-      Tweet_id: [Math.floor(i / 10)],
-      comment: faker.lorem.text(),
-      created_at: new Date(),
-      updated_at: new Date()
-    })), {})
+    const replies =  [] // 放一個空陣列存放
+    const tweets = await Tweet.findAll({ attributes: ['id'] }) // 關聯TweetId
+    const users = await User.findAll({  // 關聯UserId,並且角色只能是user
+      raw: true,
+      nest: true,
+      where: { role: 'user' },
+      attributes: ['id']
+    })
+    
+    tweets.forEach((tweet) => { // 一則tweet三筆回覆
+      [0, 1, 2].forEach( i => {
+        replies.push({
+          UserId: users[Math.floor( Math.random() * users.length)].id,
+          TweetId: tweet.id,
+          comment: faker.lorem.text(),
+          createdAt: new Date(),
+          updatedAt: new Date()
+        })
+      })
+    })
+
+    await queryInterface.bulkInsert('Replies', replies)  // 將 replies 推進 model.Replies
   },
 
   down: async (queryInterface, Sequelize) => { // truncate偵錯到錯誤馬上暫停並顯示原因
