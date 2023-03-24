@@ -10,29 +10,40 @@
       <hr>
 
       <div class="tweets-container">
-        {{!-- {{#each tweets}} --}}
-        <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #E6ECF0; ">
-          <div class="avatar ps-3">
-            <a href="/tweets/{{user.id}}" style="text-decoration:none;">
-              <img src="{{user.avatar}}" class="rounded-circle me-3"
+        {{#each tweets}}
+        <div class="row" style="width:937px; height:118px;">
+          <div class="col-1">
+            <a href="/tweets/{{this.User.id}}" style="text-decoration:none;">
+              <img src="{{this.User.avatar}}" class="rounded-circle me-3"
                 style="width: 50px;height: 50px;background: #E6ECF0;">
             </a>
           </div>
-          <div class="tweet-content" style="margin-bottom:16px;">
-            <div class="name">
-              <span
-                style="font-family:'Noto Sans TC' font-size: 16px;font-weight:700;">FakeName{{comments.user.name}}</span>
-              <span
-                style="font-size:14px; color:#6C757D">@FakeAccount{{comments.user.account}}．3小時{{comments.times}}</span>
+          <div class="col-10">
+            <div class="row">
+              <div class="col-2">
+                <span style="font-family:'Noto Sans TC' font-size: 16px;font-weight:700;">
+                  {{this.User.name}}Fack Name
+                </span>
+              </div>
+              <div class="col-9">
+                <span class="account col-9" style="font-size:14px; color:#6C757D">
+                  {{this.User.account}}Fake Account．{{this.createdAt}}
+                </span>
+              </div>
+              <div class="col-1 " style="margin-left:0px;">
+                <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+                  <button type="'submit" class="btn d-flex justify-content-end ms-5 ps-5">
+                    <i class="fa-solid fa-xmark" style="color: #364163;"></i>
+                  </button>
+                </form>
+              </div>
             </div>
-            <div class="content mt-2" style="font-size:16px; font-weight:400; color:#171725;">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut posuere sed justo sit amet imperdiet.
-              Curabitur bibendum
-              scelerisque hendrerit. Ma
+            <div class="content mt-2" style="width:855px; height:52px; font-size:16px; font-weight:400; color:#171725;">
+              {{this.description}}
             </div>
           </div>
         </div>
-        {{!-- {{/each}} --}}
+        {{/each}}
       </div>
     </div>
   </div>
