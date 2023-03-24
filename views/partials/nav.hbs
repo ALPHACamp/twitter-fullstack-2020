@@ -38,7 +38,7 @@
     </div>
   </div>
   {{!-- modal --}}
-  <div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="tweetModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -61,6 +61,7 @@
                     style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;"
                     placeholder="有什麼新鮮事?"></textarea>
                 </div>
+                {{> message}}
                 <div class="button d-flex justify-content-end">
                   <button type="submit" class="btn" style="background: #FF6600;border-radius: 50px;">
                     <span style="color: #FFFFFF;">推文</span>

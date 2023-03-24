@@ -4,14 +4,14 @@ const tweetController = {
   getTweets: (req, res, next) => { // 進入推文清單
     const id = 1
     return Tweet.findAll({
-        include:[
-          User,
-          Reply
-        ],
-        nest: true,
-        order: [['createdAt', "desc"]],
-        limit: 5
-      })
+      include: [
+        User,
+        Reply
+      ],
+      nest: true,
+      order: [['createdAt', "desc"]],
+      limit: 5
+    })
       .then(tweets => {
         const data = tweets.map(t => ({
           ...t.dataValues,
@@ -20,7 +20,7 @@ const tweetController = {
         return User.findByPk(2)//helpers.getUser(req).id
           .then(user => {
             user = user.toJSON()
-            return res.render('tweets', { tweets:data , user })
+            return res.render('tweets', { tweets: data, user })
           })
       })
       .catch(err => console.log(err))
@@ -39,15 +39,23 @@ const tweetController = {
       })
       .catch(err => console.log(err))
   },
-  createTweet:(req,res,next)=>{
+  createTweet: (req, res, next) => {
     const UserId = 2 //helpers.getUser(req).id
     const description = req.body.description
+    if (!description){
+      req.flash('error_messages', '貼文不可空白')
+      return res.redirect('back')
+    }
+    if (description.length > 140){
+      req.flash('error_messages', '貼文不得超過140個字')
+      return res.redirect('back')
+    }
     return Tweet.create({
       UserId,
       description
     })
-      .then(()=>res.redirect('/tweets'))
-      .catch(err=> console.log(err))
+      .then(() => res.redirect('/tweets'))
+      .catch(err => console.log(err))
   }
 }
 
