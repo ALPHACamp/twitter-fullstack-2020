@@ -1,8 +1,8 @@
 const userController = {
-    login_page: (req, res) => {
+    loginPage: (req, res) => {
         res.render('login')
     },
-    register_page: (req, res) => {
+    registerPage: (req, res) => {
         res.render('register')
     },
     getUser: (req, res, next) => {
