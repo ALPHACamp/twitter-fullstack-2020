@@ -1,5 +1,6 @@
 'use strict';
 const faker = require('faker')
+const { User, Tweet } = require('../models') // import User&Tweet model 因為回覆跟tweet貼文以及使用者都有關聯
 
 module.exports = {
   up: async (queryInterface, Sequelize) => { 
@@ -12,7 +13,7 @@ module.exports = {
     })), {})
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface, Sequelize) => { // truncate偵錯到錯誤馬上暫停並顯示原因
     await queryInterface.bulkDelete('Replies', null, { truncate: true, restartIdentity: true })
   }
 };

@@ -2,7 +2,7 @@
 const bcrypt = require('bcryptjs')
 const { faker } = require('@faker-js/faker') //原套件faker壞了
 
-const users = Array.from({ length: 5}).map((d, i)  => ({ //建立5個種子資料
+const users = Array.from({ length: 5 }).map((d, i)  => ({ //建立5個種子資料
   email: `user${i + 1}@example.com`,
   password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
   name:  `user${i + 1}`,
@@ -14,7 +14,7 @@ const users = Array.from({ length: 5}).map((d, i)  => ({ //建立5個種子資�
   created_at: new Date(),
   updated_at: new Date()
 }))
-users.unshift({ //建立固定的admin資料
+users.unshift({ //建立固定的管理員資料
   email: 'root@example.com',
   password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
   name:  'root',
