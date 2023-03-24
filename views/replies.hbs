@@ -17,7 +17,7 @@
           <p>@apple</p>
         </div>
 
-        <div class="tweet-content ps-3 px-3 ">
+        <div class="tweet-content-in-replies-page ps-3 px-3 ">
           <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign merjc idblid
             ngijsnli gririr leirhielr gli g grgiur
             hghbgn ign merjc idblid ngijsnli gririr leirhielr
@@ -33,7 +33,7 @@
         <div class="replies-and-likes-counts p-3">
           <span class="px-2" style="color: #6C757D;"><strong style="color: #000000;">34</strong>回覆</span>
           <spanp style="color: #6C757D;"><strong style="color: #000000;">808</strong>次喜歡</span>
-          <div class="p-2 replies-page-border-bottom"></div>
+            <div class="p-2 replies-page-border-bottom"></div>
         </div>
 
         <div class="reply-and-like-btn d-flex replies-page-border-bottom">
@@ -48,9 +48,10 @@
         </div>
 
       </div>
-      <div class="user-replies pt-3">
+      <div class="user-replies-reply-page pt-3">
         {{!-- {{#each}} --}}
-        <div class="user-reply p-3 replies-page-border-bottom">
+        <div class="user-reply p-3 replies-page-border-bottom" data-bs-toggle="modal"
+          data-bs-target="#user-replies-modal-in-replies-page">
           <div class="row">
             <div class="col-2">
               {{> following-avatar}}
@@ -69,14 +70,60 @@
           </div>
         </div>
 
-        <div class="user-reply p-3 replies-page-border-bottom">
+        {{!-- 回覆彈跳視窗 --}}
+        <div class="modal" tabindex="-1" id="user-replies-modal-in-replies-page">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                {{!-- <h5 class="modal-title">User name</h5> --}}
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-2">
+                    {{> following-avatar}}
+                    <div class="reply-modal-vr-line"></div>
+                  </div>
+                  {{!-- --}}
+                  <div class="col-10">
+                    <div>
+                      <a href="/users/{{this.id}}"><strong>Bear</strong></a>
+                      <span>@apple‧3小時</span>
+                    </div>
+                    <div>
+                      <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign merjc idblid ngijsnli gririr
+                        leirhielr gli g grgiur
+                        hghbgn ign merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign</p>
+                      <span>回覆給<span class="ms-1" style="color: #FF6600;">@mitsubishi</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                {{> user-avatar}}
+                <form action="">
+                  <textarea class="modal-input-tweets" placeholder="推你的回覆" name="" id="" maxlength="140" rows="3"
+                    cols="100"></textarea>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <div class="d-flex flex-row-reverse mb-1">
+                  <button class="tweetbtn" type="submit">回覆</button>
+                  <p class="user-reply-alertMsg">內容不可空白</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="user-reply p-3 replies-page-border-bottom" data-bs-toggle="modal"
+          data-bs-target="#user-replies-modal2">
           <div class="row">
             <div class="col-2">
               {{> following-avatar}}
             </div>
             <div class="col-10">
               <div>
-                <a href="/users/{{this.id}}"><strong>Bear</strong></a>
+                <a href="/users/{{this.id}}"><strong>Corcs</strong></a>
                 <span>@apple‧3小時</span>
               </div>
               <p>回覆<span style="color: #FF6600;">@apple</span></p>
@@ -87,6 +134,52 @@
             </div>
           </div>
         </div>
+
+        {{!-- 回覆彈跳視窗 --}}
+        <div class="modal" tabindex="-1" id="user-replies-modal2">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                {{!-- <h5 class="modal-title">User name</h5> --}}
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-2">
+                    {{> following-avatar}}
+                    <div class="reply-modal-vr-line"></div>
+                  </div>
+                  {{!-- --}}
+                  <div class="col-10">
+                    <div>
+                      <a href="/users/{{this.id}}"><strong>Apple</strong></a>
+                      <span>@apple‧3小時</span>
+                    </div>
+                    <div>
+                      <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign merjc idblid ngijsnli gririr
+                        leirhielr gli g grgiur
+                        hghbgn ign merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign</p>
+                      <span>回覆給<span class="ms-1" style="color: #FF6600;">@mitsubishi</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                {{> user-avatar}}
+                <form action="">
+                  <textarea class="modal-input-tweets" placeholder="推你的回覆" name="" id="" maxlength="140" rows="3"
+                    cols="100"></textarea>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <div class="d-flex flex-row-reverse mb-1">
+                  <button class="tweetbtn" type="submit">回覆</button>
+                  <p class="user-reply-alertMsg">內容不可空白</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {{!-- {{/each}} --}}
       </div>
     </div>
