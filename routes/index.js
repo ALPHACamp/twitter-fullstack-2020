@@ -15,12 +15,14 @@ router.get('/logout', userController.logout) // 登出
 
 router.get('/tweets', tweetController.getTweets) // 總推文清單
 router.get('/tweets/:id', tweetController.getTweet) // 個人頁面
+
 router.get('/reply/:id', replyController.getReplies) // 推文及回覆
 router.get('/likes/:id',likesController.getLikes) // 喜歡的內容
 router.get('/users/:id/followers',userController.getFollower) // 跟隨中
 router.get('/users/:id/followings', userController.getFollowing) // 跟隨者
 
 router.get("/users/:id",userController.getUser) // 個人頁面
-router.get('/users/:id/setting', userController.getSetting)  // 個人資料設定
+router.get('/setting', userController.getSetting)  // 個人資料設定
+router.put('/setting', userController.putSetting)  // 個人資料編輯
 
 module.exports = router
