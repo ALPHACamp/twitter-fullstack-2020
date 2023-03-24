@@ -1,4 +1,3 @@
-const { UCS2_PERSIAN_CI } = require('mysql2/lib/constants/charsets')
 const { User, Tweet, Followship, Like } = require('../models')
 
 const adminController = {
