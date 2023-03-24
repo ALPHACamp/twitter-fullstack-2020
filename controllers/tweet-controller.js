@@ -3,18 +3,25 @@ const { User, Tweet, Reply } = require('../models')
 const tweetController = {
   getTweets: (req, res, next) => { // 進入推文清單
     const id = 1
-    return Promise.all([
-      User.findByPk(id),
-      Tweet.findAll({
-        include: User,
-        raw: true,
+    return Tweet.findAll({
+        include:[
+          User,
+          Reply
+        ],
         nest: true,
         order: [['createdAt', "desc"]],
         limit: 5
       })
-    ])
-      .then(([user, tweets]) => {
-        res.render('tweets', { user: user.toJSON(), tweets })
+      .then(tweets => {
+        const data = tweets.map(t => ({
+          ...t.dataValues,
+          description: t.description
+        }))
+        return User.findByPk(2)//helpers.getUser(req).id
+          .then(user => {
+            user = user.toJSON()
+            return res.render('tweets', { tweets:data , user })
+          })
       })
       .catch(err => console.log(err))
   },
@@ -31,6 +38,16 @@ const tweetController = {
         res.render('tweet', { tweet })
       })
       .catch(err => console.log(err))
+  },
+  createTweet:(req,res,next)=>{
+    const UserId = 2 //helpers.getUser(req).id
+    const description = req.body.description
+    return Tweet.create({
+      UserId,
+      description
+    })
+      .then(()=>res.redirect('/tweets'))
+      .catch(err=> console.log(err))
   }
 }
 
