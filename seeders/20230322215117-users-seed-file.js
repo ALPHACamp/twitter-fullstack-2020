@@ -2,7 +2,7 @@
 const bcrypt = require('bcryptjs')
 const { faker } = require('@faker-js/faker') //原套件faker壞了
 
-const users = Array.from({ length: 5}).map((d, i)  => ({ //建立5個種子資料
+const users = Array.from({ length: 5 }).map((d, i)  => ({ //建立5個種子資料
   email: `user${i + 1}@example.com`,
   password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
   name:  `user${i + 1}`,
@@ -11,10 +11,10 @@ const users = Array.from({ length: 5}).map((d, i)  => ({ //建立5個種子資�
   role: 'user',
   account: `user${i + 1}`,
   cover:`https://loremflickr.com/250/240/landscape/?lock=${i}` ,
-  created_at: new Date(),
-  updated_at: new Date()
+  createdAt: new Date(),
+  updatedAt: new Date()
 }))
-users.unshift({ //建立固定的admin資料
+users.unshift({ //建立固定的管理員資料
   email: 'root@example.com',
   password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
   name:  'root',
@@ -23,8 +23,8 @@ users.unshift({ //建立固定的admin資料
   role: 'admin',
   account: 'root',
   cover:'https://loremflickr.com/250/240/landscape/?lock=33' ,
-  created_at: new Date(),
-  updated_at: new Date()
+  createdAt: new Date(),
+  updatedAt: new Date()
 })
 
 module.exports = { //從上面的users撈下來用
