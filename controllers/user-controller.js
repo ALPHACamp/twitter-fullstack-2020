@@ -6,7 +6,7 @@ const userController = {
         res.render('register')
     },
     getUser: (req, res, next) => {
-        res.render('users')
+        res.render('users/profile')
     }
 }
 
