@@ -10,11 +10,11 @@
           class="col-auto d-flex align-items-center">
           <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
         </a>
-        <a href="/users/{{users.id}}/tweets"
+        <a href="/users/{{tweet.User.id}}/tweets"
           class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
           style="text-decoration: none;">
           <span class="h5"
-            style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{users.name}}Elizabeth</span>
+            style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{tweet.User.name}}</span>
           <span style="color: #657786; font-size: 13px; line-height: 15px;">{{tweetCount}}
             111推文</span>
         </a>
@@ -22,17 +22,17 @@
       {{!-- user --}}
       <div class="tweets d-flex mt-3">
         <div class="avatar ps-3">
-          <a href="/tweets/{{user.id}}" style="text-decoration:none;">
-            <img src="{{user.avatar}}" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+          <a href="/users/{{tweet.User.id}}" style="text-decoration:none;">
+            <img src="{{tweet.User.avatar}}" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
           </a>
         </div>
         <div class="tweet-content d-flex flex-column justify-content-between">
           <div class="name-container">
             <div class="name">
-              <span style="font-size: 16px;font-weight:700;">666{{this.User.name}}</span>
+              <span style="font-size: 16px;font-weight:700;">{{tweet.User.name}}</span>
             </div>
             <div class="account">
-              <span style="font-size: 14px;color:#C4C4C4">666@{{this.User.account}}．3小時{{comments.times}}</span>
+              <span style="font-size: 14px;color:#C4C4C4">@{{tweet.User.account}}．3小時{{comments.times}}</span>
             </div>
           </div>
         </div>
@@ -40,7 +40,7 @@
       {{!-- content --}}
       <div class="content-container ps-3" style="border-bottom: 1px solid #C4C4C4;">
         <div class="content mt-3" style="font-size: 24px;">
-          Lorem example text example text for AC simple twitter project practice{{this.description}}
+          {{tweet.description}}
         </div>
         <div class="time mt-2" style="height: 25px;">
           <p style="color:#6C757D;font-size: 14px;">上午 10:05・2021年11月10日{{time}}</p>
@@ -49,16 +49,16 @@
       {{!--reply-like --}}
       <div class="reply-like-container d-flex align-items-center" style="height: 60px;border-bottom: 1px solid #C4C4C4;">
         <div class="reply-counts me-3 ms-3" style="font-weight: 700;">
-          34{{reply.length}}回覆
+          {{tweet.Replies.length}} 回覆
         </div>
         <div class="like-counts" style="font-weight: 700;">
-          666{{like.length}}喜歡次數
+          666{{like.length}} 喜歡次數
         </div>
       </div>
       {{!-- icon --}}
       <div class="icon-container d-flex" style="height: 60px;border-bottom: 1px solid #C4C4C4;">
         <div class="replies d-flex align-items-center ms-3 me-5">
-          <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal" data-bs-target="#replyModal{{this.id}}">
+          <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal" data-bs-target="#replyModal">
             <i class="far fa-comment"></i>
           </button>
         </div>
@@ -69,30 +69,83 @@
         </div>
       </div>
       {{!-- reply content --}}
-      {{!-- {{#each}} --}}
+      {{#each tweet.Replies }}
       <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
         <div class="avatar ps-3">
-          <a href="/tweets/{{user.id}}" style="text-decoration:none;">
-            <img src="{{user.avatar}}" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+          <a href="/users/{{this.User.id}}" style="text-decoration:none;">
+            <img src="{{this.User.avatar}}" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
           </a>
         </div>
         <div class="tweet-content">
           <div class="name">
-            <span style="font-size: 16px;font-weight:700;">FakeName{{comments.user.name}}</span>
-            <span style="font-size: 14px;color:#C4C4C4">@FakeAccount{{comments.user.account}}．3小時{{comments.times}}</span>
+            <span style="font-size: 16px;font-weight:700;">{{this.User.name}}</span>
+            <span style="font-size: 14px;color:#C4C4C4">@{{this.User.account}}．3小時{{comments.times}}</span>
           </div>
           <div class="reply-to mt-3">
-            <p style="color: #657786;">回覆給<strong style="color:#FF6600;">@FakeAccount{{this.account}}</strong></p>
+            <p style="color: #657786;font-size:14px;">回覆給<strong style="color:#FF6600;">@{{../tweet.User.account}}</strong></p>
           </div>
           <div class="content mt-3 mb-3">
-            推文及回覆頁面專用
+            {{this.comment}}
           </div>
         </div>
       </div>
-      {{!-- {{/each}} --}}
+      {{/each}}
     </div>
   </div>
   <div class="col-3 followship">
     {{> followship}}
   </div>
 </div>
+{{!-- modal --}}
+        <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <div class="tweet-title btn"><button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close" style="color: #FF6600;"></button></div>
+              </div>
+              <div class="tweets d-flex mt-3">
+                <div class="avatar ps-3">
+                  <a href="/tweets/{{tweet.User.id}}" style="text-decoration:none;">
+                    <img src="{{tweet.User.avatar}}" class="rounded-circle me-3"
+                      style="width: 50px;height: 50px;background: #C4C4C4;">
+                  </a>
+                </div>
+                <div class="tweet-content">
+                  <div class="name">
+                    <span style="font-size: 16px;font-weight:700;">{{tweet.User.name}}</span>
+                    <span
+                      style="font-size: 14px;color:#C4C4C4">@{{tweet.Userr.account}}．3小時{{comments.times}}</span>
+                  </div>
+                  <div class="content mt-3 mb-2">
+                    {{tweet.description}}
+                  </div>
+                  <p>回覆給<strong style="color:##6C757D;">@{{tweet.User.account}}</strong></p>
+                </div>
+              </div>
+              <div class="modal-body" class="d-flex">
+                <div class="body-avatar d-flex align-items-stretch">
+                  <div class="left">
+                    <a href="/tweets/{{user.id}}">
+                      <img src="{{user.avatar}}" class="rounded-circle me-3"
+                        style="width: 50px;height: 50px;background: #C4C4C4;">
+                    </a>
+                  </div>
+                  <div class="right" class="d-flex">
+                    <form method="POST" action="/tweets/{{this.user.id}}">
+                      <textarea name="description" cols="40" rows="10"
+                        style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;"
+                        placeholder="推你的回覆"></textarea>
+                      <div class="button d-flex justify-content-end">
+                        <button type="submit" class="btn" style="background: #FF6600;border-radius: 50px;">
+                          <span style="color: #FFFFFF;">推文</span>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
