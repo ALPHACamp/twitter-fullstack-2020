@@ -1,0 +1,50 @@
+<div class="main mx-auto " style="width:356px;height:400px;  margin-top:64px;">
+    <div class="mx-auto" style="width: 50px; height: 50px;" id="img_panel">
+        <img src="images/AC-icon@2x.png" style="width: 40px; height: 40px;" class="text-center">
+    </div>
+    <h3 class="text-center" style="margin-top:24px; margin-bottom:40px;font-weight:700;font-size: 28px;line-height: 26px;">
+        建立你的帳號</h3>
+    <form action="/signup" style="margin-bottom: 22px;">
+        <div style="background-color:#F5F8FA; margin-bottom:32px; border-radius:2px; border-bottom:2px solid #657786;">
+            <label for="account" class="form-label mb-0"
+                style="margin-left:10px;color:#696974;font-size: 14px;line-height: 22px;">帳號</label>
+            <input type="text" class="form-control border-0" id="account" name="account" placeholder="請輸入帳號"
+                style="background-color:#F5F8FA;color:#B5B5BE;font-size: 16px;line-height: 26px;" value="{{account}}">
+
+        </div>
+         <div style="background-color:#F5F8FA; margin-bottom:32px; border-radius:2px; border-bottom:2px solid #657786;">
+            <label for="name" class="form-label mb-0"
+                style="margin-left:10px;color:#696974;font-size: 14px;line-height: 22px;">名稱</label>
+            <input type="text" class="form-control border-0" id="name" name="name" placeholder="請輸入使用者名稱"
+                style="background-color:#F5F8FA;color:#B5B5BE;font-size: 16px;line-height: 26px;" value="{{name}}">
+
+        </div>
+         <div style="background-color:#F5F8FA; margin-bottom:32px; border-radius:2px; border-bottom:2px solid #657786;">
+            <label for="email" class="form-label mb-0"
+                style="margin-left:10px;color:#696974;font-size: 14px;line-height: 22px;">Email</label>
+            <input type="email" class="form-control border-0" id="email" name="email" placeholder="請輸入Email"
+                style="background-color:#F5F8FA;color:#B5B5BE;font-size: 16px;line-height: 26px;" value="{{email}}">
+
+        </div>
+        <div style="background-color:#F5F8FA; margin-bottom:32px; border-radius:2px; border-bottom:2px solid #657786;">
+            <label for="password" class="form-label mb-0"
+                style="margin-left:10px;color:#696974;font-size: 14px;line-height: 22px;">密碼</label>
+            <input type="password" class="form-control  border-0" id="password" name="password" placeholder="請設定密碼"
+                style="background-color:#F5F8FA;color:#B5B5BE;font-size: 16px;line-height: 26px;" value="{{password}}">
+        </div>
+         <div style="background-color:#F5F8FA; margin-bottom:40px; border-radius:2px; border-bottom:2px solid #657786;">
+            <label for="confirmPassword" class="form-label mb-0"
+                style="margin-left:10px;color:#696974;font-size: 14px;line-height: 22px;">密碼確認</label>
+            <input type="text" class="form-control border-0" id="confirmPassword" name="confirmPassword" placeholder="請再次輸入密碼"
+                style="background-color:#F5F8FA;color:#B5B5BE;font-size: 16px;line-height: 26px;" value="{{confirmPassword}}">
+
+        </div>
+        <button type="submit" class="btn"
+            style=" width:356px; background-color:#FF6600; border-radius:50px; color:#FFFFFF;font-size: 20px;line-height: 30px;">
+            註冊
+        </button>
+    </form>
+    <div class="d-flex justify-content-center align-items-center" style="height: 36px;">
+        <a style="font-size: 16px;line-height: 24px;text-decoration:underline;" href="/signin" class="text-primary">取消</a>
+    </div>
+</div>
