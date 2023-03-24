@@ -41,8 +41,12 @@ const tweetController = {
   },
   createTweet: (req, res, next) => {
     const UserId = 2 //helpers.getUser(req).id
-    const description = req.body.description
+    const {description} = req.body
     if (!description){
+      req.flash('error_messages', '貼文不可空白')
+      return res.redirect('back')
+    }
+    if (description.trim() === '') {
       req.flash('error_messages', '貼文不可空白')
       return res.redirect('back')
     }

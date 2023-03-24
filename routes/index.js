@@ -13,6 +13,7 @@ router.get('/signup', userController.signUpPage) // 註冊
 router.get('/signin', userController.signInPage) // 登入
 router.get('/logout', userController.logout) // 登出
 
+router.post('/tweets/:id/replies',replyController.createReply)//新增回覆
 router.get('/tweets/:id', tweetController.getTweet) // 個人頁面
 router.get('/tweets', tweetController.getTweets) // 總推文清單
 router.post('/tweets', tweetController.createTweet) // 新增推文
