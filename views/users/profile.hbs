@@ -30,8 +30,35 @@
             <div class="user-profile-image">
               <img src="/images/john-photo@2x.png" alt="Profile Image">
             </div>
+            {{!-- {{#ifCond other_user.id user.id}} --}}
             <button type="button" class="user-profile-edit-btn" data-bs-toggle="modal"
               data-bs-target="#editProfileModal">編輯個人資料</button>
+              {{!-- {{else}} --}}
+           {{!-- <div class="d-flex justify-content-between align-items-center"
+                style="float: right;width: 208px;height: 40px;">
+                <img src="/images/btn_msgmsg.png" style="width: 40px;height:40px;" >
+                {{#if other_user.isNotified}}
+                 <form action="/notice/{{other_user.id}}?_method=DELETE">
+                 <button class="border-0" type="submit" style="background-color: white;"> <img src="/images/btn_notfi_fill.png" style="width: 40px;height:40px;" ></button>
+                </form>
+                 {{else}}
+                 <form action="/notice/{{other_user.id}}">
+                 <button class="border-0" type="submit" style="background-color: white;"> <img src="/images/btn_notfibell.png" style="width: 40px;height:40px;" ></button>
+                </form>
+                {{/if}}
+                {{#if other_user.isFollowed}}
+                <form action="/followships/{{other_user.id}}?_method=DELETE">
+                    <button type="submit" class="btn"
+                        style="background: #FF6600;color:white;border-radius: 50px;">正在跟隨</button>
+                </form>
+                {{else}}
+                <form action="/followships/{{other_user.id}}">
+                    <button type="submit" class="btn btn-outline"
+                        style="color: #FF6600;border-radius: 50px; border: 1px solid #FF6600;">跟隨</button>
+                </form>
+                {{/if}}
+            </div> --}}
+          {{!-- {{/ifCond}} --}}
             {{!-- User profile edit modal --}}
             <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
               aria-hidden="true">
