@@ -30,14 +30,14 @@
               <div class="modal-body">
                 {{> user-avatar}}
                 <form action="">
-                  <textarea class="modal-input-tweets" placeholder="有什麼新鮮事？" name="user-tweet-description" id="user-tweet-description" maxlength="200" rows="3"
+                  <textarea class="modal-input-tweets" id="user-tweet-description-in-main" placeholder="有什麼新鮮事？" name="user-tweet-description" id="user-tweet-description" maxlength="150" rows="3"
                     cols="100"></textarea>
                 </form>
               </div>
               <div class="modal-footer">
                 <div class="d-flex flex-row-reverse mb-1">
                   <button class="tweetbtn" type="submit">推文</button>
-                  <p id="description-alert" class="user-tweet-alertMsg">字數不可超過 140 字</p>
+                  <p id="user-tweet-description-alert-in-main" class="user-tweet-alertMsg"></p>
                 </div>
               </div>
             </div>
@@ -119,14 +119,14 @@
 
                   {{> user-avatar}}
                   <form action="">
-                    <textarea class="modal-input-tweets" placeholder="推你的回覆" name="" id="" maxlength="140" rows="3"
+                    <textarea class="modal-input-tweets" id="user-reply-in-main" placeholder="推你的回覆" name="" maxlength="150" rows="4"
                       cols="100"></textarea>
                   </form>
                 </div>
                 <div class="modal-footer">
                   <div class="d-flex flex-row-reverse mb-1">
                     <button class="tweetbtn" type="submit">回覆</button>
-                    <p class="user-reply-alertMsg">內容不可空白</p>
+                    <p id="user-reply-alert-in-main" class="user-reply-alertMsg"></p>
                   </div>
                 </div>
               </div>
@@ -140,3 +140,38 @@
     {{> rightbar}}
   </div>
 </div>
+
+<script>
+  const userTweetDescription = document.getElementById('user-tweet-description-in-main')
+  const userTweetDescriptionAlertMsg = document.getElementById('user-tweet-description-alert-in-main')
+  const userReplyDescription = document.getElementById('user-reply-in-main')
+  const userReplyDescriptionAlertMsg = document.getElementById('user-reply-alert-in-main')
+
+  userTweetDescription.addEventListener('input', function userTweetModalMsg(e) {
+    const tweetContent = e.target.value
+    const trimedTweetCnt = tweetContent.trim()
+    console.log(tweetContent)
+    console.log(trimedTweetCnt.length)
+    if(!trimedTweetCnt.length) {
+      userTweetDescriptionAlertMsg.innerHTML = '內容不可空白'
+    } else if (trimedTweetCnt.length > 0 && trimedTweetCnt.length < 140) {
+      userTweetDescriptionAlertMsg.innerHTML = `${trimedTweetCnt.length}/140`
+    }else if (trimedTweetCnt.length > 140){
+      userTweetDescriptionAlertMsg.innerHTML = '內容不可超過 140 字'
+    }
+  })
+
+  userReplyDescription.addEventListener('input', function userTweetModalMsg(e) {
+      const replyContent = e.target.value
+      const trimedReplyCnt = replyContent.trim()
+      console.log(replyContent)
+      console.log(trimedReplyCnt.length)
+      if (!trimedReplyCnt.length) {
+        userReplyDescriptionAlertMsg.innerHTML = '內容不可空白'
+      } else if (trimedReplyCnt.length > 0 && trimedReplyCnt.length < 140) {
+        userReplyDescriptionAlertMsg.innerHTML = `${trimedReplyCnt.length}/140`
+      } else if (trimedReplyCnt.length > 140) {
+        userReplyDescriptionAlertMsg.innerHTML = '內容不可超過 140 字'
+      }
+    })
+</script>
