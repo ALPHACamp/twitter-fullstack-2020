@@ -49,72 +49,6 @@
 
       </div>
       <div class="user-replies-reply-page pt-3">
-        {{!-- {{#each}} --}}
-        <div class="user-reply p-3 replies-page-border-bottom" data-bs-toggle="modal"
-          data-bs-target="#user-replies-modal-in-replies-page">
-          <div class="row">
-            <div class="col-2">
-              {{> following-avatar}}
-            </div>
-            <div class="col-10">
-              <div>
-                <a href="/users/{{this.id}}"><strong>Bear</strong></a>
-                <span>@apple‧3小時</span>
-              </div>
-              <p>回覆<span style="color: #FF6600;">@apple</span></p>
-              <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign merjc idblid
-                ngijsnli gririr leirhielr gli g grgiur
-                hghbgn ign merjc idblid ngijsnli gririr leirhielr
-                gli g grgiur hghbgn ign</p>
-            </div>
-          </div>
-        </div>
-
-        {{!-- 回覆彈跳視窗 --}}
-        <div class="modal" tabindex="-1" id="user-replies-modal-in-replies-page">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                {{!-- <h5 class="modal-title">User name</h5> --}}
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <div class="row">
-                  <div class="col-2">
-                    {{> following-avatar}}
-                    <div class="reply-modal-vr-line"></div>
-                  </div>
-                  {{!-- --}}
-                  <div class="col-10">
-                    <div>
-                      <a href="/users/{{this.id}}"><strong>Bear</strong></a>
-                      <span>@apple‧3小時</span>
-                    </div>
-                    <div>
-                      <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign merjc idblid ngijsnli gririr
-                        leirhielr gli g grgiur
-                        hghbgn ign merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign</p>
-                      <span>回覆給<span class="ms-1" style="color: #FF6600;">@mitsubishi</span></span>
-                    </div>
-                  </div>
-                </div>
-
-                {{> user-avatar}}
-                <form action="">
-                  <textarea class="modal-input-tweets" placeholder="推你的回覆" name="" id="" maxlength="140" rows="3"
-                    cols="100"></textarea>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <div class="d-flex flex-row-reverse mb-1">
-                  <button class="tweetbtn" type="submit">回覆</button>
-                  <p class="user-reply-alertMsg">內容不可空白</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div class="user-reply p-3 replies-page-border-bottom" data-bs-toggle="modal"
           data-bs-target="#user-replies-modal2">
           <div class="row">
@@ -166,14 +100,14 @@
 
                 {{> user-avatar}}
                 <form action="">
-                  <textarea class="modal-input-tweets" placeholder="推你的回覆" name="" id="" maxlength="140" rows="3"
+                  <textarea class="modal-input-tweets" placeholder="推你的回覆" name="" id="user-reply-in-replies" maxlength="145" rows="3"
                     cols="100"></textarea>
                 </form>
               </div>
               <div class="modal-footer">
                 <div class="d-flex flex-row-reverse mb-1">
                   <button class="tweetbtn" type="submit">回覆</button>
-                  <p class="user-reply-alertMsg">內容不可空白</p>
+                  <p id="user-reply-alert-in-replies" class="user-reply-alertMsg"></p>
                 </div>
               </div>
             </div>
@@ -186,3 +120,22 @@
     {{> rightbar}}
   </div>
 </div>
+
+<script>
+  const userReplyDescription = document.getElementById('user-reply-in-replies')
+  const userReplyDescriptionAlertMsg = document.getElementById('user-reply-alert-in-replies')
+
+  userReplyDescription.addEventListener('input', function userTweetModalMsg(e) {
+    const replyContent = e.target.value
+    const trimedReplyCnt = replyContent.trim()
+    console.log(replyContent)
+    console.log(trimedReplyCnt.length)
+    if (!trimedReplyCnt.length) {
+      userReplyDescriptionAlertMsg.innerHTML = '內容不可空白'
+    } else if (trimedReplyCnt.length > 0 && trimedReplyCnt.length < 140) {
+      userReplyDescriptionAlertMsg.innerHTML = `${trimedReplyCnt.length}/140`
+    } else if (trimedReplyCnt.length > 140) {
+      userReplyDescriptionAlertMsg.innerHTML = '內容不可超過 140 字'
+    }
+  })
+</script>
