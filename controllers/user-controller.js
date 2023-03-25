@@ -14,7 +14,6 @@ const userController = {
                 where: { role: 'user' },
                 include: [
                     Tweet,
-                    { model: Reply, include: { model: Tweet, include: [User] } },
                     { model: Tweet, as: 'LikedTweets', include: [User] },
                 ],
                 order: [

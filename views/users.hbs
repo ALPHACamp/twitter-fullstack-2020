@@ -17,9 +17,8 @@
           class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
           style="text-decoration: none;">
           <span class="h5"
-            style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{users.name}}Elizabeth</span>
-          <span style="color: #657786; font-size: 13px; line-height: 15px;">{{tweetCount}}
-            111推文</span>
+            style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{users.name}}</span>
+          <span style="color: #657786; font-size: 13px; line-height: 15px;">{{tweetCount}}???推文</span>
         </a>
       </div>
       <!--cover & avatar & Edit button-->
@@ -42,17 +41,17 @@
       <!--profile-->
       <div class="card-body col-12">
         <div class="card-text ps-2">
-          <h4 style="font-weight: 900; line-height: 18px">{{users.name}}Elizabeth</h4>
-          <span class="text-muted" style="font-size: 0.93em; line-height: 18px;">@user1{{users.account}}</span>
+          <h4 style="font-weight: 900; line-height: 18px">{{users.name}}</h4>
+          <span class="text-muted" style="font-size: 0.93em; line-height: 18px;">@{{users.account}}</span>
           <p class="my-2" style="font-size: 0.96em; line-height: 25px">{{#if
             users.introduction}}{{users.introduction}}{{else}}Lorem example text example text for AC simple twitter
             project practice{{/if}}</p>
           <a href="/users/1{{users.id}}/followers" style="text-decoration:none;">
-            <span class="fw-bold text-dark">{{followingscount}} 11個</span><span
+            <span class="fw-bold text-dark">{{followingscount}} ??個</span><span
               class="text-muted text-dark me-3">跟隨中</span>
           </a>
           <a href="/users/1{{users.id}}/followings" style="text-decoration:none;">
-            <span class="fw-bold text-dark">{{followerscount}} 111位</span><span class="text-muted">跟隨者</span>
+            <span class="fw-bold text-dark">{{followerscount}} ???位</span><span class="text-muted">跟隨者</span>
           </a>
         </div>
       </div>
@@ -86,7 +85,7 @@
             <div class="name">
               <span style="font-size: 16px;font-weight:700;">{{../users.name}}</span>
               <span
-                style="font-size: 14px;color:#C4C4C4">{{../users.account}}．{{relativeTimeFromNow this.times}}</span>
+                style="font-size: 14px;color:#C4C4C4">@{{../users.account}}． {{relativeTimeFromNow this.createdAt}}</span>
             </div>
             <div class="content mt-3">
               {{this.description}}
@@ -118,16 +117,16 @@
               </div>
               <div class="tweets d-flex mt-3">
                 <div class="avatar ps-3">
-                  <a href="/tweets/{{user.id}}" style="text-decoration:none;">
-                    <img src="{{user.avatar}}" class="rounded-circle me-3"
+                  <a href="/tweets/{{../users.id}}" style="text-decoration:none;">
+                    <img src="{{../users.avatar}}" class="rounded-circle me-3"
                       style="width: 50px;height: 50px;background: #C4C4C4;">
                   </a>
                 </div>
                 <div class="tweet-content">
                   <div class="name">
-                    <span style="font-size: 16px;font-weight:700;">FakeName{{comments.user.name}}</span>
+                    <span style="font-size: 16px;font-weight:700;">{{../users.name}}</span>
                     <span
-                      style="font-size: 14px;color:#C4C4C4">@FakeAccount{{comments.user.account}}．3小時{{comments.times}}</span>
+                      style="font-size: 14px;color:#C4C4C4">@{{../users.account}}．{{relativeTimeFromNow this.createdAt}}</span>
                   </div>
                   <div class="content mt-3">
                     推文頁面專用
