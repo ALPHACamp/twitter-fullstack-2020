@@ -1,4 +1,5 @@
 const { User, Tweet, Reply } = require('../models')
+const bcrypt = require('bcryptjs')
 
 const userController = {
   signUpPage: (req, res) => { // 登入
@@ -47,7 +48,7 @@ const userController = {
         name, 
         email, 
         account, 
-        password
+        password:bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
       })
     })
     .then(() => {

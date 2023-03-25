@@ -7,7 +7,7 @@
   <!--middle bar-->
   <div class="col-7 user-profile">
     <div class="tweets-container"
-      style="width: 639px;height:1200px;border-right:1px solid #C4C4C4; border-left:1px solid #C4C4C4;">
+      style="width: 639px;height:100%;border-right:1px solid #C4C4C4; border-left:1px solid #C4C4C4;">
       <!--head-->
       <div class="card-header col-12 row m-0" style="max-height: 55px;">
         <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
@@ -18,9 +18,9 @@
           class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
           style="text-decoration: none;">
           <span class="h5"
-            style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{users.name}}Elizabeth</span>
+            style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{users.name}}</span>
           <span style="color: #657786; font-size: 13px; line-height: 15px;">{{tweetCount}}
-            111推文</span>
+            ??推文</span>
         </a>
       </div>
 
@@ -46,71 +46,69 @@
       <!--profile-->
       <div class="card-body col-12">
         <div class="card-text ps-2">
-          <h4 style="font-weight: 900; line-height: 18px">{{users.name}}Elizabeth</h4>
-          <span class="text-muted" style="font-size: 0.93em; line-height: 18px;">@user1{{users.account}}</span>
+          <h4 style="font-weight: 900; line-height: 18px">{{users.name}}</h4>
+          <span class="text-muted" style="font-size: 0.93em; line-height: 18px;">@{{users.account}}</span>
           <p class="my-2" style="font-size: 0.96em; line-height: 25px">{{#if
             users.introduction}}{{users.introduction}}{{else}}Lorem example text example text for AC simple twitter
             project practice{{/if}}</p>
           <a href="/users/1{{users.id}}/followers" style="text-decoration:none;">
-            <span class="fw-bold text-dark">{{followingscount}} 11個</span><span
+            <span class="fw-bold text-dark">{{followingscount}} ??個</span><span
               class="text-muted text-dark me-3">跟隨中</span>
           </a>
           <a href="/users/1{{users.id}}/followings" style="text-decoration:none;">
-            <span class="fw-bold text-dark">{{followerscount}} 111位</span><span class="text-muted">跟隨者</span>
+            <span class="fw-bold text-dark">{{followerscount}} ??位</span><span class="text-muted">跟隨者</span>
           </a>
         </div>
       </div>
 
       <!--profile nav-->
       <div class="profile-head col-12">
-        <nav>
-          <div class="nav nav-tabs " id="nav-tab" role="tablist">
-            <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="/users/:id{{user.id}}"
-              style="color: #FF6600; border: none; border-bottom: 1px solid #ff6600;" role="tab"
-              aria-controls="nav-home" aria-selected="true">推文 </a>
-            <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="/reply/1{{user.id}}"
-              style="color: #657786; border: none;" role="tab" aria-controls="nav-profile"
-              aria-selected="false">推文與回覆</a>
-            <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="/likes/1{{user.id}} "
-              style="color: #657786; border: none;" role="tab" aria-controls="nav-contact"
-              aria-selected="false">喜歡的內容</a>
-          </div>
-        </nav>
+      <nav>
+        <div class="nav nav-tabs " id="nav-tab" role="tablist">
+          <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="/users/:id{{user.id}}"
+            style="color: #657786; border: none;" role="tab" aria-controls="nav-home" aria-selected="true">推文 </a>
+          <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="/reply/1{{user.id}}"
+            style="color: #FF6600; border: none; border-bottom: 1px solid #ff6600;"
+            role="tab" aria-controls="nav-profile" aria-selected="false">回覆</a>
+          <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="/likes/1{{user.id}} "
+            style="color: #657786; border: none;" role="tab" aria-controls="nav-contact"
+            aria-selected="false">喜歡的內容</a>
+        </div>
+      </nav>
       </div>
 
       <!--tweet reply likeContent-->
       <div class="tweets-container">
         <!-- reply likeContent-->
-        {{!-- {{#each tweets }} --}}
+        {{#each repiles }} 
         <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
           <div class="avatar ps-3">
-            <a href="/tweets/{{user.id}}" style="text-decoration:none;">
-              <img src="{{user.avatar}}" class="rounded-circle me-3"
+            <a href="/tweets/{{this.Tweet.User.id}}" style="text-decoration:none;">
+              <img src="{{this.Tweet.User.avatar}}" class="rounded-circle me-3"
                 style="width: 50px;height: 50px;background: #C4C4C4;">
             </a>
           </div>
           <div class="tweet-content">
             <div class="name">
-              <span style="font-size: 16px;font-weight:700;">FakeName{{comments.user.name}}</span>
+              <span style="font-size: 16px;font-weight:700;">{{this.Tweet.User.name}}</span>
               <span
-                style="font-size: 14px;color:#C4C4C4">@FakeAccount{{comments.user.account}}．3小時{{comments.times}}</span>
+                style="font-size: 14px;color:#C4C4C4">@{{this.Tweet.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
             </div>
             <div class="reply-to mt-3">
-              <p style="color: #657786;">回覆給<strong style="color:#FF6600;">@FakeAccount{{this.account}}</strong></p>
+              <p style="color: #657786;">回覆給<strong style="color:#FF6600;">@{{this.Tweet.User.name}}</strong></p>
             </div>
             <div class="content mt-3 mb-3">
-              推文及回覆頁面專用
+              {{this.Tweet.description}}
             </div>
           </div>
         </div>
-        {{!-- {{/each}} --}}
+        {{/each}} 
       </div>
 
       <!--Edit modal-->
       <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
-
             <!--修改的PUT先寫來放-->
             <form action="/users/{{user.id}}/edit?_method=PUT" method="post" enctype="multipart/form-data">
               <div class="modal-header">
@@ -120,16 +118,15 @@
                   </button>
                   <span class="modal-title h5 fw-bold ps-3" id="ModalLabel">編輯個人資料</span>
                 </div>
-                <button type="submit" class="badge btn rounded-pill" style="font-size:0.9rem; background: #FF6600;">
+                <button type="submit" class="badge btn rounded-pill" style="font-size:1.0rem; background: #FF6600;">
                   <span style="color: #FFFFFF;">儲存</span>
                 </button>
               </div>
-
+      
               <div class="modal-body row">
                 <div class="col-12 m-0 p-0 position-relative mb-5">
                   <div class="bg-holder" style="height: 170px;">
-                    <img
-                      src="{{#if users.cover}}{{users.cover}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                    <img src="{{#if users.cover}}{{users.cover}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
                       class="card-img-top" alt="..." class="img-fluid" id="bgImage"
                       style="height:100%;width:100%;object-fit:cover">
                   </div>
@@ -147,25 +144,23 @@
                     <i class="fas fa-camera" style="color: white;"></i>
                   </label>
                 </div>
-
                 <div class="col-12" style="background-color:#f4f8fb;">
-                  <label for="name" style="margin-bottom: -30px; margin-left: 8px; font-size: 0.3em">名稱</label>
+                  <label for="name" style="margin-bottom: -30px; margin-left: 8px; font-size: 0.8em">名稱</label>
                   <input type="text" class="form-control" id="name" name="name" maxlength="50"
-                    style="border:none; border-bottom:1px solid rgb(75, 82, 85); outline: none; background-color:#f4f8fb; font-size:0.3em"
-                    aria-describedby="nameHelp" value="{{users.name}}Michael" />
-                  <p class="text-end text-muted now1" style="font-size: 0.3em;">0/50</p>
+                    style="border:none; border-bottom:1px solid rgb(75, 82, 85); outline: none; background-color:#f4f8fb; font-size:0.8em"
+                    aria-describedby="nameHelp" value="{{users.name}}" />
+                  <p class="text-end text-muted now1" style="font-size: 0.8em;">0/50</p>
                 </div>
                 <div class="col-12 mb-3 mt-4" style="background-color:#f4f8fb;">
-                  <label for="introduction" style="margin-left: 8px; font-size: 0.3em;">自我介紹</label>
+                  <label for="introduction" style="margin-left: 8px; font-size: 0.8em;">自我介紹</label>
                   <textarea class="form-control" id="introduction" name="introduction"
-                    style="border:none; border-bottom:1px solid rgb(75, 82, 85); outline: none; background-color:#f4f8fb; font-size:0.3em;"
+                    style="border:none; border-bottom:1px solid rgb(75, 82, 85); outline: none; background-color:#f4f8fb; font-size:0.8em;"
                     maxlength="160"
-                    aria-describedby="descriptionHelp">{{users.introduction}}Hello my name is Michael not Micky.</textarea>
-                  <p class="text-end text-muted now2" style="font-size: 0.3em;">0/160</p>
+                    aria-describedby="descriptionHelp">{{users.introduction}}.</textarea>
+                  <p class="text-end text-muted now2" style="font-size: 0.8em;">0/160</p>
                 </div>
               </div>
             </form>
-
           </div>
         </div>
       </div>

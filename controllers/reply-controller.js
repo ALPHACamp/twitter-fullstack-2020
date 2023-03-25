@@ -1,8 +1,27 @@
-const { Reply } = require('../models')
+const { User, Tweet, Reply } = require('../models')
 
 const replyController = {
-  getReplies:(req,res,next)=>{ // 回覆頁面
-    res.render('reply')
+  getReplies: async (req,res)=>{ // 已回覆的內容
+            let [users, user] = await Promise.all([
+            User.findAll({ where: { role: 'user' }, raw: true, nest: true, attributes: ['id'] }),
+            User.findByPk((2), {
+                where: { role: 'user' },
+                include: [
+                    Tweet,
+                    { model: Reply, include: { model: Tweet, include: [User] } },
+                    { model: Tweet, as: 'LikedTweets', include: [User] },
+                ],
+                order: [
+                    [Reply, 'updatedAt', 'DESC'],
+                ],
+            })
+        ])
+        
+        const repiles = user.toJSON().Replies.map(res => res)
+        return res.render('reply', {
+            users: user.toJSON(),
+            repiles,
+        })
   },
   createReply:(req,res,next)=>{// 新增回覆
     const UserId = 2 //helpers.getUser(req).id
