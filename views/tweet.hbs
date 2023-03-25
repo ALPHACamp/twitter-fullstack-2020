@@ -10,13 +10,10 @@
           class="col-auto d-flex align-items-center">
           <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
         </a>
-        <a href="/users/{{tweet.User.id}}/tweets"
+        <a href="/tweets"
           class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
           style="text-decoration: none;">
-          <span class="h5"
-            style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{tweet.User.name}}</span>
-          <span style="color: #657786; font-size: 13px; line-height: 15px;">{{tweetCount}}
-            111推文</span>
+          <span style="color: #000000; font-size: 24px; font-weight: 700;">推文</span>
         </a>
       </div>
       {{!-- user --}}
@@ -32,7 +29,7 @@
               <span style="font-size: 16px;font-weight:700;">{{tweet.User.name}}</span>
             </div>
             <div class="account">
-              <span style="font-size: 14px;color:#C4C4C4">@{{tweet.User.account}}．3小時{{comments.times}}</span>
+              <span style="font-size: 14px;color:#C4C4C4">@{{tweet.User.account}}．{{relativeTimeFromNow tweet.createdAt}}</span>
             </div>
           </div>
         </div>
@@ -79,7 +76,7 @@
         <div class="tweet-content">
           <div class="name">
             <span style="font-size: 16px;font-weight:700;">{{this.User.name}}</span>
-            <span style="font-size: 14px;color:#C4C4C4">@{{this.User.account}}．3小時{{comments.times}}</span>
+            <span style="font-size: 14px;color:#C4C4C4">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
           </div>
           <div class="reply-to mt-3">
             <p style="color: #657786;font-size:14px;">回覆給<strong style="color:#FF6600;">@{{../tweet.User.account}}</strong></p>
@@ -137,7 +134,8 @@
                         style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;"
                         placeholder="推你的回覆"></textarea>
                       <div class="button d-flex justify-content-end">
-                        <button type="submit" class="btn" style="background: #FF6600;border-radius: 50px;">
+                        {{> message}}
+                        <button type="submit" class="btn ms-3" style="background: #FF6600;border-radius: 50px;">
                           <span style="color: #FFFFFF;">推文</span>
                         </button>
                       </div>

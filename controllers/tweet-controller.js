@@ -31,7 +31,8 @@ const tweetController = {
       include: [
         User,
         { model: Reply, include: User }
-      ]
+      ],
+      order: [['Replies', 'createdAt', 'DESC']]
     })
       .then(tweet => {
         tweet = tweet.toJSON()
