@@ -28,6 +28,24 @@ const adminController = {
                 return res.render('admin/tweets', { tweets })
             })
 
+    },
+    deleteTweet: (req, res) => {
+        Tweet.findByPk(req.params.tweetId)
+            .then(tweet => {
+                tweet.destroy()
+                    .then(() => {
+                        req.flash('successFlashMessage', '成功刪除');
+                        return res.redirect('back')
+                    })
+                    .catch(() => {
+                        req.flash('errorFlashMessage', 'ERROR #A101');
+                        return res.redirect('back')
+                    })
+            })
+            .catch(() => {
+                req.flash('errorFlashMessage', 'ERROR #A102');
+                return res.redirect('back')
+            })
     }
 }
 module.exports = adminController
