@@ -23,7 +23,7 @@ const tweetController = {
             return res.render('tweets', { tweets: data, user })
           })
       })
-      .catch(err => console.log(err))
+      .catch(err => next(err))
   },
   getTweet: (req, res, next) => { // 登入使用者頁面顯示個人推文清單
     const { id } = req.params
@@ -31,13 +31,14 @@ const tweetController = {
       include: [
         User,
         { model: Reply, include: User }
-      ]
+      ],
+      order: [['Replies', 'createdAt', 'DESC']]
     })
       .then(tweet => {
         tweet = tweet.toJSON()
         res.render('tweet', { tweet })
       })
-      .catch(err => console.log(err))
+      .catch(err => next(err))
   },
   createTweet: (req, res, next) => {
     const UserId = 2 //helpers.getUser(req).id
@@ -59,7 +60,7 @@ const tweetController = {
       description
     })
       .then(() => res.redirect('/tweets'))
-      .catch(err => console.log(err))
+      .catch(err => next(err))
   }
 }
 

@@ -3,3 +3,15 @@
     {{error_messages}}
   </div>
 {{/if}}
+{{#if success_messages}}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  {{ success_messages }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{{/if}}
+{{#if wrong_messages}}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  {{ wrong_messages }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{{/if}}
