@@ -6,7 +6,7 @@
   <!--middle bar-->
   <div class="col-7 user-profile">
     <div class="tweets-container"
-      style="width: 639px;height:1200px;border-right:1px solid #C4C4C4; border-left:1px solid #C4C4C4;">
+      style="width: 639px;height:100%; border-right:1px solid #C4C4C4; border-left:1px solid #C4C4C4;">
       <!--head-->
       <div class="card-header col-12 row m-0" style="max-height: 55px;">
         <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
@@ -74,34 +74,34 @@
       </div>
       <!--tweet reply likeContent-->
       <div class="tweets-container">
-        {{!-- {{#each tweets }} --}}
+        {{#each users.Tweets }} 
         <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
           <div class="avatar ps-3">
-            <a href="/tweets/{{user.id}}" style="text-decoration:none;">
-              <img src="{{user.avatar}}" class="rounded-circle me-3"
+            <a href="/tweets/{{../users.id}}" style="text-decoration:none;">
+              <img src="{{../users.avatar}}" class="rounded-circle me-3"
                 style="width: 50px;height: 50px;background: #C4C4C4;">
             </a>
           </div>
           <div class="tweet-content">
             <div class="name">
-              <span style="font-size: 16px;font-weight:700;">FakeName{{comments.user.name}}</span>
+              <span style="font-size: 16px;font-weight:700;">{{../users.name}}</span>
               <span
-                style="font-size: 14px;color:#C4C4C4">@FakeAccount{{comments.user.account}}．3小時{{comments.times}}</span>
+                style="font-size: 14px;color:#C4C4C4">{{../users.account}}．{{relativeTimeFromNow this.times}}</span>
             </div>
             <div class="content mt-3">
-              推文頁面專用
+              {{this.description}}
             </div>
             <div class="footer d-flex">
               <div class="replies d-flex align-items-center">
                 <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal"
                   data-bs-target="#tweetReplyModal{{this.id}}">
-                  <i class="far fa-comment"></i>&ensp;10{{this.Replies.length}}
+                  <i class="far fa-comment"></i>&ensp;?{{this.Replies.length}}
                 </button>
               </div>
               <div class="likes d-flex align-items-center">
                 <form action="/likes" method="post">
                   <button type="submit" class="btn"><i
-                      class="fa-regular fa-heart">&ensp;66{{this.likes.length}}</i></button>
+                      class="fa-regular fa-heart">&ensp;?{{this.likes.length}}</i></button>
                 </form>
               </div>
             </div>
@@ -161,10 +161,8 @@
             <!-- reply likeContent-->
           </div>
         </div>
-        <!-- likeContent-->
+        {{/each}}
       </div>
-    </div>
-    {{!-- {{/each}} --}}
   </div>
   <!--Edit modal-->
   <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -224,6 +222,7 @@
         </form>
       </div>
     </div>
+  </div>
   </div>
   <!--right bar-->
   <div class="col-3 followship">
