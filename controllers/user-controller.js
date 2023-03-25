@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Tweet, Reply } = require('../models')
 
 const userController = {
   signUpPage: (req, res) => { // 登入
@@ -7,8 +7,21 @@ const userController = {
   signInPage: (req, res) => { // 註冊
     return res.render('signin')
   },
-  getUser: (req,res) => { // 取得個人資料頁面
-    return res.render('users')
+  getUser: async(req, res) => { // 取得個人資料頁面(推文清單)
+        let [users, user ] = await Promise.all([
+            User.findAll({ where: { role: 'user' }, raw: true, nest: true, attributes: ['id'] }),
+            User.findByPk((2) , {
+                where: { role: 'user' },
+                include: [
+                    Tweet,
+                    { model: Tweet, as: 'LikedTweets', include: [User] },
+                ],
+                order: [
+                    ['Tweets', 'createdAt', 'DESC'],
+                ],
+            }),
+        ])
+        return res.render('users', {users: user.toJSON(),})
   },
   getSetting: (req, res, next) => { // 取得帳戶設定頁面
     return User.findOne({
