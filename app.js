@@ -6,6 +6,7 @@ const helpers = require('./_helpers')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const session = require('express-session')
 const flash = require('connect-flash')
+const passport = require('passport')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -18,6 +19,8 @@ app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true })) // body-Parser
 app.use(methodOverride('_method')) // methodOverride
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: true }))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(flash())// connect-flash
 app.use((req, res, next) => {
   res.locals.error_messages = req.flash('error_messages')
