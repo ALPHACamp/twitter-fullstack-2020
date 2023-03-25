@@ -6,7 +6,7 @@
     <div class="tweets-container" style="width: 639px;height:1200px;border:1px solid #C4C4C4;">
       <h4 class="pt-3 ps-3" style="font-weight: 700;">首頁</h4>
       <hr>
-      <div class="mytweet d-flex flex-column p-3" style="border-bottom: 10px solid #C4C4C4;">
+      <div class="mytweet d-flex flex-column ps-3 pb-3 pe-3" style="border-bottom: 10px solid #C4C4C4;">
         <div class="avatar">
           <a href="/tweets/{{user.id}}" style="text-decoration:none;">
             <img src="{{user.avatar}}" class="rounded-circle me-3"
@@ -23,29 +23,27 @@ height: 26px;text-align:start;color:#C4C4C4" data-bs-toggle="modal" data-bs-targ
         </div>
       </div>
       <div class="tweets-container">
-        {{!-- {{#each tweets}} --}}
+        {{#each tweets}}
         <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
           <div class="avatar ps-3">
-            <a href="/tweets/{{user.id}}" style="text-decoration:none;">
-              <img src="{{user.avatar}}" class="rounded-circle me-3"
+            <a href="/tweets/{{this.User.dataValues.id}}" style="text-decoration:none;">
+              <img src="{{this.User.dataValues.avatar}}" class="rounded-circle me-3"
                 style="width: 50px;height: 50px;background: #C4C4C4;">
             </a>
           </div>
           <div class="tweet-content">
             <div class="name">
-              <span style="font-size: 16px;font-weight:700;">FakeName{{comments.user.name}}</span>
+              <span style="font-size: 16px;font-weight:700;">{{this.User.dataValues.name}}</span>
               <span
-                style="font-size: 14px;color:#C4C4C4">@FakeAccount{{comments.user.account}}．3小時{{comments.times}}</span>
+                style="font-size: 14px;color:#C4C4C4">@{{this.User.dataValues.account}}．3小時{{comments.times}}</span>
             </div>
             <div class="content mt-3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut posuere sed justo sit amet imperdiet.
-              Curabitur bibendum
-              scelerisque hendrerit. Ma
+              <a href="/tweets/{{this.id}}" style="text-decoration:none;color:#171725;">{{this.description}}</a>
             </div>
             <div class="footer d-flex">
               <div class="replies d-flex align-items-center">
-                <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal" data-bs-target="#replyModal">
-                  <i class="far fa-comment"></i>&ensp;10{{this.Replies.length}}
+                <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal" data-bs-target="#replyModal{{this.id}}">
+                  <i class="far fa-comment"></i>&ensp;{{this.Replies.length}}
                 </button>
               </div>
               <div class="likes d-flex align-items-center">
@@ -58,7 +56,7 @@ height: 26px;text-align:start;color:#C4C4C4" data-bs-toggle="modal" data-bs-targ
           </div>
         </div>
         {{!-- modal --}}
-        <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="replyModal{{this.id}}" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -67,39 +65,38 @@ height: 26px;text-align:start;color:#C4C4C4" data-bs-toggle="modal" data-bs-targ
               </div>
               <div class="tweets d-flex mt-3">
                 <div class="avatar ps-3">
-                  <a href="/tweets/{{user.id}}" style="text-decoration:none;">
-                    <img src="{{user.avatar}}" class="rounded-circle me-3"
+                  <a href="/tweets/{{this.User.dataValues.id}}" style="text-decoration:none;">
+                    <img src="{{this.User.dataValues.avatar}}" class="rounded-circle me-3"
                       style="width: 50px;height: 50px;background: #C4C4C4;">
                   </a>
                 </div>
                 <div class="tweet-content">
                   <div class="name">
-                    <span style="font-size: 16px;font-weight:700;">FakeName{{comments.user.name}}</span>
+                    <span style="font-size: 16px;font-weight:700;">{{this.User.dataValues.name}}</span>
                     <span
-                      style="font-size: 14px;color:#C4C4C4">@FakeAccount{{comments.user.account}}．3小時{{comments.times}}</span>
+                      style="font-size: 14px;color:#C4C4C4">@{{this.User.dataValues.account}}．3小時{{comments.times}}</span>
                   </div>
-                  <div class="content mt-3">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut posuere sed justo sit amet imperdiet.
-                    Curabitur bibendum
-                    scelerisque hendrerit. Ma
+                  <div class="content mt-3 mb-2">
+                    {{this.description}}
                   </div>
-                  <p>回覆給<strong style="color:#657786;">@FakeAccount{{this.account}}</strong></p>
+                  <p>回覆給<strong style="color:##6C757D;">@{{this.User.dataValues.account}}</strong></p>
                 </div>
               </div>
               <div class="modal-body" class="d-flex">
                 <div class="body-avatar d-flex align-items-stretch">
                   <div class="left">
-                    <a href="/tweets/{{user.id}}">
-                      <img src="{{user.avatar}}" class="rounded-circle me-3"
+                    <a href="/tweets/{{../user.id}}">
+                      <img src="{{../user.avatar}}" class="rounded-circle me-3"
                         style="width: 50px;height: 50px;background: #C4C4C4;">
                     </a>
                   </div>
                   <div class="right" class="d-flex">
-                    <form method="POST" action="/tweets/{{this.user.id}}">
+                    <form method="POST" action="/tweets/{{this.id}}/replies">
                       <textarea name="description" cols="40" rows="10"
                         style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;"
-                        placeholder="推你的回覆"></textarea>
+                        placeholder="推你的回覆" required></textarea>
                       <div class="button d-flex justify-content-end">
+                        {{> message}}
                         <button type="submit" class="btn" style="background: #FF6600;border-radius: 50px;">
                           <span style="color: #FFFFFF;">推文</span>
                         </button>
@@ -112,7 +109,7 @@ height: 26px;text-align:start;color:#C4C4C4" data-bs-toggle="modal" data-bs-targ
             </div>
           </div>
         </div>
-        {{!-- {{/each}} --}}
+        {{/each}}
       </div>
     </div>
   </div>
