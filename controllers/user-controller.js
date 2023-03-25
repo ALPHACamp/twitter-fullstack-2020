@@ -5,6 +5,9 @@ const userController = {
     registerPage: (req, res) => {
         res.render('register')
     },
+    settingPage: (req, res) => {
+        res.render('setting')
+    },
     getUser: (req, res, next) => {
         res.render('users/profile')
     }
