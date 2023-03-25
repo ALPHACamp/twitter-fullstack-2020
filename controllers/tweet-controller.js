@@ -1,8 +1,9 @@
 const { User, Tweet, Reply } = require('../models')
+const helpers = require('../_helpers')
+
 
 const tweetController = {
   getTweets: (req, res, next) => { // 進入推文清單
-    const id = 1
     return Tweet.findAll({
       include: [
         User,
@@ -17,7 +18,7 @@ const tweetController = {
           ...t.dataValues,
           description: t.description
         }))
-        return User.findByPk(2)//helpers.getUser(req).id
+        return User.findByPk(helpers.getUser(req).id)
           .then(user => {
             user = user.toJSON()
             return res.render('tweets', { tweets: data, user })
@@ -41,7 +42,7 @@ const tweetController = {
       .catch(err => next(err))
   },
   createTweet: (req, res, next) => {
-    const UserId = 2 //helpers.getUser(req).id
+    const UserId = helpers.getUser(req).id 
     const {description} = req.body
     if (!description){
       req.flash('error_messages', '貼文不可空白')
