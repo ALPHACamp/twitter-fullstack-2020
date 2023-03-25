@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const passport = require('../config/passport')
 
 const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
@@ -13,7 +14,8 @@ router.use('/admin', admin)
 
 router.get('/signup', userController.signUpPage) // 註冊頁面
 router.post('/signup', userController.signUp) // 註冊
-router.get('/signin', userController.signInPage) // 登入
+router.get('/signin', userController.signInPage) // 登入頁面
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn) // 登入
 router.get('/logout', userController.logout) // 登出
 
 router.post('/tweets/:id/replies', replyController.createReply)//新增回覆
