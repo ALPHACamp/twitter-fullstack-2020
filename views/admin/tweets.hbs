@@ -1,45 +1,45 @@
-<div class="container d-flex">
+<div class="container d-flex" style="width:1400px; height:100%; margin-top:0;">
   <div class="col-2 nav">
     {{> admin-nav}}
   </div>
-  <div class="col-7 tweets">
-    <div class="tweets-container mb-2" style="width:936px; height:1200px; 
-    border:1px solid #E6ECF0; margin-right:131px; margin-top:10px;">
-      <div class="margin-bottom:10px;">
-        <h4 class="pt-2 pb-1 ps-3" style="border-bottom:1px solid #E6ECF0; font-weight:700; size:24px; font-family: Noto Sans TC; ">推文清單</h4>
-      </div>
+  <div class="col-7 tweets" style="width:937.13px; border:1px solid #E6ECF0;">
+    <div>
+      <h4 class="pt-3 ps-3" style="font-weight:700;font-family: Noto Sans TC;">推文清單</h4>
+    </div>
 
-      <div class="tweets-container">
-        {{#each tweets}}
-        <div class="row" style="width:937px; height:118px; border-bottom:1px solid #E6ECF0">
-          <div class="col-1 ms-3 mt-3">
-            <img src="{{this.User.avatar}}" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #E6ECF0;">
+    <div class="tweets-container">
+      {{#each tweets}}
+      <div class="row"
+        style="width:936.8px; height:118px; border-top:1px solid #E6ECF0; border-bottom:1px solid #E6ECF0; margin-left:0.3px;">
+        <div class="col-1 ms-2 mt-3">
+          <img src="{{this.User.avatar}}" class="rounded-circle me-3"
+            style="width: 50px;height: 50px;background: #E6ECF0;">
+        </div>
+        <div class="col-10">
+          <div class="row">
+            <div class="col-11 mt-2">
+              <span style="font-family:'Noto Sans TC' font-size: 16px;font-weight:700;">
+                {{this.User.name}}
+              </span>
+              <span class="account ms-1" style="font-size:14px; color:#6C757D">
+                {{this.User.account}}．{{relativeTimeFromNow this.createdAt}}
+              </span>
+            </div>
+            <div class="col-1 ">
+              <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+                <button type="'submit" class="btn d-flex justify-content-end ms-4 ps-5">
+                  <i class="fa-solid fa-xmark" style="color: #696974; Width: 15px; Height: 15px;"></i>
+                </button>
+              </form>
+            </div>
           </div>
-          <div class="col-10">
-            <div class="row">
-              <div class="col-11 mt-2">
-                <span style="font-family:'Noto Sans TC' font-size: 16px;font-weight:700;">
-                  {{this.User.name}}
-                </span>
-                <span class="account ms-1" style="font-size:14px; color:#6C757D">
-                  {{this.User.account}}．{{relativeTimeFromNow this.createdAt}}
-                </span>
-              </div>
-              <div class="col-1 ">
-                <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
-                  <button type="'submit" class="btn d-flex justify-content-end ms-5 ps-5">
-                    <i class="fa-solid fa-xmark" style="color: #696974; Width: 15px; Height: 15px;"></i>
-                  </button>
-                </form>
-              </div>
-            </div>
-            <div class="content mt-2" style="width:855px; height:52px; font-size:16px; font-weight:400; color:#171725;">
-              {{this.description}}
-            </div>
+          <div class="content mt-2" style="width:855px; height:52px; font-size:16px; font-weight:400; color:#171725;">
+            {{this.description}}
           </div>
         </div>
-        {{/each}}
       </div>
+      {{/each}}
     </div>
   </div>
+</div>
 </div>
