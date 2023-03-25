@@ -1,5 +1,7 @@
 const { User, Tweet, Reply } = require('../models')
 const bcrypt = require('bcryptjs')
+const Helpers = require('faker/lib/helpers')
+const helpers = require('../_helpers')
 
 const userController = {
   signUpPage: (req, res) => { // 登入
@@ -37,7 +39,7 @@ const userController = {
   getUser: async (req, res) => { // 取得個人資料頁面(推文清單)
     let [users, user] = await Promise.all([
       User.findAll({ where: { role: 'user' }, raw: true, nest: true, attributes: ['id'] }),
-      User.findByPk((2), {
+      User.findByPk((req.params.id), {
         where: { role: 'user' },
         include: [
           Tweet,
@@ -50,25 +52,25 @@ const userController = {
     ])
     return res.render('users', { users: user.toJSON(), })
   },
-  getSetting: (req, res, next) => { // 取得帳戶設定頁面
-    return User.findOne({
-      raw: true,
-      nest: true,
-      where: { id: "2" },
-      attributes: ['name', 'email', 'account']
-    })
+  getSetting: (req, res, ) => { // 取得帳戶設定頁面
+    return User.findByPk(helpers.getUser(req).id)
       .then(user => {
-        return res.render('setting', { user: user })
+        user = user.toJSON()
+        const { name, account, email } = user
+        return res.render('setting', { name, account, email })
       })
-      .catch(err => next(err))
   },
   putSetting: (req, res, next) => { // 編輯帳戶設定
-    const { name, email, account, password } = req.body
-
-    return User.findOne({
-      where: { id: "2" },
-    })
-
+    const { name, email, account, password, passwordCheck } = req.body
+    if( !name || !email || !password || !account || !passwordCheck){
+      req.flash('wrong_messages', '所有欄位都是必填。')
+      return res.redirect('back')
+    }
+    if(password !== passwordCheck) {
+      req.flash('wrong_messages', '密碼與確認密碼不相符！')
+      return res.redirect('back')
+    }
+      return User.findByPk(helpers.getUser(req).id)
       .then(user => {
         return user.update({
           name,
@@ -78,6 +80,7 @@ const userController = {
         })
       })
       .then(() => {
+        req.flash('success_messages', '帳戶設定編輯成功!')
         return res.redirect('setting')
       })
       .catch(err => next(err))
