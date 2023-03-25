@@ -1,33 +1,38 @@
-<div class="followship mt-3" style="width: 273px;height: 731px;background-color:#F1F1F5; border-radius: 16px;">
-  <div class="title pt-3 ps-3">
-    <h4 style="font-weight: 700;">推薦跟隨</h4>
+<div class="followship mt-3" style="width: 280px;background-color:#FAFAFB; margin-bottom: 24px; border-radius: 16px;">
+  <div class="title pt-3 ps-3" style="border-bottom: 1px solid #E6ECF0;">
+    <h4 style="font-weight: 700;font-size: 24px; line-height: 24px;">推薦跟隨
+    </h4>
+    <span style="width: 273px; "></span>
   </div>
-  <hr>
+
   <div class="follower">
     {{!-- {{#each followship}} --}}
     <div class="users d-flex flex-row flex-nowrap justify-content-between mt-4">
       <div class="user-info d-flex">
-        <div class="avatar" style="width: 50px;height: 50px">
+        <div class="avatar" style="width: 50px;height: 50px;">
           <a href="/tweets/{{user.id}}">
             <img src="{{user.avatar}}" class="rounded-circle me-3"
               style="width: 50px;height: 50px;background: #C4C4C4;">
           </a>
         </div>
-        <div class="name">
-          <p class="user-name text-truncate m-0 ms-1" style="font-weight: 700;max-width: 74px;">FakeName{{this.name}}
+        <div class="name" style="width:110px; height:48px;">
+          <p class="user-name text-truncate m-0 ms-1" style="font-weight: 700;font-size:16px;">
+            FakeName{{this.name}}
           </p>
-          <p class="user-account text-truncate m-0 ms-1" style="color: #C4C4C4;max-width: 74px;">@FakeAccountm{{this.account}}</p>
+          <p class="user-account text-truncate m-0 ms-1" style="font-size:14px; color:#C4C4C4">
+            @FakeAccountm{{this.account}}
+          </p>
         </div>
       </div>
-      <div class="follow-btn" style="width: 96px;height: 40px">
+      <div class="follow-btn d-flex justify-content-center align-items-center me-2 mt-1"
+        style="width:100px; height:40px; background: #FF6600; border-radius:50px;">
         <form action="/following/{{this.id}}?_method=DELETE" method="POST">
-          <button type="submit" class="btn"
-            style="background: #FF6600;border-radius: 100px;color:#ffffff;">正在跟隨</button>
+          <button type="submit" class="btn" style="color:#ffffff;font-size: 16px;">正在跟隨</button>
         </form>
       </div>
     </div>
     {{!-- {{/each}} --}}
-    <div class="users d-flex flex-row flex-nowrap justify-content-between mt-4">
+    <div class="users d-flex flex-row flex-nowrap justify-content-between mt-4" style="border:1px solid blue">
       <div class="user-name d-flex">
         <div class="avatar" style="width: 50px;height: 50px">
           <a href="/tweets/{{user.id}}">
@@ -35,19 +40,21 @@
               style="width: 50px;height: 50px;background: #C4C4C4;">
           </a>
         </div>
-        <div class="name">
-          <p class="user-name text-truncate m-0 ms-1" style="font-weight: 700;max-width: 74px;">Lorem Ipsum{{this.name}}
+        <div class="name" style="width:110px; height:48px;">
+          <p class="user-name text-truncate m-0 ms-1" style="font-weight: 700;font-size:16px;">
+            Lorem Ipsum{{this.name}}
           </p>
-          <p class="user-account text-truncate m-0 ms-1" style="color: #C4C4C4;max-width: 74px;">@Lorem
-            Ipsum{{this.account}}</p>
+          <p class="user-account text-truncate m-0 ms-1" style="font-size:14px; color:#C4C4C4">
+            @Lorem Ipsum{{this.account}}
+          </p>
         </div>
-      </div>
-      <div class="follow-btn d-flex flex-row-reverse" style="width: 96px;height: 40px">
-        <form action="/following/{{this.id}}" method="POST">
-          <button type="submit" class="btn mt-2 me-2"
-            style="background: #FFFFFF;border-radius: 100px;border:1px solid #FF6600;color:#FF6600">跟隨</button>
-        </form>
+        <div class="follow-btn d-flex justify-content-center align-items-center mt-1"
+          style="width: 96px;height: 40px;margin-left:30px; border: 1px solid red;">
+          <form action="/following/{{this.id}}" method="POST">
+            <button type="submit" class="btn"
+              style="background: #FFFFFF;border-radius: 50px;border:1px solid #FF6600;color:#FF6600; font-size: 16px;">跟隨</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
