@@ -1,6 +1,24 @@
+const { User, Tweet } = require('../models')
+
 const likesController = {
-  getLikes:(req,res,next)=>{ // 取得喜歡的內容
-    res.render('like-content')
+  getLikes:async (req,res)=>{ // 取得喜歡的內容
+    let [users, user] = await Promise.all([
+            User.findAll({ where: { role: 'user' }, raw: true, nest: true, attributes: ['id'] }),
+            User.findByPk((2), {
+                where: { role: 'user' },
+                include: [
+                    Tweet,
+                    { model: Tweet, as: 'LikedTweets', include: [User] },
+                ],
+                order: [
+                    ['LikedTweets', 'updatedAt', 'DESC']
+                ],
+            })
+        ])
+        
+        return res.render('like-content', {
+            users: user.toJSON()
+        })
   }
 }
 

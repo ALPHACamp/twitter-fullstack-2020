@@ -30,7 +30,7 @@ const userController = {
   signInPage: (req, res) => { // 註冊
     return res.render('signin')
   },
-  signIn:(req,res,next)=>{
+  signIn: (req, res, next) => {
     console.log(123)
     res.redirect('/tweets')
   },
@@ -74,7 +74,7 @@ const userController = {
           name,
           email,
           account,
-          password
+          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
         })
       })
       .then(() => {
