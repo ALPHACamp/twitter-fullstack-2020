@@ -1,4 +1,4 @@
-const { User, Tweet, Reply } = require('../models')
+const { User, Tweet, Reply, Followship } = require('../models')
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
 
@@ -98,24 +98,11 @@ const userController = {
     res.render('following')
   },
   addFollowing:(req, res, next) => { //追蹤功能
-    
-    Promise.all([
-      User.findByPk(userId),
-      Followship.findOne({
-        where: {
-          followerId: helpers.getUser(req).id,
-          followingId: req.params.userId
-        }
-      })
-    ])
-      .then(([user, followship]) => {
-        if(!user) throw new Error("User didn't exist!")
-        if(!followship) throw new Error('You are already Following this user!')
         return Followship.create({
           followerId: helpers.getUser(req).id,
           followingId: req.params.userId
         })
-      })
+      // })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
   },
@@ -142,7 +129,7 @@ const userController = {
     return User.findAll({
       include: [
         { model: User, as: 'Followers' },
-      ],
+      ]
     })
       .then(users => {
         const limit = 10
@@ -155,7 +142,8 @@ const userController = {
           // 判斷目前登入使用者是否已追蹤該 user 物件
           isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
          }))
-         console.log(users)
+          .sort((a, b) => b.followerCount - a.followerCount)
+          .slice(0, limit)
         res.locals.getFollowship = users
         return next()
       })
