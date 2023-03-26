@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row">
+    {{> leftbar}}
+    <div class="col-7">
+      <div class="user-profile-page">
+        <div class="user-header d-flex align-items-center mt-3">
+          <div class="user-profile-header-back flex-shrink-0">
+            <a href="/tweets">
+              <img src="/images/back@2x.png" alt="home">
+            </a>
+          </div>
+          <div class="user-profile-header-info flex-grow-1">
+            <a href="/user/tweets">
+              <div class="user-profile-header-nickname">
+                <h5 class="mb-0">John Doe</h5>
+              </div>
+              <div class="user-profile-header-tweets">
+                <p class="mb-0">25 推文</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        {{> follower-tabs}}
+      </div>
+    </div>
+    {{> rightbar}}
+  </div>
+</div>

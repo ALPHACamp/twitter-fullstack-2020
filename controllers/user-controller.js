@@ -10,6 +10,12 @@ const userController = {
     },
     getUser: (req, res, next) => {
         res.render('users/profile')
+    },
+    getFollowers: (req, res, next) => {
+        res.render('users/followers')
+    },
+    getFollowings: (req, res, next) => {
+        res.render('users/followings')
     }
 }
 

@@ -113,12 +113,16 @@
               <p class="mt-2">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</p>
             </div>
             <div class="user-profile-about-follow">
-              <p><span class="user-profile-follow-count">34 個</span>跟隨中</p>
-              <P><span class="user-profile-follow-count">59 位</span>跟隨者</P>
+              <a href="/users/1/followers">
+                <p><span class="user-profile-follow-count">34 個</span>跟隨中</p>
+              </a>
+              <a href="/users/1/followings">
+                <p><span class="user-profile-follow-count">59 位</span>跟隨者</p>
+              </a>
             </div>
           </div>
         </div>
-        {{> users-tab}}
+        {{> user-tabs}}
       </div>
     </div>
     {{> rightbar}}

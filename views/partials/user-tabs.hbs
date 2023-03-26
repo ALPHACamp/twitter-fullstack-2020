@@ -1,19 +1,15 @@
-<ul class="nav nav-tabs" id="pills-tab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button"
-      role="tab" aria-controls="pills-home" aria-selected="true">推文</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button"
-      role="tab" aria-controls="pills-profile" aria-selected="false">回覆</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button"
-      role="tab" aria-controls="pills-contact" aria-selected="false">喜歡的內容</button>
-  </li>
-</ul>
-<div class="tab-content" id="pills-tabContent">
-  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <button class="nav-link active" id="nav-tweets-tab" data-bs-toggle="tab" data-bs-target="#nav-tweets" type="button"
+      role="tab" aria-controls="nav-tweets" aria-selected="true">推文</button>
+    <button class="nav-link" id="nav-replies-tab" data-bs-toggle="tab" data-bs-target="#nav-replies" type="button"
+      role="tab" aria-controls="nav-replies" aria-selected="false">回覆</button>
+    <button class="nav-link" id="nav-likes-tab" data-bs-toggle="tab" data-bs-target="#nav-likes" type="button"
+      role="tab" aria-controls="nav-likes" aria-selected="false">喜歡的內容</button>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-tweets" role="tabpanel" aria-labelledby="nav-tweets-tab" tabindex="0">
     <div class="user-replies">
       <img src="https://fakeimg.pl/50/" width="50px" height="50px" style="border-radius:50%;" />
       <div class="user-replies-content">
@@ -40,8 +36,9 @@
         </div>
       </div>
     </div>
+    <hr>
   </div>
-  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+  <div class="tab-pane fade" id="nav-replies" role="tabpanel" aria-labelledby="nav-replies-tab" tabindex="0">
     <div class="user-replies">
       <img src="https://fakeimg.pl/50/" width="50px" height="50px" style="border-radius:50%;" />
       <div class="user-replies-content">
@@ -59,8 +56,9 @@
         </div>
       </div>
     </div>
+    <hr>
   </div>
-  <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
+  <div class="tab-pane fade" id="nav-likes" role="tabpanel" aria-labelledby="nav-likes-tab" tabindex="0">
     <div class="user-replies">
       <img src="https://fakeimg.pl/50/" width="50px" height="50px" style="border-radius:50%;" />
       <div class="user-replies-content">
@@ -88,5 +86,6 @@
         </div>
       </div>
     </div>
+    <hr>
   </div>
 </div>
