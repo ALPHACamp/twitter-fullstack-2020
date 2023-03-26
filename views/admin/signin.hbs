@@ -2,33 +2,34 @@
   <div>
     <div class="d-flex justify-content-center" style="margin-top: 69px;">
       <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89-300x300.png"
-        width="35px" height="35px" alt="A logo">
+        width="50px" height="50px" alt="A logo">
     </div>
     <div class="d-flex justify-content-center" style="margin-top:25px; margin-bottom:25px;">
       <h3 style="font-weight:700;font-family:'Noto Sans TC'; font-size: 28px; color: #1C1C1C;">後台登入</h3>
     </div>
+    {{> message}}
     <form class="form-adminSign" action="/admin/signin" method="POST" style="width: 100%; ">
-      <div class="form-row" style="width:356px; height:54px; margin-bottom:32px; background: #F5F8FA;">
+      <div class="form-row" style="width:356px; height:54px; margin-bottom:32px; border-radius: 2px; background: #F5F8FA;">
         <label class="form-labe" style="font-size: 14px; margin-left:10.55px;" for="name">帳號</label>
-        <input type="text" id="name" name="name" class="form-control"
-          style="border-style:none; border-bottom: 2px solid #657786; background: #F5F8FA; font-size: 16px; border-radius:0px;"
+        <input type="text" id="account" name="account" class="form-control"
+          style="border-style:none; border-bottom: 2px solid #657786; background: #F5F8FA; font-size: 16px; border-radius:0px 0px 2px 2px;"
           placeholder="請輸入帳號" required>
       </div>
-
+    
       <div class="form-row mb-3">
-        <label class="form-label" style="font-size: 14px; margin-left:10.55px;" for="password">密碼</label>
+        <label class="form-label" style="font-size: 14px; margin-left:10.55px; border-radius: 2px;" for="password">密碼</label>
         <input type="password" id="password" name="password" class="form-control"
-          style="border-style:none; border-bottom: 2px solid #657786;background: #F5F8FA; font-size: 16px; border-radius:0px;"
-          placeholder="請輸入密碼" required>
+          style="border-style:none; border-bottom: 2px solid #657786;background: #F5F8FA; font-size: 16px; border-radius:0px 0px 2px 2px;" placeholder="請輸入密碼" required>
       </div>
 
       <div class="d-grid gap-2 col-12 mx-auto" style="width: 356px; height: 46px; margin-top:40px;">
         <button class="btn btn-primary"
           style="border-radius:50px; margin-top:8px; background:#FF6600; border-color:#FF6600; font-size:20px; font-family:'Noto Sans TC'; padding-top:8px;"
-          type="button">登入</button>
+          type="submit">登入</button>
       </div>
+
       <div class="d-flex justify-content-end" style="margin-top:22px; margin-bottom:700px;">
-        <a class="btn btn-link" href="/signin">前台登入</a>
+        <a class="btn btn-link" style="font-size:16px; font-weight:400px;" href="/signin">前台登入</a>
       </div>
 
     </form>
