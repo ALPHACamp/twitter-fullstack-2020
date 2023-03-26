@@ -65,8 +65,8 @@ const userController = {
       })
   },
   putSetting: (req, res, next) => { // 編輯帳戶設定
-    if (!name || !email || !password || !account || !passwordCheck) throw new Error('所有欄位都是必填。')
     const { account, name, email, password, passwordCheck } = req.body
+    if (!name || !email || !password || !account || !passwordCheck) throw new Error('所有欄位都是必填。')
     if (password !== passwordCheck) throw new Error('密碼不相同')
     return Promise.all([
       User.findOne({ where: { email } }),
