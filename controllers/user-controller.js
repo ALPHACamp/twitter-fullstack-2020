@@ -23,6 +23,18 @@ const userController = {
         res.redirect('/login')
       })
       .catch(err => next(err)) 
+  }, // 新增以下程式碼
+  logInPage: (req, res) => {
+    res.render('login')
+  },
+  logIn: (req, res) => {
+    req.flash('success_messages', '成功登入！')
+    res.redirect('/main')
+  },
+  logout: (req, res) => {
+    req.flash('success_messages', '登出成功！')
+    req.logout()
+    res.redirect('/login')
   }
 }
 module.exports = userController
