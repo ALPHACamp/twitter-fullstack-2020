@@ -9,19 +9,19 @@
 
     <div class="home d-flex align-items-center ps-3 mb-2" name="home" style="width: 178px;height: 58px;">
       <a class="home-page" href="/tweets"
-        style="text-decoration: none; font-size: 18Px;font-weight:700;color:#FF6600;"><i
+        style="text-decoration: none; font-size: 18Px;font-weight:700;{{#if tweetsPage}}color:#FF6600;{{else}}color:#44444F;{{/if}}"><i
           class="fas fa-home"></i>&ensp;首頁</a>
     </div>
 
     <div class="profile d-flex align-items-center ps-3 mb-2" name="profile" style="width: 178px;height: 58px;">
       <a class="profile-page" href="/users/{{user.id}}"
-        style="text-decoration: none;font-size: 18Px;font-weight:700;color:#44444F;"><i
+        style="text-decoration: none;font-size: 18Px;font-weight:700;{{#if userPage}}color:#FF6600;{{else}}color:#44444F;{{/if}}"><i
           class="far fa-user"></i>&ensp;個人資料</a>
     </div>
 
     <div class="setting d-flex align-items-center ps-3 mb-2" name="setting" style="width: 178px;height: 58px;">
       <a class="setting-page" href="/setting"
-        style="text-decoration: none;font-size: 18Px;font-weight:700;color:#44444F;"><i
+        style="text-decoration: none;font-size: 18Px;font-weight:700;{{#if setting}}color:#FF6600;{{else}}color:#44444F;{{/if}}"><i
           class="fas fa-cog"></i>&ensp;設定</a>
     </div>
 
