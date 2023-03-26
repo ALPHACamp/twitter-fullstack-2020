@@ -10,10 +10,11 @@ const userController = {
 
      User.findOne({ where: { email: req.body.email } })
       .then(user => {
-        if (user) throw new Error('Email already exists!') 
+        if (user) throw new Error('Email已被註冊！') 
         return bcrypt.hash(req.body.password, 10)
       })
       .then(hash => User.create({  
+        account: req.body.account,
         name: req.body.name,
         email: req.body.email,
         password: hash
