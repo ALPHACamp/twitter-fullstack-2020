@@ -4,7 +4,7 @@ const replyController = {
   getReplies: async (req,res)=>{ // 已回覆的內容
             let [users, user] = await Promise.all([
             User.findAll({ where: { role: 'user' }, raw: true, nest: true, attributes: ['id'] }),
-            User.findByPk((2), {
+            User.findByPk((req.params.id), {
                 where: { role: 'user' },
                 include: [
                     Tweet,
@@ -24,7 +24,7 @@ const replyController = {
         })
   },
   createReply:(req,res,next)=>{// 新增回覆
-    const UserId = 2 //helpers.getUser(req).id
+    const UserId = helpers.getUser(req).id
     const { description } = req.body
     const TweetId = req.params.id
     if (!description) {
