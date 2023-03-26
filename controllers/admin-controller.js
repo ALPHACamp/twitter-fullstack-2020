@@ -1,10 +1,15 @@
 const { User, Tweet, Followship, Like } = require('../models')
+const helpers = require('../_helpers')
 
 const adminController = {
   signInPage: (req, res) => { // 後台登入
     res.render('admin/signin')
   },
-  getTweets: (req, res) => { // 後台取得推文清單
+  signIn: (req, res, next) => {
+    req.flash('success_messages', '成功登入！')
+    res.redirect('/admin/tweets')
+  },
+  getTweets: (req, res, next) => { // 後台取得推文清單
     return Tweet.findAll({
       include: User,
       nest: true,
@@ -14,13 +19,12 @@ const adminController = {
         ...t,
         description: t.description.substring(0, 50)
       }))
-      console.log(data)
       return res.render('admin/tweets', { tweets: data })
     })
       .catch(err => console.log(err))
   }
 ,
-  getUsers: (req, res) => { // 後台取得使用者列表
+  getUsers: (req, res, next) => { // 後台取得使用者列表
     return User.findAll({
       include: [
         { model: User, as: 'Followings' },
@@ -38,6 +42,7 @@ const adminController = {
           likeCount: user.LikedTweets.length,
           tweetCount: user.Tweets.length
         }))
+        users = users.sort((a, b) => b.TweetsCount - a.TweetsCount)
         return res.render('admin/users', { users })
       })
       .catch(err => console.log(err))

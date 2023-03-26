@@ -11,7 +11,7 @@ const tweetController = {
       ],
       nest: true,
       order: [['createdAt', "desc"]],
-      limit: 5
+      // limit: 5
     })
       .then(tweets => {
         const data = tweets.map(t => ({
