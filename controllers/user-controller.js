@@ -9,10 +9,15 @@ const userController = {
   },
   signUp: (req, res, next) => {
     const { account, name, email, password, passwordCheck } = req.body
-    if (req.body.password !== req.body.passwordCheck) throw new Error('Passwords do not match!')
-    return User.findOne({ where: { account } })
-      .then(user => {
-        if (user) throw new Error('Account already exists!')
+    if (!name || !email || !password || !account || !passwordCheck) throw new Error('所有欄位都是必填。')
+    if (password !== passwordCheck) throw new Error('密碼不相同')
+    return Promise.all([
+      User.findOne({ where: { email } }),
+      User.findOne({ where: { account } })
+    ])
+      .then(([emailCheck, accountCheck]) => {
+        if (emailCheck) throw new Error('此信箱已被註冊過')
+        if (accountCheck) throw new Error('此帳號已被註冊過')
         return bcrypt.hash(password, 10)
       })
       .then(hash => {
@@ -52,7 +57,7 @@ const userController = {
     ])
     return res.render('users', { users: user.toJSON(), })
   },
-  getSetting: (req, res, ) => { // 取得帳戶設定頁面
+  getSetting: (req, res,) => { // 取得帳戶設定頁面
     return User.findByPk(helpers.getUser(req).id)
       .then(user => {
         user = user.toJSON()
@@ -61,16 +66,18 @@ const userController = {
       })
   },
   putSetting: (req, res, next) => { // 編輯帳戶設定
-    const { name, email, account, password, passwordCheck } = req.body
-    if( !name || !email || !password || !account || !passwordCheck){
-      req.flash('wrong_messages', '所有欄位都是必填。')
-      return res.redirect('back')
-    }
-    if(password !== passwordCheck) {
-      req.flash('wrong_messages', '密碼與確認密碼不相符！')
-      return res.redirect('back')
-    }
-      return User.findByPk(helpers.getUser(req).id)
+    if (!name || !email || !password || !account || !passwordCheck) throw new Error('所有欄位都是必填。')
+    const { account, name, email, password, passwordCheck } = req.body
+    if (password !== passwordCheck) throw new Error('密碼不相同')
+    return Promise.all([
+      User.findOne({ where: { email } }),
+      User.findOne({ where: { account } })
+    ])
+      .then(([emailCheck, accountCheck]) => {
+        if (emailCheck) throw new Error('此信箱已被註冊過')
+        if (accountCheck) throw new Error('此帳號已被註冊過')
+        return User.findOne({ where: { id: "2" } })
+      })
       .then(user => {
         return user.update({
           name,

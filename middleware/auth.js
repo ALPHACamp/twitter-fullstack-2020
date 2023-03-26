@@ -2,8 +2,8 @@ const { ensureAuthenticated, getUser } = require('../_helpers')
 
 const authenticated = (req, res, next) => {
   if (ensureAuthenticated(req) && getUser(req).role === 'admin') {
-    req.flash('wrong_messages', 'admin無法登入前台，已跳轉到後台頁面。')
-    return res.redirect('/admin/tweets')
+    req.flash('wrong_messages', '帳號不存在')
+    return res.redirect('/signin')
   }
   if(ensureAuthenticated(req) && getUser(req).role !== 'admin') {
     return next()
@@ -12,8 +12,8 @@ const authenticated = (req, res, next) => {
 }// 一般使用者判斷
 const authenticatedAdmin = (req, res, next) => {
   if (ensureAuthenticated(req) && getUser(req).role !== 'admin'){
-    req.flash('wrong_messages', '無權限登入後台，已跳轉到 Alphitter 首頁。')
-    return res.redirect('/tweets')
+    req.flash('wrong_messages', '帳號不存在')
+    return res.redirect('/admin/signin')
   }
   if (ensureAuthenticated(req) && getUser(req).role === 'admin') {
       return next()
