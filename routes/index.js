@@ -15,4 +15,7 @@ router.post('tweets/id/unlike', tweetController.removeLike)
 router.get('/tweets', tweetController.getTweets)
 router.post('/tweets', tweetController.postTweet)
 router.get('/users/1/tweets', userController.getUser)
+router.get('/users/1/followers', userController.getFollowers)
+router.get('/users/1/followings', userController.getFollowings)
+
 module.exports = router
