@@ -100,7 +100,7 @@
             </div>
             <div class="footer d-flex">
               <div class="replies d-flex align-items-center">
-                <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal" data-bs-target="#likeContentModal">
+                <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal" data-bs-target="#likeContentModal{{this.id}}">
                   <i class="far fa-comment"></i>&ensp;10{{this.Replies.length}}
                 </button>
               </div>
@@ -114,7 +114,7 @@
           </div>
         </div>
         {{!--likeContent modal --}}
-        <div class="modal fade" id="likeContentModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="likeContentModal{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
           aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
