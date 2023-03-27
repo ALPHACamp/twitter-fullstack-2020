@@ -72,10 +72,10 @@
       </div>
       <!--tweet-->
       <div class="tweets-container">
-        {{#each tweetLiked }}
+        {{#each tweet }}
         <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
           <div class="avatar ps-3">
-            <a href="/tweets/{{../users.id}}" style="text-decoration:none;">
+            <a href="/users/{{../users.id}}" style="text-decoration:none;">
               <img src="{{../users.avatar}}" class="rounded-circle me-3"
                 style="width: 50px;height: 50px;background: #C4C4C4;">
             </a>
@@ -93,18 +93,18 @@
               <div class="replies d-flex align-items-center">
                 <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal"
                   data-bs-target="#tweetReplyModal{{this.id}}">
-                  <i class="far fa-comment"></i>&ensp;{{../user.Replies.length}}
+                  <i class="far fa-comment"></i>&ensp;{{this.Replies.length}}
                 </button>
               </div>
               <div class="likes d-flex align-items-center">
                 {{#if this.isLiked}}
                 <form action="/like/{{this.id}}?_method=DELETE" method="post">
-                  <button type="submit" class="btn" style="color: #fc5a5a;"><i
-                      class="fa-solid fa-heart"><!--&ensp;{{this.likes.length}}--></i></button>
+                  <button type="submit" class="btn" ><i
+                      class="fa-solid fa-heart" style="color: #fc5a5a;">&ensp;</i><span>{{this.LikedUsers.length}}</span></button>
                 </form>
                 {{else}}
                 <form action="/like/{{this.id}}" method="post">
-                  <button type="submit" class="btn"><i class="fa-regular fa-heart"> <!--&ensp;{{this.likes.length}}--></i></button>
+                  <button type="submit" class="btn"><i class="fa-regular fa-heart"> &ensp;</i><span>{{this.LikedUsers.length}}</span></button>
                 </form>
                 {{/if}}
               </div>

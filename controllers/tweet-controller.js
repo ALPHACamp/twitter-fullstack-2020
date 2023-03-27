@@ -7,11 +7,11 @@ const tweetController = {
     return Tweet.findAll({
       include: [
         User,
-        Reply
+        Reply,
+        { model: User, as: 'LikedUsers' }
       ],
       nest: true,
-      order: [['createdAt', "desc"]],
-      // limit: 5
+      order: [['createdAt', "desc"]]
     })
       .then(tweets => {
         const data = tweets.map(t => ({
@@ -33,13 +33,14 @@ const tweetController = {
       include: [
         User,
         { model: Reply, include: User },
+        { model: User, as: 'LikedUsers' }
       ],
       order: [['Replies', 'createdAt', 'DESC']]
     })
       .then(tweet => {
         const isLiked = helpers.getUser(req).LikedTweets.some(l => l.id === tweet.id)
         tweet = tweet.toJSON()
-        res.render('tweet', { 
+        res.render('tweet', {
           tweet,
           isLiked
         })
@@ -47,9 +48,9 @@ const tweetController = {
       .catch(err => next(err))
   },
   createTweet: (req, res, next) => {
-    const UserId = helpers.getUser(req).id 
-    const {description} = req.body
-    if (!description){
+    const UserId = helpers.getUser(req).id
+    const { description } = req.body
+    if (!description) {
       req.flash('error_messages', '貼文不可空白')
       return res.redirect('back')
     }
@@ -57,7 +58,7 @@ const tweetController = {
       req.flash('error_messages', '貼文不可空白')
       return res.redirect('back')
     }
-    if (description.length > 140){
+    if (description.length > 140) {
       req.flash('error_messages', '貼文不得超過140個字')
       return res.redirect('back')
     }
