@@ -105,9 +105,8 @@
                 </button>
               </div>
               <div class="likes d-flex align-items-center">
-                <form action="/likes" method="post">
-                  <button type="submit" class="btn"><i class="fa-solid fa-heart"
-                      style="color: #fc5a5a;"></i>&ensp;66{{this.likes.length}}</i></button>
+                <form action="/like/{{this.id}}?_method=DELETE" method="post">
+                  <button type="submit" class="btn" style="color: #fc5a5a;"><i class="fa-solid fa-heart"><!--&ensp;{{this.likes.length}}--></i></button>
                 </form>
               </div>
             </div>
