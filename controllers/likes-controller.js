@@ -1,4 +1,5 @@
 const { User, Tweet } = require('../models')
+const helpers = require('../_helpers')
 
 const likesController = {
   getLikes:async (req,res)=>{ // 取得喜歡的內容
@@ -15,9 +16,9 @@ const likesController = {
                 ],
             })
         ])
-        
+        const isLiked = helpers.getUser(req).LikedTweets.some(l => l.id === req.user.id)
         return res.render('like-content', {
-            users: user.toJSON()
+            users: user.toJSON(),isLiked
         })
     }
 }
