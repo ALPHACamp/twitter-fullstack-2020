@@ -37,7 +37,6 @@ const userController = {
     return res.render('signin')
   },
   signIn: (req, res, next) => {
-    console.log(123)
     res.redirect('/tweets')
   },
   getUser: async (req, res) => { // 取得個人資料頁面(推文清單)
@@ -98,7 +97,8 @@ const userController = {
     res.render('following')
   },
   addFollowing:(req, res, next) => { //追蹤功能
-        return Followship.create({
+    if (+helpers.getUser(req).id === +req.params.userId)throw new Error('無法追蹤自己')//無法追蹤自己
+    return Followship.create({
           followerId: helpers.getUser(req).id,
           followingId: req.params.userId
         })
@@ -134,7 +134,9 @@ const userController = {
       .then(users => {
         const limit = 10
         // 整理 users 資料，把每個 user 項目都拿出來處理一次，並把新陣列儲存在 users 裡
-        users = users.map(user => ({
+        const withoutAdmin = users.filter(user => user.dataValues.role !== 'admin')//排除admin
+        const withoutUser = withoutAdmin.filter(user => user.dataValues.id !== helpers.getUser(req).id)//排除自己
+        users = withoutUser.map(user => ({
           // 整理格式
           ...user.toJSON(),
           // // 計算追蹤者人數(還沒用到)
