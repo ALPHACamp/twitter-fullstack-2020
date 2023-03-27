@@ -68,7 +68,9 @@
             </form>
             {{#if isLiked}}
             <form action="/tweets/{{this.id}}/unlike" method="POST">
-              {{!-- <button type="submit" class="btn btn-danger m-1">Unlike</button> --}}
+              <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
+                  src="/images/like-filled@2x.png" alt="unlike"></button>
+                  <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">87{{this.likeCount}}</span>
             </form>
             {{else}}
             <form action="/tweets/{{this.id}}/like" method="POST">
