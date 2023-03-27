@@ -10,8 +10,8 @@
         {{> user-avatar}}
         <div class="tweet-box" data-bs-toggle="modal" data-bs-target="#user-tweet-modal">
           <form action="">
-            <textarea class="modal-input-tweets" placeholder="有什麼新鮮事？" type="description" name="description" id="" maxlength="145" rows="3"
-              cols="100"></textarea>
+            <textarea class="modal-input-tweets" placeholder="有什麼新鮮事？" type="description" name="description" id=""
+              maxlength="145" rows="3" cols="100"></textarea>
           </form>
           <div class="d-flex flex-row-reverse mb-1">
             <button class="tweetbtn">推文</button>
@@ -28,7 +28,8 @@
               <div class="modal-body">
                 {{> user-avatar}}
                 <form action="/tweets" method="POST">
-                  <textarea class="modal-input-tweets" id="user-tweet-description-in-main" type="description" placeholder="有什麼新鮮事？" name="description" id="user-tweet-description" maxlength="150" rows="3"
+                  <textarea class="modal-input-tweets" id="user-tweet-description-in-main" type="description"
+                    placeholder="有什麼新鮮事？" name="description" id="user-tweet-description" maxlength="150" rows="3"
                     cols="100" required></textarea>
                   <div class="d-flex flex-row-reverse mb-1">
                     <button class="tweetbtn" type="submit">推文</button>
@@ -53,8 +54,7 @@
             <div class="col-11">
               <div>
                 <a href="/users/{{this.id}}"><strong>{{this.User.name}}</strong></a>
-                {{this.createdAt}}
-                {{!-- <span>{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span> --}}
+                <span style="color: #6C757D;">@{{this.User.account}}．{{moment this.createdAt}}</span>
               </div>
               <p>{{this.description}}</p>
             </div>
@@ -97,24 +97,24 @@
                   {{!-- --}}
                   <div class="col-10">
                     <div>
-                      <a href="/users/{{this.id}}"><strong>Apple</strong></a>
-                      <span>@apple‧3小時</span>
+                      <a href="/users/{{this.id}}"><strong>{{this.User.name}}</strong></a>
+                      <span style="color: #6C757D;"> @{{this.User.account}}‧{{moment this.createdAt}}</span>
                     </div>
                     <div>
                       <p>{{this.description}}</p>
-                      <span>回覆給<span class="ms-1" style="color: #FF6600;">@mitsubishi</span></span>
+                      <span>回覆給<span class="ms-1" style="color: #FF6600;">@{{this.User.account}}</span></span>
                     </div>
                   </div>
                 </div>
 
                 {{> user-avatar}}
                 <form action="/tweets/{{this.id}}/replies" method="POST">
-                  <textarea class="modal-input-tweets" id="user-reply-in-main" placeholder="推你的回覆" name="comment" maxlength="150" rows="4"
-                    cols="100" required></textarea>
-                    <div class="d-flex flex-row-reverse mb-1">
-                      <button class="tweetbtn" type="submit">回覆</button>
-                      <p id="user-reply-alert-in-main" class="user-reply-alertMsg"></p>
-                    </div>
+                  <textarea class="modal-input-tweets" id="user-reply-in-main" placeholder="推你的回覆" name="comment"
+                    maxlength="150" rows="4" cols="100" required></textarea>
+                  <div class="d-flex flex-row-reverse mb-1">
+                    <button class="tweetbtn" type="submit">回覆</button>
+                    <p id="user-reply-alert-in-main" class="user-reply-alertMsg"></p>
+                  </div>
                 </form>
               </div>
               <div class="modal-footer">
