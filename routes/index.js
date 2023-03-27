@@ -2,8 +2,34 @@ const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
+const adminController = require('../controllers/admin-controller')
 const passport = require('../config/Passport')
+const helpers = require('../_helpers')
 const { generalErrorHandler } = require('../middleware/error-handler')
+
+const adminAuthenticated = (req, res, next) => {
+  if (
+    helpers.ensureAuthenticated(req) &&
+    (helpers.getUser(req).isAdmin || helpers.getUser(req).role)
+  )
+    return next();
+  return res.redirect('/admin/signin');
+};
+
+const userAuthenticated = (req, res, next) => {
+  if (
+    helpers.ensureAuthenticated(req) &&
+    !helpers.getUser(req).isAdmin &&
+    !helpers.getUser(req).role
+  )
+    return next();
+  if (
+    helpers.ensureAuthenticated(req) &&
+    (helpers.getUser(req).role || helpers.getUser(req).isAdmin)
+  )
+    return res.redirect('/admin/tweets');
+  return res.redirect('/signin');
+};
 
 router.get('/admin/signin', adminController.getSigninPage);
 router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin' }), adminController.signin);
