@@ -24,6 +24,8 @@ app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req);
   res.locals.successMessage = req.flash('successMessage');
   res.locals.errorMessage = req.flash('errorMessage');
+  res.locals.successFlashMessage = req.flash('successFlashMessage');
+  res.locals.errorFlashMessage = req.flash('errorFlashMessage');
   next();
 });
 app.use(routes)
