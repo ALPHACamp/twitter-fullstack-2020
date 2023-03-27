@@ -1,32 +1,35 @@
-.header{
+.home-wrapper hr {
+  background-color: #E6ECF0;
+  opacity: 100%;
+}
+
+.home-wrapper .header {
   font-weight: 700;
 }
 
-
-input {
-  border: none 
+.home-wrapper input {
+  border: none
 }
-input:focus {
+
+.home-wrapper input:focus {
   border: none;
   outline: none !important;
 }
 
-.post-window input::placeholder{
+.home-wrapper .post-window input::placeholder {
   font-weight: 700;
   font-size: 18px;
   color: #6C757D;
-  
+
 }
 
-.post-window button
- {
+.home-wrapper .post-window button {
   display: block;
   width: 64px;
   height: 40px;
   border: none;
   color: white;
   background: #FF6600;
-    border-radius: 50px;
-  
- }
+  border-radius: 50px;
 
+}

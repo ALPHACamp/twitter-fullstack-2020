@@ -2,44 +2,33 @@
   /* height: 168px; */
 }
 
-.avatar {
+.tweet .avatar {
 
   width: 82px;
 
 }
 
-.name-account {
+.tweet .name-account {
 
   height: 26px;
 }
 
-.account {
+.tweet .account {
   color: #6C757D;
   font-size: 14px;
 }
 
-.description {
-  /* height: 78px; */
-  /* background-color: #e5e5e5; */
-}
 
-.reply-like {
-  position:relative;
+.tweet .reply-like {
+  position: relative;
   height: 16px;
   /* background-color: #d5d5d5; */
   padding: 0;
 }
 
-.reply-like svg {
-  margin:0 8px 0 0;
-}
 
-.reply-like svg path
-{
-  fill: #6C757D;
-}
-
-.reply, .like{
+.tweet .reply,
+.tweet .like {
   display: inline-block;
   height: 16px;
   line-height: 16px;
@@ -49,16 +38,45 @@
   color: #6C757D;
 }
 
-.reply{
+.tweet .reply {
   position: absolute;
-    left: 0px;
-}
-.like{
-  position:absolute;
-  left:78px;
+  left: 0px;
 }
 
-.reply span, .like span{
-  vertical-align: -1px;
+.tweet .like {
+  position: absolute;
+  left: 78px;
+}
+
+.tweet .reply-like button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  height: 16px;
+  width: 16px;
+  margin: 0 8px 0 0;
+  padding: 0;
+  vertical-align: 1px;
+}
+
+
+
+.tweet .like .isLiked,
+.tweet .like .notLiked {
+
+  display: none;
+
+}
+
+.tweet .like .liked .isLiked {
+
+  display: inline;
+
+}
+
+
+.tweet .like :not(.liked) .notLiked {
+
+  display: inline;
 
 }

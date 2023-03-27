@@ -1,46 +1,20 @@
 <div class="most-followed mt-3 pt-4">
-  <div class="ms-4 mb-3">推薦跟隨</div>
+  <div class="ms-4 mb-3 title">推薦跟隨</div>
   <hr>
-  {{!-- top10 users --}}
+  {{#each topTenFollowed}}
   <div class="d-flex top-ten-window p-4">
     <div class=" avatar">
-      <img width="50" height="50" src="{{this.User.avatar}}" alt="">
+      <img width="50" height="50" src="{{this.avatar}}" alt="">
     </div>
     <div class="name ms-2">
-      <span class="name">name</span>
-      <span class="account">@account</span>
+      <span class="name">{{this.name}}</span>
+      <span class="account">@{{this.account}}</span>
     </div>
-    <div class="button ms-1">
-      <button type="button" class="btn btn-primary">正在跟隨</button>
-    </div>
-  </div>
-  {{!-- top10 users --}}
-  {{!-- top10 users --}}
-  <div class="d-flex top-ten-window p-4">
-    <div class=" avatar">
-      <img width="50" height="50" src="{{this.User.avatar}}" alt="">
-    </div>
-    <div class="name ms-2">
-      <span class="name">name</span>
-      <span class="account">@account</span>
-    </div>
-    <div class="button ms-1">
-      <button type="button" class="btn btn-primary">正在跟隨</button>
+    <div class="button ms-1 my-auto {{#if this.isFollowed}}followed{{/if}}" onclick="follow(this)" id="{{this.id}}">
+      <button class="isFollowed">正在跟隨</button>
+      <button class="notFollowed ms-auto">跟隨</button>
     </div>
   </div>
-  {{!-- top10 users --}}
-    {{!-- top10 users --}}
-    <div class="d-flex top-ten-window p-4">
-      <div class=" avatar">
-        <img width="50" height="50" src="{{this.User.avatar}}" alt="">
-      </div>
-      <div class="name ms-2">
-        <span class="name">name</span>
-        <span class="account">@account</span>
-      </div>
-      <div class="button ms-1">
-        <button type="button" class="btn btn-primary">正在跟隨</button>
-      </div>
-    </div>
-    {{!-- top10 users --}}
+  {{/each}}
+
 </div>
