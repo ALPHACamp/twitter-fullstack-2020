@@ -1,4 +1,4 @@
-const { User, Tweet, Reply, Followship } = require('../models')
+const { User, Tweet, Reply, Followship, Like } = require('../models')
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
 
@@ -143,12 +143,34 @@ const userController = {
           followerCount: user.Followers.length,
           // 判斷目前登入使用者是否已追蹤該 user 物件
           isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
-         }))
+          }))
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, limit)
         res.locals.getFollowship = users
         return next()
       })
+      .catch(err => next(err))
+  },
+  addLike: (req, res, next) => { // 喜歡
+    return Like.create({
+          UserId: helpers.getUser(req).id,
+          TweetId: req.params.TweetId
+        })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+  removeLike: (req, res, next) => { // 不喜歡
+    return Like.findOne({
+      where: {
+        UserId: helpers.getUser(req).id,
+        TweetId: req.params.TweetId
+      }
+    })
+      .then(like => {
+        if (!like) throw new Error("You haven't Liked this tweet!")
+        return like.destroy()
+      })
+      .then(() => res.redirect('back'))
       .catch(err => next(err))
   }
 }
