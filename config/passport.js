@@ -1,7 +1,7 @@
 const passport = require('passport')
 const localStrategy = require('passport-local').Strategy
 const bcrypt = require('bcryptjs')
-const { User } = require('../models')
+const { User, Tweet } = require('../models')
 
 passport.use(new localStrategy(
   {
@@ -29,7 +29,8 @@ passport.deserializeUser((userId, done) => {
   User.findByPk(userId, {
     include: [
       { model: User, as: 'Followers' }, 
-      { model: User, as: 'Followings' }
+      { model: User, as: 'Followings' },
+      { model: Tweet, as: 'LikedTweets' }
     ]
   })
     .then(user => {

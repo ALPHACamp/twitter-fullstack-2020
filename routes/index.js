@@ -28,6 +28,8 @@ router.get('/likes/:id', authenticated, userController.getFollowship, likesContr
 router.get('/users/:id/followers', authenticated, userController.getFollower) // 跟隨中
 router.get('/users/:id/followings', authenticated, userController.getFollowing) // 跟隨者
 
+router.post('/tweets/:TweetId', authenticated, userController.addLike) // 喜歡
+router.delete('/tweets/:TweetId', authenticated, userController.removeLike) // 不喜歡
 
 router.get("/users/:id", authenticated, userController.getFollowship, userController.getUser) // 個人頁面
 router.get('/setting', authenticated, userController.getSetting)  // 個人資料設定

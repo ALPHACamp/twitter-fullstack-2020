@@ -16,7 +16,8 @@ const tweetController = {
       .then(tweets => {
         const data = tweets.map(t => ({
           ...t.dataValues,
-          description: t.description
+          description: t.description,
+          isLiked: helpers.getUser(req).LikedTweets.map(t => t.id).includes(t.id) // 判斷目前登入使用者是否喜歡這篇Tweet
         }))
         return User.findByPk(helpers.getUser(req).id)
           .then(user => {
@@ -36,6 +37,7 @@ const tweetController = {
       order: [['Replies', 'createdAt', 'DESC']]
     })
       .then(tweet => {
+        
         tweet = tweet.toJSON()
         res.render('tweet', { tweet })
       })
