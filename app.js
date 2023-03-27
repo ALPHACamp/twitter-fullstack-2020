@@ -1,6 +1,7 @@
 const express = require('express')
 const helpers = require('./_helpers');
 const session = require('express-session');
+const passport = require('./config/passport')
 const handlebars = require('express-handlebars')
 const routes = require('./routes')
 const methodOverride = require('method-override');
@@ -16,6 +17,8 @@ app.use(methodOverride('_method'));
 app.use(express.static('public'))
 app.use(session({ secret: 'test', resave: false, saveUninitialized: true }));
 app.use(express.urlencoded({ extended: true }))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(flash())
 app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req);
