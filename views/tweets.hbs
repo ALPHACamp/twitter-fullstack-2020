@@ -8,7 +8,7 @@
       <hr>
       <div class="mytweet d-flex flex-column ps-3 pb-3 pe-3" style="border-bottom: 10px solid #C4C4C4;">
         <div class="avatar">
-          <a href="/tweets/{{user.id}}" style="text-decoration:none;">
+          <a href="/users/{{user.id}}" style="text-decoration:none;">
             <img src="{{user.avatar}}" class="rounded-circle me-3"
               style="width: 50px;height: 50px;background: #C4C4C4;">
           </a>
@@ -26,7 +26,7 @@ height: 26px;text-align:start;color:#C4C4C4" data-bs-toggle="modal" data-bs-targ
         {{#each tweets}}
         <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
           <div class="avatar ps-3">
-            <a href="/tweets/{{this.User.dataValues.id}}" style="text-decoration:none;">
+            <a href="/users/{{this.User.dataValues.id}}" style="text-decoration:none;">
               <img src="{{this.User.dataValues.avatar}}" class="rounded-circle me-3"
                 style="width: 50px;height: 50px;background: #C4C4C4;">
             </a>
@@ -78,7 +78,7 @@ height: 26px;text-align:start;color:#C4C4C4" data-bs-toggle="modal" data-bs-targ
               </div>
               <div class="tweets d-flex mt-3">
                 <div class="avatar ps-3">
-                  <a href="/tweets/{{this.User.dataValues.id}}" style="text-decoration:none;">
+                  <a href="/users/{{this.User.dataValues.id}}" style="text-decoration:none;">
                     <img src="{{this.User.dataValues.avatar}}" class="rounded-circle me-3"
                       style="width: 50px;height: 50px;background: #C4C4C4;">
                   </a>
@@ -98,7 +98,7 @@ height: 26px;text-align:start;color:#C4C4C4" data-bs-toggle="modal" data-bs-targ
               <div class="modal-body" class="d-flex">
                 <div class="body-avatar d-flex align-items-stretch">
                   <div class="left">
-                    <a href="/tweets/{{../user.id}}">
+                    <a href="/users/{{../user.id}}">
                       <img src="{{../user.avatar}}" class="rounded-circle me-3"
                         style="width: 50px;height: 50px;background: #C4C4C4;">
                     </a>
