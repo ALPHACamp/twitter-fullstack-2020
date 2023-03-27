@@ -20,7 +20,7 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/logout', userController.logout) // 登出
 
 router.post('/tweets/:id/replies', authenticated, replyController.createReply)//新增回覆
-router.get('/tweets/:id', authenticated, tweetController.getTweet) // 個人頁面
+router.get('/tweets/:id', authenticated, userController.getFollowship, tweetController.getTweet) // 個人頁面
 router.get('/tweets', authenticated, userController.getFollowship, tweetController.getTweets) // 總推文清單
 router.post('/tweets', authenticated, tweetController.createTweet) // 新增推文
 router.get('/reply/:id', authenticated, replyController.getReplies) // 推文及回覆
