@@ -25,8 +25,8 @@ router.get('/tweets', authenticated, userController.getFollowship, tweetControll
 router.post('/tweets', authenticated, tweetController.createTweet) // 新增推文
 router.get('/reply/:id', authenticated, userController.getFollowship, replyController.getReplies) // 推文及回覆
 router.get('/likes/:id', authenticated, userController.getFollowship, likesController.getLikes) // 喜歡的內容
-router.get('/users/:id/followers', authenticated, userController.getFollower) // 跟隨中
-router.get('/users/:id/followings', authenticated, userController.getFollowing) // 跟隨者
+router.get('/users/:id/followers', authenticated, userController.getFollowship, userController.getFollower) // 跟隨中
+router.get('/users/:id/followings', authenticated, userController.getFollowship,userController.getFollowing) // 跟隨者
 
 router.post('/tweets/:TweetId', authenticated, userController.addLike) // 喜歡
 router.delete('/tweets/:TweetId', authenticated, userController.removeLike) // 不喜歡

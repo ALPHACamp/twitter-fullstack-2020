@@ -91,22 +91,22 @@ const userController = {
       .catch(err => next(err))
   },
   getFollower: (req, res, next) => { // 跟隨者
-    res.render('follower')
+    return res.render('follower')
   },
   getFollowing: (req, res, next) => { // 跟隨中
-    res.render('following')
+    return res.render('following')
   },
-  addFollowing:(req, res, next) => { //追蹤功能
-    if (+helpers.getUser(req).id === +req.params.userId)throw new Error('無法追蹤自己')//無法追蹤自己
+  addFollowing: (req, res, next) => { //追蹤功能
+    if (+helpers.getUser(req).id === +req.params.userId) throw new Error('無法追蹤自己')//無法追蹤自己
     return Followship.create({
-          followerId: helpers.getUser(req).id,
-          followingId: req.params.userId
-        })
+      followerId: helpers.getUser(req).id,
+      followingId: req.params.userId
+    })
       // })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
   },
-  removeFollowing:(req, res, next) => {
+  removeFollowing: (req, res, next) => {
     return Followship.findOne({
       where: {
         followerId: helpers.getUser(req).id,
@@ -143,7 +143,7 @@ const userController = {
           followerCount: user.Followers.length,
           // 判斷目前登入使用者是否已追蹤該 user 物件
           isFollowed: helpers.getUser(req).Followings.some(f => f.id === user.id)
-          }))
+        }))
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, limit)
         res.locals.getFollowship = users
@@ -153,9 +153,9 @@ const userController = {
   },
   addLike: (req, res, next) => { // 喜歡
     return Like.create({
-          UserId: helpers.getUser(req).id,
-          TweetId: req.params.TweetId
-        })
+      UserId: helpers.getUser(req).id,
+      TweetId: req.params.TweetId
+    })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
   },
