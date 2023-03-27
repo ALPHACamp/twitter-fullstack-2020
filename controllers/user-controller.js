@@ -96,7 +96,11 @@ const userController = {
       .catch(err => next(err))
   },
   getFollower: (req, res, next) => { // 跟隨者
-    return res.render('follower')
+    const data = helpers.getUser(req).Followers.map(f => ({
+      ...f,
+      isFollowed: helpers.getUser(req).Followings.some(fi => f.id === fi.id)
+    }))
+    return res.render('follower', { follower: data })
   },
   getFollowing: (req, res, next) => { // 跟隨中
     return res.render('following')
