@@ -12,3 +12,15 @@
 </div>
 {{/if}}
 
+
+{{#if successFlashMessage}}
+<div class="alert alert-success text-center useOpacity" role="alert">
+  {{successFlashMessage}}
+</div>
+{{/if}}
+
+{{#if errorFlashMessage}}
+<div class="alert alert-danger text-center useOpacity" role="alert">
+  {{errorFlashMessage}}
+</div>
+{{/if}}
