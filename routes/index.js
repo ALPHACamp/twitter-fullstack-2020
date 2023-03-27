@@ -20,16 +20,16 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/logout', userController.logout) // 登出
 
 router.post('/tweets/:id/replies', authenticated, replyController.createReply)//新增回覆
-router.get('/tweets/:id', authenticated, userController.getFollowship, tweetController.getTweet) // 個人頁面
+router.get('/tweets/:id', authenticated, userController.getFollowship, tweetController.getTweet) // 個人推文頁面
 router.get('/tweets', authenticated, userController.getFollowship, tweetController.getTweets) // 總推文清單
 router.post('/tweets', authenticated, tweetController.createTweet) // 新增推文
-router.get('/reply/:id', authenticated, replyController.getReplies) // 推文及回覆
-router.get('/likes/:id', authenticated, likesController.getLikes) // 喜歡的內容
+router.get('/reply/:id', authenticated, userController.getFollowship, replyController.getReplies) // 推文及回覆
+router.get('/likes/:id', authenticated, userController.getFollowship, likesController.getLikes) // 喜歡的內容
 router.get('/users/:id/followers', authenticated, userController.getFollower) // 跟隨中
 router.get('/users/:id/followings', authenticated, userController.getFollowing) // 跟隨者
 
 
-router.get("/users/:id", authenticated, userController.getUser) // 個人頁面
+router.get("/users/:id", authenticated, userController.getFollowship, userController.getUser) // 個人頁面
 router.get('/setting', authenticated, userController.getSetting)  // 個人資料設定
 router.put('/setting', authenticated, userController.putSetting)  // 個人資料編輯
 
