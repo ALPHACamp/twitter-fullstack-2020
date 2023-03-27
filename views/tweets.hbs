@@ -5,14 +5,12 @@
       <div class="main-page">
         <h4><strong>首頁</strong></h4>
       </div>
-
       <hr>
-
       <div class="tweet-post">
         {{> user-avatar}}
         <div class="tweet-box" data-bs-toggle="modal" data-bs-target="#user-tweet-modal">
           <form action="">
-            <textarea class="modal-input-tweets" placeholder="有什麼新鮮事？" name="" id="" maxlength="140" rows="3"
+            <textarea class="modal-input-tweets" placeholder="有什麼新鮮事？" type="description" name="description" id="" maxlength="145" rows="3"
               cols="100"></textarea>
           </form>
           <div class="d-flex flex-row-reverse mb-1">
@@ -29,16 +27,16 @@
               </div>
               <div class="modal-body">
                 {{> user-avatar}}
-                <form action="">
-                  <textarea class="modal-input-tweets" id="user-tweet-description-in-main" placeholder="有什麼新鮮事？" name="user-tweet-description" id="user-tweet-description" maxlength="150" rows="3"
-                    cols="100"></textarea>
+                <form action="/tweets" method="POST">
+                  <textarea class="modal-input-tweets" id="user-tweet-description-in-main" type="description" placeholder="有什麼新鮮事？" name="description" id="user-tweet-description" maxlength="150" rows="3"
+                    cols="100" required></textarea>
+                  <div class="d-flex flex-row-reverse mb-1">
+                    <button class="tweetbtn" type="submit">推文</button>
+                    <p id="user-tweet-description-alert-in-main" class="user-tweet-alertMsg"></p>
+                  </div>
                 </form>
               </div>
               <div class="modal-footer">
-                <div class="d-flex flex-row-reverse mb-1">
-                  <button class="tweetbtn" type="submit">推文</button>
-                  <p id="user-tweet-description-alert-in-main" class="user-tweet-alertMsg"></p>
-                </div>
               </div>
             </div>
           </div>
@@ -46,95 +44,85 @@
       </div>
       <div style="border: 2px solid #E6ECF0;"></div>
       <div class="mt-5">
-        {{!-- <div class=""> --}}
-          {{!-- {{#each tweets}} --}}
-          <div data-bs-toggle="modal" data-bs-target="#reply-modal">
-            <div class="row">
-              <div class="col-1">
-                {{> following-avatar}}
-              </div>
-              <div class="col-11">
-                <div>
-                  <a href="/users/{{this.id}}"><strong>Apple</strong></a>
-                  <span>@apple‧3小時</span>
-                </div>
-                <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign merjc idblid
-                  ngijsnli gririr leirhielr gli g grgiur
-                  hghbgn ign merjc idblid ngijsnli gririr leirhielr
-                  gli g grgiur hghbgn ign</p>
-              </div>
+        {{#each tweets}}
+        <div data-bs-toggle="modal" data-bs-target="#reply-modal{{this.id}}">
+          <div class="row">
+            <div class="col-1">
+              {{> following-avatar}}
             </div>
-            <div class="d-flex">
-              <form action="/reply /:id" method="POST">
-                <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
-                    src="/images/reply-outlined@2x.png" alt="reply"></button>
-                <span
-                  style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">78{{this.replyCount}}</span>
-              </form>
-              {{!-- {{#if isLiked}} --}}
-              {{!-- <form action="/like/:id?_method=DELETE" method="POST">
-                <button type="submit" class="btn btn-danger m-1">Unlike</button>
-              </form> --}}
-              {{!-- {{else}} --}}
-              <form action="/like/:id" method="POST">
-                <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
-                    src="/images/like-outlined@2x.png" alt="like"></button>
-                <span
-                  style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">87{{this.likeCount}}</span>
-              </form>
-              {{!-- {{/if}} --}}
+            <div class="col-11">
+              <div>
+                <a href="/users/{{this.id}}"><strong>{{this.User.name}}</strong></a>
+                {{this.createdAt}}
+                {{!-- <span>{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span> --}}
+              </div>
+              <p>{{this.description}}</p>
             </div>
-            <hr>
           </div>
-          {{!-- 回覆彈跳視窗 --}}
-          <div class="modal" tabindex="-1" id="reply-modal">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  {{!-- <h5 class="modal-title">User name</h5> --}}
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <div class="row">
-                    <div class="col-2">
-                      {{> following-avatar}}
-                      <div class="reply-modal-vr-line"></div>
-                    </div>
-                    {{!-- --}}
-                    <div class="col-10">
-                      <div>
-                        <a href="/users/{{this.id}}"><strong>Apple</strong></a>
-                        <span>@apple‧3小時</span>
-                      </div>
-                      <div>
-                        <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign merjc idblid ngijsnli gririr
-                          leirhielr gli g grgiur
-                          hghbgn ign merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign</p>
-                        <span>回覆給<span class="ms-1" style="color: #FF6600;">@mitsubishi</span></span>
-                      </div>
-
-                    </div>
-
+          <div class="d-flex">
+            <form action="/tweets/{{this.id}}/replies" method="GET">
+              <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
+                  src="/images/reply-outlined@2x.png" alt="reply"></button>
+              <span
+                style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">78{{this.replyCount}}</span>
+            </form>
+            {{#if isLiked}}
+            <form action="/tweets/{{this.id}}/unlike" method="POST">
+              {{!-- <button type="submit" class="btn btn-danger m-1">Unlike</button> --}}
+            </form>
+            {{else}}
+            <form action="/tweets/{{this.id}}/like" method="POST">
+              <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
+                  src="/images/like-outlined@2x.png" alt="like"></button>
+              <span
+                style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">87{{this.likeCount}}</span>
+            </form>
+            {{/if}}
+          </div>
+          <hr>
+        </div>
+        {{!-- 回覆彈跳視窗 --}}
+        <div class="modal fade" tabindex="-1" id="reply-modal{{this.id}}">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-2">
+                    {{> following-avatar}}
+                    <div class="reply-modal-vr-line"></div>
                   </div>
-
-                  {{> user-avatar}}
-                  <form action="">
-                    <textarea class="modal-input-tweets" id="user-reply-in-main" placeholder="推你的回覆" name="" maxlength="150" rows="4"
-                      cols="100"></textarea>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <div class="d-flex flex-row-reverse mb-1">
-                    <button class="tweetbtn" type="submit">回覆</button>
-                    <p id="user-reply-alert-in-main" class="user-reply-alertMsg"></p>
+                  {{!-- --}}
+                  <div class="col-10">
+                    <div>
+                      <a href="/users/{{this.id}}"><strong>Apple</strong></a>
+                      <span>@apple‧3小時</span>
+                    </div>
+                    <div>
+                      <p>{{this.description}}</p>
+                      <span>回覆給<span class="ms-1" style="color: #FF6600;">@mitsubishi</span></span>
+                    </div>
                   </div>
                 </div>
+
+                {{> user-avatar}}
+                <form action="/tweets/{{this.id}}/replies" method="POST">
+                  <textarea class="modal-input-tweets" id="user-reply-in-main" placeholder="推你的回覆" name="comment" maxlength="150" rows="4"
+                    cols="100" required></textarea>
+                    <div class="d-flex flex-row-reverse mb-1">
+                      <button class="tweetbtn" type="submit">回覆</button>
+                      <p id="user-reply-alert-in-main" class="user-reply-alertMsg"></p>
+                    </div>
+                </form>
+              </div>
+              <div class="modal-footer">
               </div>
             </div>
           </div>
-          {{!-- {{/each}} --}}
-          {{!--
-        </div> --}}
+        </div>
+        {{/each}}
       </div>
     </div>
     {{> rightbar}}
