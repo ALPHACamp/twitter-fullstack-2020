@@ -25,14 +25,20 @@ const tweetController = {
       req.flash('error_messages', "內容不可以超過 140 字")
     }
     return Tweet.create({ description })
-      .then(() => res.redirect('tweets'))
+      .then(() => res.redirect('back'))
       .catch(err => next(err))
   },
   getReplies: (req, res, next) => {
     res.render('replies')
   },
   postReply: (req, res, next) => {
-
+    const { comment } = req.body
+    if (!comment) throw new Error('內容不可以空白')
+    if (comment.trim() === '') throw new Error('內容不可以空白')
+    if (comment.length > 140) throw new Error('不可超過 140 字')
+    return Reply.create({ comment })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
   },
   addLike: (req, res, next) => {
 

@@ -60,7 +60,7 @@
             </div>
           </div>
           <div class="d-flex">
-            <form action="/reply/:id" method="POST">
+            <form action="/tweets/{{this.id}}/replies" method="GET">
               <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
                   src="/images/reply-outlined@2x.png" alt="reply"></button>
               <span
@@ -108,8 +108,8 @@
                 </div>
 
                 {{> user-avatar}}
-                <form action="">
-                  <textarea class="modal-input-tweets" id="user-reply-in-main" placeholder="推你的回覆" name="" maxlength="150" rows="4"
+                <form action="/tweets/{{this.id}}/replies" method="POST">
+                  <textarea class="modal-input-tweets" id="user-reply-in-main" placeholder="推你的回覆" name="comment" maxlength="150" rows="4"
                     cols="100" required></textarea>
                     <div class="d-flex flex-row-reverse mb-1">
                       <button class="tweetbtn" type="submit">回覆</button>
