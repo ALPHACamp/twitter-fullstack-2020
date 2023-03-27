@@ -39,9 +39,17 @@ const userController = {
   signIn: (req, res, next) => {
     res.redirect('/tweets')
   },
-  getUser: async (req, res) => { // 取得個人資料頁面(推文清單)
-    let [users, user] = await Promise.all([
-      User.findAll({ where: { role: 'user' }, raw: true, nest: true, attributes: ['id'] }),
+  getUser: (req, res) => { // 取得個人資料頁面(推文清單)
+    return Promise.all([
+      Tweet.findAll({
+        where: { UserId: req.params.id },
+        include: [
+          User,
+          Reply,
+          { model: User, as: 'LikedUsers' }
+        ],
+        nest: true
+      }),
       User.findByPk((req.params.id), {
         where: { role: 'user' },
         include: [
@@ -51,14 +59,16 @@ const userController = {
         order: [
           ['Tweets', 'createdAt', 'DESC'],
         ]
-      }),
+      })
     ])
-    const data = user.Tweets.map(tweet => ({
-      ...tweet.toJSON(),
-      isLiked: helpers.getUser(req).LikedTweets.map(t => t.id).includes(tweet.id)
-    }))
-    console.log(data)
-    return res.render('users', { users: user.toJSON(), tweetLiked: data })
+      .then(([tweets,user]) => {
+        const data = tweets.map(tweet => ({
+          ...tweet.toJSON(),
+          isLiked: helpers.getUser(req).LikedTweets.map(t => t.id).includes(tweet.id)
+        }))
+        return res.render('users', { users: user.toJSON(), tweet: data })
+      })
+      .catch(err => next(err))
   },
   getSetting: (req, res,) => { // 取得帳戶設定頁面
     return User.findByPk(helpers.getUser(req).id)
