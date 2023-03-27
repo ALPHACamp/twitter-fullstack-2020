@@ -50,10 +50,15 @@ const userController = {
         ],
         order: [
           ['Tweets', 'createdAt', 'DESC'],
-        ],
+        ]
       }),
     ])
-    return res.render('users', { users: user.toJSON(), })
+    const data = user.Tweets.map(tweet => ({
+      ...tweet.toJSON(),
+      isLiked: helpers.getUser(req).LikedTweets.map(t => t.id).includes(tweet.id)
+    }))
+    console.log(data)
+    return res.render('users', { users: user.toJSON(), tweetLiked: data })
   },
   getSetting: (req, res,) => { // 取得帳戶設定頁面
     return User.findByPk(helpers.getUser(req).id)

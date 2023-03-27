@@ -52,11 +52,11 @@
             users.introduction}}{{users.introduction}}{{else}}Lorem example text example text for AC simple twitter
             project practice{{/if}}</p>
           <a href="/users/1{{users.id}}/followers" style="text-decoration:none;">
-            <span class="fw-bold text-dark">{{followingscount}} ??個</span><span
+            <span class="fw-bold text-dark">{{user.Followers.length}}</span><span
               class="text-muted text-dark me-3">跟隨中</span>
           </a>
           <a href="/users/1{{users.id}}/followings" style="text-decoration:none;">
-            <span class="fw-bold text-dark">{{followerscount}} ??位</span><span class="text-muted">跟隨者</span>
+            <span class="fw-bold text-dark">{{user.Followings.length}}</span><span class="text-muted">跟隨者</span>
           </a>
         </div>
       </div>
