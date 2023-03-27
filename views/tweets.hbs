@@ -48,11 +48,11 @@ height: 26px;text-align:start;color:#C4C4C4" data-bs-toggle="modal" data-bs-targ
               </div>
               <div class="likes d-flex align-items-center">
                 {{#if isLiked}}
-                <form action="/tweets/{{this.id}}?_method=DELETE" method="post">
+                <form action="/like/{{this.id}}?_method=DELETE" method="post">
                   <button type="submit" class="btn" style="color: #fc5a5a;"><i class="fa-solid fa-heart"><!--&ensp;{{this.likes.length}}--></i></button>
                 </form>
                 {{else}}
-                <form action="/tweets/{{this.id}}" method="post">
+                <form action="/like/{{this.id}}" method="post">
                   <button type="submit" class="btn"><i class="fa-regular fa-heart""> <!--&ensp;{{this.likes.length}}--></i></button>
                 </form>
                 {{/if}}
