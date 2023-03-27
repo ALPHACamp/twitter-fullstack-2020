@@ -46,6 +46,12 @@ const adminController = {
                 req.flash('errorFlashMessage', 'ERROR #A102');
                 return res.redirect('back')
             })
-    }
+    },
+    getSigninPage: (req, res) => {
+        return res.render('admin/login')
+    },
+    signin: (req, res) => {
+        return res.redirect('tweets')
+    },
 }
 module.exports = adminController
