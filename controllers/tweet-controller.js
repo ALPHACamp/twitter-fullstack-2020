@@ -32,14 +32,17 @@ const tweetController = {
     return Tweet.findByPk(id, {
       include: [
         User,
-        { model: Reply, include: User }
+        { model: Reply, include: User },
       ],
       order: [['Replies', 'createdAt', 'DESC']]
     })
       .then(tweet => {
-        
+        const isLiked = helpers.getUser(req).LikedTweets.some(l => l.id === tweet.id)
         tweet = tweet.toJSON()
-        res.render('tweet', { tweet })
+        res.render('tweet', { 
+          tweet,
+          isLiked
+        })
       })
       .catch(err => next(err))
   },
