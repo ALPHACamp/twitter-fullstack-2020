@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-4 ">
+
+      <div class="mb-4 text-center">
+        <h1 class="h3 font-weight-normal mb-3 fw-bold">建立你的帳號</h1>
+      </div>
+      <form class="form-signup" action="/regist" method="POST" style="width: 100%;">
+        <div class="form-row mb-3">
+          <label class="form-label" for="account">帳號</label>
+          <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" required autofocus>
+        </div>
+        <div class="form-row mb-3">
+          <label class="form-label" for="name">名稱</label>
+          <input type="text" id="name" name="name" class="form-control" placeholder="請輸入使用者名稱" required autofocus>
+        </div>
+        <div class="form-row mb-3">
+          <label class="form-label" for="email">Email</label>
+          <input type="text" id="email" name="email" class="form-control" placeholder="請輸入Email" required>
+        </div>
+        <div class="form-row mb-3">
+          <label class="form-label" for="password">密碼</label>
+          <input type="password" id="password" name="password" class="form-control" placeholder="請設定密碼" required>
+        </div>
+        <div class="form-row mb-3">
+          <label class="form-label" for="passwordCheck">密碼確認</label>
+          <input type="password" id="passwordCheck" name="passwordCheck" class="form-control" placeholder="請再次輸入密碼"
+            required>
+        </div>
+        <div class="d-grid gap-2">
+          <button style="background-color:orangered; border-color: white" class="btn btn-primary btn-block"
+            type="submit">註冊</button>
+        </div>
+      </form>
+      <div class="mb-4 text-center my-3">
+        <p><a href="/login">取消</a></p>
+      </div>
+
+    </div>
+  </div>
+</div>
