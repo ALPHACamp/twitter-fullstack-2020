@@ -13,26 +13,22 @@
         </div>
 
         <div class="col-10">
-          <a href="/users/{{this.id}}"><strong>Apple</strong></a>
-          <p>@apple</p>
+          <a href="/users"><strong>{{subText tweet.User.name 20}}</strong></a>
+          <p>@{{subText tweet.User.account 20}}</p>
         </div>
 
         <div class="tweet-content-in-replies-page ps-3 px-3 ">
-          <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign merjc idblid
-            ngijsnli gririr leirhielr gli g grgiur
-            hghbgn ign merjc idblid ngijsnli gririr leirhielr
-            gli g grgiur hghbgn ign
-          </p>
+          <p>{{tweet.description}}</p>
         </div>
 
         <div class="tweet-time">
-          <p style="color: #6C757D; font-size:smaller;">上午10:05 ‧ 2023年3月23日</p>
+          <p style="color: #6C757D; font-size:smaller;">{{LocaleTime}} · {{LocaleDate}}</p>
           <div style="border-bottom: 1px solid #E6ECF0"></div>
         </div>
 
         <div class="replies-and-likes-counts p-3">
-          <span class="px-2" style="color: #6C757D;"><strong style="color: #000000;">34</strong>回覆</span>
-          <spanp style="color: #6C757D;"><strong style="color: #000000;">808</strong>次喜歡</span>
+          <span class="px-2" style="color: #6C757D;"><strong style="color: #000000;">{{tweet.Replies.length}}</strong>回覆</span>
+          <spanp style="color: #6C757D;"><strong style="color: #000000;">{{tweet.Likes.length}}</strong>次喜歡</span>
             <div class="p-2 replies-page-border-bottom"></div>
         </div>
 
@@ -48,29 +44,27 @@
         </div>
 
       </div>
+      {{#each reply}}
       <div class="user-replies-reply-page pt-3">
         <div class="user-reply p-3 replies-page-border-bottom" data-bs-toggle="modal"
-          data-bs-target="#user-replies-modal2">
+          data-bs-target="#user-replies-modal{{this.id}}">
           <div class="row">
             <div class="col-2">
               {{> following-avatar}}
             </div>
             <div class="col-10">
               <div>
-                <a href="/users/{{this.id}}"><strong>Corcs</strong></a>
-                <span>@apple‧3小時</span>
+                <a href="/users/{{this.UserId}}"><strong>{{this.User.name}}</strong></a>
+                <span>@{{this.User.account}}·{{moment this.updatedAt}}</span>
               </div>
-              <p>回覆<span style="color: #FF6600;">@apple</span></p>
-              <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign merjc idblid
-                ngijsnli gririr leirhielr gli g grgiur
-                hghbgn ign merjc idblid ngijsnli gririr leirhielr
-                gli g grgiur hghbgn ign</p>
+              <p>回覆<span style="color: #FF6600;">@{{../tweet.User.account}}</span></p>
+              <p>{{subText this.comment 140}}</p>
             </div>
           </div>
         </div>
 
         {{!-- 回覆彈跳視窗 --}}
-        <div class="modal" tabindex="-1" id="user-replies-modal2">
+        <div class="modal" tabindex="-1" id="user-replies-modal{{this.id}}">
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
@@ -86,21 +80,19 @@
                   {{!-- --}}
                   <div class="col-10">
                     <div>
-                      <a href="/users/{{this.id}}"><strong>Apple</strong></a>
-                      <span>@apple‧3小時</span>
+                      <a href="/users"><strong>{{tweet.User.name}}</strong></a>
+                      <span>@{{this.User.account}}·{{moment this.updatedAt}}</span>
                     </div>
                     <div>
-                      <p>merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign merjc idblid ngijsnli gririr
-                        leirhielr gli g grgiur
-                        hghbgn ign merjc idblid ngijsnli gririr leirhielr gli g grgiur hghbgn ign</p>
-                      <span>回覆給<span class="ms-1" style="color: #FF6600;">@mitsubishi</span></span>
+                      <p>{{subText this.comment 140}}</p>
+                      <span>回覆給<span class="ms-1" style="color: #FF6600;">@{{../tweet.User.account}}</span></span>
                     </div>
                   </div>
                 </div>
 
                 {{> user-avatar}}
                 <form action="">
-                  <textarea class="modal-input-tweets" placeholder="推你的回覆" name="" id="user-reply-in-replies" maxlength="145" rows="3"
+                  <textarea class="modal-input-tweets" placeholder="推你的回覆" name="comment" id="user-reply-in-replies" maxlength="145" rows="3"
                     cols="100"></textarea>
                 </form>
               </div>
@@ -116,6 +108,7 @@
 
         {{!-- {{/each}} --}}
       </div>
+      {{/each}}
     </div>
     {{> rightbar}}
   </div>

@@ -43,6 +43,7 @@ router.get('/signup', userController.registerPage)
 router.post('/signup', userController.signup)
 router.get('/api/users/:id', userController.settingPage)
 router.get('/tweets/:id/replies', tweetController.getReplies)
+router.get('/tweets/:id', userAuthenticated, tweetController.getReplies);
 router.post('/tweets/id/replies', tweetController.postReply)
 router.post('/tweets/id/like', tweetController.addLike)
 router.post('/tweets/id/unlike', tweetController.removeLike)

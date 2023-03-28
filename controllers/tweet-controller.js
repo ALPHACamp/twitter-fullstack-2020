@@ -3,9 +3,9 @@ const helpers = require('../_helpers')
 const tweetController = {
   getTweets: (req, res, next) => {
   return Tweet.findAll({
-      include: User,
+      include: [User, Reply],
       order: [['createdAt', 'DESC']],
-      limit: 10,
+      limit: 20,
       raw: true,
       nest: true,
     })
@@ -29,7 +29,37 @@ const tweetController = {
       .catch(err => next(err))
   },
   getReplies: (req, res, next) => {
-    res.render('replies')
+    console.log('req.params', req.params.id)
+    Tweet.findByPk(req.params.id,
+      {
+        include: [
+          Like, User,
+          {
+            model: Reply, include: [Like, User,
+              {
+                model: Reply, as: 'followingByReply',
+                include: [User, Like]
+              }]
+          },
+        ]
+      })
+      .then(tweet => {
+        const isLiked = tweet.Likes.map((i) => i.UserId).includes(helpers.getUser(req).id)
+        const reply = tweet.toJSON().Replies.map(i => {
+          i.isLiked = i.Likes.map(id => id.UserId).includes(helpers.getUser(req).id)
+          i.followingByReply.map(j => {
+            j.isLiked = j.Likes.map(id => id.UserId).includes(helpers.getUser(req).id)
+          })
+          return i
+        })
+        res.render('replies', {
+          isLiked,
+          tweet: tweet.toJSON(),
+          reply,
+          LocaleDate: tweet.toJSON().updatedAt.toLocaleDateString(),
+          LocaleTime: tweet.toJSON().updatedAt.toLocaleTimeString(),
+        })
+      })
   },
   postReply: (req, res, next) => {
     const { comment } = req.body
