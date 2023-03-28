@@ -139,11 +139,11 @@
                     <form method="POST" action="/tweets/{{tweet.id}}/replies">
                       <textarea name="description" cols="40" rows="10"
                         style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;"
-                        placeholder="推你的回覆"></textarea>
+                        placeholder="推你的回覆" required></textarea>
                       <div class="button d-flex justify-content-end">
                         {{> reply-message}}
                         <button type="submit" class="btn ms-3" style="background: #FF6600;border-radius: 50px;">
-                          <span style="color: #FFFFFF;">推文</span>
+                          <span style="color: #FFFFFF;">回覆</span>
                         </button>
                       </div>
                     </form>
