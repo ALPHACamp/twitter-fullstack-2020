@@ -108,7 +108,7 @@ const userController = {
   getFollower: (req, res, next) => { // 跟隨者
     return Followship.findAll({
       where: { followingId: helpers.getUser(req).id },
-      order: [['createdAt', 'ASC']]
+      order: [['createdAt', 'DESC']]
     })
       .then(follow => {
         follow = follow.map(f => ({
@@ -123,7 +123,7 @@ const userController = {
   getFollowing: (req, res, next) => { // 跟隨中
     return Followship.findAll({
       where: { followerId: helpers.getUser(req).id },
-      order: [['createdAt', 'ASC']]
+      order: [['createdAt', 'DESC']]
     })  
       .then(follow => {
         follow = follow.map(f=>({
