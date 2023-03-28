@@ -3,7 +3,7 @@ const router = express.Router()
 const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
 const adminController = require('../controllers/admin-controller')
-const passport = require('../config/Passport')
+const passport = require('passport')
 const helpers = require('../_helpers')
 const { generalErrorHandler } = require('../middleware/error-handler')
 
@@ -38,6 +38,7 @@ router.delete('/admin/tweets/:tweetId', adminAuthenticated, adminController.dele
 router.get('/admin/tweets', adminAuthenticated, adminController.getTweets);
 
 router.get('/signin', userController.loginPage)
+router.post('/signin', passport.authenticate('local', { successRedirect:'/tweets', failureRedirect : '/signin'}))
 router.get('/signup', userController.registerPage)
 router.post('/signup', userController.signup)
 router.get('/api/users/:id', userController.settingPage)
