@@ -12,12 +12,11 @@ const likesController = {
                 { model: Tweet, as: 'LikedTweets', include: [User] },
             ],
             order: [
-                ['LikedTweets', 'updatedAt', 'DESC']
+                ['LikedTweets', 'Likes', 'id' ,'DESC']
             ],
         })
             .then(user => {
                 const isLiked = helpers.getUser(req).LikedTweets.some(l => l.id === req.user.id)
-                console.log(user.toJSON())
                 return res.render('like-content', {
                     users: user.toJSON(), isLiked
                 })

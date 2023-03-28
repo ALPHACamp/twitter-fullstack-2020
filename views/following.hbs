@@ -38,27 +38,27 @@
 
       <!--follower-->
       <div class="tweets-container">
-        {{#each user.Followings}}
+        {{#each follow}}
           <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
             <div class="avatar ps-3">
-              <a href="/users/{{this.id}}" style="text-decoration:none;">
-                <img src="{{this.avatar}}" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+              <a href="/users/{{this.following.id}}" style="text-decoration:none;">
+                <img src="{{this.following.avatar}}" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
               </a>
             </div>
             <div class="tweet-content">
               <div class="name-container d-flex justify-content-between pe-3" style="width: 555px;">
                 <div class="name">
-                  <span style="font-size: 16px;font-weight:700;">{{this.name}}</span>
+                  <span style="font-size: 16px;font-weight:700;">{{this.following.name}}</span>
                 </div>
                 <div class="follow-btn" style="width: 96px;height: 40px">
-                  <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+                  <form action="/following/{{this.following.id}}?_method=DELETE" method="POST">
                     <button type="submit" class="btn"
                       style="background: #FF6600;border-radius: 100px;color:#ffffff;">正在跟隨</button>
                   </form>
                 </div>
               </div>
               <div class="content mt-3 mb-3">
-                {{this.introduction}}
+                {{this.following.introduction}}
               </div>
             </div>
           </div>
