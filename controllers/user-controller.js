@@ -106,11 +106,19 @@ const userController = {
       .catch(err => next(err))
   },
   getFollower: (req, res, next) => { // 跟隨者
-    const data = helpers.getUser(req).Followers.map(f => ({
-      ...f,
-      isFollowed: helpers.getUser(req).Followings.some(fi => f.id === fi.id)
-    }))
-    return res.render('follower', { follower: data })
+    return Followship.findAll({
+      where: { followingId: helpers.getUser(req).id },
+      order: [['createdAt', 'ASC']]
+    })
+      .then(follow => {
+        follow = follow.map(f => ({
+          ...f.toJSON(),
+          follower: helpers.getUser(req).Followers.find(fi => f.followerId === fi.id), //塞入追蹤者資料
+          isFollowed: helpers.getUser(req).Followings.some(fi => f.followerId === fi.id) //確認是否跟隨
+        }))
+        return res.render('follower', { follow })
+      })
+      .catch(err => next(err))
   },
   getFollowing: (req, res, next) => { // 跟隨中
     return Followship.findAll({
@@ -120,7 +128,7 @@ const userController = {
       .then(follow => {
         follow = follow.map(f=>({
           ...f.toJSON(),
-          following: helpers.getUser(req).Followings.find(fi => f.followingId === fi.id)
+          following: helpers.getUser(req).Followings.find(fi => f.followingId === fi.id) //塞入追蹤者資料
         }))
         return res.render('following', { follow })
       })
