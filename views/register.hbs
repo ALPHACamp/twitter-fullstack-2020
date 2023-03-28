@@ -4,7 +4,7 @@
     </div>
     <h3 class="text-center" style="margin-top:24px; margin-bottom:40px;font-weight:700;font-size: 28px;line-height: 26px;">
         建立你的帳號</h3>
-    <form action="/signup" style="margin-bottom: 22px;">
+    <form action="/signup" method="POST" style="margin-bottom: 22px;">
         <div style="background-color:#F5F8FA; margin-bottom:32px; border-radius:2px; border-bottom:2px solid #657786;">
             <label for="account" class="form-label mb-0"
                 style="margin-left:10px;color:#696974;font-size: 14px;line-height: 22px;">帳號</label>
@@ -33,10 +33,10 @@
                 style="background-color:#F5F8FA;color:#B5B5BE;font-size: 16px;line-height: 26px;" value="{{password}}">
         </div>
          <div style="background-color:#F5F8FA; margin-bottom:40px; border-radius:2px; border-bottom:2px solid #657786;">
-            <label for="confirmPassword" class="form-label mb-0"
+            <label for="checkPassword" class="form-label mb-0"
                 style="margin-left:10px;color:#696974;font-size: 14px;line-height: 22px;">密碼確認</label>
-            <input type="text" class="form-control border-0" id="confirmPassword" name="confirmPassword" placeholder="請再次輸入密碼"
-                style="background-color:#F5F8FA;color:#B5B5BE;font-size: 16px;line-height: 26px;" value="{{confirmPassword}}">
+            <input type="password" class="form-control border-0" id="checkPassword" name="checkPassword" placeholder="請再次輸入密碼"
+                style="background-color:#F5F8FA;color:#B5B5BE;font-size: 16px;line-height: 26px;" value="{{checkPassword}}">
 
         </div>
         <button type="submit" class="btn"

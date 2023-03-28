@@ -1,8 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcryptjs');
-//const User = require('../models');
-const { User, Like, Tweet, Reply } = require('../models');
+const { User, Like, Tweet, Reply, Private } = require('../models');
 
 passport.use(
   new LocalStrategy(
@@ -46,12 +45,50 @@ passport.use(
     },
   ),
 );
-passport.serializeUser(function (user, done) {
-  done(null, user);
+
+const jwt = require('jsonwebtoken');
+const passportJWT = require('passport-jwt');
+const ExtractJwt = passportJWT.ExtractJwt;
+const JwtStrategy = passportJWT.Strategy;
+
+let jwtOptions = {};
+jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+jwtOptions.secretOrKey = 'test';
+
+let strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
+  User.findByPk(jwt_payload.id).then((user) => {
+    if (!user) return next(null, false);
+    return next(null, user);
+  });
+});
+passport.use(strategy);
+
+passport.serializeUser((user, cb) => {
+  cb(null, user.id);
 });
 
-passport.deserializeUser(function (user, done) {
-  done(null, user);
+passport.deserializeUser((id, cb) => {
+  User.findByPk(id, {
+    include: [
+      Like,
+      { model: Tweet, include: Reply },
+      { model: User, as: 'Followers' },
+      { model: User, as: 'Followings' },
+    ],
+  }).then((user) => {
+    if (!user) return
+    Private.findAll({
+      where: {
+        ReceiveId: user.dataValues.id,
+        isLooked: false,
+      }
+    })
+      .then(data => {
+        user.dataValues.noSeeMsg = data.length
+        return cb(null, user.toJSON());
+      })
+  });
 });
+
 
 module.exports = passport;
