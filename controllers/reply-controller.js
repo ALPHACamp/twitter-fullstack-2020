@@ -9,6 +9,8 @@ const replyController = {
                 Tweet,
                 { model: Reply, include: { model: Tweet, include: [User] } },
                 { model: Tweet, as: 'LikedTweets', include: [User] },
+                { model: User, as: 'Followers' },
+                { model: User, as: 'Followings' }
             ],
             order: [
               [Reply, 'updatedAt', 'DESC'],

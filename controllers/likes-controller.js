@@ -10,6 +10,8 @@ const likesController = {
                 { model: Tweet, as: 'LikedTweets', include: [Reply] },
                 { model: Tweet, as: 'LikedTweets', include: [Like] },
                 { model: Tweet, as: 'LikedTweets', include: [User] },
+                { model: User, as: 'Followers' },
+                { model: User, as: 'Followings' }
             ],
             order: [
                 ['LikedTweets', 'Likes', 'id' ,'DESC']
