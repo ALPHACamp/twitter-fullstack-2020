@@ -2,8 +2,8 @@
   <div class="col-2 nav">
     {{> nav tweetsPage=tweet}}
   </div>
-  <div class="col-7 tweet">
-    <div class="tweet-container" style="width: 639px;height:1200px;border:1px solid #C4C4C4;">
+  <div class="col-7 tweet" style="width: 639px;">
+    <div class="tweet-container" style="width: 639px;height:1200px;">
       <!--head-->
       <div class="card-header col-12 row m-0" style="max-height: 55px;">
         <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
@@ -67,7 +67,7 @@
           </form>
           {{else}}
           <form action="/like/{{tweet.id}}" method="post">
-            <button type="submit" class="btn"><i class="fa-regular fa-heart""> <!--&ensp;{{this.likes.length}}--></i></button>
+            <button type="submit" class="btn"><i class="fa-regular fa-heart"> <!--&ensp;{{this.likes.length}}--></i></button>
           </form>
           {{/if}}
         </div>
@@ -96,7 +96,7 @@
       {{/each}}
     </div>
   </div>
-  <div class="col-3 followship">
+  <div class="col-3 followship ms-3" style="width: 273px; height:100%px;">
     {{> followship}}
   </div>
 </div>

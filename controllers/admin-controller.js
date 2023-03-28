@@ -13,7 +13,10 @@ const adminController = {
     return Tweet.findAll({
       include: User,
       nest: true,
-      raw: true
+      raw: true,
+      order: [
+        ['createdAt', 'DESC'],
+        ]
     }).then((tweets) => {
       const data = tweets.map(t => ({
         ...t,
@@ -31,7 +34,7 @@ const adminController = {
         { model: User, as: 'Followers' },
         { model: Tweet, as: 'LikedTweets'},
         Tweet
-      ]
+      ] 
     })
       .then((users) => {
         users = users.map(user => ({
@@ -40,9 +43,9 @@ const adminController = {
           followerCount: user.Followers.length,
           followingCount: user.Followings.length,
           likeCount: user.LikedTweets.length,
-          tweetCount: user.Tweets.length
+          tweetsCount: user.Tweets.length
         }))
-        users = users.sort((a, b) => b.TweetsCount - a.TweetsCount)
+        users = users.sort((a, b) => b.tweetsCount - a.tweetsCount)
         return res.render('admin/users', { users })
       })
       .catch(err => console.log(err))

@@ -4,38 +4,37 @@
     {{> nav userPage=users}}
   </div>
   <!--middle bar-->
-  <div class="col-7 user-profile">
+  <div class="col-7 user-profile" style="width: 639px;">
     <div class="tweets-container"
       style="width: 639px;height:100%; border-right:1px solid #C4C4C4; border-left:1px solid #C4C4C4;">
       <!--head-->
-      <div class="card-header col-12 row m-0" style="max-height: 55px;">
+      <div class="card-header col-12 row" style="height: 75px;margin-left:1px; background-color:#FFFFFF; border-right:1px solid #C4C4C4;">
         <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
-          class="col-auto d-flex align-items-center">
-          <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
+          class="col-auto d-flex align-items-center ms-0 ps-0">
+          <i class="fas fa-arrow-left" style="width:17pxl height:14px;"></i>
         </a>
         <a href="/users/{{users.id}}/tweets"
           class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
-          style="text-decoration: none;">
-          <span class="h5"
-            style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{users.name}}</span>
-          <span style="color: #657786; font-size: 13px; line-height: 15px;">{{user.Tweets.length}}推文</span>
+          style="text-decoration: none; ">
+          <span class="h5" style="line-height: 26px; color: #000000; font-size: 18px; font-weight: 700;">{{users.name}}</span>
+          <span style="color: #6C757D; font-size: 13px; line-height: 19px;font-weight: 500;">{{user.Tweets.length}}推文</span>
         </a>
       </div>
       <!--cover & avatar & Edit button-->
       <div class="card-body col-12 m-0 p-0 position-relative">
+
         <div class="bg-holder" style="height: 280px;">
           <img src="{{#if users.cover}}{{users.cover}}{{else}}https://i.imgur.com/ndXEE6d.jpg{{/if}}"
             class="card-img-top" alt="..." class="img-fluid" id="bgImage"
             style="height:100%;width:100%;object-fit:cover">
+          <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/200/200/avatar{{/if}}"class="rounded-circle" alt="user_Aavtar" height="130px" width="130px"
+            style="border: 2px solid white; position: absolute; object-fit: cover; top: 55%; left: 3%;">
         </div>
-        <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/200/200/avatar{{/if}}"
-          class="rounded-circle" alt="user_Aavtar" height="130px" width="130px"
-          style="border: 2px solid white; position: absolute; object-fit: cover; top: 63%; left: 3%;">
 
         <div class="card-body col-12 d-flex justify-content-end">
           <button type="submit" class="btn user-edit-button" data-bs-toggle="modal" data-bs-target="#editModal"
             style="background: #FFFFFF; border-radius: 100px; border:1px solid #FF6600;">
-            <span style="color: #FF6600;">編輯個人資料</span></button>
+            <span style="color: #FF6600;font-size: 16px; line-height: 24px;">編輯個人資料</span></button>
         </div>
       </div>
       <!--profile-->
@@ -112,8 +111,7 @@
           </div>
         </div>
         {{!--tweetReply modal --}}
-        <div class="modal fade" id="tweetReplyModal{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-          aria-hidden="true">
+        <div class="modal fade" id="tweetReplyModal{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -167,35 +165,39 @@
         {{/each}}
       </div>
     </div>
-    <!--Edit modal-->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <!--修改的PUT先寫來放-->
-          <form action="/users/{{user.id}}/edit?_method=PUT" method="post" enctype="multipart/form-data">
-            <div class="modal-header">
-              <div class="d-flex align-items-center">
-                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close" style="color: #FF6600;">
-                  <i class="fas fa-times"></i>
-                </button>
-                <span class="modal-title h5 fw-bold ps-3" id="ModalLabel">編輯個人資料</span>
-              </div>
-              <button type="submit" class="badge btn rounded-pill" style="font-size:1.0rem; background: #FF6600;">
-                <span style="color: #FFFFFF;">儲存</span>
+  <!--Edit modal-->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog">
+      <div class="modal-content" style="width:634px; height:650px;">
+        <!--修改的PUT先寫來放-->
+        <form action="/users/{{user.id}}?_method=PUT" method="post" enctype="multipart/form-data">
+          <div class="modal-header">
+            <div class="d-flex align-items-center">
+              <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close" style="color: #FF6600;">
+                <i class="fas fa-times"></i>
               </button>
+              <span class="modal-title h5 fw-bold ps-3" id="ModalLabel">編輯個人資料</span>
             </div>
-
-            <div class="modal-body row">
-              <div class="col-12 m-0 p-0 position-relative mb-5">
-                <div class="bg-holder" style="height: 170px;">
-                  <img src="{{#if users.cover}}{{users.cover}}{{else}}https://i.imgur.com/ndXEE6d.jpg{{/if}}"
-                    class="card-img-top" alt="..." class="img-fluid" id="bgImage"
-                    style="height:100%;width:100%;object-fit:cover">
+            <button type="submit" class="badge btn rounded-pill" style="font-size:1.0rem; background: #FF6600;">
+              <span style="color: #FFFFFF;">儲存</span>
+            </button>
+          </div>
+  
+          <div class="modal-body row">
+            <div class="col-12 m-0 p-0 position-relative mb-1">
+                         
+              <div class="bg-holder" style="height: 170px;">
+                <img src="{{#if users.cover}}{{users.cover}}{{else}}https://i.imgur.com/ndXEE6d.jpg{{/if}}"class="card-img-top" alt="..." class="img-fluid" id="bgImage" style="height:100%;width:100%;object-fit:cover">
+              </div>
+                <div class="form-row mb-3">
+                  <label for="cover" class="btn form-label">
+                    <input class="d-none" type="file" id="cover" name="cover" accept="image/*" style="display: none">
+                    <i class="fa-solid fa-camera" style="position: absolute; object-fit: cover; top: 40%; left: 40%;; width:20; height:20px; color: #FFFFFF"></i>
+                    {{!--<i class="fa-solid fa-xmark" style="position: absolute; object-fit: cover; top: 40%; left: 60%;; width:20; height:20px; color: #FFFFFF"></i>--}}
+                  </label>
                 </div>
-                <label for="cover" class="btn cover-uploader">
-                  <input class="d-none" type="file" id="cover" name="cover" accept="image/*">
-                  <i class="fas fa-came" style="font-size: 1.5em; color: white"></i>
-                </label>
+
+
                 <div class="avatar-holder">
                   <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/300/300/avator{{/if}}"
                     class="rounded-circle" alt="user_Aavtor" height="140px" width="140px"
@@ -206,28 +208,38 @@
                   <i class="fas fa-camera" style="color: white;"></i>
                 </label>
               </div>
-              <div class="col-12" style="background-color:#f4f8fb;">
-                <label for="name" style="margin-bottom: -30px; margin-left: 8px; font-size: 0.8em">名稱</label>
-                <input type="text" class="form-control" id="name" name="name" maxlength="50"
-                  style="border:none; border-bottom:1px solid rgb(75, 82, 85); outline: none; background-color:#f4f8fb; font-size:0.8em"
-                  aria-describedby="nameHelp" value="{{users.name}}" />
-                <p class="text-end text-muted now1" style="font-size: 0.8em;">0/50</p>
+              <div class="form-row mb-1">
+             <label for="avatar" class="btn form-label">
+              <input class="form-control-file" type="file" id="avatar" name="avatar" accept="image/*" style="display: none">
+                <i class="fa-solid fa-camera" style="position: absolute; object-fit: cover; top: 55%; left: 14.5%;; width:20; height:20px; color:#FFFFFF"> 
+                </i>
+              </label>
+                {{!--<label class="form-label" for="avatar"></label>
+                <input class="form-control" type="file" class="form-control-file" id="avatar" name="avatar">
+                <button type="submit" class="btn btn-primary">Submit</button>--}}
               </div>
-              <div class="col-12 mb-3 mt-4" style="background-color:#f4f8fb;">
-                <label for="introduction" style="margin-left: 8px; font-size: 0.8em;">自我介紹</label>
-                <textarea class="form-control" id="introduction" name="introduction"
-                  style="border:none; border-bottom:1px solid rgb(75, 82, 85); outline: none; background-color:#f4f8fb; font-size:0.8em;"
-                  maxlength="160" aria-describedby="descriptionHelp">{{users.introduction}}</textarea>
-                <p class="text-end text-muted now2" style="font-size: 0.8em;">0/160</p>
-              </div>
+
             </div>
-          </form>
-        </div>
+            <div class="col-12 ms-2" style="width: 600px; background-color:#F5F8FA; height:54px;">
+              <label for="name" style="font-size:14px; ">名稱</label>
+              <input type="text" class="form-control pt-0" id="name" name="name" maxlength="50"
+                style="width: 600px; border:none;outline: none; background-color:#F5F8FA; border-bottom:1px solid #657786;font-size:14px" aria-describedby="nameHelp" value="{{users.name}}" />
+              <p class="text-end text-muted now1" style="font-size: 12px;">{{users.name.length}}/50</p>
+            </div>
+            <div class="col-12 mt-4 ms-2" style=" width: 600px;background-color:#F5F8FA;">
+              <label for="introduction" style="margin-left: 8px; font-size: 0.8em;">自我介紹</label>
+              <textarea class="form-control" id="introduction" name="introduction"
+                style="border:none; border-bottom:1px solid #657786; outline: none; background-color:#F5F8FA; font-size:16px;" maxlength="160" aria-describedby="descriptionHelp">{{users.introduction}}</textarea>
+              <p class="text-end text-muted now2" style="font-size:12px;">{{users.introduction.length}}/160</p>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
+  </div>
   </div>
   <!--right bar-->
   <div class="col-3 followship">
     {{> followship}}
   </div>
-</div>
+  </div>

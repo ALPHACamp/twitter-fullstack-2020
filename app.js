@@ -7,6 +7,7 @@ const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('passport')
+const path = require('path')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -22,6 +23,7 @@ app.use(session({ secret: 'secret', resave: false, saveUninitialized: true })) /
 app.use(passport.initialize()) //passport
 app.use(passport.session()) //passport
 app.use(flash())// connect-flash
+app.use('/upload', express.static(path.join(__dirname, 'upload')))//上傳圖片
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.wrong_messages = req.flash('wrong_messages')

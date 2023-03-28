@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
+const upload = require('../middleware/multer')
 
 const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
@@ -28,10 +29,15 @@ router.get('/likes/:id', authenticated, userController.getFollowship, likesContr
 router.get('/users/:id/followers', authenticated, userController.getFollowship, userController.getFollower) // 跟隨中
 router.get('/users/:id/followings', authenticated, userController.getFollowship,userController.getFollowing) // 跟隨者
 
+//router.put('/users/:id', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), authenticated, userController.putUser)
+//自個人頁面修改使用者資料 只能改avatar
+router.put('/users/:id', upload.single('avatar'), authenticated, userController.putUser)
+
+router.get("/users/:id", authenticated, userController.getFollowship, userController.getUser) // 個人頁面
+
 router.post('/like/:TweetId', authenticated, userController.addLike) // 喜歡
 router.delete('/like/:TweetId', authenticated, userController.removeLike) // 不喜歡
 
-router.get("/users/:id", authenticated, userController.getFollowship, userController.getUser) // 個人頁面
 router.get('/setting', authenticated, userController.getSetting)  // 個人資料設定
 router.put('/setting', authenticated, userController.putSetting)  // 個人資料編輯
 
