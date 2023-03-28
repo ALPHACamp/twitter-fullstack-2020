@@ -41,10 +41,32 @@ const tweetController = {
       .catch(err => next(err))
   },
   addLike: (req, res, next) => {
-
+    const tweetId = req.params.id
+    const userId = helpers.getUser(req).id
+    return Tweet.findByPk(tweetId)
+      .then(tweet => {
+        if (!tweet) throw new Error("這則貼文不存在")
+        return Like.create({ tweetId })
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
   },
   removeLike: (req, res, next) => {
+    const tweetId = req.params.id
+    const userId = Number(helpers.getUser(req).id)
 
+    return Like.findOne({
+      where: {
+        //userId,
+        tweetId
+      }
+    })
+    .then(like => {
+      if (!like) throw new Error("這則貼文還沒按like")
+      return like.destroy()
+    })
+    .then(() => res.redirect('back'))
+    .catch(err => next(err))
   }
 }
 module.exports = tweetController
