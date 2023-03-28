@@ -56,6 +56,8 @@ const userController = {
         include: [
           Tweet,
           { model: Tweet, as: 'LikedTweets', include: [User] },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
         ],
         order: [
           ['Tweets', 'createdAt', 'DESC'],
@@ -67,6 +69,7 @@ const userController = {
           ...tweet.toJSON(),
           isLiked: helpers.getUser(req).LikedTweets.map(t => t.id).includes(tweet.id)
         })).sort((a, b) => b.createdAt - a.createdAt)
+        console.log(user)
         return res.render('users', { users: user.toJSON(), tweet: data })
       })
       .catch(err => next(err))
@@ -190,7 +193,7 @@ const userController = {
   getFollowship: (req, res, next) => {
     return User.findAll({
       include: [
-        { model: User, as: 'Followers' },
+        { model: User, as: 'Followers' }
       ]
     })
       .then(users => {

@@ -50,11 +50,11 @@
             users.introduction}}{{users.introduction}}{{else}}Lorem example text example text for AC simple twitter
             project practice{{/if}}</p>
           <a href="/users/{{users.id}}/followers" style="text-decoration:none;">
-            <span class="fw-bold text-dark">{{user.Followers.length}}</span><span
+            <span class="fw-bold text-dark">{{users.Followers.length}}</span><span
               class="text-muted text-dark me-3">跟隨中</span>
           </a>
           <a href="/users/{{users.id}}/followings" style="text-decoration:none;">
-            <span class="fw-bold text-dark">{{user.Followings.length}}</span><span class="text-muted">跟隨者</span>
+            <span class="fw-bold text-dark">{{users.Followings.length}}</span><span class="text-muted">跟隨者</span>
           </a>
         </div>
       </div>
@@ -62,12 +62,12 @@
       <div class="profile-head col-12">
         <nav>
           <div class="nav nav-tabs " id="nav-tab" role="tablist">
-            <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="/tweets/{{user.id}}"
+            <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="/tweets/{{users.id}}"
               style="color: #FF6600; border: none; border-bottom: 1px solid #ff6600;" role="tab"
               aria-controls="nav-home" aria-selected="true">推文 </a>
-            <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="/reply/{{user.id}}"
+            <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="/reply/{{users.id}}"
               style="color: #657786; border: none;" role="tab" aria-controls="nav-profile" aria-selected="false">回覆</a>
-            <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="/likes/{{user.id}}"
+            <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="/likes/{{users.id}}"
               style="color: #657786; border: none;" role="tab" aria-controls="nav-contact"
               aria-selected="false">喜歡的內容</a>
           </div>
