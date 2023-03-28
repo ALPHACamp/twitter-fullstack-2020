@@ -4,7 +4,6 @@ const { User, Tweet } = require('../models') // import User&Tweet model 因為�
 
 module.exports = {
   up: async (queryInterface, Sequelize) => { 
-    const replies =  [] // 放一個空陣列存放
     const tweets = await Tweet.findAll({ attributes: ['id'] }) // 關聯TweetId
     const users = await User.findAll({  // 關聯UserId,並且角色只能是user
       raw: true,
@@ -12,20 +11,24 @@ module.exports = {
       where: { role: 'user' },
       attributes: ['id']
     })
-    
-    tweets.forEach((tweet) => { // 一則tweet三筆回覆
-      [0, 1, 2].forEach( i => {
-        replies.push({
-          UserId: users[Math.floor( Math.random() * users.length)].id,
+
+    for (const tweet of tweets) {
+      const replies =  [] // 放一個空陣列存放
+      for (let i =0 ; i < 3; i++){
+        let randomUser
+          do { //判斷UserId不重複則將資料推入replies陣列,重複則重來
+          randomUser = users[Math.floor( Math.random() * users.length)].id
+        }while (replies.some(r => r.UserId === randomUser)) // 運用some做單一判斷
+          replies.push({
+          UserId: randomUser ,
           TweetId: tweet.id,
-          comment: faker.lorem.text(),
+          comment: faker.lorem.text().substring(0, 140), //字數限制
           createdAt: new Date(),
           updatedAt: new Date()
         })
-      })
-    })
-
-    await queryInterface.bulkInsert('Replies', replies)  // 將 replies 推進 model.Replies
+      }
+      await queryInterface.bulkInsert('Replies', replies)  // 將 replies 推進 model.Replies
+    }
   },
 
   down: async (queryInterface, Sequelize) => { // truncate偵錯到錯誤馬上暫停並顯示原因

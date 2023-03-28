@@ -3,26 +3,24 @@ const helpers = require('../_helpers')
 
 const replyController = {
   getReplies: async (req,res)=>{ // 已回覆的內容
-            let [users, user] = await Promise.all([
-            User.findAll({ where: { role: 'user' }, raw: true, nest: true, attributes: ['id'] }),
-            User.findByPk((req.params.id), {
-                where: { role: 'user' },
-                include: [
-                    Tweet,
-                    { model: Reply, include: { model: Tweet, include: [User] } },
-                    { model: Tweet, as: 'LikedTweets', include: [User] },
-                ],
-                order: [
-                    [Reply, 'updatedAt', 'DESC'],
-                ],
-            })
-        ])
-        
-        const repiles = user.toJSON().Replies.map(res => res)
-        return res.render('reply', {
-            users: user.toJSON(),
-            repiles,
+        return User.findByPk((req.params.id), {
+            where: { role: 'user' },
+            include: [
+                Tweet,
+                { model: Reply, include: { model: Tweet, include: [User] } },
+                { model: Tweet, as: 'LikedTweets', include: [User] },
+            ],
+            order: [
+              [Reply, 'updatedAt', 'DESC'],
+            ],
         })
+        .then(user => {
+          const repiles = user.toJSON().Replies.map(res => res)
+          res.render('reply', {
+            users: user.toJSON(),
+            repiles
+        })
+      })
   },
   createReply:(req,res,next)=>{// 新增回覆
     const UserId = helpers.getUser(req).id
