@@ -113,9 +113,9 @@ const userController = {
       User.findOne({ where: { account } })
     ])
       .then(([emailCheck, accountCheck]) => {
-        if (emailCheck) throw new Error('此信箱已被註冊過')
         if (accountCheck) throw new Error('此帳號已被註冊過')
-        return User.findOne({ where: { id: "2" } })
+        if (emailCheck) throw new Error('此信箱已被註冊過')
+        return User.findOne({ where: { id: helpers.getUser(req).id } })
       })
       .then(user => {
         return user.update({
