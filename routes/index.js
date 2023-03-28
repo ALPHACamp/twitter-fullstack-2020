@@ -33,9 +33,9 @@ const userAuthenticated = (req, res, next) => {
 
 router.get('/admin/signin', adminController.getSigninPage);
 router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin' }), adminController.signin);
-router.get('/admin/users', adminController.getUsers)
-router.delete('/admin/tweets/:tweetId', adminController.deleteTweet)
-router.get('/admin/tweets', adminController.getTweets);
+router.get('/admin/users', adminAuthenticated, adminController.getUsers)
+router.delete('/admin/tweets/:tweetId', adminAuthenticated, adminController.deleteTweet)
+router.get('/admin/tweets', adminAuthenticated, adminController.getTweets);
 
 router.get('/signin', userController.loginPage)
 router.post('/signin', passport.authenticate('local', { successRedirect:'/tweets', failureRedirect : '/signin'}))
