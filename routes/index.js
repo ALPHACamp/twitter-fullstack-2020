@@ -21,6 +21,7 @@ router.get('/signup', userController.registerPage)
 router.post('/signup', userController.signup)
 router.get('/api/users/:id', userController.settingPage)
 router.get('/tweets/:id/replies', authenticated, tweetController.getReplies)
+router.get('/tweets/:id', authenticated, tweetController.getReplies);
 router.post('/tweets/id/replies', authenticated, tweetController.postReply)
 router.post('/tweets/id/like', authenticated, tweetController.addLike)
 router.post('/tweets/id/unlike', authenticated, tweetController.removeLike)
