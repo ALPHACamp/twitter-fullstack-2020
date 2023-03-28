@@ -1,4 +1,8 @@
-const { User, Like, Tweet, Reply } = require('../models');
+const db = require('../models');
+const User = db.User;
+const Like = db.Like;
+const Tweet = db.Tweet;
+const Reply = db.Reply;
 
 const adminController = {
 
@@ -20,7 +24,7 @@ const adminController = {
         Tweet.findAll({
             include: User,
             order: [['createdAt', 'DESC']],
-            limit: 10,
+            limit: 20,
             raw: true,
             nest: true,
         })
@@ -51,7 +55,7 @@ const adminController = {
         return res.render('admin/login')
     },
     signin: (req, res) => {
-        return res.redirect('tweets')
+        return res.redirect('/admin/tweets')
     },
 }
 module.exports = adminController
