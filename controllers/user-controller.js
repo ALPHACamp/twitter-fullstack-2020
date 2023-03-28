@@ -113,7 +113,18 @@ const userController = {
     return res.render('follower', { follower: data })
   },
   getFollowing: (req, res, next) => { // 跟隨中
-    return res.render('following')
+    return Followship.findAll({
+      where: { followerId: helpers.getUser(req).id },
+      order: [['createdAt', 'ASC']]
+    })  
+      .then(follow => {
+        follow = follow.map(f=>({
+          ...f.toJSON(),
+          following: helpers.getUser(req).Followings.find(fi => f.followingId === fi.id)
+        }))
+        return res.render('following', { follow })
+      })
+      .catch(err => next(err))
   },
   addFollowing: (req, res, next) => { //追蹤功能
     if (+helpers.getUser(req).id === +req.params.userId) throw new Error('無法追蹤自己')//無法追蹤自己
