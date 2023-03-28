@@ -38,28 +38,28 @@
 
       <!--follower-->
       <div class="tweets-container">
-        {{#each follower}}
+        {{#each follow}}
         <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
           <div class="avatar ps-3">
-            <a href="/users/{{this.id}}" style="text-decoration:none;">
-              <img src="{{this.avatar}}" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+            <a href="/users/{{this.follower.id}}" style="text-decoration:none;">
+              <img src="{{this.follower.avatar}}" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
             </a>
           </div>
           <div class="tweet-content">
             <div class="name-container d-flex justify-content-between pe-3" style="width: 555px;">
               <div class="name">
-                <span style="font-size: 16px;font-weight:700;">{{this.name}}</span>
+                <span style="font-size: 16px;font-weight:700;">{{this.follower.name}}</span>
               </div>
               {{#if this.isFollowed }}
               <div class="follow-btn d-flex justify-content-end" style="width: 96px;height: 40px">
-                <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+                <form action="/following/{{this.follower.id}}?_method=DELETE" method="POST">
                   <button type="submit" class="btn"
                     style="background: #FF6600;border-radius: 100px;color:#ffffff;">正在跟隨</button>
                 </form>
               </div>
               {{else}}
               <div class="follow-btn d-flex justify-content-end" style="width: 90px;height: 40px">
-                <form action="/following/{{this.id}}" method="POST">
+                <form action="/following/{{this.follower.id}}" method="POST">
                   <button type="submit" class="btn"
                     style="width: 64px;height: 40px; background: #FFFFFF;border-radius: 50px;border:1px solid #FF6600;color:#FF6600; font-size: 16px;">跟隨</button>
                 </form>
@@ -67,7 +67,7 @@
               {{/if}}
             </div>
             <div class="content mt-3 mb-3">
-              {{this.introduction}}
+              {{this.follower.introduction}}
             </div>
           </div>
         </div>

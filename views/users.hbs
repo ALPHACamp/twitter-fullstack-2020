@@ -22,8 +22,13 @@
       </div>
       <!--cover & avatar & Edit button-->
       <div class="card-body col-12 m-0 p-0 position-relative">
+<<<<<<< HEAD
         <div class="bg-holder" style="width: 638px; height: 280px; border-radius:0px;">
           <img src="{{#if users.cover}}{{users.cover}}{{else}}https://loremflickr.com/500/350/landscape{{/if}}"
+=======
+        <div class="bg-holder" style="height: 280px;">
+          <img src="{{#if users.cover}}{{users.cover}}{{else}}https://i.imgur.com/ndXEE6d.jpg{{/if}}"
+>>>>>>> origin/master
             class="card-img-top" alt="..." class="img-fluid" id="bgImage"
             style="height:100%;width:100%;object-fit:cover">
         </div>
@@ -197,8 +202,26 @@
                   </label>
                 </div>
 
-              <div class="avatar-holder">
-                <img src="{{#if users.avatar}}{{users.avatar}}{{else}}{{/if}}" class="rounded-circle" alt="user_Aavtor" height="140px" width="140px" style="border: 2px solid white; position: absolute; object-fit: cover; top: 40%; left: 3%;">
+            <div class="modal-body row">
+              <div class="col-12 m-0 p-0 position-relative mb-5">
+                <div class="bg-holder" style="height: 170px;">
+                  <img src="{{#if users.cover}}{{users.cover}}{{else}}https://i.imgur.com/ndXEE6d.jpg{{/if}}"
+                    class="card-img-top" alt="..." class="img-fluid" id="bgImage"
+                    style="height:100%;width:100%;object-fit:cover">
+                </div>
+                <label for="cover" class="btn cover-uploader">
+                  <input class="d-none" type="file" id="cover" name="cover" accept="image/*">
+                  <i class="fas fa-came" style="font-size: 1.5em; color: white"></i>
+                </label>
+                <div class="avatar-holder">
+                  <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/300/300/avator{{/if}}"
+                    class="rounded-circle" alt="user_Aavtor" height="140px" width="140px"
+                    style="border: 2px solid white; position: absolute; object-fit: cover; top: 40%; left: 3%;">
+                </div>
+                <label for="avatar" class="btn avator-uploader">
+                  <input class="d-none" type="file" id="avatar" name="avatar" accept="image/*">
+                  <i class="fas fa-camera" style="color: white;"></i>
+                </label>
               </div>
               <div class="form-row mb-3">
              <label for="avatar" class="btn form-label">
