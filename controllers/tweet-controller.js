@@ -51,15 +51,15 @@ const tweetController = {
     const UserId = helpers.getUser(req).id
     const { description } = req.body
     if (!description) {
-      req.flash('error_messages', '貼文不可空白')
+      req.flash('wrong_messages', '貼文不可空白')
       return res.redirect('back')
     }
     if (description.trim() === '') {
-      req.flash('error_messages', '貼文不可空白')
+      req.flash('wrong_messages', '貼文不可空白')
       return res.redirect('back')
     }
     if (description.length > 140) {
-      req.flash('error_messages', '貼文不得超過140個字')
+      req.flash('wrong_messages', '貼文不得超過140個字')
       return res.redirect('back')
     }
     return Tweet.create({
