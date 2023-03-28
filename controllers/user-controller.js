@@ -1,6 +1,7 @@
 const { User, Tweet, Reply, Followship, Like } = require('../models')
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
+const { localFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
   signUpPage: (req, res) => { // 登入
@@ -33,7 +34,7 @@ const userController = {
       })
       .catch(err => next(err))
   },
-  signInPage: (req, res) => { // 註冊
+  signInPage: (req, res) => { // 登入
     return res.render('signin')
   },
   signIn: (req, res, next) => {
@@ -69,6 +70,29 @@ const userController = {
         return res.render('users', { users: user.toJSON(), tweet: data })
       })
       .catch(err => next(err))
+  },
+  putUser:(req, res, next) => {
+    const { name, introduction } = req.body
+    const { file } = req
+    //if (!name) throw new Error('User name is required!')
+    Promise.all([
+      User.findByPk(helpers.getUser(req).id),
+      localFileHandler(file)
+    ])
+      .then(([user, filePath]) => {
+        if (!user) throw new Error("User didn't exist!")
+        return user.update({
+          name,
+          introduction,
+          cover: filePath || user.cover,
+          avatar: filePath || user.avatar
+        }) 
+    })
+    .then(() => {
+      req.flash('success_messages', 'User was successfully to update')
+      res.redirect('/users/`${helpers.getUser(req).id}`')
+    })
+    .catch(err => next(err))
   },
   getSetting: (req, res,) => { // 取得帳戶設定頁面
     return User.findByPk(helpers.getUser(req).id)
