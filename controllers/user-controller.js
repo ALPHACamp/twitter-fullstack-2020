@@ -73,21 +73,24 @@ const userController = {
       })
       .catch(err => next(err))
   },
-  putUser:(req, res, next) => {
+  putUser:(req, res, next) => { //修改使用者名稱、自我介紹、大頭照、背景圖
     const { name, introduction } = req.body
-    const { file } = req
-    //if (!name) throw new Error('User name is required!')
-    Promise.all([
-      User.findByPk(helpers.getUser(req).id),
-      localFileHandler(file)
-    ])
-      .then(([user, filePath]) => {
+    const avatar = req.files ? req.files.avatar : null
+    const cover = req.files ? req.files.cover : null
+
+    if (!name) throw new Error('User name is required!')
+
+    return User.findByPk(helpers.getUser(req).id)
+      .then(async user => {
         if (!user) throw new Error("User didn't exist!")
+        const avatarFilePath = avatar ? await localFileHandler(avatar[0]) : user.avatar
+        const coverFilePath = cover ? await localFileHandler(cover[0]) : user.cover
+        console.log('avatarFilePath:', avatarFilePath)
         return user.update({
           name,
           introduction,
-          cover: filePath || user.cover,
-          avatar: filePath || user.avatar
+          avatar: avatarFilePath || user.avatar,
+          cover: coverFilePath || user.cover
         }) 
     })
     .then(() => {

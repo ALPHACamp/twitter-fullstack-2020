@@ -29,9 +29,7 @@ router.get('/likes/:id', authenticated, userController.getFollowship, likesContr
 router.get('/users/:id/followers', authenticated, userController.getFollowship, userController.getFollower) // 跟隨中
 router.get('/users/:id/followings', authenticated, userController.getFollowship,userController.getFollowing) // 跟隨者
 
-//router.put('/users/:id', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), authenticated, userController.putUser)
-//自個人頁面修改使用者資料 只能改avatar
-router.put('/users/:id', upload.single('avatar'), authenticated, userController.putUser)
+router.put('/users/:id', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), authenticated, userController.putUser)// 上傳照片
 
 router.get("/users/:id", authenticated, userController.getFollowship, userController.getUser) // 個人頁面
 
