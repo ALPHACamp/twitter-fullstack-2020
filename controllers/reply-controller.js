@@ -28,18 +28,18 @@ const replyController = {
     const UserId = helpers.getUser(req).id
     const { description } = req.body
     const TweetId = req.params.id
-    if (!description) {
-      req.flash('error_reply', '貼文不可空白')
-      return res.redirect('back')
-    }
-    if (description.trim() === '') {
-      req.flash('error_reply', '貼文不可空白')
-      return res.redirect('back')
-    }
-    if (description.length > 140) {
-      req.flash('error_reply', '貼文不得超過140個字')
-      return res.redirect('back')
-    }
+    // if (!description) {
+    //   req.flash('error_reply', '貼文不可空白')
+    //   return res.redirect('back')
+    // }
+    // if (description.trim() === '') {
+    //   req.flash('error_reply', '貼文不可空白')
+    //   return res.redirect('back')
+    // }
+    // if (description.length > 140) {
+    //   req.flash('error_reply', '貼文不得超過140個字')
+    //   return res.redirect('back')
+    // }
     return Reply.create({
       UserId,
       TweetId,

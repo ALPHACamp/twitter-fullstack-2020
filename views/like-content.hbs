@@ -98,7 +98,7 @@
             <div class="footer d-flex">
               <div class="replies d-flex align-items-center">
                 <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal"
-                  data-bs-target="#likeContentModal{{this.id}}">
+                  data-bs-target="#replyModal{{this.id}}">
                   <i class="far fa-comment"></i>&ensp;{{this.Replies.length}}
                 </button>
               </div>
@@ -112,58 +112,7 @@
           </div>
         </div>
         {{!--likeContent modal --}}
-        <div class="modal fade" id="likeContentModal{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-          aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <div class="tweet-title btn"><button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close" style="color: #FF6600;"></button></div>
-              </div>
-              <div class="tweets d-flex mt-3">
-                <div class="avatar ps-3">
-                  <a href="/tweets/{{this.User.id}}" style="text-decoration:none;">
-                    <img src="{{this.User.avatar}}" class="rounded-circle me-3"
-                      style="width: 50px;height: 50px;background: #C4C4C4;">
-                  </a>
-                </div>
-                <div class="tweet-content">
-                  <div class="name">
-                    <span style="font-size: 16px;font-weight:700;">{{this.User.name}}</span>
-                    <span style="font-size: 14px;color:#C4C4C4">@{{this.User.account}}．{{relativeTimeFromNow
-                      this.createdAt}}</span>
-                  </div>
-                  <div class="content mt-3">
-                    {{this.description}}
-                  </div>
-                  <p style="color: #657786;">回覆給<strong style="color:#FF6600;">@{{this.User.account}}</strong></p>
-                </div>
-              </div>
-              <div class="modal-body" class="d-flex">
-                <div class="body-avatar d-flex align-items-stretch">
-                  <div class="left">
-                    <a href="/tweets/{{user.id}}">
-                      <img src="{{user.avatar}}" class="rounded-circle me-3"
-                        style="width: 50px;height: 50px;background: #C4C4C4;">
-                    </a>
-                  </div>
-                  <div class="right" class="d-flex">
-                    <form method="POST" action="/tweets/{{this.user.id}}">
-                      <textarea name="description" cols="40" rows="10"
-                        style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;"
-                        placeholder="推你的回覆" required></textarea>
-                      <div class="button d-flex justify-content-end">
-                        <button type="submit" class="btn" style="background: #FF6600;border-radius: 50px;">
-                          <span style="color: #FFFFFF;">回覆</span>
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {{> reply-modal tweets=this user=../user }}
         {{/each}}
         {{!-- {{/ifcond}} --}}
       </div>
@@ -236,3 +185,5 @@
     {{> followship}}
   </div>
 </div>
+
+{{> post-modal}}
