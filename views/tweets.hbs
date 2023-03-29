@@ -46,12 +46,12 @@
       <div style="border: 2px solid #E6ECF0;"></div>
       <div class="mt-5">
         {{#each tweets}}
-        <div data-bs-toggle="modal" data-bs-target="#reply-modal{{this.id}}">
+        <div>
           <div class="row">
             <div class="col-1">
               {{> following-avatar}}
             </div>
-            <div class="col-11">
+            <div class="col-11" data-bs-toggle="modal" data-bs-target="#reply-modal{{this.id}}">
               <div>
                 <a href="/users/{{this.id}}"><strong>{{this.User.dataValues.name}}</strong></a>
                 <span style="color: #6C757D;">@{{this.User.dataValues.account}}．{{moment this.createdAt}}</span>
@@ -66,7 +66,7 @@
               <span
                 style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Replies.length}}</span>
             </form>
-            {{#if isLiked}}
+            {{#if this.isLiked}}
             <form action="/tweets/{{this.id}}/unlike" method="POST">
               <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
                   src="/images/like-filled@2x.png" alt="unlike"></button>

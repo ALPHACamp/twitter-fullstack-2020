@@ -96,33 +96,63 @@ const tweetController = {
         })
     }
   },
-  addLike: (req, res, next) => {
-    const tweetId = req.params.id
-    const userId = helpers.getUser(req).id
-    return Tweet.findByPk(tweetId)
-      .then(tweet => {
-        if (!tweet) throw new Error("這則貼文不存在")
-        return Like.create({ tweetId })
-      })
-      .then(() => res.redirect('back'))
-      .catch(err => next(err))
+  addLike: async (req, res) => {
+    try {
+      const isCreated = await Like.findOrCreate(
+        {
+          where: {
+            Position: 'tweet',
+            PositionId: req.params.id,
+            UserId: helpers.getUser(req).id,
+          },
+          defaults: {
+            UserId: helpers.getUser(req).id,
+            Position: 'tweet',
+            PositionId: req.params.id,
+            isLike: true,
+          }
+        })
+      if (isCreated) console.log('addLike success')
+      else console.log('addLike already created')
+      return res.redirect('back')
+    }
+    catch {
+      // console.log('addLike error')
+      return res.redirect('back')
+    }
   },
-  removeLike: (req, res, next) => {
-    const tweetId = req.params.id
-    const userId = Number(helpers.getUser(req).id)
-
-    return Like.findOne({
+  removeLike: (req, res) => {
+    Like.findOne({
       where: {
-        //userId,
-        tweetId
+        Position: 'tweet',
+        PositionId: req.params.id,
+        UserId: helpers.getUser(req).id,
       }
     })
-    .then(like => {
-      if (!like) throw new Error("這則貼文還沒按like")
-      return like.destroy()
-    })
-    .then(() => res.redirect('back'))
-    .catch(err => next(err))
-  }
+      .then((like) => {
+        if (!like) {
+          return Like.findOne({
+            where: {
+              TweetId: req.params.id,
+              UserId: helpers.getUser(req).id,
+            }
+          })
+            .then((testLike) => {
+              return testLike.destroy()
+                .then(() => { return res.redirect('back') })
+            })
+        }
+        return like.destroy()
+          .then(() => { return res.redirect('back') })
+          .catch(() => {
+            //console.log('removeLike error')
+            return res.redirect('back')
+          })
+      })
+      .catch((err) => {
+        //console.log('queryLike error')
+        return res.redirect('back')
+      })
+  },
 }
 module.exports = tweetController
