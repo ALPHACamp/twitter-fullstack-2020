@@ -24,14 +24,13 @@ app.engine('hbs', handlebars({
   extname: '.hbs',
   partialsDir: ['views/partials', 'views/partials/svgs']
 }));
-
-
 app.set('view engine', 'hbs')
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 app.use(getUser)
 app.use(express.static('public'));
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 

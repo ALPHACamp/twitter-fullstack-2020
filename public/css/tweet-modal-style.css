@@ -1,0 +1,53 @@
+.tweet.modal .modal-content {
+  height: 300px;
+  width: 634px;
+  border-radius: 14px;
+}
+.tweet.modal .header {
+  height: 57px;
+  border-bottom: solid 1px #e6ecf0;
+}
+.tweet.modal .button {
+  width: 24px;
+  height: 24px;
+  margin: 16px 0 0 16px;
+  border: none;
+  background: white;
+}
+.tweet.modal .post-window {
+  position: relative;
+  flex-grow: 1;
+}
+.tweet.modal .post-window img {
+  vertical-align: top;
+}
+.tweet.modal .post-window textarea {
+  border: none;
+  resize: none;
+}
+.tweet.modal .post-window textarea:focus {
+  border: none;
+  outline: none !important;
+}
+.tweet.modal .post-window textarea::-moz-placeholder {
+  font-weight: 700;
+  font-size: 18px;
+  color: #6c757d;
+}
+.tweet.modal .post-window textarea::placeholder {
+  font-weight: 700;
+  font-size: 18px;
+  color: #6c757d;
+}
+.tweet.modal .post-window button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: block;
+  width: 64px;
+  height: 40px;
+  border: none;
+  color: white;
+  background: #ff6600;
+  border-radius: 50px;
+}/*# sourceMappingURL=tweet-modal-style.css.map */

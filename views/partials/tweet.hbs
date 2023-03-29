@@ -11,7 +11,7 @@
       {{!-- up --}}
       <div class="name-account  mb-2">
         <span class="name me-2">{{this.User.name}}</span>
-        <span class="account">@{{this.User.account}}</span>
+        <span class="account">@{{this.User.account}}・{{this.createdAt.fromNow}}</span>
       </div>
       {{!-- middle --}}
       <a href="/tweets/{{this.id}}">
@@ -22,7 +22,7 @@
       {{!-- bottom --}}
       <div class="reply-like" id="{{this.id}}">
         <div class="reply m-0">
-          <button> {{>reply}}</button>
+          <button onclick="reply(this)" > {{>reply}}</button>
           <span>{{this.replyCount}}</span>
         </div>
         <div class="like m-0">

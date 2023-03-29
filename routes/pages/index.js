@@ -11,36 +11,34 @@ const passport = require('../../config/passport')
 
 
 
-//admin routes 
+
 const admin = require('./modules/admin')
 router.use('/admin', admin)
 
-//normal users
-//regist
 router.get('/regist', userController.registPage)
 router.post('/regist', userController.regist)
 
-// login & logout
+
 router.get('/login', userController.logInPage)
-router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), userController.logIn) // 注意是 post
+router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), userController.logIn) 
 router.get('/logout', userController.logout)
 
 
-router.post('/tweets/:id/like', userController.addLike)
-router.delete('/tweets/:id/like', userController.removeLike)
 
-// router.post('/tweets/:id/replies', tweetController.postReply)
+
 router.get('/tweets/:id', tweetController.getTweet)
 router.get('/tweets/', tweetController.getTweets)
+
+router.get('/users/:id/tweets', userController.getUserTweets)
+router.get('/users/:id/replies', userController.getUserReplies)
+router.get('/users/:id/likes', userController.getUserLikes)
 
 router.use('/test', (req, res) => res.render('test'))
 router.use('/', (req, res) => res.redirect('/tweets'))
 
 
-//main page
-router.get('/main', mainPageController.getMainPage)
 
-router.use('/', (req, res) => res.redirect('/main'))
+router.use('/', (req, res) => res.redirect('/tweets'))  //authenticate fail then go login
 router.use('/', generalErrorHandler)
 
 

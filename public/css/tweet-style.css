@@ -3,14 +3,16 @@
 }
 
 .tweet .avatar {
-
   width: 82px;
-
 }
 
 .tweet .name-account {
-
   height: 26px;
+}
+
+.tweet .name{
+  font-weight:700;
+  font-size:16px;
 }
 
 .tweet .account {
@@ -18,14 +20,12 @@
   font-size: 14px;
 }
 
-
 .tweet .reply-like {
   position: relative;
   height: 16px;
   /* background-color: #d5d5d5; */
   padding: 0;
 }
-
 
 .tweet .reply,
 .tweet .like {
@@ -59,24 +59,15 @@
   vertical-align: 1px;
 }
 
-
-
 .tweet .like .isLiked,
 .tweet .like .notLiked {
-
   display: none;
-
 }
 
 .tweet .like .liked .isLiked {
-
   display: inline;
-
 }
 
-
 .tweet .like :not(.liked) .notLiked {
-
   display: inline;
-
 }

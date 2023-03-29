@@ -16,7 +16,7 @@ const tweetServices = {
     } catch (error) {
       cb(error)
     }
-  }
+  },
 }
 
 module.exports = tweetServices
