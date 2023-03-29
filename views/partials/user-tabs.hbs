@@ -1,5 +1,13 @@
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-link {{#ifCond route 'tweets'}}active{{/ifCond}}" href="tweets" role="tab" aria-selected="true">推文</a>
+    <a class="nav-link {{#ifCond route 'replies'}}active{{/ifCond}}" href="replies" role="tab" aria-selected="false">回覆</a>
+    <a class="nav-link {{#ifCond route 'likes'}}active{{/ifCond}}" href="likes" role="tab" aria-selected="false">喜歡的內容</a>
+  </div>
+</nav>
+
+{{!-- <nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
     <button class="nav-link active" id="nav-tweets-tab" data-bs-toggle="tab" data-bs-target="#nav-tweets" type="button"
       role="tab" aria-controls="nav-tweets" aria-selected="true">推文</button>
     <button class="nav-link" id="nav-replies-tab" data-bs-toggle="tab" data-bs-target="#nav-replies" type="button"
@@ -88,4 +96,4 @@
     </div>
     <hr>
   </div>
-</div>
+</div> --}}
