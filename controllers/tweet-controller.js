@@ -2,31 +2,44 @@ const { Tweet, User, Reply, Like, Followship } = require('../models')
 const helpers = require('../_helpers')
 const tweetController = {
   getTweets: (req, res, next) => {
-  return Tweet.findAll({
-      include: [User, Reply],
-      order: [['createdAt', 'DESC']],
-      limit: 20,
-      raw: true,
-      nest: true,
+    Tweet.findAll({
+      include: [
+        User,
+        Reply,
+        Like
+      ],
+      order: [['createdAt', 'DESC']]
     })
-      .then(tweets => {
-        return res.render('tweets', { tweets })
+      .then((tweets) => {
+        const data = tweets.map((t) => ({
+          ...t.dataValues,
+          isLiked: t.toJSON().Likes.map((i) => i.UserId).includes(helpers.getUser(req).id),
+        }))
+        const likes = helpers.getUser(req).Likes
+        const isLiked = likes ? likes.map((i) => i.id).includes(data.id) : false;
+        return res.render('tweets', {
+          isLiked: isLiked,
+          tweets: data,
+          user: helpers.getUser(req)
+        })
       })
-      .catch(err => next(err))
   },
   postTweet: (req, res, next) => {
-    //const userId = Number(helpers.getUser(req).id)
-    const description = req.body.description
-    const tD = description.trim()
-    if (!tD){
-      req.flash('error_messages',"內容不可以空白")
-      res.redirect('back')
-    } else if (tD.length > 140){
-      req.flash('error_messages', "內容不可以超過 140 字")
-    }
-    return Tweet.create({ description })
-      .then(() => res.redirect('back'))
-      .catch(err => next(err))
+    const tweetText = req.body.tweetText ? req.body.tweetText.trim() : req.body.description.trim()
+
+    if (!tweetText || tweetText.length > 140) return res.redirect('back')
+    Tweet.create({
+      UserId: helpers.getUser(req).id,
+      description: tweetText,
+    })
+      .then(() => {
+        req.flash('successFlashMessage', '成功新增推文!')
+        return res.redirect('/tweets')
+      })
+      .catch(() => {
+        req.flash('errorFlashMessage', '新增推文失敗!')
+        return res.redirect('back')
+      })
   },
   getReplies: (req, res, next) => {
     console.log('req.params', req.params.id)
