@@ -1,0 +1,71 @@
+<div class="modal fade" id="replyModal{{tweets.id}}" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="tweet-title btn"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            style="color: #FF6600;"></button></div>
+      </div>
+      <div class="tweets d-flex mt-3">
+        <div class="avatar ps-3">
+          <a href="/users/{{tweets.User.dataValues.id}}" style="text-decoration:none;">
+            <img src="{{tweets.User.dataValues.avatar}}" class="rounded-circle me-3"
+              style="width: 50px;height: 50px;background: #C4C4C4;">
+          </a>
+        </div>
+        <div class="tweet-content">
+          <div class="name">
+            <span style="font-size: 16px;font-weight:700;">{{tweets.User.dataValues.name}}</span>
+            <span style="font-size: 14px;color:#C4C4C4">@{{tweets.User.dataValues.account}}．{{relativeTimeFromNow
+              tweets.createdAt}}</span>
+          </div>
+          <div class="content mt-3 mb-2">
+            {{tweets.description}}
+          </div>
+          <p>回覆給<strong style="color:##6C757D;">@{{tweets.User.dataValues.account}}</strong></p>
+        </div>
+      </div>
+      <div class="modal-body" class="d-flex">
+        <div class="body-avatar d-flex align-items-stretch">
+          <div class="left">
+            <a href="/users/{{user.id}}">
+              <img src="{{user.avatar}}" class="rounded-circle me-3"
+                style="width: 50px;height: 50px;background: #C4C4C4;">
+            </a>
+          </div>
+          <div class="right" class="d-flex">
+            <form method="POST" id="reply-tweet-modal" action="/tweets/{{tweets.id}}/replies">
+              <textarea name="description" id="reply-description" cols="40" rows="10"
+                style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;" placeholder="推你的回覆"
+                required></textarea>
+              <div class="button d-flex justify-content-end">
+                <div class="me-3" id="err-message-reply">
+                </div>
+                <button type="submit" class="btn" id="reply-button" style="background: #FF6600;border-radius: 50px;">
+                  <span style="color: #FFFFFF;">回覆</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const replyTweetModal = document.querySelector('#reply-tweet-modal')
+  const replyErrContainer = document.querySelector('#err-message-reply')
+
+  replyTweetModal.addEventListener('submit', function onFormSubmit(event) {
+    if (document.querySelector('#reply-description').value.trim() === '') {
+      event.preventDefault()
+      event.stopPropagation()
+      replyErrContainer.innerHTML = `
+      <span style="font-weight: 500;font-size: 15px;color: #FC5A5A;">內容不可空白</span>
+      `
+    }
+  })
+
+</script>
