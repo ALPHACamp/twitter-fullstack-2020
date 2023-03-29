@@ -42,44 +42,4 @@
     </a>
   </div>
 
-  {{!-- modal --}}
-  <div class="modal fade" id="tweetModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="tweet-title btn">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-              style="color: #FF6600;"></button>
-          </div>
-        </div>
-        <div class="modal-body" class="d-flex">
-          <div class="body-avatar d-flex align-items-stretch">
-            <div class="left">
-              <a href="/users/{{user.id}}">
-                <img src="{{user.avatar}}" class="rounded-circle mr-3"
-                  style="width: 50px;height: 50px;background: #C4C4C4;">
-              </a>
-            </div>
-            <div class="right">
-              <form method="POST" action="/tweets">
-                <div class="textarea ms-2 mt-2">
-                  <textarea name="description" cols="40" rows="10"
-                    style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;" placeholder="有什麼新鮮事?"
-                    required></textarea>
-                </div>
-                {{> message}}
-                <div class="button d-flex justify-content-end">
-                  <button type="submit" class="btn" style="background: #FF6600;border-radius: 50px;">
-                    <span style="color: #FFFFFF;">推文</span>
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
