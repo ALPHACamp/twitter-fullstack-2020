@@ -26,8 +26,10 @@ const tweetController = {
   },
   postTweet: (req, res, next) => {
     const tweetText = req.body.tweetText ? req.body.tweetText.trim() : req.body.description.trim()
-
-    if (!tweetText || tweetText.length > 140) return res.redirect('back')
+    req.flash()
+    if (!tweetText || tweetText.length > 140) {
+      req.flash('errorFlashMessage', '超過 140 字新增推文失敗!')
+      return res.redirect('back')}
     Tweet.create({
       UserId: helpers.getUser(req).id,
       description: tweetText,
