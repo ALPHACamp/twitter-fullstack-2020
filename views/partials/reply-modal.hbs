@@ -8,21 +8,21 @@
       </div>
       <div class="tweets d-flex mt-3">
         <div class="avatar ps-3">
-          <a href="/users/{{tweets.User.dataValues.id}}" style="text-decoration:none;">
-            <img src="{{tweets.User.dataValues.avatar}}" class="rounded-circle me-3"
+          <a href="/users/{{#if tweets.User.dataValues.id}}{{tweets.User.dataValues.id}}{{else}}{{tweets.User.id}}{{/if}}" style="text-decoration:none;">
+            <img src="{{#if tweets.User.dataValues.avatar}}{{tweets.User.dataValues.avatar}}{{else}}{{tweets.User.avatar}}{{/if}}" class="rounded-circle me-3"
               style="width: 50px;height: 50px;background: #C4C4C4;">
           </a>
         </div>
         <div class="tweet-content">
           <div class="name">
-            <span style="font-size: 16px;font-weight:700;">{{tweets.User.dataValues.name}}</span>
-            <span style="font-size: 14px;color:#C4C4C4">@{{tweets.User.dataValues.account}}．{{relativeTimeFromNow
+            <span style="font-size: 16px;font-weight:700;">{{#if tweets.User.dataValues.name}}{{tweets.User.dataValues.name}}{{else}}{{tweets.User.name}}{{/if}}</span>
+            <span style="font-size: 14px;color:#C4C4C4">@{{#if tweets.User.dataValues.account}}{{tweets.User.dataValues.account}}{{else}}{{tweets.User.account}}{{/if}}．{{relativeTimeFromNow
               tweets.createdAt}}</span>
           </div>
           <div class="content mt-3 mb-2">
             {{tweets.description}}
           </div>
-          <p>回覆給<strong style="color:##6C757D;">@{{tweets.User.dataValues.account}}</strong></p>
+          <p>回覆給<strong style="color:##6C757D;">@{{#if tweets.User.dataValues.account}}{{tweets.User.dataValues.account}}{{else}}{{tweets.User.account}}{{/if}}</strong></p>
         </div>
       </div>
       <div class="modal-body" class="d-flex">
