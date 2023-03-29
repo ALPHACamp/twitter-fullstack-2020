@@ -26,7 +26,7 @@ const replyController = {
   },
   createReply:(req,res,next)=>{// 新增回覆
     const UserId = helpers.getUser(req).id
-    // const { description } = req.body
+    const { description } = req.body
     const TweetId = req.params.id
     // if (!description) {
     //   req.flash('error_reply', '貼文不可空白')

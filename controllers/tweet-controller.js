@@ -49,7 +49,7 @@ const tweetController = {
   },
   createTweet: (req, res, next) => {
     const UserId = helpers.getUser(req).id
-    // const { description } = req.body
+    const { description } = req.body
     // if (!description) {
     //   req.flash('wrong_messages', '貼文不可空白')
     //   return res.redirect('back')
