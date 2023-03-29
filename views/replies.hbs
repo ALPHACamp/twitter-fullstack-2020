@@ -27,27 +27,66 @@
         </div>
 
         <div class="replies-and-likes-counts p-3">
-          <span class="px-2" style="color: #6C757D;"><strong style="color: #000000;">{{tweet.Replies.length}}</strong>回覆</span>
+          <span class="px-2" style="color: #6C757D;"><strong
+              style="color: #000000;">{{tweet.Replies.length}}</strong>回覆</span>
           <spanp style="color: #6C757D;"><strong style="color: #000000;">{{tweet.Likes.length}}</strong>次喜歡</span>
             <div class="p-2 replies-page-border-bottom"></div>
         </div>
 
         <div class="reply-and-like-btn d-flex replies-page-border-bottom">
-          <form action="/reply /:id" method="POST">
-            <button type="submit" class="btn"><img class="left-bar-icon" src="/images/reply-outlined@2x.png"
-                alt="reply"></button>
-          </form>
+          <div data-bs-toggle="modal" data-bs-target="#user-replies-modal{{tweet.id}}">
+            <button type="submit" class="btn"><img class="left-bar-icon" src="/images/reply-outlined@2x.png"  alt="reply"></button>
+          </div>
           <form action="/like/:id" method="POST">
             <button type="submit" class="btn"><img class="left-bar-icon" src="/images/like-outlined@2x.png"
                 alt="like"></button>
           </form>
         </div>
+        {{!-- 回覆彈跳視窗 --}}
+        <div class="modal" tabindex="-1" id="user-replies-modal{{tweet.id}}">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-2">
+                    {{> following-avatar}}
+                    <div class="reply-modal-vr-line"></div>
+                  </div>
+                  <div class="col-10">
+                    <div>
+                      <a href="/users"><strong>{{tweet.User.name}}</strong></a>
+                      <span>@{{tweet.User.account}}·{{moment tweet.updatedAt}}</span>
+                    </div>
+                    <div>
+                      <p>{{subText tweet.description 140}}</p>
+                      <span>回覆給<span class="ms-1" style="color: #FF6600;">@{{tweet.User.account}}</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                {{> user-avatar}}
+                <form action="/tweets/{{tweet.id}}/replies" method="POST">
+                  <textarea class="modal-input-tweets" placeholder="推你的回覆" name="comment" id="user-reply-in-replies"
+                    maxlength="145" rows="3" cols="100"></textarea>
+                    <div class="d-flex flex-row-reverse mb-1">
+                      <button class="tweetbtn" type="submit">回覆</button>
+                      <p id="user-reply-alert-in-replies" class="user-reply-alertMsg"></p>
+                    </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
       {{#each reply}}
       <div class="user-replies-reply-page pt-3">
-        <div class="user-reply p-3 replies-page-border-bottom" data-bs-toggle="modal"
-          data-bs-target="#user-replies-modal{{this.id}}">
+        <div class="user-reply p-3 replies-page-border-bottom">
           <div class="row">
             <div class="col-2">
               {{> following-avatar}}
@@ -62,51 +101,6 @@
             </div>
           </div>
         </div>
-
-        {{!-- 回覆彈跳視窗 --}}
-        <div class="modal" tabindex="-1" id="user-replies-modal{{this.id}}">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                {{!-- <h5 class="modal-title">User name</h5> --}}
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <div class="row">
-                  <div class="col-2">
-                    {{> following-avatar}}
-                    <div class="reply-modal-vr-line"></div>
-                  </div>
-                  {{!-- --}}
-                  <div class="col-10">
-                    <div>
-                      <a href="/users"><strong>{{tweet.User.name}}</strong></a>
-                      <span>@{{this.User.account}}·{{moment this.updatedAt}}</span>
-                    </div>
-                    <div>
-                      <p>{{subText this.comment 140}}</p>
-                      <span>回覆給<span class="ms-1" style="color: #FF6600;">@{{../tweet.User.account}}</span></span>
-                    </div>
-                  </div>
-                </div>
-
-                {{> user-avatar}}
-                <form action="">
-                  <textarea class="modal-input-tweets" placeholder="推你的回覆" name="comment" id="user-reply-in-replies" maxlength="145" rows="3"
-                    cols="100"></textarea>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <div class="d-flex flex-row-reverse mb-1">
-                  <button class="tweetbtn" type="submit">回覆</button>
-                  <p id="user-reply-alert-in-replies" class="user-reply-alertMsg"></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {{!-- {{/each}} --}}
       </div>
       {{/each}}
     </div>

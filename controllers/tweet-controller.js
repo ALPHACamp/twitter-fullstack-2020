@@ -62,13 +62,26 @@ const tweetController = {
       })
   },
   postReply: (req, res, next) => {
-    const { comment } = req.body
-    if (!comment) throw new Error('內容不可以空白')
-    if (comment.trim() === '') throw new Error('內容不可以空白')
-    if (comment.length > 140) throw new Error('不可超過 140 字')
-    return Reply.create({ comment })
-      .then(() => res.redirect('back'))
-      .catch(err => next(err))
+    const tweetId = req.params.id
+    const replyText = req.body.comment
+    console.log(replyText)
+    if (!replyText.length) {
+      return res.redirect('back')
+    } else {
+      return Reply.create({
+        UserId: helpers.getUser(req).id,
+        TweetId: tweetId,
+        comment: replyText
+      })
+        .then(() => {
+          req.flash('successFlashMessage', '成功回覆推文!')
+          return res.redirect('back')
+        })
+        .catch(() => {
+          req.flash('errorFlashMessage', '回覆推文失敗!')
+          return res.redirect('back')
+        })
+    }
   },
   addLike: (req, res, next) => {
     const tweetId = req.params.id
