@@ -12,7 +12,7 @@ module.exports = {
     tweet_ids = randomindexs.map((i) => tweet_ids[i]);
 
     let userIds = await queryInterface.sequelize.query(
-      `SELECT id FROM Users WHERE is_admin = false;`,
+      'SELECT id FROM Users;',
     );
     userIds = userIds[0].map((i) => i.id);
 

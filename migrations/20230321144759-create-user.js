@@ -30,9 +30,8 @@ module.exports = {
       introduction: {
         type: Sequelize.TEXT,
       },
-      is_admin: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+      role: {
+        type: Sequelize.STRING
       },
       cover: {
         type: Sequelize.STRING,
