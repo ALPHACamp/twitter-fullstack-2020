@@ -32,7 +32,8 @@ router.get('/users/:id', authenticated, userController.getUser)
 
 router.get('/api/users/:id', userController.settingPage)
 router.get('/tweets/:id/replies', authenticated, tweetController.getReplies)
-router.post('/tweets/id/replies', authenticated, tweetController.postReply)
+router.get('/tweets/:id', authenticated, tweetController.getReplies);
+router.post('/tweets/:id/replies', authenticated, tweetController.postReply)
 router.post('/tweets/id/like', authenticated, tweetController.addLike)
 router.post('/tweets/id/unlike', authenticated, tweetController.removeLike)
 router.get('/tweets', authenticated, tweetController.getTweets)
