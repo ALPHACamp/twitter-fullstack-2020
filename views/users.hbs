@@ -4,7 +4,7 @@
     {{> nav userPage=users}}
   </div>
   <!--middle bar-->
-  <div class="col-7 user-profile" >
+  <div class="col-7 user-profile" style="width: 639px;" >
     <div class="tweets-container"
       style="width: 639px;height:100%; border-right:1px solid #C4C4C4; border-left:1px solid #C4C4C4;">
       <!--head-->
@@ -201,9 +201,11 @@
                   <label for="cover" class="btn form-label">
                     <input class="d-none" type="file" id="cover" name="cover" accept="image/*" style="display: none">
                     <i class="fa-solid fa-camera"
-                      style="position: absolute; object-fit: cover; top: 40%; left: 40%;; width:20; height:20px; color: #FFFFFF"></i>
-                    {{!--<i class="fa-solid fa-xmark"
-                      style="position: absolute; object-fit: cover; top: 40%; left: 60%;; width:20; height:20px; color: #FFFFFF"></i>--}}
+                      style="position: absolute; object-fit: cover; top: 40%; left: 40%;; width:20; height:20px; color: #FFFFFF"></i> 
+                  </label>
+                  <label for="no-cover" class="btn form-label">
+                    <input class="d-none" type="file" id="no-cover" name="no-cover" accept="image/*" style="display: none">
+                    <i class="fa-solid fa-xmark" style="position: absolute; object-fit: cover; top: 40%; left: 60%;; width:20; height:20px; color: #FFFFFF"></i>
                   </label>
                 </div>
 
@@ -223,7 +225,7 @@
                   <input class="form-control-file" type="file" id="avatar" name="avatar" accept="image/*"
                     style="display: none">
                   <i class="fa-solid fa-camera"
-                    style="position: absolute; object-fit: cover; top: 55%; left: 14.5%;; width:20; height:20px; color:#FFFFFF">
+                    style="position: absolute; object-fit: cover; top: 53%; left: 15%;; width:20; height:20px; color:#FFFFFF">
                   </i>
                 </label>
                 {{!--<label class="form-label" for="avatar"></label>
@@ -252,7 +254,14 @@
     </div>
   </div>
   <!--right bar-->
-  <div class="col-3 followship">
+  <div class="col-3 followship ms-3" style="width: 273px; height:100%;">
     {{> followship}}
   </div>
 </div>
+
+<script>
+
+  document.getElementById('no-cover').addEventListener('click', function (event) {
+    document.querySelector('.no-cover').srcset = "https://i.imgur.com/ndXEE6d.jpg"
+  });
+</script>
