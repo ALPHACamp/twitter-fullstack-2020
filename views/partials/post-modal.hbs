@@ -1,8 +1,8 @@
 <div class="modal fade" id="tweetModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
+    <div class="modal-content" style="width:634px; height:350px; border-radius:14px;">
+      <div class="modal-header" style="width:634px; height:56px;">
         <div class="tweet-title btn">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
             style="color: #FF6600;"></button>
@@ -16,20 +16,19 @@
                 style="width: 50px;height: 50px;background: #C4C4C4;">
             </a>
           </div>
-          <div class="right">
+          <div class="right" style="width: 643px; height: 243px;border-style: none;">
             <form method="POST" id="post-tweet-modal" action="/tweets">
-              <div class="textarea ms-2 mt-2">
-                <textarea name="description" id="description" cols="40" rows="10"
-                  style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;" placeholder="有什麼新鮮事?"
+              <div class="textarea ms-2 mt-2"style="width: 500px; height: 200px;box-sizing: border-box; ">
+                <textarea style="width: 500px; height: 230px; background: #FFFFFF; border: 1px solid #FFFFFF;" name="description" id="description" cols="40" rows="10" placeholder="有什麼新鮮事?"
                   onkeyup="wordsCheck()" required></textarea>
               </div>
               <div class="footer d-flex justify-content-end">
-                <div class="me-3" id="err-message-container">
-                  <span>0/140</span>
+                <div class="me-3" id="err-message-container" style="margin-top: 12px; margin-right:15px; height: 15px;line-height: 15px;">
+                  <span style="font-size:15px;">0/140</span>
                 </div>
                 <div class="button">
-                  <button type="submit" class="btn" id="tweet-button" style="background: #FF6600;border-radius: 50px;">
-                    <span style="color: #FFFFFF;">推文</span>
+                  <button type="submit" class="btn" id="tweet-button" style="width: 66px; height:38px; background: #FF6600;border-radius: 50px;">
+                    <span class="d-flex justify-content-center align-items-center mb-1" style="white-space:nowrap; font-weight: 500; font-size: 18px; color: #FFFFFF;">推文</span>
                   </button>
                 </div>
               </div>
@@ -52,7 +51,7 @@
       postErrContainer.innerHTML = `
       <span style="font-weight: 500;font-size: 15px;color: #FC5A5A;">字數不可超過140字</span>
       `
-    }else{
+    } else {
       postErrContainer.innerHTML = `
       <span>${content}/140</span>
       `
@@ -69,3 +68,4 @@
     }
   })
 </script>
+
