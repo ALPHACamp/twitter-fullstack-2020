@@ -1,4 +1,4 @@
-.tweet.modal {
+.modal {
   .modal-content {
     height: 300px;
     width: 634px;
@@ -20,9 +20,9 @@
     position: relative;
     flex-grow: 1;
   }
-.post-window img{
-  vertical-align: top;
-}
+  .post-window img {
+    vertical-align: top;
+  }
 
   .post-window textarea {
     border: none;
@@ -50,5 +50,30 @@
     color: white;
     background: #ff6600;
     border-radius: 50px;
+  }
+}
+
+.reply {
+  .modal-content {
+    height: 500px;
+  }
+  .tweet {
+    height: 205px;
+  }
+
+  .connect-line {
+    width: 2px;
+    height: 86px;
+    background-color: #b5b5be;
+  }
+
+  .reply-to{
+    color: #6C757D;
+    font-size: 14px;
+  }
+
+  .reply-to .account{
+    color: #ff6600;
+    font-size: 14px;
   }
 }

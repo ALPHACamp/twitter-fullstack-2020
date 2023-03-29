@@ -55,6 +55,7 @@ const tweetController = {
           { model: User },
           { model: User, as: 'LikedUsers' }
         ],
+        order: [[{ model: Reply }, 'createdAt', 'DESC']],
         nest: true
       })
 

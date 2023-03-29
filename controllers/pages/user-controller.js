@@ -40,81 +40,84 @@ const userController = {
   },
 
   getUserTweets: async (req, res, next) => {
-    try{const user = await User.findByPk(helpers.getUser(req).id, {
-      include: {
-        model: Tweet,
-        include: [{ model: Reply }, { model: User }, { model: User, as: 'LikedUsers' }],
-      },
-      order: [[{ model: Tweet }, 'createdAt', 'DESC']],
-      nest: true
-    })
-    const userTweets = user.toJSON().Tweets.map(tweet => ({
-      ...tweet,
-      replyCount: tweet.Replies.length,
-      likeCount: tweet.LikedUsers.length,
-      isLiked: tweet.LikedUsers.some(lu => lu.id === helpers.getUser(req).id)
-    }))
+    try {
+      const user = await User.findByPk(helpers.getUser(req).id, {
+        include: {
+          model: Tweet,
+          include: [{ model: Reply }, { model: User }, { model: User, as: 'LikedUsers' }],
+        },
+        order: [[{ model: Tweet }, 'createdAt', 'DESC']],
+        nest: true
+      })
+      const userTweets = user.toJSON().Tweets.map(tweet => ({
+        ...tweet,
+        replyCount: tweet.Replies.length,
+        likeCount: tweet.LikedUsers.length,
+        isLiked: tweet.LikedUsers.some(lu => lu.id === helpers.getUser(req).id)
+      }))
 
 
-    userTweets.forEach(tweet => {
-      dateFormatter(tweet, 8)
-    })
-    res.render('user-profile', { tweets: userTweets, isTweets: true, isProfile: true })
-  }catch(error){
-    console.log(error)
-  }
+      userTweets.forEach(tweet => {
+        dateFormatter(tweet, 8)
+      })
+      res.render('user-profile', { tweets: userTweets, isTweets: true, isProfile: true })
+    } catch (error) {
+      console.log(error)
+    }
   },
 
   getUserReplies: async (req, res, next) => {
-    try{const user = await User.findByPk(helpers.getUser(req).id, {
-      include: {
-        model: Reply,
-        include: [
-          {
-            model: Tweet,
-            include: { model: User }
-          },
-          { model: User }
-        ], 
-      },
-      order: [[{ model: Reply }, 'createdAt', 'DESC']],
-      nest: true
-    })
-    const userReplies = user.toJSON().Replies
-    userReplies.forEach(reply => {
-      dateFormatter(reply, 8)
-    })
-    res.render('user-profile', { replies: userReplies, isReplies: true, isProfile: true })
-    }catch(error){
+    try {
+      const user = await User.findByPk(helpers.getUser(req).id, {
+        include: {
+          model: Reply,
+          include: [
+            {
+              model: Tweet,
+              include: { model: User }
+            },
+            { model: User }
+          ],
+        },
+        order: [[{ model: Reply }, 'createdAt', 'DESC']],
+        nest: true
+      })
+      const userReplies = user.toJSON().Replies
+      userReplies.forEach(reply => {
+        dateFormatter(reply, 8)
+      })
+      res.render('user-profile', { replies: userReplies, isReplies: true, isProfile: true })
+    } catch (error) {
       console.log(error)
     }
   },
 
   getUserLikes: async (req, res, next) => {
-    try{const user = await User.findByPk(helpers.getUser(req).id, {
-      include: {
-        model: Tweet,
-        as: 'LikedTweets',
-        include: [{ model: Reply }, { model: User }, { model: User, as: 'LikedUsers' }],
-      },
-      order: [[{ model: Tweet, as: 'LikedTweets' }, 'createdAt', 'DESC']],
-      nest: true
-    })
-    const likedTweets = user.toJSON().LikedTweets.map(tweet => ({
-      ...tweet,
-      replyCount: tweet.Replies.length,
-      likeCount: tweet.LikedUsers.length,
-      isLiked: true
-    }))
+    try {
+      const user = await User.findByPk(helpers.getUser(req).id, {
+        include: {
+          model: Tweet,
+          as: 'LikedTweets',
+          include: [{ model: Reply }, { model: User }, { model: User, as: 'LikedUsers' }],
+        },
+        order: [[{ model: Tweet, as: 'LikedTweets' }, 'createdAt', 'DESC']],
+        nest: true
+      })
+      const likedTweets = user.toJSON().LikedTweets.map(tweet => ({
+        ...tweet,
+        replyCount: tweet.Replies.length,
+        likeCount: tweet.LikedUsers.length,
+        isLiked: true
+      }))
 
-    likedTweets.forEach(reply => {
-      dateFormatter(reply, 8)
-    })
+      likedTweets.forEach(reply => {
+        dateFormatter(reply, 8)
+      })
 
-    res.render('user-profile', { tweets: likedTweets, isLikes: true, isProfile: true })
-  }catch(error) {
-    console.log(error)
-  }
+      res.render('user-profile', { tweets: likedTweets, isLikes: true, isProfile: true })
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 module.exports = userController

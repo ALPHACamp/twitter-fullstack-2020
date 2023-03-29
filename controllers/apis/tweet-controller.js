@@ -2,6 +2,24 @@ const { User, Tweet, Reply, Followship, Like } = require('../../models')
 const dateFormatter = require('../../helpers/dateFormatter')
 const helpers = require('../../_helpers')
 const tweetController = {
+  getTweet: async (req, res) => {
+    try {
+      let tweet = await Tweet.findByPk(req.params.id, {
+        include: { model: User },
+        nest: true
+      })
+
+      tweet = tweet.toJSON()
+      dateFormatter(tweet, 8)
+      res.status(200).json({
+        tweet
+      })
+    } catch (error) {
+      res.status(500).json({
+        error: error.message
+      })
+    }
+  },
 
   getLikeCount: async (req, res) => {
     const tweetId = req.params.id
@@ -95,9 +113,28 @@ const tweetController = {
         message: error.message
       })
     }
+  },
+  postReply: async (req, res, next) => {
+    try {
+      if (!req.body.reply) throw new Error("回覆不可為空白")
+      if (req.body.reply.length > 140) throw new Error("回覆長度上限為 140 個字元！")
+      await Reply.create({ UserId: helpers.getUser(req).id, TweetId: req.params.id, comment: req.body.reply })
+      const reply = await Reply.findOne({
+        where: { UserId: helpers.getUser(req).id, TweetId: req.params.id, comment: req.body.reply }
+      })
+      if (!reply) throw new Error("回覆失敗！")
+      res.status(200).json({
+        message: "回覆成功！"
+      })
+
+    } catch (error) {
+      res.status(500).json({
+        message: error.message
+      })
+    }
   }
 
-  
+
 
   // postReply: (req, res, next) => {
 

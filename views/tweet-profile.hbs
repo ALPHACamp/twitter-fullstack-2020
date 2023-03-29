@@ -30,7 +30,7 @@
     <hr>
     {{!-- button --}}
     <div class="reply-like-button mt-3" id="{{tweet.id}}">
-      <button class="reply" onclick="like(this)">
+      <button onclick="replyOfProfile(this)" data-bs-toggle="modal" data-bs-target="#reply">
         <span>{{>reply-30}}</span>
       </button>
       <button class="like {{#if tweet.isLiked}}liked{{/if}}" onclick="likeOfProfile(this)">
@@ -45,20 +45,38 @@
 
 <script>
   async function likeOfProfile(button) {
+    const tweetId = button.parentElement.id
+    const likeCountElement = document.querySelector('.like.number');
+    try {
+      if (!button.classList.contains('liked')) {
+        const response = await fetch(`/api/tweets/${tweetId}/like`, { method: 'POST' })
+        const data = await response.json()
+        likeCountElement.textContent = data.likeCount
+        if (data.isLiked) button.classList.toggle('liked') //remove liked
+      } else if (button.classList.contains('liked')) {
+        const response = await fetch(`/api/tweets/${tweetId}/like`, { method: 'DELETE' })
+        const data = await response.json()
+        likeCountElement.textContent = data.likeCount
+        if (data.isLiked === false) button.classList.toggle('liked') //add liked
+      }
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async function replyOfProfile(button) {
       const tweetId = button.parentElement.id
-      const likeCountElement = document.querySelector('.like.number');
+      const templateSource = document.getElementById('tweet-template')
+      const tweetHTML = document.querySelector('.reply.modal .tweet')
       try {
-        if (!button.classList.contains('liked')) {
-          const response = await fetch(`/api/tweets/${tweetId}/like`, { method: 'POST' })
-          const data = await response.json()
-          likeCountElement.textContent = data.likeCount
-          if (data.isLiked) button.classList.toggle('liked') //remove liked
-        } else if (button.classList.contains('liked')) {
-          const response = await fetch(`/api/tweets/${tweetId}/like`, { method: 'DELETE' })
-          const data = await response.json()
-          likeCountElement.textContent = data.likeCount
-          if (data.isLiked === false) button.classList.toggle('liked') //add liked
-        }
+        console.log('11')
+        const response = await fetch(`/api/tweets/${tweetId}/`, { method: 'GET' })
+        const data = await response.json()
+        const template = Handlebars.compile(templateSource.innerHTML);
+        const html = template({ tweet: data.tweet });
+        console.log(html)
+        tweetHTML.innerHTML = html
 
       } catch (error) {
         console.error(error)

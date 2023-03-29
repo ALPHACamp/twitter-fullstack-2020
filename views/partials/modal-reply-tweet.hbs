@@ -1,0 +1,76 @@
+<!-- Modal post-->
+<div class="tweet modal fade" id="postTweet" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="header p-0">
+        <button class="button " data-bs-dismiss="modal">{{>close}}</button>
+      </div>
+      <div class="post-window mx-4 my-3">
+        <img src="{{user.avatar}}" width="50" height="50" alt="">
+        <textarea id="tweetInput" rows="4" wrap="soft" type="text" placeholder="有什麼新鮮事"></textarea>
+        <button id="tweetButton" class="ms-auto" onclick="postTweet(this.previousElementSibling)">推文</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal reply-->
+<div class="reply modal fade" id="reply" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      {{!-- header --}}
+      <div class="header p-0">
+        <button class="button " data-bs-dismiss="modal">{{>close}}</button>
+      </div>
+
+      <div class="tweet d-flex">
+
+      </div>
+
+      {{!-- reply window --}}
+      <div class="post-window mx-4 my-3">
+        <img src="{{user.avatar}}" width="50" height="50" alt="">
+        <textarea id="tweetInput" rows="4" wrap="soft" type="text" placeholder="有什麼新鮮事"></textarea>
+        <button id="tweetButton" class="ms-auto" onclick="postReply(document.querySelector('.reply.modal .description').id, this.previousElementSibling)">推文</button>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+
+{{{{raw}}}}
+<script id="tweet-template" type="text/x-handlebars-template">
+              <div class="avatar d-flex flex-column pt-3 ps-4 pe-2 ">
+                <a href=""><img width="50" height="50" src="{{this.User.avatar}}" alt=""></a>
+                <div class="connect-line mt-3 mx-auto"></div>
+              </div>
+      
+      
+              <div class="d-flex flex-column py-3 pe-3 h-100 w-100">
+      
+                <div class="name-account  mb-2">
+                  <span class="name me-2">{{tweet.User.name}}</span>
+                  <span class="account">{{tweet.User.account}}・{{tweet.createdAt.fromNow}}</span>
+                </div>
+      
+                <div class="description  mb-2" id="{{tweet.id}}">
+                  <span>{{tweet.description}}</span>
+                </div>
+      
+                <div class="reply-to  mt-auto mb-4">
+                  回覆給 <span class="account">@{{tweet.User.account}}</span>
+                </div>
+              </div>
+              </script>
+{{{{/raw}}}}
+
+
+
+
+
+
+
+

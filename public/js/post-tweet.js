@@ -1,16 +1,7 @@
 
-// const tweetButton = document.querySelector('.home-wrapper #tweetButton');
-// const tweetInput = document.querySelector('.home-wrapper #tweetInput');
-// const tweetButton3 = document.querySelector('.modal #tweetButton');
-// const tweetInput3 = document.querySelector('.modal #tweetInput');
 
 
-// postTweet(tweetButton, tweetInput)
-// postTweet(tweetButton3, tweetInput3)
-
-
-
-async function postTweet (button, input) {
+async function postTweet (input) {
   try {
     const response = await fetch('/api/tweets', {
       method: 'POST',

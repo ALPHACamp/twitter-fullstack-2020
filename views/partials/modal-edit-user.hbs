@@ -1,0 +1,94 @@
+<div class="edit-container cus-modal-container">
+  <div class="row cus-modal border border-dark">
+    <form id="edit-form" class="row form-row post-user-edit" action="/api/users/:id" method="POST"
+      enctype="multipart/form-data">
+      <div class="modal-header d-flex justify-content-between">
+        <div class="d-flex align-items-center">
+          <div class="edit-modal-close po-cur">
+            <div class="svg-round svg-round-effect">
+              {{>close}}
+            </div>
+          </div>
+          <div class="ms-3">編輯個人資料</div>
+        </div>
+        <button type="submit" class="btn btn-1 form-submit">
+          儲存
+        </button>
+      </div>
+      <div class="coverage-image edit-coverage-image" style="background-image: url('https://i.imgur.com/s2FQTRY.jpg');">
+        <div class="coverage-image-preview">
+          <div class="filter">
+            <div class="d-flex justify-content-center align-items-center">
+              <label class="icon-box mx-2">
+                <div class="svg-a">
+                  <div class="svg-round po-cur">
+                    {{>addPhoto}}
+                  </div>
+                </div>
+                <input id="upload_coverage_img" style="display:none;" id="coverage" name="coverage" type="file"
+                  accept="image/*">
+                <input id="croppedCoverage" type="hidden" name="croppedCoverage">
+              </label>
+              <label class="icon-box mx-2">
+                <div class="svg-a">
+                  <div class="svg-round po-cur modal-coverage-delete">
+                    {{>close}}
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between px-3">
+        <div class="avatar-size">
+          <div class="avatar-image-clip">
+            <div class="avatar-border" style="">
+              <div class="avatar-a">
+                <div class="avatar-image edit-avatar-image"
+                  style="background-image: url(&quot https://images.unsplash.com/photo-1533738363-b7f9aef128ce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80&quot);">
+                  <div class="avatar-image-preview">
+                    <div class="filter">
+                      <div class="d-flex justify-content-center align-items-center">
+                        <label class="icon-box mx-2">
+                          <div class="svg-a">
+                            <div class="svg-round po-cur">
+                              {{>addPhoto}}
+                            </div>
+                          </div>
+                          <input id="upload_avatar_img" style="display:none;" name="avatar" type="file"
+                            accept="image/*">
+                          <input id="croppedAvatar" type="hidden" name="croppedAvatar">
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="input-structure px-3 my-2">
+        <div class="form-floating">
+          <input type="name" class="form-control edit-user-name" id="name" placeholder="" name="name"
+            style="height: 54px">
+          <label for="floatingInput">名稱</label>
+        </div>
+        <div class="text-right">
+          <span class="">8</span>/50
+        </div>
+      </div>
+      <div class="input-structure px-3 mb-3">
+        <div class="form-floating">
+          <textarea class="form-control edit-user-introduction" placeholder="" id="introduction" style="height: 147px"
+            name="introduction"></textarea>
+          <label for="floatingTextarea2">自我介紹</label>
+        </div>
+        <div class="text-right">
+          <span class="">0</span>/160
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,45 +1,45 @@
-.tweet.modal .modal-content {
+.modal .modal-content {
   height: 300px;
   width: 634px;
   border-radius: 14px;
 }
-.tweet.modal .header {
+.modal .header {
   height: 57px;
   border-bottom: solid 1px #e6ecf0;
 }
-.tweet.modal .button {
+.modal .button {
   width: 24px;
   height: 24px;
   margin: 16px 0 0 16px;
   border: none;
   background: white;
 }
-.tweet.modal .post-window {
+.modal .post-window {
   position: relative;
   flex-grow: 1;
 }
-.tweet.modal .post-window img {
+.modal .post-window img {
   vertical-align: top;
 }
-.tweet.modal .post-window textarea {
+.modal .post-window textarea {
   border: none;
   resize: none;
 }
-.tweet.modal .post-window textarea:focus {
+.modal .post-window textarea:focus {
   border: none;
   outline: none !important;
 }
-.tweet.modal .post-window textarea::-moz-placeholder {
+.modal .post-window textarea::-moz-placeholder {
   font-weight: 700;
   font-size: 18px;
   color: #6c757d;
 }
-.tweet.modal .post-window textarea::placeholder {
+.modal .post-window textarea::placeholder {
   font-weight: 700;
   font-size: 18px;
   color: #6c757d;
 }
-.tweet.modal .post-window button {
+.modal .post-window button {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -50,4 +50,24 @@
   color: white;
   background: #ff6600;
   border-radius: 50px;
-}/*# sourceMappingURL=tweet-modal-style.css.map */
+}
+
+.reply .modal-content {
+  height: 500px;
+}
+.reply .tweet {
+  height: 205px;
+}
+.reply .connect-line {
+  width: 2px;
+  height: 86px;
+  background-color: #b5b5be;
+}
+.reply .reply-to {
+  color: #6C757D;
+  font-size: 14px;
+}
+.reply .reply-to .account {
+  color: #ff6600;
+  font-size: 14px;
+}/*# sourceMappingURL=modal-style.css.map */
