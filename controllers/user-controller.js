@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Tweet } = require('../models')
 const { Op } = require('sequelize')
 const bcrypt = require('bcryptjs')
 const userController = {
@@ -28,15 +28,6 @@ const userController = {
             .catch(err => next(err))
 
     },
-    getUser: (req, res, next) => {
-        res.render('users/profile')
-    },
-    getFollowers: (req, res, next) => {
-        res.render('users/followers')
-    },
-    getFollowings: (req, res, next) => {
-        res.render('users/followings')
-    },
     signin: (req, res) => {
         return res.redirect('/tweets');
     },
@@ -45,6 +36,33 @@ const userController = {
         req.logout();
         res.redirect('/signin');
     },
+    getUser: (req, res, next) => {
+        const userId = req.params.id
+        return res.redirect(`/users/${userId}/tweets`)
+    },
+    getTweets: (req, res, next) => {
+        return User.findByPk(req.params.id, {
+            include: { model: Tweet }
+        })
+            .then(result => {
+                if (!result) throw new Error("User didn't exist!")
+                const user = result.get({ plain: true });
+                return res.render('users/profile', { user })
+            })
+            .catch(err => next(err));
+    },
+    getReplies: (req, res, next) => {
+        res.render('users/replies')
+    },
+    getLikes: (req, res, next) => {
+        res.render('users/likes')
+    },
+    getFollowers: (req, res, next) => {
+        res.render('users/followers')
+    },
+    getFollowings: (req, res, next) => {
+        res.render('users/followings')
+    }
 }
 
 module.exports = userController

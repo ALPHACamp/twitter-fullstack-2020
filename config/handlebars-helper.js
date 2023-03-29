@@ -24,4 +24,7 @@ module.exports = {
 
     return content.substring(0, count) + '...';
   },
+  ifCond: function (a, b, options) {
+    return a === b ? options.fn(this) : options.inverse(this)
+  }
 };
