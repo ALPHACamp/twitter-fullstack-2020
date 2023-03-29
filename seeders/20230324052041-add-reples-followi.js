@@ -10,7 +10,7 @@ module.exports = {
 
     //console.log(repliesIds);
     let userIds = await queryInterface.sequelize.query(
-      `SELECT id FROM Users WHERE is_admin = false;`,
+      'SELECT id FROM Users;',
     );
     userIds = userIds[0].map((i) => i.id);
     let random = randomNums(

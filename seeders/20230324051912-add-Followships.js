@@ -3,7 +3,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     let userIds = await queryInterface.sequelize.query(
-      `SELECT id FROM Users WHERE is_admin = false;`,
+      'SELECT id FROM Users;',
     );
     userIds = userIds[0].map((i) => i.id);
     /*五個user，一個人有0~4個追蹤者*/

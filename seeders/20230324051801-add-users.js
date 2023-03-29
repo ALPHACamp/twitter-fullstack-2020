@@ -15,7 +15,7 @@ module.exports = {
       cover: randomCover(),
       avatar: randomAvater(),
       introduction: faker.lorem.sentence(),
-      is_admin: true,
+      role: 'admin',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -30,7 +30,7 @@ module.exports = {
         cover: randomCover(),
         avatar: randomAvater(),
         introduction: faker.lorem.sentence(),
-        is_admin: false,
+        role: 'user',
         created_at: new Date(),
         updated_at: new Date(),
       };
@@ -46,7 +46,7 @@ module.exports = {
       cover: randomCover(),
       avatar: randomAvater(),
       introduction: faker.lorem.sentence(),
-      is_admin: true,
+      role: 'admin',
       created_at: new Date(),
       updated_at: new Date(),
     };
