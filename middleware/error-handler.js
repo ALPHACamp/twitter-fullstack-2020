@@ -1,9 +1,9 @@
 module.exports = {
   generalErrorHandler(err, req, res, next) {
     if (err instanceof Error) {
-      req.flash('error_messages', `${err.name}: ${err.message}`)
+      req.flash('wrong_messages', `${err.name}: ${err.message}`)
     } else {
-      req.flash('error_messages', `${err}`)
+      req.flash('wrong_messages', `${err}`)
     }
     res.redirect('back')
     next(err)
