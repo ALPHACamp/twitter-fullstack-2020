@@ -6,20 +6,20 @@
     <div class="tweets-container" style="width: 639px;height:100%px;border:1px solid #C4C4C4;">
       <h4 class="pt-3 ps-3" style="font-weight: 700;">首頁</h4>
       <hr>
-      <div class="mytweet d-flex flex-column ps-3 pb-3 pe-3" style="border-bottom: 10px solid #C4C4C4;">
-        <div class="avatar">
+      <div class="mytweet d-flex flex-column ps-3 pb-3 pe-3" style="border-bottom: 8px solid #E6ECF0">
+        <div class="avatar d-flex">
           <a href="/users/{{user.id}}" style="text-decoration:none;">
             <img src="{{user.avatar}}" class="rounded-circle me-3"
               style="width: 50px;height: 50px;background: #C4C4C4;">
           </a>
-          <button type="button" class="btn" style="width: 526px;
-height: 26px;text-align:start;color:#C4C4C4" data-bs-toggle="modal" data-bs-target="#tweetModal">
+          <button type="button" class="btn" style="padding-left: 0px; width: 526px; height: 36px;text-align:start; font-size: 18px;color:#C4C4C4" data-bs-toggle="modal" data-bs-target="#tweetModal">
             有什麼新鮮事?
           </button>
         </div>
-        <div class="button d-flex justify-content-end">
-          <button type="submit" class="btn tweet-button" style="background: #FF6600;border-radius: 100px;">
-            <span style="color: #FFFFFF;">推文</span></button>
+        <div class="button d-flex justify-content-end" >
+          <button type="submit" class="btn tweet-button d-flex justify-content-center align-items-center" style="width: 64px; height: 40px; background: #FF6600;border-radius: 100px;">
+            <span style=" font-size: 16px; color: #FFFFFF;">推文</span>
+          </button>
         </div>
       </div>
       <div class="tweets-container">
