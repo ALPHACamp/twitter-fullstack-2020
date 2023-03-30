@@ -7,7 +7,10 @@ const routes = require('./routes')
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const app = express()
-const port = 3000
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+const port = process.env.PORT || 3000
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
@@ -15,7 +18,7 @@ app.engine('hbs', handlebars({ extname: '.hbs', helpers: require('./config/handl
 app.set('view engine', 'hbs')
 app.use(methodOverride('_method'));
 app.use(express.static('public'))
-app.use(session({ secret: 'test', resave: false, saveUninitialized: true }));
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
 app.use(express.urlencoded({ extended: true }))
 app.use(passport.initialize())
 app.use(passport.session())
