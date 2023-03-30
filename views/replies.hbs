@@ -35,12 +35,20 @@
 
         <div class="reply-and-like-btn d-flex replies-page-border-bottom">
           <div data-bs-toggle="modal" data-bs-target="#user-replies-modal{{tweet.id}}">
-            <button type="submit" class="btn"><img class="left-bar-icon" src="/images/reply-outlined@2x.png"  alt="reply"></button>
+            <button type="submit" class="btn"><img class="left-bar-icon" src="/images/reply-outlined@2x.png"
+                alt="reply"></button>
           </div>
-          <form action="/like/:id" method="POST">
-            <button type="submit" class="btn"><img class="left-bar-icon" src="/images/like-outlined@2x.png"
-                alt="like"></button>
+          {{#if isLiked}}
+          <form action="/tweets/{{tweet.id}}/unlike" method="POST">
+            <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
+                src="/images/like-filled@2x.png" alt="unlike"></button>
           </form>
+          {{else}}
+          <form action="/tweets/{{tweet.id}}/like" method="POST">
+            <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
+                src="/images/like-outlined@2x.png" alt="like"></button>
+          </form>
+          {{/if}}
         </div>
         {{!-- 回覆彈跳視窗 --}}
         <div class="modal" tabindex="-1" id="user-replies-modal{{tweet.id}}">
@@ -71,10 +79,10 @@
                 <form action="/tweets/{{tweet.id}}/replies" method="POST">
                   <textarea class="modal-input-tweets" placeholder="推你的回覆" name="comment" id="user-reply-in-replies"
                     maxlength="145" rows="3" cols="100"></textarea>
-                    <div class="d-flex flex-row-reverse mb-1">
-                      <button class="tweetbtn" type="submit">回覆</button>
-                      <p id="user-reply-alert-in-replies" class="user-reply-alertMsg"></p>
-                    </div>
+                  <div class="d-flex flex-row-reverse mb-1">
+                    <button class="tweetbtn" type="submit">回覆</button>
+                    <p id="user-reply-alert-in-replies" class="user-reply-alertMsg"></p>
+                  </div>
                 </form>
               </div>
               <div class="modal-footer">

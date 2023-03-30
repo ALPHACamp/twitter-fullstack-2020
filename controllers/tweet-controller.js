@@ -28,8 +28,9 @@ const tweetController = {
     const tweetText = req.body.tweetText ? req.body.tweetText.trim() : req.body.description.trim()
     req.flash()
     if (!tweetText || tweetText.length > 140) {
-      req.flash('errorFlashMessage', '超過 140 字新增推文失敗!')
-      return res.redirect('back')}
+      req.flash('errorFlashMessage', '推文不可空白或超過140字!')
+      return res.redirect('back')
+    }
     Tweet.create({
       UserId: helpers.getUser(req).id,
       description: tweetText,
@@ -78,9 +79,11 @@ const tweetController = {
   },
   postReply: (req, res, next) => {
     const tweetId = req.params.id
-    const replyText = req.body.comment
+    //const replyText = req.body.comment
+    const replyText = req.body.replyText ? req.body.replyText.trim() : req.body.comment.trim()
     console.log(replyText)
-    if (!replyText.length) {
+    if (!replyText.length || replyText.length > 140) {
+      req.flash('errorFlashMessage', '回覆不可空白或超過140字!')
       return res.redirect('back')
     } else {
       return Reply.create({
