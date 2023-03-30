@@ -41,6 +41,7 @@ const userController = {
     res.redirect('/tweets')
   },
   getUser: (req, res, next ) => { // 取得個人資料頁面(推文清單)
+    const isUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
     return Promise.all([
       Tweet.findAll({
         where: { UserId: req.params.id },
@@ -67,9 +68,11 @@ const userController = {
       .then(([tweets,user]) => {
         const data = tweets.map(tweet => ({
           ...tweet.toJSON(),
-          isLiked: helpers.getUser(req).LikedTweets.map(t => t.id).includes(tweet.id)
+          isLiked: helpers.getUser(req).LikedTweets.map(t => t.id).includes(tweet.id),
+          
         })).sort((a, b) => b.createdAt - a.createdAt)
-        return res.render('users', { users: user.toJSON(), tweet: data })
+        
+        return res.render('users', { users: user.toJSON(), tweet: data, isUser })
       })
       .catch(err => next(err))
   },

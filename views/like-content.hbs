@@ -9,19 +9,19 @@
     <div class="tweets-container"
       style="width: 639px; height:100%; border-right:1px solid #C4C4C4; border-left:1px solid #C4C4C4;">
       <!--head-->
-    <div class="card-header col-12 row"
-      style="height: 75px;margin-left:1px; background-color:#FFFFFF; border-right:1px solid #C4C4C4;">
-      <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
-        class="col-auto d-flex align-items-center ms-0 ps-0">
-        <i class="fas fa-arrow-left" style="width:17pxl height:14px;"></i>
-      </a>
-      <a href="/users/{{users.id}}/tweets"
-        class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
-        style="text-decoration: none; ">
-        <span class="h5" style="line-height: 26px; color: #000000; font-size: 18px; font-weight: 700;">{{users.name}}</span>
-        <span style="color: #6C757D; font-size: 13px; line-height: 19px;font-weight: 500;">{{user.Tweets.length}}推文</span>
-      </a>
-    </div>
+      <div class="card-header col-12 row m-0" style="max-height: 55px;">
+        <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
+          class="col-auto d-flex align-items-center">
+          <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
+        </a>
+        <a href="/users/{{users.id}}/tweets"
+          class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
+          style="text-decoration: none;">
+          <span class="h5"
+            style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{users.name}}</span>
+          <span style="color: #657786; font-size: 13px; line-height: 15px;">{{user.Tweets.length}}推文</span>
+        </a>
+      </div>
 
       <!--cover & avatar & Edit button-->
       <div class="card-body col-12 m-0 p-0 position-relative">
@@ -34,9 +34,12 @@
             style="border: 2px solid white; position: absolute; object-fit: cover; top: 55%; left: 3%;">
         </div>
         <div class="card-body col-12 d-flex justify-content-end">
+          {{#if isUser}}
           <button type="submit" class="btn user-edit-button" data-bs-toggle="modal" data-bs-target="#editModal"
             style="background: #FFFFFF; border-radius: 100px; border:1px solid #FF6600;">
-            <span style="color: #FF6600;">編輯個人資料</span></button>
+            <span style="color: #FF6600;font-size: 16px; line-height: 24px;">編輯個人資料</span>
+          </button>
+          {{/if}}
         </div>
       </div>
 

@@ -3,6 +3,7 @@ const helpers = require('../_helpers')
 
 const replyController = {
   getReplies: async (req,res)=>{ // 已回覆的內容
+    const isUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
         return User.findByPk((req.params.id), {
             where: { role: 'user' },
             include: [
@@ -20,7 +21,8 @@ const replyController = {
           const repiles = user.toJSON().Replies.map(res => res)
           res.render('reply', {
             users: user.toJSON(),
-            repiles
+            repiles,
+            isUser
         })
       })
   },
@@ -28,18 +30,19 @@ const replyController = {
     const UserId = helpers.getUser(req).id
     const { description } = req.body
     const TweetId = req.params.id
+
     // if (!description) {
     //   req.flash('error_reply', '貼文不可空白')
-    //   return res.redirect('back')
-    // }
-    // if (description.trim() === '') {
-    //   req.flash('error_reply', '貼文不可空白')
-    //   return res.redirect('back')
-    // }
-    // if (description.length > 140) {
-    //   req.flash('error_reply', '貼文不得超過140個字')
-    //   return res.redirect('back')
-    // }
+    //    return res.redirect('back')
+    //  }
+    //  if (description.trim() === '') {
+    //    req.flash('error_reply', '貼文不可空白')
+    //    return res.redirect('back')
+    //  }
+    //  if (description.length > 140) {
+    //    req.flash('error_reply', '貼文不得超過140個字')
+    //    return res.redirect('back')
+    //  }
     return Reply.create({
       UserId,
       TweetId,
