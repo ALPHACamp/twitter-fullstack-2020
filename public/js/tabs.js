@@ -36,3 +36,16 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeBottomBorder();
   });
 });
+
+
+function load(button) {
+    window.history.pushState({}, "", `/users/${button.id}/${button.name}`)
+    fetch(`/api/users/${button.id}/${button.name}`)
+      .then(response => response.text())
+      .then(html => {
+        document.querySelector('.content').innerHTML = html
+      });
+  }
+
+
+

@@ -18,6 +18,10 @@
   width: 50px;
 }
 
+.top-ten-window img {
+  border-radius: 50%;
+}
+
 .top-ten-window .name {
   width: 90px;
 }
@@ -40,27 +44,6 @@
   font-size: 14px;
   font-weight: 500;
 }
-
-/* .top-ten-window .isFollowed {
-  display: block;
-  width: 96px;
-  height: 40px;
-  border: none;
-  color: white;
-  background: #FF6600;
-  border-radius: 50px;
-} */
-
-/* .top-ten-window .notFollowed {
-  display: block;
-  width: 64px;
-  height: 40px;
-  border: solid 1px #FF6600;
-  color: #FF6600;
-  background: white;
-  border-radius: 50px;
-} */
-
 
 .top-ten-window .button .isFollowed,
 .top-ten-window .button .notFollowed {

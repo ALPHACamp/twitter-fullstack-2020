@@ -1,7 +1,3 @@
-.tweet {
-  /* height: 168px; */
-}
-
 .tweet .avatar {
   width: 82px;
 }
@@ -9,6 +5,11 @@
 .tweet .name-account {
   height: 26px;
 }
+
+.tweet img{
+  border-radius:50%;
+}
+
 
 .tweet .name{
   font-weight:700;
@@ -18,6 +19,10 @@
 .tweet .account {
   color: #6C757D;
   font-size: 14px;
+}
+
+.tweet .description{
+  width: 530px;
 }
 
 .tweet .reply-like {

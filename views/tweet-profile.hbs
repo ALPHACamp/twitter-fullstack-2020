@@ -1,12 +1,12 @@
 <div class="tweet-profile pt-4">
-  <a href="/tweets">
-    <h4 class="header ms-4 mb-4">{{>back}}<span class="ms-3 ">推文</span></h4>
-  </a>
+ 
+    <h4 class="header ms-4 mb-4"><a href="javascript:history.back()">{{>back}}</a><span class="ms-3 ">推文</span></h4>
+ 
   <hr>
   <div class="d-flex flex-column h-100 p-3 w-100">
     {{!-- up --}}
     <div class="title d-flex mb-2 w-100">
-      <div><img width="50" height="50" src="{{tweet.User.avatar}}" alt=""></div>
+      <div><img width="50" height="50" src="{{tweet.User.avatar}}" alt="" "></div>
       <div class="d-flex flex-column ms-2">
         <span class="name me-2">{{tweet.User.name}}</span>
         <span class="account">@{{tweet.User.account}}</span>
@@ -14,7 +14,7 @@
     </div>
     {{!-- middle --}}
     <div class="description  mb-2 w-100">
-      {{tweet.description}}
+      <span>{{tweet.description}}</span>
     </div>
     {{!-- bottom --}}
     <div class="time mb-2 w-100">
@@ -43,43 +43,3 @@
 {{>tweet-reply}}
 
 
-<script>
-  async function likeOfProfile(button) {
-    const tweetId = button.parentElement.id
-    const likeCountElement = document.querySelector('.like.number');
-    try {
-      if (!button.classList.contains('liked')) {
-        const response = await fetch(`/api/tweets/${tweetId}/like`, { method: 'POST' })
-        const data = await response.json()
-        likeCountElement.textContent = data.likeCount
-        if (data.isLiked) button.classList.toggle('liked') //remove liked
-      } else if (button.classList.contains('liked')) {
-        const response = await fetch(`/api/tweets/${tweetId}/like`, { method: 'DELETE' })
-        const data = await response.json()
-        likeCountElement.textContent = data.likeCount
-        if (data.isLiked === false) button.classList.toggle('liked') //add liked
-      }
-
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  async function replyOfProfile(button) {
-      const tweetId = button.parentElement.id
-      const templateSource = document.getElementById('tweet-template')
-      const tweetHTML = document.querySelector('.reply.modal .tweet')
-      try {
-        console.log('11')
-        const response = await fetch(`/api/tweets/${tweetId}/`, { method: 'GET' })
-        const data = await response.json()
-        const template = Handlebars.compile(templateSource.innerHTML);
-        const html = template({ tweet: data.tweet });
-        console.log(html)
-        tweetHTML.innerHTML = html
-
-      } catch (error) {
-        console.error(error)
-      }
-    }
-</script>

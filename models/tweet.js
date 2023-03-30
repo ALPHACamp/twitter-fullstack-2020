@@ -13,12 +13,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'tweetId',
         as: 'LikedUsers' 
       })
-      Tweet.belongsToMany(models.User, {
-        through: models.Followship,
-        foreignKey: 'followingId',
-        sourceKey: 'UserId',
-        as: 'tweetFollowers'
-      })
     }
   }
   Tweet.init({

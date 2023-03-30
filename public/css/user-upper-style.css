@@ -1,4 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap");
+.user-upper * {
+  font-family: "Noto Sans TC", sans-serif;
+}
 .user-upper .coverage-a {
   padding: initial;
 }
@@ -69,12 +72,12 @@
 }
 .user-upper .edit-user-btn {
   background-color: white;
-  border-color: #ff6600;
-  color: #ff6600;
+  border-color: #FF6600;
+  color: #FF6600;
   border-radius: 50px;
 }
 .user-upper .edit-user-btn:hover {
-  background-color: #ff6600;
+  background-color: #FF6600;
   border-color: white;
   color: white;
   border-radius: 50px;
@@ -91,7 +94,7 @@
 .user-upper .user-account,
 .user-upper .user-followers,
 .user-upper .user-followings {
-  color: #6c757d;
+  color: #6C757D;
 }
 .user-upper .followings-block:hover,
 .user-upper .followers-block:hover {
@@ -151,21 +154,21 @@
   margin: initial;
 }
 .user-upper .modal-header path {
-  fill: #ff6600;
+  fill: #FF6600;
 }
 .user-upper .coverage-image path,
 .user-upper .avatar-image path {
   fill: white;
 }
 .user-upper .btn-1 {
-  background-color: #ff6600;
+  background-color: #FF6600;
   color: white;
   border-radius: 50px;
 }
 .user-upper .btn-1:hover {
   background-color: white;
-  color: #ff6600;
-  border-color: #ff6600;
+  color: #FF6600;
+  border-color: #FF6600;
   border-radius: 50px;
 }
 .user-upper .cus-modal form {
@@ -180,7 +183,7 @@
   border-bottom: 2px solid #657786;
   height: 100%;
   background-color: initial;
-  background-color: #f5f8fa;
+  background-color: #F5F8FA;
 }
 .user-upper .input-structure .text-right {
   opacity: 0.65;

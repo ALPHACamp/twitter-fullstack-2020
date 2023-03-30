@@ -3,8 +3,9 @@
   <hr>
   <div class="post-window mx-4 my-3">
     <img src="{{user.avatar}}" width="50" height="50" alt="">
-    <textarea id="tweetInput" rows="3" wrap="soft" placeholder="有什麼新鮮事"></textarea>
-    <button id="tweetButton" class="ms-auto" onclick="postTweet(this, this.previousElementSibling)">推文</button>
+    <textarea id="tweetInput" rows="4" wrap="soft" placeholder="有什麼新鮮事"></textarea>
+    <span class="error-message"></span>
+    <button id="tweetButton" class="ms-auto" onclick="postTweet(previousElementSibling.previousElementSibling)">推文</button>
   </div>
 
 

@@ -1,9 +1,10 @@
-const { User, Tweet, Reply, Followship, Like } = require('../../models')
+const { sequelize, User, Tweet, Reply, Followship, Like } = require('../../models')
 const helpers = require('../../_helpers')
 const userServices = require('../../services/user-services')
 const dateFormatter = require('../../helpers/dateFormatter')
-
+const { imgurFileHandler } = require('../../helpers/file-helpers')
 const userController = {
+
 
   addFollowing: async (req, res, next) => {
     try {
@@ -65,7 +66,7 @@ const userController = {
 
   getUserTweets: async (req, res, next) => {
     try {
-      const user = await User.findByPk(helpers.getUser(req).id, {
+      const user = await User.findByPk(req.params.id, {
         include: {
           model: Tweet,
           include: [{ model: Reply }, { model: User }, { model: User, as: 'LikedUsers' }],
@@ -82,7 +83,7 @@ const userController = {
       userTweets.forEach(reply => {
         dateFormatter(reply, 8)
       })
-      res.status(200).render('partials/user-tweets', { tweets: userTweets, layout: false })
+      res.status(200).render('partials/tweet', { tweets: userTweets, layout: false })
     } catch (error) {
       res.status(500).json({
         error: error.message
@@ -93,7 +94,7 @@ const userController = {
 
   getUserReplies: async (req, res, next) => {
     try {
-      const user = await User.findByPk(helpers.getUser(req).id, {
+      const user = await User.findByPk(req.params.id, {
         include: {
           model: Reply,
           include: [
@@ -111,7 +112,7 @@ const userController = {
       userReplies.forEach(reply => {
         dateFormatter(reply, 8)
       })
-      res.status(200).render('partials/user-replies', { replies: userReplies, layout: false })
+      res.status(200).render('partials/tweet-reply', { replies: userReplies, layout: false })
     } catch (error) {
       res.status(500).json({
         error: error.message
@@ -122,27 +123,80 @@ const userController = {
 
   getUserLikes: async (req, res, next) => {
     try {
-      const user = await User.findByPk(helpers.getUser(req).id, {
+      const user = await User.findByPk(req.params.id, {
         include: {
           model: Tweet,
           as: 'LikedTweets',
           include: [{ model: Reply }, { model: User }, { model: User, as: 'LikedUsers' }],
         },
-        order: [[{ model: Tweet, as: 'LikedTweets' }, 'createdAt', 'DESC']],
-        nest: true
+                nest: true
       })
       const likedTweets = user.toJSON().LikedTweets.map(tweet => ({
         ...tweet,
         replyCount: tweet.Replies.length,
         likeCount: tweet.LikedUsers.length,
-        isLiked: true
+        isLiked: tweet.LikedUsers.some(lu => lu.id === helpers.getUser(req).id)
       }))
-
+      likedTweets.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
       likedTweets.forEach(reply => {
         dateFormatter(reply, 8)
       })
 
-      res.status(200).render('partials/user-likes', { tweets: likedTweets, layout: false })
+      res.status(200).render('partials/tweet', { tweets: likedTweets, layout: false })
+    } catch (error) {
+
+      res.status(500).json({
+        error: error.message
+      })
+    }
+  },
+  getUserFollowers: async (req, res, next) => {
+    try {
+      const user = await User.findByPk(req.params.id, {
+        include: {
+          model: User,
+          as: 'Followers',
+          include: { model: User, as: 'Followers' }
+        },
+        nest: true
+      })
+      if (!user) throw new Error('User not found')
+      const followers = user.toJSON().Followers
+
+      followers.forEach(follower =>
+        follower.isFollowed = follower.Followers.some(fr => fr.id === helpers.getUser(req).id)
+      )
+
+      followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+
+      res.status(200).render('partials/user-followship', { users: followers, layout: false })
+    } catch (error) {
+
+      res.status(500).json({
+        error: error.message
+      })
+    }
+  },
+  getUserFollowings: async (req, res, next) => {
+    try {
+      const user = await User.findByPk(req.params.id, {
+        include: {
+          model: User,
+          as: 'Followings',
+          include: { model: User, as: 'Followers' }
+        },
+        nest: true
+      })
+
+      if (!user) throw new Error('User not found')
+
+      const followings = user.toJSON().Followings
+      followings.forEach(following =>
+        following.isFollowed = following.Followers.some(fr => fr.id === helpers.getUser(req).id)
+      )
+      followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+
+      res.status(200).render('partials/user-followship', { users: followings, layout: false })
     } catch (error) {
 
       res.status(500).json({

@@ -1,4 +1,5 @@
 .modal {
+
   .modal-content {
     height: 300px;
     width: 634px;
@@ -9,6 +10,9 @@
     border-bottom: solid 1px #e6ecf0;
   }
 
+  img {
+    border-radius: 50%;
+  }
   .button {
     width: 24px;
     height: 24px;
@@ -25,6 +29,7 @@
   }
 
   .post-window textarea {
+    margin-top: 8px;
     border: none;
     resize: none;
   }
@@ -37,6 +42,15 @@
     font-weight: 700;
     font-size: 18px;
     color: #6c757d;
+  }
+
+  .post-window .error-message {
+    position: absolute;
+    bottom: 7px;
+    right: 80px;
+    color: red;
+    font-size: 15px;
+    font-weight: 500;
   }
 
   .post-window button {
@@ -58,21 +72,21 @@
     height: 500px;
   }
   .tweet {
-    height: 205px;
+    height: 135px;
   }
 
   .connect-line {
     width: 2px;
-    height: 86px;
+    height: 80px;
     background-color: #b5b5be;
   }
 
-  .reply-to{
-    color: #6C757D;
+  .reply-to {
+    color: #6c757d;
     font-size: 14px;
   }
 
-  .reply-to .account{
+  .reply-to .account {
     color: #ff6600;
     font-size: 14px;
   }

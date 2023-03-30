@@ -1,35 +1,21 @@
 <div class="profile-wrapper border-top-0 pt-4">
-  <a href="/tweets">
-    <h4 class="header ms-4 mb-4">{{>back}}<span class="ms-3 ">{{user.name}}</span></h4>
-  </a>
-  {{>user-upper}}
-
+  
+    <h4 class="header ms-4 mb-4"><a href="javascript:history.back()">{{>back}}</a><span class="ms-3 ">{{user.name}}</span></h4>
+  
+  <div class="d-flex flex-column user-upper">
+    {{>modal-edit-user}}
+    {{>avatar-cropper}}
+    {{>coverage-cropper}}
+    {{>user-upper}}
+  </div>
   {{>user-tab}}
-
   <div class="content">
-
-
     {{#if replies}}
     {{>tweet-reply}}
-
     {{else}}
     {{>tweet}}
-
     {{/if}}
   </div>
 </div>
 
 
-<script>
-
-  function load(button) {
-    window.history.pushState({}, "", `/users/${button.id}/${button.name}`)
-    fetch(`/api/users/${button.id}/${button.name}`)
-      .then(response => response.text())
-      .then(html => {
-        document.querySelector('.profile-wrapper .content').innerHTML = html
-      });
-  }
-
-
-</script>

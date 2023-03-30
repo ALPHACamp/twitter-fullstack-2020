@@ -1,9 +1,10 @@
-.reply {
-  /* height: 168px; */
-}
 
 .reply .avatar {
   width: 82px;
+}
+
+.reply img {
+  border-radius: 50%
 }
 
 .reply .replier {

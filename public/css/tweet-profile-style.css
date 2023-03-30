@@ -11,6 +11,10 @@
 }
 
 
+.tweet-profile img {
+  border-radius: 50%;
+}
+
 .tweet-profile .title .account {
 
   font-size: 14px;

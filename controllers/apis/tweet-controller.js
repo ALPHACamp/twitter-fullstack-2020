@@ -98,7 +98,7 @@ const tweetController = {
   postTweet: async (req, res, next) => {
     try {
       if (!req.body.tweet) throw new Error("推文不可為空白")
-      if (req.body.tweet.length > 140) throw new Error("推文長度上限為 140 個字元！")
+      if (req.body.tweet.length > 140) throw new Error(" 推文長度上限為140 個字元！")
       await Tweet.create({ UserId: helpers.getUser(req).id, description: req.body.tweet })
       const tweet = await Tweet.findOne({
         where: { UserId: helpers.getUser(req).id, description: req.body.tweet }

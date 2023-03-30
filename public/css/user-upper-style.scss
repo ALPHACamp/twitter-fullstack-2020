@@ -1,302 +1,307 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap");
 
 .user-upper {
-  .coverage-a {
-    padding: initial;
-  }
+  * {
+  font-family: 'Noto Sans TC', sans-serif;
+}
 
-  .coverage-image {
-    width: 100%;
-    aspect-ratio: 3.195;
-    padding: 0;
-  }
+.coverage-a {
+  padding: initial;
+}
 
-  .d-flex {
-    min-height: 50px;
-    max-height: 68px;
-    position: relative;
-  }
+.coverage-image {
+  width: 100%;
+  aspect-ratio: 3.195;
+  padding: 0;
+}
 
-  .avatar-size {
-    margin-top: -15%;
-    width: 45%;
-    margin-bottom: 12px;
-  }
+.d-flex {
+  min-height: 50px;
+  max-height: 68px;
+  position: relative;
+}
 
-  .avatar-image-clip {
-    display: inline-block;
-    width: 47%;
-    padding-bottom: 47%;
-    height: 0;
-    position: relative;
-  }
+.avatar-size {
+  margin-top: -15%;
+  width: 45%;
+  margin-bottom: 12px;
+}
 
-  .avatar-border {
-    width: 110%;
-    height: 110%;
-    overflow: hidden;
-    position: absolute;
-    border-radius: 50%;
-    background-color: white;
-    display: flex;
-  }
+.avatar-image-clip {
+  display: inline-block;
+  width: 47%;
+  padding-bottom: 47%;
+  height: 0;
+  position: relative;
+}
 
-  .avatar-a {
-    width: inherit;
-    display: inherit;
-    align-items: center;
-    justify-content: center;
-  }
+.avatar-border {
+  width: 110%;
+  height: 110%;
+  overflow: hidden;
+  position: absolute;
+  border-radius: 50%;
+  background-color: white;
+  display: flex
+}
 
-  .avatar-image {
-    width: 95%;
-    height: 95%;
-    display: inherit;
-    display: inline-block;
-    border-radius: 50%;
-    background-size: cover;
-  }
+.avatar-a {
+  width: inherit;
+  display: inherit;
+  align-items: center;
+  justify-content: center;
+}
 
-  .avatar-image:hover {
-    cursor: pointer;
-    filter: brightness(86%);
-    transition: filter 0.3s;
-  }
+.avatar-image {
+  width: 95%;
+  height: 95%;
+  display: inherit;
+  display: inline-block;
+  border-radius: 50%;
+  background-size: cover;
+}
 
-  .avatar-image-preview {
-    border-radius: 50%;
-    background-size: cover;
-  }
+.avatar-image:hover {
+  cursor: pointer;
+  filter: brightness(86%);
+  transition: filter 0.3s;
+}
 
-  .coverage-image-preview {
-    background-size: cover;
-  }
+.avatar-image-preview {
+  border-radius: 50%;
+  background-size: cover;
+}
 
-  .cus-modal .avatar-image:hover {
-    cursor: default;
-    filter: none;
-  }
+.coverage-image-preview {
+  background-size: cover;
+}
 
-  .cus-modal .coverage-image svg:hover,
-  .cus-modal .avatar-image svg:hover {
-    width: 20px;
-  }
+.cus-modal .avatar-image:hover {
+  cursor: default;
+  filter: none;
+}
 
-  .edit-user-btn {
-    background-color: white;
-    border-color: #ff6600;
-    color: #ff6600;
-    border-radius: 50px;
-  }
+.cus-modal .coverage-image svg:hover,
+.cus-modal .avatar-image svg:hover {
+  width: 20px
+}
 
-  .edit-user-btn:hover {
-    background-color: #ff6600;
-    border-color: white;
-    color: white;
-    border-radius: 50px;
-  }
+.edit-user-btn {
+  background-color: white;
+  border-color: #FF6600;
+  color: #FF6600;
+  border-radius: 50px;
+}
 
-  .user-account,
-  .user-description,
-  .follow-box {
-    font-size: 16px;
-  }
+.edit-user-btn:hover {
+  background-color: #FF6600;
+  border-color: white;
+  color: white;
+  border-radius: 50px;
+}
 
-  .follow-box a {
-    text-decoration: none;
-    color: inherit;
-  }
+.user-account,
+.user-description,
+.follow-box {
+  font-size: 16px;
+}
 
-  .user-account,
-  .user-followers,
-  .user-followings {
-    color: #6c757d;
-  }
+.follow-box a {
+  text-decoration: none;
+  color: inherit;
+}
 
-  .followings-block:hover,
-  .followers-block:hover {
-    text-decoration: underline;
-    cursor: pointer;
-  }
+.user-account,
+.user-followers,
+.user-followings {
+  color: #6C757D;
+}
 
-  .header {
-    padding-top: 6%;
-    padding-bottom: 6%;
-  }
+.followings-block:hover,
+.followers-block:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
 
-  .svg-a {
-    width: inherit;
-    height: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.header {
+  padding-top: 6%;
+  padding-bottom: 6%;
+}
 
-  .icon-box {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-  }
+.svg-a {
+  width: inherit;
+  height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .svg-round {
-    width: inherit;
-    height: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    border-radius: 50%;
-  }
+.icon-box {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+}
 
-  .svg-round-effect:hover {
-    background-color: white;
-    filter: brightness(86%);
-    transition: filter 0.3s;
-    cursor: pointer;
-  }
+.svg-round {
+  width: inherit;
+  height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 50%;
+}
 
-  .svg-round2 {
-    width: inherit;
-    height: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    border-radius: 50%;
-  }
+.svg-round-effect:hover {
+  background-color: white;
+  filter: brightness(86%);
+  transition: filter 0.3s;
+  cursor: pointer;
+}
 
-  .svg-round2:hover {
-    background-color: black;
-    filter: brightness(86%);
-    transition: filter 0.3s;
-    cursor: pointer;
-  }
+.svg-round2 {
+  width: inherit;
+  height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 50%;
+}
 
-  .svg-round svg {
-    margin: initial;
-  }
+.svg-round2:hover {
+  background-color: black;
+  filter: brightness(86%);
+  transition: filter 0.3s;
+  cursor: pointer;
+}
 
-  .modal-header svg {
-    margin: initial;
-  }
+.svg-round svg {
+  margin: initial
+}
 
-  .modal-header path {
-    fill: #ff6600;
-  }
+.modal-header svg {
+  margin: initial;
 
-  .coverage-image path,
-  .avatar-image path {
-    fill: white;
-  }
+}
 
-  .btn-1 {
-    background-color: #ff6600;
-    color: white;
-    border-radius: 50px;
-  }
+.modal-header path {
+  fill: #FF6600;
+}
 
-  .btn-1:hover {
-    background-color: white;
-    color: #ff6600;
-    border-color: #ff6600;
-    border-radius: 50px;
-  }
+.coverage-image path,
+.avatar-image path {
+  fill: white;
+}
 
-  .cus-modal form {
-    position: relative;
-    padding: 0;
-    --bs-gutter-x: 0;
-  }
+.btn-1 {
+  background-color: #FF6600;
+  color: white;
+  border-radius: 50px;
+}
 
-  input[type="text"],
-  .form-control {
-    border-radius: 2px;
-    border: none;
-    border-bottom: 2px solid #657786;
-    height: 100%;
-    background-color: initial;
-    background-color: #f5f8fa;
-  }
+.btn-1:hover {
+  background-color: white;
+  color: #FF6600;
+  border-color: #FF6600;
+  border-radius: 50px;
+}
 
-  .input-structure .text-right {
-    opacity: 0.65;
-    font-size: 12px;
-    text-align: end;
-  }
+.cus-modal form {
+  position: relative;
+  padding: 0;
+  --bs-gutter-x: 0;
+}
 
-  .coverage-image {
-    background-size: cover;
-  }
+input[type="text"],
+.form-control {
+  border-radius: 2px;
+  border: none;
+  border-bottom: 2px solid #657786;
+  height: 100%;
+  background-color: initial;
+  background-color: #F5F8FA;
+}
 
-  .coverage-image .filter {
-    display: flex;
-    width: 100%;
-    aspect-ratio: 3.195;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    background-color: rgba(23, 23, 37, 0.5);
-  }
+.input-structure .text-right {
+  opacity: .65;
+  font-size: 12px;
+  text-align: end;
+}
 
-  .avatar-image .filter {
-    display: flex;
-    width: 100%;
-    aspect-ratio: 1;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    background-color: rgba(23, 23, 37, 0.5);
-    border-radius: 50%;
-  }
+.coverage-image {
+  background-size: cover;
+}
 
-  .po-cur:hover {
-    cursor: pointer;
-  }
+.coverage-image .filter {
+  display: flex;
+  width: 100%;
+  aspect-ratio: 3.195;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background-color: rgba(23, 23, 37, 0.5);
+}
 
-  .cus-modal-container {
-    display: none;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100vw;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    z-index: 1;
-    background-color: rgba(23, 23, 37, 0.5);
-  }
+.avatar-image .filter {
+  display: flex;
+  width: 100%;
+  aspect-ratio: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background-color: rgba(23, 23, 37, 0.5);
+  border-radius: 50%;
+}
 
-  .cus-modal {
-    display: inline-block;
-    background-color: white;
-    border-radius: 10px;
-  }
+.po-cur:hover {
+  cursor: pointer
+}
 
-  .avatar-cropper-container,
-  .coverage-cropper-container {
-    background-color: initial;
-  }
+.cus-modal-container {
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  z-index: 1;
+  background-color: rgba(23, 23, 37, 0.5);
+}
 
-  .avatar-cropper,
-  .coverage-cropper {
-    display: inline-block;
-    background-color: white;
-    border-radius: 10px;
-  }
+.cus-modal {
+  display: inline-block;
+  background-color: white;
+  border-radius: 10px;
+}
 
-  .avatar-cropper-container .tailoring-box {
-    width: 640px;
-    height: 640px;
-  }
+.avatar-cropper-container,
+.coverage-cropper-container {
+  background-color: initial;
+}
 
-  .coverage-cropper-container .tailoring-box {
-    max-width: 958.5px;
-    height: 600px;
-  }
+.avatar-cropper,
+.coverage-cropper {
+  display: inline-block;
+  background-color: white;
+  border-radius: 10px;
+}
 
-  .avatar-cropper-container img,
-  .coverage-cropper-container img {
-    display: block;
-  }
+.avatar-cropper-container .tailoring-box {
+  width: 640px;
+  height: 640px;
+}
+
+.coverage-cropper-container .tailoring-box {
+  max-width: 958.5px;
+  height: 600px;
+}
+
+.avatar-cropper-container img,
+.coverage-cropper-container img {
+  display: block;
+}
 }

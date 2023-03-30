@@ -4,7 +4,7 @@
   {{#each topTenFollowed}}
   <div class="d-flex top-ten-window p-4">
     <div class=" avatar">
-      <img width="50" height="50" src="{{this.avatar}}" alt="">
+      <a href="/users/{{this.id}}/tweets"><img width="50" height="50" src="{{this.avatar}}" alt=""></a>
     </div>
     <div class="name ms-2">
       <span class="name">{{this.name}}</span>

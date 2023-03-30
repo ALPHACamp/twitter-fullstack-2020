@@ -4,40 +4,31 @@ const dateFormatter = require('../../helpers/dateFormatter')
 const helpers = require('../../_helpers')
 const tweetController = {
   getTweets: async (req, res) => {
-    try {
-      let tweets = await Tweet.findAll({
-        include:
-          [
-            { model: User },
-            { model: User, as: 'LikedUsers' },
-            {
-              model: User,
-              as: 'tweetFollowers',
-              where: { id: helpers.getUser(req).id }
-            },
-            { model: Reply },
-          ],
-        order: [['createdAt', 'DESC']],
-        nest: true
-
-      })
-      
-      tweets = tweets.map(tweet => {
-        tweet = tweet.toJSON()
-        dateFormatter(tweet, 8)
-        return {
-          ...tweet,
-          replyCount: tweet.Replies.length,
-          likeCount: tweet.LikedUsers.length,
-          isLiked: tweet.LikedUsers.some(lu => lu.id === helpers.getUser(req).id)
+    const user = await User.findByPk(helpers.getUser(req).id, {
+      include: [
+        {
+          model: User,
+          as: 'Followings',
+          include: {
+            model: Tweet,
+            include: [{ model: User }, { model: Reply }, { model: User, as: 'LikedUsers' }],
+          }
         }
-      })
+      ],
+      nest: true
+    })
 
+    let followingTweets = user.toJSON().Followings.reduce((accumulator, currentValue) => {
+      return accumulator.concat(currentValue.Tweets);
+    }, []);
 
-      res.render('home', { user: helpers.getUser(req), tweets, isHome: true })
-    } catch (error) {
-      console.log(error)
-    }
+    followingTweets = followingTweets.map(tweet => ({
+      ...tweet,
+      replyCount: tweet.Replies.length,
+      likeCount: tweet.LikedUsers.length,
+      isLiked: tweet.LikedUsers.some(lu => lu.id === helpers.getUser(req).id)
+    }))
+    res.render('home', { user: user.toJSON(), tweets: followingTweets, isHome: true })
   },
 
   getTweet: async (req, res) => {
