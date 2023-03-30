@@ -101,10 +101,10 @@ textarea {
 }
 
 .reply-modal-vr-line {
-  height: 120px;
+  height: 100px;
   border-left: 2px solid gray;
   position: relative;
-  top: 5px;
+  top: 60px;
   left: 23px;
   margin-bottom: 10px;
 }
