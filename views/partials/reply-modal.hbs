@@ -31,15 +31,21 @@
             </a>
           </div>
           <div class="right" class="d-flex">
-            <form method="POST" id="reply-tweet-modal" action="/tweets/{{tweets.id}}/replies style=height:200px;">
-              <textarea name="description" id="reply-description" cols="60" rows="5" 
-                style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box; resize:none; outline : 0;" placeholder="推你的回覆"required  style="height:100px;"></textarea>
-              <div class="button d-flex justify-content-end">
-                <div class="me-3" id="err-message-reply">
+            <form method="POST" id="reply-tweet-modal" action="/tweets/{{tweets.id}}/replies">
+              <textarea name="description" id="reply-description" cols="50" rows="5" 
+                style="width: 620px; background: #FFFFFF;font-size: 16px; border: 0px solid #E6ECF0;box-sizing: border-box; resize:none; outline : 0;" placeholder="推你的回覆" style="height:100px;">
+              </textarea>
+             
+              <div class="button d-flex justify-content-between" style="width: 630px;">
+                <div class="me-0" id="err-message-reply">
+                
                 </div>
-                <button type="submit" class="btn" id="reply-button" style="justify-content: center;align-content: center; white-space: nowrap; width: 64px; height:40px; background: #FF6600;border-radius: 50px;">
-                  <span style="font-size: 16px; color: #FFFFFF;">回覆</span>
+                <button type="submit" class="btn" id="reply-button"
+                    style="justify-content: center;align-content: center; white-space: nowrap; width: 64px; height:40px; background: #FF6600;border-radius: 50px;">
+                  <span class="d-flex align-items-center" style="font-size: 16px; color: #FFFFFF;">回覆</span>
                 </button>
+          
+
               </div>
             </form>
           </div>
@@ -50,6 +56,7 @@
   </div>
 </div>
 
+
 <script>
   const replyTweetModal = document.querySelector('#reply-tweet-modal')
   const replyErrContainer = document.querySelector('#err-message-reply')
@@ -59,7 +66,14 @@
       event.preventDefault()
       event.stopPropagation()
       replyErrContainer.innerHTML = `
-      <span style="font-weight: 500;font-size: 15px;color: #FC5A5A;">內容不可空白</span>
+      <span style="justify-content: start; width: 634px; font-weight: 500;font-size: 15px;color: #FC5A5A;">內容不可空白</span>
+      `
+    }
+    if(document.querySelector('#reply-description').value.length > 140 ) {
+      event.preventDefault()
+      event.stopPropagation()
+      replyErrContainer.innerHTML = `
+      <span style="justify-content: start; width: 634px; font-weight: 500;font-size: 15px;color: #FC5A5A;">推文內容不可以超過140字！</span>
       `
     }
   })
