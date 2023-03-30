@@ -9,7 +9,13 @@
       <hr>
       <div class="row user-description">
         <div class="col-2">
-          {{> following-avatar}}
+          {{!-- {{#if this.image}} --}}
+          {{!-- <img src="{{user.avatar}}" width="100px" height="100px"
+            style="transition: opacity 0.5s; opacity:0; border-radius:50%;" onload="this.style.opacity=1;" /> --}}
+          {{!-- {{else}} --}}
+          <img src="{{tweet.User.avatar}}" class="fl" width="50px" height="50px"
+            style="border-radius:50%; margin-right: 3px;" />
+          {{!-- {{/if}} --}}
         </div>
 
         <div class="col-10">
@@ -60,7 +66,12 @@
               <div class="modal-body">
                 <div class="row">
                   <div class="col-2">
-                    {{> following-avatar}}
+                    {{!-- {{#if this.image}} --}}
+                    {{!-- <img src="{{user.avatar}}" width="100px" height="100px"
+                      style="transition: opacity 0.5s; opacity:0; border-radius:50%;" onload="this.style.opacity=1;" /> --}}
+                    {{!-- {{else}} --}}
+                    <img src="{{tweet.User.avatar}}" class="fl" width="50px" height="50px" style="border-radius:50%; margin-right: 3px;" />
+                    {{!-- {{/if}} --}}
                     <div class="reply-modal-vr-line"></div>
                   </div>
                   <div class="col-10">
@@ -75,7 +86,12 @@
                   </div>
                 </div>
 
-                {{> user-avatar}}
+                {{!-- {{#if this.image}} --}}
+                {{!-- <img src="{{user.avatar}}" width="100px" height="100px"
+                  style="transition: opacity 0.5s; opacity:0; border-radius:50%;" onload="this.style.opacity=1;" /> --}}
+                {{!-- {{else}} --}}
+                <img src="{{tweet.User.avatar}}" class="fl" width="50px" height="50px" style="border-radius:50%; margin-right: 3px;" />
+                {{!-- {{/if}} --}}
                 <form action="/tweets/{{tweet.id}}/replies" method="POST">
                   <textarea class="modal-input-tweets" placeholder="推你的回覆" name="comment" id="user-reply-in-replies"
                     maxlength="145" rows="3" cols="100"></textarea>
@@ -97,7 +113,12 @@
         <div class="user-reply p-3 replies-page-border-bottom">
           <div class="row">
             <div class="col-2">
-              {{> following-avatar}}
+              {{!-- {{#if this.image}} --}}
+              {{!-- <img src="{{user.avatar}}" width="100px" height="100px"
+                style="transition: opacity 0.5s; opacity:0; border-radius:50%;" onload="this.style.opacity=1;" /> --}}
+              {{!-- {{else}} --}}
+              <img src="{{this.User.avatar}}" class="fl" width="50px" height="50px" style="border-radius:50%; margin-right: 3px;" />
+              {{!-- {{/if}} --}}
             </div>
             <div class="col-10">
               <div>
