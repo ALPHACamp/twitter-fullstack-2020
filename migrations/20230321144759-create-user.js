@@ -20,7 +20,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       account: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING(20),
         unique: true,
       },
       avatar: {
