@@ -24,7 +24,7 @@ const adminController = {
         Tweet.findAll({
             include: User,
             order: [['createdAt', 'DESC']],
-            limit: 9,
+            limit: 20,
             raw: true,
             nest: true,
         })
