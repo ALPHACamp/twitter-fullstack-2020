@@ -28,7 +28,7 @@
             </div>
             <div class="col-1 ">
               <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
-                <button type="'submit" class="btn d-flex justify-content-end ms-4 ps-5">
+                <button type="'submit" class="btn d-flex justify-content-end ms-4 ps-5" onclick="return confirm(`確定要刪除嗎?`)">
                   <i class="fa-solid fa-xmark" style="color: #696974; Width: 15px; Height: 15px;"></i>
                 </button>
               </form>
