@@ -98,7 +98,7 @@ const userController = {
             let resultTweets = [];
             replies.forEach((r) => {
                 r.isLikeBySelf = r.Likes.map((l) => l.UserId).includes(selfId);
-                r.tweetUser = r.Tweet.User; // 新增這一行
+                r.tweetUser = r.Tweet.User;
 
                 let targetTweetId = r.Tweet.id;
                 if (resultTweets.findIndex((t) => t.id === targetTweetId) === -1) {
