@@ -1,7 +1,7 @@
 const { User, Tweet, Reply, Followship, Like } = require('../models')
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
-const { localFileHandler } = require('../helpers/file-helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
   signUpPage: (req, res) => { // 登入
@@ -89,8 +89,8 @@ const userController = {
     return User.findByPk(helpers.getUser(req).id)
       .then(async user => {
         if (!user) throw new Error("User didn't exist!")
-        const avatarFilePath = avatar ? await localFileHandler(avatar[0]) : user.avatar
-        const coverFilePath = cover ? await localFileHandler(cover[0]) : user.cover
+        const avatarFilePath = avatar ? await imgurFileHandler(avatar[0]) : user.avatar
+        const coverFilePath = cover ? await imgurFileHandler(cover[0]) : user.cover
         console.log('avatarFilePath:', avatarFilePath)
         return user.update({
           name,
