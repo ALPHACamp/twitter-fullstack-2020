@@ -37,8 +37,10 @@
               <span style="font-size: 14px;color:#C4C4C4">@{{this.User.dataValues.account}}．{{relativeTimeFromNow
                 this.createdAt}}</span>
             </div>
-            <div class="content mt-3">
-              <a href="/tweets/{{this.id}}" style="text-decoration:none;color:#171725;">{{this.description}}</a>
+            <div class="content mt-3" style="width: 540px; word-wrap: break-word;">
+              <a href="/tweets/{{this.id}}" style="word-wrap: break-word; text-decoration:none; color: #171725;">
+                {{this.description}}
+              </a>
             </div>
             <div class="footer d-flex">
               <div class="replies d-flex align-items-center">

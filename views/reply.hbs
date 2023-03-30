@@ -98,9 +98,9 @@
                 style="font-size: 14px;color:#C4C4C4">@{{this.Tweet.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
             </div>
             <div class="reply-to mt-3">
-              <p style="color: #657786;">回覆給<strong style="color:#FF6600;">@{{this.Tweet.User.name}}</strong></p>
+              <p style="outline : 0; color: #657786;">回覆給<strong style="color:#FF6600;">@{{this.Tweet.User.name}}</strong></p>
             </div>
-            <div class="content mt-3 mb-3">
+            <div class="content mt-3 mb-3" style="word-wrap: break-word;">
               {{this.Tweet.description}}
             </div>
           </div>
