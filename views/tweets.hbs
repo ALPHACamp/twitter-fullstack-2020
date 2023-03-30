@@ -99,8 +99,8 @@
                   {{!-- --}}
                   <div class="col-10">
                     <div>
-                      <a href="/users/{{this.id}}"><strong>{{this.User.name}}</strong></a>
-                      <span style="color: #6C757D;"> @{{this.User.account}}‧{{moment this.createdAt}}</span>
+                      <a href="/users/{{this.id}}"><strong>{{this.User.dataValues.name}}</strong></a>
+                      <span style="color: #6C757D;"> @{{this.User.dataValues.account}}‧{{moment this.createdAt}}</span>
                     </div>
                     <div>
                       <p>{{this.description}}</p>
