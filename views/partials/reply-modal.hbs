@@ -1,31 +1,28 @@
-<div class="modal fade" id="replyModal{{tweets.id}}" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
-  aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="replyModal{{tweets.id}}" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content"  style="width: 750px; height: 100%; border-radius:14px;">
       <div class="modal-header">
-        <div class="tweet-title btn"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-            style="color: #FF6600;"></button></div>
+        <div class="tweet-title btn"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"style="color: #FF6600;"></button></div>
       </div>
-      <div class="tweets d-flex mt-3">
-        <div class="avatar ps-3">
+      <div class="tweets d-flex mt-3" >
+        <div class="avatar ps-3" style="width: 634px;">
           <a href="/users/{{#if tweets.User.dataValues.id}}{{tweets.User.dataValues.id}}{{else}}{{tweets.User.id}}{{/if}}" style="text-decoration:none;">
-            <img src="{{#if tweets.User.dataValues.avatar}}{{tweets.User.dataValues.avatar}}{{else}}{{tweets.User.avatar}}{{/if}}" class="rounded-circle me-3"
-              style="width: 50px;height: 50px;background: #C4C4C4;">
+            <img src="{{#if tweets.User.dataValues.avatar}}{{tweets.User.dataValues.avatar}}{{else}}{{tweets.User.avatar}}{{/if}}" class="rounded-circle me-3"style="width: 50px;height: 50px;background: #C4C4C4;">
           </a>
         </div>
-        <div class="tweet-content">
+        <div class="tweet-content me-5" style="width:634px; ">
           <div class="name">
             <span style="font-size: 16px;font-weight:700;">{{#if tweets.User.dataValues.name}}{{tweets.User.dataValues.name}}{{else}}{{tweets.User.name}}{{/if}}</span>
             <span style="font-size: 14px;color:#C4C4C4">@{{#if tweets.User.dataValues.account}}{{tweets.User.dataValues.account}}{{else}}{{tweets.User.account}}{{/if}}．{{relativeTimeFromNow
               tweets.createdAt}}</span>
           </div>
-          <div class="content mt-3 mb-2">
-            {{tweets.description}}
+          <div class="content mt-2 mb-1 me-5" style="width:630px;">
+            <p style="font-size:16px; font-weight:400">{{tweets.description}}</p>
           </div>
-          <p>回覆給<strong style="color:##6C757D;">@{{#if tweets.User.dataValues.account}}{{tweets.User.dataValues.account}}{{else}}{{tweets.User.account}}{{/if}}</strong></p>
+          <p style="font-size: 16px;">回覆給<strong style="color:##6C757D;font-size: 14px; font-weight: 400; color: #6C757D;">@{{#if tweets.User.dataValues.account}}{{tweets.User.dataValues.account}}{{else}}{{tweets.User.account}}{{/if}}</strong></p>
         </div>
       </div>
-      <div class="modal-body" class="d-flex">
+      <div class="modal-body" class="d-flex" style="height:250px;">
         <div class="body-avatar d-flex align-items-stretch">
           <div class="left">
             <a href="/users/{{user.id}}">
@@ -34,15 +31,14 @@
             </a>
           </div>
           <div class="right" class="d-flex">
-            <form method="POST" id="reply-tweet-modal" action="/tweets/{{tweets.id}}/replies">
-              <textarea name="description" id="reply-description" cols="40" rows="10"
-                style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;" placeholder="推你的回覆"
-                required></textarea>
+            <form method="POST" id="reply-tweet-modal" action="/tweets/{{tweets.id}}/replies style=height:200px;">
+              <textarea name="description" id="reply-description" cols="60" rows="5" 
+                style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box; resize:none; outline : 0;" placeholder="推你的回覆"required  style="height:100px;"></textarea>
               <div class="button d-flex justify-content-end">
                 <div class="me-3" id="err-message-reply">
                 </div>
-                <button type="submit" class="btn" id="reply-button" style="background: #FF6600;border-radius: 50px;">
-                  <span style="color: #FFFFFF;">回覆</span>
+                <button type="submit" class="btn" id="reply-button" style="justify-content: center;align-content: center; white-space: nowrap; width: 64px; height:40px; background: #FF6600;border-radius: 50px;">
+                  <span style="font-size: 16px; color: #FFFFFF;">回覆</span>
                 </button>
               </div>
             </form>

@@ -3,6 +3,7 @@ const helpers = require('../_helpers')
 
 const replyController = {
   getReplies: async (req,res)=>{ // 已回覆的內容
+    const isUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
         return User.findByPk((req.params.id), {
             where: { role: 'user' },
             include: [
@@ -20,7 +21,8 @@ const replyController = {
           const repiles = user.toJSON().Replies.map(res => res)
           res.render('reply', {
             users: user.toJSON(),
-            repiles
+            repiles,
+            isUser
         })
       })
   },

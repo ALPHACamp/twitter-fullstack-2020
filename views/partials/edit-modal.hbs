@@ -28,18 +28,17 @@
               <label for="cover" class="btn form-label">
                 <input class="d-none" type="file" id="cover" name="cover" accept="image/*" style="display: none">
                 <i class="fa-solid fa-camera"
-                  style="position: absolute; object-fit: cover; top: 40%; left: 40%;; width:20; height:20px; color: #FFFFFF"></i>
+                  style="position: absolute; object-fit: cover; top: 30%; left: 40%;; width:20; height:20px; color: #FFFFFF"></i>
               </label>
               <label for="no-cover" class="btn form-label">
                 <input class="d-none" type="file" id="no-cover" name="no-cover" accept="image/*" style="display: none">
                 <i class="fa-solid fa-xmark"
-                  style="position: absolute; object-fit: cover; top: 40%; left: 60%;; width:20; height:20px; color: #FFFFFF"></i>
+                  style="position: absolute; object-fit: cover; top: 30%; left: 60%;; width:20; height:20px; color: #FFFFFF"></i>
               </label>
             </div>
 
-
             <div class="avatar-holder">
-              <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/300/300/avator{{/if}}"
+              <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://reurl.cc/zAQEle{{/if}}"
                 class="rounded-circle" alt="user_Aavtor" height="140px" width="140px"
                 style="border: 2px solid white; position: absolute; object-fit: cover; top: 40%; left: 3%;">
             </div>
@@ -56,9 +55,6 @@
                 style="position: absolute; object-fit: cover; top: 53%; left: 15%;; width:20; height:20px; color:#FFFFFF">
               </i>
             </label>
-            {{!--<label class="form-label" for="avatar"></label>
-            <input class="form-control" type="file" class="form-control-file" id="avatar" name="avatar">
-            <button type="submit" class="btn btn-primary">Submit</button>--}}
           </div>
 
         </div>
