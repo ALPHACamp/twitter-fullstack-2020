@@ -8,9 +8,9 @@ const userController = {
     return res.render('signup')
   },
   signUp: (req, res, next) => {
-    const { account, name, email, password, passwordCheck } = req.body
-    if (!name || !email || !password || !account || !passwordCheck) throw new Error('所有欄位都是必填。')
-    if (password !== passwordCheck) throw new Error('密碼不相同')
+    const { account, name, email, password, checkPassword } = req.body
+    if (!name || !email || !password || !account || !checkPassword) throw new Error('所有欄位都是必填。')
+    if (password !== checkPassword) throw new Error('密碼不相同')
     return Promise.all([
       User.findOne({ where: { email } }),
       User.findOne({ where: { account } })
