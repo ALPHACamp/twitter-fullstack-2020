@@ -46,15 +46,15 @@
       <div style="border: 2px solid #E6ECF0;"></div>
       <div class="mt-5">
         {{#each tweets}}
-        <div data-bs-toggle="modal" data-bs-target="#reply-modal{{this.id}}">
+        <div>
           <div class="row">
             <div class="col-1">
               {{> following-avatar}}
             </div>
-            <div class="col-11">
+            <div class="col-11" data-bs-toggle="modal" data-bs-target="#reply-modal{{this.id}}">
               <div>
-                <a href="/users/{{this.id}}"><strong>{{this.User.name}}</strong></a>
-                <span style="color: #6C757D;">@{{this.User.account}}．{{moment this.createdAt}}</span>
+                <a href="/users/{{this.id}}"><strong>{{this.User.dataValues.name}}</strong></a>
+                <span style="color: #6C757D;">@{{this.User.dataValues.account}}．{{moment this.createdAt}}</span>
               </div>
               <p>{{this.description}}</p>
             </div>
@@ -64,20 +64,20 @@
               <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
                   src="/images/reply-outlined@2x.png" alt="reply"></button>
               <span
-                style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">78{{this.replyCount}}</span>
+                style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Replies.length}}</span>
             </form>
-            {{#if isLiked}}
+            {{#if this.isLiked}}
             <form action="/tweets/{{this.id}}/unlike" method="POST">
               <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
                   src="/images/like-filled@2x.png" alt="unlike"></button>
-                  <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">87{{this.likeCount}}</span>
+                  <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Likes.length}}</span>
             </form>
             {{else}}
             <form action="/tweets/{{this.id}}/like" method="POST">
               <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
                   src="/images/like-outlined@2x.png" alt="like"></button>
               <span
-                style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">87{{this.likeCount}}</span>
+                style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Likes.length}}</span>
             </form>
             {{/if}}
           </div>
@@ -99,8 +99,8 @@
                   {{!-- --}}
                   <div class="col-10">
                     <div>
-                      <a href="/users/{{this.id}}"><strong>{{this.User.name}}</strong></a>
-                      <span style="color: #6C757D;"> @{{this.User.account}}‧{{moment this.createdAt}}</span>
+                      <a href="/users/{{this.id}}"><strong>{{this.User.dataValues.name}}</strong></a>
+                      <span style="color: #6C757D;"> @{{this.User.dataValues.account}}‧{{moment this.createdAt}}</span>
                     </div>
                     <div>
                       <p>{{this.description}}</p>
