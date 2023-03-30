@@ -70,7 +70,7 @@
             <form action="/tweets/{{this.id}}/unlike" method="POST">
               <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
                   src="/images/like-filled@2x.png" alt="unlike"></button>
-                  <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Likes.length}}</span>
+              <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Likes.length}}</span>
             </form>
             {{else}}
             <form action="/tweets/{{this.id}}/like" method="POST">
@@ -104,7 +104,8 @@
                     </div>
                     <div>
                       <p>{{this.description}}</p>
-                      <span>回覆給<span class="ms-1" style="color: #FF6600;">@{{this.User.account}}</span></span>
+                      <span>回覆給<span class="ms-1"
+                          style="color: #FF6600;">@{{this.User.dataValues.account}}</span></span>
                     </div>
                   </div>
                 </div>
@@ -112,7 +113,7 @@
                 {{> user-avatar}}
                 <form action="/tweets/{{this.id}}/replies" method="POST">
                   <textarea class="modal-input-tweets" id="user-reply-in-main" placeholder="推你的回覆" name="comment"
-                    maxlength="150" rows="4" cols="100" required></textarea>
+                    maxlength="145" rows="4" cols="100" required></textarea>
                   <div class="d-flex flex-row-reverse mb-1">
                     <button class="tweetbtn" type="submit">回覆</button>
                     <p id="user-reply-alert-in-main" class="user-reply-alertMsg"></p>
