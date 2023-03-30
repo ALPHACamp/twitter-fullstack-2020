@@ -3,6 +3,7 @@ const helpers = require('../_helpers')
 
 const likesController = {
     getLikes: (req, res, next) => { // 取得喜歡的內容
+        const isUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
         return User.findByPk((req.params.id), {
             where: { role: 'user' },
             include: [
@@ -20,7 +21,7 @@ const likesController = {
             .then(user => {
                 const isLiked = helpers.getUser(req).LikedTweets.some(l => l.id === req.user.id)
                 return res.render('like-content', {
-                    users: user.toJSON(), isLiked
+                    users: user.toJSON(), isLiked, isUser
                 })
             })
             .catch(err => next(err))

@@ -19,8 +19,7 @@
           <div class="right" style="width: 643px; height: 243px;border-style: none;">
             <form method="POST" id="post-tweet-modal" action="/tweets">
               <div class="textarea ms-2 mt-2"style="width: 500px; height: 200px;box-sizing: border-box; ">
-                <textarea style="width: 500px; height: 230px; background: #FFFFFF; border: 1px solid #FFFFFF;" name="description" id="description" cols="40" rows="10" placeholder="有什麼新鮮事?"
-                  onkeyup="wordsCheck()" required></textarea>
+                <textarea style="word-wrap: break-word; width: 500px; height: 230px; background: #FFFFFF; border: 1px solid #FFFFFF;" name="description" id="description" cols="40" rows="10" placeholder="有什麼新鮮事?" onkeyup="wordsCheck()"></textarea>
               </div>
               <div class="footer d-flex justify-content-end">
                 <div class="me-3" id="err-message-container" style="margin-top: 12px; margin-right:15px; height: 15px;line-height: 15px;">
