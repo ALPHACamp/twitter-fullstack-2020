@@ -41,6 +41,23 @@
             style="background: #FFFFFF; border-radius: 100px; border:1px solid #FF6600;">
             <span style="color: #FF6600;font-size: 16px; line-height: 24px;">編輯個人資料</span>
           </button>
+          {{else}}
+            {{#if isFollowed}}
+            <div class="follow-btn d-flex justify-content-center align-items-center me-2 mt-1"
+              style="width:96px; height:40px; background: #FF6600; border-radius:50px;">            
+              <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+                <button type="submit" class="btn" style="white-space: nowrap;color:#ffffff;font-size: 16px;">正在跟隨</button>
+              </form>
+            </div>
+            {{else}}
+            <div class="follow-btn d-flex justify-content-center align-items-center me-2 mt-1"
+              style="width:64px; height:40px; background:  #FFFFFF; border-radius:50px; white-space: nowrap;">
+              <form action="/following/{{this.id}}" method="POST">
+                <button type="submit" class="btn"
+                  style="width: 64px;height: 40px; background: #FFFFFF;border-radius: 50px;border:1px solid #FF6600;color:#FF6600; font-size: 16px;">跟隨</button>
+              </form>
+            </div>
+            {{/if}}
           {{/if}}
         </div>
       </div>
