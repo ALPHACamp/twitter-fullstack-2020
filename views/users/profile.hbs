@@ -54,7 +54,8 @@
                   style="background: #FF6600;color:white;border-radius: 50px;">正在跟隨</button>
               </form>
               {{else}}
-              <form action="/followships/{{other_user.id}}">
+              <form action="/followships" method="POST">
+                 <input type="number" name = "id" value="{{other_user.id}}"  style="display: none;">
                 <button type="submit" class="btn btn-outline"
                   style="color: #FF6600;border-radius: 50px; border: 1px solid #FF6600;">跟隨</button>
               </form>

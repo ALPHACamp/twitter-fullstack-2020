@@ -19,7 +19,7 @@ router.get('/signup', userController.registerPage)
 router.post('/signup', userController.signup)
 
 router.get('/signin', userController.loginPage)
-router.post('/signin', passport.authenticate('local', { successRedirect: '/tweets', failureRedirect: '/signin' }))
+router.post('/signin', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/signin' }))
 
 router.get('/logout', userController.signout)
 
@@ -29,8 +29,10 @@ router.get('/users/:id/likes', authenticated, userController.getLikes)
 router.get('/users/:id/followers', authenticated, userController.getFollowers)
 router.get('/users/:id/followings', authenticated, userController.getFollowings)
 router.get('/users/:id', authenticated, userController.getUser)
-
 router.get('/api/users/:id', userController.settingPage)
+router.post('/followships', authenticated, userController.addFollow)
+router.delete('/followships/:id', authenticated, userController.removeFollow)
+
 router.get('/tweets/:id/replies', authenticated, tweetController.getReplies)
 router.get('/tweets/:id', authenticated, tweetController.getReplies);
 router.post('/tweets/:id/replies', authenticated, tweetController.postReply)
@@ -39,6 +41,7 @@ router.post('/tweets/id/unlike', authenticated, tweetController.removeLike)
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
 
+router.get('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
 
 module.exports = router

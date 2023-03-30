@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 });
 app.use(routes)
 
-app.get('/', (req, res) => res.redirect('/signin'))
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 module.exports = app
