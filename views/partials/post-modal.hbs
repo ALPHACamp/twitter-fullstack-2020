@@ -16,14 +16,16 @@
                 style="width: 50px;height: 50px;background: #C4C4C4;">
             </a>
           </div>
+
           <div class="right" style="width: 643px; height: 243px;border-style: none;">
             <form method="POST" id="post-tweet-modal" action="/tweets">
               <div class="textarea ms-2 mt-2"style="width: 500px; height: 200px;box-sizing: border-box; ">
-                <textarea style="word-wrap: break-word; width: 500px; height: 230px; background: #FFFFFF; border: 1px solid #FFFFFF;" name="description" id="description" cols="40" rows="10" placeholder="有什麼新鮮事?" onkeyup="wordsCheck()"></textarea>
+                <textarea style="word-wrap: break-word; width: 500px; height: 230px; background: #FFFFFF; border: 1px solid #FFFFFF; outline : 0;" name="description" id="description" cols="40" rows="10" placeholder="有什麼新鮮事?" onkeyup="wordsCheck()">
+                </textarea>
               </div>
-              <div class="footer d-flex justify-content-end">
+              <div class="footer  d-flex justify-content-between" style="width:550px;">
                 <div class="me-3" id="err-message-container" style="margin-top: 12px; margin-right:15px; height: 15px;line-height: 15px;">
-                  <span style="font-size:15px;">0/140</span>
+                  <span style="font-size:15px;"></span>
                 </div>
                 <div class="button">
                   <button type="submit" class="btn" id="tweet-button" style="width: 66px; height:38px; background: #FF6600;border-radius: 50px;">
@@ -44,27 +46,36 @@
   const postTweetModal = document.querySelector('#post-tweet-modal')
   const postErrContainer = document.querySelector('#err-message-container')
 
-  function wordsCheck() {
-    const content = document.querySelector('#description').value.trim().length
-    if (content > 140) {
-      postErrContainer.innerHTML = `
-      <span style="font-weight: 500;font-size: 15px;color: #FC5A5A;">字數不可超過140字</span>
-      `
-    } else {
-      postErrContainer.innerHTML = `
-      <span>${content}/140</span>
-      `
-    }
-  }
+//function
 
   postTweetModal.addEventListener('submit', function onFormSubmit(event) {
     if (document.querySelector('#description').value.trim() === '') {
       event.preventDefault()
       event.stopPropagation()
       postErrContainer.innerHTML = `
-      <span style="font-weight: 500;font-size: 15px;color: #FC5A5A;">內容不可空白</span>
+      <span style="justify-content: start; width: 634px; font-weight: 500;font-size: 15px;color: #FC5A5A;">內容不可空白</span>
+      `
+    }
+    if (document.querySelector('#description').value.length > 140) {
+      event.preventDefault()
+      event.stopPropagation()
+      postErrContainer.innerHTML = `
+      <span style="justify-content: start; width: 634px; font-weight: 500;font-size: 15px;color: #FC5A5A;">推文內容不可以超過140字！</span>
       `
     }
   })
 </script>
 
+{{!--
+function wordsCheck() {
+const content = document.querySelector('#description').value.trim().length
+if (content > 140) {
+postErrContainer.innerHTML = `
+<span style="font-weight: 500;font-size: 15px;color: #FC5A5A;">字數不可超過140字</span>
+`
+} else {
+postErrContainer.innerHTML = `
+<span>${content}/140</span>
+`
+}
+--}}

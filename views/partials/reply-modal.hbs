@@ -16,7 +16,7 @@
             <span style="font-size: 14px;color:#C4C4C4">@{{#if tweets.User.dataValues.account}}{{tweets.User.dataValues.account}}{{else}}{{tweets.User.account}}{{/if}}．{{relativeTimeFromNow
               tweets.createdAt}}</span>
           </div>
-          <div class="content mt-2 mb-1 me-5" style="width:630px;">
+          <div class="content mt-2 mb-1 me-5" style="width:630px; word-wrap: break-word;">
             <p style="font-size:16px; font-weight:400">{{tweets.description}}</p>
           </div>
           <p style="font-size: 16px;">回覆給<strong style="color:##6C757D;font-size: 14px; font-weight: 400; color: #6C757D;">@{{#if tweets.User.dataValues.account}}{{tweets.User.dataValues.account}}{{else}}{{tweets.User.account}}{{/if}}</strong></p>
@@ -36,7 +36,7 @@
                 style="width: 620px; background: #FFFFFF;font-size: 16px; border: 0px solid #E6ECF0;box-sizing: border-box; resize:none; outline : 0;" placeholder="推你的回覆" style="height:100px;">
               </textarea>
              
-              <div class="button d-flex justify-content-between" style="width: 630px;">
+              <div class="button d-flex justify-content-between" style="width: 550px; margin-left:100px;">
                 <div class="me-0" id="err-message-reply">
                 
                 </div>
@@ -77,5 +77,6 @@
       `
     }
   })
-
 </script>
+
+
