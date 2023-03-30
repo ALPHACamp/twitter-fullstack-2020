@@ -1,6 +1,7 @@
-const { User, Tweet, Followship } = require('../models')
+const { Tweet, User, Reply, Like, Followship } = require('../models')
 const { Op } = require('sequelize')
 const bcrypt = require('bcryptjs')
+const helpers = require('../_helpers')
 const userController = {
     loginPage: (req, res) => {
         res.render('login')
@@ -40,19 +41,85 @@ const userController = {
         const userId = req.params.id
         return res.redirect(`/users/${userId}/tweets`)
     },
-    getTweets: (req, res, next) => {
-        return User.findByPk(req.params.id, {
-            include: { model: Tweet }
-        })
-            .then(result => {
-                if (!result) throw new Error("User didn't exist!")
-                const user = result.get({ plain: true });
-                return res.render('users/profile', { user })
+    getTweets: async (req, res, next) => {
+        try {
+            const userId = req.params.id;
+            const user = await User.findByPk(userId, {
+                include: [
+                    {
+                        model: Tweet,
+                        include: [Reply, Like],
+                    },
+                    { model: User, as: 'Followers' },
+                    { model: User, as: 'Followings' },
+                ],
+                order: [['Tweets', 'updatedAt', 'DESC']],
+            });
+            const followings = helpers.getUser(req).Followings.map((u) => u.id)
+
+            const data = user.toJSON()
+            let Tweets = data.Tweets
+            Tweets = Tweets.map((t) => {
+                t.isLikeBySelf = t.Likes.some((l) => l.UserId === helpers.getUser(req).id)
+                return t
+            });
+            return res.render('users/profile', {
+                user: helpers.getUser(req),
+                visitUser: data,
+                isFollowing: followings.includes(Number(req.params.id)),
             })
-            .catch(err => next(err));
+        } catch (error) {
+            next(error)
+        }
     },
-    getReplies: (req, res, next) => {
-        res.render('users/replies')
+    getReplies: async (req, res, next) => {
+        try {
+            const userId = req.params.id;
+            const selfId = Number(helpers.getUser(req).id);
+            const user = await User.findByPk(userId, {
+                include: [
+                    {
+                        model: Reply,
+                        where: { ReplyId: null },
+                        include: [
+                            { model: User },
+                            { model: Tweet, include: [User, { model: Like, attributes: ['UserId'] }] },
+                            { model: Like, attributes: ['UserId'] },
+                        ],
+                    },
+                    { model: User, as: 'Followers' },
+                    { model: User, as: 'Followings' },
+                ],
+                order: [['Replies', 'updatedAt', 'DESC']],
+            });
+            const followings = helpers.getUser(req).Followings.map((u) => u.id);
+            const data = user.toJSON();
+            let replies = data.Replies;
+            let resultTweets = [];
+            replies.forEach((r) => {
+                r.isLikeBySelf = r.Likes.map((l) => l.UserId).includes(selfId);
+                r.tweetUser = r.Tweet.User; // 新增這一行
+
+                let targetTweetId = r.Tweet.id;
+                if (resultTweets.findIndex((t) => t.id === targetTweetId) === -1) {
+                    r.Tweet.User = Object.assign({}, r.Tweet.User.dataValues);
+                    r.Tweet.isLikeBySelf = r.Tweet.Likes.map((l) => l.UserId).includes(selfId);
+                    r.Tweet.replies = [r];
+                    resultTweets.push(r.Tweet);
+                } else {
+                    resultTweets.find((t) => t.id === targetTweetId).replies.push(r);
+                }
+            });
+            const repliesWithTweet = resultTweets.flatMap((tweet) => tweet.replies);
+            return res.render('users/replies', {
+                user: helpers.getUser(req),
+                visitUser: data,
+                repliesWithTweet: repliesWithTweet,
+                isFollowing: followings.includes(Number(req.params.id)),
+            });
+        } catch (error) {
+            next(error);
+        }
     },
     getLikes: (req, res, next) => {
         res.render('users/likes')
