@@ -9,7 +9,7 @@ const flash = require('connect-flash');
 const app = express()
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
-}
+} 
 const port = process.env.PORT || 3000
 
 // use helpers.getUser(req) to replace req.user

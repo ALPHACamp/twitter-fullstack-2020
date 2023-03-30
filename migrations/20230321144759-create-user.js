@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       email: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(20),
         unique: true,
         allowNull: true,
       },
@@ -20,7 +20,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       account: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING(20),
         unique: true,
       },
       avatar: {
