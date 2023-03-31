@@ -30,9 +30,8 @@ router.get('/users/:id/likes', authenticated, userController.getFollowship, like
 router.get('/users/:id/followers', authenticated, userController.getFollowship, userController.getFollower) // 跟隨中
 router.get('/users/:id/followings', authenticated, userController.getFollowship,userController.getFollowing) // 跟隨者
 
-router.put('/users/:id', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), authenticated, userController.putUser)// 上傳照片
-
 router.get("/users/:id/tweets", authenticated, userController.getFollowship, userController.getUser) // 個人頁面
+router.put('/users/:id', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), authenticated, userController.putUser)// 上傳照片
 
 router.post('/tweets/:TweetId/like', authenticated, userController.addLike) // 喜歡
 router.post('/tweets/:TweetId/unlike', authenticated, userController.removeLike) // 不喜歡
