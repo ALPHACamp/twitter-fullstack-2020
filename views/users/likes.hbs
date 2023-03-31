@@ -10,12 +10,12 @@
             </a>
           </div>
           <div class="user-profile-header-info flex-grow-1">
-            <a href="/users/{{user.id}}">
+            <a href="/users/{{visitUser.id}}">
               <div class="user-profile-header-nickname">
-                <h5 class="mb-0">{{user.name}}</h5>
+                <h5 class="mb-0">{{subText visitUser.name 20}}</h5>
               </div>
               <div class="user-profile-header-tweets">
-                <p class="mb-0">{{user.Tweets.length}} 推文</p>
+                <p class="mb-0">{{tweetsCount}} 推文</p>
               </div>
             </a>
           </div>
@@ -23,12 +23,12 @@
         <div class="user-profile">
           <div class="user-profile-cover">
             <div class="cover-image">
-              <img src="{{user.cover}}" alt="Cover Image">
+              <img src="{{visitUser.cover}}" alt="Cover Image">
             </div>
           </div>
           <div class="user-profile-about">
             <div class="user-profile-image">
-              <img src="{{user.avatar}}" alt="Profile Image">
+              <img src="{{visitUser.avatar}}" alt="Profile Image">
             </div>
             {{!-- {{#ifCond other_user.id user.id}} --}}
             <button type="button" class="user-profile-edit-btn" data-bs-toggle="modal"
@@ -81,16 +81,16 @@
                   </div>
                   <div class="modal-body user-profile-edit">
                     <div class="user-profile-edit-cover">
-                      <img src="{{user.cover}}" alt="Cover Image">
+                      <img src="{{visitUser.cover}}" alt="Cover Image">
                     </div>
                     <div class="user-profile-edit-image">
-                      <img src="{{user.avatar}}" alt="Profile Image">
+                      <img src="{{visitUser.avatar}}" alt="Profile Image">
                     </div>
                     <!-- Name input -->
                     <div class="user-profile-edit-form">
                       <label for="name" class="user-profile-edit-form-label">名稱</label>
                       <input type="text" class="user-profile-edit-form-control" id="name" maxlength="50"
-                        placeholder="{{user.name}}">
+                        placeholder="{{visitUser.name}}">
                     </div>
                     <span class="form-text float-end" id="name-char-count">0 / 50</span>
                     <br>
@@ -98,7 +98,7 @@
                     <div class="user-profile-edit-form">
                       <label for="self-introduction" class="user-profile-edit-form-label">自我介紹</label>
                       <textarea class="user-profile-edit-form-control" id="self-introduction" rows="4" maxlength="160"
-                        placeholder="{{user.introduction}}"></textarea>
+                        placeholder="{{visitUser.introduction}}"></textarea>
                     </div>
                     <span class="form-text float-end" id="self-introduction-char-count">0 / 160</span>
                   </div>
@@ -106,56 +106,57 @@
               </div>
             </div>
             <div class="user-profile-about-nickname">
-              <h5 class="mb-0">{{user.name}}</h5>
+              <h5 class="mb-0">{{subText visitUser.name 20}}</h5>
             </div>
             <div class="user-profile-about-name">
-              <p class="mb-0">@{{user.account}}</p>
+              <p class="mb-0">@{{subText visitUser.account 20}}</p>
             </div>
             <div class="user-profile-about-description">
-              <p class="mt-2">{{user.introduction}}</p>
+              <p class="mt-2">{{visitUser.introduction}}</p>
             </div>
             <div class="user-profile-about-follow">
               <a href="/users/1/followers">
-                <p><span class="user-profile-follow-count">34 個</span>跟隨中</p>
+                <p><span class="user-profile-follow-count">{{visitUser.Followings.length}} 個</span>跟隨中</p>
               </a>
               <a href="/users/1/followings">
-                <p><span class="user-profile-follow-count">59 位</span>跟隨者</p>
+                <p><span class="user-profile-follow-count">{{visitUser.Followers.length}} 位</span>跟隨者</p>
               </a>
             </div>
           </div>
         </div>
         {{>user-tabs route='likes'}}
         <br>
-        {{!-- {{#each user.Tweets}} --}}
+        {{#each visitUser.likedTweets}}
         <div class="user-replies">
-          <img src="https://fakeimg.pl/50/" width="50px" height="50px" style="border-radius:50%;" />
+          <a href="/users/{{this.User.id}}">
+          <img src="{{this.User.avatar}}" width="50px" height="50px" style="border-radius:50%;" />
           <div class="user-replies-content">
             <div class="user-replies-name-time">
-              <b>John Doe</b>
-              <span>@heyjohn・3 小時</span>
+              <b>{{subText this.User.name 20}}</b>
+              <span>@{{subText this.User.account 20}}・{{moment this.createdAt}}</span>
             </div>
+          </a>
             <div class="user-replies-details">
+              <a href="/tweets/{{this.id}}">
               <div class="user-replies-details-reply-to">
                 <div class="user-replies-details-reply">
-                  <p>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate
-                    exercitation
-                    incididunt
-                    aliquip deserunt reprehenderit elit laborum.</p>
+                  <p>{{subText this.description 140}}</p>
                 </div>
                 <div class="user-replies-details-actions">
                   <div class="user-replies-details-reply-numbers">
-                    <img src="/images/reply-outlined@2x.png" alt="reply"><span>13</span>
+                    <img src="/images/reply-outlined@2x.png" alt="reply"><span>{{this.Replies.length}}</span>
                   </div>
                   <div class="user-replies-details-like-numbers">
-                    <img src="/images/like-filled@2x.png" alt="like"><span>76</span>
+                    <img src="/images/like-filled@2x.png" alt="like"><span>{{this.likeCount}}</span>
                   </div>
                 </div>
               </div>
+              </a>
             </div>
           </div>
         </div>
         <hr>
-        {{!-- {{/each}} --}}
+        {{/each}}
       </div>
     </div>
     {{> rightbar}}

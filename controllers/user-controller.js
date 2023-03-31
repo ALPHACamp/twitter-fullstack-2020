@@ -144,8 +144,50 @@ const userController = {
             next(error);
         }
     },
-    getLikes: (req, res, next) => {
-        res.render('users/likes')
+    getLikes: async (req, res, next) => {
+        try {
+            const userId = req.params.id;
+            const selfId = Number(helpers.getUser(req).id);
+            const user = await User.findByPk(userId, {
+                include: [
+                    {
+                        model: Tweet,
+                        as: 'LikeTweets',
+                        through: { attributes: [] },
+                        include: [
+                            { model: User },
+                            { model: Reply },
+                            { model: Like, attributes: ['UserId'] },
+                        ],
+                    },
+                    {
+                        model: Tweet,
+                        attributes: ['id']
+                    },
+                    { model: User, as: 'Followers' },
+                    { model: User, as: 'Followings' },
+                ],
+                order: [['LikeTweets', 'updatedAt', 'DESC']],
+            });
+            const followings = helpers.getUser(req).Followings.map((u) => u.id);
+            const data = user.toJSON();
+            let likedTweets = data.LikeTweets;
+            likedTweets.forEach((t) => {
+                t.isLikeBySelf = t.Likes.map((l) => l.UserId).includes(selfId);
+                t.likeCount = t.Likes.length;
+            });
+            data.likedTweets = likedTweets;
+            console.log('likedTweets:', likedTweets);
+            return res.render('users/likes', {
+                user: helpers.getUser(req),
+                visitUser: data,
+                likedTweets: likedTweets,
+                tweetsCount: data.Tweets.length,
+                isFollowing: followings.includes(Number(req.params.id)),
+            });
+        } catch (error) {
+            next(error);
+        }
     },
     getFollowers: (req, res, next) => {
         res.render('users/followers')
