@@ -33,8 +33,8 @@ router.put('/users/:id', upload.fields([{ name: 'avatar', maxCount: 1 }, { name:
 
 router.get("/users/:id/tweets", authenticated, userController.getFollowship, userController.getUser) // 個人頁面
 
-router.post('/like/:TweetId', authenticated, userController.addLike) // 喜歡
-router.delete('/like/:TweetId', authenticated, userController.removeLike) // 不喜歡
+router.post('/tweets/:TweetId/like', authenticated, userController.addLike) // 喜歡
+router.delete('/tweets/:TweetId/unlike', authenticated, userController.removeLike) // 不喜歡
 
 router.get('/setting', authenticated, userController.getSetting)  // 個人資料設定
 router.put('/setting', authenticated, userController.putSetting)  // 個人資料編輯
