@@ -3,7 +3,7 @@ const helpers = require('../_helpers')
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role === 'admin') {
     req.flash('wrong_messages', '帳號不存在')
-    return res.redirect('/signin')
+    return res.redirect('/admin/tweets')
   }
   if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role !== 'admin') {
     return next()
