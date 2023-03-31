@@ -117,20 +117,18 @@ const userController = {
     if (!name || !email || !password || !account || !passwordCheck) throw new Error('所有欄位都是必填。')
     if (password !== passwordCheck) throw new Error('密碼不相同')
     return Promise.all([
+      User.findByPk(helpers.getUser(req).id),
       User.findOne({ where: { email } }),
       User.findOne({ where: { account } })
     ])
-      .then(([emailCheck, accountCheck]) => {
-        if (accountCheck) throw new Error('此帳號已被註冊過')
-        if (emailCheck) throw new Error('此信箱已被註冊過')
-        return User.findOne({ where: { id: helpers.getUser(req).id } })
-      })
-      .then(user => {
+        .then(async ([user, emailCheck, accountCheck]) => {
+        if (accountCheck && Number(accountCheck.id) !== Number(helpers.getUser(req).id)) throw new Error('帳號已有人註冊')
+        if (emailCheck && Number(emailCheck.id) !== Number(helpers.getUser(req).id))throw new Error('信箱已有人註冊')
         return user.update({
           name,
-          email,
           account,
-          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+          email,
+          password: password ? await bcrypt.hash(password, 10) : user.password
         })
       })
       .then(() => {
