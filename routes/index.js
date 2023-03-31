@@ -39,8 +39,8 @@ router.delete('/like/:TweetId', authenticated, userController.removeLike) // 不
 router.get('/setting', authenticated, userController.getSetting)  // 個人資料設定
 router.put('/setting', authenticated, userController.putSetting)  // 個人資料編輯
 
-router.post('/following/:userId', authenticated, userController.addFollowing) //追蹤功能
-router.delete('/following/:userId', authenticated, userController.removeFollowing) //取消追蹤
+router.post('/followships', authenticated, userController.addFollowing) //追蹤功能
+router.delete('/followships/:userId', authenticated, userController.removeFollowing) //取消追蹤
 
 router.get('/', (req, res) => res.redirect('/tweets'))// 設定feedback
 router.use('/', generalErrorHandler)// 錯誤處裡
