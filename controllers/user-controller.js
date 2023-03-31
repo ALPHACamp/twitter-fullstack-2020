@@ -10,7 +10,25 @@ const userController = {
         res.render('register')
     },
     settingPage: (req, res) => {
-        res.render('setting')
+        res.render('setting', { user: req.user })
+    },
+    edit: (req, res, next) => {
+        const { name, account, email, password, checkPassword } = req.body
+        if (!name.trim() || !account.trim() || !email.trim() || !password.trim() || !checkPassword.trim()) throw new Error('欄位不得為空白!')
+        if (name.length > 50) throw new Error('名稱上限50字!')
+        if (password !== checkPassword) throw new Error('密碼與確認密碼不相符!')
+        return bcrypt.genSalt(10)
+          .then(salt => {
+            return Promise.all([bcrypt.hash(password, salt), User.findByPk(req.user.id)])
+          })
+          .then(([hash, user]) => {
+            return user.update({ name, account, email, password: hash })
+          })
+          .then(() => {
+            req.flash('successMessage', '編輯個人資料成功')
+            res.redirect('back')
+          })
+          .catch(err => next(err))
     },
     signup: (req, res, next) => {
         const { name, account, email, password, checkPassword } = req.body
@@ -33,7 +51,7 @@ const userController = {
         return res.redirect('/tweets');
     },
     signout: (req, res) => {
-        req.flash('successScrollingMessage', '登出成功！');
+        req.flash('successMessage', '登出成功！');
         req.logout();
         res.redirect('/signin');
     },
@@ -87,6 +105,10 @@ const userController = {
                             { model: Like, attributes: ['UserId'] },
                         ],
                     },
+                    {
+                        model: Tweet,
+                        attributes: ['id']
+                    },
                     { model: User, as: 'Followers' },
                     { model: User, as: 'Followings' },
                 ],
@@ -115,6 +137,7 @@ const userController = {
                 user: helpers.getUser(req),
                 visitUser: data,
                 repliesWithTweet: repliesWithTweet,
+                tweetsCount: data.Tweets.length,
                 isFollowing: followings.includes(Number(req.params.id)),
             });
         } catch (error) {
