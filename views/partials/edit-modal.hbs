@@ -30,7 +30,7 @@
                 <i class="fa-solid fa-camera"
                   style="position: absolute; object-fit: cover; top: 30%; left: 50%;; width:20; height:20px; color: #FFFFFF;"></i>
               </label>
-              <label for="no-cover" class="btn form-label"  style="border: 1px solid red;">
+              <label for="no-cover" class="btn form-label">
                 <input class="d-none" type="file" id="no-cover" name="no-cover" accept="image/*" style="display: none">
                 {{!--
                 <i class="fa-solid fa-xmark"
@@ -40,7 +40,7 @@
             </div>
 
             <div class="avatar-holder">
-              <img src="{{#if users.avatar}}{{users.avatar}}{{else}}{{/if}}"
+              <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}"
                 class="rounded-circle" alt="user_Aavtor" height="140px" width="140px"
                 style="border: 2px solid white; position: absolute; object-fit: cover; top: 40%; left: 3%;">
             </div>

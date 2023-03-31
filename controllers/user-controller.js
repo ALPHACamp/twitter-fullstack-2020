@@ -74,7 +74,6 @@ const userController = {
         }))
         
         .sort((a, b) => b.createdAt - a.createdAt)
-        console.log(isFollowed)
         return res.render('users', { users: user.toJSON(), tweet: data, isUser, isFollowed })
       })
       .catch(err => next(err))

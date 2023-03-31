@@ -9,7 +9,7 @@
       <div class="mytweet d-flex flex-column ps-3 pb-3 pe-3" style="border-bottom: 8px solid #E6ECF0">
         <div class="avatar d-flex">
           <a href="/users/{{user.id}}" style="text-decoration:none;">
-            <img src="{{user.avatar}}" class="rounded-circle me-3"
+            <img src="{{#if this.User.dataValues.avatar}}{{this.User.dataValues.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}" class="rounded-circle me-3"
               style="width: 50px;height: 50px;background: #C4C4C4;">
           </a>
           <button type="button" class="btn" style="padding-left: 0px; width: 526px; height: 36px;text-align:start; font-size: 18px;color:#C4C4C4" data-bs-toggle="modal" data-bs-target="#tweetModal">
@@ -17,17 +17,17 @@
           </button>
         </div>
         <div class="button d-flex justify-content-end" >
-          <button type="submit" class="btn tweet-button d-flex justify-content-center align-items-center" style="width: 64px; height: 40px; background: #FF6600;border-radius: 100px;white-space:nowrap;">
+          <button type="submit" class="btn tweet-button d-flex justify-content-center align-items-center" data-bs-toggle="modal" data-bs-target="#tweetModal"style="width: 64px; height: 40px; background: #FF6600;border-radius: 100px;white-space:nowrap;">
             <span style=" font-size: 16px; color: #FFFFFF;">推文</span>
           </button>
-        </div>
+        </div> 
       </div>
       <div class="tweets-container">
         {{#each tweets}}
         <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
           <div class="avatar ps-3">
             <a href="/users/{{this.User.dataValues.id}}" style="text-decoration:none;">
-              <img src="{{this.User.dataValues.avatar}}" class="rounded-circle me-3"
+              <img src="{{#if this.User.dataValues.avatar}}{{this.User.dataValues.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}" class="rounded-circle me-3"
                 style="width: 50px;height: 50px;background: #C4C4C4;">
             </a>
           </div>
