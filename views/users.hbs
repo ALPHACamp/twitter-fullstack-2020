@@ -85,12 +85,12 @@
       <div class="profile-head col-12" >
         <nav>
           <div class="nav nav-tabs " id="nav-tab" role="tablist">
-            <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="/tweets/{{users.id}}"
+            <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="/users/{{user.id}}/tweets"
               style="color: #FF6600; border: none; border-bottom: 1px solid #ff6600;" role="tab"
               aria-controls="nav-home" aria-selected="true">推文 </a>
             <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="/reply/{{users.id}}"
               style="color: #657786; border: none;" role="tab" aria-controls="nav-profile" aria-selected="false">回覆</a>
-            <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="/likes/{{users.id}}"
+            <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="/users/{{users.id}}/likes"
               style="color: #657786; border: none;" role="tab" aria-controls="nav-contact"
               aria-selected="false">喜歡的內容</a>
           </div>
@@ -124,12 +124,12 @@
               </div>
               <div class="likes d-flex align-items-center">
                 {{#if this.isLiked}}
-                <form action="/like/{{this.id}}?_method=DELETE" method="post">
+                <form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="post">
                   <button type="submit" class="btn"><i class="fa-solid fa-heart"
                       style="color: #fc5a5a;">&ensp;</i><span>{{this.LikedUsers.length}}</span></button>
                 </form>
                 {{else}}
-                <form action="/like/{{this.id}}" method="post">
+                <form action="/tweets/{{this.id}}/like" method="post">
                   <button type="submit" class="btn"><i class="fa-regular fa-heart">
                       &ensp;</i><span>{{this.LikedUsers.length}}</span></button>
                 </form>
