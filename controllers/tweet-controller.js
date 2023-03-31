@@ -17,7 +17,7 @@ const tweetController = {
         const data = tweets.map(t => ({
           ...t.dataValues,
           description: t.description,
-          isLiked: helpers.getUser(req).LikedTweets.map(t => t.id).includes(t.id) // 判斷目前登入使用者是否喜歡這篇Tweet
+          isLiked: helpers.getUser(req)?.LikedTweets?.map(t => t.id).includes(t.id) // 判斷目前登入使用者是否喜歡這篇Tweet
         }))
         return User.findByPk(helpers.getUser(req).id)
           .then(user => {
@@ -50,18 +50,18 @@ const tweetController = {
   createTweet: (req, res, next) => {
     const UserId = helpers.getUser(req).id
     const { description } = req.body
-    // if (!description) {
-    //   req.flash('wrong_messages', '貼文不可空白')
-    //   return res.redirect('back')
-    // }
-    // if (description.trim() === '') {
-    //   req.flash('wrong_messages', '貼文不可空白')
-    //   return res.redirect('back')
-    // }
-    // if (description.length > 140) {
-    //   req.flash('wrong_messages', '貼文不得超過140個字')
-    //   return res.redirect('back')
-    // }
+    if (!description) {
+      // req.flash('wrong_messages', '貼文不可空白')
+      return res.redirect('back')
+    }
+    if (description.trim() === '') {
+      // req.flash('wrong_messages', '貼文不可空白')
+      return res.redirect('back')
+    }
+    if (description.length > 140) {
+      // req.flash('wrong_messages', '貼文不得超過140個字')
+      return res.redirect('back')
+    }
     return Tweet.create({
       UserId,
       description

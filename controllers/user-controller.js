@@ -70,7 +70,7 @@ const userController = {
         const isFollowed = user.Followers.some(f => f.id === helpers.getUser(req).id)  
         const data = tweets.map(tweet => ({
           ...tweet.toJSON(),
-          isLiked: helpers.getUser(req).LikedTweets.map(t => t.id).includes(tweet.id)
+          isLiked: helpers.getUser(req)?.LikedTweets?.map(t => t.id).includes(tweet.id)
         }))
         
         .sort((a, b) => b.createdAt - a.createdAt)
@@ -147,8 +147,8 @@ const userController = {
       .then(follow => {
         follow = follow.map(f => ({
           ...f.toJSON(),
-          follower: helpers.getUser(req).Followers.find(fi => f.followerId === fi.id), //塞入追蹤者資料
-          isFollowed: helpers.getUser(req).Followings.some(fi => f.followerId === fi.id) //確認是否跟隨
+          follower: helpers.getUser(req)?.Followers?.find(fi => f.followerId === fi.id), //塞入追蹤者資料
+          isFollowed: helpers.getUser(req)?.Followings?.some(fi => f.followerId === fi.id) //確認是否跟隨
         }))
         return res.render('follower', { follow })
       })
