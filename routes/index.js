@@ -21,7 +21,7 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/logout', userController.logout) // 登出
 
 router.post('/tweets/:id/replies', authenticated, replyController.createReply)//新增回覆
-router.get('/tweets/:id', authenticated, userController.getFollowship, tweetController.getTweet) // 個人推文頁面
+router.get('/tweets/:id/replies', authenticated, userController.getFollowship, tweetController.getTweet) // 個人推文頁面
 router.get('/tweets', authenticated, userController.getFollowship, tweetController.getTweets) // 總推文清單
 router.post('/tweets', authenticated, tweetController.createTweet) // 新增推文
 router.get('/reply/:id', authenticated, userController.getFollowship, replyController.getReplies) // 推文及回覆
@@ -39,8 +39,8 @@ router.delete('/tweets/:TweetId/unlike', authenticated, userController.removeLik
 router.get('/setting', authenticated, userController.getSetting)  // 個人資料設定
 router.put('/setting', authenticated, userController.putSetting)  // 個人資料編輯
 
-router.post('/following/:userId', authenticated, userController.addFollowing) //追蹤功能
-router.delete('/following/:userId', authenticated, userController.removeFollowing) //取消追蹤
+router.post('/followships', authenticated, userController.addFollowing) //追蹤功能
+router.delete('/followships/:userId', authenticated, userController.removeFollowing) //取消追蹤
 
 router.get('/', (req, res) => res.redirect('/tweets'))// 設定feedback
 router.use('/', generalErrorHandler)// 錯誤處裡

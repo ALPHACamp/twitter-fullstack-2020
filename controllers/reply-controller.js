@@ -48,7 +48,7 @@ const replyController = {
       TweetId,
       comment : description
     })
-      .then(() => res.redirect(`/tweets/${TweetId}`))
+      .then(() => res.redirect(`/tweets/${TweetId}/replies`))
       .catch(err => next(err))
   }
 }

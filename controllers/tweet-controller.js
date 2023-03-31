@@ -1,4 +1,4 @@
-const { User, Tweet, Reply } = require('../models')
+const { User, Tweet, Reply, Like } = require('../models')
 const helpers = require('../_helpers')
 
 
@@ -28,21 +28,21 @@ const tweetController = {
       .catch(err => next(err))
   },
   getTweet: (req, res, next) => { // 登入使用者頁面顯示個人推文清單
-    const { id } = req.params
+    const id = +req.params.id
     return Tweet.findByPk(id, {
       include: [
         User,
         { model: Reply, include: User },
-        { model: User, as: 'LikedUsers' }
+        { model: User, as: 'LikedUsers' },
       ],
       order: [['Replies', 'createdAt', 'DESC']]
     })
       .then(tweet => {
-        const isLiked = helpers.getUser(req).LikedTweets.some(l => l.id === tweet.id)
         tweet = tweet.toJSON()
+        tweet.isLiked = helpers.getUser(req)?.LikedTweets?.some(l => l.id === tweet.id)
+        console.log(tweet)
         res.render('tweet', {
-          tweet,
-          isLiked
+          tweet
         })
       })
       .catch(err => next(err))
