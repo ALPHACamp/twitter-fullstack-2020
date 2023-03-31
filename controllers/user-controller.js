@@ -105,6 +105,10 @@ const userController = {
                             { model: Like, attributes: ['UserId'] },
                         ],
                     },
+                    {
+                        model: Tweet,
+                        attributes: ['id']
+                    },
                     { model: User, as: 'Followers' },
                     { model: User, as: 'Followings' },
                 ],
@@ -133,6 +137,7 @@ const userController = {
                 user: helpers.getUser(req),
                 visitUser: data,
                 repliesWithTweet: repliesWithTweet,
+                tweetsCount: data.Tweets.length,
                 isFollowing: followings.includes(Number(req.params.id)),
             });
         } catch (error) {
