@@ -8,6 +8,7 @@ const tweetController = require('../controllers/tweet-controller')
 const admin = require('./modules/admin')
 const replyController = require('../controllers/reply-controller')
 const likesController = require('../controllers/likes-controller')
+const apiController = require('../controllers/api-controller')
 
 const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated } = require('../middleware/auth')
@@ -41,6 +42,9 @@ router.put('/setting', authenticated, userController.putSetting)  // 個人資�
 
 router.post('/followships', authenticated, userController.addFollowing) //追蹤功能
 router.delete('/followships/:userId', authenticated, userController.removeFollowing) //取消追蹤
+
+router.get('/api/users/:id', authenticated,apiController.getUser)
+router.post('/api/users/:id', authenticated, apiController.postUser)
 
 router.get('/', (req, res) => res.redirect('/tweets'))// 設定feedback
 router.use('/', generalErrorHandler)// 錯誤處裡

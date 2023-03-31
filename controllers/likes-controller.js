@@ -19,7 +19,7 @@ const likesController = {
             ],
         })
             .then(user => {
-                const isLiked = helpers.getUser(req).LikedTweets.some(l => l.id === req.user.id)
+                const isLiked = helpers.getUser(req)?.LikedTweets?.some(l => l.id === req.user.id)
                 return res.render('like-content', {
                     users: user.toJSON(), isLiked, isUser
                 })
