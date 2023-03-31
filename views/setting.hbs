@@ -4,10 +4,10 @@
   </div>
   <div class="col-7 tweets">
     <div class="tweets-container" style="width: 639px;height:1200px;;border:1px solid #E6ECF0; ">
-      <div style="border-bottom: 1px solid #E6ECF0">
-        <h4 class="pt-3 ps-3" style="font-weight: 700;">帳戶設定</h4>
+      <div style="border-bottom: 1px solid #E6ECF0;">
+        <h4 class="pt-3 ps-3" style=" height: 55px;font-weight: 700;">帳戶設定</h4>
       </div>
-      {{> message}}
+      {{> success-message}}
       <div class="tweets-container">
         <form class="form-setting ms-3 mt-3" action="/setting?_method=PUT" method="POST" style="width: 100%; ">
 
@@ -45,7 +45,7 @@
               style="border-style:none; border-bottom:2px solid #657786; background: #F5F8FA; font-size: 16px; border-radius:0px;"
               placeholder="請再次輸入密碼">
           </div>
-
+          {{> message}}
           <div class="d-flex align-items-center justify-content-end">
             <button class="btn btn-primary"
               style="border-radius:50px; margin-top:8px; margin-bottom:8px; margin-right:45px; background:#FF6600; border-color:#FF6600; font-size:20px; font-family:'Noto Sans TC'; padding-top:8px; width: 88px; height: 46px;"
