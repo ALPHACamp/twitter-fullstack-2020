@@ -7,12 +7,10 @@
       </div>
       <hr>
       <div class="tweet-post">
-        {{!-- {{#if this.image}} --}}
-        {{!-- <img src="{{user.avatar}}" width="100px" height="100px" style="transition: opacity 0.5s; opacity:0; border-radius:50%;"
-          onload="this.style.opacity=1;" /> --}}
-        {{!-- {{else}} --}}
-        <img src="{{user.avatar}}" class="fl" width="50px" height="50px" style="border-radius:50%; margin-right: 3px;" />
-        {{!-- {{/if}} --}}
+        <a href="/users/{{user.id}}">
+          <img src="{{user.avatar}}" class="fl" width="50px" height="50px" style="border-radius:50%; margin-right: 3px;" />
+        </a>
+
         <div class="tweet-box" data-bs-toggle="modal" data-bs-target="#user-tweet-modal">
           <form action="">
             <textarea class="modal-input-tweets" placeholder="有什麼新鮮事？" type="description" name="description" id=""
@@ -27,16 +25,13 @@
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
-                {{!-- <h5 class="modal-title">User name</h5> --}}
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                {{!-- {{#if this.image}} --}}
-                {{!-- <img src="{{user.avatar}}" width="100px" height="100px"
-                  style="transition: opacity 0.5s; opacity:0; border-radius:50%;" onload="this.style.opacity=1;" /> --}}
-                {{!-- {{else}} --}}
-                <img src="{{user.avatar}}" class="fl" width="50px" height="50px" style="border-radius:50%; margin-right: 3px;" />
-                {{!-- {{/if}} --}}
+                <a href="/users/{{user.id}}">
+                  <img src="{{user.avatar}}" class="fl" width="50px" height="50px" style="border-radius:50%; margin-right: 3px;" />
+                </a>
+                
                 <form action="/tweets" method="POST">
                   <textarea class="modal-input-tweets" id="user-tweet-description-in-main" type="description"
                     placeholder="有什麼新鮮事？" name="description" id="user-tweet-description" maxlength="150" rows="3"
@@ -59,14 +54,12 @@
         <div>
           <div class="row">
             <div class="col-1">
-              {{!-- {{#if this.image}} --}}
-              {{!-- <img src="{{user.avatar}}" width="100px" height="100px"
-                style="transition: opacity 0.5s; opacity:0; border-radius:50%;" onload="this.style.opacity=1;" /> --}}
-              {{!-- {{else}} --}}
-              <img src="{{this.User.dataValues.avatar}}" class="fl" width="50px" height="50px" style="border-radius:50%; margin-right: 3px;" />
-              {{!-- {{/if}} --}}
+              <a href="/users/{{this.User.dataValues.id}}">
+                <img src="{{this.User.dataValues.avatar}}" class="fl" width="50px" height="50px"
+                  style="border-radius:50%; margin-right: 3px;" />
+              </a>
             </div>
-            <div class="col-11" >
+            <div class="col-11">
               <div>
                 <a href="/users/{{this.User.dataValues.id}}"><strong>{{this.User.dataValues.name}}</strong></a>
                 <span style="color: #6C757D;">@{{this.User.dataValues.account}}．{{moment this.createdAt}}</span>
@@ -85,7 +78,8 @@
             <form action="/tweets/{{this.id}}/unlike" method="POST">
               <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
                   src="/images/like-filled@2x.png" alt="unlike"></button>
-              <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Likes.length}}</span>
+              <span
+                style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Likes.length}}</span>
             </form>
             {{else}}
             <form action="/tweets/{{this.id}}/like" method="POST">
@@ -108,16 +102,12 @@
               <div class="modal-body">
                 <div class="row">
                   <div class="col-2">
-                    {{!-- {{#if this.image}} --}}
-                    {{!-- <img src="{{user.avatar}}" width="100px" height="100px"
-                      style="transition: opacity 0.5s; opacity:0; border-radius:50%;" onload="this.style.opacity=1;" /> --}}
-                    {{!-- {{else}} --}}
-                    <img src="{{this.User.dataValues.avatar}}" class="fl" width="50px" height="50px"
-                      style="border-radius:50%; margin-right: 3px;" />
-                    {{!-- {{/if}} --}}
+                    <a href="/users/{{this.User.dataValues.id}}">
+                      <img src="{{this.User.dataValues.avatar}}" class="fl" width="50px" height="50px"
+                        style="border-radius:50%; margin-right: 3px;" />
+                    </a>
                     <div class="reply-modal-vr-line"></div>
                   </div>
-                  {{!-- --}}
                   <div class="col-10">
                     <div>
                       <a href="/users/{{this.User.dataValues.id}}"><strong>{{this.User.dataValues.name}}</strong></a>
@@ -131,13 +121,10 @@
                   </div>
                 </div>
                 <div class="mt-3"></div>
-                {{!-- {{#if this.image}} --}}
-                {{!-- <img src="{{user.avatar}}" width="100px" height="100px"
-                  style="transition: opacity 0.5s; opacity:0; border-radius:50%;" onload="this.style.opacity=1;" /> --}}
-                {{!-- {{else}} --}}
-                <img src="{{../user.avatar}}" class="fl" width="50px" height="50px"
-                  style="border-radius:50%; margin-right: 3px;" />
-                {{!-- {{/if}} --}}
+                <a href="/users/{{../user.id}}">
+                  <img src="{{../user.avatar}}" class="fl" width="50px" height="50px"
+                    style="border-radius:50%; margin-right: 3px;" />
+                </a>
                 <form action="/tweets/{{this.id}}/replies" method="POST">
                   <textarea class="modal-input-tweets" id="user-reply-in-main" placeholder="推你的回覆" name="comment"
                     maxlength="145" rows="4" cols="100" required></textarea>
