@@ -9,11 +9,11 @@
     </div>
 
     <div class="tweets-container">
-      {{#each tweets}}
+      {{#each tweets}} 
       <div class="row"
         style="width:936.8px; height:118px; border-top:1px solid #E6ECF0; border-bottom:1px solid #E6ECF0; margin-left:0.3px;">
         <div class="col-1 ms-2 mt-3">
-          <img src="{{this.User.avatar}}" class="rounded-circle me-3"
+          <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}" class="rounded-circle me-3"
             style="width: 50px;height: 50px;background: #E6ECF0;">
         </div>
         <div class="col-10">

@@ -26,15 +26,14 @@
         <div class="body-avatar d-flex align-items-stretch">
           <div class="left">
             <a href="/users/{{user.id}}">
-              <img src="{{user.avatar}}" class="rounded-circle me-3"
+              <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}" class="rounded-circle me-3"
                 style="width: 50px;height: 50px;background: #C4C4C4;">
             </a>
           </div>
           <div class="right" class="d-flex">
             <form method="POST" id="reply-tweet-modal" action="/tweets/{{tweets.id}}/replies">
-              <textarea name="description" id="reply-description" cols="50" rows="5" 
-                style="width: 620px; background: #FFFFFF;font-size: 16px; border: 0px solid #E6ECF0;box-sizing: border-box; resize:none; outline : 0;" placeholder="推你的回覆" style="height:100px;">
-              </textarea>
+              <textarea name="description" id="reply-description" cols="50" rows="5" placeholder="推你的回覆" 
+                style="height:100px; width: 620px; background: #FFFFFF;font-size: 18px;border: 0px solid #E6ECF0;box-sizing: border-box; resize:none; outline : 0;"></textarea>
              
               <div class="button d-flex justify-content-between" style="width: 550px; margin-left:100px;">
                 <div class="me-0" id="err-message-reply">

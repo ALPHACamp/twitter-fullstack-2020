@@ -45,14 +45,14 @@
             {{#if isFollowed}}
             <div class="follow-btn d-flex justify-content-center align-items-center me-2 mt-1"
               style="width:96px; height:40px; background: #FF6600; border-radius:50px;">            
-              <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+              <form action="/following/{{users.id}}?_method=DELETE" method="POST">
                 <button type="submit" class="btn" style="white-space: nowrap;color:#ffffff;font-size: 16px;">正在跟隨</button>
               </form>
             </div>
             {{else}}
             <div class="follow-btn d-flex justify-content-center align-items-center me-2 mt-1"
               style="width:64px; height:40px; background:  #FFFFFF; border-radius:50px; white-space: nowrap;">
-              <form action="/following/{{this.id}}" method="POST">
+              <form action="/following/{{users.id}}" method="POST">
                 <button type="submit" class="btn"
                   style="width: 64px;height: 40px; background: #FFFFFF;border-radius: 50px;border:1px solid #FF6600;color:#FF6600; font-size: 16px;">跟隨</button>
               </form>
@@ -61,6 +61,7 @@
           {{/if}}
         </div>
       </div>
+
       <!--profile-->
       <div class="card-body col-12">
         <div class="card-text ps-2">
