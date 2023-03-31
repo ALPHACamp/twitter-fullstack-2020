@@ -51,7 +51,7 @@
               </div>
               <div class="likes d-flex align-items-center">
                 {{#if isLiked}}
-                <form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="post">
+                <form action="/tweets/{{this.id}}/unlike" method="post">
                   <div class="d-flex">
                     <button type="submit" class="btn"><i class="fa-solid fa-heart" style="color: #fc5a5a;">&ensp;</i>
                       <span>{{this.LikedUsers.length}}</span>
