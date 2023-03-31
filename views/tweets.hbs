@@ -26,7 +26,7 @@
         {{#each tweets}}
         <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
           <div class="avatar ps-3">
-            <a href="/users/{{this.User.dataValues.id}}" style="text-decoration:none;">
+            <a href="/users/{{this.User.dataValues.id}}/tweets" style="text-decoration:none;">
               <img src="{{#if this.User.dataValues.avatar}}{{this.User.dataValues.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}" class="rounded-circle me-3"
                 style="width: 50px;height: 50px;background: #C4C4C4;">
             </a>
@@ -51,7 +51,7 @@
               </div>
               <div class="likes d-flex align-items-center">
                 {{#if isLiked}}
-                <form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="post">
+                <form action="/tweets/{{this.id}}/unlike" method="post">
                   <div class="d-flex">
                     <button type="submit" class="btn"><i class="fa-solid fa-heart" style="color: #fc5a5a;">&ensp;</i>
                       <span>{{this.LikedUsers.length}}</span>
