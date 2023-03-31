@@ -61,12 +61,12 @@
         </div>
         <div class="likes d-flex align-items-center ms-5">
           {{#if isLiked}}
-          <form action="/like/{{tweet.id}}?_method=DELETE" method="post">
+          <form action="/tweets/{{tweet.id}}/unlike?_method=DELETE" method="post">
             <button type="submit" class="btn" style="color: #fc5a5a;"><i
                 class="fa-solid fa-heart"><!--&ensp;{{this.likes.length}}--></i></button>
           </form>
           {{else}}
-          <form action="/like/{{tweet.id}}" method="post">
+          <form action="/tweets/{{tweet.id}}/like" method="post">
             <button type="submit" class="btn"><i class="fa-regular fa-heart"> <!--&ensp;{{this.likes.length}}--></i></button>
           </form>
           {{/if}}
