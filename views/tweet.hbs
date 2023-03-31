@@ -61,7 +61,7 @@
         </div>
         <div class="likes d-flex align-items-center ms-5">
           {{#if tweet.isLiked}}
-          <form action="/tweets/{{tweet.id}}/unlike?_method=DELETE" method="post">
+          <form action="/tweets/{{tweet.id}}/unlike" method="post">
             <button type="submit" class="btn" style="color: #fc5a5a;"><i
                 class="fa-solid fa-heart"><!--&ensp;{{this.likes.length}}--></i></button>
           </form>
@@ -76,7 +76,7 @@
       {{#each tweet.Replies }}
       <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #E6ECF0;">
         <div class="avatar ps-3">
-          <a href="/users/{{this.User.id}}" style="text-decoration:none;">
+          <a href="/users/{{this.User.id}}/tweets" style="text-decoration:none;">
             <img src="{{this.User.avatar}}" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
           </a>
         </div>
