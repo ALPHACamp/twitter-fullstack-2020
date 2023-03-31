@@ -1,4 +1,4 @@
-const { User, Tweet, Reply, Followship, Like } = require('../../models')
+const { User, Tweet, Reply, Like, Sequelize } = require('../../models')
 const bcrypt = require('bcryptjs') //載入 bcrypt
 const dateFormatter = require('../../helpers/dateFormatter')
 const helpers = require('../../_helpers')
@@ -45,7 +45,7 @@ const userController = {
         include: [
           {
             model: Tweet,
-            include: [{ model: Reply }, { model: User }, { model: User, as: 'LikedUsers' }]
+            include: [{ model: Reply }, { model: User }, { model: Like }]
           },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
@@ -57,8 +57,8 @@ const userController = {
       const userTweets = user.Tweets.map(tweet => ({
         ...tweet,
         replyCount: tweet.Replies.length,
-        likeCount: tweet.LikedUsers.length,
-        isLiked: tweet.LikedUsers.some(lu => lu.id === helpers.getUser(req).id)
+        likeCount: tweet.Likes.length,
+        isLiked: tweet.Likes.some(like => like.UserId === helpers.getUser(req).id)
       }))
 
       userTweets.forEach(tweet => {
@@ -112,24 +112,29 @@ const userController = {
   getUserLikes: async (req, res, next) => {
     try {
       let user = await User.findByPk(req.params.id, {
-        include: [{
-          model: Tweet,
-          as: 'LikedTweets',
-          include: [{ model: Reply }, { model: User }, { model: User, as: 'LikedUsers' }],
-        },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
+        include: [
+          {
+            model: Like, include:
+            {
+              model: Tweet,
+              include: [{ model: Reply }, { model: Like }, { model: User }]
+            }
+          },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
         ],
         nest: true
       })
       user = user.toJSON()
-      const likedTweets = user.LikedTweets.map(tweet => ({
-        ...tweet,
-        replyCount: tweet.Replies.length,
-        likeCount: tweet.LikedUsers.length,
-        isLiked: true
+      user.Likes.sort((a, b) => b.createdAt - a.createdAt)
+      const likedTweets = user.Likes.map(like => ({
+        ...like.Tweet,
+        replyCount: like.Tweet.Replies.length,
+        likeCount: like.Tweet.Likes.length,
+        isLiked: like.Tweet.Likes.some(like => like.UserId === helpers.getUser(req).id)
       }))
-      likedTweets.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
+
+
       likedTweets.forEach(reply => {
         dateFormatter(reply, 8)
       })
@@ -155,10 +160,10 @@ const userController = {
       })
       if (!user) throw new Error('User not found')
       const followers = user.toJSON().Followers
-      
-        followers.forEach(follower =>
-          follower.isFollowed = follower.Followers.some(fr => fr.id === req.params.id)
-        )
+
+      followers.forEach(follower =>
+        follower.isFollowed = follower.Followers.some(fr => fr.id === req.params.id)
+      )
       followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
       res.render('followship', { user: user.toJSON(), users: followers, isFollowers: true, isProfile: true })
     } catch (error) {
@@ -179,17 +184,48 @@ const userController = {
       })
       if (!user) throw new Error('User not found')
       const followings = user.toJSON().Followings
-      
-      
-        followings.forEach(following =>
-          following.isFollowed = true
-        )
-      
+
+
+      followings.forEach(following =>
+        following.isFollowed = true
+      )
+
       followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
       res.render('followship', { user: user.toJSON(), users: followings, isFollowings: true, isProfile: true })
     } catch (error) {
 
       console.log(error)
+    }
+  },
+  settingPage: async (req, res, next) => {
+    try {
+      const loginUser = helpers.getUser(req)
+      console.log(loginUser.id)
+      const findUser = await User.findByPk(loginUser.id, { raw: true })
+      if (!findUser) throw new Error('Can not find user!')
+      return res.render('setting', { findUser })
+    } catch (err) {
+      next(err)
+    }
+  },
+  setting: async (req, res, next) => {
+    try {
+      const { account, name, email, password, confirmpassword } = req.body
+      if (!account || !name || !email || !password || !confirmpassword) throw new Error('All column is required!')
+      if (password !== confirmpassword) throw new Error('Password do not match to confirm password')
+      const loginUser = helpers.getUser(req)
+      const user = await User.findByPk(loginUser.id)
+      if (!user) throw new Error('Cannot find user!')
+      await user.update({
+        account,
+        name,
+        email,
+        password
+      })
+      req.flash('success_messages', '使用者資料編輯成功')
+      res.redirect(`/`)
+    } catch (err) {
+      next(err)
     }
   }
 }

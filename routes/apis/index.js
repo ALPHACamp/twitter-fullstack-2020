@@ -29,9 +29,9 @@ router.post('/api/tweets/', tweetController.postTweet)
 
 
 // 瀏覽編輯使用者頁面 GET /api/users/:id
-router.get('/api/users/:id', userController.editUserPage)
+router.get('/api/users/:id/edit', userController.editUserPage)
 // 更新使用者的資訊 POST /api/users/:id, upload.single('image')
-router.post('/api/users/:id', upload.fields([
+router.post('/api/users/:id/edit', upload.fields([
   { name: 'name', maxCount: 1 },
   { name: 'introduction', maxCount: 1 },
   { name: 'croppedAvatar', maxCount: 1 },

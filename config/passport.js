@@ -1,19 +1,19 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const bcrypt = require('bcryptjs')
-const db = require('../models')
-const User = db.User
+const {User, Tweet} = require('../models')
+
 // set up Passport strategy
 passport.use(new LocalStrategy(
   // customize user field
   {
-    usernameField: 'account',
+    usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true
   },
   // authenticate user
-  (req, account, password, cb) => {
-    User.findOne({ where: { account } })
+  (req, email, password, cb) => {
+    User.findOne({ where: { email } })
       .then(user => {
         if (!user) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
         bcrypt.compare(password, user.password).then(res => {
@@ -28,10 +28,13 @@ passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
 passport.deserializeUser((id, cb) => {
-  User.findByPk(id).then(user => {
-    user = user.toJSON()
-    //console.log(user)  //暫時添加
-    return cb(null, user)
+  return User.findByPk(id, {
+    include: [
+      { model: User, as: 'Followings' },
+      { model: User, as: 'Followers' }
+    ],
   })
+    .then(user => cb(null, user.toJSON()))
+    .catch(err => cb(err))
 })
 module.exports = passport

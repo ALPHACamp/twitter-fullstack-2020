@@ -26,11 +26,10 @@ const tweetController = {
     try {
       const tweet = await Tweet.findByPk(tweetId, {
         include: {
-          model: User,
-          as: 'LikedUsers'
+          model: Like,
         }
       })
-      const likeCount = tweet.LikedUsers.length
+      const likeCount = tweet.Likes.length
       res.status(200).json({
         likeCount
       })
@@ -43,21 +42,20 @@ const tweetController = {
   },
   addLike: async (req, res, next) => {
     try {
-      const tweetId = req.params.id
-      let tweet = await Tweet.findByPk(tweetId)
-      const like = await Like.findOne({ where: { userId: helpers.getUser(req).id, tweetId } })
+      const TweetId = req.params.id
+      let tweet = await Tweet.findByPk(TweetId)
+      const like = await Like.findOne({ where: { userId: helpers.getUser(req).id, TweetId } })
       if (!tweet) throw new Error("Tweet doesn't exist!")
       if (!like) {
-        await Like.create({ userId: helpers.getUser(req).id, tweetId })
+        await Like.create({ UserId: helpers.getUser(req).id, TweetId })
       }
-      tweet = await Tweet.findByPk(tweetId, {
+      tweet = await Tweet.findByPk(TweetId, {
         include: {
-          model: User,
-          as: 'LikedUsers'
+          model: Like,
         }
       })
-      const likeCount = tweet.LikedUsers.length
-      const isLiked = tweet.LikedUsers.some(lu => lu.id === helpers.getUser(req).id)
+      const likeCount = tweet.Likes.length
+      const isLiked = tweet.Likes.some(like => like.UserId === helpers.getUser(req).id)
       res.status(200).json({
         likeCount,
         isLiked
@@ -71,19 +69,18 @@ const tweetController = {
   },
   removeLike: async (req, res, next) => {
     try {
-      const tweetId = req.params.id
+      const TweetId = req.params.id
       const like = await Like.findOne({
-        where: { userId: helpers.getUser(req).id, tweetId }
+        where: { UserId: helpers.getUser(req).id, TweetId }
       })
       if (like) await like.destroy()
-      const tweet = await Tweet.findByPk(tweetId, {
+      const tweet = await Tweet.findByPk(TweetId, {
         include: {
-          model: User,
-          as: 'LikedUsers'
+          model: Like,
         }
       })
-      const likeCount = tweet.LikedUsers.length
-      const isLiked = tweet.LikedUsers.some(lu => lu.id === helpers.getUser(req).id)
+      const likeCount = tweet.Likes.length
+      const isLiked = tweet.Likes.some(like => like.UserId === helpers.getUser(req).id)
       res.status(200).json({
         likeCount,
         isLiked

@@ -18,8 +18,7 @@ module.exports = (data, timezone) => {
 
   const meridiem = hours < 12 ? '上午' : '下午';
   const hour12 = hours % 12 || 12; // convert to 12-hour format
-  const now = dayjs()
-  
+
 
   data.createdAt = {
 

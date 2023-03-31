@@ -1,4 +1,4 @@
-const { sequelize, User, Tweet, Reply, Followship, Like } = require('../../models')
+const { sequelize, User, Tweet, Reply, Followship, Like, Sequelize } = require('../../models')
 const helpers = require('../../_helpers')
 const userServices = require('../../services/user-services')
 const dateFormatter = require('../../helpers/dateFormatter')
@@ -69,7 +69,7 @@ const userController = {
       const user = await User.findByPk(req.params.id, {
         include: {
           model: Tweet,
-          include: [{ model: Reply }, { model: User }, { model: User, as: 'LikedUsers' }],
+          include: [{ model: Reply }, { model: User }, { model: Like }],
         },
         order: [[{ model: Tweet }, 'createdAt', 'DESC']],
         nest: true
@@ -77,8 +77,8 @@ const userController = {
       const userTweets = user.toJSON().Tweets.map(tweet => ({
         ...tweet,
         replyCount: tweet.Replies.length,
-        likeCount: tweet.LikedUsers.length,
-        isLiked: tweet.LikedUsers.some(lu => lu.id === helpers.getUser(req).id)
+        likeCount: tweet.Likes.length,
+        isLiked: tweet.Likes.some(like => like.UserId === helpers.getUser(req).id)
       }))
       userTweets.forEach(reply => {
         dateFormatter(reply, 8)
@@ -123,24 +123,36 @@ const userController = {
 
   getUserLikes: async (req, res, next) => {
     try {
-      const user = await User.findByPk(req.params.id, {
-        include: {
-          model: Tweet,
-          as: 'LikedTweets',
-          include: [{ model: Reply }, { model: User }, { model: User, as: 'LikedUsers' }],
-        },
-                nest: true
+      let user = await User.findByPk(req.params.id, {
+        include: [
+          {
+            model: Like, include:
+            {
+              model: Tweet,
+              include: [{ model: Reply }, { model: Like }, { model: User }]
+            }
+          },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ],
+        nest: true
       })
-      const likedTweets = user.toJSON().LikedTweets.map(tweet => ({
-        ...tweet,
-        replyCount: tweet.Replies.length,
-        likeCount: tweet.LikedUsers.length,
-        isLiked: tweet.LikedUsers.some(lu => lu.id === helpers.getUser(req).id)
+      user = user.toJSON()
+      user.Likes.sort((a, b) => b.createdAt - a.createdAt)
+      const likedTweets = user.Likes.map(like => ({
+        ...like.Tweet,
+        replyCount: like.Tweet.Replies.length,
+        likeCount: like.Tweet.Likes.length,
+        isLiked: like.Tweet.Likes.some(like => like.UserId === helpers.getUser(req).id)
       }))
-      likedTweets.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
+
+      
       likedTweets.forEach(reply => {
         dateFormatter(reply, 8)
       })
+
+      user.followerCount = user.Followers.length
+      user.followingCount = user.Followings.length
 
       res.status(200).render('partials/tweet', { tweets: likedTweets, layout: false })
     } catch (error) {
@@ -208,19 +220,16 @@ const userController = {
     try {
       // 根據傳入的id找到對應的使用者
       const user = await User.findOne({ where: { id: req.params.id } })
+      console.log(user)
       if (!user) throw new Error('No such User!')
       // 回傳資料
       return res.json({
         status: 'success',
-        data: {
-          user: {
-            id: user.id,
-            name: user.name,
-            avatar: user.avatar,
-            coverage: user.coverage,
-            introduction: user.introduction
-          }
-        }
+        id: user.id,
+        name: user.name,
+        avatar: user.avatar,
+        coverage: user.coverage,
+        introduction: user.introduction
       })
     } catch (err) {
       next(err)
@@ -248,15 +257,11 @@ const userController = {
       })
       return res.json({
         status: 'success',
-        data: {
-          user: {
-            id: updatedUser.id,
-            name: updatedUser.name,
-            avatar: updatedUser.avatar,
-            coverage: updatedUser.coverage,
-            introduction: updatedUser.introduction
-          }
-        }
+        id: updatedUser.id,
+        name: updatedUser.name,
+        avatar: updatedUser.avatar,
+        coverage: updatedUser.coverage,
+        introduction: updatedUser.introduction
       })
     } catch (err) {
       next(err)

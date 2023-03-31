@@ -8,10 +8,9 @@ const tweetServices = {
       const tweet = await Tweet.findByPk(tweetId, {
         include: {
           model: User,
-          as: 'LikedUsers'
         }
       })
-      const likeCount = tweet.LikedUsers.length
+      const likeCount = tweet.Likes.length
       return cb(null, likeCount)
     } catch (error) {
       cb(error)

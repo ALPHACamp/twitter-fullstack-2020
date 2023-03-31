@@ -11,7 +11,7 @@ const tweetController = {
           as: 'Followings',
           include: {
             model: Tweet,
-            include: [{ model: User }, { model: Reply }, { model: User, as: 'LikedUsers' }],
+            include: [{ model: User }, { model: Reply }, { model: Like }],
           }
         }
       ],
@@ -25,8 +25,8 @@ const tweetController = {
     followingTweets = followingTweets.map(tweet => ({
       ...tweet,
       replyCount: tweet.Replies.length,
-      likeCount: tweet.LikedUsers.length,
-      isLiked: tweet.LikedUsers.some(lu => lu.id === helpers.getUser(req).id)
+      likeCount: tweet.Likes.length,
+      isLiked: tweet.Likes.some(like => like.UserId === helpers.getUser(req).id)
     }))
     res.render('home', { user: user.toJSON(), tweets: followingTweets, isHome: true })
   },
@@ -43,8 +43,8 @@ const tweetController = {
             ],
             order: [['createdAt', 'DESC']]
           },
-          { model: User },
-          { model: User, as: 'LikedUsers' }
+          { model: Like },
+          { model: User }
         ],
         order: [[{ model: Reply }, 'createdAt', 'DESC']],
         nest: true
@@ -56,9 +56,9 @@ const tweetController = {
         dateFormatter(reply, 8)
       })
 
-      tweet.likeCount = tweet.LikedUsers.length
+      tweet.likeCount = tweet.Likes.length
       tweet.replyCount = tweet.Replies.length
-      tweet.isLiked = helpers.getUser(req).LikedTweets.some(lt => lt.id === tweet.id)
+      tweet.isLiked = tweet.Likes.some(like => like.UserId === helpers.getUser(req).id)
 
       res.render('tweet-profile', { tweet, replies: tweet.Replies, isHome: true })
     } catch (error) {

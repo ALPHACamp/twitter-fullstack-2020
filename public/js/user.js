@@ -1,11 +1,12 @@
+// 創建formData, 為了之後POST時的資料
+const formData = new FormData()
+
 const editUserBtn = document.querySelector('.edit-user-btn')
 const formSubmit = document.querySelector('.form-submit')
 const editModalContainer = document.querySelector('.edit-container')
 const editModalClose = document.querySelector('.edit-modal-close')
 const coverageImage = document.querySelector('.edit-coverage-image')
 const avatarImage = document.querySelector('.edit-avatar-image')
-const userName = document.querySelector('.edit-user-name')
-const userIntroduction = document.querySelector('.edit-user-introduction')
 // cropper
 const avatarModalContainer = document.querySelector('.avatar-cropper-container')
 const coverageModalContainer = document.querySelector('.coverage-cropper-container')
@@ -22,22 +23,52 @@ const avatarimageCropField = document.querySelector('#avatarTailoringImg')
 const coverageimageCropField = document.querySelector('#coverageTailoringImg')
 const avatarImagePreview = document.querySelector('.avatar-image-preview')
 const coverageImagePreview = document.querySelector('.coverage-image-preview')
-
-// 創建formData, 為了之後POST時的資料
-const formData = new FormData()
+// 監聽輸入字數
+const userName = document.querySelector('.edit-user-name')
+const userIntroduction = document.querySelector('.edit-user-introduction')
+const nameWord = document.querySelector('.name-word')
+const introductionWord = document.querySelector('.introduction-word')
+const nameWordWarning = document.querySelector('.name-word-warning')
+const introductionWordWarning = document.querySelector('.introduction-word-warning')
+userName.addEventListener('input', (event) => {
+  const count = event.target.value.trim().length
+  if (count > 50) {
+    nameWordWarning.innerHTML = "字數超出上限"
+    userName.classList.add('is-invalid')
+  }
+  else {
+    nameWordWarning.innerHTML = ""
+    userName.classList.remove('is-invalid')
+  }
+  nameWord.innerHTML = count
+})
+userIntroduction.addEventListener('input', (event) => {
+  const count = event.target.value.trim().length
+  if (count > 160) {
+    introductionWordWarning.innerHTML = "字數超出上限"
+    userIntroduction.classList.add('is-invalid')
+  }
+  else {
+    introductionWordWarning.innerHTML = ""
+    userName.classList.remove('is-invalid')
+  }
+  introductionWord.innerHTML = count
+})
 
 // 點擊"編輯個人資料""
 editUserBtn.addEventListener('click', function getUserDataRenderPage() {
-  axios.get('/api/users/1') //will change to users/id(id will select by DOM)
+  axios.get(`/api/users/${editUserBtn.id}`) //will change to users/id(id will select by DOM)
     .then(function (response) {
       // 1.handle success
-      if (response.data.data.user) {
-        console.log(response.data.data.user) // 傳入的資料，取到user
-        coverageImage.style.backgroundImage = `url('${response.data.data.user.coverage}')` || 'none'
-        avatarImage.style.backgroundImage = `url('${response.data.data.user.avatar}')` || 'none'
-        userName.value = `${response.data.data.user.name}`
-        userIntroduction.value = response.data.data.user.introduction !== null ? `${response.data.data.user.introduction}` : ""
-        document.querySelector('.post-user-edit').action = `/api/users/${response.data.data.user.id}`
+      console.log(response.data)
+      if (response.data) {
+        coverageImage.style.backgroundImage = `url('${response.data.coverage}')` || 'none'
+        avatarImage.style.backgroundImage = `url('${response.data.avatar}')` || 'none'
+        userName.value = `${response.data.name}`
+        userIntroduction.value = response.data.introduction !== null ? `${response.data.introduction}` : ""
+        document.querySelector('.post-user-edit').action = `/api/users/${response.data.id}`
+        nameWord.innerHTML = response.data.name !== null ? response.data.name.trim().length : 0
+        introductionWord.innerHTML = response.data.introduction !== null ? response.data.introduction.trim().length : 0
       } else { throw new Error('Data Type Incorrect') }
     })
     .catch(function (error) {
@@ -53,6 +84,15 @@ editUserBtn.addEventListener('click', function getUserDataRenderPage() {
 
 // 關閉"編輯個人資料""
 editModalClose.addEventListener('click', function closeUserData() {
+  // 當關閉modal時刪除所有form data
+  formData.delete('croppedAvatar')
+  formData.delete('croppedCoverage')
+  formData.delete('name')
+  formData.delete('introduction')
+  userName.classList.remove('is-invalid')
+  userIntroduction.classList.remove('is-invalid')
+  nameWordWarning.innerHTML = ""
+  introductionWordWarning.innerHTML = ""
   fadeOut(editModalContainer)
   unblockScroll()
 })
@@ -60,30 +100,40 @@ editModalClose.addEventListener('click', function closeUserData() {
 // 點擊儲存
 formSubmit.addEventListener('click', function sendEditData(event) {
   event.preventDefault() // 防止預設的送出
-  formData.append('name', document.querySelector("input[name='name']").value)
-  formData.append('introduction', document.querySelector("textarea[name='introduction']").value)
-  // show form Data
-  // for (var pair of formData.entries()) {
-  //   console.log(pair[0] + ', ' + pair[1]);
-  // }
-  axios.post('/api/users/1', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  }) //will change to users/id(id will select by DOM)
-    .then(function (response) {
-      // 1.handle success
-      console.log(response)
-    })
-    .catch(function (error) {
-      // 2.handle error
-      console.log(error)
-    })
-    .then(function () {
-      // 3.always executed
-      fadeOut(editModalContainer)
-      unblockScroll()
-    })
+  // 若字數超出上限，防止表單送出
+  if (userName.classList.contains('is-invalid') || userIntroduction.classList.contains('is-invalid')) {
+    shakeModal()
+  }
+  else {
+    formData.append('name', document.querySelector("input[name='name']").value)
+    formData.append('introduction', document.querySelector("textarea[name='introduction']").value)
+    // show form Data
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + ', ' + pair[1]);
+    // }
+    axios.post(`/api/users/${editUserBtn.id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }) //will change to users/id(id will select by DOM)
+      .then(function (response) {
+        // 1.handle success
+        console.log(response)
+      })
+      .catch(function (error) {
+        // 2.handle error
+        console.log(error)
+      })
+      .then(function () {
+        // 3.always executed
+        formData.delete('croppedAvatar')
+        formData.delete('croppedCoverage')
+        formData.delete('name')
+        formData.delete('introduction')
+        fadeOut(editModalContainer)
+        unblockScroll()
+      })
+  }
 })
 
 // Cropper.js >> For圖片裁切
@@ -248,6 +298,15 @@ modalCoverageDelete.addEventListener('click', function removeUploadCoverage() {
   coverageImagePreview.style.backgroundImage = ""
   cropped_coverage_img.value = "" //清除為空；送出資料時若為空，則保留原圖
 })
+
+
+// shake modal
+function shakeModal() {
+  document.querySelector('.edit-container .cus-modal').classList.add('modal-shake')
+  setTimeout(() => {
+    document.querySelector('.edit-container .cus-modal').classList.remove('modal-shake')
+  }, 300)
+}
 
 // fadeIn,...
 function fadeIn(element, display, duration = 300) {
