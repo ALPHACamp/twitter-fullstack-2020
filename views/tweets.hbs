@@ -11,7 +11,7 @@
       <div class="mytweet d-flex flex-column ps-3 pb-3 pe-3" style="border-bottom: 8px solid #E6ECF0">
         <div class="avatar d-flex mt-3">
           <a href="/users/{{user.id}}" style="text-decoration:none;">
-            <img src="{{#if this.User.dataValues.avatar}}{{this.User.dataValues.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}" class="rounded-circle me-3"
+            <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}" class="rounded-circle me-3"
               style="width: 50px;height: 50px;background: #C4C4C4;">
           </a>
           <button type="button" class="btn" style="padding-left: 0px; width: 526px; height: 36px;text-align:start; font-size: 18px;color:#C4C4C4" data-bs-toggle="modal" data-bs-target="#tweetModal">
