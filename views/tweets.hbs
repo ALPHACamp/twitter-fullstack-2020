@@ -3,11 +3,13 @@
     {{> nav tweetsPage=tweets}}
   </div>
   <div class="col-7 tweets"  style="width: 639px;">
-    <div class="tweets-container" style="width: 639px;height:100%px;border:1px solid #C4C4C4;">
-      <h4 class="pt-3 ps-3" style="font-weight: 700;">首頁</h4>
-      <hr>
+    <div class="tweets-container" style="width: 639px;height:1200px;;border:1px solid #E6ECF0; ">
+      <div style="border-bottom: 1px solid #E6ECF0;">
+      <h4 class="pt-3 ps-3" style="display:flex; justify-content:start; align-iten:center; height: 75px;font-weight: 700;">首頁</h4>
+      </div>
+      
       <div class="mytweet d-flex flex-column ps-3 pb-3 pe-3" style="border-bottom: 8px solid #E6ECF0">
-        <div class="avatar d-flex">
+        <div class="avatar d-flex mt-3">
           <a href="/users/{{user.id}}" style="text-decoration:none;">
             <img src="{{#if this.User.dataValues.avatar}}{{this.User.dataValues.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}" class="rounded-circle me-3"
               style="width: 50px;height: 50px;background: #C4C4C4;">
@@ -34,7 +36,7 @@
           <div class="tweet-content">
             <div class="name">
               <span style="font-size: 16px;font-weight:700;">{{this.User.dataValues.name}}</span>
-              <span style="font-size: 14px;color:#C4C4C4">@{{this.User.dataValues.account}}．{{relativeTimeFromNow
+              <span style="font-size: 14px;color:#C4C4C4">{{this.User.dataValues.account}}．{{relativeTimeFromNow
                 this.createdAt}}</span>
             </div>
             <div class="content mt-3" style="width: 540px; word-wrap: break-word;">
