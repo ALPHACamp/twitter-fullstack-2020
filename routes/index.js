@@ -33,6 +33,7 @@ router.get('/edit', authenticated, userController.settingPage)
 router.patch('/edit', authenticated, userController.edit)
 router.post('/followships', authenticated, userController.addFollow)
 router.delete('/followships/:id', authenticated, userController.removeFollow)
+router.get('/followships/top10', authenticated, userController.getTopFollowers)
 
 router.get('/tweets/:id/replies', authenticated, tweetController.getReplies)
 router.get('/tweets/:id', authenticated, tweetController.getReplies);

@@ -6,10 +6,11 @@ const handlebars = require('express-handlebars')
 const routes = require('./routes')
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
+const topUsers = require('./middleware/topUsers')
 const app = express()
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
-} 
+}
 const port = process.env.PORT || 3000
 
 // use helpers.getUser(req) to replace req.user
@@ -22,6 +23,7 @@ app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUniniti
 app.use(express.urlencoded({ extended: true }))
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(topUsers.topUsers);
 app.use(flash())
 app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req);
