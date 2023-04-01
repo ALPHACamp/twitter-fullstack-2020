@@ -40,7 +40,6 @@ const tweetController = {
       .then(tweet => {
         tweet = tweet.toJSON()
         tweet.isLiked = helpers.getUser(req)?.LikedTweets?.some(l => l.id === tweet.id)
-        console.log(tweet)
         res.render('tweet', {
           tweet
         })
