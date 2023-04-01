@@ -203,7 +203,7 @@ const userController = {
       console.log(loginUser.id)
       const findUser = await User.findByPk(loginUser.id, { raw: true })
       if (!findUser) throw new Error('Can not find user!')
-      return res.render('setting', { findUser })
+      return res.render('setting', { findUser, isSetting: true })
     } catch (err) {
       next(err)
     }

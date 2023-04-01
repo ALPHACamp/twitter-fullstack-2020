@@ -34,7 +34,7 @@ router.get('/users/:id/likes', userController.getUserLikes)
 router.get('/users/:id/followers', userController.getUserFollowers)
 router.get('/users/:id/followings', userController.getUserFollowings)
 
-router.get('/tweets/:id/replies', tweetController.getTweet)
+router.get('/tweets/:id', tweetController.getTweet)
 router.get('/tweets/', tweetController.getTweets)
 router.get('/setting', userController.settingPage)
 router.post('/setting', userController.setting)

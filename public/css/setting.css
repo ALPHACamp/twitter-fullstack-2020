@@ -1,0 +1,20 @@
+.setting-form .form-floating {
+  margin-bottom: 32px;
+}
+.setting-form .form-floating input {
+  border: none;
+  border-bottom: solid 2px #657786;
+  background-color: #f5f8fa;
+}
+.setting-form button {
+  display: block;
+  width: 88px;
+  height: 46px;
+  border: none;
+  color: white;
+  background: #ff6600;
+  border-radius: 50px;
+  margin-left: auto;
+  font-size: 20px;
+  font-weight: 400;
+}/*# sourceMappingURL=setting.css.map */

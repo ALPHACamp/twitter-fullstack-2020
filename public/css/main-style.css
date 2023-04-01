@@ -17,6 +17,10 @@ body {
 
 }
 
+.header {
+  border-bottom: solid 1px #E6ECF0;
+}
+
 a,
 a:hover,
 a:focus {
@@ -64,7 +68,7 @@ h3 {
 }
 
 h4 {
-  font-weight: medium;
+  font-weight: 700;
   font-size: 24px;
 }
 
@@ -88,9 +92,27 @@ div.container .middle {
   overflow-y: scroll;
 }
 
-div.container .middle-wrapper {
+/* div.container .middle-wrapper {
   border-left: solid 1px #E6ECF0;
   border-right: solid 1px #E6ECF0;
+  width: 628px;
+}
+
+div.container .middle-wrapper.outer {
+  border-left: solid 1px #E6ECF0;
+  border-right: solid 1px #E6ECF0;
+} */
+
+div.container .middle-border::before {
+  content: '';
+  height:100vh;
+    position: absolute;
+    top: 0;
+    left: 24px;
+    right: 24px;
+    bottom: 0;
+    border-left: solid 1px #E6ECF0;
+    border-right: solid 1px #E6ECF0;
 }
 
 div.container .right {

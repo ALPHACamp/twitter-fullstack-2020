@@ -24,14 +24,18 @@
         {{>user-left}}
       </div>
       {{!-- middle --}}
-      <div class=" middle   py-0 vh-100">
-        <div class="middle-wrapper"> {{!-- for outside scroll bar --}}
+      <div class="middle-border position-relative">
+        <div class=" middle   py-0 vh-100">
 
-          {{{body}}}
+          <div class="middle-wrapper position-relative"> {{!-- for outside scrollbar --}}
+            {{{body}}}
+          </div>
+
         </div>
       </div>
       {{!-- right --}}
-      <div class=" right position-sticky vh-100">
+      <div class=" right position-sticky vh-100 {{#if isSetting}}invisible{{/if}}">
+        
         {{>user-right}}
       </div>
     </div>

@@ -32,7 +32,7 @@ const nameWordWarning = document.querySelector('.name-word-warning')
 const introductionWordWarning = document.querySelector('.introduction-word-warning')
 userName.addEventListener('input', (event) => {
   const count = event.target.value.trim().length
-  if (count > 50) {
+  if (count > 50 ) {
     nameWordWarning.innerHTML = "字數超出上限"
     userName.classList.add('is-invalid')
   }
@@ -61,25 +61,27 @@ editUserBtn.addEventListener('click', function getUserDataRenderPage() {
     .then(function (response) {
       // 1.handle success
       console.log(response.data)
-      if (response.data) {
-        coverageImage.style.backgroundImage = `url('${response.data.coverage}')` || 'none'
-        avatarImage.style.backgroundImage = `url('${response.data.avatar}')` || 'none'
-        userName.value = `${response.data.name}`
-        userIntroduction.value = response.data.introduction !== null ? `${response.data.introduction}` : ""
-        document.querySelector('.post-user-edit').action = `/api/users/${response.data.id}`
-        nameWord.innerHTML = response.data.name !== null ? response.data.name.trim().length : 0
-        introductionWord.innerHTML = response.data.introduction !== null ? response.data.introduction.trim().length : 0
-      } else { throw new Error('Data Type Incorrect') }
-    })
-    .catch(function (error) {
-      // 2.handle error
-      console.log(error)
+      if (response.status === 500) throw new Error(response.data.message)
+      
+      coverageImage.style.backgroundImage = `url('${response.data.coverage}')` || 'none'
+      avatarImage.style.backgroundImage = `url('${response.data.avatar}')` || 'none'
+      userName.value = `${response.data.name}`
+      userIntroduction.value = response.data.introduction !== null ? `${response.data.introduction}` : ""
+      document.querySelector('.post-user-edit').action = `/api/users/${response.data.id}`
+      nameWord.innerHTML = response.data.name !== null ? response.data.name.trim().length : 0
+      introductionWord.innerHTML = response.data.introduction !== null ? response.data.introduction.trim().length : 0
+
     })
     .then(function () {
       // 3.always executed
       fadeIn(editModalContainer, 'flex')
       blockScroll()
     })
+    .catch(function (error) {
+      // 2.handle error
+      console.log(error)
+    })
+   
 })
 
 // 關閉"編輯個人資料""
@@ -132,6 +134,7 @@ formSubmit.addEventListener('click', function sendEditData(event) {
         formData.delete('introduction')
         fadeOut(editModalContainer)
         unblockScroll()
+        location.reload()
       })
   }
 })
