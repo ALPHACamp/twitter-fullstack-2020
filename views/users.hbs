@@ -9,7 +9,7 @@
       style="width: 639px;height:100%; border-right:1px solid #C4C4C4; border-left:1px solid #C4C4C4;">
       <!--head-->
       <div class="card-header col-12 row"
-        style="height: 55px;margin-left:1px; background-color:#FFFFFF; border-right:1px solid #C4C4C4;">
+        style="height: 75px;margin-left:1px; background-color:#FFFFFF; border-right:1px solid #C4C4C4;">
         <a href="javascript:history.back()" style="color: #171725;; text-decoration: none;"
           class="col-auto d-flex align-items-center ms-0 ps-0">
           <i class="fas fa-arrow-left" style="width:17px; height:14px;"></i>
@@ -35,21 +35,38 @@
             style="border: 2px solid white; position: absolute; object-fit: cover; top: 55%; left: 3%;">
         </div>
 
-        <div class="card-body col-12 d-flex justify-content-end">
+        <div class="card-body col-12 d-flex justify-content-end align-items-center">
+
           {{#if isUser}}
-          <button type="submit" class="btn user-edit-button" data-bs-toggle="modal" data-bs-target="#editModal"
-            style="background: #FFFFFF; border-radius: 100px; border:1px solid #FF6600;">
-            <span style="color: #FF6600;font-size: 16px; line-height: 24px;">編輯個人資料</span>
+          <button type="submit" class="btn user-edit-button" data-bs-toggle="modal" data-bs-target="#editModal"style="width:125px; height:40px; background: #FFFFFF; border-radius: 100px; border:1px solid #FF6600; white-space:nowrap; ">
+            <span style="display:flex; justify-content:start; align-items: center; color: #FF6600;font-size: 16px;width: 96px; line-height: 24px;">編輯個人資料</span>
           </button>
           {{else}}
             {{#if isFollowed}}
-            <div class="follow-btn d-flex justify-content-center align-items-center me-2 mt-1"
+            <div class="d-flex justify-content-center align-items-center me-3" style="margin-top:8px; width:40px; height:40px;border-radius: 50px; border:1px solid #FF6600;">
+              <a href="mailto:someone@example.com"><i class="fa-regular fa-envelope justify-content-center" style="Width: 22px; height: 20px; color: #FF6600;"></i>
+              </a>
+            </div>
+            <div class="d-flex justify-content-center align-items-center me-3"
+              style="margin-top:7px; width:40px; height:40px;border-radius: 50px; border:1px solid #FF6600;">
+              <i class="fa-regular fa-bell justify-content-center align-items-center"style="margin-bottom: 2px; margin-left: 2px; Width: 22px; height: 20px; color: #FF6600;"></i>
+            </div>
+            <div class="follow-btn d-flex justify-content-center align-items-center me-3 mt-1"
               style="width:96px; height:40px; background: #FF6600; border-radius:50px;">            
               <form action="/followships/{{users.id}}?_method=DELETE" method="POST">
                 <button type="submit" class="btn" style="white-space: nowrap;color:#ffffff;font-size: 16px;">正在跟隨</button>
               </form>
             </div>
             {{else}}
+            <div class="d-flex justify-content-center align-items-center me-3" style="margin-top:8px; width:40px; height:40px;border-radius: 50px; border:1px solid #FF6600;">
+              <a href="mailto:someone@example.com"><i class="fa-regular fa-envelope justify-content-center"
+                  style="Width: 22px; height: 20px; color: #FF6600;"></i>
+              </a>
+            </div>
+            <div class="d-flex justify-content-center align-items-center me-3"
+              style="margin-top:7px; width:40px; height:40px;border-radius: 50px; border:1px solid #FF6600;">
+              <i class="fa-regular fa-bell justify-content-center " style="margin-bottom: 2px; margin-left: 2px;Width: 22px; height: 20px; color: #FF6600;"></i>
+            </div>
             <div class="follow-btn d-flex justify-content-center align-items-center me-2 mt-1"
               style="width:64px; height:40px; background:  #FFFFFF; border-radius:50px; white-space: nowrap;">
               <form action="/followships" method="POST">
@@ -67,7 +84,7 @@
       <div class="card-body col-12">
         <div class="card-text ps-2">
           <h4 style="font-weight: 900; line-height: 18px">{{users.name}}</h4>
-          <span class="text-muted" style="font-size: 0.93em; line-height: 18px;">@{{users.account}}</span>
+          <span class="text-muted" style="font-size: 0.93em; line-height: 18px;">{{users.account}}</span>
           <p class="my-2" style="font-size: 0.96em; line-height: 25px">{{#if
             users.introduction}}{{users.introduction}}{{else}}Lorem example text example text for AC simple twitter
             project practice{{/if}}</p>
@@ -109,7 +126,7 @@
           <div class="tweet-content">
             <div class="name">
               <span style="font-size: 16px;font-weight:700;">{{../users.name}}</span>
-              <span style="font-size: 14px;color:#C4C4C4">@{{../users.account}}． {{relativeTimeFromNow
+              <span style="font-size: 14px;color:#C4C4C4">{{../users.account}}． {{relativeTimeFromNow
                 this.createdAt}}</span>
             </div>
             <div class="content mt-3" style="width: 540px; word-wrap: break-word;">
