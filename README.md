@@ -57,8 +57,9 @@ npm i
 IMGUR_CLIENT_ID= 
 PORT=3000
 ```
-4.更改連線至資料庫的username和password
+4.更改連線至資料庫的username和password:
 在config/config.json下，將development的username和password改為自己本地端資料庫的
+
 5.建立資料庫
 開啟 MySQL workbench，連線至本地資料庫，輸入以下指令建立資料庫 
 ```
@@ -93,28 +94,28 @@ npm run dev
 | user5 | 12345678 |
 
 # 開發工具
-bcrypt-nodejs: 0.0.3
-bcryptjs: 2.4.3
-body-parser: 1.18.3
-chai: 4.2.0
-connect-flash: 0.1.1
-cross-env: 7.0.3
-express: 4.16.4
-express-handlebars: 3.0.0
-express-session: 1.15.6
-Bootstrap 5.0.2
-faker: 4.1.0
-jsonwebtoken: 8.5.1
-method-override: 3.0.0
-mocha: 6.0.2
-mysql2: 1.6.4
-passport: 0.4.0
-passport-jwt: 4.0.0
-passport-local: 1.0.0
-sequelize: 6.18.0
-sequelize-cli: 5.5.0
-sinon: 10.0.0
-sinon-chai: 3.3.0
+- bcrypt-nodejs: 0.0.3
+- bcryptjs: 2.4.3
+- body-parser: 1.18.3
+- chai: 4.2.0
+- connect-flash: 0.1.1
+- cross-env: 7.0.3
+- express: 4.16.4
+- express-handlebars: 3.0.0
+- express-session: 1.15.6
+- Bootstrap 5.0.2
+- faker: 4.1.0
+- jsonwebtoken: 8.5.1
+- method-override: 3.0.0
+- mocha: 6.0.2
+- mysql2: 1.6.4
+- passport: 0.4.0
+- passport-jwt: 4.0.0
+- passport-local: 1.0.0
+- sequelize: 6.18.0
+- sequelize-cli: 5.5.0
+- sinon: 10.0.0
+- sinon-chai: 3.3.0
 
 # 共同開發人員
 
