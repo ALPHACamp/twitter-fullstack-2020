@@ -13,13 +13,13 @@
         <div class="tweet-content me-5" style="width:634px; ">
           <div class="name">
             <span style="font-size: 16px;font-weight:700;">{{#if tweets.User.dataValues.name}}{{tweets.User.dataValues.name}}{{else}}{{tweets.User.name}}{{/if}}</span>
-            <span style="font-size: 14px;color:#C4C4C4">@{{#if tweets.User.dataValues.account}}{{tweets.User.dataValues.account}}{{else}}{{tweets.User.account}}{{/if}}．{{relativeTimeFromNow
+            <span style="font-size: 14px;color:#C4C4C4">{{#if tweets.User.dataValues.account}}{{tweets.User.dataValues.account}}{{else}}{{tweets.User.account}}{{/if}}．{{relativeTimeFromNow
               tweets.createdAt}}</span>
           </div>
           <div class="content mt-2 mb-1 me-5" style="width:630px; word-wrap: break-word;">
             <p style="font-size:16px; font-weight:400">{{tweets.description}}</p>
           </div>
-          <p style="font-size: 16px;">回覆給<strong style="color:##6C757D;font-size: 14px; font-weight: 400; color: #6C757D;">@{{#if tweets.User.dataValues.account}}{{tweets.User.dataValues.account}}{{else}}{{tweets.User.account}}{{/if}}</strong></p>
+          <p style="font-size: 16px;">回覆給<strong style="color:##6C757D;font-size: 14px; font-weight: 400; color: #6C757D;">{{#if tweets.User.dataValues.account}}{{tweets.User.dataValues.account}}{{else}}{{tweets.User.account}}{{/if}}</strong></p>
         </div>
       </div>
       <div class="modal-body" class="d-flex" style="height:250px;">

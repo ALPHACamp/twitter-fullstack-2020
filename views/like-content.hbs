@@ -47,7 +47,7 @@
       <div class="card-body col-12">
         <div class="card-text ps-2">
           <h4 style="font-weight: 900; line-height: 18px">{{users.name}}</h4>
-          <span class="text-muted" style="font-size: 0.93em; line-height: 18px;">@{{users.account}}</span>
+          <span class="text-muted" style="font-size: 0.93em; line-height: 18px;">{{users.account}}</span>
           <p class="my-2" style="font-size: 0.96em; line-height: 25px">{{#if
             users.introduction}}{{users.introduction}}{{else}}Lorem example text example text for AC simple twitter
             project practice{{/if}}</p>
@@ -84,7 +84,7 @@
         <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
           <div class="avatar ps-3">
             <a href="/users/{{this.UserId}}/tweets" style="text-decoration:none;">
-              <img src="{{this.User.avatar}}" class="rounded-circle me-3"
+              <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}" class="rounded-circle me-3"
                 style="width: 50px;height: 50px;background: #C4C4C4;">
             </a>
           </div>

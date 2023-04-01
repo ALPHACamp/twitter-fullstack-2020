@@ -17,10 +17,10 @@
         </div>
 
         <div class="modal-body row">
-          <div class="col-12 m-0 p-0 position-relative mb-1">
+          <div class="col-12 m-0 p-0 position-relative mb-1" >
 
             <div class="bg-holder" style="height: 170px;">
-              <img src="{{#if users.cover}}{{users.cover}}{{else}}https://i.imgur.com/ndXEE6d.jpg{{/if}}"
+              <img  id="cover-image" src="{{#if users.cover}}{{users.cover}}{{else}}https://i.imgur.com/ndXEE6d.jpg{{/if}}"
                 class="card-img-top" alt="..." class="img-fluid" id="bgImage"
                 style="height:100%;width:100%;object-fit:cover">
             </div>
@@ -28,18 +28,16 @@
               <label for="cover" class="btn form-label">
                 <input class="d-none" type="file" id="cover" name="cover" accept="image/*" style="display: none">
                 <i class="fa-solid fa-camera"
-                  style="position: absolute; object-fit: cover; top: 30%; left: 50%;; width:20; height:20px; color: #FFFFFF;"></i>
+                  style="position: absolute; object-fit: cover; top: 30%; left: 45%;; width:20; height:20px; color: #FFFFFF;"></i>
               </label>
-              <label for="no-cover" class="btn form-label">
-                <input class="d-none" type="file" id="no-cover" name="no-cover" accept="image/*" style="display: none">
-                {{!--
-                <i class="fa-solid fa-xmark"
-                  style="position: absolute; object-fit: cover; top: 30%; left: 60%;; width:20; height:20px; color: #FFFFFF"></i>
-                --}}
-              </label>
+
+                <i class="fa-solid fa-xmark" id="delete-cover"
+                  style="position: absolute; object-fit: cover; top: 30%; left: 55%;; width:20; height:20px; color: #FFFFFF"></i>
+
+
             </div>
 
-            <div class="avatar-holder">
+            <div class="avatar-holder"> 
               <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}"
                 class="rounded-circle" alt="user_Aavtor" height="140px" width="140px"
                 style="border: 2px solid white; position: absolute; object-fit: cover; top: 40%; left: 3%;">
@@ -49,6 +47,7 @@
               <i class="fas fa-camera" style="color: white;"></i>
             </label>
           </div>
+
           <div class="form-row mb-1">
             <label for="avatar" class="btn form-label">
               <input class="form-control-file" type="file" id="avatar" name="avatar" accept="image/*"
@@ -105,5 +104,10 @@
           nameCount.innerHTML = `<p class="text-end text-muted now1" style="font-size: 12px;">${content}/50</p>`
     }
   }
+
+  const deleteCover = document.querySelector('#delete-cover')
+  deleteCover.addEventListener('click', function deleteCover() {
+    document.querySelector('#cover-image').srcset = 'https://i.imgur.com/ndXEE6d.jpg'
+  })
 
 </script>

@@ -100,7 +100,7 @@ const userController = {
     })
     .then(() => {
       req.flash('success_messages', 'User was successfully to update')
-      res.redirect('/users/`${helpers.getUser(req).id}`')
+      res.redirect('/users/`${helpers.getUser(req).id}`/tweets')
     })
     .catch(err => next(err))
   },

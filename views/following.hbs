@@ -7,9 +7,9 @@
   <!--middle bar-->
   <div class="col-7 user-profile">
     <div class="tweets-container"
-      style="width: 639px;height:1200px;border-right:1px solid #C4C4C4; border-left:1px solid #C4C4C4;">
+      style="width: 639px;height:1200px;border-right:1px solid #C4C4C4; border-left:1px solid #C4C4C4; ">
       <!--head-->
-      <div class="card-header col-12 row m-0" style="max-height: 55px;">
+      <div class="card-header col-12 row m-0" style="height: 75px; background-color:#FFFFFF;">
         <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
           class="col-auto d-flex align-items-center">
           <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
@@ -30,8 +30,7 @@
               style="color: #657786; border: none; " role="tab"
               aria-controls="nav-home" aria-selected="true">追隨者 </a>
             <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="/users/{{user.id}}/followings"
-              style="color: #ff6600; border: none;border-bottom: 1px solid #ff6600;" role="tab" aria-controls="nav-profile"
-              aria-selected="false">正在追隨</a>
+              style="color: #ff6600; border: none;border-bottom: 1px solid #ff6600; " role="tab" aria-controls="nav-profile"aria-selected="false">正在追隨</a>
           </div>
         </nav>
       </div>
@@ -50,12 +49,14 @@
                 <div class="name">
                   <span style="font-size: 16px;font-weight:700;">{{this.following.name}}</span>
                 </div>
+       
                 <div class="follow-btn" style="width: 96px;height: 40px">
-                  <form action="/following/{{this.following.id}}?_method=DELETE" method="POST">
+                  <form action="/followships/{{this.following.id}}?_method=DELETE" method="POST">
                     <button type="submit" class="btn"
-                      style="background: #FF6600;border-radius: 100px;color:#ffffff;">正在跟隨</button>
+                      style="display: flex; justify-content: center; width: 100px; font-size: 16px; background: #FF6600;border-radius: 100px;color:#ffffff;">正在跟隨</button>
                   </form>
                 </div>
+
               </div>
               <div class="content mt-3 mb-3">
                 {{this.following.introduction}}

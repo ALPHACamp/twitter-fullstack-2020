@@ -9,7 +9,7 @@
     <div class="tweets-container"
       style="width: 639px;height:1200px;border-right:1px solid #C4C4C4; border-left:1px solid #C4C4C4;">
       <!--head-->
-      <div class="card-header col-12 row m-0" style="max-height: 55px;">
+      <div class="card-header col-12 row m-0" style="height: 75px; background-color:#FFFFFF;">
         <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
           class="col-auto d-flex align-items-center">
           <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
@@ -52,16 +52,16 @@
               </div>
               {{#if this.isFollowed }}
               <div class="follow-btn d-flex justify-content-end" style="width: 96px;height: 40px">
-                <form action="/following/{{this.follower.id}}?_method=DELETE" method="POST">
+                <form action="/followships/{{this.follower.id}}?_method=DELETE" method="POST">
                   <button type="submit" class="btn"
-                    style="background: #FF6600;border-radius: 100px;color:#ffffff;">正在跟隨</button>
+                    style="width: 95px; font-size: 16px; white-space:nowrap; background: #FF6600;border-radius: 100px;color:#ffffff;">正在跟隨</button>
                 </form>
               </div>
               {{else}}
               <div class="follow-btn d-flex justify-content-end" style="width: 90px;height: 40px">
-                <form action="/following/{{this.follower.id}}" method="POST">
+                <form action="/followships/{{this.follower.id}}" method="POST">
                   <button type="submit" class="btn"
-                    style="width: 64px;height: 40px; background: #FFFFFF;border-radius: 50px;border:1px solid #FF6600;color:#FF6600; font-size: 16px;">跟隨</button>
+                    style="width: 64px;height: 40px; background: #FFFFFF;white-space:nowrap; border-radius: 50px;border:1px solid #FF6600;color:#FF6600; font-size: 16px;">跟隨</button>
                 </form>
               </div>
               {{/if}}
