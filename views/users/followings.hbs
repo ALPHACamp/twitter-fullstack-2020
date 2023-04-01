@@ -12,15 +12,39 @@
           <div class="user-profile-header-info flex-grow-1">
             <a href="/user/tweets">
               <div class="user-profile-header-nickname">
-                <h5 class="mb-0">John Doe</h5>
+                <h5 class="mb-0">{{user.name}}</h5>
               </div>
               <div class="user-profile-header-tweets">
-                <p class="mb-0">25 推文</p>
+                <p class="mb-0">{{user.Tweets.length}} 推文</p>
               </div>
             </a>
           </div>
         </div>
         {{> follower-tabs}}
+        <div class="tab-content" id="nav-tabContent">
+          {{#each followings}}
+          <div class="user-replies">
+            <img src="{{this.avatar}}" width="50px" height="50px" style="border-radius:50%;" />
+            <div class="user-replies-content" style="width:650px;">
+              <div class="user-replies-name-time">
+                <b class="p-2 w-75">{{this.name}}</b>
+                  <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+                    <button type="submit" class="btn"
+                      style="background: #FF6600;color:white;border-radius: 50px;">正在跟隨</button>
+                  </form>
+              </div>
+              <div class="user-replies-details">
+                <div class="user-replies-details-reply-to">
+                  <div class="follower-description">
+                    <p>{{this.introduction}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          {{/each}}
+        </div>
       </div>
     </div>
     {{> rightbar}}

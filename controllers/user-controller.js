@@ -177,7 +177,6 @@ const userController = {
                 t.likeCount = t.Likes.length;
             });
             data.likedTweets = likedTweets;
-            console.log('likedTweets:', likedTweets);
             return res.render('users/likes', {
                 user: helpers.getUser(req),
                 visitUser: data,
@@ -190,10 +189,28 @@ const userController = {
         }
     },
     getFollowers: (req, res, next) => {
-        res.render('users/followers')
+        return User.findByPk(req.params.id, { include: [{ model: User, as: 'Followers'}, { model: User, as: 'Followings'}], nest: true })
+          .then(user => {
+            if (!user) throw new Error('此使用者不存在!')
+            if (user.id !== req.user.id) throw new Error('你不能瀏覽他人的追隨者名單!')
+            user = user.toJSON()
+            const followers = user.Followers.map(f => ({
+                ...f,
+                isFollowed: user.Followings.some(F => F.id === f.id)
+            }))
+            res.render('users/followers', { followers })
+          })
+          .catch(err => next(err))
     },
     getFollowings: (req, res, next) => {
-        res.render('users/followings')
+        return User.findByPk(req.params.id, { include: [{ model: User, as: 'Followings'}], nest: true })
+          .then(user => {
+            if (!user) throw new Error('此使用者不存在!')
+            if (user.id !== req.user.id) throw new Error('你不能瀏覽他人的追蹤名單!')
+            user = user.toJSON()
+            res.render('users/followings', { followings: user.Followings })
+          })
+          .catch(err => next(err))
     },
     addFollow: (req, res, next) => {
       const id = Number(req.body.id)
