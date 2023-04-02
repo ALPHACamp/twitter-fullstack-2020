@@ -254,4 +254,26 @@
 .user-upper .avatar-cropper-container img,
 .user-upper .coverage-cropper-container img {
   display: block;
+}
+.user-upper .button .isFollowed,
+.user-upper .button .notFollowed {
+  display: none;
+}
+.user-upper .button.followed .isFollowed {
+  display: block;
+  width: 96px;
+  height: 40px;
+  border: none;
+  color: white;
+  background: #FF6600;
+  border-radius: 50px;
+}
+.user-upper .button:not(.followed) .notFollowed {
+  display: block;
+  width: 64px;
+  height: 40px;
+  border: solid 1px #FF6600;
+  color: #FF6600;
+  background: white;
+  border-radius: 50px;
 }/*# sourceMappingURL=user-upper-style.css.map */

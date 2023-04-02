@@ -1,0 +1,6 @@
+  <div class="nav nav-pills flex-column vh-100" >
+    {{>logo}}
+    <a class="nav-link {{#if isTweets}}active{{/if}}"  href="/admin/tweets" >{{>home}}推文清單</a>
+    <a class="nav-link {{#if isUsers}}active{{/if}}"  href="/admin/users" >{{>user}}使用者列表</a>
+    <a class="nav-link mt-auto" href="/logout">{{>logout}}登出</a>
+  </div>

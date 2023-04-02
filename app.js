@@ -13,7 +13,6 @@ const helpers = require('./_helpers');
 const app = express()
 const port = process.env.PORT || 3000
 const methodOverride = require('method-override')
-const getUser = require('./helpers/getUser')
 const getTopTen = require('./helpers/getTopTen')
 const { pages, apis } = require('./routes')
 
@@ -33,16 +32,16 @@ app.set('view engine', 'hbs')
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.use(getUser)
+app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: true }))
+app.use(passport.initialize()) // 初始化 Passport
+app.use(passport.session()) // 啟動 session 功能
+app.use(flash()) // 掛載套件
 app.use(express.static('public'));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
-app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
-app.use(passport.initialize()) // 初始化 Passport
-app.use(passport.session()) // 啟動 session 功能
-app.use(flash()) // 掛載套件
+
 
 
 app.use(async (req, res, next) => {

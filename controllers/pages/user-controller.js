@@ -3,40 +3,40 @@ const bcrypt = require('bcryptjs') //載入 bcrypt
 const dateFormatter = require('../../helpers/dateFormatter')
 const helpers = require('../../_helpers')
 const userController = {
-  registPage: (req, res) => {
-    res.render('regist', { layout: false })
+  signUpPage: (req, res) => {
+    res.render('signup')
   },
-  regist: (req, res, next) => {
+  signUp: (req, res, next) => {
     if (req.body.password !== req.body.passwordCheck) throw new Error('Passwords do not match!')
 
     User.findOne({ where: { email: req.body.email } })
       .then(user => {
-        if (user) throw new Error('Email已被註冊！')
+        if (user) throw new Error('Email already exists!')
+
         return bcrypt.hash(req.body.password, 10)
       })
       .then(hash => User.create({
-        account: req.body.account,
         name: req.body.name,
         email: req.body.email,
         password: hash
       }))
       .then(() => {
         req.flash('success_messages', '成功註冊帳號！')
-        res.redirect('/login', { layout: false })
+        res.redirect('/signin')
       })
       .catch(err => next(err))
-  }, // 新增以下程式碼
-  logInPage: (req, res) => {
-    res.render('login', { layout: false })
   },
-  logIn: (req, res) => {
+  signInPage: (req, res) => {
+    res.render('signin')
+  },
+  signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
     res.redirect('/tweets')
   },
   logout: (req, res) => {
     req.flash('success_messages', '登出成功！')
     req.logout()
-    res.redirect('/login', { layout: false })
+    res.redirect('/signin')
   },
 
   getUserTweets: async (req, res, next) => {
@@ -67,6 +67,8 @@ const userController = {
 
       user.followerCount = user.Followers.length
       user.followingCount = user.Followings.length
+      user.isSelf = helpers.getUser(req).id === user.id
+      user.isFollowed = user.Followers.some(fr => fr.id === helpers.getUser(req).id)
 
       res.render('user-profile', { tweets: userTweets, user, isTweets: true, isProfile: true })
     } catch (error) {

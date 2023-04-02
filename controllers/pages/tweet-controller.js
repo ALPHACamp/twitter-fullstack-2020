@@ -28,6 +28,10 @@ const tweetController = {
       likeCount: tweet.Likes.length,
       isLiked: tweet.Likes.some(like => like.UserId === helpers.getUser(req).id)
     }))
+    followingTweets.sort((a, b) => b.createdAt - a.createdAt)
+    followingTweets.forEach(tweet => {
+      dateFormatter(tweet, 8)
+    })
     res.render('home', { user: user.toJSON(), tweets: followingTweets, isHome: true })
   },
 
@@ -40,8 +44,7 @@ const tweetController = {
             include: [
               { model: User },
               { model: Tweet, include: User }
-            ],
-            order: [['createdAt', 'DESC']]
+            ]
           },
           { model: Like },
           { model: User }

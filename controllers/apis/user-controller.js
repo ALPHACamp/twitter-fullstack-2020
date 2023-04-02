@@ -13,6 +13,7 @@ const userController = {
         where: { followerId: helpers.getUser(req).id, followingId: req.params.id }
       })
       if (!user) throw new Error("User doesn't exist!")
+      if (user.id === helpers.getUser(req).id) throw new Error("Cannot follow yourself!")
       if (!followship) {
         await Followship.create({ followerId: helpers.getUser(req).id, followingId: req.params.id })
       }
@@ -146,7 +147,7 @@ const userController = {
         isLiked: like.Tweet.Likes.some(like => like.UserId === helpers.getUser(req).id)
       }))
 
-      
+
       likedTweets.forEach(reply => {
         dateFormatter(reply, 8)
       })

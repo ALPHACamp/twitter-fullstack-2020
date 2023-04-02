@@ -38,6 +38,10 @@ a {
   /* For Internet Explorer and Edge */
 }
 
+.modal-open {
+  overflow: hidden !important;
+}
+
 img {
   object-fit: cover
 }
@@ -50,6 +54,10 @@ hr {
   margin: 0;
   opacity: 100%;
   background-color: #E6ECF0;
+}
+
+textarea{
+  resize:none;
 }
 
 h1 {
@@ -92,18 +100,32 @@ div.container .middle {
   overflow-y: scroll;
 }
 
-/* div.container .middle-wrapper {
-  border-left: solid 1px #E6ECF0;
-  border-right: solid 1px #E6ECF0;
-  width: 628px;
+div.container.admin .middle {
+
+  width: 937px;
+  padding-right: 12px;
+  margin: 0 12px 0 24px;
+  overflow-y: scroll;
+
 }
 
-div.container .middle-wrapper.outer {
-  border-left: solid 1px #E6ECF0;
-  border-right: solid 1px #E6ECF0;
-} */
 
-div.container .middle-border::before {
+div.container.admin .middle-border::before {
+  content: '';
+  height:100vh;
+    position: absolute;
+    top: 0;
+    left: 24px;
+    right: 24px;
+    bottom: 0;
+    border-left: solid 1px #E6ECF0;
+}
+
+
+
+
+
+div.container:not(.admin) .middle-border::before {
   content: '';
   height:100vh;
     position: absolute;
@@ -115,6 +137,32 @@ div.container .middle-border::before {
     border-right: solid 1px #E6ECF0;
 }
 
+
+
 div.container .right {
   width: 270 px;
 }
+
+
+div.notification {
+        position: fixed;
+        top: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        box-sizing: border-box;
+        width: 394px;
+        height: 96px;
+        background: #ffffff;
+        padding: 34px 20px 34px 24px;
+        /* Shadow */
+        box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04),
+          0px 4px 16px rgba(51, 51, 51, 0.08);
+        border-radius: 8px;
+      }
+  
+      svg.notification {
+        position: absolute;
+        top: 20px;
+        right: 24px;
+      }

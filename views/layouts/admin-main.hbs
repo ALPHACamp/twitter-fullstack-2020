@@ -17,26 +17,20 @@
 
 <body class="h-100">
 
-  <div class="container d-flex p-0 my-0 mx-auto">
+  <div class="container admin d-flex p-0 my-0 mx-auto">
     <div class="d-flex mx-auto">
       {{!-- left --}}
       <div class="left  position-sticky vh-100">
-        {{>user-left}}
+        {{>admin-left}}
       </div>
       {{!-- middle --}}
-      <div class="middle-border position-relative">
-        <div class=" middle   py-0 vh-100">
-
-          <div class="middle-wrapper position-relative"> {{!-- for outside scrollbar --}}
-            {{>messages}}
+      <div class="middle-border position-relative">{{!-- for outside border --}}
+        <div class=" middle   py-0 vh-100">{{!-- for outside scrollbar --}}
+          <div class="middle-wrapper position-relative">
             {{{body}}}
           </div>
+
         </div>
-    </div>
-      {{!-- right --}}
-      <div class=" right position-sticky vh-100 {{#if isSetting}}invisible{{/if}}">
-        
-        {{>user-right}}
       </div>
     </div>
   </div>
@@ -62,6 +56,3 @@
 
 
 </html>
-
-
-{{>modal-reply-tweet}}

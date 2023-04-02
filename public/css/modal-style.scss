@@ -1,4 +1,7 @@
 .modal {
+  .modal-dialog {
+    margin: 56px 0 0 calc((50vw - 376px));
+  }
 
   .modal-content {
     height: 300px;

@@ -32,9 +32,12 @@ const nameWordWarning = document.querySelector('.name-word-warning')
 const introductionWordWarning = document.querySelector('.introduction-word-warning')
 userName.addEventListener('input', (event) => {
   const count = event.target.value.trim().length
-  if (count > 50 ) {
-    nameWordWarning.innerHTML = "字數超出上限"
+  if (count > 50) {
+    nameWordWarning.innerHTML = `<span style="color:red">字數超過上限</span>`
     userName.classList.add('is-invalid')
+  } else if (count === 0) {
+    nameWordWarning.innerHTML = `<span style="color:red">名稱不可為空</span>`
+    userName.classList.add('is-null')
   }
   else {
     nameWordWarning.innerHTML = ""
@@ -45,7 +48,7 @@ userName.addEventListener('input', (event) => {
 userIntroduction.addEventListener('input', (event) => {
   const count = event.target.value.trim().length
   if (count > 160) {
-    introductionWordWarning.innerHTML = "字數超出上限"
+    introductionWordWarning.innerHTML = `<span style="color:red">字數超過上限</span>`
     userIntroduction.classList.add('is-invalid')
   }
   else {
@@ -60,28 +63,26 @@ editUserBtn.addEventListener('click', function getUserDataRenderPage() {
   axios.get(`/api/users/${editUserBtn.id}`) //will change to users/id(id will select by DOM)
     .then(function (response) {
       // 1.handle success
-      console.log(response.data)
-      if (response.status === 500) throw new Error(response.data.message)
-      
-      coverageImage.style.backgroundImage = `url('${response.data.coverage}')` || 'none'
-      avatarImage.style.backgroundImage = `url('${response.data.avatar}')` || 'none'
-      userName.value = `${response.data.name}`
-      userIntroduction.value = response.data.introduction !== null ? `${response.data.introduction}` : ""
-      document.querySelector('.post-user-edit').action = `/api/users/${response.data.id}`
-      nameWord.innerHTML = response.data.name !== null ? response.data.name.trim().length : 0
-      introductionWord.innerHTML = response.data.introduction !== null ? response.data.introduction.trim().length : 0
-
+      if (response.data) {
+        coverageImage.style.backgroundImage = `url('${response.data.coverage}')` || 'none'
+        avatarImage.style.backgroundImage = `url('${response.data.avatar}')` || 'none'
+        userName.value = `${response.data.name}`
+        userIntroduction.value = response.data.introduction !== null ? `${response.data.introduction}` : ""
+        document.querySelector('.post-user-edit').action = `/api/users/${response.data.id}`
+        nameWord.innerHTML = response.data.name !== null ? response.data.name.trim().length : 0
+        introductionWord.innerHTML = response.data.introduction !== null ? response.data.introduction.trim().length : 0
+      } else { throw new Error('Data Type Incorrect') }
     })
+   
     .then(function () {
       // 3.always executed
-      fadeIn(editModalContainer, 'flex')
       blockScroll()
+      fadeIn(editModalContainer, 'flex')
     })
     .catch(function (error) {
       // 2.handle error
       console.log(error)
     })
-   
 })
 
 // 關閉"編輯個人資料""
@@ -96,17 +97,21 @@ editModalClose.addEventListener('click', function closeUserData() {
   nameWordWarning.innerHTML = ""
   introductionWordWarning.innerHTML = ""
   fadeOut(editModalContainer)
-  unblockScroll()
+  unblockScroll()   
 })
 
 // 點擊儲存
 formSubmit.addEventListener('click', function sendEditData(event) {
   event.preventDefault() // 防止預設的送出
   // 若字數超出上限，防止表單送出
-  if (userName.classList.contains('is-invalid') || userIntroduction.classList.contains('is-invalid')) {
+
+  if (userName.classList.contains('is-null')) {
+    postNotification('red', '名稱不可為空！', 'top')
     shakeModal()
-  }
-  else {
+  } else if (userName.classList.contains('is-invalid') || userIntroduction.classList.contains('is-invalid')) {
+    postNotification('red', '字數超出上限！', 'top')
+    shakeModal()
+  } else {
     formData.append('name', document.querySelector("input[name='name']").value)
     formData.append('introduction', document.querySelector("textarea[name='introduction']").value)
     // show form Data
@@ -118,23 +123,26 @@ formSubmit.addEventListener('click', function sendEditData(event) {
         'Content-Type': 'multipart/form-data',
       },
     }) //will change to users/id(id will select by DOM)
-      .then(function (response) {
-        // 1.handle success
-        console.log(response)
-      })
-      .catch(function (error) {
-        // 2.handle error
-        console.log(error)
-      })
       .then(function () {
         // 3.always executed
         formData.delete('croppedAvatar')
         formData.delete('croppedCoverage')
         formData.delete('name')
         formData.delete('introduction')
+
         fadeOut(editModalContainer)
+        setTimeout(function () {
+          postNotification('green', '修改成功', 'top');
+          setTimeout(function () {
+            location.reload(true)
+          }, 1300);
+        }, 700);
+
         unblockScroll()
-        location.reload()
+      })
+      .catch(function (error) {
+        // 2.handle error
+        console.log(error)
       })
   }
 })
@@ -150,7 +158,7 @@ const avatarCrop = new Cropper(avatarimageCropField, {
   cropBoxResizable: true, // 是否有裁剪框調整四邊八點
   movable: true, // 是否允許移動圖片
   zoomable: true, // 是否允許縮放圖片大小
-  rotatable: false,   // 是否允許旋轉圖片
+  rotatable: true,   // 是否允許旋轉圖片
   zoomOnWheel: true, // 是否允許通過滑鼠滾輪來縮放圖片
   zoomOnTouch: true, // 是否允許通過觸控移動來縮放圖片
 })
@@ -313,6 +321,7 @@ function shakeModal() {
 
 // fadeIn,...
 function fadeIn(element, display, duration = 300) {
+ 
   element.style.opacity = element.style.opacity || 0
   element.style.display = display
   element.style.visibility = "visible"
@@ -325,7 +334,9 @@ function fadeIn(element, display, duration = 300) {
       opacity = 1
     }
     element.style.opacity = opacity
+    console.log(opacity)
   }, 20)
+
 }
 
 function fadeOut(element, duration = 400) {
@@ -347,9 +358,11 @@ function fadeOut(element, duration = 400) {
 }
 
 function blockScroll() {
-  document.body.style.overflow = 'hidden';
+  // document.body.style.overflow = 'hidden'
+  document.querySelector('.middle').classList.add('modal-open')
 }
 
 function unblockScroll() {
-  document.body.style.overflow = null;
+  // document.body.style.overflow = null;
+  document.querySelector('.middle').classList.remove('modal-open')
 }

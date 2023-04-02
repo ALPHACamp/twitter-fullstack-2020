@@ -69,9 +69,12 @@ async function postTweet(input) {
 
     if (response.ok) {
       // Tweet posted successfully
-      input.value = null
+      // input.value = null
       // document.querySelector('span.error-message').innerText = null
-      location.reload()
+      postNotification('green', '推文成功', 'top')
+      setTimeout(function() {
+        location.reload(true);
+      }, 1000);
     } else {
       // Error posting tweet
       const error = await response.json();
@@ -101,7 +104,10 @@ async function postReply(id, input) {
       const data = await response.json();
       // input.value = null
       // document.querySelector('span.error-message').innerText = null
-      location.reload(true)
+      postNotification('green', '回覆成功', 'top')
+      setTimeout(function() {
+        location.reload(true);
+      }, 1000);
     } else {
       // Error posting tweet
       const error = await response.json();
@@ -118,6 +124,7 @@ async function postReply(id, input) {
 async function likeOfProfile(button) {
   const tweetId = button.parentElement.id
   const likeCountElement = document.querySelector('.like.number');
+ 
   try {
     if (!button.classList.contains('liked')) {
       const response = await fetch(`/api/tweets/${tweetId}/like`, { method: 'POST' })

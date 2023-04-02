@@ -1,26 +1,26 @@
 const express = require('express')
 const router = express.Router()
-const mainPageController = require('../../controllers/pages/mainPage-controller')
 const userController = require('../../controllers/pages/user-controller')
 const tweetController = require('../../controllers/pages/tweet-controller')
 const { generalErrorHandler } = require('../../middleware/error-handler')
 const passport = require('../../config/passport')
-
-
-
-
-
-
-
+const { authenticatedRegular, authenticatedAdmin } = require('../../middleware/auth')
 const admin = require('./modules/admin')
-router.use('/admin', admin)
-
-router.get('/regist', userController.registPage)
-router.post('/regist', userController.regist)
 
 
-router.get('/login', userController.logInPage)
-router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), userController.logIn)
+
+
+
+
+
+router.use('/admin', authenticatedAdmin, admin)
+
+router.get('/signup', userController.signUpPage)
+router.post('/signup', userController.signUp)
+
+router.get('/signin', userController.signInPage)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+
 router.get('/logout', userController.logout)
 
 
@@ -28,23 +28,20 @@ router.get('/logout', userController.logout)
 
 
 
-router.get('/users/:id/tweets', userController.getUserTweets)
-router.get('/users/:id/replies', userController.getUserReplies)
-router.get('/users/:id/likes', userController.getUserLikes)
-router.get('/users/:id/followers', userController.getUserFollowers)
-router.get('/users/:id/followings', userController.getUserFollowings)
+router.get('/users/:id/tweets', authenticatedRegular, userController.getUserTweets) 
+router.get('/users/:id/replies', authenticatedRegular, userController.getUserReplies)
+router.get('/users/:id/likes', authenticatedRegular, userController.getUserLikes)
+router.get('/users/:id/followers', authenticatedRegular, userController.getUserFollowers)
+router.get('/users/:id/followings', authenticatedRegular, userController.getUserFollowings)
 
-router.get('/tweets/:id', tweetController.getTweet)
-router.get('/tweets/', tweetController.getTweets)
-router.get('/setting', userController.settingPage)
-router.post('/setting', userController.setting)
+router.get('/tweets/:id', authenticatedRegular, tweetController.getTweet)
+router.get('/tweets/', authenticatedRegular, tweetController.getTweets)
+router.get('/setting', authenticatedRegular, userController.settingPage)
+router.post('/setting', authenticatedRegular, userController.setting)
 
-router.use('/test', (req, res) => res.render('test'))
 router.use('/', (req, res) => res.redirect('/tweets'))
 
 
-
-router.use('/', (req, res) => res.redirect('/tweets'))  //authenticate fail then go login
 router.use('/', generalErrorHandler)
 
 
