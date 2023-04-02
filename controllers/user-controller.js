@@ -189,26 +189,24 @@ const userController = {
         }
     },
     getFollowers: (req, res, next) => {
-        return User.findByPk(req.params.id, { include: [{ model: User, as: 'Followers'}, { model: User, as: 'Followings'}], nest: true })
+        return User.findByPk(req.params.id, { include: [{ model: Tweet, include: Reply }, { model: User, as: 'Followers'}, { model: User, as: 'Followings'}], nest: true })
           .then(user => {
             if (!user) throw new Error('此使用者不存在!')
-            if (user.id !== req.user.id) throw new Error('你不能瀏覽他人的追隨者名單!')
             user = user.toJSON()
             const followers = user.Followers.map(f => ({
                 ...f,
                 isFollowed: user.Followings.some(F => F.id === f.id)
             }))
-            res.render('users/followers', { followers })
+            res.render('users/followers', { followers, otherUser: user })
           })
           .catch(err => next(err))
     },
     getFollowings: (req, res, next) => {
-        return User.findByPk(req.params.id, { include: [{ model: User, as: 'Followings'}], nest: true })
+        return User.findByPk(req.params.id, { include: [{ model: Tweet, include: Reply }, { model: User, as: 'Followings'}], nest: true })
           .then(user => {
             if (!user) throw new Error('此使用者不存在!')
-            if (user.id !== req.user.id) throw new Error('你不能瀏覽他人的追蹤名單!')
             user = user.toJSON()
-            res.render('users/followings', { followings: user.Followings })
+            res.render('users/followings', { followings: user.Followings, otherUser: user })
           })
           .catch(err => next(err))
     },
