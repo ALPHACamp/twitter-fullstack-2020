@@ -14,7 +14,7 @@ module.exports = {
       position: {
         type: Sequelize.STRING,
       },
-      position_id: {
+      tweet_id: {
         type: Sequelize.INTEGER,
       },
       is_like: {

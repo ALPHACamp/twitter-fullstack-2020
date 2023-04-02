@@ -2,6 +2,10 @@ const { Tweet, User, Reply, Like, Followship } = require('../models')
 const { Op } = require('sequelize')
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
+const imgur = require('imgur')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+
+
 const userController = {
     loginPage: (req, res) => {
         res.render('login')
@@ -185,7 +189,99 @@ const userController = {
                 isFollowing: followings.includes(Number(req.params.id)),
             });
         } catch (error) {
-            next(error);
+            next(error)
+        }
+    },
+    editProfile: async (req, res) => {
+        try {
+            const user = await User.findByPk(req.params.id);
+            if (Number(req.params.id) === helpers.getUser(req).id) {
+                res.json(user.toJSON())
+            } else {
+                res.json({ status: 'error' })
+            }
+        } catch (error) {
+            console.log('error')
+        }
+    },
+    putProfile: async (req, res) => {
+        try {
+            const UserId = Number(req.params.id)
+            if (helpers.getUser(req).id !== UserId) {
+                req.flash('errorMessage', '你沒有足夠的權限')
+                return res.redirect('/tweets')
+            }
+
+            if (!req.body.name || req.body.name.trim() === '') {
+                req.flash('errorMessage', '名稱或自我介紹不能為空白')
+                return res.redirect('back')
+            }
+
+            if (req.body.name.length > 50) {
+                req.flash('errorMessage', '名稱長度不符')
+                return res.redirect('back')
+            }
+
+            if (!req.body.introduction || req.body.introduction.trim() === '') {
+                if (req.get('Accept') !== 'application/json') {
+                    req.flash('errorMessage', '名稱或自我介紹不能為空')
+                    return res.redirect('back')
+                }
+            }
+
+            if (req.body.introduction && req.body.introduction.length > 160) {
+                req.flash('errorMessage', '自我介紹長度不符')
+                return res.redirect('back')
+            }
+
+            const { files } = req;
+            const user = await User.findByPk(UserId)
+            let avatarUrl = user.avatar
+            let coverUrl = user.cover
+            let name = user.name
+            let introduction = user.introduction
+
+            if (files) {
+                const { avatar, cover } = req.files
+                imgur.setClientId(IMGUR_CLIENT_ID)
+                if (avatar != null) {
+                    let avatarPath = avatar[0].path
+                    const img = await imgur.uploadFile(avatarPath)
+                    console.log('Avatar Imgur response:', img)
+                    avatarUrl = img.link
+                }
+                if (cover != null) {
+                    let coverPath = cover[0].path
+                    const img = await imgur.uploadFile(coverPath)
+                    console.log('Cover Imgur response:', img)
+                    coverUrl = img.link
+                }
+            }
+
+            if (req.body.name) {
+                name = req.body.name
+            }
+
+            if (req.body.introduction) {
+                introduction = req.body.introduction;
+            }
+
+            await user.update({
+                avatar: avatarUrl,
+                cover: coverUrl,
+                name: name,
+                introduction: introduction,
+            })
+
+            if (req.get('Accept') === 'application/json') {
+                return res.status(200).json(user.toJSON())
+            } else {
+                req.flash('successMessage', '更新成功！')
+                return res.redirect(`/users/${UserId}/tweets`)
+            }
+        } catch (error) {
+            req.flash('errorMessage', '更新失敗')
+            return res.redirect('back')
         }
     },
     getFollowers: (req, res, next) => {

@@ -9,6 +9,12 @@ const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated, adminAuthenticated } = require('../middleware/auth')
 const followUser = require('../middleware/followUser')
 
+const multer = require('multer');
+const upload = multer({ dest: 'temp/' });
+const imgUpload = upload.fields([
+  { name: 'avatar', maxCount: 1 },
+  { name: 'cover', maxCount: 1 },
+])
 
 router.get('/admin/signin', adminController.getSigninPage);
 router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signin);
@@ -30,8 +36,13 @@ router.get('/users/:id/likes', authenticated, userController.getLikes)
 router.get('/users/:id/followers', authenticated, userController.getFollowers)
 router.get('/users/:id/followings', authenticated, userController.getFollowings)
 router.get('/users/:id', authenticated, userController.getUser)
+
+router.get('/api/users/:id', authenticated, userController.editProfile)
+router.post('/api/users/:id', authenticated, imgUpload, userController.putProfile)
+
 router.get('/edit', authenticated, userController.settingPage)
 router.patch('/edit', authenticated, userController.edit)
+
 router.post('/followships', authenticated, userController.addFollow)
 router.delete('/followships/:id', authenticated, userController.removeFollow)
 

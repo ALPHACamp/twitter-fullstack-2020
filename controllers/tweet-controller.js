@@ -107,13 +107,13 @@ const tweetController = {
         {
           where: {
             Position: 'tweet',
-            PositionId: req.params.id,
+            TweetId: req.params.id,
             UserId: helpers.getUser(req).id,
           },
           defaults: {
             UserId: helpers.getUser(req).id,
             Position: 'tweet',
-            PositionId: req.params.id,
+            TweetId: req.params.id,
             isLike: true,
           }
         })
@@ -130,7 +130,7 @@ const tweetController = {
     Like.findOne({
       where: {
         Position: 'tweet',
-        PositionId: req.params.id,
+        TweetId: req.params.id,
         UserId: helpers.getUser(req).id,
       }
     })
