@@ -11,10 +11,12 @@ async function follow(button) {
         body: JSON.stringify({ id: button.id })
       })
       const data = await response.json()
+      console.log(data)
       if (data.isFollowed) button.classList.toggle('followed') //remove followed
     } else if (button.classList.contains('followed')) {
       const response = await fetch(`/followships/${button.id}`, { method: 'DELETE' })
       const data = await response.json()
+      console.log(data)
       if (data.isFollowed === false) button.classList.toggle('followed') //add followed
     }
 
@@ -29,15 +31,17 @@ async function like(button) {
   const likeCountElement = button.nextElementSibling
   try {
     if (!button.classList.contains('liked')) {
-      const response = await fetch(`/api/tweets/${tweetId}/like`, { method: 'POST' })
+      const response = await fetch(`/tweets/${tweetId}/like`, { method: 'POST' })
       const data = await response.json()
+      console.log(data)
       likeCountElement.textContent = data.likeCount
-      if (data.isLiked) button.classList.toggle('liked') //remove liked
+      if (data.isLiked) button.classList.toggle('liked') 
     } else if (button.classList.contains('liked')) {
-      const response = await fetch(`/api/tweets/${tweetId}/like`, { method: 'DELETE' })
+      const response = await fetch(`/tweets/${tweetId}/unlike`, { method: 'POST' })
       const data = await response.json()
+      console.log(data)
       likeCountElement.textContent = data.likeCount
-      if (data.isLiked === false) button.classList.toggle('liked') //add liked
+      if (data.isLiked === false) button.classList.toggle('liked') 
     }
 
   } catch (error) {
@@ -73,19 +77,18 @@ async function postTweet(input) {
       },
       body: JSON.stringify({ description: input.value })
     });
-
-    if (response.ok) {
+    const body = await response.json()
+    if (body.status === 'success') {
       // Tweet posted successfully
       // input.value = null
       // document.querySelector('span.error-message').innerText = null
-      postNotification('green', '推文成功', 'top')
+      postNotification('green', '推文 成功', 'top')
       setTimeout(function () {
         location.reload(true);
       }, 1000);
-    } else {
+    } else if (body.status === 'failure') {
       // Error posting tweet
-      const error = await response.json();
-      input.nextElementSibling.innerText = error.message
+      input.nextElementSibling.innerText = body.message
     }
   } catch (error) {
     // Network error
@@ -105,21 +108,18 @@ async function postReply(id, input) {
       },
       body: JSON.stringify({ comment: input.value })
     });
-
-    if (response.ok) {
+    const body = await response.json()
+    if (body.status === 'success') {
       // Tweet posted successfully
-      const data = await response.json();
       // input.value = null
       // document.querySelector('span.error-message').innerText = null
       postNotification('green', '回覆成功', 'top')
       setTimeout(function () {
         location.reload(true);
       }, 1000);
-    } else {
+    } else if (body.status === 'failure') {
       // Error posting tweet
-      const error = await response.json();
-      document.querySelector('span.error-message').innerText = error.message
-      // console.error(error);
+      input.nextElementSibling.innerText = body.message
     }
   } catch (error) {
     // Network error
@@ -134,12 +134,12 @@ async function likeOfProfile(button) {
 
   try {
     if (!button.classList.contains('liked')) {
-      const response = await fetch(`/api/tweets/${tweetId}/like`, { method: 'POST' })
+      const response = await fetch(`/tweets/${tweetId}/like`, { method: 'POST' })
       const data = await response.json()
       likeCountElement.textContent = data.likeCount
       if (data.isLiked) button.classList.toggle('liked') //remove liked
     } else if (button.classList.contains('liked')) {
-      const response = await fetch(`/api/tweets/${tweetId}/like`, { method: 'DELETE' })
+      const response = await fetch(`/tweets/${tweetId}/unlike`, { method: 'POST' })
       const data = await response.json()
       likeCountElement.textContent = data.likeCount
       if (data.isLiked === false) button.classList.toggle('liked') //add liked
@@ -155,7 +155,7 @@ async function replyOfProfile(button) {
   const templateSource = document.getElementById('tweet-template')
   const tweetHTML = document.querySelector('.reply.modal .tweet')
   try {
-    const response = await fetch(`/api/tweets/${tweetId}/`, { method: 'GET' })
+    const response = await fetch(`api/tweets/${tweetId}/replies`, { method: 'GET' })
     const data = await response.json()
     const template = Handlebars.compile(templateSource.innerHTML);
     const html = template({ tweet: data.tweet });

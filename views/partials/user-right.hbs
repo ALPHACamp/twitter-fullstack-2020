@@ -11,12 +11,12 @@
         <span class="name">{{this.name}}</span>
         <span class="account">@{{this.account}}</span>
       </div>
-      {{!-- {{#if this.notSelf}} --}}
+      {{#if this.notSelf}}
       <div class="button ms-1 my-auto {{#if this.isFollowed}}followed{{/if}}" onclick="follow(this)" id="{{this.id}}">
         <button class="isFollowed">正在跟隨</button>
         <button class="notFollowed ms-auto">跟隨</button>
       </div>
-      {{!-- {{/if}} --}}
+      {{/if}}
 
     </div>
     {{/each}}

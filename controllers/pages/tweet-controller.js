@@ -3,7 +3,8 @@ const userController = require('../../controllers/pages/user-controller')
 const dateFormatter = require('../../helpers/dateFormatter')
 const helpers = require('../../_helpers')
 const tweetController = {
-  getTweets: async (req, res) => {
+  getTweets: async (req, res, next) => {
+    try{
     const user = await User.findByPk(helpers.getUser(req).id, {
       include: [
         {
@@ -38,10 +39,16 @@ const tweetController = {
     allTweets.forEach(tweet => {
       dateFormatter(tweet, 8)
     })
-    res.status(200).render('home', { user: user.toJSON(), tweets: allTweets, isHome: true })
+    res.render('tweets', { user: user.toJSON(), tweets: allTweets, isHome: true })
+  }catch(error){
+    console.log(error)
+    next(error)
+  }
+
+
   },
 
-  getTweet: async (req, res) => {
+  getTweet: async (req, res, next) => {
     try {
       let tweet = await Tweet.findByPk(req.params.id, {
         include: [
@@ -69,9 +76,10 @@ const tweetController = {
       tweet.replyCount = tweet.Replies.length
       tweet.isLiked = tweet.Likes.some(like => like.UserId === helpers.getUser(req).id)
 
-      res.status(200).render('tweet-profile', { tweet, replies: tweet.Replies, isHome: true })
+      res.render('tweet-profile', { tweet, replies: tweet.Replies, isHome: true })
     } catch (error) {
       console.log(error)
+      next(error)
     }
   }
 

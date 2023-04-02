@@ -34,7 +34,7 @@ router.get('/users/:id/followings', authenticatedRegular, userController.getUser
 router.get('/tweets/:id/replies', authenticatedRegular, tweetController.getTweet)
 router.get('/tweets/', authenticatedRegular, tweetController.getTweets)
 router.get('/setting', authenticatedRegular, userController.settingPage)
-router.post('/setting', authenticatedRegular, userController.setting)
+router.put('/setting', authenticatedRegular, userController.setting)
 router.use('/', generalErrorHandler)
 router.use('/', (req, res) => res.redirect('/tweets'))
 

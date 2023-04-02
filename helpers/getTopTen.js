@@ -1,10 +1,13 @@
 const helpers = require('../_helpers')
 const { User } = require('../models')
 
-async function getTopTen (req)  {
+async function getTopTen(req) {
   try {
     const users = await User.findAll(
-      { include: { model: User, as: 'Followers' } }
+      {
+        include: { model: User, as: 'Followers' },
+        where: { role: null }
+      }
     )
     const topTenFollowed = users
       .map(user => ({

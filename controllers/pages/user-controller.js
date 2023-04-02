@@ -2,32 +2,36 @@ const { User, Tweet, Reply, Like, Sequelize } = require('../../models')
 const bcrypt = require('bcryptjs') //載入 bcrypt
 const dateFormatter = require('../../helpers/dateFormatter')
 const helpers = require('../../_helpers')
+const { Op } = require('sequelize')
 const userController = {
   signUpPage: (req, res) => {
-    res.render('signup' , {layout: false})
+    res.render('signup', { layout: 'signin-main' })
   },
-  signUp: (req, res, next) => {
-    if (req.body.password !== req.body.checkPassword) throw new Error('Passwords do not match!')
-
-    User.findOne({ where: { email: req.body.email } })
-      .then(user => {
-        if (user) throw new Error('Email already exists!')
-
-        return bcrypt.hash(req.body.password, 10)
-      })
-      .then(hash => User.create({
+  signUp: async (req, res, next) => {
+    try {
+      if (req.body.password !== req.body.checkPassword) throw new Error('Passwords do not match!')
+      let user = await User.findOne({ where: { email: req.body.email } })
+      if (user) throw new Error('email已存在')
+      user = await User.findOne({ where: { account: req.body.account } })
+      if (user) throw new Error('帳號已存在')
+      hash = await bcrypt.hash(req.body.password, 10)
+      await User.create({
+        account: req.body.name,
         name: req.body.name,
         email: req.body.email,
         password: hash
-      }))
-      .then(() => {
-        req.flash('success_messages', '成功註冊帳號！')
-        res.redirect('/signin')
       })
-      .catch(err => next(err))
+
+      req.flash('success_messages', '成功註冊帳號！')
+      res.redirect('/signin')
+    } catch (error) {
+
+      console.log(error)
+      next(error)
+    }
   },
   signInPage: (req, res) => {
-    res.render('signin' , {layout: false})
+    res.render('signin', { layout: 'signin-main' })
   },
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
@@ -73,6 +77,7 @@ const userController = {
       res.render('user-profile', { tweets: userTweets, user, isTweets: true, isProfile: true })
     } catch (error) {
       console.log(error)
+      next(error)
     }
   },
 
@@ -108,6 +113,7 @@ const userController = {
       res.render('user-profile', { replies: userReplies, user, isReplies: true, isProfile: true })
     } catch (error) {
       console.log(error)
+      next(error)
     }
   },
 
@@ -147,6 +153,7 @@ const userController = {
       res.render('user-profile', { tweets: likedTweets, user, isLikes: true, isProfile: true })
     } catch (error) {
       console.log(error)
+      next(error)
     }
   },
   getUserFollowers: async (req, res, next) => {
@@ -171,6 +178,7 @@ const userController = {
     } catch (error) {
 
       console.log(error)
+      next(error)
     }
   },
 
@@ -197,6 +205,7 @@ const userController = {
     } catch (error) {
 
       console.log(error)
+      next(error)
     }
   },
   settingPage: async (req, res, next) => {
@@ -217,17 +226,22 @@ const userController = {
       const loginUser = helpers.getUser(req)
       const user = await User.findByPk(loginUser.id)
       if (!user) throw new Error('Cannot find user!')
+      const hash = await bcrypt.hash(req.body.password, 10)
       await user.update({
         account,
         name,
         email,
-        password
+        password: hash
       })
+      console.log('setting!')
       req.flash('success_messages', '使用者資料編輯成功')
       res.redirect(`/`)
     } catch (err) {
+      console.log(err)
       next(err)
     }
   }
 }
 module.exports = userController
+
+

@@ -103,11 +103,13 @@ const tweetController = {
       })
       if (!tweet) throw new Error("推文失敗！")
       res.status(302).json({
+        status: "success",
         message: "推文成功！"
       })
 
     } catch (error) {
       res.status(302).json({
+        status: "failure",
         message: error.message
       })
     }
@@ -127,11 +129,13 @@ const tweetController = {
       })
       if (!reply) throw new Error("回覆失敗！")
       res.status(302).json({
+        status: "success",
         message: "回覆成功！"
       })
 
     } catch (error) {
       res.status(302).json({
+        status: "failure",
         message: error.message
       })
     }

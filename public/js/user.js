@@ -35,14 +35,22 @@ userName.addEventListener('input', (event) => {
   if (count > 50) {
     nameWordWarning.innerHTML = `<span style="color:red">字數超過上限</span>`
     userName.classList.add('is-invalid')
-  } else if (count === 0) {
-    nameWordWarning.innerHTML = `<span style="color:red">名稱不可為空</span>`
-    userName.classList.add('is-null')
   }
   else {
     nameWordWarning.innerHTML = ""
     userName.classList.remove('is-invalid')
   }
+
+  if (count === 0) {
+    nameWordWarning.innerHTML = `<span style="color:red">名稱不可為空</span>`
+    userName.classList.add('is-null')
+  }
+  else if (count>0){
+    introductionWordWarning.innerHTML = ""
+    userName.classList.remove('is-null')
+  }
+
+  
   nameWord.innerHTML = count
 })
 userIntroduction.addEventListener('input', (event) => {
@@ -57,6 +65,9 @@ userIntroduction.addEventListener('input', (event) => {
   }
   introductionWord.innerHTML = count
 })
+
+
+
 
 // 點擊"編輯個人資料""
 editUserBtn.addEventListener('click', function getUserDataRenderPage() {
@@ -73,7 +84,7 @@ editUserBtn.addEventListener('click', function getUserDataRenderPage() {
         introductionWord.innerHTML = response.data.introduction !== null ? response.data.introduction.trim().length : 0
       } else { throw new Error('Data Type Incorrect') }
     })
-   
+
     .then(function () {
       // 3.always executed
       blockScroll()
@@ -97,7 +108,7 @@ editModalClose.addEventListener('click', function closeUserData() {
   nameWordWarning.innerHTML = ""
   introductionWordWarning.innerHTML = ""
   fadeOut(editModalContainer)
-  unblockScroll()   
+  unblockScroll()
 })
 
 // 點擊儲存
@@ -321,7 +332,7 @@ function shakeModal() {
 
 // fadeIn,...
 function fadeIn(element, display, duration = 300) {
- 
+
   element.style.opacity = element.style.opacity || 0
   element.style.display = display
   element.style.visibility = "visible"

@@ -33,7 +33,7 @@ Handlebars.registerHelper('relativeTime', function (value) {
 
 const adminController = {
   adminSignInPage: (req, res) => {
-    return res.render('admin/signin', {layout: false})
+    return res.render('admin/signin', {layout: 'signin-main'})
   },
 
   adminSignIn: (req, res) => {

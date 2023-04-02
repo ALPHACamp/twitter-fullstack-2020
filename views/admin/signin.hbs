@@ -1,33 +1,18 @@
-<div class="container">
-  <div class="row justify-content-md-center">
-    <div class="col-md-4 ">
-
-      <div class="mb-4 text-center">
-        <h1 class="h3 font-weight-normal mb-3 fw-bold">後台登入</h1>
-      </div>
-      <div class="text-center">
-      <img class="logo " src="/pictures/logo.png"
-          style="width: 150px; margin: 10px; transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;">
-      </div>
-      <form class="form-login" action="/admin" method="POST">
-        <div class="form-row mb-3">
-          <label class="form-label" for="account">帳號</label>
-          <input class="form-control" id="account" type="text" name="account" class="form-control" placeholder="請輸入帳號"
-            required autofocus>
-        </div>
-        <div class="form-row mb-3">
-          <label class="form-label" for="password">密碼</label>
-          <input class="form-control" id="password" type="password" name="password" class="form-control"
-            placeholder="請輸入密碼" required>
-        </div>
-        <div class="d-grid gap-2">
-          <button style="background-color:orangered; border-color: white"class="btn btn-primary rounded-pill" type="submit">登入</button>
-        </div>
-      </form>
-      <div class="mb-4 text-end my-3">
-         <a href="/login">前台登入</a>
-      </div>
-
+<div class="signin-wrapper d-flex flex-column align-items-center mx-auto mt-5">
+  {{>logo}}
+  <h3 class="title mt-3">後台登入</h3>
+  <form class="setting-form mt-3 p-4" action="/signin" method="POST">
+    <div class="form-floating">
+      <input type="account" class="form-control" id="floatingAccount" name="account">
+      <label for="floatingAccount">帳號</label>
     </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="floatingPassword" name="password">
+      <label for="floatingPassword">密碼</label>
+    </div>
+    <button type="submit" class="btn btn-primary">登入</button>
+  </form>
+  <div class="footer">
+    <a href="/signin"> 一般登入</a>
   </div>
 </div>
