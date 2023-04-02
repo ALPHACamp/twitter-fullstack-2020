@@ -7,11 +7,16 @@ const tweetController = {
     const user = await User.findByPk(helpers.getUser(req).id, {
       include: [
         {
+          model: Tweet,
+          include: 
+            [{ model: User }, { model: Reply }, { model: Like }]
+        },
+        {
           model: User,
           as: 'Followings',
           include: {
             model: Tweet,
-            include: [{ model: User }, { model: Reply }, { model: Like }],
+            include: [{ model: User }, { model: Reply }, { model: Like }]
           }
         }
       ],
@@ -21,18 +26,19 @@ const tweetController = {
     let followingTweets = user.toJSON().Followings.reduce((accumulator, currentValue) => {
       return accumulator.concat(currentValue.Tweets);
     }, []);
+    let allTweets = followingTweets.concat(user.toJSON().Tweets)
 
-    followingTweets = followingTweets.map(tweet => ({
+    allTweets = allTweets.map(tweet => ({
       ...tweet,
       replyCount: tweet.Replies.length,
       likeCount: tweet.Likes.length,
       isLiked: tweet.Likes.some(like => like.UserId === helpers.getUser(req).id)
     }))
-    followingTweets.sort((a, b) => b.createdAt - a.createdAt)
-    followingTweets.forEach(tweet => {
+    allTweets.sort((a, b) => b.createdAt - a.createdAt)
+    allTweets.forEach(tweet => {
       dateFormatter(tweet, 8)
     })
-    res.render('home', { user: user.toJSON(), tweets: followingTweets, isHome: true })
+    res.status(200).render('home', { user: user.toJSON(), tweets: allTweets, isHome: true })
   },
 
   getTweet: async (req, res) => {
@@ -63,7 +69,7 @@ const tweetController = {
       tweet.replyCount = tweet.Replies.length
       tweet.isLiked = tweet.Likes.some(like => like.UserId === helpers.getUser(req).id)
 
-      res.render('tweet-profile', { tweet, replies: tweet.Replies, isHome: true })
+      res.status(200).render('tweet-profile', { tweet, replies: tweet.Replies, isHome: true })
     } catch (error) {
       console.log(error)
     }

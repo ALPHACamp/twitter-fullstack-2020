@@ -56,13 +56,13 @@ const tweetController = {
       })
       const likeCount = tweet.Likes.length
       const isLiked = tweet.Likes.some(like => like.UserId === helpers.getUser(req).id)
-      res.status(200).json({
+      res.status(302).json({
         likeCount,
         isLiked
       })
     } catch (error) {
       console.log(error)
-      res.status(500).json({
+      res.status(302).json({
         error: error.message
       })
     }
@@ -81,51 +81,57 @@ const tweetController = {
       })
       const likeCount = tweet.Likes.length
       const isLiked = tweet.Likes.some(like => like.UserId === helpers.getUser(req).id)
-      res.status(200).json({
+      res.status(302).json({
         likeCount,
         isLiked
       })
     } catch (error) {
-      res.status(500).json({
+      res.status(302).json({
         error: error.message
       })
     }
   },
 
   postTweet: async (req, res, next) => {
+    const description = req.body.description
     try {
-      if (!req.body.tweet) throw new Error("推文不可為空白")
-      if (req.body.tweet.length > 140) throw new Error(" 推文長度上限為140 個字元！")
-      await Tweet.create({ UserId: helpers.getUser(req).id, description: req.body.tweet })
+      if (!description) throw new Error("推文不可為空白")
+      if (description.length > 140) throw new Error(" 推文長度上限為140 個字元！")
+      await Tweet.create({ UserId: helpers.getUser(req).id, description })
       const tweet = await Tweet.findOne({
-        where: { UserId: helpers.getUser(req).id, description: req.body.tweet }
+        where: { UserId: helpers.getUser(req).id, description }
       })
       if (!tweet) throw new Error("推文失敗！")
-      res.status(200).json({
+      res.status(302).json({
         message: "推文成功！"
       })
 
     } catch (error) {
-      res.status(500).json({
+      res.status(302).json({
         message: error.message
       })
     }
   },
   postReply: async (req, res, next) => {
+    const comment = req.body.comment
+    const TweetId = req.params.id
+    console.log('reply!')
     try {
-      if (!req.body.reply) throw new Error("回覆不可為空白")
-      if (req.body.reply.length > 140) throw new Error("回覆長度上限為 140 個字元！")
-      await Reply.create({ UserId: helpers.getUser(req).id, TweetId: req.params.id, comment: req.body.reply })
+      if (!comment) throw new Error("回覆不可為空白")
+      if (comment.length > 140) throw new Error("回覆長度上限為 140 個字元！")
+      const tweet = await Tweet.findByPk(TweetId)
+      if (!tweet) throw new Error("無此推文！")
+      await Reply.create({ UserId: helpers.getUser(req).id, TweetId, comment })
       const reply = await Reply.findOne({
-        where: { UserId: helpers.getUser(req).id, TweetId: req.params.id, comment: req.body.reply }
+        where: { UserId: helpers.getUser(req).id, TweetId, comment }
       })
       if (!reply) throw new Error("回覆失敗！")
-      res.status(200).json({
+      res.status(302).json({
         message: "回覆成功！"
       })
 
     } catch (error) {
-      res.status(500).json({
+      res.status(302).json({
         message: error.message
       })
     }

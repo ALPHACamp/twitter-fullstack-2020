@@ -8,27 +8,35 @@ const userController = {
 
   addFollowing: async (req, res, next) => {
     try {
-      let user = await User.findByPk(req.params.id)
-      const followship = await Followship.findOne({
-        where: { followerId: helpers.getUser(req).id, followingId: req.params.id }
-      })
-      if (!user) throw new Error("User doesn't exist!")
-      if (user.id === helpers.getUser(req).id) throw new Error("Cannot follow yourself!")
-      if (!followship) {
-        await Followship.create({ followerId: helpers.getUser(req).id, followingId: req.params.id })
-      }
-      user = await User.findByPk(req.params.id, {
-        include: {
-          model: User,
-          as: 'Followers'
-        }
-      })
 
-      const isFollowed = user.Followers.some(fr => fr.id === helpers.getUser(req).id)
-      res.status(200).json({
-        followerCount: user.Followers.length,
-        isFollowed
-      })
+      if (req.body.id.toString() === helpers.getUser(req).id.toString()) {
+        res.status(200).json({ message: '不能追蹤自己' })
+      }
+
+      else {
+        let user = await User.findByPk(req.body.id)
+        const followship = await Followship.findOne({
+          where: { followerId: helpers.getUser(req).id, followingId: req.body.id }
+        })
+        if (!user) throw new Error("User doesn't exist!")
+
+        if (!followship) {
+          await Followship.create({ followerId: helpers.getUser(req).id, followingId: req.body.id })
+        }
+        user = await User.findByPk(req.body.id, {
+          include: {
+            model: User,
+            as: 'Followers'
+          }
+        })
+
+        const isFollowed = user.Followers.some(fr => fr.id === helpers.getUser(req).id)
+        res.status(302).json({
+          followerCount: user.Followers.length,
+          isFollowed
+        })
+      }
+
     } catch (error) {
       console.log(error)
       res.status(500).json({
@@ -53,7 +61,7 @@ const userController = {
       })
 
       const isFollowed = user.Followers.some(fr => fr.id === helpers.getUser(req).id)
-      res.status(200).json({
+      res.status(302).json({
         followerCount: user.Followers.length,
         isFollowed
       })
@@ -219,9 +227,14 @@ const userController = {
   },
   editUserPage: async (req, res, next) => {
     try {
+      const check = helpers.getUser(req).id === Number(req.params.id) ? true : false
+      if (!check) return res.json({
+        status: 'error',
+        message: 'Permission denied!'
+      })
       // 根據傳入的id找到對應的使用者
       const user = await User.findOne({ where: { id: req.params.id } })
-      console.log(user)
+      // console.log(user)
       if (!user) throw new Error('No such User!')
       // 回傳資料
       return res.json({
@@ -238,6 +251,11 @@ const userController = {
   },
   editUser: async (req, res, next) => {
     try {
+      const check = helpers.getUser(req).id === Number(req.params.id) ? true : false
+      if (!check) return res.json({
+        status: 'error',
+        message: 'Permission denied!'
+      })
       const { name, introduction, croppedAvatar, croppedCoverage } = req.body
       if (!name) throw new Error('Name is required!')
       // console.log(name, introduction)
@@ -247,8 +265,8 @@ const userController = {
         imgurFileHandler(croppedAvatar),
         imgurFileHandler(croppedCoverage)]
       )
-      console.log(avatarFilePath)
-      console.log(coverageFilePath)
+      // console.log(avatarFilePath)
+      // console.log(coverageFilePath)
       if (!user) throw new Error('Can not find user!')
       const updatedUser = await user.update({
         name,

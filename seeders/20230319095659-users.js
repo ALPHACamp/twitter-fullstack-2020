@@ -9,7 +9,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       account: `user${i + 1}`,
       name: `user${i + 1}`,
-      role: 'Regular',
+      role: null,
       createdAt: new Date(),
       updatedAt: new Date()
     })))
@@ -20,7 +20,7 @@ module.exports = {
       password,
       account: 'root',
       name: 'root',
-      role: 'Admin',
+      role: 'admin',
       createdAt: new Date(),
       updatedAt: new Date()
     })

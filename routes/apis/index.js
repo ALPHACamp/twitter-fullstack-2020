@@ -15,17 +15,17 @@ router.get('/api/users/:id/replies', userController.getUserReplies)
 router.get('/api/users/:id/likes', userController.getUserLikes)
 router.get('/api/users/:id/followers', userController.getUserFollowers)
 router.get('/api/users/:id/followings', userController.getUserFollowings)
-router.post('/api/users/:id/follow', userController.addFollowing)
-router.delete('/api/users/:id/follow', userController.removeFollowing)
+router.post('/followships', userController.addFollowing)
+router.delete('/followships/:id', userController.removeFollowing)
 
 
 router.get('/api/tweets/:id/like', tweetController.getLikeCount)
-router.post('/api/tweets/:id/like', tweetController.addLike)
-router.delete('/api/tweets/:id/like', tweetController.removeLike)
-router.post('/api/tweets/:id/replies', tweetController.postReply)
+router.post('/tweets/:id/like', tweetController.addLike)
+router.post('/tweets/:id/unlike', tweetController.removeLike)
+router.post('/tweets/:id/replies', tweetController.postReply)
 
 router.get('/api/tweets/:id', tweetController.getTweet)
-router.post('/api/tweets/', tweetController.postTweet)
+router.post('/tweets/', tweetController.postTweet)
 
 
 // 瀏覽編輯使用者頁面 GET /api/users/:id

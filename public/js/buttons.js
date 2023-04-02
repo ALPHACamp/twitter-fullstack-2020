@@ -1,12 +1,19 @@
 
 async function follow(button) {
+  console.log(`${button.id}`)
   try {
     if (!button.classList.contains('followed')) {
-      const response = await fetch(`/api/users/${button.id}/follow`, { method: 'POST' })
+      const response = await fetch(`/followships`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: button.id })
+      })
       const data = await response.json()
       if (data.isFollowed) button.classList.toggle('followed') //remove followed
     } else if (button.classList.contains('followed')) {
-      const response = await fetch(`/api/users/${button.id}/follow`, { method: 'DELETE' })
+      const response = await fetch(`/followships/${button.id}`, { method: 'DELETE' })
       const data = await response.json()
       if (data.isFollowed === false) button.classList.toggle('followed') //add followed
     }
@@ -59,12 +66,12 @@ async function postTweet(input) {
   try {
     if (input.value.length > 140) throw new Error('推文長度上限為 140 個字元！')
     if (input.value.length === 0) throw new Error('內容不可為空白！')
-    const response = await fetch('/api/tweets', {
+    const response = await fetch('/tweets', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ tweet: input.value })
+      body: JSON.stringify({ description: input.value })
     });
 
     if (response.ok) {
@@ -72,7 +79,7 @@ async function postTweet(input) {
       // input.value = null
       // document.querySelector('span.error-message').innerText = null
       postNotification('green', '推文成功', 'top')
-      setTimeout(function() {
+      setTimeout(function () {
         location.reload(true);
       }, 1000);
     } else {
@@ -91,12 +98,12 @@ async function postReply(id, input) {
   try {
     if (input.value.length > 140) throw new Error('回覆長度上限為 140 個字元！')
     if (input.value.length === 0) throw new Error('內容不可為空白！')
-    const response = await fetch(`/api/tweets/${id}/replies`, {
+    const response = await fetch(`/tweets/${id}/replies`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ reply: input.value })
+      body: JSON.stringify({ comment: input.value })
     });
 
     if (response.ok) {
@@ -105,7 +112,7 @@ async function postReply(id, input) {
       // input.value = null
       // document.querySelector('span.error-message').innerText = null
       postNotification('green', '回覆成功', 'top')
-      setTimeout(function() {
+      setTimeout(function () {
         location.reload(true);
       }, 1000);
     } else {
@@ -124,7 +131,7 @@ async function postReply(id, input) {
 async function likeOfProfile(button) {
   const tweetId = button.parentElement.id
   const likeCountElement = document.querySelector('.like.number');
- 
+
   try {
     if (!button.classList.contains('liked')) {
       const response = await fetch(`/api/tweets/${tweetId}/like`, { method: 'POST' })

@@ -2,6 +2,7 @@ const { User, Tweet, Like } = require('../../../models')
 const bcrypt = require('bcryptjs') //載入 bcrypt
 const helpers = require('../../../_helpers')
 const Handlebars = require('handlebars')
+const { Op } = require('sequelize');
 const abbreviateNumber = require('../../../helpers/abbreviateNumber')
 
 Handlebars.registerHelper('relativeTime', function (value) {
@@ -31,11 +32,11 @@ Handlebars.registerHelper('relativeTime', function (value) {
 });
 
 const adminController = {
-  adminSigninPage: (req, res) => {
-    return res.render('admin/signin')
+  adminSignInPage: (req, res) => {
+    return res.render('admin/signin', {layout: false})
   },
 
-  adminSignin: (req, res) => {
+  adminSignIn: (req, res) => {
     req.flash('success_messages', '後台成功登入！')
     res.redirect('/admin/tweets')
   },
@@ -66,7 +67,9 @@ const adminController = {
 
   adminUsers: (req, res, next) => {
     User.findAll({
-      where: { role: 'regular' },
+      where: {
+        role: null
+      },
       include: [
         { model: Tweet, include: { model: Like } },
         { model: User, as: 'Followers' },

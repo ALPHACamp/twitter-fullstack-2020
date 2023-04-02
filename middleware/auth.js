@@ -3,8 +3,7 @@ const helpers = require('../_helpers')
 const authenticatedRegular = (req, res, next) => {
   // if (req.isAuthenticated)
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'Regular') return next()
-    // not Regular
+    if (helpers.getUser(req).role !== 'admin') return next()
     res.redirect('/admin/tweets') 
   } else {
     res.redirect('/signin')
@@ -14,9 +13,9 @@ const authenticatedRegular = (req, res, next) => {
 const authenticatedAdmin = (req, res, next) => {
   // if (req.isAuthenticated)
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'Admin') return next()
+    if (helpers.getUser(req).role === 'admin') return next()
     // not Admin
-    res.redirect('/')
+    res.redirect('/tweets')
   } else {
     res.redirect('/signin')
   }

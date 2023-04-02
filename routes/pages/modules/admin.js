@@ -4,7 +4,7 @@ const adminController = require('../../../controllers/pages/admin/admin-controll
 
 
 
-router.get('/signin', adminController.adminSignin)
+router.delete('/tweets/:id', adminController.deleteTweet)
 router.get('/tweets', adminController.adminTweets)
 router.get('/users', adminController.adminUsers)
 

@@ -4,10 +4,10 @@ const dateFormatter = require('../../helpers/dateFormatter')
 const helpers = require('../../_helpers')
 const userController = {
   signUpPage: (req, res) => {
-    res.render('signup')
+    res.render('signup' , {layout: false})
   },
   signUp: (req, res, next) => {
-    if (req.body.password !== req.body.passwordCheck) throw new Error('Passwords do not match!')
+    if (req.body.password !== req.body.checkPassword) throw new Error('Passwords do not match!')
 
     User.findOne({ where: { email: req.body.email } })
       .then(user => {
@@ -27,7 +27,7 @@ const userController = {
       .catch(err => next(err))
   },
   signInPage: (req, res) => {
-    res.render('signin')
+    res.render('signin' , {layout: false})
   },
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
@@ -202,7 +202,6 @@ const userController = {
   settingPage: async (req, res, next) => {
     try {
       const loginUser = helpers.getUser(req)
-      console.log(loginUser.id)
       const findUser = await User.findByPk(loginUser.id, { raw: true })
       if (!findUser) throw new Error('Can not find user!')
       return res.render('setting', { findUser, isSetting: true })
