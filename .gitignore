@@ -89,3 +89,6 @@ typings/
 # Others
 .note.ac
 
+.scss
+
+gulpfile.js
