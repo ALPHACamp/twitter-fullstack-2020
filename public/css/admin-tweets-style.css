@@ -19,7 +19,7 @@
   font-size: 14px;
 }
 .admin-tweets-wrapper .description {
-  width: 530px;
+  width: 830px;
 }
 .admin-tweets-wrapper .reply-like {
   position: relative;
@@ -64,4 +64,4 @@
 }
 .admin-tweets-wrapper .like :not(.liked) .notLiked {
   display: inline;
-}/*# sourceMappingURL=admin-tweet-style.css.map */
+}/*# sourceMappingURL=admin-tweets-style.css.map */

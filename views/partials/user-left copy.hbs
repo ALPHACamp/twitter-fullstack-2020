@@ -1,0 +1,12 @@
+  <div class="nav nav-pills flex-column vh-100" >
+    {{>logo}}
+    <a class="nav-link {{#if isHome}}active{{/if}}"  href="/tweets" >{{>home}}首頁</a>
+    <a class="nav-link {{#if isProfile}}active{{/if}}"  href="/users/{{user.id}}/tweets" >{{>user}}個人資料</a>
+    <a class="nav-link {{#if isSetting}}active{{/if}}"  href="/setting" > {{>setting}}設定</a>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postTweet">推文</button>
+    <a class="nav-link mt-auto" href="/logout">{{>logout}}登出</a>
+  </div>
+
+
+
+

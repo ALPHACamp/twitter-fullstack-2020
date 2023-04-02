@@ -1,0 +1,28 @@
+.admin-users-wrapper {
+  overflow: hidden;
+}
+.admin-users-wrapper .user-card {
+  width: 210px;
+  height: 314px;
+  border-radius: 10px;
+  background-color: #F6F7F8;
+  background-size: auto 140px;
+  background-repeat: no-repeat;
+}
+.admin-users-wrapper .user-info {
+  margin-top: 64px;
+}
+.admin-users-wrapper .user-info .avatar img {
+  border-radius: 50px;
+  border: 4px solid #FFFFFF;
+}
+.admin-users-wrapper .user-info .account {
+  font-size: 14px;
+  font-weight: 400;
+  color: #6C757D;
+}
+.admin-users-wrapper .user-info .counts span {
+  font-family: "Montserrat", sans-serif !important;
+  font-weight: 500;
+  font-size: 16px;
+}/*# sourceMappingURL=admin-users-style.css.map */
