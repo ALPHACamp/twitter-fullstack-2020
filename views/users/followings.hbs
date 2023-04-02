@@ -20,7 +20,18 @@
             </a>
           </div>
         </div>
-        {{> follower-tabs}}
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a href="/users/{{user.id}}/followers">
+              <button class="nav-link" id="nav-followers-tab" data-bs-toggle="tab" data-bs-target="#nav-followers"
+                type="button" role="tab" aria-controls="nav-followers" aria-selected="true">追隨者</button>
+            </a>
+            <a href="/users/{{user.id}}/followings">
+              <button class="nav-link active" id="nav-followings-tab" data-bs-toggle="tab" data-bs-target="#nav-followings" type="button"
+                role="tab" aria-controls="nav-followings" aria-selected="false">正在追隨</button>
+            </a>
+          </div>
+        </nav>
         <div class="tab-content" id="nav-tabContent">
           {{#each followings}}
           <div class="user-replies">
@@ -48,5 +59,31 @@
       </div>
     </div>
     {{> rightbar}}
+  </div>
+</div>
+
+{{!-- user推文彈跳視窗 --}}
+<div class="modal" tabindex="-1" id="user-tweet-modal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img src="{{user.avatar}}" class="fl" width="50px" height="50px"
+          style="border-radius:50%; margin-right: 3px;" />
+        <form action="/tweets" method="POST">
+          <textarea class="modal-input-tweets" id="user-tweet-description-in-replies" type="description"
+            placeholder="有什麼新鮮事？" name="description" id="user-tweet-description" maxlength="150" rows="3" cols="100"
+            required></textarea>
+          <div class="d-flex flex-row-reverse mb-1">
+            <button class="tweetbtn" type="submit">推文</button>
+            <p id="user-tweet-description-alert-in-replies" class="user-tweet-alertMsg"></p>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
   </div>
 </div>

@@ -51,22 +51,6 @@ passport.use(
   ),
 );
 
-const jwt = require('jsonwebtoken');
-const passportJWT = require('passport-jwt');
-const ExtractJwt = passportJWT.ExtractJwt;
-const JwtStrategy = passportJWT.Strategy;
-
-let jwtOptions = {};
-jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-jwtOptions.secretOrKey = 'test';
-
-let strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
-  User.findByPk(jwt_payload.id).then((user) => {
-    if (!user) return next(null, false);
-    return next(null, user);
-  });
-});
-passport.use(strategy);
 
 passport.serializeUser((user, cb) => {
   cb(null, user.id);

@@ -18,11 +18,11 @@
         </div>
         {{#if this.isFollowed }}
         <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-          <button class="btn-follow" name="id" value="{{this.id}}">正在追蹤</button>
+          <button class="btn-follow" name="id" value="{{this.id}}">正在追隨</button>
         </form>
         {{else}}
         <form action="/followships" method="POST">
-          <button class="btn-unfollow" name="id" value="{{this.id}}">追蹤</button>
+          <button class="btn-unfollow" name="id" value="{{this.id}}">追隨</button>
         </form>
         {{/if}}
       </div>

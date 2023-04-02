@@ -118,6 +118,12 @@ const userController = {
                 ],
                 order: [['Replies', 'updatedAt', 'DESC']],
             });
+
+            if (!user) {
+                req.flash('errorMessage', '用戶未有任何回覆');
+                return res.redirect(`/users/${userId}/tweets`);
+            }
+
             const followings = helpers.getUser(req).Followings.map((u) => u.id);
             const data = user.toJSON();
             let replies = data.Replies;
@@ -137,6 +143,7 @@ const userController = {
                 }
             });
             const repliesWithTweet = resultTweets.flatMap((tweet) => tweet.replies);
+
             return res.render('users/replies', {
                 user: helpers.getUser(req),
                 visitUser: data,
