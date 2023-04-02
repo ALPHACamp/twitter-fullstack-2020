@@ -1,6 +1,7 @@
 # Simple Twitter - full stack
 使用基於node.js的express.js應用程式框架，全端開發simple twitter專案
-![cover](cover.png)
+![cover1](cover1.png)
+![cover2](cover2.png)
 
 ## 專案功能
 - 所有頁面(除了登入和註冊頁)
