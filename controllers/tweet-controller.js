@@ -16,7 +16,7 @@ const tweetController = {
           isLiked: t.toJSON().Likes.map((i) => i.UserId).includes(helpers.getUser(req).id),
         }))
         const likes = helpers.getUser(req).Likes
-        const isLiked = likes ? likes.map((i) => i.id).includes(data.id) : false;
+        const isLiked = likes ? likes.map((i) => i.id).includes(data.find(d => d.id === req.params.id).id) : false;
         return res.render('tweets', {
           isLiked: isLiked,
           tweets: data,
@@ -62,11 +62,17 @@ const tweetController = {
       .then(tweet => {
         const isLiked = tweet.Likes.map((i) => i.UserId).includes(helpers.getUser(req).id)
         const reply = tweet.toJSON().Replies.map(i => {
-          i.isLiked = i.Likes.map(id => id.UserId).includes(helpers.getUser(req).id)
-          i.followingByReply.map(j => {
-            j.isLiked = j.Likes.map(id => id.UserId).includes(helpers.getUser(req).id)
-          })
-          return i
+          const isLiked = i.Likes.map(id => id.UserId).includes(helpers.getUser(req).id)
+          const data = {
+            ...i,
+            isLiked,
+            likesCount: i.Likes.length,
+            replies: i.followingByReply.map(j => ({
+              ...j.dataValues,
+              isLiked: j.Likes.map(id => id.UserId).includes(helpers.getUser(req).id)
+            }))
+          }
+          return data
         })
         res.render('replies', {
           isLiked,
