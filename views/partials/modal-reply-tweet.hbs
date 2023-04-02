@@ -7,7 +7,7 @@
       </div>
       <div class="post-window mx-4 my-3">
         <img src="{{user.avatar}}" width="50" height="50" alt="">
-        <textarea id="tweetInput" rows="6" wrap="soft" type="text" placeholder="有什麼新鮮事"></textarea>
+        <textarea id="tweetInput" rows="6" wrap="soft" type="text" placeholder="輸入您的回覆"></textarea>
         <span class="error-message"></span>
         <button id="tweetButton" class="ms-auto" onclick="postTweet(this.previousElementSibling.previousElementSibling)">推文</button>
       </div>
@@ -32,7 +32,7 @@
       {{!-- reply window --}}
       <div class="post-window mx-4 my-3">
         <img src="{{user.avatar}}" width="50" height="50" alt="">
-        <textarea id="tweetInput" rows="6" wrap="soft" type="text" placeholder="有什麼新鮮事"></textarea>
+        <textarea id="tweetInput" rows="6" wrap="soft" type="text" placeholder="輸入您的回覆"></textarea>
         <span class="error-message"></span>
         <button id="tweetButton" class="ms-auto" onclick="postReply(document.querySelector('.reply.modal .description').id, this.previousElementSibling.previousElementSibling)">回覆</button>
       </div>

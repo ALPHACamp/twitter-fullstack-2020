@@ -155,7 +155,7 @@ async function replyOfProfile(button) {
   const templateSource = document.getElementById('tweet-template')
   const tweetHTML = document.querySelector('.reply.modal .tweet')
   try {
-    const response = await fetch(`api/tweets/${tweetId}/replies`, { method: 'GET' })
+    const response = await fetch(`/api/tweets/${tweetId}`, { method: 'GET' })
     const data = await response.json()
     const template = Handlebars.compile(templateSource.innerHTML);
     const html = template({ tweet: data.tweet });
