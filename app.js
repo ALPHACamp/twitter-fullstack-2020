@@ -18,7 +18,7 @@ app.engine('hbs', handlebars({ extname: '.hbs', helpers: require('./config/handl
 app.set('view engine', 'hbs')
 app.use(methodOverride('_method'));
 app.use(express.static('public'))
-app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }));
+app.use(session({ secret: 'secret', resave: false, saveUninitialized: true }))
 app.use(express.urlencoded({ extended: true }))
 app.use(passport.initialize())
 app.use(passport.session())
