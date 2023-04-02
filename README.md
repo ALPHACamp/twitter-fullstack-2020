@@ -101,11 +101,13 @@ npm run dev
 - chai: 4.2.0
 - connect-flash: 0.1.1
 - cross-env: 7.0.3
+- dotenv: 10.0.0
 - express: 4.16.4
 - express-handlebars: 3.0.0
 - express-session: 1.15.6
 - Bootstrap 5.0.2
 - faker: 4.1.0
+- imgur: 1.0.2
 - jsonwebtoken: 8.5.1
 - method-override: 3.0.0
 - mocha: 6.0.2
