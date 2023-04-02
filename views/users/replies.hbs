@@ -1,0 +1,205 @@
+<div class="container">
+  <div class="row">
+    {{> leftbar}}
+    <div class="col-7">
+      <div class="user-profile-page">
+        <div class="user-header d-flex align-items-center mt-3">
+          <div class="user-profile-header-back flex-shrink-0">
+            <a href="/tweets">
+              <img src="/images/back@2x.png" alt="home">
+            </a>
+          </div>
+          <div class="user-profile-header-info flex-grow-1">
+            <a href="/users/{{visitUser.id}}">
+              <div class="user-profile-header-nickname">
+                <h5 class="mb-0">{{subText visitUser.name 20}}</h5>
+              </div>
+              <div class="user-profile-header-tweets">
+                <p class="mb-0">{{tweetsCount}} 推文</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="user-profile">
+          <div class="user-profile-cover">
+            <div class="cover-image">
+              <img src="{{visitUser.cover}}" alt="Cover Image">
+            </div>
+          </div>
+          <div class="user-profile-about">
+            <div class="user-profile-image">
+              <img src="{{visitUser.avatar}}" alt="Profile Image">
+            </div>
+            {{#ifCond visitUser.id user.id}}
+            <button type="button" class="user-profile-edit-btn" data-bs-toggle="modal"
+              data-bs-target="#editProfileModal">編輯個人資料</button>
+            {{else}}
+            <div class="d-flex justify-content-between align-items-center" style="float: right;width: 208px;height: 40px;">
+              <img src="/images/btn_msgmsg.png" style="width: 40px;height:40px;">
+              {{#if visitUser.isNotified}}
+              {{!-- <form action="/notice/{{visitUser.id}}?_method=DELETE"> --}}
+                <button class="border-0" type="submit" style="background-color: white;"> <img src="/images/btn_notfi_fill.png"
+                    style="width: 40px;height:40px;"></button>
+                {{!--
+              </form> --}}
+              {{else}}
+              {{!-- <form action="/notice/{{visitUser.id}}"> --}}
+                <button class="border-0" type="submit" style="background-color: white;"> <img src="/images/btn_notfibell.png"
+                    style="width: 40px;height:40px;"></button>
+                {{!--
+              </form> --}}
+              {{/if}}
+              {{#if isFollowing}}
+              <form action="/followships/{{visitUser.id}}?_method=DELETE" method="POST">
+                <button type="submit" class="btn" style="background: #FF6600;color:white;border-radius: 50px;">正在跟隨</button>
+              </form>
+              {{else}}
+              <form action="/followships" method="POST">
+                <button class="btn btn-outline" style="color: #FF6600;border-radius: 50px; border: 1px solid #FF6600;" name="id"
+                  value="{{visitUser.id}}">追蹤</button>
+              </form>
+              {{/if}}
+            </div>
+            {{/ifCond}}
+            {{!-- User profile edit modal --}}
+            <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <form action="/api/users/{{user.id}}" enctype="multipart/form-data" method="post">
+                  <input type="hidden" name="_method" value="PUT">
+                  <div class="modal-content user-profile-edit">
+                    <!-- Modal header -->
+                    <div class="modal-header user-profile-edit d-flex">
+                      <div class="p-2">
+                        <img src="/images/edit-profile-close@2x.png" class="close-image user-profile-edit" data-bs-dismiss="modal"
+                          alt="Close">
+                      </div>
+                      <div class="p-2 flex-grow-1">
+                        <b class="modal-title user-profile-edit mb-0" id="editProfileModalLabel">編輯個人資料</b>
+                      </div>
+                      <div class="p-2">
+                        <button type="submit" class="btn custom-save">儲存</button>
+                      </div>
+                    </div>
+                    <div class="modal-body user-profile-edit">
+                      <div class="user-profile-edit-cover">
+                        <label for="cover">
+                          <img src="{{user.cover}}" alt="Cover Image" class="image-hover-effect" style="cursor: pointer;">
+                        </label>
+                        <input type="file" class="user-profile-edit-form-control d-none" id="cover" name="cover" accept="image/*">
+                      </div>
+                      <div class="user-profile-edit-image">
+                        <label for="avatar">
+                          <img src="{{user.avatar}}" alt="Profile Image" class="image-hover-effect" style="cursor: pointer;">
+                        </label>
+                        <input type="file" class="user-profile-edit-form-control d-none" id="avatar" name="avatar" accept="image/*">
+                      </div>
+                      <!-- Name input -->
+                      <div class="user-profile-edit-form">
+                        <label for="name" class="user-profile-edit-form-label">名稱</label>
+                        <input type="text" class="user-profile-edit-form-control" id="name" name="name" maxlength="50"
+                          placeholder="請輸入使用者名稱" value="{{user.name}}">
+                      </div>
+                      <span class="form-text float-end" id="name-char-count">0 / 50</span>
+                      <br>
+                      <!-- Self-introduction input -->
+                      <div class="user-profile-edit-form">
+                        <label for="self-introduction" class="user-profile-edit-form-label">自我介紹</label>
+                        <textarea class="user-profile-edit-form-control" id="self-introduction" name="introduction" rows="4"
+                          maxlength="160" placeholder="請輸入自我介紹">{{user.introduction}}</textarea>
+                      </div>
+                      <span class="form-text float-end" id="self-introduction-char-count">0 / 160</span>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="user-profile-about-nickname">
+              <h5 class="mb-0">{{subText visitUser.name 20}}</h5>
+            </div>
+            <div class="user-profile-about-name">
+              <p class="mb-0">@{{subText visitUser.account 20}}</p>
+            </div>
+            <div class="user-profile-about-description">
+              <p class="mt-2">{{visitUser.introduction}}</p>
+            </div>
+            <div class="user-profile-about-follow">
+              <a href="/users/1/followers">
+                <p><span class="user-profile-follow-count">{{visitUser.Followers.length}} 個</span>跟隨中</p>
+              </a>
+              <a href="/users/1/followings">
+                <p><span class="user-profile-follow-count">{{visitUser.Followings.length}} 位</span>跟隨者</p>
+              </a>
+            </div>
+          </div>
+        </div>
+        {{>user-tabs route='replies'}}
+        <br>
+        {{#each visitUser.Replies}}
+        <div class="user-replies">
+          <a href="/users/{{../visitUser.id}}">
+          <img src="{{../visitUser.avatar}}" width="50px" height="50px" style="border-radius:50%;" />
+          <div class="user-replies-content">
+            <div class="user-replies-name-time">
+              <b>{{subText ../visitUser.name 20}}</b>
+              <span>@{{subText ../visitUser.account 20}}・{{moment this.createdAt}}</span>
+            </div>
+          </a>
+            <div class="user-replies-details">
+              <div class="user-replies-details-reply-to">
+                <p>回覆
+                  <a href="/users/{{tweetUser.id}}">
+                    <span class="user-replies-details-reply-to-name">@{{tweetUser.name}}</span>
+                  </a>
+                </p>
+                <div class="user-replies-details-reply">
+                  <a href="/tweets/{{this.Tweet.id}}">
+                  <p>{{subText this.comment 140}}</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        {{/each}}
+      </div>
+    </div>
+    {{> rightbar}}
+  </div>
+</div>
+
+{{!-- user推文彈跳視窗 --}}
+<div class="modal" tabindex="-1" id="user-tweet-modal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img src="{{user.avatar}}" class="fl" width="50px" height="50px"
+          style="border-radius:50%; margin-right: 3px;" />
+        <form action="/tweets" method="POST">
+          <textarea class="modal-input-tweets" id="user-tweet-description-in-replies" type="description"
+            placeholder="有什麼新鮮事？" name="description" id="user-tweet-description" maxlength="150" rows="3" cols="100"
+            required></textarea>
+          <div class="d-flex flex-row-reverse mb-1">
+            <button class="tweetbtn" type="submit">推文</button>
+            <p id="user-tweet-description-alert-in-replies" class="user-tweet-alertMsg"></p>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('name').addEventListener('input', function () {
+    document.getElementById('name-char-count').textContent = this.value.length + ' / 50';
+  });
+
+  document.getElementById('self-introduction').addEventListener('input', function () {
+    document.getElementById('self-introduction-char-count').textContent = this.value.length + ' / 160';
+  });
+</script>

@@ -1,0 +1,182 @@
+<div class="container">
+  <div class="row">
+    {{> leftbar}}
+    <div class="col-7">
+      <div class="main-page">
+        <h4><strong>首頁</strong></h4>
+      </div>
+      <hr>
+      <div class="tweet-post">
+        <a href="/users/{{user.id}}">
+          <img src="{{user.avatar}}" class="fl" width="50px" height="50px" style="border-radius:50%; margin-right: 3px;" />
+        </a>
+
+        <div class="tweet-box" data-bs-toggle="modal" data-bs-target="#user-tweet-modal">
+          <form action="">
+            <textarea class="modal-input-tweets" placeholder="有什麼新鮮事？" type="description" name="description" id=""
+              maxlength="145" rows="3" cols="100"></textarea>
+          </form>
+          <div class="d-flex flex-row-reverse mb-1">
+            <button class="tweetbtn">推文</button>
+          </div>
+        </div>
+        {{!-- user推文彈跳視窗 --}}
+        <div class="modal" tabindex="-1" id="user-tweet-modal">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <a href="/users/{{user.id}}">
+                  <img src="{{user.avatar}}" class="fl" width="50px" height="50px" style="border-radius:50%; margin-right: 3px;" />
+                </a>
+                
+                <form action="/tweets" method="POST">
+                  <textarea class="modal-input-tweets" id="user-tweet-description-in-main" type="description"
+                    placeholder="有什麼新鮮事？" name="description" id="user-tweet-description" maxlength="150" rows="3"
+                    cols="100" required></textarea>
+                  <div class="d-flex flex-row-reverse mb-1">
+                    <button class="tweetbtn" type="submit">推文</button>
+                    <p id="user-tweet-description-alert-in-main" class="user-tweet-alertMsg"></p>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="border: 2px solid #E6ECF0;"></div>
+      <div class="mt-5">
+        {{#each tweets}}
+        <div>
+          <div class="row">
+            <div class="col-1">
+              <a href="/users/{{this.User.dataValues.id}}">
+                <img src="{{this.User.dataValues.avatar}}" class="fl" width="50px" height="50px"
+                  style="border-radius:50%; margin-right: 3px;" />
+              </a>
+            </div>
+            <div class="col-11">
+              <div>
+                <a href="/users/{{this.User.dataValues.id}}"><strong>{{this.User.dataValues.name}}</strong></a>
+                <span style="color: #6C757D;">@{{this.User.dataValues.account}}．{{moment this.createdAt}}</span>
+              </div>
+              <p data-bs-toggle="modal" data-bs-target="#reply-modal{{this.id}}">{{this.description}}</p>
+            </div>
+          </div>
+          <div class="d-flex">
+            <form action="/tweets/{{this.id}}" method="GET">
+              <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
+                  src="/images/reply-outlined@2x.png" alt="reply"></button>
+              <span
+                style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Replies.length}}</span>
+            </form>
+            {{#if this.isLiked}}
+            <form action="/tweets/{{this.id}}/unlike" method="POST">
+              <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
+                  src="/images/like-filled@2x.png" alt="unlike"></button>
+              <span
+                style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Likes.length}}</span>
+            </form>
+            {{else}}
+            <form action="/tweets/{{this.id}}/like" method="POST">
+              <button type="submit" class="btn" style="padding-right: 0px;"><img class="left-bar-icon"
+                  src="/images/like-outlined@2x.png" alt="like"></button>
+              <span
+                style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.Likes.length}}</span>
+            </form>
+            {{/if}}
+          </div>
+          <hr>
+        </div>
+        {{!-- 回覆彈跳視窗 --}}
+        <div class="modal fade" tabindex="-1" id="reply-modal{{this.id}}">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-2">
+                    <a href="/users/{{this.User.dataValues.id}}">
+                      <img src="{{this.User.dataValues.avatar}}" class="fl" width="50px" height="50px"
+                        style="border-radius:50%; margin-right: 3px;" />
+                    </a>
+                    <div class="reply-modal-vr-line"></div>
+                  </div>
+                  <div class="col-10">
+                    <div>
+                      <a href="/users/{{this.User.dataValues.id}}"><strong>{{this.User.dataValues.name}}</strong></a>
+                      <span style="color: #6C757D;"> @{{this.User.dataValues.account}}‧{{moment this.createdAt}}</span>
+                    </div>
+                    <div>
+                      <p class="mb-5">{{this.description}}</p>
+                      <span>回覆給<span class="ms-1"
+                          style="color: #FF6600;">@{{this.User.dataValues.account}}</span></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-3"></div>
+                <a href="/users/{{../user.id}}">
+                  <img src="{{../user.avatar}}" class="fl" width="50px" height="50px"
+                    style="border-radius:50%; margin-right: 3px;" />
+                </a>
+                <form action="/tweets/{{this.id}}/replies" method="POST">
+                  <textarea class="modal-input-tweets" id="user-reply-in-main" placeholder="推你的回覆" name="comment"
+                    maxlength="145" rows="4" cols="100" required></textarea>
+                  <div class="d-flex flex-row-reverse mb-1">
+                    <button class="tweetbtn" type="submit">回覆</button>
+                    <p id="user-reply-alert-in-main" class="user-reply-alertMsg"></p>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{> rightbar}}
+  </div>
+</div>
+
+<script>
+  const userTweetDescription = document.getElementById('user-tweet-description-in-main')
+  const userTweetDescriptionAlertMsg = document.getElementById('user-tweet-description-alert-in-main')
+  const userReplyDescription = document.getElementById('user-reply-in-main')
+  const userReplyDescriptionAlertMsg = document.getElementById('user-reply-alert-in-main')
+
+  userTweetDescription.addEventListener('input', function userTweetModalMsg(e) {
+    const tweetContent = e.target.value
+    const trimedTweetCnt = tweetContent.trim()
+    console.log(tweetContent)
+    console.log(trimedTweetCnt.length)
+    if(!trimedTweetCnt.length) {
+      userTweetDescriptionAlertMsg.innerHTML = '內容不可空白'
+    } else if (trimedTweetCnt.length > 0 && trimedTweetCnt.length < 140) {
+      userTweetDescriptionAlertMsg.innerHTML = `${trimedTweetCnt.length}/140`
+    }else if (trimedTweetCnt.length > 140){
+      userTweetDescriptionAlertMsg.innerHTML = '內容不可超過 140 字'
+    }
+  })
+
+  userReplyDescription.addEventListener('input', function userTweetModalMsg(e) {
+      const replyContent = e.target.value
+      const trimedReplyCnt = replyContent.trim()
+      console.log(replyContent)
+      console.log(trimedReplyCnt.length)
+      if (!trimedReplyCnt.length) {
+        userReplyDescriptionAlertMsg.innerHTML = '內容不可空白'
+      } else if (trimedReplyCnt.length > 0 && trimedReplyCnt.length < 140) {
+        userReplyDescriptionAlertMsg.innerHTML = `${trimedReplyCnt.length}/140`
+      } else if (trimedReplyCnt.length > 140) {
+        userReplyDescriptionAlertMsg.innerHTML = '內容不可超過 140 字'
+      }
+    })
+</script>

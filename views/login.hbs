@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="main mx-auto " style="width:356px;height:400px;  margin-top:64px;">
+        <div class="mx-auto" style="width: 50px; height: 50px;" id="img_panel">
+            <img src="images/AC-icon@2x.png" style="width: 40px; height: 40px;" class="text-center">
+        </div>
+        <h3 class="text-center"
+            style="margin-top:24px; margin-bottom:40px;font-weight:700;font-size: 28px;line-height: 26px;">
+            登入Alphitter</h3>
+        <form action="/signin" method="POST" style="margin-bottom: 22px;">
+            <div
+                style="background-color:#F5F8FA; margin-bottom:32px; border-radius:2px; border-bottom:2px solid #657786;">
+                <label for="account" class="form-label mb-0"
+                    style="margin-left:10px;color:#696974;font-size: 14px;line-height: 22px;">帳號</label>
+                <input type="text" class="form-control border-0" id="account" name="account" placeholder="請輸入帳號"
+                    style="background-color:#F5F8FA;color:#B5B5BE;font-size: 16px;line-height: 26px;">
+            </div>
+            <div
+                style="background-color:#F5F8FA; margin-bottom:40px; border-radius:2px; border-bottom:2px solid #657786;">
+                <label for="password" class="form-label mb-0"
+                    style="margin-left:10px;color:#696974;font-size: 14px;line-height: 22px;">密碼</label>
+                <input type="password" class="form-control  border-0" id="password" name="password" placeholder="請輸入密碼"
+                    style="background-color:#F5F8FA;color:#B5B5BE;font-size: 16px;line-height: 26px;">
+            </div>
+            <button type="submit" class="btn"
+                style="width:356px; background-color:#FF6600; border-radius:50px; color:#FFFFFF;font-size: 20px;line-height: 30px;">
+                登入
+            </button>
+        </form>
+        <div class="d-flex justify-content-end align-items-center" style="height: 36px;">
+            <a style="font-size: 16px;line-height: 24px;margin-right:12px;text-decoration:underline" href="/signup"
+                class="text-primary">註冊</a>
+            <b style="font-size: 16px;line-height: 24px;margin-right:12px;">・</b>
+            <a style="font-size: 16px;line-height: 24px;text-decoration:underline" href="/admin/signin"
+                class="text-primary">後台登入</a>
+        </div>
+    </div>
+</div>

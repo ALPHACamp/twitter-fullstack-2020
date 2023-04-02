@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="row">
+        {{>leftbar}}
+        <div class="ms-4 " style="border-right:1px solid #E6ECF0; border-left:1px solid #E6ECF0;  width:641px; ">
+            <h4 class="m-4" style="font-weight: 700;font-size: 24px;line-height: 26px;">帳戶設定</h4>
+            <hr style="width: 639px;height: 1px; color:#E6ECF0">
+            <form action="/edit?_method=PATCH" method="POST" class="p-4">
+                <div
+                    style="background-color:#F5F8FA; margin-bottom:32px; border-radius:2px; border-bottom:2px solid #657786;">
+                    <label for="account" class="form-label mb-0"
+                        style="margin-left:10px;color:#696974;font-size: 14px;line-height: 22px;">帳號</label>
+                    <input type="text" class="form-control border-0" id="account" name="account" placeholder="請輸入帳號"
+                        style="background-color:#F5F8FA;color:#B5B5BE;font-size: 16px;line-height: 26px;"
+                        value="{{user.account}}">
+                </div>
+                <div
+                    style="background-color:#F5F8FA; margin-bottom:32px; border-radius:2px; border-bottom:2px solid #657786;">
+                    <label for="name" class="form-label mb-0"
+                        style="margin-left:10px;color:#696974;font-size: 14px;line-height: 22px;">名稱</label>
+                    <input type="text" class="form-control border-0" id="name" name="name" placeholder="請輸入使用者名稱"
+                        style="background-color:#F5F8FA;color:#B5B5BE;font-size: 16px;line-height: 26px;" maxlength="50"
+                        value="{{user.name}}">
+                </div>
+                <div
+                    style="background-color:#F5F8FA; margin-bottom:32px; border-radius:2px; border-bottom:2px solid #657786;">
+                    <label for="email" class="form-label mb-0"
+                        style="margin-left:10px;color:#696974;font-size: 14px;line-height: 22px;">Email</label>
+                    <input type="email" class="form-control border-0" id="email" name="email" placeholder="請輸入Email"
+                        style="background-color:#F5F8FA;color:#B5B5BE;font-size: 16px;line-height: 26px;"
+                        value="{{user.email}}">
+
+                </div>
+                <div
+                    style="background-color:#F5F8FA; margin-bottom:32px; border-radius:2px; border-bottom:2px solid #657786;">
+                    <label for="password" class="form-label mb-0"
+                        style="margin-left:10px;color:#696974;font-size: 14px;line-height: 22px;">密碼</label>
+                    <input type="password" class="form-control  border-0" id="password" name="password"
+                        placeholder="請設定密碼"
+                        style="background-color:#F5F8FA;color:#B5B5BE;font-size: 16px;line-height: 26px;">
+                </div>
+                <div
+                    style="background-color:#F5F8FA; margin-bottom:40px; border-radius:2px; border-bottom:2px solid #657786;">
+                    <label for="checkPassword" class="form-label mb-0"
+                        style="margin-left:10px;color:#696974;font-size: 14px;line-height: 22px;">密碼確認</label>
+                    <input type="password" class="form-control border-0" id="checkPassword" name="checkPassword"
+                        placeholder="請再次輸入密碼"
+                        style="background-color:#F5F8FA;color:#B5B5BE;font-size: 16px;line-height: 26px;">
+
+                </div>
+                <div class="d-flex justify-content-end"><button type="submit" class="btn"
+                        style=" width: 88px;height: 46px; background-color:#FF6600; border-radius:50px; color:#FFFFFF;font-size: 20px;line-height: 30px;">
+                        儲存
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

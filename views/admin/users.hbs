@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  <div class="left-content">
+    <div class="navbar-content">
+      <div class="ac-icon mb-4">
+        <a href=""><img class="ac-img" width="50px" , height="50px" src="/images/AC-icon@2x.png" alt="AC icon"></a>
+      </div>
+      <div class="home mb-3">
+        <img class="left-bar-icon" src="/images/home-filled@2x.png" alt="home">
+        <a href="/admin/tweets">
+          <span><strong>貼文清單</strong></span>
+        </a>
+      </div>
+
+      <div class="personal-info mb-3">
+        <img class="left-bar-icon" src="/images/user-filled@2x.png" alt="user">
+        <a href="/admin/users">
+          <span><strong>使用者列表</strong></span>
+        </a>
+      </div>
+
+      <div class="logout">
+        <img class="left-bar-icon" src="/images/logout@2x.png" alt="setting">
+        <a href="/logout">
+          <span><strong>登出</strong></span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="admin-right-list">
+    <div class="admin-users-title">
+      使用者列表
+    </div>
+    <div class="admin-users-list">
+      {{#each userByFind}}
+      <div class="user-list-item">
+        <div class="user-list-item-cover"
+          style="background: url({{this.dataValues.cover}});background-repeat:no-repeat;background-position: center;background-size: cover;">
+        </div>
+        <div class="user-list-item-avatar">
+          <img src="{{this.dataValues.avatar}}" class="rounded-circle" style="width: 100px;height:100px;">
+        </div>
+        <div class="user-list-item-info">
+          <a href="">
+            {{this.dataValues.name}}
+          </a>
+          <div class="user-list-item-account" style="color: #657786; font-wight:500">@{{this.dataValues.account}}
+          </div>
+          <div class="user-list-item-icons mt-2">
+            <div class="reply-data mr-4">
+              {{!-- <i class="icon-reply" style="font-size: 18px;color: #657786"></i> --}}
+              <img class="reply-icon" src="/images/reply@1X.png" alt="reply">
+              <span>{{this.dataValues.Tweets.length}}</span>
+            </div>
+            <div class="like-data">
+              {{!-- <i class="icon-like" style="font-size: 18px;color: #657786;"></i> --}}
+              <img class="like-icon" src="/images/like@1X.png" alt="like">
+              <span>{{this.dataValues.Likes.length}}</span>
+            </div>
+          </div>
+          <div class="user-list-item-follow mt-2">
+            <div class="user-list-item-following mr-3">
+              {{this.dataValues.Followings.length}} <span>個跟隨中</span>
+            </div>
+            <div class="user-list-item-follower ">
+              {{this.dataValues.Followers.length}} <span>個跟隨者</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each }}
+
+    </div>
+  </div>
+</div>

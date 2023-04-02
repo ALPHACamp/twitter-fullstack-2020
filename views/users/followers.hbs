@@ -1,0 +1,97 @@
+<div class="container">
+  <div class="row">
+    {{> leftbar}}
+    <div class="col-7">
+      <div class="user-profile-page">
+        <div class="user-header d-flex align-items-center mt-3">
+          <div class="user-profile-header-back flex-shrink-0">
+            <a href="/tweets">
+              <img src="/images/back@2x.png" alt="home">
+            </a>
+          </div>
+          <div class="user-profile-header-info flex-grow-1">
+            <a href="/user/tweets">
+              <div class="user-profile-header-nickname">
+                <h5 class="mb-0">{{otherUser.name}}</h5>
+              </div>
+              <div class="user-profile-header-tweets">
+                <p class="mb-0">{{otherUser.Tweets.length}} 推文</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a href="/users/{{user.id}}/followers">
+              <button class="nav-link active" id="nav-followers-tab" data-bs-toggle="tab" data-bs-target="#nav-followers"
+              type="button" role="tab" aria-controls="nav-followers" aria-selected="true">追隨者</button>
+            </a>
+            <a href="/users/{{user.id}}/followings">
+              <button class="nav-link" id="nav-followings-tab" data-bs-toggle="tab" data-bs-target="#nav-followings" type="button"
+              role="tab" aria-controls="nav-followings" aria-selected="false">正在追隨</button>
+            </a>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          {{#each followers}}
+          <div class="user-replies">
+            <img src="{{this.avatar}}" width="50px" height="50px" style="border-radius:50%;" />
+            <div class="user-replies-content" style="width:650px;">
+              <div class="user-replies-name-time">
+                <b class="p-2 w-75">{{this.name}}</b>
+                {{#if this.isFollowed}}
+                  <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+                    <button type="submit" class="btn"
+                      style="background: #FF6600;color:white;border-radius: 50px;">正在跟隨</button>
+                  </form>
+                {{else}}
+                  <form action="/followships" method="POST">
+                    <input type="number" name = "id" value="{{this.id}}"  style="display: none;">
+                    <button type="submit" class="btn btn-outline"
+                      style="color: #FF6600;border-radius: 50px; border: 1px solid #FF6600;">跟隨</button>
+                  </form>
+                {{/if}}
+              </div>
+              <div class="user-replies-details">
+                <div class="user-replies-details-reply-to">
+                  <div class="follower-description">
+                    <p>{{this.introduction}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    {{> rightbar}}
+  </div>
+</div>
+
+{{!-- user推文彈跳視窗 --}}
+<div class="modal" tabindex="-1" id="user-tweet-modal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img src="{{user.avatar}}" class="fl" width="50px" height="50px"
+          style="border-radius:50%; margin-right: 3px;" />
+        <form action="/tweets" method="POST">
+          <textarea class="modal-input-tweets" id="user-tweet-description-in-replies" type="description"
+            placeholder="有什麼新鮮事？" name="description" id="user-tweet-description" maxlength="150" rows="3" cols="100"
+            required></textarea>
+          <div class="d-flex flex-row-reverse mb-1">
+            <button class="tweetbtn" type="submit">推文</button>
+            <p id="user-tweet-description-alert-in-replies" class="user-tweet-alertMsg"></p>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
