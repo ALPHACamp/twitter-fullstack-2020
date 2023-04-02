@@ -38,16 +38,16 @@ const adminController = {
             .then(tweet => {
                 tweet.destroy()
                     .then(() => {
-                        req.flash('successFlashMessage', '成功刪除');
+                        req.flash('successMessage', '成功刪除');
                         return res.redirect('back')
                     })
                     .catch(() => {
-                        req.flash('errorFlashMessage', 'ERROR #A101');
+                        req.flash('errorMessage', 'ERROR #A101');
                         return res.redirect('back')
                     })
             })
             .catch(() => {
-                req.flash('errorFlashMessage', 'ERROR #A102');
+                req.flash('errorMessage', 'ERROR #A102');
                 return res.redirect('back')
             })
     },
