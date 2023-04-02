@@ -6,11 +6,11 @@ const users = Array.from({ length: 5 }).map((d, i)  => ({ //建立5個種子資�
   email: `user${i + 1}@example.com`,
   password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
   name:  `user${i + 1}`,
-  avatar: `https://loremflickr.com/200/200/avatar/?lock=${i}`,
+  avatar: `https://i.imgur.com/ehh37fR.jpg`,
   introduction: faker.lorem.text().substring(0, 160),
   role: 'user',
   account: `user${i + 1}`,
-  cover:`https://loremflickr.com/250/240/landscape/?lock=${i}` ,
+  cover:`https://i.imgur.com/ndXEE6d.jpg` ,
   createdAt: new Date(),
   updatedAt: new Date()
 }))
@@ -18,11 +18,11 @@ users.unshift({ //建立固定的管理員資料
   email: 'root@example.com',
   password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
   name:  'root',
-  avatar: 'https://loremflickr.com/200/200/avatar/?lock=10',
+  avatar: 'https://i.imgur.com/ehh37fR.jpg',
   introduction: faker.lorem.text().substring(0, 160),
   role: 'admin',
   account: 'root',
-  cover:'https://loremflickr.com/250/240/landscape/?lock=33' ,
+  cover:'https://i.imgur.com/ndXEE6d.jpg' ,
   createdAt: new Date(),
   updatedAt: new Date()
 })
