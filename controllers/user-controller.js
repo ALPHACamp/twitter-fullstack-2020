@@ -90,7 +90,6 @@ const userController = {
         if (!user) throw new Error("User didn't exist!")
         const avatarFilePath = avatar ? await imgurFileHandler(avatar[0]) : user.avatar
         const coverFilePath = cover ? await imgurFileHandler(cover[0]) : user.cover
-        console.log('avatarFilePath:', avatarFilePath)
         return user.update({
           name,
           introduction,
