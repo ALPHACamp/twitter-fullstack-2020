@@ -30,10 +30,10 @@
                 <i class="fa-solid fa-camera"
                   style="position: absolute; object-fit: cover; top: 30%; left: 45%;; width:20; height:20px; color: #FFFFFF;"></i>
               </label>
-
+              {{!-- 
                 <i class="fa-solid fa-xmark" id="delete-cover"
                   style="position: absolute; object-fit: cover; top: 30%; left: 55%;; width:20; height:20px; color: #FFFFFF"></i>
-
+              --}}
 
             </div>
 
@@ -47,7 +47,6 @@
               <i class="fas fa-camera" style="color: white;"></i>
             </label>
           </div>
-
           <div class="form-row mb-1">
             <label for="avatar" class="btn form-label">
               <input class="form-control-file" type="file" id="avatar" name="avatar" accept="image/*"
@@ -57,7 +56,7 @@
               </i>
             </label>
           </div>
-
+          
         </div>
         <div class="col-12 ms-2" style="width: 600px; background-color:#F5F8FA; height:54px;">
           <label for="name" style="font-size:14px; ">名稱</label>
@@ -105,9 +104,9 @@
     }
   }
 
-  const deleteCover = document.querySelector('#delete-cover')
-  deleteCover.addEventListener('click', function deleteCover() {
-    document.querySelector('#cover-image').srcset = 'https://i.imgur.com/ndXEE6d.jpg'
-  })
+  //const deleteCover = document.querySelector('#delete-cover')
+ // deleteCover.addEventListener('click', function deleteCover() {
+    //document.querySelector('#cover-image').srcset = 'https://i.imgur.com/ndXEE6d.jpg'
+  //})
 
 </script>
