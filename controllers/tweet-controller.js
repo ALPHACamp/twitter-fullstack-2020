@@ -28,7 +28,7 @@ const tweetController = {
     const tweetText = req.body.tweetText ? req.body.tweetText.trim() : req.body.description.trim()
     req.flash()
     if (!tweetText || tweetText.length > 140) {
-      req.flash('errorFlashMessage', '推文不可空白或超過140字!')
+      req.flash('errorMessage', '推文不可空白或超過140字!')
       return res.redirect('back')
     }
     Tweet.create({
@@ -36,11 +36,11 @@ const tweetController = {
       description: tweetText,
     })
       .then(() => {
-        req.flash('successFlashMessage', '成功新增推文!')
+        req.flash('successMessage', '成功新增推文!')
         return res.redirect('/tweets')
       })
       .catch(() => {
-        req.flash('errorFlashMessage', '新增推文失敗!')
+        req.flash('errorMessage', '新增推文失敗!')
         return res.redirect('back')
       })
   },
@@ -83,7 +83,7 @@ const tweetController = {
     const replyText = req.body.replyText ? req.body.replyText.trim() : req.body.comment.trim()
     console.log(replyText)
     if (!replyText.length || replyText.length > 140) {
-      req.flash('errorFlashMessage', '回覆不可空白或超過140字!')
+      req.flash('errorMessage', '回覆不可空白或超過140字!')
       return res.redirect('back')
     } else {
       return Reply.create({
@@ -92,11 +92,11 @@ const tweetController = {
         comment: replyText
       })
         .then(() => {
-          req.flash('successFlashMessage', '成功回覆推文!')
+          req.flash('successMessage', '成功回覆推文!')
           return res.redirect('back')
         })
         .catch(() => {
-          req.flash('errorFlashMessage', '回覆推文失敗!')
+          req.flash('errorMessage', '回覆推文失敗!')
           return res.redirect('back')
         })
     }
