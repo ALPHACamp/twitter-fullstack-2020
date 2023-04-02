@@ -124,10 +124,10 @@
             </div>
             <div class="user-profile-about-follow">
               <a href="/users/1/followers">
-                <p><span class="user-profile-follow-count">{{visitUser.Followings.length}} 個</span>跟隨中</p>
+                <p><span class="user-profile-follow-count">{{visitUser.Followers.length}} 個</span>跟隨中</p>
               </a>
               <a href="/users/1/followings">
-                <p><span class="user-profile-follow-count">{{visitUser.Followers.length}} 位</span>跟隨者</p>
+                <p><span class="user-profile-follow-count">{{visitUser.Followings.length}} 位</span>跟隨者</p>
               </a>
             </div>
           </div>
@@ -165,6 +165,32 @@
       </div>
     </div>
     {{> rightbar}}
+  </div>
+</div>
+
+{{!-- user推文彈跳視窗 --}}
+<div class="modal" tabindex="-1" id="user-tweet-modal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img src="{{user.avatar}}" class="fl" width="50px" height="50px"
+          style="border-radius:50%; margin-right: 3px;" />
+        <form action="/tweets" method="POST">
+          <textarea class="modal-input-tweets" id="user-tweet-description-in-replies" type="description"
+            placeholder="有什麼新鮮事？" name="description" id="user-tweet-description" maxlength="150" rows="3" cols="100"
+            required></textarea>
+          <div class="d-flex flex-row-reverse mb-1">
+            <button class="tweetbtn" type="submit">推文</button>
+            <p id="user-tweet-description-alert-in-replies" class="user-tweet-alertMsg"></p>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
   </div>
 </div>
 
