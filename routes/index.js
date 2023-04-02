@@ -7,6 +7,7 @@ const passport = require('../config/passport')
 const helpers = require('../_helpers')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated, adminAuthenticated } = require('../middleware/auth')
+const followUser = require('../middleware/followUser')
 
 
 router.get('/admin/signin', adminController.getSigninPage);
@@ -22,7 +23,7 @@ router.get('/signin', userController.loginPage)
 router.post('/signin', passport.authenticate('local', { successRedirect: '/tweets', failureRedirect: '/signin' }))
 
 router.get('/logout', userController.signout)
-
+router.use(followUser.topUsers);
 router.get('/users/:id/tweets', authenticated, userController.getTweets)
 router.get('/users/:id/replies', authenticated, userController.getReplies)
 router.get('/users/:id/likes', authenticated, userController.getLikes)
