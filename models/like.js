@@ -7,14 +7,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Like.belongsTo(models.User);
       Like.belongsTo(models.Tweet, {
-        foreignKey: 'PositionId',
+        foreignKey: 'TweetId',
         constraints: false,
         scope: {
           Position: 'tweet',
         },
       });
       Like.belongsTo(models.Reply, {
-        foreignKey: 'PositionId',
+        foreignKey: 'TweetId',
         constraints: false,
         scope: {
           Position: 'reply',
@@ -31,9 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     UserId: DataTypes.INTEGER,
     Position: DataTypes.STRING,
-    PositionId: DataTypes.INTEGER,
-    isLike: DataTypes.BOOLEAN,
     TweetId: DataTypes.INTEGER,
+    isLike: DataTypes.BOOLEAN,
   },
     {
       sequelize,

@@ -30,80 +30,87 @@
             <div class="user-profile-image">
               <img src="{{visitUser.avatar}}" alt="Profile Image">
             </div>
-            {{!-- {{#ifCond other_user.id user.id}} --}}
+            {{#ifCond visitUser.id user.id}}
             <button type="button" class="user-profile-edit-btn" data-bs-toggle="modal"
               data-bs-target="#editProfileModal">編輯個人資料</button>
-            {{!-- {{else}} --}}
-            {{!-- <div class="d-flex justify-content-between align-items-center"
-              style="float: right;width: 208px;height: 40px;">
+            {{else}}
+            <div class="d-flex justify-content-between align-items-center" style="float: right;width: 208px;height: 40px;">
               <img src="/images/btn_msgmsg.png" style="width: 40px;height:40px;">
-              {{#if other_user.isNotified}}
-              <form action="/notice/{{other_user.id}}?_method=DELETE">
-                <button class="border-0" type="submit" style="background-color: white;"> <img
-                    src="/images/btn_notfi_fill.png" style="width: 40px;height:40px;"></button>
-              </form>
+              {{#if visitUser.isNotified}}
+              {{!-- <form action="/notice/{{visitUser.id}}?_method=DELETE"> --}}
+                <button class="border-0" type="submit" style="background-color: white;"> <img src="/images/btn_notfi_fill.png"
+                    style="width: 40px;height:40px;"></button>
+                {{!--
+              </form> --}}
               {{else}}
-              <form action="/notice/{{other_user.id}}">
-                <button class="border-0" type="submit" style="background-color: white;"> <img
-                    src="/images/btn_notfibell.png" style="width: 40px;height:40px;"></button>
-              </form>
+              {{!-- <form action="/notice/{{visitUser.id}}"> --}}
+                <button class="border-0" type="submit" style="background-color: white;"> <img src="/images/btn_notfibell.png"
+                    style="width: 40px;height:40px;"></button>
+                {{!--
+              </form> --}}
               {{/if}}
-              {{#if other_user.isFollowed}}
-              <form action="/followships/{{other_user.id}}?_method=DELETE">
-                <button type="submit" class="btn"
-                  style="background: #FF6600;color:white;border-radius: 50px;">正在跟隨</button>
+              {{#if isFollowing}}
+              <form action="/followships/{{visitUser.id}}?_method=DELETE" method="POST">
+                <button type="submit" class="btn" style="background: #FF6600;color:white;border-radius: 50px;">正在跟隨</button>
               </form>
               {{else}}
               <form action="/followships" method="POST">
-                 <input type="number" name = "id" value="{{other_user.id}}"  style="display: none;">
-                <button type="submit" class="btn btn-outline"
-                  style="color: #FF6600;border-radius: 50px; border: 1px solid #FF6600;">跟隨</button>
+                <button class="btn btn-outline" style="color: #FF6600;border-radius: 50px; border: 1px solid #FF6600;" name="id"
+                  value="{{visitUser.id}}">追蹤</button>
               </form>
               {{/if}}
-            </div> --}}
-            {{!-- {{/ifCond}} --}}
+            </div>
+            {{/ifCond}}
             {{!-- User profile edit modal --}}
-            <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
-              aria-hidden="true">
+            <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
               <div class="modal-dialog">
-                <div class="modal-content user-profile-edit">
-                  {{!-- Modal header --}}
-                  <div class="modal-header user-profile-edit d-flex">
-                    <div class="p-2">
-                      <img src="/images/edit-profile-close@2x.png" class="close-image user-profile-edit"
-                        data-bs-dismiss="modal" alt="Close">
+                <form action="/api/users/{{user.id}}" enctype="multipart/form-data" method="post">
+                  <input type="hidden" name="_method" value="PUT">
+                  <div class="modal-content user-profile-edit">
+                    <!-- Modal header -->
+                    <div class="modal-header user-profile-edit d-flex">
+                      <div class="p-2">
+                        <img src="/images/edit-profile-close@2x.png" class="close-image user-profile-edit" data-bs-dismiss="modal"
+                          alt="Close">
+                      </div>
+                      <div class="p-2 flex-grow-1">
+                        <b class="modal-title user-profile-edit mb-0" id="editProfileModalLabel">編輯個人資料</b>
+                      </div>
+                      <div class="p-2">
+                        <button type="submit" class="btn custom-save">儲存</button>
+                      </div>
                     </div>
-                    <div class="p-2 flex-grow-1">
-                      <b class="modal-title user-profile-edit mb-0" id="editProfileModalLabel">編輯個人資料</b>
-                    </div>
-                    <div class="p-2">
-                      <button type="button" class="btn custom-save">儲存</button>
+                    <div class="modal-body user-profile-edit">
+                      <div class="user-profile-edit-cover">
+                        <label for="cover">
+                          <img src="{{user.cover}}" alt="Cover Image" class="image-hover-effect" style="cursor: pointer;">
+                        </label>
+                        <input type="file" class="user-profile-edit-form-control d-none" id="cover" name="cover" accept="image/*">
+                      </div>
+                      <div class="user-profile-edit-image">
+                        <label for="avatar">
+                          <img src="{{user.avatar}}" alt="Profile Image" class="image-hover-effect" style="cursor: pointer;">
+                        </label>
+                        <input type="file" class="user-profile-edit-form-control d-none" id="avatar" name="avatar" accept="image/*">
+                      </div>
+                      <!-- Name input -->
+                      <div class="user-profile-edit-form">
+                        <label for="name" class="user-profile-edit-form-label">名稱</label>
+                        <input type="text" class="user-profile-edit-form-control" id="name" name="name" maxlength="50"
+                          placeholder="請輸入使用者名稱" value="{{user.name}}">
+                      </div>
+                      <span class="form-text float-end" id="name-char-count">0 / 50</span>
+                      <br>
+                      <!-- Self-introduction input -->
+                      <div class="user-profile-edit-form">
+                        <label for="self-introduction" class="user-profile-edit-form-label">自我介紹</label>
+                        <textarea class="user-profile-edit-form-control" id="self-introduction" name="introduction" rows="4"
+                          maxlength="160" placeholder="請輸入自我介紹">{{user.introduction}}</textarea>
+                      </div>
+                      <span class="form-text float-end" id="self-introduction-char-count">0 / 160</span>
                     </div>
                   </div>
-                  <div class="modal-body user-profile-edit">
-                    <div class="user-profile-edit-cover">
-                      <img src="{{visitUser.cover}}" alt="Cover Image">
-                    </div>
-                    <div class="user-profile-edit-image">
-                      <img src="{{visitUser.avatar}}" alt="Profile Image">
-                    </div>
-                    <!-- Name input -->
-                    <div class="user-profile-edit-form">
-                      <label for="name" class="user-profile-edit-form-label">名稱</label>
-                      <input type="text" class="user-profile-edit-form-control" id="name" maxlength="50"
-                        placeholder="{{visitUser.name}}">
-                    </div>
-                    <span class="form-text float-end" id="name-char-count">0 / 50</span>
-                    <br>
-                    <!-- Self-introduction input -->
-                    <div class="user-profile-edit-form">
-                      <label for="self-introduction" class="user-profile-edit-form-label">自我介紹</label>
-                      <textarea class="user-profile-edit-form-control" id="self-introduction" rows="4" maxlength="160"
-                        placeholder="{{user.introduction}}"></textarea>
-                    </div>
-                    <span class="form-text float-end" id="self-introduction-char-count">0 / 160</span>
-                  </div>
-                </div>
+                </form>
               </div>
             </div>
             <div class="user-profile-about-nickname">

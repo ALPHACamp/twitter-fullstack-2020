@@ -33,7 +33,7 @@ module.exports = {
       const likesIntweet = userids.map((d) => ({
         user_id: parseInt(d),
         position: 'tweet',
-        position_id: parseInt(value),
+        tweet_id: parseInt(value),
         is_like: true,
         created_at: new Date(),
         updated_at: new Date(),
@@ -49,7 +49,7 @@ module.exports = {
       const likesInreply = userids.map((d) => ({
         user_id: parseInt(d),
         position: 'reply',
-        position_id: parseInt(value),
+        tweet_id: parseInt(value),
         is_like: true,
         created_at: new Date(),
         updated_at: new Date(),
