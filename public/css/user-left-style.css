@@ -1,0 +1,39 @@
+.left svg {
+  margin: auto 16px auto 16px;
+}
+
+.left svg.logo {
+  margin: 8px auto 13px 8px;
+  width: 40px;
+  height: 40px;
+}
+
+
+.left .nav-pills .nav-link {
+  padding: 0;
+  color: black;
+  height: 58px;
+  line-height: 58px;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.left .nav-pills .nav-link.active {
+  background-color: white;
+  color: #FF6600;
+
+}
+
+.left .nav-pills .nav-link.active path {
+  fill: #FF6600;
+}
+
+.left .nav-pills .btn {
+  background-color: #FF6600;
+  color: white;
+  border-radius: 50px;
+  height: 46px;
+  font-weight: 400;
+  font-size: 20px;
+}

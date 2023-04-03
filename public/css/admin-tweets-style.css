@@ -1,0 +1,67 @@
+.admin-tweets-wrapper {
+  width: 937px;
+}
+.admin-tweets-wrapper .avatar {
+  width: 82px;
+}
+.admin-tweets-wrapper .name-account {
+  height: 26px;
+}
+.admin-tweets-wrapper img {
+  border-radius: 50%;
+}
+.admin-tweets-wrapper .name {
+  font-weight: 700;
+  font-size: 16px;
+}
+.admin-tweets-wrapper .account {
+  color: #6C757D;
+  font-size: 14px;
+}
+.admin-tweets-wrapper .description {
+  width: 830px;
+}
+.admin-tweets-wrapper .reply-like {
+  position: relative;
+  height: 16px;
+  /* background-color: #d5d5d5; */
+  padding: 0;
+}
+.admin-tweets-wrapper .reply,
+.admin-tweets-wrapper .like {
+  display: inline-block;
+  height: 16px;
+  line-height: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+  color: #6C757D;
+}
+.admin-tweets-wrapper .reply {
+  position: absolute;
+  left: 0px;
+}
+.admin-tweets-wrapper .like {
+  position: absolute;
+  left: 78px;
+}
+.admin-tweets-wrapper .reply-like button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  height: 16px;
+  width: 16px;
+  margin: 0 8px 0 0;
+  padding: 0;
+  vertical-align: 1px;
+}
+.admin-tweets-wrapper .like .isLiked,
+.admin-tweets-wrapper .like .notLiked {
+  display: none;
+}
+.admin-tweets-wrapper .like .liked .isLiked {
+  display: inline;
+}
+.admin-tweets-wrapper .like :not(.liked) .notLiked {
+  display: inline;
+}/*# sourceMappingURL=admin-tweets-style.css.map */

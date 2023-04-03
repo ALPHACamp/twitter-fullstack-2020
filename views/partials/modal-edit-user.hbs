@@ -1,0 +1,95 @@
+<div class="edit-container cus-modal-container">
+  <div class="row cus-modal border border-dark">
+    <form id="edit-form" class="row form-row post-user-edit" action="/api/users/{{user.id}}" method="POST"
+      enctype="multipart/form-data">
+      <div class="modal-header d-flex justify-content-between">
+        <div class="d-flex align-items-center">
+          <div class="edit-modal-close po-cur">
+            <div class="svg-round svg-round-effect">
+              {{>close}}
+            </div>
+          </div>
+          <div class="ms-3">編輯個人資料</div>
+        </div>
+        <button type="submit" class="btn btn-1 form-submit">
+          儲存
+        </button>
+      </div>
+      <div class="coverage-image edit-coverage-image" style="background-image: url('{{user.coverage}}');">
+        <div class="coverage-image-preview">
+          <div class="filter">
+            <div class="d-flex justify-content-center align-items-center">
+              <label class="icon-box mx-2">
+                <div class="svg-a">
+                  <div class="svg-round po-cur">
+                    {{>addPhoto}}
+                  </div>
+                </div>
+                <input id="upload_coverage_img" style="display:none;" id="coverage" name="coverage" type="file"
+                  accept="image/*">
+                <input id="croppedCoverage" type="hidden" name="croppedCoverage">
+              </label>
+              <label class="icon-box mx-2">
+                <div class="svg-a">
+                  <div class="svg-round po-cur modal-coverage-delete">
+                    {{>close}}
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between px-3">
+        <div class="avatar-size">
+          <div class="avatar-image-clip">
+            <div class="avatar-border" style="">
+              <div class="avatar-a">
+                <div class="avatar-image edit-avatar-image"
+                  style="background-image: url('{{user.avatar}}');">
+                  <div class="avatar-image-preview">
+                    <div class="filter">
+                      <div class="d-flex justify-content-center align-items-center">
+                        <label class="icon-box mx-2">
+                          <div class="svg-a">
+                            <div class="svg-round po-cur">
+                              {{>addPhoto}}
+                            </div>
+                          </div>
+                          <input id="upload_avatar_img" style="display:none;" name="avatar" type="file"
+                            accept="image/*">
+                          <input id="croppedAvatar" type="hidden" name="croppedAvatar">
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="input-structure px-3 my-2">
+        <div class="form-floating name-word-form">
+          <input type="name" class="form-control edit-user-name" id="name" placeholder="" name="name" value="{{user.name}}" style="height: 54px">
+          <label for="floatingInput">名稱</label>
+        </div>
+        <div class="d-flex justify-content-between">
+          <div><span class="name-word-warning warning"></span></div>
+          <div><span class="name-word">0</span>/50</div>
+        </div>
+      </div>
+      <div class="input-structure px-3 mb-3">
+        <div class="form-floating introduction-word-form">
+          <textarea class="form-control edit-user-introduction" placeholder="" id="introduction" style="height: 147px"
+            name="introduction" value="{{user.introduction}}"></textarea>
+          <label for="floatingTextarea2">自我介紹</label>
+        </div>
+        <div class="d-flex justify-content-between">
+          <div><span class="introduction-word-warning warning"></span></div>
+          <div><span class="introduction-word">0</span>/160</div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="profile-wrapper border-top-0 pt-4">
+  
+  <div class="header">
+    <h4 class="ms-4 mb-4"><a href="javascript:history.back()">{{>back}} </a><span class="ms-3 ">{{user.name}}</span></h4>
+  
+  </div>
+  
+  <div class="d-flex flex-column user-upper">
+    {{>modal-edit-user}}
+    {{>avatar-cropper}}
+    {{>coverage-cropper}}
+    {{>user-upper}}
+  </div>
+  {{>user-tab}}
+  <div class="content">
+    {{#if replies}}
+    {{>tweet-reply}}
+    {{else}}
+    {{>tweet}}
+    {{/if}}
+  </div>
+</div>
+
+

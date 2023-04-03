@@ -1,0 +1,60 @@
+.home-wrapper hr {
+  background-color: #E6ECF0;
+  opacity: 100%;
+}
+
+.home-wrapper .header {
+  font-weight: 700;
+}
+
+.home-wrapper img {
+  border-radius: 50%;
+  vertical-align: top
+}
+
+
+.home-wrapper .post-window {
+  position: relative;
+  height: 120px;
+}
+
+.home-wrapper textarea {
+  border: none;
+  width: 400px;
+
+}
+
+.home-wrapper textarea:focus {
+  border: none;
+  outline: none !important;
+}
+
+.post-window textarea::placeholder {
+  font-weight: 700;
+  font-size: 18px;
+  color: #6C757D;
+
+}
+
+.home-wrapper .post-window .error-message {
+  position: absolute;
+  bottom: 8px;
+  right: 80px;
+  color: red;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.home-wrapper .post-window button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: block;
+  width: 64px;
+  height: 40px;
+  border: none;
+  color: white;
+  background: #ff6600;
+  border-radius: 50px;
+
+}

@@ -1,0 +1,36 @@
+.admin-users-wrapper {
+    overflow: hidden;
+
+    .user-list {}
+
+    .user-card {
+        width: 210px;
+        height: 314px;
+        border-radius: 10px;
+        background-color: #F6F7F8;
+        background-size: auto 140px;
+        background-repeat: no-repeat;
+    }
+
+    .user-info {
+        margin-top: 64px;
+
+        .avatar img {
+            border-radius: 50px;
+            border: 4px solid #FFFFFF;
+        }
+
+        .account {
+            font-size: 14px;
+            font-weight: 400;
+            color: #6C757D
+        }
+
+        .counts span {
+            font-family: 'Montserrat', sans-serif !important;
+            font-weight: 500;
+            font-size: 16px;
+        }
+    }
+
+}

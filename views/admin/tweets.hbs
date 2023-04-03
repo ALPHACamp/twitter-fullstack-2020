@@ -1,0 +1,22 @@
+<div class="admin-tweets-wrapper pt-4">
+  <div class="header position-sticky">
+    <h4 class="ms-4 mb-4"> <span>推文清單</span>
+    </h4>
+
+  </div>
+  {{>admin-tweet}}
+
+
+  <style>
+    div.container.admin .middle-border::before {
+      content: '';
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      left: 24px;
+      right: 30px;
+      bottom: 0;
+      border-left: solid 1px #E6ECF0;
+      border-right: solid 1px #E6ECF0;
+    }
+  </style>

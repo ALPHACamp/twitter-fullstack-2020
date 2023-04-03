@@ -1,0 +1,23 @@
+<div class="home-wrapper border-top-0 pt-4">
+  <div class="header">
+    <h4 class="ms-4 mb-4"><span>首頁</span></h4>
+  
+  </div>
+  <div class="post-window mx-4 my-3">
+    <img src="{{user.avatar}}" width="50" height="50" alt="">
+    <textarea id="tweetInput" rows="4" wrap="soft" placeholder="有什麼新鮮事"></textarea>
+    <span class="error-message"></span>
+    <button id="tweetButton" class="ms-auto" onclick="postTweet(previousElementSibling.previousElementSibling)">推文</button>
+  </div>
+
+
+  <hr size="10px">
+
+
+
+
+
+  {{>tweet}}
+</div>
+
+

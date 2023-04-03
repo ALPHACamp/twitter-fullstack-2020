@@ -1,0 +1,78 @@
+.tweet .avatar {
+  width: 82px;
+}
+
+.tweet .name-account {
+  height: 26px;
+}
+
+.tweet img{
+  border-radius:50%;
+}
+
+
+.tweet .name{
+  font-weight:700;
+  font-size:16px;
+}
+
+.tweet .account {
+  color: #6C757D;
+  font-size: 14px;
+}
+
+.tweet .description{
+  width: 530px;
+}
+
+.tweet .reply-like {
+  position: relative;
+  height: 16px;
+  /* background-color: #d5d5d5; */
+  padding: 0;
+}
+
+.tweet .reply,
+.tweet .like {
+  display: inline-block;
+  height: 16px;
+  line-height: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  color: #6C757D;
+}
+
+.tweet .reply {
+  position: absolute;
+  left: 0px;
+}
+
+.tweet .like {
+  position: absolute;
+  left: 78px;
+}
+
+.tweet .reply-like button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  height: 16px;
+  width: 16px;
+  margin: 0 8px 0 0;
+  padding: 0;
+  vertical-align: 1px;
+}
+
+.tweet .like .isLiked,
+.tweet .like .notLiked {
+  display: none;
+}
+
+.tweet .like .liked .isLiked {
+  display: inline;
+}
+
+.tweet .like :not(.liked) .notLiked {
+  display: inline;
+}

@@ -1,0 +1,25 @@
+div.notification {
+    position: fixed;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    box-sizing: border-box;
+    width: 394px;
+    height: 96px;
+    background: #ffffff;
+    padding: 34px 20px 34px 24px;
+    /* Shadow */
+    box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04),
+      0px 4px 16px rgba(51, 51, 51, 0.08);
+    border-radius: 8px;
+    z-index:9999;
+    font-size:20px;
+    font-weight:700
+  }
+
+  div.notification svg {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+  }

@@ -1,0 +1,88 @@
+.modal .modal-dialog {
+  margin: 56px 0 0 calc(50vw - 376px);
+}
+.modal .modal-content {
+  height: 300px;
+  width: 634px;
+  border-radius: 14px;
+}
+.modal .header {
+  height: 57px;
+  border-bottom: solid 1px #e6ecf0;
+}
+.modal img {
+  border-radius: 50%;
+}
+.modal .button {
+  width: 24px;
+  height: 24px;
+  margin: 16px 0 0 16px;
+  border: none;
+  background: white;
+}
+.modal .post-window {
+  position: relative;
+  flex-grow: 1;
+}
+.modal .post-window img {
+  vertical-align: top;
+}
+.modal .post-window textarea {
+  margin-top: 8px;
+  border: none;
+  resize: none;
+}
+.modal .post-window textarea:focus {
+  border: none;
+  outline: none !important;
+}
+.modal .post-window textarea::-moz-placeholder {
+  font-weight: 700;
+  font-size: 18px;
+  color: #6c757d;
+}
+.modal .post-window textarea::placeholder {
+  font-weight: 700;
+  font-size: 18px;
+  color: #6c757d;
+}
+.modal .post-window .error-message {
+  position: absolute;
+  bottom: 7px;
+  right: 80px;
+  color: red;
+  font-size: 15px;
+  font-weight: 500;
+}
+.modal .post-window button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: block;
+  width: 64px;
+  height: 40px;
+  border: none;
+  color: white;
+  background: #ff6600;
+  border-radius: 50px;
+}
+
+.reply .modal-content {
+  height: 500px;
+}
+.reply .tweet {
+  height: 135px;
+}
+.reply .connect-line {
+  width: 2px;
+  height: 80px;
+  background-color: #b5b5be;
+}
+.reply .reply-to {
+  color: #6c757d;
+  font-size: 14px;
+}
+.reply .reply-to .account {
+  color: #ff6600;
+  font-size: 14px;
+}/*# sourceMappingURL=modal-style.css.map */

@@ -1,0 +1,26 @@
+{{#if error_messages}}
+  <div class="notification" id="message">
+    {{ error_messages }}
+    {{>notification-red}}
+  </div>
+  <script>
+  // Hide the message after 5 seconds
+  setTimeout(function() {
+    document.getElementById('message').style.display = 'none';
+  }, 3000);
+</script>
+{{/if}}
+
+{{#if success_messages}}
+  <div class="notification" id="message">
+    {{ success_messages }}
+    {{>notification-green}}
+  </div>
+  <script>
+  // Hide the message after 5 seconds
+  setTimeout(function() {
+    document.getElementById('message').style.display = 'none';
+  }, 3000);
+</script>
+{{/if}}
+

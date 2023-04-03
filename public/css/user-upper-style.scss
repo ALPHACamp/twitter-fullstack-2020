@@ -1,0 +1,334 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap");
+
+.user-upper {
+  * {
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+
+  .coverage-a {
+    padding: initial;
+  }
+
+  .coverage-image {
+    width: 100%;
+    aspect-ratio: 3.195;
+    padding: 0;
+  }
+
+  .d-flex {
+    min-height: 50px;
+    max-height: 68px;
+    position: relative;
+  }
+
+  .avatar-size {
+    margin-top: -15%;
+    width: 45%;
+    margin-bottom: 12px;
+  }
+
+  .avatar-image-clip {
+    display: inline-block;
+    width: 47%;
+    padding-bottom: 47%;
+    height: 0;
+    position: relative;
+  }
+
+  .avatar-border {
+    width: 110%;
+    height: 110%;
+    overflow: hidden;
+    position: absolute;
+    border-radius: 50%;
+    background-color: white;
+    display: flex
+  }
+
+  .avatar-a {
+    width: inherit;
+    display: inherit;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .avatar-image {
+    width: 95%;
+    height: 95%;
+    display: inherit;
+    display: inline-block;
+    border-radius: 50%;
+    background-size: cover;
+  }
+
+  .avatar-image:hover {
+    cursor: pointer;
+    filter: brightness(86%);
+    transition: filter 0.3s;
+  }
+
+  .avatar-image-preview {
+    border-radius: 50%;
+    background-size: cover;
+  }
+
+  .coverage-image-preview {
+    background-size: cover;
+  }
+
+  .cus-modal .avatar-image:hover {
+    cursor: default;
+    filter: none;
+  }
+
+  .cus-modal .coverage-image svg:hover,
+  .cus-modal .avatar-image svg:hover {
+    width: 20px
+  }
+
+  .edit-user-btn {
+    background-color: white;
+    border-color: #FF6600;
+    color: #FF6600;
+    border-radius: 50px;
+  }
+
+  .edit-user-btn:hover {
+    background-color: #FF6600;
+    border-color: white;
+    color: white;
+    border-radius: 50px;
+  }
+
+  .user-account,
+  .user-description,
+  .follow-box {
+    font-size: 16px;
+  }
+
+  .follow-box a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .user-account,
+  .user-followers,
+  .user-followings {
+    color: #6C757D;
+  }
+
+  .followings-block:hover,
+  .followers-block:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .header {
+    padding-top: 6%;
+    padding-bottom: 6%;
+  }
+
+  .svg-a {
+    width: inherit;
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icon-box {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+  }
+
+  .svg-round {
+    width: inherit;
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 50%;
+  }
+
+  .svg-round-effect:hover {
+    background-color: white;
+    filter: brightness(86%);
+    transition: filter 0.3s;
+    cursor: pointer;
+  }
+
+  .svg-round2 {
+    width: inherit;
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 50%;
+  }
+
+  .svg-round2:hover {
+    background-color: black;
+    filter: brightness(86%);
+    transition: filter 0.3s;
+    cursor: pointer;
+  }
+
+  .svg-round svg {
+    margin: initial
+  }
+
+  .modal-header svg {
+    margin: initial;
+
+  }
+
+  .modal-header path {
+    fill: #FF6600;
+  }
+
+  .coverage-image path,
+  .avatar-image path {
+    fill: white;
+  }
+
+  .btn-1 {
+    background-color: #FF6600;
+    color: white;
+    border-radius: 50px;
+  }
+
+  .btn-1:hover {
+    background-color: white;
+    color: #FF6600;
+    border-color: #FF6600;
+    border-radius: 50px;
+  }
+
+  .cus-modal form {
+    position: relative;
+    padding: 0;
+    --bs-gutter-x: 0;
+  }
+
+  input[type="text"],
+  .form-control {
+    border-radius: 2px;
+    border: none;
+    border-bottom: 2px solid #657786;
+    height: 100%;
+    background-color: initial;
+    background-color: #F5F8FA;
+  }
+
+  .input-structure .text-right {
+    opacity: .65;
+    font-size: 12px;
+    text-align: end;
+  }
+
+  .coverage-image {
+    background-size: cover;
+  }
+
+  .coverage-image .filter {
+    display: flex;
+    width: 100%;
+    aspect-ratio: 3.195;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background-color: rgba(23, 23, 37, 0.5);
+  }
+
+  .avatar-image .filter {
+    display: flex;
+    width: 100%;
+    aspect-ratio: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background-color: rgba(23, 23, 37, 0.5);
+    border-radius: 50%;
+  }
+
+  .po-cur:hover {
+    cursor: pointer
+  }
+
+  .cus-modal-container {
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    z-index: 1;
+    background-color: rgba(23, 23, 37, 0.5);
+  }
+
+  .cus-modal {
+    display: inline-block;
+    background-color: white;
+    border-radius: 10px;
+  }
+
+  .avatar-cropper-container,
+  .coverage-cropper-container {
+    background-color: initial;
+  }
+
+  .avatar-cropper,
+  .coverage-cropper {
+    display: inline-block;
+    background-color: white;
+    border-radius: 10px;
+  }
+
+  .avatar-cropper-container .tailoring-box {
+    width: 640px;
+    height: 640px;
+  }
+
+  .coverage-cropper-container .tailoring-box {
+    max-width: 958.5px;
+    height: 600px;
+  }
+
+  .avatar-cropper-container img,
+  .coverage-cropper-container img {
+    display: block;
+  }
+
+  .button .isFollowed,
+  .button .notFollowed {
+    display: none;
+  }
+
+  .button.followed .isFollowed {
+    display: block;
+    width: 96px;
+    height: 40px;
+    border: none;
+    color: white;
+    background: #FF6600;
+    border-radius: 50px;
+  }
+
+  .button:not(.followed) .notFollowed {
+    display: block;
+    width: 64px;
+    height: 40px;
+    border: solid 1px #FF6600;
+    color: #FF6600;
+    background: white;
+    border-radius: 50px;
+  }
+
+
+}

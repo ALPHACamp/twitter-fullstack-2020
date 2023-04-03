@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+
+
+html {
+  font-size: 16px;
+  font-family: 'Noto Sans TC', sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  box-sizing: border-box;
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  color: #171725;
+
+}
+
+.header {
+  border-bottom: solid 1px #E6ECF0;
+}
+
+a,
+a:hover,
+a:focus {
+  color: inherit;
+  text-decoration: none;
+}
+
+a {
+  user-select: text;
+  -webkit-user-select: text;
+  /* For Safari */
+  -moz-user-select: text;
+  /* For Firefox */
+  -ms-user-select: text;
+  /* For Internet Explorer and Edge */
+}
+
+.modal-open {
+  overflow: hidden !important;
+}
+
+img {
+  object-fit: cover
+}
+
+span {
+  overflow-wrap: break-word;
+}
+
+hr {
+  margin: 0;
+  opacity: 100%;
+  background-color: #E6ECF0;
+}
+
+textarea{
+  resize:none;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 68px;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 42px;
+}
+
+h3 {
+  font-weight: 700;
+  font-size: 28px;
+}
+
+h4 {
+  font-weight: 700;
+  font-size: 24px;
+}
+
+h5 {
+  font-weight: medium;
+  font-size: 18px;
+}
+
+/* div.container {
+  width: 1140px;
+} */
+
+div.container .left {
+  width: 180px;
+}
+
+div.container .middle {
+  width: 640px;
+  padding-right: 12px;
+  margin: 0 12px 0 24px;
+  overflow-y: auto;
+}
+
+div.container.admin .middle {
+
+  width: 955px;
+  padding-right: 12px;
+  margin: 0 12px 0 24px;
+  overflow-y: auto;
+
+}
+
+
+div.container.admin .middle-border::before {
+  content: '';
+  height:100vh;
+    position: absolute;
+    top: 0;
+    left: 24px;
+    right: 48px;
+    bottom: 0;
+    border-left: solid 1px #E6ECF0;
+}
+
+
+
+
+
+div.container:not(.admin) .middle-border::before {
+  content: '';
+  height:100vh;
+    position: absolute;
+    top: 0;
+    left: 24px;
+    right: 24px;
+    bottom: 0;
+    border-left: solid 1px #E6ECF0;
+    border-right: solid 1px #E6ECF0;
+}
+
+
+
+div.container .right {
+  width: 270 px;
+}
+
+
+div.notification {
+        position: fixed;
+        top: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        box-sizing: border-box;
+        width: 394px;
+        height: 96px;
+        background: #ffffff;
+        padding: 34px 20px 34px 24px;
+        /* Shadow */
+        box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04),
+          0px 4px 16px rgba(51, 51, 51, 0.08);
+        border-radius: 8px;
+      }
+  
+      svg.notification {
+        position: absolute;
+        top: 20px;
+        right: 24px;
+      }

@@ -1,0 +1,71 @@
+.most-followed {
+  border-radius: 16px;
+  background: #FAFAFB;
+}
+
+.most-followed .title {
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.most-followed hr {
+  margin: 0;
+  background-color: #E6ECF0;
+  opacity: 100%;
+}
+
+.top-ten-window .avatar {
+  width: 50px;
+}
+
+.top-ten-window img {
+  border-radius: 50%;
+}
+
+.top-ten-window .name {
+  width: 90px;
+}
+
+.top-ten-window .button {
+  width: 96px;
+}
+
+.top-ten-window .name span {
+  display: inline-block;
+}
+
+.top-ten-window .name span.name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #92929D
+}
+
+.top-ten-window .name span.account {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.top-ten-window .button .isFollowed,
+.top-ten-window .button .notFollowed {
+  display: none;
+}
+
+.top-ten-window .button.followed .isFollowed {
+  display: block;
+  width: 96px;
+  height: 40px;
+  border: none;
+  color: white;
+  background: #FF6600;
+  border-radius: 50px;
+}
+
+.top-ten-window .button:not(.followed) .notFollowed {
+  display: block;
+  width: 64px;
+  height: 40px;
+  border: solid 1px #FF6600;
+  color: #FF6600;
+  background: white;
+  border-radius: 50px;
+}

@@ -1,0 +1,279 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap");
+.user-upper * {
+  font-family: "Noto Sans TC", sans-serif;
+}
+.user-upper .coverage-a {
+  padding: initial;
+}
+.user-upper .coverage-image {
+  width: 100%;
+  aspect-ratio: 3.195;
+  padding: 0;
+}
+.user-upper .d-flex {
+  min-height: 50px;
+  max-height: 68px;
+  position: relative;
+}
+.user-upper .avatar-size {
+  margin-top: -15%;
+  width: 45%;
+  margin-bottom: 12px;
+}
+.user-upper .avatar-image-clip {
+  display: inline-block;
+  width: 47%;
+  padding-bottom: 47%;
+  height: 0;
+  position: relative;
+}
+.user-upper .avatar-border {
+  width: 110%;
+  height: 110%;
+  overflow: hidden;
+  position: absolute;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+}
+.user-upper .avatar-a {
+  width: inherit;
+  display: inherit;
+  align-items: center;
+  justify-content: center;
+}
+.user-upper .avatar-image {
+  width: 95%;
+  height: 95%;
+  display: inherit;
+  display: inline-block;
+  border-radius: 50%;
+  background-size: cover;
+}
+.user-upper .avatar-image:hover {
+  cursor: pointer;
+  filter: brightness(86%);
+  transition: filter 0.3s;
+}
+.user-upper .avatar-image-preview {
+  border-radius: 50%;
+  background-size: cover;
+}
+.user-upper .coverage-image-preview {
+  background-size: cover;
+}
+.user-upper .cus-modal .avatar-image:hover {
+  cursor: default;
+  filter: none;
+}
+.user-upper .cus-modal .coverage-image svg:hover,
+.user-upper .cus-modal .avatar-image svg:hover {
+  width: 20px;
+}
+.user-upper .edit-user-btn {
+  background-color: white;
+  border-color: #FF6600;
+  color: #FF6600;
+  border-radius: 50px;
+}
+.user-upper .edit-user-btn:hover {
+  background-color: #FF6600;
+  border-color: white;
+  color: white;
+  border-radius: 50px;
+}
+.user-upper .user-account,
+.user-upper .user-description,
+.user-upper .follow-box {
+  font-size: 16px;
+}
+.user-upper .follow-box a {
+  text-decoration: none;
+  color: inherit;
+}
+.user-upper .user-account,
+.user-upper .user-followers,
+.user-upper .user-followings {
+  color: #6C757D;
+}
+.user-upper .followings-block:hover,
+.user-upper .followers-block:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.user-upper .header {
+  padding-top: 6%;
+  padding-bottom: 6%;
+}
+.user-upper .svg-a {
+  width: inherit;
+  height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.user-upper .icon-box {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+}
+.user-upper .svg-round {
+  width: inherit;
+  height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 50%;
+}
+.user-upper .svg-round-effect:hover {
+  background-color: white;
+  filter: brightness(86%);
+  transition: filter 0.3s;
+  cursor: pointer;
+}
+.user-upper .svg-round2 {
+  width: inherit;
+  height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 50%;
+}
+.user-upper .svg-round2:hover {
+  background-color: black;
+  filter: brightness(86%);
+  transition: filter 0.3s;
+  cursor: pointer;
+}
+.user-upper .svg-round svg {
+  margin: initial;
+}
+.user-upper .modal-header svg {
+  margin: initial;
+}
+.user-upper .modal-header path {
+  fill: #FF6600;
+}
+.user-upper .coverage-image path,
+.user-upper .avatar-image path {
+  fill: white;
+}
+.user-upper .btn-1 {
+  background-color: #FF6600;
+  color: white;
+  border-radius: 50px;
+}
+.user-upper .btn-1:hover {
+  background-color: white;
+  color: #FF6600;
+  border-color: #FF6600;
+  border-radius: 50px;
+}
+.user-upper .cus-modal form {
+  position: relative;
+  padding: 0;
+  --bs-gutter-x: 0;
+}
+.user-upper input[type=text],
+.user-upper .form-control {
+  border-radius: 2px;
+  border: none;
+  border-bottom: 2px solid #657786;
+  height: 100%;
+  background-color: initial;
+  background-color: #F5F8FA;
+}
+.user-upper .input-structure .text-right {
+  opacity: 0.65;
+  font-size: 12px;
+  text-align: end;
+}
+.user-upper .coverage-image {
+  background-size: cover;
+}
+.user-upper .coverage-image .filter {
+  display: flex;
+  width: 100%;
+  aspect-ratio: 3.195;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background-color: rgba(23, 23, 37, 0.5);
+}
+.user-upper .avatar-image .filter {
+  display: flex;
+  width: 100%;
+  aspect-ratio: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background-color: rgba(23, 23, 37, 0.5);
+  border-radius: 50%;
+}
+.user-upper .po-cur:hover {
+  cursor: pointer;
+}
+.user-upper .cus-modal-container {
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  z-index: 1;
+  background-color: rgba(23, 23, 37, 0.5);
+}
+.user-upper .cus-modal {
+  display: inline-block;
+  background-color: white;
+  border-radius: 10px;
+}
+.user-upper .avatar-cropper-container,
+.user-upper .coverage-cropper-container {
+  background-color: initial;
+}
+.user-upper .avatar-cropper,
+.user-upper .coverage-cropper {
+  display: inline-block;
+  background-color: white;
+  border-radius: 10px;
+}
+.user-upper .avatar-cropper-container .tailoring-box {
+  width: 640px;
+  height: 640px;
+}
+.user-upper .coverage-cropper-container .tailoring-box {
+  max-width: 958.5px;
+  height: 600px;
+}
+.user-upper .avatar-cropper-container img,
+.user-upper .coverage-cropper-container img {
+  display: block;
+}
+.user-upper .button .isFollowed,
+.user-upper .button .notFollowed {
+  display: none;
+}
+.user-upper .button.followed .isFollowed {
+  display: block;
+  width: 96px;
+  height: 40px;
+  border: none;
+  color: white;
+  background: #FF6600;
+  border-radius: 50px;
+}
+.user-upper .button:not(.followed) .notFollowed {
+  display: block;
+  width: 64px;
+  height: 40px;
+  border: solid 1px #FF6600;
+  color: #FF6600;
+  background: white;
+  border-radius: 50px;
+}/*# sourceMappingURL=user-upper-style.css.map */

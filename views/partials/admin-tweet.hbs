@@ -1,0 +1,25 @@
+{{#each tweets}}
+<div class="admin-tweet border-bottom d-flex">
+  {{!-- left --}}
+  <div class="avatar pt-3 ps-4 pe-2">
+    <a href="/users/{{this.User.id}}/tweets"><img width="50" height="50" src="{{this.User.avatar}}" alt=""></a>
+  </div>
+  {{!-- right --}}
+  <div class="d-flex flex-column py-3 pe-0 h-100 w-100">
+    {{!-- up --}}
+    <div class="name-account  pt-1 d-flex mb-2">
+      <span class="name me-2">{{this.User.name}}</span>
+      <span class="account">@{{this.User.account}}・{{relativeTime this.createdAt}}</span>
+      <form class="ms-auto me-1 pt-1 d-flex align-items-center " style="height: 16px;"
+        action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+        <button type="submit" class="btn-close p-0 m-0" aria-label="Close"></button>
+      </form>
+
+    </div>
+    {{!-- middle --}}
+    <div class="description  mb-2">
+      <span>{{this.description}}</span>
+    </div>
+  </div>
+</div>
+{{/each}}

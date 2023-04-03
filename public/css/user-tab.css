@@ -1,0 +1,24 @@
+.user-tab.nav-pills .nav-link {
+  padding: 16px;
+  margin: 0 0 0 1px;
+  text-align: center;
+  color: black;
+  font-weight: 700;
+  font-size: 15px;
+  width: 130px;
+  border-radius: 0px
+}
+
+.user-tab.nav-pills .nav-link.active {
+  background-color: white;
+  color: #FF6600;
+}
+
+.user-tab.nav-pills .bottom-border {
+  position: absolute;
+  bottom: 0;
+  width:130px;
+  height: 2px;
+  background-color: #FF6600;
+  transition: all 0.3s ease;
+}

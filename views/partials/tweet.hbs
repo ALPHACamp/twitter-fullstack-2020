@@ -1,0 +1,39 @@
+{{#each tweets}}
+<div class="tweet border-bottom d-flex"> 
+  {{!-- left --}}
+  <div class="avatar pt-3 ps-4 pe-2">    
+      <a href="/users/{{this.User.id}}/tweets"><img width="50" height="50" src="{{this.User.avatar}}" alt=""></a>
+  </div>
+  {{!-- right --}}
+    <div class="d-flex flex-column py-3 pe-3 h-100 w-100">
+      {{!-- up --}}
+      <div class="name-account  mb-2">
+        <span class="name me-2">{{this.User.name}}</span>
+        <span class="account">@{{this.User.account}}・{{this.createdAt.fromNow}}</span>
+      </div>
+      {{!-- middle --}}
+      <a href="/tweets/{{this.id}}/replies">
+        <div class="description  mb-2">
+          <span>{{this.description}}</span>
+        </div>
+      </a>
+      {{!-- bottom --}}
+      <div class="reply-like" id="{{this.id}}">
+        <div class="reply m-0">
+          <button onclick="reply(this)" data-bs-toggle="modal" data-bs-target="#reply"> {{>reply}}</button>
+          <span>{{this.replyCount}}</span>
+        </div>
+        <div class="like m-0">
+          <button class="{{#if this.isLiked}}liked{{/if}}" onclick="like(this)">
+            <span class="notLiked">{{>like}}</span>
+            <span class="isLiked">{{>like-filled}}</span>
+          </button>
+
+          <span>{{this.likeCount}}</span>
+        </div>
+
+
+      </div>
+    </div>
+</div>
+{{/each}}

@@ -1,0 +1,85 @@
+.tweet-profile {
+  border-bottom: solid 1px #E6ECF0;
+}
+
+.tweet-profile .header {
+  font-weight: 700;
+}
+
+.tweet-profile .header svg {
+  vertical-align: -3px;
+}
+
+
+.tweet-profile img {
+  border-radius: 50%;
+}
+
+.tweet-profile .title .account {
+
+  font-size: 14px;
+  color: #6C757D
+}
+
+
+.tweet-profile .description {
+  font-size: 24px;
+}
+
+
+.tweet-profile .time {
+  font-size: 14px;
+  color: #6C757D;
+  font-weight: 500;
+}
+
+.tweet-profile .reply-like-count .text {
+  font-size: 19px;
+  font-weight: 500;
+  color: #6C757D;
+}
+
+.tweet-profile .reply-like-count .number {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+
+.tweet-profile .reply-like-button button {
+  display: inline-block;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+.tweet-profile .reply,
+.tweet-profile .like {
+  display: inline-block;
+}
+
+.tweet-profile .like {
+  margin-left: 133px;
+}
+
+
+.tweet-profile .like .isLiked,
+.tweet-profile .like .notLiked {
+
+  display: none;
+
+}
+
+.tweet-profile .like.liked .isLiked {
+
+  display: inline;
+
+}
+
+
+.tweet-profile .like:not(.liked) .notLiked {
+
+  display: inline;
+
+}

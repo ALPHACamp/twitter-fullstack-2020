@@ -1,0 +1,27 @@
+{{#each replies}}
+<div class="reply border-bottom d-flex">
+  {{!-- left --}}
+  <div class="avatar">
+    <div class="mt-3 ms-4 me-2">
+      <a href="/users/{{this.User.id}}/tweets"><img width="50" height="50" src="{{this.User.avatar}}" alt=""></a>
+    </div>
+  </div>
+  {{!-- right --}}
+    <div class="d-flex flex-column py-3 pe-3 h-100 w-100">
+      {{!-- up --}}
+      <div class="replier  mb-2">
+        <span class="name me-2">{{this.User.name}}</span>
+        <span class="account">@{{this.User.account}}・{{this.createdAt.fromNow}}</span>
+      </div>
+      {{!-- middle --}}
+      <div class="repliedTo  mb-2">
+        回覆 <span class="account">@{{this.Tweet.User.account}}</span>
+      </div>
+      {{!-- bottom --}}
+      <div class="comment  mb-3">
+        <span>{{this.comment}}</span>
+      </div>
+    </div>
+
+</div>
+{{/each}}

@@ -1,0 +1,39 @@
+<!--content-->
+<div class="admin-users-wrapper pt-4">
+  <div class="header">
+    <h4 class="ms-4 mb-4"><span>使用者列表</span></h4>
+  </div>
+  <div class="user-list row g-1">
+    {{#each users}}
+    <div class="user-card ms-3 mt-3 col-3" style="background-image: url('{{this.coverage}}')  ">
+      <div class="user-info d-flex flex-column align-items-center">
+        <div class="avatar"><img src="{{this.avatar}}" height="100" width="100" alt=""></div>
+        <div class="name-account text-center mt-2">
+          <span class="name">{{this.name}}</span>
+          <br>
+          <span class="account">@{{this.account}}</span>
+        </div>
+        <div class="counts mt-2">
+          {{>tweet-icon}} <span class="tweet ms-1 me-3"> {{this.tweetCount}} </span>
+          {{>like-24}} <span class="like ms-1"> {{this.likeCount}}</span>
+        </div>
+        <div class="followship mt-2">
+          {{this.followingCount}} 個<span class="followings text-secondary me-2">跟隨中</span>
+          {{this.followerCount}} 個<span class="followers text-secondary">跟隨者</span>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+
+
+<style>
+  div.container.admin .middle {
+
+    width: 970px;
+    padding-right: 12px;
+    margin: 0 12px 0 24px;
+
+  }
+</style>

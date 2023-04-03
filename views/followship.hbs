@@ -1,0 +1,26 @@
+<div class="followship-wrapper border-top-0 pt-4">
+  <div class="header">
+    <h4 class="ms-4 mb-4"><a href="javascript:history.back()">{{>back}} </a><span class="ms-3 ">{{user.name}}</span></h4>
+ 
+</div>
+
+  <div class="user-tab nav nav-pills p-0 d-flex position-relative">
+    <button class="nav-link {{#if isFollowers}}active{{/if}}" id="{{user.id}}" name="followers" onclick="load(this)"
+      data-bs-toggle="tab">追隨者</button>
+    <button class="nav-link  {{#if isFollowings}}active{{/if}}" id="{{user.id}}" name="followings" onclick="load(this)"
+      data-bs-toggle="tab">正在追隨</button>
+    <div class="bottom-border"></div>
+  </div>
+
+
+  <div class="content">
+
+    {{>user-followship}}
+  </div>
+</div>
+
+
+
+
+
+

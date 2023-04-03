@@ -1,0 +1,18 @@
+<div class="signin-wrapper d-flex flex-column align-items-center mx-auto mt-5">
+  {{>logo}}
+  <h3 class="title mt-3">後台登入</h3>
+  <form class="setting-form mt-3 p-4" action="/signin" method="POST">
+    <div class="form-floating">
+      <input type="account" class="form-control" id="floatingAccount" name="account">
+      <label for="floatingAccount">帳號</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="floatingPassword" name="password">
+      <label for="floatingPassword">密碼</label>
+    </div>
+    <button type="submit" class="btn btn-primary">登入</button>
+  </form>
+  <div class="footer">
+    <a href="/signin"> 一般登入</a>
+  </div>
+</div>

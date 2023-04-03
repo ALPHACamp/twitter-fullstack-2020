@@ -85,3 +85,10 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+# Others
+.note.ac
+
+.scss
+
+gulpfile.js

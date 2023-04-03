@@ -1,0 +1,11 @@
+<div class="user-tab nav nav-pills p-0 d-flex position-relative">
+  <button class="nav-link {{#if isTweets}}active{{/if}}" id="{{user.id}}" name="tweets" onclick="load(this)"
+    data-bs-toggle="tab">推文</button>
+  <button class="nav-link  {{#if isReplies}}active{{/if}}" id="{{user.id}}" name="replies" onclick="load(this)"
+    data-bs-toggle="tab">回覆</button>
+  <button class="nav-link  {{#if isLikes}}active{{/if}}" id="{{user.id}}" name="likes" onclick="load(this)"
+    data-bs-toggle="tab">喜歡的內容</button>
+  <div class="bottom-border"></div>
+</div>
+
+

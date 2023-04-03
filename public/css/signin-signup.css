@@ -1,0 +1,30 @@
+.signin-wrapper {
+  width: 356px;
+}
+.signin-wrapper .form-control {
+  height: 54px !important;
+  font-size: 16px;
+  padding: 8px;
+}
+.signin-wrapper label {
+  padding: 8px;
+}
+.signin-wrapper button {
+  width: 100%;
+  font-size: 20px;
+}
+.signin-wrapper .footer {
+  margin: 0 48px 0 auto;
+}
+.signin-wrapper a {
+  text-decoration: underline;
+  color: blue;
+}
+
+.signup-wrapper {
+  width: 500px;
+}
+.signup-wrapper button {
+  width: 100%;
+  font-size: 20px;
+}/*# sourceMappingURL=signin-signup.css.map */

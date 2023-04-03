@@ -1,0 +1,29 @@
+<div class="signup-wrapper d-flex flex-column align-items-center mx-auto mt-5">
+  {{>logo}}
+  <h3 class="title mt-3">註冊</h3>
+
+<form class="setting-form p-4" action="/signup" method="POST">
+  <div class="form-floating">
+    <input type="account" class="form-control" id="floatingAccount" value="{{value.account}}" name="account">
+    <label for="floatingAccount" required>帳號</label>
+  </div>
+  <div class="form-floating ">
+    <input type="name" class="form-control" id="floatingName" value="{{value.name}}" name="name">
+    <label for="floatingName" required>名稱</label>
+  </div>
+  <div class="form-floating ">
+    <input type="email" class="form-control" id="floatingEmail" value="{{value.email}}" name="email">
+    <label for="floatingEmail" required>Email</label>
+  </div>
+  <div class="form-floating">
+    <input type="password" class="form-control" id="floatingPassword" value="" name="password">
+    <label for="floatingPassword" required>密碼</label>
+  </div>
+  <div class="form-floating ">
+    <input type="password" class="form-control" id="floatingCheckPassword" value="" name="checkPassword">
+    <label for="floatingCheckPassword" required>密碼再確認</label>
+  </div>
+  <button type="submit" class="btn btn-primary">註冊</button>
+</form>
+
+</div>

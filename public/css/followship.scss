@@ -1,0 +1,28 @@
+.followship-wrapper {
+  
+
+  .button .isFollowed,
+  .button .notFollowed {
+    display: none;
+  }
+
+  .button.followed .isFollowed {
+    display: block;
+    width: 96px;
+    height: 40px;
+    border: none;
+    color: white;
+    background: #ff6600;
+    border-radius: 50px;
+  }
+
+  .button:not(.followed) .notFollowed {
+    display: block;
+    width: 64px;
+    height: 40px;
+    border: solid 1px #ff6600;
+    color: #ff6600;
+    background: white;
+    border-radius: 50px;
+  }
+}

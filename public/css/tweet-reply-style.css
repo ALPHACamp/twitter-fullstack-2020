@@ -1,0 +1,32 @@
+
+.reply .avatar {
+  width: 82px;
+}
+
+.reply img {
+  border-radius: 50%
+}
+
+.reply .replier {
+  height: 26px;
+}
+
+.reply .replier .name {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.reply .repliedTo, .reply .replier .account {
+  color: #6C757D;
+  font-size: 14px;
+}
+
+
+.reply .repliedTo .account {
+  color: #6C757D;
+  font-size: 14px;
+}
+
+/* .reply .comment {
+  font-size: 14px;
+} */
