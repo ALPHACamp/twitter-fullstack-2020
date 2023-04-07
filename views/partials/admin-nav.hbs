@@ -1,0 +1,51 @@
+<div class="d-flex flex-column justify-content-between mt-2" style="width: 178px; height:100%;">
+  <div>
+    <div class="d-flex justify-content-start">
+      <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89-300x300.png"
+        width="45px" height="45px" alt="A logo">
+    </div>
+
+    <div class="d-flex justify-content-start mt-4">
+      <div class="d-flex align-self-center">
+        <i class="fa-solid fa-house" style="{{#if adminTweetsPage}} color:#FF6600;{{else}}color:#44444F;{{/if}}"></i>
+      </div>
+      <a class="btn btn-link"
+        style="text-decoration:none; font-family:'Noto Sans TC'; font-weight:700; font-size:18px; 
+        {{#if adminTweetsPage}} color:#FF6600;{{else}}color:#44444F;{{/if}}" href="/admin/tweets">
+        推文清單
+      </a>
+    </div>
+
+    <div class="d-flex justify-content-start mt-3">
+      <div class="d-flex align-self-center" >
+        <i class="fa-regular fa-user" style="{{#if adminUsersPage}} color:#FF6600;{{else}}color:#44444F;{{/if}}"></i>
+      </div>
+      <a class="btn btn-link"
+        style="text-decoration:none; font-family:'Noto Sans TC';font-size:18px; font-weight:700; {{#if adminUsersPage}} color:#FF6600;{{else}}color:#44444F;{{/if}}"
+        href="/admin/users">
+        使用者列表
+      </a>
+    </div>
+
+    <div style="height:100%;">
+      <div class="d-flex justify-content-center" style="position: fixed; bottom: 50px; margin-left:5px;">
+        <div class="d-flex align-self-center">
+          <i class="fa-solid fa-arrow-right-from-bracket" style="color: #44444F;"></i>
+        </div>
+          <a class="btn btn-link"
+            style="text-decoration:none; font-family:'Noto Sans TC';font-size:18px; font-weight:700; color:#44444F;"
+            href="/admin/logout">
+          登出
+        </a>
+      </div>
+    </div>
+  </div>
+
+ 
+     
+    
+  
+
+
+
+</div>

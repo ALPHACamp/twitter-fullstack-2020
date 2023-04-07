@@ -1,0 +1,84 @@
+<div class="container d-flex">
+  <div class="col-2 nav">
+    {{> nav tweetsPage=tweets}}
+  </div>
+  <div class="col-7 tweets"  style="width: 639px;">
+    <div class="tweets-container" style="width: 639px;height:1200px;;border:1px solid #E6ECF0; ">
+      <div style="border-bottom: 1px solid #E6ECF0;">
+      <h4 class="pt-3 ps-3" style="display:flex; justify-content:start; align-iten:center; height: 75px;font-weight: 700;">首頁</h4>
+      </div>
+      
+      <div class="mytweet d-flex flex-column ps-3 pb-3 pe-3" style="border-bottom: 8px solid #E6ECF0">
+        <div class="avatar d-flex mt-3">
+          <a href="/users/{{user.id}}/tweets" style="text-decoration:none;">
+            <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}" class="rounded-circle me-3"
+              style="width: 50px;height: 50px;background: #C4C4C4;">
+          </a>
+          <button type="button" class="btn" style="padding-left: 0px; width: 526px; height: 36px;text-align:start; font-size: 18px;color:#C4C4C4" data-bs-toggle="modal" data-bs-target="#tweetModal">
+            有什麼新鮮事?
+          </button>
+        </div>
+        <div class="button d-flex justify-content-end" >
+          <button type="submit" class="btn tweet-button d-flex justify-content-center align-items-center" data-bs-toggle="modal" data-bs-target="#tweetModal"style="width: 64px; height: 40px; background: #FF6600;border-radius: 100px;white-space:nowrap;">
+            <span style=" font-size: 16px; color: #FFFFFF;">推文</span>
+          </button>
+        </div> 
+      </div>
+      <div class="tweets-container">
+        {{#each tweets}}
+        <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
+          <div class="avatar ps-3">
+            <a href="/users/{{this.User.dataValues.id}}/tweets" style="text-decoration:none;">
+              <img src="{{#if this.User.dataValues.avatar}}{{this.User.dataValues.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}" class="rounded-circle me-3"
+                style="width: 50px;height: 50px;background: #C4C4C4;">
+            </a>
+          </div>
+          <div class="tweet-content">
+            <div class="name">
+              <span style="font-size: 16px;font-weight:700;">{{this.User.dataValues.name}}</span>
+              <span style="font-size: 14px;color:#C4C4C4">{{this.User.dataValues.account}}．{{relativeTimeFromNow
+                this.createdAt}}</span>
+            </div>
+            <div class="content mt-3" style="width: 540px; word-wrap: break-word;">
+              <a href="/tweets/{{this.id}}/replies" style="word-wrap: break-word; text-decoration:none; color: #171725;">
+                {{this.description}}
+              </a>
+            </div>
+            <div class="footer d-flex">
+              <div class="replies d-flex align-items-center">
+                <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal"
+                  data-bs-target="#replyModal{{this.id}}">
+                  <i class="far fa-comment"></i>&ensp;{{this.Replies.length}}
+                </button>
+              </div>
+              <div class="likes d-flex align-items-center">
+                {{#if isLiked}}
+                <form action="/tweets/{{this.id}}/unlike" method="post">
+                  <div class="d-flex">
+                    <button type="submit" class="btn"><i class="fa-solid fa-heart" style="color: #fc5a5a;">&ensp;</i>
+                      <span>{{this.LikedUsers.length}}</span>
+                    </button>
+                  </div>
+                </form>
+                {{else}}
+                <form action="/tweets/{{this.id}}/like" method="post">
+                  <button type="submit" class="btn"><i class="fa-regular fa-heart">&ensp;</i>
+                    <span>{{this.LikedUsers.length}}</span>
+                  </button>
+                </form>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+        </div>
+        {{!-- modal --}}
+        {{> reply-modal tweets=this user=../user}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <div class="col-3 followship ms-3" style="width: 273px; height:100%px;">
+    {{> followship}}
+  </div>
+</div>
+{{> post-modal}}

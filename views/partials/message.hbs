@@ -1,0 +1,12 @@
+{{#if error_messages}}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{error_messages}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{{/if}}
+
+{{#if wrong_messages}}
+<div class="error d-flex justify-content-start" style="font-size: 14px; color: #FC5A5A;">
+  {{wrong_messages}}
+</div>
+{{/if}}
