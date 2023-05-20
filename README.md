@@ -1,5 +1,7 @@
 # Twitter-fullstack-2020
 使用 Node.js + Express 打造類似Twitter的簡易網站。
+因為Heroku 已經取消免費試用部署的策略，但還是能夠在本地端設置好環境後執行本項目。
+
 
 ## 開發環境
 1. Node.js v14.16.0
