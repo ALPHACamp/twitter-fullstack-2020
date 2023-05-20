@@ -1,0 +1,59 @@
+<div class='row w-100 mt-5'>
+  <div class='col-3 mx-auto'>
+    <div class='mb-4 text-center'>
+      <i class='logo mb-4'></i>
+      <p class='h3 fw-bold mb-3'>後台登入</p>
+    </div>
+    <form class='form-signin needs-validation' action='/admin/signin' method='POST' novalidate>
+      <div class='form-row mb-4' style='background-color: #F5F8FA'>
+        <label class='form-label m-0 pt-1 ps-3' for='account' style='color: #696974'>帳號</label>
+        <input
+          type='text'
+          id='account'
+          name='account'
+          class='form-control p-0 ps-3 shadow-none'
+          style='margin: 0;'
+          placeholder='請輸入帳號'
+          onkeyup="this.value=this.value.replace(/[^\w_]/g,'')"
+          required
+          autofocus
+        />
+        <div class="invalid-feedback m-0" style='background-color: #ffffff'>Please enter your account.</div>
+      </div>
+      <div class='form-row mb-4' style='background-color: #F5F8FA'>
+        <label class='form-label m-0 pt-1 ps-3' for='password' style='color: #696974'>密碼</label>
+        <input
+          type='password'
+          id='password'
+          name='password'
+          class='form-control p-0 ps-3 shadow-none'
+          style='margin: 0;'
+          placeholder='請輸入密碼'
+          onkeyup="this.value=this.value.replace(/[\u4e00-\u9fa5]/g,'')"
+          required
+        />
+        <div class="invalid-feedback m-0" style='background-color: #ffffff'>Please enter your password.</div>
+      </div>
+      <div class='mb-4 text-center'>
+        <button class='btn btn-brand mb-3 rounded-pill border-0 w-100' type='submit'>登入</button>
+        <p class='float-end'>
+          <a href='/signin'>前台登入</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  (function () {
+    'use strict'
+    const form = document.querySelector('.needs-validation')
+    form.addEventListener('submit', function (event) {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      form.classList.add('was-validated')
+    })
+  })()
+</script>

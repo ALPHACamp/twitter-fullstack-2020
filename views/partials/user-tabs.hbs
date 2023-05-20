@@ -1,0 +1,23 @@
+<ul class="nav nav-tabs mb-2 follow-tab">
+  <a class="text-decoration-none" href="/users/{{profileUser.id}}/tweets">
+    <li class="user-item-tab {{#ifCond tab 'tweets'}}current{{/ifCond}}">
+      <span class="profile-tweet-word fw-bold {{#ifCond tab 'tweets'}}text-brand{{/ifCond}}">
+        推文
+      </span>
+    </li>
+  </a>
+  <a class="text-decoration-none" href="/users/{{profileUser.id}}/replies">
+    <li class="user-item-tab {{#ifCond tab 'replies'}}current{{/ifCond}}">
+      <span class="profile-reply-word fw-bold {{#ifCond tab 'replies'}}text-brand{{/ifCond}}">
+        回覆
+      </span>
+    </li>
+  </a>
+  <a class="text-decoration-none" href='/users/{{profileUser.id}}/likes'>
+    <li class="user-item-tab {{#ifCond tab 'likes'}}current{{/ifCond}}">
+      <span class="profile-like-word fw-bold {{#ifCond tab 'likes'}}text-brand{{/ifCond}}">
+        喜歡的內容
+      </span>
+    </li>
+  </a>
+</ul>

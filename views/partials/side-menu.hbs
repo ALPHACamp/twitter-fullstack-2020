@@ -1,0 +1,47 @@
+{{#ifCond role 'user'}}
+<div class="menu" id="menu">
+  <nav class="nav side-menu d-flex flex-column justify-content-start align-items-start mt-2">
+    <a href="/"><i class="logo ms-2"></i></a>
+    <a aria-current="page" href="/">
+      <i class="{{#ifCond route 'tweets'}}active-index{{else}}default-index{{/ifCond}}"></i>
+    </a>
+    <a href="/users/{{currentUser.id}}/tweets">
+      <i class="{{#ifCond currentUser.id profileUser.id}}active-user{{else}}default-user{{/ifCond}}"></i>
+    </a>
+    <a href="/users/setting">
+      <i class="{{#ifCond route 'setting'}}active-setting{{else}}default-setting{{/ifCond}}"></i>
+    </a>
+    <button class="btn btn-brand rounded-pill border-0 w-100" data-bs-toggle="modal"
+      data-bs-target="#sendTweetBtn">推文</button>
+    <div class="flex-fill"></div>
+    <a class="" href="/logout">
+      <i class="default-logout"></i>
+    </a>
+  </nav>
+</div>
+{{/ifCond}}
+
+{{#ifCond role "admin"}}
+  <div class="menu vh-100 col-2 position-sticky top-0" id="menu">
+    <nav class="nav d-flex flex-column justify-content-start align-items-start mt-2">
+      <a href="/admin/tweets"><i class="logo ms-5 mb-2"></i></a>
+      <a
+        href="/admin/tweets"
+        class="btn border-0 d-flex align-items-center ms-5 mb-3 {{#if tweets}}text-brand{{/if}}"
+      ><i class="{{#if tweets}}home{{else}}outline-home{{/if}} ms-2"></i><h5
+          class="mb-0 mt-1 ms-3"
+        >推文清單</h5></a>
+        <a
+        href="/admin/users"
+        class="btn border-0 d-flex align-items-center ms-5 mb-3 {{#if users}}text-brand{{/if}}"
+      ><i class="{{#if users}}user{{else}}outline-user{{/if}} ms-2"></i><h5
+          class="mb-0 mt-1 ms-3"
+        >使用者列表</h5></a>
+        <a class="position-absolute bottom-0 ms-5"  href="/admin/logout">
+        <i class="default-logout"></i>
+      </a>
+    </nav>
+  </div>
+{{/ifCond}}
+
+{{> side-tweet-btn-model}}
