@@ -217,3 +217,65 @@ body {
   font-size: 14px;
   color: #92929D;
 }
+
+.tweet-btn {
+  width: 64px;
+  height: 40px;
+}
+
+.tweet-placeholder {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+
+  color: #6C757D;
+}
+
+.tweet-close-button {
+  background: transparent;
+  border: none;
+}
+
+#description::placeholder {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: #6C757D;
+}
+
+.tweet-text {
+  margin-left: 8px;
+  margin-right: 3px;
+  width: 528px;
+}
+
+.tweet-name {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.tweet-account {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #6C757D;
+}
+
+.tweet-description {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+}
