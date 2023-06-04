@@ -1,0 +1,219 @@
+/****** body ******/
+html,
+body {
+  height: 100vh;
+  margin: 0;
+  overflow-y: hidden;
+}
+
+
+
+/****** home ******/
+.home-page {
+  margin: 0px 24px;
+  padding: 0;
+  border: 1px solid #E6ECF0;
+  overflow-y: hidden;
+}
+
+.tweet-list {
+  border: 0px;
+  border-radius: 0 !important;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+
+
+/****** nav ******/
+.navbar.navbar-vertical {
+  padding: 0;
+}
+
+.navbar-nav {
+  height: 100vh;
+  padding-top: 13px;
+  padding-bottom: 16px;
+}
+
+.navbar-nav .nav-item .nav-link {
+  display: flex;
+  align-items: center;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: #44444F;
+}
+
+.navbar-nav .nav-item.active .nav-link {
+  color: #FF6600;
+}
+
+.navbar-nav .nav-item .nav-link .nav-text {
+  margin-left: 16.9px;
+}
+
+.navbar-nav .nav-item .nav-link .nav-icon {
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+
+/* nav-icon */
+.navbar-nav .nav-item.active .nav-link .home-icon {
+  background-image: url('/images/navbar/home_filled.svg');
+}
+.navbar-nav .nav-item .nav-link .home-icon {
+  background-image: url('/images/navbar/home_outlined.svg');
+}
+
+.navbar-nav .nav-item.active .nav-link .user-icon {
+  background-image: url('/images/navbar/user_filled.svg');
+}
+.navbar-nav .nav-item .nav-link .user-icon {
+  background-image: url('/images/navbar/user_outlined.svg');
+}
+
+.navbar-nav .nav-item.active .nav-link .cog-icon {
+  background-image: url('/images/navbar/cog_filled.svg');
+}
+.navbar-nav .nav-item .nav-link .cog-icon {
+  background-image: url('/images/navbar/cog_outlined.svg');
+}
+
+.navbar-nav .nav-item .nav-link .logout-icon {
+  background-image: url('/images/navbar/logout.svg');
+}
+
+
+/****** btn ******/
+.btn {
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px auto;
+
+  /* color/brand/main */
+
+  background: #FF6600;
+  border-radius: 50px;
+  border-color: #FF6600;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+
+
+
+  /* Global/09. White */
+
+  color: #FFFFFF;
+}
+
+.btn:hover {
+  color: #FFFFFF;
+  background: #FF6600;
+  border-color: #FF6600;
+  transform: scale(1.05);
+}
+
+.btn:active {
+  color: #FF6600 !important;
+  background-color: #FFFFFF !important;
+  border-color: #FF6600 !important;
+}
+
+.nav-btn {
+  /* btn */
+  max-width: 178px;
+  height: 46px;
+
+  /* font */
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.recommend-followings-btn {
+  /* btn */
+  width: auto;
+  height: 40px;
+  background: #FFFFFF;
+  border: 1px solid #FF6600;
+
+  /* font */
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #FF6600;
+}
+
+.recommend-followings-btn.followed {
+  background: #FF6600;
+  border: 1px solid #FF6600;
+  color: #FFFFFF;
+}
+
+
+/****** recommend-followings ******/
+.recommend-followings {
+  /* Right Column */
+  height: calc(100vh - 2rem);
+  max-width: 273px;
+  overflow-y: auto;
+
+  border-radius: 16px;
+}
+
+.recommend-followings-item {
+  background: #FAFAFB;
+  border: 0;
+  padding: 0.8vw;
+}
+
+.recommend-followings-title {
+  background: #FAFAFB;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.recommend-followings-img {
+  max-width: 100%;
+  height: auto;
+}
+
+.recommend-followings-text {
+  margin-left: 8px;
+  margin-right: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 76px;
+}
+
+.follower-name {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  color: #171725;
+}
+
+.follower-account {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  color: #92929D;
+}
