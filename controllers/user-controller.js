@@ -4,6 +4,9 @@ const userController = {
   },
   getUserFollows: (req, res) => {
     res.render('users/follow')
+  },
+  editUser: (req, res) => {
+    res.render('users/edit')
   }
 }
 
