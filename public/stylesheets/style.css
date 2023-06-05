@@ -228,8 +228,6 @@ body {
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
-  line-height: 26px;
-
   color: #6C757D;
 }
 
@@ -243,7 +241,6 @@ body {
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  line-height: 26px;
   color: #6C757D;
 }
 
@@ -258,7 +255,6 @@ body {
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
-  line-height: 26px;
   color: #171725;
 }
 
@@ -267,7 +263,6 @@ body {
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  line-height: 22px;
   color: #6C757D;
 }
 
@@ -276,6 +271,18 @@ body {
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  line-height: 26px;
   color: #171725;
+}
+
+.tweets-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.tweets-interact-counts {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  color: #6C757D;
 }
