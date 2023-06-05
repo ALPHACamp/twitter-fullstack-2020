@@ -256,13 +256,15 @@ body {
   color: #6c757d;
 }
 
-.user-container > .card > div > span {
+.user-container > .card > div > span,
+.user-container > .card > div > span > a {
   font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
   color: #171725;
+  text-decoration: none;
 }
 
 .user-container > .card > .edit-btn {
@@ -277,7 +279,7 @@ body {
   margin-right: 16px;
 }
 
-.user-container > .card .nav-link {
+.user-container .nav-link {
   border: 0;
   width: 130px;
   text-align: center;
@@ -289,7 +291,7 @@ body {
   color: #657786;
 }
 
-.user-container > .card .nav-link.active {
+.user-container .nav-link.active {
   color: #ff6600;
   border-bottom: 2px solid #ff6600;
 }

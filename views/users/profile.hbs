@@ -1,15 +1,5 @@
 <div class='user-container m-0 p-0'>
-  <div class='d-flex flex-row m-0 p-0'>
-    <span class='d-flex justify-content-start align-items-center'>
-      <a href='javascript:history.back()'>
-        <img src='/images/back.svg' alt='back' />
-      </a>
-    </span>
-    <span class='ms-2'>
-      <h5 class='m-0'>John Doe</h5>
-      <p class='m-0 tweet'>25 推文</p>
-    </span>
-  </div>
+  {{!-- {{> user-profile}} --}}
   <div class='card'>
     <img src='/images/profile/cover.png' class='card-img-top cover' alt='cover' />
     <img src='/images/profile/avatar.png' class='avatar' alt='avatar' />
@@ -20,8 +10,8 @@
       <h5 class='card-title m-0'>John Doe</h5>
       <p class='at-name m-0'>@heyjohn</p>
       <p class='card-text m-0'>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</p>
-      <span>34 個跟隨中</span>
-      <span>59 位跟隨者</span>
+      <span>34 個<a href='/users/:id/followings'>跟隨中</a></span>
+      <span>59 位<a href='/users/:id/followers'>跟隨者</a></span>
     </div>
     <ul class='nav nav-tabs'>
       <li class='nav-item'>
