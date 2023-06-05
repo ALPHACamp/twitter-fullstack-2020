@@ -5,6 +5,7 @@ const handlebars = require('express-handlebars')
 
 // files
 const helpers = require('./_helpers')
+const routes = require('./routes')
 app.use(express.static('public'))
 
 const port = 3000
@@ -16,7 +17,8 @@ app.set('view engine', 'hbs')
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 // routes
-app.get('/', (req, res) => res.render('index'))
+app.use(routes)
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 // exports
