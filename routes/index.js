@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const userController = require('../controllers/user-controller')
 
 const { generalErrorHandler } = require('../middleware/error-handler')
 
@@ -23,9 +24,15 @@ router.post('/example', (req, res, next) => {
   }
 })
 
-router.get('/signup', (req, res) => {
-  res.render('signup')
-})
+// 註冊
+router.get('/signup', userController.signUpPage)
+router.post('/signup', userController.signUp)
+
+
+// 登入頁
+router.get('/signin', userController.signInPage)
+
+
 
 router.use('/', generalErrorHandler)
 

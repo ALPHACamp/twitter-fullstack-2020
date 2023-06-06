@@ -24,8 +24,11 @@ app.use(express.static('public'))
 app.use(session({ secret: 'SECRET', resave: false, saveUninitialized: false }))
 // secret寫死? 加進env?
 
+// setting body-parser
+app.use(express.urlencoded({ extended: true }))
+
 // passport setting
-app.use(passport)
+passport(app)
 
 // Setting middleware
 app.use(flash())
@@ -34,7 +37,7 @@ app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg')
   res.locals.warning_msg = req.flash('warning_msg')
   res.locals.info_msg = req.flash('info_msg')
-  re.locals.loginUser = helpers.getUser(req)
+  res.locals.loginUser = helpers.getUser(req)
   next()
 })
 
