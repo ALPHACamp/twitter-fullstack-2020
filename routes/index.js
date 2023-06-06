@@ -10,11 +10,13 @@ const tweetsController = require('../controllers/tweets-controller')
 router.get('/signin', userController.signinPage)
 router.post('/signin', userController.signin)
 
+router.get('/tweets', (req, res) => res.render('index'))
+
 router.get('/users/:id/tweets', profileController.getUserTweets)
 router.get('/users/:id/followings', profileController.getUserFollows)
 router.get('/users/:id/followers', profileController.getUserFollows)
 router.get('/users/:id', profileController.editUser)
 
-router.use('/', (req, res) => res.render('index'))
+router.use('/', (req, res) => res.redirect('/tweets'))
 
 module.exports = router
