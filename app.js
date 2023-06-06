@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const express = require('express')
 const helpers = require('./_helpers');
+const passport = require('./config/passport')
 const exphbs = require('express-handlebars')
 const flash = require('connect-flash')
 const session = require('express-session')
@@ -21,6 +22,10 @@ app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
 app.use(session({ secret: 'SECRET', resave: false, saveUninitialized: false }))
+// secret寫死? 加進env?
+
+// passport setting
+app.use(passport)
 
 // Setting middleware
 app.use(flash())
