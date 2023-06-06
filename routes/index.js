@@ -5,13 +5,16 @@ const adminController = require('../controllers/admin-controller')
 const followshipController = require('../controllers/followship-controller')
 const profileController = require('../controllers/profile-controller')
 const userController = require('../controllers/user-controller')
-const tweetsController = require('../controllers/tweets-controller.js')
+const tweetsController = require('../controllers/tweets-controller')
+
+router.get('/signin', userController.signinPage)
+router.post('/signin', userController.signin)
 
 router.get('/users/:id/tweets', profileController.getUserTweets)
 router.get('/users/:id/followings', profileController.getUserFollows)
 router.get('/users/:id/followers', profileController.getUserFollows)
 router.get('/users/:id', profileController.editUser)
 
-router.get('/', (req, res) => res.render('index'))
+router.use('/', (req, res) => res.render('index'))
 
 module.exports = router
