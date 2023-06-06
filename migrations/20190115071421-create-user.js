@@ -3,7 +3,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Users', {
       id: {
-        allowNull: false,
+        // allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
@@ -32,21 +32,20 @@ module.exports = {
         type: Sequelize.TEXT
       },
       role: {
-        allowNull: false,
         type: Sequelize.STRING,
         defaultValue: 'user'
       },
-      createdAt: {
-        allowNull: false,
+      created_at: {
+        // allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
-        allowNull: false,
+      updated_at: {
+        // allowNull: false,
         type: Sequelize.DATE
       }
     });
   },
-  down:async(queryInterface, Sequelize) => {
+  down: async(queryInterface, Sequelize) => {
     await queryInterface.dropTable('Users');
   }
 };
