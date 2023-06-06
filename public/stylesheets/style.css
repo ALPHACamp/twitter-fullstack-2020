@@ -314,7 +314,7 @@ h4 {
   color: #92929d;
 }
 
-/* user */
+/* profile */
 .user-container > div > span > .tweet {
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -322,6 +322,10 @@ h4 {
   font-size: 13px;
   line-height: 19px;
   color: #6c757d;
+}
+
+.user-container .head {
+  margin-left: 28px;
 }
 
 .user-container h5 {
@@ -418,6 +422,10 @@ h4 {
   padding: 0;
 }
 
+.user-container .tweet-list .icon {
+  margin: 0 0 0 24px;
+}
+
 .user-container .tweet-text {
   margin-left: 8px;
   margin-right: 3px;
@@ -488,6 +496,10 @@ h4 {
 .user-container .follow-list .btn-unfollow {
   background: #ffffff;
   color: #ff6600;
+}
+
+.user-container .follow-list .follow {
+  margin: 0 24px;
 }
 
 /* user edit modal */
@@ -629,6 +641,10 @@ h4 {
   font-size: 12px;
   line-height: 20px;
   color: #696974;
+}
+
+.user-edit-container {
+  margin: 24px;
 }
 
 .user-edit-container h4 {
