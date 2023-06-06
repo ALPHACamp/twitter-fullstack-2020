@@ -369,7 +369,7 @@ h4 {
   color: #171725;
 }
 
-.tweet-account {
+.tweet-account, .reply-tag-text {
   font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 400;
@@ -405,4 +405,54 @@ h4 {
   font-size: 24px;
   line-height: 26px;
   color: #171725;
+}
+
+.list-header-img {
+  width: 24px;
+  height: 24px;
+  margin-right: 16px;
+}
+
+.tweet-content {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  color: #171725;
+}
+
+.hr {
+  border: 0px;
+  /* 不要框架 */
+  height: 1px;
+  /* 設定 1px 的高度 */
+  background: #E6ECF0;
+  /* 讓背景色填滿高度 1px 的元素空間 */
+  margin: 20px 0;
+}
+
+.tweet-interact-counts {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 19px;
+  color: #171725;
+  margin-right: 5px;
+}
+
+.tweet-interact-text {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 19px;
+  color: #6C757D;
+  margin-right: 24px;
+}
+
+.reply-tag {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: #FF6600;
 }
