@@ -29,7 +29,7 @@ h4 {
   /* layout */
   margin: 0px 24px;
   padding: 0;
-  border-left: 1px solid #E6ECF0;
+  /*不確定這行是不是要刪掉: border-left: 1px solid #E6ECF0; */
 
   /* scrollbar */
   overflow-y: hidden;
@@ -54,7 +54,7 @@ h4 {
 }
 
 .home-list::-webkit-scrollbar-track {
-  border-left: 1px solid #E6ECF0;
+  /* 要再確認這一行需不需要: border-left: 1px solid #E6ECF0; */
   background-color: transparent;
 }
 
@@ -68,15 +68,15 @@ h4 {
 }
 
 .tweet-list {
-  border: 0px;
   border-radius: 0 !important;
-  border-bottom: 1px solid #E6ECF0;
+  border: 1px solid #E6ECF0;
 }
 
+/* 這裡是否不需要 再請各位確認
 .home-title {
   border: 0px;
   border-bottom: 1px solid #E6ECF0;
-}
+} */
 
 
 
@@ -358,7 +358,7 @@ h4 {
 .tweet-text {
   margin-left: 8px;
   margin-right: 3px;
-  width: 528px;
+  width: auto;
 }
 
 .tweet-name {
@@ -455,4 +455,12 @@ h4 {
   font-weight: 400;
   font-size: 14px;
   color: #FF6600;
+}
+
+.vertical-line {
+  width: 0;
+  border-left: 1px solid #B5B5BE;
+  border-right: 1px solid #B5B5BE;
+  height: 60%;
+  margin: 10px auto 0;
 }

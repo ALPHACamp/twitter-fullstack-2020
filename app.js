@@ -17,7 +17,7 @@ app.set('view engine', 'hbs')
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 // routes
-app.get('/', (req, res) => res.render('tweet'))
+app.get('/', (req, res) => res.render('tweets'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 // exports
