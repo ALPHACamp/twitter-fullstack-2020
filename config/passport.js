@@ -9,14 +9,14 @@ passport.use(
   new LocalStrategy(
     {
       // 設定變數
-      usernameField: 'email',
+      usernameField: 'account',
       passwordField: 'password',
       passReqToCallback: true
     },
-    async (req, email, password, cb) => {
+    async (req, account, password, cb) => {
       try {
         // 抓取 user
-        const user = await User.findOne({ where: { email } })
+        const user = await User.findOne({ where: { account } })
         // 判斷有無
         if (!user) {
           return cb(null, false, req.flash('error_messages'), '帳號或密碼錯誤')

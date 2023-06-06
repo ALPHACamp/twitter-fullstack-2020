@@ -18,6 +18,8 @@ const SESSION_SECRET = process.env.SESSION_SECRET || 'simple_twitter_session_sec
 app.engine('hbs', handlebars({ extname: '.hbs', defaultLayout: 'main', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 
+app.use(express.urlencoded({ extended: true }))
+
 app.use(
   session({
     secret: SESSION_SECRET,

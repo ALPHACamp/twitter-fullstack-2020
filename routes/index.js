@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const passport = require('../config/passport')
 
 const adminController = require('../controllers/admin-controller')
 const followshipController = require('../controllers/followship-controller')
@@ -7,10 +8,19 @@ const profileController = require('../controllers/profile-controller')
 const userController = require('../controllers/user-controller')
 const tweetsController = require('../controllers/tweets-controller')
 
-router.get('/signin', userController.signinPage)
-router.post('/signin', userController.signin)
+const { authenticated, adminAuthenticated } = require('../middleware/auth')
 
-router.get('/tweets', (req, res) => res.render('index'))
+router.get('/signin', userController.signinPage)
+router.post(
+  '/signin',
+  passport.authenticate('local', {
+    failureRedirect: '/signin',
+    failureFlash: true
+  }),
+  userController.signin
+)
+
+router.get('/tweets', authenticated, (req, res) => res.render('index'))
 
 router.get('/users/:id/tweets', profileController.getUserTweets)
 router.get('/users/:id/followings', profileController.getUserFollows)
