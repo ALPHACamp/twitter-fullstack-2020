@@ -373,6 +373,11 @@ body {
   width: 16px;
 }
 
+.user-container .tweet-list .btn-unfollow {
+  background: #ffffff;
+  color: #ff6600;
+}
+
 /* user edit modal */
 .user-edit-modal .modal-content {
   margin: 0;
