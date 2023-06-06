@@ -1,14 +1,14 @@
 'use strict'
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Likes', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('Followships', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
+      follower_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -16,11 +16,11 @@ module.exports = {
           key: 'id'
         }
       },
-      tweet_id: {
+      following_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Tweets',
+          model: 'Users',
           key: 'id'
         }
       },
@@ -34,7 +34,7 @@ module.exports = {
       }
     })
   },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Likes')
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('Followships')
   }
 }
