@@ -2,6 +2,7 @@
 const express = require('express')
 const app = express()
 const handlebars = require('express-handlebars')
+const handlebarsHelpers = require('./helpers/handlebars-helpers')
 
 // files
 const helpers = require('./_helpers')
@@ -9,7 +10,7 @@ app.use(express.static('public'))
 
 const port = 3000
 
-app.engine('hbs', handlebars({ extname: '.hbs', defaultLayout: 'main' }))
+app.engine('hbs', handlebars({ extname: '.hbs', defaultLayout: 'main', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 
 // use helpers.getUser(req) to replace req.user
