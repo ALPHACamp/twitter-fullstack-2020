@@ -331,6 +331,22 @@ body {
   color: #6c757d;
 }
 
+.user-container .reply-name {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.user-container .reply-name > .text {
+  color: #6c757d;
+}
+
+.user-container .reply-name > .account {
+  color: #ff6600;
+}
+
 .user-container .tweet-description {
   margin: 0;
   font-family: 'Noto Sans TC';
