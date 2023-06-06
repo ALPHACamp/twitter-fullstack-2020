@@ -1,13 +1,3 @@
-const userController = {
-  getUserTweets: (req, res) => {
-    res.render('users/profile')
-  },
-  getUserFollows: (req, res) => {
-    res.render('users/follow')
-  },
-  editUser: (req, res) => {
-    res.render('users/edit')
-  }
-}
+const userController = {}
 
 module.exports = userController
