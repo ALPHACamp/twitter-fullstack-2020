@@ -17,6 +17,10 @@ app.set('view engine', 'hbs')
 
 // routes
 app.get('/', (req, res) => res.render('index'))
+app.get('/signin', (req, res) => res.render('signin'));
+app.get('/signup', (req, res) => res.render('signup'));
+app.get('/admin/signin', (req, res) => res.render('admin/signin'));
+app.get('/admin/tweets', (req, res) => res.render('admin/tweets'));
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 // exports
