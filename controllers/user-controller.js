@@ -34,8 +34,12 @@ const userController = {
     return res.render('signin')
   },
   signIn: async (req, res, next) => {
-
-    return res.render('example')
+    req.flash('success_msg','登入成功')
+    return res.redirect('/tweets')
+  },
+  // 登出
+  signOut:(req,res,next)=>{
+    
   }
 }
 

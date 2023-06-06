@@ -13,7 +13,7 @@ module.exports = app => {
     passReqToCallback: true
   }, async (req, email, password, cb) => {
     try {
-      const user = await User.findOne({ where: { email } })
+      const user = await User.findOne({ where: { account } })
       if (!user) cb(null, false, req.flash('danger_msg', '帳號或密碼錯誤!'))
 
       const passwordCompare = await bcrypt.compare(password, user.password)
