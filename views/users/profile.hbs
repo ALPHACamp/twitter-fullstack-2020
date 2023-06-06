@@ -25,9 +25,85 @@
       </li>
     </ul>
   </div>
+  <!-- each tweets -->
+  <ul class='tweet-list'>
+    <li class='mt-2'>
+      <div class='d-flex align-items-start'>
+        <div class='flex-shrink-1 p-0'>
+          <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
+        </div>
+        <div class='tweet-text flex-grow-1'>
+          <span class='tweet-name'>Apple </span>
+          <span class='tweet-account'>@apple・3 小時</span>
+          <p class='tweet-description' style='white-space:break-spaces;'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
+            dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
+          <div>
+            <a class='reply' href='#'>
+              <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
+              <span>76</span>
+            </a>
+            <a class='like' href='#'>
+              <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
+              <span>13</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <hr />
+    </li>
+    <li class='mt-2'>
+      <div class='d-flex align-items-start'>
+        <div class='flex-shrink-1 p-0'>
+          <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
+        </div>
+        <div class='tweet-text flex-grow-1'>
+          <span class='tweet-name'>Apple </span>
+          <span class='tweet-account'>@apple・3 小時</span>
+          <p class='tweet-description' style='white-space:break-spaces;'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
+            dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
+          <div>
+            <a class='reply' href='#'>
+              <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
+              <span>76</span>
+            </a>
+            <a class='like' href='#'>
+              <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
+              <span>13</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <hr />
+    </li>
+    <li class='mt-2'>
+      <div class='d-flex align-items-start'>
+        <div class='flex-shrink-1 p-0'>
+          <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
+        </div>
+        <div class='tweet-text flex-grow-1'>
+          <span class='tweet-name'>Apple </span>
+          <span class='tweet-account'>@apple・3 小時</span>
+          <p class='tweet-description' style='white-space:break-spaces;'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
+            dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
+          <div>
+            <a class='reply' href='#'>
+              <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
+              <span>76</span>
+            </a>
+            <a class='like' href='#'>
+              <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
+              <span>13</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <hr />
+    </li>
+  </ul>
+
 </div>
 
-<!-- Modal -->
+<!-- edit Modal -->
 <div class='modal fade user-edit-modal' id='edit-modal' tabindex='-1' aria-labelledby='editModalLabel' aria-hidden='true'>
   <div class='modal-dialog'>
     <div class='modal-content'>
@@ -63,6 +139,43 @@
           </div>
         </div>
       </form>
+    </div>
+  </div>
+</div>
+
+<!-- reply Modal -->
+<div
+  class='modal fade'
+  id='tweet-modal'
+  data-bs-backdrop='static'
+  data-bs-keyboard='false'
+  tabindex='-1'
+  aria-labelledby='tweetModalLabel'
+  aria-hidden='true'
+>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <button type='button' class='tweet-close-button' data-bs-dismiss='modal' aria-label='Close'>
+          <span aria-hidden='true'><img src='/images/message/message_danger.svg' alt='' /></span>
+        </button>
+      </div>
+      <div class='modal-body'>
+        <!-- form -->
+        <div class='d-flex align-items-start'>
+          <div class='flex-shrink-1 p-0'>
+            <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
+          </div>
+          <div class='flex-grow-1 position-relative'>
+            <form action='/user/tweets' method='POST'>
+              <div class='form-group mb-5'>
+                <textarea class='form-control border-0' id='description' name='description' rows='3' placeholder='有什麼新鮮事？'></textarea>
+              </div>
+              <button type='submit' class='btn btn-primary position-absolute end-0 bottom-0 mx-5 me-2'>推文</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

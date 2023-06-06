@@ -296,6 +296,67 @@ body {
   border-bottom: 2px solid #ff6600;
 }
 
+.user-container .tweet-list {
+  margin: 0;
+  padding: 0;
+}
+
+.user-container .tweet-list li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.user-container .tweet-text {
+  margin-left: 8px;
+  margin-right: 3px;
+  width: 528px;
+}
+
+.user-container .tweet-name {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.user-container .tweet-account {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #6c757d;
+}
+
+.user-container .tweet-description {
+  margin: 0;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.user-container .tweet-list a {
+  margin-right: 65px;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 14px;
+  color: #6c757d;
+  text-decoration: none;
+}
+
+.user-container .tweet-list .reply-icon,
+.user-container .tweet-list .like-icon {
+  width: 16px;
+}
+
 /* user edit modal */
 .user-edit-modal .modal-content {
   margin: 0;
