@@ -1,0 +1,125 @@
+/* ----------Basic---------- */
+@font-face {
+  font-family: 'custom-font';
+  src: url(./fonts//NotoSansTC-Regular.otf)format('opentype');
+  unicode-range: U+4E00-9FFF, U+00-024F
+}
+
+@font-face {
+  font-family: 'custom-font';
+  src: url(./fonts/Montserrat-VariableFont_wght.ttf)format('truetype');
+  unicode-range: U+21-40
+}
+
+:root {
+  --light-info: #FF974A;
+  --light-blue: #50B5FF;
+  --light-green: #82C43C;
+  --light-purple: #A461D8;
+  --light-pink: #FF9AD5;
+  --danger: #FC5A5A;
+  --warning: #FFC542
+}
+
+body {
+  font-family: 'custom-font';
+  /* 設定字型 */
+  font-size: 1rem;
+  line-height: 26px;
+  margin: 0;
+}
+
+
+/* ----------Messages---------- */
+
+.message-text {
+  padding-left: 24px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.light-green-message,
+.danger-message,
+.warning-message,
+.light-blue-message {
+  position: relative;
+  width: 394px;
+  height: 96px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.08);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.light-green-message::before,
+.danger-message::before,
+.warning-message::before,
+.light-blue-message::before {
+  position: absolute;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  content: '';
+  border-radius: 50%;
+}
+
+.light-green-message::before {
+  border: 2px solid var(--light-green);
+}
+
+.danger-message::before {
+  border: 2px solid var(--danger);
+}
+
+.warning-message::before {
+  border: 2px solid var(--warning);
+}
+
+.light-blue-message::before {
+  border: 2px solid var(--light-blue);
+}
+
+.danger-icon,
+.light-green-icon,
+.warning-icon,
+.light-blue-icon {
+  position: absolute;
+  transform: scale(0.5);
+}
+
+.light-green-icon {
+  right: 35px;
+  color: var(--light-green);
+}
+
+.danger-icon {
+  right: 38px;
+  color: var(--danger);
+}
+
+.warning-icon {
+  right: 49px;
+  color: var(--warning);
+}
+
+.light-blue-icon {
+  right: 48px;
+  color: var(--light-blue);
+}
+
+
+/* ----------Form settings---------- */
+
+.sign-up-section {
+  min-width: 540px;
+}
+
+.was-validated>.mb-3>.form-control:invalid {
+  border-color: white;
+  border-bottom: 2px solid var(--danger);
+}
