@@ -279,6 +279,10 @@ body {
   margin-right: 16px;
 }
 
+.user-container .nav {
+  border-top: 1px solid #e6ecf0;
+}
+
 .user-container .nav-link {
   border: 0;
   width: 130px;
@@ -296,12 +300,14 @@ body {
   border-bottom: 2px solid #ff6600;
 }
 
-.user-container .tweet-list {
+.user-container .tweet-list,
+.user-container .follow-list {
   margin: 0;
   padding: 0;
 }
 
-.user-container .tweet-list li {
+.user-container .tweet-list li,
+.user-container .follow-list li {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -357,7 +363,8 @@ body {
   color: #171725;
 }
 
-.user-container .tweet-list a {
+.user-container .tweet-list a,
+.user-container .follow-list a {
   margin-right: 65px;
   font-family: 'Montserrat';
   font-style: normal;
@@ -373,7 +380,7 @@ body {
   width: 16px;
 }
 
-.user-container .tweet-list .btn-unfollow {
+.user-container .follow-list .btn-unfollow {
   background: #ffffff;
   color: #ff6600;
 }
