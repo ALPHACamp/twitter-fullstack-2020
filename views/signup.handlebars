@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-6 m-auto  sign-up-section">
+      <div class="card card-body">
+        <h1 class="text-center mt-3">Register</h1>
+        {{!-- {{> message}} --}}
+        <form action="/users/register" method="POST" id="form" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="name" class="mb-2">name</label>
+            <input type="text" id="name" name="name" placeholder="Enter name" class="form-control" value="{{ name }}"
+              required>
+            <div class="invalid-feedback">請填寫22個字元以內的名稱</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="mb-2">Email</label><span class="text-danger mx-1">*</span>
+            <input type="email" id="email" name="email" placeholder="Enter email" class="form-control"
+              value="{{ email }}">
+          </div>
+          <div class="mb-3">
+            <label for="password" class="mb-2">Password</label><span class="text-danger mx-1">*</span>
+            <input type="password" id="password" name="password" placeholder="Enter password" class="form-control"
+              value="{{ password }}">
+          </div>
+          <div class="mb-3">
+            <label for="confirmPassword" class="mb-2">Confirm Password</label><span class="text-danger mx-1">*</span>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Enter your password again"
+              class="form-control" value="{{ confirmPassword }}">
+          </div>
+          <div class="d-grid gap-2 my-4">
+            <button type="submit" class="btn btn-primary" id="submit">Register</button>
+          </div>
+        </form>
+        <p class="lead mt-3">Already have an account? <a href="/users/login">Login</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/javascripts/register.js"></script>
