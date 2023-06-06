@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/user-controller')
-const passport = require('passport')
+const passport = require('../config/passport')
 
 const { generalErrorHandler } = require('../middleware/error-handler')
 
@@ -31,7 +31,10 @@ router.post('/signup', userController.signUp)
 
 // 登入頁
 router.get('/signin', userController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureMessage: true, faliureRedirect: '/signin' }), userController.signIn)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', successRedirect: '/tweets' }), userController.signIn)
+
+// 登出
+router.post('/signout', userController.signOut)
 
 // 登入後的假首頁
 router.get('/tweets', (req, res) => {

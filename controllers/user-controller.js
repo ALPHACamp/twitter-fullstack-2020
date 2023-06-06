@@ -7,17 +7,17 @@ const userController = {
     return res.render('signup')
   },
   signUp: async (req, res, next) => {
-    const { account, name, email, password, confirmPassword } = req.body
-    if (!account || !name || !email || password) throw new Error('欄位未正確填寫')
-    if (password !== confirmPassword) throw new Error('輸入密碼不一致')
+    const { account, name, email, password, checkPassword } = req.body
+    if (!account || !name || !email || !password) throw new Error('欄位未正確填寫')
+    if (password !== checkPassword) throw new Error('輸入密碼不一致')
     try {
       const usedAccount = await User.findByPk({ where: { account } })
       if (usedAccount) throw new Error('該帳號已被使用')
       const usedEmail = await User.findByPk({ where: { email } })
       if (usedEmail) throw new Error('該email已被使用')
 
-      const hashedPassword = await bcrypt.hash(password, 12)
-      await User.creat({
+      const hashedPassword = await bcrypt.hash(password, 10)
+      await User.create({
         account,
         name,
         email,
@@ -33,13 +33,15 @@ const userController = {
   signInPage: (req, res) => {
     return res.render('signin')
   },
-  signIn: async (req, res, next) => {
-    req.flash('success_msg','登入成功')
+  signIn: (req, res) => {
+    req.flash('success_msg', '登入成功')
     return res.redirect('/tweets')
   },
   // 登出
-  signOut:(req,res,next)=>{
-    
+  signOut: (req, res) => {
+    req.logout()
+    req.flash('success_msg', "登出成功")
+    return res.redirect('/signin')
   }
 }
 

@@ -28,7 +28,8 @@ app.use(session({ secret: 'SECRET', resave: false, saveUninitialized: false }))
 app.use(express.urlencoded({ extended: true }))
 
 // passport setting
-passport(app)
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Setting middleware
 app.use(flash())
