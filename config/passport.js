@@ -19,12 +19,12 @@ passport.use(
         const user = await User.findOne({ where: { account } })
         // 判斷有無
         if (!user) {
-          return cb(null, false, req.flash('error_messages'), '帳號或密碼錯誤')
+          return cb(null, false, req.flash('error_messages', '帳號或密碼錯誤'))
         }
         const isMatch = await bcrypt.compare(password, user.password)
         // 判斷密碼正確
         if (!isMatch) {
-          return cb(null, false, req.flash('error_messages'), '帳號或密碼錯誤')
+          return cb(null, false, req.flash('error_messages', '帳號或密碼錯誤'))
         }
         // 正確的話就cb
         cb(null, user)

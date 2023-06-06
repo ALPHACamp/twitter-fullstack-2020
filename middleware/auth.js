@@ -1,11 +1,14 @@
 const { ensureAuthenticated, getUser } = require('../_helpers')
 
 const authenticated = (req, res, next) => {
-  console.log(getUser(req).role)
+  const isUser = getUser(req)?.role === 'user'
   if (ensureAuthenticated(req)) {
-    if (getUser(req).role === 'user') {
+    if (isUser) {
       return next()
     }
+    return res.redirect('/signin')
+  } else {
+    req.flash('error_messages', '請先登入!')
     return res.redirect('/signin')
   }
 }
@@ -15,6 +18,9 @@ const adminAuthenticated = (req, res, next) => {
     if (getUser(req).role === 'admin') {
       return next()
     }
+    return res.redirect('/signin')
+  } else {
+    req.flash('error_messages', '請先登入!')
     return res.redirect('/signin')
   }
 }
