@@ -33,6 +33,7 @@ body {
 /* ----------Messages---------- */
 
 .message-text {
+  width: 300px;
   padding-left: 24px;
   font-family: 'Roboto';
   font-style: normal;
