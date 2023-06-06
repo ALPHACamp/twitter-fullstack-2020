@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const express = require('express')
 const helpers = require('./_helpers');
 const exphbs = require('express-handlebars')
@@ -25,6 +29,7 @@ app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg')
   res.locals.warning_msg = req.flash('warning_msg')
   res.locals.info_msg = req.flash('info_msg')
+  re.locals.loginUser = helpers.getUser(req)
   next()
 })
 
