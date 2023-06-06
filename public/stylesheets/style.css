@@ -1,24 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Noto+Sans+TC:wght@400;500;700&family=Roboto&display=swap');
+
+
+
 /****** body ******/
 html,
 body {
+  /* layout */
   height: 100vh;
   margin: 0;
+
+  /* font */
+  font-family: 'Noto Sans TC', sans-serif;
+
+  /* scrollbar */
   overflow-y: hidden;
+}
+
+h4 {
+  font-weight: 700;
+  font-size: 24px;
+  margin: 0;
 }
 
 
 
 /****** home ******/
 .home-page {
+  /* layout */
   margin: 0px 24px;
   padding: 0;
-  border: 1px solid #E6ECF0;
+  border-left: 1px solid #E6ECF0;
+
+  /* scrollbar */
   overflow-y: hidden;
+}
+
+
+/* list content */
+.home-list {
+  /* layout */
+  height: 100vh;
+
+  /* style */
+  border-radius: 0 !important;
+
+  /* scrollbar */
+  overflow-y: auto !important;
+}
+
+/* scrollbar */
+.home-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.home-list::-webkit-scrollbar-track {
+  border-left: 1px solid #E6ECF0;
+  background-color: transparent;
+}
+
+.home-list::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.home-list:hover::-webkit-scrollbar-thumb {
+  background-color: #E6ECF0;
+  border-radius: 50px;
 }
 
 .tweet-list {
   border: 0px;
   border-radius: 0 !important;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.home-title {
+  border: 0px;
   border-bottom: 1px solid #E6ECF0;
 }
 
@@ -36,14 +92,20 @@ body {
 }
 
 .navbar-nav .nav-item .nav-link {
+  /* layout */
   display: flex;
   align-items: center;
-  font-family: 'Noto Sans TC';
+
+  /* font */
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
   line-height: 26px;
   color: #44444F;
+}
+
+.navbar-nav .nav-item:hover .nav-link {
+  color: #FF6600;
 }
 
 .navbar-nav .nav-item.active .nav-link {
@@ -55,8 +117,11 @@ body {
 }
 
 .navbar-nav .nav-item .nav-link .nav-icon {
+  /* size */
   width: 24px;
   height: 24px;
+
+  /* img */
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -64,23 +129,15 @@ body {
 
 
 /* nav-icon */
-.navbar-nav .nav-item.active .nav-link .home-icon {
-  background-image: url('/images/navbar/home_filled.svg');
-}
+/* default state */
 .navbar-nav .nav-item .nav-link .home-icon {
   background-image: url('/images/navbar/home_outlined.svg');
 }
 
-.navbar-nav .nav-item.active .nav-link .user-icon {
-  background-image: url('/images/navbar/user_filled.svg');
-}
 .navbar-nav .nav-item .nav-link .user-icon {
   background-image: url('/images/navbar/user_outlined.svg');
 }
 
-.navbar-nav .nav-item.active .nav-link .cog-icon {
-  background-image: url('/images/navbar/cog_filled.svg');
-}
 .navbar-nav .nav-item .nav-link .cog-icon {
   background-image: url('/images/navbar/cog_outlined.svg');
 }
@@ -90,37 +147,55 @@ body {
 }
 
 
+/* toggle state */
+.navbar-nav .nav-item.active .nav-link .home-icon,
+.navbar-nav .nav-item:hover .nav-link .home-icon {
+  background-image: url('/images/navbar/home_filled.svg');
+}
+
+.navbar-nav .nav-item.active .nav-link .user-icon,
+.navbar-nav .nav-item:hover .nav-link .user-icon {
+  background-image: url('/images/navbar/user_filled.svg');
+}
+
+.navbar-nav .nav-item.active .nav-link .cog-icon,
+.navbar-nav .nav-item:hover .nav-link .cog-icon {
+  background-image: url('/images/navbar/cog_filled.svg');
+}
+
+.navbar-nav .nav-item:hover .nav-link .logout-icon {
+  background-image: url('/images/navbar/logout_colored.svg');
+}
+
+
+
 /****** btn ******/
 .btn {
-  /* Auto layout */
-
+  /* layout */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 8px auto;
 
-  /* color/brand/main */
-
-  background: #FF6600;
-  border-radius: 50px;
-  border-color: #FF6600;
-
-  /* Inside auto layout */
-
+  /* Inside layout */
   flex: none;
   order: 0;
   align-self: stretch;
   flex-grow: 0;
 
+  /* style */
+  background: #FF6600;
+  border-radius: 50px;
+  border-color: #FF6600;
 
-
-  /* Global/09. White */
-
+  /* font */
+  font-weight: 400;
   color: #FFFFFF;
 }
 
 .btn:hover {
+  /* style */
   color: #FFFFFF;
   background: #FF6600;
   border-color: #FF6600;
@@ -128,32 +203,33 @@ body {
 }
 
 .btn:active {
+  /* style */
   color: #FF6600 !important;
   background-color: #FFFFFF !important;
   border-color: #FF6600 !important;
 }
 
 .nav-btn {
-  /* btn */
+  /* size */
   max-width: 178px;
   height: 46px;
 
   /* font */
-  font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
 }
 
 .recommend-followings-btn {
-  /* btn */
+  /* size */
   width: auto;
   height: 40px;
+
+  /* style */
   background: #FFFFFF;
   border: 1px solid #FF6600;
 
   /* font */
-  font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -161,57 +237,91 @@ body {
 }
 
 .recommend-followings-btn.followed {
+  /* style */
   background: #FF6600;
   border: 1px solid #FF6600;
   color: #FFFFFF;
 }
 
 
+
 /****** recommend-followings ******/
 .recommend-followings {
-  /* Right Column */
+  /* layout */
   height: calc(100vh - 2rem);
   max-width: 273px;
-  overflow-y: auto;
 
+  /* style */
   border-radius: 16px;
+
+  /* scrollbar */
+  overflow-y: auto;
 }
 
+/* scrollbar */
+.recommend-followings::-webkit-scrollbar {
+  /* size */
+  width: 6px;
+}
+
+.recommend-followings::-webkit-scrollbar-thumb {
+  /* style */
+  background-color: transparent;
+}
+
+.recommend-followings:hover::-webkit-scrollbar-thumb {
+  /* style */
+  background-color: #E6ECF0;
+  border-radius: 50px;
+}
+
+
+/* list content */
 .recommend-followings-item {
+  /* layout */
+  padding: 0.8vw;
+
+  /* style */
   background: #FAFAFB;
   border: 0;
-  padding: 0.8vw;
 }
 
 .recommend-followings-title {
+  /* style */
   background: #FAFAFB;
   border-bottom: 1px solid #E6ECF0;
 }
 
 .recommend-followings-img {
+  /* size */
   max-width: 100%;
   height: auto;
 }
 
 .recommend-followings-text {
+  /* layout */
   margin-left: 8px;
   margin-right: 3px;
+
+  /* text length limit */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  /* style */
   width: 76px;
 }
 
-.follower-name {
-  font-family: 'Noto Sans TC';
+.following-name {
+  /* font */
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   color: #171725;
 }
 
-.follower-account {
-  font-family: 'Noto Sans TC';
+.following-account {
+  /* font */
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
