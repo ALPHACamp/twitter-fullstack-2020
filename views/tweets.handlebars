@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="wrapper">
+
+    {{> navbar}}
+
+    {{!-- main --}}
+    <section class="main">
+      <h4 class="main-title">
+        title
+      </h4>
+      <div class="main-create-bar">
+        <div class="avatar">
+          <div class="avatar-img">
+            avatar-img
+          </div>
+        </div>
+      </div>
+      <form action="/tweets" method="post">
+        <input type="text" class="main-create-input">
+        <button type="submit" class="btn btn-info">
+          submit
+        </button>
+      </form>
+      <div class="main-bg-bray"></div>
+      <div class="card">
+        <div class="avatar">
+          <div class="avatar-img">avatarimg</div>
+        </div>
+      </div>
+      <div class="card-text">
+        <div class="card-text-info">
+          <span class="card-name">card name</span>
+          <span class="card-account">card account</span>
+          <span class="card-date">card date</span>
+        </div>
+        <p class="card-description">description</p>
+        <div class="card-datas">
+          <span class="card-datas-icon">icon</span>
+          <span class="card-datas-counts">123</span>
+        </div>
+      </div>
+    </section>
+
+    {{!-- followship --}}
+    <section class="followship">
+      <h4 class="followship-title">title</h4>
+      <div class="followship-card">
+        <div class="avatar">
+          <div class="avatar-img">avatar img</div>
+        </div>
+        <div class="card-text-info">
+          <span class="card-name">name</span>
+          <span class="card-account">account</span>
+        </div>
+        <div class="btn btn-info">btn-follow</div>
+      </div>
+    </section>
+  </div>
+</div>

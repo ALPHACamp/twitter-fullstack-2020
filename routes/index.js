@@ -27,6 +27,10 @@ router.get('/signup', (req, res) => {
   res.render('signup')
 })
 
+router.get('/tweets', (req, res) => {
+  res.render('tweets')
+})
+
 router.use('/', generalErrorHandler)
 
 module.exports = router
