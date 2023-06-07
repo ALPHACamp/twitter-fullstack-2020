@@ -37,6 +37,7 @@ npx sequelize db:migrate
 ### 建立種子資料
 ```
 npm run seed
+npx sequelize db:seed:all
 ```
 
 ### 執行測試

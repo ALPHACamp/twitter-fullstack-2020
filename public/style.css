@@ -144,6 +144,15 @@ h5 {
   color: #171725;
 }
 
+.number {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 14px;
+  color: #6C757D;
+}
+
 /* ------------------------------     Color */
 .color-main {
   color: #FF6600
@@ -180,7 +189,7 @@ h5 {
 .color-dark-80 {
   color: #696974
 }
-
+ㄠ
 .color-dark-70 {
   color: #92929D
 }
@@ -309,7 +318,7 @@ button {
 
 .modal {
   position: relative;
-  top: 2vw;
+  top: 50%;
   left: 0;
 }
 

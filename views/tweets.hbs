@@ -1,0 +1,54 @@
+<h4 class="pt-4 ps-4 pe-4 pb-1">首頁</h4>
+<hr>
+<div class="d-flex flex-column m-4">
+  <div class="d-flex">
+    {{!-- 用戶大頭貼 --}}
+    <div class="me-2" style="width: 50px; height: 50px; border-radius: 50%;">
+      <img src="/user/card/tweet/base/img.svg">
+    </div>
+    {{!-- tweet 文字輸入區 --}}
+    <textarea placeholder="有什麼新鮮事？" class="text-basic-reg mt-2" rows="3" cols="50" maxlength="140"></textarea>
+  </div>
+  {{!-- 發送按鈕 --}}
+  <div class="d-flex flex-row-reverse">
+    <form action="/tweets" method="POST" enctype="multipart/form-data">
+      <button type="submit" class="pill-default pill-main">推文</button>
+    </form>
+  </div>
+</div>
+<hr style="height:10px; color:#E6ECF0;;">
+{{#each tweets}}
+{{!-- 一篇貼文 --}}
+<div class="d-flex flex-row align-items-center ps-4 pe-4 p-3 mb-3 mt-3 align-items-start" style="width: 100%">
+  <div class="d-flex align-items-center">
+    {{!-- 用戶大頭貼 --}}
+    <figure class="me-2 align-self-start" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
+      <img src="{{this.User.avatar}}" style="object-fit: cover;width:100%;height:100%">
+    </figure>
+    <div class="me-2 d-flex flex-column">
+      <div class="d-flex align-items-center">
+        {{!-- 用戶名稱 --}}
+        <p class="m-0 text-16px-med">{{this.User.name}}</p>
+        {{!-- 用戶id --}}
+        <p class="m-0 text-14px-reg color-secondary">&nbsp @{{this.User.account}} ・</p>
+        <p class="m-0 text-14px-reg color-secondary">{{relativeTime this.createdAt}}</p>
+      </div>
+      {{!-- tweets 內容 --}}
+      <div class="m-0 text-16px-reg text-break mt-2">
+        {{this.description}}
+      </div>
+      <div class="d-flex mt-3">
+        {{!-- 留言數 Comment --}}
+        <div class="me-5 number">
+          <img class="me-2" src="/_base/Property 2=outlined, Property 3=reply.svg" style="width: 13px">13
+        </div>
+        {{!-- 喜歡數 Like --}}
+        <div class="number">
+          <img class="me-2" src="/_base/Property 2=outlined, Property 3=like.svg" style="width: 13px">16
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+{{/each}}
