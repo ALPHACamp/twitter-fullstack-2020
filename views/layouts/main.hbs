@@ -28,24 +28,9 @@
 
 <body>
   <div class="container">
-    <div class="d-flex justify-content-center">
-      {{!-- navbar --}}
-      <div class="col-2">
-        {{> navbar}}
-      </div>
-      
-      {{!--tweet-list --}}
-      <div class="col-7 home-page">
-        <ul class="list-group home-list">
-            {{{ body }}}
-        </ul>
-      </div>
+    
+    {{{ body }}}
 
-      {{!-- recommend-followings --}}
-      <div class="col-3">
-        {{> recommend-followings}}
-      </div>
-    </div>
   </div>
 
 

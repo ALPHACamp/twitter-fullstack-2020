@@ -25,10 +25,10 @@ h4 {
   /* layout */
   margin: 0px 24px;
   padding: 0;
-  /*不確定這行是不是要刪掉: border-left: 1px solid #E6ECF0; */
+  border: 1px solid #e6ecf0;
 
   /* scrollbar */
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 /* list content */
@@ -38,40 +38,13 @@ h4 {
 
   /* style */
   border-radius: 0 !important;
-
-  /* scrollbar */
-  overflow-y: auto !important;
-}
-
-/* scrollbar */
-.home-list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.home-list::-webkit-scrollbar-track {
-  /* 要再確認這一行需不需要: border-left: 1px solid #E6ECF0; */
-  background-color: transparent;
-}
-
-.home-list::-webkit-scrollbar-thumb {
-  background-color: transparent;
-}
-
-.home-list:hover::-webkit-scrollbar-thumb {
-  background-color: #e6ecf0;
-  border-radius: 50px;
 }
 
 .tweet-list {
   border-radius: 0 !important;
-  border: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
 }
 
-/* 這裡是否不需要 再請各位確認
-.home-title {
-  border: 0px;
-  border-bottom: 1px solid #E6ECF0;
-} */
 
 /****** nav ******/
 .navbar.navbar-vertical {
@@ -350,7 +323,7 @@ h4 {
 }
 
 /* profile */
-.user-container > div > span > .tweet {
+.user-container>div>span>.tweet {
   font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 500;
@@ -395,18 +368,18 @@ h4 {
   color: #171725;
 }
 
-.user-container > .card {
+.user-container>.card {
   position: relative;
   border-radius: 0px;
 }
 
-.user-container > .card > .cover {
+.user-container>.card>.cover {
   width: 100%;
   height: 200px;
   border-radius: 0px;
 }
 
-.user-container > .card > .avatar {
+.user-container>.card>.avatar {
   position: absolute;
   height: 140px;
   top: 124px;
@@ -414,7 +387,7 @@ h4 {
   border-radius: 50%;
 }
 
-.user-container > .card > div > .at-name {
+.user-container>.card>div>.at-name {
   font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 400;
@@ -423,8 +396,8 @@ h4 {
   color: #6c757d;
 }
 
-.user-container > .card > div > span,
-.user-container > .card > div > span > a {
+.user-container>.card>div>span,
+.user-container>.card>div>span>a {
   font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 400;
@@ -434,13 +407,13 @@ h4 {
   text-decoration: none;
 }
 
-.user-container > .card > .edit-btn {
+.user-container>.card>.edit-btn {
   display: flex;
   justify-content: flex-end;
   width: 100%;
 }
 
-.user-container > .card > .edit-btn .btn {
+.user-container>.card>.edit-btn .btn {
   width: 128px;
   margin-top: 16px;
   margin-right: 16px;
@@ -537,11 +510,11 @@ h4 {
   line-height: 22px;
 }
 
-.user-container .reply-name > .text {
+.user-container .reply-name>.text {
   color: #6c757d;
 }
 
-.user-container .reply-name > .account {
+.user-container .reply-name>.account {
   color: #ff6600;
 }
 
@@ -650,7 +623,7 @@ h4 {
   padding: 0;
 }
 
-.user-edit-modal .modal-header > .modal-close {
+.user-edit-modal .modal-header>.modal-close {
   position: absolute;
   left: 20px;
   top: 50%;
@@ -661,7 +634,7 @@ h4 {
   width: 15px;
 }
 
-.user-edit-modal .modal-header > .modal-title {
+.user-edit-modal .modal-header>.modal-title {
   position: absolute;
   left: 71px;
   top: 50%;
@@ -674,7 +647,7 @@ h4 {
   color: #1c1c1c;
 }
 
-.user-edit-modal .modal-header > .btn-edit {
+.user-edit-modal .modal-header>.btn-edit {
   position: absolute;
   right: 16px;
   top: 50%;
@@ -688,11 +661,11 @@ h4 {
   padding: 0;
 }
 
-.user-edit-modal .modal-body > .cover {
+.user-edit-modal .modal-body>.cover {
   position: relative;
 }
 
-.user-edit-modal .modal-body > .cover > .cover-img {
+.user-edit-modal .modal-body>.cover>.cover-img {
   -webkit-filter: brightness(0.5);
   filter: brightness(0.5);
   width: 100%;
@@ -700,7 +673,7 @@ h4 {
   border-radius: 0px;
 }
 
-.user-edit-modal .modal-body > .cover > .cover-edit {
+.user-edit-modal .modal-body>.cover>.cover-edit {
   position: absolute;
   top: 0;
   left: 0;
@@ -711,14 +684,14 @@ h4 {
   height: 100%;
 }
 
-.user-edit-modal .modal-body > .cover > .cover-edit > .form-control {
+.user-edit-modal .modal-body>.cover>.cover-edit>.form-control {
   top: 0;
   width: 0;
   opacity: 0;
   pointer-events: none;
 }
 
-.user-edit-modal .modal-body > .cover > .cover-edit > .form-label {
+.user-edit-modal .modal-body>.cover>.cover-edit>.form-label {
   margin: 0;
   top: 0;
   left: 0;
@@ -726,7 +699,7 @@ h4 {
   cursor: pointer;
 }
 
-.user-edit-modal .modal-body > .cover > .cover-edit > .cover-delete {
+.user-edit-modal .modal-body>.cover>.cover-edit>.cover-delete {
   width: 15px;
   text-align: center;
   background-color: transparent;
@@ -734,7 +707,7 @@ h4 {
   margin: 0;
 }
 
-.user-edit-modal .modal-body > .avatar {
+.user-edit-modal .modal-body>.avatar {
   position: absolute;
   height: 140px;
   top: 124px;
@@ -742,16 +715,16 @@ h4 {
   border-radius: 50%;
 }
 
-.user-edit-modal .modal-body > .form-text {
+.user-edit-modal .modal-body>.form-text {
   margin: 80px 16px 0;
 }
 
-.user-edit-modal .modal-body > .form-text .box {
+.user-edit-modal .modal-body>.form-text .box {
   background: #f5f8fa;
   border-bottom: 2px solid #657786;
 }
 
-.user-edit-modal .modal-body > .form-text .form-label {
+.user-edit-modal .modal-body>.form-text .form-label {
   margin: 0;
   padding: 0;
   font-family: 'Noto Sans TC';
@@ -762,12 +735,12 @@ h4 {
   color: #696974;
 }
 
-.user-edit-modal .modal-body > .form-text .form-control {
+.user-edit-modal .modal-body>.form-text .form-control {
   background-color: transparent;
   border: 0;
 }
 
-.user-edit-modal .modal-body > .form-text .text-amount {
+.user-edit-modal .modal-body>.form-text .text-amount {
   text-align: right;
   font-family: 'Noto Sans TC';
   font-style: normal;
