@@ -100,15 +100,52 @@ const profileController = {
       })
       // 整理資料
       const repliesData = replies.map(reply => reply.toJSON())
-      console.log(userData)
       // render
       res.render('users/replies', { user: userData, replies: repliesData })
     } catch (err) {
       next(err)
     }
   },
-  getUserLikes: (req, res) => {
-    res.render('users/likes', { user: userData })
+  getUserLikes: async (req, res, next) => {
+    const { userData } = req
+    const userId = req.params.userId
+    try {
+      // likes找相對應的資料，跟user推文者關聯，依照like建立時間排列
+      const likes = await Like.findAll({
+        where: { UserId: userId },
+        include: [Tweet],
+        order: [['createdAt', 'DESC']]
+      })
+      // 透過likeId找對應的tweet資料
+      // replies、likes數量計算
+      const tweets = await Promise.all(
+        likes.map(like => {
+          console.log(like)
+          return Tweet.findByPk(like.TweetId, {
+            attributes: {
+              include: [
+                [Sequelize.fn('COUNT', Sequelize.col('Replies.id')), 'repliesCount'],
+                [Sequelize.fn('COUNT', Sequelize.col('Likes.id')), 'likesCount']
+              ]
+            },
+            where: { UserId: userId },
+            include: [
+              User,
+              // 不要引入reply資料
+              { model: Reply, attributes: [] },
+              { model: Like, attributes: ['createdAt'] }
+            ],
+            group: ['Tweet.id']
+          })
+        })
+      )
+      // 整理資料
+      const tweetsData = tweets.map(tweet => tweet.toJSON())
+      // render
+      res.render('users/likes', { user: userData, tweets: tweetsData })
+    } catch (err) {
+      next(err)
+    }
   },
   getUserFollows: (req, res) => {
     res.render('users/likes')
