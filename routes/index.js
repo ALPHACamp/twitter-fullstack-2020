@@ -23,10 +23,10 @@ router.post(
 
 router.get('/tweets', authenticated, (req, res) => res.render('index'))
 
-router.get('/users/:id/tweets', authenticated, profileController.getUserTweets)
-router.get('/users/:id/followings', authenticated, profileController.getUserFollows)
-router.get('/users/:id/followers', authenticated, profileController.getUserFollows)
-router.get('/users/:id', authenticated, profileController.editUser)
+router.get('/users/:userId/tweets', authenticated, profileController.getUserTweets)
+router.get('/users/:userId/followings', authenticated, profileController.getUserFollows)
+router.get('/users/:userId/followers', authenticated, profileController.getUserFollows)
+router.get('/users/:userId', authenticated, profileController.editUser)
 
 router.use('/', (req, res) => res.redirect('/tweets'))
 

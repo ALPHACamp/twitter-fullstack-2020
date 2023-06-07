@@ -9,16 +9,30 @@
         {{> user-profile}}
         <div class='card'>
           <img src='/images/profile/cover.png' class='card-img-top cover' alt='cover' />
-          <img src='/images/profile/avatar.png' class='avatar' alt='avatar' />
-          <div class='edit-btn'>
-            <div class='btn rounded-pill' data-bs-toggle='modal' data-bs-target='#edit-modal'>編輯個人資料</div>
-          </div>
+          <img src='{{user.avatar}}' class='avatar' alt='avatar' />
+          {{#if user.isLoginUser}}
+            <div class='edit-btn'>
+              <div class='btn rounded-pill' data-bs-toggle='modal' data-bs-target='#edit-modal'>編輯個人資料</div>
+            </div>
+          {{else}}
+            <div>
+              <a class='mail' href='#'>
+                <img class='reply-icon' src='/images/profile/mail_outlined.svg' alt='mail' />
+              </a>
+              <a class='notification' href='#'>
+                <img class='like-icon' src='/images/profile/notification_outlined.svg' alt='notification' />
+              </a>
+              <form class='' action='/follow/{{this.id}}' method='POST'>
+                <button type='submit' class='btn'>正在跟隨</button>
+              </form>
+            </div>
+          {{/if}}
           <div class='card-body'>
-            <h5 class='card-title m-0'>John Doe</h5>
-            <p class='at-name m-0'>@heyjohn</p>
-            <p class='card-text m-0'>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</p>
-            <span>34 個<a href='/users/:id/followings'>跟隨中</a></span>
-            <span>59 位<a href='/users/:id/followers'>跟隨者</a></span>
+            <h5 class='card-title m-0'>{{user.name}}</h5>
+            <p class='at-name m-0'>@{{user.account}}</p>
+            <p class='card-text m-0'>{{user.introduction}}</p>
+            <span>{{user.FollowingsCount}} 個<a href='/users/:id/followings'>跟隨中</a></span>
+            <span>{{user.FollowersCount}} 位<a href='/users/:id/followers'>跟隨者</a></span>
           </div>
           <ul class='nav nav-tabs'>
             <li class='nav-item'>
