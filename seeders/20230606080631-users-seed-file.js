@@ -26,7 +26,7 @@ module.exports = {
         password: await bcrypt.hash('12345678', 10),
         intro: faker.lorem.text(),
         avatar: `https://loremflickr.com/320/240/headshot/?random=${Math.random() * 10}`,
-        cover: 'https://unsplash.com/photos/cO9_joZ1FdA',
+        cover: 'https://images.unsplash.com/photo-1580436541340-36b8d0c60bae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80',
         is_admin: false,
         created_at: new Date(),
         updated_at: new Date()
