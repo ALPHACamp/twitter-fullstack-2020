@@ -10,6 +10,7 @@ const tweetsController = require('../controllers/tweets-controller')
 
 const { authenticated, adminAuthenticated } = require('../middleware/auth')
 
+// signin
 router.get('/signin', userController.signinPage)
 router.post(
   '/signin',
@@ -20,6 +21,24 @@ router.post(
   userController.signin
 )
 
+// signup
+router.get('/signup', userController.signupPage)
+router.post(
+  '/signup',
+  passport.authenticate('local', {
+    failureRedirect: '/signup',
+    failureFlash: true
+  }),
+  userController.signup
+)
+
+// admin
+router.get('/admin/signin', adminController.adminSigninPage)
+router.get('/admin/tweets', adminAuthenticated, (req, res) =>
+  res.render('admin/tweets')
+)
+
+// index
 router.get('/tweets', authenticated, (req, res) => res.render('index'))
 
 router.get('/users/:id/tweets', profileController.getUserTweets)
