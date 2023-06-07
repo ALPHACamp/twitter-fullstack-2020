@@ -23,7 +23,7 @@ const adminAuthenticated = (req, res, next) => {
     return res.redirect('/signin')
   } else {
     req.flash('error_messages', '請先登入!')
-    return res.redirect('/signin')
+    return res.redirect('/admin/signin')
   }
 }
 

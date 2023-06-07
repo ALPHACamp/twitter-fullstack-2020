@@ -1,28 +1,26 @@
 <nav class="navbar navbar-vertical d-flex justify-content-center">
   <ul class="navbar-nav d-flex justify-content-between">
     <div>
-      <li class="nav-item px-3 mb-4">
+      <li class="nav-item p-3 mb-2">
         <img src="/images/logo.svg" alt="">
       </li>
-
       <div class="px-4">
-        <li class="nav-item">
-          <a class="nav-link mb-4" href="#">
+        <li class="nav-item {{#ifCond route 'tweets'}}active{{/ifCond}}">
+          <a class="nav-link mb-4" href="/admin/tweets">
             <div class="nav-icon home-icon"></div>
             <span class="nav-text">推文清單</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link mb-4" href="#">
+        <li class="nav-item {{#ifCond route 'users'}}active{{/ifCond}}">
+          <a class="nav-link mb-4" href="/admin/users">
             <div class="nav-icon user-icon"></div>
             <span class="nav-text">使用者列表</span>
           </a>
+        </li>
       </div>
-
     </div>
-
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="/admin/signin">
         <div class="nav-icon logout-icon"></div>
         <span class="nav-text">登出</span>
       </a>
