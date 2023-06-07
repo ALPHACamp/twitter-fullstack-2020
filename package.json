@@ -19,7 +19,7 @@
     "express": "^4.16.4",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
-    "faker": "^4.1.0",
+    "faker": "^5.5.3",
     "method-override": "^3.0.0",
     "mocha": "^6.0.2",
     "mysql2": "^1.6.4",
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@types/bcrypt-nodejs": "0.0.31",
+    "@types/faker": "^6.6.9",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.23.4",
