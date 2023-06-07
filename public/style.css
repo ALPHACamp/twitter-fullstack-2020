@@ -144,6 +144,15 @@ h5 {
   color: #171725;
 }
 
+.number {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 14px;
+  color: #6C757D;
+}
+
 /* ------------------------------     Color */
 .color-main {
   color: #FF6600
@@ -180,7 +189,7 @@ h5 {
 .color-dark-80 {
   color: #696974
 }
-
+ㄠ
 .color-dark-70 {
   color: #92929D
 }
@@ -309,10 +318,26 @@ button {
 
 .modal {
   position: relative;
-  top: 2vw;
   left: 0;
 }
 
 .modal-twitter {
   border-radius: 14px !important;
+}
+
+/* ------------------------------     刪除頁面上的滑動bar */
+html {
+  overflow: -moz-hidden-unscrollable;
+  height: 100%;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  height: 100%;
+  width: calc(100vw + 18px);
+  overflow: auto;
 }
