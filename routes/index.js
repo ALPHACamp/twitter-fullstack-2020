@@ -28,7 +28,10 @@ router.get('/users/:userId/followings', authenticated, profileController.getUser
 router.get('/users/:userId/followers', authenticated, profileController.getUserFollows)
 router.get('/users/:userId', authenticated, profileController.editUser)
 
-router.use('/', (req, res) => res.redirect('/tweets'))
+router.use('/', (req, res) => {
+  console.log('404')
+  res.redirect('/tweets')
+})
 
 router.use('/', generalErrorHandler)
 
