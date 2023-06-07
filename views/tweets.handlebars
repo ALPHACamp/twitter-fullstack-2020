@@ -55,10 +55,12 @@
               <span class="card-reply-icon background-image"></span>
               <span class="card-counts">13</span>
             </div>
-            <a href="/tweets/{{tweet.id}}/like" class="primary-anchor">
-              <span class="card-like-icon background-image"></span>
-              <span class="card-counts">76</span>
-            </a>
+            <form action="/tweets/{{tweet.id}}/like" method="post" class="primary-anchor form-like">
+              <button type="submit" class="btn-like">
+                <span class="card-like-icon background-image"></span>
+                <span class="card-counts">76</span>
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -92,10 +94,12 @@
               <span class="card-reply-icon background-image"></span>
               <span class="card-counts">13</span>
             </div>
-            <a href="/tweets/{{tweet.id}}/unlike" class="primary-anchor">
-              <span class="card-unlike-icon background-image"></span>
-              <span class="card-counts">76</span>
-            </a>
+            <form action="/tweets/{{tweet.id}}/unlike" method="post" class="primary-anchor form-like">
+              <button type="submit" class="btn-like">
+                <span class="card-unlike-icon background-image"></span>
+                <span class="card-counts">76</span>
+              </button>
+            </form>
           </div>
         </div>
       </div>

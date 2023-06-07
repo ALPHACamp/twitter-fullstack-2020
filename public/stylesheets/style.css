@@ -500,6 +500,16 @@ textarea {
   background-image: url('/stylesheets/icons/chat.png');
 }
 
+.form-like {
+  display: inline;
+}
+
+.btn-like {
+  background-color: transparent;
+  border-width: 0;
+  padding: 0;
+}
+
 .card-like-icon {
   background-image: url('/stylesheets/icons/like_white.png');
 }
