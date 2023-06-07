@@ -12,8 +12,8 @@ router.post('/signup', userController.signUp)
 
 // 登入登出
 router.get('/signin', userController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureRedirect: true, successRedirect: '/tweets' }), userController.signIn)
-router.post('/signout', userController.signOut)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureMessage: true, successRedirect: '/tweets' }), userController.signIn)
+router.get('/signout', userController.signOut)
 
 
 // 登入後的假首頁(測試用)
