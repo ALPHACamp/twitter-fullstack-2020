@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-6 m-auto sign-up-section">
+      <div class="logo-container text-center">
+        <img src="/stylesheets/icons/icon.png" alt="logo" class="logo">
+      </div>
+      <h3 class="text-center">登入 Alphitter</h3>
+      {{> messages}}
+      <form action="/signin" method="POST" id="form" class="needs-validation" novalidate>
+
+        {{!-- Account --}}
+        <div class="bg-form-gray">
+          <label for="account" class="form-label">帳號</label>
+          <input type="text" id="account" name="account" placeholder="請輸入帳號" class="form-input" value="{{ account }}"
+            required>
+          {{!-- 驗證錯誤的提示訊息 --}}
+          <div class="invalid-feedback">請輸入帳號</div>
+          <div class="input-minmax"></div>
+        </div>
+
+        {{!-- Password --}}
+        <div class="bg-form-gray">
+          <label for="password" class="form-label">密碼</label>
+          <input type="password" id="password" name="password" placeholder="請輸入密碼" class="form-input"
+            value="{{ password }}" required>
+          <div class="invalid-feedback">請輸入密碼</div>
+          <div class="input-minmax"></div>
+        </div>
+
+        {{!-- button --}}
+        <div class="">
+          <button type="submit" class="btn btn-info btn-submit" id="submit">登入</button>
+        </div>
+      </form>
+      <div class="mt-2" style="display:flex;justify-content:space-around;float:right">
+        <a class="p-2" href="/signup" style="text-decoration:underline">註冊</a>
+        <a class="p-2">・</a>
+        <a class="p-2" href="/admin/signin" style="text-decoration:underline">後台登入</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="/javascripts/register.js"></script>
