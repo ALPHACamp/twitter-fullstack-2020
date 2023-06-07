@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt-nodejs')
+const bcrypt = require('bcryptjs')
 const { User } = require('../models')
 
 const userController = {
@@ -8,15 +8,24 @@ const userController = {
   },
   signUp: async (req, res, next) => {
     const { account, name, email, password, checkPassword } = req.body
-    if (!account || !name || !email || !password) throw new Error('欄位未正確填寫')
-    if (password !== checkPassword) throw new Error('輸入密碼不一致')
+    if (!account || !name || !email || !password) {
+      req.flash('danger_msg', '欄位未正確填寫')
+      return res.render('signup', { account, name, email, password, checkPassword })
+    }
+    if (password !== checkPassword) {
+      // req.flash('danger_msg', '輸入密碼不一致')
+      req.flash('danger_msg', '前後輸入密碼不一致')
+      return res.render('signup', { account, name, email, password, checkPassword })
+    }
+
     try {
-      const usedAccount = await User.findByPk({ where: { account } })
+      const usedAccount = await User.findOne({ where: { account } })
       if (usedAccount) throw new Error('該帳號已被使用')
-      const usedEmail = await User.findByPk({ where: { email } })
+      const usedEmail = await User.findOne({ where: { email } })
       if (usedEmail) throw new Error('該email已被使用')
 
-      const hashedPassword = await bcrypt.hash(password, 10)
+      const salt = await bcrypt.genSalt(10)
+      const hashedPassword = await bcrypt.hash(password, salt)
       await User.create({
         account,
         name,
@@ -24,9 +33,9 @@ const userController = {
         password: hashedPassword
       })
       req.flash('success_msg', '註冊成功，請以新帳號登入')
-      return res.redirect('/signin')
-    } catch (err) {
-      next(err)
+      res.redirect('/signin')
+    } catch (e) {
+      next(e)
     }
   },
   // 登入
