@@ -62,6 +62,10 @@ input:valid {
   background-repeat: no-repeat;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 /* modal */
 
 .modal-footer {
@@ -244,13 +248,12 @@ input:valid {
   top: 16px;
   /* sizing */
   width: 150px;
-  height: 100vh;
+  height: 95vh;
   min-height: 400px;
 }
 
 .main {
   width: 639px;
-  height: 3000px;
   border-left: 1px solid #E6ECF0;
   border-right: 1px solid #E6ECF0;
   position: relative;
@@ -260,7 +263,6 @@ input:valid {
   position: sticky;
   top: 16px;
   width: 273px;
-  height: 200px;
   background-color: #FAFAFB;
   border-radius: 16px;
 }
@@ -471,6 +473,11 @@ textarea {
   margin-left: 8px;
 }
 
+.primary-anchor {
+  position: relative;
+  z-index: 1;
+}
+
 .card-description {
   margin: 8px 0 0 0;
 }
@@ -480,7 +487,8 @@ textarea {
 }
 
 .card-reply-icon,
-.card-like-icon {
+.card-like-icon,
+.card-unlike-icon {
   display: inline-block;
   height: 14px;
   width: 14px;
@@ -496,20 +504,40 @@ textarea {
   background-image: url('/stylesheets/icons/like_white.png');
 }
 
+.card-unlike-icon {
+  background-image: url('/stylesheets/icons/like_black.png');
+}
+
 .card-counts {
   margin-right: 40px;
+  color: #6C757D;
+}
+
+.reply-modal-trigger {
+  display: inline;
+  cursor: pointer;
+}
+
+.tweet-href {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
 
 /* -------------------- followship -------------------- */
 
+.followship-card-wrapper {
+  padding: 16px;
+}
+
 .followship-card {
   display: flex;
   align-items: center;
-}
-
-.followship-card-wrapper {
-  padding: 16px;
+  margin-bottom: 32px;
 }
 
 .followship-account {
@@ -520,4 +548,26 @@ textarea {
 .card-text-info {
   width: 35%;
   margin-left: 8px;
+}
+
+.followship-name,
+.followship-account {
+  text-overflow: ellipsis;
+}
+
+.ellipsis {
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.follow-button-wrapper {
+  width: 90px;
+  text-align: end;
+}
+
+.btn-follow {
+  width: 64px;
 }
