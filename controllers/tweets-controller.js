@@ -1,9 +1,9 @@
 const tweetsController = {
   getTweets: (req, res, next) => {
-    res.render('tweets')
+    return res.render('tweets')
   },
   getTweet: (req, res, next) => {
-    res.render('tweet')
+    return res.render('tweet')
   }
 }
 

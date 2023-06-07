@@ -20,8 +20,6 @@ router.post(
   userController.signin
 )
 
-//router.get('/tweets', authenticated, (req, res) => res.render('index'))
-
 router.get('/users/:id/tweets', profileController.getUserTweets)
 router.get('/users/:id/followings', profileController.getUserFollows)
 router.get('/users/:id/followers', profileController.getUserFollows)
