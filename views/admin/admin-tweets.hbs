@@ -5,7 +5,7 @@
   </div>
 
   <div class="user-panel d-flex flex-column" style="overflow: hidden;">
-    {{!-- {{#each tweets}} --}}
+    {{#each tweets}}
     <div class='row p-0' style="height: 118px; border-bottom: 1px solid #E6ECF0">
       <div class="col col-1 ps-5 pt-3" style="position: relative;">
         <img class='user-avatar' src="{{this.user.avatar}}" alt=""
@@ -27,5 +27,5 @@
         </form>
       </div>
     </div>
-    {{!-- {{/each}} --}}
+    {{/each}}
   </div>
