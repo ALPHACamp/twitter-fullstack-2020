@@ -23,14 +23,6 @@ router.post(
 
 // signup
 router.get('/signup', userController.signupPage)
-router.post(
-  '/signup',
-  passport.authenticate('local', {
-    failureRedirect: '/signup',
-    failureFlash: true
-  }),
-  userController.signup
-)
 
 // admin
 router.get('/admin/signin', adminController.adminSigninPage)
