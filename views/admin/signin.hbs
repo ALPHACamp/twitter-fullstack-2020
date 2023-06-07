@@ -1,0 +1,23 @@
+{{!-- admin/signin page --}}
+<div class="mb-4 text-center">
+  <div class="pt-5 mb-3">
+    <img src="/images/logo.svg" alt="">
+  </div>
+  <h1 class="h3 fw-bolder mb-3">後台登入</h1>
+</div>
+<form class="d-flex flex-column align-items-center form-signin" action="/admin/signin" method="POST">
+  <div class="form-row mb-5">
+    <label class="form-label account-label" for="account">帳號</label>
+    <input class="form-control account-input" id="account" type="text" name="account" class="form-control" placeholder="請輸入帳號" required autofocus>
+  </div>
+  <div class="form-row mb-5">
+    <label class="form-label password-label" for="password">密碼</label>
+    <input class="form-control password-input" id="password" type="text" name="password" class="form-control" placeholder="請輸入密碼" required autofocus>
+  </div>
+  <div class="mb-4">
+    <button class="btn btn-primary signin-btn" type="submit">登入</button>
+  </div>
+</form>
+<div class="d-flex flex-column align-items-center text-end other-page-btn">
+  <p><a href="/signin">前台登入</a></p>
+</div>

@@ -20,10 +20,10 @@ const adminAuthenticated = (req, res, next) => {
       return next()
     }
     req.flash('error_messages', '帳號或密碼錯誤!')
-    return res.redirect('/signin')
+    return res.redirect('/admin/signin')
   } else {
     req.flash('error_messages', '請先登入!')
-    return res.redirect('/signin')
+    return res.redirect('/admin/signin')
   }
 }
 
