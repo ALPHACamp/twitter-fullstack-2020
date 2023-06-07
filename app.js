@@ -8,11 +8,13 @@ const router = require('./routes')
 const app = express()
 const port = 3000
 
+const handlebarsHelper = require('./helpers/handlebars-helper')
+
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 // Setting template engine
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine('handlebars', exphbs({ defaultLayout: 'main', helpers: handlebarsHelper }))
 app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))

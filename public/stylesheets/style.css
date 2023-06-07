@@ -517,6 +517,21 @@ textarea {
   z-index: 1;
 }
 
+.reply-to-part {
+  margin-top: 8px;
+}
+
+.reply-to {
+  font-size: 14px;
+  line-height: 22px;
+  color: #6C757D
+}
+
+.reply-account {
+  margin: 0;
+  color: var(--info)
+}
+
 .card-description {
   margin: 8px 0 0 0;
 }
@@ -554,7 +569,7 @@ textarea {
 }
 
 .card-unlike-icon {
-  background-image: url('/stylesheets/icons/like_black.png');
+  background-image: url('/stylesheets/icons/like_red.png');
 }
 
 .card-counts {
@@ -585,6 +600,7 @@ textarea {
 
 .followship-card {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 32px;
 }
