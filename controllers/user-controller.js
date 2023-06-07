@@ -6,12 +6,10 @@ const userController = {
     res.render('signup')
   },
   signin: (req, res, next) => {
-    console.log(req.user)
     req.flash('success_messages', '成功登入!')
     res.redirect('/tweets')
   },
   signup: (req, res, next) => {
-    console.log(req.user)
     req.flash('success_messages', '註冊成功，請登入!')
     res.redirect('/signin')
   }

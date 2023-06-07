@@ -34,9 +34,8 @@ router.post(
 
 // admin
 router.get('/admin/signin', adminController.adminSigninPage)
-router.get('/admin/tweets', adminAuthenticated, (req, res) =>
-  res.render('admin/tweets')
-)
+router.get('/admin/tweets', adminController.adminTweetsPage)
+router.get('/admin/users', adminController.adminUsersPage)
 
 // index
 router.get('/tweets', authenticated, (req, res) => res.render('index'))
