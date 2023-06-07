@@ -10,15 +10,17 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate (models) {
+      // define association here
     }
-  }
+  };
   Followship.init({
     followerId: DataTypes.INTEGER,
     followingId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Followship',
-    tableName: 'Followships'
+    tableName: 'Followships',
+    underscored: true
   })
   return Followship
 }
