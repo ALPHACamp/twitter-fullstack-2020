@@ -147,8 +147,34 @@ const profileController = {
       next(err)
     }
   },
-  getUserFollows: (req, res) => {
-    res.render('users/likes')
+  getUserFollowings: async (req, res, next) => {
+    const userId = req.params.userId
+    // 判斷active
+    const followings = true
+    try {
+      // 取對應的user資料、包含追隨的人、推文數
+      const [user, tweetsCount] = await Promise.all([
+        User.findByPk(userId, {
+          include: [{ model: User, as: 'Followings' }]
+        }),
+        Tweet.count({
+          where: { UserId: userId }
+        })
+      ])
+      // 判斷user是否存在，沒有就err
+      if (!user) throw new Error('該用戶不存在!')
+      const userData = {
+        ...user.toJSON(),
+        tweetsCount
+      }
+      console.log(userData)
+      res.render('users/followings', { user: userData, followings })
+    } catch (err) {
+      next(err)
+    }
+  },
+  getUserFollowers: (req, res) => {
+    res.render('users/followers')
   },
   editUser: (req, res) => {
     res.render('users/edit')

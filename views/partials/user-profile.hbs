@@ -34,8 +34,8 @@
     <h5 class='card-title m-0'>{{user.name}}</h5>
     <p class='at-name m-0'>@{{user.account}}</p>
     <p class='card-text m-0'>{{user.introduction}}</p>
-    <span>{{user.FollowingsCount}} 個<a href='/users/:id/followings'>跟隨中</a></span>
-    <span>{{user.FollowersCount}} 位<a href='/users/:id/followers'>跟隨者</a></span>
+    <span>{{user.FollowingsCount}} 個<a href='/users/{{user.id}}/followings'>跟隨中</a></span>
+    <span>{{user.FollowersCount}} 位<a href='/users/{{user.id}}/followers'>跟隨者</a></span>
   </div>
   <ul class='nav nav-tabs'>
     <li class='nav-item'>
