@@ -6,6 +6,7 @@ const profileController = {
     // 取得loginUser(使用helpers), userId
     const loginUser = helpers.getUser(req)
     const userId = req.params.userId
+    const route = 'tweets'
     try {
       // 取對應的user資料，包含following跟follower的count
       const [user, FollowingsCount, FollowersCount, tweets] = await Promise.all([
@@ -37,7 +38,7 @@ const profileController = {
         isLoginUser
       }
       // render
-      res.render('users/profile', { user: userData, tweets: tweets.rows })
+      res.render('users/tweets', { user: userData, tweets: tweets.rows, route })
     } catch (err) {
       next(err)
     }

@@ -1,0 +1,105 @@
+<div class='d-flex justify-content-center'>
+  {{! navbar }}
+  {{> navbar}}
+
+  {{!tweet-list }}
+  <div class='col-7 home-page'>
+    <ul class='list-group home-list'>
+      <div class='user-container m-0 p-0'>
+        {{> user-profile route = 'tweets'}}
+        
+        <!-- each tweets -->
+        <ul class='tweet-list'>
+          <li class='mt-2'>
+            <div class='d-flex align-items-start'>
+              <div class='flex-shrink-1 p-0 icon'>
+                <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
+              </div>
+              <div class='tweet-text flex-grow-1'>
+                <span class='tweet-name'>Apple </span>
+                <span class='tweet-account'>@apple・3 小時</span>
+                <div class='reply-name'>
+                  <span class='text'>回覆</span>
+                  <span class='account'>@apple</span>
+                </div>
+                <p class='tweet-description' style='white-space:break-spaces;'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
+                  dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
+                <div>
+                  <a class='reply' href='#'>
+                    <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
+                    <span>76</span>
+                  </a>
+                  <a class='like' href='#'>
+                    <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
+                    <span>13</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <hr />
+          </li>
+          <li class='mt-2'>
+            <div class='d-flex align-items-start'>
+              <div class='flex-shrink-1 p-0 icon'>
+                <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
+              </div>
+              <div class='tweet-text flex-grow-1'>
+                <span class='tweet-name'>Apple </span>
+                <span class='tweet-account'>@apple・3 小時</span>
+                <div class='reply-name'>
+                  <span class='text'>回覆</span>
+                  <span class='account'>@apple</span>
+                </div>
+                <p class='tweet-description' style='white-space:break-spaces;'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
+                  dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
+                <div>
+                  <a class='reply' href='#'>
+                    <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
+                    <span>76</span>
+                  </a>
+                  <a class='like' href='#'>
+                    <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
+                    <span>13</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <hr />
+          </li>
+          <li class='mt-2'>
+            <div class='d-flex align-items-start'>
+              <div class='flex-shrink-1 p-0 icon'>
+                <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
+              </div>
+              <div class='tweet-text flex-grow-1'>
+                <span class='tweet-name'>Apple </span>
+                <span class='tweet-account'>@apple・3 小時</span>
+                <div class='reply-name'>
+                  <span class='text'>回覆</span>
+                  <span class='account'>@apple</span>
+                </div>
+                <p class='tweet-description' style='white-space:break-spaces;'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
+                  dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
+                <div>
+                  <a class='reply' href='#'>
+                    <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
+                    <span>76</span>
+                  </a>
+                  <a class='like' href='#'>
+                    <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
+                    <span>13</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <hr />
+          </li>
+        </ul>
+      </div>
+    </ul>
+  </div>
+
+  {{! recommend-followings }}
+  {{> recommend-followings}}
+
+</div>
