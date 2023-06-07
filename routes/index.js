@@ -9,6 +9,7 @@ const userController = require('../controllers/user-controller')
 const tweetsController = require('../controllers/tweets-controller')
 
 const { authenticated, adminAuthenticated } = require('../middleware/auth')
+const { generalErrorHandler } = require('../middleware/error-handler')
 
 router.get('/signin', userController.signinPage)
 router.post(
@@ -28,5 +29,7 @@ router.get('/users/:id/followers', authenticated, profileController.getUserFollo
 router.get('/users/:id', authenticated, profileController.editUser)
 
 router.use('/', (req, res) => res.redirect('/tweets'))
+
+router.use('/', generalErrorHandler)
 
 module.exports = router
