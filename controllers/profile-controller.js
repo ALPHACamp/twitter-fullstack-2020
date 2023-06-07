@@ -167,14 +167,55 @@ const profileController = {
         ...user.toJSON(),
         tweetsCount
       }
-      console.log(userData)
       res.render('users/followings', { user: userData, followings })
     } catch (err) {
       next(err)
     }
   },
-  getUserFollowers: (req, res) => {
-    res.render('users/followers')
+  getUserFollowers: async (req, res, next) => {
+    const loginUser = helpers.getUser(req)
+    const userId = req.params.userId
+    // 判斷active
+    const followers = true
+    try {
+      // 取對應的user資料、包含追隨的人、推文數
+      const [user, tweetsCount] = await Promise.all([
+        User.findByPk(userId, {
+          include: [
+            { model: User, as: 'Followers' },
+            { model: User, as: 'Followings' }
+          ]
+        }),
+        Tweet.count({
+          where: { UserId: userId }
+        })
+      ])
+      // 判斷是否為本人，不是的話就back
+      if (user.id !== loginUser.id) return res.redirect('back')
+      // 判斷user是否存在，沒有就err
+      if (!user) throw new Error('該用戶不存在!')
+      // 判斷user有沒有追隨
+      const isFollowed = user.Followers.map(follower => {
+        return user.Followings.some(following => {
+          return following.id === follower.id
+        })
+      })
+      // 追隨者的資料
+      const userFollowersData = user.Followers.map(follower => ({
+        ...follower.toJSON(),
+        // 追隨者的id對應到user追隨的id
+        isFollowed: user.Followings.some(following => follower.id === following.id)
+      }))
+      console.log(userFollowersData)
+      const userData = {
+        ...user.toJSON(),
+        tweetsCount
+      }
+      console.log(userData)
+      res.render('users/followers', { user: userData, followers, userFollowers: userFollowersData })
+    } catch (err) {
+      next(err)
+    }
   },
   editUser: (req, res) => {
     res.render('users/edit')
