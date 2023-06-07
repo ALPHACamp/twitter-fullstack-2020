@@ -20,8 +20,25 @@ app.use(express.json())
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }))
 
 
-app.get('/', (req, res) => res.send('Hello World!'))
-// app.use(routes)
+// Setting template engine
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.set('view engine', 'handlebars')
+
+app.use(express.static('public'))
+app.use(session({ secret: 'SECRET', resave: false, saveUninitialized: false }))
+
+// Setting middleware
+app.use(flash())
+app.use((req, res, next) => {
+  res.locals.danger_msg = req.flash('danger_msg')
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
+  res.locals.info_msg = req.flash('info_msg')
+  next()
+})
+
+app.use(router)
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 module.exports = app
