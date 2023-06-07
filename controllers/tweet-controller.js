@@ -1,6 +1,6 @@
 const tweetController = {
-  getTweets: (req, res, next) => {
-    res.render('tweets', {})
+  mainPage: (req, res, next) => {
+    res.render('main', {})
   }
 }
 
