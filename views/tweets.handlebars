@@ -8,56 +8,79 @@
       <h4 class="main-title">
         首頁
       </h4>
+
+      {{!-- create-bar --}}
       <div class="main-create-bar">
         <div class="avatar">
-          <div class="avatar-img">
-            avatar-img
+          <a href="/users/{{user.id}}">
+            <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+          </a>
+        </div>
+        <div class="main-create-modal-trigger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <div class="main-create-input">
+            有什麼新鮮事？
+          </div>
+          <button type="submit" class="btn btn-info btn-create-tweet">
+            推文
+          </button>
+        </div>
+      </div>
+      <div class="main-bg-bray"></div>
+
+      {{!-- card --}}
+      <div class="card card-tweet-lg">
+        <div class="avatar">
+          <a href="/users/{{user.id}}">
+            <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+          </a>
+        </div>
+        <div class="card-text">
+          <div class="card-text-info">
+            <span class="card-name">Apple</span>
+            <span class="card-account">@apple</span>
+            <span class="card-dot">·</span>
+            <span class="card-datetime">3小時</span>
+          </div>
+          <p class="card-description">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.
+            Voluptate exercitation incididunt
+            aliquip deserunt reprehenderit elit laborum.</p>
+          <div class="card-datas">
+            <span class="card-reply-icon background-image"></span>
+            <span class="card-counts">13</span>
+            <span class="card-like-icon background-image"></span>
+            <span class="card-counts">76</span>
           </div>
         </div>
       </div>
-      <form action="/tweets" method="post">
-        <input type="text" class="main-create-input" placeholder="有什麼新鮮事？">
-        <button type="submit" class="btn btn-info">
-          推文
-        </button>
-      </form>
-      <div class="main-bg-bray"></div>
-      <div class="card">
-        <div class="avatar">
-          <div class="avatar-img">avatarimg</div>
-        </div>
-      </div>
-      <div class="card-text">
-        <div class="card-text-info">
-          <span class="card-name">Apple</span>
-          <span class="card-account">@apple</span>
-          <span class="card-date">3小時</span>
-        </div>
-        <p class="card-description">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.
-          Voluptate exercitation incididunt
-          aliquip deserunt reprehenderit elit laborum.</p>
-        <div class="card-datas">
-          <span class="card-datas-icon">icon</span>
-          <span class="card-datas-counts">13</span>
-          <span class="card-datas-icon">icon</span>
-          <span class="card-datas-counts">76</span>
-        </div>
-      </div>
     </section>
+    {{> followship}}
+  </div>
+</div>
 
-    {{!-- followship --}}
-    <section class="followship">
-      <h4 class="followship-title">title</h4>
-      <div class="followship-card">
-        <div class="avatar">
-          <div class="avatar-img">avatar img</div>
-        </div>
-        <div class="card-text-info">
-          <span class="card-name">name</span>
-          <span class="card-account">account</span>
-        </div>
-        <div class="btn btn-info">btn-follow</div>
+
+{{!------------- modal -------------}}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">x</button>
       </div>
-    </section>
+      <div class="modal-body">
+        <div class="main-create-bar">
+          <div class="avatar">
+            <a href="/users/{{user.id}}">
+              <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+            </a>
+          </div>
+          <form action="/tweets" method="post" class="create-tweet-form">
+            <textarea name="tweet" id="tweet" cols="30" rows="10" class="main-create-input"
+              placeholder="有什麼新鮮事？"></textarea>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info">推文</button>
+      </div>
+    </div>
   </div>
 </div>

@@ -62,7 +62,13 @@ input:valid {
   background-repeat: no-repeat;
 }
 
-/* ----------Partial Messages---------- */
+/* modal */
+
+.modal-footer {
+  border-top: 0;
+}
+
+/* -------------------- Partial Messages -------------------- */
 
 .message-text {
   width: 300px;
@@ -146,7 +152,7 @@ input:valid {
 }
 
 
-/* ----------Sign up: Form settings---------- */
+/* ------------------ Sign up: Form settings ------------------ */
 
 .sign-up-section {
   max-width: 356px;
@@ -224,10 +230,10 @@ input:valid {
 }
 
 
-/* ----------Tweets Page---------- */
+/* ------------------ page flexbox & positions ------------------ */
 .wrapper {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: flex-start;
   min-width: 1100px;
 }
@@ -237,7 +243,7 @@ input:valid {
   position: sticky;
   top: 16px;
   /* sizing */
-  width: 178px;
+  width: 150px;
   height: 100vh;
   min-height: 400px;
 }
@@ -245,7 +251,9 @@ input:valid {
 .main {
   width: 639px;
   height: 3000px;
-  background-color: #50B5FF;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  position: relative;
 }
 
 .followship {
@@ -253,10 +261,11 @@ input:valid {
   top: 16px;
   width: 273px;
   height: 200px;
-  background-color: #82C43C;
+  background-color: #FAFAFB;
+  border-radius: 16px;
 }
 
-/* left */
+/* --------------- navbar --------------- */
 
 .nav-row {
   position: relative;
@@ -292,7 +301,6 @@ input:valid {
   background-image: url('./icons/house_orange.png');
 }
 
-
 /* user */
 .nav-row-user-icon {
   position: absolute;
@@ -310,7 +318,6 @@ input:valid {
   background-image: url('./icons/user_orange.png');
   background-size: contain;
 }
-
 
 /* setting */
 .nav-row-setting-icon {
@@ -355,4 +362,162 @@ input:valid {
 
 .btn-tweet {
   width: 100%;
+}
+
+/* -------------------- main section -------------------- */
+
+.main-title,
+.followship-title {
+  border-bottom: 1px solid #E6ECF0;
+  height: 74px;
+  line-height: 74px;
+  padding-left: 23px;
+}
+
+.main-create-bar {
+  position: relative;
+  display: flex;
+  height: 136px;
+  padding: 16px 25px;
+}
+
+.main-bg-bray {
+  height: 10px;
+  background-color: #E6ECF0;
+}
+
+.avatar {
+  height: 50px;
+  width: 50px;
+}
+
+.main-create-modal-trigger {
+  width: 100%
+}
+
+.main-create-modal-trigger:hover {
+  cursor: pointer;
+}
+
+.main-create-bar .main-create-input,
+textarea {
+  height: 50px;
+  width: 75%;
+  border-width: 0;
+  background-color: transparent;
+  padding-left: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 50px;
+  color: var(--secondary);
+}
+
+.btn-create-tweet {
+  position: absolute;
+  right: 25px;
+  bottom: 16px;
+  width: 64px;
+}
+
+/* modal */
+
+.modal-body {
+  height: 200px;
+}
+
+.main-create-bar>.create-tweet-form>textarea {
+  width: 360px;
+  height: 150px;
+  resize: none;
+  margin-left: 8px;
+}
+
+.btn-close {
+  color: var(--info);
+}
+
+/* -------------------- card -------------------- */
+
+.card-tweet-lg {
+  flex-direction: row;
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid #E6ECF0;
+  padding: 16px 25px;
+}
+
+.card-text {
+  padding-left: 8px;
+}
+
+.card-name {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.card-account,
+.card-dot,
+.card-datetime {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #6C757D;
+  font-family: "Noto Sans TC";
+}
+
+.card-account {
+  margin-left: 8px;
+}
+
+.card-description {
+  margin: 8px 0 0 0;
+}
+
+.card-datas {
+  margin-top: 8px;
+}
+
+.card-reply-icon,
+.card-like-icon {
+  display: inline-block;
+  height: 14px;
+  width: 14px;
+  background-size: contain;
+  margin-right: 6px;
+}
+
+.card-reply-icon {
+  background-image: url('/stylesheets/icons/chat.png');
+}
+
+.card-like-icon {
+  background-image: url('/stylesheets/icons/like_white.png');
+}
+
+.card-counts {
+  margin-right: 40px;
+}
+
+
+/* -------------------- followship -------------------- */
+
+.followship-card {
+  display: flex;
+  align-items: center;
+}
+
+.followship-card-wrapper {
+  padding: 16px;
+}
+
+.followship-account {
+  margin-left: 0;
+  font-weight: 500;
+}
+
+.card-text-info {
+  width: 35%;
+  margin-left: 8px;
 }
