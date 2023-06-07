@@ -1,15 +1,17 @@
+const Sequelize = require('sequelize')
+
 const helpers = require('../_helpers')
-const { User, Followship, Tweet } = require('../models')
+const { User, Followship, Tweet, Reply, Like } = require('../models')
+const { group } = require('console')
 
 const profileController = {
-  getUserTweets: async (req, res, next) => {
+  getUser: async (req, res, next) => {
     // 取得loginUser(使用helpers), userId
     const loginUser = helpers.getUser(req)
     const userId = req.params.userId
-    const route = 'tweets'
     try {
       // 取對應的user資料，包含following跟follower的count
-      const [user, FollowingsCount, FollowersCount, tweets] = await Promise.all([
+      const [user, FollowingsCount, FollowersCount, tweetsCount] = await Promise.all([
         User.findByPk(userId),
         // 計算user的folowing數量
         Followship.count({
@@ -20,8 +22,7 @@ const profileController = {
           where: { followingId: userId }
         }),
         // 推文及推文數
-        Tweet.findAndCountAll({
-          raw: true,
+        Tweet.count({
           where: { UserId: userId }
         })
       ])
@@ -30,15 +31,47 @@ const profileController = {
       // 變數存，user是否為使用者
       const isLoginUser = user.id === loginUser.id
       // 將變數加入
-      const userData = {
+      req.userData = {
         ...user.toJSON(),
         FollowingsCount,
         FollowersCount,
-        tweetsCount: tweets.count,
+        tweetsCount,
         isLoginUser
       }
+      // next
+      next()
+    } catch (err) {
+      next(err)
+    }
+  },
+  getUserTweets: async (req, res, next) => {
+    const { userData } = req
+    // 取得 id
+    const userId = req.params.userId
+    try {
+      // tweets找相對應的資料，跟user關聯，依照建立時間排列
+      // replies、likes數量計算
+      const tweets = await Tweet.findAll({
+        attributes: {
+          include: [
+            [Sequelize.fn('COUNT', Sequelize.col('Replies.id')), 'repliesCount'],
+            [Sequelize.fn('COUNT', Sequelize.col('Likes.id')), 'likesCount']
+          ]
+        },
+        where: { UserId: userId },
+        include: [
+          User,
+          // 不要引入reply資料
+          { model: Reply, attributes: [] },
+          { model: Like, attributes: [] }
+        ],
+        order: [['createdAt', 'DESC']],
+        group: ['Tweet.id']
+      })
+      // 整理資料
+      const tweetsData = tweets.map(tweet => tweet.toJSON())
       // render
-      res.render('users/tweets', { user: userData, tweets: tweets.rows, route })
+      res.render('users/tweets', { user: userData, tweets: tweetsData })
     } catch (err) {
       next(err)
     }
