@@ -4,11 +4,11 @@ const { User } = db
 
 const userController = {
   // 取得註冊頁面
-  registPage: (req, res) => {
-    res.render('regist')
+  signUpPage: (req, res) => {
+    res.render('signup')
   },
   // 送出註冊資訊
-  regist: (req, res, next) => {
+  signUp: (req, res, next) => {
     // 取出註冊資訊
     const { account, name, email, password, confirmPassword } = req.body
     // 準備裝錯誤訊息的陣列 為了同時顯示多個錯誤
@@ -22,7 +22,7 @@ const userController = {
       errors.push({ message: '密碼與確認密碼不一致。' })
     }
     if (errors.length) {
-      return res.render('regist', {
+      return res.render('signup', {
         errors,
         account,
         name,
@@ -44,7 +44,7 @@ const userController = {
           errors.push({ message: '這個帳號已被註冊。' })
         }
         if (errors.length) {
-          return res.render('regist', {
+          return res.render('signup', {
             errors,
             account,
             name,
@@ -63,24 +63,24 @@ const userController = {
           }))
           .then(() => {
             req.flash('success_messages', '成功註冊帳號。')
-            res.redirect('/login')
+            res.redirect('/signin')
           })
           .catch(err => next(err))
       })
   },
   // 取得登入頁面
-  loginPage: (req, res) => {
-    res.render('login')
+  signInPage: (req, res) => {
+    res.render('signin')
   },
   // 送出登入資訊
-  login: (req, res) => {
-    res.redirect('/main')
+  signIn: (req, res) => {
+    res.redirect('/tweets')
   },
   // 登出
   logout: (req, res) => {
     req.logout()
     req.flash('success_messages', '你已成功登出。')
-    res.redirect('/login')
+    res.redirect('/signin')
   }
 }
 

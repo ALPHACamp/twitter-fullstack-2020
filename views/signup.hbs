@@ -1,7 +1,8 @@
 <div class="mb-4 text-center">
+  {{> messages}}
   <h1 class="h3 font-weight-normal mb-3">建立你的帳號</h1>
 </div>
-<form class="form-regist" action="/regist" method="POST" style="width: 100%;">
+<form class="form-regist" action="/signup" method="POST" style="width: 100%;">
   <div class="form-row mb-3">
     <label class="form-label" for="account">帳號</label>
     <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" value="{{ account }}"
@@ -29,5 +30,5 @@
   <button class="btn btn-primary btn-block" type="submit">註冊</button>
 </form>
 <div class="mb-4 text-center">
-  <p><a href="/login">取消</a></p>
+  <p><a href="/signin">取消</a></p>
 </div>

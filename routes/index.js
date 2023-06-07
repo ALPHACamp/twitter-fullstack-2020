@@ -2,19 +2,24 @@ const express = require('express')
 const router = express.Router()
 const passport = require('passport')
 
-const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
 
 const { authenticator } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 
-router.get('/regist', userController.registPage)
-router.post('/regist', userController.regist)
-router.get('/login', userController.loginPage)
-router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), userController.login)
+const users = require('./modules/users')
+const tweets = require('./modules/tweets')
+const admin = require('./modules/admin')
+
+router.use('/users', authenticator, users)
+router.use('/tweets', authenticator, tweets)
+router.use('/admin', authenticator, admin)
+router.get('/signup', userController.signUpPage)
+router.post('/signup', userController.signUp)
+router.get('/signin', userController.signInPage)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 router.get('/logout', userController.logout)
-router.get('/main', authenticator, tweetController.mainPage)
-router.use('/', (req, res) => res.redirect('/main'))
+router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
 
 module.exports = router
