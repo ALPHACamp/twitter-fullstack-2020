@@ -33,6 +33,8 @@ const profileController = {
       // 將變數加入
       req.userData = {
         ...user.toJSON(),
+        cover: user.cover || '/images/profile/cover.png',
+        avatar: user.avatar || '/images/profile/avatar.png',
         FollowingsCount,
         FollowersCount,
         tweetsCount,
@@ -76,8 +78,40 @@ const profileController = {
       next(err)
     }
   },
+  getUserReplies: async (req, res, next) => {
+    const { userData } = req
+    // 取得userId
+    const userId = req.params.userId
+    try {
+      // 取得reply資料及回覆的推文者
+      const replies = await Reply.findAll({
+        where: { UserId: userId },
+        include: [
+          {
+            model: Tweet,
+            include: [
+              // 只取回覆的推文者
+              { model: User, attributes: ['account'] }
+            ],
+            // 不能是空的
+            attributes: ['id']
+          }
+        ]
+      })
+      // 整理資料
+      const repliesData = replies.map(reply => reply.toJSON())
+      console.log(userData)
+      // render
+      res.render('users/replies', { user: userData, replies: repliesData })
+    } catch (err) {
+      next(err)
+    }
+  },
+  getUserLikes: (req, res) => {
+    res.render('users/likes', { user: userData })
+  },
   getUserFollows: (req, res) => {
-    res.render('users/follow')
+    res.render('users/likes')
   },
   editUser: (req, res) => {
     res.render('users/edit')

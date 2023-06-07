@@ -10,90 +10,26 @@
         
         <!-- each tweets -->
         <ul class='tweet-list'>
-          <li class='mt-2'>
-            <div class='d-flex align-items-start'>
-              <div class='flex-shrink-1 p-0 icon'>
-                <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
-              </div>
-              <div class='tweet-text flex-grow-1'>
-                <span class='tweet-name'>Apple </span>
-                <span class='tweet-account'>@apple・3 小時</span>
-                <div class='reply-name'>
-                  <span class='text'>回覆</span>
-                  <span class='account'>@apple</span>
+          {{#each replies}}
+            <li class='mt-2'>
+              <div class='d-flex align-items-start'>
+                <div class='flex-shrink-1 p-0 icon'>
+                  <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
                 </div>
-                <p class='tweet-description' style='white-space:break-spaces;'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
-                  dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
-                <div>
-                  <a class='reply' href='#'>
-                    <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
-                    <span>76</span>
-                  </a>
-                  <a class='like' href='#'>
-                    <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
-                    <span>13</span>
-                  </a>
+                <div class='tweet-text flex-grow-1'>
+                  <span class='tweet-name'>{{../user.name}} </span>
+                  <span class='tweet-account'>@{{../user.account}}</span>
+                <span class='tweet-account'>・{{relativeTimeFromNow this.createdAt}}</span>
+                  <div class='reply-name'>
+                    <span class='text'>回覆</span>
+                    <span class='account'>@{{this.Tweet.User.account}}</span>
+                  </div>
+                  <p class='tweet-description' style='white-space:break-spaces;'>{{this.comment}}</p>
                 </div>
               </div>
-            </div>
-            <hr />
-          </li>
-          <li class='mt-2'>
-            <div class='d-flex align-items-start'>
-              <div class='flex-shrink-1 p-0 icon'>
-                <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
-              </div>
-              <div class='tweet-text flex-grow-1'>
-                <span class='tweet-name'>Apple </span>
-                <span class='tweet-account'>@apple・3 小時</span>
-                <div class='reply-name'>
-                  <span class='text'>回覆</span>
-                  <span class='account'>@apple</span>
-                </div>
-                <p class='tweet-description' style='white-space:break-spaces;'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
-                  dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
-                <div>
-                  <a class='reply' href='#'>
-                    <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
-                    <span>76</span>
-                  </a>
-                  <a class='like' href='#'>
-                    <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
-                    <span>13</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <hr />
-          </li>
-          <li class='mt-2'>
-            <div class='d-flex align-items-start'>
-              <div class='flex-shrink-1 p-0 icon'>
-                <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
-              </div>
-              <div class='tweet-text flex-grow-1'>
-                <span class='tweet-name'>Apple </span>
-                <span class='tweet-account'>@apple・3 小時</span>
-                <div class='reply-name'>
-                  <span class='text'>回覆</span>
-                  <span class='account'>@apple</span>
-                </div>
-                <p class='tweet-description' style='white-space:break-spaces;'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
-                  dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
-                <div>
-                  <a class='reply' href='#'>
-                    <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
-                    <span>76</span>
-                  </a>
-                  <a class='like' href='#'>
-                    <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
-                    <span>13</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <hr />
-          </li>
+              <hr />
+            </li>
+          {{/each}}
         </ul>
       </div>
     </ul>
