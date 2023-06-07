@@ -1,156 +1,171 @@
-<div class='user-container m-0 p-0'>
-  {{> user-profile}}
-  <div class='card'>
-    <img src='/images/profile/cover.png' class='card-img-top cover' alt='cover' />
-    <img src='/images/profile/avatar.png' class='avatar' alt='avatar' />
-    <div class='edit-btn'>
-      <div class='btn rounded-pill' data-bs-toggle='modal' data-bs-target='#edit-modal'>編輯個人資料</div>
-    </div>
-    <div class='card-body'>
-      <h5 class='card-title m-0'>John Doe</h5>
-      <p class='at-name m-0'>@heyjohn</p>
-      <p class='card-text m-0'>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</p>
-      <span>34 個<a href='/users/:id/followings'>跟隨中</a></span>
-      <span>59 位<a href='/users/:id/followers'>跟隨者</a></span>
-    </div>
-    <ul class='nav nav-tabs'>
-      <li class='nav-item'>
-        <a class='nav-link active' aria-current='page' href='/restaurants'>推文</a>
-      </li>
-      <li class='nav-item'>
-        <a class='nav-link' href='/restaurants/feeds'>回覆</a>
-      </li>
-      <li class='nav-item'>
-        <a class='nav-link' href='/users/top'>喜歡的內容</a>
-      </li>
+<div class='d-flex justify-content-center'>
+  {{! navbar }}
+  {{> navbar}}
+
+  {{!tweet-list }}
+  <div class='col-7 home-page'>
+    <ul class='list-group home-list'>
+      <div class='user-container m-0 p-0'>
+        {{> user-profile}}
+        <div class='card'>
+          <img src='/images/profile/cover.png' class='card-img-top cover' alt='cover' />
+          <img src='/images/profile/avatar.png' class='avatar' alt='avatar' />
+          <div class='edit-btn'>
+            <div class='btn rounded-pill' data-bs-toggle='modal' data-bs-target='#edit-modal'>編輯個人資料</div>
+          </div>
+          <div class='card-body'>
+            <h5 class='card-title m-0'>John Doe</h5>
+            <p class='at-name m-0'>@heyjohn</p>
+            <p class='card-text m-0'>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</p>
+            <span>34 個<a href='/users/:id/followings'>跟隨中</a></span>
+            <span>59 位<a href='/users/:id/followers'>跟隨者</a></span>
+          </div>
+          <ul class='nav nav-tabs'>
+            <li class='nav-item'>
+              <a class='nav-link active' aria-current='page' href='/restaurants'>推文</a>
+            </li>
+            <li class='nav-item'>
+              <a class='nav-link' href='/restaurants/feeds'>回覆</a>
+            </li>
+            <li class='nav-item'>
+              <a class='nav-link' href='/users/top'>喜歡的內容</a>
+            </li>
+          </ul>
+        </div>
+        <!-- each tweets -->
+        <ul class='tweet-list'>
+          <li class='mt-2'>
+            <div class='d-flex align-items-start'>
+              <div class='flex-shrink-1 p-0 icon'>
+                <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
+              </div>
+              <div class='tweet-text flex-grow-1'>
+                <span class='tweet-name'>Apple </span>
+                <span class='tweet-account'>@apple・3 小時</span>
+                <div class='reply-name'>
+                  <span class='text'>回覆</span>
+                  <span class='account'>@apple</span>
+                </div>
+                <p class='tweet-description' style='white-space:break-spaces;'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
+                  cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
+                <div>
+                  <a class='reply' href='#'>
+                    <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
+                    <span>76</span>
+                  </a>
+                  <a class='like' href='#'>
+                    <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
+                    <span>13</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <hr />
+          </li>
+          <li class='mt-2'>
+            <div class='d-flex align-items-start'>
+              <div class='flex-shrink-1 p-0 icon'>
+                <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
+              </div>
+              <div class='tweet-text flex-grow-1'>
+                <span class='tweet-name'>Apple </span>
+                <span class='tweet-account'>@apple・3 小時</span>
+                <div class='reply-name'>
+                  <span class='text'>回覆</span>
+                  <span class='account'>@apple</span>
+                </div>
+                <p class='tweet-description' style='white-space:break-spaces;'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
+                  cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
+                <div>
+                  <a class='reply' href='#'>
+                    <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
+                    <span>76</span>
+                  </a>
+                  <a class='like' href='#'>
+                    <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
+                    <span>13</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <hr />
+          </li>
+          <li class='mt-2'>
+            <div class='d-flex align-items-start'>
+              <div class='flex-shrink-1 p-0 icon'>
+                <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
+              </div>
+              <div class='tweet-text flex-grow-1'>
+                <span class='tweet-name'>Apple </span>
+                <span class='tweet-account'>@apple・3 小時</span>
+                <div class='reply-name'>
+                  <span class='text'>回覆</span>
+                  <span class='account'>@apple</span>
+                </div>
+                <p class='tweet-description' style='white-space:break-spaces;'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
+                  cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
+                <div>
+                  <a class='reply' href='#'>
+                    <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
+                    <span>76</span>
+                  </a>
+                  <a class='like' href='#'>
+                    <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
+                    <span>13</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <hr />
+          </li>
+        </ul>
+
+      </div>
+
+      <!-- edit Modal -->
+      <div class='modal fade user-edit-modal' id='edit-modal' tabindex='-1' aria-labelledby='editModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'>
+          <div class='modal-content'>
+            <form action='/users/{{user.id}}?_method=PUT' method='POST' enctype='multipart/form-data'>
+              <div class='modal-header'>
+                <button type='button' class='modal-close' data-bs-dismiss='modal' aria-label='Close'>X</button>
+                <h1 class='modal-title' id='editModalLabel'>編輯個人資料</h1>
+                <button type='submit' class='btn btn-primary btn-edit'>儲存</button>
+              </div>
+              <div class='modal-body'>
+                <div class='cover'>
+                  <img src='/images/profile/cover.png' class='card-img-top cover-img' alt='cover' />
+                  <div class='cover-edit'>
+                    <label class='form-label' for='cover-edit'>
+                      <img src='/images/profile/cover_edit.svg' alt='cover' />
+                    </label>
+                    <input class='form-control' type='file' class='form-control-file' id='cover-edit' name='cover-edit' />
+                    <a type='button' href='#' class='btn cover-delete'>X</a>
+                  </div>
+                </div>
+                <img src='/images/profile/avatar.png' class='avatar' alt='avatar' />
+                <div class='form-text'>
+                  <div class='name box'>
+                    <label class='form-label' for='name'>名稱</label>
+                    <input class='form-control' type='text' name='name' id='name' value='{{user.name}}' placeholder='John Doe' />
+                  </div>
+                  <div class='text-amount'>8/50</div>
+                  <div class='introduction box'>
+                    <label class='form-label' for='introduction'>自我介紹</label>
+                    <textarea class='form-control' id='introduction' name='introduction' rows='3'>John Doe</textarea>
+                  </div>
+                  <div class='text-amount'>8/160</div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
     </ul>
   </div>
-  <!-- each tweets -->
-  <ul class='tweet-list'>
-    <li class='mt-2'>
-      <div class='d-flex align-items-start'>
-        <div class='flex-shrink-1 p-0 icon'>
-          <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
-        </div>
-        <div class='tweet-text flex-grow-1'>
-          <span class='tweet-name'>Apple </span>
-          <span class='tweet-account'>@apple・3 小時</span>
-          <div class='reply-name'>
-            <span class='text'>回覆</span>
-            <span class='account'>@apple</span>
-          </div>
-          <p class='tweet-description' style='white-space:break-spaces;'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
-            dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
-          <div>
-            <a class='reply' href='#'>
-              <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
-              <span>76</span>
-            </a>
-            <a class='like' href='#'>
-              <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
-              <span>13</span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <hr />
-    </li>
-    <li class='mt-2'>
-      <div class='d-flex align-items-start'>
-        <div class='flex-shrink-1 p-0 icon'>
-          <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
-        </div>
-        <div class='tweet-text flex-grow-1'>
-          <span class='tweet-name'>Apple </span>
-          <span class='tweet-account'>@apple・3 小時</span>
-          <div class='reply-name'>
-            <span class='text'>回覆</span>
-            <span class='account'>@apple</span>
-          </div>
-          <p class='tweet-description' style='white-space:break-spaces;'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
-            dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
-          <div>
-            <a class='reply' href='#'>
-              <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
-              <span>76</span>
-            </a>
-            <a class='like' href='#'>
-              <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
-              <span>13</span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <hr />
-    </li>
-    <li class='mt-2'>
-      <div class='d-flex align-items-start'>
-        <div class='flex-shrink-1 p-0 icon'>
-          <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
-        </div>
-        <div class='tweet-text flex-grow-1'>
-          <span class='tweet-name'>Apple </span>
-          <span class='tweet-account'>@apple・3 小時</span>
-          <div class='reply-name'>
-            <span class='text'>回覆</span>
-            <span class='account'>@apple</span>
-          </div>
-          <p class='tweet-description' style='white-space:break-spaces;'>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
-            dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
-          <div>
-            <a class='reply' href='#'>
-              <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
-              <span>76</span>
-            </a>
-            <a class='like' href='#'>
-              <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
-              <span>13</span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <hr />
-    </li>
-  </ul>
 
-</div>
+  {{! recommend-followings }}
+  {{> recommend-followings}}
 
-<!-- edit Modal -->
-<div class='modal fade user-edit-modal' id='edit-modal' tabindex='-1' aria-labelledby='editModalLabel' aria-hidden='true'>
-  <div class='modal-dialog'>
-    <div class='modal-content'>
-      <form action='/users/{{user.id}}?_method=PUT' method='POST' enctype='multipart/form-data'>
-        <div class='modal-header'>
-          <button type='button' class='modal-close' data-bs-dismiss='modal' aria-label='Close'>X</button>
-          <h1 class='modal-title' id='editModalLabel'>編輯個人資料</h1>
-          <button type='submit' class='btn btn-primary btn-edit'>儲存</button>
-        </div>
-        <div class='modal-body'>
-          <div class='cover'>
-            <img src='/images/profile/cover.png' class='card-img-top cover-img' alt='cover' />
-            <div class='cover-edit'>
-              <label class='form-label' for='cover-edit'>
-                <img src='/images/profile/cover_edit.svg' alt='cover' />
-              </label>
-              <input class='form-control' type='file' class='form-control-file' id='cover-edit' name='cover-edit' />
-              <a type='button' href='#' class='btn cover-delete'>X</a>
-            </div>
-          </div>
-          <img src='/images/profile/avatar.png' class='avatar' alt='avatar' />
-          <div class='form-text'>
-            <div class='name box'>
-              <label class='form-label' for='name'>名稱</label>
-              <input class='form-control' type='text' name='name' id='name' value='{{user.name}}' placeholder='John Doe' />
-            </div>
-            <div class='text-amount'>8/50</div>
-            <div class='introduction box'>
-              <label class='form-label' for='introduction'>自我介紹</label>
-              <textarea class='form-control' id='introduction' name='introduction' rows='3'>John Doe</textarea>
-            </div>
-            <div class='text-amount'>8/160</div>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
 </div>
