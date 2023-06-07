@@ -3,10 +3,11 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express')
-const exphbs = require('express-handlebars')
-const session = require('express-session')
 const helpers = require('./_helpers');
-const routes = require('./routes')
+const passport = require('./config/passport')
+const exphbs = require('express-handlebars')
+const flash = require('connect-flash')
+const session = require('express-session')
 
 const app = express()
 const port = 3000
@@ -26,6 +27,14 @@ app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
 app.use(session({ secret: 'SECRET', resave: false, saveUninitialized: false }))
+// secret寫死? 加進env?
+
+// setting body-parser
+app.use(express.urlencoded({ extended: true }))
+
+// passport setting
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Setting middleware
 app.use(flash())
@@ -34,6 +43,7 @@ app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg')
   res.locals.warning_msg = req.flash('warning_msg')
   res.locals.info_msg = req.flash('info_msg')
+  res.locals.loginUser = helpers.getUser(req)
   next()
 })
 

@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const userController = require('../controllers/user-controller')
+const passport = require('../config/passport')
 
 const { generalErrorHandler } = require('../middleware/error-handler')
 
@@ -23,8 +25,20 @@ router.post('/example', (req, res, next) => {
   }
 })
 
-router.get('/signup', (req, res) => {
-  res.render('signup')
+// 註冊
+router.get('/signup', userController.signUpPage)
+router.post('/signup', userController.signUp)
+
+// 登入頁
+router.get('/signin', userController.signInPage)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', successRedirect: '/tweets' }), userController.signIn)
+
+// 登出
+router.post('/signout', userController.signOut)
+
+// 登入後的假首頁
+router.get('/tweets', (req, res) => {
+  res.send('twitter home page')
 })
 
 router.use('/', generalErrorHandler)
