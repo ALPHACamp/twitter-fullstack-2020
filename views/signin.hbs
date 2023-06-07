@@ -1,23 +1,39 @@
-{{!-- signin page --}}
-<div class="mb-4 text-center">
-  <div class="pt-5 mb-3">
-    <img src="/images/logo.svg" alt="">
+<div class='mb-4 text-center'>
+  <div class='pt-5 mb-3'>
+    <img src='./logo.svg' alt='' />
   </div>
-  <h1 class="h3 fw-bolder mb-3">登入 Alphitter</h1>
+  <h1 class='h3 fw-bolder mb-3'>登入 Alphitter</h1>
 </div>
-<form class="d-flex flex-column align-items-center form-signin" action="/signin" method="POST">
-  <div class="form-row mb-5">
-    <label class="form-label account-label" for="account">帳號</label>
-    <input class="form-control account-input" id="account" type="text" name="account" class="form-control" placeholder="請輸入帳號" required autofocus>
+{{> message}}
+<form class='d-flex flex-column align-items-center form-signin' action='/signin' method='POST'>
+  <div class='form-row mb-5'>
+    <label class='form-label account-label' for='account'>帳號</label>
+    <input
+      class='form-control account-input'
+      id='account'
+      type='text'
+      name='account'
+      class='form-control'
+      placeholder='請輸入帳號'
+      required
+      autofocus
+    />
   </div>
-  <div class="form-row mb-5">
-    <label class="form-label password-label" for="password">密碼</label>
-    <input class="form-control password-input" id="password" type="text" name="password" class="form-control" placeholder="請輸入密碼" required autofocus>
+  <div class='form-row mb-5'>
+    <label class='form-label password-label' for='password'>密碼</label>
+    <input
+      class='form-control password-input'
+      id='password'
+      type='text'
+      name='password'
+      class='form-control'
+      placeholder='請輸入密碼'
+      required
+      autofocus
+    />
   </div>
-  <div class="mb-3">
-    <button class="btn btn-primary mb-4 signin-btn" type="submit">登入</button>
-  </div>
+  <button class='btn btn-primary mb-4 fw-bolder signin-btn' type='submit'>登入</button>
 </form>
-<div class="d-flex flex-column align-items-center text-end other-page-btn">
-  <p><a href="/signup">註冊</a> · <a href="/admin/signin">後台登入</a></p>
+<div class='d-flex flex-column align-items-center fw-bolder text-end other-page-btn'>
+  <p><a href='/signup'>註冊</a> · <a href='/admin/signin'>後台登入</a></p>
 </div>
