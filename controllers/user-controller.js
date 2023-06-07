@@ -3,7 +3,7 @@ const userController = {
     res.render('signin')
   },
   signin: (req, res, next) => {
-    console.log(req.user)
+    //console.log(req.user)
     req.flash('success_messages', '成功登入!')
     res.redirect('/tweets')
   }

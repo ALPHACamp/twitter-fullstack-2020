@@ -24,8 +24,8 @@ router.get('/users/:id/tweets', profileController.getUserTweets)
 router.get('/users/:id/followings', profileController.getUserFollows)
 router.get('/users/:id/followers', profileController.getUserFollows)
 router.get('/users/:id', profileController.editUser)
-router.get('/tweets', tweetsController.getTweets)
-router.get('/tweet', tweetsController.getTweet)
+router.get('/tweets', authenticated, tweetsController.getTweets)
+router.get('/tweet', authenticated, tweetsController.getTweet)
 
 router.use('/', (req, res) => res.redirect('/tweets'))
 
