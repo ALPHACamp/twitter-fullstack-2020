@@ -30,7 +30,7 @@
           <div class="tweet-text d-flex flex-column">
             <div class="d-flex align-items-baseline mb-2">
               <div class="tweet-name me-2">{{this.User.name}} </div>
-              <div class="tweet-account">@{{this.User.account}}・8 小時</div>
+              <div class="tweet-account">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
             </div>
       
             <p class="mb-2" style="white-space:break-spaces;">{{this.description}}</p>

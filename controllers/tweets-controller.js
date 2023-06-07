@@ -15,7 +15,6 @@ const tweetsController = {
           nest: true
         })
       ])
-      console.log(tweets)
       res.render('tweets', { user, tweets })
     } catch (err) {
       next(err)

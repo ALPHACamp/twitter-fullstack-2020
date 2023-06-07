@@ -22,7 +22,7 @@ module.exports = {
         avatar: `https://loremflickr.com/140/140/avatar/?lock=${
           Math.random() * 100
         }`,
-        cover:`https://loremflickr.com/640/200/landscape/?lock=${
+        cover: `https://loremflickr.com/640/200/landscape/?lock=${
           Math.random() * 100
         }`,
         introduction: faker.lorem.text(),
@@ -38,7 +38,7 @@ module.exports = {
         avatar: `https://loremflickr.com/140/140/avatar/?lock=${
           Math.random() * 100
         }`,
-        cover:`https://loremflickr.com/640/200/landscape/?lock=${
+        cover: `https://loremflickr.com/640/200/landscape/?lock=${
           Math.random() * 100
         }`,
         introduction: faker.lorem.text(),
@@ -54,7 +54,7 @@ module.exports = {
         avatar: `https://loremflickr.com/140/140/avatar/?lock=${
           Math.random() * 100
         }`,
-        cover:`https://loremflickr.com/640/200/landscape/?lock=${
+        cover: `https://loremflickr.com/640/200/landscape/?lock=${
           Math.random() * 100
         }`,
         introduction: faker.lorem.text(),
@@ -70,7 +70,7 @@ module.exports = {
         avatar: `https://loremflickr.com/140/140/avatar/?lock=${
           Math.random() * 100
         }`,
-        cover:`https://loremflickr.com/640/200/landscape/?lock=${
+        cover: `https://loremflickr.com/640/200/landscape/?lock=${
           Math.random() * 100
         }`,
         introduction: faker.lorem.text(),
@@ -86,7 +86,7 @@ module.exports = {
         avatar: `https://loremflickr.com/140/140/avatar/?lock=${
           Math.random() * 100
         }`,
-        cover:`https://loremflickr.com/640/200/landscape/?lock=${
+        cover: `https://loremflickr.com/640/200/landscape/?lock=${
           Math.random() * 100
         }`,
         introduction: faker.lorem.text(),
