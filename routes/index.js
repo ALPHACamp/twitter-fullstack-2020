@@ -11,6 +11,7 @@ const tweetsController = require('../controllers/tweets-controller')
 const { authenticated, adminAuthenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 
+// signin
 router.get('/signin', userController.signinPage)
 router.post(
   '/signin',
@@ -21,6 +22,15 @@ router.post(
   userController.signin
 )
 
+// signup
+router.get('/signup', userController.signupPage)
+
+// admin
+router.get('/admin/signin', adminController.adminSigninPage)
+router.get('/admin/tweets', adminController.adminTweetsPage)
+router.get('/admin/users', adminController.adminUsersPage)
+
+// index
 router.get('/tweets', authenticated, (req, res) => res.render('index'))
 
 router.get('/users/:userId/tweets', authenticated, profileController.getUser, profileController.getUserTweets)

@@ -52,6 +52,48 @@ h4 {
   border-bottom: 1px solid #e6ecf0;
 }
 
+/****** signin signup admin/signin ******/
+.form-row {
+  width: 354px;
+  height: 54px;
+  border-radius: 2px;
+  background-color: #F5F8FA;
+}
+
+.account-label,.password-label {
+  margin-bottom: 0;
+  padding: 0 0 0 10px;
+  font-size: 14px;
+}
+
+.account-input,.password-input {
+  padding-left: 10px;
+  font-size: 16px;
+  background-color: #F5F8FA;
+  border: 0;
+  border-bottom: 2px solid #657786;
+  border-radius: 0;
+}
+
+.account-input::placeholder,.password-input::placeholder {
+  color: #B5B5BE;
+}
+
+.signin-btn {
+  width: 354px;
+  height: 46px;
+  font-size: 20px;
+  border: 0;
+  border-radius: 50px;
+  background-color: #FF6600;
+}
+
+.other-page-btn p{
+  width: 354px;
+}
+
+
+
 /****** nav ******/
 .navbar.navbar-vertical {
   padding: 0;
@@ -667,4 +709,141 @@ h4 {
 .user-edit-container .form-control {
   background-color: transparent;
   border: 0;
+}
+
+/****** tweets-list ******/
+.tweet-btn {
+  width: 64px;
+  height: 40px;
+}
+
+.tweet-placeholder {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  color: #6C757D;
+}
+
+.tweet-close-button {
+  background: transparent;
+  border: none;
+}
+
+#description::placeholder {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #6C757D;
+}
+
+.tweet-text {
+  margin-left: 8px;
+  margin-right: 3px;
+  width: auto;
+}
+
+.tweet-name {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  color: #171725;
+}
+
+.tweet-account, .reply-tag-text {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: #6C757D;
+}
+
+.tweet-description {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #171725;
+}
+
+.tweets-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.tweets-interact-counts {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  color: #6C757D;
+}
+
+.list-header {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.list-header-img {
+  width: 24px;
+  height: 24px;
+  margin-right: 16px;
+}
+
+.tweet-content {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  color: #171725;
+}
+
+.hr {
+  border: 0px;
+  /* 不要框架 */
+  height: 1px;
+  /* 設定 1px 的高度 */
+  background: #E6ECF0;
+  /* 讓背景色填滿高度 1px 的元素空間 */
+  margin: 20px 0;
+}
+
+.tweet-interact-counts {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 19px;
+  color: #171725;
+  margin-right: 5px;
+}
+
+.tweet-interact-text {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 19px;
+  color: #6C757D;
+  margin-right: 24px;
+}
+
+.reply-tag {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: #FF6600;
+}
+
+.vertical-line {
+  width: 0;
+  border-left: 1px solid #B5B5BE;
+  border-right: 1px solid #B5B5BE;
+  height: 60%;
+  margin: 10px auto 0;
 }
