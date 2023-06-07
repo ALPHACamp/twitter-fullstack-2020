@@ -8,7 +8,7 @@ const hbshelpers = require('handlebars-helpers')()
 const session = require('express-session')
 
 const passport = require('./config/passport')
-const helpers = require('./_helpers')
+// const helpers = require('./_helpers')
 const routes = require('./routes')
 const app = express()
 const port = process.env.PORT
