@@ -318,10 +318,26 @@ button {
 
 .modal {
   position: relative;
-  top: 50%;
   left: 0;
 }
 
 .modal-twitter {
   border-radius: 14px !important;
+}
+
+/* ------------------------------     刪除頁面上的滑動bar */
+html {
+  overflow: -moz-hidden-unscrollable;
+  height: 100%;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  height: 100%;
+  width: calc(100vw + 18px);
+  overflow: auto;
 }
