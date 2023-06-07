@@ -8,5 +8,12 @@ module.exports = {
     }
     req.flash('warning_messages', '請先登入才能使用。')
     res.redirect('/signin')
+  },
+  authenticatedAdmin: (req, res, next) => {
+    if (helpers.ensureAuthenticated(req) && helpers.getUser(req).isAdmin) {
+      return next()
+    } else {
+      res.redirect('/admin/signin')
+    }
   }
 }

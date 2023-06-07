@@ -13,7 +13,7 @@ const admin = require('./modules/admin')
 
 router.use('/users', authenticator, users)
 router.use('/tweets', authenticator, tweets)
-router.use('/admin', authenticator, admin)
+router.use('/admin', admin)
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
