@@ -5,7 +5,6 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const handlebars = require('express-handlebars')
 const hbshelpers = require('./helpers/handlebars-helpers')
-
 const session = require('express-session')
 
 const passport = require('./config/passport')
