@@ -2,11 +2,9 @@
 const dayjs = require('dayjs')
 const relativeTime = require('dayjs/plugin/relativeTime')
 
-dayjs.extend(relativeTime)
 // exports
 module.exports = {
   currentYear: () => dayjs().year(),
-  relativeTimeFromNow: a => dayjs(a).fromNow(),
   formatRelativeTime: targetTime => {
     const currentTime = dayjs()
     if ((currentTime - targetTime) < 0) {
