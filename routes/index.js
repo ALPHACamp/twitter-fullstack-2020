@@ -7,9 +7,11 @@ const followshipController = require('../controllers/followship-controller')
 const profileController = require('../controllers/profile-controller')
 const userController = require('../controllers/user-controller')
 const tweetsController = require('../controllers/tweets-controller')
+const apiProfileController = require('../controllers/api-profile-controller')
 
 const { authenticated, adminAuthenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
+const upload = require('../middleware/multer')
 
 // signin
 router.get('/signin', userController.signinPage)
@@ -38,8 +40,30 @@ router.get('/users/:userId/replies', authenticated, profileController.getUser, p
 router.get('/users/:userId/likes', authenticated, profileController.getUser, profileController.getUserLikes)
 router.get('/users/:userId/followings', authenticated, profileController.getUserFollowings)
 router.get('/users/:userId/followers', authenticated, profileController.getUserFollowers)
-router.get('/api/users/:userId', authenticated, profileController.editUserAccount)
-router.put('/api/users/:userId', authenticated, profileController.putUserAccount)
+router.get('/users/:userId', authenticated, profileController.editUserAccount)
+
+router.put(
+  '/users/:userId',
+  authenticated,
+  upload.fields([
+    { name: 'avatar', maxCount: 1 },
+    { name: 'cover', maxCount: 1 }
+  ]),
+  profileController.putUserAccount
+)
+
+// api
+router.get('/api/users/:userId', authenticated, apiProfileController.editUserAccount)
+
+router.post(
+  '/api/users/:userId',
+  authenticated,
+  upload.fields([
+    { name: 'avatar', maxCount: 1 },
+    { name: 'cover', maxCount: 1 }
+  ]),
+  apiProfileController.putUserAccount
+)
 
 router.use('/', (req, res) => res.redirect('/tweets'))
 

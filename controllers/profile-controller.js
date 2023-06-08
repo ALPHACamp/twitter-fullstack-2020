@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize')
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
+const { imgurFileHelper } = require('../helpers/file-helpers')
 const { User, Followship, Tweet, Reply, Like } = require('../models')
-const { group } = require('console')
 
 const profileController = {
   getUser: async (req, res, next) => {
@@ -127,7 +127,6 @@ const profileController = {
                 [Sequelize.fn('COUNT', Sequelize.col('Likes.id')), 'likesCount']
               ]
             },
-            where: { UserId: userId },
             include: [
               User,
               // 不要引入reply資料
@@ -193,12 +192,6 @@ const profileController = {
       if (user.id !== loginUser.id) return res.redirect('back')
       // 判斷user是否存在，沒有就err
       if (!user) throw new Error('該用戶不存在!')
-      // 判斷user有沒有追隨
-      const isFollowed = user.Followers.map(follower => {
-        return user.Followings.some(following => {
-          return following.id === follower.id
-        })
-      })
       // 追隨者的資料
       const userFollowersData = user.Followers.map(follower => ({
         ...follower.toJSON(),
@@ -223,54 +216,65 @@ const profileController = {
     try {
       // 找對應user、取出帳號、名稱、信箱
       const user = await User.findByPk(userId, {
-        raw: true,
-        attributes: ['id', 'account', 'name', 'email']
+        raw: true
       })
       // 找不到就報錯
       if (!user) throw new Error('該用戶不存在!')
       // render
-      res.render('users/edit', { user })
+      return res.render('users/edit', { user })
     } catch (err) {
       next(err)
     }
   },
   putUserAccount: async (req, res, next) => {
+    // 取出照片檔
+    const cover = req.files?.cover ? req.files.cover[0] : null
+    const avatar = req.files?.avatar ? req.files.avatar[0] : null
     // 抓id, 表單資料
     const { userId } = req.params
     const loginUser = helpers.getUser(req)
-    const { account, name, email, password, passwordCheck } = req.body
+    const { account, name, email, password, passwordCheck, introduction } = req.body
     const saltNumber = 10
     // 判斷是否為本人
     if (loginUser.id !== Number(userId)) return res.redirect('back')
     try {
       // 找對應user、找出是否有account、email
-      const [user, isAccountExist, isEmailExist] = await Promise.all([
+      const [user, isAccountExist, isEmailExist, coverFilePath, avatarFilePath] = await Promise.all([
         User.findByPk(userId),
-        User.findOne({ where: { account } }),
-        User.findOne({ where: { email } })
+        // 如果account, email有值得話就搜尋
+        User.findOne({ where: { account: account || '' } }),
+        User.findOne({ where: { email: email || '' } }),
+        imgurFileHelper(cover),
+        imgurFileHelper(avatar)
       ])
+      console.log(user)
       // 找不到就報錯
       if (!user) throw new Error('該用戶不存在!')
       // 如果account、email有更動就判斷是否有重複
       if (user.account !== account && isAccountExist) throw new Error('該帳號已存在!')
-
       if (user.email !== email && isEmailExist) throw new Error('該email已存在!')
-      // 確認name有無超過50字
-      if (name.length > 50) throw new Error('該名字超過字數上限!')
+      // 確認name有無超過50字，introduction有無超過150字
+      if (name?.length > 50) throw new Error('該名字超過字數上限!')
+      if (introduction?.length > 150) throw new Error('該敘述超過字數上限!')
       // 確認密碼是否正確
       if (password !== passwordCheck) throw new Error('密碼不一致!')
       // 將密碼hash
-      const salt = bcrypt.genSaltSync(saltNumber)
-      const hashedPassword = bcrypt.hashSync(password, salt)
+      let hashedPassword = 0
+      if (password) {
+        const salt = bcrypt.genSaltSync(saltNumber)
+        hashedPassword = bcrypt.hashSync(password, salt)
+      }
       // 更新資料
       const userUpdate = await user.update({
-        name,
-        email,
-        account,
-        password: hashedPassword
+        // 如果是空的就代入資料庫的值
+        name: name || user.name,
+        email: email || user.email,
+        account: account || user.account,
+        password: hashedPassword || user.password,
+        introduction: introduction || user.introduction,
+        cover: coverFilePath || user.cover,
+        avatar: avatarFilePath || user.avatar
       })
-      console.log(userUpdate)
-      req.session.updateDate = userUpdate
       // redirect /tweets
       res.redirect('/tweets')
     } catch (err) {
