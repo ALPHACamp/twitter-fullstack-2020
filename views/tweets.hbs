@@ -1,20 +1,21 @@
 <h4 class="pt-4 ps-4 pe-4 pb-1">首頁</h4>
 <hr>
 <div class="d-flex flex-column m-4">
-  <div class="d-flex">
-    {{!-- 用戶大頭貼 --}}
-    <div class="me-2" style="width: 50px; height: 50px; border-radius: 50%;">
-      <img src="/user/card/tweet/base/img.svg">
+  <form action="/tweets" method="POST">
+    <div class="d-flex">
+      {{!-- 用戶大頭貼 --}}
+      <div class="me-2" style="width: 50px; height: 50px; border-radius: 50%;">
+        <img src="/user/card/tweet/base/img.svg">
+      </div>
+      {{!-- tweet 文字輸入區 --}}
+      <textarea placeholder="有什麼新鮮事？" id="description" name="description" class="text-basic-reg mt-2" rows="3" cols="50"
+        maxlength="140" required></textarea>
     </div>
-    {{!-- tweet 文字輸入區 --}}
-    <textarea placeholder="有什麼新鮮事？" class="text-basic-reg mt-2" rows="3" cols="50" maxlength="140"></textarea>
-  </div>
-  {{!-- 發送按鈕 --}}
-  <div class="d-flex flex-row-reverse">
-    <form action="/tweets" method="POST" enctype="multipart/form-data">
+    {{!-- 發送按鈕 --}}
+    <div class="d-flex flex-row-reverse">
       <button type="submit" class="pill-default pill-main">推文</button>
-    </form>
-  </div>
+    </div>
+  </form>
 </div>
 <hr style="height:10px; color:#E6ECF0;;">
 {{#each tweets}}
@@ -22,10 +23,10 @@
 <div class="d-flex flex-row align-items-center ps-4 pe-4 p-3 mb-3 mt-3 align-items-start" style="width: 100%">
   <div class="d-flex align-items-center">
     {{!-- 用戶大頭貼 --}}
-    <figure class="me-2 align-self-start" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
+    <figure class="me-2 align-self-start flex-shrink-0" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
       <img src="{{this.User.avatar}}" style="object-fit: cover;width:100%;height:100%">
     </figure>
-    <div class="me-2 d-flex flex-column">
+    <div class="me-2 d-flex flex-column flex-shrink-1">
       <div class="d-flex align-items-center">
         {{!-- 用戶名稱 --}}
         <p class="m-0 text-16px-med">{{this.User.name}}</p>

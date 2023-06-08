@@ -23,6 +23,19 @@ const tweetController = {
         res.render('tweets', { tweets, users })
       })
       .catch(err => next(err))
+  },
+  postTweets: (req, res, next) => {
+    const { description } = req.body
+    console.log(req.body)
+    if (!description) throw new Error('Tweet is required!')
+    if (description.length > 140) throw new Error('Tweet length must be under 140 character!')
+    Promise.all([
+      Tweet.create({ description })
+    ])
+      .then(() => {
+        res.redirect('/tweets')
+      })
+      .catch(err => next(err))
   }
 }
 
