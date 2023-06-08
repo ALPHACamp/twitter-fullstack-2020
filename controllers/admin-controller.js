@@ -1,7 +1,30 @@
 const { User, Tweet } = require('../models')
+const { getUser } = require('../_helpers')
 
-// 未完成
 const adminController = {
+  signInPage: (req, res, next) => {
+    res.render('admin/admin-signin')
+  },
+
+  signIn: (req, res, next) => {
+    const { account, password } = req.body
+
+    // 檢查欄位不能為空
+    if (account.trim() === '' || password.trim() === '' || !account || !password) {
+      req.flash('warning_messages', '欄位不能為空')
+      return res.redirect('/admin/signin');
+    }
+
+    return User.findOne({ where: { account } })
+      .then(user => {
+        // 判斷 account 存不存在或是否為管理員
+        if (!user || user.isAdmin === 0) throw new Error("Admin didn't exist!")
+        res.redirect('/admin/tweets')
+      })
+      .catch(err => next(err))
+  },
+
+  // 未完成
   getTweets: (req, res, next) => {
     res.render('admin/admin-tweets')
   },
@@ -24,7 +47,7 @@ const adminController = {
       where: { is_admin: false }
     })
       .then(users => {
-        console.log(users)
+        // console.log(users)
         res.render('admin/admin-users', { users })
       })
       .catch(err => next(err))
@@ -36,7 +59,7 @@ const adminController = {
         if (!tweet) throw new Error("Tweet didn't exist!")
         return tweet.destroy()
       })
-      .then(() => res.redirect('admin/tweets'))
+      .then(() => res.redirect('/admin/tweets'))
       .catch(err => next(err))
   }
 }

@@ -1,12 +1,13 @@
-<div class="mb-4 text-center">
+<div class="mt-4 mb-4 text-center" style="width:50%; margin:0 auto; position:relative; top:64px;">
   {{> messages}}
   {{!-- logo --}}
-  <a href="/" class="">
+  <a href="/admin/signin" class="">
     <img src="/_base/icon/logo.svg">
   </a>
-  <h1 class="h3 font-weight-normal mb-3">登入 Alphitter</h1>
+  <h1 class="h3 font-weight-normal mt-2 mb-3">後台登入</h1>
 </div>
-<form class="form-signin" action="/signin" method="POST">
+<form class="form-signin" action="/admin/signin" method="POST"
+  style="width:50%; margin:0 auto; position: relative; top:40px;">
   <div class="form-row mb-3">
     <label class="form-label" for="account">帳號</label>
     <input class="form-control" id="account" type="text" name="account" placeholder="請輸入帳號" required autofocus>
@@ -18,6 +19,5 @@
   <button class="btn btn-primary btn-block" type="submit">登入</button>
 </form>
 <div class="mb-4 text-center">
-  <p><a href="/signup">註冊</a></p>
-  <a href="/admin/signin">後台入口</a>
+  <a href="/signin">前台登入</a>
 </div>

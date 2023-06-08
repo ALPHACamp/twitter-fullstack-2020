@@ -19,7 +19,7 @@ const tweetController = {
       })
     ])
       .then(([tweets, users]) => {
-        console.log(users)
+        // console.log(users)
         res.render('tweets', { tweets, users })
       })
       .catch(err => next(err))

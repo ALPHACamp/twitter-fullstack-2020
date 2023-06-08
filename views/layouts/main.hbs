@@ -22,9 +22,10 @@
 
 
 <body>
-  {{!-- {{> messages}} --}}
+  {{#if loginUser}}
+  {{> messages}}
   {{!-- 後台登入 --}}
-  {{!-- {{#if user.isAdmin}} --}}
+  {{#if loginUser.isAdmin}}
   <div class="container-lg">
     <div class="row">
       {{!-- 左側 fixed 欄位 --}}
@@ -58,18 +59,15 @@
         </div>
       </div>
       {{!-- 中間欄位 --}}
-      {{!-- <div class="col col-10 p-0" style="height: 100%;">
-        <div style="position:relative; height: 96%; width: 937px;"> --}}
-          {{{body}}}
-          {{!-- </div>
-      </div> --}}
+      {{{body}}}
     </div>
   </div>
-  {{!-- {{else}} --}}
+  </div>
+  {{else}}
   {{!-- 前台登入 --}}
-  {{!-- <div class="container-lg"> --}}
+  <div class="container-lg">
     {{!-- 檢查用 --}}
-    {{!-- <div class="row">
+    <div class="row">
       <div class="col-1 border">1</div>
       <div class="col-1 border">2</div>
       <div class="col-1 border">3</div>
@@ -82,37 +80,37 @@
       <div class="col-1 border">10</div>
       <div class="col-1 border">11</div>
       <div class="col-1 border">12</div>
-    </div> --}}
-    {{!-- <div class="row"> --}}
+    </div>
+    <div class="row">
       {{!-- 左側 fixed 欄位 --}}
-      {{!-- <div class="col-2 p-0">
+      <div class="col-2 p-0">
         <div class="d-flex flex-column justify-content-between" style="position: fixed; height:96%; width:178px">
-          <div class="mt-2"> --}}
+          <div class="mt-2">
             {{!-- logo --}}
-            {{!-- <a href="/" class="">
+            <a href="/" class="">
               <img src="/_base/icon/logo.svg">
-            </a> --}}
+            </a>
             {{!-- 首頁 --}}
-            {{!-- <div class="mt-4 mb-4">
+            <div class="mt-4 mb-4">
               <a href="/tweets" class="d-flex flex-row align-items-center">
                 <img class="ms-2 me-3 svg-fill-main" src="/_base/Property 2=filled, Property 3=home.svg">
                 <h5 class="color-main m-0">首頁</h5>
               </a>
-            </div> --}}
+            </div>
             {{!-- 個人資料 --}}
-            {{!-- <div class="mt-4 mb-4">
+            <div class="mt-4 mb-4">
               <a href="/users/{{user.id}}/tweets" class="d-flex flex-row align-items-center">
                 <img class="ms-2 me-3" src="/_base/Property 2=outlined, Property 3=user.svg">
                 <h5 class="m-0">個人資料</h5>
               </a>
-            </div> --}}
+            </div>
             {{!-- 設定 --}}
-            {{!-- <div class="mt-4 mb-4">
+            <div class="mt-4 mb-4">
               <a href="/api/users/{{user.id}}" class="d-flex flex-row align-items-center">
                 <img class="ms-2 me-3" src="/_base/Property 2=outlined, Property 3=cog.svg">
                 <h5 class="m-0">設定</h5>
               </a>
-            </div> --}}
+            </div>
             {{!-- 推文 --}}
             <button id="modalBtn" class="mt-4 mb-4 pill pill-large pill-main " data-bs-toggle="modal"
               data-bs-target="#exampleModal">推文
@@ -120,17 +118,15 @@
           </div>
           <div class="">
             {{!-- 登出 --}}
-            {{!-- <div class="">
+            <div class="">
               <a href="/logout" class="d-flex flex-row align-items-center">
                 <img class="ms-2 me-3" src="/_base/Property 2=outlined, Property 3=logout.svg">
                 <h5 class="m-0">登出</h5>
               </a>
-            </div> --}}
-            {{!-- </div> --}}
-          {{!--
-        </div> --}}
-        {{!--
-      </div> --}}
+            </div>
+          </div>
+        </div>
+      </div>
       {{!-- 中間欄位 --}}
       <div class="col col-7 border p-0">
         <div id="body" style="position:relative; overflow: auto;height:100vh">
@@ -201,6 +197,10 @@
       </div>
     </div>
   </div>
+  {{/if}}
+  {{else}}
+  {{{body}}}
+  {{/if}}
   <script src="/index.js"></script>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
