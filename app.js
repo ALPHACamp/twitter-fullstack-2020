@@ -5,10 +5,6 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const handlebars = require('express-handlebars')
 const hbshelpers = require('./helpers/handlebars-helpers')
-<<<<<<< HEAD
-
-=======
->>>>>>> master
 const session = require('express-session')
 const flash = require('connect-flash')
 const methodOverride = require('method-override')
