@@ -1,10 +1,10 @@
 const { Tweet, User } = require('../models')
-const { getUser } = require('../helpers/_helpers')
+const helpers = require('../_helpers')
 
 const tweetController = {
   // 獲得所有貼文
   getTweets: (req, res, next) => {
-    const userId = getUser(req).id
+    const userId = helpers.getUser(req).id
     Promise.all([
       Tweet.findAll({
         // limit: 2,
@@ -31,11 +31,10 @@ const tweetController = {
   // 新增一則貼文
   postTweets: (req, res, next) => {
     const { description } = req.body
-    const userId = getUser(req).id
     if (!description) throw new Error('Tweet is required!')
     if (description.length > 140) throw new Error('Tweet length must be under 140 character!')
     Promise.all([
-      Tweet.create({ description, userId })
+      Tweet.create({ description, UserId: helpers.getUser(req).id })
     ])
       .then(() => {
         res.redirect('/tweets')

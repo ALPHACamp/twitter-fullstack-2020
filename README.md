@@ -25,6 +25,7 @@ echo $NODE_ENV
 例如：切換到 test 環境
 ```
 export NODE_ENV=test
+export NODE_ENV=development
 ```
 
 ### 設定資料
@@ -43,6 +44,11 @@ npx sequelize db:seed:all
 ### 執行測試
 ```
 npm run test
+```
+
+#### 個別測試檔
+```
+npx mocha test/requests/tweet.spec.js --exit
 ```
 
 ## 共用帳號
