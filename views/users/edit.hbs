@@ -1,74 +1,86 @@
-<div class='user-edit-container'>
-  <h4>帳戶設定</h4>
-  <hr />
-  <form class='' action='#' method='POST'>
-    <div class='form-row box'>
-      <label class='form-label' for='account'>帳號</label>
-      <input
-        class='form-control account-input'
-        id='account'
-        type='text'
-        name='account'
-        class='form-control'
-        placeholder='請輸入帳號'
-        required
-        autofocus
-      />
-    </div>
-    <div class='form-row box'>
-      <label class='form-label password-label' for='name'>名稱</label>
-      <input
-        class='form-control password-input'
-        id='name'
-        type='text'
-        name='name'
-        class='form-control'
-        placeholder='請輸入使用者名稱'
-        required
-        autofocus
-      />
-    </div>
-    <div class='form-row box'>
-      <label class='form-label password-label' for='email'>Email</label>
-      <input
-        class='form-control password-input'
-        id='email'
-        type='text'
-        name='email'
-        class='form-control'
-        placeholder='請輸入 Email'
-        required
-        autofocus
-      />
-    </div>
-    <div class='form-row box'>
-      <label class='form-label password-label' for='password'>密碼</label>
-      <input
-        class='form-control password-input'
-        id='password'
-        type='text'
-        name='password'
-        class='form-control'
-        placeholder='請輸入密碼'
-        required
-        autofocus
-      />
-    </div>
-    <div class='form-row box'>
-      <label class='form-label password-label' for='passwordCheck'>密碼確認</label>
-      <input
-        class='form-control password-input'
-        id='passwordCheck'
-        type='text'
-        name='passwordCheck'
-        class='form-control'
-        placeholder='請再次輸入密碼'
-        required
-        autofocus
-      />
-    </div>
-    <div class='save-btn'>
-      <button class='btn' type='submit'>儲存</button>
-    </div>
-  </form>
+<div class='d-flex justify-content-center'>
+  {{> navbar}}
+
+  <div class='col-7 home-page'>
+    <ul class='list-group home-list'>
+
+      <div class='user-edit-container'>
+        <h4>帳戶設定</h4>
+        <hr />
+        {{> message}}
+        <form class='' action='/api/users/{{user.id}}?_method=PUT' method='POST'>
+          <div class='form-row box'>
+            <label class='form-label' for='account'>帳號</label>
+            <input
+              class='form-control account-input'
+              id='account'
+              type='text'
+              name='account'
+              placeholder='請輸入帳號'
+              value="{{user.account}}"
+              required
+              autofocus
+            />
+          </div>
+          <div class='form-row box'>
+            <label class='form-label password-label' for='name'>名稱</label>
+            <input
+              class='form-control password-input'
+              id='name'
+              type='text'
+              name='name'
+              placeholder='請輸入使用者名稱(最多50字)'
+              value="{{user.name}}"
+              required
+              autofocus
+            />
+          </div>
+          <div class='form-row box'>
+            <label class='form-label password-label' for='email'>Email</label>
+            <input
+              class='form-control password-input'
+              id='email'
+              type='text'
+              name='email'
+              placeholder='請輸入 Email'
+              value="{{user.email}}"
+              required
+              autofocus
+            />
+          </div>
+          <div class='form-row box'>
+            <label class='form-label password-label' for='password'>密碼</label>
+            <input
+              class='form-control password-input'
+              id='password'
+              type='text'
+              name='password'
+              class='form-control'
+              placeholder='請輸入密碼'
+              required
+              autofocus
+            />
+          </div>
+          <div class='form-row box'>
+            <label class='form-label password-label' for='passwordCheck'>密碼確認</label>
+            <input
+              class='form-control password-input'
+              id='passwordCheck'
+              type='text'
+              name='passwordCheck'
+              class='form-control'
+              placeholder='請再次輸入密碼'
+              required
+              autofocus
+            />
+          </div>
+          <div class='save-btn'>
+            <button class='btn' type='submit'>儲存</button>
+          </div>
+        </form>
+      </div>
+
+    </ul>
+  </div>
+
 </div>

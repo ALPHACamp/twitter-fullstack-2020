@@ -38,7 +38,8 @@ router.get('/users/:userId/replies', authenticated, profileController.getUser, p
 router.get('/users/:userId/likes', authenticated, profileController.getUser, profileController.getUserLikes)
 router.get('/users/:userId/followings', authenticated, profileController.getUserFollowings)
 router.get('/users/:userId/followers', authenticated, profileController.getUserFollowers)
-router.get('/users/:userId', authenticated, profileController.editUser)
+router.get('/api/users/:userId', authenticated, profileController.editUserAccount)
+router.put('/api/users/:userId', authenticated, profileController.putUserAccount)
 
 router.use('/', (req, res) => res.redirect('/tweets'))
 
