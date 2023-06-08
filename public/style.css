@@ -144,7 +144,6 @@ h5 {
   color: #171725;
 }
 
-<<<<<<< HEAD
 .text-16px-med-Montserrat {
   font-family: 'Montserrat';
   font-style: Medium;
@@ -152,7 +151,8 @@ h5 {
   font-size: 16px;
   line-height: 15px;
   color: #171725;
-=======
+}
+
 .number {
   font-family: 'Montserrat';
   font-style: normal;
@@ -160,7 +160,6 @@ h5 {
   font-size: 14px;
   line-height: 14px;
   color: #6C757D;
->>>>>>> master
 }
 
 /* ------------------------------     Color */
