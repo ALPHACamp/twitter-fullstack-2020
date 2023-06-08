@@ -15,14 +15,8 @@ router.post('/signup', userController.signUp)
 
 // 登入登出
 router.get('/signin', userController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureMessage: true, successRedirect: '/tweets' }), userController.signIn)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureMessage: true }), userController.signIn)
 router.get('/signout', userController.signOut)
-
-
-// 登入後的假首頁(測試用)
-router.get('/tweets', authenticated, (req, res) => {
-  res.send('twitter home page')
-})
 
 
 router.get('/example', (req, res, next) => {
@@ -47,10 +41,12 @@ router.post('/example', (req, res, next) => {
 
 router.use('/admin', admin)
 
-router.use('', (req, res) => res.redirect('/tweets'))
-
-router.get('/tweets', (req, res) => {
+router.get('/tweets', authenticated, (req, res) => {
   res.render('tweets')
+})
+
+router.use('', (req, res) => {
+  return res.redirect('/signin')
 })
 
 router.use('/', generalErrorHandler)

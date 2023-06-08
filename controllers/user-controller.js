@@ -47,9 +47,15 @@ const userController = {
   },
   // 登出
   signOut: (req, res) => {
-    req.logout()
-    req.flash('success_msg', "登出成功")
-    return res.redirect('/signin')
+    if (req.user.role === 'user') {
+      req.logout()
+      req.flash('success_msg', "登出成功")
+      return res.redirect('/signin')
+    } else {
+      req.logout()
+      req.flash('success_msg', "登出成功")
+      return res.redirect('/admin/signin')
+    }
   }
 }
 
