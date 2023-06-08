@@ -10,7 +10,6 @@ module.exports = {
   formatRelativeTime: targetTime => {
     const currentTime = dayjs()
     if ((currentTime - targetTime) < 0) {
-      console.log(currentTime)
       return '-'
     }
     const diffInMilliseconds = (currentTime - targetTime)
