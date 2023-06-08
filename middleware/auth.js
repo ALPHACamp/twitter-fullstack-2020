@@ -1,8 +1,8 @@
-const { ensureAuthenticated, getUser } = require('../_helpers')
+const helpers = require('../_helpers')
 
 const authenticated = (req, res, next) => {
-  const isUser = getUser(req)?.role === 'user'
-  if (ensureAuthenticated(req)) {
+  const isUser = helpers.getUser(req)?.role === 'user'
+  if (helpers.ensureAuthenticated(req)) {
     if (isUser) {
       return next()
     }
@@ -15,8 +15,8 @@ const authenticated = (req, res, next) => {
 }
 
 const adminAuthenticated = (req, res, next) => {
-  if (ensureAuthenticated(req)) {
-    if (getUser(req).role === 'admin') {
+  if (helpers.ensureAuthenticated(req)) {
+    if (helpers.getUser(req).role === 'admin') {
       return next()
     }
     req.flash('error_messages', '帳號或密碼錯誤!')
