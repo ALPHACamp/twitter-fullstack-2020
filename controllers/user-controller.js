@@ -13,8 +13,7 @@ const userController = {
       return res.render('signup', { account, name, email, password, checkPassword })
     }
     if (password !== checkPassword) {
-      // req.flash('danger_msg', '輸入密碼不一致')
-      req.flash('danger_msg', '前後輸入密碼不一致')
+      req.flash('danger_msg', '輸入密碼不一致')
       return res.render('signup', { account, name, email, password, checkPassword })
     }
 
@@ -33,9 +32,9 @@ const userController = {
         password: hashedPassword
       })
       req.flash('success_msg', '註冊成功，請以新帳號登入')
-      res.redirect('/signin')
+      return res.redirect('/signin')
     } catch (e) {
-      next(e)
+      return next(e)
     }
   },
   // 登入

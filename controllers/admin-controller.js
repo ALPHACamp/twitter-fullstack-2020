@@ -4,8 +4,9 @@ const adminController = {
   signInPage: (req, res) => {
     return res.render('admin/signin')
   },
-  signIn: async (req, res, next) => {
-
+  signIn: async (req, res) => {
+    req.flash('success_msg', '登入成功')
+    return res.redirect('/admin/tweets')
   }
 }
 
