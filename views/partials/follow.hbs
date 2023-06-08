@@ -1,0 +1,52 @@
+<div class="followship mt-3"
+  style="width: 273px; height 731px; margin-bottom: 24px; border-radius: 16px; background-color:#FAFAFB;">
+  {{!-- Top Side --}}
+  <div class="title pt-3 ps-3 pb-2" style="background-color:#FAFAFB; ">
+    <h4 style="font-family: 'Noto Sans TC'; font-weight: 700;font-size: 24px; line-height: 26px;">
+      推薦跟隨
+    </h4>
+    <span style="width: 273px; "></span>
+  </div>
+
+  <hr>
+  {{!-- 推薦追隨User區 --}}
+  <div class="follower" style="background-color:#FAFAFB;">
+    <div class="users d-flex flex-row flex-nowrap justify-content-between mt-4">
+      {{!--Followshi資訊區 --}}
+      <div class="user-info d-flex" style="height: 82px; ">
+        <div class="avatar" style="width: 50px;height: 50px; margin-left:10px; word-wrap:break-word;">
+          <a href="/">
+            <img src="" class="rounded-circle" style="width: 50px;height: 50px;background: #C4C4C4;">
+          </a>
+        </div>
+        <div class="name" style="width:110px; height:48px;">
+          <p class="user-name text-truncate m-0 ms-1"
+            style="font-family: 'Noto Sans TC';font-weight: 700;font-size: 16px;line-height: 26px;color: #171725;">
+            Name
+          </p>
+          <p class="user-account text-truncate m-0 ms-1"
+            style="font-family: 'Noto Sans TC'; font-weight: 500;font-size: 14px; line-height: 22px;color: #92929D;">
+            Account
+          </p>
+        </div>
+      </div>
+      {{!-- follow按鈕區 --}}
+      <div class="follow-btn d-flex justify-content-center align-items-center me-2 mt-1"
+        style="width:96px; height:40px; background: #FF6600; border-radius:50px;">
+
+        <form action="/" method=" ">
+          <button type="submit" class="btn" style="white-space: nowrap;color:#ffffff;font-size: 16px;">正在跟隨</button>
+        </form>
+      </div>
+
+      <div class="follow-btn d-flex justify-content-center align-items-center me-2 mt-1"
+        style="width:64px; height:40px; background:  #FFFFFF; border-radius:50px; white-space: nowrap;">
+        <form action="/followships" method="POST">
+          <input type="hidden" name="id" value="" />
+          <button type="submit" class="btn"
+            style="width: 64px;height: 40px; background: #FFFFFF;border-radius: 50px;border:1px solid #FF6600;color:#FF6600; font-size: 16px;">跟隨</button>
+        </form>
+
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,89 @@
+<div class="container d-flex " style="background: #FFFFFF;display: flex">
+  {{!-- left bar --}}
+  <div class="col-2 nav" style="width: 178px">
+    {{> nav }}
+  </div>
+  {{!-- midelle bar --}}
+  <div class="col-7 tweets" style="width: 639px;">
+    <div class="tweet container" style="width: 639px;height: 100%;border:1px solid #E6ECF0; ">
+
+      <div style="border-bottom: 1px solid #E6ECF0;">
+        <h4 class="pt-3 ps-3"
+          style="display:flex; justify-content:start; align-iten:center; height: 75px;font-weight: 700;font-size: 24px;line-height: 26px;color: #171725;">
+          首頁</h4>
+      </div>
+
+      <div class="tweetpost d-flex flex-column ps-3 pb-3 pe-3" style="border-bottom: 8px solid #E6ECF0">
+        <div class="avatar d-flex mt-3">
+          <a href="/" style="text-decoration:none;">
+            <img src="" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+          </a>
+          <button type="button" class="btn"
+            style="padding-left: 0px; width: 526px; height: 36px;text-align:start; font-size: 18px;color:#C4C4C4"
+            data-bs-toggle="modal" data-bs-target="#tweetModal">
+            有什麼新鮮事?
+          </button>
+        </div>
+        <div class="button d-flex justify-content-end">
+          <button type="submit" class="btn tweet-button d-flex justify-content-center align-items-center"
+            style="width: 64px; height: 40px; background: #FF6600;border-radius: 50px; ">
+            <span style="font-weight: 400;font-size: 16px;line-height: 24px; color: #FFFFFF;">推文</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="line" style="width: 639px;
+height: 10px; border-top: 3px solid #E6ECF0;"></div>
+
+      <div class="tweets-container">
+
+        <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
+          <div class="avatar ps-3">
+            <a href="/" style="text-decoration:none;">
+              <img src="/" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+            </a>
+          </div>
+          <div class="tweet-content">
+            <div class="name">
+              <span style="font-size: 16px;font-weight:700;color: #171725;">Name</span>
+              <span style="font-size: 14px;color: #6C757D;">Account・Time</span>
+            </div>
+            <div class="content mt-3" style="width: 528px; word-wrap: break-word;">
+              <a href="/" style="word-wrap: break-word; text-decoration:none;font-size: 16px; color: #171725;">
+                Descriptionssssss
+              </a>
+            </div>
+            <div class="tweetfooter d-flex">
+              <div class="replies d-flex align-items-center">
+                <button type="button" class="mt-4 mb-4 btn">
+                  <i class="fa-regular fa-comment"></i>&ensp;77
+                </button>
+              </div>
+              <div class="likes d-flex align-items-center">
+
+                <form action="/" method="">
+                  <div class="d-flex">
+                    <button type="submit" class="btn"><i class="fa-solid fa-heart" style="color: #FF6600">&ensp;</i>
+                      <span>11</span>
+                    </button>
+                  </div>
+                </form>
+
+                <form action="/" method="">
+                  <button type="submit" class="btn"><i class="fa-regular fa-heart">&ensp;</i>
+                    <span>12</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  {{!-- left bar--}}
+  <div class="col-3 followship ms-3" style="width: 273px; height:100%px;">
+    {{> follow }}
+  </div>
+</div>

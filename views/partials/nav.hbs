@@ -1,0 +1,46 @@
+<div class="d-flex flex-column justify-content-between mt-3" style="width: 178px;height: 100%;">
+  <div class="nav-top">
+    <div class="AC-icon">
+      <a href="/">
+        <img src="https://imgur.com/a/s7yH0tq" style="width:50px"></a>
+    </div>
+
+    <br>
+
+    <div class="home d-flex align-items-center ps-3 mb-2" name="home" style="width: 178px;height: 58px;">
+      <a class="home-page" href="/tweets"
+        style="text-decoration: none; font-size: 18Px;font-weight:700;color:#FF6600;"><i
+          class="fa-solid fa-house-window"></i></i>&emsp;首頁</a>
+    </div>
+
+    <div class="profile d-flex align-items-center ps-3 mb-2" name="profile" style="width: 178px;height: 58px;">
+      <a class="profile-page" href="/users/{{user.id}}/tweets"
+        style="text-decoration: none;font-size: 18Px;font-weight:700;color:#FF6600;"><i
+          class="fa-solid fa-user"></i>&emsp;個人資料</a>
+    </div>
+
+    <div class="setting d-flex align-items-center ps-3 mb-2" name="setting" style="width: 178px;height: 58px;">
+      <a class="setting-page" href="/setting"
+        style="text-decoration: none;font-size: 18Px;font-weight:700;color:#FF6600;"><i
+          class="fa-solid fa-gear"></i>&emsp;設定</a>
+    </div>
+
+    <button type="button" class="tweet-btn btn" data-bs-toggle="modal" data-bs-target="#tweetModal"
+      style="background-color: #FF6600;width: 178px;height: 46px;border-radius: 50px;">
+      <span style="color: #FFFFFF;">推文</span>
+    </button>
+  </div>
+
+  <div class="nav-bottom" style="height:100%;">
+    <div class="d-flex justify-content" style="position: fixed; bottom: 50px; margin-left:27px;">
+      <div class="d-flex align-self-center">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </div>
+      <a class="btn btn-link"
+        style="text-decoration:none; font-family:'Noto Sans TC';font-size:18px; font-weight:700; color:#44444F;"
+        href="/logout">
+        登出
+      </a>
+    </div>
+  </div>
+</div>
