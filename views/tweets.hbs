@@ -23,26 +23,28 @@
       
       {{#each tweets}}
       <li class="list-group-item tweet-list">
-        <div class="d-flex">
-          <div class="flex-shrink-1 p-0">
-            <img src="{{this.User.avatar}}" alt="" class="recommend-followings-img">
-          </div>
-          <div class="tweet-text d-flex flex-column">
-            <div class="d-flex align-items-baseline mb-2">
-              <div class="tweet-name me-2">{{this.User.name}} </div>
-              <div class="tweet-account">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
+        <a href="/tweets/{{this.id}}/replies" class="text-decoration-none">
+          <div class="d-flex">
+            <div class="flex-shrink-1 p-0">
+              <img src="{{this.User.avatar}}" alt="" class="recommend-followings-img">
             </div>
-      
-            <p class="mb-2" style="white-space:break-spaces;">{{this.description}}</p>
-      
-            <div class="d-flex">
-              <img src="/images/reply_outlined.svg" alt="" class="tweets-icon me-1">
-              <span class="tweets-interact-counts" style="margin-right:40px;">13</span>
-              <img src="/images/like_outlined.svg" alt="" class="tweets-icon me-1">
-              <span class="tweets-interact-counts">76</span>
+            <div class="tweet-text d-flex flex-column">
+              <div class="d-flex align-items-baseline mb-2">
+                <div class="tweet-name me-2">{{this.User.name}} </div>
+                <div class="tweet-account">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
+              </div>
+        
+              <p class="mb-2" style="white-space:break-spaces;">{{this.description}}</p>
+        
+              <div class="d-flex">
+                <img src="/images/reply_outlined.svg" alt="" class="tweets-icon me-1">
+                <span class="tweets-interact-counts" style="margin-right:40px;">13</span>
+                <img src="/images/like_outlined.svg" alt="" class="tweets-icon me-1">
+                <span class="tweets-interact-counts">76</span>
+              </div>
             </div>
           </div>
-        </div>
+        </a>
       </li>
       {{/each}}
 
