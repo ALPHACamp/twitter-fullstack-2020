@@ -1,5 +1,4 @@
 const { User, Tweet } = require('../models')
-const Sequelize = require('sequelize')
 
 // 未完成
 const adminController = {
@@ -19,26 +18,14 @@ const adminController = {
       raw: true,
       nest: true,
       include: [
-        [Sequelize.literal('(SELECT COUNT(*) FROM Likes WHERE Likes.user_id = User.id)'), 'likeCount'],
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' }
       ],
       where: { is_admin: false }
     })
       .then(users => {
-        const result = users.map(user => ({
-          ...user,
-          followerCount: user.Followers.length,
-          followingCount: user.Followings.length,
-          likeCount: user.likeCount
-        }))
-        const likeCount = result.reduce((sum, user) => sum + user.likeCount, 0)
-        res.render('admin/admin-users', {
-          users,
-          likeCount,
-          followerCount: result.followerCount,
-          followingCount: result.followingCount
-        })
+        console.log(users)
+        res.render('admin/admin-users', { users })
       })
       .catch(err => next(err))
   },
