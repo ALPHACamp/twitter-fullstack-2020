@@ -2,9 +2,12 @@ const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/user-controller')
 const passport = require('../config/passport')
+const admin = require('./modules/admin')
 const { authenticated } = require('../middleware/auth')
 
+
 const { generalErrorHandler } = require('../middleware/error-handler')
+
 
 // 註冊
 router.get('/signup', userController.signUpPage)
@@ -41,6 +44,8 @@ router.post('/example', (req, res, next) => {
     next(err)
   }
 })
+
+router.use('/admin', admin)
 
 router.use('', (req, res) => res.redirect('/tweets'))
 
