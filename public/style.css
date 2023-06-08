@@ -144,6 +144,7 @@ h5 {
   color: #171725;
 }
 
+<<<<<<< HEAD
 .text-16px-med-Montserrat {
   font-family: 'Montserrat';
   font-style: Medium;
@@ -151,6 +152,15 @@ h5 {
   font-size: 16px;
   line-height: 15px;
   color: #171725;
+=======
+.number {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 14px;
+  color: #6C757D;
+>>>>>>> master
 }
 
 /* ------------------------------     Color */
@@ -318,10 +328,26 @@ button {
 
 .modal {
   position: relative;
-  top: 2vw;
   left: 0;
 }
 
 .modal-twitter {
   border-radius: 14px !important;
+}
+
+/* ------------------------------     刪除頁面上的滑動bar */
+html {
+  overflow: -moz-hidden-unscrollable;
+  height: 100%;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  height: 100%;
+  width: calc(100vw + 18px);
+  overflow: auto;
 }
