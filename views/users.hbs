@@ -27,24 +27,24 @@
       <div class="card-body col-12 m-0 p-0 position-relative">
 
         <div class="bg-holder" style="height: 280px;">
-          <img src="{{#if users.cover}}{{users.cover}}{{else}}https://i.imgur.com/ndXEE6d.jpg{{/if}}"
+          <img src="https://i.imgur.com/ndXEE6d.jpg"
             class="card-img-top" alt="..." class="img-fluid" id="bgImage"
             style="height:100%;width:100%;object-fit:cover">
-          <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}"
+          <img src="https://i.imgur.com/ehh37fR.jpg"
             class="rounded-circle" alt="user_Aavtar" height="130px" width="130px"
             style="border: 2px solid white; position: absolute; object-fit: cover; top: 55%; left: 3%;">
         </div>
 
         <div class="card-body col-12 d-flex justify-content-end align-items-center">
 
-          {{#if isUser}}
+          {{!-- {{#if isUser}} --}}
           <button type="submit" class="btn user-edit-button" data-bs-toggle="modal" data-bs-target="#editModal"
             style="width:125px; height:40px; background: #FFFFFF; border-radius: 100px; border:1px solid #FF6600; white-space:nowrap; ">
             <span
               style="display:flex; justify-content:start; align-items: center; color: #FF6600;font-size: 16px;width: 96px; line-height: 24px;">編輯個人資料</span>
           </button>
-          {{else}}
-          {{#if isFollowed}}
+          {{!-- {{else}}
+          {{#if isFollowed}} --}}
           <div class="d-flex justify-content-center align-items-center me-3"
             style="margin-top:8px; width:40px; height:40px;border-radius: 50px; border:1px solid #FF6600;">
             <a href="mailto:someone@example.com"><i class="fa-regular fa-envelope fa-lg justify-content-center"
@@ -61,7 +61,7 @@
               <button type="submit" class="btn" style="white-space: nowrap;color:#ffffff;font-size: 16px;">正在跟隨</button>
             </form>
           </div>
-          {{else}}
+          {{!-- {{else}} --}}
           <div class="d-flex justify-content-center align-items-center me-3"
             style="margin-top:8px; width:40px; height:40px;border-radius: 50px; border:1px solid #FF6600;">
             <a href="mailto:someone@example.com"><i class="fa-regular fa-envelope fa-lg justify-content-center"
@@ -80,8 +80,8 @@
                 style="width: 64px;height: 40px; background: #FFFFFF;border-radius: 50px;border:1px solid #FF6600;color:#FF6600; font-size: 16px;">跟隨</button>
             </form>
           </div>
-          {{/if}}
-          {{/if}}
+          {{!-- {{/if}}
+          {{/if}} --}}
         </div>
       </div>
 
@@ -120,7 +120,7 @@
       </div>
       <!--tweet-->
       <div class="tweets-container">
-        {{#each tweet }}
+        {{!-- {{#each tweet }} --}}
         <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
           <div class="avatar ps-3">
             <a href="/users/{{../users.id}}/tweets" style="text-decoration:none;">
@@ -130,12 +130,12 @@
           </div>
           <div class="tweet-content">
             <div class="name">
-              <span style="font-size: 16px;font-weight:700;">{{../users.name}}</span>
+              <span style="font-size: 16px;font-weight:700;">{{../users.name}}aaa</span>
               <span style="font-size: 14px;color:#C4C4C4">{{../users.account}}． {{relativeTimeFromNow
                 this.createdAt}}</span>
             </div>
             <div class="content mt-3" style="width: 540px; word-wrap: break-word;">
-              {{this.description}}
+              {{this.description}}add
             </div>
             <div class="footer d-flex">
               <div class="replies d-flex align-items-center">
@@ -162,7 +162,7 @@
         </div>
         {{!--tweetReply modal --}}
         {{> reply-modal tweets=this user=../user }}
-        {{/each}}
+        {{!-- {{/each}} --}}
       </div>
     </div>
   </div>
