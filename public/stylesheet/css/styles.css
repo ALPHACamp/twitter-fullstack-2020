@@ -1,5 +1,5 @@
 /* alpha logo icon */
-#sign-up-logo-icon {
+#ac-logo-icon {
   display: block;
   width: 40px;
   height: 40px;
@@ -11,6 +11,42 @@
   width: 40px;
   height: 40px;
   margin: 69px auto;
+}
+
+#ac-logo-icon-admin {
+  width: 40px;
+  height: 40px;
+}
+
+#ac-home-icon-admin {
+  width: 24px;
+  height: 24px;
+}
+
+#ac-user-icon-admin {
+  width: 24px;
+  height: 24px;
+}
+
+#ac-exit-icon-admin {
+  width: 24px;
+  height: 24px;
+}
+
+#ac-delete-icon-admin {
+  width: 24px;
+  height: 24px;
+}
+
+#ac-avatar-icon-admin {
+  width: 50px;
+  height: 50px;
+}
+
+/* container ac-logo-icon */
+#container-ac-logo-icon-admin {
+  width: 50px;
+  height: 50px;
 }
 
 
@@ -74,4 +110,75 @@
   order: 0;
   align-self: stretch;
   flex-grow: 0;
+}
+
+#btn-setting-submit {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
+
+  width: 88px;
+  height: 46px;
+
+  background: #FF6600;
+  border: none;
+  border-radius: 50px;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+/* container-btn */
+.container-btn-setting {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* nav */
+/* nav link */
+#nav-link-admin {
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 700;
+  color: #44444F;
+}
+
+#nav-link-bottom-admin {
+  position: absolute;
+  bottom: 0;
+}
+/* container-nav */
+#container-nav-admin {
+  position: relative;
+  height: 100%;
+}
+
+/* span font */
+#span-tweets-name-admin {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+
+  columns: #171725;
+}
+
+#span-tweets-account-time-admin {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+
+  color: #6C757D;
+}
+
+/* p font */
+#p-tweets-description-admin {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+
+  color: #171725;
 }

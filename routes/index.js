@@ -10,6 +10,7 @@ router.use('/admin', admin)
 
 router.get('/signup', userController.signUpPage)
 router.get('/signin', userController.signInPage)
+router.get('/users/setting', userController.settingPage)
 
 router.get('/', (req, res) => res.render('tweets')) // 專案初始測試路由
 router.use('/', generalErrorHandler)
