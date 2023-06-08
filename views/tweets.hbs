@@ -1,20 +1,27 @@
 <div class="container d-flex " style="background: #FFFFFF;display: flex">
+
+  {{!-- left bar --}}
   <div class="col-2 nav" style="width: 178px">
     {{> nav }}
   </div>
+  {{!-- midelle bar --}}
+
   <div class="col-7 tweets" style="width: 639px;">
     <div class="tweet container" style="width: 639px;height: 100%;border:1px solid #E6ECF0; ">
 
       <div style="border-bottom: 1px solid #E6ECF0;">
         <h4 class="pt-3 ps-3"
-          style="display:flex; justify-content:start; align-iten:center; height: 75px;font-weight: 700;font-size: 24px;line-height: 26px;color: #171725;">首頁</h4>
-      </div>
+
+          style="display:flex; justify-content:start; align-iten:center; height: 75px;font-weight: 700;font-size: 24px;line-height: 26px;color: #171725;">
+          首頁</h4>
+
 
       <div class="tweetpost d-flex flex-column ps-3 pb-3 pe-3" style="border-bottom: 8px solid #E6ECF0">
         <div class="avatar d-flex mt-3">
           <a href="/" style="text-decoration:none;">
-            <img src=""
-              class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+
+            <img src="" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+
           </a>
           <button type="button" class="btn"
             style="padding-left: 0px; width: 526px; height: 36px;text-align:start; font-size: 18px;color:#C4C4C4"
@@ -30,7 +37,9 @@
         </div>
       </div>
 
-     <div class="line" style="width: 639px;
+
+      <div class="line" style="width: 639px;
+
 height: 10px; border-top: 3px solid #E6ECF0;"></div>
 
       <div class="tweets-container">
@@ -38,9 +47,9 @@ height: 10px; border-top: 3px solid #E6ECF0;"></div>
         <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
           <div class="avatar ps-3">
             <a href="/" style="text-decoration:none;">
-              <img
-                src="/"
-                class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+
+              <img src="/" class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+
             </a>
           </div>
           <div class="tweet-content">
@@ -49,8 +58,9 @@ height: 10px; border-top: 3px solid #E6ECF0;"></div>
               <span style="font-size: 14px;color: #6C757D;">Account・Time</span>
             </div>
             <div class="content mt-3" style="width: 528px; word-wrap: break-word;">
-              <a href="/"
-                style="word-wrap: break-word; text-decoration:none;font-size: 16px; color: #171725;">
+
+              <a href="/" style="word-wrap: break-word; text-decoration:none;font-size: 16px; color: #171725;">
+
                 Descriptionssssss
               </a>
             </div>
@@ -61,7 +71,7 @@ height: 10px; border-top: 3px solid #E6ECF0;"></div>
                 </button>
               </div>
               <div class="likes d-flex align-items-center">
-               
+
                 <form action="/" method="">
                   <div class="d-flex">
                     <button type="submit" class="btn"><i class="fa-solid fa-heart" style="color: #FF6600">&ensp;</i>
@@ -69,7 +79,7 @@ height: 10px; border-top: 3px solid #E6ECF0;"></div>
                     </button>
                   </div>
                 </form>
-             
+
                 <form action="/" method="">
                   <button type="submit" class="btn"><i class="fa-regular fa-heart">&ensp;</i>
                     <span>12</span>
@@ -79,11 +89,14 @@ height: 10px; border-top: 3px solid #E6ECF0;"></div>
             </div>
           </div>
         </div>
-        
+
+
       </div>
     </div>
   </div>
-  <div class="col-3 followship ms-3" style="width: 273px; height:100%px;">
+  {{!-- left bar--}}
+  <div class="col-3 follow ms-3" style="width: 273px; height:100%px;">
     {{> follow }}
   </div>
 </div>
+
