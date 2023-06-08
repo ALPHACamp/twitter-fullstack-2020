@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { User } = require('../models')
+const { User, Tweet } = require('../models')
 
 const userController = {
   // 註冊
@@ -51,6 +51,17 @@ const userController = {
     req.logout()
     req.flash('success_msg', "登出成功")
     return res.redirect('/signin')
+  },
+  getUserTweets: async (req, res, next) => {
+    try {
+      const userId = req.params.uid
+      let user = await User.findByPk(userId, {
+        include: [Tweet]
+      })
+      user = user.toJSON()
+      // console.log(user)
+      res.render('user/user-tweets', { user })
+    } catch (err) { next(err) }
   }
 }
 

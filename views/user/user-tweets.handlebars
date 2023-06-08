@@ -1,0 +1,151 @@
+<div class="container">
+  <div class="wrapper">
+
+    {{> navbar}}
+
+    {{!-- main --}}
+    <section class="main">
+      <div class="main-title main-head-bar">
+        <div class="main-arrow-icon background-image"></div>
+        <div class="main-head-bar-text">
+          <h5 class="main-head-bar-name">John Doe</h5>
+          <span class="card-datetime">25 推文</span>
+        </div>
+      </div>
+
+
+      {{!-- profile --}}
+      <div class="profile-wrapper">
+        <div class="profile-cover background-image"></div>
+        <div class="profile-avatar">
+          <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+        </div>
+        <div class="profile-info">
+          <h5 class="profile-name">Apple</h5>
+          <div class="card-account profile-account">@apple</div>
+          <p class="card-description">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
+            dolor.</p>
+          <div class="following-follower-wrapper">
+            <span class="following-count">34個</span>
+            <span class="following-text">跟隨中</span>
+            <span class="follower-count">59位</span>
+            <span class="follower-text">跟隨者</span>
+          </div>
+          <button type="button" class="btn btn-outline-info btn-edit-profile" data-bs-toggle="modal"
+            data-bs-target="#editModal">
+            編輯個人資料
+          </button>
+        </div>
+      </div>
+
+
+      {{!-- card 1 --}}
+      <div class="card card-tweet-lg">
+        <a href="/tweets/{{tweet.id}}" class="tweet-href"></a>
+        <div class="avatar">
+          <a href="/users/{{user.id}}" class="primary-anchor">
+            <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+          </a>
+        </div>
+        <div class="card-text">
+          <div class="card-text-info">
+            <a href="/users/{{user.id}}" class="primary-anchor">
+              <span class="card-name">Apple</span>
+            </a>
+            <a href="/users/{{user.id}}" class="primary-anchor">
+              <span class="card-account">@apple</span>
+            </a>
+            <span class="card-dot">·</span>
+            <span class="card-datetime">3小時</span>
+          </div>
+          <p class="card-description">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
+            dolor.
+            Voluptate exercitation incididunt
+            aliquip deserunt reprehenderit elit laborum.</p>
+          <div class="card-datas">
+            <div data-bs-toggle="modal" data-bs-target="#replyModal" class="reply-modal-trigger primary-anchor">
+              <span class="card-reply-icon background-image"></span>
+              <span class="card-counts">13</span>
+            </div>
+            <form action="/tweets/{{tweet.id}}/like" method="post" class="primary-anchor form-like">
+              <button type="submit" class="btn-like">
+                <span class="card-like-icon background-image"></span>
+                <span class="card-counts">76</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+      {{!-- card 2 --}}
+      <div class="card card-tweet-lg">
+        <a href="/tweets/{{tweet.id}}" class="tweet-href"></a>
+        <div class="avatar">
+          <a href="/users/{{user.id}}" class="primary-anchor">
+            <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+          </a>
+        </div>
+        <div class="card-text">
+          <div class="card-text-info">
+            <a href="/users/{{user.id}}" class="primary-anchor">
+              <span class="card-name">Apple</span>
+            </a>
+            <a href="/users/{{user.id}}" class="primary-anchor">
+              <span class="card-account">@apple</span>
+            </a>
+            <span class="card-dot">·</span>
+            <span class="card-datetime">3小時</span>
+          </div>
+          <p class="card-description">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
+            dolor.
+            Voluptate exercitation incididunt
+            aliquip deserunt reprehenderit elit laborum.</p>
+          <div class="card-datas">
+            <div data-bs-toggle="modal" data-bs-target="#replyModal" class="reply-modal-trigger primary-anchor">
+              <span class="card-reply-icon background-image"></span>
+              <span class="card-counts">13</span>
+            </div>
+            <form action="/tweets/{{tweet.id}}/unlike" method="post" class="primary-anchor form-like">
+              <button type="submit" class="btn-like">
+                <span class="card-unlike-icon background-image"></span>
+                <span class="card-counts">76</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    {{> followship}}
+  </div>
+</div>
+
+
+{{!------------- edit profile modal -------------}}
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="main-create-bar">
+          <div class="avatar">
+            <a href="/users/{{user.id}}">
+              <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+            </a>
+          </div>
+          <form action="/tweets" method="post" class="create-tweet-form">
+            <textarea name="tweet" id="tweet" cols="30" rows="10" class="main-create-input"
+              placeholder="有什麼新鮮事？"></textarea>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <form action="/tweets" method="post">
+          <button type="submit" class="btn btn-info">推文</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

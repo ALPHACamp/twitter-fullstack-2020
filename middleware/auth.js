@@ -6,7 +6,7 @@ module.exports = {
     return res.redirect('/signin')
   },
   authenticatedAdmin: (rea, res, next) => {
-    if (helpers.ensureAuthenticated(req) && (helpers.getUser(req).role === 'admin')) next()
+    if (helpers.ensureAuthenticated(req) && (helpers.getUser(req).role === 'admin')) return next()
     return res.redirect('/admin/signin')
   }
 }

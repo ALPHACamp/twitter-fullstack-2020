@@ -542,7 +542,8 @@ textarea {
 
 .card-reply-icon,
 .card-like-icon,
-.card-unlike-icon {
+.card-unlike-icon,
+.main-arrow-icon {
   display: inline-block;
   height: 14px;
   width: 14px;
@@ -634,4 +635,96 @@ textarea {
 
 .btn-follow {
   width: 64px;
+}
+
+
+/* -------------------- user page -------------------- */
+
+.main-head-bar {
+  display: flex;
+  align-items: center;
+}
+
+.main-arrow-icon {
+  background-image: url('/stylesheets/icons/arrow.png');
+  margin-right: 19px;
+}
+
+.main-head-bar-text {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.main-head-bar-name {
+  line-height: 26px;
+}
+
+/* -------------------- profile -------------------- */
+
+.profile-wrapper {
+  position: relative;
+}
+
+.profile-cover {
+  width: 100%;
+  height: 200px;
+  background-image: url('/stylesheets/icons/mountain.png');
+}
+
+.profile-avatar {
+  position: absolute;
+  top: 124px;
+  left: 16px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 5px solid white;
+}
+
+.profile-info {
+  width: 600px;
+  height: 209px;
+  margin: 72px 0 0 16px;
+}
+
+.profile-name {
+  line-height: 26px;
+}
+
+.profile-account {
+  margin-left: 0;
+}
+
+.following-follower-wrapper {
+  margin-top: 8px;
+}
+
+.following-count,
+.following-text,
+.follower-count,
+.follower-text {
+  font-family: "Noto Sans TC";
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+}
+
+.following-count,
+.follower-count {
+  margin-right: -3px;
+  color: #171725;
+}
+
+.following-text,
+.follower-text {
+  color: var(--secondary);
+  margin-right: 20px;
+}
+
+.btn-edit-profile {
+  position: absolute;
+  top: 216px;
+  right: 16px
 }

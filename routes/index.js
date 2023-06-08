@@ -14,12 +14,13 @@ router.post('/signup', userController.signUp)
 // 登入登出
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureMessage: true, successRedirect: '/tweets' }), userController.signIn)
-router.get('/signout', userController.signOut)
+router.post('/signout', userController.signOut)
 
+// users路由
 router.get('/tweets', (req, res) => res.render('tweets'))
 router.use('/users', authenticated, users)
 
-router.use('/', (req, res) => res.redirect('/tweets'))
+router.use('', (req, res) => res.redirect('/tweets'))
 
 router.use('/', generalErrorHandler)
 
