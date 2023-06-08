@@ -169,6 +169,7 @@ a:hover {
 
 .logo {
   height: 100%;
+  border-radius: 50%;
 }
 
 /* input */
@@ -372,6 +373,13 @@ a:hover {
 
 /* -------------------- main section -------------------- */
 
+.main-head-bar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: white;
+}
+
 .main-title,
 .followship-title {
   border-bottom: 1px solid #E6ECF0;
@@ -479,6 +487,11 @@ textarea {
 
 /* -------------------- card -------------------- */
 
+.no-tweet {
+  text-align: center;
+  padding: 20px;
+}
+
 .card-tweet-lg {
   flex-direction: row;
   border-radius: 0;
@@ -488,6 +501,7 @@ textarea {
 }
 
 .card-text {
+  width: 537px;
   padding-left: 8px;
 }
 
@@ -650,6 +664,10 @@ textarea {
   margin-right: 19px;
 }
 
+.main-arrow-icon:hover {
+  cursor: pointer;
+}
+
 .main-head-bar-text {
   height: 100%;
   display: flex;
@@ -685,7 +703,7 @@ textarea {
 
 .profile-info {
   width: 600px;
-  height: 209px;
+  height: 150px;
   margin: 72px 0 0 16px;
 }
 
@@ -699,6 +717,11 @@ textarea {
 
 .following-follower-wrapper {
   margin-top: 8px;
+}
+
+.following-wrapper {
+  display: inline;
+  margin-right: 20px;
 }
 
 .following-count,
@@ -720,11 +743,32 @@ textarea {
 .following-text,
 .follower-text {
   color: var(--secondary);
-  margin-right: 20px;
 }
 
 .btn-edit-profile {
   position: absolute;
   top: 216px;
   right: 16px
+}
+
+
+/* -------------------- tabs -------------------- */
+
+.nav-user-tab {
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.nav-link {
+  padding: 15px 50px;
+  color: #657786;
+  font-weight: 700;
+}
+
+.nav-link-active,
+.nav-link:hover {
+  color: var(--info);
+}
+
+.nav-link-active {
+  border-bottom: 2px solid var(--info);
 }

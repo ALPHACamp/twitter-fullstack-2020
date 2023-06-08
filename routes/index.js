@@ -20,8 +20,8 @@ router.post('/signout', userController.signOut)
 router.get('/tweets', (req, res) => res.render('tweets'))
 router.use('/users', authenticated, users)
 
+router.use('/', generalErrorHandler)
 router.use('', (req, res) => res.redirect('/tweets'))
 
-router.use('/', generalErrorHandler)
 
 module.exports = router
