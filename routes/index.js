@@ -29,14 +29,12 @@ router.get('/admin/signin', adminController.adminSigninPage)
 router.get('/admin/tweets', adminController.adminTweetsPage)
 router.get('/admin/users', adminController.adminUsersPage)
 
-// index
-router.get('/tweets', authenticated, (req, res) => res.render('index'))
-
 router.get('/users/:id/tweets', profileController.getUserTweets)
 router.get('/users/:id/followings', profileController.getUserFollows)
 router.get('/users/:id/followers', profileController.getUserFollows)
 router.get('/users/:id', profileController.editUser)
 router.get('/tweets', authenticated, tweetsController.getTweets)
+router.post('/tweets', authenticated, tweetsController.postTweet)
 router.get('/tweet', authenticated, tweetsController.getTweet)
 
 router.use('/', (req, res) => res.redirect('/tweets'))

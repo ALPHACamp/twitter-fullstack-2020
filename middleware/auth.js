@@ -6,7 +6,7 @@ const authenticated = (req, res, next) => {
     if (isUser) {
       return next()
     }
-    req.flash('error_messages', '管理者無法登入前台!')
+    req.flash('error_messages', '帳號或密碼錯誤!')
     return res.redirect('/signin')
   } else {
     req.flash('error_messages', '請先登入!')
@@ -19,8 +19,8 @@ const adminAuthenticated = (req, res, next) => {
     if (getUser(req).role === 'admin') {
       return next()
     }
-    req.flash('error_messages', '一般使用者無法登入後台')
-    return res.redirect('/signin')
+    req.flash('error_messages', '帳號或密碼錯誤!')
+    return res.redirect('/admin/signin')
   } else {
     req.flash('error_messages', '請先登入!')
     return res.redirect('/admin/signin')

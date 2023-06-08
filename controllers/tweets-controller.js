@@ -1,10 +1,11 @@
 const { User, Tweet } = require('../models')
-
+const helpers = require('../_helpers')
 const tweetsController = {
   getTweets: async (req, res, next) => {
+    const UserId = helpers.getUser(req).id
     try {
       const [user, tweets] = await Promise.all([
-        User.findByPk(req.user.id, {
+        User.findByPk(UserId, {
           raw: true,
           nest: true
         }),
@@ -22,6 +23,20 @@ const tweetsController = {
   },
   getTweet: (req, res, next) => {
     return res.render('tweet')
+  },
+  postTweet: async (req, res, next) => {
+    const { description } = req.body
+    const UserId = helpers.getUser(req).id
+    if (!description) throw new Error('推文內容不能為空白!')
+    try {
+      await Tweet.create({
+        UserId,
+        description
+      })
+      res.redirect('tweets')
+    } catch (err) {
+      next(err)
+    }
   }
 }
 
