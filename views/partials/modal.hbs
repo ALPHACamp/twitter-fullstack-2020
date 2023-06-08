@@ -1,0 +1,55 @@
+{{!-- 首頁叫出貼文的 Modal --}}
+<div class="modal fade" id="postTweetModal">
+  <div class="modal-dialog" style="max-width: 100%;">
+    <div class="modal-content modal-twitter">
+      <div class="modal-header">
+        {{!-- 關閉 Modal 按鈕 --}}
+        <button type="button" data-bs-dismiss="modal" aria-label="Close">
+          <img class="ms-2 me-3 svg-fill-main" src="/_base/Property 2=outlined, Property 3=close.svg">
+        </button>
+      </div>
+      <form action="/tweets" method="POST">
+      <div class="modal-body d-flex">
+        {{!-- 用戶大頭貼 --}}
+        <figure class="ms-2 me-2 align-self-start flex-shrink-0"
+          style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
+          <img src="{{currentUser.avatar}}" style="object-fit: cover;width:100%; height:100%">
+        </figure>
+        {{!-- tweet 文字輸入區 --}}
+        <textarea placeholder="有什麼新鮮事？" id="description" name="description" class="text-basic-reg mt-2" rows="5" cols="50"
+          maxlength="140" required></textarea>
+      </div>
+      <div class="modal-footer" style="border:0px">
+          <button type="submit" class="pill-default pill-main me-2">推文</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{{!-- 備用的 Modal，可以拿這份去魔改，記得改id --}}
+<div class="modal fade" id="要記得改我">
+  <div class="modal-dialog" style="max-width: 100%;">
+    <div class="modal-content modal-twitter">
+      <div class="modal-header">
+        {{!-- 關閉 Modal 按鈕 --}}
+        <button type="button" data-bs-dismiss="modal" aria-label="Close">
+          <img class="ms-2 me-3 svg-fill-main" src="/_base/Property 2=outlined, Property 3=close.svg">
+        </button>
+      </div>
+      <div class="modal-body d-flex">
+        {{!-- 用戶大頭貼 --}}
+        <div class="me-2" style="width: 50px; height: 50px; border-radius: 50%;">
+          <img src="/user/card/tweet/base/img.svg">
+        </div>
+        {{!-- tweet 文字輸入區 --}}
+        <textarea placeholder="有什麼新鮮事？" class="text-basic-reg mt-2" rows="5" cols="50" maxlength="140"></textarea>
+      </div>
+      <div class="modal-footer" style="border:0px">
+        <form action="/tweets" method="POST" enctype="multipart/form-data">
+          <button type="submit" class="pill-default pill-main">推文</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
