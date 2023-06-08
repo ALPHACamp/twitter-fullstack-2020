@@ -1,7 +1,26 @@
 const express = require('express')
 const router = express.Router()
+const userController = require('../controllers/user-controller')
+const passport = require('../config/passport')
+const { authenticated } = require('../middleware/auth')
 
 const { generalErrorHandler } = require('../middleware/error-handler')
+
+// 註冊
+router.get('/signup', userController.signUpPage)
+router.post('/signup', userController.signUp)
+
+// 登入登出
+router.get('/signin', userController.signInPage)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureMessage: true, successRedirect: '/tweets' }), userController.signIn)
+router.get('/signout', userController.signOut)
+
+
+// 登入後的假首頁(測試用)
+router.get('/tweets', authenticated, (req, res) => {
+  res.send('twitter home page')
+})
+
 
 router.get('/example', (req, res, next) => {
   res.render('example')
@@ -23,9 +42,7 @@ router.post('/example', (req, res, next) => {
   }
 })
 
-router.get('/signup', (req, res) => {
-  res.render('signup')
-})
+router.use('', (req, res) => res.redirect('/tweets'))
 
 router.get('/tweets', (req, res) => {
   res.render('tweets')
