@@ -44,6 +44,10 @@ router.post('/example', (req, res, next) => {
 
 router.use('', (req, res) => res.redirect('/tweets'))
 
+router.get('/tweets', (req, res) => {
+  res.render('tweets')
+})
+
 router.use('/', generalErrorHandler)
 
 module.exports = router

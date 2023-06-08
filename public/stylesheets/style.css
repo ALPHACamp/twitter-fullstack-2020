@@ -44,6 +44,10 @@ h3 {
   margin-bottom: 40px
 }
 
+h5 {
+  font-size: 18px;
+}
+
 input:focus {
   outline-width: 0;
 }
@@ -52,7 +56,23 @@ input:valid {
   background-color: var(--form-gray);
 }
 
-/* ----------Messages---------- */
+.background-image {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* modal */
+
+.modal-footer {
+  border-top: 0;
+}
+
+/* -------------------- Partial Messages -------------------- */
 
 .message-text {
   width: 300px;
@@ -136,7 +156,7 @@ input:valid {
 }
 
 
-/* ----------Form settings---------- */
+/* ------------------ Sign up: Form settings ------------------ */
 
 .sign-up-section {
   max-width: 356px;
@@ -211,4 +231,407 @@ input:valid {
 
 .btn-cancel {
   margin-top: 22px;
+}
+
+
+/* ------------------ page flexbox & positions ------------------ */
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  min-width: 1100px;
+}
+
+.navbar-column {
+  /* position */
+  position: sticky;
+  top: 0;
+  /* sizing */
+  width: 150px;
+  height: 95vh;
+  min-height: 400px;
+}
+
+.main {
+  width: 639px;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  position: relative;
+}
+
+.followship {
+  position: sticky;
+  top: 16px;
+  width: 273px;
+  background-color: #FAFAFB;
+  border-radius: 16px;
+}
+
+/* --------------- navbar --------------- */
+
+.logo-container {
+  margin-top: 16px;
+}
+
+.nav-row {
+  position: relative;
+  height: 26px;
+  text-decoration: none;
+  color: #44444F;
+}
+
+.nav-row:hover,
+.active {
+  text-decoration: none;
+  color: var(--info)
+}
+
+.nav-row-title {
+  padding-left: 35px;
+  margin-bottom: 40px;
+}
+
+/* house */
+.nav-row-house-icon {
+  position: absolute;
+  left: 0px;
+  top: 2px;
+  display: inline-block;
+  width: 22px;
+  height: 20px;
+  background-image: url('./icons/house.png');
+}
+
+.nav-row:hover>.nav-row-house-icon,
+.active>.nav-row-house-icon {
+  background-image: url('./icons/house_orange.png');
+}
+
+/* user */
+.nav-row-user-icon {
+  position: absolute;
+  left: 0px;
+  top: 2px;
+  display: inline-block;
+  width: 17px;
+  height: 19px;
+  background-image: url('./icons/user.png');
+  background-size: contain;
+}
+
+.nav-row:hover>.nav-row-user-icon,
+.active>.nav-row-user-icon {
+  background-image: url('./icons/user_orange.png');
+  background-size: contain;
+}
+
+/* setting */
+.nav-row-setting-icon {
+  position: absolute;
+  left: 0px;
+  top: 2px;
+  display: inline-block;
+  width: 22px;
+  height: 20px;
+  background-image: url('./icons/setting.png');
+  background-size: contain;
+}
+
+.nav-row:hover>.nav-row-setting-icon,
+.active>.nav-row-setting-icon {
+  background-image: url('./icons/setting_orange.png');
+  background-size: contain;
+}
+
+/* sign out */
+.signout-form {
+  position: absolute;
+  bottom: 50px;
+}
+
+.nav-row-signout-icon {
+  position: absolute;
+  left: 0px;
+  top: 2px;
+  display: inline-block;
+  width: 22px;
+  height: 20px;
+  background-image: url('./icons/signout.png');
+  background-size: contain;
+}
+
+.nav-row:hover>.nav-row-signout-icon,
+.active>.nav-row-signout-icon {
+  background-image: url('./icons/signout_orange.png');
+  background-size: contain;
+}
+
+.btn-tweet {
+  width: 100%;
+}
+
+/* -------------------- main section -------------------- */
+
+.main-title,
+.followship-title {
+  border-bottom: 1px solid #E6ECF0;
+  height: 74px;
+  line-height: 74px;
+  padding-left: 23px;
+}
+
+.main-create-bar {
+  position: relative;
+  display: flex;
+  height: 136px;
+  padding: 16px 25px;
+}
+
+.main-bg-bray {
+  height: 10px;
+  background-color: #E6ECF0;
+}
+
+.avatar {
+  height: 50px;
+  width: 50px;
+}
+
+.main-create-modal-trigger {
+  width: 100%
+}
+
+.main-create-modal-trigger:hover {
+  cursor: pointer;
+}
+
+.main-create-bar .main-create-input,
+textarea {
+  height: 50px;
+  width: 75%;
+  border-width: 0;
+  background-color: transparent;
+  padding-left: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 50px;
+  color: var(--secondary);
+}
+
+.btn-create-tweet {
+  position: absolute;
+  right: 25px;
+  bottom: 16px;
+  width: 64px;
+}
+
+/* modal */
+
+.modal-content {
+  border-radius: 14px;
+}
+
+.modal-header {
+  position: relative;
+  height: 60px;
+  padding: 0;
+}
+
+.modal-body {
+  height: 150px;
+  padding: 0;
+}
+
+.main-create-bar>.create-tweet-form>textarea {
+  width: 360px;
+  height: 130px;
+  resize: none;
+  margin-left: 8px;
+}
+
+.btn-close {
+  position: relative;
+  top: 20px;
+  left: 30px;
+  width: 15px;
+  height: 15px;
+  padding: 0;
+}
+
+.btn-close::before,
+.btn-close::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 21px;
+  background-color: var(--info);
+}
+
+.btn-close::before {
+  transform: rotate(45deg);
+}
+
+.btn-close::after {
+  transform: rotate(135deg);
+}
+
+/* -------------------- card -------------------- */
+
+.card-tweet-lg {
+  flex-direction: row;
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid #E6ECF0;
+  padding: 16px 25px;
+}
+
+.card-text {
+  padding-left: 8px;
+}
+
+.card-name {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.card-account,
+.card-dot,
+.card-datetime {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #6C757D;
+  font-family: "Noto Sans TC";
+}
+
+.card-account {
+  margin-left: 8px;
+}
+
+.primary-anchor {
+  position: relative;
+  z-index: 1;
+}
+
+.reply-to-part {
+  margin-top: 8px;
+}
+
+.reply-to {
+  font-size: 14px;
+  line-height: 22px;
+  color: #6C757D
+}
+
+.reply-account {
+  margin: 0;
+  color: var(--info)
+}
+
+.card-description {
+  margin: 8px 0 0 0;
+}
+
+.card-datas {
+  margin-top: 8px;
+}
+
+.card-reply-icon,
+.card-like-icon,
+.card-unlike-icon {
+  display: inline-block;
+  height: 14px;
+  width: 14px;
+  background-size: contain;
+  margin-right: 6px;
+}
+
+.card-reply-icon {
+  background-image: url('/stylesheets/icons/chat.png');
+}
+
+.form-like {
+  display: inline;
+}
+
+.btn-like {
+  background-color: transparent;
+  border-width: 0;
+  padding: 0;
+}
+
+.card-like-icon {
+  background-image: url('/stylesheets/icons/like_white.png');
+}
+
+.card-unlike-icon {
+  background-image: url('/stylesheets/icons/like_red.png');
+}
+
+.card-counts {
+  margin-right: 40px;
+  color: #6C757D;
+}
+
+.reply-modal-trigger {
+  display: inline;
+  cursor: pointer;
+}
+
+.tweet-href {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+
+/* -------------------- followship -------------------- */
+
+.followship-card-wrapper {
+  padding: 16px;
+}
+
+.followship-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.followship-account {
+  margin-left: 0;
+  font-weight: 500;
+}
+
+.card-text-info {
+  width: 35%;
+}
+
+.followship-name,
+.followship-account {
+  text-overflow: ellipsis;
+}
+
+.ellipsis {
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.follow-button-wrapper {
+  width: 90px;
+  text-align: end;
+}
+
+.btn-follow {
+  width: 64px;
 }

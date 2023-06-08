@@ -1,0 +1,46 @@
+{{!-- nav bar --}}
+<nav class="navbar-column">
+
+  <div class="logo-container">
+    <a href="/tweets">
+      <img src="/stylesheets/icons/icon.png" alt="logo" class="logo">
+    </a>
+  </div>
+
+  {{!-- front page --}}
+  <a class="nav-row active" href="/tweets">
+    <div class="nav-row-house-icon background-image">
+    </div>
+    <h5 class="nav-row-title">首頁</h5>
+  </a>
+
+  {{!-- user --}}
+  <a class="nav-row" href="/users/{{req.user.id}}">
+    <div class="nav-row-user-icon background-image">
+    </div>
+    <h5 class="nav-row-title">個人資料</h5>
+  </a>
+
+  {{!-- edit --}}
+  <a class="nav-row" href="/users/{{req.user.id}}/edit">
+    <div class="nav-row-setting-icon background-image">
+    </div>
+    <h5 class="nav-row-title">設定</h5>
+  </a>
+
+  {{!-- tweet button --}}
+  <button type="button" class="btn btn-info btn-tweet" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    推文
+  </button>
+
+  {{!-- signout --}}
+  <form action="/signout" method="post" class="signout-form">
+    <button type="submit" class="btn">
+      <div class="nav-row">
+        <div class="nav-row-signout-icon background-image">
+        </div>
+        <h5 class="nav-row-title">登出</h5>
+      </div>
+    </button>
+  </form>
+</nav>

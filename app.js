@@ -15,7 +15,7 @@ const app = express()
 const port = 3000
 
 // Setting template engine
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine('handlebars', exphbs({ defaultLayout: 'main', helpers: handlebarsHelper }))
 app.set('view engine', 'handlebars')
 
 app.use(express.static('public'))
