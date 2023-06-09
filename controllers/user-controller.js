@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { User, Tweet, Reply, Like } = require('../models')
+const { User, Tweet, Reply, Like, Followship } = require('../models')
 const _helpers = require('../_helpers')
 const userServices = require('../services/user-services')
 
@@ -191,6 +191,43 @@ const userController = {
         })
 
       res.render('user/user-likes', { user, likeList, loginUserId, topUsers })
+    } catch (err) { next(err) }
+  },
+  // User Followings頁面
+  getUserFollowings: async (req, res, next) => {
+    try {
+      const UserId = req.params.uid
+      const loginUserId = _helpers.getUser(req).id
+
+      let [user, loginUserFollowingList] = await Promise.all([
+        User.findByPk(UserId, {
+          include: [
+            { model: User, as: 'Followings' },
+            { model: User, as: 'Followers' },
+            { model: Tweet, attributes: ['id'] },
+          ],
+        }),
+        Followship.findAll({
+          where: { followerId: loginUserId },
+          raw: true
+        })
+      ])
+      const topUsers = await userServices.getTopUsers(loginUserId)
+
+      loginUserFollowingList = loginUserFollowingList.map(i => i.followingId)
+
+      if (!user) throw new Error('使用者不存在')
+      user = user.toJSON()
+      FollowingList = user.Followings
+        .map(i => ({
+          ...i,
+          isFollow: loginUserFollowingList.some(j => i.id === j)
+        }))
+        .sort(function (a, b) {
+          return b.Followship.createdAt.toLocaleString().localeCompare(a.Followship.createdAt.toLocaleString())
+        })
+
+      res.render('user/user-followings', { user, FollowingList, loginUserId, topUsers })
     } catch (err) { next(err) }
   },
 }
