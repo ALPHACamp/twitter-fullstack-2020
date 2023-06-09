@@ -36,14 +36,14 @@ app.use(passport.session())
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
-  res.user = getUser(req)
-  res.isAuthenticated = ensureAuthenticated(req)
+  // 為了不跟user的資料衝突，所以更換名字
+  res.locals.loginUser = getUser(req)
+  res.locals.isAuthenticated = ensureAuthenticated(req)
   next()
 })
 
 // routes
 app.use(routes)
-
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 // exports
