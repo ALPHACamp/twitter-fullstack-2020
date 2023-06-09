@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { User, Tweet, Reply, Like, Followship } = require('../models')
+const { User, Tweet, Reply, Like } = require('../models')
 const _helpers = require('../_helpers')
 
 const userController = {
@@ -113,7 +113,56 @@ const userController = {
 
       res.render('user/user-tweets', { user, tweetList, loginUserId, topUsers })
     } catch (err) { next(err) }
-  }
+  },
+  // User Replies 頁面 
+  getUserReplies: async (req, res, next) => {
+    try {
+      const UserId = req.params.uid
+      const loginUserId = _helpers.getUser(req).id
+
+      let [user, replyList, topUsers] = await Promise.all([
+        User.findByPk(UserId, {
+          include: [
+            { model: User, as: 'Followings', attributes: ['id'] },
+            { model: User, as: 'Followers', attributes: ['id'] },
+            { model: Tweet, attributes: ['id'] },
+          ],
+        }),
+        Reply.findAll({
+          where: { UserId },
+          include: [
+            { model: User, attributes: ['name', 'account', 'avatar'] },
+            { model: Tweet, attributes: ['id'], include: [User] }
+          ],
+          order: [['createdAt', 'DESC']],
+        }),
+        User.findAll({
+          attributes: ['name', 'account', 'avatar', 'id', 'role'],
+          include: { model: User, as: 'Followers' },
+        })
+      ])
+
+      // 資料處理
+      if (!user) throw new Error('使用者不存在')
+      user = user.toJSON()
+
+      replyList = replyList
+        .map(i => i.toJSON())
+      topUsers = topUsers
+        .map(i => {
+          i = i.toJSON()
+          return {
+            ...i,
+            isFollow: i.Followers.some(j => j.id === loginUserId)
+          }
+        })
+        .filter(i => i.role === 'user')
+        .sort((a, b) => b.Followers.length - a.Followers.length)
+        .slice(0, 10)
+
+      res.render('user/user-replies', { user, replyList, loginUserId, topUsers })
+    } catch (err) { next(err) }
+  },
 }
 
 module.exports = userController
