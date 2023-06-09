@@ -1,0 +1,28 @@
+{{!------------- edit profile modal -------------}}
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="main-create-bar">
+          <div class="avatar">
+            <a href="/users/{{user.id}}">
+              <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+            </a>
+          </div>
+          <form action="/tweets" method="post" class="create-tweet-form">
+            <textarea name="tweet" id="tweet" cols="30" rows="10" class="main-create-input"
+              placeholder="有什麼新鮮事？"></textarea>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <form action="/tweets" method="post">
+          <button type="submit" class="btn btn-info">推文</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
