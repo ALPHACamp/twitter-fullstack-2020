@@ -43,10 +43,58 @@
   height: 50px;
 }
 
+#ac-reply-icon-admin {
+  width: 24px;
+  height: 24px
+}
+
+#ac-like-icon-admin {
+  width: 24px;
+  height: 24px
+}
+
 /* container ac-logo-icon */
 #container-ac-logo-icon-admin {
   width: 50px;
   height: 50px;
+}
+
+/* image cover */
+#img-users-cover-admin {
+  width: 100%;
+  height: 140px;
+
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+/* image avatar */
+#img-users-avatar-admin {
+  width: 100px;
+  height: 100px;
+
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 1;
+
+  border-radius: 50%;
+  border: 4px solid #FFFFFF;
+
+  margin-top: -84px;
+}
+
+/* avatar admin */
+.container-avatar-img {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+
+  margin-top: 64px;
+
+
+
 }
 
 
@@ -151,6 +199,7 @@
   position: absolute;
   bottom: 0;
 }
+
 /* container-nav */
 #container-nav-admin {
   position: relative;
