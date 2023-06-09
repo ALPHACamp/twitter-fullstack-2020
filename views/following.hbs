@@ -16,19 +16,29 @@
     <div class="user-following d-flex flex-column mt-2">
     {{> follow-tabs route='following'}}
     <hr class="solid">
-       <div class="following-user-content d-flex flex-column"> 
-        <div class="following-user-info d-flex flex-row">
-          <div class="user-avatar">
-              <img src="https://i.imgur.com/mhXz6z9.png?1" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;border:2px  solid;margin:auto 8px auto 24px;margin:auto 8 auto 0" alt="avatar"> 
-          </div>
-          <div class="user-name-account d-flex" style="align-items: center">
-              <p style="font-size: 16px;margin:0;">followship.User.name</p>
-          </div>
+       <div class="following-user-content d-flex flex-row"> 
+        <div class="user-avatar">
+          <img src="https://i.imgur.com/mhXz6z9.png?1" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;border:2px  solid;margin:auto 8px auto 24px;margin:auto 8 auto 0" alt="avatar"> 
         </div>
-        <!--切換鍵-->
+        <div class="d-flex flex-column"> 
+          <div class="following-user-info d-flex justify-content-between">
+            <div class="user-name-account d-flex" style="align-items: center">
+              <p style="font-size: 16px;margin:0;">followship.User.name</p>
+            </div>
+            <div>
+              <!--預先做好依followship狀態切換按鈕，但需加上if切換-->
+              <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                <button type="submit" class="isFollowing" style="color:#FFFFFF;width:96x;height:40px;border:none;background:#FF6600;border-radius:50px">正在跟隨</button>
+              </form>
+              <form action="/following/{{this.id}}" method="POST" style="display: contents;">
+                <button type="submit" class="notFollowing"style="width:64x;height:40px;border-radius:50px;background-color:#FCFCFC;color:#FF6600;border-color:#FF6600" >跟隨</button>
+              </form>
+            </div>
+          </div>
         <div class="tweet-content mt-2" >
           <p class="content">{{tweet.content}}Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt. </p>
          </div>
+        </div>
       </div>
       
 
