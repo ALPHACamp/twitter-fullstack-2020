@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { User, Tweet, Reply, Like, Followship } = require('../models')
+const { User, Tweet, Reply, Like } = require('../models')
 const _helpers = require('../_helpers')
 const userServices = require('../services/user-services')
 

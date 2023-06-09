@@ -42,6 +42,7 @@
 
 
     {{!-- 1. 不是log in user 本人。2. log in user 跟隨中--}}
+
     {{#ifTrueAndNotEqual user.isFollow user.id loginUserId}}
     <form action="/followships/{{ user.id }}?_method=DELETE" method="post">
       <input type="hidden" name="loginUserId" value="{{loginUserId}}" />
@@ -50,6 +51,7 @@
       </div>
     </form>
     {{/ifTrueAndNotEqual}}
+
 
     {{!-- 1.不是log in user 本人。2. log in user 沒有跟隨--}}
     {{#ifFalseAndNotEqual user.isFollow user.id loginUserId}}
