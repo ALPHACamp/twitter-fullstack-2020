@@ -1,0 +1,29 @@
+<div class="container" style="margin:0 auto;">
+  <div class="mt-4 mb-4 text-center" style="position:relative; top:64px;">
+    {{> messages}}
+    {{!-- logo --}}
+    <a href="/admin/signin" class="">
+      <img src="/_base/icon/logo.svg">
+    </a>
+    <h3 class="font-weight-normal mt-2 mb-3">後台登入</h3>
+  </div>
+  <form class="form-signin" action="/admin/signin" method="POST"
+    style="position: relative; top: 60px; width:356px; height: 155px; margin:0 auto; background: #F5F8FA;">
+    <div class="form-row mb-1">
+      <label class="form-label text-14px-reg ps-3 pt-1" for="account" style="background: #F5F8FA;">帳號</label>
+      <input type="text" id="account" name="account" class="form-control"
+        style="border-style:none; border-bottom: 2px solid #657786; background: #F5F8FA; font-size: 16px; border-radius:0px;"
+        placeholder="請輸入帳號" required autofocus>
+    </div>
+    <div style="position: relative; top: -4px; background: #ffffff; width: 356px; height: 25px; z-index:5;"></div>
+    <div class="form-row mb-3">
+      <label class="form-label text-14px-reg ps-3 pt-1" for="password">密碼</label>
+      <input class="form-control" id="password" type="password" name="password" placeholder="請輸入密碼"
+        style="border-style:none; border-bottom: 2px solid #657786; background: #F5F8FA; font-size: 16px; border-radius:0px;"
+        required>
+    </div>
+    <button class="mt-2 pill pill-large pill-main" type="submit" style="position: relative; top: 30px;">登入</button>
+    <a href="/signin" class="color-primary text-16px-reg"
+      style="position: relative; top:50px; left: 280px; border-bottom: 1px solid #0062FF;">前台登入</a>
+  </form>
+</div>
