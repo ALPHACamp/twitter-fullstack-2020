@@ -2,7 +2,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const bcrypt = require('bcryptjs')
 
-const { User } = require('../models')
+const { User, Like } = require('../models')
 
 passport.use(
   // 本地登入策略
@@ -41,8 +41,15 @@ passport.serializeUser((user, cb) => {
 
 passport.deserializeUser(async (id, cb) => {
   try {
-    const user = await User.findByPk(id)
-    return cb(null, user)
+    const user = await User.findByPk(id, {
+      include: [
+        // 關聯資料
+        { model: Like },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    })
+    return cb(null, user.toJSON())
   } catch (err) {
     cb(err)
   }
