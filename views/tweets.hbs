@@ -49,7 +49,7 @@
             </div>
             <div class="tweetfooter d-flex">
               <div class="replies d-flex align-items-center">
-                <button type="button" class="mt-4 mb-4 btn">
+                <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal" data-bs-target="#replyModal{{this.id}}">
                   <i class="fa-regular fa-comment"></i>&ensp;77
                 </button>
               </div>
@@ -81,3 +81,4 @@
   </div>
 </div>
 {{> post-modal}}
+{{> reply-modal}}
