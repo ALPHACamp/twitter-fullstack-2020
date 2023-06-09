@@ -12,8 +12,8 @@
 </div>
 {{> message}}
 <div class='card'>
-  <img src='{{user.cover}}' class='card-img-top cover' alt='cover' />
-  <img src='{{user.avatar}}' class='avatar' alt='avatar' />
+  <img src='{{user.cover}}' class='card-img-top cover' alt='cover'/>
+  <img src='{{user.avatar}}' class='avatar' alt='avatar' onerror="this.style.visibility= 'hidden'"/>
   {{#if user.isLoginUser}}
     <div class='edit-btn'>
       <a href="/users/{{user.id}}"></a>
@@ -65,17 +65,20 @@
         </div>
         <div class='modal-body'>
           <div class='cover-edit'>
-            <img src='{{user.cover}}' class='card-img-top cover-img' alt='/images/profile/cover.png' />
+            <img src='{{user.cover}}' class='card-img-top cover-img' alt='cover' />
             <div class='cover'>
               <label class='form-label' for='cover'>
                 <img src='/images/profile/cover_edit.svg' alt='cover' />
               </label>
               <input class='form-control' type='file' class='form-control-file' id='cover' name='cover' />
-              <a type='button' href='#' class='btn cover-delete'>X</a>
+              <label class='form-label cover-delete' for='cover-delete'>
+                X
+              </label>
+              <input class='form-control' type='radio' class='form-control-file' id='cover-delete' name='coverDelete' />
             </div>
           </div>
           <div class='avatar-edit'>
-            <img src='{{user.avatar}}' class='avatar-img' alt='/images/profile/avatar.png' />
+            <img src='{{user.avatar}}' class='avatar-img'  onerror="this.style.display='block' "/>
             <div class='avatar'>
               <label class='form-label' for='avatar'>
                 <img src='/images/profile/cover_edit.svg' alt='cover' />

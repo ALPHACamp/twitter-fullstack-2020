@@ -48,5 +48,4 @@ function previewFile(target, targetImage) {
     targetImage.src = event.target.result
   }
   reader.readAsDataURL(file)
-  console.log(reader)
 }
