@@ -21,8 +21,10 @@ app.engine('hbs', exphbs({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 
 app.use(express.static('public'))
+
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }))
 app.use(express.urlencoded({ extended: true }))
-app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
+
 app.use(flash())
 app.use(methodOverride('_method'))
 app.use('/upload', express.static(path.join(__dirname, 'upload')))
