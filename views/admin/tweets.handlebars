@@ -12,30 +12,33 @@
       {{!-- card 1 --}}
       {{#each users}}
       <div class="card card-tweet-lg">
-        <a href="#" class="tweet-href"></a>
+        <a class="tweet-href"></a>
         <div class="avatar">
-          <a href="#" class="primary-anchor">
+          <a href="/users/{{this.id}}" class="primary-anchor">
             <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
           </a>
         </div>
 
         <div class="card-text">
-          <div style="display:flex;justify-content:space-between">
-            <div class="card-text-info">
-              <a href="/users/{{this.id}}" class="primary-anchor">
-                <span class="card-name">{{this.name}}</span>
-              </a>
-              <a href="/users/{{this.id}}" class="primary-anchor">
-                <span class="card-account">@{{this.account}}</span>
-              </a>
-              <span class="card-dot">·</span>
-              <span class="card-datetime">{{relativeTimeFromNow this.updatedAt}}</span>
-            </div>
-            <div>
-              <img href="/admin/tweets/{{this.Tweets.id}}" src="/stylesheets/icons/delete.png" alt="delete icon">
-            </div>
+          <div style="position:absolute;right:3px;top:6px">
+            <form action="/admin/tweets/{{this.Tweets.id}}?_method=DELETE" method="POST" class="tweet-delete-form"
+              style="float:right">
+              <button class="btn" type="submit">
+                <img src="/stylesheets/icons/delete.png" alt="delete icon">
+              </button>
+            </form>
           </div>
-          <p class="card-description">{{this.Tweets.description}}</p>
+          <div class="card-text-info">
+            <a href="/users/{{this.id}}" class="primary-anchor">
+              <span class="card-name">{{this.name}}</span>
+            </a>
+            <a href="/users/{{this.id}}" class="primary-anchor">
+              <span class="card-account">@{{this.account}}</span>
+            </a>
+            <span class="card-dot">·</span>
+            <span class="card-datetime">{{relativeTimeFromNow this.updatedAt}}</span>
+          </div>
+          <p class=" card-description">{{this.Tweets.description}}</p>
         </div>
       </div>
       {{/each}}

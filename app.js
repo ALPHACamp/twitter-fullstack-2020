@@ -9,7 +9,7 @@ const routes = require('./routes')
 const exphbs = require('express-handlebars')
 const flash = require('connect-flash')
 const session = require('express-session')
-
+const methodOverride = require('method-override')
 
 const app = express()
 const port = 3000
@@ -33,6 +33,9 @@ app.use(express.json())
 // passport setting
 app.use(passport.initialize())
 app.use(passport.session())
+
+// setting method-override
+app.use(methodOverride('_method'))
 
 // Setting middleware
 app.use(flash())

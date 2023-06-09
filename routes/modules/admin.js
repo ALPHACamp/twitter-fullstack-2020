@@ -9,7 +9,7 @@ router.get('/signin', adminController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureMessage: true }), adminController.signIn)
 
 // 後台假首頁
-router.get('/tweets', authenticatedAdmin, adminController.getAdminTweets)
-
+router.get('/tweets', authenticatedAdmin, adminController.adminGetTweets)
+router.delete('/tweets/:tid',authenticatedAdmin,adminController.deleteUserTweet)
 
 module.exports = router
