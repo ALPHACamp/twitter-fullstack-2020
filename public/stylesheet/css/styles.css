@@ -1,0 +1,233 @@
+/* alpha logo icon */
+#ac-logo-icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin: 69px auto;
+
+}
+
+#sign-in-logo-icon {
+  width: 40px;
+  height: 40px;
+  margin: 69px auto;
+}
+
+#ac-logo-icon-admin {
+  width: 40px;
+  height: 40px;
+}
+
+#ac-home-icon-admin {
+  width: 24px;
+  height: 24px;
+}
+
+#ac-user-icon-admin {
+  width: 24px;
+  height: 24px;
+}
+
+#ac-exit-icon-admin {
+  width: 24px;
+  height: 24px;
+}
+
+#ac-delete-icon-admin {
+  width: 24px;
+  height: 24px;
+}
+
+#ac-avatar-icon-admin {
+  width: 50px;
+  height: 50px;
+}
+
+#ac-reply-icon-admin {
+  width: 24px;
+  height: 24px
+}
+
+#ac-like-icon-admin {
+  width: 24px;
+  height: 24px
+}
+
+/* container ac-logo-icon */
+#container-ac-logo-icon-admin {
+  width: 50px;
+  height: 50px;
+}
+
+/* image cover */
+#img-users-cover-admin {
+  width: 100%;
+  height: 140px;
+
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+/* image avatar */
+#img-users-avatar-admin {
+  width: 100px;
+  height: 100px;
+
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 1;
+
+  border-radius: 50%;
+  border: 4px solid #FFFFFF;
+
+  margin-top: -84px;
+}
+
+/* avatar admin */
+.container-avatar-img {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+
+  margin-top: 64px;
+
+
+
+}
+
+
+/* h3 */
+#sign-up-h3 {
+  width: 168px;
+  height: 26px;
+  line-height: 26px;
+  margin: 29px auto;
+  font-size: 28px;
+  color: #1C1C1C;
+
+}
+
+
+/* form */
+#container-form-signup {
+  width: 25%;
+  margin: 40px auto;
+}
+
+#form-input-line {
+  background-color: #F5F8FA;
+
+}
+
+.form-control {
+  background-color: transparent;
+
+  border: none;
+  border-radius: 0px 0px 4px 4px;
+  border-bottom: 2px solid #657786;
+}
+
+.form-label {
+  margin-left: 10.55px;
+}
+
+#container-form-front-back-end-signin {
+  width: 25%;
+  margin: 40px auto;
+}
+
+/* button */
+#btn-signin-signup-submit {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
+
+  width: 100%;
+  height: 46px;
+
+  background: #FF6600;
+  border: none;
+  border-radius: 50px;
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+#btn-setting-submit {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
+
+  width: 88px;
+  height: 46px;
+
+  background: #FF6600;
+  border: none;
+  border-radius: 50px;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+/* container-btn */
+.container-btn-setting {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* nav */
+/* nav link */
+#nav-link-admin {
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 700;
+  color: #44444F;
+}
+
+#nav-link-bottom-admin {
+  position: absolute;
+  bottom: 0;
+}
+
+/* container-nav */
+#container-nav-admin {
+  position: relative;
+  height: 100%;
+}
+
+/* span font */
+#span-tweets-name-admin {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+
+  columns: #171725;
+}
+
+#span-tweets-account-time-admin {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+
+  color: #6C757D;
+}
+
+/* p font */
+#p-tweets-description-admin {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+
+  color: #171725;
+}
