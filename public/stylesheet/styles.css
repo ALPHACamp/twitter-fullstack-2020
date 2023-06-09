@@ -26,7 +26,7 @@
   border-bottom: 1px solid #E6ECF0;
 }
 
-#tweets-post {
+#tweet-post {
   display: flex;
   flex-direction: column;
   padding-left: 1rem;
@@ -76,13 +76,13 @@
 #tweet-frame {
   border-bottom: 1px solid #C4C4C4;
 }
-#tweets-post-link {
+#tweet-post-link {
   padding-left: 0px;
     width: 526px;
     height: 36px;
     text-align: start;
     font-size: 18px;
-    color: #C4C4C4
+    color: #6C757D
 }
 #tweetword {
   font-weight: 400;
@@ -91,7 +91,7 @@
     color: #FFFFFF;
 }
 
-#tweets-post-btn{
+#tweet-post-btn{
   justify-content:center ;
   align-items:center;
   width: 64px;
