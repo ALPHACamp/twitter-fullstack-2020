@@ -5,12 +5,12 @@ module.exports = {
     try {
       const [users, tweets] = await Promise.all([
         queryInterface.sequelize.query(
-          "SELECT id FROM ac_twitter_workspace.Users WHERE `role` = 'user';",
-          { type: queryInterface.sequelize.QueryTypes.SELECT }
-        ),
+        "SELECT id FROM Users WHERE `role` = 'user';",
+        { type: queryInterface.sequelize.QueryTypes.SELECT }
+      ),
         queryInterface.sequelize.query(
-          "SELECT id FROM ac_twitter_workspace.Tweets;",
-          { type: queryInterface.sequelize.QueryTypes.SELECT }
+        "SELECT id FROM Tweets;",
+        { type: queryInterface.sequelize.QueryTypes.SELECT }
         )
       ])
 
