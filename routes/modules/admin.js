@@ -10,7 +10,7 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/admin
 
 // 後台假首頁
 router.get('/tweets', authenticatedAdmin, (req, res) => {
-  return res.send('backend homw page')
+  return res.render('admin/tweets')
 })
 
 

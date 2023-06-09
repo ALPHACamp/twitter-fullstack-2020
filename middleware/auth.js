@@ -19,10 +19,10 @@ module.exports = {
         return next()
       } else {
         req.flash('danger_msg', '帳號不存在')
-        return res.redirect('/signin')
+        return res.redirect('/admin/signin')
       }
     }
     req.flash('danger_msg', '使用前請先登入')
-    return res.redirect('/signin')
+    return res.redirect('/admin/signin')
   }
 }

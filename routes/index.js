@@ -2,12 +2,10 @@ const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/user-controller')
 const passport = require('../config/passport')
-const admin = require('./modules/admin')
-const { authenticated } = require('../middleware/auth')
-
-
+const { authenticated, authenticatedAdmin } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const users = require('./modules/users')
+const admin = require('./modules/admin')
 
 
 // 註冊
@@ -20,8 +18,11 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.post('/signout', userController.signOut)
 
 // users路由
-router.get('/tweets', (req, res) => res.render('tweets'))
+router.get('/tweets', authenticated, (req, res) => res.render('tweets'))
 router.use('/users', authenticated, users)
+
+// 後台
+router.use('/admin', admin)
 
 router.use('', (req, res) => {
   return res.redirect('/signin')
