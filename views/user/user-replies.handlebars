@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="wrapper">
+
+    {{> profile-navbar}}
+
+    {{!-- main --}}
+    <section class="main">
+      <div class="main-title main-head-bar">
+        <div class="main-arrow-icon background-image" onclick="history.back()"></div>
+        <div class="main-head-bar-text">
+          <h5 class="main-head-bar-name">{{ user.name }}</h5>
+          <span class="card-datetime">{{ user.Tweets.length }} 推文</span>
+        </div>
+      </div>
+
+
+      {{> profile-card}}
+
+
+      {{!-- tabs --}}
+      <ul class="nav nav-user-tab">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/users/{{user.id}}/tweets">推文</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-link-active" href="#">回覆</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
+        </li>
+      </ul>
+
+      {{> messages}}
+
+
+      {{!-- replies cards --}}
+      {{#if replyList }}
+
+      {{#each replyList}}
+      <div class="card card-tweet-lg">
+        <a href="/tweets/{{this.Tweet.id}}/replies" class="tweet-href"></a>
+        <div class="avatar">
+          <a href="/users/{{this.UserId}}/tweets" class="primary-anchor">
+            {{#if this.User.avatar}}
+            <img src="{{ this.User.avatar }}" alt="avatar" class="logo">
+            {{else}}
+            <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+            {{/if}}
+          </a>
+        </div>
+        <div class="card-text">
+          <div class="card-text-info">
+            <a href="/users/{{ this.UserId }}/tweets" class="primary-anchor">
+              <span class="card-name">{{ this.User.name }}</span>
+            </a>
+            <a href="/users/{{ this.UserId }}/tweets" class="primary-anchor">
+              <span class="card-account">@{{ this.User.account }}</span>
+            </a>
+            <span class="card-dot">·</span>
+            <span class="card-datetime">{{relativeTimeFromNow this.createdAt }}</span>
+          </div>
+
+          <div class="reply-to-part">
+            <span class="reply-to">回覆</span>
+            <a href="/users/{{ this.Tweet.User.id }}/tweets" class="primary-anchor">
+              <span class="card-account reply-account">@{{ this.Tweet.User.name }}</span>
+            </a>
+          </div>
+          <p class="card-description">{{ this.comment }}</p>
+        </div>
+      </div>
+      {{/each}}
+      {{else}}
+      <div class="no-tweet">
+        <h5>
+          沒有回覆
+        </h5>
+      </div>
+      {{/if}}
+
+    </section>
+    {{> followship}}
+  </div>
+</div>
+
+
+{{> tweet-modal}}
+
+
+
+
+{{> edit-modal}}

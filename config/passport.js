@@ -10,13 +10,13 @@ passport.use(new LocalStrategy({
 }, async (req, account, password, cb) => {
   try {
     const user = await User.findOne({ where: { account } })
-    if (!user) cb(null, false, req.flash('danger_msg', '帳號或密碼錯誤!'))
+    if (!user) return cb(null, false, req.flash('danger_msg', '帳號或密碼錯誤!'))
 
     const passwordCompare = await bcrypt.compare(password, user.password)
-    if (!passwordCompare) cb(null, false, req.flash('danger_msg', '帳號或密碼錯誤!'))
+    if (!passwordCompare) return cb(null, false, req.flash('danger_msg', '帳號或密碼錯誤!'))
     return cb(null, user)
   } catch (err) {
-    cb(err)
+    return cb(err)
   }
 })
 )
@@ -35,7 +35,7 @@ passport.deserializeUser(async (id, cb) => {
     })
     return cb(null, user.toJSON())
   } catch (err) {
-    cb(err)
+    return cb(err)
   }
 })
 

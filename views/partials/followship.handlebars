@@ -23,7 +23,6 @@
         </a>
       </div>
       {{#if this.isFollow}}
-      
       <form action="/followships/{{ this.id }}?_method=DELETE" method="post">
         <input type="hidden" name="loginUserId" value="{{loginUserId}}" />
         <div class="follow-button-wrapper">
@@ -42,8 +41,7 @@
     </div>
     {{/each}}
 
-    {{!-- card 2 --}}
-    
+    {{!-- card 2 --}}    
       {{!-- <div class="avatar">
         <a href="/users/{{user.id}}">
           <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
