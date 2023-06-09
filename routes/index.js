@@ -7,6 +7,7 @@ const { authenticated } = require('../middleware/auth')
 
 
 const { generalErrorHandler } = require('../middleware/error-handler')
+const users = require('./modules/users')
 
 
 // 註冊
@@ -16,39 +17,18 @@ router.post('/signup', userController.signUp)
 // 登入登出
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureMessage: true }), userController.signIn)
-router.get('/signout', userController.signOut)
+router.post('/signout', userController.signOut)
 
-
-router.get('/example', (req, res, next) => {
-  res.render('example')
-
-  // 以下為訊息的樣板，直接使用req.flash達成
-  req.flash('danger_msg', 'danger')
-  req.flash('success_msg', 'success')
-  req.flash('warning_msg', 'warning')
-  req.flash('info_msg', 'info')
-})
-
-router.post('/example', (req, res, next) => {
-
-  // 錯誤訊息(紅色的)可以另外用 throw new Error 來處理
-  try {
-    throw new Error('name is required')
-  } catch (err) {
-    next(err)
-  }
-})
-
-router.use('/admin', admin)
-
-router.get('/tweets', authenticated, (req, res) => {
-  res.render('tweets')
-})
+// users路由
+router.get('/tweets', (req, res) => res.render('tweets'))
+router.use('/users', authenticated, users)
 
 router.use('', (req, res) => {
   return res.redirect('/signin')
 })
 
 router.use('/', generalErrorHandler)
+router.use('', (req, res) => res.redirect('/tweets'))
+
 
 module.exports = router

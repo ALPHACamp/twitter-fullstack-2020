@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
-const { User } = require('../models')
+const { User, Tweet, Reply, Like, Followship } = require('../models')
+const _helpers = require('../_helpers')
 
 const userController = {
   // 註冊
@@ -56,6 +57,67 @@ const userController = {
       req.flash('success_msg', "登出成功")
       return res.redirect('/admin/signin')
     }
+  },
+  // User tweet 頁面 
+  getUserTweets: async (req, res, next) => {
+    try {
+      const UserId = req.params.uid
+      const loginUserId = _helpers.getUser(req).id
+
+      let [user, tweetList, likeList, topUsers] = await Promise.all([
+        User.findByPk(UserId, {
+          include: [
+            { model: User, as: 'Followings', attributes: ['id'] },
+            { model: User, as: 'Followers', attributes: ['id'] },
+          ],
+        }),
+        Tweet.findAll({
+          where: { UserId },
+          include: [
+            { model: User, attributes: ['name', 'account', 'avatar'] },
+            { model: Reply, attributes: ['id'] },
+            { model: Like, attributes: ['id'] }
+          ],
+          order: [['createdAt', 'DESC']],
+        }),
+        Like.findAll({
+          where: { UserId: loginUserId },
+          raw: true,
+          attributes: ['TweetId']
+        }),
+        User.findAll({
+          attributes: ['name', 'account', 'avatar', 'id', 'role'],
+          include: { model: User, as: 'Followers' },
+        })
+      ])
+
+      // 資料處理
+      if (!user) throw new Error('使用者不存在')
+      user = user.toJSON()
+
+      likeList = likeList.map(i => i.TweetId)
+      tweetList = tweetList
+        .map(i => {
+          i = i.toJSON()
+          return {
+            ...i,
+            isLike: likeList.some(j => j === i.id)
+          }
+        })
+      topUsers = topUsers
+        .map(i => {
+          i = i.toJSON()
+          return {
+            ...i,
+            isFollow: i.Followers.some(j => j.id === loginUserId)
+          }
+        })
+        .filter(i => i.role === 'user')
+        .sort((a, b) => b.Followers.length - a.Followers.length)
+        .slice(0, 10)
+
+      res.render('user/user-tweets', { user, tweetList, loginUserId, topUsers })
+    } catch (err) { next(err) }
   }
 }
 
