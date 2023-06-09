@@ -12,7 +12,7 @@ const session = require('express-session')
 
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 const handlebarsHelper = require('./helpers/handlebars-helper')
 // use helpers.getUser(req) to replace req.user
