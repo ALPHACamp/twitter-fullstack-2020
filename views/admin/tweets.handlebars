@@ -9,18 +9,18 @@
         推文清單
       </h4>
       {{!-- tweet cards --}}
-      {{#each users}}
+      {{#each tweets}}
       <div class="card card-tweet-lg">
         <a class="tweet-href"></a>
         <div class="avatar">
-          <a href="/users/{{this.id}}" class="primary-anchor">
+          <a class="primary-anchor">
             <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
           </a>
         </div>
 
         <div class="card-text">
           <div style="position:absolute;right:3px;top:6px">
-            <form action="/admin/tweets/{{this.Tweets.id}}?_method=DELETE" method="POST" class="tweet-delete-form"
+            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="tweet-delete-form"
               style="float:right">
               <button class="btn" type="submit">
                 <img src="/stylesheets/icons/delete.png" alt="delete icon">
@@ -29,15 +29,15 @@
           </div>
           <div class="card-text-info">
             <a href="/users/{{this.id}}" class="primary-anchor">
-              <span class="card-name">{{this.name}}</span>
+              <span class="card-name">{{this.User.name}}</span>
             </a>
             <a href="/users/{{this.id}}" class="primary-anchor">
-              <span class="card-account">@{{this.account}}</span>
+              <span class="card-account">@{{this.User.account}}</span>
             </a>
             <span class="card-dot">·</span>
             <span class="card-datetime">{{relativeTimeFromNow this.updatedAt}}</span>
           </div>
-          <p class=" card-description">{{this.Tweets.description}}</p>
+          <p class=" card-description">{{this.description}}</p>
         </div>
       </div>
       {{/each}}

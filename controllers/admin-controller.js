@@ -12,13 +12,16 @@ const adminController = {
   // 後台頁面
   adminGetTweets: async (req, res, next) => {
     try {
-      const users = await User.findAll({
-        where: { role: 'user' },
-        raw: true,
-        nest: true,
-        include: Tweet
+      let tweets = await Tweet.findAll({
+        order: [['updatedAt', 'DESC']],
+        include: User
       })
-      return res.render('admin/tweets', { users })
+      tweets = tweets.map(tweet => ({
+        ...tweet.toJSON(),
+        description: tweet.description.substring(0, 50)
+      })
+      )
+      return res.render('admin/tweets', { tweets })
     } catch (e) {
       next(e)
     }
