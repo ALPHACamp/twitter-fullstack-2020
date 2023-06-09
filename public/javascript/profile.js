@@ -4,6 +4,8 @@ const inputForm = document.querySelector('.input-form')
 const saveButton = document.querySelector('.btn-edit')
 const coverImg = document.querySelector('.cover-img')
 const avatarImg = document.querySelector('.avatar-img')
+const inputName = document.querySelector('.input-name')
+const inputIntroduction = document.querySelector('.input-introduction')
 
 // 自定變數
 const maxName = 50
@@ -14,22 +16,13 @@ inputForm.addEventListener('input', event => {
   const { length } = target.value
   // 顯示字數
   if (target.name === 'name') {
-    if (length > maxName) {
-      nameAmount.innerText = `${length}/${maxName}`
-      saveButton.disabled = true
-      return swal('暱稱', '字數超過上限', 'warning')
-    }
-    saveButton.disabled = false
-    return (nameAmount.innerText = `${length}/${maxName}`)
+    nameAmount.innerText = `${length}/${maxName}`
+    checkLength(inputName, length, maxName)
   }
+
   if (target.name === 'introduction') {
-    if (length > maxIntroduction) {
-      nameAmount.innerText = `${length}/${maxName}`
-      saveButton.disabled = true
-      return swal('自我介紹', '字數超過上限', 'warning')
-    }
-    saveButton.disabled = false
-    return (introductionAmount.innerText = `${length}/${maxIntroduction}`)
+    introductionAmount.innerText = `${length}/${maxIntroduction}`
+    checkLength(inputIntroduction, length, maxIntroduction)
   }
   // 顯示照片
   if (target.name === 'cover') {
@@ -37,6 +30,13 @@ inputForm.addEventListener('input', event => {
   }
   if (target.name === 'avatar') {
     previewFile(target, avatarImg)
+  }
+})
+
+inputForm.addEventListener('submit', function onFormSubmitted(event) {
+  if (!inputForm.checkValidity()) {
+    event.stopPropagation()
+    event.preventDefault()
   }
 })
 
@@ -48,4 +48,13 @@ function previewFile(target, targetImage) {
     targetImage.src = event.target.result
   }
   reader.readAsDataURL(file)
+}
+
+// 文字超過上限
+function checkLength(target, length, maxLength) {
+  if (length > maxLength) {
+    target.setCustomValidity('字數超過上限')
+  } else {
+    target.setCustomValidity('')
+  }
 }

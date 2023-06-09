@@ -10,7 +10,6 @@
   </span>
 
 </div>
-{{> message}}
 <div class='card'>
   <img src='{{user.cover}}' class='card-img-top cover' alt='cover'/>
   <img src='{{user.avatar}}' class='avatar' alt='avatar' onerror="this.style.visibility= 'hidden'"/>
@@ -57,7 +56,7 @@
 <div class='modal fade user-edit-modal' id='edit-modal' tabindex='-1' aria-labelledby='editModalLabel' aria-hidden='true'>
   <div class='modal-dialog'>
     <div class='modal-content'>
-      <form class='input-form' action='/users/{{user.id}}?_method=PUT' method='POST' enctype='multipart/form-data'>
+      <form class='input-form' action='/users/{{user.id}}?_method=PUT' method='POST' enctype='multipart/form-data' novalidate>
         <div class='modal-header'>
           <button type='button' class='modal-close' data-bs-dismiss='modal' aria-label='Close'>X</button>
           <h1 class='modal-title' id='editModalLabel'>編輯個人資料</h1>
@@ -90,12 +89,14 @@
           <div class='form-text'>
             <div class='name box'>
               <label class='form-label' for='name' >名稱</label>
-              <input class='form-control' type='text' name='name' id='name' value='{{user.name}}' placeholder='暱稱' />
+              <input class='form-control input-name' type='text' name='name' id='name' value='{{user.name}}' placeholder='暱稱' />
+              <div class="invalid-feedback">字數超過上限 !</div>
             </div>
             <div class='name-amount'>{{user.name.length}}/50</div>
             <div class='introduction box'>
               <label class='form-label' for='introduction'>自我介紹</label>
-              <textarea class='form-control' id='introduction' name='introduction' rows='3'>{{user.introduction}}</textarea>
+              <textarea class='form-control input-introduction' id='introduction' name='introduction' rows='3'>{{user.introduction}}</textarea>
+              <div class="invalid-feedback">字數超過上限 !</div>
             </div>
             <div class='introduction-amount'>{{user.introduction.length}}/160</div>
           </div>
@@ -106,5 +107,3 @@
 </div>
 
 <script src="/javascript/profile.js"></script>
-{{!-- sweetalert --}}
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

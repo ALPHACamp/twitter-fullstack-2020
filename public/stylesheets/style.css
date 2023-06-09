@@ -440,7 +440,7 @@ h4 {
 }
 
 .user-container > .card > .cover {
-  background-image: url('/images/profile/cover.png');
+  size: 100% 200px;
   width: 100%;
   height: 200px;
   border-radius: 0px;
@@ -449,10 +449,11 @@ h4 {
 .user-container > .card > .avatar {
   position: absolute;
   height: 140px;
-  width: 140px;
-  top: 124px;
   left: 15px;
+  top: 124px;
+  /* transform: translateY(50%); */
   border-radius: 50%;
+  border: 4px solid #ffffff;
 }
 
 .user-container > .card > div > .at-name {
@@ -775,7 +776,21 @@ h4 {
 
 .user-edit-modal .modal-body > .form-text .box {
   background: #f5f8fa;
+}
+
+.user-edit-modal .modal-body > .form-text .box > input,
+.user-edit-modal .modal-body > .form-text .box > textarea {
   border-bottom: 2px solid #657786;
+}
+
+.user-edit-modal .modal-body > .form-text .box > input:valid,
+.user-edit-modal .modal-body > .form-text .box > textarea:valid {
+  border-bottom: 2px solid #50b5ff;
+}
+
+.user-edit-modal .modal-body > .form-text .box > input:invalid,
+.user-edit-modal .modal-body > .form-text .box > textarea:invalid {
+  border-bottom: 2px solid #fc5a5a;
 }
 
 .user-edit-modal .modal-body > .form-text .form-label {
@@ -990,4 +1005,58 @@ h4 {
   border-right: 1px solid #b5b5be;
   height: 60%;
   margin: 10px auto 0;
+}
+
+/* message */
+.msg-container {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 394px;
+  height: 96px;
+  background-color: #ffffff;
+}
+
+.msg-container > .msg {
+  margin-left: 24px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.msg-container > .btn-error {
+  margin-right: 20px;
+  border: 2px solid #fc5a5a;
+  background-color: transparent;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+}
+
+.msg-container > .btn-success {
+  margin-right: 20px;
+  border: 2px solid #82c43c;
+  background-color: transparent;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+}
+
+/* input */
+form.invalid-feedback {
+  display: none;
+  font-size: 0.8em;
+}
+
+form.invalid-feedback {
+  color: #fc5a5a;
+}
+
+.input-form .form-control:invalid ~ .invalid-feedback {
+  display: initial;
 }

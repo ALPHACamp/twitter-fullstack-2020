@@ -7,7 +7,6 @@
       <div class='user-edit-container'>
         <h4>帳戶設定</h4>
         <hr />
-        {{> message}}
         <form class='' action='/users/{{user.id}}?_method=PUT' method='POST'>
           <div class='form-row box'>
             <label class='form-label' for='account'>帳號</label>
@@ -21,6 +20,7 @@
               required
               autofocus
             />
+            <div class="invalid-feedback">{{error_messages}}</div>
           </div>
           <div class='form-row box'>
             <label class='form-label password-label' for='name'>名稱</label>
