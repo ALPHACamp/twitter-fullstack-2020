@@ -15,8 +15,7 @@ const userController = {
       return res.render('signup', { account, name, email, password, checkPassword })
     }
     if (password !== checkPassword) {
-      // req.flash('danger_msg', '輸入密碼不一致')
-      req.flash('danger_msg', '前後輸入密碼不一致')
+      req.flash('danger_msg', '輸入密碼不一致')
       return res.render('signup', { account, name, email, password, checkPassword })
     }
 
@@ -35,9 +34,9 @@ const userController = {
         password: hashedPassword
       })
       req.flash('success_msg', '註冊成功，請以新帳號登入')
-      res.redirect('/signin')
+      return res.redirect('/signin')
     } catch (e) {
-      next(e)
+      return next(e)
     }
   },
   // 登入
@@ -50,9 +49,15 @@ const userController = {
   },
   // 登出
   signOut: (req, res) => {
-    req.logout()
-    req.flash('success_msg', "登出成功")
-    return res.redirect('/signin')
+    if (req.user.role === 'user') {
+      req.logout()
+      req.flash('success_msg', "登出成功")
+      return res.redirect('/signin')
+    } else {
+      req.logout()
+      req.flash('success_msg', "登出成功")
+      return res.redirect('/admin/signin')
+    }
   },
   // User tweet 頁面 
   getUserTweets: async (req, res, next) => {

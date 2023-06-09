@@ -1,7 +1,13 @@
-
+const { User } = require('../models')
 
 const adminController = {
-  SignIn: async (req, res, next) => {
-    
+  signInPage: (req, res) => {
+    return res.render('admin/signin')
+  },
+  signIn: async (req, res) => {
+    req.flash('success_msg', '登入成功')
+    return res.redirect('/admin/tweets')
   }
 }
+
+module.exports = adminController
