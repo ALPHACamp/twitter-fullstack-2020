@@ -1,4 +1,4 @@
-{{!-- <div class="display-flex flex-column justify-content-between mt-3" style="width: 178px; height: 100%;"> --}}
+
   <div class="nav-top" style="width: 178px; height: 100%;">
     <div class="AC-icon" style="">
       <a href="/">
@@ -9,16 +9,16 @@
 
     <div class="home d-flex align-items-center ps-3 mb-2" name="home" style="width: 178px;height: 58px;">
       <a class="home-page" href="/tweets"
-        style="text-decoration: none; font-size: 18Px;font-weight:700;color:#FF6600;"><i class="fa-solid fa-house"></i>&emsp;首頁</a>
+        style="text-decoration: none; font-size: 18Px;font-weight:700;{{#if tweetsPage}}color:#FF6600;{{else}}color:#44444F;{{/if}}"><i class="fa-solid fa-house"></i>&emsp;首頁</a>
     </div>
 
-    <div class="profile d-flex align-items-center ps-3 mb-2" name="profile" style="width: 178px;height: 58px;">
+    <div class="profile d-flex align-items-center ps-3 mb-2" name="profile" style="width: 178px;height: 58px;{{#if userPage}}color:#FF6600;{{else}}color:#44444F;{{/if}}">
       <a class="profile-page" href="/users/{{user.id}}/tweets"
         style="text-decoration: none;font-size: 18Px;font-weight:700;color:#FF6600;"><i
           class="fa-solid fa-user"></i>&emsp;個人資料</a>
     </div>
 
-    <div class="setting d-flex align-items-center ps-3 mb-2" name="setting" style="width: 178px;height: 58px;">
+    <div class="setting d-flex align-items-center ps-3 mb-2" name="setting" style="width: 178px;height: 58px;{{#if setting}}color:#FF6600;{{else}}color:#44444F;{{/if}}">
       <a class="setting-page" href="/setting"
         style="text-decoration: none;font-size: 18Px;font-weight:700;color:#FF6600;"><i
           class="fa-solid fa-gear"></i>&emsp;設定</a>
