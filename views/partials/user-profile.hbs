@@ -57,7 +57,7 @@
 <div class='modal fade user-edit-modal' id='edit-modal' tabindex='-1' aria-labelledby='editModalLabel' aria-hidden='true'>
   <div class='modal-dialog'>
     <div class='modal-content'>
-      <form action='/users/{{user.id}}?_method=PUT' method='POST' enctype='multipart/form-data'>
+      <form class='input-form' action='/users/{{user.id}}?_method=PUT' method='POST' enctype='multipart/form-data'>
         <div class='modal-header'>
           <button type='button' class='modal-close' data-bs-dismiss='modal' aria-label='Close'>X</button>
           <h1 class='modal-title' id='editModalLabel'>編輯個人資料</h1>
@@ -87,17 +87,20 @@
           <div class='form-text'>
             <div class='name box'>
               <label class='form-label' for='name' >名稱</label>
-              <input class='form-control' type='text' name='name' id='name' value='{{user.name}}' placeholder='暱稱(限50字)' />
+              <input class='form-control' type='text' name='name' id='name' value='{{user.name}}' placeholder='暱稱' />
             </div>
-            <div class='text-amount'>8/50</div>
+            <div class='name-amount'>{{user.name.length}}/50</div>
             <div class='introduction box'>
               <label class='form-label' for='introduction'>自我介紹</label>
               <textarea class='form-control' id='introduction' name='introduction' rows='3'>{{user.introduction}}</textarea>
             </div>
-            <div class='text-amount'>8/160</div>
+            <div class='introduction-amount'>{{user.introduction.length}}/160</div>
           </div>
         </div>
       </form>
     </div>
   </div>
 </div>
+
+<script src="/javascript/main.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

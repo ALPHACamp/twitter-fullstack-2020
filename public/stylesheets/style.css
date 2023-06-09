@@ -745,7 +745,8 @@ h4 {
   border: 0;
 }
 
-.user-edit-modal .modal-body > .form-text .text-amount {
+.user-edit-modal .modal-body > .form-text .name-amount,
+.user-edit-modal .modal-body > .form-text .introduction-amount {
   text-align: right;
   font-family: 'Noto Sans TC';
   font-style: normal;
