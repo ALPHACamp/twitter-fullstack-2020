@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
-const { User, Tweet, Reply, Like, Followship } = require('../models')
+const { User, Tweet, Reply, Like } = require('../models')
 const _helpers = require('../_helpers')
+const userServices = require('../services/user-services')
 
 const userController = {
   // 註冊
@@ -64,7 +65,7 @@ const userController = {
       const UserId = req.params.uid
       const loginUserId = _helpers.getUser(req).id
 
-      let [user, tweetList, likeList, topUsers] = await Promise.all([
+      let [user, tweetList, likeList] = await Promise.all([
         User.findByPk(UserId, {
           include: [
             { model: User, as: 'Followings', attributes: ['id'] },
@@ -84,16 +85,13 @@ const userController = {
           where: { UserId: loginUserId },
           raw: true,
           attributes: ['TweetId']
-        }),
-        User.findAll({
-          attributes: ['name', 'account', 'avatar', 'id', 'role'],
-          include: { model: User, as: 'Followers' },
         })
       ])
+      const topUsers = await userServices.getTopUsers(loginUserId)
 
-      // 資料處理
       if (!user) throw new Error('使用者不存在')
       user = user.toJSON()
+      user.isFollow = user.Followers.some(i => i.id === loginUserId)
 
       likeList = likeList.map(i => i.TweetId)
       tweetList = tweetList
@@ -104,21 +102,97 @@ const userController = {
             isLike: likeList.some(j => j === i.id)
           }
         })
-      topUsers = topUsers
+
+      res.render('user/user-tweets', { user, tweetList, loginUserId, topUsers })
+    } catch (err) { next(err) }
+  },
+  // User Replies 頁面 
+  getUserReplies: async (req, res, next) => {
+    try {
+      const UserId = req.params.uid
+      const loginUserId = _helpers.getUser(req).id
+
+      let [user, replyList] = await Promise.all([
+        User.findByPk(UserId, {
+          include: [
+            { model: User, as: 'Followings', attributes: ['id'] },
+            { model: User, as: 'Followers', attributes: ['id'] },
+            { model: Tweet, attributes: ['id'] },
+          ],
+        }),
+        Reply.findAll({
+          where: { UserId },
+          include: [
+            { model: User, attributes: ['name', 'account', 'avatar'] },
+            { model: Tweet, attributes: ['id'], include: [User] }
+          ],
+          order: [['createdAt', 'DESC']],
+        })
+      ])
+      const topUsers = await userServices.getTopUsers(loginUserId)
+
+      if (!user) throw new Error('使用者不存在')
+      user = user.toJSON()
+      user.isFollow = user.Followers.some(i => i.id === loginUserId)
+      replyList = replyList
+        .map(i => i.toJSON())
+
+      res.render('user/user-replies', { user, replyList, loginUserId, topUsers })
+    } catch (err) { next(err) }
+  },
+  // User likes 頁面
+  getUserLikes: async (req, res, next) => {
+    try {
+      const UserId = req.params.uid
+      const loginUserId = _helpers.getUser(req).id
+
+      let [user, likeList, loginUserLikeList] = await Promise.all([
+        User.findByPk(UserId, {
+          include: [
+            { model: User, as: 'Followings', attributes: ['id'] },
+            { model: User, as: 'Followers', attributes: ['id'] },
+            { model: Tweet, attributes: ['id'] },
+          ],
+        }),
+        Like.findAll({
+          where: { UserId },
+          include: [
+            {
+              model: Tweet,
+              include: [
+                { model: User, attributes: ['name', 'account', 'avatar'] },
+                { model: Reply, attributes: ['id'] },
+                { model: Like, attributes: ['id'] }
+              ]
+            },
+          ],
+          order: [['createdAt', 'DESC']],
+        }),
+        Like.findAll({
+          where: { UserId: loginUserId },
+          raw: true,
+          attributes: ['TweetId']
+        })
+      ])
+      const topUsers = await userServices.getTopUsers(loginUserId)
+
+      if (!user) throw new Error('使用者不存在')
+      user = user.toJSON()
+      user.isFollow = user.Followers.some(i => i.id === loginUserId)
+
+      loginUserLikeList = loginUserLikeList.map(i => i.TweetId)
+      likeList = likeList
         .map(i => {
           i = i.toJSON()
           return {
             ...i,
-            isFollow: i.Followers.some(j => j.id === loginUserId)
+            isLike: loginUserLikeList.some(j => j === i.TweetId)
           }
         })
-        .filter(i => i.role === 'user')
-        .sort((a, b) => b.Followers.length - a.Followers.length)
-        .slice(0, 10)
 
-      res.render('user/user-tweets', { user, tweetList, loginUserId, topUsers })
+      res.render('user/user-likes', { user, likeList, loginUserId, topUsers })
     } catch (err) { next(err) }
-  }
+  },
 }
 
 module.exports = userController

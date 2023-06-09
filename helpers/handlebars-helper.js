@@ -9,5 +9,11 @@ module.exports = {
   relativeTimeFromNow: a => dayjs(a).fromNow().slice(0, -1),
   ifCond: (a, b, options) => {
     return a === b ? options.fn(this) : options.inverse(this)
-  }
+  },
+  ifFalseAndEqual: (a, b, c, options) => {
+    return a && b !== c ? options.fn(this) : options.inverse(this)
+  },
+  ifFalseAndNotEqual: (a, b, c, options) => {
+    return !a && b !== c ? options.fn(this) : options.inverse(this)
+  },
 }
