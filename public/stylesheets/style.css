@@ -169,6 +169,7 @@ a:hover {
 
 .logo {
   height: 100%;
+  border-radius: 50%;
 }
 
 /* input */
@@ -372,6 +373,13 @@ a:hover {
 
 /* -------------------- main section -------------------- */
 
+.main-head-bar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: white;
+}
+
 .main-title,
 .followship-title {
   border-bottom: 1px solid #E6ECF0;
@@ -479,6 +487,11 @@ textarea {
 
 /* -------------------- card -------------------- */
 
+.no-tweet {
+  text-align: center;
+  padding: 20px;
+}
+
 .card-tweet-lg {
   flex-direction: row;
   border-radius: 0;
@@ -488,6 +501,7 @@ textarea {
 }
 
 .card-text {
+  width: 537px;
   padding-left: 8px;
 }
 
@@ -542,7 +556,8 @@ textarea {
 
 .card-reply-icon,
 .card-like-icon,
-.card-unlike-icon {
+.card-unlike-icon,
+.main-arrow-icon {
   display: inline-block;
   height: 14px;
   width: 14px;
@@ -634,4 +649,126 @@ textarea {
 
 .btn-follow {
   width: 64px;
+}
+
+
+/* -------------------- user page -------------------- */
+
+.main-head-bar {
+  display: flex;
+  align-items: center;
+}
+
+.main-arrow-icon {
+  background-image: url('/stylesheets/icons/arrow.png');
+  margin-right: 19px;
+}
+
+.main-arrow-icon:hover {
+  cursor: pointer;
+}
+
+.main-head-bar-text {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.main-head-bar-name {
+  line-height: 26px;
+}
+
+/* -------------------- profile -------------------- */
+
+.profile-wrapper {
+  position: relative;
+}
+
+.profile-cover {
+  width: 100%;
+  height: 200px;
+  background-image: url('/stylesheets/icons/mountain.png');
+}
+
+.profile-avatar {
+  position: absolute;
+  top: 124px;
+  left: 16px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 5px solid white;
+}
+
+.profile-info {
+  width: 600px;
+  height: 150px;
+  margin: 72px 0 0 16px;
+}
+
+.profile-name {
+  line-height: 26px;
+}
+
+.profile-account {
+  margin-left: 0;
+}
+
+.following-follower-wrapper {
+  margin-top: 8px;
+}
+
+.following-wrapper {
+  display: inline;
+  margin-right: 20px;
+}
+
+.following-count,
+.following-text,
+.follower-count,
+.follower-text {
+  font-family: "Noto Sans TC";
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+}
+
+.following-count,
+.follower-count {
+  margin-right: -3px;
+  color: #171725;
+}
+
+.following-text,
+.follower-text {
+  color: var(--secondary);
+}
+
+.btn-edit-profile {
+  position: absolute;
+  top: 216px;
+  right: 16px
+}
+
+
+/* -------------------- tabs -------------------- */
+
+.nav-user-tab {
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.nav-link {
+  padding: 15px 50px;
+  color: #657786;
+  font-weight: 700;
+}
+
+.nav-link-active,
+.nav-link:hover {
+  color: var(--info);
+}
+
+.nav-link-active {
+  border-bottom: 2px solid var(--info);
 }
