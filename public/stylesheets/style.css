@@ -1,3 +1,7 @@
+.solid{
+  color:#E6ECF0
+}
+
 .sidebar-left {
   height: 1200px;
   width: 178px;
@@ -209,4 +213,8 @@
   border:none;
   background:#FF6600;
   border-radius:50px
+}
+
+.content{
+  font-size: 16px;
 }
