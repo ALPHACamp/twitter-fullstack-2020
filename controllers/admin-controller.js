@@ -6,22 +6,8 @@ const adminController = {
     res.render('admin/admin-signin')
   },
 
-  signIn: (req, res, next) => {
-    const { account, password } = req.body
-
-    // 檢查欄位不能為空
-    if (account.trim() === '' || password.trim() === '' || !account || !password) {
-      req.flash('warning_messages', '欄位不能為空')
-      return res.redirect('/admin/signin');
-    }
-
-    return User.findOne({ where: { account } })
-      .then(user => {
-        // 判斷 account 存不存在或是否為管理員
-        if (!user || user.isAdmin === 0) throw new Error("Admin didn't exist!")
-        res.redirect('/admin/tweets')
-      })
-      .catch(err => next(err))
+  signIn: (req, res) => {
+    res.redirect('/admin/tweets')
   },
 
   // 未完成

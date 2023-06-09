@@ -32,10 +32,10 @@ const userController = {
         confirmPassword
       })
     }
-    // 檢查註冊資訊是否正確 account 或 email 是否已存在於資料庫
+    // 檢查註冊資訊是否正確 前往資料庫查詢 非管理員的 account 或 email 是否已存在於資料庫
     return Promise.all([
-      User.findOne({ where: { account } }),
-      User.findOne({ where: { email } })
+      User.findOne({ where: { account, isAdmin: 0 } }),
+      User.findOne({ where: { email, isAdmin: 0 } })
     ])
       .then(([accountUser, emailUser]) => {
         if (emailUser) {
