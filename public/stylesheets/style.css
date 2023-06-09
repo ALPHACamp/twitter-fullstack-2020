@@ -404,6 +404,12 @@ a:hover {
 .avatar {
   height: 50px;
   width: 50px;
+  background-color: #E6ECF0;
+  border-radius: 50%;
+}
+
+.avatar:hover .logo {
+  opacity: .4;
 }
 
 .main-create-modal-trigger {
@@ -514,6 +520,11 @@ textarea {
   color: #171725;
 }
 
+.card-name:hover,
+.card-account:hover {
+  text-decoration: underline;
+}
+
 .card-account,
 .card-dot,
 .card-datetime {
@@ -616,8 +627,9 @@ textarea {
 }
 
 .following-card-text {
-  width: 430px;
+  width: 528px;
   padding-left: 8px;
+  margin-top: 8px;
 }
 
 

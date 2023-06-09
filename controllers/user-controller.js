@@ -230,6 +230,43 @@ const userController = {
       res.render('user/user-followings', { user, FollowingList, loginUserId, topUsers })
     } catch (err) { next(err) }
   },
+  // User Followers頁面
+  getUserFollowers: async (req, res, next) => {
+    try {
+      const UserId = req.params.uid
+      const loginUserId = _helpers.getUser(req).id
+
+      let [user, loginUserFollowingList] = await Promise.all([
+        User.findByPk(UserId, {
+          include: [
+            { model: User, as: 'Followings' },
+            { model: User, as: 'Followers' },
+            { model: Tweet, attributes: ['id'] },
+          ],
+        }),
+        Followship.findAll({
+          where: { followerId: loginUserId },
+          raw: true
+        })
+      ])
+      const topUsers = await userServices.getTopUsers(loginUserId)
+
+      loginUserFollowingList = loginUserFollowingList.map(i => i.followingId)
+
+      if (!user) throw new Error('使用者不存在')
+      user = user.toJSON()
+      FollowerList = user.Followers
+        .map(i => ({
+          ...i,
+          isFollow: loginUserFollowingList.some(j => i.id === j)
+        }))
+        .sort(function (a, b) {
+          return b.Followship.createdAt.toLocaleString().localeCompare(a.Followship.createdAt.toLocaleString())
+        })
+
+      res.render('user/user-followers', { user, FollowerList, loginUserId, topUsers })
+    } catch (err) { next(err) }
+  },
 }
 
 module.exports = userController
