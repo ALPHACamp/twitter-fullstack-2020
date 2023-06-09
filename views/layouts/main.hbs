@@ -8,13 +8,8 @@
   <title>餐廳評論網</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link rel="preconnect" href="https://fonts.googleapis.com%22%3E/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap"
-    rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap"
     rel="stylesheet">
@@ -99,7 +94,7 @@
             </div>
             {{!-- 個人資料 --}}
             <div class="mt-4 mb-4">
-              <a href="/users/{{user.id}}/tweets" class="d-flex flex-row align-items-center">
+              <a href="/users/{{currentUser.id}}/tweets" class="d-flex flex-row align-items-center">
                 <img class="ms-2 me-3" src="/_base/Property 2=outlined, Property 3=user.svg">
                 <h5 class="m-0">個人資料</h5>
               </a>
@@ -113,7 +108,7 @@
             </div>
             {{!-- 推文 --}}
             <button id="modalBtn" class="mt-4 mb-4 pill pill-large pill-main " data-bs-toggle="modal"
-              data-bs-target="#exampleModal">推文
+              data-bs-target="#postTweetModal">推文
             </button>
           </div>
           <div class="">
@@ -133,32 +128,7 @@
           {{{body}}}
         </div>
         {{!-- 彈出視窗 Modal --}}
-        <div class="modal fade" id="exampleModal">
-          <div class="modal-dialog" style="max-width: 100%;">
-            <div class="modal-content modal-twitter">
-              <div class="modal-header">
-                {{!-- 關閉 Modal 按鈕 --}}
-                <button type="button" data-bs-dismiss="modal" aria-label="Close">
-                  <img class="ms-2 me-3 svg-fill-main" src="/_base/Property 2=outlined, Property 3=close.svg">
-                </button>
-              </div>
-              <div class="modal-body d-flex">
-                {{!-- 用戶大頭貼 --}}
-                <div class="me-2" style="width: 50px; height: 50px; border-radius: 50%;">
-                  <img src="/user/card/tweet/base/img.svg">
-                </div>
-                {{!-- tweet 文字輸入區 --}}
-                <textarea placeholder="有什麼新鮮事？" class="text-basic-reg mt-2" rows="5" cols="50"
-                  maxlength="140"></textarea>
-              </div>
-              <div class="modal-footer" style="border:0px">
-                <form action="/tweets" method="POST" enctype="multipart/form-data">
-                  <button type="submit" class="pill-default pill-main">推文</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+        {{> modal}}
       </div>
       {{!-- 右側 fixed 欄位 --}}
       <div class="col col-3">

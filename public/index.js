@@ -1,4 +1,4 @@
-const targetNode = document.getElementById('exampleModal')
+const targetNode = document.getElementById('postTweetModal')
 
 // 取得目前現在視窗大小的函式
 function updatePageHeight () {
