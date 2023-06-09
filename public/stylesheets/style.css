@@ -169,6 +169,7 @@ a:hover {
 
 .logo {
   height: 100%;
+  border-radius: 50%;
 }
 
 /* input */
