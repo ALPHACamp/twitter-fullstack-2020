@@ -5,7 +5,7 @@ module.exports = {
     try {
       const users = await
       queryInterface.sequelize.query(
-        "SELECT * FROM ac_twitter_workspace.Users WHERE `role` = 'user';",
+        "SELECT * FROM Users WHERE `role` = 'user';",
         { type: queryInterface.sequelize.QueryTypes.SELECT }
       )
       await queryInterface.bulkInsert('Tweets', Array.from({ length: 50 }).map((d, i) => ({

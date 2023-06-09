@@ -43,7 +43,7 @@ const userController = {
     return res.render('signin')
   },
   signIn: (req, res) => {
-    req.flash('success_msg', '登入成功')
+    // req.flash('success_msg', '登入成功')  似乎沒地方顯示?
     return res.redirect('/tweets')
   },
   // 登出
