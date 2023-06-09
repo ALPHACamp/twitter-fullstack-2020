@@ -37,6 +37,7 @@ router.get('/users/:userId/followings', authenticated, profileController.getUser
 router.get('/users/:userId/followers', authenticated, profileController.getUserFollowers)
 router.get('/users/:userId', authenticated, profileController.editUser)
 router.get('/tweets/:tweetId/replies', authenticated, tweetsController.getTweet)
+router.post('/tweets/:tweetId/replies', authenticated, tweetsController.postReply)
 router.get('/tweets', authenticated, tweetsController.getTweets)
 router.post('/tweets', authenticated, tweetsController.postTweet)
 

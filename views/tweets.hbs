@@ -23,7 +23,7 @@
       
       {{#each tweets}}
       <li class="list-group-item tweet-list">
-        <a href="/tweets/{{this.id}}/replies" class="text-decoration-none">
+        <a href="/tweets/{{this.id}}/replies" class="text-decoration-none" >
           <div class="d-flex">
             <div class="flex-shrink-1 p-0">
               <img src="{{this.User.avatar}}" alt="" class="recommend-followings-img">
@@ -36,10 +36,19 @@
         
               <p class="mb-2" style="white-space:break-spaces;">{{this.description}}</p>
         
-              <div class="d-flex">
+              <div class="d-flex" >
                 <img src="/images/reply_outlined.svg" alt="" class="tweets-icon me-1">
                 <span class="tweets-interact-counts" style="margin-right:40px;">13</span>
-                <img src="/images/like_outlined.svg" alt="" class="tweets-icon me-1">
+
+                {{#if this.isLiked }}
+                <form action="/tweets/{{../this.id}}/unlike" method="POST" style="display: contents;">
+                  <input type="image" src="/images/like_filled.svg" alt="提交">
+                </form>
+                {{else}}
+                <form action="/tweets/{{../this.id}}/like" method="POST" style="display: contents;">
+                  <input type="image" src="/images/like_outlined.svg" alt="提交">
+                </form>
+                {{/if}}
                 <span class="tweets-interact-counts">76</span>
               </div>
             </div>
