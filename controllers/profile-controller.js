@@ -153,7 +153,7 @@ const profileController = {
       // 取對應的user資料、包含追隨的人、推文數
       const [user, tweetsCount] = await Promise.all([
         User.findByPk(userId, {
-          include: [{ model: User, as: 'Followings' }]
+          include: [{ model: User, as: 'Followings', order: [['createdAt', 'DESC']] }]
         }),
         Tweet.count({
           where: { UserId: userId }
@@ -180,7 +180,7 @@ const profileController = {
       const [user, tweetsCount] = await Promise.all([
         User.findByPk(userId, {
           include: [
-            { model: User, as: 'Followers' },
+            { model: User, as: 'Followers', order: [['createdAt', 'DESC']] },
             { model: User, as: 'Followings' }
           ]
         }),

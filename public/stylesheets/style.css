@@ -95,6 +95,74 @@ h4 {
   width: 354px;
 }
 
+/****** admin-users ******/
+.secondary-color {
+  color: #6c757d;
+}
+
+.admin-user-info {
+  text-decoration: none;
+}
+
+.admin-user-card {
+  width: 210px;
+  height: 314px;
+  border: 0;
+  border-radius: 10px;
+  background-color: #f6f7f8;
+  transition: 0.5s;
+}
+
+.admin-user-card:hover {
+  transform: scale(1.03);
+}
+
+.admin-user-card i {
+  font-style: normal;
+}
+
+.admin-user-card-cover {
+  width: 210px;
+  height: 140px;
+}
+
+.admin-user-card-cover img {
+  width: 210px;
+  height: 140px;
+  border-radius: 10px 10px 0 0;
+}
+
+.admin-user-avatar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -95%);
+  border: 4px solid #ffffff;
+  border-radius: 50%;
+}
+
+.admin-user-avatar img {
+  border-radius: 50%;
+}
+
+.admin-user-info-name {
+  margin-top: 35px;
+  font-size: 16px;
+}
+
+.admin-user-info-account {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.admin-user-info-count i {
+  vertical-align: text-top;
+}
+
+.admin-user-info-follower i {
+  font-size: 14px;
+}
+
 /****** nav ******/
 .navbar.navbar-vertical {
   padding: 0;

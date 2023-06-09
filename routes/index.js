@@ -33,8 +33,10 @@ router.get('/admin/tweets', adminController.adminTweetsPage)
 router.get('/admin/users', adminController.adminUsersPage)
 
 // index
-router.get('/tweets', authenticated, (req, res) => res.render('index'))
+router.get('/tweets', authenticated, tweetsController.getTweets)
+router.get('/tweets/:tweetId/replies', authenticated, tweetsController.getTweet)
 
+// profile
 router.get('/users/:userId/tweets', authenticated, profileController.getUser, profileController.getUserTweets)
 router.get('/users/:userId/replies', authenticated, profileController.getUser, profileController.getUserReplies)
 router.get('/users/:userId/likes', authenticated, profileController.getUser, profileController.getUserLikes)
