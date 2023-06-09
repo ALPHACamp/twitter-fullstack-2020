@@ -608,6 +608,18 @@ textarea {
   z-index: 0;
 }
 
+.btn-following-card {
+  position: absolute;
+  z-index: 2;
+  top: 16px;
+  right: 30px
+}
+
+.following-card-text {
+  width: 430px;
+  padding-left: 8px;
+}
+
 
 /* -------------------- followship -------------------- */
 
