@@ -405,6 +405,13 @@ h4 {
 }
 
 /* profile */
+.profile-page {
+  /* layout */
+  margin: 0px 24px;
+  padding: 0;
+  border: 1px solid #e6ecf0;
+}
+
 .user-container > div > span > .tweet {
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -480,6 +487,20 @@ h4 {
   margin-right: 16px;
 }
 
+.user-container > .card > .follow {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 16px;
+  margin-right: 16px;
+}
+
+.user-container > .card > .follow > .mail,
+.user-container > .card > .follow > .notification {
+  width: 40px;
+  margin-right: 16px;
+}
+
 .user-container .nav {
   border-top: 1px solid #e6ecf0;
 }
@@ -505,6 +526,31 @@ h4 {
 .user-container .follow-list {
   margin: 0;
   padding: 0;
+
+  height: 100vh;
+
+  /* scrollbar */
+  overflow-y: auto;
+}
+
+/* scrollbar */
+.user-container .tweet-list::-webkit-scrollbar,
+.user-container .follow-list::-webkit-scrollbar {
+  /* size */
+  width: 6px;
+}
+
+.user-container .tweet-list::-webkit-scrollbar-thumb,
+.user-container .follow-list::-webkit-scrollbar-thumb {
+  /* style */
+  background-color: transparent;
+}
+
+.user-container .tweet-list:hover::-webkit-scrollbar-thumb,
+.user-container .follow-list:hover::-webkit-scrollbar-thumb {
+  /* style */
+  background-color: #e6ecf0;
+  border-radius: 50px;
 }
 
 .user-container .tweet-list li,

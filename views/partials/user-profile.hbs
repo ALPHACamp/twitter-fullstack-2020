@@ -20,12 +20,12 @@
       <div class='btn rounded-pill' data-bs-toggle='modal' data-bs-target='#edit-modal'>編輯個人資料</div>
     </div>
   {{else}}
-    <div>
+    <div class='follow'>
       <a class='mail' href='#'>
-        <img class='reply-icon' src='/images/profile/mail_outlined.svg' alt='mail' />
+        <img class='reply-icon' src='/images/profile/btn_msg.svg' alt='mail' />
       </a>
       <a class='notification' href='#'>
-        <img class='like-icon' src='/images/profile/notification_outlined.svg' alt='notification' />
+        <img class='like-icon' src='/images/profile/btn_notfi.svg' alt='notification' />
       </a>
       <form class='' action='/follow/{{this.id}}' method='POST'>
         <button type='submit' class='btn'>正在跟隨</button>
