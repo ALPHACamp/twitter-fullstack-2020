@@ -1,5 +1,7 @@
 <div class="d-flex align-items-center border p-3 ps-4" style="position: relative">
-  <img class="me-3" src="/_base/Property 2=outlined, Property 3=back.svg" style="width: 23px">
+  <a href="javascript:history.back()">
+    <img class="me-3" src="/_base/Property 2=outlined, Property 3=back.svg" style="width: 23px">
+  </a>
   <div class="d-flex flex-column">
     <h5 class="m-0" style="line-height:0.9em;">{{user.name}}</h5>
     <p class="text-12px-reg color-secondary m-0">{{tweets.length}} 推文</p>
@@ -29,7 +31,8 @@
   </div>
 </div>
 <div class="d-flex mt-4">
-  <div class="p-2 text-14px-med text-center" style="color:#ff6600;font-size: 15px; width:20%; border-bottom: 2px solid #ff6600">推文</div>
+  <div class="p-2 text-14px-med text-center"
+    style="color:#ff6600;font-size: 15px; width:20%; border-bottom: 2px solid #ff6600">推文</div>
   <div class="p-2 text-14px-med text-center" style="color:#657786;font-size: 15px; width:20%">回覆</div>
   <div class="p-2 text-14px-med text-center" style="color:#657786;font-size: 15px; width:20%">喜歡的內容</div>
 </div>
@@ -39,21 +42,22 @@
 <div class="d-flex flex-row align-items-center ps-4 pe-4 p-3align-items-start" style="width: 100%">
   <div class="d-flex align-items-center">
     {{!-- 用戶大頭貼 --}}
-    <figure class="me-2 align-self-start flex-shrink-0"
-      style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
-      <img src="{{../user.avatar}}" style="object-fit: cover;width:100%;height:100%">
-    </figure>
+    <a href="/users/{{this.User.id}}/tweets" class="align-self-start">
+      <figure class="me-2 flex-shrink-0" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
+        <img src="{{this.User.avatar}}" style="object-fit: cover;width:100%;height:100%">
+      </figure>
+    </a>
     <div class="me-2 d-flex flex-column flex-shrink-1">
       <div class="d-flex align-items-center">
         {{!-- 用戶名稱 --}}
-        <p class="m-0 text-16px-med">{{../user.name}}</p>
+        <p class="m-0 text-16px-med">{{this.User.name}}</p>
         {{!-- 用戶id --}}
-        <p class="m-0 text-14px-reg color-secondary">&nbsp @{{../user.account}} ・</p>
+        <p class="m-0 text-14px-reg color-secondary">&nbsp @{{this.User.account}} ・</p>
         <p class="m-0 text-14px-reg color-secondary">{{relativeTime this.createdAt}}</p>
       </div>
       {{!-- tweets 內容 --}}
       <div class="m-0 text-16px-reg text-break mt-2">
-        {{this.description}}
+        <a href="/tweets/{{this.id}}/replies">{{this.description}}</a>
       </div>
       <div class="d-flex mt-3">
         {{!-- 留言數 Comment --}}

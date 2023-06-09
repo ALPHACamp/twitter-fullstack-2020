@@ -1,8 +1,8 @@
-const { Tweet, User } = require('../models')
+const { Tweet, User, Reply } = require('../models')
 const helpers = require('../_helpers')
 
 const tweetController = {
-  // 獲得所有貼文
+  // 獲得所有推文
   getTweets: (req, res, next) => {
     const userId = helpers.getUser(req).id
     Promise.all([
@@ -28,7 +28,7 @@ const tweetController = {
       })
       .catch(err => next(err))
   },
-  // 新增一則貼文
+  // 新增一則推文
   postTweets: (req, res, next) => {
     const { description } = req.body
     if (!description) throw new Error('Tweet is required!')
@@ -40,6 +40,27 @@ const tweetController = {
         res.redirect('/tweets')
       })
       .catch(err => next(err))
+  },
+  // 獲取特定推文頁面
+  getTweet: (req, res, next) => {
+    const tweetId = req.params.id
+    Promise.all([
+      Tweet.findByPk(tweetId, {
+        include: [User],
+        raw: true,
+        nest: true
+      }),
+      Reply.findAll({
+        include: [User],
+        where: { tweetId },
+        raw: true,
+        nest: true
+      })
+    ])
+      .then(([tweet, replies]) => {
+        console.log(replies)
+        res.render('tweet', { tweet, replies })
+      })
   }
 }
 
