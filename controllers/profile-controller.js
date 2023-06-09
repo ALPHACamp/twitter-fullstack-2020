@@ -231,7 +231,6 @@ const profileController = {
     const cover = req.files?.cover ? req.files.cover[0] : null
     const avatar = req.files?.avatar ? req.files.avatar[0] : null
     // 抓id, 表單資料
-    console.log('body', req.body)
     const { userId } = req.params
     const loginUser = helpers.getUser(req)
     const { account, name, email, password, passwordCheck, introduction, coverDelete } = req.body

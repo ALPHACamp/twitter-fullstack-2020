@@ -1,7 +1,6 @@
 const nameAmount = document.querySelector('.name-amount')
 const introductionAmount = document.querySelector('.introduction-amount')
 const inputForm = document.querySelector('.input-form')
-const saveButton = document.querySelector('.btn-edit')
 const coverImg = document.querySelector('.cover-img')
 const avatarImg = document.querySelector('.avatar-img')
 const inputName = document.querySelector('.input-name')
@@ -33,7 +32,7 @@ inputForm.addEventListener('input', event => {
   }
 })
 
-inputForm.addEventListener('submit', function onFormSubmitted(event) {
+inputForm.addEventListener('submit', event => {
   if (!inputForm.checkValidity()) {
     event.stopPropagation()
     event.preventDefault()
