@@ -9,7 +9,7 @@
         <div class="main-arrow-icon background-image" onclick="history.back()"></div>
         <div class="main-head-bar-text">
           <h5 class="main-head-bar-name">{{ user.name }}</h5>
-          <span class="card-datetime">{{ tweetList.length }} 推文</span>
+          <span class="card-datetime">{{ user.Tweets.length }} 推文</span>
         </div>
       </div>
 
@@ -20,27 +20,27 @@
       {{!-- tabs --}}
       <ul class="nav nav-user-tab">
         <li class="nav-item">
-          <a class="nav-link nav-link-active" aria-current="page" href="#">推文</a>
+          <a class="nav-link" aria-current="page" href="/users/{{user.id}}/tweets">推文</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/users/{{user.id}}/replies">回覆</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
+          <a class="nav-link  nav-link-active" href="#">喜歡的內容</a>
         </li>
       </ul>
 
       {{> messages}}
       {{!-- tweets cards --}}
-      {{#if tweetList }}
+      {{#if likeList }}
 
-      {{#each tweetList}}
+      {{#each likeList}}
       <div class="card card-tweet-lg">
-        <a href="/tweets/{{this.id}}/replies" class="tweet-href"></a>
+        <a href="/tweets/{{this.TweetId}}/replies" class="tweet-href"></a>
         <div class="avatar">
-          <a href="/users/{{this.UserId}}/tweets" class="primary-anchor">
-            {{#if this.User.avatar}}
-            <img src="{{ this.User.avatar }}" alt="avatar" class="logo">
+          <a href="/users/{{this.Tweet.UserId}}/tweets" class="primary-anchor">
+            {{#if this.Tweet.User.avatar}}
+            <img src="{{ this.Tweet.User.avatar }}" alt="avatar" class="logo">
             {{else}}
             <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
             {{/if}}
@@ -48,34 +48,34 @@
         </div>
         <div class="card-text">
           <div class="card-text-info">
-            <a href="/users/{{ this.UserId }}/tweets" class="primary-anchor">
-              <span class="card-name">{{ this.User.name }}</span>
+            <a href="/users/{{ this.Tweet.UserId }}/tweets" class="primary-anchor">
+              <span class="card-name">{{ this.Tweet.User.name }}</span>
             </a>
-            <a href="/users/{{ this.UserId }}/tweets" class="primary-anchor">
-              <span class="card-account">@{{ this.User.account }}</span>
+            <a href="/users/{{ this.Tweet.UserId }}/tweets" class="primary-anchor">
+              <span class="card-account">@{{ this.Tweet.User.account }}</span>
             </a>
             <span class="card-dot">·</span>
-            <span class="card-datetime">{{relativeTimeFromNow this.createdAt }}</span>
+            <span class="card-datetime">{{relativeTimeFromNow this.Tweet.createdAt }}</span>
           </div>
-          <p class="card-description">{{ this.description }}</p>
+          <p class="card-description">{{ this.Tweet.description }}</p>
           <div class="card-datas">
             <div data-bs-toggle="modal" data-bs-target="#replyModal" class="reply-modal-trigger primary-anchor">
               <span class="card-reply-icon background-image"></span>
-              <span class="card-counts">{{ this.Replies.length }}</span>
+              <span class="card-counts">{{ this.Tweet.Replies.length }}</span>
             </div>
 
             {{#if this.isLike}}
-            <form action="/tweets/{{tweet.id}}/unlike" method="post" class="primary-anchor form-like">
+            <form action="/tweets/{{this.Tweet.id}}/unlike" method="post" class="primary-anchor form-like">
               <button type="submit" class="btn-like">
                 <span class="card-unlike-icon background-image"></span>
-                <span class="card-counts">{{ this.Likes.length }}</span>
+                <span class="card-counts">{{ this.Tweet.Likes.length }}</span>
               </button>
             </form>
             {{else}}
-            <form action="/tweets/{{tweet.id}}/like" method="post" class="primary-anchor form-like">
+            <form action="/tweets/{{this.Tweet.id}}/like" method="post" class="primary-anchor form-like">
               <button type="submit" class="btn-like">
                 <span class="card-like-icon background-image"></span>
-                <span class="card-counts">{{ this.Likes.length }}</span>
+                <span class="card-counts">{{ this.Tweet.Likes.length }}</span>
               </button>
             </form>
             {{/if}}
@@ -89,7 +89,7 @@
       {{else}}
       <div class="no-tweet">
         <h5>
-          沒有貼文
+          沒有喜愛的貼文
         </h5>
       </div>
       {{/if}}
@@ -101,8 +101,6 @@
 
 
 {{> tweet-modal}}
-
-
 
 
 {{> edit-modal}}
