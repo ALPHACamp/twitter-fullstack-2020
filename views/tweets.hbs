@@ -1,56 +1,49 @@
-<div class="container d-flex " style="background: #FFFFFF;display: flex">
-  <div class="col-2 nav" style="width: 178px">
+<div id="whole-container" class="container d-flex ">
+  <div id="left-nav" class="col-2">
     {{> nav }}
   </div>
-  <div class="col-7 tweets" style="width: 639px;">
-    <div class="tweet container" style="width: 639px;height: 100%;border:1px solid #E6ECF0; ">
+  <div id="mid-tweets" class="col-7">
+    <div id="mid-tweets-content"class="tweet container">
 
-      <div style="border-bottom: 1px solid #E6ECF0;">
-        <h4 class="pt-3 ps-3"
-          style="display:flex; justify-content:start; align-iten:center; height: 75px;font-weight: 700;font-size: 24px;line-height: 26px;color: #171725;">首頁</h4>
+      <div id="tweets-top">
+        <h4 id="home-word"class="pt-3 ps-3">首頁</h4>
       </div>
 
-      <div class="tweetpost d-flex flex-column ps-3 pb-3 pe-3" style="border-bottom: 8px solid #E6ECF0">
+      <div id="tweet-post"class="tweetpost ">
         <div class="avatar d-flex mt-3">
-          <a href="/" style="text-decoration:none;">
-            <img src=""
-              class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+          <a href="/users/{{user.id}}/tweets" style="text-decoration:none;">
+            <img id="tweet-post-avatar" src="http://i.imgur.com/ehh37fR.jpg"
+              class="rounded-circle me-3">
           </a>
-          <button type="button" class="btn"
-            style="padding-left: 0px; width: 526px; height: 36px;text-align:start; font-size: 18px;color:#C4C4C4"
+          <button id="tweet-post-link" type="button" class="btn"
             data-bs-toggle="modal" data-bs-target="#tweetModal">
             有什麼新鮮事?
           </button>
         </div>
         <div class="button d-flex justify-content-end">
-          <button type="submit" class="btn tweet-button d-flex justify-content-center align-items-center"
-            style="width: 64px; height: 40px; background: #FF6600;border-radius: 50px; ">
-            <span style="font-weight: 400;font-size: 16px;line-height: 24px; color: #FFFFFF;">推文</span>
+          <button id="tweet-post-btn" type="submit" class="btn tweet-button d-flex" data-bs-toggle="modal" data-bs-target="#tweetModal">
+            <span id="tweet-post-btn-word">推文</span>
           </button>
         </div>
       </div>
 
-     <div class="line" style="width: 639px;
-height: 10px; border-top: 3px solid #E6ECF0;"></div>
+      <div class="tweets container">
 
-      <div class="tweets-container">
-
-        <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
+        <div id="tweet-frame"class="tweets d-flex mt-3">
           <div class="avatar ps-3">
-            <a href="/" style="text-decoration:none;">
-              <img
-                src="/"
-                class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+            <a href="/users/{{this.User.dataValues.id}}/tweets" style="text-decoration:none;">
+              <img id="tweet-post-avatar"
+                src="http://i.imgur.com/ehh37fR.jpg"
+                class="rounded-circle me-3">
             </a>
           </div>
           <div class="tweet-content">
             <div class="name">
-              <span style="font-size: 16px;font-weight:700;color: #171725;">Name</span>
-              <span style="font-size: 14px;color: #6C757D;">Account・Time</span>
+              <span id="tweet-name" >Name</span>
+              <span id="tweet-account">Account・Time</span>
             </div>
-            <div class="content mt-3" style="width: 528px; word-wrap: break-word;">
-              <a href="/"
-                style="word-wrap: break-word; text-decoration:none;font-size: 16px; color: #171725;">
+            <div id="tweet-text-aria"class="content mt-3">
+              <a id="tweet-text" href="/">
                 Descriptionssssss
               </a>
             </div>
@@ -83,7 +76,7 @@ height: 10px; border-top: 3px solid #E6ECF0;"></div>
       </div>
     </div>
   </div>
-  <div class="col-3 followship ms-3" style="width: 273px; height:100%px;">
+  <div id="right-followship"class="col-3 ms-3">
     {{> follow }}
   </div>
 </div>
