@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const { User } = db
+const { User, Tweet } = db
+const helpers = require('../_helpers')
 
 const userController = {
   // 取得註冊頁面
@@ -81,6 +82,29 @@ const userController = {
     req.logout()
     req.flash('success_messages', '你已成功登出。')
     res.redirect('/signin')
+  },
+  // 取得特定使用者頁面
+  getUserPage: (req, res, next) => {
+    const userId = req.params.id
+    Promise.all([
+      // 取得特定使用者 Id
+      User.findByPk(userId, {
+        raw: true,
+        nest: true
+      }),
+      // 取得該使用者所有貼文
+      Tweet.findAll({
+        where: { UserId: userId },
+        raw: true,
+        nest: true
+      }),
+      // 取得目前登入的使用者資料
+      User.findByPk(helpers.getUser(req).id, { raw: true })
+    ])
+      .then(([user, tweets, currentUser]) => {
+        console.log(tweets)
+        res.render('user', { user, tweets, currentUser })
+      })
   }
 }
 
