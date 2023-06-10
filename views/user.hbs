@@ -18,8 +18,8 @@
       style="width: 140px; height: 140px; border-radius: 50%; overflow: hidden;border:4px solid #ffffff; position: relative;">
       <img src="{{user.avatar}}" style="object-fit: cover;width:100%;height:100%;">
     </figure>
-    <button type="button" class="pill-default pill-outline m-2 flex-shrink-1" data-bs-toggle="modal"
-      data-bs-target="#editProfileModal">編輯個人資料</button>
+    <button type="button" id="editProfileButton" class="pill-default pill-outline m-2 flex-shrink-1"
+      data-bs-toggle="modal" data-bs-target="#editProfileModal" value="{{user.id}}">編輯個人資料</button>
   </div>
   <div class="d-flex flex-column ps-3 mt-2">
     <h5 class="mb-0">{{user.name}}</h5>
