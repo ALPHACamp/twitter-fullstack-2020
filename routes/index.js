@@ -18,7 +18,6 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.post('/signout', userController.signOut)
 
 // users路由
-router.get('/tweets', authenticated, (req, res) => res.render('tweets'))
 router.use('/users', authenticated, users)
 
 // tweets路由

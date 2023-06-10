@@ -49,6 +49,25 @@ const tweetController = {
     } catch(err) {
       next(err)
     }
+  },
+  postTweet: async (req, res, next) => {
+    try {
+      const UserId = _helpers.getUser(req).id
+      const { description } = req.body
+      
+      if (!description.trim()) throw new Error('Description is required!')
+      if (description.length > 140) throw new Error('Description cannot be longer than 140 characters!')
+
+      await Tweet.create({
+        UserId,
+        description
+      })
+
+      return res.redirect('/tweets')
+
+    } catch(err) {
+      next(err)
+    }
   }
 }
 
