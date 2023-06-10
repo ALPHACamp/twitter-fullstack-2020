@@ -68,6 +68,47 @@ const tweetController = {
     } catch(err) {
       next(err)
     }
+  },
+  likeTweet: async (req, res, next) => {
+    try {
+      const UserId = _helpers.getUser(req).id
+      const TweetId = req.params.tid
+      
+      const likedTweet = await Like.findOne({
+          where: { TweetId, UserId }
+        })
+
+      if (likedTweet) throw new Error("You have Liked this tweet!")
+
+      await Like.create({
+        UserId,
+        TweetId
+      })
+
+      return res.redirect('back')
+
+    } catch(err) {
+      next(err)
+    }
+  },
+  unlikeTweet: async (req, res, next) => {
+    try {
+      const UserId = _helpers.getUser(req).id
+      const TweetId = req.params.tid
+      
+      const likedTweet = await Like.findOne({
+          where: { TweetId, UserId }
+        })
+
+      if (!likedTweet) throw new Error("You haven't Liked this tweet!")
+
+      await likedTweet.destroy()
+
+      return res.redirect('back')
+
+    } catch(err) {
+      next(err)
+    }
   }
 }
 
