@@ -63,7 +63,7 @@ const tweetController = {
         description
       })
 
-      return res.redirect('/tweets')
+      return res.redirect('back')
 
     } catch(err) {
       next(err)
