@@ -1,0 +1,43 @@
+<div class="modal fade"id="replyModal"tabindex="-1"aria-labelledby="exampleModalLabel"ariahidden="true">
+  <div class="modal-dialog">
+   <div class="modal-content" style="width:634px;height:500px;border-radius:14px;padding:0px 16px">
+    <div class=" d-flex justify-content-start m-2">
+      <button
+       type="button"
+       class="btn-close "
+       data-bs-dismiss="modal"
+       aria-label="Close">
+       </button>
+     </div>
+ <hr class="solid">
+ <div class="d-flex flex-column">
+ <div class="d-flex flex-row mb-3" >
+ <div>
+   <img src="https://i.imgur.com/mhXz6z9.png?1" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;border:2px black solid;margin:auto 8px auto 24px" alt="avatar"> 
+ </div>
+  <div class="d-flex flex-column">
+    <div class="d-flex justify-content-start m-2">
+      <p class="name mb-0" style="font-size:15px">{{tweet.User.name}}@</p>
+      <p class="account mb-0" style="font-size:15px">{{tweet.User.account}}</p>
+    </div>
+  <p class="content mt-0 pt-0">{{tweet.content}} Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum. </p>
+  <p class="reply-to"> 回覆給@{{tweet.User.account}}</p>
+</div>
+  
+</div>
+   <div class="form-row d-flex flex-row mb-3" style="display:inline-block">
+   <div>
+   <img src="https://i.imgur.com/mhXz6z9.png?1" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;border:2px black solid;margin:auto 8px auto 24px" alt="avatar"> 
+   </div>
+  <textarea class="form-control" id="description" style="border:none;padding:0px;resize: none" name="description" rows="7" cols="20" maxlength:"140" minlength:"1"  placeholder="推你的回覆"></textarea>
+</div>
+</div>
+     
+ <div class="d-flex justify-content-end">
+  <p ciass="warnig-meg" style="font-size:15px;color:#FC5A5A">內容不可空白</p>
+  <button type="submit" class="btn btn-primary m-1" style="color:#FFFFFF;width:64px;
+height:40px;border:none;background:#FF6600;border-radius:50px">推文</button>
+ </div>         
+        </div>
+      </div>
+    </div>
