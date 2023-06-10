@@ -36,6 +36,14 @@ const adminController = {
     } catch (e) {
       next(e)
     }
+  },
+  adminGetUsers: async (req, res, next) => {
+    try {
+      const users = await User.findAll({ raw: true, nest: true })
+      return res.render('admin/users', { users })
+    } catch (e) {
+      next(e)
+    }
   }
 }
 module.exports = adminController
