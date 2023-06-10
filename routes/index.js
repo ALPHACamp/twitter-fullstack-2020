@@ -33,15 +33,16 @@ router.get('/signup', userController.signupPage)
 // index
 router.get('/tweets', authenticated, tweetsController.getTweets)
 router.get('/tweets/:tweetId/replies', authenticated, tweetsController.getTweet)
+router.post('/tweets/:tweetId/replies', authenticated, tweetsController.postReply)
+router.get('/tweets', authenticated, tweetsController.getTweets)
+router.post('/tweets', authenticated, tweetsController.postTweet)
 
-// profile
 router.get('/users/:userId/tweets', authenticated, profileController.getUser, profileController.getUserTweets)
 router.get('/users/:userId/replies', authenticated, profileController.getUser, profileController.getUserReplies)
 router.get('/users/:userId/likes', authenticated, profileController.getUser, profileController.getUserLikes)
 router.get('/users/:userId/followings', authenticated, profileController.getUserFollowings)
 router.get('/users/:userId/followers', authenticated, profileController.getUserFollowers)
 router.get('/users/:userId', authenticated, profileController.editUserAccount)
-
 router.put(
   '/users/:userId',
   authenticated,
