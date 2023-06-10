@@ -33,7 +33,7 @@
           <div class="avatar ps-3">
             <a href="/users/{{this.User.dataValues.id}}/tweets" style="text-decoration:none;">
               <img id="tweet-post-avatar"
-                src="http://i.imgur.com/ehh37fR.jpg"
+                src="{{#if this.User.dataValues.avatar}}{{this.User.dataValues.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}"
                 class="rounded-circle me-3">
             </a>
           </div>
@@ -43,7 +43,7 @@
               <span id="tweet-account">Account・Time</span>
             </div>
             <div id="tweet-text-aria"class="content mt-3">
-              <a id="tweet-text" href="/">
+              <a id="tweet-text" href="/tweets/:id/replies">
                 Descriptionssssss
               </a>
             </div>
