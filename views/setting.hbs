@@ -1,0 +1,51 @@
+<div class="row h-100">
+
+  <div class="col-3">
+    <div class="row position-relative h-100">
+      {{> nav}}
+      <div class="border-line position-absolute"
+        style=" width:1px; background-color:#E6ECF0; padding: 0; right: 0; top:0; bottom: 0;">
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6" style="padding: 0;">
+    <div class="container-account-setting" style="height: 100%;border:1px solid #E6ECF0; ">
+
+      <div style="border-bottom: 1px solid #E6ECF0;">
+        <h4 class="pt-3 ps-3"
+          style="display:flex; justify-content:start; align-iten:center; height: 75px;font-weight: 700;font-size: 24px;line-height: 26px;color: #171725;">
+          帳戶設定</h4>
+      </div>
+
+      <div class="container-form-setting pt-3 ps-3 pe-3">
+        <form class="form-setting" action="/users/{{user.id}}setting?_method=PUT" method="POST">
+          <div class="mb-3" id="form-input-line">
+            <label class="form-label" for="account">帳號</label>
+            <input type="text" id="account" name="account" class="form-control" placeholder="{{account}}" required autofocus>
+          </div>
+          <div class="mb-3" id="form-input-line">
+            <label class="form-label" for="account">名稱</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="{{name}}" required autofocus>
+          </div>
+          <div class="mb-3" id="form-input-line">
+            <label class="form-label" for="email">Email</label>
+            <input type="text" id="email" name="email" class="form-control" placeholder="{{email}}" required>
+          </div>
+          <div class="mb-3" id="form-input-line">
+            <label class="form-label" for="password">密碼</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="請設定密碼" required>
+          </div>
+          <div class="mb-3" id="form-input-line">
+            <label class="form-label" for="passwordCheck">密碼確認</label>
+            <input type="password" id="passwordCheck" name="passwordCheck" class="form-control" placeholder="請再次輸入密碼"
+              required>
+          </div>
+          <div class="container-btn-setting">
+            <button class="btn btn-primary" id="btn-setting-submit" type="submit">儲存</button>
+          </div>
+        </form>
+
+      </div>
+
+    </div>

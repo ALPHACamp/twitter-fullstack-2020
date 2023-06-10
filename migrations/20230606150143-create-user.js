@@ -21,13 +21,16 @@ module.exports = {
         type: Sequelize.STRING
       },
       avatar: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: '/images/users/avatar.png'
       },
       cover: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: '/images/users/cover.png'
       },
       introduction: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: ''
       },
       is_admin: {
         type: Sequelize.BOOLEAN
