@@ -57,26 +57,29 @@ h4 {
   width: 354px;
   height: 54px;
   border-radius: 2px;
-  background-color: #F5F8FA;
+  background-color: #f5f8fa;
 }
 
-.account-label,.password-label {
+.account-label,
+.password-label {
   margin-bottom: 0;
   padding: 0 0 0 10px;
   font-size: 14px;
 }
 
-.account-input,.password-input {
+.account-input,
+.password-input {
   padding-left: 10px;
   font-size: 16px;
-  background-color: #F5F8FA;
+  background-color: #f5f8fa;
   border: 0;
   border-bottom: 2px solid #657786;
   border-radius: 0;
 }
 
-.account-input::placeholder,.password-input::placeholder {
-  color: #B5B5BE;
+.account-input::placeholder,
+.password-input::placeholder {
+  color: #b5b5be;
 }
 
 .signin-btn {
@@ -85,16 +88,16 @@ h4 {
   font-size: 20px;
   border: 0;
   border-radius: 50px;
-  background-color: #FF6600;
+  background-color: #ff6600;
 }
 
-.other-page-btn p{
+.other-page-btn p {
   width: 354px;
 }
 
 /****** admin-users ******/
 .secondary-color {
-  color: #6C757D;
+  color: #6c757d;
 }
 
 .admin-user-info {
@@ -106,8 +109,8 @@ h4 {
   height: 314px;
   border: 0;
   border-radius: 10px;
-  background-color: #F6F7F8;
-  transition: .5s;
+  background-color: #f6f7f8;
+  transition: 0.5s;
 }
 
 .admin-user-card:hover {
@@ -149,18 +152,16 @@ h4 {
 
 .admin-user-info-account {
   font-size: 14px;
-  color: #6C757D;
+  color: #6c757d;
 }
 
 .admin-user-info-count i {
-  vertical-align:text-top;
+  vertical-align: text-top;
 }
 
 .admin-user-info-follower i {
   font-size: 14px;
 }
-
-
 
 /****** nav ******/
 .navbar.navbar-vertical {
@@ -404,7 +405,7 @@ h4 {
 }
 
 /* profile */
-.user-container>div>span>.tweet {
+.user-container > div > span > .tweet {
   font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 500;
@@ -426,18 +427,18 @@ h4 {
   color: #171725;
 }
 
-.user-container>.card {
+.user-container > .card {
   position: relative;
   border-radius: 0px;
 }
 
-.user-container>.card>.cover {
+.user-container > .card > .cover {
   width: 100%;
   height: 200px;
   border-radius: 0px;
 }
 
-.user-container>.card>.avatar {
+.user-container > .card > .avatar {
   position: absolute;
   height: 140px;
   top: 124px;
@@ -445,7 +446,7 @@ h4 {
   border-radius: 50%;
 }
 
-.user-container>.card>div>.at-name {
+.user-container > .card > div > .at-name {
   font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 400;
@@ -454,8 +455,8 @@ h4 {
   color: #6c757d;
 }
 
-.user-container>.card>div>span,
-.user-container>.card>div>span>a {
+.user-container > .card > div > span,
+.user-container > .card > div > span > a {
   font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 400;
@@ -465,13 +466,13 @@ h4 {
   text-decoration: none;
 }
 
-.user-container>.card>.edit-btn {
+.user-container > .card > .edit-btn {
   display: flex;
   justify-content: flex-end;
   width: 100%;
 }
 
-.user-container>.card>.edit-btn .btn {
+.user-container > .card > .edit-btn .btn {
   width: 128px;
   margin-top: 16px;
   margin-right: 16px;
@@ -547,11 +548,11 @@ h4 {
   line-height: 22px;
 }
 
-.user-container .reply-name>.text {
+.user-container .reply-name > .text {
   color: #6c757d;
 }
 
-.user-container .reply-name>.account {
+.user-container .reply-name > .account {
   color: #ff6600;
 }
 
@@ -605,7 +606,7 @@ h4 {
   padding: 0;
 }
 
-.user-edit-modal .modal-header>.modal-close {
+.user-edit-modal .modal-header > .modal-close {
   position: absolute;
   left: 20px;
   top: 50%;
@@ -616,7 +617,7 @@ h4 {
   width: 15px;
 }
 
-.user-edit-modal .modal-header>.modal-title {
+.user-edit-modal .modal-header > .modal-title {
   position: absolute;
   left: 71px;
   top: 50%;
@@ -629,7 +630,7 @@ h4 {
   color: #1c1c1c;
 }
 
-.user-edit-modal .modal-header>.btn-edit {
+.user-edit-modal .modal-header > .btn-edit {
   position: absolute;
   right: 16px;
   top: 50%;
@@ -643,11 +644,12 @@ h4 {
   padding: 0;
 }
 
-.user-edit-modal .modal-body>.cover {
+.user-edit-modal .modal-body > .cover-edit,
+.user-edit-modal .modal-body > .avatar-edit {
   position: relative;
 }
 
-.user-edit-modal .modal-body>.cover>.cover-img {
+.user-edit-modal .modal-body > .cover-edit > .cover-img {
   -webkit-filter: brightness(0.5);
   filter: brightness(0.5);
   width: 100%;
@@ -655,7 +657,7 @@ h4 {
   border-radius: 0px;
 }
 
-.user-edit-modal .modal-body>.cover>.cover-edit {
+.user-edit-modal .modal-body > .cover-edit > .cover {
   position: absolute;
   top: 0;
   left: 0;
@@ -666,14 +668,15 @@ h4 {
   height: 100%;
 }
 
-.user-edit-modal .modal-body>.cover>.cover-edit>.form-control {
+.user-edit-modal .modal-body > .cover-edit > .cover > .form-control,
+.user-edit-modal .modal-body > .avatar-edit > .avatar > .form-control {
   top: 0;
   width: 0;
   opacity: 0;
   pointer-events: none;
 }
 
-.user-edit-modal .modal-body>.cover>.cover-edit>.form-label {
+.user-edit-modal .modal-body > .cover-edit > .cover > .form-label {
   margin: 0;
   top: 0;
   left: 0;
@@ -681,7 +684,7 @@ h4 {
   cursor: pointer;
 }
 
-.user-edit-modal .modal-body>.cover>.cover-edit>.cover-delete {
+.user-edit-modal .modal-body > .cover-edit > .cover > .cover-delete {
   width: 15px;
   text-align: center;
   background-color: transparent;
@@ -689,24 +692,44 @@ h4 {
   margin: 0;
 }
 
-.user-edit-modal .modal-body>.avatar {
+.user-edit-modal .modal-body .avatar-img {
+  -webkit-filter: brightness(0.5);
+  filter: brightness(0.5);
   position: absolute;
   height: 140px;
-  top: 124px;
+  transform: translateY(-50%);
   left: 15px;
   border-radius: 50%;
+  z-index: 0;
 }
 
-.user-edit-modal .modal-body>.form-text {
+.user-edit-modal .modal-body > .avatar-edit > .avatar {
+  position: absolute;
+  top: 0;
+  left: 75px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.user-edit-modal .modal-body > .avatar-edit > .avatar > .form-label {
+  margin: 0;
+  top: 0;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.user-edit-modal .modal-body > .form-text {
   margin: 80px 16px 0;
 }
 
-.user-edit-modal .modal-body>.form-text .box {
+.user-edit-modal .modal-body > .form-text .box {
   background: #f5f8fa;
   border-bottom: 2px solid #657786;
 }
 
-.user-edit-modal .modal-body>.form-text .form-label {
+.user-edit-modal .modal-body > .form-text .form-label {
   margin: 0;
   padding: 0;
   font-family: 'Noto Sans TC';
@@ -717,12 +740,12 @@ h4 {
   color: #696974;
 }
 
-.user-edit-modal .modal-body>.form-text .form-control {
+.user-edit-modal .modal-body > .form-text .form-control {
   background-color: transparent;
   border: 0;
 }
 
-.user-edit-modal .modal-body>.form-text .text-amount {
+.user-edit-modal .modal-body > .form-text .text-amount {
   text-align: right;
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -758,12 +781,14 @@ h4 {
 }
 
 .user-edit-container .box {
+  width: 100%;
   background: #f5f8fa;
   border-bottom: 2px solid #657786;
   margin-bottom: 32px;
 }
 
 .user-edit-container .form-label {
+  width: 100%;
   margin: 0;
   padding: 0;
   font-family: 'Noto Sans TC';
@@ -790,7 +815,7 @@ h4 {
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
-  color: #6C757D;
+  color: #6c757d;
 }
 
 .tweet-close-button {
@@ -803,7 +828,7 @@ h4 {
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  color: #6C757D;
+  color: #6c757d;
 }
 
 .tweet-text {
@@ -820,12 +845,13 @@ h4 {
   color: #171725;
 }
 
-.tweet-account, .reply-tag-text {
+.tweet-account,
+.reply-tag-text {
   font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  color: #6C757D;
+  color: #6c757d;
 }
 
 .tweet-description {
@@ -846,7 +872,7 @@ h4 {
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
-  color: #6C757D;
+  color: #6c757d;
 }
 
 .list-header {
@@ -877,7 +903,7 @@ h4 {
   /* 不要框架 */
   height: 1px;
   /* 設定 1px 的高度 */
-  background: #E6ECF0;
+  background: #e6ecf0;
   /* 讓背景色填滿高度 1px 的元素空間 */
   margin: 20px 0;
 }
@@ -896,7 +922,7 @@ h4 {
   font-style: normal;
   font-weight: 500;
   font-size: 19px;
-  color: #6C757D;
+  color: #6c757d;
   margin-right: 24px;
 }
 
@@ -905,13 +931,13 @@ h4 {
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  color: #FF6600;
+  color: #ff6600;
 }
 
 .vertical-line {
   width: 0;
-  border-left: 1px solid #B5B5BE;
-  border-right: 1px solid #B5B5BE;
+  border-left: 1px solid #b5b5be;
+  border-right: 1px solid #b5b5be;
   height: 60%;
   margin: 10px auto 0;
 }
