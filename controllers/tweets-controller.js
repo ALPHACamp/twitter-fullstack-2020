@@ -15,13 +15,15 @@ const tweetsController = {
           nest: true
         })
       ])
-      res.render('tweets', { user, tweets })
+      const partialName = 'tweets'
+      res.render('index', { user, tweets, partialName })
     } catch (err) {
       next(err)
     }
   },
   getTweet: (req, res, next) => {
-    return res.render('tweet')
+    const partialName = 'tweet'
+    return res.render('index', { partialName })
   }
 }
 

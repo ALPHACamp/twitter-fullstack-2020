@@ -1,0 +1,27 @@
+<div class='user-container m-0 p-0'>
+  {{> user-profile route = 'replies'}}
+
+  <!-- each tweets -->
+  <ul class='tweet-list'>
+    {{#each replies}}
+    <li class='mt-2'>
+      <div class='d-flex align-items-start'>
+        <div class='flex-shrink-1 p-0 icon'>
+          <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
+        </div>
+        <div class='tweet-text flex-grow-1'>
+          <span class='tweet-name'>{{../user.name}} </span>
+          <span class='tweet-account'>@{{../user.account}}</span>
+          <span class='tweet-account'>・{{formatRelativeTime this.createdAt}}</span>
+          <div class='reply-name'>
+            <span class='text'>回覆</span>
+            <span class='account'>@{{this.Tweet.User.account}}</span>
+          </div>
+          <p class='tweet-description' style='white-space:break-spaces;'>{{this.comment}}</p>
+        </div>
+      </div>
+      <hr />
+    </li>
+    {{/each}}
+  </ul>
+</div>

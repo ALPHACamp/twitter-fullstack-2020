@@ -228,7 +228,8 @@ const profileController = {
       if (!user) throw new Error('該用戶不存在!')
       // render
       const partialName = 'user-edit'
-      return res.render('index', { user, partialName })
+      const visibleToggle = 'invisible'
+      return res.render('index', { user, partialName, visibleToggle })
     } catch (err) {
       next(err)
     }
