@@ -10,6 +10,8 @@ const profileController = {
     const loginUser = helpers.getUser(req)
     const { userId } = req.params
     try {
+      // 判斷session儲存的資料是否跟req相同
+      if (req.session.userData?.id === userId) return next()
       // 取對應的user資料，包含following跟follower的count
       const [user, FollowingsCount, FollowersCount, tweetsCount] = await Promise.all([
         User.findByPk(userId),
@@ -30,8 +32,8 @@ const profileController = {
       if (!user) throw new Error('該用戶不存在!')
       // 變數存，user是否為使用者
       const isLoginUser = user.id === loginUser.id
-      // 將變數加入
-      req.userData = {
+      // 將變數加入session
+      req.session.userData = {
         ...user.toJSON(),
         cover: user.cover || '/images/profile/cover.png',
         avatar: user.avatar || 'https://ionicframework.com/docs/img/demos/avatar.svg',
@@ -41,13 +43,13 @@ const profileController = {
         isLoginUser
       }
       // next
-      next()
+      return next()
     } catch (err) {
       next(err)
     }
   },
   getUserTweets: async (req, res, next) => {
-    const { userData } = req
+    const { userData } = req.session
     // 取得 id
     const { userId } = req.params
     try {
@@ -79,7 +81,7 @@ const profileController = {
     }
   },
   getUserReplies: async (req, res, next) => {
-    const { userData } = req
+    const { userData } = req.session
     // 取得userId
     const { userId } = req.params
     try {
@@ -107,7 +109,7 @@ const profileController = {
     }
   },
   getUserLikes: async (req, res, next) => {
-    const { userData } = req
+    const { userData } = req.session
     const { userId } = req.params
     try {
       // likes找相對應的資料，跟user推文者關聯，依照like建立時間排列
