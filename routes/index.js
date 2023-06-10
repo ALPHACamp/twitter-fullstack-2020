@@ -38,6 +38,8 @@ router.get('/users/:userId/followers', authenticated, profileController.getUserF
 router.get('/users/:userId', authenticated, profileController.editUser)
 router.get('/tweets/:tweetId/replies', authenticated, tweetsController.getTweet)
 router.post('/tweets/:tweetId/replies', authenticated, tweetsController.postReply)
+router.post('/tweets/:tweetId/like', authenticated, userController.postLike)
+router.post('/tweets/:tweetId/unlike', authenticated, userController.postUnlike)
 router.get('/tweets', authenticated, tweetsController.getTweets)
 router.post('/tweets', authenticated, tweetsController.postTweet)
 
