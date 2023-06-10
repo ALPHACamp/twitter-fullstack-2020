@@ -32,19 +32,19 @@ router.get('/admin/signin', adminController.adminSigninPage)
 router.get('/admin/tweets', adminController.adminTweetsPage)
 router.get('/admin/users', adminController.adminUsersPage)
 
-router.get('/users/:userId/tweets', authenticated, profileController.getUser, profileController.getUserTweets)
-router.get('/users/:userId/replies', authenticated, profileController.getUser, profileController.getUserReplies)
-router.get('/users/:userId/likes', authenticated, profileController.getUser, profileController.getUserLikes)
-router.get('/users/:userId/followings', authenticated, profileController.getUserFollowings)
-router.get('/users/:userId/followers', authenticated, profileController.getUserFollowers)
+// tweets & reply
 router.get('/tweets/:tweetId/replies', authenticated, tweetsController.getTweet)
 router.post('/tweets/:tweetId/replies', authenticated, tweetsController.postReply)
 router.post('/tweets/:tweetId/like', authenticated, userController.postLike)
 router.post('/tweets/:tweetId/unlike', authenticated, userController.postUnlike)
 router.get('/tweets', authenticated, tweetsController.getTweets)
 router.post('/tweets', authenticated, tweetsController.postTweet)
+router.get('/users/:userId/tweets', authenticated, profileController.getUser, profileController.getUserTweets)
+router.get('/users/:userId/replies', authenticated, profileController.getUser, profileController.getUserReplies)
+router.get('/users/:userId/likes', authenticated, profileController.getUser, profileController.getUserLikes)
+router.get('/users/:userId/followings', authenticated, profileController.getUserFollowings)
+router.get('/users/:userId/followers', authenticated, profileController.getUserFollowers)
 router.get('/users/:userId', authenticated, profileController.editUserAccount)
-
 router.put(
   '/users/:userId',
   authenticated,
