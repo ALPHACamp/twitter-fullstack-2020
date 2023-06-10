@@ -1,8 +1,9 @@
-function ensureAuthenticated(req) {
+function ensureAuthenticated (req) {
   return req.isAuthenticated()
 }
 
-function getUser(req) {
+function getUser (req) {
+
   return req.user
 }
 
