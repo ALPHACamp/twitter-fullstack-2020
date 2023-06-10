@@ -1,0 +1,88 @@
+<div class="d-flex justify-content-center">
+  {{!-- navbar --}}
+  {{> navbar}}
+
+  {{!--tweet-list --}}
+  <div class="col-7 home-page">
+    <ul class="list-group home-list">
+      <li class="list-group-item tweet-list p-4">
+        <h4>首頁</h4>
+      </li>
+      
+      <li class="list-group-item tweet-list" type="button" data-bs-toggle="modal" data-bs-target="#tweet-modal">
+        <div class="d-flex flex-column">
+          <div class="d-flex align-items-center">
+            <img src="{{user.avatar}}" alt="" class="recommend-followings-img me-1">
+      
+            <div class="tweet-placeholder">有什麼新鮮事？</div>
+          </div>
+      
+          <div class="btn tweet-btn mb-2 me-2 align-self-end">推文</div>
+        </div>
+      </li>
+      
+      {{#each tweets}}
+      <li class="list-group-item tweet-list">
+        <div class="d-flex">
+          <div class="flex-shrink-1 p-0">
+            <img src="{{this.User.avatar}}" alt="" class="recommend-followings-img">
+          </div>
+          <div class="tweet-text d-flex flex-column">
+            <div class="d-flex align-items-baseline mb-2">
+              <div class="tweet-name me-2">{{this.User.name}} </div>
+              <div class="tweet-account">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
+            </div>
+      
+            <p class="mb-2" style="white-space:break-spaces;">{{this.description}}</p>
+      
+            <div class="d-flex">
+              <img src="/images/reply_outlined.svg" alt="" class="tweets-icon me-1">
+              <span class="tweets-interact-counts" style="margin-right:40px;">13</span>
+              <img src="/images/like_outlined.svg" alt="" class="tweets-icon me-1">
+              <span class="tweets-interact-counts">76</span>
+            </div>
+          </div>
+        </div>
+      </li>
+      {{/each}}
+
+      <!-- Modal -->
+      <div class="modal fade" id="tweet-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="tweetModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="tweet-close-button" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><img src="/images/message/message_danger.svg" alt=""></span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <!-- form -->
+              <div class="d-flex align-items-start">
+                <div class="flex-shrink-0 p-0">
+                  <img src="{{user.avatar}}" alt="" class="recommend-followings-img">
+                </div>
+                <div class="d-flex flex-column flex-grow-1">
+                  <form action="/user/tweets" method="POST">
+                    <div class="form-group">
+                      <textarea class="border-0 mb-2" id="description" name="description" rows="3"
+                        style="resize:vertical;outline:none;" placeholder="有什麼新鮮事？"></textarea>
+                      <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">推文</button>
+                      </div>
+                    </div>
+      
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ul>
+  </div>
+
+  {{!-- recommend-followings --}}
+  {{> recommend-followings}}
+
+</div>
