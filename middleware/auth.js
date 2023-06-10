@@ -6,12 +6,12 @@ const authenticated = (req, res, next) => {
     if (isUser) {
       return next()
     }
+    req.flash('error_messages', '帳號或密碼錯誤!')
+    return res.redirect('/signin')
   } else {
     req.flash('error_messages', '請先登入!')
     return res.redirect('/signin')
   }
-  req.flash('error_messages', '請先登入!')
-  res.redirect('/signin')
 }
 
 const adminAuthenticated = (req, res, next) => {
@@ -23,10 +23,8 @@ const adminAuthenticated = (req, res, next) => {
     return res.redirect('/admin/signin')
   } else {
     req.flash('error_messages', '請先登入管理者帳號!')
-    res.redirect('/admin/signin')
+    return res.redirect('/admin/signin')
   }
-  req.flash('error_messages', '請先登入管理者帳號!')
-  res.redirect('/admin/signin')
 }
 
 module.exports = {
