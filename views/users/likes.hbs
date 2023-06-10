@@ -8,7 +8,7 @@
       <div class='user-container m-0 p-0'>
         {{> user-profile route = 'likes'}}
         
-        <!-- each tweets -->
+        <!-- each like tweets -->
         <ul class='tweet-list'>
         {{#each tweets}}
           <li class='mt-2'>
@@ -22,14 +22,14 @@
                 <span class='tweet-account'>・{{formatRelativeTime this.Like.createdAt}}</span>
                 <p class='tweet-description' style='white-space:break-spaces;'>{{this.description}}</p>
                 <div>
-                  <a class='reply' href='#'>
-                    <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
+                  <div class='reply'>
+                    <img src="/images/reply_outlined.svg" class='reply-icon' alt="" type="button" data-bs-toggle="modal" data-bs-target="#reply-modal"/>
                     <span>{{this.repliesCount}}</span>
-                  </a>
-                  <a class='like' href='#'>
+                  </div>
+                  <form class='like' action="/tweets/{{tweet.id}}/unlike" method="POST" style="display: contents;">
                     <img class='like-icon' src='/images/like_filled.svg' alt='like' />
                     <span>{{this.likesCount}}</span>
-                  </a>
+                  </form>
                 </div>
               </div>
             </div>
