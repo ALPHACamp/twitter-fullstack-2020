@@ -6,7 +6,7 @@ const { generalErrorHandler } = require('../middleware/error-handler')
 
 router.use('/admin', admin)
 
-router.get('/', (req, res) => res.render('users'))
+router.get('/', (req, res) => res.render('tweets'))
 router.use('/', generalErrorHandler)
 
 module.exports = router
