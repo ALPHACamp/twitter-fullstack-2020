@@ -36,17 +36,18 @@
         
               <p class="mb-2" style="white-space:break-spaces;">{{this.description}}</p>
         
-              <div class="d-flex" >
-                <img src="/images/reply_outlined.svg" alt="" class="tweets-icon me-1">
-                <span class="tweets-interact-counts" style="margin-right:40px;">13</span>
-
+              <div class="d-flex">
+                <div onclick="event.stopImmediatePropagation(); event.preventDefault();" data-bs-toggle="modal" data-bs-target="#reply-modal-{{this.id}}">
+                  <img src="/images/reply_outlined.svg" alt="" class="tweets-icon me-1" >
+                  <span class="tweets-interact-counts ">13</span>
+                </div>
                 {{#if this.isLiked }}
                 <form action="/tweets/{{../this.id}}/unlike" method="POST" style="display: contents;">
-                  <input type="image" src="/images/like_filled.svg" alt="提交">
+                  <input type="image" src="/images/like_filled.svg" alt="提交" style="margin-left:40px;">
                 </form>
                 {{else}}
                 <form action="/tweets/{{../this.id}}/like" method="POST" style="display: contents;">
-                  <input type="image" src="/images/like_outlined.svg" alt="提交">
+                  <input type="image" src="/images/like_outlined.svg" alt="提交" style="margin-left:40px;">
                 </form>
                 {{/if}}
                 <span class="tweets-interact-counts">76</span>
@@ -55,11 +56,10 @@
           </div>
         </a>
       </li>
-      {{/each}}
 
-      <!-- Modal -->
-      <div class="modal fade" id="tweet-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="tweetModalLabel" aria-hidden="true">
+      {{!--Reply Modal --}}
+      <div class="modal fade" id="reply-modal-{{this.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="replyModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -69,20 +69,37 @@
             </div>
             <div class="modal-body">
               <!-- form -->
-              <div class="d-flex align-items-start">
+              <div class="d-flex mb-4">
                 <div class="flex-shrink-0 p-0">
-                  <img src="{{user.avatar}}" alt="" class="recommend-followings-img">
+                  <img src="{{this.User.avatar}}" alt="123" class="recommend-followings-img">
+                  <div class="vertical-line"></div>
+                </div>
+                <div class="tweet-text">
+                  <div class="d-flex align-items-baseline mb-2">
+                    <div class="tweet-name me-2">{{this.User.name}}</div>
+                    <div class="tweet-account">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
+                  </div>
+                  <p class="tweet-description mb-2" style="white-space:break-spaces;">{{this.description}}</p>
+                  <div class="d-flex">
+                    <div class="reply-tag-text me-1">回覆給</div>
+                    <div class="reply-tag">@{{this.User.account}}</div>
+                  </div>
+                </div>
+              </div>
+      
+              <div class="d-flex">
+                <div class="flex-shrink-0 p-0">
+                  <img src="{{../user.avatar}}" alt="" class="recommend-followings-img">
                 </div>
                 <div class="d-flex flex-column flex-grow-1">
-                  <form action="/tweets" method="POST">
+                  <form action="/tweets/{{this.id}}/replies" method="POST">
                     <div class="form-group">
-                      <textarea class="border-0 mb-2" id="description" name="description" rows="3"
-                        style="resize:vertical;outline:none;" placeholder="有什麼新鮮事？"></textarea>
+                      <textarea class="ms-1 border-0 my-2" id="comment" name="comment" rows="3"
+                        style="resize:vertical;outline:none;" placeholder="推你的回覆"></textarea>
                       <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">推文</button>
+                        <button type="submit" class="btn btn-primary">回覆</button>
                       </div>
                     </div>
-      
                   </form>
                 </div>
               </div>
@@ -90,10 +107,46 @@
           </div>
         </div>
       </div>
+      {{/each}}
+
+      
     </ul>
   </div>
 
   {{!-- recommend-followings --}}
   {{> recommend-followings}}
 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="tweet-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="tweet-close-button" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><img src="/images/message/message_danger.svg" alt=""></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- form -->
+        <div class="d-flex align-items-start">
+          <div class="flex-shrink-0 p-0">
+            <img src="{{user.avatar}}" alt="" class="recommend-followings-img">
+          </div>
+          <div class="d-flex flex-column flex-grow-1">
+            <form action="/tweets" method="POST">
+              <div class="form-group">
+                <textarea class="border-0 mb-2" id="description" name="description" rows="3"
+                  style="resize:vertical;outline:none;" placeholder="有什麼新鮮事？"></textarea>
+                <div class="d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary">推文</button>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

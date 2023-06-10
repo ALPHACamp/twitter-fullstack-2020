@@ -79,7 +79,8 @@ const tweetsController = {
         TweetId,
         comment
       })
-      res.redirect(`/tweets/${TweetId}/replies`)
+      res.redirect('back')
+      // res.redirect(`/tweets/${TweetId}/replies`)
     } catch (err) {
       next(err)
     }
