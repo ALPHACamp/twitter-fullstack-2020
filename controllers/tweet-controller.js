@@ -36,7 +36,7 @@ const tweetController = {
           ...user.toJSON(),
           isFollow: user.Followers.some(f => f.id === loginUserId)
           }))
-        .filter(user => user.role === 'user')
+        .filter(user => user.role === 'user' && user.id !== loginUserId)
         .sort((a, b) => b.Followers.length - a.Followers.length)
         .slice(0, 10)
 

@@ -57,7 +57,7 @@
       <input type="hidden" name="userId" value="{{user.id}}" />
       <input type="hidden" name="loginUserId" value="{{loginUser.id}}" />
       <div class="follow-button-wrapper">
-        <button type="submit" class="btn btn-outline-info btn-follow  btn-edit-profile">跟隨</button>
+        <button type="submit" class="btn btn-outline-info btn-follow  btn-edit-profile" name="id" value={{user.id}}>跟隨</button>
       </div>
     </form>
     {{/ifFalseAndNotEqual}}

@@ -7,6 +7,7 @@ const { generalErrorHandler } = require('../middleware/error-handler')
 const users = require('./modules/users')
 const admin = require('./modules/admin')
 const tweets = require('./modules/tweets')
+const followships = require('./modules/followships')
 
 // 註冊
 router.get('/signup', userController.signUpPage)
@@ -22,6 +23,9 @@ router.use('/users', authenticated, users)
 
 // tweets路由
 router.use('/tweets', authenticated, tweets)
+
+// followships 路由
+router.use('/followships', authenticated, followships)
 
 // 後台
 router.use('/admin', admin)
