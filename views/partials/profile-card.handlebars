@@ -1,0 +1,68 @@
+{{!-- profile --}}
+<div class="profile-wrapper">
+
+  {{#if user.cover}}
+  <img src="{{ user.cover }}" alt="cover" class="profile-cover background-image">
+  {{else}}
+  <div class="profile-cover background-image"></div>
+  {{/if}}
+
+  <div class="profile-avatar">
+    {{#if user.avatar }}
+    <img src="{{ user.avatar }}" alt="avatar" class="logo">
+    {{else}}
+    <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+    {{/if}}
+  </div>
+
+  <div class="profile-info">
+    <h5 class="profile-name">{{ user.name }}</h5>
+    <div class="card-account profile-account">@{{ user.account }}</div>
+    <p class="card-description">{{ user.introduction }}</p>
+    <div class="following-follower-wrapper">
+      <div class="following-wrapper">
+        <a href="/users/{{ user.id }}/followings">
+          <span class="following-count">{{ user.Followings.length }}個</span>
+          <span class="following-text">跟隨中</span>
+        </a>
+      </div>
+      <a href="/users/{{user.id}}/followers">
+        <span class="follower-count">{{ user.Followers.length }}位</span>
+        <span class="follower-text">跟隨者</span>
+      </a>
+    </div>
+
+    {{!-- 是log in user 本人 --}}
+    {{#ifCond user.id loginUserId }}
+    <button type="button" class="btn btn-outline-info btn-edit-profile" data-bs-toggle="modal"
+      data-bs-target="#editModal">
+      編輯個人資料
+    </button>
+    {{/ifCond}}
+
+
+    {{!-- 1. 不是log in user 本人。2. log in user 跟隨中--}}
+
+    {{#ifTrueAndNotEqual user.isFollow user.id loginUserId}}
+    <form action="/followships/{{ user.id }}?_method=DELETE" method="post">
+      <input type="hidden" name="loginUserId" value="{{loginUserId}}" />
+      <div class="follow-button-wrapper">
+        <button type="submit" class="btn btn-info btn-edit-profile">正在跟隨</button>
+      </div>
+    </form>
+    {{/ifTrueAndNotEqual}}
+
+
+    {{!-- 1.不是log in user 本人。2. log in user 沒有跟隨--}}
+    {{#ifFalseAndNotEqual user.isFollow user.id loginUserId}}
+    <form action="/followships" method="post">
+      <input type="hidden" name="userId" value="{{user.id}}" />
+      <input type="hidden" name="loginUserId" value="{{loginUserId}}" />
+      <div class="follow-button-wrapper">
+        <button type="submit" class="btn btn-outline-info btn-follow  btn-edit-profile">跟隨</button>
+      </div>
+    </form>
+    {{/ifFalseAndNotEqual}}
+
+  </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="container">
+  <div class="wrapper">
+
+    {{> profile-navbar}}
+
+    {{!-- main --}}
+    <section class="main">
+      <div class="main-title main-head-bar">
+        <div class="main-arrow-icon background-image" onclick="history.back()"></div>
+        <div class="main-head-bar-text">
+          <h5 class="main-head-bar-name">{{ user.name }}</h5>
+          <span class="card-datetime">{{ user.Tweets.length }} 推文</span>
+        </div>
+      </div>
+
+
+      {{!-- tabs --}}
+      <ul class="nav nav-user-tab">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/users/{{user.id}}/followers">跟隨者</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-link-active" href="#">正在跟隨</a>
+        </li>
+      </ul>
+
+      {{> messages}}
+      {{!-- tweets cards --}}
+      {{#if FollowingList }}
+
+      {{#each FollowingList}}
+      <div class="card card-tweet-lg">
+        <a href="/users/{{this.id}}/tweets" class="tweet-href"></a>
+        <div class="avatar">
+          <a href="/users/{{this.id}}/tweets" class="primary-anchor">
+            {{#if this.avatar}}
+            <img src="{{ this.avatar }}" alt="avatar" class="logo">
+            {{else}}
+            <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+            {{/if}}
+          </a>
+        </div>
+        <div class="following-card-text">
+          <div class="card-text-info">
+            <a href="/users/{{ this.id }}/tweets" class="primary-anchor">
+              <span class="card-name">{{ this.name }}</span>
+            </a>
+          </div>
+
+
+          {{!-- 1. 不是log in user 本人。2. log in user 跟隨中--}}
+          {{#ifTrueAndNotEqual this.isFollow this.id ../loginUserId}}
+          <form action="/followships/{{ this.id }}?_method=DELETE" method="post">
+            <input type="hidden" name="loginUserId" value="{{../loginUserId}}" />
+            <div class="follow-button-wrapper">
+              <button type="submit" class="btn btn-info btn-following-card">正在跟隨</button>
+            </div>
+          </form>
+          {{/ifTrueAndNotEqual}}
+
+          {{!-- 1.不是log in user 本人。2. log in user 沒有跟隨--}}
+          {{#ifFalseAndNotEqual this.isFollow this.id ../loginUserId}}
+          <form action="/followships" method="post">
+            <input type="hidden" name="userId" value="{{this.id}}" />
+            <input type="hidden" name="loginUserId" value="{{../loginUserId}}" />
+            <div class="follow-button-wrapper">
+              <button type="submit" class="btn btn-outline-info btn-follow  btn-following-card">跟隨</button>
+            </div>
+          </form>
+          {{/ifFalseAndNotEqual}}
+
+          <p class="card-description">{{ this.introduction }}</p>
+        </div>
+      </div>
+      {{/each}}
+
+
+      {{else}}
+      <div class="no-tweet">
+        <h5>
+          沒有正在跟隨
+        </h5>
+      </div>
+      {{/if}}
+
+    </section>
+    {{> followship}}
+  </div>
+</div>
+
+
+{{> tweet-modal}}
+
+
+
+
+{{> edit-modal}}
+
+
+{{> reply-modal}}
