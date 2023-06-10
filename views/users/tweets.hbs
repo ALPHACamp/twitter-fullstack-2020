@@ -5,7 +5,7 @@
   {{!tweet-list }}
   <div class='col-7 profile-page'>
     <ul class='list-group home-list'>
-      <div class='user-container m-0 p-0'>
+      <div class='user-container m-0 p-0 home-page'>
         {{> user-profile route = 'tweets'}}
         
         <!-- each tweets -->
@@ -37,6 +37,7 @@
           </li>
         {{/each}}
         </ul>
+        {{> pagination route = route }}
       </div>
     </ul>
   </div>

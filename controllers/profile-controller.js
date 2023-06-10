@@ -3,6 +3,10 @@ const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
 const { imgurFileHelper } = require('../helpers/file-helpers')
 const { User, Followship, Tweet, Reply, Like } = require('../models')
+const { getOffset, getPagination } = require('../helpers/pagination-helper')
+
+// 推文顯示數量
+const DEFAULT_LIMIT = 10
 
 const profileController = {
   getUser: async (req, res, next) => {
@@ -49,13 +53,19 @@ const profileController = {
     }
   },
   getUserTweets: async (req, res, next) => {
-    const { userData } = req.session
+    const { userData, previousPage, tweetId } = req.session
+    console.log(previousPage)
     // 取得 id
     const { userId } = req.params
+    const route = `users/${userId}/tweets`
+    // 取得page, limit, offset
+    const page = Number(req.query.page) || 1
+    const limit = DEFAULT_LIMIT
+    const offset = getOffset(page, limit)
     try {
       // tweets找相對應的資料，跟user關聯，依照建立時間排列
       // replies、likes數量計算
-      const tweets = await Tweet.findAll({
+      const tweets = await Tweet.findAndCountAll({
         attributes: {
           include: [
             [Sequelize.fn('COUNT', Sequelize.col('Replies.id')), 'repliesCount'],
@@ -70,12 +80,17 @@ const profileController = {
           { model: Like, attributes: [] }
         ],
         order: [['createdAt', 'DESC']],
-        group: ['Tweet.id']
+        group: ['Tweet.id'],
+        limit,
+        offset,
+        subQuery: false
       })
       // 整理資料
-      const tweetsData = tweets.map(tweet => tweet.toJSON())
+      const tweetsData = tweets.rows.map(tweet => tweet.toJSON())
+      // pagination
+      const pagination = getPagination(page, limit, tweets.count.length)
       // render
-      res.render('users/tweets', { user: userData, tweets: tweetsData })
+      res.render('users/tweets', { user: userData, tweets: tweetsData, route, pagination, previousPage, tweetId })
     } catch (err) {
       next(err)
     }
@@ -84,9 +99,14 @@ const profileController = {
     const { userData } = req.session
     // 取得userId
     const { userId } = req.params
+    const route = `users/${userId}/replies`
+    // 取得page, limit, offset
+    const page = Number(req.query.page) || 1
+    const limit = DEFAULT_LIMIT
+    const offset = getOffset(page, limit)
     try {
       // 取得reply資料及回覆的推文者
-      const replies = await Reply.findAll({
+      const replies = await Reply.findAndCountAll({
         where: { UserId: userId },
         include: [
           {
@@ -98,12 +118,16 @@ const profileController = {
             // 不能是空的
             attributes: ['id']
           }
-        ]
+        ],
+        limit,
+        offset
       })
       // 整理資料
-      const repliesData = replies.map(reply => reply.toJSON())
+      const repliesData = replies.rows.map(reply => reply.toJSON())
+      // pagination
+      const pagination = getPagination(page, limit, replies.count)
       // render
-      res.render('users/replies', { user: userData, replies: repliesData })
+      res.render('users/replies', { user: userData, replies: repliesData, route, pagination })
     } catch (err) {
       next(err)
     }
@@ -140,7 +164,7 @@ const profileController = {
         })
       )
       // 整理資料
-      const tweetsData = tweets.map(tweet => tweet.toJSON())
+      const tweetsData = tweets.map(tweet => ({ ...tweet.toJSON() }))
       // render
       res.render('users/likes', { user: userData, tweets: tweetsData })
     } catch (err) {

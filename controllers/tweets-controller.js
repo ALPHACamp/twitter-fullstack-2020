@@ -21,6 +21,8 @@ const tweetsController = {
     }
   },
   getTweet: (req, res, next) => {
+    req.session.previousPage = 'replies'
+    req.session.tweetId = req.params.tweetId
     return res.render('tweet')
   }
 }

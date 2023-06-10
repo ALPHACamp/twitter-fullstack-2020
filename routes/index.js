@@ -33,8 +33,8 @@ router.get('/admin/tweets', adminController.adminTweetsPage)
 router.get('/admin/users', adminController.adminUsersPage)
 
 // index
-router.get('/tweets', authenticated, tweetsController.getTweets)
 router.get('/tweets/:tweetId/replies', authenticated, tweetsController.getTweet)
+router.get('/tweets', authenticated, tweetsController.getTweets)
 
 // profile
 router.get('/users/:userId/tweets', authenticated, profileController.getUser, profileController.getUserTweets)
