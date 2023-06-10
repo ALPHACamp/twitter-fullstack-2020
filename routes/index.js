@@ -27,6 +27,10 @@ router.post(
 // signup
 router.get('/signup', userController.signupPage)
 
+// logout
+router.get('/logout', userController.logout)
+
+
 // admin
 router.get('/admin/signin', adminController.adminSigninPage)
 router.get('/admin/tweets', adminController.adminTweetsPage)

@@ -12,6 +12,11 @@ const userController = {
   signup: (req, res, next) => {
     req.flash('success_messages', '註冊成功，請登入!')
     res.redirect('/signin')
+  },
+  logout: (req, res) => {
+    req.flash('success_messages', '登出成功！')
+    req.logout()
+    res.redirect('/signin')
   }
 }
 
