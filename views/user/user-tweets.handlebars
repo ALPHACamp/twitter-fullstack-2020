@@ -65,14 +65,14 @@
             </div>
 
             {{#if this.isLike}}
-            <form action="/tweets/{{tweet.id}}/unlike" method="post" class="primary-anchor form-like">
+            <form action="/tweets/{{this.id}}/unlike" method="post" class="primary-anchor form-like">
               <button type="submit" class="btn-like">
                 <span class="card-unlike-icon background-image"></span>
                 <span class="card-counts">{{ this.Likes.length }}</span>
               </button>
             </form>
             {{else}}
-            <form action="/tweets/{{tweet.id}}/like" method="post" class="primary-anchor form-like">
+            <form action="/tweets/{{this.id}}/like" method="post" class="primary-anchor form-like">
               <button type="submit" class="btn-like">
                 <span class="card-like-icon background-image"></span>
                 <span class="card-counts">{{ this.Likes.length }}</span>
