@@ -19,7 +19,7 @@ module.exports = {
         account: 'user1',
         name: 'user1',
         role: 'user',
-        avatar: `https://loremflickr.com/140/140/avatar/?lock=${
+        avatar: `https://loremflickr.com/140/140/portrait/?lock=${
           Math.random() * 100
         }`,
         cover: `https://loremflickr.com/640/200/landscape/?lock=${
@@ -35,7 +35,7 @@ module.exports = {
         account: 'user2',
         name: faker.name.findName(),
         role: 'user',
-        avatar: `https://loremflickr.com/140/140/avatar/?lock=${
+        avatar: `https://loremflickr.com/140/140/portrait/?lock=${
           Math.random() * 100
         }`,
         cover: `https://loremflickr.com/640/200/landscape/?lock=${
@@ -51,7 +51,7 @@ module.exports = {
         account: 'user3',
         name: faker.name.findName(),
         role: 'user',
-        avatar: `https://loremflickr.com/140/140/avatar/?lock=${
+        avatar: `https://loremflickr.com/140/140/portrait/?lock=${
           Math.random() * 100
         }`,
         cover: `https://loremflickr.com/640/200/landscape/?lock=${
@@ -67,7 +67,7 @@ module.exports = {
         account: 'user4',
         name: faker.name.findName(),
         role: 'user',
-        avatar: `https://loremflickr.com/140/140/avatar/?lock=${
+        avatar: `https://loremflickr.com/140/140/portrait/?lock=${
           Math.random() * 100
         }`,
         cover: `https://loremflickr.com/640/200/landscape/?lock=${
@@ -83,7 +83,7 @@ module.exports = {
         account: 'user5',
         name: faker.name.findName(),
         role: 'user',
-        avatar: `https://loremflickr.com/140/140/avatar/?lock=${
+        avatar: `https://loremflickr.com/140/140/portrait/?lock=${
           Math.random() * 100
         }`,
         cover: `https://loremflickr.com/640/200/landscape/?lock=${
