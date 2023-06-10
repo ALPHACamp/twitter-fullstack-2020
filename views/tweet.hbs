@@ -15,7 +15,7 @@
         <div class="d-flex flex-column">
           <div class="d-flex flex-row mb-2">
             <div class="flex-shrink-1 p-0">
-              <img src={{tweet.User.avatar}} alt="" class="recommend-followings-img">
+              <img src={{tweet.User.avatar}} alt="avatar" class="recommend-followings-img" onerror="this.onerror=null; this.src='/images/profile-img.svg'">
             </div>
             <div class="tweet-text">
               <div class="tweet-name">{{tweet.User.name}}</div>
@@ -57,7 +57,10 @@
       <li class="list-group-item tweet-list">
         <div class="d-flex">
           <div class="flex-shrink-1 p-0">
-            <img src="{{this.User.avatar}}" alt="" class="recommend-followings-img">
+            <button onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{this.User.id}}/tweets';">
+              <img src="{{this.User.avatar}}" alt="avatar" class="recommend-followings-img"
+                onerror="this.onerror=null; this.src='/images/profile-img.svg'">
+            </button>
           </div>
       
           <div class="d-flex flex-column">
@@ -93,7 +96,7 @@
               <!-- form -->
               <div class="d-flex mb-4">
                 <div class="flex-shrink-0 p-0">
-                  <img src="{{tweet.User.avatar}}" alt="123" class="recommend-followings-img">
+                  <img src="{{tweet.User.avatar}}" alt="avatar" class="recommend-followings-img" onerror="this.onerror=null; this.src='/images/profile-img.svg'">
                   <div class="vertical-line"></div>
                 </div>
                 <div class="tweet-text">
@@ -111,7 +114,7 @@
       
               <div class="d-flex">
                 <div class="flex-shrink-0 p-0">
-                  <img src="{{user.avatar}}" alt="" class="recommend-followings-img">
+                  <img src="{{user.avatar}}" alt="avatar" class="recommend-followings-img" onerror="this.onerror=null; this.src='/images/profile-img.svg'">
                 </div>
                 <div class="d-flex flex-column flex-grow-1">
                   <form action="/tweets/{{tweet.id}}/replies" method="POST">

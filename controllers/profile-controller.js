@@ -2,7 +2,6 @@ const Sequelize = require('sequelize')
 
 const helpers = require('../_helpers')
 const { User, Followship, Tweet, Reply, Like } = require('../models')
-const { group } = require('console')
 
 const profileController = {
   getUser: async (req, res, next) => {
