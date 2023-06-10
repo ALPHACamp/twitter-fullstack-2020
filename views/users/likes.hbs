@@ -19,7 +19,7 @@
               <div class='tweet-text flex-grow-1'>
                 <span class='tweet-name'>{{this.User.name}} </span>
                 <span class='tweet-account'>@{{this.User.account}}</span>
-                <span class='tweet-account'>・{{relativeTimeFromNow this.Like.createdAt}}</span>
+                <span class='tweet-account'>・{{formatRelativeTime this.Like.createdAt}}</span>
                 <p class='tweet-description' style='white-space:break-spaces;'>{{this.description}}</p>
                 <div>
                   <a class='reply' href='#'>
