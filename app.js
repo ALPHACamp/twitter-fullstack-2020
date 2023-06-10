@@ -1,9 +1,14 @@
 // modules
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const express = require('express')
 const app = express()
 const handlebars = require('express-handlebars')
 const session = require('express-session')
 const flash = require('connect-flash')
+const methodOverride = require('method-override')
 const passport = require('./config/passport')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 
@@ -32,6 +37,8 @@ app.use(flash())
 
 app.use(passport.initialize())
 app.use(passport.session())
+
+app.use(methodOverride('_method'))
 
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
