@@ -25,6 +25,8 @@ router.get('/tweets', authenticated, tweetController.getTweets)
 
 router.get('/users/setting', authenticated, userController.settingPage)
 
+router.get('/users/:id/tweets', authenticated, userController.getUser) // 個人頁面
+
 router.get('/', (req, res) => res.redirect('/tweets')) // 專案初始測試路由
 
 router.use('/', generalErrorHandler)

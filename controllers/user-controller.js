@@ -1,5 +1,6 @@
-const { User } = require('../models')
+const { User, Tweet, Reply, Followship, Like } = require('../models')
 const bcrypt = require('bcryptjs')
+const helpers = require('../_helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -57,6 +58,44 @@ const userController = {
   },
   settingPage: (req, res) => {
     res.render('setting')
+  },
+  getUser: (req, res, next) => { // 取得個人資料頁面(推文清單)
+    const isUser = helpers.getUser(req).id === Number(req.params.id)
+
+    return Promise.all([
+      Tweet.findAll({
+        where: { UserId: req.params.id },
+        include: [
+          User,
+          Reply,
+          { model: User, as: 'LikedUsers' }
+        ],
+        nest: true
+      }),
+      User.findByPk((req.params.id), {
+        where: { role: 'user' },
+        include: [
+          Tweet,
+          { model: Tweet, as: 'LikedTweets', include: [User] },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ],
+        order: [
+          ['Tweets', 'createdAt', 'DESC']
+        ]
+      })
+    ])
+      .then(([tweets, user]) => {
+        const isFollowed = user.Followers.some(f => f.id === helpers.getUser(req).id)
+        const data = tweets.map(tweet => ({
+          ...tweet.toJSON(),
+          isLiked: helpers.getUser(req)?.LikedTweets?.map(t => t.id).includes(tweet.id)
+        }))
+
+          .sort((a, b) => b.createdAt - a.createdAt)
+        return res.render('users', { users: user.toJSON(), tweet: data, isUser, isFollowed })
+      })
+      .catch(err => next(err))
   }
 }
 
