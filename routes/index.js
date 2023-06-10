@@ -30,9 +30,6 @@ router.use('/followships', authenticated, followships)
 // 後台
 router.use('/admin', admin)
 
-router.use('', (req, res) => {
-  return res.redirect('/signin')
-})
 
 router.use('/', generalErrorHandler)
 router.use('', (req, res) => res.redirect('/tweets'))
