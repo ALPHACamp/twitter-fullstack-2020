@@ -524,3 +524,56 @@ img.card-avatar {
   font-size: 16px;
   line-height: 24px;
 }
+
+.edit-close {
+  color: #FF6600;
+  background-color: #FFFFFF;
+  border: none;
+}
+
+.user-edit {
+  width: 634px;
+  height: 650px;
+  border-radius: 14px;
+  padding: 0px 16px
+}
+
+.edit-banner {
+  position: relative;
+  z-index: 2;
+  margin-left: -16px;
+  width: 498px;
+  height: 200px;
+  background: #dddddd center center url('https://i.imgur.com/aGQffTU.png');
+  background-size: cover;
+}
+
+#input-user-cover {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.avatar {
+  transform: translate(0, -50%);
+  z-index: 3;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  /* 正圆形 */
+  background: center center url('https://i.imgur.com/mhXz6z9.png?1');
+  background-size: cover;
+}
+
+#input-user-avatar {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+#user-introduction {
+  padding: 0px;
+  resize: none;
+}
