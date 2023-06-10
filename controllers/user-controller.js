@@ -83,6 +83,15 @@ const userController = {
     req.flash('success_messages', '你已成功登出。')
     res.redirect('/signin')
   },
+  // API: 取得目前登入的使用者資料 只回傳json
+  getUserData: (req, res, next) => {
+    User.findByPk(helpers.getUser(req).id, { raw: true })
+      .then(user => {
+        if (!user) throw new Error('User did not exist.')
+        return res.json(user)
+      })
+      .catch(err => next(err))
+  },
   // 取得特定使用者頁面
   getUserPage: (req, res, next) => {
     const userId = req.params.id
