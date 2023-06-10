@@ -3,7 +3,7 @@ const { DataTypes, Model } = require('sequelize')
 
 module.exports = sequelize => {
   class Tweet extends Model {
-    static associate(models) {
+    static associate (models) {
       //* 推文
       Tweet.belongsTo(models.User, { foreignKey: 'userId' })
       //* 回覆
