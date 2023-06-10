@@ -46,6 +46,9 @@ const userController = {
   },
   signInPage: (req, res) => {
     res.render('signin')
+  },
+  getOther: (req, res) => {
+    res.render('other-tweets')
   }
 }
 module.exports = userController

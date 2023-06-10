@@ -1,5 +1,5 @@
 <nav class="nav" style="border-bottom: 1px solid #E6ECF0;">
-  <a class="nav-link {{#ifCond route 'tweets'}}active{{/ifCond}}" aria-current="page" href="/tweets/user">推文</a>
-  <a class="nav-link {{#ifCond route 'replies'}}active{{/ifCond}}" href="/tweets/replies">回覆</a>
-  <a class="nav-link {{#ifCond route 'likes'}}active{{/ifCond}}" href="/tweets/likes">喜歡的內容</a>
+  <a class="nav-link {{#ifCond route 'tweets'}}active{{/ifCond}}" aria-current="page" href="/users/:id/tweets">推文</a>
+  <a class="nav-link {{#ifCond route 'replies'}}active{{/ifCond}}" href="/tweets/:id/replies">回覆</a>
+  <a class="nav-link {{#ifCond route 'likes'}}active{{/ifCond}}" href="/users/:id/likes">喜歡的內容</a>
 </nav>
