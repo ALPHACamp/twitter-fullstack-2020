@@ -1,51 +1,54 @@
 <div class="d-flex justify-content-evenly" style="height: 1400px;width:1200px">
- 
+
   {{> left-sidebar}}
-  
+
   <div class="follower-following-page" style="width:45%">
     <!--header-->
     <div class="header">
-      <a href=""><img src="https://i.postimg.cc/QxZdg4vB/Vector.png" alt="" class="arrow-left"></a>
-    <div class="header-user">
-      <h5>John Doe</h5>
-      <p style="font-size: 13px;">25 推文</p>
+      <a href=""><img src="https://i.postimg.cc/QxZdg4vB/Vector.png" alt="" class="arrow-left m-1"></a>
+      <div class="header-user">
+        <h5 class="mb-0">John Doe</h5>
+        <p style="font-size: 13px; color: #6C757D;">25 推文</p>
+      </div>
     </div>
-    </div>
-    <hr class="solid">
-      <!--tabs-->
+    <hr class="solid mt-2">
+    <!--tabs-->
     <div class="user-follower d-flex flex-column mt-2">
-    {{> follow-tabs route='follower'}}
-    <hr class="solid">
-      <div class="follower-user-content d-flex flex-row"> 
+      {{> follow-tabs route='follower'}}
+      <hr class="solid mt-0">
+      <div class="follower-user-content d-flex flex-row">
         <div class="user-avatar">
-          <img src="https://i.imgur.com/mhXz6z9.png?1" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;border:2px  solid;margin:auto 8px auto 24px;margin:auto 8 auto 0" alt="avatar"> 
+          <img src="https://i.imgur.com/mhXz6z9.png?1" width="50px" ;height="50px"
+            style="display:inline-block;border-radius:100%;border:2px  solid;margin:auto 8px auto 24px;margin:auto 8 auto 0"
+            alt="avatar">
         </div>
-        <div class="d-flex flex-column"> 
+        <div class="d-flex flex-column">
           <div class="follower-user-info d-flex justify-content-between">
             <div class="user-name-account d-flex" style="align-items: center">
-              <p style="font-size: 16px;margin:0;">followship.User.name</p>
+              <p style="font-size: 16px; margin:0; font-weight:700; ">followship.User.name</p>
             </div>
             <div>
               <!--預先做好依followship狀態切換按鈕，但需加上if切換-->
               <form action="/follower/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                <button type="submit" class="isFollowing" style="color:#FFFFFF;width:96x;height:40px;border:none;background:#FF6600;border-radius:50px">正在跟隨</button>
+                <button type="submit" class="following m-0">正在跟隨</button>
               </form>
               <form action="/follower/{{this.id}}" method="POST" style="display: contents;">
-                <button type="submit" class="notFollowing"style="width:64x;height:40px;border-radius:50px;background-color:#FCFCFC;color:#FF6600;border-color:#FF6600" >跟隨</button>
+                <button type="submit" class="follow m-0">跟隨</button>
               </form>
             </div>
           </div>
-        <div class="tweet-content mt-2" >
-          <p class="content">{{tweet.content}}Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt. </p>
-         </div>
+          <div class="tweet-content mt-3">
+            <p class="content">{{tweet.content}}Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
+              cillum dolor. Voluptate exercitation incididunt aliquip deserunt. </p>
+          </div>
         </div>
-      </div>      
-      
+      </div>
+
 
 
     </div>
 
-</div> 
-{{> right-sidebar}}   
-{{> reply-modal}} 
+  </div>
+  {{> right-sidebar}}
+  {{> reply-modal}}
 </div>

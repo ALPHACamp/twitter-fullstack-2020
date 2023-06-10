@@ -46,6 +46,7 @@
 .nav-item a {
   text-decoration:none;
 }
+
 .tweet {
   width: 178px;
   height: 46px;
@@ -206,6 +207,10 @@
   border-bottom: 1px solid #E6ECF0;
 }
 
+.header-user {
+  margin-left: 10px;
+}
+
 .post-new-tweet{
   color:#FFFFFF;
   width:64px;
@@ -217,4 +222,25 @@
 
 .content{
   font-size: 16px;
+}
+
+.nav-tabs .nav-item {
+  margin: 0 0 8px 0;
+  height: 45px;
+  width: 120px;
+  display: flex;
+  font-size: 15px;
+  font-family: "Noto Sans TC", sans-serif;
+  font-weight: 700;
+}
+
+.nav-tabs .nav-item .nav-link {
+  color: #657786;
+  border: none;
+  margin-left: 20px;
+}
+
+.nav-tabs .nav-item .nav-link.active {
+  color: #FF6600;
+  border-bottom: 2px solid #FF6600;
 }
