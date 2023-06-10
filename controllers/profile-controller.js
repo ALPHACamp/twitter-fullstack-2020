@@ -73,7 +73,8 @@ const profileController = {
       // 整理資料
       const tweetsData = tweets.map(tweet => tweet.toJSON())
       // render
-      res.render('users/tweets', { user: userData, tweets: tweetsData })
+      const partialName = 'user-tweets'
+      res.render('index', { user: userData, tweets: tweetsData, partialName })
     } catch (err) {
       next(err)
     }
@@ -101,7 +102,8 @@ const profileController = {
       // 整理資料
       const repliesData = replies.map(reply => reply.toJSON())
       // render
-      res.render('users/replies', { user: userData, replies: repliesData })
+      const partialName = 'user-replies'
+      res.render('index', { user: userData, replies: repliesData, partialName })
     } catch (err) {
       next(err)
     }
@@ -138,9 +140,11 @@ const profileController = {
         })
       )
       // 整理資料
-      const tweetsData = tweets.map(tweet => tweet.toJSON())
+      const tweetsData = tweets.map(tweet => ({ ...tweet.toJSON() }))
+
       // render
-      res.render('users/likes', { user: userData, tweets: tweetsData })
+      const partialName = 'user-likes'
+      res.render('index', { user: userData, tweets: tweetsData, partialName })
     } catch (err) {
       next(err)
     }
@@ -165,7 +169,8 @@ const profileController = {
         ...user.toJSON(),
         tweetsCount
       }
-      res.render('users/followings', { user: userData, followings })
+      const partialName = 'user-followings'
+      res.render('index', { user: userData, followings, partialName })
     } catch (err) {
       next(err)
     }
@@ -202,7 +207,8 @@ const profileController = {
         ...user.toJSON(),
         tweetsCount
       }
-      res.render('users/followers', { user: userData, followers, userFollowers: userFollowersData })
+      const partialName = 'user-followers'
+      res.render('index', { user: userData, followers, userFollowers: userFollowersData, partialName })
     } catch (err) {
       next(err)
     }
@@ -221,7 +227,8 @@ const profileController = {
       // 找不到就報錯
       if (!user) throw new Error('該用戶不存在!')
       // render
-      return res.render('users/edit', { user })
+      const partialName = 'user-edit'
+      return res.render('index', { user, partialName })
     } catch (err) {
       next(err)
     }

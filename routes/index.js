@@ -58,6 +58,10 @@ router.put(
   profileController.putUserAccount
 )
 
+// followship
+router.post('/followships/:userId', authenticated, followshipController.addFollowing)
+router.delete('/followships/:userId', authenticated, followshipController.removeFollowing)
+
 // api
 router.get('/api/users/:userId', authenticated, apiProfileController.editUserAccount)
 

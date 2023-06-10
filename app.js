@@ -11,6 +11,11 @@ const flash = require('connect-flash')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
+const partialHelpers = require('./helpers/partial-helpers')
+const helpers = {
+  ...handlebarsHelpers,
+  ...partialHelpers
+}
 
 // files
 const { getUser, ensureAuthenticated } = require('./_helpers')
@@ -20,7 +25,7 @@ app.use(express.static('public'))
 const port = process.env.PORT || 3000
 const SESSION_SECRET = process.env.SESSION_SECRET || 'simple_twitter_session_secret'
 
-app.engine('hbs', handlebars({ extname: '.hbs', defaultLayout: 'main', helpers: handlebarsHelpers }))
+app.engine('hbs', handlebars({ extname: '.hbs', defaultLayout: 'main', helpers: helpers }))
 app.set('view engine', 'hbs')
 
 app.use(express.urlencoded({ extended: true }))
