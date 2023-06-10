@@ -8,6 +8,7 @@ const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
+const { getUser } = require('./helpers/auth-helpers')
 const flash = require('connect-flash')
 const session = require('express-session')
 
@@ -33,6 +34,7 @@ app.use('/upload', express.static(path.join(__dirname, 'upload')))
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
+  res.locals.user = getUser(req)
   next()
 })
 
