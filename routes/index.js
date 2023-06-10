@@ -8,4 +8,6 @@ router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
 router.use('/', generalErrorHandler)
 
+router.get('/user', userController.getOther)
+
 module.exports = router
