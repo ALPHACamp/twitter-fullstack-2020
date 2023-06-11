@@ -11,16 +11,17 @@ const adminController = {
 
   getTweets: (req, res, next) => {
     return Tweet.findAll({
-      raw: true,
-      nest: true,
+      // raw: true,
+      // nest: true,
       include: User,
       order: [['createdAt', 'DESC']]
     })
       .then(tweets => {
         const data = tweets.map(tweet => ({
-          ...req,
+          ...tweet.toJSON(),
           description: tweet.description.substring(0, 50)
         }))
+        console.log(data)
         return res.render('admin/admin-tweets', { tweets: data })
       })
       .catch(err => next(err))
