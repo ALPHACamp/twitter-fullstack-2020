@@ -1,5 +1,4 @@
 const { User, Tweet } = require('../models')
-const { getUser } = require('../_helpers')
 
 const adminController = {
   signInPage: (req, res, next) => {
@@ -7,12 +6,25 @@ const adminController = {
   },
 
   signIn: (req, res) => {
-    res.redirect('/admin/tweets')
+    res.redirect(302, '/admin/tweets')
   },
 
-  // 未完成
   getTweets: (req, res, next) => {
-    res.render('admin/admin-tweets')
+    return Tweet.findAll({
+      // raw: true,
+      // nest: true,
+      include: User,
+      order: [['createdAt', 'DESC']]
+    })
+      .then(tweets => {
+        const data = tweets.map(tweet => ({
+          ...tweet.toJSON(),
+          description: tweet.description.substring(0, 50)
+        }))
+        console.log(data)
+        return res.render('admin/admin-tweets', { tweets: data })
+      })
+      .catch(err => next(err))
   },
 
   // 未完成
@@ -45,7 +57,7 @@ const adminController = {
         if (!tweet) throw new Error("Tweet didn't exist!")
         return tweet.destroy()
       })
-      .then(() => res.redirect('/admin/tweets'))
+      .then(() => res.redirect(302, '/admin/tweets'))
       .catch(err => next(err))
   }
 }
