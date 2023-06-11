@@ -21,9 +21,7 @@ tweetForm.addEventListener('input', event => {
   const { target } = event
   const content = target.value
   // tweet
-  if (target.name === 'description') {
-    checkTweetValid(target, content, MAX_TWEET_COUNT)
-  }
+  checkTweetValid(target, content, MAX_TWEET_COUNT)
 })
 
 tweetClose.addEventListener('click', event => {

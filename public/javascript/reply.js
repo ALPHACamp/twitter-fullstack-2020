@@ -1,42 +1,50 @@
-const replySubmitButton = document.querySelector('#reply-submit-button')
-const replyForm = document.querySelector('#reply-form')
-const replyFeedback = document.querySelector('.reply-feedback')
-const replyClose = document.querySelector('#reply-close')
-const replyArea = document.querySelector('#comment')
+const replySubmitButtons = document.querySelectorAll('#reply-submit-button')
+const replyForms = document.querySelectorAll('#reply-form')
+const replyFeedbacks = document.querySelectorAll('.reply-feedback')
+const replyCloses = document.querySelectorAll('#reply-close')
+const replyAreas = document.querySelectorAll('#comment')
 
 const MAX_COMMENT_COUNT = 140
 
-replySubmitButton.addEventListener('click', event => {
-  replyForm.classList.add('was-validated')
+replySubmitButtons.forEach((replySubmitButton, index) => {
+  replySubmitButton.addEventListener('click', event => {
+    replyForms[index].classList.add('was-validated')
+  })
 })
 
-replyForm.addEventListener('submit', event => {
-  if (!replyForm.checkValidity()) {
-    event.stopPropagation()
-    event.preventDefault()
-  }
+replyForms.forEach(replyForm => {
+  replyForm.addEventListener('submit', event => {
+    if (!replyForm.checkValidity()) {
+      event.stopPropagation()
+      event.preventDefault()
+    }
+  })
 })
 
-replyForm.addEventListener('input', event => {
-  const { target } = event
-  const content = target.value
-  // reply
-  checkReplyValid(target, content, MAX_COMMENT_COUNT)
+replyForms.forEach((replyForm, index) => {
+  replyForm.addEventListener('input', event => {
+    const { target } = event
+    const content = target.value
+    // reply
+    checkReplyValid(target, content, MAX_COMMENT_COUNT, index)
+  })
 })
 
-replyClose.addEventListener('click', event => {
-  // 關掉modal時清空錯誤訊息和textarea
-  replyFeedback.innerText = ''
-  replyArea.value = ''
+replyCloses.forEach((replyClose, index) => {
+  replyClose.addEventListener('click', event => {
+    // 關掉modal時清空錯誤訊息和textarea
+    replyFeedbacks[index].innerText = ''
+    replyAreas[index].value = ''
+  })
 })
 
-function checkReplyValid (target, content, mexLength) {
+function checkReplyValid (target, content, mexLength, index) {
   // 如果內容只有空白或換行
   if (content.trim().length === 0) {
-    replyFeedback.innerText = '內容不可空白'
+    replyFeedbacks[index].innerText = '內容不可空白'
     target.setCustomValidity('內容不可空白')
   } else if (content.length > mexLength) {
-    replyFeedback.innerHTML = `字數不可超過${mexLength}字`
+    replyFeedbacks[index].innerHTML = `字數不可超過${mexLength}字`
     target.setCustomValidity(`字數不可超過${mexLength}字`)
   } else {
     target.setCustomValidity('')
