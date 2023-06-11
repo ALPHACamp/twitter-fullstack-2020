@@ -5,31 +5,29 @@
       <h4>推文清單</h4>
     </div>
     <div class="admin-tweets">
-      {{!-- each here --}}
+      {{#each tweets }}
       <div class="admin-tweet">
         <div class="admin-tweet-left">
-          <img class="rounded-circle" src="/images/acIcon.png" alt="avatar" title="avatar" width="50px" height="50px">
+          {{#if this.User.avatar}}
+            <img class="rounded-circle" src="{{this.User.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
+          {{else}}
+            <img class="rounded-circle" src="/images/acIcon.png" alt="avatar" title="avatar" width="50px" height="50px">
+          {{/if}}
         </div>
         <div class="admin-tweet-right">
           <div class="admin-tweet-right-up">
-            <span class="name">Apple</span>
-            <span class="account">&nbsp;@apple<b> •</b>&nbsp;3小時</span>
+            <span class="name">{{ this.User.name }}</span>
+            <span class="account">&nbsp;@{{ this.User.account}}<b> • </b>{{relativeTimeFromNow this.createdAt}}</span>
             <div class="tweet-xmark">
-              <a href=""><img src="/images/xmarkGray.png" alt=""></a>
+              <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+                <button type="submit"><img src="/images/xmarkGray.png" onclick="return confirm(`確定要刪除此tweet嗎？`)"></button>
+              </form>
             </div>
           </div>
-          <p class="content">{{tweet.content}} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi
-            ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-            dolore eu
-            fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim
-            id est laborum.</p>
+          <p class="content">{{this.description}}</p>
         </div>
       </div>
-      {{!-- end --}}
+      {{/each}}
     </div>
   </div>
 </div>
