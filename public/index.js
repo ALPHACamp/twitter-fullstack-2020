@@ -1,8 +1,10 @@
 const targetNodes = []
 const postTweetModal = document.getElementById('postTweetModal')
 const editProfileModal = document.getElementById('editProfileModal')
+const postReplyModal = document.getElementById('postReplyModal')
 targetNodes.push(postTweetModal)
 targetNodes.push(editProfileModal)
+targetNodes.push(postReplyModal)
 
 // 取得目前現在視窗大小的函式
 function updatePageHeight () {

@@ -60,6 +60,33 @@ const tweetController = {
       .then(([tweet, replies]) => {
         res.render('tweet', { tweet, replies })
       })
+  },
+  // 抓特定推文資料傳給前端
+  apiGetTweet: (req, res, next) => {
+    const tweetId = req.params.id
+    console.log(tweetId)
+    Promise.all([
+      Tweet.findByPk(tweetId, {
+        include: [User],
+        raw: true,
+        nest: true
+      }),
+      User.findByPk(helpers.getUser(req).id, { raw: true })
+    ])
+      .then(([tweet, currentUser]) => {
+        if (!tweet) throw new Error('Tweet did not exist.')
+        const result = { tweet, currentUser }
+        return res.json(result)
+      })
+      .catch(err => next(err))
+  },
+  // 新增回覆
+  postReply: (req, res, next) => {
+    const { comment } = req.body
+    const tweetId = req.params.id
+    Reply.create({ comment, userId: helpers.getUser(req).id, tweetId })
+      .then(reply => res.redirect(`/tweets/${tweetId}/replies`))
+      .catch(err => next(err))
   }
 }
 

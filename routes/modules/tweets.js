@@ -2,6 +2,9 @@ const express = require('express')
 const router = express.Router()
 const tweetController = require('../../controllers/tweet-controller')
 
+// 新增一則留言
+router.post('/:id/replies', tweetController.postReply)
+
 // 取得特定推文的回覆頁面
 router.get('/:id/replies', tweetController.getTweet)
 
