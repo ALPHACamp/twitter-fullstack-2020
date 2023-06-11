@@ -528,24 +528,10 @@ h4 {
   border-bottom: 2px solid #ff6600;
 }
 
-/* scrollbar */
-.user-container .tweet-list::-webkit-scrollbar,
-.user-container .follow-list::-webkit-scrollbar {
-  /* size */
-  width: 6px;
-}
-
-.user-container .tweet-list::-webkit-scrollbar-thumb,
-.user-container .follow-list::-webkit-scrollbar-thumb {
-  /* style */
-  background-color: transparent;
-}
-
-.user-container .tweet-list:hover::-webkit-scrollbar-thumb,
-.user-container .follow-list:hover::-webkit-scrollbar-thumb {
-  /* style */
-  background-color: #e6ecf0;
-  border-radius: 50px;
+.user-container .tweet-text {
+  margin-left: 8px;
+  margin-right: 3px;
+  width: 528px;
 }
 
 .user-container .tweet-list li,
@@ -557,12 +543,6 @@ h4 {
 
 .user-container .tweet-list .icon {
   margin: 0 0 0 24px;
-}
-
-.user-container .tweet-text {
-  margin-left: 8px;
-  margin-right: 3px;
-  width: 528px;
 }
 
 .user-container .tweet-name {
@@ -609,7 +589,7 @@ h4 {
   color: #171725;
 }
 
-.user-container .tweet-list a,
+.user-container .tweet-list .count,
 .user-container .follow-list a {
   margin-right: 65px;
   font-family: 'Montserrat';

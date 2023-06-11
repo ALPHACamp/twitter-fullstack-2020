@@ -163,7 +163,8 @@ const profileController = {
         })
       )
       // 整理資料
-      const tweetsData = tweets.map(tweet => ({ ...tweet.toJSON() }))
+      console.log(tweets)
+      const tweetsData = tweets.map(tweet => ({ ...tweet?.toJSON() }))
       // render
       res.render('users/likes', { user: userData, tweets: tweetsData })
     } catch (err) {
