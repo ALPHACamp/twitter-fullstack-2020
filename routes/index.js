@@ -5,6 +5,7 @@ const passport = require('../config/passport')
 const { authenticated, authenticatedAdmin } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const users = require('./modules/users')
+const api = require('./modules/api')
 const admin = require('./modules/admin')
 const tweets = require('./modules/tweets')
 const followships = require('./modules/followships')
@@ -20,6 +21,9 @@ router.post('/signout', userController.signOut)
 
 // users路由
 router.use('/users', authenticated, users)
+
+// api路由
+router.use('/api', authenticated, api)
 
 // tweets路由
 router.use('/tweets', authenticated, tweets)

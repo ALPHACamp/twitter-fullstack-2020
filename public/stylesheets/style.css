@@ -170,7 +170,15 @@ a:hover {
 
 .logo {
   height: 100%;
+  width: 100%;
   border-radius: 50%;
+  object-fit: cover;
+}
+
+.logo-container .logo {
+  height: 40px;
+  width: 40px;
+  object-fit: unset;
 }
 
 /* input */
@@ -200,16 +208,22 @@ a:hover {
   border-bottom: 2px solid #657786;
 }
 
-.form-input::placeholder {
+
+.form-input::placeholder,
+.form-textarea::placeholder {
   color: #B5B5BE
 }
 
 .form-input:hover,
-.form-input:focus {
+.form-input:focus,
+.form-textarea:hover,
+.form-textarea:focus {
   border-bottom: 2px solid var(--light-blue);
+  outline-width: 0;
 }
 
-.was-validated .form-input:invalid {
+.was-validated .form-input:invalid,
+.was-validated .form-textarea:invalid {
   border-bottom: 2px solid var(--danger);
 }
 
@@ -218,7 +232,8 @@ a:hover {
   background-color: white;
 }
 
-.input-minmax {
+.input-minmax,
+.textarea-minmax {
   position: absolute;
   right: 0;
   top: 52px;
@@ -442,6 +457,10 @@ textarea {
 
 /* modal */
 
+.modal-dialog {
+  position: relative;
+}
+
 .modal-content {
   border-radius: 14px;
 }
@@ -455,6 +474,107 @@ textarea {
 .modal-body {
   height: 150px;
   padding: 0;
+}
+
+.edit-profile-modal-body {
+  height: 630px;
+  padding: 0;
+}
+
+.edit-profile-header {
+  position: absolute;
+  top: 15px;
+  left: 71px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.btn-submit-profile {
+  position: absolute;
+  top: -256px;
+  right: 16px;
+}
+
+.edit-profile-modal-body .profile-wrapper,
+.edit-profile-modal-body .profile-wrapper>.profile-avatar {
+  background-color: #171725
+}
+
+.edit-profile-modal-body .profile-wrapper>.profile-cover,
+.edit-profile-modal-body .profile-wrapper>.profile-avatar>.logo {
+  opacity: .5;
+}
+
+.edit-camera-icon,
+.edit-camera-icon-avatar {
+  position: absolute;
+  top: 50%;
+  left: 42%;
+  transform: translate(-50%, -50%);
+  height: 20px;
+  width: 20px;
+  background-image: url('/stylesheets/icons/camera.png');
+  cursor: pointer;
+}
+
+.edit-x-icon {
+  position: absolute;
+  top: 50%;
+  right: 42%;
+  transform: translate(-50%, -50%);
+  height: 15px;
+  width: 15px;
+  background-image: url('/stylesheets/icons/x_white.png');
+  cursor: pointer;
+}
+
+.edit-camera-icon-avatar {
+  left: 50%;
+  cursor: pointer;
+}
+
+.file-input-label {
+  position: absolute;
+  top: 50%;
+  left: 43%;
+}
+
+.file-input-label-avatar {
+  left: 50%
+}
+
+.profile-wrapper~.main-create-bar {
+  padding-top: 80px;
+}
+
+.create-tweet-form {
+  width: 100%;
+}
+
+.bg-form-gray-textarea {
+  height: 147px;
+}
+
+.form-textarea {
+  height: 147px;
+  width: 100%;
+  outline-width: 0;
+  border-width: 0;
+  border-radius: 2px;
+  border-bottom: 2px solid #657786;
+  padding: 0 0 0 8px;
+  color: #171725;
+  background-color: var(--form-gray);
+
+  /* font */
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  resize: none;
+}
+
+.textarea-minmax {
+  top: 173px;
 }
 
 .main-create-bar>.create-tweet-form>textarea {
@@ -490,6 +610,32 @@ textarea {
 
 .btn-close::after {
   transform: rotate(135deg);
+}
+
+.spinner-border {
+  position: absolute;
+  top: 50%;
+  left: 48%;
+  display: none;
+}
+
+.spinner-border-show {
+  display: inline-block;
+}
+
+.spinning-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #171725;
+  opacity: .5;
+  display: none;
+}
+
+.spinning-background-show {
+  display: block;
 }
 
 .tweetTips {
@@ -661,6 +807,10 @@ textarea {
   width: 35%;
 }
 
+.card-tweet-lg .card-text .card-text-info {
+  width: 100%;
+}
+
 .followship-name,
 .followship-account {
   text-overflow: ellipsis;
@@ -721,6 +871,7 @@ textarea {
   width: 100%;
   height: 200px;
   background-image: url('/stylesheets/icons/mountain.png');
+  object-fit: cover;
 }
 
 .profile-avatar {
