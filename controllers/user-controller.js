@@ -5,17 +5,11 @@ const userController = {
   signUpPage: (req, res) => {
     res.render('signup')
   },
-  signUp: (req, res) => {
+  signUp: (req, res, next) => {
     const { account, name, email, password, passwordCheck } = req.body
-    if (!account || !name || !email || !password || !passwordCheck) {
-      req.flash('error_message', '所有欄位都是必填')
-      return req.redirect('/signup')
-    }
+    if (!account || !name || !email || !password || !passwordCheck) throw new Error('所有欄位都是必填!')
 
-    if (req.body.password !== req.body.passwordCheck) {
-      req.flash('error_message', '密碼不相符')
-      return req.redirect('/signup')
-    }
+    if (req.body.password !== req.body.passwordCheck) throw new Error('密碼不相符!')
 
     Promise.all([
       User.findOne({ where: { account } }),
@@ -36,11 +30,11 @@ const userController = {
       }))
       .then(() => {
         req.flash('success_messages', '成功註冊帳號！')
-        return res.redirect('/signin')
+        res.redirect('/signin')
       })
       .catch(err => {
-        req.flash('error_message', `${err}`)
-        return req.redirect('/signup')
+        next(err)
+        res.redirect('/signup')
       })
   },
   signInPage: (req, res) => {

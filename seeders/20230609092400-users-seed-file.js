@@ -13,7 +13,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       is_admin: true,
       cover: '/images/users/cover.png',
-      avatar: faker.image.avatar(),
+      avatar: 'https://assets-lighthouse.alphacamp.co/uploads/image/file/15982/man_02.png',
       introduction: generateLimitedParagraph(160),
       created_at: new Date(),
       updated_at: new Date()
@@ -24,7 +24,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       is_admin: false,
       cover: '/images/users/cover.png',
-      avatar: faker.image.avatar(),
+      avatar: 'https://assets-lighthouse.alphacamp.co/uploads/image/file/15982/man_02.png',
       introduction: generateLimitedParagraph(160),
       created_at: new Date(),
       updated_at: new Date()
@@ -35,7 +35,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       is_admin: false,
       cover: '/images/users/cover.png',
-      avatar: faker.image.avatar(),
+      avatar: 'https://assets-lighthouse.alphacamp.co/uploads/image/file/15982/man_02.png',
       introduction: generateLimitedParagraph(160),
       created_at: new Date(),
       updated_at: new Date()
@@ -47,7 +47,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       is_admin: false,
       cover: '/images/users/cover.png',
-      avatar: faker.image.avatar(),
+      avatar: 'https://assets-lighthouse.alphacamp.co/uploads/image/file/15982/man_02.png',
       introduction: generateLimitedParagraph(160),
       created_at: new Date(),
       updated_at: new Date()
@@ -58,7 +58,7 @@ module.exports = {
       password: await bcrypt.hash('12345678', 10),
       is_admin: false,
       cover: '/images/users/cover.png',
-      avatar: faker.image.avatar(),
+      avatar: 'https://assets-lighthouse.alphacamp.co/uploads/image/file/15982/man_02.png',
       introduction: generateLimitedParagraph(160),
       created_at: new Date(),
       updated_at: new Date()

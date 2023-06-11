@@ -22,22 +22,21 @@
 
       <table class="table align-top bg-light" >
         <tbody >
+          {{#each tweets}}
           <tr >
             <td class="bg-light">
               <div class="row">
                 <div class="col-1 text-end">
-                  <img id="ac-avatar-icon-admin" src="/images/icons/avatar.png" alt="">
+                  <img id="ac-avatar-icon-admin" src="{{this.User.avatar}}" alt="tweet avatar image">
                 </div>
                 <div class="col">
                   <div class="name">
-                    <span id="span-tweets-name-admin">Name</span>
-                    <span id="span-tweets-account-time-admin">@accout・Time</span>
+                    <span id="span-tweets-name-admin">{{this.User.name}}</span>
+                    <span id="span-tweets-account-time-admin">@{{this.User.account}}・{{relativeTimeFromNow this.User.createdAt}}</span>
                   </div>
                   <div class="description">
                     <p id="p-tweets-description-admin" class="mb-0">
-                      Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate
-                      exercitation incididunt
-                      aliquip deserunt reprehenderit elit laborum.
+                      {{this.description}}
                     </p>
                   </div>
                 </div>
@@ -52,6 +51,7 @@
               </form>
             </td>
           </tr>
+          {{/each}}
         </tbody>
       </table>
 
