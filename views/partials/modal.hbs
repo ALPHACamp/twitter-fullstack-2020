@@ -9,20 +9,46 @@
         </button>
       </div>
       <form action="/tweets" method="POST">
-      <div class="modal-body d-flex">
-        {{!-- 用戶大頭貼 --}}
-        <figure class="ms-2 me-2 align-self-start flex-shrink-0"
-          style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
-          <img src="{{currentUser.avatar}}" style="object-fit: cover;width:100%; height:100%">
-        </figure>
-        {{!-- tweet 文字輸入區 --}}
-        <textarea placeholder="有什麼新鮮事？" id="description" name="description" class="text-basic-reg mt-2" rows="5" cols="50"
-          maxlength="140" required></textarea>
+        <div class="modal-body d-flex">
+          {{!-- 用戶大頭貼 --}}
+          <figure class="ms-2 me-2 align-self-start flex-shrink-0"
+            style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
+            <img src="{{currentUser.avatar}}" style="object-fit: cover;width:100%; height:100%">
+          </figure>
+          {{!-- tweet 文字輸入區 --}}
+          <textarea placeholder="有什麼新鮮事？" id="description" name="description" class="text-basic-reg mt-2" rows="5"
+            cols="50" maxlength="140" required></textarea>
+        </div>
+        <div class="modal-footer" style="border:0px">
+          <button type="submit" class="pill-default pill-main me-2">推文</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{{!-- 點擊編輯個人資料按鈕時叫出的 Modal --}}
+<div class="modal fade" id="editProfileModal" tabindex="-1">
+  <div class="modal-dialog" style="max-width: 100%;">
+    <div class="modal-content modal-twitter">
+      <div class="modal-header">
+        {{!-- 關閉 Modal 按鈕 --}}
+        <button type="button" data-bs-dismiss="modal" aria-label="Close">
+          <img class="ms-2 me-3 svg-fill-main" src="/_base/Property 2=outlined, Property 3=close.svg">
+        </button>
+      </div>
+      {{!-- 編輯個人資料的表單內容 --}}
+      <div class="mb-3">
+        <label class="form-label" for="name">名稱</label>
+        <input type="text" id="name" name="name" class="form-control" placeholder="請輸入使用者名稱" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="intro">自我介紹</label>
+        <input type="text" id="intro" name="intro" class="form-control" placeholder="請輸入自我介紹" required>
       </div>
       <div class="modal-footer" style="border:0px">
-          <button type="submit" class="pill-default pill-main me-2">推文</button>
+        <button type="button" id="putProfileButton" class="pill-default pill-main me-2">儲存</button>
       </div>
-      </form>
     </div>
   </div>
 </div>
