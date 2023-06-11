@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/user-controller')
+const tweetController = require('../controllers/tweet-controller')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const admin = require('./modules/admin')
 const passport = require('../config/passport')
@@ -15,5 +16,8 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.use('/', authenticated, generalErrorHandler)
 
 router.get('/user', userController.getOther)
+
+router.get('/tweets', tweetController.getTweets)
+router.use('/', generalErrorHandler)
 
 module.exports = router
