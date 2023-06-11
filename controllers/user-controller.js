@@ -142,7 +142,7 @@ const userController = {
     const loginUser = helpers.getUser(req).id
 
     // 自己不能追蹤自己(測試檔 redirect 需要 200)
-    if (userId === loginUser.id) {
+    if (userId === loginUser) {
       req.flash('error_messages', 'Cannot follow yourself!')
       return res.redirect(200, 'back')
     }

@@ -67,7 +67,20 @@
         </div>
         {{!-- 喜歡數 Like --}}
         <div class="number">
-          <img class="me-2" src="/_base/Property 2=outlined, Property 3=like.svg" style="width: 13px">16
+          {{#if this.isLiked}}
+          <form action="/tweets/{{this.id}}/unlike" method="POST" class="me-2">
+            <button type="submit">
+              <img src="/_base/Property 2=outlined, Property 3=like.svg" style="width: 13px">
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{this.id}}/like" method="POST" class="me-2">
+            <button type="submit">
+              <img src="/_base/Property 2=filled, Property 3=like.svg" style="width: 13px">
+            </button>
+          </form>
+          <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.likeCount}}</span>
+          {{/if}}
         </div>
       </div>
     </div>

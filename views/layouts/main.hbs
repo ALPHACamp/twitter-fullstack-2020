@@ -152,13 +152,14 @@
               </div>
             </div>
             {{!-- 跟隨按鈕 --}}
-            {{#if isFollowed}}
-            <form action="/followship/{{this.id}}?_method=DELETE" method="POST">
+            {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
               <button type="submit" class="pill pill-default pill-main">正在跟隨</button>
             </form>
             {{else}}
-            <form action="/followship" method="POST">
-              <button type="submit" class="pill pill-default pill-outline" value="{{this.id}}">跟隨</button>
+            <form action="/followships" method="POST">
+              <input type="text" name="id" value="{{this.id}}" style="display: none;">
+              <button type="submit" class="pill pill-default pill-outline">跟隨</button>
             </form>
             {{/if}}
           </div>

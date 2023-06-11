@@ -44,6 +44,7 @@ passport.use('local-admin', new LocalStrategy(
           if (!isMatch) {
             return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
           }
+          console.log()
           return cb(null, user)
         })
       })
@@ -53,11 +54,15 @@ passport.use('local-admin', new LocalStrategy(
 
 // serialize and deserialize user
 passport.serializeUser((user, cb) => {
+  console.log('你到序列化了')
   cb(null, user.id)
 })
 passport.deserializeUser((id, cb) => {
   User.findByPk(id)
-    .then(user => cb(null, user.toJSON()))
+    .then(user => {
+      console.log('你到反序列化了')
+      return cb(null, user.toJSON())
+    })
     .catch(err => cb(err))
 })
 module.exports = passport

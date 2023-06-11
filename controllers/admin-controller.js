@@ -1,5 +1,4 @@
 const { User, Tweet } = require('../models')
-const { getUser } = require('../_helpers')
 
 const adminController = {
   signInPage: (req, res, next) => {
@@ -7,7 +6,7 @@ const adminController = {
   },
 
   signIn: (req, res) => {
-    res.redirect('/admin/tweets')
+    res.redirect(302, '/admin/tweets')
   },
 
   // 未完成
@@ -45,7 +44,7 @@ const adminController = {
         if (!tweet) throw new Error("Tweet didn't exist!")
         return tweet.destroy()
       })
-      .then(() => res.redirect('/admin/tweets'))
+      .then(() => res.redirect(302, '/admin/tweets'))
       .catch(err => next(err))
   }
 }
