@@ -54,13 +54,11 @@ passport.use('local-admin', new LocalStrategy(
 
 // serialize and deserialize user
 passport.serializeUser((user, cb) => {
-  console.log('你到序列化了')
   cb(null, user.id)
 })
 passport.deserializeUser((id, cb) => {
   User.findByPk(id)
     .then(user => {
-      console.log('你到反序列化了')
       return cb(null, user.toJSON())
     })
     .catch(err => cb(err))

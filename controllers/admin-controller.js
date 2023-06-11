@@ -9,9 +9,21 @@ const adminController = {
     res.redirect(302, '/admin/tweets')
   },
 
-  // 未完成
   getTweets: (req, res, next) => {
-    res.render('admin/admin-tweets')
+    return Tweet.findAll({
+      raw: true,
+      nest: true,
+      include: User,
+      order: [['createdAt', 'DESC']]
+    })
+      .then(tweets => {
+        const data = tweets.map(tweet => ({
+          ...req,
+          description: tweet.description.substring(0, 50)
+        }))
+        return res.render('admin/admin-tweets', { tweets: data })
+      })
+      .catch(err => next(err))
   },
 
   // 未完成
