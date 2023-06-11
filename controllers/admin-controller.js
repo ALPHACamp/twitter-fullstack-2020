@@ -1,4 +1,4 @@
-const adminController = { 
+const adminController = {
   getSignin: (req, res) => {
     res.render('admin/login')
   },

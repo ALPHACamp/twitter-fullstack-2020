@@ -50,11 +50,11 @@ const userController = {
 
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
-    res.send('Success')},
+    res.send('Success')
+  },
 
   getOther: (req, res) => {
     res.render('other-tweets')
-
   }
 }
 module.exports = userController

@@ -3,7 +3,7 @@ const { DataTypes, Model } = require('sequelize')
 
 module.exports = sequelize => {
   class User extends Model {
-    static associate(models) {
+    static associate (models) {
       //* 推文
       User.hasMany(models.Tweet, { foreignKey: 'userId' })
       //* 回覆
@@ -25,7 +25,7 @@ module.exports = sequelize => {
   }
   User.init(
     {
-      //? name 不能做其他的條件限制，只能由後端來做... 不然TEST會卡住
+      // ? name 不能做其他的條件限制，只能由後端來做... 不然TEST會卡住
       name: DataTypes.STRING,
       account: {
         type: DataTypes.STRING,
