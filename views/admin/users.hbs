@@ -6,37 +6,37 @@
     </div>
     <div class="admin-user">
       <div class="admin-user-row">
-        {{!-- each here --}}
+        {{#each user}}
         <div class="admin-user-card">
           <div class="card mb-4">
             <div class="card-img-top">
-              <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/5720/restaurants-list-cover.jpg"
+              <img src="{{ this.cover }}"
                 alt="...">
               <img class="card-avatar" src="https://xsgames.co/randomusers/assets/avatars/male/71.jpg">
             </div>
             <div class="card-body text-center">
-              <div class="body-16px-medium">{{user.name}}111</div>
-              <div class="body-14-regular secondary">@{{user.account}}111</div>
+              <div class="body-16px-medium">{{this.name}}</div>
+              <div class="body-14-regular secondary">@{{this.account}}</div>
               <div class='mt-2 d-flex justify-content-center card-icon '>
-                <span><img src="/images/adminFollow.png" alt="">1.5K　</span>
-                <span><img src="/images/adminLike.png" alt="">20K</span>
+                <span><img src="/images/adminFollow.png" alt="">{{this.tweetsCount}}　</span>
+                <span><img src="/images/adminLike.png" alt="">{{this.likesCount}}</span>
               </div>
               <div class='mt-2 d-flex justify-content-center '>
                 <span class="combined ">
                   <!-- todo {{user.following.length}}   -->
-                  <span class="body-14-regular grayscale float-start">34 個</span>
+                  <span class="body-14-regular grayscale float-start">{{this.followersCount}} 個</span>
                   <span class="body-14-regular secondary float-start">跟隨中　</span>
                 </span>
                 <span class="combined ">
                   <!-- todo {{user.follower.length}} -->
-                  <span class="body-14-regular grayscale float-start">59 位</span>
+                  <span class="body-14-regular grayscale float-start">{{this.followingsCount}} 位</span>
                   <span class="body-14-regular secondary float-start">跟隨者</span>
                 </span>
               </div>
             </div>
           </div>
         </div>
-        {{!-- end --}}
+        {{/each}}
 
       </div>
     </div>

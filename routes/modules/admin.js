@@ -8,5 +8,11 @@ router.get('/signin', adminController.getSignin)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.adminSignin)
 
 router.get('/tweets', adminAuthenticated, adminController.getTweets)
+router.delete('/tweets/:id', adminController.deleteTweets)
+
+
+router.get('/users', adminController.getUsers)
+
+router.get('/logout', adminController.getLogout)
 
 module.exports = router
