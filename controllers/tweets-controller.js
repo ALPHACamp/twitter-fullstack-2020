@@ -60,8 +60,10 @@ const tweetsController = {
     }
   },
   postTweet: async (req, res, next) => {
-    const { description } = req.body
+    let { description } = req.body
     const UserId = helpers.getUser(req).id
+    // 修剪推文內容去掉前後空白
+    description = description.trim()
     if (!description) throw new Error('推文內容不能為空白!')
     try {
       await Tweet.create({
@@ -74,9 +76,11 @@ const tweetsController = {
     }
   },
   postReply: async (req, res, next) => {
-    const { comment } = req.body
+    let { comment } = req.body
     const TweetId = req.params.tweetId
     const UserId = helpers.getUser(req).id
+    // 修剪回覆內容去掉前後空白
+    comment = comment.trim()
     if (!comment) throw new Error('回覆內容不能為空白!')
     try {
       await Reply.create({
