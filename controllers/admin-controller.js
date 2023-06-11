@@ -1,4 +1,4 @@
-const { User, Tweet } = require('../models')
+const { User, Tweet, Like, Followship } = require('../models')
 
 const adminController = {
   // 後台登入
@@ -39,7 +39,16 @@ const adminController = {
   },
   adminGetUsers: async (req, res, next) => {
     try {
-      const users = await User.findAll({ where: { role: 'user' }, raw: true, nest: true })
+      const users = await User.findAll({
+        where: { role: 'user' },
+        raw: true,
+        nest: true,
+        include: [
+          // Tweet & Like
+          { model: User, as: 'Followings', attributes: ['id'] },
+          { model: User, as: 'Followers', attributes: ['id'] }
+        ]
+      })
       console.log(users)
       return res.render('admin/users', { users })
     } catch (e) {
