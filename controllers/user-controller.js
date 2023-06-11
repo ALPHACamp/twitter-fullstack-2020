@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const { User, Tweet } = db
+const { User, Tweet, Followship } = db
 const helpers = require('../_helpers')
 
 const userController = {
@@ -132,6 +132,60 @@ const userController = {
         console.log(tweets)
         res.render('user', { user, tweets, currentUser })
       })
+  },
+
+  // 追蹤特定使用者
+  addFollow: (req, res, next) => {
+    // 按鈕上這人的 id
+    const userId = Number(req.body.id)
+    // 登入中的使用者 id
+    const loginUser = helpers.getUser(req).id
+
+    // 自己不能追蹤自己(測試檔 redirect 需要 200)
+    if (userId === loginUser) {
+      req.flash('error_messages', 'Cannot follow yourself!')
+      return res.redirect(200, 'back')
+    }
+
+    return Promise.all([
+      User.findByPk(userId),
+      Followship.findOne({
+        where: {
+          followingId: loginUser,
+          followerId: userId
+        }
+      })
+    ])
+      .then(([user, followship]) => {
+        if (!user) throw new Error('User did not exist.')
+        if (followship) throw new Error('You have already followed this user!')
+        return Followship.create({
+          followerId: loginUser,
+          followingId: userId
+        })
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+
+  // 取消追蹤特定使用者
+  removeFollow: (req, res, next) => {
+    // 按鈕上這人的 id
+    const userId = req.params.id
+    // 登入中的使用者 id
+    const loginUser = helpers.getUser(req).id
+    return Followship.findOne({
+      where: {
+        followerId: loginUser,
+        followingId: userId
+      }
+    })
+      .then(followship => {
+        if (!followship) throw new Error("You haven't followed this user!")
+        return followship.destroy()
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
   }
 }
 
