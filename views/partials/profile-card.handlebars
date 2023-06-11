@@ -35,7 +35,7 @@
     {{!-- 是log in user 本人 --}}
     {{#ifCond user.id loginUserId }}
     <button type="button" class="btn btn-outline-info btn-edit-profile" data-bs-toggle="modal"
-      data-bs-target="#editModal">
+      data-bs-target="#editModal" data-UserId="{{ ../user.id }}">
       編輯個人資料
     </button>
     {{/ifCond}}
@@ -44,8 +44,8 @@
     {{!-- 1. 不是log in user 本人。2. log in user 跟隨中--}}
 
     {{#ifTrueAndNotEqual user.isFollow user.id loginUserId}}
-    <form action="/followships/{{ user.id }}?_method=DELETE" method="post">
-      <input type="hidden" name="loginUserId" value="{{loginUserId}}" />
+    <form action="/followships/{{ ../user.id }}/?_method=DELETE" method="post">
+      <input type="hidden" name="loginUserId" value="{{../loginUserId}}" />
       <div class="follow-button-wrapper">
         <button type="submit" class="btn btn-info btn-edit-profile">正在跟隨</button>
       </div>
@@ -56,8 +56,8 @@
     {{!-- 1.不是log in user 本人。2. log in user 沒有跟隨--}}
     {{#ifFalseAndNotEqual user.isFollow user.id loginUserId}}
     <form action="/followships" method="post">
-      <input type="hidden" name="userId" value="{{user.id}}" />
-      <input type="hidden" name="loginUserId" value="{{loginUserId}}" />
+      <input type="hidden" name="userId" value="{{../user.id}}" />
+      <input type="hidden" name="loginUserId" value="{{../loginUserId}}" />
       <div class="follow-button-wrapper">
         <button type="submit" class="btn btn-outline-info btn-follow  btn-edit-profile">跟隨</button>
       </div>

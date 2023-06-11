@@ -4,7 +4,7 @@ const submitButton = document.querySelector('#submit')
 const accountInput = document.querySelector('#account')
 const nameInput = document.querySelector('#name')
 const passwordInput = document.querySelector('#password')
-const confirmPasswordInput = document.querySelector('#confirmPassword')
+const confirmPasswordInput = document.querySelector('#checkPassword')
 
 submitButton.addEventListener('click', function onSubmitClick() {
   form.classList.add('was-validated')
