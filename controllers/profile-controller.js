@@ -188,7 +188,7 @@ const profileController = {
         })
       ])
       // 判斷user是否存在，沒有就err
-      if (!user) throw new Error('該用戶不存在!')
+      if (!user) throw new Error('帳號不存在!')
       const userData = {
         ...user.toJSON(),
         tweetsCount
@@ -219,7 +219,7 @@ const profileController = {
       // 判斷是否為本人，不是的話就back
       if (user.id !== loginUser.id) return res.redirect('back')
       // 判斷user是否存在，沒有就err
-      if (!user) throw new Error('該用戶不存在!')
+      if (!user) throw new Error('帳號不存在!')
       // 追隨者的資料
       const userFollowersData = user.Followers.map(follower => ({
         ...follower.toJSON(),
@@ -247,7 +247,7 @@ const profileController = {
         raw: true
       })
       // 找不到就報錯
-      if (!user) throw new Error('該用戶不存在!')
+      if (!user) throw new Error('帳號不存在!')
       // render
       return res.render('users/edit', { user })
     } catch (err) {
@@ -276,13 +276,13 @@ const profileController = {
         imgurFileHelper(avatar)
       ])
       // 找不到就報錯
-      if (!user) throw new Error('該用戶不存在!')
+      if (!user) throw new Error('帳號不存在!')
       // 如果account、email有更動就判斷是否有重複
-      if (user.account !== account && isAccountExist) throw new Error('該帳號已存在!')
-      if (user.email !== email && isEmailExist) throw new Error('該email已存在!')
+      if (user.account !== account && isAccountExist) throw new Error('account已重複註冊!')
+      if (user.email !== email && isEmailExist) throw new Error('email已重複註冊!')
       // 確認name有無超過50字，introduction有無超過150字
-      if (name?.length > 50) throw new Error('該名字超過字數上限!')
-      if (introduction?.length > 150) throw new Error('該敘述超過字數上限!')
+      if (name?.length > 50) throw new Error('字數超出上限!')
+      if (introduction?.length > 150) throw new Error('字數超出上限!')
       // 確認密碼是否正確
       if (password !== passwordCheck) throw new Error('密碼不一致!')
       // 將密碼hash
