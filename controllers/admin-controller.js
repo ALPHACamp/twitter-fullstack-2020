@@ -39,7 +39,8 @@ const adminController = {
   },
   adminGetUsers: async (req, res, next) => {
     try {
-      const users = await User.findAll({ raw: true, nest: true })
+      const users = await User.findAll({ where: { role: 'user' }, raw: true, nest: true })
+      console.log(users)
       return res.render('admin/users', { users })
     } catch (e) {
       next(e)

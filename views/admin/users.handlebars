@@ -3,64 +3,44 @@
 
     {{> admin-navbar}}
 
-    <section>
+    <section class="admin-users">
       <h4 class="main-title">使用者列表</h4>
 
-      <div class="users-container">
-        <div class="card" style="width:210px;height:314px;">
-          <div class="user-image" style="height:50%;border:1px solid black">
+      <div class="users-container" style="flex-wrap: wrap;display:flex">
+        {{#each users}}
+        <div class="card mt-2 ml-2" style="width:210px;height:314px;">
+          <div class="user-image" style="height:50%">
+            {{#if this.cover}}
+            <div class="background-image"
+              style="height:140px;border-radius:10px 10px 0px 0px;background-image: url('{{this.cover}}')"></div>
+            {{else}}
             <div class="profile-cover background-image" style="height:140px;border-radius:10px 10px 0px 0px"></div>
-            <div style="position:absolute;top:64px;left:55px"><img src="/stylesheets/icons/avatar.png"></div>
+            {{/if}}
+
+            {{#if this.avatar}}
+            <div style=""><img class="admin-user-avatar" src="{{this.avatar}}"></div>
+            {{else}}
+            <div style=""><img class="admin-user-avatar" src="/stylesheets/icons/avatar.png"></div>
+            {{/if}}
           </div>
 
-          <div class="user-info mt-8" style="height:50%">
-            <div class="user-name" style="text-align:center">name</div>
-            <div class="user-account" style="text-align:center">account</div>
-            <div class="user-data" style="display:flex;justify-content:space-around">
-              <div class="tweets">1.5K</div>
-              <div class="likes">20K</div>
+          <div class="user-info" style="height:50%;position:absolute;top:172px;left:23px;font-family: 'Noto Sans TC'">
+            <div class="user-name" style="text-align:center;font-weight:bold">{{this.name}}</div>
+            <div class="user-account" style="text-align:center;color:#6C757D">@{{this.account}}</div>
+            <div class="user-data mt-3" style="display:flex;justify-content:space-around">
+              <div class="tweets"><img src=" /stylesheets/icons/pen_gray.png" style="width:23.87px;height:21.6px">&nbsp&nbsp1.5K
+              </div>
+              <div class="likes"><img src="/stylesheets/icons/like_white.png" style="width:23.87px;height:21.6px">&nbsp&nbsp20K
+              </div>
             </div>
-            <div class="user-followships" style="display:flex;justify-content:space-around">
-              <div class="followings">34個跟隨中</div>
-              <div class="followers">59位跟隨者</div>
+            <div class="user-followships mt-2" style="display:flex;justify-content:space-around">
+              <div class="followings mx-1" style="font-size:14px">34&nbsp個跟隨中</div>
+              <div class="followers mx-1" style="font-size:14px">59&nbsp位跟隨者</div>
             </div>
           </div>
         </div>
-
-
+        {{/each}}
       </div>
     </section>
-    {{!-- <div class="card-text">
-
-      {{#if user.cover}}
-      <img src="{{ user.cover }}" alt="cover" class="profile-cover background-image">
-      {{else}}
-      <div class="profile-cover background-image"></div>
-      {{/if}}
-
-      <div class="profile-avatar">
-        {{#if user.avatar }}
-        <img src="{{ user.avatar }}" alt="avatar" class="logo">
-        {{else}}
-        <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo" style="">
-        {{/if}}
-      </div>
-
-      <div class="profile-info">
-        <h5 class="profile-name">{{ user.name }}</h5>
-        <div class="card-account profile-account">@{{ user.account }}</div>
-        <p class="card-description">{{ user.introduction }}</p>
-        <div class="following-follower-wrapper">
-          <div class="following-wrapper">
-            <a href="/users/{{ user.id }}/followings">
-              <span class="following-count">{{ user.Followings.length }}個</span>
-              <span class="following-text">跟隨中</span>
-            </a>
-          </div>
-          <a href="/users/{{user.id}}/followers">
-            <span class="follower-count">{{ user.Followers.length }}位</span>
-            <span class="follower-text">跟隨者</span>
-          </a>
-        </div> --}}
-      </div>
-    </div>
+  </div>
+</div>
