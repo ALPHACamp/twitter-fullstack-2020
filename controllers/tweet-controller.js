@@ -15,6 +15,7 @@ const tweetController = {
         raw: true,
         nest: true
       }),
+      // 未來會取得追蹤數前 10 名的使用者資料
       User.findAll({
         // limit: 10,
         where: { isAdmin: 0 },
@@ -22,9 +23,9 @@ const tweetController = {
       }),
       User.findByPk(userId, { raw: true })
     ])
-      .then(([tweets, users, currentUser]) => {
+      .then(([tweets, topUsers, currentUser]) => {
         console.log(currentUser)
-        res.render('tweets', { tweets, users, currentUser })
+        res.render('tweets', { tweets, topUsers, currentUser })
       })
       .catch(err => next(err))
   },

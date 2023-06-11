@@ -127,11 +127,18 @@ const userController = {
         nest: true
       }),
       // 取得目前登入的使用者資料
-      User.findByPk(helpers.getUser(req).id, { raw: true })
+      User.findByPk(helpers.getUser(req).id, { raw: true }),
+      // 未來會取得追蹤數前 10 名的使用者資料
+      User.findAll({
+        // limit: 10,
+        order: [['createdAt', 'DESC']],
+        where: { isAdmin: 0 },
+        raw: true
+      })
     ])
-      .then(([user, tweets, currentUser]) => {
+      .then(([user, tweets, currentUser, topUsers]) => {
         console.log(tweets)
-        res.render('user', { user, tweets, currentUser })
+        res.render('user', { user, tweets, currentUser, topUsers })
       })
   }
 }
