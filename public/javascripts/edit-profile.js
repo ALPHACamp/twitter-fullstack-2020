@@ -13,6 +13,8 @@ const nameInput = document.querySelector('#edit-name')
 const introInput = document.querySelector('#intro')
 const spinner = document.querySelector('.spinner-border')
 const spinnerBackground = document.querySelector('.spinning-background')
+const inputMinmax = document.querySelector('.input-minmax')
+const textareaMinmax = document.querySelector('.textarea-minmax')
 
 let coverPath = ''
 let avatarPath = ''
@@ -20,6 +22,12 @@ let avatarPath = ''
 // AJAX for user profile
 editProfileBtn.addEventListener('click', async () => {
   try {
+    form.classList.remove('was-validated')
+    inputMinmax.innerText = ''
+    textareaMinmax.innerText = ''
+    nameInput.setCustomValidity("")
+    introInput.setCustomValidity("")
+
     const UserId = editProfileBtn.dataset.userid
     const data = await axios.get(`/api/users/${UserId}`)
     const user = data.data
@@ -96,15 +104,20 @@ avatarFile.addEventListener('change', async () => {
 submitButton.addEventListener('click', async function onSubmitClick() {
   try {
     event.preventDefault()
+    event.stopPropagation()
     form.classList.add('was-validated')
 
-    const UserId = editProfileBtn.dataset.userid
-    const data = await axios.post(`/api/users/${UserId}`, {
+    if (!form.checkValidity()) return
+
+    const sentForm = {
       cover: coverPath,
       avatar: avatarPath,
       name: nameInput.value,
       introduction: introInput.value
-    })
+    }
+
+    const UserId = editProfileBtn.dataset.userid
+    const data = await axios.post(`/api/users/${UserId}`, sentForm)
 
     if (data.status === 200) window.location.replace(`/users/${UserId}/tweets`)
 
@@ -114,12 +127,6 @@ submitButton.addEventListener('click', async function onSubmitClick() {
   } catch (err) { console.log(err) }
 })
 
-form.addEventListener('submit', function onFormSubmit() {
-  if (!form.checkValidity()) {
-    event.preventDefault()
-    event.stopPropagation()
-  }
-})
 
 // Name
 nameInput.addEventListener('keyup', function countLetters() {
