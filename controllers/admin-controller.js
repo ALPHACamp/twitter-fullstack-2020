@@ -2,13 +2,14 @@ const { Tweet, User, Like, Followship } = require('../models')
 
 const adminController = {
   getSignin: (req, res) => {
-    res.render('admin/login')
+    res.render('admin/signin')
   },
   adminSignin: (req, res) => {
     req.flash('success_messages', '成功登入！')
     res.redirect('/admin/tweets')
   },
   getTweets: (req, res, next) => {
+    const tweetRoute = true // admin sidebar判斷目前路由
     Tweet.findAll({
       raw: true,
       nest: true,
@@ -16,7 +17,7 @@ const adminController = {
       order: [['createdAt', 'DESC']]
     })
       .then(tweets => {
-        res.render('admin/tweets', { tweets })
+        res.render('admin/tweets', { tweets, tweetRoute })
       })
       .catch(err => next(err))
   },
@@ -49,6 +50,11 @@ const adminController = {
     }))
 
     res.render('admin/users', { user: userData })
+  },
+  getLogout: (req, res) => {
+    req.flash('success_messages', '登出成功！')
+    req.logout()
+    res.redirect('/signin')
   }
 }
 
