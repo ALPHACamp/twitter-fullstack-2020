@@ -30,13 +30,6 @@ router.post(
 // signup
 router.get('/signup', userController.signupPage)
 
-
-// admin
-router.get('/admin/signin', adminController.adminSigninPage)
-router.get('/admin/tweets', adminController.adminTweetsPage)
-router.get('/admin/users', adminController.adminUsersPage)
-
-// tweets & reply
 // index
 router.get('/tweets/:tweetId/replies', authenticated, tweetsController.getTweet)
 router.post('/tweets/:tweetId/replies', authenticated, tweetsController.postReply)
