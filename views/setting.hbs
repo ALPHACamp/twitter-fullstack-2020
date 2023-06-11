@@ -1,0 +1,30 @@
+<div class="mb-4 text-center">
+  <h1 class="h3 font-weight-normal mb-3">帳戶設定</h1>
+</div>
+<form class="form-regist" action="/users/{{ userId }}/setting?_method=PUT" method="POST" style="width: 100%;">
+  <div class="form-row mb-3">
+    <label class="form-label" for="account">帳號</label>
+    <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" value="{{ account }}"
+      required autofocus>
+  </div>
+  <div class="form-row mb-3">
+    <label class="form-label" for="name">名稱</label>
+    <input type="text" id="name" name="name" class="form-control" placeholder="請輸入名稱" value="{{ name }}" required>
+  </div>
+  <div class="form-row mb-3">
+    <label class="form-label" for="email">Email</label>
+    <input type="text" id="email" name="email" class="form-control" placeholder="請輸入 Email" value="{{ email }}"
+      required>
+  </div>
+  <div class="form-row mb-3">
+    <label class="form-label" for="password">密碼</label>
+    <input type="password" id="password" name="password" class="form-control" placeholder="請設定密碼" value="{{ password }}"
+      required>
+  </div>
+  <div class="form-row mb-3">
+    <label class="form-label" for="confirmPassword">密碼再確認</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="請再次輸入密碼"
+      value="{{ confirmPassword }}" required>
+  </div>
+  <button class="btn btn-primary btn-block" type="submit">儲存</button>
+</form>
