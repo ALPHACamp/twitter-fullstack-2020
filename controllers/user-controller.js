@@ -121,6 +121,7 @@ const userController = {
       // 取得該使用者所有貼文
       Tweet.findAll({
         where: { UserId: userId },
+        order: [['createdAt', 'DESC']],
         include: [User],
         raw: true,
         nest: true
