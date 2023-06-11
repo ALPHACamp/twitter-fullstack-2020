@@ -95,6 +95,17 @@ h4 {
   width: 354px;
 }
 
+/****** admin-tweets ******/
+.admin-tweets-page {
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+/* .admin-users-page {
+  height: 90vh;
+  overflow-y: scroll;
+} */
+
 /****** admin-users ******/
 .secondary-color {
   color: #6c757d;
