@@ -62,7 +62,7 @@ const tweetController = {
       })
   },
 
-// 抓特定推文資料傳給前端
+  // 抓特定推文資料傳給前端
   apiGetTweet: (req, res, next) => {
     const tweetId = req.params.id
     console.log(tweetId)
@@ -86,7 +86,7 @@ const tweetController = {
     const { comment } = req.body
     const tweetId = req.params.id
     Reply.create({ comment, userId: helpers.getUser(req).id, tweetId })
-      .then(reply => res.redirect(/tweets/${tweetId}/replies))
+      .then(reply => res.redirect(`/tweets/${tweetId}/replies)`))
       .catch(err => next(err))
   },
 
