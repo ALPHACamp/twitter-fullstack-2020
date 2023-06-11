@@ -13,11 +13,6 @@ const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const upload = require('../middleware/multer')
 
-router.use('/', (req, res, next) => {
-  req.session.previousPage = req.url
-  next()
-})
-
 // admin
 router.use('/admin', admin)
 
@@ -36,10 +31,6 @@ router.post(
 router.get('/signup', userController.signupPage)
 
 // index
-<<<<<<< HEAD
-router.get('/tweets', authenticated, tweetsController.getTweets)
-=======
->>>>>>> origin
 router.get('/tweets/:tweetId/replies', authenticated, tweetsController.getTweet)
 router.post('/tweets/:tweetId/replies', authenticated, tweetsController.postReply)
 router.post('/tweets/:tweetId/like', authenticated, userController.postLike)

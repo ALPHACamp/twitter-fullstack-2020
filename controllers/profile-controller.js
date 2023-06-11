@@ -53,7 +53,8 @@ const profileController = {
     }
   },
   getUserTweets: async (req, res, next) => {
-    const { userData, previousPage, previousPageId } = req.session
+    const { userData } = req.session
+    // req.session.previousPage = `/users/${userData.id}/tweets`
     // 取得 id
     const { userId } = req.params
     const route = `users/${userId}/tweets`
@@ -89,13 +90,14 @@ const profileController = {
       // pagination
       const pagination = getPagination(page, limit, tweets.count.length)
       // render
-      res.render('users/tweets', { user: userData, tweets: tweetsData, route, pagination, previousPage, previousPageId })
+      res.render('users/tweets', { user: userData, tweets: tweetsData, route, pagination })
     } catch (err) {
       next(err)
     }
   },
   getUserReplies: async (req, res, next) => {
     const { userData } = req.session
+    // req.session.previousPage = `/users/${userData.id}/replies`
     // 取得userId
     const { userId } = req.params
     const route = `users/${userId}/replies`
@@ -134,6 +136,7 @@ const profileController = {
   getUserLikes: async (req, res, next) => {
     const { userData } = req.session
     const { userId } = req.params
+    // req.session.previousPage = `/users/${userData.id}/likes`
     try {
       // likes找相對應的資料，跟user推文者關聯，依照like建立時間排列
       const likes = await Like.findAll({
@@ -163,7 +166,6 @@ const profileController = {
         })
       )
       // 整理資料
-      console.log(tweets)
       const tweetsData = tweets.map(tweet => ({ ...tweet?.toJSON() }))
       // render
       res.render('users/likes', { user: userData, tweets: tweetsData })
