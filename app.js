@@ -8,6 +8,7 @@ const passport = require('./config/passport')
 const routes = require('./routes')
 const exphbs = require('express-handlebars')
 const flash = require('connect-flash')
+const methodOverride = require('method-override')
 const session = require('express-session')
 
 
@@ -36,6 +37,7 @@ app.use(passport.session())
 
 // Setting middleware
 app.use(flash())
+app.use(methodOverride('_method'))
 app.use((req, res, next) => {
   res.locals.danger_msg = req.flash('danger_msg')
   res.locals.success_msg = req.flash('success_msg')

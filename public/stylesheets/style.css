@@ -638,6 +638,12 @@ textarea {
   display: block;
 }
 
+.tweetTips {
+  margin-right: 10px; 
+  margin-bottom: 0px;
+  color: var(--info);
+}
+
 /* -------------------- card -------------------- */
 
 .no-tweet {

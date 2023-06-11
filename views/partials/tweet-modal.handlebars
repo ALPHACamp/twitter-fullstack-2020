@@ -1,4 +1,3 @@
-{{!------------- tweet modal -------------}}
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -9,19 +8,22 @@
         <div class="main-create-bar">
           <div class="avatar">
             <a href="/users/{{user.id}}">
-              <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+              <img src="{{user.avatar}}" alt="avatar" class="logo">
             </a>
           </div>
-          <form action="/tweets" method="post" class="create-tweet-form">
-            <textarea name="tweet" id="tweet" cols="30" rows="10" class="main-create-input"
+          <form action="/tweets" method="POST" class="create-tweet-form">
+            <textarea name="description" id="tweet" cols="30" rows="10" class="main-create-input"
               placeholder="有什麼新鮮事？"></textarea>
-          </form>
+          {{!-- </form> --}}
         </div>
       </div>
       <div class="modal-footer">
-        <form action="/tweets" method="post">
-          <button type="submit" class="btn btn-info">推文</button>
-        </form>
+        <div>
+          <h6 class="tweetTips">字數不可超過140字</h6>
+        </div>
+        {{!-- <form action="/tweets" method="POST"> --}}
+        <button type="submit" class="btn btn-info">推文</button>
+          </form>
       </div>
     </div>
   </div>

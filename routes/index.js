@@ -8,6 +8,7 @@ const users = require('./modules/users')
 const api = require('./modules/api')
 const admin = require('./modules/admin')
 const tweets = require('./modules/tweets')
+const followships = require('./modules/followships')
 
 // 註冊
 router.get('/signup', userController.signUpPage)
@@ -26,6 +27,9 @@ router.use('/api', authenticated, api)
 
 // tweets路由
 router.use('/tweets', authenticated, tweets)
+
+// followships 路由
+router.use('/followships', authenticated, followships)
 
 // 後台
 router.use('/admin', admin)

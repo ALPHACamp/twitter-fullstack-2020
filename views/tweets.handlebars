@@ -30,7 +30,8 @@
         </div>
       </div>
       <div class="main-bg-bray"></div>
-
+      
+      {{> messages}}
       {{!-- card 1 --}}
       {{#each tweetList}}
       <div class="card card-tweet-lg">
@@ -46,9 +47,9 @@
         </div>
         <div class="card-text">
           <div class="card-text-info">
-            <a href="/users/{{ this.UserId }}/tweets" class="primary-anchor">
+            <a href="/users/{{ this.UserId }}/tweets" class="primary-anchor"></a>
               <span class="card-name">{{ this.User.name }}</span>
-            <a href="/users/{{ this.UserId }}/tweets" class="primary-anchor">
+            <a href="/users/{{ this.UserId }}/tweets" class="primary-anchor"></a>
               <span class="card-account">@{{ this.User.account }}</span>
             <span class="card-dot">·</span>
             <span class="card-datetime">{{relativeTimeFromNow this.createdAt }}</span>
@@ -60,14 +61,14 @@
               <span class="card-counts">{{ this.Replies.length }}</span>
             </div>
             {{#if this.isLike}}
-            <form action="/tweets/{{this.id}}/unlike" method="post" class="primary-anchor form-like">
+            <form action="/tweets/{{this.id}}/unlike" method="POST" class="primary-anchor form-like">
               <button type="submit" class="btn-like">
                 <span class="card-unlike-icon background-image"></span>
                 <span class="card-counts">{{ this.Likes.length }}</span>
               </button>
             </form>
             {{else}}
-            <form action="/tweets/{{this.id}}/like" method="post" class="primary-anchor form-like">
+            <form action="/tweets/{{this.id}}/like" method="POST" class="primary-anchor form-like">
               <button type="submit" class="btn-like">
                 <span class="card-like-icon background-image"></span>
                 <span class="card-counts">{{ this.Likes.length }}</span>
@@ -156,33 +157,7 @@
 
 
 {{!------------- tweet modal -------------}}
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="main-create-bar">
-          <div class="avatar">
-            <a href="/users/{{user.id}}">
-              <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
-            </a>
-          </div>
-          <form action="/tweets" method="post" class="create-tweet-form">
-            <textarea name="tweet" id="tweet" cols="30" rows="10" class="main-create-input"
-              placeholder="有什麼新鮮事？"></textarea>
-          </form>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <form action="/tweets" method="post">
-          <button type="submit" class="btn btn-info">推文</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+{{> tweet-modal}}
 
 {{!------------- reply modal -------------}}
 <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
