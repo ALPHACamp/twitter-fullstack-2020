@@ -35,7 +35,6 @@ const tweetsController = {
   getTweet: async (req, res, next) => {
     const { tweetId } = req.params
     const user = helpers.getUser(req)
-    console.log(user)
     try {
       const tweet = await Tweet.findByPk(tweetId, {
         include: [
