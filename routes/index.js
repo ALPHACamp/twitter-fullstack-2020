@@ -12,6 +12,8 @@ router.use('/admin', admin)
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+router.get('/logout', userController.logout)
 router.post(
   '/signin',
   passport.authenticate('local', {
@@ -32,8 +34,8 @@ router.post('/tweets/:id/like', authenticated, userController.addLike)
 router.delete('/tweets/:id/unlike', authenticated, userController.removeLike)
 router.use('/', authenticated, generalErrorHandler)
 router.get('/user', userController.getOther)
-
-router.get('/tweets', tweetController.getTweets)
+router.get('/tweets', authenticated, tweetController.getTweets)
+router.use('/', authenticated, generalErrorHandler)
 router.use('/', generalErrorHandler)
 
 module.exports = router

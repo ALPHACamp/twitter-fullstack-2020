@@ -11,7 +11,7 @@ module.exports = {
     )
     const tweets = []
     // 每個使用者都要新增推文
-    for (let user of users) {
+    for (const user of users) {
       // 每個使用者都新增10則推文
       for (let i = 0; i < 10; i++) {
         tweets.push({
