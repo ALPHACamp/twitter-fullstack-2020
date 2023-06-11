@@ -46,16 +46,22 @@ const apiProfileController = {
         imgurFileHelper(cover),
         imgurFileHelper(avatar)
       ])
+      const errors = []
       // 找不到就報錯
-      if (!user) throw new Error('該用戶不存在!')
+      if (!user) errors.push({ status: 'error', messages: '該用戶不存在!' })
       // 如果account、email有更動就判斷是否有重複
-      if (user.account !== account && isAccountExist) throw new Error('該帳號已存在!')
-      if (user.email !== email && isEmailExist) throw new Error('該email已存在!')
+      if (user.account !== account && isAccountExist) errors.push({ status: 'error', messages: '該帳號已存在!', name: 'account' })
+      if (user.email !== email && isEmailExist) errors.push({ status: 'error', messages: '該email已存在!', name: 'email' })
       // 確認name有無超過50字，introduction有無超過150字
-      if (name?.length > 50) throw new Error('該名字超過字數上限!')
-      if (introduction?.length > 150) throw new Error('該敘述超過字數上限!')
+      if (name?.length > 50) errors.push({ status: 'error', messages: '該名字超過字數上限!', name: 'name' })
+      if (introduction?.length > 150) errors.push({ status: 'error', messages: '該敘述超過字數上限!', name: 'introduction' })
       // 確認密碼是否正確
-      if (password !== passwordCheck) throw new Error('密碼不一致!')
+      if (password !== passwordCheck) {
+        errors.push({ status: 'error', messages: '密碼不一致!', name: 'password' })
+        errors.push({ status: 'error', messages: '密碼不一致!', name: 'passwordCheck' })
+      }
+      if (errors.length) return res.json(errors)
+
       // 將密碼hash
       let hashedPassword = 0
       if (password) {
@@ -73,8 +79,9 @@ const apiProfileController = {
         cover: coverFilePath || user.cover,
         avatar: avatarFilePath || user.avatar
       })
+
       // redirect /tweets
-      return res.json({ status: 'success', ...userUpdate })
+      return res.json([{ status: 'success', ...userUpdate }])
     } catch (err) {
       next(err)
     }

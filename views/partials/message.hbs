@@ -1,12 +1,20 @@
 {{#if error_messages}}
-  <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-    {{error_messages}}
-    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+  <div class='alert alert-danger alert-dismissible msg-container' role='alert'>
+    <div class='msg'>
+      {{error_messages}}
+    </div>
+    <button type='button' class='btn-error' data-bs-dismiss='alert' aria-label='Close'>
+      <img src='/images/message/message_danger.svg' />
+    </button>
   </div>
 {{/if}}
 {{#if success_messages}}
-  <div class='alert alert-success alert-dismissible fade show' role='alert'>
-    {{success_messages}}
-    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+  <div class='alert alert-success alert-dismissible msg-container' role='alert'>
+    <div class='msg'>
+      {{success_messages}}
+    </div>
+    <button type='button' class='btn-success' data-bs-dismiss='alert' aria-label='Close'>
+      <img src='/images/message/message_danger.svg' />
+    </button>
   </div>
 {{/if}}
