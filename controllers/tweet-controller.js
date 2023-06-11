@@ -86,7 +86,7 @@ const tweetController = {
     const { comment } = req.body
     const tweetId = req.params.id
     Reply.create({ comment, userId: helpers.getUser(req).id, tweetId })
-      .then(reply => res.redirect(`/tweets/${tweetId}/replies)`))
+      .then(reply => res.redirect(`/tweets/${tweetId}/replies`))
       .catch(err => next(err))
   },
 
