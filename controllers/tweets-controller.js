@@ -10,12 +10,17 @@ const tweetsController = {
           nest: true
         }),
         Tweet.findAll({
-          include: User,
+          include: [
+            User,
+            { model: Like },
+            { model: Reply, include: User }
+          ],
           order: [['createdAt', 'DESC']]
         })
       ])
-      console.log(helpers.getUser(req).Likes)
       tweets = tweets.map(tweet => ({
+        likeCount: tweet.Likes.length,
+        replyCount: tweet.Replies.length,
         ...tweet.toJSON(),
         isLiked: helpers.getUser(req) && helpers.getUser(req).Likes.some(like => like.TweetId === tweet.id)
       }))
@@ -29,24 +34,24 @@ const tweetsController = {
   },
   getTweet: async (req, res, next) => {
     const { tweetId } = req.params
-    const UserId = helpers.getUser(req).id
+    const user = helpers.getUser(req)
+    console.log(user)
     try {
-      const [tweet, user] = await Promise.all([
-        Tweet.findByPk(tweetId, {
-          include: [
-            User,
-            { model: Like },
-            { model: Reply, include: User }
-          ]
-        }),
-        User.findByPk(UserId)
-      ])
+      const tweet = await Tweet.findByPk(tweetId, {
+        include: [
+          User,
+          { model: Like },
+          { model: Reply, include: User }
+        ]
+      })
       const likeCount = tweet.Likes.length
       const replyCount = tweet.Replies.length
-      const isLiked = tweet.Likes.some(l => l.dataValues.UserId === UserId)
+      const isLiked = tweet.Likes.some(l => l.dataValues.UserId === user.id)
+      // 按照發文順序顯示
+      tweet.Replies = tweet.Replies.sort((a, b) => b.createdAt - a.createdAt)
       res.render('tweet', {
         tweet: tweet.toJSON(),
-        user: user.toJSON(),
+        user,
         likeCount,
         replyCount,
         isLiked
@@ -80,7 +85,7 @@ const tweetsController = {
         TweetId,
         comment
       })
-      res.redirect(`/tweets/${TweetId}/replies`)
+      res.redirect('back')
     } catch (err) {
       next(err)
     }
