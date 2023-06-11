@@ -14,4 +14,6 @@ router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 router.use('/', authenticated, generalErrorHandler)
 
+router.get('/user', userController.getOther)
+
 module.exports = router

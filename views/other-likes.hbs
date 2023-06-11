@@ -1,0 +1,55 @@
+{{> main-sidebar-left route='user'}}
+<div class="user-main">
+  <div class="header">
+    <a href=""><img src="https://i.postimg.cc/QxZdg4vB/Vector.png" alt="" class="arrow-left"></a>
+    <div class="header-user">
+      <h5>John Doe</h5>
+      <p>25 推文</p>
+    </div>
+  </div>
+  <div class="user-main-body">
+    {{> user-other-info route='other'}}
+    {{> user-tab route='user'}}
+    <div class="user-tweets">
+      {{!-- each here --}}
+      <div class="user-tweet">
+        <div class="admin-tweet-left">
+          <img class="rounded-circle" src="/images/acIcon.png" alt="avatar" title="avatar" width="50px" height="50px">
+        </div>
+        <div class="admin-tweet-right">
+          <div class="admin-tweet-right-up">
+            <span class="name">Apple</span>
+            <span class="account">&nbsp;@apple<b> •</b>&nbsp;3小時</span>
+          </div>
+          <p class="user-content">{{tweet.content}} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod
+            tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris
+            nisi
+            ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+            dolore
+            eu
+            fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+            mollit
+            anim
+            id est laborum.</p>
+          <div class="d-flex">
+            <div class="replies">
+              <img src="/images/replyIcon.png" alt="11">
+              {{replies.length}}13
+            </div>
+            <div class="likes">
+              <img src="/images/likeIcon-red.png" alt="">
+              {{likes.length}}76
+            </div>
+          </div>
+        </div>
+
+      </div>
+      {{!-- end --}}
+
+    </div>
+  </div>
+</div>
+  {{> main-sidebar-right route='user'}}

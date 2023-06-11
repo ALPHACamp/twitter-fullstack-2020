@@ -1,0 +1,32 @@
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" ariahidden="true">
+  <div class="modal-dialog">
+    <div class="user-edit modal-content">
+      <form action="<!--路由?_method=PUT-->" method="POST" enctype="multipart/form-data">
+        <div class=" d-flex justify-content-between m-2">
+          <div class="edit-page-title d-flex align-items-center">
+            <button type="button" class="edit-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+            <span class="ms-4">編輯個人資料</span>
+          </div>
+          <button type="submit" class="btn btn-primary m-1" style="color:white;width:64px;
+height:40px;border:none;background:#FF6600;border-radius:50px">儲存</button>
+        </div>
+        <div class="edit-banner">
+          <input class="form-control" type="file" class="form-control-file" id="input-user-cover" name="cover">
+        </div>
+        <div class="d-flex justify-content-between">
+          <div class="avatar">
+            <input class="form-control" type="file" class="form-control-file" id="input-user-avatar" name="avatar">
+          </div>
+        </div>
+        <div class="form-row mb-3">
+          <label for="user-name" style="font-size:14px">名稱
+            <input class="form-control" type="text" id="user-name" name="name" style="width:465px" value="">
+          </label>
+        </div>
+        <label for="user-introduction" style="font-size:14px">自我介紹</label>
+        <textarea class="form-control" id="user-introduction" name="user-introduction" rows="5" cols="32">
+          </textarea>
+      </form>
+    </div>
+  </div>
+</div>
