@@ -10,7 +10,6 @@ const exphbs = require('express-handlebars')
 const flash = require('connect-flash')
 const methodOverride = require('method-override')
 const session = require('express-session')
-const methodOverride = require('method-override')
 
 const app = express()
 const port = 3000
