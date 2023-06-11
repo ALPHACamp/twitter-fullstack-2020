@@ -39,7 +39,9 @@
             </li>
           {{/each}}
         </ul>
-        {{> pagination route = route }}
+        {{#if pagination.hasManyPages}}
+          {{> pagination route = route }}
+        {{/if}}
       </div>
     </ul>
   </div>

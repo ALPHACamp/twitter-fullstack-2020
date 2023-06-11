@@ -15,7 +15,9 @@ const getPagination = (page, limit, total) => {
   const prev = currentPage - 1 < 1 ? 1 : currentPage - 1
   // 下一頁，如上
   const next = currentPage + 1 > totalPage ? totalPage : currentPage + 1
-  return { totalPage, pages, currentPage, prev, next }
+  // 頁數判斷是否只有1
+  const hasManyPages = totalPage > 1
+  return { totalPage, pages, currentPage, prev, next, hasManyPages }
 }
 
 module.exports = {
