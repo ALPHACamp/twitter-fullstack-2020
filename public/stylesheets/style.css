@@ -815,3 +815,24 @@ img.card-avatar {
   border-bottom: 2px solid #FF6600;
 
 }
+
+.message {
+  z-index: 999;
+  opacity: 0;
+  animation-name: fadenum;
+  animation-duration: 1.5s;
+}
+
+ @keyframes fadenum {
+   0% {
+     opacity: 1;
+   }
+
+   50% {
+     opacity: 1;
+   }
+
+   100% {
+     opacity: 0;
+   }
+  }
