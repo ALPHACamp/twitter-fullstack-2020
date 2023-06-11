@@ -23,8 +23,14 @@ editProfileBtn.addEventListener('click', async () => {
     const UserId = editProfileBtn.dataset.userid
     const data = await axios.get(`/api/users/${UserId}`)
     const user = data.data
-    coverImage.src = user.cover
-    avatarImage.src = user.avatar
+
+    // 重置設定
+    coverImage.src = user.cover || '/stylesheets/icons/mountain.png'
+    coverFile.value = ''
+    coverPath = ''
+    avatarImage.src = user.avatar || '/stylesheets/icons/avatar.png'
+    avatarFile.value = ''
+    avatarPath = ''
     nameInput.value = user.name
     introInput.value = user.introduction
   } catch (err) { console.log(err) }
@@ -57,8 +63,9 @@ deleteCoverButton.addEventListener('click', async () => {
     const UserId = editProfileBtn.dataset.userid
     const data = await axios.get(`/api/users/${UserId}`)
 
-    coverPath = data.data.cover
+    coverPath = data.data.cover || '/stylesheets/icons/mountain.png'
     coverImage.src = coverPath
+    coverFile.value = ''
   } catch (err) { console.log(err) }
 })
 
