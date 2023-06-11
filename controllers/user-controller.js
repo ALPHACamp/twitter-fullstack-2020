@@ -137,7 +137,6 @@ const userController = {
       })
     ])
       .then(([user, tweets, currentUser, topUsers]) => {
-        console.log(tweets)
         res.render('user', { user, tweets, currentUser, topUsers })
       })
   }

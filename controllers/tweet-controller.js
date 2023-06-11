@@ -24,7 +24,6 @@ const tweetController = {
       User.findByPk(userId, { raw: true })
     ])
       .then(([tweets, topUsers, currentUser]) => {
-        console.log(currentUser)
         res.render('tweets', { tweets, topUsers, currentUser })
       })
       .catch(err => next(err))
@@ -59,7 +58,6 @@ const tweetController = {
       })
     ])
       .then(([tweet, replies]) => {
-        console.log(replies)
         res.render('tweet', { tweet, replies })
       })
   }
