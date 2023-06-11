@@ -10,7 +10,7 @@ module.exports = {
       'SELECT id FROM Tweets;',
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
-    await queryInterface.bulkInsert('Replies',
+    await queryInterface.bulkInsert('Likes',
       Array.from({ length: 50 }, () => ({
         user_id: users[Math.floor(Math.random() * users.length)].id,
         tweet_id: tweets[Math.floor(Math.random() * tweets.length)].id,
@@ -20,6 +20,6 @@ module.exports = {
     )
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Replies', {})
+    await queryInterface.bulkDelete('Likes', {})
   }
 }
