@@ -15,7 +15,7 @@ router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 router.get('/logout', userController.logout)
 router.get('/user', userController.getOther)
-router.get('/tweets', tweetController.getTweets)
+router.get('/tweets', authenticated, tweetController.getTweets)
 router.use('/', authenticated, generalErrorHandler)
 router.use('/', generalErrorHandler)
 

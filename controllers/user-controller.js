@@ -47,9 +47,13 @@ const userController = {
   signInPage: (req, res) => {
     res.render('signin')
   },
-  signIn: (req, res) => {
-    req.flash('success_messages', '成功登入！')
-    res.redirect('/tweets')
+  signIn: async (req, res, next) => {
+    try {
+      req.flash('success_messages', '成功登入！')
+      res.redirect('/tweets')
+    } catch (err) {
+      next(err)
+    }
   },
   getOther: (req, res) => {
     res.render('other-tweets')
