@@ -2,16 +2,19 @@ const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
 
-const adminController = require('../controllers/admin-controller')
+const admin = require('./modules/admin')
 const followshipController = require('../controllers/followship-controller')
 const profileController = require('../controllers/profile-controller')
 const userController = require('../controllers/user-controller')
 const tweetsController = require('../controllers/tweets-controller')
 const apiProfileController = require('../controllers/api-profile-controller')
 
-const { authenticated, adminAuthenticated } = require('../middleware/auth')
+const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const upload = require('../middleware/multer')
+
+// admin
+router.use('/admin', admin)
 
 // signin
 router.get('/signin', userController.signinPage)
@@ -27,12 +30,7 @@ router.post(
 // signup
 router.get('/signup', userController.signupPage)
 
-// admin
-router.get('/admin/signin', adminController.adminSigninPage)
-router.get('/admin/tweets', adminController.adminTweetsPage)
-router.get('/admin/users', adminController.adminUsersPage)
-
-// tweets & reply
+// index
 router.get('/tweets/:tweetId/replies', authenticated, tweetsController.getTweet)
 router.post('/tweets/:tweetId/replies', authenticated, tweetsController.postReply)
 router.post('/tweets/:tweetId/like', authenticated, userController.postLike)
