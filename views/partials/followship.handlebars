@@ -31,10 +31,10 @@
       </form>
       {{else}}
       <form action="/followships" method="post">
-        <input type="hidden" name="userId" value="{{user.id}}" />
+        <input type="hidden" name="userId" value="{{this.id}}" />
         <input type="hidden" name="loginUserId" value="{{loginUser.id}}" />
         <div class="follow-button-wrapper">
-          <button type="submit" class="btn btn-outline-info btn-follow">跟隨</button>
+          <button type="submit" class="btn btn-outline-info btn-follow" name="id" value={{this.id}}>跟隨</button>
         </div>
       </form>
       {{/if}}
