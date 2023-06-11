@@ -18,36 +18,32 @@
       <div class="card">
         <div class="card reply-tweet-lg">
           <div class="avatar">
-            <a href="/users/{{user.id}}/tweets">
-              {{#if user.avatar }}
-              <img src="{{ user.avatar }}" alt="avatar" class="logo">
+            <a href="/users/{{tweet.UserId}}/tweets">
+              {{#if tweet.User.avatar }}
+              <img src="{{ tweet.User.avatar }}" alt="avatar" class="logo">
               {{else}}
               <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
               {{/if}}
             </a>
           </div>
           <div class="card-text">
-            <h5 class="profile-name">Apple</h5>
-            <div class="card-account profile-account">@apple</div>
+            <h5 class="profile-name">{{tweet.User.name}}</h5>
+            <div class="card-account profile-account">@{{tweet.User.account}}</div>
           </div>
         </div> 
         <div class="reply-comment">
-          <p class="reply-description">qwerrttyuuiiogfdd  fertregr</p>
-          <span class="card-datetime">上午10:05</span>
+          <p class="reply-description">{{tweet.description}}</p>
+          <span class="card-datetime">{{normalHourForm tweet.createdAt }}</span>
           <span class="card-dot">·</span>
-          <span class="card-datetime">2021年11月10日</span>
+          <span class="card-datetime">{{normalTimeForm tweet.createdAt }}</span>
           <hr class="reply-datetime-hr">
           <div class="following-follower-wrapper">
             <div class="following-wrapper">
-              <a href="/users/{{ user.id }}/followings">
-                <span class="reply-count">34</span>
+                <span class="reply-count">{{replies.length}}</span>
                 <span class="reply-text">回覆</span>
-              </a>
             </div>
-              <a href="/users/{{user.id}}/followers">
-                <span class="reply-like-count">808</span>
+                <span class="reply-like-count">{{tweet.Likes.length}}</span>
                 <span class="reply-like-text">喜歡次數</span>
-              </a>
           </div>
           <hr>
           <div class="card-datas">
@@ -74,9 +70,9 @@
 
       {{> messages}}
     {{!-- replies cards --}}
-    {{#if replyList }}
+    {{#if replies }}
     
-    {{#each replyList}}
+    {{#each replies}}
     <div class="card card-tweet-lg">
       <a href="/tweets/{{this.Tweet.id}}/replies" class="tweet-href"></a>
       <div class="avatar">

@@ -6,7 +6,7 @@ const replyController = {
     try {
       const loginUserId = _helpers.getUser(req).id
       const TweetId = req.params.tid
-      let [ loginUser, resplies, topUsers, tweet ] = await Promise.all([
+      let [ loginUser, replies, topUsers, tweet ] = await Promise.all([
         User.findByPk(loginUserId, {
           include: [
             { model: User, as: 'Followings'},
@@ -15,9 +15,9 @@ const replyController = {
           ],
         }),
         Reply.findAll({
-          order: [['createdAt', 'DESC']],
+          order: [['createdAt', 'ASC']],
           include: [ 
-            User,
+            { model: User },
             { model: Tweet, include: [User] },
             { model: Tweet, include: [Like] }
           ],
@@ -32,13 +32,15 @@ const replyController = {
       ])
      
       if (!loginUser) throw new Error('使用者不存在')
+
       loginUser = loginUser.toJSON()
-     
-      const likedTweetsId = loginUser?.LikedTweets ? loginUser.LikedTweets.map(lt => lt.id) : []
-      tweet = tweet.map(tweet => ({
-          ...tweet.toJSON(),
-          isLike: likedTweetsId.includes(TweetId)
-        }))
+      tweet = tweet.toJSON()
+
+      tweet.isLike = tweet.Likes.some(like => like.UserId === loginUserId);
+      
+      replies = replies.map(reply => ({
+          ...reply.toJSON(),
+          }))
 
       topUsers = topUsers.map(user => ({
           ...user.toJSON(),
@@ -50,7 +52,7 @@ const replyController = {
 
       return res.render('replies', {
         loginUser,
-        resplies,
+        replies,
         tweet,
         topUsers
       })
