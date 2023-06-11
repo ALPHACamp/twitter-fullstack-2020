@@ -10,22 +10,21 @@
   </span>
 
 </div>
-{{> message}}
 <div class='card'>
-  <img src='{{user.cover}}' class='card-img-top cover' alt='cover' />
-  <img src='{{user.avatar}}' class='avatar' alt='avatar' />
+  <img src='{{user.cover}}' class='card-img-top cover' alt='cover'/>
+  <img src='{{user.avatar}}' class='avatar' alt='avatar' onerror="this.style.visibility= 'hidden'"/>
   {{#if user.isLoginUser}}
     <div class='edit-btn'>
       <a href="/users/{{user.id}}"></a>
       <div class='btn rounded-pill' data-bs-toggle='modal' data-bs-target='#edit-modal'>編輯個人資料</div>
     </div>
   {{else}}
-    <div>
+    <div class='follow'>
       <a class='mail' href='#'>
-        <img class='reply-icon' src='/images/profile/mail_outlined.svg' alt='mail' />
+        <img class='reply-icon' src='/images/profile/btn_msg.svg' alt='mail' />
       </a>
       <a class='notification' href='#'>
-        <img class='like-icon' src='/images/profile/notification_outlined.svg' alt='notification' />
+        <img class='like-icon' src='/images/profile/btn_notfi.svg' alt='notification' />
       </a>
       <form class='' action='/follow/{{this.id}}' method='POST'>
         <button type='submit' class='btn'>正在跟隨</button>
@@ -57,7 +56,7 @@
 <div class='modal fade user-edit-modal' id='edit-modal' tabindex='-1' aria-labelledby='editModalLabel' aria-hidden='true'>
   <div class='modal-dialog'>
     <div class='modal-content'>
-      <form action='/users/{{user.id}}?_method=PUT' method='POST' enctype='multipart/form-data'>
+      <form class='input-form' action='/users/{{user.id}}?_method=PUT' method='POST' enctype='multipart/form-data' novalidate>
         <div class='modal-header'>
           <button type='button' class='modal-close' data-bs-dismiss='modal' aria-label='Close'>X</button>
           <h1 class='modal-title' id='editModalLabel'>編輯個人資料</h1>
@@ -65,17 +64,20 @@
         </div>
         <div class='modal-body'>
           <div class='cover-edit'>
-            <img src='{{user.cover}}' class='card-img-top cover-img' alt='/images/profile/cover.png' />
+            <img src='{{user.cover}}' class='card-img-top cover-img' alt='cover' />
             <div class='cover'>
               <label class='form-label' for='cover'>
                 <img src='/images/profile/cover_edit.svg' alt='cover' />
               </label>
               <input class='form-control' type='file' class='form-control-file' id='cover' name='cover' />
-              <a type='button' href='#' class='btn cover-delete'>X</a>
+              <label class='form-label cover-delete' for='cover-delete'>
+                X
+              </label>
+              <input class='form-control' type='radio' class='form-control-file' id='cover-delete' name='coverDelete' />
             </div>
           </div>
           <div class='avatar-edit'>
-            <img src='{{user.avatar}}' class='avatar-img' alt='/images/profile/avatar.png' />
+            <img src='{{user.avatar}}' class='avatar-img'  onerror="this.style.display='block' "/>
             <div class='avatar'>
               <label class='form-label' for='avatar'>
                 <img src='/images/profile/cover_edit.svg' alt='cover' />
@@ -87,17 +89,21 @@
           <div class='form-text'>
             <div class='name box'>
               <label class='form-label' for='name' >名稱</label>
-              <input class='form-control' type='text' name='name' id='name' value='{{user.name}}' placeholder='暱稱(限50字)' />
+              <input class='form-control input-name' type='text' name='name' id='name' value='{{user.name}}' placeholder='暱稱' />
+              <div class="invalid-feedback">字數超過上限 !</div>
             </div>
-            <div class='text-amount'>8/50</div>
+            <div class='name-amount'>{{user.name.length}}/50</div>
             <div class='introduction box'>
               <label class='form-label' for='introduction'>自我介紹</label>
-              <textarea class='form-control' id='introduction' name='introduction' rows='3'>{{user.introduction}}</textarea>
+              <textarea class='form-control input-introduction' id='introduction' name='introduction' rows='3'>{{user.introduction}}</textarea>
+              <div class="invalid-feedback">字數超過上限 !</div>
             </div>
-            <div class='text-amount'>8/160</div>
+            <div class='introduction-amount'>{{user.introduction.length}}/160</div>
           </div>
         </div>
       </form>
     </div>
   </div>
 </div>
+
+<script src="/javascript/profile.js"></script>
