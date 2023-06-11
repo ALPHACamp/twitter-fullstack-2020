@@ -1,10 +1,6 @@
 <div class='d-flex flex-row head'>
   <span class='d-flex justify-content-start align-items-center'>
-    <a  {{#ifCond previousPage 'replies'}}
-          href='/tweets/{{tweetId}}/replies'
-        {{else}}
-          href="/tweets"
-        {{/ifCond}}>
+    <a  href='{{previousRoute}}' >
       <img src='/images/back.svg' alt='back' />
     </a>
   </span>

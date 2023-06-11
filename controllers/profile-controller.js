@@ -53,7 +53,7 @@ const profileController = {
     }
   },
   getUserTweets: async (req, res, next) => {
-    const { userData, previousPage, tweetId } = req.session
+    const { userData, previousPage, previousPageId } = req.session
     // 取得 id
     const { userId } = req.params
     const route = `users/${userId}/tweets`
@@ -89,7 +89,7 @@ const profileController = {
       // pagination
       const pagination = getPagination(page, limit, tweets.count.length)
       // render
-      res.render('users/tweets', { user: userData, tweets: tweetsData, route, pagination, previousPage, tweetId })
+      res.render('users/tweets', { user: userData, tweets: tweetsData, route, pagination, previousPage, previousPageId })
     } catch (err) {
       next(err)
     }
