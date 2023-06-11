@@ -1,4 +1,4 @@
-const { Tweet, User } = require('../models')
+const { Tweet, User, Reply } = require('../models')
 
 const tweetController = {
   getTweets: async (req, res, next) => {
@@ -10,7 +10,16 @@ const tweetController = {
       next(err)
     }
   },
-  postTweet: async (res, req, nex) => {}
+  getTweetReplies: async (req, res, next) => {
+    try {
+      const tweet = await Tweet.findByPk(req.params.id, { raw: true, nest: true, include: [User] })
+      const replies = await Reply.findAll({ where: { Tweet_id: req.params.id }, include: [User, { model: Tweet, include: User }], raw: true, nest: true })
+      const replyQuantity = replies.length
+      return res.render('reply-list', { tweet, replies, replyQuantity })
+    } catch (err) {
+      next(err)
+    }
+  }
 }
 
 module.exports = tweetController
