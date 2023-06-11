@@ -6,7 +6,7 @@ const { User, Followship, Tweet, Reply, Like } = require('../models')
 const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 // 推文顯示數量
-const DEFAULT_LIMIT = 10
+const DEFAULT_LIMIT = 3
 
 const profileController = {
   getUser: async (req, res, next) => {
@@ -54,13 +54,12 @@ const profileController = {
   },
   getUserTweets: async (req, res, next) => {
     const { userData, previousPage, tweetId } = req.session
-    console.log(previousPage)
     // 取得 id
     const { userId } = req.params
     const route = `users/${userId}/tweets`
     // 取得page, limit, offset
     const page = Number(req.query.page) || 1
-    const limit = DEFAULT_LIMIT
+    const limit = DEFAULT_LIMIT * page
     const offset = getOffset(page, limit)
     try {
       // tweets找相對應的資料，跟user關聯，依照建立時間排列

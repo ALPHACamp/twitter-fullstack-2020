@@ -14,7 +14,6 @@ const tweetsController = {
           order: [['createdAt', 'DESC']]
         })
       ])
-      console.log(helpers.getUser(req).Likes)
       tweets = tweets.map(tweet => ({
         ...tweet.toJSON(),
         isLiked: helpers.getUser(req) && helpers.getUser(req).Likes.some(like => like.TweetId === tweet.id)
