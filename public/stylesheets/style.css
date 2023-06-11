@@ -209,6 +209,7 @@ h5 {
 }
 
 .admin-tweet-right-up .account {
+  width: 150px;
   margin: 2px 0 0 8px;
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -246,7 +247,14 @@ h5 {
 }
 
 .tweet-xmark {
-  margin-left: 677.5px;
+  margin-left: 628px;
+}
+
+.tweet-xmark button{
+  width: 15px;
+  height: 15px;
+  border: none;
+  background-color: #FFFFFF;
 }
 
 .banner {

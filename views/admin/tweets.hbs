@@ -17,9 +17,11 @@
         <div class="admin-tweet-right">
           <div class="admin-tweet-right-up">
             <span class="name">{{ this.User.name }}</span>
-            <span class="account">&nbsp;@{{ this.User.account}}<b> •</b>&nbsp;3小時</span>
+            <span class="account">&nbsp;@{{ this.User.account}}<b> • </b>{{relativeTimeFromNow this.createdAt}}</span>
             <div class="tweet-xmark">
-              <a href=""><img src="/images/xmarkGray.png" alt=""></a>
+              <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+                <button type="submit"><img src="/images/xmarkGray.png" onclick="return confirm(`確定要刪除此tweet嗎？`)"></button>
+              </form>
             </div>
           </div>
           <p class="content">{{this.description}}</p>
