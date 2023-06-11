@@ -201,16 +201,23 @@ const userController = {
       // 取得該使用者所有貼文
       Tweet.findAll({
         where: { UserId: userId },
+        order: [['createdAt', 'DESC']],
         include: [User],
         raw: true,
         nest: true
       }),
       // 取得目前登入的使用者資料
-      User.findByPk(helpers.getUser(req).id, { raw: true })
+      User.findByPk(helpers.getUser(req).id, { raw: true }),
+      // 未來會取得追蹤數前 10 名的使用者資料
+      User.findAll({
+        // limit: 10,
+        order: [['createdAt', 'DESC']],
+        where: { isAdmin: 0 },
+        raw: true
+      })
     ])
-      .then(([user, tweets, currentUser]) => {
-        console.log(tweets)
-        res.render('user', { user, tweets, currentUser })
+      .then(([user, tweets, currentUser, topUsers]) => {
+        res.render('user', { user, tweets, currentUser, topUsers })
       })
   },
 

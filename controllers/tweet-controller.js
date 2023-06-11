@@ -15,6 +15,7 @@ const tweetController = {
         raw: true,
         nest: true
       }),
+      // 未來會取得追蹤數前 10 名的使用者資料
       User.findAll({
         // limit: 10,
         where: { isAdmin: 0 },
@@ -22,9 +23,8 @@ const tweetController = {
       }),
       User.findByPk(userId, { raw: true })
     ])
-      .then(([tweets, users, currentUser]) => {
-        // console.log(currentUser)
-        res.render('tweets', { tweets, users, currentUser })
+      .then(([tweets, topUsers, currentUser]) => {
+        res.render('tweets', { tweets, topUsers, currentUser })
       })
       .catch(err => next(err))
   },
@@ -58,9 +58,36 @@ const tweetController = {
       })
     ])
       .then(([tweet, replies]) => {
-        console.log(replies)
         res.render('tweet', { tweet, replies })
       })
+  },
+
+// 抓特定推文資料傳給前端
+  apiGetTweet: (req, res, next) => {
+    const tweetId = req.params.id
+    console.log(tweetId)
+    Promise.all([
+      Tweet.findByPk(tweetId, {
+        include: [User],
+        raw: true,
+        nest: true
+      }),
+      User.findByPk(helpers.getUser(req).id, { raw: true })
+    ])
+      .then(([tweet, currentUser]) => {
+        if (!tweet) throw new Error('Tweet did not exist.')
+        const result = { tweet, currentUser }
+        return res.json(result)
+      })
+      .catch(err => next(err))
+  },
+  // 新增回覆
+  postReply: (req, res, next) => {
+    const { comment } = req.body
+    const tweetId = req.params.id
+    Reply.create({ comment, userId: helpers.getUser(req).id, tweetId })
+      .then(reply => res.redirect(/tweets/${tweetId}/replies))
+      .catch(err => next(err))
   },
 
   postLike: (req, res, next) => {
