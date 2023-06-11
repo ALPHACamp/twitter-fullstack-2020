@@ -60,11 +60,11 @@
 <div class='modal fade user-edit-modal' id='edit-modal' tabindex='-1' aria-labelledby='editModalLabel' aria-hidden='true'>
   <div class='modal-dialog'>
     <div class='modal-content'>
-      <form class='input-form' action='/users/{{user.id}}?_method=PUT' method='POST' enctype='multipart/form-data' novalidate>
+      <form class='input-form validated' action='/users/{{user.id}}?_method=PUT' method='POST' enctype='multipart/form-data' novalidate>
         <div class='modal-header'>
           <button type='button' class='modal-close' data-bs-dismiss='modal' aria-label='Close'>X</button>
           <h1 class='modal-title' id='editModalLabel'>編輯個人資料</h1>
-          <button type='submit' class='btn btn-primary btn-edit'>儲存</button>
+          <button type='submit' class='btn btn-primary btn-edit' onclick='return confirm(`確定要修改嗎?`)'>儲存</button>
         </div>
         <div class='modal-body'>
           <div class='cover-edit'>
