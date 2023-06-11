@@ -1,3 +1,4 @@
+const { Op } = require('sequelize') // 用「不等於」的條件查詢資料庫時需要用到的東西
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const { User, Tweet } = db
@@ -130,8 +131,7 @@ const userController = {
     const errors = []
     // 檢查是不是自己本人
     if (Number(userId) !== helpers.getUser(req).id) throw new Error('Permission denied.')
-
-    // 檢查註冊資訊是否正確 任一欄不得為空 密碼與確認密碼必須相同
+    // 檢查帳戶資訊是否正確 任一欄不得為空 密碼與確認密碼必須相同
     if (!account || !name || !email || !password || !confirmPassword) {
       errors.push({ message: '所有欄位都是必填。' })
     }
@@ -149,21 +149,45 @@ const userController = {
         confirmPassword
       })
     }
-    // 取得自己的帳戶資訊 同時生成密碼
-    Promise.all([
-      User.findByPk(userId),
-      bcrypt.hash(password, 10)
+    // 檢查帳戶資訊是否正確 資料庫中是否已經有非管理者使用了該 account 或 email
+    return Promise.all([
+      User.findOne({ where: { account, isAdmin: 0, id: { [Op.ne]: userId } } }), // 尋找該account、排除管理員、排除自己
+      User.findOne({ where: { email, isAdmin: 0, id: { [Op.ne]: userId } } }) // 尋找該email、排除管理員、排除自己
     ])
-      .then(([user, hash]) => {
-        if (!user) throw new Error('User did not exist.')
-        // 更新到資料庫
-        return user.update({ account, name, email, password: hash })
+      .then(([accountUser, emailUser]) => {
+        if (emailUser) {
+          errors.push({ message: '這個Email已被註冊。' })
+        }
+        if (accountUser) {
+          errors.push({ message: '這個帳號已被註冊。' })
+        }
+        if (errors.length) {
+          return res.render('setting', {
+            userId,
+            errors,
+            account,
+            name,
+            email,
+            password,
+            confirmPassword
+          })
+        }
+        // 取得自己的帳戶資訊 同時生成密碼
+        return Promise.all([
+          User.findByPk(userId),
+          bcrypt.hash(password, 10)
+        ])
+          .then(([user, hash]) => {
+            if (!user) throw new Error('User did not exist.')
+            // 更新到資料庫
+            return user.update({ account, name, email, password: hash })
+          })
+          .then(() => {
+            req.flash('success_messages', '帳戶設定完成。')
+            res.redirect(`/users/${userId}/setting`)
+          })
+          .catch(err => next(err))
       })
-      .then(() => {
-        req.flash('success_messages', '帳戶設定完成。')
-        res.redirect(`/users/${userId}/setting`)
-      })
-      .catch(err => next(err))
   },
   // 取得特定使用者頁面
   getUserPage: (req, res, next) => {
