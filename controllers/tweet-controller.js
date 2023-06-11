@@ -1,4 +1,4 @@
-const { Tweet, User, Reply } = require('../models')
+const { Tweet, User, Reply, Like } = require('../models')
 const helpers = require('../_helpers')
 
 const tweetController = {
@@ -23,7 +23,7 @@ const tweetController = {
       User.findByPk(userId, { raw: true })
     ])
       .then(([tweets, users, currentUser]) => {
-        console.log(currentUser)
+        // console.log(currentUser)
         res.render('tweets', { tweets, users, currentUser })
       })
       .catch(err => next(err))
@@ -61,6 +61,46 @@ const tweetController = {
         console.log(replies)
         res.render('tweet', { tweet, replies })
       })
+  },
+
+  postLike: (req, res, next) => {
+    const tweetId = req.params.id
+    return Promise.all([
+      Tweet.findByPk(tweetId),
+      Like.findOne({
+        where: {
+          userId: helpers.getUser(req).id,
+          tweetId
+        }
+      })
+    ])
+      .then(([tweet, like]) => {
+        if (!tweet) throw new Error("Tweet doesn't exist!")
+        if (like) throw new Error('You have liked this!')
+        return Like.create({
+          UserId: helpers.getUser(req).id,
+          TweetId: tweetId
+        })
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+
+  postUnlike: (req, res, next) => {
+    const tweetId = req.params.id
+
+    return Like.findOne({
+      where: {
+        UserId: helpers.getUser(req).id,
+        TweetId: tweetId
+      }
+    })
+      .then(like => {
+        if (!like) throw new Error("You haven't liked this!")
+        return like.destroy()
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
   }
 }
 

@@ -25,8 +25,7 @@
   <div class="d-flex align-items-center">
     {{!-- 用戶大頭貼 --}}
     <a href="/users/{{this.User.id}}/tweets" class="align-self-start">
-      <figure class="me-2 flex-shrink-0"
-        style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
+      <figure class="me-2 flex-shrink-0" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
         <img src="{{this.User.avatar}}" style="object-fit: cover;width:100%;height:100%">
       </figure>
     </a>
@@ -49,7 +48,22 @@
         </div>
         {{!-- 喜歡數 Like --}}
         <div class="number">
-          <img class="me-2" src="/_base/Property 2=outlined, Property 3=like.svg" style="width: 13px">16
+          {{#if this.isLiked}}
+          <form action="/tweets/{{this.id}}/unlike" method="POST" class="me-2">
+            <button type="submit">
+              <img src="/_base/Property 2=outlined, Property 3=like.svg" style="width: 13px">
+            </button>
+            不喜歡貼文
+          </form>
+          {{else}}
+          <form action="/tweets/{{this.id}}/like" method="POST" class="me-2">
+            <button type="submit">
+              <img src="/_base/Property 2=filled, Property 3=like.svg" style="width: 13px">
+            </button>
+            喜歡貼文
+          </form>
+          <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.likeCount}}</span>
+          {{/if}}
         </div>
       </div>
     </div>
