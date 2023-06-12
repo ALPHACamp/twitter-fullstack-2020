@@ -53,6 +53,7 @@ const tweetController = {
       Reply.findAll({
         include: [User],
         where: { tweetId },
+        order: [['createdAt', 'DESC']],
         raw: true,
         nest: true
       })
