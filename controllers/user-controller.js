@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs')
 const { Op } = require('sequelize')
 const { User, Followship, Like, Tweet } = require('../models')
+const helpers = require('../helpers/auth-helpers')
+
 const userController = {
   signUpPage: (req, res) => {
     res.render('signup')
@@ -47,7 +49,6 @@ const userController = {
   signInPage: (req, res) => {
     res.render('signin')
   },
-
   signIn: async (req, res, next) => {
     try {
       req.flash('success_messages', '成功登入！')
@@ -110,6 +111,67 @@ const userController = {
       })
       like.destroy()
       return res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
+  },
+  //* 帳戶設定
+  editUserAccount: async (req, res, next) => {
+    const { id } = req.params
+    const loginUser = helpers.getUser(req)
+    if (loginUser.id !== Number(id)) throw new Error('您沒有權限編緝帳戶')
+
+    try {
+      const user = await User.findByPk(id, {
+        raw: true
+      })
+      if (!user) throw new Error('該用戶不存在!')
+      return res.render('account-setting', { user })
+    } catch (err) {
+      next(err)
+    }
+  },
+  putUserAccount: async (req, res, next) => {
+    const { id } = req.params
+    const loginUser = helpers.getUser(req)
+    const { account, name, email, password, checkPassword } = req.body
+    const saltNumber = 10
+    if (loginUser.id !== Number(id)) return res.redirect('back')
+
+    try {
+      // 找對應user、找出是否有account、email
+      const [user, isAccountExist, isEmailExist] = await Promise.all([
+        User.findByPk(id),
+        // 如果account, email有值就搜尋
+        User.findOne({ where: { account: account || '' } }),
+        User.findOne({ where: { email: email || '' } })
+      ])
+
+      if (!user) throw new Error('該用戶不存在!')
+      // 如果account、email有更動就判斷是否有重複
+      if (user.account !== account && isAccountExist) throw new Error('該帳號已存在!')
+      if (user.email !== email && isEmailExist) throw new Error('該email已存在!')
+      // 確認name有無超過50字
+      if (name?.length > 50) throw new Error('該名字超過字數上限 50 個字!')
+      // 確認密碼是否正確
+      if (password !== checkPassword) throw new Error('密碼不一致!')
+      // 將密碼hash
+      let hashedPassword = 0
+      if (password) {
+        const salt = bcrypt.genSaltSync(saltNumber)
+        hashedPassword = bcrypt.hashSync(password, salt)
+      }
+
+      // 更新資料
+      await user.update({
+        // 如果是空的就代入資料庫的值
+        account: account || user.account,
+        name: name || user.name,
+        email: email || user.email,
+        password: hashedPassword || user.password
+      })
+      req.flash('success_messages', '已更新成功！')
+      res.redirect('/tweets')
     } catch (err) {
       next(err)
     }
