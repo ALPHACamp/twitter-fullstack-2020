@@ -639,7 +639,7 @@ textarea {
 }
 
 .tweetTips {
-  margin-right: 10px; 
+  margin-right: 10px;
   margin-bottom: 0px;
   color: var(--info);
 }
@@ -954,4 +954,20 @@ textarea {
 
 .nav-link-active {
   border-bottom: 2px solid var(--info);
+}
+
+
+
+/* -------------------- User Setting -------------------- */
+.user-setting {
+  padding: 23px;
+}
+
+.btn-submit-wrapper {
+  text-align: end;
+}
+
+.btn-submit-setting {
+  margin-top: 8px;
+  width: 14%;
 }

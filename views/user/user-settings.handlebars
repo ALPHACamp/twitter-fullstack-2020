@@ -1,0 +1,126 @@
+<div class="container">
+  <div class="wrapper">
+
+    {{!-------------- nav bar --------------}}
+    <nav class="navbar-column">
+
+      <div class="logo-container">
+        <a href="/tweets">
+          <img src="/stylesheets/icons/icon.png" alt="logo" class="logo">
+        </a>
+      </div>
+
+      {{!-- front page --}}
+      <a class="nav-row" href="/tweets">
+        <div class="nav-row-house-icon background-image">
+        </div>
+        <h5 class="nav-row-title">首頁</h5>
+      </a>
+
+      {{!-- user --}}
+      <a class="nav-row" href="/users/{{loginUserId}}/tweets">
+        <div class="nav-row-user-icon background-image">
+        </div>
+        <h5 class="nav-row-title">個人資料</h5>
+      </a>
+
+      {{!-- edit --}}
+      <a class="nav-row active" href="/users/{{loginUserId}}/edit">
+        <div class="nav-row-setting-icon background-image">
+        </div>
+        <h5 class="nav-row-title">設定</h5>
+      </a>
+
+      {{!-- tweet button --}}
+      <button type="button" class="btn btn-info btn-tweet" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        推文
+      </button>
+
+      {{!-- signout --}}
+      <form action="/signout" method="POST" class="signout-form">
+        <button type="submit" class="btn">
+          <div class="nav-row">
+            <div class="nav-row-signout-icon background-image">
+            </div>
+            <h5 class="nav-row-title">登出</h5>
+          </div>
+        </button>
+      </form>
+    </nav>
+
+    {{!------------------------ main ------------------------}}
+    <section class="main">
+      <div class="main-title main-head-bar">
+        <h4>
+          帳戶設定
+        </h4>
+      </div>
+
+      {{> messages}}
+
+      <div class="user-setting">
+        {{!-- form --}}
+        <form action="/users/{{ user.id }}/edit" method="POST" id="form" class="needs-validation" novalidate>
+
+          {{!-- Account --}}
+          <div class="bg-form-gray">
+            <label for="account" class="form-label">帳號</label>
+            <input type="text" id="account" name="account" placeholder="請輸入帳號" class="form-input"
+              value="{{ user.account }}" required>
+            {{!-- 驗證錯誤的提示訊息 --}}
+            <div class="invalid-feedback">請輸入10個字以內</div>
+            <div class="input-minmax"></div>
+          </div>
+
+          {{!-- Name --}}
+          <div class="bg-form-gray">
+            <label for="name" class="form-label">名稱</label>
+            <input type="text" id="name" name="name" placeholder="請輸入使用者名稱" class="form-input" value="{{ user.name }}"
+              required>
+            <div class="invalid-feedback">請輸入50個字以內</div>
+            <div class="input-minmax"></div>
+          </div>
+
+          {{!-- Email --}}
+          <div class="bg-form-gray">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" placeholder="請輸入Email" class="form-input"
+              value="{{ user.email }}" required>
+            <div class="invalid-feedback">請輸入Email</div>
+            <div class="input-minmax"></div>
+          </div>
+
+          {{!-- Password --}}
+          <div class="bg-form-gray">
+            <label for="password" class="form-label">密碼</label>
+            <input type="password" id="password" name="password" placeholder="請設定密碼" class="form-input"
+              value="{{ password }}" required>
+            <div class="invalid-feedback">請設定密碼</div>
+            <div class="input-minmax"></div>
+          </div>
+
+          {{!-- Confirm Password --}}
+          <div class="bg-form-gray">
+            <label for="checkPassword" class="form-label">密碼確認</label>
+            <input type="password" id="checkPassword" name="checkPassword" placeholder="請再次輸入密碼" class="form-input"
+              value="{{ checkPassword }}" required>
+            <div class="invalid-feedback">密碼不一致</div>
+            <div class="input-minmax"></div>
+          </div>
+
+
+          {{!-- button --}}
+          <div class="btn-submit-wrapper">
+            <button type="submit" class="btn btn-info btn-submit-setting" id="submit">儲存</button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <section class="followship"></section>
+  </div>
+</div>
+
+
+{{> tweet-modal}}
+
+<script src="/javascripts/register.js"></script>
