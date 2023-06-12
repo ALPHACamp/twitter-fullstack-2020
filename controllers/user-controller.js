@@ -166,6 +166,20 @@ const userController = {
       .then(() => res.redirect('back'))
       .catch(err => next(err))
   },
+  removeFollowing: (req, res, next) => {
+    return Followship.findOne({
+      where: {
+        followerId: helpers.getUser(req).id,
+        followingId: req.params.userId
+      }
+    })
+      .then(followship => {
+        if (!followship) throw new Error("You haven't followed this user!")
+        return followship.destroy()
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
   getFollowship: (req, res, next) => {
     return User.findAll({
       include: [
