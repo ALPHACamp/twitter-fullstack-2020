@@ -56,6 +56,7 @@ const userController = {
       next(err)
     }
   },
+  // 待刪除
   getOther: (req, res) => {
     res.render('other-tweets')
   },
@@ -63,15 +64,6 @@ const userController = {
     req.flash('success_messages', '登出成功！')
     req.logout()
     res.redirect('/signin')
-
-
-  signIn: (req, res) => {
-    req.flash('success_messages', '成功登入！')
-    res.send('Success')
-  },
-
-  getOther: (req, res) => {
-    res.render('other-tweets')
   },
   //* 追蹤功能
   addFollowing: async (req, res, next) => {
