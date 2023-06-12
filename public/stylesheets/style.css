@@ -101,11 +101,6 @@ h4 {
   overflow-y: scroll;
 }
 
-/* .admin-users-page {
-  height: 90vh;
-  overflow-y: scroll;
-} */
-
 /****** admin-users ******/
 .secondary-color {
   color: #6c757d;
@@ -1027,6 +1022,22 @@ h4 {
   border-right: 1px solid #b5b5be;
   height: 60%;
   margin: 10px auto 0;
+}
+
+/* 錯誤訊息 */
+.invalid-feedback .tweet-feedback,
+.invalid-feedback .reply-feedback {
+  display: none;
+  font-weight: 500;
+  font-size: 15px;
+  color: #FC5A5A;
+  text-align: right;
+}
+
+form.was-validated .invalid-message:invalid~.invalid-parent .tweet-feedback,
+form.was-validated .invalid-message:invalid ~ .invalid-parent .reply-feedback {
+  display: initial;
+  /* 顯示 */
 }
 
 /* message */
