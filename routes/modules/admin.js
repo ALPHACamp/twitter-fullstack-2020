@@ -7,14 +7,9 @@ const { authenticatedAdmin } = require('../../middleware/auth')
 router.get('/signin', adminController.getSignin)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.adminSignin)
 
+router.get('/users', authenticatedAdmin, adminController.getUsers)
 router.get('/tweets', authenticatedAdmin, adminController.getTweets)
 router.delete('/tweets/:id', authenticatedAdmin, adminController.deleteTweets)
-
-
-router.get('/users', adminController.getUsers)
-
-router.get('/users', authenticatedAdmin, adminController.getUsers)
-
 
 router.get('/logout', adminController.getLogout)
 
