@@ -239,7 +239,7 @@ const userController = {
     // 自己不能追蹤自己(測試檔 redirect 需要 200)
     if (userId === helpers.getUser(req).id) {
       req.flash('error_messages', 'Cannot follow yourself!')
-      return res.redirect(200, 'back')
+      return res.redirect('back')
     }
 
     return Promise.all([
@@ -281,11 +281,35 @@ const userController = {
       .catch(err => next(err))
   },
 
-  getUserFollowings: (req, res, next) => {
-    res.render('followship')
+  getUserFollowers: (req, res, next) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          as: 'Followings',
+          include: { model: User, as: 'Followings' }
+        },
+        {
+          model: Tweet
+        }
+      ],
+      nest: true
+    })
+      .then(user => {
+        if (!user) throw new Error('User not found')
+        // 推文數量
+        const tweetsLength = user.Tweets.length
+        const followings = user.toJSON().Followings
+        // console.log(user.toJSON())
+        followings.forEach(following => following.isFollowed = following.Followings.some(fr => fr.id === helpers.getUser(req).id))
+        // console.log('上下切開')
+        // followings.sort((a, b) => b.Followship.createdAt - a.Followership.createdAt)
+        res.status(200).render('followship', { user: user.toJSON(), tweetsLength, users: followings })
+      })
+      .catch(err => next(err))
   },
 
-  getUserFollowers: (req, res, next) => {
+  getUserFollowings: (req, res, next) => {
     return User.findByPk(req.params.id, {
       include: [
         {
@@ -304,10 +328,10 @@ const userController = {
         // 推文數量
         const tweetsLength = user.Tweets.length
         const followers = user.toJSON().Followers
-        console.log(user.toJSON())
+        // console.log(user.toJSON())
         followers.forEach(follower => follower.isFollowed = follower.Followers.some(fr => fr.id === helpers.getUser(req).id))
-        console.log('上下切開')
-        console.log(followers)
+        // console.log('上下切開')
+        // console.log(followers)
         // followers.sort((a, b) => b.Followship.createdAt - a.Followership.createdAt)
         res.status(200).render('followship', { user: user.toJSON(), tweetsLength, users: followers })
       })
