@@ -29,9 +29,9 @@
           {{#each user.Followers}}
             <li class='mt-2'>
               <div class='d-flex align-items-start follow'>
-                <div class='flex-shrink-1 p-0'>
+                <a class='flex-shrink-1 p-0' href="/users/{{this.id}}/tweets">
                   <img src='{{this.avatar}}' alt='' class='recommend-followings-img' />
-                </div>
+                </a>
                 <div class='tweet-text flex-grow-1'>
                   <div class='head d-flex justify-content-between'>
                     <span class='tweet-name'>{{this.name}} </span>

@@ -27,8 +27,8 @@
                       <img src="/images/reply_outlined.svg" class='reply-icon' alt="" type="button" data-bs-toggle="modal" data-bs-target="#reply-modal"/>
                       <span>{{this.repliesCount}}</span>
                     </span>
-                    <form class='count' action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;" onclick="event.stopPropagation(); event.preventDefault();">
-                      <img class='like-icon' src='/images/like_filled.svg' alt='like' />
+                    <form class='count' action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;" >
+                      <input type="image" src="/images/like_filled.svg" alt="like" class="like-icon">
                       <span>{{this.likesCount}}</span>
                     </form>
                   </div>
