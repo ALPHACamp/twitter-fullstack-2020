@@ -29,7 +29,6 @@ module.exports = sequelize => {
       name: DataTypes.STRING,
       account: {
         type: DataTypes.STRING,
-
         unique: true
       },
       email: {
@@ -42,7 +41,8 @@ module.exports = sequelize => {
       password: DataTypes.STRING,
       role: DataTypes.STRING,
       avatar: DataTypes.STRING,
-      cover: DataTypes.STRING
+      cover: DataTypes.STRING,
+      introduction: DataTypes.TEXT
     },
     {
       sequelize,
