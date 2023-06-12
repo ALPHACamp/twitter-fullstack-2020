@@ -1,4 +1,4 @@
-const { User, Tweet, Like, Followship } = require('../models')
+const { User, Tweet, Like, Followship, sequelize } = require('../models')
 
 const adminController = {
   // 後台登入
@@ -6,7 +6,7 @@ const adminController = {
     return res.render('admin/signin')
   },
   signIn: async (req, res) => {
-    req.flash('success_msg', '登入成功')
+    // req.flash('success_msg', '登入成功')
     return res.redirect('/admin/tweets')
   },
   // 後台頁面
@@ -43,13 +43,32 @@ const adminController = {
         where: { role: 'user' },
         raw: true,
         nest: true,
-        include: [
-          // Tweet & Like
-          { model: User, as: 'Followings', attributes: ['id'] },
-          { model: User, as: 'Followers', attributes: ['id'] }
+        attributes: [
+          'id', 'name', 'account', 'cover', 'avatar'
+          [sequelize.literal(
+            'SELECT COUNT(*) FROM `Tweets` WHERE `UserId`=`User`.`id`'
+          ), 'totalTweets'],
+          [sequelize.literal(
+            'SELECT COUNT(*) FROM `Followships` WHERE `followingId`=`User`.`id`'
+          ), 'totalFollowings'],
+          [sequelize.literal(
+            'SELECT COUNT(*) FROM `Followships` WHERE `followerId`=`User`.`id`'
+          ), 'totalFollowers']
+        ]
+      }
+      )
+      const tweets = await Tweet.findAll({
+        raw: true,
+        nest: true,
+        group: 'UserId',
+        attributes: [
+          [sequelize.literal(
+            'SELECT COUNT(*) FROM `Like` WHERE `TweetId`=`Tweet`.`id`'
+          ), 'totalLikes']
         ]
       })
-      console.log(users)
+
+      console.log(users, '\n\n', tweets)
       return res.render('admin/users', { users })
     } catch (e) {
       next(e)
