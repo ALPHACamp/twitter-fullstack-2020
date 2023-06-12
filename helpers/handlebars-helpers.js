@@ -3,10 +3,10 @@ const dayjs = require('dayjs')
 
 const formatRelativeTime = targetTime => {
   const currentTime = dayjs()
-  if ((currentTime - targetTime) < 0) {
+  if (currentTime - targetTime < 0) {
     return '-'
   }
-  const diffInMilliseconds = (currentTime - targetTime)
+  const diffInMilliseconds = currentTime - targetTime
   const second = Math.floor(diffInMilliseconds / 1000)
   const minutes = Math.floor(diffInMilliseconds / 60000)
   const hours = Math.floor(minutes / 60)
@@ -39,5 +39,8 @@ module.exports = {
   formatDateTime,
   ifCond: function (a, b, options) {
     return a === b ? options.fn(this) : options.inverse(this)
+  },
+  ifQuery: function (a, b) {
+    return a?.includes('?') ? `${a}&${b}` : `${a}?${b}`
   }
 }

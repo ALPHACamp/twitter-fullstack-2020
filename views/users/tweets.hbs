@@ -1,42 +1,47 @@
 <div class='d-flex justify-content-center'>
   {{! navbar }}
-  {{> navbar}}
+  {{> navbar route = 'profile'}}
 
   {{!tweet-list }}
   <div class='col-7 profile-page'>
     <ul class='list-group home-list'>
-      <div class='user-container m-0 p-0'>
+      <div class='user-container m-0 p-0 home-page'>
         {{> user-profile route = 'tweets'}}
-        
+
         <!-- each tweets -->
         <ul class='tweet-list'>
-        {{#each tweets}}
-          <li class='mt-2'>
-            <div class='d-flex align-items-start'>
-              <div class='flex-shrink-1 p-0 icon'>
-                <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
-              </div>
-              <div class='tweet-text flex-grow-1'>
-                <span class='tweet-name'>{{this.User.name}} </span>
-                <span class='tweet-account'>@{{this.User.account}}</span>
-                <span class='tweet-account'>・{{formatRelativeTime this.createdAt}}</span>
-                <p class='tweet-description' style='white-space:break-spaces;'>{{this.description}}</p>
-                <div>
-                  <a class='reply' href='#'>
-                    <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
-                    <span>{{this.repliesCount}}</span>
-                  </a>
-                  <a class='like' href='#'>
-                    <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
-                    <span>{{this.likesCount}}</span>
-                  </a>
+          {{#each tweets}}
+            <li class='mt-2'>
+              <a href='/tweets/{{this.id}}/replies' class='text-decoration-none'>
+                <div class='d-flex align-items-start'>
+                  <div class='flex-shrink-1 p-0 icon'>
+                    <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
+                  </div>
+                  <div class='tweet-text flex-grow-1'>
+                    <span class='tweet-name'>{{this.User.name}} </span>
+                    <span class='tweet-account'>@{{this.User.account}}</span>
+                    <span class='tweet-account'>・{{formatRelativeTime this.createdAt}}</span>
+                    <p class='tweet-description' style='white-space:break-spaces;'>{{this.description}}</p>
+                    <div>
+                      <span class='count' href='#'>
+                        <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
+                        <span>{{this.repliesCount}}</span>
+                      </span>
+                      <span class='count' href='#'>
+                        <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
+                        <span>{{this.likesCount}}</span>
+                      </span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <hr />
-          </li>
-        {{/each}}
+              </a>
+              <hr />
+            </li>
+          {{/each}}
         </ul>
+        {{#if pagination.hasManyPages}}
+          {{> pagination route = route }}
+        {{/if}}
       </div>
     </ul>
   </div>

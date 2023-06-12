@@ -6,11 +6,7 @@ const tweetsController = {
     const loginUser = helpers.getUser(req)
     try {
       let tweets = await Tweet.findAll({
-        include: [
-          User,
-          { model: Like },
-          { model: Reply, include: User }
-        ],
+        include: [User, { model: Like }, { model: Reply, include: User }],
         order: [['createdAt', 'DESC']]
       })
       tweets = tweets.map(tweet => ({
@@ -32,11 +28,7 @@ const tweetsController = {
     const user = helpers.getUser(req)
     try {
       const tweet = await Tweet.findByPk(tweetId, {
-        include: [
-          User,
-          { model: Like },
-          { model: Reply, include: User }
-        ]
+        include: [User, { model: Like }, { model: Reply, include: User }]
       })
       const likeCount = tweet.Likes.length
       const replyCount = tweet.Replies.length

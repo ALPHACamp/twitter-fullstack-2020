@@ -1,36 +1,41 @@
 <div class='d-flex justify-content-center'>
   {{! navbar }}
-  {{> navbar}}
+  {{> navbar route = 'profile'}}
 
   {{!tweet-list }}
   <div class='col-7 profile-page'>
     <ul class='list-group home-list'>
-      <div class='user-container m-0 p-0'>
+      <div class='user-container m-0 p-0 home-page'>
         {{> user-profile route = 'replies'}}
         
         <!-- each tweets -->
         <ul class='tweet-list'>
           {{#each replies}}
             <li class='mt-2'>
-              <div class='d-flex align-items-start'>
-                <div class='flex-shrink-1 p-0 icon'>
-                  <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
-                </div>
-                <div class='tweet-text flex-grow-1'>
-                  <span class='tweet-name'>{{../user.name}} </span>
-                  <span class='tweet-account'>@{{../user.account}}</span>
-                <span class='tweet-account'>・{{formatRelativeTime this.createdAt}}</span>
-                  <div class='reply-name'>
-                    <span class='text'>回覆</span>
-                    <span class='account'>@{{this.Tweet.User.account}}</span>
+              <a href='/tweets/{{this.TweetId}}/replies' class='text-decoration-none'>
+                <div class='d-flex align-items-start'>
+                  <div class='flex-shrink-1 p-0 icon'>
+                    <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
                   </div>
-                  <p class='tweet-description' style='white-space:break-spaces;'>{{this.comment}}</p>
+                  <div class='tweet-text flex-grow-1'>
+                    <span class='tweet-name'>{{../user.name}} </span>
+                    <span class='tweet-account'>@{{../user.account}}</span>
+                  <span class='tweet-account'>・{{formatRelativeTime this.createdAt}}</span>
+                    <div class='reply-name'>
+                      <span class='text'>回覆</span>
+                      <span class='account'>@{{this.Tweet.User.account}}</span>
+                    </div>
+                    <p class='tweet-description' style='white-space:break-spaces;'>{{this.comment}}</p>
+                  </div>
                 </div>
-              </div>
+              </a>
               <hr />
             </li>
           {{/each}}
         </ul>
+        {{#if pagination.hasManyPages}}
+          {{> pagination route = route }}
+        {{/if}}
       </div>
     </ul>
   </div>

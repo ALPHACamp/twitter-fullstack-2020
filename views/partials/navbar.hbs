@@ -6,19 +6,19 @@
       </li>
 
       <div class='px-4'>
-        <li class='nav-item active'>
+        <li class='nav-item {{#ifCond route 'tweets'}}active{{/ifCond}}'>
           <a class='nav-link mb-4' href='/'>
             <div class='nav-icon home-icon'></div>
             <span class='nav-text'>首頁</span>
           </a>
         </li>
-        <li class='nav-item'>
-          <a class='nav-link mb-4' href='/users/{{loginUser.id}}/tweets'>
+        <li class='nav-item {{#ifCond route 'profile'}}active{{/ifCond}}'>
+          <a class='nav-link  mb-4' href='/users/{{loginUser.id}}/tweets'>
             <div class='nav-icon user-icon'></div>
             <span class='nav-text'>個人資料</span>
           </a>
         </li>
-        <li class='nav-item'>
+        <li class='nav-item {{#ifCond route 'setting'}}active{{/ifCond}}'>
           <a class='nav-link mb-3' href='/users/{{loginUser.id}}'>
             <div class='nav-icon cog-icon'></div>
             <span class='nav-text'>設定</span>

@@ -1,42 +1,47 @@
 <div class='d-flex justify-content-center'>
   {{! navbar }}
-  {{> navbar}}
+  {{> navbar route = 'profile'}}
 
   {{!tweet-list }}
   <div class='col-7 profile-page'>
     <ul class='list-group home-list'>
-      <div class='user-container m-0 p-0'>
+      <div class='user-container m-0 p-0 home-page'>
         {{> user-profile route = 'likes'}}
         
         <!-- each like tweets -->
         <ul class='tweet-list'>
         {{#each tweets}}
           <li class='mt-2'>
-            <div class='d-flex align-items-start'>
-              <div class='flex-shrink-1 p-0 icon'>
-                <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
-              </div>
-              <div class='tweet-text flex-grow-1'>
-                <span class='tweet-name'>{{this.User.name}} </span>
-                <span class='tweet-account'>@{{this.User.account}}</span>
-                <span class='tweet-account'>・{{formatRelativeTime this.Like.createdAt}}</span>
-                <p class='tweet-description' style='white-space:break-spaces;'>{{this.description}}</p>
-                <div>
-                  <div class='reply'>
-                    <img src="/images/reply_outlined.svg" class='reply-icon' alt="" type="button" data-bs-toggle="modal" data-bs-target="#reply-modal"/>
-                    <span>{{this.repliesCount}}</span>
+            <a href='/tweets/{{this.id}}/replies' class='text-decoration-none'>
+              <div class='d-flex align-items-start'>
+                <div class='flex-shrink-1 p-0 icon'>
+                  <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
+                </div>
+                <div class='tweet-text flex-grow-1'>
+                  <span class='tweet-name'>{{this.User.name}} </span>
+                  <span class='tweet-account'>@{{this.User.account}}</span>
+                  <span class='tweet-account'>・{{formatRelativeTime this.Like.createdAt}}</span>
+                  <p class='tweet-description' style='white-space:break-spaces;'>{{this.description}}</p>
+                  <div>
+                    <span class='count'>
+                      <img src="/images/reply_outlined.svg" class='reply-icon' alt="" type="button" data-bs-toggle="modal" data-bs-target="#reply-modal"/>
+                      <span>{{this.repliesCount}}</span>
+                    </span>
+                    <form class='count' action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;" >
+                      <input type="image" src="/images/like_filled.svg" alt="like" class="like-icon">
+                      <span>{{this.likesCount}}</span>
+                    </form>
                   </div>
-                  <form class='like' action="/tweets/{{tweet.id}}/unlike" method="POST" style="display: contents;">
-                    <img class='like-icon' src='/images/like_filled.svg' alt='like' />
-                    <span>{{this.likesCount}}</span>
-                  </form>
                 </div>
               </div>
-            </div>
+            </a>
             <hr />
           </li>
         {{/each}}
         </ul>
+        {{#if pagination.hasManyPages}}
+          {{> pagination route = route }}
+        {{/if}}
       </div>
     </ul>
   </div>

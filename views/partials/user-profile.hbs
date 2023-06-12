@@ -1,6 +1,6 @@
 <div class='d-flex flex-row head'>
   <span class='d-flex justify-content-start align-items-center'>
-    <a href='javascript:history.back()'>
+    <a  href='{{ifQuery previousPage 'back=1'}}' >
       <img src='/images/back.svg' alt='back' />
     </a>
   </span>
@@ -36,8 +36,8 @@
     <h5 class='card-title m-0'>{{user.name}}</h5>
     <p class='at-name m-0'>@{{user.account}}</p>
     <p class='card-text m-0'>{{user.introduction}}</p>
-    <span>{{user.FollowingsCount}} 個<a href='/users/{{user.id}}/followings'>跟隨中</a></span>
-    <span>{{user.FollowersCount}} 位<a href='/users/{{user.id}}/followers'>跟隨者</a></span>
+    <span><a href='/users/{{user.id}}/followings'>{{user.FollowingsCount}} 個跟隨中</a></span>
+    <span><a href='/users/{{user.id}}/followers'>{{user.FollowersCount}} 位跟隨者</a></span>
   </div>
   <ul class='nav nav-tabs'>
     <li class='nav-item'>
@@ -56,11 +56,11 @@
 <div class='modal fade user-edit-modal' id='edit-modal' tabindex='-1' aria-labelledby='editModalLabel' aria-hidden='true'>
   <div class='modal-dialog'>
     <div class='modal-content'>
-      <form class='input-form' action='/users/{{user.id}}?_method=PUT' method='POST' enctype='multipart/form-data' novalidate>
+      <form class='input-form validated' action='/users/{{user.id}}?_method=PUT' method='POST' enctype='multipart/form-data' novalidate>
         <div class='modal-header'>
           <button type='button' class='modal-close' data-bs-dismiss='modal' aria-label='Close'>X</button>
           <h1 class='modal-title' id='editModalLabel'>編輯個人資料</h1>
-          <button type='submit' class='btn btn-primary btn-edit'>儲存</button>
+          <button type='submit' class='btn btn-primary btn-edit' onclick='return confirm(`確定要修改嗎?`)'>儲存</button>
         </div>
         <div class='modal-body'>
           <div class='cover-edit'>
@@ -90,13 +90,13 @@
             <div class='name box'>
               <label class='form-label' for='name' >名稱</label>
               <input class='form-control input-name' type='text' name='name' id='name' value='{{user.name}}' placeholder='暱稱' />
-              <div class="invalid-feedback">字數超過上限 !</div>
+              <div class="invalid-feedback">字數超出上限 !</div>
             </div>
             <div class='name-amount'>{{user.name.length}}/50</div>
             <div class='introduction box'>
               <label class='form-label' for='introduction'>自我介紹</label>
               <textarea class='form-control input-introduction' id='introduction' name='introduction' rows='3'>{{user.introduction}}</textarea>
-              <div class="invalid-feedback">字數超過上限 !</div>
+              <div class="invalid-feedback">字數超出上限 !</div>
             </div>
             <div class='introduction-amount'>{{user.introduction.length}}/160</div>
           </div>
