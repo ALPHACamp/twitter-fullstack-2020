@@ -34,7 +34,7 @@ const profileController = {
       req.userData = {
         ...user.toJSON(),
         cover: user.cover || '/images/profile/cover.png',
-        avatar: user.avatar || '/images/profile/avatar.png',
+        avatar: user.avatar || 'https://ionicframework.com/docs/img/demos/avatar.svg',
         FollowingsCount,
         FollowersCount,
         tweetsCount,
@@ -241,7 +241,7 @@ const profileController = {
     // 抓id, 表單資料
     const { userId } = req.params
     const loginUser = helpers.getUser(req)
-    const { account, name, email, password, passwordCheck, introduction } = req.body
+    const { account, name, email, password, passwordCheck, introduction, coverDelete } = req.body
     const saltNumber = 10
     // 判斷是否為本人
     if (loginUser.id !== Number(userId)) return res.redirect('back')
@@ -255,7 +255,6 @@ const profileController = {
         imgurFileHelper(cover),
         imgurFileHelper(avatar)
       ])
-      console.log(user)
       // 找不到就報錯
       if (!user) throw new Error('該用戶不存在!')
       // 如果account、email有更動就判斷是否有重複
@@ -272,8 +271,12 @@ const profileController = {
         const salt = bcrypt.genSaltSync(saltNumber)
         hashedPassword = bcrypt.hashSync(password, salt)
       }
+      // 如果coverFilePath是空的，且coverDelete是同意的，就將cover刪除
+      if (!coverFilePath && coverDelete === 'on') {
+        user.cover = ''
+      }
       // 更新資料
-      const userUpdate = await user.update({
+      await user.update({
         // 如果是空的就代入資料庫的值
         name: name || user.name,
         email: email || user.email,

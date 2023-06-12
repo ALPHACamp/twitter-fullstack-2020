@@ -5,33 +5,34 @@
   {{!--tweet-list --}}
   <div class="col-7 home-page">
     <ul class="list-group home-list">
+      <a href="/tweets">
       <li class="list-group-item tweet-list p-4 d-flex align-items-center">
         <img src="/images/back.svg" class="list-header-img" alt="">
         <span class="list-header">推文</span>
       </li>
+      </a>
       
       {{!-- tweet --}}
       <li class="list-group-item" style="height:auto;">
         <div class="d-flex flex-column">
           <div class="d-flex flex-row mb-2">
             <div class="flex-shrink-1 p-0">
-              <img src="/images/profile-img.svg" alt="" class="recommend-followings-img">
+              <img src={{tweet.User.avatar}} alt="avatar" class="recommend-followings-img" onerror="this.onerror=null; this.src='/images/profile-img.svg'">
             </div>
             <div class="tweet-text">
-              <div class="tweet-name">Apple </div>
-              <span class="tweet-account">@apple</span>
+              <div class="tweet-name">{{tweet.User.name}}</div>
+              <span class="tweet-account">@{{tweet.User.account}}</span>
             </div>
           </div>
-          <p class="tweet-content" style="white-space:break-spaces;">Nulla Lorem mollit cupidatat irure. Laborum magna nulla
-            duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</p>
-          <div class="following-account">上午 10:05・2021年11月10日</div>
+          <p class="tweet-content" style="white-space:break-spaces;">{{tweet.description}}</p>
+          <div class="following-account">{{formatDateTime tweet.createdAt}}</div>
         </div>
       
         <hr>
         <div class="d-flex">
-          <div class="tweet-interact-counts">34</div>
+          <div class="tweet-interact-counts">{{replyCount}}</div>
           <div class="tweet-interact-text">回覆</div>
-          <div class="tweet-interact-counts">808</div>
+          <div class="tweet-interact-counts">{{likeCount}}</div>
           <div class="tweet-interact-text">喜歡次數</div>
         </div>
       
@@ -39,139 +40,49 @@
         <div class="mb-2">
           <img src="/images/reply_outlined.svg" alt="" type="button" data-bs-toggle="modal" data-bs-target="#reply-modal"
             style="margin-right:128px;">
-          <img src="/images/like_outlined.svg" alt="">
+          
+          {{#if isLiked }}
+          <form action="/tweets/{{tweet.id}}/unlike" method="POST" style="display: contents;">
+            <input type="image" src="/images/like_filled.svg" alt="提交">
+          </form>
+          {{else}}
+          <form action="/tweets/{{tweet.id}}/like" method="POST" style="display: contents;">
+            <input type="image" src="/images/like_outlined.svg" alt="提交">
+          </form>
+          {{/if}}
+
         </div>
       
       </li>
       
-      <!-- each replies -->
+      {{#each tweet.Replies}}
       <li class="list-group-item tweet-list">
         <div class="d-flex">
           <div class="flex-shrink-1 p-0">
-            <img src="/images/profile-img.svg" alt="" class="recommend-followings-img">
+            <button onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{this.User.id}}/tweets';">
+              <img src="{{this.User.avatar}}" alt="avatar" class="recommend-followings-img"
+                onerror="this.onerror=null; this.src='/images/profile-img.svg'">
+            </button>
           </div>
       
           <div class="d-flex flex-column">
             <div class="tweet-text flex-grow-1">
               <div class="d-flex align-items-baseline mb-2">
-                <div class="tweet-name me-2">Apple</div>
-                <div class="tweet-account">@apple・8 小時</div>
+                <div class="tweet-name me-2">{{this.User.name}}</div>
+                <div class="tweet-account">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
               </div>
       
               <div class="d-flex mb-2">
                 <div class="reply-tag-text me-1">回覆</div>
-                <div class="reply-tag">@apple</div>
+                <div class="reply-tag">@{{../tweet.User.name}}</div>
               </div>
       
-              <p class="tweet-description" style="white-space:break-spaces;">former apple engineer shares a simple DIY fix to seal your surgical mask</p>
+              <p class="tweet-description" style="white-space:break-spaces;">{{this.comment}}</p>
             </div>
           </div>
         </div>
       </li>
-      
-      <li class="list-group-item tweet-list">
-        <div class="d-flex">
-          <div class="flex-shrink-1 p-0">
-            <img src="/images/profile-img.svg" alt="" class="recommend-followings-img">
-          </div>
-      
-          <div class="d-flex flex-column">
-            <div class="tweet-text">
-              <div class="d-flex align-items-baseline mb-2">
-                <div class="tweet-name me-2">Apple</div>
-                <div class="tweet-account">@apple・8 小時</div>
-              </div>
-      
-              <div class="d-flex mb-2">
-                <div class="reply-tag-text me-1">回覆</div>
-                <div class="reply-tag">@apple</div>
-              </div>
-      
-              <p class="tweet-description" style="white-space:break-spaces;">former apple engineer shares a simple DIY fix to seal your surgical mask</p>
-            </div>
-          </div>
-        </div>
-      </li>
-      
-      <li class="list-group-item tweet-list">
-        <div class="d-flex">
-          <div class="flex-shrink-1 p-0">
-            <img src="/images/profile-img.svg" alt="" class="recommend-followings-img">
-          </div>
-      
-          <div class="d-flex flex-column">
-            <div class="tweet-text">
-              <div class="d-flex align-items-baseline mb-2">
-                <div class="tweet-name me-2">Apple</div>
-                <div class="tweet-account">@apple・8 小時</div>
-              </div>
-      
-              <div class="d-flex mb-2">
-                <div class="reply-tag-text me-1">回覆</div>
-                <div class="reply-tag">@apple</div>
-              </div>
-      
-              <p class="tweet-description" style="white-space:break-spaces;">former apple engineer shares a simple DIY fix to seal your surgical mask</p>
-            </div>
-          </div>
-        </div>
-      </li>
-      
-      <li class="list-group-item tweet-list">
-        <div class="d-flex">
-          <div class="flex-shrink-1 p-0">
-            <img src="/images/profile-img.svg" alt="" class="recommend-followings-img">
-          </div>
-      
-          <div class="d-flex flex-column">
-            <div class="tweet-text">
-              <div class="d-flex align-items-baseline mb-2">
-                <div class="tweet-name me-2">Apple</div>
-                <div class="tweet-account">@apple・8 小時</div>
-              </div>
-      
-              <div class="d-flex mb-2">
-                <div class="reply-tag-text me-1">回覆</div>
-                <div class="reply-tag">@apple</div>
-              </div>
-      
-              <p class="tweet-description" style="white-space:break-spaces;">former apple engineer shares a simple DIY fix to seal your surgical mask</p>
-            </div>
-          </div>
-        </div>
-      </li>
-      
-      
-      <!-- Modal -->
-      <div class="modal fade" id="tweet-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="tweetModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="tweet-close-button" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true"><img src="/images/message/message_danger.svg" alt=""></span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <!-- form -->
-              <div class="d-flex align-items-start">
-                <div class="flex-shrink-1 p-0">
-                  <img src="/images/profile-img.svg" alt="" class="recommend-followings-img">
-                </div>
-                <div class="flex-grow-1 position-relative">
-                  <form action="/user/tweets" method="POST">
-                    <div class="form-group mb-5">
-                      <textarea class="form-control border-0" id="description" name="description" rows="3"
-                        placeholder="有什麼新鮮事？"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary position-absolute end-0 bottom-0 mx-5 me-2">推文</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {{/each}}
       
       <!-- Modal -->
       <div class="modal fade" id="reply-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -187,30 +98,30 @@
               <!-- form -->
               <div class="d-flex mb-4">
                 <div class="flex-shrink-0 p-0">
-                  <img src="/images/profile-img.svg" alt="123" class="recommend-followings-img">
+                  <img src="{{tweet.User.avatar}}" alt="avatar" class="recommend-followings-img" onerror="this.onerror=null; this.src='/images/profile-img.svg'">
                   <div class="vertical-line"></div>
                 </div>
                 <div class="tweet-text">
                   <div class="d-flex align-items-baseline mb-2">
-                    <div class="tweet-name me-2">Apple</div>
-                    <div class="tweet-account">@apple・8 小時</div>
+                    <div class="tweet-name me-2">{{tweet.User.name}}</div>
+                    <div class="tweet-account">@{{tweet.User.account}}・{{formatRelativeTime tweet.createdAt}}</div>
                   </div>
-                  <p class="tweet-description mb-2" style="white-space:break-spaces;">former apple engineer shares a simple DIY fix to seal your surgical mask</p>
+                  <p class="tweet-description mb-2" style="white-space:break-spaces;">{{tweet.description}}</p>
                   <div class="d-flex">
                     <div class="reply-tag-text me-1">回覆給</div>
-                    <div class="reply-tag">@apple</div>
+                    <div class="reply-tag">@{{tweet.User.account}}</div>
                   </div>
                 </div>
               </div>
       
               <div class="d-flex">
                 <div class="flex-shrink-0 p-0">
-                  <img src="/images/profile-img.svg" alt="" class="recommend-followings-img">
+                  <img src="{{user.avatar}}" alt="avatar" class="recommend-followings-img" onerror="this.onerror=null; this.src='/images/profile-img.svg'">
                 </div>
                 <div class="d-flex flex-column flex-grow-1">
-                  <form action="/user/tweets" method="POST">
+                  <form action="/tweets/{{tweet.id}}/replies" method="POST">
                     <div class="form-group">
-                      <textarea class="ms-1 border-0 my-2" id="description" name="description" rows="3"
+                      <textarea class="ms-1 border-0 my-2" id="comment" name="comment" rows="3"
                         style="resize:vertical;outline:none;" placeholder="推你的回覆"></textarea>
                       <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary">回覆</button>

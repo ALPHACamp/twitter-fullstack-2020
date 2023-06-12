@@ -18,7 +18,7 @@ const helpers = {
 }
 
 // files
-const { getUser, ensureAuthenticated } = require('./_helpers')
+const helpers = require('./_helpers')
 const routes = require('./routes')
 app.use(express.static('public'))
 
@@ -29,6 +29,7 @@ app.engine('hbs', handlebars({ extname: '.hbs', defaultLayout: 'main', helpers: 
 app.set('view engine', 'hbs')
 
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 app.use(
   session({
@@ -49,8 +50,8 @@ app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
   // 為了不跟user的資料衝突，所以更換名字
-  res.locals.loginUser = getUser(req)
-  res.locals.isAuthenticated = ensureAuthenticated(req)
+  res.locals.loginUser = helpers.getUser(req)
+  res.locals.isAuthenticated = helpers.ensureAuthenticated(req)
   next()
 })
 
