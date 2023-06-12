@@ -209,6 +209,7 @@ h5 {
 }
 
 .admin-tweet-right-up .account {
+  width: 150px;
   margin: 2px 0 0 8px;
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -246,7 +247,14 @@ h5 {
 }
 
 .tweet-xmark {
-  margin-left: 677.5px;
+  margin-left: 628px;
+}
+
+.tweet-xmark button{
+  width: 15px;
+  height: 15px;
+  border: none;
+  background-color: #FFFFFF;
 }
 
 .banner {
@@ -402,7 +410,9 @@ img.card-avatar {
 
 .user-main-body {
   width: 641px;
-  margin: -25px 0 0 282px;
+  position: absolute;
+  top: 72px;
+  left: 354px;
   border-left: 1px solid #E6ECF0;
   border-right: 1px solid #E6ECF0;
 }
@@ -568,7 +578,7 @@ img.card-avatar {
 }
 
 .nav-logout {
-  margin: 832px 0 8px 0;
+  margin: 400px 0 8px 0;
 }
 
 .sidebar-header h4 {
@@ -761,7 +771,7 @@ img.card-avatar {
 }
 
 .header {
-  width: 100%;
+  /* width: 100%; */
   height: 74px;
   padding: 24px 0 0 24px;
   display: flex;
@@ -807,3 +817,24 @@ img.card-avatar {
   border-bottom: 2px solid #FF6600;
 
 }
+
+.message {
+  z-index: 999;
+  opacity: 0;
+  animation-name: fadenum;
+  animation-duration: 1.5s;
+}
+
+ @keyframes fadenum {
+   0% {
+     opacity: 1;
+   }
+
+   50% {
+     opacity: 1;
+   }
+
+   100% {
+     opacity: 0;
+   }
+  }
