@@ -12,7 +12,14 @@ router.use('/admin', admin)
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+router.post(
+  '/signin',
+  passport.authenticate('local', {
+    failureRedirect: '/signin',
+    failureFlash: true
+  }),
+  userController.signIn
+)
 router.get('/logout', userController.logout)
 router.post(
   '/signin',
@@ -35,6 +42,12 @@ router.delete('/tweets/:id/unlike', authenticated, userController.removeLike)
 router.use('/', authenticated, generalErrorHandler)
 router.get('/user', userController.getOther)
 router.get('/tweets', authenticated, tweetController.getTweets)
+router.get('/other-likes', (req, res) => {
+  res.render('other-likes')
+})
+router.get('/self-likes', (req, res) => {
+  res.render('self-likes')
+})
 router.use('/', authenticated, generalErrorHandler)
 router.use('/', generalErrorHandler)
 
