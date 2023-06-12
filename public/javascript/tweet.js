@@ -30,14 +30,14 @@ tweetClose.addEventListener('click', event => {
   textArea.value = ''
 })
 
-function checkTweetValid (target, content, mexLength) {
+function checkTweetValid (target, content, maxLength) {
   // 如果內容只有空白或換行
   if (content.trim().length === 0) {
-    tweetFeedback.innerText = '內容不可空白'
     target.setCustomValidity('內容不可空白')
-  } else if (content.length > mexLength) {
-    tweetFeedback.innerHTML = `字數不可超過${mexLength}字`
-    target.setCustomValidity(`字數不可超過${mexLength}字`)
+    tweetFeedback.innerText = target.validationMessage
+  } else if (content.length > maxLength) {
+    target.setCustomValidity(`字數不可超過${maxLength}字`)
+    tweetFeedback.innerText = target.validationMessage
   } else {
     target.setCustomValidity('')
   }
