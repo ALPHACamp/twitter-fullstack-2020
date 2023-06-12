@@ -6,8 +6,7 @@ const authenticated = (req, res, next) => {
     if (isUser) {
       return next()
     }
-    req.flash('error_messages', '請至後台登入!')
-    return res.redirect('/signin')
+    return res.redirect('/admin/tweets')
   } else {
     req.flash('error_messages', '請先登入!')
     return res.redirect('/signin')
@@ -33,7 +32,22 @@ const authenticatedAdmin = (req, res, next) => {
   }
 }
 
+const redirectAdminTweet = (req, res, next) => {
+  const isAdmin = helpers.getUser(req)?.role === 'admin'
+  if (helpers.ensureAuthenticated(req)) {
+    if (isAdmin) {
+      return next()
+    }
+    req.flash('error_messages', '請至後台登入!')
+    return res.redirect('/signin')
+  } else {
+    req.flash('error_messages', '請先登入!')
+    return res.redirect('/signin')
+  }
+}
+
 module.exports = {
   authenticated,
-  authenticatedAdmin
+  authenticatedAdmin,
+  redirectAdminTweet
 }

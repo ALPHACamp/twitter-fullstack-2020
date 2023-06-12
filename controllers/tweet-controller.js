@@ -1,4 +1,3 @@
-const { Tweet, User } = require('../models')
 const { getTop10Following } = require('../helpers/getTop10Following-helper')
 const { Tweet, User, Reply, Like } = require('../models')
 
