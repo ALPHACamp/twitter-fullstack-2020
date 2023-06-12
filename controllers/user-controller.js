@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { Op } = require('sequelize')
 const { User, Followship, Like, Tweet } = require('../models')
+const { localFileHandler } = require('../helpers/file-helpers')
 const helpers = require('../helpers/auth-helpers')
 
 const userController = {
@@ -62,7 +63,47 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
+  getUser: async (req, res, next) => {
+    const { id } = req.params
+    const loginUser = helpers.getUser(req)
+    if (loginUser.id !== Number(id)) throw new Error('您沒有權限查看此個人資料')
 
+    try {
+      const [user, FollowingsCount, FollowersCount, tweetsCount] = await Promise.all([
+        User.findByPk(id, {
+          include: [
+            { model: Tweet, include: User }
+          ]
+        }),
+        // 計算user的folowing數量
+        Followship.count({
+          where: { follower_id: id }
+        }),
+        // 計算user的folower數量
+        Followship.count({
+          where: { following_id: id }
+        }),
+        // 計算user的推文數
+        Tweet.count({
+          where: { user_id: id }
+        })
+      ])
+
+      if (!user) throw new Error('該用戶不存在!')
+      const userData = {
+        ...user.toJSON(),
+        cover: user.cover || 'https://i.imgur.com/TGRK7uy.png',
+        avatar: user.avatar || 'https://i.imgur.com/mhXz6z9.png?1',
+        FollowingsCount,
+        FollowersCount,
+        tweetsCount
+      }
+      console.log('user:', user.toJSON())
+      return res.render('self-tweets', { user: userData })
+    } catch (err) {
+      next(err)
+    }
+  },
   getOther: (req, res) => {
     res.render('other-tweets')
   },
@@ -115,7 +156,7 @@ const userController = {
       next(err)
     }
   },
-  //* 帳戶設定
+  //* 帳戶/個人資料設定
   editUserAccount: async (req, res, next) => {
     const { id } = req.params
     const loginUser = helpers.getUser(req)
@@ -170,6 +211,34 @@ const userController = {
         email: email || user.email,
         password: hashedPassword || user.password
       })
+      req.flash('success_messages', '已更新成功！')
+      res.redirect('/tweets')
+    } catch (err) {
+      next(err)
+    }
+  },
+  putUserInfo: async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const { name, introduction } = req.body
+      const { files } = req
+
+      if (name?.length > 50) throw new Error('名稱不能超過 50 個字')
+      if (introduction?.length > 160) throw new Error('自我介紹不能超過 160 個字')
+
+      const [user, avatarPath, coverPath] = await Promise.all([
+        User.findByPk(id),
+        localFileHandler(files?.avatar ? files.avatar[0] : null),
+        localFileHandler(files?.cover ? files.cover[0] : null)
+      ])
+
+      await user.update({
+        name,
+        introduction,
+        avatar: avatarPath || user.avatar,
+        cover: coverPath || user.cover
+      })
+
       req.flash('success_messages', '已更新成功！')
       res.redirect('/tweets')
     } catch (err) {

@@ -1,36 +1,32 @@
 <div class="header">
   <a href=""><img src="https://i.postimg.cc/QxZdg4vB/Vector.png" alt="" class="arrow-left"></a>
   <div class="header-user">
-    <h5>Jason Doe</h5>
-    <p>25 推文</p>
+    <h5>{{user.name}}</h5>
+    <p>{{user.tweetsCount}} 推文</p>
   </div>
 </div>
 <div class="user-main-body">
-  <div class="banner"
-    style='background: #dddddd center center url("https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/5720/restaurants-list-cover.jpg");'>
-  </div>
+  <img src="{{user.cover}}" class="banner" alt="cover" />
   <div class="d-flex justify-content-between user-banner">
-    <img class="avatar ms-3" src="https://xsgames.co/randomusers/assets/avatars/male/71.jpg">
+    <img class="avatar ms-3" src="{{user.avatar}}">
     <div class="btns" id="data-panel">
       <!-- todo 下面新增觸發編輯的MODAL，API : /api/users/:id/profile-->
       <button class="btn-outline m-3" data-bs-toggle="modal" data-bs-target="#editModal">編輯個人資料</button>
     </div>
   </div>
   <div class="info user-info">
-    <div class="h5">{{user.name}}222</div>
-    <div class="body-14-regular secondary">{{user.account}}222</div>
-    <p class="body-14-regular grayscale mt-2">{{user.introduction}}22djaohfuohfuoeah1</p>
+    <div class="h5">{{user.name}}</div>
+    <div class="body-14-regular secondary">{{user.account}}</div>
+    <p class="body-14-regular grayscale mt-2">{{user.introduction}}</p>
   </div>
   <div class="m-3 following-info">
     <span class="combined ">
-      <!-- todo {{user.following.length}}   -->
-      <span class="body-14-regular grayscale float-start">34個</span>
+      <span class="body-14-regular grayscale float-start">{{user.FollowingsCount}}個</span>
       <span class="body-14-regular secondary float-start">跟隨中　</span>
     </span>
     <span class="separator">　</span>
     <span class="combined ">
-      <!-- todo {{user.follower.length}} -->
-      <span class="body-14-regular grayscale float-start">59位</span>
+      <span class="body-14-regular grayscale float-start">{{user.FollowersCount}}位</span>
       <span class="body-14-regular secondary float-start">跟隨者</span>
     </span>
   </div>

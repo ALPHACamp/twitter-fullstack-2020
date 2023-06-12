@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
+const upload = require('../middleware/multer')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const admin = require('./modules/admin')
 const passport = require('../config/passport')
@@ -29,20 +30,33 @@ router.delete(
   authenticated,
   userController.removeFollowing
 )
+
+router.get('/tweets/:id/reply', authenticated, tweetController.getTweetReplies)
 router.post('/tweets/:id/like', authenticated, userController.addLike)
 router.delete('/tweets/:id/unlike', authenticated, userController.removeLike)
-router.use('/', authenticated, generalErrorHandler)
-router.get('/users/:id/account', userController.editUserAccount)
-router.put('/users/:id/account', authenticated, userController.putUserAccount)
-router.get('/user', userController.getOther)
 router.get('/tweets', authenticated, tweetController.getTweets)
-router.get('/tweets/:id/reply', authenticated, tweetController.getTweetReplies)
+
+router.get('/users/:id/tweets', authenticated, userController.getUser)
+router.get('/users/:id/account', authenticated, userController.editUserAccount)
+router.put('/users/:id/account', authenticated, userController.putUserAccount)
+router.put(
+  '/users/:id',
+  authenticated,
+  upload.fields([
+    { name: 'avatar', maxCount: 1 },
+    { name: 'cover', maxCount: 1 }
+  ]),
+  userController.putUserInfo
+)
+router.get('/user', userController.getOther)
+
 router.get('/other-likes', (req, res) => {
   res.render('other-likes')
 })
 router.get('/self-likes', (req, res) => {
   res.render('self-likes')
 })
+
 router.use('/', authenticated, generalErrorHandler)
 router.use('/', generalErrorHandler)
 
