@@ -48,10 +48,6 @@ const userController = {
     res.render('signin')
   },
 
-  signIn: (req, res) => {
-    req.flash('success_messages', '成功登入！')
-    res.send('Success')
-  },
   signIn: async (req, res, next) => {
     try {
       req.flash('success_messages', '成功登入！')
