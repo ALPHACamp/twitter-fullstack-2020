@@ -46,6 +46,25 @@ const followshipController = {
       })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
+  },
+  getTopFollowedUsers: (req, res, next) => {
+    return User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    })
+      .then(users => {
+        const result = users
+          .map(user => ({
+            ...user.toJSON(),
+            followerCount: user.Followers.length,
+            isFollowed: req.user.Followings.some(f => f.id === user.id)
+          }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+        req.userData = {
+          ...result
+        }
+        res.send(req.userData) // 測試用
+      })
+      .catch(err => next(err))
   }
 }
 
