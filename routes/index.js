@@ -40,6 +40,8 @@ router.delete(
 router.post('/tweets/:id/like', authenticated, userController.addLike)
 router.delete('/tweets/:id/unlike', authenticated, userController.removeLike)
 router.use('/', authenticated, generalErrorHandler)
+router.get('/users/:id/account', userController.editUserAccount)
+router.put('/users/:id/account', authenticated, userController.putUserAccount)
 router.get('/user', userController.getOther)
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.get('/tweets/:id/reply', authenticated, tweetController.getTweetReplies)
