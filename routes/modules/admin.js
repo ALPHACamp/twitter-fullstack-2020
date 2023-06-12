@@ -5,7 +5,7 @@ const passport = require('../../config/passport')
 const { authenticatedAdmin } = require('../../middleware/auth')
 
 router.get('/signin', adminController.getSignin)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.adminSignin)
+router.post('/signin', passport.authenticate('admin', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.adminSignin)
 
 router.get('/users', authenticatedAdmin, adminController.getUsers)
 router.get('/tweets', authenticatedAdmin, adminController.getTweets)
