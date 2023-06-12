@@ -1,0 +1,840 @@
+.sidebar-left {
+  width: 178px;
+  height: 1200px;
+  position: fixed;
+  left: 130px;
+  top: 0px;
+}
+
+.sidebar-left img {
+  margin: 13px 0 0 13px;
+}
+
+.nav-card {
+  margin: 13px 0 0 0;
+  height: 244px;
+  width: 178px;
+  left: 0px;
+  top: 66px;
+  border-radius: 0px;
+}
+
+.nav-item {
+  margin: 0 0 8px 0;
+  height: 58px;
+  width: 178px;
+  display: flex;
+}
+
+.nav-item img {
+  margin: 18.78px 0 0 16.9px;
+  height: 20.25px;
+  width: 22.2px;
+}
+
+.nav-item h5 {
+  margin: 16px 0 0 16.9px;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: #44444F;
+}
+
+.nav-item a {
+  text-decoration: none;
+}
+
+.tweet {
+  width: 178px;
+  height: 46px;
+  color: #FFFFFF;
+  background: #FF6600;
+  border-radius: 50px;
+  border: none;
+}
+
+.nav-logout {
+  margin: 400px 0 8px 0;
+}
+
+.header {
+  width: 641px;
+  height: 74px;
+  position: absolute;
+  left: 353.79px;
+  top: 24px;
+  margin-top: -26px;
+  padding: 24px 0 0 20.9px;
+  display: flex;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E6ECF0;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+}
+
+.header-admin {
+  width: 937.13px;
+  height: 74px;
+  position: absolute;
+  left: 353.79px;
+  top: 24px;
+  margin-top: -24px;
+  padding: 24px 0 0 20.9px;
+  display: flex;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E6ECF0;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+}
+
+h4 {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.arrow-left {
+  width: 17px;
+  height: 14px;
+  margin-top: -4px;
+}
+
+.header-tweet {
+  width: 48px;
+  height: 26px;
+  margin-left: 19px;
+}
+
+.header-user {
+  margin: -8px 0 0 19px;
+}
+
+h5 {
+  margin-bottom: 0;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.header-user p {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: #92929D;
+}
+
+.edit-user-modal {
+  width: 634px;
+  height: 57px;
+  display: flex;
+}
+
+.edit-user-modal h5 {
+  margin: 15px 0 16px 36.5px;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: #1C1C1C;
+}
+
+.xmark {
+  width: 15px;
+  height: 15px;
+}
+
+.xmark-edit-user-modal {
+  margin: 20.5px 0 21.5px 19.5px;
+}
+
+.save {
+  width: 64px;
+  height: 40px;
+  margin: 8px 16px 9px 375px;
+  border-radius: 50px;
+  color: #FFFFFF;
+  background: #FF6600;
+  border: none;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.admin-tweets {
+  width: 937.13px;
+  margin-top: 50px;
+  position: absolute;
+  left: 353.79px;
+  top: 24px;
+}
+
+.admin-tweet {
+  width: 937.13px;
+  height: 118px;
+  display: flex;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E6ECF0;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+}
+
+.admin-tweet-left {
+  padding: 16px 0 0 23.13px;
+}
+
+.admin-tweet-right-up {
+  margin: 16px 0 0 8px;
+  display: flex;
+}
+
+.admin-tweet-right-up .name {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.admin-tweet-right-up .account {
+  width: 150px;
+  margin: 2px 0 0 8px;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #6C757D;
+}
+
+.admin-tweet-right .content {
+  width: 855px;
+  height: 52px;
+  margin: 10px 0 0 8px;
+  overflow: hidden;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.admin-tweet-right .replies {
+  font-size: 14px;
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  color: #6c757d;
+}
+
+.admin-tweet-right .likes {
+  margin-left: 40px;
+  font-size: 14px;
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  color: #6c757d;
+}
+
+.tweet-xmark {
+  margin-left: 628px;
+}
+
+.tweet-xmark button{
+  width: 15px;
+  height: 15px;
+  border: none;
+  background-color: #FFFFFF;
+}
+
+.banner {
+  position: relative;
+  z-index: -1;
+  height: 200px;
+  width: 100%;
+  background-size: cover;
+}
+
+.avatar {
+  transform: translate(0, -50%);
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  /* 正圆形 */
+  border: solid 4px #ffffff;
+}
+
+.btn-outline {
+  border: 1px solid #ff6600;
+  border-radius: 50px;
+  padding: 8px 16px;
+  background: #ffffff;
+  color: #ff6600;
+}
+
+a {
+  text-decoration: none;
+}
+
+.secondary a {
+  text-decoration: none;
+  margin-left: 8px;
+}
+
+.h5 {
+  margin: 0;
+  padding: 0;
+  font-family: "Noto Sans TC";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.body-14-regular {
+  font-family: "Noto Sans TC";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.secondary {
+  color: #6c757d;
+}
+
+.grayscale {
+  color: #171725;
+}
+
+.card {
+  width: 210px;
+  height: 314px;
+  position: relative;
+  padding: 0;
+}
+
+.card img {
+  width: 100%;
+  height: 140px;
+  border-radius: 10px 10px 0 0;
+}
+
+img.card-avatar {
+  top: 18%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: solid 4px #ffffff;
+
+}
+
+.body-16px-medium {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.card-icon {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 15px;
+  color: #1C1C1C;
+}
+
+.card-icon img {
+  width: 23.87px;
+  height: 21.6px;
+  margin-right: 8.13px;
+}
+
+.header-admin-user {
+  width: 1075px;
+  height: 74px;
+  position: absolute;
+  left: 353.79px;
+  top: 24px;
+  margin-top: -24px;
+  padding: 24px 0 0 20.9px;
+  display: flex;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E6ECF0;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+}
+
+.admin-user {
+  width: 1075px;
+  position: absolute;
+  left: 353.79px;
+  margin-top: -22px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E6ECF0;
+  border-left: 1px solid #E6ECF0;
+}
+
+.admin-user-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.admin-user-card {
+  margin-left: 16px;
+}
+
+.setting-container {
+  width: 641px;
+  height: 692px;
+  margin: -26px 0 0 282px;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+}
+
+
+.user-main-body {
+  width: 641px;
+  position: absolute;
+  top: 72px;
+  left: 354px;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+}
+
+.user-info {
+  margin: 0 0 0 15px;
+}
+
+.user-banner {
+  height: 72px;
+}
+
+
+.user-tweet {
+  width: 641px;
+  height: 168px;
+  display: flex;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.user-content {
+  width: 528px;
+  height: 78px;
+  margin: 10px 0 0 8px;
+  overflow: hidden;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.sidebar-header h4 {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.sidebar-right {
+  width: 273px;
+  height: 731px;
+  position: fixed;
+  left: 1011px;
+  top: 16px;
+  background: #FAFAFB;
+  border-radius: 16px;
+}
+
+.sidebar-header {
+  padding: 24px 0 24px 24px;
+  width: 273px;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.follow-card {
+  display: flex;
+}
+
+.follow-card img {
+  width: 50px;
+  height: 50px;
+  margin: 16px 0 16px 16px;
+}
+
+.follow-card-user {
+  width: 94px;
+  height: 47px;
+  margin: 17px 0 18px 8px;
+}
+
+.follow-card-user h5 {
+  margin-bottom: 0;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.follow-card-user p {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: #92929D;
+}
+
+.following {
+  margin: 21px 16px 21px 13px;
+  width: 96px;
+  height: 40px;
+  border-radius: 50px;
+  color: #FFFFFF;
+  background: #FF6600;
+  border: none;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+.solid{
+  color:#E6ECF0
+}
+
+.sidebar-left {
+  height: 1200px;
+  width: 178px;
+}
+
+.sidebar-left img {
+  margin: 13px 0 0 13px;
+}
+
+.nav-card {
+  margin: 13px 0 0 0;
+  height: 244px;
+  width: 178px;
+  left: 0px;
+  top: 66px;
+  border-radius: 0px;
+}
+
+.nav-item {
+  margin: 0 0 8px 0;
+  height: 58px;
+  width: 178px;
+  display: flex;
+}
+
+.nav-item img {
+  margin: 18.78px 0 0 16.9px;
+  height: 20.25px;
+  width: 22.2px;
+}
+
+.nav-item h5 {
+  margin: 16px 0 0 16.9px;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  color: #44444F;
+}
+
+.nav-item a {
+  text-decoration:none;
+}
+
+.tweet {
+  width: 178px;
+  height: 46px;
+  color: #FFFFFF;
+  background: #FF6600;
+  border-radius: 50px;
+  border: none;
+}
+
+.nav-logout {
+  margin: 400px 0 8px 0;
+}
+
+.sidebar-header h4 {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.sidebar-right {
+  width: 273px;
+  height: 731px;
+  background: #FAFAFB;
+  border-radius: 16px;
+}
+
+.sidebar-header {
+  padding: 24px 0 24px 24px;
+  width: 273px;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.follow-card {
+  display: flex;
+}
+
+.follow-card img {
+  width: 50px;
+  height: 50px;
+  margin: 16px 0 16px 16px;
+}
+
+.follow-card-user {
+  width: 94px;
+  height: 47px;
+  margin: 17px 0 18px 8px;
+}
+
+.follow-card-user h5 {
+  margin-bottom: 0;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.follow-card-user p {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: #92929D;
+}
+
+.following {
+  margin: 21px 16px 21px 13px;
+  width: 96px;
+  height: 40px;
+  border-radius: 50px;
+  color: #FFFFFF;
+  background: #FF6600;
+  border: none;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.follow {
+  margin: 21px 16px 21px 28px;
+  width: 64px;
+  height: 40px;
+  border-radius: 50px;
+  color: #FF6600;
+  background: #FFFFFF;
+  border: 1px solid #FF6600;
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+.edit-close {
+  color: #FF6600;
+  background-color: #FFFFFF;
+  border: none;
+}
+
+.user-edit {
+  width: 634px;
+  height: 650px;
+  border-radius: 14px;
+  padding: 0px 16px
+}
+
+.edit-banner {
+  position: relative;
+  z-index: 2;
+  margin-left: -16px;
+  width: 498px;
+  height: 200px;
+  background: #dddddd center center url('https://i.imgur.com/aGQffTU.png');
+  background-size: cover;
+}
+
+#input-user-cover {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.avatar {
+  transform: translate(0, -50%);
+  z-index: 3;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  /* 正圆形 */
+  background: center center url('https://i.imgur.com/mhXz6z9.png?1');
+  background-size: cover;
+}
+
+#input-user-avatar {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+#user-introduction {
+  padding: 0px;
+  resize: none;
+  }
+.one-tweet {
+  padding: 10px 15px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: #e6ecf0;
+}
+
+.tweet-right .name {
+  font-size: 16px;
+  font-family: "Noto Sans TC", sans-serif;
+  font-weight: bold;
+  color: #171725;
+}
+
+.tweet-right .account {
+  font-size: 14px;
+  font-family: "Noto Sans TC", sans-serif;
+  color: #6c757d;
+}
+
+.tweet-right .time {
+  font-size: 14px;
+  font-family: "Noto Sans TC", sans-serif;
+  color: #6c757d;
+}
+
+.tweet-right .content {
+  font-size: 16px;
+  font-family: "Noto Sans TC", sans-serif;
+  color: #171725;
+  margin-top: 8px;
+  max-width: 100%;
+  white-space: pre-line;
+  word-break: break-all;
+}
+
+.tweet-right .replies {
+  font-size: 14px;
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  color: #6c757d;
+}
+
+.tweet-right .likes {
+  margin-left: 40px;
+  font-size: 14px;
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  color: #6c757d;
+}
+
+.header {
+  /* width: 100%; */
+  height: 74px;
+  padding: 24px 0 0 24px;
+  display: flex;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.header-user {
+  margin-left: 10px;
+}
+
+.post-new-tweet{
+  color:#FFFFFF;
+  width:64px;
+  height:40px;
+  border:none;
+  background:#FF6600;
+  border-radius:50px
+}
+
+.content{
+  font-size: 16px;
+}
+
+.nav-tabs .nav-item {
+  margin: 0 0 8px 0;
+  height: 45px;
+  width: 120px;
+  display: flex;
+  font-size: 15px;
+  font-family: "Noto Sans TC", sans-serif;
+  font-weight: 700;
+}
+
+.nav-tabs .nav-item .nav-link {
+  color: #657786;
+  border: none;
+  margin-left: 20px;
+}
+
+.nav-tabs .nav-item .nav-link.active {
+  color: #FF6600;
+  border-bottom: 2px solid #FF6600;
+
+}
+
+.message {
+  z-index: 999;
+  opacity: 0;
+  animation-name: fadenum;
+  animation-duration: 1.5s;
+}
+
+ @keyframes fadenum {
+   0% {
+     opacity: 1;
+   }
+
+   50% {
+     opacity: 1;
+   }
+
+   100% {
+     opacity: 0;
+   }
+  }
