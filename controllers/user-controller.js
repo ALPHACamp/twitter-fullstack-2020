@@ -195,8 +195,12 @@ const userController = {
     Promise.all([
       // 取得特定使用者 Id
       User.findByPk(userId, {
-        raw: true,
-        nest: true
+        // raw: true,
+        nest: true,
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
       }),
       // 取得該使用者所有貼文
       Tweet.findAll({
@@ -222,12 +226,19 @@ const userController = {
       })
     ])
       .then(([user, tweets, likes, currentUser, topUsers]) => {
+        console.log(user.toJSON().Followers)
+        console.log(user.toJSON().Followings)
+        const userData = ({
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+          followingCount: user.Followings.length
+        })
         const tweetsData = tweets.map(tweet => ({
           ...tweet,
           isLiked: likes.some(like => (like.userId === helpers.getUser(req).id && like.tweetId === tweet.id)),
           likeCount: likes.filter(like => like.tweetId === tweet.id).length
         }))
-        res.render('user', { user, tweets: tweetsData, currentUser, topUsers })
+        res.render('user', { user: userData, tweets: tweetsData, currentUser, topUsers })
       })
   },
 
@@ -281,7 +292,7 @@ const userController = {
       .catch(err => next(err))
   },
 
-  getUserFollowers: (req, res, next) => {
+  getUserFollowings: (req, res, next) => {
     return User.findByPk(req.params.id, {
       include: [
         {
@@ -309,7 +320,7 @@ const userController = {
       .catch(err => next(err))
   },
 
-  getUserFollowings: (req, res, next) => {
+  getUserFollowers: (req, res, next) => {
     return User.findByPk(req.params.id, {
       include: [
         {
