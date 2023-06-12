@@ -224,16 +224,31 @@ const userController = {
       }),
       // 取得目前登入的使用者資料
       User.findByPk(helpers.getUser(req).id, { raw: true }),
-      // 未來會取得追蹤數前 10 名的使用者資料
+      // 取得包含追蹤者的使用者資料
       User.findAll({
-        // limit: 10,
-        order: [['createdAt', 'DESC']],
-        where: { role: 'user' },
-        raw: true
+        where: {
+          isAdmin: 0,
+          id: { [Op.ne]: helpers.getUser(req).id }
+        },
+        include: [
+          { model: User, as: 'Followers' }
+        ],
+        group: ['User.id'],
+        limit: 10
       })
     ])
       .then(([user, tweets, currentUser, topUsers]) => {
-        res.render('user', { user, tweets, currentUser, topUsers })
+        // 將目前使用者追蹤的使用者做成一張清單
+        const followingList = helpers.getUser(req).Followings.map(f => f.id)
+        const data = topUsers
+          .map(user => ({
+            ...user.toJSON(),
+            isFollowed: followingList.includes(user.id),
+            followerCount: user.Followers.length
+          }))
+          // 排序：從追蹤數多的排到少的
+          .sort((a, b) => b.followerCount - a.followerCount)
+        res.render('user', { user, tweets, currentUser, topUsers: data })
       })
   },
 

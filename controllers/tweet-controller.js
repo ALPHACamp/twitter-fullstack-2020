@@ -1,4 +1,5 @@
 const { Tweet, User, Reply, Like } = require('../models')
+const { Op } = require('sequelize')
 const helpers = require('../_helpers')
 
 const tweetController = {
@@ -15,16 +16,32 @@ const tweetController = {
         raw: true,
         nest: true
       }),
-      // 未來會取得追蹤數前 10 名的使用者資料
+      // 取得包含追蹤者的使用者資料
       User.findAll({
-        // limit: 10,
-        where: { role: 'user' },
-        raw: true
+        where: {
+          isAdmin: 0,
+          id: { [Op.ne]: helpers.getUser(req).id }
+        },
+        include: [
+          { model: User, as: 'Followers' }
+        ],
+        group: ['User.id'],
+        limit: 10
       }),
       User.findByPk(userId, { raw: true })
     ])
       .then(([tweets, topUsers, currentUser]) => {
-        res.render('tweets', { tweets, topUsers, currentUser })
+        // 將目前使用者追蹤的使用者做成一張清單
+        const followingList = helpers.getUser(req).Followings.map(f => f.id)
+        const data = topUsers
+          .map(user => ({
+            ...user.toJSON(),
+            isFollowed: followingList.includes(user.id),
+            followerCount: user.Followers.length
+          }))
+          // 排序：從追蹤數多的排到少的
+          .sort((a, b) => b.followerCount - a.followerCount)
+        res.render('tweets', { tweets, topUsers: data, currentUser })
       })
       .catch(err => next(err))
   },
@@ -56,10 +73,32 @@ const tweetController = {
         order: [['createdAt', 'DESC']],
         raw: true,
         nest: true
+      }),
+      // 取得包含追蹤者的使用者資料
+      User.findAll({
+        where: {
+          isAdmin: 0,
+          id: { [Op.ne]: helpers.getUser(req).id }
+        },
+        include: [
+          { model: User, as: 'Followers' }
+        ],
+        group: ['User.id'],
+        limit: 10
       })
     ])
-      .then(([tweet, replies]) => {
-        res.render('tweet', { tweet, replies })
+      .then(([tweet, replies, topUsers]) => {
+        // 將目前使用者追蹤的使用者做成一張清單
+        const followingList = helpers.getUser(req).Followings.map(f => f.id)
+        const data = topUsers
+          .map(user => ({
+            ...user.toJSON(),
+            isFollowed: followingList.includes(user.id),
+            followerCount: user.Followers.length
+          }))
+          // 排序：從追蹤數多的排到少的
+          .sort((a, b) => b.followerCount - a.followerCount)
+        res.render('tweet', { tweet, replies, topUsers: data })
       })
   },
 
