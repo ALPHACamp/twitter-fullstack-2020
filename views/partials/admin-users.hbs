@@ -1,213 +1,38 @@
 {{!--user-list --}}
 <div class="col-9 home-page">
   <ul class="list-group">
-
-    <li class="list-group-item tweet-list mt-2 ms-2">
-      <p class="fw-bolder h4">使用者列表</p>
+    <li class="list-group-item tweet-list mt-2">
+      <p class="ms-2 fw-bolder h4">使用者列表</p>
     </li>
-
-    <li class="d-flex justify-content-start flex-wrap list-group-item tweet-list">
-
-      <a href="" class="admin-user-info">
-        <div class="position-relative card admin-user-card mt-2 mb-2 me-3">
-          <div class="admin-user-card-cover">
-            <img src="/images/profile/cover.png" class="card-img-top" alt="...">
-          </div>
-          <div class="admin-user-avatar">
-            <img src="/images/profile/avatar.png" class="card-img-top" alt="...">
-          </div>
-          <div class="d-flex flex-column align-items-center">
-            <div class="admin-user-info-name fw-bold">John Doe</div>
-            <div class="admin-user-info-account mb-3">@heyjohn</div>
-            <div class="d-flex flex-row">
-              <div class="admin-user-info-count mb-2">
-                <img src="/images/post_dark80.svg" class="me-2" alt=""><i class="me-3">1.5k</i>
-                <img src="/images/like_secondary.svg" class="me-2" alt=""><i>20k</i>
+    <div class="admin-users-page">
+      <li class="d-flex justify-content-start flex-wrap list-group-item tweet-list">
+        {{#each users}}
+        <a href="" class="admin-user-info">
+          <div class="position-relative card admin-user-card mt-2 mb-2 me-3">
+            <div class="admin-user-card-cover">
+              <img src="{{this.cover}}" class="card-img-top" alt="...">
+            </div>
+            <div class="admin-user-avatar">
+              <img src="{{this.avatar}}" class="card-img-top" alt="...">
+            </div>
+            <div class="d-flex flex-column align-items-center">
+              <div class="admin-user-info-name fw-bold">{{this.name}}</div>
+              <div class="admin-user-info-account mb-3">@{{this.account}}</div>
+              <div class="d-flex flex-row">
+                <div class="admin-user-info-count mb-2">
+                  <img src="/images/post_dark80.svg" class="me-2" alt=""><i class="me-3">1.5k</i>
+                  <img src="/images/like_secondary.svg" class="me-2" alt=""><i>20k</i>
+                </div>
+              </div>
+              <div class="admin-user-info-follower">
+                  <i class="ms-1 me-1">34</i><i>個</i><i class="secondary-color me-2">跟隨中</i>
+                  <i class="me-1">59</i><i>位</i><i class="secondary-color">跟隨者</i>
               </div>
             </div>
-            <div class="admin-user-info-follower">
-                <i class="ms-1 me-1">34</i><i>個</i><i class="secondary-color me-2">跟隨中</i>
-                <i class="me-1">59</i><i>位</i><i class="secondary-color">跟隨者</i>
-            </div>
           </div>
-        </div>
-      </a>
-
-      <a href="" class="admin-user-info">
-        <div class="position-relative card admin-user-card mt-2 mb-2 me-3">
-          <div class="admin-user-card-cover">
-            <img src="/images/profile/cover.png" class="card-img-top" alt="...">
-          </div>
-          <div class="admin-user-avatar">
-            <img src="/images/profile/avatar.png" class="card-img-top" alt="...">
-          </div>
-          <div class="d-flex flex-column align-items-center">
-            <div class="admin-user-info-name fw-bold">John Doe</div>
-            <div class="admin-user-info-account mb-3">@heyjohn</div>
-            <div class="d-flex flex-row">
-              <div class="admin-user-info-count mb-2">
-                <img src="/images/post_dark80.svg" class="me-2" alt=""><i class="me-3">1.5k</i>
-                <img src="/images/like_secondary.svg" class="me-2" alt=""><i>20k</i>
-              </div>
-            </div>
-            <div class="admin-user-info-follower">
-                <i class="ms-1 me-1">34</i><i>個</i><i class="secondary-color me-2">跟隨中</i>
-                <i class="me-1">59</i><i>位</i><i class="secondary-color">跟隨者</i>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <a href="" class="admin-user-info">
-        <div class="position-relative card admin-user-card mt-2 mb-2 me-3">
-          <div class="admin-user-card-cover">
-            <img src="/images/profile/cover.png" class="card-img-top" alt="...">
-          </div>
-          <div class="admin-user-avatar">
-            <img src="/images/profile/avatar.png" class="card-img-top" alt="...">
-          </div>
-          <div class="d-flex flex-column align-items-center">
-            <div class="admin-user-info-name fw-bold">John Doe</div>
-            <div class="admin-user-info-account mb-3">@heyjohn</div>
-            <div class="d-flex flex-row">
-              <div class="admin-user-info-count mb-2">
-                <img src="/images/post_dark80.svg" class="me-2" alt=""><i class="me-3">1.5k</i>
-                <img src="/images/like_secondary.svg" class="me-2" alt=""><i>20k</i>
-              </div>
-            </div>
-            <div class="admin-user-info-follower">
-                <i class="ms-1 me-1">34</i><i>個</i><i class="secondary-color me-2">跟隨中</i>
-                <i class="me-1">59</i><i>位</i><i class="secondary-color">跟隨者</i>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <a href="" class="admin-user-info">
-        <div class="position-relative card admin-user-card mt-2 mb-2 me-3">
-          <div class="admin-user-card-cover">
-            <img src="/images/profile/cover.png" class="card-img-top" alt="...">
-          </div>
-          <div class="admin-user-avatar">
-            <img src="/images/profile/avatar.png" class="card-img-top" alt="...">
-          </div>
-          <div class="d-flex flex-column align-items-center">
-            <div class="admin-user-info-name fw-bold">John Doe</div>
-            <div class="admin-user-info-account mb-3">@heyjohn</div>
-            <div class="d-flex flex-row">
-              <div class="admin-user-info-count mb-2">
-                <img src="/images/post_dark80.svg" class="me-2" alt=""><i class="me-3">1.5k</i>
-                <img src="/images/like_secondary.svg" class="me-2" alt=""><i>20k</i>
-              </div>
-            </div>
-            <div class="admin-user-info-follower">
-                <i class="ms-1 me-1">34</i><i>個</i><i class="secondary-color me-2">跟隨中</i>
-                <i class="me-1">59</i><i>位</i><i class="secondary-color">跟隨者</i>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <a href="" class="admin-user-info">
-        <div class="position-relative card admin-user-card mt-2 mb-2 me-3">
-          <div class="admin-user-card-cover">
-            <img src="/images/profile/cover.png" class="card-img-top" alt="...">
-          </div>
-          <div class="admin-user-avatar">
-            <img src="/images/profile/avatar.png" class="card-img-top" alt="...">
-          </div>
-          <div class="d-flex flex-column align-items-center">
-            <div class="admin-user-info-name fw-bold">John Doe</div>
-            <div class="admin-user-info-account mb-3">@heyjohn</div>
-            <div class="d-flex flex-row">
-              <div class="admin-user-info-count mb-2">
-                <img src="/images/post_dark80.svg" class="me-2" alt=""><i class="me-3">1.5k</i>
-                <img src="/images/like_secondary.svg" class="me-2" alt=""><i>20k</i>
-              </div>
-            </div>
-            <div class="admin-user-info-follower">
-                <i class="ms-1 me-1">34</i><i>個</i><i class="secondary-color me-2">跟隨中</i>
-                <i class="me-1">59</i><i>位</i><i class="secondary-color">跟隨者</i>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <a href="" class="admin-user-info">
-        <div class="position-relative card admin-user-card mt-2 mb-2 me-3">
-          <div class="admin-user-card-cover">
-            <img src="/images/profile/cover.png" class="card-img-top" alt="...">
-          </div>
-          <div class="admin-user-avatar">
-            <img src="/images/profile/avatar.png" class="card-img-top" alt="...">
-          </div>
-          <div class="d-flex flex-column align-items-center">
-            <div class="admin-user-info-name fw-bold">John Doe</div>
-            <div class="admin-user-info-account mb-3">@heyjohn</div>
-            <div class="d-flex flex-row">
-              <div class="admin-user-info-count mb-2">
-                <img src="/images/post_dark80.svg" class="me-2" alt=""><i class="me-3">1.5k</i>
-                <img src="/images/like_secondary.svg" class="me-2" alt=""><i>20k</i>
-              </div>
-            </div>
-            <div class="admin-user-info-follower">
-                <i class="ms-1 me-1">34</i><i>個</i><i class="secondary-color me-2">跟隨中</i>
-                <i class="me-1">59</i><i>位</i><i class="secondary-color">跟隨者</i>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <a href="" class="admin-user-info">
-        <div class="position-relative card admin-user-card mt-2 mb-2 me-3">
-          <div class="admin-user-card-cover">
-            <img src="/images/profile/cover.png" class="card-img-top" alt="...">
-          </div>
-          <div class="admin-user-avatar">
-            <img src="/images/profile/avatar.png" class="card-img-top" alt="...">
-          </div>
-          <div class="d-flex flex-column align-items-center">
-            <div class="admin-user-info-name fw-bold">John Doe</div>
-            <div class="admin-user-info-account mb-3">@heyjohn</div>
-            <div class="d-flex flex-row">
-              <div class="admin-user-info-count mb-2">
-                <img src="/images/post_dark80.svg" class="me-2" alt=""><i class="me-3">1.5k</i>
-                <img src="/images/like_secondary.svg" class="me-2" alt=""><i>20k</i>
-              </div>
-            </div>
-            <div class="admin-user-info-follower">
-                <i class="ms-1 me-1">34</i><i>個</i><i class="secondary-color me-2">跟隨中</i>
-                <i class="me-1">59</i><i>位</i><i class="secondary-color">跟隨者</i>
-            </div>
-          </div>
-        </div>
-      </a>
-
-      <a href="" class="admin-user-info">
-        <div class="position-relative card admin-user-card mt-2 mb-2 me-3">
-          <div class="admin-user-card-cover">
-            <img src="/images/profile/cover.png" class="card-img-top" alt="...">
-          </div>
-          <div class="admin-user-avatar">
-            <img src="/images/profile/avatar.png" class="card-img-top" alt="...">
-          </div>
-          <div class="d-flex flex-column align-items-center">
-            <div class="admin-user-info-name fw-bold">John Doe</div>
-            <div class="admin-user-info-account mb-3">@heyjohn</div>
-            <div class="d-flex flex-row">
-              <div class="admin-user-info-count mb-2">
-                <img src="/images/post_dark80.svg" class="me-2" alt=""><i class="me-3">1.5k</i>
-                <img src="/images/like_secondary.svg" class="me-2" alt=""><i>20k</i>
-              </div>
-            </div>
-            <div class="admin-user-info-follower">
-                <i class="ms-1 me-1">34</i><i>個</i><i class="secondary-color me-2">跟隨中</i>
-                <i class="me-1">59</i><i>位</i><i class="secondary-color">跟隨者</i>
-            </div>
-          </div>
-        </div>
-      </a>
-
-    </li>
+        </a>
+        {{/each}}
+      </li>
+    </div>
   </ul>
 </div>
