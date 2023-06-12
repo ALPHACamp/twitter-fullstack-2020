@@ -35,8 +35,6 @@ const followshipController = {
   removeFollowing: (req, res, next) => {
     const userId = helpers.getUser(req).id
     const followingId = req.params.userId
-    console.log(userId)
-    console.log(followingId)
     return Followship.findOne({
       where: {
         followerId: userId,

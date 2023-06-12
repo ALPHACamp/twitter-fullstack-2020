@@ -8,6 +8,7 @@ const previousPage = (req, res, next) => {
 
   // 如果沒有該變數就先設定為[]，按了上一頁也是
   if (!req.session.historyPage) req.session.historyPage = []
+  if (!req.session.previousPage) req.session.previousPage = []
   // 歷史紀錄
   req.session.historyPage.push(currentUrl)
   const historyPage = req.session.historyPage

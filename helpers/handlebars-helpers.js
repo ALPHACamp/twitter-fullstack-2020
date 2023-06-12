@@ -41,6 +41,6 @@ module.exports = {
     return a === b ? options.fn(this) : options.inverse(this)
   },
   ifQuery: function (a, b) {
-    return a.includes('?') ? `${a}&${b}` : `${a}?${b}`
+    return a?.includes('?') ? `${a}&${b}` : `${a}?${b}`
   }
 }
