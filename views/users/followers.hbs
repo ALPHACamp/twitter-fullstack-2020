@@ -35,16 +35,19 @@
                 <div class='tweet-text flex-grow-1'>
                   <div class='head d-flex justify-content-between'>
                     <span class='tweet-name'>{{this.name}} </span>
-                    {{#if this.isFollowing}}
-                      <form class='' action='/followship/{{this.id}}' method='POST'>
-                        <button type='submit' class='btn'>正在跟隨</button>
-                      </form>
+                    {{#ifCond ../loginUser.id this.id}}
                     {{else}}
-                      <form class='' action='/followships' method='POST'>
-                        <input type="hidden" name="id" value={{this.id}}>
-                        <button type='submit' class='btn btn-unfollow'>跟隨</button>
-                      </form>
-                    {{/if}}
+                      {{#if this.isFollowing}}
+                        <form class='' action='/followships/{{this.id}}?_method=DELETE' method='POST'>
+                          <button type='submit' class='btn'>正在跟隨</button>
+                        </form>
+                      {{else}}
+                        <form class='' action='/followships' method='POST'>
+                          <input type="hidden" name="id" value={{this.id}}>
+                          <button type='submit' class='btn btn-unfollow'>跟隨</button>
+                        </form>
+                      {{/if}}
+                    {{/ifCond}}
                   </div>
                   <p class='tweet-description' style='white-space:break-spaces;'>{{this.introduction}}</p>
                 </div>
