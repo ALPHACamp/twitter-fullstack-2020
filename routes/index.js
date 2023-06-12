@@ -42,6 +42,7 @@ router.delete('/tweets/:id/unlike', authenticated, userController.removeLike)
 router.use('/', authenticated, generalErrorHandler)
 router.get('/user', userController.getOther)
 router.get('/tweets', authenticated, tweetController.getTweets)
+router.get('/tweets/:id/reply', authenticated, tweetController.getTweetReplies)
 router.get('/other-likes', (req, res) => {
   res.render('other-likes')
 })
