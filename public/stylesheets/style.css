@@ -991,6 +991,22 @@ h4 {
   margin: 10px auto 0;
 }
 
+/* 錯誤訊息 */
+.invalid-feedback .tweet-feedback,
+.invalid-feedback .reply-feedback {
+  display: none;
+  font-weight: 500;
+  font-size: 15px;
+  color: #FC5A5A;
+  text-align: right;
+}
+
+form.was-validated .invalid-message:invalid~.invalid-parent .tweet-feedback,
+form.was-validated .invalid-message:invalid ~ .invalid-parent .reply-feedback {
+  display: initial;
+  /* 顯示 */
+}
+
 /* message */
 .msg-container {
   position: relative;
