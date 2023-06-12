@@ -14,9 +14,10 @@ const authenticated = (req, res, next) => {
   }
 }
 
-const adminAuthenticated = (req, res, next) => {
+const authenticatedAdmin = (req, res, next) => {
+  const isAdmin = helpers.getUser(req)?.role === 'admin'
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'admin') {
+    if (isAdmin) {
       return next()
     }
     req.flash('error_messages', '請至前台登入!')
@@ -29,5 +30,5 @@ const adminAuthenticated = (req, res, next) => {
 
 module.exports = {
   authenticated,
-  adminAuthenticated
+  authenticatedAdmin
 }
