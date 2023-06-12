@@ -1,6 +1,7 @@
 const { User, Tweet, Reply, Followship, Like } = require('../models')
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -93,9 +94,32 @@ const userController = {
         }))
 
           .sort((a, b) => b.createdAt - a.createdAt)
-        console.log('tweets:', tweets); 
-        console.log('user:', user);
         return res.render('users', { users: user.toJSON(), tweet: data, isUser, isFollowed })
+      })
+      .catch(err => next(err))
+  },
+  putUser: (req, res, next) => { // 修改使用者名稱、自我介紹、大頭照、背景圖
+    const { name, introduction } = req.body
+    const avatar = req.files ? req.files.avatar : null
+    const cover = req.files ? req.files.cover : null
+
+    if (!name) throw new Error('User name is required!')
+
+    return User.findByPk(helpers.getUser(req).id)
+      .then(async user => {
+        if (!user) throw new Error("User didn't exist!")
+        const avatarFilePath = avatar ? await imgurFileHandler(avatar[0]) : user.avatar
+        const coverFilePath = cover ? await imgurFileHandler(cover[0]) : user.cover
+        return user.update({
+          name,
+          introduction,
+          avatar: avatarFilePath || user.avatar,
+          cover: coverFilePath || user.cover
+        })
+      })
+      .then(() => {
+        req.flash('success_messages', 'User was successfully to update')
+        res.redirect('/users/`${helpers.getUser(req).id}`/tweets')
       })
       .catch(err => next(err))
   }

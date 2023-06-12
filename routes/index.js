@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const passport = require('../config/passport')
+const upload = require('../middleware/multer')
 
 const admin = require('./modules/admin')
 
@@ -26,6 +27,7 @@ router.get('/tweets', authenticated, tweetController.getTweets)
 router.get('/users/setting', authenticated, userController.settingPage)
 
 router.get('/users/:id/tweets', authenticated, userController.getUser) // 個人頁面
+router.put('/users/:id', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), authenticated, userController.putUser)// 上傳照片
 
 router.get('/', (req, res) => res.redirect('/tweets')) // 專案初始測試路由
 
