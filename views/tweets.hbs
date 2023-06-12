@@ -19,6 +19,7 @@
       </div>
     <!--瀏覽推文-->
   {{#each tweets}}
+  <a href="/tweets/{{this.id}}/reply" style="text-decoration:none"> 
     <div class="tweets d-flex flex-row" >
       <div class="one-tweet d-flex">
         <div class="tweet-left m-2">
@@ -56,6 +57,7 @@
       </div>     
       </div>
     </div>
+  </a>
   {{/each}}
   </div>
   {{> right-sidebar}}   <!--右欄-->
