@@ -12,7 +12,7 @@ module.exports = {
   ifCond: (a, b, options) => {
     return a === b ? options.fn(this) : options.inverse(this)
   },
-  ifFalseAndEqual: (a, b, c, options) => {
+  ifTrueAndNotEqual: (a, b, c, options) => {
     return a && b !== c ? options.fn(this) : options.inverse(this)
   },
   ifFalseAndNotEqual: (a, b, c, options) => {

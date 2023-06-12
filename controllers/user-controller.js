@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
-const { User, Tweet, Reply, Like } = require('../models')
+const { User, Tweet, Reply, Like, Followship } = require('../models')
+const { Op } = require('sequelize')
 const _helpers = require('../_helpers')
 const userServices = require('../services/user-services')
 
@@ -193,6 +194,142 @@ const userController = {
       res.render('user/user-likes', { user, likeList, loginUserId, topUsers })
     } catch (err) { next(err) }
   },
+  // User Followings頁面
+  getUserFollowings: async (req, res, next) => {
+    try {
+      const UserId = req.params.uid
+      const loginUserId = _helpers.getUser(req).id
+
+      let [user, loginUserFollowingList] = await Promise.all([
+        User.findByPk(UserId, {
+          include: [
+            { model: User, as: 'Followings' },
+            { model: User, as: 'Followers' },
+            { model: Tweet, attributes: ['id'] },
+          ],
+        }),
+        Followship.findAll({
+          where: { followerId: loginUserId },
+          raw: true
+        })
+      ])
+      const topUsers = await userServices.getTopUsers(loginUserId)
+
+      loginUserFollowingList = loginUserFollowingList.map(i => i.followingId)
+
+      if (!user) throw new Error('使用者不存在')
+      user = user.toJSON()
+      FollowingList = user.Followings
+        .map(i => ({
+          ...i,
+          isFollow: loginUserFollowingList.some(j => i.id === j)
+        }))
+        .sort(function (a, b) {
+          return b.Followship.createdAt.toLocaleString().localeCompare(a.Followship.createdAt.toLocaleString())
+        })
+
+      res.render('user/user-followings', { user, FollowingList, loginUserId, topUsers })
+    } catch (err) { next(err) }
+  },
+  // User Followers頁面
+  getUserFollowers: async (req, res, next) => {
+    try {
+      const UserId = req.params.uid
+      const loginUserId = _helpers.getUser(req).id
+
+      let [user, loginUserFollowingList] = await Promise.all([
+        User.findByPk(UserId, {
+          include: [
+            { model: User, as: 'Followings' },
+            { model: User, as: 'Followers' },
+            { model: Tweet, attributes: ['id'] },
+          ],
+        }),
+        Followship.findAll({
+          where: { followerId: loginUserId },
+          raw: true
+        })
+      ])
+      const topUsers = await userServices.getTopUsers(loginUserId)
+
+      loginUserFollowingList = loginUserFollowingList.map(i => i.followingId)
+
+      if (!user) throw new Error('使用者不存在')
+      user = user.toJSON()
+      FollowerList = user.Followers
+        .map(i => ({
+          ...i,
+          isFollow: loginUserFollowingList.some(j => i.id === j)
+        }))
+        .sort(function (a, b) {
+          return b.Followship.createdAt.toLocaleString().localeCompare(a.Followship.createdAt.toLocaleString())
+        })
+
+      res.render('user/user-followers', { user, FollowerList, loginUserId, topUsers })
+    } catch (err) { next(err) }
+  },
+  getUserSetting: async (req, res, next) => {
+    try {
+      const UserId = Number(req.params.uid)
+      const loginUserId = _helpers.getUser(req).id
+      const { name, account, email } = req.query
+
+      if (UserId !== loginUserId) throw new Error('無法瀏覽他人的編輯頁面')
+
+      let user = await User.findByPk(UserId, {
+        raw: true
+      })
+
+      if (!user) throw new Error('使用者不存在')
+      user = {
+        ...user,
+        name: name || user.name,
+        account: account || user.account,
+        email: email || user.email
+      }
+
+      res.render('user/user-settings', { user, loginUserId })
+    } catch (err) { next(err) }
+  },
+  postUserSetting: async (req, res, next) => {
+    try {
+      const UserId = Number(req.params.uid)
+      const loginUserId = _helpers.getUser(req).id
+      const errors = []
+
+      const { account, name, email, password, checkPassword } = req.body
+
+      if (name?.length > 50) errors.push('name字數超出上限')
+      if (UserId !== loginUserId) errors.push('無法編輯他人的資料')
+      if (password !== checkPassword) errors.push('密碼與確認密碼不一致')
+
+      let [otherUser, user, hash] = await Promise.all([
+        User.findAll({
+          where: {
+            [Op.or]: [{ account }, { email }]
+          },
+          raw: true
+        }),
+        User.findByPk(UserId),
+        bcrypt.hash(password, 10)
+      ])
+
+      otherUser.forEach(u => {
+        if (user.account !== account && u.account === account) errors.push('account已重複註冊')
+        if (user.email !== email && u.email === email) errors.push('email已重複註冊')
+      })
+
+      if (errors.length) {
+        errors.forEach(e => req.flash('danger_msg', e))
+        return res.redirect(`/users/${UserId}/edit?account=${account}&name=${name}&email=${email}`)
+      }
+
+      await user.update({ account, name, email, password: hash })
+      req.flash('success_msg', '修改成功')
+
+      res.redirect(`/users/${UserId}/edit`)
+    } catch (err) { next(err) }
+  }
 }
 
 module.exports = userController
