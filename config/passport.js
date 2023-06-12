@@ -13,7 +13,7 @@ passport.use('local', new LocalStrategy(
   },
   // authenticate user
   (req, account, password, cb) => {
-    User.findOne({ where: { account, isAdmin: false } })
+    User.findOne({ where: { account } })
       .then(user => {
         if (!user) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
         return bcrypt.compare(password, user.password).then(isMatch => {
@@ -37,14 +37,13 @@ passport.use('local-admin', new LocalStrategy(
   },
   // authenticate user
   (req, account, password, cb) => {
-    User.findOne({ where: { account, isAdmin: true } })
+    User.findOne({ where: { account } })
       .then(user => {
         if (!user) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
         return bcrypt.compare(password, user.password).then(isMatch => {
           if (!isMatch) {
             return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
           }
-          console.log('登入成功')
           return cb(null, user)
         })
       })
@@ -59,7 +58,6 @@ passport.serializeUser((user, cb) => {
 passport.deserializeUser((id, cb) => {
   User.findByPk(id)
     .then(user => {
-      console.log('反序列化成功')
       return cb(null, user.toJSON())
     })
     .catch(err => cb(err))

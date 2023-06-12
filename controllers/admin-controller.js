@@ -42,7 +42,7 @@ const adminController = {
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' }
       ],
-      where: { is_admin: false }
+      where: { role: 'user' }
     })
       .then(users => {
         // console.log(users)
