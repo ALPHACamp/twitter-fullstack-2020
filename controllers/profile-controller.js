@@ -228,6 +228,8 @@ const profileController = {
       userData.Followings.forEach((following, index) => {
         following.isFollowing = isFollowing[index]
       })
+      // 根據isFollowing排序
+      userData.Followings.sort((a, b) => b.isFollowing - a.isFollowing)
       // pagination
       const pagination = getPagination(page, limit, followingsCount)
       res.render('users/followings', { user: userData, followings, pagination, route })
@@ -280,6 +282,8 @@ const profileController = {
       userData.Followers.forEach((follower, index) => {
         follower.isFollowing = isFollowing[index]
       })
+      // 根據isFollowing排序
+      userData.Followers.sort((a, b) => b.isFollowing - a.isFollowing)
       // pagination
       const pagination = getPagination(page, limit, followersCount)
       res.render('users/followers', { user: userData, followers, pagination, route })
