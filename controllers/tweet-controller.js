@@ -100,9 +100,11 @@ const tweetController = {
         attributes: ['id', 'userId', 'tweetId'],
         raw: true,
         nest: true
-      })
+      }),
+      // 取得目前登入的使用者資料
+      User.findByPk(helpers.getUser(req).id, { raw: true })
     ])
-      .then(([tweet, replies, topUsers, likes]) => {
+      .then(([tweet, replies, topUsers, likes, currentUser]) => {
         const tweetData = ({
           ...tweet,
           isLiked: likes.some(like => like.userId === helpers.getUser(req).id && like.tweetId === tweet.id),
@@ -118,7 +120,7 @@ const tweetController = {
           }))
           // 排序：從追蹤數多的排到少的
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('tweet', { tweet: tweetData, replies, topUsers: data })
+        res.render('tweet', { tweet: tweetData, replies, topUsers: data, currentUser })
       })
   },
 
