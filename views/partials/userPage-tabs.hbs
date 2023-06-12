@@ -1,0 +1,11 @@
+<div class="d-flex mt-4">
+  <button class="p-2 text-14px-med text-center" onclick="window.location.href='/users/{{user.id}}/tweets'"
+    style="font-size: 15px; width:20%;{{#is route 'tweets'}}color:#ff6600; border-bottom: 2px solid #ff6600;{{else}}color:#657786{{/is}}">
+    推文</button>
+  <button class="p-2 text-14px-med text-center" onclick="window.location.href='/users/{{user.id}}/replies'"
+    style="font-size: 15px; width:20%;{{#is route 'replies'}}color:#ff6600; border-bottom: 2px solid #ff6600;{{else}}color:#657786{{/is}}">
+    回覆</button>
+  <button class="p-2 text-14px-med text-center" onclick="window.location.href='/users/{{user.id}}/tweets'"
+    style="font-size: 15px; width:20%;{{#is route 'likes'}}color:#ff6600; border-bottom: 2px solid #ff6600;{{else}}color:#657786{{/is}}">
+    喜歡的內容</button>
+</div>

@@ -1,7 +1,7 @@
 const { Op } = require('sequelize') // 用「不等於」的條件查詢資料庫時需要用到的東西
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const { User, Tweet, Followship, Like } = db
+const { User, Tweet, Followship, Like, Reply } = db
 const helpers = require('../_helpers')
 
 const userController = {
@@ -205,8 +205,8 @@ const userController = {
           .catch(err => next(err))
       })
   },
-  // 取得特定使用者頁面
-  getUserPage: (req, res, next) => {
+  // 取得特定使用者所有推文頁面
+  getUserTweetsPage: (req, res, next) => {
     const userId = req.params.id
     Promise.all([
       // 取得特定使用者 Id
@@ -258,10 +258,61 @@ const userController = {
           }))
           // 排序：從追蹤數多的排到少的
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('user', { user, tweets: tweetsData, currentUser, topUsers: data })
+        res.render('userPage-tweets', { user, tweets: tweetsData, currentUser, topUsers: data })
       })
   },
-
+  // 取得特定使用者所有回覆頁面
+  getUserRepliesPage: (req, res, next) => {
+    const userId = req.params.id
+    Promise.all([
+      // 取得特定使用者個人資料
+      User.findByPk(userId, {
+        raw: true,
+        nest: true
+      }),
+      // 取得特定使用者所有的回覆內容
+      Reply.findAll({
+        include: [
+          { model: User, attributes: ['account', 'name', 'avatar', 'createdAt'] },
+          { model: Tweet, attributes: [], include: [{ model: User, attributes: ['account'], raw: true, nest: true }] }
+        ],
+        where: { userId },
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
+      }),
+      Tweet.findAll({ where: { userId } }),
+      // 取得目前登入的使用者資料
+      User.findByPk(helpers.getUser(req).id, { raw: true }),
+      // 取得包含追蹤者的使用者資料
+      User.findAll({
+        where: {
+          isAdmin: 0,
+          id: { [Op.ne]: helpers.getUser(req).id }
+        },
+        include: [
+          { model: User, as: 'Followers' }
+        ],
+        group: ['User.id'],
+        limit: 10
+      })
+    ])
+      .then(([user, replies, tweets, currentUser, topUsers]) => {
+        // console.log(replies)
+        console.log(JSON.stringify(replies, null, 2))
+        // 將目前使用者追蹤的使用者做成一張清單
+        const followingList = helpers.getUser(req).Followings.map(f => f.id)
+        const data = topUsers
+          .map(user => ({
+            ...user.toJSON(),
+            isFollowed: followingList.includes(user.id),
+            followerCount: user.Followers.length
+          }))
+          // 排序：從追蹤數多的排到少的
+          .sort((a, b) => b.followerCount - a.followerCount)
+        res.render('userPage-replies', { user, replies, tweets, currentUser, topUsers: data })
+      })
+  },
   // 追蹤特定使用者
   addFollow: (req, res, next) => {
     // 按鈕上這人的 id
