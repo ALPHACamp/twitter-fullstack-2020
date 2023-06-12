@@ -31,6 +31,8 @@ router.get('/users/:id/followings', authenticated, userController.getFollowship,
 router.get('/users/:id/tweets', authenticated, userController.getFollowship, userController.getUser) // 個人頁面
 router.put('/users/:id', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), authenticated, userController.putUser)// 上傳照片
 
+router.post('/followships', authenticated, userController.addFollowing) // 追蹤功能
+
 router.get('/', (req, res) => res.redirect('/tweets')) // 專案初始測試路由
 
 router.use('/', generalErrorHandler)

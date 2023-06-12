@@ -152,6 +152,20 @@ const userController = {
       })
       .catch(err => next(err))
   },
+  addFollowing: (req, res, next) => { // 追蹤功能
+    const id = +req.body.id
+    if (+helpers.getUser(req).id === id) {
+      req.flash('error_messages', '不得追蹤自己')
+      return res.redirect(200, 'back')// 配合test的except(200)
+    }// 無法追蹤自己
+    return Followship.create({
+      followerId: helpers.getUser(req).id,
+      followingId: id
+    })
+      // })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
   getFollowship: (req, res, next) => {
     return User.findAll({
       include: [
