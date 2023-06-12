@@ -30,14 +30,20 @@
             <li class='mt-2'>
               <div class='d-flex align-items-start follow'>
                 <div class='flex-shrink-1 p-0'>
-                  <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
+                  <img src='{{this.avatar}}' alt='' class='recommend-followings-img' />
                 </div>
                 <div class='tweet-text flex-grow-1'>
                   <div class='head d-flex justify-content-between'>
                     <span class='tweet-name'>{{this.name}} </span>
-                    <form class='' action='/followship/{{this.id}}' method='POST'></form>
-                      <button  class='btn'>正在跟隨</button>
-                    </form>
+                    {{#if this.isFollowing}}
+                      <form class='' action='/followship/{{this.id}}' method='POST'>
+                        <button type='submit' class='btn'>正在跟隨</button>
+                      </form>
+                    {{else}}
+                      <form class='' action='/followship/{{this.id}}' method='POST'></form>
+                        <button type='submit' class='btn btn-unfollow'>跟隨</button>
+                      </form>
+                    {{/if}}
                   </div>
                   <p class='tweet-description' style='white-space:break-spaces;'>{{this.introduction}}</p>
                 </div>

@@ -180,6 +180,7 @@ const profileController = {
     }
   },
   getUserFollowings: async (req, res, next) => {
+    const loginUser = helpers.getUser(req)
     const { userId } = req.params
     // 判斷active
     const followings = true
@@ -209,13 +210,23 @@ const profileController = {
           where: { followerId: userId }
         })
       ])
-      console.log(user)
       // 判斷user是否存在，沒有就err
       if (!user) throw new Error('帳號不存在!')
+      // 判斷是否loginUser是否有追隨該user清單
+      const isFollowing =
+        // 清單中的id是否跟loginUser追蹤的id相同
+        user.Followings.map(following => {
+          return loginUser.Followings.some(f => f.id === following.id)
+        })
+
       const userData = {
         ...user.toJSON(),
         tweetsCount
       }
+      // 將isFollowing加入其中
+      userData.Followings.forEach((following, index) => {
+        following.isFollowing = isFollowing[index]
+      })
       // pagination
       const pagination = getPagination(page, limit, followingsCount)
       res.render('users/followings', { user: userData, followings, pagination, route })
@@ -238,8 +249,8 @@ const profileController = {
       const [user, tweetsCount, followersCount] = await Promise.all([
         User.findByPk(userId, {
           include: [
-            { model: User, as: 'Followers', order: [['createdAt', 'DESC']] },
-            { model: User, as: 'Followings' }
+            // Followers
+            { model: User, as: 'Followers', order: [['createdAt', 'DESC']] }
           ],
           limit,
           offset
@@ -251,23 +262,26 @@ const profileController = {
           where: { followingId: userId }
         })
       ])
-      // 判斷是否為本人，不是的話就back
-      if (user.id !== loginUser.id) return res.redirect('back')
+
       // 判斷user是否存在，沒有就err
       if (!user) throw new Error('帳號不存在!')
-      // 追隨者的資料
-      const userFollowersData = user.Followers.map(follower => ({
-        ...follower.toJSON(),
-        // 追隨者的id對應到user追隨的id
-        isFollowed: user.Followings.some(following => follower.id === following.id)
-      }))
+      // 判斷是否loginUser是否有追隨該user清單
+      const isFollowing =
+        // 清單中的id是否跟loginUser追蹤的id相同
+        user.Followers.map(follower => {
+          return loginUser.Followings.some(f => f.id === follower.id)
+        })
       const userData = {
         ...user.toJSON(),
         tweetsCount
       }
+      // 將isFollowing加入其中
+      userData.Followers.forEach((follower, index) => {
+        follower.isFollowing = isFollowing[index]
+      })
       // pagination
       const pagination = getPagination(page, limit, followersCount)
-      res.render('users/followers', { user: userData, followers, userFollowers: userFollowersData, pagination, route })
+      res.render('users/followers', { user: userData, followers, pagination, route })
     } catch (err) {
       next(err)
     }
