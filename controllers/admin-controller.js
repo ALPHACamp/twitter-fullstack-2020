@@ -39,36 +39,21 @@ const adminController = {
   },
   adminGetUsers: async (req, res, next) => {
     try {
-      const users = await User.findAll({
-        where: { role: 'user' },
-        raw: true,
-        nest: true,
-        attributes: [
-          'id', 'name', 'account', 'cover', 'avatar'
-          [sequelize.literal(
-            'SELECT COUNT(*) FROM `Tweets` WHERE `UserId`=`User`.`id`'
-          ), 'totalTweets'],
-          [sequelize.literal(
-            'SELECT COUNT(*) FROM `Followships` WHERE `followingId`=`User`.`id`'
-          ), 'totalFollowings'],
-          [sequelize.literal(
-            'SELECT COUNT(*) FROM `Followships` WHERE `followerId`=`User`.`id`'
-          ), 'totalFollowers']
-        ]
-      }
-      )
-      const tweets = await Tweet.findAll({
-        raw: true,
-        nest: true,
-        group: 'UserId',
-        attributes: [
-          [sequelize.literal(
-            'SELECT COUNT(*) FROM `Like` WHERE `TweetId`=`Tweet`.`id`'
-          ), 'totalLikes']
-        ]
-      })
+      let users = await User.findAll({ raw: true, where: { role: 'user' } })
+      users = await Promise.all(users.map(async (user) => {
+        const userId = user.id
+        const tweets = await Tweet.findAll({ raw: true, where: { UserId: userId } })
+        const likes = await Like.findAll({ raw: true, where: { UserId: userId } })
+        const followings = await Followship.findAll({ raw: true, where: { followerId: userId } })
+        const followers = await Followship.findAll({ raw: true, where: { followingId: userId } })
 
-      console.log(users, '\n\n', tweets)
+        user.totalTweets = tweets ? tweets.length : 0
+        user.totalLikes = likes ? likes.length : 0
+        user.totalFollowings = followings ? followings.length : 0
+        user.totalFollowers = followers ? followers.length : 0
+
+        return user
+      }))
       return res.render('admin/users', { users })
     } catch (e) {
       next(e)
