@@ -1,4 +1,4 @@
-const { User, Tweet } = require('../models')
+const { User, Tweet, Reply } = require('../models')
 const helpers = require('../_helpers')
 
 const tweetController = {
@@ -6,6 +6,7 @@ const tweetController = {
     return Tweet.findAll({
       include: [
         User,
+        { model: Reply, include: User },
         { model: User, as: 'LikedUsers' }
       ],
       nest: true,
@@ -14,7 +15,8 @@ const tweetController = {
       .then(tweets => {
         const data = tweets.map(t => ({
           ...t.dataValues,
-          description: t.description
+          description: t.description,
+          isLiked: helpers.getUser(req)?.LikedTweets?.map(t => t.id).includes(t.id) // 判斷目前登入使用者是否喜歡這篇Tweet
         }))
         return User.findByPk(helpers.getUser(req).id)
           .then(user => {
@@ -29,11 +31,14 @@ const tweetController = {
     return Tweet.findByPk(id, {
       include: [
         User,
-        { model: User }
-      ]
+        { model: Reply, include: User },
+        { model: User, as: 'LikedUsers' }
+      ],
+      order: [['Replies', 'createdAt', 'DESC']]
     })
       .then(tweet => {
         tweet = tweet.toJSON()
+        tweet.isLiked = helpers.getUser(req)?.LikedTweets?.some(l => l.id === tweet.id)
         res.render('tweet', {
           tweet
         })

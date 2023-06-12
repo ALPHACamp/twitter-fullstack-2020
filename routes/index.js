@@ -13,11 +13,6 @@ const { authenticated } = require('../middleware/auth')
 
 router.use('/admin', admin)
 
-router.get('/tweets/:id/replies', tweetController.getTweet)
-router.get('/tweets', tweetController.getTweets) // 顯示全部推文
-router.post('/tweets', tweetController.createTweet) // 新增推文
-
-// router.get('/', (req, res) => res.redirect('/tweets'))
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 
@@ -26,7 +21,9 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 
 router.get('/logout', userController.logOut)
 
-router.get('/tweets', authenticated, tweetController.getTweets)
+router.get('/tweets', authenticated, tweetController.getTweets) // 顯示全部推文
+router.get('/tweets/:id/replies', tweetController.getTweet)
+router.post('/tweets', tweetController.createTweet) // 新增推文
 
 router.get('/users/setting', authenticated, userController.settingPage)
 

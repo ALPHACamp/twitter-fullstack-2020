@@ -231,3 +231,147 @@
 
   color: #171725;
 }
+
+/* tweets */
+#whole-container {
+  background: #FFFFFF;
+  display: flex;
+}
+
+#left-nav {
+  width: 178px;
+}
+
+#mid-tweets {
+  width: 639px;
+}
+
+#right-followship {
+  width: 273px;
+  height: 100%px;
+}
+
+#mid-tweets-content {
+  width: 639px;
+  height: 100%;
+  border: 1px solid #E6ECF0;
+}
+
+#tweets-top {
+  border-bottom: 1px solid #E6ECF0;
+}
+
+#tweet-post {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 1rem;
+  border-bottom: 8px solid #E6ECF0;
+}
+
+#home-word {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  height: 75px;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 26px;
+  color: #171725;
+}
+
+#tweet-post-avatar {
+  width: 50px;
+  height: 50px;
+  background: #C4C4C4;
+}
+
+#avatar {
+  width: 50px;
+  height: 50px;
+  background: #C4C4C4;
+}
+
+#tweet-post-btn {
+  width: 64px;
+  height: 40px;
+  background: #FF6600;
+  border-radius: 50px;
+}
+
+#tweet-post-btn-word {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+}
+
+
+#tweet-frame {
+  border-bottom: 1px solid #C4C4C4;
+}
+
+#tweet-post-link {
+  padding-left: 0px;
+  width: 526px;
+  height: 36px;
+  text-align: start;
+  font-size: 18px;
+  color: #6C757D
+}
+
+#tweetword {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+}
+
+#tweet-post-btn {
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 40px;
+  background: #FF6600;
+  border-radius: 50px;
+}
+
+#tweetcontent {
+  border-bottom: 1px solid #C4C4C4;
+}
+
+#tweet-account {
+  font-size: 14px;
+  color: #6C757D;
+}
+
+#tweet-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #171725;
+}
+
+#tweet-text-aria {
+  width: 528px;
+  word-wrap: break-word;
+}
+
+#tweet-text {
+  word-wrap: break-word;
+  text-decoration: none;
+  font-size: 16px;
+  color: #171725;
+}
+
+#account-time-word {
+  text-align: center;
+  border: 1px solid blud;
+  font-size: 14px;
+  color: #C4C4C4
+}
+
+#user-account {
+  align-content: center;
+  height: 22px;
+}
