@@ -15,14 +15,14 @@
   </a>
 
   {{!-- user --}}
-  <a class="nav-row" href="/users/{{req.user.id}}/tweets">
+  <a class="nav-row" href="/users/{{loginUserId}}/tweets">
     <div class="nav-row-user-icon background-image">
     </div>
     <h5 class="nav-row-title">個人資料</h5>
   </a>
 
   {{!-- edit --}}
-  <a class="nav-row" href="/users/{{req.user.id}}/edit">
+  <a class="nav-row" href="/users/{{loginUserId}}/edit">
     <div class="nav-row-setting-icon background-image">
     </div>
     <h5 class="nav-row-title">設定</h5>
