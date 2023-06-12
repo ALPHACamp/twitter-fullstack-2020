@@ -56,6 +56,7 @@ const profileController = {
     const { userData } = req.session
     // 取得 id
     const { userId } = req.params
+
     const route = `users/${userId}/tweets`
     // 取得page, limit, offset
     const page = Number(req.query.page) || 1
