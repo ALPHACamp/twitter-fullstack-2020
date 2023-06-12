@@ -28,9 +28,19 @@ const tweetController = {
         group: ['User.id'],
         limit: 10
       }),
-      User.findByPk(userId, { raw: true })
+      User.findByPk(userId, { raw: true }),
+      Like.findAll({
+        attributes: ['id', 'userId', 'tweetId'],
+        raw: true,
+        nest: true
+      })
     ])
-      .then(([tweets, topUsers, currentUser]) => {
+      .then(([tweets, topUsers, currentUser, likes]) => {
+        const tweetsData = tweets.map(tweet => ({
+          ...tweet,
+          isLiked: likes.some(like => (like.userId === helpers.getUser(req).id && like.tweetId === tweet.id)),
+          likeCount: likes.filter(like => like.tweetId === tweet.id).length
+        }))
         // 將目前使用者追蹤的使用者做成一張清單
         const followingList = helpers.getUser(req).Followings.map(f => f.id)
         const data = topUsers
@@ -41,7 +51,7 @@ const tweetController = {
           }))
           // 排序：從追蹤數多的排到少的
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('tweets', { tweets, topUsers: data, currentUser })
+        res.render('tweets', { tweets: tweetsData, topUsers: data, currentUser })
       })
       .catch(err => next(err))
   },
@@ -85,9 +95,19 @@ const tweetController = {
         ],
         group: ['User.id'],
         limit: 10
+      }),
+      Like.findAll({
+        attributes: ['id', 'userId', 'tweetId'],
+        raw: true,
+        nest: true
       })
     ])
-      .then(([tweet, replies, topUsers]) => {
+      .then(([tweet, replies, topUsers, likes]) => {
+        const tweetData = ({
+          ...tweet,
+          isLiked: likes.some(like => like.userId === helpers.getUser(req).id && like.tweetId === tweet.id),
+          likeCount: likes.filter(like => like.tweetId === tweet.id).length
+        })
         // 將目前使用者追蹤的使用者做成一張清單
         const followingList = helpers.getUser(req).Followings.map(f => f.id)
         const data = topUsers
@@ -98,7 +118,7 @@ const tweetController = {
           }))
           // 排序：從追蹤數多的排到少的
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('tweet', { tweet, replies, topUsers: data })
+        res.render('tweet', { tweet: tweetData, replies, topUsers: data })
       })
   },
 

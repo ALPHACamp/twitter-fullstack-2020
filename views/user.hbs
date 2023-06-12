@@ -69,17 +69,18 @@
         <div class="number">
           {{#if this.isLiked}}
           <form action="/tweets/{{this.id}}/unlike" method="POST" class="me-2">
-            <button type="submit">
-              <img src="/_base/Property 2=outlined, Property 3=like.svg" style="width: 13px">
+            <button type="submit" class="d-flex align-items-center">
+              <img src="/_base/Property 2=filled, Property 3=like.svg" style="width: 13px" class="me-2 svg-fill-error">
+              <span style="line-height: 14px;font-size:14px; font-weight:600; color: #6C757D; text-align: left">{{this.likeCount}}</span>
             </button>
           </form>
           {{else}}
           <form action="/tweets/{{this.id}}/like" method="POST" class="me-2">
-            <button type="submit">
-              <img src="/_base/Property 2=filled, Property 3=like.svg" style="width: 13px">
+            <button type="submit" class="d-flex align-items-center">
+              <img src="/_base/Property 2=outlined, Property 3=like.svg" style="width: 13px" class="me-2">
+              <span style="line-height: 14px;font-size:14px; font-weight:600; color: #6C757D; text-align: left">{{this.likeCount}}</span>
             </button>
           </form>
-          <span style="line-height: 14px; font-size:14px; font-weight:600; color: #6C757D;">{{this.likeCount}}</span>
           {{/if}}
         </div>
       </div>
