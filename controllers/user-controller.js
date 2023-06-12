@@ -235,11 +235,9 @@ const userController = {
   addFollow: (req, res, next) => {
     // 按鈕上這人的 id
     const userId = Number(req.body.id)
-    // 登入中的使用者 id
-    const loginUser = helpers.getUser(req).id
 
     // 自己不能追蹤自己(測試檔 redirect 需要 200)
-    if (userId === loginUser) {
+    if (userId === helpers.getUser(req).id) {
       req.flash('error_messages', 'Cannot follow yourself!')
       return res.redirect(200, 'back')
     }
@@ -248,8 +246,8 @@ const userController = {
       User.findByPk(userId),
       Followship.findOne({
         where: {
-          followingId: loginUser,
-          followerId: userId
+          followerId: helpers.getUser(req).id,
+          followingId: userId
         }
       })
     ])
@@ -257,7 +255,7 @@ const userController = {
         if (!user) throw new Error('User did not exist.')
         if (followship) throw new Error('You have already followed this user!')
         return Followship.create({
-          followerId: loginUser,
+          followerId: helpers.getUser(req).id,
           followingId: userId
         })
       })
@@ -269,11 +267,9 @@ const userController = {
   removeFollow: (req, res, next) => {
     // 按鈕上這人的 id
     const userId = req.params.id
-    // 登入中的使用者 id
-    const loginUser = helpers.getUser(req).id
     return Followship.findOne({
       where: {
-        followerId: loginUser,
+        followerId: helpers.getUser(req).id,
         followingId: userId
       }
     })
@@ -282,6 +278,39 @@ const userController = {
         return followship.destroy()
       })
       .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+
+  getUserFollowings: (req, res, next) => {
+    res.render('followship')
+  },
+
+  getUserFollowers: (req, res, next) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          as: 'Followers',
+          include: { model: User, as: 'Followers' }
+        },
+        {
+          model: Tweet
+        }
+      ],
+      nest: true
+    })
+      .then(user => {
+        if (!user) throw new Error('User not found')
+        // 推文數量
+        const tweetsLength = user.Tweets.length
+        const followers = user.toJSON().Followers
+        console.log(user.toJSON())
+        followers.forEach(follower => follower.isFollowed = follower.Followers.some(fr => fr.id === helpers.getUser(req).id))
+        console.log('上下切開')
+        console.log(followers)
+        // followers.sort((a, b) => b.Followship.createdAt - a.Followership.createdAt)
+        res.status(200).render('followship', { user: user.toJSON(), tweetsLength, users: followers })
+      })
       .catch(err => next(err))
   }
 }

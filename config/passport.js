@@ -57,7 +57,12 @@ passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
 passport.deserializeUser((id, cb) => {
-  User.findByPk(id)
+  return User.findByPk(id, {
+    include: [
+      { model: User, as: 'Followings' },
+      { model: User, as: 'Followers' }
+    ]
+  })
     .then(user => {
       console.log('反序列化成功')
       return cb(null, user.toJSON())

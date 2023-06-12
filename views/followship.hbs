@@ -1,0 +1,22 @@
+<div class="d-flex align-items-center p-3 ps-4" style="position: relative; border-bottom: 1px solid #E6ECF0;">
+  <a href="javascript:history.back()">
+    <img class="me-3" src="/_base/Property 2=outlined, Property 3=back.svg" style="width: 23px">
+  </a>
+  <div class="d-flex flex-column">
+    <h5 class="m-0" style="line-height:0.9em;">{{user.name}}</h5>
+    <p class="text-12px-reg color-secondary m-0">{{tweetsLength}} 推文</p>
+  </div>
+</div>
+
+<div class="d-flex align-items-center" style="height: 52px; border-bottom: 1px solid #E6ECF0;">
+  <a href="/{{user.id}}/followers" class="p-2 text-14px-med text-center" {{#ifCond route 'followers' }}
+    style="color:#ff6600;font-size: 15px; width:20%; border-bottom: 2px solid #ff6600" {{else}}
+    style="color:#657786;font-size: 15px; width:20%" {{/ifCond}}>追隨者</a>
+  <a href="/{{user.id}}/followings" class="p-2 text-14px-med text-center" {{#ifCond route 'followings' }}
+    style="color:#ff6600;font-size: 15px; width:20%; border-bottom: 2px solid #ff6600" {{else}}
+    style="color:#657786;font-size: 15px; width:20%" {{/ifCond}}>正在追蹤</a>
+</div>
+
+<div class="content">
+  {{>user-followship}}
+</div>

@@ -8,4 +8,9 @@ hbshelpers.relativeTime = function (a) {
   return dayjs(a).fromNow()
 }
 
+// hbs 路由管理
+hbshelpers.ifCond = function (a, b, options) {
+  return a === b ? options.fn(this) : options.inverse(this)
+}
+
 module.exports = { hbshelpers }
