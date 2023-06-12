@@ -13,8 +13,8 @@ router.post(
   }),
   adminController.adminSignin
 )
-router.get('/tweets', adminAuthenticated, adminController.adminTweetsPage)
-router.get('/users', adminAuthenticated, adminController.adminUsersPage)
+router.get('/tweets', adminAuthenticated, adminController.adminGetTweets)
+router.get('/users', adminAuthenticated, adminController.adminGetUsers)
 
 router.use('/', (req, res) => res.redirect('/admin/tweets'))
 router.get('', (req, res) => res.redirect('/admin/tweets'))
