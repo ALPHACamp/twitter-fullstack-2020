@@ -1,5 +1,4 @@
 const previousPage = (req, res, next) => {
-  console.log(req)
   // 判斷有無按上一頁
   const { back } = req.query
   let currentUrl = req.url
@@ -24,7 +23,6 @@ const previousPage = (req, res, next) => {
         )
       ) {
         historyPage.push(currentUrl)
-        req.session.previousPage = historyPage[i]
         break
         // return next()
       } else {
@@ -45,7 +43,6 @@ const previousPage = (req, res, next) => {
         )
       ) {
         historyPage.push(currentUrl)
-        req.session.previousPage = historyPage[i]
         break
         // return next()
       } else {
@@ -57,8 +54,8 @@ const previousPage = (req, res, next) => {
   // 如果按上一頁將原本的頁面以及目前頁面從historyPage刪除
   if (back) {
     historyPage.splice(-2)
-    req.session.previousPage = historyPage[historyPage.length - 2]
   }
+  req.session.previousPage = historyPage[historyPage.length - 2]
 
   return next()
 }
