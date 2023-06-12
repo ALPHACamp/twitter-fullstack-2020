@@ -1,4 +1,4 @@
-const { User, Tweet, Like, Followship, sequelize } = require('../models')
+const { User, Tweet, Like, Followship } = require('../models')
 
 const adminController = {
   // 後台登入
@@ -42,18 +42,19 @@ const adminController = {
       let users = await User.findAll({ raw: true, where: { role: 'user' } })
       users = await Promise.all(users.map(async (user) => {
         const userId = user.id
-        const tweets = await Tweet.findAll({ raw: true, where: { UserId: userId } })
-        const likes = await Like.findAll({ raw: true, where: { UserId: userId } })
         const followings = await Followship.findAll({ raw: true, where: { followerId: userId } })
         const followers = await Followship.findAll({ raw: true, where: { followingId: userId } })
+        const tweets = await Tweet.findAll({ raw: true, where: { UserId: userId } })
+        const likes = await Like.findAll({ raw: true, where: { UserId: userId } })
+
 
         user.totalTweets = tweets ? tweets.length : 0
         user.totalLikes = likes ? likes.length : 0
         user.totalFollowings = followings ? followings.length : 0
         user.totalFollowers = followers ? followers.length : 0
-
         return user
       }))
+
       return res.render('admin/users', { users })
     } catch (e) {
       next(e)
