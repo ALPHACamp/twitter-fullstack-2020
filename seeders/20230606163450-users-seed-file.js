@@ -25,7 +25,7 @@ module.exports = {
         cover: `https://loremflickr.com/640/200/landscape/?lock=${
           Math.random() * 100
         }`,
-        introduction: faker.lorem.words(({ min: 1, max: 3 })),
+        introduction: faker.lorem.words(10),
         created_at: new Date(),
         updated_at: new Date()
       },
@@ -41,7 +41,7 @@ module.exports = {
         cover: `https://loremflickr.com/640/200/landscape/?lock=${
           Math.random() * 100
         }`,
-        introduction: faker.lorem.words(({ min: 1, max: 3 })),
+        introduction: faker.lorem.words(10),
         created_at: new Date(),
         updated_at: new Date()
       },
@@ -57,7 +57,7 @@ module.exports = {
         cover: `https://loremflickr.com/640/200/landscape/?lock=${
           Math.random() * 100
         }`,
-        introduction: faker.lorem.words(({ min: 1, max: 3 })),
+        introduction: faker.lorem.words(10),
         created_at: new Date(),
         updated_at: new Date()
       },
@@ -73,7 +73,7 @@ module.exports = {
         cover: `https://loremflickr.com/640/200/landscape/?lock=${
           Math.random() * 100
         }`,
-        introduction: faker.lorem.words(({ min: 1, max: 3 })),
+        introduction: faker.lorem.words(10),
         created_at: new Date(),
         updated_at: new Date()
       },
@@ -89,7 +89,7 @@ module.exports = {
         cover: `https://loremflickr.com/640/200/landscape/?lock=${
           Math.random() * 100
         }`,
-        introduction: faker.lorem.words(({ min: 1, max: 3 })),
+        introduction: faker.lorem.words(10),
         created_at: new Date(),
         updated_at: new Date()
       }

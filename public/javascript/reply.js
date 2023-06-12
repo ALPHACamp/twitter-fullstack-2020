@@ -38,14 +38,14 @@ replyCloses.forEach((replyClose, index) => {
   })
 })
 
-function checkReplyValid (target, content, mexLength, index) {
+function checkReplyValid (target, content, maxLength, index) {
   // 如果內容只有空白或換行
   if (content.trim().length === 0) {
-    replyFeedbacks[index].innerText = '內容不可空白'
     target.setCustomValidity('內容不可空白')
-  } else if (content.length > mexLength) {
-    replyFeedbacks[index].innerHTML = `字數不可超過${mexLength}字`
-    target.setCustomValidity(`字數不可超過${mexLength}字`)
+    replyFeedbacks[index].innerText = target.validationMessage
+  } else if (content.length > maxLength) {
+    target.setCustomValidity(`字數不可超過${maxLength}字`)
+    replyFeedbacks[index].innerText = target.validationMessage
   } else {
     target.setCustomValidity('')
   }
