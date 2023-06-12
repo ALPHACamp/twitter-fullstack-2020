@@ -11,7 +11,7 @@
           <h4 id="home-word" class="pt-3 ps-3">← 推文</h4>
         </a>
       </div>
-      {{!-- user --}}
+      {{!-- 發文者資料 --}}
       <div class="tweets d-flex mt-3">
         <div class="avatar ps-3">
           <a href="/users/{{tweet.User.id}}" style="text-decoration:none;">
@@ -21,36 +21,36 @@
         <div class="tweet-content">
           <div class="name-container">
             <div class="name">
-              <span id="tweet-name">UserName</span>
+              <span id="tweet-name">{{tweet.User.name}}</span>
             </div>
             <div id="user-account"class="account">
-              <span id="account-time-word">@UserAccount．WhenCreate</span>
+              <span id="account-time-word">@{{tweet.User.account}}．{{relativeTimeFromNow tweet.createdAt}}</span>
             </div>
           </div>
         </div>
       </div>
-      {{!-- content --}}
+      {{!-- 發文內容--}}
       <div class="content-container ps-3" style="border-bottom: 1px solid #E6ECF0">
         <div class="content mt-3" style="font-size: 24px; color: #171725; line-height: 36px;">
-          Descriptionssssss
+          {{tweet.description}}
         </div>
         <div class="time mt-2" style="height: 25px;">
-          <p id="tweet-create-time"style="color:#6C757D;font-size: 14px;">CreateTime Date</p>
+          <p id="tweet-create-time"style="color:#6C757D;font-size: 14px;">{{tweetCreateTime tweet.createdAt}}</p>
         </div>
       </div>
-        {{!--reply-like --}}
+        {{!--發文的comment like次數  --}}
         <div class="reply-like-container d-flex align-items-center" style="height: 60px;border-bottom: 1px solid #E6ECF0;">
           <div class="reply-counts me-3 ms-3"
             style="align-content: center; font-size: 19px;font-weight: 700; font-family: 'Montserrat';">
-            11
+            {{tweet.Replies.length}}
             <span class="mt-1" style="color: #6C757D">回覆</span>
           </div>
           <div class="like-counts" style="font-size: 19px;font-weight: 700; font-family: 'Montserrat';">
-            45 
+            {{tweet.LikedUsers.length}}
             <span style="color: #6C757D">喜歡次數</span>
           </div>
         </div>
-        {{!-- icon --}}
+        {{!-- like comment 按鈕區--}}
         <div class="icon-container d-flex" style="height: 60px;border-bottom: 1px solid #E6ECF0;">
           <div class="replies d-flex align-items-center ms-3 me-5">
             <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal" data-bs-target="#replyModal{{tweet.id}}">
@@ -58,18 +58,23 @@
             </button>
           </div>
           <div class="likes d-flex align-items-center ms-5">
-           
+          {{#if tweet.isLiked}}
             <form action="/tweets/{{tweet.id}}/unlike" method="post">
-              <button type="submit" class="btn" style="color: #fc5a5a;"><i class="fa-solid fa-heart">&ensp;4</i></button>
+              <button type="submit" class="btn" style="color: #fc5a5a;"><i class="fa-solid fa-heart">
+                &ensp;{{this.likes.length}}
+                </i></button>
             </form>
-         
+          {{else}}
             <form action="/tweets/{{tweet.id}}/like" method="post">
-              <button type="submit" class="btn"><i class="fa-regular fa-heart"> &ensp;7</i></button>
+              <button type="submit" class="btn"><i class="fa-regular fa-heart"> 
+                &ensp;{{this.likes.length}}
+                </i></button>
             </form>
-         
+          {{/if}}
           </div>
         </div>
-        {{!-- reply content --}}
+        {{!-- 回覆留言區--}}
+        {{#each tweet.Replies }}
         <div id="tweet-frame" class="tweets d-flex mt-3">
           <div class="avatar ps-3">
             <a href="/users/{{this.User.id}}/tweets" style="text-decoration:none;">
@@ -78,18 +83,19 @@
           </div>
           <div class="tweet-content">
             <div class="name">
-              <span id="tweet-name">ReplyName</span>
-              <span id="tweet-account">Reply Account・Time</span>
+              <span id="tweet-name">{{this.User.name}}</span>
+              <span id="tweet-account">@{{this.User.account}}．{{relativeTimeFromNow this.createdAt}}</span>
             </div>
             <div class="reply-to mt-3">
-              <p style="color: #657786;font-size:14px;">回覆給<strong style="color:#FF6600;">@User Account</strong>
+              <p style="color: #657786;font-size:14px;">回覆給<strong style="color:#FF6600;">@{{../tweet.User.account}}</strong>
               </p>
             </div>
             <div id="tweet-text-aria" class="content mt-3">
-                Comment Text
+                {{this.comment}}
             </div>
           </div>
         </div>
+        {{/each}}
       </div>
         </div>
         <div id="right-followship" class="col-3 ms-3">
