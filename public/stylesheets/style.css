@@ -840,3 +840,48 @@ textarea {
 .reply-datetime-hr {
   margin-top: 8px; 
 }
+
+.reply-modal {
+  width: 640px;
+  transform: translateX(-20%);
+  height: 500px;
+}
+
+.reply-content {
+  width: 100%;
+}
+
+.create-reply-form>textarea {
+  width: 360px;
+  height: 130px;
+  resize: none;
+  /* margin-left: 8px; */
+}
+
+.reply-create-input {
+  height: 50px;
+  width: 100%;
+  border-width: 0;
+  background-color: transparent;
+  padding-left: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 50px;
+  color: var(--secondary);
+}
+
+.reply-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 13px;
+}
+
+.vertical-line {
+  border-left: 3px solid #B5B5BE;
+  height: 75px;
+}
+
+.reply-avatar {
+  height: 140px;
+}
