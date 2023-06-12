@@ -1,7 +1,7 @@
 const { Op } = require('sequelize') // 用「不等於」的條件查詢資料庫時需要用到的東西
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const { User, Tweet, Followship } = db
+const { User, Tweet, Followship, Like } = db
 const helpers = require('../_helpers')
 
 const userController = {
@@ -206,6 +206,11 @@ const userController = {
         raw: true,
         nest: true
       }),
+      Like.findAll({
+        attributes: ['id', 'userId', 'tweetId'],
+        raw: true,
+        nest: true
+      }),
       // 取得目前登入的使用者資料
       User.findByPk(helpers.getUser(req).id, { raw: true }),
       // 未來會取得追蹤數前 10 名的使用者資料
@@ -216,8 +221,13 @@ const userController = {
         raw: true
       })
     ])
-      .then(([user, tweets, currentUser, topUsers]) => {
-        res.render('user', { user, tweets, currentUser, topUsers })
+      .then(([user, tweets, likes, currentUser, topUsers]) => {
+        const tweetsData = tweets.map(tweet => ({
+          ...tweet,
+          isLiked: likes.some(like => (like.userId === helpers.getUser(req).id && like.tweetId === tweet.id)),
+          likeCount: likes.filter(like => like.tweetId === tweet.id).length
+        }))
+        res.render('user', { user, tweets: tweetsData, currentUser, topUsers })
       })
   },
 

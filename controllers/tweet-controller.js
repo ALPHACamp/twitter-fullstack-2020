@@ -21,10 +21,22 @@ const tweetController = {
         where: { isAdmin: 0 },
         raw: true
       }),
-      User.findByPk(userId, { raw: true })
+      User.findByPk(userId,
+        { raw: true }
+      ),
+      Like.findAll({
+        attributes: ['id', 'userId', 'tweetId'],
+        raw: true,
+        nest: true
+      })
     ])
-      .then(([tweets, topUsers, currentUser]) => {
-        res.render('tweets', { tweets, topUsers, currentUser })
+      .then(([tweets, topUsers, currentUser, likes]) => {
+        const tweetsData = tweets.map(tweet => ({
+          ...tweet,
+          isLiked: likes.some(like => (like.userId === helpers.getUser(req).id && like.tweetId === tweet.id)),
+          likeCount: likes.filter(like => like.tweetId === tweet.id).length
+        }))
+        res.render('tweets', { tweets: tweetsData, topUsers, currentUser })
       })
       .catch(err => next(err))
   },
@@ -55,11 +67,23 @@ const tweetController = {
         where: { tweetId },
         raw: true,
         nest: true
+      }),
+      Like.findAll({
+        attributes: ['id', 'userId', 'tweetId'],
+        raw: true,
+        nest: true
       })
     ])
-      .then(([tweet, replies]) => {
-        res.render('tweet', { tweet, replies })
+      .then(([tweet, replies, likes]) => {
+        const tweetData = ({
+          ...tweet,
+          isLiked: likes.some(like => like.userId === helpers.getUser(req).id && like.tweetId === tweet.id),
+          likeCount: likes.filter(like => like.tweetId === tweet.id).length
+        })
+        console.log(tweetData)
+        res.render('tweet', { tweet: tweetData, replies })
       })
+      .catch(err => next(err))
   },
 
   // 抓特定推文資料傳給前端
