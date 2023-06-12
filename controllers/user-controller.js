@@ -9,32 +9,52 @@ const userController = {
   signupPage: (req, res) => {
     res.render('signup')
   },
-  signin: (req, res, next) => {
+  signin: (req, res) => {
     req.flash('success_messages', '成功登入!')
     res.redirect('/tweets')
   },
-  signUp: (req, res, next) => {
-    if (req.body.password !== req.body.passwordCheck) {
-      throw new Error('Passwords do not match!')
+  signup: (req, res) => {
+    const { account, name, email, password, passwordCheck } = req.body
+
+    if (password !== passwordCheck) {
+      throw new Error('密碼不符合!')
     }
-    User.findOne({ where: { email: req.body.email } })
+
+    User.findOne({ where: { account } })
       .then(user => {
-        if (user) throw new Error('Email already exists!')
-        return bcrypt.hash(req.body.password, 10)
+        if (user) {
+          req.flash('error_messages', 'account 已重複註冊！')
+          res.redirect('/signup')
+          throw new Error('account already exists!')
+        }
       })
-      .then(hash =>
-        User.create({
-          name: req.body.name,
-          email: req.body.email,
-          password: hash,
-          role: 'user',
-          avatar: `https://loremflickr.com/140/140/portrait/?lock=${Math.random() * 100}`,
-          cover: `https://loremflickr.com/640/200/landscape/?lock=${Math.random() * 100}`
-        })
-      )
-      .then(() => {
-        req.flash('success_messages', '成功註冊帳號！')
-        res.redirect('/signin')
+      .catch(err => console.log(err))
+
+    User.findOne({ where: { email } })
+      .then(user => {
+        if (user) {
+          req.flash('error_messages', 'email 已重複註冊！')
+          res.redirect('/signup')
+          throw new Error('email already exists!')
+        }
+        return bcrypt.genSalt(10)
+          .then(salt => bcrypt.hash(password, salt))
+          .then(hash =>
+            User.create({
+              account,
+              name,
+              email,
+              password: hash,
+              role: 'user',
+              avatar: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+              cover: '/images/profile/cover.png'
+            })
+          )
+          .then(() => {
+            req.flash('success_messages', '成功註冊帳號！')
+            res.redirect('/signin')
+          })
+          .catch(err => console.log(err))
       })
   },
   postLike: async (req, res, next) => {

@@ -29,7 +29,7 @@ router.post(
 
 // signup
 router.get('/signup', userController.signupPage)
-router.post('/signup', userController.signUp)
+router.post('/signup', userController.signup)
 
 // index
 router.get('/tweets/:tweetId/replies', authenticated, tweetsController.getTweet)
