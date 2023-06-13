@@ -1,8 +1,6 @@
-<div class="d-flex justify-content-evenly" style="height: 1400px;width:1200px">
+{{> left-sidebar}} <!--左欄-->
 
-  {{> left-sidebar}} <!--左欄-->
-
-  <div class="main-page" style="width:45%">
+  <div class="main-page">
     <!--header-->
     <div class="header">
       <h4>首頁</h4>
@@ -22,6 +20,7 @@
         <button class="post-new-tweet m-3" data-bs-toggle="modal" data-bs-target="#tweetModal">推文</button>
       </div>
     </div>
+    <hr style="height: 10px; background:#E6ECF0;">
     <!--瀏覽推文-->
     {{#each tweets}}
     <a href="/tweets/{{this.id}}/reply" style="text-decoration:none">
@@ -73,4 +72,3 @@
   {{> right-sidebar}} <!--右欄-->
   {{> tweet-modal}} <!--tweet的彈出式釋出視窗-->
   {{> reply-modal}} <!--reply的彈出式釋出視窗-->
-</div>
