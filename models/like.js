@@ -9,19 +9,24 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate (models) {
+    static associate(models) {
       // define association here
       Like.belongsTo(models.User, {
-      foreignKey: 'UserId'
+        foreignKey: 'UserId'
       }),
-      Like.belongsTo(models.Tweet, {
-      foreignKey: 'TweetId'
-      })
+        Like.belongsTo(models.Tweet, {
+          foreignKey: 'TweetId'
+        })
     }
   };
   Like.init({
-      UserId: DataTypes.INTEGER,
-      TweetId: DataTypes.INTEGER,
+    id: {
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    UserId: DataTypes.INTEGER,
+    TweetId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Like',
