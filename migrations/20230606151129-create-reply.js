@@ -24,7 +24,8 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'Users',
-          key: 'id'
+          key: 'id',
+          defaultValue: ''
         }
       },
       tweet_id: {
@@ -32,7 +33,8 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'Tweets',
-          key: 'id'
+          key: 'id',
+          defaultValue: ''
         }
       }
     })
