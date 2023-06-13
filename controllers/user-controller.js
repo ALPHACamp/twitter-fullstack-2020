@@ -1,4 +1,4 @@
-const { Op, Sequelize } = require('sequelize') // 用「不等於」的條件查詢資料庫時需要用到的東西
+const { Op } = require('sequelize') // 用「不等於」的條件查詢資料庫時需要用到的東西
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const { User, Tweet, Followship, Like } = db
@@ -319,7 +319,7 @@ const userController = {
         })
         // console.log('上下切開')
         followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        console.log('這是執行 getUserFollowings 排列完的 followings', followings)
+        // console.log('這是執行 getUserFollowings 排列完的 followings', followings)
         return res.status(200).render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followings })
       })
       .catch(err => next(err))
@@ -354,7 +354,7 @@ const userController = {
         })
         // console.log('上下切開')
         followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        console.log('這是執行 getUserFollowers 排列完的資料', followers)
+        // console.log('這是執行 getUserFollowers 排列完的資料', followers)
         return res.status(200).render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followers })
       })
       .catch(err => next(err))
