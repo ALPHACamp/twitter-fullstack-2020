@@ -133,10 +133,9 @@ const userController = {
     if (Number(userId) !== helpers.getUser(req).id) throw new Error('Permission denied.')
     // 取得自己的帳戶資訊
     User.findByPk(userId, { raw: true })
-      .then(user => {
-        if (!user) throw new Error('User did not exist.')
-        const { account, name, email } = user
-        res.render('setting', { account, name, email, userId, isSetting: true })
+      .then(currentUser => {
+        if (!currentUser) throw new Error('User did not exist.')
+        res.render('setting', { currentUser, isSetting: true })
       })
       .catch(err => next(err))
   },
