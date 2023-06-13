@@ -1,6 +1,4 @@
-
 const { Tweet, User, Like, Followship } = require('../models')
-
 const adminController = {
   getSignin: (req, res) => {
     res.render('admin/signin')
@@ -35,22 +33,27 @@ const adminController = {
     const users = await User.findAll({
       raw: true
     })
-    const userData = await Promise.all(users.map(async user => {
-      const userId = user.id
-      const [tweets, likes, followers, followings] = await Promise.all([ // 用user id進去個表格找
-        Tweet.findAll({ where: { userId }, raw: true }),
-        Like.findAll({ where: { userId }, raw: true }),
-        Followship.findAll({ where: { followerId: userId }, raw: true }),
-        Followship.findAll({ where: { followingId: userId }, raw: true })
-      ])
-      user.tweetsCount = tweets?.length // 照到後計算個陣列個數
-      user.likesCount = likes?.length
-      user.followersCount = followers?.length
-      user.followingsCount = followings?.length
-      return user
-    }))
+    const userData = await Promise.all(
+      users.map(async user => {
+        const userId = user.id
+        const [tweets, likes, followers, followings] = await Promise.all([
+          // 用user id進去個表格找
+          Tweet.findAll({ where: { userId }, raw: true }),
+          Like.findAll({ where: { userId }, raw: true }),
+          Followship.findAll({ where: { followerId: userId }, raw: true }),
+          Followship.findAll({ where: { followingId: userId }, raw: true })
+        ])
+        user.tweetsCount = tweets?.length // 照到後計算個陣列個數
+        user.likesCount = likes?.length
+        user.followersCount = followers?.length
+        user.followingsCount = followings?.length
 
-    res.render('admin/users', { user: userData })
+        return user
+      })
+    )
+    const sortedUser = userData.sort((a, b) => b.tweetsCount - a.tweetsCount)
+
+    res.render('admin/users', { user: sortedUser })
   },
   getLogout: (req, res) => {
     req.flash('success_messages', '登出成功！')

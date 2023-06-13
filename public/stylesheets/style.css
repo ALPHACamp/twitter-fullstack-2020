@@ -1,9 +1,9 @@
 .sidebar-left {
   width: 178px;
-  height: 1200px;
-  position: fixed;
-  left: 130px;
-  top: 0px;
+  height: 100%;
+  margin-right: 35px;
+  position: sticky;
+  top: 0;
 }
 
 .sidebar-left img {
@@ -39,7 +39,7 @@
   font-weight: 700;
   font-size: 18px;
   line-height: 26px;
-  color: #44444F;
+  color: #44444f;
 }
 
 .nav-item a {
@@ -49,8 +49,8 @@
 .tweet {
   width: 178px;
   height: 46px;
-  color: #FFFFFF;
-  background: #FF6600;
+  color: #ffffff;
+  background: #ff6600;
   border-radius: 50px;
   border: none;
 }
@@ -62,31 +62,20 @@
 .header {
   width: 641px;
   height: 74px;
-  position: absolute;
-  left: 353.79px;
-  top: 24px;
-  margin-top: -26px;
   padding: 24px 0 0 20.9px;
   display: flex;
-  background: #FFFFFF;
   border-bottom: 1px solid #E6ECF0;
-  border-left: 1px solid #E6ECF0;
-  border-right: 1px solid #E6ECF0;
 }
 
 .header-admin {
   width: 937.13px;
   height: 74px;
-  position: absolute;
-  left: 353.79px;
-  top: 24px;
-  margin-top: -24px;
   padding: 24px 0 0 20.9px;
   display: flex;
-  background: #FFFFFF;
-  border-bottom: 1px solid #E6ECF0;
-  border-left: 1px solid #E6ECF0;
-  border-right: 1px solid #E6ECF0;
+  background: #ffffff;
+  border-bottom: 1px solid #e6ecf0;
+  border-left: 1px solid #e6ecf0;
+  border-right: 1px solid #e6ecf0;
 }
 
 h4 {
@@ -130,7 +119,7 @@ h5 {
   font-weight: 500;
   font-size: 14px;
   line-height: 22px;
-  color: #92929D;
+  color: #92929d;
 }
 
 .edit-user-modal {
@@ -146,7 +135,7 @@ h5 {
   font-weight: 700;
   font-size: 18px;
   line-height: 26px;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
 .xmark {
@@ -163,8 +152,8 @@ h5 {
   height: 40px;
   margin: 8px 16px 9px 375px;
   border-radius: 50px;
-  color: #FFFFFF;
-  background: #FF6600;
+  color: #ffffff;
+  background: #ff6600;
   border: none;
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -175,20 +164,16 @@ h5 {
 
 .admin-tweets {
   width: 937.13px;
-  margin-top: 50px;
-  position: absolute;
-  left: 353.79px;
-  top: 24px;
 }
 
 .admin-tweet {
   width: 937.13px;
   height: 118px;
   display: flex;
-  background: #FFFFFF;
-  border-bottom: 1px solid #E6ECF0;
-  border-left: 1px solid #E6ECF0;
-  border-right: 1px solid #E6ECF0;
+  background: #ffffff;
+  border-bottom: 1px solid #e6ecf0;
+  border-left: 1px solid #e6ecf0;
+  border-right: 1px solid #e6ecf0;
 }
 
 .admin-tweet-left {
@@ -216,7 +201,7 @@ h5 {
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
-  color: #6C757D;
+  color: #6c757d;
 }
 
 .admin-tweet-right .content {
@@ -250,11 +235,11 @@ h5 {
   margin-left: 628px;
 }
 
-.tweet-xmark button{
+.tweet-xmark button {
   width: 15px;
   height: 15px;
   border: none;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .banner {
@@ -271,7 +256,7 @@ h5 {
   height: 140px;
   border-radius: 50%;
   /* 正圆形 */
-  border: solid 4px #ffffff;
+  background: center center;
 }
 
 .btn-outline {
@@ -294,7 +279,7 @@ a {
 .h5 {
   margin: 0;
   padding: 0;
-  font-family: "Noto Sans TC";
+  font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -303,7 +288,7 @@ a {
 }
 
 .body-14-regular {
-  font-family: "Noto Sans TC";
+  font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -340,7 +325,6 @@ img.card-avatar {
   height: 100px;
   border-radius: 50%;
   border: solid 4px #ffffff;
-
 }
 
 .body-16px-medium {
@@ -355,7 +339,7 @@ img.card-avatar {
   font-weight: 500;
   font-size: 16px;
   line-height: 15px;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
 .card-icon img {
@@ -367,26 +351,23 @@ img.card-avatar {
 .header-admin-user {
   width: 1075px;
   height: 74px;
-  position: absolute;
-  left: 353.79px;
-  top: 24px;
-  margin-top: -24px;
   padding: 24px 0 0 20.9px;
   display: flex;
   background: #FFFFFF;
   border-bottom: 1px solid #E6ECF0;
+}
+
+.admin-main {
   border-left: 1px solid #E6ECF0;
   border-right: 1px solid #E6ECF0;
 }
 
 .admin-user {
   width: 1075px;
-  position: absolute;
-  left: 353.79px;
-  margin-top: -22px;
   background: #FFFFFF;
   border-bottom: 1px solid #E6ECF0;
   border-left: 1px solid #E6ECF0;
+
 }
 
 .admin-user-row {
@@ -401,18 +382,18 @@ img.card-avatar {
 
 .setting-container {
   width: 641px;
-  height: 692px;
-  margin: -26px 0 0 282px;
+  height: 943px;
   border-left: 1px solid #E6ECF0;
   border-right: 1px solid #E6ECF0;
 }
 
+.user-main {
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+}
 
 .user-main-body {
   width: 641px;
-  position: absolute;
-  top: 72px;
-  left: 354px;
   border-left: 1px solid #E6ECF0;
   border-right: 1px solid #E6ECF0;
 }
@@ -425,12 +406,11 @@ img.card-avatar {
   height: 72px;
 }
 
-
 .user-tweet {
   width: 641px;
   height: 168px;
   display: flex;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
 }
 
 .user-content {
@@ -457,20 +437,26 @@ img.card-avatar {
 .sidebar-right {
   width: 273px;
   height: 731px;
-  position: fixed;
-  left: 1011px;
-  top: 16px;
+  margin-left: 30px;
+  position: sticky;
+  top: 10px;
   background: #FAFAFB;
+
   border-radius: 16px;
+  overflow: hidden;
 }
 
 .sidebar-header {
   padding: 24px 0 24px 24px;
   width: 273px;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
 }
 
 .follow-card {
+  display: flex;
+}
+
+.follow-card a {
   display: flex;
 }
 
@@ -502,7 +488,7 @@ img.card-avatar {
   font-weight: 500;
   font-size: 14px;
   line-height: 22px;
-  color: #92929D;
+  color: #92929d;
 }
 
 .following {
@@ -510,8 +496,8 @@ img.card-avatar {
   width: 96px;
   height: 40px;
   border-radius: 50px;
-  color: #FFFFFF;
-  background: #FF6600;
+  color: #ffffff;
+  background: #ff6600;
   border: none;
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -519,17 +505,9 @@ img.card-avatar {
   font-size: 16px;
   line-height: 24px;
 }
-.solid{
-  color:#E6ECF0
-}
 
-.sidebar-left {
-  height: 1200px;
-  width: 178px;
-}
-
-.sidebar-left img {
-  margin: 13px 0 0 13px;
+.solid {
+  color: #e6ecf0;
 }
 
 .nav-card {
@@ -547,7 +525,6 @@ img.card-avatar {
   width: 178px;
   display: flex;
 }
-
 .nav-item img {
   margin: 18.78px 0 0 16.9px;
   height: 20.25px;
@@ -561,18 +538,18 @@ img.card-avatar {
   font-weight: 700;
   font-size: 18px;
   line-height: 26px;
-  color: #44444F;
+  color: #44444f;
 }
 
 .nav-item a {
-  text-decoration:none;
+  text-decoration: none;
 }
 
 .tweet {
   width: 178px;
   height: 46px;
-  color: #FFFFFF;
-  background: #FF6600;
+  color: #ffffff;
+  background: #ff6600;
   border-radius: 50px;
   border: none;
 }
@@ -590,17 +567,10 @@ img.card-avatar {
   color: #171725;
 }
 
-.sidebar-right {
-  width: 273px;
-  height: 731px;
-  background: #FAFAFB;
-  border-radius: 16px;
-}
-
 .sidebar-header {
   padding: 24px 0 24px 24px;
   width: 273px;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
 }
 
 .follow-card {
@@ -635,22 +605,7 @@ img.card-avatar {
   font-weight: 500;
   font-size: 14px;
   line-height: 22px;
-  color: #92929D;
-}
-
-.following {
-  margin: 21px 16px 21px 13px;
-  width: 96px;
-  height: 40px;
-  border-radius: 50px;
-  color: #FFFFFF;
-  background: #FF6600;
-  border: none;
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  color: #92929d;
 }
 
 .follow {
@@ -658,18 +613,19 @@ img.card-avatar {
   width: 64px;
   height: 40px;
   border-radius: 50px;
-  color: #FF6600;
-  background: #FFFFFF;
-  border: 1px solid #FF6600;
+  color: #ff6600;
+  background: #ffffff;
+  border: 1px solid #ff6600;
   font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
 }
+
 .edit-close {
-  color: #FF6600;
-  background-color: #FFFFFF;
+  color: #ff6600;
+  background-color: #ffffff;
   border: none;
 }
 
@@ -677,7 +633,7 @@ img.card-avatar {
   width: 634px;
   height: 650px;
   border-radius: 14px;
-  padding: 0px 16px
+  padding: 0px 16px;
 }
 
 .edit-banner {
@@ -704,7 +660,7 @@ img.card-avatar {
   height: 140px;
   border-radius: 50%;
   /* 正圆形 */
-  background: center center url('https://i.imgur.com/mhXz6z9.png?1');
+  background: center center;
   background-size: cover;
 }
 
@@ -718,8 +674,10 @@ img.card-avatar {
 #user-introduction {
   padding: 0px;
   resize: none;
-  }
+}
+
 .one-tweet {
+  width: 641px;
   padding: 10px 15px;
   border-width: 0px 0px 1px 0px;
   border-style: solid;
@@ -728,26 +686,26 @@ img.card-avatar {
 
 .tweet-right .name {
   font-size: 16px;
-  font-family: "Noto Sans TC", sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
   font-weight: bold;
   color: #171725;
 }
 
 .tweet-right .account {
   font-size: 14px;
-  font-family: "Noto Sans TC", sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
   color: #6c757d;
 }
 
 .tweet-right .time {
   font-size: 14px;
-  font-family: "Noto Sans TC", sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
   color: #6c757d;
 }
 
 .tweet-right .content {
   font-size: 16px;
-  font-family: "Noto Sans TC", sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
   color: #171725;
   margin-top: 8px;
   max-width: 100%;
@@ -770,29 +728,20 @@ img.card-avatar {
   color: #6c757d;
 }
 
-.header {
-  /* width: 100%; */
-  height: 74px;
-  padding: 24px 0 0 24px;
-  display: flex;
-  background: #FFFFFF;
-  border-bottom: 1px solid #E6ECF0;
-}
-
 .header-user {
   margin-left: 10px;
 }
 
-.post-new-tweet{
-  color:#FFFFFF;
-  width:64px;
-  height:40px;
-  border:none;
-  background:#FF6600;
-  border-radius:50px
+.post-new-tweet {
+  color: #ffffff;
+  width: 64px;
+  height: 40px;
+  border: none;
+  background: #ff6600;
+  border-radius: 50px;
 }
 
-.content{
+.content {
   font-size: 16px;
 }
 
@@ -802,7 +751,7 @@ img.card-avatar {
   width: 120px;
   display: flex;
   font-size: 15px;
-  font-family: "Noto Sans TC", sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
   font-weight: 700;
 }
 
@@ -813,28 +762,102 @@ img.card-avatar {
 }
 
 .nav-tabs .nav-item .nav-link.active {
-  color: #FF6600;
-  border-bottom: 2px solid #FF6600;
-
+  color: #ff6600;
+  border-bottom: 2px solid #ff6600;
 }
 
 .message {
-  z-index: 999;
+  display: flex;
+  justify-content: center;
   opacity: 0;
   animation-name: fadenum;
   animation-duration: 1.5s;
 }
 
- @keyframes fadenum {
-   0% {
-     opacity: 1;
-   }
-
-   50% {
-     opacity: 1;
-   }
-
-   100% {
-     opacity: 0;
-   }
+@keyframes fadenum {
+  0% {
+    opacity: 1;
   }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.cover-edit,
+.avatar-edit {
+  position: relative;
+}
+
+.cover-edit .cover-img {
+  -webkit-filter: brightness(0.5);
+  filter: brightness(0.5);
+  width: 100%;
+  height: 200px;
+  border-radius: 0px;
+}
+
+.cover-edit .cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.cover-edit .cover .form-control,
+.avatar-edit .avatar .form-control {
+  top: 0;
+  width: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cover-edit .cover .form-label {
+  margin: 0;
+  top: 0;
+  left: 0;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.avatar-edit .avatar {
+  position: absolute;
+  top: 0;
+  left: 75px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-edit .avatar .form-label {
+  margin: 0;
+  top: 0;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.avatar-img {
+  -webkit-filter: brightness(0.5);
+  filter: brightness(0.5);
+  position: absolute;
+  height: 140px;
+  width: 140px;
+  transform: translateY(-50%);
+  left: 15px;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.main-page {
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+}

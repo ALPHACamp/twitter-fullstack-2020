@@ -1,7 +1,8 @@
-{{> main-sidebar-left route='user'}}
+{{> left-sidebar }}
+
 <div class="user-main">
-  {{> user-self-info route='self'}}
-  {{> user-self-tab route='user'}}
+  {{> user-self-info }}
+  {{> user-self-tab }}
   <div class="user-tweets">
     {{!-- each here --}}
     <div class="user-tweet">
@@ -40,8 +41,8 @@
 
     </div>
     {{!-- end --}}
-
   </div>
 </div>
-{{> main-sidebar-right route='user'}}
-{{> user-edit-modal route='self'}}
+
+{{> right-sidebar }}
+{{> user-edit-modal }}

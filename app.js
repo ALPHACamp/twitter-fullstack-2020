@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
+const path = require('path')
 const express = require('express')
 const exphbs = require('express-handlebars')
 const routes = require('./routes')
@@ -9,26 +10,32 @@ const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('./config/passport')
 const flash = require('connect-flash')
-const helpers = require('./helpers/auth-helpers')
+const helpers = require('./_helpers')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 
 const app = express()
 const port = process.env.PORT || 3000
 
-app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', helpers: handlebarsHelpers }))
+app.engine(
+  'hbs',
+  exphbs({ defaultLayout: 'main', extname: '.hbs', helpers: handlebarsHelpers })
+)
 app.set('view engine', 'hbs')
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false
-}))
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+  })
+)
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 app.use(methodOverride('_method'))
+app.use('/upload', express.static(path.join(__dirname, 'upload')))
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
@@ -40,6 +47,8 @@ app.use((req, res, next) => {
 
 app.use(routes)
 
-app.listen(port, () => console.log(`App is running on http://localhost:${port}`))
+app.listen(port, () =>
+  console.log(`App is running on http://localhost:${port}`)
+)
 
 module.exports = app

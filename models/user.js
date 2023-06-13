@@ -27,22 +27,13 @@ module.exports = sequelize => {
     {
       // ? name 不能做其他的條件限制，只能由後端來做... 不然TEST會卡住
       name: DataTypes.STRING,
-      account: {
-        type: DataTypes.STRING,
-
-        unique: true
-      },
-      email: {
-        type: DataTypes.STRING,
-        unique: true,
-        validate: {
-          isEmail: true
-        }
-      },
+      account: DataTypes.STRING,
+      email: DataTypes.STRING,
       password: DataTypes.STRING,
       role: DataTypes.STRING,
       avatar: DataTypes.STRING,
-      cover: DataTypes.STRING
+      cover: DataTypes.STRING,
+      introduction: DataTypes.TEXT
     },
     {
       sequelize,
