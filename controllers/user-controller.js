@@ -156,6 +156,7 @@ const userController = {
   },
   //* 帳戶/個人資料設定
   editUserAccount: async (req, res, next) => {
+    const userRoute = true
     const { id } = req.params
     const loginUser = helpers.getUser(req)
     if (loginUser.id !== Number(id)) throw new Error('您沒有權限編緝帳戶')
@@ -165,7 +166,7 @@ const userController = {
         raw: true
       })
       if (!user) throw new Error('該用戶不存在!')
-      return res.render('account-setting', { user })
+      return res.render('account-setting', { user, userRoute })
     } catch (err) {
       next(err)
     }

@@ -3,6 +3,7 @@ const { Tweet, User, Reply, Like } = require('../models')
 
 const tweetController = {
   getTweets: async (req, res, next) => {
+    const tweetRoute = true
     try {
       const tweets = await Tweet.findAll({
         raw: true,
@@ -13,7 +14,8 @@ const tweetController = {
       const sortedTweets = tweets.sort((a, b) => b.createdAt - a.createdAt)
       return res.render('tweets', {
         tweets: sortedTweets,
-        topFollowers: top10Followers
+        topFollowers: top10Followers,
+        tweetRoute
       })
     } catch (err) {
       next(err)
