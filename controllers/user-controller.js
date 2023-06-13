@@ -69,25 +69,24 @@ const userController = {
     if (loginUser.id !== Number(id)) throw new Error('您沒有權限查看此個人資料')
 
     try {
-      const [user, FollowingsCount, FollowersCount, tweetsCount] = await Promise.all([
-        User.findByPk(id, {
-          include: [
-            { model: Tweet, include: User }
-          ]
-        }),
-        // 計算user的folowing數量
-        Followship.count({
-          where: { follower_id: id }
-        }),
-        // 計算user的folower數量
-        Followship.count({
-          where: { following_id: id }
-        }),
-        // 計算user的推文數
-        Tweet.count({
-          where: { user_id: id }
-        })
-      ])
+      const [user, FollowingsCount, FollowersCount, tweetsCount] =
+        await Promise.all([
+          User.findByPk(id, {
+            include: [{ model: Tweet, include: User }]
+          }),
+          // 計算user的folowing數量
+          Followship.count({
+            where: { follower_id: id }
+          }),
+          // 計算user的folower數量
+          Followship.count({
+            where: { following_id: id }
+          }),
+          // 計算user的推文數
+          Tweet.count({
+            where: { user_id: id }
+          })
+        ])
 
       if (!user) throw new Error('該用戶不存在!')
       const userData = {
@@ -98,7 +97,6 @@ const userController = {
         FollowersCount,
         tweetsCount
       }
-      console.log('user:', user.toJSON())
       return res.render('self-tweets', { user: userData })
     } catch (err) {
       next(err)
@@ -190,8 +188,10 @@ const userController = {
 
       if (!user) throw new Error('該用戶不存在!')
       // 如果account、email有更動就判斷是否有重複
-      if (user.account !== account && isAccountExist) throw new Error('該帳號已存在!')
-      if (user.email !== email && isEmailExist) throw new Error('該email已存在!')
+      if (user.account !== account && isAccountExist)
+        throw new Error('該帳號已存在!')
+      if (user.email !== email && isEmailExist)
+        throw new Error('該email已存在!')
       // 確認name有無超過50字
       if (name?.length > 50) throw new Error('該名字超過字數上限 50 個字!')
       // 確認密碼是否正確
@@ -222,9 +222,11 @@ const userController = {
       const { id } = req.params
       const { name, introduction } = req.body
       const { files } = req
+      console.log('intro' + introduction)
 
       if (name?.length > 50) throw new Error('名稱不能超過 50 個字')
-      if (introduction?.length > 160) throw new Error('自我介紹不能超過 160 個字')
+      if (introduction?.length > 160)
+        throw new Error('自我介紹不能超過 160 個字')
 
       const [user, avatarPath, coverPath] = await Promise.all([
         User.findByPk(id),
@@ -238,6 +240,7 @@ const userController = {
         avatar: avatarPath || user.avatar,
         cover: coverPath || user.cover
       })
+      console.log('user:' + user.toJSON())
 
       req.flash('success_messages', '已更新成功！')
       res.redirect('/tweets')
