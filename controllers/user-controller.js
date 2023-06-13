@@ -106,8 +106,8 @@ const userController = {
   editUserProfile: (req, res, next) => {
     const userId = req.params.id
     const { name, intro } = req.body
-    const avatarFile = req.files.avatar ? req.files.avatar[0] : null // avatar是一個file的陣列，但裡面最多只會有1個file。file包含了上傳的檔案資訊
-    const coverFile = req.files.cover ? req.files.cover[0] : null // cover是一個file的陣列，但裡面最多只會有1個file。file包含了上傳的檔案資訊
+    const avatarFile = req.files?.avatar ? req.files.avatar[0] : null // avatar是一個file的陣列，但裡面最多只會有1個file。file包含了上傳的檔案資訊
+    const coverFile = req.files?.cover ? req.files.cover[0] : null // cover是一個file的陣列，但裡面最多只會有1個file。file包含了上傳的檔案資訊
     // 檢查是不是自己本人
     if (Number(userId) !== helpers.getUser(req).id) {
       return res.json({
