@@ -1,0 +1,31 @@
+{{#each users}}
+<div class='row p-0' style="height: 118px; border-bottom: 1px solid #E6ECF0">
+  {{!-- 頭像 --}}
+  <div class="col col-1 ps-5" style="position: relative;">
+    <a href="/users/{{this.id}}/tweets"><img src="{{this.avatar}}" class='user-avatar' src="{{this.avatar}}" alt=""
+        style="position: absolute; left: 42px; top: 15px; width: 50px; height: 50px; object-fit: cover; border: 4px solid #FFFFFF; border-radius: 50%;"></a>
+  </div>
+  {{!-- 使用者資料 --}}
+  <div class="col col-8 ms-4 mb-3 d-flex flex-column justify-content-center">
+    <div class="uppen d-flex" style="height: 26px;">
+      <p class="text-16px-med m-0" style="display: inline-block;">{{this.name}} &nbsp</p>
+    </div>
+    <div class="bottom pt-2" style="height: 52px;">
+      <p class="text-16px-reg">{{substring this.intro 0 100}}</p>
+    </div>
+  </div>
+  {{!-- 追蹤按鈕 --}}
+  <div class="col col-2 d-flex flex-row-reverse">
+    {{#if this.isFollowed}}
+    <form action="/followships/{{this.id}}?_method=DELETE" method="POST" class="me-2 pt-3">
+      <button type="submit" class="pill pill-default pill-main">正在跟隨</button>
+    </form>
+    {{else}}
+    <form action="/followships" method="POST" class="me-2 pt-3">
+      <input type="text" name="id" value="{{this.id}}" style="display: none;">
+      <button type="submit" class="pill pill-default pill-outline">跟隨</button>
+    </form>
+    {{/if}}
+  </div>
+</div>
+{{/each}}

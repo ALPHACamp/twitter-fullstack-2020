@@ -234,8 +234,12 @@ const userController = {
     Promise.all([
       // 取得特定使用者 Id
       User.findByPk(userId, {
-        raw: true,
-        nest: true
+        // raw: true,
+        nest: true,
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
       }),
       // 取得該使用者所有貼文
       Tweet.findAll({
@@ -270,6 +274,12 @@ const userController = {
       })
     ])
       .then(([user, tweets, replies, likes, currentUser, topUsers]) => {
+        // 抓取特定使用者的資料
+        const userData = ({
+          ...user.toJSON(),
+          followerCount: user.Followings.length,
+          followingCount: user.Followers.length
+        })
         const tweetsData = tweets.map(tweet => ({
           ...tweet,
           replyCount: replies.filter(reply => reply.tweetId === tweet.id).length,
@@ -286,7 +296,7 @@ const userController = {
           }))
           // 排序：從追蹤數多的排到少的
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('userPage-tweets', { user, tweets: tweetsData, currentUser, topUsers: data, isProfile: true })
+        res.render('userPage-tweets', { user: userData, tweets: tweetsData, currentUser, topUsers: data, isProfile: true })
       })
   },
   // 取得特定使用者所有回覆頁面
@@ -411,11 +421,9 @@ const userController = {
   addFollow: (req, res, next) => {
     // 按鈕上這人的 id
     const userId = Number(req.body.id)
-    // 登入中的使用者 id
-    const loginUser = helpers.getUser(req).id
 
     // 自己不能追蹤自己(測試檔 redirect 需要 200)
-    if (userId === loginUser) {
+    if (userId === helpers.getUser(req).id) {
       req.flash('error_messages', 'Cannot follow yourself!')
       return res.redirect(200, 'back')
     }
@@ -424,8 +432,8 @@ const userController = {
       User.findByPk(userId),
       Followship.findOne({
         where: {
-          followingId: loginUser,
-          followerId: userId
+          followerId: helpers.getUser(req).id,
+          followingId: userId
         }
       })
     ])
@@ -433,7 +441,7 @@ const userController = {
         if (!user) throw new Error('User did not exist.')
         if (followship) throw new Error('You have already followed this user!')
         return Followship.create({
-          followerId: loginUser,
+          followerId: helpers.getUser(req).id,
           followingId: userId
         })
       })
@@ -445,11 +453,9 @@ const userController = {
   removeFollow: (req, res, next) => {
     // 按鈕上這人的 id
     const userId = req.params.id
-    // 登入中的使用者 id
-    const loginUser = helpers.getUser(req).id
     return Followship.findOne({
       where: {
-        followerId: loginUser,
+        followerId: helpers.getUser(req).id,
         followingId: userId
       }
     })
@@ -458,6 +464,77 @@ const userController = {
         return followship.destroy()
       })
       .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+
+  // 取得特定使用者 Following(正在追蹤) 名單
+  getUserFollowings: (req, res, next) => {
+    return Promise.all([
+      User.findByPk(req.params.id, {
+        include: [
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' },
+          { model: Tweet }
+        ],
+        nest: true
+      }),
+      User.findByPk(helpers.getUser(req).id, { raw: true })
+    ])
+      .then(([user, currentUser]) => {
+        if (!user) throw new Error('User not found')
+        // 推文數量
+        const tweetsLength = user.Tweets.length
+        // 登入使用者目前的 following 清單
+        const followingList = helpers.getUser(req).Followings.map(f => f.id)
+        // console.log('Followers')
+        // console.log(user.toJSON().Followers)
+        // console.log('Followings')
+        // console.log(user.toJSON().Followings)
+        // 特定使用者的 following 清單
+        const followings = user.toJSON().Followings
+          .map(following => ({
+            ...following,
+            isFollowed: followingList.includes(following.id)
+          }))
+          .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        // console.log(followings)
+        res.render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followings })
+      })
+      .catch(err => next(err))
+  },
+
+  // 取得特定使用者 Follower(追隨者) 名單
+  getUserFollowers: (req, res, next) => {
+    return Promise.all([
+      User.findByPk(req.params.id, {
+        include: [
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' },
+          { model: Tweet }
+        ],
+        nest: true
+      }),
+      User.findByPk(helpers.getUser(req).id, { raw: true })
+    ])
+      .then(([user, currentUser]) => {
+        if (!user) throw new Error('User not found')
+        // 推文數量
+        const tweetsLength = user.Tweets.length
+        // 登入使用者目前的 following 清單
+        const followingList = helpers.getUser(req).Followings.map(f => f.id)
+        // console.log('Followers')
+        // console.log(user.toJSON().Followers)
+        // console.log('Followings')
+        // console.log(user.toJSON().Followings)
+        const followers = user.toJSON().Followers
+          .map(follower => ({
+            ...follower,
+            isFollowed: followingList.includes(follower.id)
+          }))
+          .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        console.log(followers)
+        res.status(200).render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followers })
+      })
       .catch(err => next(err))
   }
 }

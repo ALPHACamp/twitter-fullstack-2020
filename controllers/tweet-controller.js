@@ -126,6 +126,7 @@ const tweetController = {
           .sort((a, b) => b.followerCount - a.followerCount)
         res.render('tweet', { tweet: tweetData, replies, topUsers: data, currentUser })
       })
+      .catch(err => next(err))
   },
 
   // 抓特定推文資料傳給前端
