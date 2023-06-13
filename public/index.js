@@ -7,7 +7,7 @@ targetNodes.push(editProfileModal)
 targetNodes.push(postReplyModal)
 
 // 取得目前現在視窗大小的函式
-function updatePageHeight () {
+function updatePageHeight() {
   let pageHeight = Math.max(
     document.documentElement.scrollHeight,
     document.body.scrollHeight
@@ -23,7 +23,7 @@ window.addEventListener('resize', function () {
   pageHeight = updatePageHeight()
 })
 
-const observer = new MutationObserver(function async (mutationsList, observer) {
+const observer = new MutationObserver(function async(mutationsList, observer) {
   for (const mutation of mutationsList) {
     if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
       // 如果監聽對象的 class 有 show 的話
@@ -47,16 +47,19 @@ targetNodes.forEach(function (targetNode) {
 // 編輯個人資料相關
 const editProfileButton = document.querySelector('#editProfileButton')
 const putProfileButton = document.querySelector('#putProfileButton')
+const editModalCover = document.querySelector('#editModalCover')
+const editModalAvatar = document.querySelector('#editModalAvatar')
 const nameInput = document.querySelector('#name')
 const introInput = document.querySelector('#intro')
 const userId = editProfileButton.value
 
 // 監聽按鈕 call API取得個人資料 把個人資料插入modal
 editProfileButton.addEventListener('click', event => {
-  // 待補上：檢查是否為本人
   axios.get(`/api/users/${userId}`)
     .then(response => {
-      const { name, intro } = response.data
+      const { cover, avatar, name, intro } = response.data
+      editModalCover.src = cover
+      editModalAvatar.src = avatar
       nameInput.value = name
       introInput.value = intro
     })
@@ -71,7 +74,6 @@ putProfileButton.addEventListener('click', event => {
   // 取得使用者輸入的資料
   const name = nameInput.value
   const intro = introInput.value
-  // 待補上：檢查是否為本人
   axios.post(`/api/users/${userId}`, { name, intro })
     .then(response => {
       const { name, intro } = response.data
