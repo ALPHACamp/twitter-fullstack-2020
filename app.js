@@ -16,16 +16,21 @@ const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const app = express()
 const port = process.env.PORT || 3000
 
-app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', helpers: handlebarsHelpers }))
+app.engine(
+  'hbs',
+  exphbs({ defaultLayout: 'main', extname: '.hbs', helpers: handlebarsHelpers })
+)
 app.set('view engine', 'hbs')
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true
-}))
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+  })
+)
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
@@ -42,6 +47,8 @@ app.use((req, res, next) => {
 
 app.use(routes)
 
-app.listen(port, () => console.log(`App is running on http://localhost:${port}`))
+app.listen(port, () =>
+  console.log(`App is running on http://localhost:${port}`)
+)
 
 module.exports = app
