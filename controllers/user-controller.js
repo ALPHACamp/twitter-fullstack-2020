@@ -298,8 +298,6 @@ const userController = {
       })
     ])
       .then(([user, replies, tweets, currentUser, topUsers]) => {
-        // console.log(replies)
-        console.log(JSON.stringify(replies, null, 2))
         // 將目前使用者追蹤的使用者做成一張清單
         const followingList = helpers.getUser(req).Followings.map(f => f.id)
         const data = topUsers
@@ -312,6 +310,69 @@ const userController = {
           .sort((a, b) => b.followerCount - a.followerCount)
         res.render('userPage-replies', { user, replies, tweets, currentUser, topUsers: data })
       })
+  },
+  // 取得特定使用者所有喜歡的內容頁面
+  getUserLikesPage: (req, res, next) => {
+    const userId = req.params.id
+    Promise.all([
+      // 取得特定使用者個人資料
+      User.findByPk(userId, {
+        raw: true,
+        nest: true
+      }),
+      // 取得該使用者喜歡的所有貼文
+      Tweet.findAll({
+        order: [['createdAt', 'DESC']],
+        attributes: ['id', 'description', 'createdAt'],
+        include: [
+          { model: User, attributes: ['id', 'account', 'name', 'avatar'] },
+          { model: Like, where: { userId } }
+        ],
+        nest: true,
+        raw: true
+      }),
+      Like.findAll({
+        attributes: ['id', 'userId', 'tweetId'],
+        raw: true,
+        nest: true
+      }),
+      // 取得該使用者所有貼文
+      Tweet.findAll({ where: { userId } }),
+      // 取得目前登入的使用者資料
+      User.findByPk(helpers.getUser(req).id, { raw: true }),
+      // 取得包含追蹤者的使用者資料
+      User.findAll({
+        where: {
+          isAdmin: 0,
+          id: { [Op.ne]: helpers.getUser(req).id }
+        },
+        include: [
+          { model: User, as: 'Followers' }
+        ],
+        group: ['User.id'],
+        limit: 10
+      })
+    ])
+      .then(([user, likedtweets, likes, tweets, currentUser, topUsers]) => {
+        // 調整 isLiked 及計算 likeCount
+        const tweetsData = likedtweets.map(tweet => ({
+          ...tweet,
+          isLiked: likes.some(like => (like.userId === helpers.getUser(req).id && like.tweetId === tweet.id)),
+          likeCount: likes.filter(like => like.tweetId === tweet.id).length
+        }))
+        // 將目前使用者追蹤的使用者做成一張清單
+        const followingList = helpers.getUser(req).Followings.map(f => f.id)
+        const data = topUsers
+          .map(user => ({
+            ...user.toJSON(),
+            isFollowed: followingList.includes(user.id),
+            followerCount: user.Followers.length
+          }))
+          // 排序：從追蹤數多的排到少的
+          .sort((a, b) => b.followerCount - a.followerCount)
+        res.render('userPage-likes', { user, likedtweets: tweetsData, tweets, currentUser, topUsers: data })
+      })
+      .catch(err => next(err))
   },
   // 追蹤特定使用者
   addFollow: (req, res, next) => {

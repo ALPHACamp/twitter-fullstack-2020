@@ -158,8 +158,8 @@ const tweetController = {
       Tweet.findByPk(tweetId),
       Like.findOne({
         where: {
-          userId: helpers.getUser(req).id,
-          tweetId
+          UserId: helpers.getUser(req).id,
+          TweetId: tweetId
         }
       })
     ])
