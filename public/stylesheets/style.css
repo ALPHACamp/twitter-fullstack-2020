@@ -1,9 +1,9 @@
 .sidebar-left {
   width: 178px;
-  height: 1200px;
-  position: fixed;
-  left: 130px;
-  top: 0px;
+  height: 100%;
+  margin-right: 35px;
+  position: sticky;
+  top: 0;
 }
 
 .sidebar-left img {
@@ -62,25 +62,14 @@
 .header {
   width: 641px;
   height: 74px;
-  position: absolute;
-  left: 353.79px;
-  top: 24px;
-  margin-top: -26px;
   padding: 24px 0 0 20.9px;
   display: flex;
-  background: #ffffff;
-  border-bottom: 1px solid #e6ecf0;
-  border-left: 1px solid #e6ecf0;
-  border-right: 1px solid #e6ecf0;
+  border-bottom: 1px solid #E6ECF0;
 }
 
 .header-admin {
   width: 937.13px;
   height: 74px;
-  position: absolute;
-  left: 353.79px;
-  top: 24px;
-  margin-top: -24px;
   padding: 24px 0 0 20.9px;
   display: flex;
   background: #ffffff;
@@ -175,10 +164,6 @@ h5 {
 
 .admin-tweets {
   width: 937.13px;
-  margin-top: 50px;
-  position: absolute;
-  left: 353.79px;
-  top: 24px;
 }
 
 .admin-tweet {
@@ -366,26 +351,23 @@ img.card-avatar {
 .header-admin-user {
   width: 1075px;
   height: 74px;
-  position: absolute;
-  left: 353.79px;
-  top: 24px;
-  margin-top: -24px;
   padding: 24px 0 0 20.9px;
   display: flex;
-  background: #ffffff;
-  border-bottom: 1px solid #e6ecf0;
-  border-left: 1px solid #e6ecf0;
-  border-right: 1px solid #e6ecf0;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.admin-main {
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
 }
 
 .admin-user {
   width: 1075px;
-  position: absolute;
-  left: 353.79px;
-  margin-top: -22px;
-  background: #ffffff;
-  border-bottom: 1px solid #e6ecf0;
-  border-left: 1px solid #e6ecf0;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E6ECF0;
+  border-left: 1px solid #E6ECF0;
+
 }
 
 .admin-user-row {
@@ -400,19 +382,20 @@ img.card-avatar {
 
 .setting-container {
   width: 641px;
-  height: 692px;
-  margin: -26px 0 0 282px;
-  border-left: 1px solid #e6ecf0;
-  border-right: 1px solid #e6ecf0;
+  height: 943px;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+}
+
+.user-main {
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
 }
 
 .user-main-body {
   width: 641px;
-  position: absolute;
-  top: 72px;
-  left: 354px;
-  border-left: 1px solid #e6ecf0;
-  border-right: 1px solid #e6ecf0;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
 }
 
 .user-info {
@@ -454,11 +437,13 @@ img.card-avatar {
 .sidebar-right {
   width: 273px;
   height: 731px;
-  position: fixed;
-  left: 1011px;
-  top: 16px;
-  background: #fafafb;
+  margin-left: 30px;
+  position: sticky;
+  top: 10px;
+  background: #FAFAFB;
+
   border-radius: 16px;
+  overflow: hidden;
 }
 
 .sidebar-header {
@@ -468,6 +453,10 @@ img.card-avatar {
 }
 
 .follow-card {
+  display: flex;
+}
+
+.follow-card a {
   display: flex;
 }
 
@@ -519,15 +508,6 @@ img.card-avatar {
 
 .solid {
   color: #e6ecf0;
-}
-
-.sidebar-left {
-  height: 1200px;
-  width: 178px;
-}
-
-.sidebar-left img {
-  margin: 13px 0 0 13px;
 }
 
 .nav-card {
@@ -587,13 +567,6 @@ img.card-avatar {
   color: #171725;
 }
 
-.sidebar-right {
-  width: 273px;
-  height: 731px;
-  background: #fafafb;
-  border-radius: 16px;
-}
-
 .sidebar-header {
   padding: 24px 0 24px 24px;
   width: 273px;
@@ -633,21 +606,6 @@ img.card-avatar {
   font-size: 14px;
   line-height: 22px;
   color: #92929d;
-}
-
-.following {
-  margin: 21px 16px 21px 13px;
-  width: 96px;
-  height: 40px;
-  border-radius: 50px;
-  color: #ffffff;
-  background: #ff6600;
-  border: none;
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
 }
 
 .follow {
@@ -719,6 +677,7 @@ img.card-avatar {
 }
 
 .one-tweet {
+  width: 641px;
   padding: 10px 15px;
   border-width: 0px 0px 1px 0px;
   border-style: solid;
@@ -769,15 +728,6 @@ img.card-avatar {
   color: #6c757d;
 }
 
-.header {
-  /* width: 100%; */
-  height: 74px;
-  padding: 24px 0 0 24px;
-  display: flex;
-  background: #ffffff;
-  border-bottom: 1px solid #e6ecf0;
-}
-
 .header-user {
   margin-left: 10px;
 }
@@ -817,6 +767,8 @@ img.card-avatar {
 }
 
 .message {
+  display: flex;
+  justify-content: center;
   z-index: 999;
   opacity: 0;
   animation-name: fadenum;
@@ -904,4 +856,9 @@ img.card-avatar {
   left: 15px;
   border-radius: 50%;
   z-index: 0;
+}
+
+.main-page {
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
 }
