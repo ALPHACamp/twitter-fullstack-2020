@@ -1,4 +1,4 @@
-const { Tweet, User, Reply } = require('../models')
+const { Tweet, User, Reply, Like } = require('../models')
 
 const adminController = {
   signInPage: (req, res) => {
@@ -44,8 +44,40 @@ const adminController = {
       next(err)
     }
   },
-  usersPage: (req, res) => {
-    res.render('admin/users')
+  getUsers: (req, res, next) => {
+    return User.findAll({
+      where: { isAdmin: false },
+      include: [
+        { model: User, as: 'Followers', attributes: ['id'] },
+        { model: User, as: 'Followings', attributes: ['id'] },
+        {
+          model: Tweet,
+          attributes: ['id'],
+          include: [{ model: Like, attributes: ['id'] }]
+        }
+      ]
+    })
+      .then(users => {
+        const result = users.map(user => {
+          // 計算使用者所有推文的Likes數
+          let sumLikes = 0
+
+          user.Tweets?.forEach(tweet => {
+            sumLikes += tweet.Likes?.length
+          })
+          // 回傳result
+          return {
+            ...user.toJSON(),
+            followerCounts: user.Followers.length,
+            followingCounts: user.Followings.length,
+            tweetsCounts: user.Tweets.length,
+            LikesCounts: sumLikes
+          }
+        })
+
+        res.render('admin/users', { users: result })
+      })
+      .catch(err => next(err))
   }
 }
 

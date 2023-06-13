@@ -21,32 +21,33 @@
       </div>
 
       <div class="row mt-3 me-5">
-
+        {{#each users}}
         <div class="col-md-3">
           <div class="card mb-4 ms-3" style="border-radius: 15px; overflow:hidden;">
             <div class="container-cover">
-              <img id="img-users-cover-admin" src="/images/users/cover.png" alt="">
+              <img id="img-users-cover-admin" src="{{this.cover}}" alt="圖片出錯拉">
             </div>
             <div class="container-avatar">
               <img id="img-users-avatar-admin"
-                src="https://assets-lighthouse.alphacamp.co/uploads/image/file/15982/man_02.png" alt="">
+                src="{{this.avatar}}" alt="圖片出錯拉">
             </div>
             <div class="container-name" style="text-align: center;">
-              <p class="mb-0">John Doe</p>
-              <p class="mb-2">@heyjohn</p>
+              <p class="mb-0">{{this.name}}</p>
+              <p class="mb-2">@{{this.account}}</p>
             </div>
             <div class="container-reply" style="text-align: center;">
-              <img id="ac-reply-icon-admin" src="/images/users/reply.png" alt="" >
-              <span>1.5k</span>
+              <img id="ac-tweet-icon-admin" src="/images/users/tweet.png" alt="">
+              <span>{{this.tweetsCounts}}</span>
               <img id="ac-like-icon-admin" src="/images/users/like.png" alt="">
-              <span>20k</span>
+              <span>{{this.LikesCounts}}</span>
             </div>
             <div class="container-follow" style="text-align: center;">
-              <span>3.4個跟隨中</span>
-              <span>59位跟隨者</span>
+              <span>{{this.followingCounts}}個跟隨中</span>
+              <span>{{this.followerCounts}}位跟隨者</span>
             </div>
           </div>
         </div>
+        {{/each}}
 
       </div>
 

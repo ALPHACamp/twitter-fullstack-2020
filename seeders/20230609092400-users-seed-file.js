@@ -6,63 +6,38 @@ const { generateLimitedParagraph } = require('../helpers/seed-helpers')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Users', [{
+    const fakeUsers = []
+    const admin = {
       account: 'root',
       name: 'root',
       email: 'root@example.com',
       password: await bcrypt.hash('12345678', 10),
       is_admin: true,
-      cover: '/images/users/cover.png',
-      avatar: 'https://assets-lighthouse.alphacamp.co/uploads/image/file/15982/man_02.png',
+      cover: `https://loremflickr.com/320/240/background/?random=${Math.random() * 100}`,
+      avatar: `https://loremflickr.com/320/240/avatar,person/?random=${Math.random() * 100}`,
       introduction: generateLimitedParagraph(160),
       created_at: new Date(),
       updated_at: new Date()
-    }, {
-      account: 'user1',
-      name: faker.lorem.word(50),
-      email: 'user1@example.com',
-      password: await bcrypt.hash('12345678', 10),
-      is_admin: false,
-      cover: '/images/users/cover.png',
-      avatar: 'https://assets-lighthouse.alphacamp.co/uploads/image/file/15982/man_02.png',
-      introduction: generateLimitedParagraph(160),
-      created_at: new Date(),
-      updated_at: new Date()
-    }, {
-      account: 'user2',
-      name: faker.lorem.word(50),
-      email: 'user2@example.com',
-      password: await bcrypt.hash('12345678', 10),
-      is_admin: false,
-      cover: '/images/users/cover.png',
-      avatar: 'https://assets-lighthouse.alphacamp.co/uploads/image/file/15982/man_02.png',
-      introduction: generateLimitedParagraph(160),
-      created_at: new Date(),
-      updated_at: new Date()
+    }
+    fakeUsers.push(admin)
 
-    }, {
-      account: 'user3',
-      name: faker.lorem.word(50),
-      email: 'user1@example.com',
-      password: await bcrypt.hash('12345678', 10),
-      is_admin: false,
-      cover: '/images/users/cover.png',
-      avatar: 'https://assets-lighthouse.alphacamp.co/uploads/image/file/15982/man_02.png',
-      introduction: generateLimitedParagraph(160),
-      created_at: new Date(),
-      updated_at: new Date()
-    }, {
-      account: 'user4',
-      name: faker.lorem.word(50),
-      email: 'user1@example.com',
-      password: await bcrypt.hash('12345678', 10),
-      is_admin: false,
-      cover: '/images/users/cover.png',
-      avatar: 'https://assets-lighthouse.alphacamp.co/uploads/image/file/15982/man_02.png',
-      introduction: generateLimitedParagraph(160),
-      created_at: new Date(),
-      updated_at: new Date()
-    }], {})
+    for (let i = 1; i <= 12; i++) {
+      const user = {
+        account: `user${i}`,
+        name: faker.lorem.word(50),
+        email: `user${i}@example.com`,
+        password: await bcrypt.hash('12345678', 10),
+        is_admin: false,
+        cover: `https://loremflickr.com/320/240/background/?random=${Math.random() * 100}`,
+        avatar: `https://loremflickr.com/320/240/avatar,person/?random=${Math.random() * 100}`,
+        introduction: generateLimitedParagraph(160),
+        created_at: new Date(),
+        updated_at: new Date()
+      }
+      fakeUsers.push(user)
+    }
+
+    await queryInterface.bulkInsert('Users', fakeUsers, {})
   },
 
   down: async (queryInterface, Sequelize) => {
