@@ -136,7 +136,7 @@ const userController = {
       .then(user => {
         if (!user) throw new Error('User did not exist.')
         const { account, name, email } = user
-        res.render('setting', { account, name, email, userId })
+        res.render('setting', { account, name, email, userId, isSetting: true })
       })
       .catch(err => next(err))
   },
@@ -258,7 +258,7 @@ const userController = {
           }))
           // 排序：從追蹤數多的排到少的
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('userPage-tweets', { user, tweets: tweetsData, currentUser, topUsers: data })
+        res.render('userPage-tweets', { user, tweets: tweetsData, currentUser, topUsers: data, isProfile: true })
       })
   },
   // 取得特定使用者所有回覆頁面

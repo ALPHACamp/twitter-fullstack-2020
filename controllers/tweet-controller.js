@@ -51,7 +51,7 @@ const tweetController = {
           }))
           // 排序：從追蹤數多的排到少的
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('tweets', { tweets: tweetsData, topUsers: data, currentUser })
+        res.render('tweets', { tweets: tweetsData, topUsers: data, currentUser, isHomePage: true })
       })
       .catch(err => next(err))
   },
