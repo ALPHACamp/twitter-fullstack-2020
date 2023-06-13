@@ -1,5 +1,6 @@
-const { User } = require('../models')
+const { User, Like } = require('../models')
 const bcrypt = require('bcryptjs')
+const helpers = require('../_helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -57,6 +58,28 @@ const userController = {
   },
   settingPage: (req, res) => {
     res.render('setting')
+  },
+  addLike: (req, res, next) => { // 喜歡
+    return Like.create({
+      UserId: helpers.getUser(req).id,
+      TweetId: req.params.TweetId
+    })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+  removeLike: (req, res, next) => { // 不喜歡
+    return Like.findOne({
+      where: {
+        UserId: helpers.getUser(req).id,
+        TweetId: req.params.TweetId
+      }
+    })
+      .then(like => {
+        if (!like) throw new Error("You haven't Liked this tweet!")
+        return like.destroy()
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
   }
 }
 
