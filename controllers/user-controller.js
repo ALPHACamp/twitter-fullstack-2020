@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { Op } = require('sequelize')
 const { User, Followship, Like, Tweet } = require('../models')
-const { localFileHandler } = require('../helpers/file-helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
 const helpers = require('../helpers/auth-helpers')
 
 const userController = {
@@ -228,8 +228,8 @@ const userController = {
 
       const [user, avatarPath, coverPath] = await Promise.all([
         User.findByPk(id),
-        localFileHandler(files?.avatar ? files.avatar[0] : null),
-        localFileHandler(files?.cover ? files.cover[0] : null)
+        imgurFileHandler(files?.avatar ? files.avatar[0] : null),
+        imgurFileHandler(files?.cover ? files.cover[0] : null)
       ])
 
       await user.update({
