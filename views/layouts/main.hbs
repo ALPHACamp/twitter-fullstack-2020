@@ -132,39 +132,7 @@
       </div>
       {{!-- 右側 fixed 欄位 --}}
       <div class="col col-3">
-        <div class="m-2 mt-3" style="position:fixed; width:auto; background-color:#FAFAFB; border-radius: 16px">
-          <h4 class="pt-4 ps-4 pe-4 pb-1">推薦跟隨</h4>
-          <hr class="mb-0">
-          {{#each topUsers}}
-          {{!-- 一個用戶 --}}
-          <div class="d-flex flex-row align-items-center ps-3 pe-3 mb-3 mt-4 justify-content-between"
-            style="width: 273px">
-            <div class="d-flex align-items-center">
-              {{!-- 用戶大頭貼 --}}
-              <figure class="m-0 me-2" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
-                <img src="{{this.avatar}}" style="object-fit: cover;width:100%;height:100%">
-              </figure>
-              <div class="me-2">
-                {{!-- 用戶名稱 --}}
-                <p class="m-0" style="font-weight: 700;">{{this.name}}</p>
-                {{!-- 用戶id --}}
-                <p class="m-0 color-dark-70" style="font-weight: 500;">@{{this.account}}</p>
-              </div>
-            </div>
-            {{!-- 跟隨按鈕 --}}
-            {{#if this.isFollowed}}
-            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-              <button type="submit" class="pill pill-default pill-main">正在跟隨</button>
-            </form>
-            {{else}}
-            <form action="/followships" method="POST">
-              <input type="text" name="id" value="{{this.id}}" style="display: none;">
-              <button type="submit" class="pill pill-default pill-outline">跟隨</button>
-            </form>
-            {{/if}}
-          </div>
-          {{/each}}
-        </div>
+        {{> mainPage-topUsers}}
       </div>
     </div>
   </div>
