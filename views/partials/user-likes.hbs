@@ -20,17 +20,18 @@
                 <img src="/images/reply_outlined.svg" class='reply-icon' alt="" type="button" data-bs-toggle="modal" data-bs-target="#reply-modal"/>
                 <span>{{this.repliesCount}}</span>
               </span>
-              {{#ifCond ../loginUser.id ../user.id}}
-                <form class='count' action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;" >
-                  <input type="image" src="/images/like_filled.svg" alt="like" class="like-icon">
-                  <span>{{this.likesCount}}</span>
-                </form>
-              {{else}}
-                <span class='count'>
-                  <img src="/images/like_filled.svg" class='reply-icon' alt="" type="button" data-bs-toggle="modal" data-bs-target="#reply-modal"/>
+              <span class='count'>
+                {{#if this.isLiked }}
+                  <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
+                    <input class='like-icon' type="image" src="/images/like_filled.svg" alt="提交">
+                  </form>
+                {{else}}
+                  <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
+                    <input class='like-icon' type="image" src="/images/like_outlined.svg" alt="提交">
+                  </form>
+                {{/if}}
                   <span>{{this.likesCount}}</span>
                 </span>
-              {{/ifCond}}
             </div>
           </div>
         </div>

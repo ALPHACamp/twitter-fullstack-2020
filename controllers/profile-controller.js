@@ -145,6 +145,7 @@ const profileController = {
   },
   getUserLikes: async (req, res, next) => {
     const { userData, followingData } = req.session
+    const loginUser = helpers.getUser(req)
     const { userId } = req.params
     const route = `users/${userId}/likes`
     // 取得page, limit, offset
@@ -170,7 +171,8 @@ const profileController = {
       const tweetsData = likes.rows.map((like, index) => ({
         ...like.Tweet.toJSON(),
         likesCount: counts[index].likesCount,
-        repliesCount: counts[index].repliesCount
+        repliesCount: counts[index].repliesCount,
+        isLiked: loginUser.Likes.some(l => l.TweetId === like.TweetId)
       }))
       // pagination
       const pagination = getPagination(page, limit, likes.count)

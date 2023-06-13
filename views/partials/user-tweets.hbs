@@ -22,7 +22,7 @@
                   <span>{{this.repliesCount}}</span>
                 </span>
                 <span class='count'>
-                {{#if isLiked }}
+                {{#if this.isLiked }}
                   <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
                     <input class='like-icon' type="image" src="/images/like_filled.svg" alt="提交">
                   </form>
