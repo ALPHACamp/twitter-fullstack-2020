@@ -5,7 +5,7 @@ module.exports = {
     // 先查詢 User 的 id 有哪些
     const users = await queryInterface.sequelize.query(
       // 過濾掉 User 裡的管理者
-      'SELECT id FROM Users WHERE is_admin = false;',
+      `SELECT id FROM Users WHERE role = 'user';`,
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
 
