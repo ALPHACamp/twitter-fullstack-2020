@@ -24,7 +24,7 @@ getTweetButton.forEach(button => {
         ModalUserAccount2.innerText = account
         ModalDescription.innerText = description
         ModalCurrentUserAvatar.src = currentUserAvatar
-        ModalReplyForm.action = `tweets/${id}/replies`
+        ModalReplyForm.action = `/tweets/${id}/replies`
         console.log(response)
       })
       .catch(err => {

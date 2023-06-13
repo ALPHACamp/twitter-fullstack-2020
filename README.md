@@ -48,7 +48,25 @@ npm run test
 
 #### 個別測試檔
 ```
+// models
+npx mocha test/models/Followship.spec.js --exit
+npx mocha test/models/Like.spec.js --exit
+npx mocha test/models/Reply.spec.js --exit
+npx mocha test/models/Tweet.spec.js --exit
+npx mocha test/models/User.spec.js --exit
+
+//admin
+npx mocha test/requests/admin/login.spec.js --exit
+npx mocha test/requests/admin/tweets.spec.js --exit
+npx mocha test/requests/admin/user.spec.js --exit
+
+// requests
+npx mocha test/requests/followship.spec.js --exit
+npx mocha test/requests/login.spec.js --exit
+npx mocha test/requests/reply.spec.js --exit
 npx mocha test/requests/tweet.spec.js --exit
+npx mocha test/requests/user.spec.js --exit
+
 ```
 
 ## 共用帳號
