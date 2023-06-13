@@ -9,7 +9,7 @@ module.exports = {
     })
     await queryInterface.bulkInsert(
       'Followships',
-      Array.from({ length: 50 }, () => ({
+      Array.from({ length: 10 }, () => ({
         ...doNotFollowSelf(users),
         created_at: new Date(),
         updated_at: new Date()
