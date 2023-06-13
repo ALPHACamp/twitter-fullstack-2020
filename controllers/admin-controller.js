@@ -35,7 +35,6 @@ const adminController = {
         user,
         tweets: tweets
       })
-      console.log('adminGetTweets')
     } catch (err) {
       next(err)
     }
@@ -53,10 +52,19 @@ const adminController = {
         })
       ])
       res.render('admin/users', { users })
-      console.log('adminGetUsers')
     } catch (err) {
       next(err)
     }
+  },
+  deleteTweet: (req, res, next) => {
+    const tweetId = req.body.tweetId
+    Tweet.destroy(
+      { where: { id: tweetId } }
+    )
+      .then(user => {
+        console.log(user)
+      })
+      .catch(err => console.log(err))
   }
 }
 
