@@ -5,70 +5,70 @@
 <li class="list-group-item tweet-list" type="button" data-bs-toggle="modal" data-bs-target="#tweet-modal">
   <div class="d-flex flex-column">
     <div class="d-flex align-items-center">
-      <img src="{{user.avatar}}" alt="" class="recommend-followings-img me-1">
+      <img src="{{user.avatar}}" class="tweet-user-img me-1"
+        onerror="this.onerror=null; this.src='/images/profile-img.svg'">
 
       <div class="tweet-placeholder">有什麼新鮮事？</div>
     </div>
 
-    <div class="btn tweet-btn mb-2 me-2 align-self-end">推文</div>
+    <div class="btn align-self-end">推文</div>
   </div>
 </li>
 
 {{#each tweets}}
-<li class="list-group-item tweet-list">
-  <div class="d-flex">
-    <div class="flex-shrink-1 p-0">
-      <img src="{{this.User.avatar}}" alt="" class="recommend-followings-img">
-    </div>
-    <div class="tweet-text d-flex flex-column">
-      <div class="d-flex align-items-baseline mb-2">
-        <div class="tweet-name me-2">{{this.User.name}} </div>
-        <div class="tweet-account">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
-      </div>
-
-      <p class="mb-2" style="white-space:break-spaces;">{{this.description}}</p>
-
-      <div class="d-flex">
-        <img src="/images/reply_outlined.svg" alt="" class="tweets-icon me-1">
-        <span class="tweets-interact-counts" style="margin-right:40px;">13</span>
-        <img src="/images/like_outlined.svg" alt="" class="tweets-icon me-1">
-        <span class="tweets-interact-counts">76</span>
-      </div>
-    </div>
-  </div>
-</li>
-{{/each}}
-
-<!-- Modal -->
-<div class="modal fade" id="tweet-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="tweetModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="tweet-close-button" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true"><img src="/images/message/message_danger.svg" alt=""></span>
+<a href="/tweets/{{this.id}}/replies" class="text-decoration-none">
+  <li class="list-group-item tweet-list">
+    <div class="d-flex">
+      <div class="flex-shrink-1 p-0">
+        <button class="tweet-click-block"
+          onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{this.User.id}}/tweets';">
+          <img src="{{this.User.avatar}}" class="tweet-user-img"
+            onerror="this.onerror=null; this.src='/images/profile-img.svg'">
         </button>
       </div>
-      <div class="modal-body">
-        <!-- form -->
-        <div class="d-flex align-items-start">
-          <div class="flex-shrink-0 p-0">
-            <img src="{{user.avatar}}" alt="" class="recommend-followings-img">
+      <div class="tweet-text d-flex flex-column">
+        <button class="tweet-click-block"
+          onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{this.User.id}}/tweets';">
+          <div class="d-flex align-items-baseline">
+            <div class="user-name">{{this.User.name}} </div>
+            <div class="user-account">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
           </div>
-          <div class="d-flex flex-column flex-grow-1">
-            <form action="/user/tweets" method="POST">
-              <div class="form-group">
-                <textarea class="border-0 mb-2" id="description" name="description" rows="3"
-                  style="resize:vertical;outline:none;" placeholder="有什麼新鮮事？"></textarea>
-                <div class="d-flex justify-content-end">
-                  <button type="submit" class="btn btn-primary">推文</button>
-                </div>
-              </div>
+        </button>
 
-            </form>
+        <p class="text-content">{{this.description}}</p>
+
+        <div class="d-flex">
+          <div class="d-flex align-items-center" onclick="event.stopImmediatePropagation();event.preventDefault();"
+            data-bs-toggle="modal" data-bs-target="#reply-modal-{{this.id}}">
+            <img src="/images/reply_outlined.svg" alt="" class="tweet-list-icon">
+            <span class="interact-counts-text">{{this.replyCount}}</span>
+          </div>
+
+          {{#if this.isLiked }}
+          <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
+            <input type="image" src="/images/like_filled.svg" alt="提交" style="margin-left:40px;"
+              class="tweet-list-icon">
+          </form>
+          {{else}}
+          <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
+            <input type="image" src="/images/like_outlined.svg" alt="提交" style="margin-left:40px;"
+              class="tweet-list-icon">
+          </form>
+          {{/if}}
+
+          <span class="interact-counts-text">{{this.likeCount}}</span>
+          <div class="d-flex align-items-center">
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </li>
+</a>
+
+{{!-- modal --}}
+{{> modal-reply}}
+
+{{/each}}
+
+{{!-- modal --}}
+{{> modal-tweet}}

@@ -7,6 +7,7 @@ const followshipController = require('../controllers/followship-controller')
 const profileController = require('../controllers/profile-controller')
 const userController = require('../controllers/user-controller')
 const tweetsController = require('../controllers/tweets-controller')
+const adminController = require('../controllers/admin-controller')
 const apiProfileController = require('../controllers/api-profile-controller')
 
 const { authenticated } = require('../middleware/auth')
@@ -29,15 +30,10 @@ router.post(
 
 // signup
 router.get('/signup', userController.signupPage)
+router.post('/signup', userController.signup)
 
 // logout
 router.get('/logout', userController.logout)
-
-
-// admin
-router.get('/admin/signin', adminController.adminSigninPage)
-router.get('/admin/tweets', adminController.adminTweetsPage)
-router.get('/admin/users', adminController.adminUsersPage)
 
 // index
 router.get('/tweets/:tweetId/replies', authenticated, tweetsController.getTweet)
@@ -63,7 +59,7 @@ router.put(
 )
 
 // followship
-router.post('/followships/:userId', authenticated, followshipController.addFollowing)
+router.post('/followships', authenticated, followshipController.addFollowing)
 router.delete('/followships/:userId', authenticated, followshipController.removeFollowing)
 
 // api

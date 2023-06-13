@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Noto+Sans+TC:wght@400;500;700&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Roboto&display=swap');
 
-/****** body ******/
+/****** Common Styles ******/
+/* body */
 html,
 body {
   /* layout */
@@ -9,18 +10,167 @@ body {
 
   /* font */
   font-family: 'Noto Sans TC', sans-serif;
+  font-style: normal;
+  color: #171725;
 
   /* scrollbar */
   overflow-y: hidden;
 }
 
+hr {
+  border: 1px solid #e6ecf0;
+  margin: 16px 0;
+}
+
+
+/* font */
 h4 {
   font-weight: 700;
   font-size: 24px;
   margin: 0;
 }
 
-/****** home ******/
+h5 {
+  font-weight: 700;
+  font-size: 18px;
+  margin: 0;
+}
+
+.user-name {
+  /* layout */
+  margin-right: 8px;
+
+  /* font */
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.tag-user-name {
+  /* font */
+  font-weight: 400;
+  font-size: 14px;
+  color: #ff6600;
+}
+
+.user-account {
+  /* font */
+  font-weight: 400;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.recommend-following-account {
+  /* font */
+  font-weight: 400;
+  font-size: 14px;
+  color: #92929d;
+}
+
+.text-content {
+  /* layout */
+  margin: 8px 0px;
+
+  /* font */
+  font-weight: 400;
+  font-size: 16px;
+  white-space: break-spaces;
+}
+
+.text-title {
+  font-weight: 400;
+  font-size: 14px;
+  color: #696974;
+}
+
+.interact-counts-text {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.interact-counts-title {
+  font-weight: 500;
+  font-size: 13px;
+  color: #6c757d;
+}
+
+
+/* btn */
+.btn {
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+
+  /* Inside layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+
+  /* style */
+  width: auto;
+  background: #ff6600;
+  border-radius: 50px;
+  border-color: #ff6600;
+
+  /* font */
+  font-size: 16px;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.btn:hover {
+  /* style */
+  color: #ffffff;
+  background: #ff6600;
+  border-color: #ff6600;
+  transform: scale(1.05);
+}
+
+.btn:active {
+  /* style */
+  color: #ff6600 !important;
+  background-color: #ffffff !important;
+  border-color: #ff6600 !important;
+}
+
+.nav-btn {
+  /* size */
+  max-width: 178px;
+  height: 46px;
+
+  /* font */
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.recommend-followings-btn {
+  /* size */
+  height: 40px;
+
+  /* style */
+  background: #ffffff;
+  border: 1px solid #ff6600;
+
+  /* font */
+  color: #ff6600;
+}
+
+.recommend-followings-btn.followed {
+  /* style */
+  background: #ff6600;
+  border: 1px solid #ff6600;
+  color: #ffffff;
+}
+
+
+
+/****** index ******/
 .home-page {
   /* layout */
   margin: 0px 24px;
@@ -31,137 +181,7 @@ h4 {
   overflow-y: auto;
 }
 
-/* list content */
-.home-list {
-  /* layout */
-  height: 100vh;
 
-  /* style */
-  border-radius: 0 !important;
-}
-
-.tweet-list {
-  border: 0px;
-  border-radius: 0 !important;
-  border-bottom: 1px solid #e6ecf0;
-  /* border: 1px solid #E6ECF0; */
-}
-
-.home-title {
-  border: 0px;
-  border-bottom: 1px solid #e6ecf0;
-}
-
-/****** signin signup admin/signin ******/
-.form-row {
-  width: 354px;
-  height: 54px;
-  border-radius: 2px;
-  background-color: #f5f8fa;
-}
-
-.account-label,
-.password-label {
-  margin-bottom: 0;
-  padding: 0 0 0 10px;
-  font-size: 14px;
-}
-
-.account-input,
-.password-input {
-  padding-left: 10px;
-  font-size: 16px;
-  background-color: #f5f8fa;
-  border: 0;
-  border-bottom: 2px solid #657786;
-  border-radius: 0;
-}
-
-.account-input::placeholder,
-.password-input::placeholder {
-  color: #b5b5be;
-}
-
-.signin-btn {
-  width: 354px;
-  height: 46px;
-  font-size: 20px;
-  border: 0;
-  border-radius: 50px;
-  background-color: #ff6600;
-}
-
-.other-page-btn p {
-  width: 354px;
-}
-
-/****** admin-users ******/
-.secondary-color {
-  color: #6c757d;
-}
-
-.admin-user-info {
-  text-decoration: none;
-}
-
-.admin-user-card {
-  width: 210px;
-  height: 314px;
-  border: 0;
-  border-radius: 10px;
-  background-color: #f6f7f8;
-  transition: 0.5s;
-}
-
-.admin-user-card:hover {
-  transform: scale(1.03);
-}
-
-.admin-user-card i {
-  font-style: normal;
-}
-
-.admin-user-card-cover {
-  width: 210px;
-  height: 140px;
-}
-
-.admin-user-card-cover img {
-  width: 210px;
-  height: 140px;
-  border-radius: 10px 10px 0 0;
-}
-
-.admin-user-avatar {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -95%);
-  border: 4px solid #ffffff;
-  border-radius: 50%;
-}
-
-.admin-user-avatar img {
-  border-radius: 50%;
-}
-
-.admin-user-info-name {
-  margin-top: 35px;
-  font-size: 16px;
-}
-
-.admin-user-info-account {
-  font-size: 14px;
-  color: #6c757d;
-}
-
-.admin-user-info-count i {
-  vertical-align: text-top;
-}
-
-.admin-user-info-follower i {
-  font-size: 14px;
-}
 
 /****** nav ******/
 .navbar.navbar-vertical {
@@ -248,79 +268,7 @@ h4 {
   background-image: url('/images/navbar/logout_colored.svg');
 }
 
-/****** btn ******/
-.btn {
-  /* layout */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 8px auto;
 
-  /* Inside layout */
-  flex: none;
-  order: 0;
-  align-self: stretch;
-  flex-grow: 0;
-
-  /* style */
-  background: #ff6600;
-  border-radius: 50px;
-  border-color: #ff6600;
-
-  /* font */
-  font-weight: 400;
-  color: #ffffff;
-}
-
-.btn:hover {
-  /* style */
-  color: #ffffff;
-  background: #ff6600;
-  border-color: #ff6600;
-  transform: scale(1.05);
-}
-
-.btn:active {
-  /* style */
-  color: #ff6600 !important;
-  background-color: #ffffff !important;
-  border-color: #ff6600 !important;
-}
-
-.nav-btn {
-  /* size */
-  max-width: 178px;
-  height: 46px;
-
-  /* font */
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-}
-
-.recommend-followings-btn {
-  /* size */
-  width: auto;
-  height: 40px;
-
-  /* style */
-  background: #ffffff;
-  border: 1px solid #ff6600;
-
-  /* font */
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  color: #ff6600;
-}
-
-.recommend-followings-btn.followed {
-  /* style */
-  background: #ff6600;
-  border: 1px solid #ff6600;
-  color: #ffffff;
-}
 
 /****** recommend-followings ******/
 .recommend-followings {
@@ -368,12 +316,6 @@ h4 {
   border-bottom: 1px solid #e6ecf0;
 }
 
-.recommend-followings-img {
-  /* size */
-  max-width: 100%;
-  height: auto;
-}
-
 .recommend-followings-text {
   /* layout */
   margin-left: 8px;
@@ -388,85 +330,210 @@ h4 {
   width: 76px;
 }
 
-.following-name {
-  /* font */
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  color: #171725;
-}
 
-.following-account {
-  /* font */
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  color: #92929d;
-}
 
-/* profile */
-.profile-page {
-  /* layout */
-  margin: 0px 24px;
+/****** modal ******/
+.modal-dialog {
   padding: 0;
   border: 1px solid #e6ecf0;
+  height: 100vh;
+  position: absolute;
+  top: 5%;
+  left: 30%;
 }
 
-.user-container > div > span > .tweet {
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 19px;
+.modal-content {
+  margin: 0;
+  padding: 0;
+  width: 634px;
+  min-height: 300px;
+}
+
+.modal-header {
+  position: relative;
+  height: 57px;
+  margin: 0;
+  padding: 8px 16px;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.modal-title {
+  margin-left: 32px;
+  color: #1c1c1c;
+}
+
+.modal-body {
+  position: relative;
+  margin: 0;
+  padding: 16px 16px 16px 24px;
+}
+
+.modal-body-content textarea {
+  width: 100%;
+  min-height: 150px;
+  margin-bottom: 16px;
+  padding: 8px;
+  resize: none;
+  outline: none;
+  border: 0px;
+}
+
+.modal-body-content {
+  height: 100%;
+}
+
+
+
+/****** tweets-list ******/
+.home-list {
+  /* layout */
+  height: 100vh;
+
+  /* style */
+  border-radius: 0 !important;
+}
+
+.tweet-list {
+  border: 0px;
+  border-radius: 0 !important;
+  border-bottom: 1px solid #e6ecf0;
+  padding: 16px 24px;
+}
+
+.tweet-click-block {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+}
+
+.tweet-text {
+  margin-left: 8px;
+}
+
+.tweet-interact-btn {
+  text-decoration: none;
+  margin-right: 40px;
+}
+
+.tweet-user-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.tweet-list-icon {
+  height: 18px;
+  width: auto;
+  margin-right: 8px;
+}
+
+.tweet-placeholder {
+  /* layout */
+  margin-left: 8px;
+
+  /* font */
+  font-weight: 700;
+  font-size: 18px;
   color: #6c757d;
 }
 
-.user-container .head {
-  margin-left: 28px;
-}
-
-.user-container h5 {
-  font-family: 'Noto Sans TC';
-  font-style: normal;
+.tweet-interact-counts {
+  font-family: 'Montserrat';
   font-weight: 700;
-  font-size: 18px;
-  line-height: 26px;
-  color: #171725;
+  font-size: 19px;
+  margin-right: 5px;
 }
 
-.user-container > .card {
-  position: relative;
-  border-radius: 0px;
+.tweet-interact-text {
+  font-weight: 500;
+  font-size: 19px;
+  color: #6c757d;
+  margin-right: 24px;
 }
 
-.user-container > .card > .cover {
-  size: 100% 200px;
+/* tweet */
+.tweet-content {
+  font-size: 24px;
+  margin: 8px 0;
+}
+
+.tweet-icon {
+  height: 30px;
+  width: auto;
+  margin-right: 128px;
+}
+
+
+
+/****** profile ******/
+.profile-header {
+  padding: 16px 24px;
+}
+
+.card {
+  border: 0px;
+}
+
+.card-body {
+  padding: 0px;
+  margin: 16px;
+}
+
+.card-text {
+  margin: 6px 0 8px 0;
+}
+
+.profile-cover {
   width: 100%;
   height: 200px;
   border-radius: 0px;
 }
 
-.user-container > .card > .avatar {
+.profile-user-img-block {
+  position: relative;
+  display: flex;
+  margin: 0;
+}
+
+.profile-user-img {
   position: absolute;
   height: 140px;
-  left: 15px;
-  top: 124px;
-  /* transform: translateY(50%); */
+  transform: translateY(-50%);
   border-radius: 50%;
   border: 4px solid #ffffff;
 }
 
-.user-container > .card > div > .at-name {
-  font-family: 'Noto Sans TC';
-  font-style: normal;
+.profile-description-data {
+  /* font */
   font-weight: 400;
   font-size: 14px;
-  line-height: 22px;
+  color: #171725;
+  text-decoration: none;
+  white-space: break-spaces;
+}
+
+.underline:hover {
+  text-decoration: underline;
+}
+
+.profile-description-text {
+  /* layout */
+  margin-right: 20px;
+
+  /* font */
+  font-size: 14px;
   color: #6c757d;
 }
 
-.user-container > .card > div > span,
-.user-container > .card > div > span > a {
+.user-container>.card>div>span,
+.user-container>.card>div>span>a {
   font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 400;
@@ -476,45 +543,25 @@ h4 {
   text-decoration: none;
 }
 
-.user-container > .card > .edit-btn {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-}
-
-.user-container > .card > .edit-btn .btn {
-  width: 128px;
-  margin-top: 16px;
-  margin-right: 16px;
-}
-
-.user-container > .card > .follow {
+.profile-btn-block {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 16px;
-  margin-right: 16px;
+  margin: 16px;
 }
 
-.user-container > .card > .follow > .mail,
-.user-container > .card > .follow > .notification {
+.profile-btn-block >.mail-btn,
+.profile-btn-block >.notification-btn {
   width: 40px;
   margin-right: 16px;
-}
-
-.user-container .nav {
-  border-top: 1px solid #e6ecf0;
 }
 
 .user-container .nav-link {
   border: 0;
   width: 130px;
   text-align: center;
-  font-family: 'Noto Sans TC';
-  font-style: normal;
   font-weight: 700;
   font-size: 15px;
-  line-height: 22px;
   color: #657786;
 }
 
@@ -523,182 +570,13 @@ h4 {
   border-bottom: 2px solid #ff6600;
 }
 
-.user-container .tweet-list,
-.user-container .follow-list {
-  margin: 0;
-  padding: 0;
-
-  height: 100vh;
-
-  /* scrollbar */
-  overflow-y: auto;
-}
-
-/* scrollbar */
-.user-container .tweet-list::-webkit-scrollbar,
-.user-container .follow-list::-webkit-scrollbar {
-  /* size */
-  width: 6px;
-}
-
-.user-container .tweet-list::-webkit-scrollbar-thumb,
-.user-container .follow-list::-webkit-scrollbar-thumb {
-  /* style */
-  background-color: transparent;
-}
-
-.user-container .tweet-list:hover::-webkit-scrollbar-thumb,
-.user-container .follow-list:hover::-webkit-scrollbar-thumb {
-  /* style */
-  background-color: #e6ecf0;
-  border-radius: 50px;
-}
-
-.user-container .tweet-list li,
-.user-container .follow-list li {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.user-container .tweet-list .icon {
-  margin: 0 0 0 24px;
-}
-
-.user-container .tweet-text {
-  margin-left: 8px;
-  margin-right: 3px;
-  width: 528px;
-}
-
-.user-container .tweet-name {
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 26px;
-  color: #171725;
-}
-
-.user-container .tweet-account {
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 22px;
-  color: #6c757d;
-}
-
-.user-container .reply-name {
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 22px;
-}
-
-.user-container .reply-name > .text {
-  color: #6c757d;
-}
-
-.user-container .reply-name > .account {
-  color: #ff6600;
-}
-
-.user-container .tweet-description {
-  margin: 0;
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 26px;
-  color: #171725;
-}
-
-.user-container .tweet-list a,
-.user-container .follow-list a {
-  margin-right: 65px;
-  font-family: 'Montserrat';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 14px;
-  color: #6c757d;
-  text-decoration: none;
-}
-
-.user-container .tweet-list .reply-icon,
-.user-container .tweet-list .like-icon {
-  width: 16px;
-}
-
-.user-container .follow-list .btn-unfollow {
-  background: #ffffff;
-  color: #ff6600;
-}
-
-.user-container .follow-list .follow {
-  margin: 0 24px;
-}
-
-/* user edit modal */
-.user-edit-modal .modal-content {
-  margin: 0;
-  padding: 0;
-  width: 634px;
-}
-
-.user-edit-modal .modal-header {
-  position: relative;
-  height: 57px;
-  margin: 0;
-  padding: 0;
-}
-
-.user-edit-modal .modal-header > .modal-close {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #ff6600 !important;
-  background-color: transparent;
-  border: 0;
-  width: 15px;
-}
-
-.user-edit-modal .modal-header > .modal-title {
-  position: absolute;
-  left: 71px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 26px;
-  color: #1c1c1c;
-}
-
-.user-edit-modal .modal-header > .btn-edit {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 40px;
-}
-
-.user-edit-modal .modal-body {
-  position: relative;
-  margin: 0;
-  padding: 0;
-}
-
-.user-edit-modal .modal-body > .cover-edit,
-.user-edit-modal .modal-body > .avatar-edit {
+/* user-profile-modal */
+.user-edit-modal .modal-body>.cover-edit,
+.user-edit-modal .modal-body>.avatar-edit {
   position: relative;
 }
 
-.user-edit-modal .modal-body > .cover-edit > .cover-img {
+.user-edit-modal .modal-body>.cover-edit>.cover-img {
   -webkit-filter: brightness(0.5);
   filter: brightness(0.5);
   width: 100%;
@@ -706,7 +584,7 @@ h4 {
   border-radius: 0px;
 }
 
-.user-edit-modal .modal-body > .cover-edit > .cover {
+.user-edit-modal .modal-body>.cover-edit>.cover {
   position: absolute;
   top: 0;
   left: 0;
@@ -717,15 +595,15 @@ h4 {
   height: 100%;
 }
 
-.user-edit-modal .modal-body > .cover-edit > .cover > .form-control,
-.user-edit-modal .modal-body > .avatar-edit > .avatar > .form-control {
+.user-edit-modal .modal-body>.cover-edit>.cover>.form-control,
+.user-edit-modal .modal-body>.avatar-edit>.avatar>.form-control {
   top: 0;
   width: 0;
   opacity: 0;
   pointer-events: none;
 }
 
-.user-edit-modal .modal-body > .cover-edit > .cover > .form-label {
+.user-edit-modal .modal-body>.cover-edit>.cover>.form-label {
   margin: 0;
   top: 0;
   left: 0;
@@ -733,10 +611,9 @@ h4 {
   cursor: pointer;
 }
 
-.user-edit-modal .modal-body > .cover-edit > .cover > .cover-delete {
+.user-edit-modal .modal-body>.cover-edit>.cover>.cover-delete {
   width: 15px;
   text-align: center;
-  background-color: transparent;
   border: 0;
   margin: 0;
 }
@@ -745,15 +622,11 @@ h4 {
   -webkit-filter: brightness(0.5);
   filter: brightness(0.5);
   position: absolute;
-  height: 140px;
-  width: 140px;
   transform: translateY(-50%);
-  left: 15px;
-  border-radius: 50%;
   z-index: 0;
 }
 
-.user-edit-modal .modal-body > .avatar-edit > .avatar {
+.user-edit-modal .modal-body>.avatar-edit>.avatar {
   position: absolute;
   top: 0;
   left: 75px;
@@ -763,37 +636,37 @@ h4 {
   height: 100%;
 }
 
-.user-edit-modal .modal-body > .avatar-edit > .avatar > .form-label {
+.user-edit-modal .modal-body>.avatar-edit>.avatar>.form-label {
   margin: 0;
   top: 0;
   color: #ffffff;
   cursor: pointer;
 }
 
-.user-edit-modal .modal-body > .form-text {
+.user-edit-modal .modal-body>.form-text {
   margin: 80px 16px 0;
 }
 
-.user-edit-modal .modal-body > .form-text .box {
+.user-edit-modal .modal-body>.form-text .box {
   background: #f5f8fa;
 }
 
-.user-edit-modal .modal-body > .form-text .box > input,
-.user-edit-modal .modal-body > .form-text .box > textarea {
+.user-edit-modal .modal-body>.form-text .box>input,
+.user-edit-modal .modal-body>.form-text .box>textarea {
   border-bottom: 2px solid #657786;
 }
 
-.user-edit-modal .modal-body > .form-text .box > input:valid,
-.user-edit-modal .modal-body > .form-text .box > textarea:valid {
+.user-edit-modal .modal-body>.form-text .box>input:valid,
+.user-edit-modal .modal-body>.form-text .box>textarea:valid {
   border-bottom: 2px solid #50b5ff;
 }
 
-.user-edit-modal .modal-body > .form-text .box > input:invalid,
-.user-edit-modal .modal-body > .form-text .box > textarea:invalid {
+.user-edit-modal .modal-body>.form-text .box>input:invalid,
+.user-edit-modal .modal-body>.form-text .box>textarea:invalid {
   border-bottom: 2px solid #fc5a5a;
 }
 
-.user-edit-modal .modal-body > .form-text .form-label {
+.user-edit-modal .modal-body>.form-text .form-label {
   margin: 0;
   padding: 0;
   font-family: 'Noto Sans TC';
@@ -804,13 +677,13 @@ h4 {
   color: #696974;
 }
 
-.user-edit-modal .modal-body > .form-text .form-control {
+.user-edit-modal .modal-body>.form-text .form-control {
   background-color: transparent;
   border: 0;
 }
 
-.user-edit-modal .modal-body > .form-text .name-amount,
-.user-edit-modal .modal-body > .form-text .introduction-amount {
+.user-edit-modal .modal-body>.form-text .name-amount,
+.user-edit-modal .modal-body>.form-text .introduction-amount {
   text-align: right;
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -818,256 +691,4 @@ h4 {
   font-size: 12px;
   line-height: 20px;
   color: #696974;
-}
-
-.user-edit-container {
-  margin: 24px;
-}
-
-.user-edit-container h4 {
-  margin-bottom: 24px;
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 26px;
-  color: #171725;
-}
-
-.user-edit-container form {
-  width: 100%;
-  align-self: stretch;
-}
-
-.user-edit-container .save-btn {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.user-edit-container .box {
-  width: 100%;
-  background: #f5f8fa;
-  margin-bottom: 32px;
-}
-
-.user-edit-container .box > input {
-  border-bottom: 2px solid #657786;
-}
-
-.user-edit-container .validated .box > input:valid {
-  border-bottom: 2px solid #50b5ff;
-}
-
-.user-edit-container .validated .box > input:invalid {
-  border-bottom: 2px solid #fc5a5a;
-}
-
-.user-edit-container .form-label {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 22px;
-  color: #696974;
-}
-
-.user-edit-container .form-control {
-  background-color: transparent;
-  border: 0;
-}
-
-/****** tweets-list ******/
-.tweet-btn {
-  width: 64px;
-  height: 40px;
-}
-
-.tweet-placeholder {
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  color: #6c757d;
-}
-
-.tweet-close-button {
-  background: transparent;
-  border: none;
-}
-
-#description::placeholder {
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  color: #6c757d;
-}
-
-.tweet-text {
-  margin-left: 8px;
-  margin-right: 3px;
-  width: auto;
-}
-
-.tweet-name {
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  color: #171725;
-}
-
-.tweet-account,
-.reply-tag-text {
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  color: #6c757d;
-}
-
-.tweet-description {
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  color: #171725;
-}
-
-.tweets-icon {
-  width: 16px;
-  height: 16px;
-}
-
-.tweets-interact-counts {
-  font-family: 'Montserrat';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  color: #6c757d;
-}
-
-.list-header {
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 26px;
-  color: #171725;
-}
-
-.list-header-img {
-  width: 24px;
-  height: 24px;
-  margin-right: 16px;
-}
-
-.tweet-content {
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  color: #171725;
-}
-
-.hr {
-  border: 0px;
-  /* 不要框架 */
-  height: 1px;
-  /* 設定 1px 的高度 */
-  background: #e6ecf0;
-  /* 讓背景色填滿高度 1px 的元素空間 */
-  margin: 20px 0;
-}
-
-.tweet-interact-counts {
-  font-family: 'Montserrat';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 19px;
-  color: #171725;
-  margin-right: 5px;
-}
-
-.tweet-interact-text {
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 19px;
-  color: #6c757d;
-  margin-right: 24px;
-}
-
-.reply-tag {
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  color: #ff6600;
-}
-
-.vertical-line {
-  width: 0;
-  border-left: 1px solid #b5b5be;
-  border-right: 1px solid #b5b5be;
-  height: 60%;
-  margin: 10px auto 0;
-}
-
-/* message */
-.msg-container {
-  position: relative;
-  left: 50%;
-  transform: translate(-50%);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 394px;
-  height: 96px;
-  background-color: #ffffff;
-}
-
-.msg-container > .msg {
-  margin-left: 24px;
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 28px;
-}
-
-.msg-container > .btn-error {
-  margin-right: 20px;
-  border: 2px solid #fc5a5a;
-  background-color: transparent;
-  border-radius: 50%;
-  width: 56px;
-  height: 56px;
-}
-
-.msg-container > .btn-success {
-  margin-right: 20px;
-  border: 2px solid #82c43c;
-  background-color: transparent;
-  border-radius: 50%;
-  width: 56px;
-  height: 56px;
-}
-
-/* input */
-form.invalid-feedback {
-  display: none;
-  font-size: 0.8em;
-}
-
-form.invalid-feedback {
-  color: #fc5a5a;
-}
-
-.validated .form-control:invalid ~ .invalid-feedback {
-  display: initial;
 }

@@ -9,7 +9,7 @@
         {{!-- user header --}}
         <div class='d-flex flex-row head'>
           <span class='d-flex justify-content-start align-items-center'>
-            <a href='javascript:history.back()'>
+            <a href='{{ifQuery previousPage 'back=1'}}'>
               <img src='/images/back.svg' alt='back' />
             </a>
           </span>
@@ -22,7 +22,8 @@
         {{!-- list nav --}}
         <ul class='nav nav-tabs'>
           <li class='nav-item'>
-            <a class='nav-link {{#if followers}}active{{/if}}' aria-current='page' href='/users/{{user.id}}/followers'>追隨者</a>
+            <a class='nav-link {{#if followers}}active{{/if}}' aria-current='page'
+              href='/users/{{user.id}}/followers'>追隨者</a>
           </li>
           <li class='nav-item'>
             <a class='nav-link {{#if followings}}active{{/if}}' href='/users/{{user.id}}/followings'>正在追隨</a>
@@ -31,12 +32,12 @@
 
         {{!-- followers-list --}}
         <ul class='follow-list'>
-          {{#each userFollowers}}
+          {{#each user.Followers}}
             <li class='mt-2'>
               <div class='d-flex align-items-start follow'>
-                <div class='flex-shrink-1 p-0'>
-                  <img src='/images/profile-img.svg' alt='' class='recommend-followings-img' />
-                </div>
+                <a class='flex-shrink-1 p-0' href="/users/{{this.id}}/tweets">
+                  <img src='{{this.avatar}}' alt='' class='recommend-followings-img' />
+                </a>
                 <div class='tweet-text flex-grow-1'>
                   <div class='head d-flex justify-content-between'>
                     <span class='tweet-name'>{{this.name}} </span>
@@ -45,7 +46,8 @@
                         <button type='submit' class='btn'>正在跟隨</button>
                       </form>
                     {{else}}
-                      <form class='' action='/followships/{{this.id}}' method='POST'>
+                      <form class='' action='/followships' method='POST'>
+                        <input type="hidden" name="id" value={{this.id}}>
                         <button type='submit' class='btn btn-unfollow'>跟隨</button>
                       </form>
                     {{/if}}
@@ -53,15 +55,33 @@
                   <p class='tweet-description' style='white-space:break-spaces;'>{{this.introduction}}</p>
                 </div>
               </div>
-              <hr/>
-            </li>
+              <div class='tweet-text flex-grow-1'>
+                <div class='head d-flex justify-content-between'>
+                  <span class='tweet-name'>{{this.name}} </span>
+                  {{#if this.isFollowed}}
+                  <form class='' action='/followships/{{this.id}}?_method=DELETE' method='POST'>
+                    <button type='submit' class='btn'>正在跟隨</button>
+                  </form>
+                  {{else}}
+                  <form class='' action='/followships/{{this.id}}' method='POST'>
+                    <button type='submit' class='btn btn-unfollow'>跟隨</button>
+                  </form>
+                  {{/if}}
+                </div>
+                <p class='tweet-description' style='white-space:break-spaces;'>{{this.introduction}}</p>
+              </div>
+            </div>
+            <hr />
+          </li>
           {{/each}}
         </ul>
-
+        {{#if pagination.hasManyPages}}
+          {{> pagination route = route }}
+        {{/if}}
       </div>
     </ul>
   </div>
-  
+
   {{! recommend-followings }}
   {{> recommend-followings}}
 </div>

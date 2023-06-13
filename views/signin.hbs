@@ -4,9 +4,8 @@
   </div>
   <h1 class='h3 fw-bolder mb-3'>登入 Alphitter</h1>
 </div>
-
+{{> message}}
 <form class='d-flex flex-column align-items-center form-signin' action='/signin' method='POST'>
-  {{> message}}
   <div class='form-row mb-5'>
     <label class='form-label account-label' for='account'>帳號</label>
     <input
@@ -25,7 +24,7 @@
     <input
       class='form-control password-input'
       id='password'
-      type='text'
+      type='password'
       name='password'
       class='form-control'
       placeholder='請輸入密碼'

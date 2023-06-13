@@ -1,16 +1,16 @@
 // files
 const { Followship, User } = require('../models')
+const helpers = require('../_helpers')
 
 // controllers
 const followshipController = {
   addFollowing: (req, res, next) => {
-    const userId = req.user.id
-    const followingId = req.params.userId
+    const userId = helpers.getUser(req).id
+    const followingId = req.body.id
 
     if (userId.toString() === followingId.toString()) {
-      return next(new Error('can not follow self'))
+      return res.status(200).json({ error: "You can't follow yourself." })
     }
-
     return Promise.all([
       User.findByPk(followingId),
       Followship.findOne({
@@ -32,7 +32,7 @@ const followshipController = {
       .catch(err => next(err))
   },
   removeFollowing: (req, res, next) => {
-    const userId = req.user.id
+    const userId = helpers.getUser(req).id
     const followingId = req.params.userId
     return Followship.findOne({
       where: {
