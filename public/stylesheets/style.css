@@ -769,6 +769,8 @@ img.card-avatar {
 }
 
 .message {
+  display: flex;
+  justify-content: center;
   z-index: 999;
   opacity: 0;
   animation-name: fadenum;
