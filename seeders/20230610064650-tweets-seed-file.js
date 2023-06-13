@@ -3,7 +3,7 @@ const { generateLimitedParagraph } = require('../helpers/seed-helpers')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const users = await queryInterface.sequelize.query('SELECT id FROM Users WHERE role = \'user\'', { type: queryInterface.sequelize.QueryTypes.SELECT })
+    const users = await queryInterface.sequelize.query('SELECT id FROM Users WHERE role = "user"', { type: queryInterface.sequelize.QueryTypes.SELECT })
 
     const tweets = []
 

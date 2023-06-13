@@ -1,5 +1,4 @@
-const helpers = require('../helpers/auth-helpers')
-// 前台驗證是不是一般使用者
+const helpers = require('../_helpers')
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (helpers.getUser(req).role === 'user') {
