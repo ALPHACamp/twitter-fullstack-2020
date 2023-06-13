@@ -31,7 +31,8 @@ router.delete(
   userController.removeFollowing
 )
 
-router.get('/tweets/:id/reply', authenticated, tweetController.getTweetReplies)
+router.get('/tweets/:id/replies', authenticated, tweetController.getTweetReplies)
+router.post('/tweets/:id/replies', authenticated, tweetController.postTweetReply)
 router.post('/tweets/:id/like', authenticated, userController.addLike)
 router.delete('/tweets/:id/unlike', authenticated, userController.removeLike)
 router.get('/tweets', authenticated, tweetController.getTweets)
