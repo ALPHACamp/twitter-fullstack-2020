@@ -7,7 +7,7 @@
     <div class="admin-tweets-page">
       {{#each tweets}}
       <li class="list-group-item tweet-list position-relative collapse show" id="tweet-{{this.id}}">
-        <form action="/admin/tweets?_method=DELETE" method="POST" class="text-decoration-none" >
+        <form action="/admin/tweets?_method=DELETE" method="POST">
           <div class="d-flex">
             <div class="tweet-text d-flex flex-column">
               <div class="d-flex justify-content-between">
@@ -18,7 +18,7 @@
                 <input type="hidden" name="tweetId" value="{{this.id}}" />
                 <button type="submit" class="btn-close position-absolute end-0" data-bs-toggle="collapse" data-bs-target="#tweet-{{this.id}}" aria-expanded="false" aria-controls="collapseExample" aria-label="Close"></button>
               </div>
-              <p class="mb-2" style="white-space:break-spaces;">{{this.description}}</p>
+              <p class="mb-2" >{{this.description}}</p>
             </div>
           </div>
         </form>

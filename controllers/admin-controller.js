@@ -31,6 +31,15 @@ const adminController = {
       tweets = tweets.map(tweet => ({
         ...tweet.toJSON()
       }))
+
+      tweets.forEach(tweet => {
+        if (tweet.description.length > 50) {
+          const newText = tweet.description.slice(0, 50) + '...'
+          delete tweet.description
+          tweet.description = newText
+        }
+      })
+
       res.render('admin/tweets', {
         user,
         tweets: tweets
