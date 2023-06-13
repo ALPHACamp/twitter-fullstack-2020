@@ -1,4 +1,4 @@
-const { Op } = require('sequelize') // 用「不等於」的條件查詢資料庫時需要用到的東西
+const { Op, Sequelize } = require('sequelize') // 用「不等於」的條件查詢資料庫時需要用到的東西
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const { User, Tweet, Followship, Like } = db
@@ -226,8 +226,6 @@ const userController = {
       })
     ])
       .then(([user, tweets, likes, currentUser, topUsers]) => {
-        console.log(user.toJSON().Followers)
-        console.log(user.toJSON().Followings)
         const userData = ({
           ...user.toJSON(),
           followerCount: user.Followers.length,
@@ -292,59 +290,72 @@ const userController = {
       .catch(err => next(err))
   },
 
+  // 取得特定使用者 Following 名單
   getUserFollowings: (req, res, next) => {
-    return User.findByPk(req.params.id, {
-      include: [
-        {
-          model: User,
-          as: 'Followings',
-          include: { model: User, as: 'Followings' }
-        },
-        {
-          model: Tweet
-        }
-      ],
-      nest: true
-    })
-      .then(user => {
+    return Promise.all([
+      User.findByPk(req.params.id, {
+        include: [
+          {
+            model: User,
+            as: 'Followings',
+            include: { model: User, as: 'Followings' }
+          },
+          {
+            model: Tweet
+          }
+        ],
+        nest: true
+      }),
+      User.findByPk(helpers.getUser(req).id, { raw: true })
+    ])
+      .then(([user, currentUser]) => {
         if (!user) throw new Error('User not found')
         // 推文數量
         const tweetsLength = user.Tweets.length
         const followings = user.toJSON().Followings
-        // console.log(user.toJSON())
-        followings.forEach(following => following.isFollowed = following.Followings.some(fr => fr.id === helpers.getUser(req).id))
+        // console.log('這是 user.toJSON() 的資料', user.toJSON())
+        followings.forEach(following => {
+          following.isFollowed = following.Followings.some(fr => fr.id === helpers.getUser(req).id)
+        })
         // console.log('上下切開')
-        // followings.sort((a, b) => b.Followship.createdAt - a.Followership.createdAt)
-        res.status(200).render('followship', { user: user.toJSON(), tweetsLength, users: followings })
+        followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        console.log('這是執行 getUserFollowings 排列完的 followings', followings)
+        return res.status(200).render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followings })
       })
       .catch(err => next(err))
   },
 
+  // 取得特定使用者 Follower 名單
   getUserFollowers: (req, res, next) => {
-    return User.findByPk(req.params.id, {
-      include: [
-        {
-          model: User,
-          as: 'Followers',
-          include: { model: User, as: 'Followers' }
-        },
-        {
-          model: Tweet
-        }
-      ],
-      nest: true
-    })
-      .then(user => {
+    return Promise.all([
+      User.findByPk(req.params.id, {
+        include: [
+          {
+            model: User,
+            as: 'Followers',
+            include: { model: User, as: 'Followers' }
+          },
+          {
+            model: Tweet
+          }
+        ],
+        nest: true
+      }),
+      User.findByPk(helpers.getUser(req).id, { raw: true })
+    ])
+      .then(([user, currentUser]) => {
         if (!user) throw new Error('User not found')
         // 推文數量
         const tweetsLength = user.Tweets.length
         const followers = user.toJSON().Followers
         // console.log(user.toJSON())
-        followers.forEach(follower => follower.isFollowed = follower.Followers.some(fr => fr.id === helpers.getUser(req).id))
+        followers.forEach(follower => {
+          follower.isFollowed = follower.Followers.some(fr => fr.id === helpers.getUser(req).id)
+        })
         // console.log('上下切開')
-        // console.log(followers)
-        // followers.sort((a, b) => b.Followship.createdAt - a.Followership.createdAt)
-        res.status(200).render('followship', { user: user.toJSON(), tweetsLength, users: followers })
+        followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        console.log('這是執行 getUserFollowers 排列完的資料', followers)
+        return res.status(200).render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followers })
       })
       .catch(err => next(err))
   }
