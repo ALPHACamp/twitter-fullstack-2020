@@ -1,4 +1,5 @@
 const { Tweet, User, Reply, Like } = require('../models')
+const { Op } = require('sequelize')
 const helpers = require('../_helpers')
 
 const tweetController = {
@@ -9,34 +10,52 @@ const tweetController = {
       Tweet.findAll({
         // limit: 2,
         order: [['createdAt', 'DESC']],
-        include: [
-          User
-        ],
+        attributes: ['id', 'description', 'createdAt'],
+        include: [User],
         raw: true,
         nest: true
       }),
-      // 未來會取得追蹤數前 10 名的使用者資料
-      User.findAll({
-        // limit: 10,
-        where: { role: 'user' },
+      Reply.findAll({
+        attributes: ['tweetId'],
         raw: true
       }),
-      User.findByPk(userId,
-        { raw: true }
-      ),
+      // 取得包含追蹤者的使用者資料
+      User.findAll({
+        where: {
+          role: 'user',
+          id: { [Op.ne]: helpers.getUser(req).id }
+        },
+        include: [
+          { model: User, as: 'Followers' }
+        ],
+        group: ['User.id'],
+        limit: 10
+      }),
+      User.findByPk(userId, { raw: true }),
       Like.findAll({
         attributes: ['id', 'userId', 'tweetId'],
         raw: true,
         nest: true
       })
     ])
-      .then(([tweets, topUsers, currentUser, likes]) => {
+      .then(([tweets, replies, topUsers, currentUser, likes]) => {
         const tweetsData = tweets.map(tweet => ({
           ...tweet,
+          replyCount: replies.filter(reply => reply.tweetId === tweet.id).length,
           isLiked: likes.some(like => (like.userId === helpers.getUser(req).id && like.tweetId === tweet.id)),
           likeCount: likes.filter(like => like.tweetId === tweet.id).length
         }))
-        res.render('tweets', { tweets: tweetsData, topUsers, currentUser })
+        // 將目前使用者追蹤的使用者做成一張清單
+        const followingList = helpers.getUser(req).Followings.map(f => f.id)
+        const data = topUsers
+          .map(user => ({
+            ...user.toJSON(),
+            isFollowed: followingList.includes(user.id),
+            followerCount: user.Followers.length
+          }))
+          // 排序：從追蹤數多的排到少的
+          .sort((a, b) => b.followerCount - a.followerCount)
+        res.render('tweets', { tweets: tweetsData, topUsers: data, currentUser, isHomePage: true })
       })
       .catch(err => next(err))
   },
@@ -65,23 +84,47 @@ const tweetController = {
       Reply.findAll({
         include: [User],
         where: { tweetId },
+        order: [['createdAt', 'DESC']],
         raw: true,
         nest: true
+      }),
+      // 取得包含追蹤者的使用者資料
+      User.findAll({
+        where: {
+          role: 'user',
+          id: { [Op.ne]: helpers.getUser(req).id }
+        },
+        include: [
+          { model: User, as: 'Followers' }
+        ],
+        group: ['User.id'],
+        limit: 10
       }),
       Like.findAll({
         attributes: ['id', 'userId', 'tweetId'],
         raw: true,
         nest: true
-      })
+      }),
+      // 取得目前登入的使用者資料
+      User.findByPk(helpers.getUser(req).id, { raw: true })
     ])
-      .then(([tweet, replies, likes]) => {
+      .then(([tweet, replies, topUsers, likes, currentUser]) => {
         const tweetData = ({
           ...tweet,
           isLiked: likes.some(like => like.userId === helpers.getUser(req).id && like.tweetId === tweet.id),
           likeCount: likes.filter(like => like.tweetId === tweet.id).length
         })
-        console.log(tweetData)
-        res.render('tweet', { tweet: tweetData, replies })
+        // 將目前使用者追蹤的使用者做成一張清單
+        const followingList = helpers.getUser(req).Followings.map(f => f.id)
+        const data = topUsers
+          .map(user => ({
+            ...user.toJSON(),
+            isFollowed: followingList.includes(user.id),
+            followerCount: user.Followers.length
+          }))
+          // 排序：從追蹤數多的排到少的
+          .sort((a, b) => b.followerCount - a.followerCount)
+        res.render('tweet', { tweet: tweetData, replies, topUsers: data, currentUser })
       })
       .catch(err => next(err))
   },
@@ -89,7 +132,6 @@ const tweetController = {
   // 抓特定推文資料傳給前端
   apiGetTweet: (req, res, next) => {
     const tweetId = req.params.id
-    console.log(tweetId)
     Promise.all([
       Tweet.findByPk(tweetId, {
         include: [User],
@@ -109,7 +151,7 @@ const tweetController = {
   postReply: (req, res, next) => {
     const { comment } = req.body
     const tweetId = req.params.id
-    Reply.create({ comment, userId: helpers.getUser(req).id, tweetId })
+    Reply.create({ comment, UserId: helpers.getUser(req).id, tweetId })
       .then(reply => res.redirect(`/tweets/${tweetId}/replies`))
       .catch(err => next(err))
   },
@@ -120,8 +162,8 @@ const tweetController = {
       Tweet.findByPk(tweetId),
       Like.findOne({
         where: {
-          userId: helpers.getUser(req).id,
-          tweetId
+          UserId: helpers.getUser(req).id,
+          TweetId: tweetId
         }
       })
     ])
