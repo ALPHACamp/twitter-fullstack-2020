@@ -16,7 +16,7 @@ router.post('/signup', userController.signUp)
 
 // 登入登出
 router.get('/signin', userController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureMessage: true }), userController.signIn)
+router.post('/signin', passport.authenticate('userLogin', { failureRedirect: '/signin', failureMessage: true }), userController.signIn)
 router.post('/signout', userController.signOut)
 
 // users路由
