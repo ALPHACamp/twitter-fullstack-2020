@@ -47,14 +47,14 @@ targetNodes.forEach(function (targetNode) {
 // 編輯個人資料相關
 const editProfileButton = document.querySelector('#editProfileButton')
 const putProfileButton = document.querySelector('#putProfileButton')
-const previewCover = document.querySelector('#previewCover')
-const previewAvatar = document.querySelector('#previewAvatar')
-const nameInput = document.querySelector('#name')
-const introInput = document.querySelector('#intro')
-const userId = editProfileButton.value
 
 // 監聽按鈕 call API取得個人資料 把個人資料插入modal
 editProfileButton.addEventListener('click', event => {
+  const userId = editProfileButton.value
+  const nameInput = document.querySelector('#name')
+  const introInput = document.querySelector('#intro')
+  const previewCover = document.querySelector('#previewCover')
+  const previewAvatar = document.querySelector('#previewAvatar')
   axios.get(`/api/users/${userId}`)
     .then(response => {
       const { cover, avatar, name, intro } = response.data
@@ -71,15 +71,26 @@ editProfileButton.addEventListener('click', event => {
 
 // 監聽按鈕 call API更新個人資料 把個人資料插入modal
 putProfileButton.addEventListener('click', event => {
+  const userId = editProfileButton.value
   // 取得使用者輸入的資料
-  const name = nameInput.value
-  const intro = introInput.value
-  const avatar = previewAvatar.src
-  axios.post(`/api/users/${userId}`, { name, intro })
+  const name = document.querySelector('#name').value
+  const intro = document.querySelector('#intro').value
+  const avatar = document.querySelector('#avatarInput').files[0]
+  const cover = document.querySelector('#coverInput').files[0]
+  // 打包成FormData
+  const formData = new FormData()
+  formData.append('name', name)
+  formData.append('intro', intro)
+  formData.append('avatar', avatar)
+  formData.append('cover', cover)
+  // 發送打包好的formData
+  axios.post(`/api/users/${userId}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
     .then(response => {
-      const { name, intro } = response.data
-      nameInput.value = name
-      introInput.value = intro
+      console.log(response)
       alert('個人資料已成功修改') // 給使用者顯示一個提示
     })
     .catch(err => {
@@ -88,9 +99,25 @@ putProfileButton.addEventListener('click', event => {
     })
 })
 
-function previewFile() {
+function previewAvatar() {
   const preview = document.querySelector('#previewAvatar')
-  const file = document.querySelector('#addAvatar').files[0]
+  const file = document.querySelector('#avatarInput').files[0]
+  const reader = new FileReader()
+
+  reader.onloadend = function () {
+    preview.src = reader.result
+  }
+
+  if (file) {
+    reader.readAsDataURL(file)
+  } else {
+    preview.src = ''
+  }
+}
+
+function previewCover() {
+  const preview = document.querySelector('#previewCover')
+  const file = document.querySelector('#coverInput').files[0]
   const reader = new FileReader()
 
   reader.onloadend = function () {

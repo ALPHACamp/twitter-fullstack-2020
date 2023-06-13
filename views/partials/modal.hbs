@@ -39,15 +39,16 @@
       </div>
       {{!-- 封面跟大頭區域 --}}
       <figure class="m-0 align-self-start" style="width: 100%; height: 126px; position: relative">
-        <img id="previewCover" style="object-fit: cover; -webkit-filter:brightness(.7); width: 100%; height: 200px;">
         <div style="position: absolute; top: 100px; left: 50%; transform: translate(-50%, -50%); z-index: 1;">
-          <button type="button">
+          <label type="button">
+            <input id="coverInput" style="display:none;" type="file" onchange="previewCover()">
             <img class="mx-2 svg-fill-dark-0" src="/_base/Property 2=outlined, Property 3=addphoto.svg">
-          </button>
+          </label>
           <button type="button">
             <img class="mx-2 svg-fill-dark-0" src="/_base/Property 2=outlined, Property 3=close.svg">
           </button>
         </div>
+        <img id="previewCover" style="object-fit: cover; -webkit-filter:brightness(.7); width: 100%; height: 200px;">
       </figure>
       <div class="d-flex flex-column" style="position: relative;">
         <div class="d-flex align-items-end justify-content-between ps-4 pe-3">
@@ -56,7 +57,7 @@
             style="width: 140px; height: 140px; border-radius: 50%; overflow: hidden; border: 4px solid #ffffff; position: relative;">
             <label type="button"
               style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1;">
-              <input id="addAvatar" style="display:none;" type="file" onchange="previewFile()">
+              <input id="avatarInput" style="display:none;" type="file" onchange="previewAvatar()">
               <img class="mx-2 svg-fill-dark-0" src="/_base/Property 2=outlined, Property 3=addphoto.svg">
             </label>
             <img id="previewAvatar"
