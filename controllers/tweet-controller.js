@@ -18,7 +18,7 @@ const tweetController = {
       // 未來會取得追蹤數前 10 名的使用者資料
       User.findAll({
         // limit: 10,
-        where: { isAdmin: 0 },
+        where: { role: 'user' },
         raw: true
       }),
       User.findByPk(userId,
