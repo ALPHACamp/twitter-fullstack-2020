@@ -7,7 +7,7 @@ module.exports = {
         return next()
       } else {
         req.flash('danger_msg', '帳號不存在')
-        return res.redirect('/signin')
+        return res.redirect('/signin')  // 為符合test檔改寫，但可以用前台登入頁登入後台
       }
     }
     req.flash('danger_msg', '使用前請先登入')

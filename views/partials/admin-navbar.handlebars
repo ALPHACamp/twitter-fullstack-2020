@@ -8,14 +8,14 @@
   </div>
 
   {{!-- front page --}}
-  <a class="nav-row active" href="/admin/tweets">
+  <a class="nav-row {{#if tweets}}active{{/if}}" href="/admin/tweets">
     <div class="nav-row-house-icon background-image">
     </div>
     <h5 class="nav-row-title">推文清單</h5>
   </a>
 
   {{!-- users list --}}
-  <a class="nav-row" href="/admin/users">
+  <a class="nav-row {{#if users}}active{{/if}}" href="/admin/users">
     <div class="nav-row-user-icon background-image">
     </div>
     <h5 class="nav-row-title">使用者列表</h5>
