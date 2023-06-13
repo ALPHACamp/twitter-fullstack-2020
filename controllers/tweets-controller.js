@@ -1,9 +1,12 @@
 const { User, Followship, Tweet, Reply, Like } = require('../models')
 const helpers = require('../_helpers')
+
+const nav = 'tweets'
 const tweetsController = {
   getTweets: async (req, res, next) => {
     // 取得登入使用者的資料
     const loginUser = helpers.getUser(req)
+    const { followingData } = req.session
     try {
       let tweets = await Tweet.findAll({
         include: [User, { model: Like }, { model: Reply, include: User }],
@@ -15,9 +18,13 @@ const tweetsController = {
         ...tweet.toJSON(),
         isLiked: loginUser && loginUser.Likes && loginUser.Likes.some(like => like.TweetId === tweet.id)
       }))
-      return res.render('tweets', {
+      const partialName = 'tweets'
+      return res.render('index', {
         user: loginUser,
-        tweets: tweets
+        tweets: tweets,
+        partialName,
+        nav,
+        followingData
       })
     } catch (err) {
       next(err)
@@ -35,12 +42,15 @@ const tweetsController = {
       const isLiked = tweet.Likes.some(l => l.dataValues.UserId === user.id)
       // 按照發文順序顯示
       tweet.Replies = tweet.Replies.sort((a, b) => b.createdAt - a.createdAt)
-      return res.render('tweet', {
+      const partialName = 'tweet'
+      return res.render('index', {
         tweet: tweet.toJSON(),
         user,
         likeCount,
         replyCount,
-        isLiked
+        isLiked,
+        partialName,
+        nav
       })
     } catch (err) {
       next(err)

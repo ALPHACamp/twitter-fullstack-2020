@@ -7,6 +7,7 @@ const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 // 推文顯示數量
 const DEFAULT_LIMIT = 50
+let nav = 'profile'
 
 const profileController = {
   getUser: async (req, res, next) => {
@@ -53,7 +54,7 @@ const profileController = {
     }
   },
   getUserTweets: async (req, res, next) => {
-    const { userData } = req.session
+    const { userData, followingData } = req.session
     // 取得 id
     const { userId } = req.params
 
@@ -90,13 +91,15 @@ const profileController = {
       // pagination
       const pagination = getPagination(page, limit, tweets.count.length)
       // render
-      res.render('users/tweets', { user: userData, tweets: tweetsData, route, pagination })
+      const partialName = 'user-tweets'
+      // res.render('users/tweets', { user: userData, tweets: tweetsData, route, pagination })
+      res.render('index', { user: userData, tweets: tweetsData, route, pagination, partialName, nav, followingData })
     } catch (err) {
       next(err)
     }
   },
   getUserReplies: async (req, res, next) => {
-    const { userData } = req.session
+    const { userData, followingData } = req.session
     // 取得userId
     const { userId } = req.params
     const route = `users/${userId}/replies`
@@ -126,14 +129,15 @@ const profileController = {
       const repliesData = replies.rows.map(reply => reply.toJSON())
       // pagination
       const pagination = getPagination(page, limit, replies.count)
+      const partialName = 'user-replies'
       // render
-      res.render('users/replies', { user: userData, replies: repliesData, route, pagination })
+      res.render('index', { user: userData, replies: repliesData, route, pagination, partialName, nav, followingData })
     } catch (err) {
       next(err)
     }
   },
   getUserLikes: async (req, res, next) => {
-    const { userData } = req.session
+    const { userData, followingData } = req.session
     const { userId } = req.params
     const route = `users/${userId}/likes`
     // 取得page, limit, offset
@@ -174,8 +178,9 @@ const profileController = {
       const tweetsData = tweets.map(tweet => ({ ...tweet?.toJSON() }))
       // pagination
       const pagination = getPagination(page, limit, likes.count)
+      const partialName = 'user-likes'
       // render
-      res.render('users/likes', { user: userData, tweets: tweetsData, pagination, route })
+      res.render('index', { user: userData, tweets: tweetsData, pagination, route, partialName, nav, followingData })
     } catch (err) {
       next(err)
     }
@@ -183,6 +188,7 @@ const profileController = {
   getUserFollowings: async (req, res, next) => {
     const loginUser = helpers.getUser(req)
     const { userId } = req.params
+    const { followingData } = req.session
     // 判斷active
     const followings = true
     const route = `users/${userId}/followings`
@@ -235,7 +241,8 @@ const profileController = {
       })
       // pagination
       const pagination = getPagination(page, limit, followingsCount)
-      res.render('users/followings', { user: userData, followings, pagination, route })
+      const partialName = 'user-followings'
+      res.render('index', { user: userData, followings, pagination, route, partialName, nav, followingData })
     } catch (err) {
       next(err)
     }
@@ -243,6 +250,7 @@ const profileController = {
   getUserFollowers: async (req, res, next) => {
     const loginUser = helpers.getUser(req)
     const { userId } = req.params
+    const { followingData } = req.session
     // 判斷active
     const followers = true
     const route = `users/${userId}/followers`
@@ -289,12 +297,14 @@ const profileController = {
       userData.Followers.sort((a, b) => b.isFollowing - a.isFollowing)
       // pagination
       const pagination = getPagination(page, limit, followersCount)
-      res.render('users/followers', { user: userData, followers, pagination, route })
+      const partialName = 'user-followers'
+      res.render('index', { user: userData, followers, pagination, route, partialName, nav, followingData })
     } catch (err) {
       next(err)
     }
   },
   editUserAccount: async (req, res, next) => {
+    nav = 'setting'
     // 抓id
     const { userId } = req.params
     const loginUser = helpers.getUser(req)
@@ -307,8 +317,10 @@ const profileController = {
       })
       // 找不到就報錯
       if (!user) throw new Error('帳號不存在!')
+      const partialName = 'user-edit'
+      const visibleToggle = 'invisible'
       // render
-      return res.render('users/edit', { user })
+      return res.render('index', { user, partialName, visibleToggle })
     } catch (err) {
       next(err)
     }

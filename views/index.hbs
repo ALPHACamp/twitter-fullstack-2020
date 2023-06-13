@@ -1,17 +1,19 @@
 {{!-- delete --}}
 <div class="d-flex  justify-content-center">
   {{!-- navbar --}}
-  {{> navbar}}
+  {{> navbar nav = nav}}
 
   {{!--tweet-list --}}
   <div class="col-7 home-page">
     <ul class="list-group">
-      <div></div>
+      <ul class="list-group home-list">
+
+      {{> (lookupPartial partialName)}}
       
     </ul>
   </div>
 
   {{!-- recommend-followings --}}
-  {{> recommend-followings}}
+  {{> recommend-followings followingData = followingData }}
 
 </div>
