@@ -11,7 +11,6 @@ const flash = require('connect-flash')
 const methodOverride = require('method-override')
 const session = require('express-session')
 
-
 const app = express()
 const port = process.env.PORT || 3000
 
@@ -34,6 +33,9 @@ app.use(express.json())
 // passport setting
 app.use(passport.initialize())
 app.use(passport.session())
+
+// setting method-override
+app.use(methodOverride('_method'))
 
 // Setting middleware
 app.use(flash())

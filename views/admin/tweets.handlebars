@@ -8,56 +8,39 @@
       <h4 class="main-title">
         推文清單
       </h4>
-
-      {{!-- card 1 --}}
+      {{!-- tweet cards --}}
+      {{#each tweets}}
       <div class="card card-tweet-lg">
-        <a href="#" class="tweet-href"></a>
+        <a class="tweet-href"></a>
         <div class="avatar">
-          <a href="#" class="primary-anchor">
-            <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+          <a class="primary-anchor">
+            <img src="{{this.User.avatar}}" alt="avatar" class="logo">
           </a>
         </div>
+
         <div class="card-text">
+          <div style="position:absolute;right:3px;top:6px">
+            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="tweet-delete-form"
+              style="float:right">
+              <button class="btn" type="submit">
+                <img src="/stylesheets/icons/delete.png" alt="delete icon">
+              </button>
+            </form>
+          </div>
           <div class="card-text-info">
             <a href="#" class="primary-anchor">
-              <span class="card-name">Apple</span>
+              <span class="card-name">{{this.User.name}}</span>
             </a>
             <a href="#" class="primary-anchor">
-              <span class="card-account">@apple</span>
+              <span class="card-account">@{{this.User.account}}</span>
             </a>
             <span class="card-dot">·</span>
-            <span class="card-datetime">3小時</span>
+            <span class="card-datetime">{{relativeTimeFromNow this.updatedAt}}</span>
           </div>
-          <p class="card-description">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
-            dolor.
-            Voluptate exercitation incididunt
-            aliquip deserunt reprehenderit elit laborum.</p>
+          <p class=" card-description">{{this.description}}</p>
         </div>
       </div>
-
-
-      {{!-- card 2 --}}
-      <div class="card card-tweet-lg">
-        <a href="#" class="tweet-href"></a>
-        <div class="avatar">
-          <a href="#" class="primary-anchor">
-            <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
-          </a>
-        </div>
-        <div class="card-text">
-          <div class="card-text-info">
-            <a href="#" class="primary-anchor">
-              <span class="card-name">Apple</span>
-            </a>
-            <a href="#" class="primary-anchor">
-              <span class="card-account">@apple</span>
-            </a>
-            <span class="card-dot">·</span>
-            <span class="card-datetime">3小時</span>
-          </div>
-          <p class="card-description">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
-            dolor.
-            Voluptate exercitation incididunt
-            aliquip deserunt reprehenderit elit laborum.</p>
-        </div>
-      </div>
+      {{/each}}
+    </section>
+  </div>
+</div>

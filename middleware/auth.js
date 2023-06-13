@@ -6,8 +6,7 @@ module.exports = {
       if (helpers.getUser(req).role === 'user') {
         return next()
       } else {
-        req.flash('danger_msg', '帳號不存在')
-        return res.redirect('/signin')
+        return res.redirect('/admin/tweets') 
       }
     }
     req.flash('danger_msg', '使用前請先登入')
@@ -18,8 +17,7 @@ module.exports = {
       if (helpers.getUser(req).role === 'admin') {
         return next()
       } else {
-        req.flash('danger_msg', '帳號不存在')
-        return res.redirect('/admin/signin')
+        return res.redirect('/tweets')
       }
     }
     req.flash('danger_msg', '使用前請先登入')
