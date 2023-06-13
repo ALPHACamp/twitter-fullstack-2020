@@ -1,0 +1,33 @@
+<li class='list-group-item tweet-list'>
+  <div class='d-flex'>
+    <div class="flex-shrink-1 p-0">
+      <button class="tweet-click-block"
+        onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{this.id}}/tweets';">
+        <img src="{{this.avatar}}" alt="avatar" class="tweet-user-img"
+          onerror="this.onerror=null; this.src='/images/profile-img.svg'">
+      </button>
+    </div>
+
+    <div class='tweet-text flex-grow-1'>
+      <div class='head d-flex justify-content-between align-items-center'>
+        <button class="tweet-click-block"
+          onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{this.id}}/tweets';">
+          <span class='user-name'>{{this.name}} </span>
+        </button>
+
+        {{#if this.isFollowing}}
+        <form class='m-0' action='/followships/{{this.id}}?_method=DELETE' method='POST'>
+          <button type='submit' class='btn'>正在跟隨</button>
+        </form>
+        {{else}}
+        <form class='m-0' action='/followships' method='POST'>
+          <input type="hidden" name="id" value={{this.id}}>
+          <button type='submit' class='btn recommend-followings-btn'>跟隨</button>
+        </form>
+        {{/if}}
+
+      </div>
+      <p class='text-content mb-0'>{{this.introduction}}</p>
+    </div>
+  </div>
+</li>

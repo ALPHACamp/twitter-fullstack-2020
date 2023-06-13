@@ -12,11 +12,11 @@ const passport = require('./config/passport')
 
 // helpers
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
-// const partialHelpers = require('./helpers/partial-helpers')
+const partialHelpers = require('./helpers/partial-helpers')
 const authHelpers = require('./_helpers')
 const helpers = {
   ...handlebarsHelpers,
-  // ...partialHelpers,
+  ...partialHelpers,
   ...authHelpers
 }
 const previousPage = require('./middleware/previous-page')
@@ -54,6 +54,8 @@ app.use(previousPage)
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
+  res.locals.warning_messages = req.flash('warning_messages')
+  res.locals.info_messages = req.flash('info_messages')
   // 為了不跟user的資料衝突，所以更換名字
   res.locals.loginUser = helpers.getUser(req)
   res.locals.isAuthenticated = helpers.ensureAuthenticated(req)

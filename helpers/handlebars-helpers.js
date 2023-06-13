@@ -42,5 +42,8 @@ module.exports = {
   },
   ifQuery: function (a, b) {
     return a?.includes('?') ? `${a}&${b}` : `${a}?${b}`
+  },
+  chooseEach: function (condition, options) {
+    return condition ? options.fn(this) : options.inverse(this)
   }
 }

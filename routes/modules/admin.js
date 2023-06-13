@@ -13,6 +13,9 @@ router.post(
   }),
   adminController.adminSignin
 )
+
+// logout
+router.get('/logout', adminController.logout)
 router.get('/tweets', adminAuthenticated, adminController.adminGetTweets)
 router.get('/users', adminAuthenticated, adminController.adminGetUsers)
 

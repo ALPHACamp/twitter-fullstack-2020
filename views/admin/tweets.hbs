@@ -1,5 +1,14 @@
 <div class="d-flex justify-content-center">
-  {{!-- admin-nvabar --}}
-  {{> admin-navbar route='tweets'}}
-  {{> admin-tweets}}
+  {{!-- admin-navbar --}}
+  {{> admin-navbar route = (lookupPartial partialName)}}
+
+  {{!--tweet-list --}}
+  <div class="col-9 home-page {{#if userPage}}admin-user-page{{/if}}">
+    <ul class="list-group home-list">
+  
+      {{> (lookupPartial partialName)}}
+  
+    </ul>
+  </div>
+
 </div>

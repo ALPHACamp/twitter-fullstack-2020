@@ -12,13 +12,13 @@
             <span class='nav-text'>首頁</span>
           </a>
         </li>
-        <li class='nav-item {{#ifCond route 'profile'}}active{{/ifCond}}'>
-          <a class='nav-link  mb-4' href='/users/{{loginUser.id}}/tweets'>
+        <li class='nav-item {{#ifCond route 'user-profile'}}active{{/ifCond}}'>
+          <a class='nav-link mb-4' href='/users/{{loginUser.id}}/tweets'>
             <div class='nav-icon user-icon'></div>
             <span class='nav-text'>個人資料</span>
           </a>
         </li>
-        <li class='nav-item {{#ifCond route 'setting'}}active{{/ifCond}}'>
+        <li class='nav-item {{#ifCond route 'user-edit'}}active{{/ifCond}}'>
           <a class='nav-link mb-3' href='/users/{{loginUser.id}}'>
             <div class='nav-icon cog-icon'></div>
             <span class='nav-text'>設定</span>
@@ -38,4 +38,4 @@
   </ul>
 </nav>
 
-{{> modal-tweet}}
+{{> modal/modal-tweet}}

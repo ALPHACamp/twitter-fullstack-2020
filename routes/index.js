@@ -7,7 +7,6 @@ const followshipController = require('../controllers/followship-controller')
 const profileController = require('../controllers/profile-controller')
 const userController = require('../controllers/user-controller')
 const tweetsController = require('../controllers/tweets-controller')
-const adminController = require('../controllers/admin-controller')
 const apiProfileController = require('../controllers/api-profile-controller')
 
 const { authenticated } = require('../middleware/auth')

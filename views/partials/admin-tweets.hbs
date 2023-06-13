@@ -1,30 +1,30 @@
-{{!--tweet-list --}}
-<div class="col-9 home-page">
-  <ul class="list-group">
-    <li class="list-group-item tweet-list mt-2 sticky-top">
-      <p class="ms-2 fw-bolder h4">推文清單</p>
-    </li>
-    <div class="admin-tweets-page">
-      {{#each tweets}}
-      <li class="list-group-item tweet-list position-relative">
-        <a href="/tweets/{{this.id}}/replies" class="text-decoration-none" ></a>
-        <div class="d-flex">
-          <div class="flex-shrink-1 p-0">
-            <img src="{{this.User.avatar}}" alt="" class="recommend-followings-img">
-          </div>
-          <div class="tweet-text d-flex flex-column">
-            <div class="d-flex justify-content-between">
-              <div class="d-flex align-items-baseline mb-2">
-                <div class="tweet-name me-2">{{this.User.name}} </div>
-                <div class="tweet-account">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
-              </div>
-              <button type="button" class="btn-close position-absolute end-0" aria-label="Close"></button>
-            </div>
-            <p class="mb-2" style="white-space:break-spaces;">{{this.description}}</p>
-          </div>
-        </div>
-      </li>
-      {{/each}}
+{{!-- header --}}
+<li class="list-group-item tweet-list p-4 d-flex align-items-center">
+  <h4>推文清單</h4>
+</li>
+
+{{!-- tweet --}}
+{{#each tweets}}
+<li class="list-group-item tweet-list p-3">  
+  <div class="d-flex">
+    {{!-- avatar --}}
+    <div class="flex-shrink-1 p-0">
+      <img src="{{this.User.avatar}}" class="tweet-user-img" onerror="this.onerror=null; this.src='/images/profile-img.svg'">
     </div>
-  </ul>
-</div>
+
+    <div class="tweet-text d-flex flex-column">
+      {{!-- user name and account --}}
+      <div class="d-flex align-items-baseline">
+        <div class="user-name">{{this.User.name}} </div>
+        <div class="user-account">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
+      </div>
+
+      {{!-- delete btn --}}
+      <button type="button" class="btn-close position-absolute end-0" aria-label="Close"></button>
+      
+      {{!-- tweet description --}}
+      <p class="text-content">{{this.description}}</p>
+    </div>
+  </div>
+</li>
+{{/each}}

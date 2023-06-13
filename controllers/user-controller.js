@@ -10,7 +10,7 @@ const userController = {
     res.render('signup')
   },
   signin: (req, res) => {
-    req.flash('success_messages', '成功登入!')
+    req.flash('success_messages', '成功登入！')
     res.redirect('/tweets')
   },
   signup: (req, res) => {
@@ -23,7 +23,7 @@ const userController = {
     User.findOne({ where: { account } })
       .then(user => {
         if (user) {
-          req.flash('error_messages', 'account 已重複註冊！')
+          req.flash('error_messages', '帳號已重複註冊！')
           res.redirect('/signup')
           throw new Error('account already exists!')
         }
@@ -33,7 +33,7 @@ const userController = {
     User.findOne({ where: { email } })
       .then(user => {
         if (user) {
-          req.flash('error_messages', 'email 已重複註冊！')
+          req.flash('error_messages', 'Email 已重複註冊！')
           res.redirect('/signup')
           throw new Error('email already exists!')
         }

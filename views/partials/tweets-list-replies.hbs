@@ -1,0 +1,42 @@
+<a href="/tweets/{{this.Tweet.id}}/replies" class="text-decoration-none">
+  <li class="list-group-item tweet-list">
+    <div class="d-flex">
+      {{!-- avatar --}}
+      <div class="flex-shrink-1 p-0">
+        <button class="tweet-click-block"
+          onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{this.user.id}}/tweets';">
+          <img src="{{this.user.avatar}}" class="tweet-user-img"
+            onerror="this.onerror=null; this.src='/images/profile-img.svg'">
+        </button>
+      </div>
+
+      <div class="d-flex flex-column">
+      <div class="tweet-text flex-grow-1">
+        {{!-- user name and account --}}
+        <button class="tweet-click-block"
+          onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{this.user.id}}/tweets';">
+          <div class="d-flex align-items-baseline mb-2">
+            <div class="user-name me-2">{{this.user.name}}</div>
+            <div class="user-account">@{{this.user.account}}・{{formatRelativeTime this.createdAt}}</div>
+          </div>
+        </button>
+
+        {{!-- reply tweet --}}
+        <div class="d-flex mb-2">
+          <div class="user-account me-1">回覆</div>
+          <button class="tweet-click-block"
+            onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{this.Tweet.User.id}}/tweets';">
+            <div class="tag-user-name">@{{this.Tweet.User.account}}</div>
+          </button>
+        </div>
+
+        {{!-- tweet description --}}
+        <p class="text-content">{{this.comment}}</p>
+      </div>
+    </div>
+    </div>
+  </li>
+</a>
+
+{{!-- modal --}}
+{{> modal/modal-reply}}
