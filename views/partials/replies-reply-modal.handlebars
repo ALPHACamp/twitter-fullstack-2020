@@ -1,4 +1,4 @@
-<div class="modal fade" id="replyModal-{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="replyModal-{{tweet.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content reply-modal">
       <div class="modal-header">
@@ -6,12 +6,12 @@
       </div>
       <div class="modal-body">
         <div class="card reply-tweet-lg">
-          <a href="/tweets/{{this.id}}/replies" class="tweet-href" id="tweetHref"></a>
+          <a href="/tweets/{{tweet.id}}/replies" class="tweet-href" id="tweetHref"></a>
           <div class="reply-avatar">
             <div class="avatar">
-              <a href="/users/{{this.UserId}}/tweets" class="primary-anchor" id="tweetUserHref">
-                {{#if this.User.avatar}}
-                <img src="{{ this.User.avatar }}" alt="avatar" class="logo" id="tweetUserAvater">
+              <a href="/users/{{tweet.UserId}}/tweets" class="primary-anchor" id="tweetUserHref">
+                {{#if tweet.User.avatar}}
+                <img src="{{ tweet.User.avatar }}" alt="avatar" class="logo" id="tweetUserAvater">
                 {{else}}
                 <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
                 {{/if}}
@@ -23,35 +23,35 @@
           </div>
           <div class="card-text">
             <div class="card-text-info">
-              <a href="/users/{{ this.UserId }}/tweets" class="primary-anchor" id="tweetUserHref">
-                <span class="card-name" id="tweetUserName">{{this.User.name}}</span>
+              <a href="/users/{{ tweet.UserId }}/tweets" class="primary-anchor" id="tweetUserHref">
+                <span class="card-name" id="tweetUserName">{{tweet.User.name}}</span>
               </a>
-              <a href="/users/{{ this.UserId }}/tweets" class="primary-anchor" id="tweetUserHref">
-                <span class="card-account" id="tweetUserAccount">{{this.User.account}}</span>
+              <a href="/users/{{ tweet.UserId }}/tweets" class="primary-anchor" id="tweetUserHref">
+                <span class="card-account" id="tweetUserAccount">{{tweet.User.account}}</span>
               </a>
               <span class="card-dot">·</span>
-              <span class="card-datetime" id="tweetDate">{{relativeTimeFromNow this.createdAt}}</span>
+              <span class="card-datetime" id="tweetDate">{{relativeTimeFromNow tweet.createdAt}}</span>
             </div>
-            <p class="card-description" id="tweetDescription">{{this.description}}</p>
+            <p class="card-description" id="tweetDescription">{{tweet.description}}</p>
             <div class="reply-to-part">
               <span class="reply-to">回覆</span>
-              <a href="/users/{{ this.UserId }}/tweets" class="primary-anchor" id="tweetUserHref">
-                <span class="card-account reply-account" id="tweetUserAccount">@{{this.User.account}}</span>
+              <a href="/users/{{ tweet.UserId }}/tweets" class="primary-anchor" id="tweetUserHref">
+                <span class="card-account reply-account" id="tweetUserAccount">@{{tweet.User.account}}</span>
               </a>
             </div>
           </div>
         </div>
         <div class="main-create-bar">
           <div class="avatar">
-            <a href="/users/{{this.loginUserId}}/tweets">
-              {{#if this.loginUserAvatar }}
-              <img src="{{ this.loginUserAvatar }}" alt="avatar" class="logo">
+            <a href="/users/{{loginUser.id}}/tweets">
+              {{#if loginUser.avatar }}
+              <img src="{{ loginUser.avatar}}" alt="avatar" class="logo">
               {{else}}
               <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
               {{/if}}
             </a>
           </div>
-          <form action="/tweets/{{this.id}}/replies" method="POST" class="create-reply-form reply-content" name="comment" id="tweetReply">
+          <form action="/tweets/{{tweet.id}}/replies" method="POST" class="create-reply-form reply-content" name="comment" id="tweetReply">
             <textarea name="comment" id="reply" cols="30" rows="10" class="reply-create-input"
               placeholder="推你的回覆"></textarea>
         </div>

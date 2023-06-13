@@ -92,6 +92,7 @@ const userController = {
 
       if (!user) throw new Error('使用者不存在')
       user = user.toJSON()
+      loginUserAvatar = user.avatar
       user.isFollow = user.Followers.some(i => i.id === loginUserId)
 
       likeList = likeList.map(i => i.TweetId)
@@ -100,7 +101,9 @@ const userController = {
           i = i.toJSON()
           return {
             ...i,
-            isLike: likeList.some(j => j === i.id)
+            isLike: likeList.some(j => j === i.id),
+            loginUserAvatar,
+            loginUserId
           }
         })
 
@@ -179,6 +182,7 @@ const userController = {
 
       if (!user) throw new Error('使用者不存在')
       user = user.toJSON()
+      loginUserAvatar = user.avatar
       user.isFollow = user.Followers.some(i => i.id === loginUserId)
 
       loginUserLikeList = loginUserLikeList.map(i => i.TweetId)
@@ -187,7 +191,9 @@ const userController = {
           i = i.toJSON()
           return {
             ...i,
-            isLike: loginUserLikeList.some(j => j === i.TweetId)
+            isLike: loginUserLikeList.some(j => j === i.TweetId),
+            loginUserId,
+            loginUserAvatar
           }
         })
 
