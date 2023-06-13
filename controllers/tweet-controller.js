@@ -23,13 +23,16 @@ const tweetController = {
       ])
 
       user = user.toJSON()
+      loginUserAvatar= user.avatar
       
       const likedTweetsId = user?.LikedTweets ? user.LikedTweets.map(lt => lt.id) : []
 
       tweetList = tweetList.map(tweet => ({
           ...tweet.toJSON(),
           description: tweet.description.substring(0, 50),
-          isLike: likedTweetsId.includes(tweet.id)
+          isLike: likedTweetsId.includes(tweet.id),
+          loginUserAvatar,
+          loginUserId
         }))
 
       topUsers = topUsers.map(user => ({

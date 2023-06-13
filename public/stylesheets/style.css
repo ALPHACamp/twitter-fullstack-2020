@@ -644,6 +644,11 @@ textarea {
   color: var(--info);
 }
 
+.tweet-modal {
+  width: 640px;
+  transform: translateX(-20%);
+}
+
 /* -------------------- card -------------------- */
 
 .no-tweet {
@@ -956,7 +961,111 @@ textarea {
   border-bottom: 2px solid var(--info);
 }
 
+/* -------------------- reply -------------------- */
 
+.reply-tweet-lg {
+  flex-direction: row;
+  border-radius: 0;
+  border: 0;
+  /* border-bottom: 1px solid #E6ECF0; */
+  padding: 16px 25px 0px;
+}
+
+.reply-comment {
+  flex-direction: column;
+  width: 100%;
+  padding: 5px 25px;
+}
+
+.reply-description {
+  margin: 8px 0px 0px 0px;
+  font-size: 24px;
+  padding: 0px 0px 15px;
+}
+
+.reply-background-image {
+  background-position: center;
+  /* background-size: cover; */
+  background-repeat: no-repeat;
+  size: 24px;
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  background-size: contain;
+  margin: 3px 120px 10px 0px ;
+}
+
+.reply-count,
+.reply-text,
+.reply-like-count,
+.reply-like-text {
+  font-family: "Noto Sans TC";
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.reply-count,
+.reply-like-count {
+  margin-right: -3px;
+  color: #171725;
+  font-weight: bold;
+}
+
+.reply-text,
+.reply-like-text {
+  color: var(--secondary);
+}
+
+.reply-datetime-hr {
+  margin-top: 8px; 
+}
+
+.reply-modal {
+  width: 640px;
+  transform: translateX(-20%);
+  height: 500px;
+}
+
+.reply-content {
+  width: 100%;
+}
+
+.create-reply-form>textarea {
+  width: 360px;
+  height: 130px;
+  resize: none;
+  /* margin-left: 8px; */
+}
+
+.reply-create-input {
+  height: 50px;
+  width: 100%;
+  border-width: 0;
+  background-color: transparent;
+  padding-left: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 50px;
+  color: var(--secondary);
+}
+
+.reply-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 13px;
+}
+
+.vertical-line {
+  border-left: 3px solid #B5B5BE;
+  height: 75px;
+}
+
+.reply-avatar {
+  height: 140px;
+}
 
 /* -------------------- User Setting -------------------- */
 .user-setting {
