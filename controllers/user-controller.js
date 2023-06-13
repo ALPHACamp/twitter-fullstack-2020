@@ -274,6 +274,12 @@ const userController = {
       })
     ])
       .then(([user, tweets, replies, likes, currentUser, topUsers]) => {
+        // 抓取特定使用者的資料
+        const userData = ({
+          ...user.toJSON(),
+          followerCount: user.Followings.length,
+          followingCount: user.Followers.length
+        })
         const tweetsData = tweets.map(tweet => ({
           ...tweet,
           replyCount: replies.filter(reply => reply.tweetId === tweet.id).length,
@@ -290,7 +296,7 @@ const userController = {
           }))
           // 排序：從追蹤數多的排到少的
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('userPage-tweets', { user, tweets: tweetsData, currentUser, topUsers: data, isProfile: true })
+        res.render('userPage-tweets', { user: userData, tweets: tweetsData, currentUser, topUsers: data, isProfile: true })
       })
   },
   // 取得特定使用者所有回覆頁面
@@ -419,7 +425,7 @@ const userController = {
     // 自己不能追蹤自己(測試檔 redirect 需要 200)
     if (userId === helpers.getUser(req).id) {
       req.flash('error_messages', 'Cannot follow yourself!')
-      return res.redirect('back')
+      return res.redirect(200, 'back')
     }
 
     return Promise.all([
@@ -491,7 +497,8 @@ const userController = {
             isFollowed: followingList.includes(following.id)
           }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        return res.status(200).render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followings })
+        // console.log(followings)
+        res.render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followings })
       })
       .catch(err => next(err))
   },
@@ -515,18 +522,18 @@ const userController = {
         const tweetsLength = user.Tweets.length
         // 登入使用者目前的 following 清單
         const followingList = helpers.getUser(req).Followings.map(f => f.id)
-        console.log('Followers')
-        console.log(user.toJSON().Followers)
-        console.log('Followings')
-        console.log(user.toJSON().Followings)
-
+        // console.log('Followers')
+        // console.log(user.toJSON().Followers)
+        // console.log('Followings')
+        // console.log(user.toJSON().Followings)
         const followers = user.toJSON().Followers
           .map(follower => ({
             ...follower,
             isFollowed: followingList.includes(follower.id)
           }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        return res.status(200).render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followers })
+        console.log(followers)
+        res.status(200).render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followers })
       })
       .catch(err => next(err))
   }

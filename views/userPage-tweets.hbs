@@ -26,7 +26,8 @@
       </div>
       <div class="d-flex mt-3">
         {{!-- 留言數 Comment --}}
-        <button id="" class="me-5 number  getTweetButton d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#postReplyModal" value="{{this.id}}">
+        <button id="" class="me-5 number  getTweetButton d-flex align-items-center" data-bs-toggle="modal"
+          data-bs-target="#postReplyModal" value="{{this.id}}">
           <img class="me-2 " src="/_base/Property 2=outlined, Property 3=reply.svg" style="width: 13px">
           <span>{{this.replyCount}}</span>
         </button>
@@ -36,14 +37,16 @@
           <form action="/tweets/{{this.id}}/unlike" method="POST" class="me-2">
             <button type="submit" class="d-flex align-items-center">
               <img src="/_base/Property 2=filled, Property 3=like.svg" style="width: 13px" class="me-2 svg-fill-error">
-              <span style="line-height: 14px;font-size:14px; font-weight:600; color: #6C757D; text-align: left">{{this.likeCount}}</span>
+              <span
+                style="line-height: 14px;font-size:14px; font-weight:600; color: #6C757D; text-align: left">{{this.likeCount}}</span>
             </button>
           </form>
           {{else}}
           <form action="/tweets/{{this.id}}/like" method="POST" class="me-2">
             <button type="submit" class="d-flex align-items-center">
               <img src="/_base/Property 2=outlined, Property 3=like.svg" style="width: 13px" class="me-2">
-              <span style="line-height: 14px;font-size:14px; font-weight:600; color: #6C757D; text-align: left">{{this.likeCount}}</span>
+              <span
+                style="line-height: 14px;font-size:14px; font-weight:600; color: #6C757D; text-align: left">{{this.likeCount}}</span>
             </button>
           </form>
           {{/if}}
