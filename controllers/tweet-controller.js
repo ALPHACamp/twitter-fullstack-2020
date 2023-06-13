@@ -10,11 +10,14 @@ const tweetController = {
       Tweet.findAll({
         // limit: 2,
         order: [['createdAt', 'DESC']],
-        include: [
-          User
-        ],
+        attributes: ['id', 'description', 'createdAt'],
+        include: [User],
         raw: true,
         nest: true
+      }),
+      Reply.findAll({
+        attributes: ['tweetId'],
+        raw: true
       }),
       // 取得包含追蹤者的使用者資料
       User.findAll({
@@ -35,9 +38,10 @@ const tweetController = {
         nest: true
       })
     ])
-      .then(([tweets, topUsers, currentUser, likes]) => {
+      .then(([tweets, replies, topUsers, currentUser, likes]) => {
         const tweetsData = tweets.map(tweet => ({
           ...tweet,
+          replyCount: replies.filter(reply => reply.tweetId === tweet.id).length,
           isLiked: likes.some(like => (like.userId === helpers.getUser(req).id && like.tweetId === tweet.id)),
           likeCount: likes.filter(like => like.tweetId === tweet.id).length
         }))
@@ -127,7 +131,6 @@ const tweetController = {
   // 抓特定推文資料傳給前端
   apiGetTweet: (req, res, next) => {
     const tweetId = req.params.id
-    console.log(tweetId)
     Promise.all([
       Tweet.findByPk(tweetId, {
         include: [User],

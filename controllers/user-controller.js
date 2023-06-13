@@ -245,6 +245,10 @@ const userController = {
         raw: true,
         nest: true
       }),
+      Reply.findAll({
+        attributes: ['tweetId'],
+        raw: true
+      }),
       Like.findAll({
         attributes: ['id', 'userId', 'tweetId'],
         raw: true,
@@ -265,9 +269,10 @@ const userController = {
         limit: 10
       })
     ])
-      .then(([user, tweets, likes, currentUser, topUsers]) => {
+      .then(([user, tweets, replies, likes, currentUser, topUsers]) => {
         const tweetsData = tweets.map(tweet => ({
           ...tweet,
+          replyCount: replies.filter(reply => reply.tweetId === tweet.id).length,
           isLiked: likes.some(like => (like.userId === helpers.getUser(req).id && like.tweetId === tweet.id)),
           likeCount: likes.filter(like => like.tweetId === tweet.id).length
         }))
@@ -354,6 +359,10 @@ const userController = {
         nest: true,
         raw: true
       }),
+      Reply.findAll({
+        attributes: ['tweetId'],
+        raw: true
+      }),
       Like.findAll({
         attributes: ['id', 'userId', 'tweetId'],
         raw: true,
@@ -376,10 +385,11 @@ const userController = {
         limit: 10
       })
     ])
-      .then(([user, likedtweets, likes, tweets, currentUser, topUsers]) => {
-        // 調整 isLiked 及計算 likeCount
+      .then(([user, likedtweets, replies, likes, tweets, currentUser, topUsers]) => {
+        // 調整 isLiked 及計算 likeCount、replyCount
         const tweetsData = likedtweets.map(tweet => ({
           ...tweet,
+          replyCount: replies.filter(reply => reply.tweetId === tweet.id).length,
           isLiked: likes.some(like => (like.userId === helpers.getUser(req).id && like.tweetId === tweet.id)),
           likeCount: likes.filter(like => like.tweetId === tweet.id).length
         }))
