@@ -10,7 +10,7 @@ const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('./config/passport')
 const flash = require('connect-flash')
-const helpers = require('./helpers/auth-helpers')
+const helpers = require('./_helpers')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 
 const app = express()
@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: true
 }))
 app.use(passport.initialize())
 app.use(passport.session())

@@ -15,21 +15,13 @@ router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
 router.post(
   '/signin',
-  passport.authenticate('local', {
-    failureRedirect: '/signin',
-    failureFlash: true
+  passport.authenticate('user', {
+    successRedirect: '/tweets',
+    failureRedirect: '/signin'
   }),
   userController.signIn
 )
 router.get('/logout', userController.logout)
-router.post(
-  '/signin',
-  passport.authenticate('local', {
-    failureRedirect: '/signin',
-    failureFlash: true
-  }),
-  userController.signIn
-)
 
 //* 追蹤功能
 router.post('/followships/:userId', authenticated, userController.addFollowing)

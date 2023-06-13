@@ -1,9 +1,9 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const bcrypt = require('bcryptjs')
-const { User, Tweet } = require('../models')
+const { User, Like } = require('../models')
 // set up Passport strategy
-passport.use(new LocalStrategy(
+passport.use('user', new LocalStrategy(
   // customize user field
   {
     usernameField: 'account',
@@ -12,12 +12,31 @@ passport.use(new LocalStrategy(
   },
   // authenticate user
   (req, account, password, cb) => {
-    User.findOne({ where: { account } })
+    User.findOne({ where: { account, role: 'user' } })
       .then(user => {
-        if (!user) return cb(null, false, req.flash('error_messages', '帳號不存在！'))
+        if (!user) return cb(null, false, req.flash('error_messages', '請至後台登入！'))
         bcrypt.compare(password, user.password).then(res => {
           if (!res) return cb(null, false, req.flash('error_messages', '密碼錯誤！'))
           return cb(null, user)
+        })
+      })
+  }
+))
+passport.use('admin', new LocalStrategy(
+  // customize user field
+  {
+    usernameField: 'account',
+    passwordField: 'password',
+    passReqToCallback: true
+  },
+  // authenticate admin
+  (req, account, password, cb) => {
+    User.findOne({ where: { account, role: 'admin' } })
+      .then(admin => {
+        if (!admin) return cb(null, false, req.flash('error_messages', '請至前台登入！'))
+        bcrypt.compare(password, admin.password).then(res => {
+          if (!res) return cb(null, false, req.flash('error_messages', '密碼錯誤！'))
+          return cb(null, admin)
         })
       })
   }
@@ -31,7 +50,7 @@ passport.deserializeUser(async (id, cb) => {
     const user = await User.findByPk(id, {
       include: [
         // 關聯資料
-        { model: Tweet },
+        { model: Like },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
