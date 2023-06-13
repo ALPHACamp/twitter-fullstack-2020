@@ -7,6 +7,7 @@ const admin = require('./modules/admin')
 
 const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
+const replyController = require('../controllers/reply-controller')
 
 const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated } = require('../middleware/auth')
@@ -21,9 +22,12 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 
 router.get('/logout', userController.logOut)
 
-router.get('/tweets', authenticated, tweetController.getTweets) // 顯示全部推文
+router.post('/tweets/:id/replies', authenticated, replyController.createReply)
 router.get('/tweets/:id/replies', tweetController.getTweet)
+router.get('/tweets', authenticated, tweetController.getTweets) // 顯示全部推文
 router.post('/tweets', tweetController.createTweet) // 新增推文
+
+router.get('/reply/:id', authenticated, replyController.getReplies)
 
 router.get('/users/setting', authenticated, userController.settingPage)
 

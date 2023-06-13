@@ -57,7 +57,7 @@ const tweetController = {
       return res.redirect('back')
     }
     if (description.length > 140) {
-      req.flash('error_messages', '字數已超過上限140個字ˇ')
+      req.flash('error_messages', '字數已超過上限140個字')
       return res.redirect('back')
     }
     return Tweet.create({
