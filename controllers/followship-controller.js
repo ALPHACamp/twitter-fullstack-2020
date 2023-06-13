@@ -11,6 +11,7 @@ const followshipController = {
     if (userId.toString() === followingId.toString()) {
       return res.status(200).json({ error: "You can't follow yourself." })
     }
+
     return Promise.all([
       User.findByPk(followingId),
       Followship.findOne({

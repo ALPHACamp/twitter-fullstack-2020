@@ -35,7 +35,6 @@ const adminController = {
         user,
         tweets: tweets
       })
-      console.log('adminGetTweets')
     } catch (err) {
       next(err)
     }
@@ -53,7 +52,6 @@ const adminController = {
         })
       ])
       res.render('admin/users', { users })
-      console.log('adminGetUsers')
     } catch (err) {
       next(err)
     }

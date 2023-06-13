@@ -229,7 +229,10 @@ const profileController = {
         following.isFollowing = isFollowing[index]
       })
       // 根據isFollowing排序
-      userData.Followings.sort((a, b) => b.isFollowing - a.isFollowing)
+      userData.Followings.sort((a, b) => {
+        if (loginUser.id === a.id || loginUser.id === b.id) return -1
+        return b.isFollowing - a.isFollowing
+      })
       // pagination
       const pagination = getPagination(page, limit, followingsCount)
       res.render('users/followings', { user: userData, followings, pagination, route })
