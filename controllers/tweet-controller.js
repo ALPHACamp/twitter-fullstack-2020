@@ -7,7 +7,7 @@ const tweetController = {
       const user = await User.findByPk(req.user.id, { raw: true, nest: true })
       const userAvatar = user.avatar
       const sortedTweets = tweets.sort((a, b) => b.createdAt - a.createdAt)
-      return res.render('tweets', { tweets: sortedTweets, userAvatar })
+      return res.render('tweets', { tweets: sortedTweets, user, userAvatar })
     } catch (err) {
       next(err)
     }
