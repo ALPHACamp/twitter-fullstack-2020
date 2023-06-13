@@ -47,8 +47,8 @@ targetNodes.forEach(function (targetNode) {
 // 編輯個人資料相關
 const editProfileButton = document.querySelector('#editProfileButton')
 const putProfileButton = document.querySelector('#putProfileButton')
-const editModalCover = document.querySelector('#editModalCover')
-const editModalAvatar = document.querySelector('#editModalAvatar')
+const previewCover = document.querySelector('#previewCover')
+const previewAvatar = document.querySelector('#previewAvatar')
 const nameInput = document.querySelector('#name')
 const introInput = document.querySelector('#intro')
 const userId = editProfileButton.value
@@ -58,8 +58,8 @@ editProfileButton.addEventListener('click', event => {
   axios.get(`/api/users/${userId}`)
     .then(response => {
       const { cover, avatar, name, intro } = response.data
-      editModalCover.src = cover
-      editModalAvatar.src = avatar
+      previewCover.src = cover
+      previewAvatar.src = avatar
       nameInput.value = name
       introInput.value = intro
     })
@@ -74,6 +74,7 @@ putProfileButton.addEventListener('click', event => {
   // 取得使用者輸入的資料
   const name = nameInput.value
   const intro = introInput.value
+  const avatar = previewAvatar.src
   axios.post(`/api/users/${userId}`, { name, intro })
     .then(response => {
       const { name, intro } = response.data
@@ -86,3 +87,19 @@ putProfileButton.addEventListener('click', event => {
       alert('An error occurred while fetching profile data.') // 給使用者顯示一個錯誤提示
     })
 })
+
+function previewFile() {
+  const preview = document.querySelector('#previewAvatar')
+  const file = document.querySelector('#addAvatar').files[0]
+  const reader = new FileReader()
+
+  reader.onloadend = function () {
+    preview.src = reader.result
+  }
+
+  if (file) {
+    reader.readAsDataURL(file)
+  } else {
+    preview.src = ''
+  }
+}
