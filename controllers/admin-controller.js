@@ -61,8 +61,8 @@ const adminController = {
     Tweet.destroy(
       { where: { id: tweetId } }
     )
-      .then(user => {
-        console.log(user)
+      .then(() => {
+        res.redirect('/admin/tweets')
       })
       .catch(err => console.log(err))
   }
