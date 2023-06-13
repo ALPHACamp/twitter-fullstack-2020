@@ -10,19 +10,28 @@
           <button type="submit" class="btn btn-primary m-1" style="color:white;width:64px;
 height:40px;border:none;background:#FF6600;border-radius:50px">儲存</button>
         </div>
-        <div class="edit-banner">
+        <div class='cover-edit'>
           <img src='{{user.cover}}' class='card-img-top cover-img' alt='cover' />
-          <input class="form-control" type="file" class="form-control-file" id="input-user-cover" name="cover">
-        </div>
-        <div class="d-flex justify-content-between">
-          <div class="avatar">
-            <img src='{{user.avatar}}' class='avatar' onerror="this.style.display='block' " />
-            <input class="form-control" type="file" class="form-control-file" id="input-user-avatar" name="avatar">
+          <div class='cover'>
+            <label class='form-label' for='cover'>
+              <img src='/images/cover_edit.svg' alt='cover' style="margin-left: 20px;" />
+            </label>
+            <input class='form-control' type='file' class='form-control-file' id='cover' name='cover' />
           </div>
         </div>
-        <div class="form-row mb-3">
+        <div class='avatar-edit'>
+          <img src='{{user.avatar}}' class='avatar-img' onerror="this.style.display='block' " />
+          <div class='avatar'>
+            <label class='form-label' for='avatar'>
+              <img src='/images/cover_edit.svg' alt='avatar' />
+            </label>
+            <input class='form-control' type='file' class='form-control-file' id='avatar' name='avatar' />
+          </div>
+        </div>
+        <div class="form-row mb-3" style="margin-top: 100px;">
           <label for="user-name" style="font-size:14px">名稱
-            <input class="form-control" type="text" id="user-name" name="name" style="width:465px" value="{{user.name}}">
+            <input class="form-control" type="text" id="user-name" name="name" style="width:465px"
+              value="{{user.name}}">
           </label>
         </div>
         <label for="user-introduction" style="font-size:14px">自我介紹</label>

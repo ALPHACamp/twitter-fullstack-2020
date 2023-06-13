@@ -271,7 +271,7 @@ h5 {
   height: 140px;
   border-radius: 50%;
   /* 正圆形 */
-  border: solid 4px #ffffff;
+  background: center center;
 }
 
 .btn-outline {
@@ -840,4 +840,73 @@ img.card-avatar {
   100% {
     opacity: 0;
   }
+}
+
+.cover-edit,
+.avatar-edit {
+  position: relative;
+}
+
+.cover-edit .cover-img {
+  -webkit-filter: brightness(0.5);
+  filter: brightness(0.5);
+  width: 100%;
+  height: 200px;
+  border-radius: 0px;
+}
+
+.cover-edit .cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.cover-edit .cover .form-control,
+.avatar-edit .avatar .form-control {
+  top: 0;
+  width: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cover-edit .cover .form-label {
+  margin: 0;
+  top: 0;
+  left: 0;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.avatar-edit .avatar {
+  position: absolute;
+  top: 0;
+  left: 75px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-edit .avatar .form-label {
+  margin: 0;
+  top: 0;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.avatar-img {
+  -webkit-filter: brightness(0.5);
+  filter: brightness(0.5);
+  position: absolute;
+  height: 140px;
+  width: 140px;
+  transform: translateY(-50%);
+  left: 15px;
+  border-radius: 50%;
+  z-index: 0;
 }
