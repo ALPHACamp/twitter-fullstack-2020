@@ -57,7 +57,7 @@ const profileController = {
     const { userData, followingData } = req.session
     // 取得 id
     const { userId } = req.params
-
+    const loginUser = helpers.getUser(req)
     const route = `users/${userId}/tweets`
     // 取得page, limit, offset
     const page = Number(req.query.page) || 1
@@ -68,17 +68,13 @@ const profileController = {
       // replies、likes數量計算
       const tweets = await Tweet.findAndCountAll({
         attributes: {
-          include: [
-            [Sequelize.fn('COUNT', Sequelize.col('Replies.id')), 'repliesCount'],
-            [Sequelize.fn('COUNT', Sequelize.col('Likes.id')), 'likesCount']
-          ]
+          include: [[Sequelize.fn('COUNT', Sequelize.col('Replies.id')), 'repliesCount']]
         },
         where: { UserId: userId },
         include: [
           User,
           // 不要引入reply資料
-          { model: Reply, attributes: [] },
-          { model: Like, attributes: [] }
+          { model: Reply, attributes: [] }
         ],
         order: [['createdAt', 'DESC']],
         group: ['Tweet.id'],
@@ -86,8 +82,19 @@ const profileController = {
         offset,
         subQuery: false
       })
+      const likes = await Promise.all(
+        tweets.rows.map(tweet =>
+          Like.findAndCountAll({
+            where: { TweetId: tweet.id }
+          })
+        )
+      )
       // 整理資料
-      const tweetsData = tweets.rows.map(tweet => tweet.toJSON())
+      const tweetsData = tweets.rows.map((tweet, index) => ({
+        ...tweet.toJSON(),
+        likesCount: likes[index].count,
+        isLiked: likes[index].rows.some(like => like.UserId === loginUser.id)
+      }))
       // pagination
       const pagination = getPagination(page, limit, tweets.count.length)
       // render
@@ -148,34 +155,23 @@ const profileController = {
       // likes找相對應的資料，跟user推文者關聯，依照like建立時間排列
       const likes = await Like.findAndCountAll({
         where: { UserId: userId },
-        include: [Tweet],
+        include: [{ model: Tweet, include: [User] }],
         order: [['createdAt', 'DESC']],
         limit,
         offset
       })
-      // 透過likeId找對應的tweet資料
-      // replies、likes數量計算
-      const tweets = await Promise.all(
-        likes.rows.map(like => {
-          return Tweet.findByPk(like.TweetId, {
-            attributes: {
-              include: [
-                [Sequelize.fn('COUNT', Sequelize.col('Replies.id')), 'repliesCount'],
-                [Sequelize.fn('COUNT', Sequelize.col('Likes.id')), 'likesCount']
-              ]
-            },
-            include: [
-              User,
-              // 不要引入reply資料
-              { model: Reply, attributes: [] },
-              { model: Like, attributes: ['createdAt'] }
-            ],
-            group: ['Tweet.id']
-          })
-        })
+      const counts = await Promise.all(
+        likes.rows.map(async like => ({
+          repliesCount: await Reply.count({ where: { TweetId: like.TweetId } }),
+          likesCount: await Like.count({ where: { TweetId: like.TweetId } })
+        }))
       )
       // 整理資料
-      const tweetsData = tweets.map(tweet => ({ ...tweet?.toJSON() }))
+      const tweetsData = likes.rows.map((like, index) => ({
+        ...like.Tweet.toJSON(),
+        likesCount: counts[index].likesCount,
+        repliesCount: counts[index].repliesCount
+      }))
       // pagination
       const pagination = getPagination(page, limit, likes.count)
       const partialName = 'user-likes'

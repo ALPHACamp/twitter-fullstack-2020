@@ -63,7 +63,6 @@ const followshipController = {
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
         req.session.followingData = result.slice(0, topFollowedUsersNumber - 1)
-        console.log(result)
         return next()
       })
       .catch(err => next(err))

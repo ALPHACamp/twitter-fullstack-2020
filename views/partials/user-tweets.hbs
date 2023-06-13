@@ -21,8 +21,16 @@
                   <img class='reply-icon' src='/images/reply_outlined.svg' alt='reply' />
                   <span>{{this.repliesCount}}</span>
                 </span>
-                <span class='count' href='#'>
-                  <img class='like-icon' src='/images/like_outlined.svg' alt='like' />
+                <span class='count'>
+                {{#if isLiked }}
+                  <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
+                    <input class='like-icon' type="image" src="/images/like_filled.svg" alt="提交">
+                  </form>
+                {{else}}
+                  <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
+                    <input class='like-icon' type="image" src="/images/like_outlined.svg" alt="提交">
+                  </form>
+                {{/if}}
                   <span>{{this.likesCount}}</span>
                 </span>
               </div>
