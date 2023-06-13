@@ -2,10 +2,10 @@ const helpers = require('../helpers/auth-helpers')
 // 前台驗證是不是一般使用者
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (!helpers.getUser(req).isAdmin) {
+    if (helpers.getUser(req).role === 'user') {
       return next()
     }
-    req.logOut(() => {}) // 是admin就登出
+    req.logOut(() => { }) // 是admin就登出
   }
   req.flash('error_message', '帳號不存在')
   return res.redirect('/signin')
@@ -13,7 +13,7 @@ const authenticated = (req, res, next) => {
 // 後台驗證是不是admin
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).isAdmin) {
+    if (helpers.getUser(req).role === 'admin') {
       return next()
     }
     req.logOut(() => { }) // 是一般users就登出
@@ -27,7 +27,7 @@ const authenticatedAdmin = (req, res, next) => {
 const authenticatedTweets = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) { // 有沒有驗證
     // 驗證通過 是使用者
-    if (!helpers.getUser(req).isAdmin) { // 是一般user
+    if (helpers.getUser(req).role === 'user') { // 是一般user
       return next()
     } else { // 是管理員
       return res.redirect('/admin/tweets')

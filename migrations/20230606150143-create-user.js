@@ -32,8 +32,8 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue: '跟大家介紹你自己吧！！'
       },
-      is_admin: {
-        type: Sequelize.BOOLEAN
+      role: {
+        type: Sequelize.STRING
       },
       created_at: {
         allowNull: false,
