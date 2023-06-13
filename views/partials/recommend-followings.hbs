@@ -5,6 +5,8 @@
     </li>
 
     {{#each followingData}}
+      {{#ifCond ../loginUser.id this.id}}
+      {{else}}
       <li class='list-group-item recommend-followings-item'>
         <div class='d-flex align-items-center'>
           <div class='flex-shrink-1 p-0'>
@@ -15,8 +17,6 @@
             <div class='following-account'>@{{this.account}}</div>
           </div>
           <div class='flex-shrink-1 p-0'>
-            {{#ifCond ../loginUser.id this.id}}
-            {{else}}
               {{#if this.isFollowed}}
                 <form class='' action='/followships/{{this.id}}?_method=DELETE' method='POST'>
                   <button type='submit' class='btn btn-primary recommend-followings-btn followed col'>正在跟隨</button>
@@ -28,10 +28,10 @@
                   <button type='submit' class='btn btn-primary recommend-followings-btn followed col'>跟隨</button>
                 </form>
               {{/if}}
-            {{/ifCond}}
           </div>
         </div>
       </li>
+      {{/ifCond}}
     {{/each}}
   </ul>
 </div>
