@@ -43,7 +43,7 @@ module.exports = {
   ifQuery: function (a, b) {
     return a?.includes('?') ? `${a}&${b}` : `${a}?${b}`
   },
-  lookupPartial: function (a) {
-    return a
+  lookupPartial: function (partialName) {
+    return partialName
   }
 }

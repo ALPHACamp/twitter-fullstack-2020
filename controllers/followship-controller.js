@@ -49,8 +49,10 @@ const followshipController = {
       .catch(err => next(err))
   },
   getTopFollowedUsers: (req, res, next) => {
+    const topFollowedUsersNumber = 10
     return User.findAll({
-      include: [{ model: User, as: 'Followers' }]
+      include: [{ model: User, as: 'Followers' }],
+      where: { role: 'user' }
     })
       .then(users => {
         const result = users
@@ -60,10 +62,9 @@ const followshipController = {
             isFollowed: req.user.Followings.some(f => f.id === user.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
-        req.userData = {
-          ...result
-        }
-        res.send(req.userData) // 測試用
+        req.session.followingData = result.slice(0, topFollowedUsersNumber - 1)
+        console.log(result)
+        return next()
       })
       .catch(err => next(err))
   }

@@ -6,6 +6,7 @@ const tweetsController = {
   getTweets: async (req, res, next) => {
     // 取得登入使用者的資料
     const loginUser = helpers.getUser(req)
+    const { followingData } = req.session
     try {
       let tweets = await Tweet.findAll({
         include: [User, { model: Like }, { model: Reply, include: User }],
@@ -22,7 +23,8 @@ const tweetsController = {
         user: loginUser,
         tweets: tweets,
         partialName,
-        nav
+        nav,
+        followingData
       })
     } catch (err) {
       next(err)

@@ -7,7 +7,7 @@ const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 // 推文顯示數量
 const DEFAULT_LIMIT = 50
-const nav = 'profile'
+let nav = 'profile'
 
 const profileController = {
   getUser: async (req, res, next) => {
@@ -54,7 +54,7 @@ const profileController = {
     }
   },
   getUserTweets: async (req, res, next) => {
-    const { userData } = req.session
+    const { userData, followingData } = req.session
     // 取得 id
     const { userId } = req.params
 
@@ -93,7 +93,7 @@ const profileController = {
       // render
       const partialName = 'user-tweets'
       // res.render('users/tweets', { user: userData, tweets: tweetsData, route, pagination })
-      res.render('index', { user: userData, tweets: tweetsData, route, pagination, partialName, nav })
+      res.render('index', { user: userData, tweets: tweetsData, route, pagination, partialName, nav, followingData })
     } catch (err) {
       next(err)
     }
@@ -302,6 +302,7 @@ const profileController = {
     }
   },
   editUserAccount: async (req, res, next) => {
+    nav = 'setting'
     // 抓id
     const { userId } = req.params
     const loginUser = helpers.getUser(req)
@@ -314,8 +315,10 @@ const profileController = {
       })
       // 找不到就報錯
       if (!user) throw new Error('帳號不存在!')
+      const partialName = 'user-edit'
+      const visibleToggle = 'invisible'
       // render
-      return res.render('users/edit', { user })
+      return res.render('index', { user, partialName, visibleToggle })
     } catch (err) {
       next(err)
     }
