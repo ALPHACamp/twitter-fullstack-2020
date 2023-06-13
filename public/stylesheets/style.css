@@ -250,7 +250,7 @@ h5 {
   margin-left: 628px;
 }
 
-.tweet-xmark button{
+.tweet-xmark button {
   width: 15px;
   height: 15px;
   border: none;
@@ -271,7 +271,7 @@ h5 {
   height: 140px;
   border-radius: 50%;
   /* 正圆形 */
-  border: solid 4px #ffffff;
+  background: center center;
 }
 
 .btn-outline {
@@ -519,8 +519,9 @@ img.card-avatar {
   font-size: 16px;
   line-height: 24px;
 }
-.solid{
-  color:#E6ECF0
+
+.solid {
+  color: #E6ECF0
 }
 
 .sidebar-left {
@@ -565,7 +566,7 @@ img.card-avatar {
 }
 
 .nav-item a {
-  text-decoration:none;
+  text-decoration: none;
 }
 
 .tweet {
@@ -667,6 +668,7 @@ img.card-avatar {
   font-size: 16px;
   line-height: 24px;
 }
+
 .edit-close {
   color: #FF6600;
   background-color: #FFFFFF;
@@ -704,7 +706,7 @@ img.card-avatar {
   height: 140px;
   border-radius: 50%;
   /* 正圆形 */
-  background: center center url('https://i.imgur.com/mhXz6z9.png?1');
+  background: center center;
   background-size: cover;
 }
 
@@ -718,7 +720,8 @@ img.card-avatar {
 #user-introduction {
   padding: 0px;
   resize: none;
-  }
+}
+
 .one-tweet {
   padding: 10px 15px;
   border-width: 0px 0px 1px 0px;
@@ -783,16 +786,16 @@ img.card-avatar {
   margin-left: 10px;
 }
 
-.post-new-tweet{
-  color:#FFFFFF;
-  width:64px;
-  height:40px;
-  border:none;
-  background:#FF6600;
-  border-radius:50px
+.post-new-tweet {
+  color: #FFFFFF;
+  width: 64px;
+  height: 40px;
+  border: none;
+  background: #FF6600;
+  border-radius: 50px
 }
 
-.content{
+.content {
   font-size: 16px;
 }
 
@@ -825,16 +828,85 @@ img.card-avatar {
   animation-duration: 1.5s;
 }
 
- @keyframes fadenum {
-   0% {
-     opacity: 1;
-   }
-
-   50% {
-     opacity: 1;
-   }
-
-   100% {
-     opacity: 0;
-   }
+@keyframes fadenum {
+  0% {
+    opacity: 1;
   }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.cover-edit,
+.avatar-edit {
+  position: relative;
+}
+
+.cover-edit .cover-img {
+  -webkit-filter: brightness(0.5);
+  filter: brightness(0.5);
+  width: 100%;
+  height: 200px;
+  border-radius: 0px;
+}
+
+.cover-edit .cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.cover-edit .cover .form-control,
+.avatar-edit .avatar .form-control {
+  top: 0;
+  width: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cover-edit .cover .form-label {
+  margin: 0;
+  top: 0;
+  left: 0;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.avatar-edit .avatar {
+  position: absolute;
+  top: 0;
+  left: 75px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-edit .avatar .form-label {
+  margin: 0;
+  top: 0;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.avatar-img {
+  -webkit-filter: brightness(0.5);
+  filter: brightness(0.5);
+  position: absolute;
+  height: 140px;
+  width: 140px;
+  transform: translateY(-50%);
+  left: 15px;
+  border-radius: 50%;
+  z-index: 0;
+}
