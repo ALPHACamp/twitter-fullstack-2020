@@ -1,3 +1,7 @@
+html, body {
+  font-family: 'Noto Sans TC';
+}
+
 /* alpha logo icon */
 #ac-logo-icon {
   display: block;
@@ -201,6 +205,8 @@
   bottom: 0;
 }
 
+
+
 /* container-nav */
 #container-nav-admin {
   position: relative;
@@ -208,6 +214,10 @@
 }
 
 /* span font */
+#span-nav-item-active-admin {
+  color: #FF6600;
+}
+
 #span-tweets-name-admin {
   font-weight: 700;
   font-size: 16px;
@@ -224,6 +234,22 @@
   color: #6C757D;
 }
 
+#span-follow-start-admin {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+
+  color: #171725;
+}
+
+#span-follow-end-admin {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+
+  color: #6C757D;
+}
+
 /* p font */
 #p-tweets-description-admin {
   font-weight: 400;
@@ -231,4 +257,25 @@
   line-height: 26px;
 
   color: #171725;
+}
+
+#p-users-name-admin {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+
+  color: #171725;
+
+}
+
+#p-users-account-admin {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+
+  color: #6C757D;
+}
+
+＃nav-link-admin .active {
+  color: #FF6600;
 }

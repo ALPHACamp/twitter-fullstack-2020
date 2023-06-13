@@ -8,17 +8,31 @@
   <ul class="nav flex-column">
 
     <li class="nav-item">
+      {{#ifCond route 'tweets'}}
+      <a id="nav-link-admin" class="nav-link ps-0" href="/admin/tweets">
+        <img id="ac-home-icon-admin" src="/images/icons/home-solid.png" alt="" srcset="">
+        &emsp;<span id="span-nav-item-active-admin">推文清單</span>
+      </a>
+      {{else}}
       <a id="nav-link-admin" class="nav-link ps-0" href="/admin/tweets">
         <img id="ac-home-icon-admin" src="/images/icons/home.png" alt="" srcset="">
         &emsp;推文清單
       </a>
+      {{/ifCond}}
     </li>
 
     <li class="nav-item">
+      {{#ifCond route 'users'}}
+      <a id="nav-link-admin" class="nav-link ps-0" href="/admin/users">
+        <img id="ac-user-icon-admin" src="/images/icons/user-solid.png" alt="" srcset="">
+        &emsp;<span id="span-nav-item-active-admin">使用者列表</span>
+      </a>
+      {{else}}
       <a id="nav-link-admin" class="nav-link ps-0" href="/admin/users">
         <img id="ac-user-icon-admin" src="/images/icons/user.png" alt="" srcset="">
         &emsp;使用者列表
       </a>
+      {{/ifCond}}
     </li>
 
     <li id="nav-link-bottom-admin" class="nav-item">
@@ -27,7 +41,7 @@
         &emsp;登出
       </a>
     </li>
-    
+
   </ul>
 
 </div>
