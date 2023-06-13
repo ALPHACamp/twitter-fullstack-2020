@@ -8,7 +8,7 @@ const admin = require('./modules/admin')
 const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
 const replyController = require('../controllers/reply-controller')
-
+const likesController = require('../controllers/likes-controller')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated } = require('../middleware/auth')
 
@@ -28,9 +28,10 @@ router.get('/tweets', authenticated, tweetController.getTweets) // 顯示全部�
 router.post('/tweets', tweetController.createTweet) // 新增推文
 
 router.get('/reply/:id', authenticated, replyController.getReplies)
-
+router.get('/users/:id/likes', authenticated, likesController.getLikes)
 router.get('/users/setting', authenticated, userController.settingPage)
-
+router.post('/tweets/:TweetId/like', authenticated, userController.addLike) // 喜歡
+router.post('/tweets/:TweetId/unlike', authenticated, userController.removeLike) // 不喜歡
 router.get('/', (req, res) => res.redirect('/tweets')) // 專案初始測試路由
 
 router.use('/', generalErrorHandler)
