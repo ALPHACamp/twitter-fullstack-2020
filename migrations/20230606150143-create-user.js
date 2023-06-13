@@ -30,7 +30,7 @@ module.exports = {
       },
       introduction: {
         type: Sequelize.STRING,
-        defaultValue: ''
+        defaultValue: '跟大家介紹你自己吧！！'
       },
       is_admin: {
         type: Sequelize.BOOLEAN
