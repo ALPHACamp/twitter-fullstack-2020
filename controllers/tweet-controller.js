@@ -22,7 +22,7 @@ const tweetController = {
       // 取得包含追蹤者的使用者資料
       User.findAll({
         where: {
-          isAdmin: 0,
+          role: 'user',
           id: { [Op.ne]: helpers.getUser(req).id }
         },
         include: [
@@ -91,7 +91,7 @@ const tweetController = {
       // 取得包含追蹤者的使用者資料
       User.findAll({
         where: {
-          isAdmin: 0,
+          role: 'user',
           id: { [Op.ne]: helpers.getUser(req).id }
         },
         include: [
