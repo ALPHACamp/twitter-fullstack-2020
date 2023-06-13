@@ -47,11 +47,13 @@ const adminController = {
         user.likesCount = likes?.length
         user.followersCount = followers?.length
         user.followingsCount = followings?.length
+
         return user
       })
     )
+    const sortedUser = userData.sort((a, b) => b.tweetsCount - a.tweetsCount)
 
-    res.render('admin/users', { user: userData })
+    res.render('admin/users', { user: sortedUser })
   },
   getLogout: (req, res) => {
     req.flash('success_messages', '登出成功！')
