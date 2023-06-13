@@ -15,11 +15,9 @@ passport.use(
     // authenticate user
     (req, account, password, cb) => {
       User.findOne({ where: { account, role: 'user' } }).then(user => {
-        if (!user)
-          return cb(null, false, req.flash('error_messages', '請至後台登入！'))
+        if (!user) { return cb(null, false, req.flash('error_messages', '請至後台登入！')) }
         bcrypt.compare(password, user.password).then(res => {
-          if (!res)
-            return cb(null, false, req.flash('error_messages', '密碼錯誤！'))
+          if (!res) { return cb(null, false, req.flash('error_messages', '密碼錯誤！')) }
           return cb(null, user)
         })
       })
@@ -38,11 +36,9 @@ passport.use(
     // authenticate admin
     (req, account, password, cb) => {
       User.findOne({ where: { account, role: 'admin' } }).then(admin => {
-        if (!admin)
-          return cb(null, false, req.flash('error_messages', '請至前台登入！'))
+        if (!admin) { return cb(null, false, req.flash('error_messages', '請至前台登入！')) }
         bcrypt.compare(password, admin.password).then(res => {
-          if (!res)
-            return cb(null, false, req.flash('error_messages', '密碼錯誤！'))
+          if (!res) { return cb(null, false, req.flash('error_messages', '密碼錯誤！')) }
           return cb(null, admin)
         })
       })
