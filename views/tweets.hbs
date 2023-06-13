@@ -1,42 +1,41 @@
 <div class="d-flex justify-content-evenly" style="height: 1400px;width:1200px">
- 
-  {{> left-sidebar}} <!--左欄-->
-  
+  {{> left-sidebar}} <!--左欄--> 
   <div class="main-page" style="width:45%">
     <!--header-->
     <div class="header"><h4>首頁</h4></div>
       <!--po文欄位-->
-      <div class="d-flex flex-column mt-3">
-        <div class="form-row d-flex flex-row mb-3" style="display:inline-block">
-          <div class="user-avatar">
-            <img src="https://i.imgur.com/mhXz6z9.png?1" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;border:2px black solid;margin:auto 8px auto 24px" alt="avatar"> 
-          </div>
-            <textarea class="form-control" id="description" style="border:none;padding:0px;resize: none" name="description" rows="2" cols="20" maxlength:"140" minlength:"1"  placeholder="有什麼新鮮事?"></textarea>
+    <div class="d-flex flex-column mt-3">
+      <div class="form-row d-flex flex-row mb-3" style="display:inline-block">
+        <div class="user-avatar">
+          <img src="https://i.imgur.com/mhXz6z9.png?1" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;border:2px black solid;margin:auto 8px auto 24px" alt="avatar"> 
+        </div>
+          <textarea class="form-control" id="description" style="border:none;padding:0px;resize: none" name="description" rows="2" cols="20" maxlength:"140" minlength:"1"  placeholder="有什麼新鮮事?"></textarea>
         </div>
         <div class="d-flex justify-content-end">       
-        <button  class="post-new-tweet m-3"  data-bs-toggle="modal" data-bs-target="#tweetModal" >推文</button>
+          <button  class="post-new-tweet m-3"  data-bs-toggle="modal" data-bs-target="#tweetModal" >推文</button>
         </div>
-      </div>
+    </div>
     <!--瀏覽推文-->
   {{#each tweets}}
-  <a href="/tweets/{{this.id}}/reply" style="text-decoration:none"> 
+    
     <div class="tweets d-flex flex-row" >
-      <div class="one-tweet d-flex">
+      <a style=" text-decoration:none" class="link-to-replies" href="/tweets/{{this.id}}/replies" style="z-index:0">
         <div class="tweet-left m-2">
           <img class="rounded-circle" src="{{this.User.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
         </div> 
         <div class="tweet-right m-2 d-flex flex-column">
-          <div>
+          <div class="tweets-info">
             <span class="name">{{this.User.name}}</span>
             <span class="account">&nbsp;@{{this.User.account}}</span>
-            <span class="time"><b>•</b>&nbsp;{{relativeTimeFromNow this.createdAt}}
-            </span>
+            <span class="time"><b>•</b>&nbsp;{{relativeTimeFromNow this.createdAt}}</span>
           </div>
-          <p class="content">{{this.description}}.</p>
-
-        <div class="d-flex">
-          <div class="replies">
-            <button type="button" class="btn reply-btn" data-bs-toggle="modal" data-bs-target="#replyModal" >
+        <!--推文-->
+        <p class="content">{{this.description}}.</p>
+        </a>
+       <!--icon-->
+        <div class="d-flex replies-likes-icon">
+          <div class="replies" >
+            <button type="button" class="btn reply-btn" data-bs-toggle="modal" data-bs-target="#replyModal" data-id="{{this.id}} " style="z-index:2">
             <!--<img src="/images/reply-small.svg" alt="reply"> -->
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M8.36401 0.49446L5.59867 0.487793H5.59734C2.68134 0.487793 0.397339 2.77246 0.397339 5.68913C0.397339 8.42113 2.52134 10.4931 5.37401 10.6025V13.1545C5.37401 13.2265 5.40334 13.3451 5.45401 13.4231C5.54867 13.5731 5.71001 13.6545 5.87534 13.6545C5.96734 13.6545 6.06001 13.6291 6.14334 13.5758C6.31934 13.4638 10.4587 10.8158 11.5353 9.90513C12.8033 8.83179 13.562 7.25846 13.564 5.69713V5.68579C13.56 2.77446 11.2773 0.49446 8.36401 0.493793V0.49446ZM10.8887 9.14246C10.1327 9.78246 7.64734 11.4125 6.37401 12.2378V10.1131C6.37401 9.83713 6.15067 9.61313 5.87401 9.61313H5.61001C3.17001 9.61313 1.39801 7.96246 1.39801 5.68913C1.39801 3.33313 3.24334 1.48779 5.59801 1.48779L8.36267 1.49446H8.36401C10.7187 1.49446 12.564 3.33846 12.5653 5.69179C12.5633 6.96513 11.9373 8.25446 10.8893 9.14246H10.8887Z" fill="#6C757D" />
@@ -52,19 +51,71 @@
             </svg>
             likes.length
             </button>
-          </div>
+            
+          <!--test-->
+<div class="modal fade"id="replyModal"tabindex="-1"aria-labelledby="exampleModalLabel"ariahidden="true">
+  <div class="modal-dialog">
+   <div class="modal-content" style="width:634px;height:500px;border-radius:14px;padding:0px 16px">
+    <div class=" d-flex justify-content-start m-2">
+      <button
+       type="button"
+       class="btn-close "
+       data-bs-dismiss="modal"
+       aria-label="Close"
+       style="color: #FF6600;">
+       </button>
+     </div>
+ <hr class="solid">
+ <form action="/tweets/{{this.id}}/replies" method="POST">  
+ <div class="d-flex flex-column">
+ <div class="d-flex flex-row mb-3" >
+ <div>
+   <img src="https://i.imgur.com/mhXz6z9.png?1" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;border:2px black solid;margin:auto 8px auto 24px" alt="avatar"> 
+ </div>
+  <div class="d-flex flex-column">
+    <div class="d-flex justify-content-start m-2">
+      <p class="name mb-0" style="font-size:15px">{{this.User.name}}@</p>
+      <p class="account mb-0" style="font-size:15px">{{this.User.account}}</p>
+    </div>
+  <p class="content mt-0 pt-0">{{this.description}} </p>
+  <p class="reply-to"> 回覆給@{{this.User.account}}</p>
+</div>
+  
+</div>
+    
+   <div class="form-row d-flex flex-row mb-3" style="display:inline-block">
+   <div>
+   <img src="https://i.imgur.com/mhXz6z9.png?1" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;border:2px black solid;margin:auto 8px auto 24px" alt="avatar"> 
+   </div>
+  <textarea class="form-control" id="comment" style="border:none;padding:0px;resize: none" name="comment" rows="7" cols="20" maxlength="140" minlength="1"  placeholder="推你的回覆"></textarea>
+</div>
+</div>
+ 
+ <div class="d-flex justify-content-end" >
+  
+  <p class="warnig-meg" style="font-size:15px;color:#FC5A5A;margin:0;display: flex;align-items: center">內容不可空白</p>
+  <input class="form-control" type="hidden" name="tweetId" value="{{this.id}}" />
+  <button type="submit" class="btn btn-primary m-1" style="color:#FFFFFF;width:64px;
+height:40px;border:none;background:#FF6600;border-radius:50px">推文</button>
+ </div> 
+</form>   
         </div>
-      </div>     
       </div>
     </div>
-  </a>
-  {{/each}}
-  </div>
-  {{> right-sidebar}}   <!--右欄-->
-  {{> tweet-modal}} <!--tweet的彈出式釋出視窗-->
-  {{> reply-modal}} <!--reply的彈出式釋出視窗-->
-</div> 
 
+          <!--test-->  
+          </div>
+          
+        </div>
+        </div>
+      
+        </div>
+    
+   {{/each}} 
+  {{> right-sidebar}}
+  </div>     
+</div>
+   
   
   
 
