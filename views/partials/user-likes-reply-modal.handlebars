@@ -1,4 +1,4 @@
-<div class="modal fade" id="replyModal-{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="replyModal-{{this.Tweet.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content reply-modal">
       <div class="modal-header">
@@ -6,12 +6,12 @@
       </div>
       <div class="modal-body">
         <div class="card reply-tweet-lg">
-          <a href="/tweets/{{this.id}}/replies" class="tweet-href" id="tweetHref"></a>
+          <a href="/tweets/{{this.Tweet.id}}/replies" class="tweet-href" id="tweetHref"></a>
           <div class="reply-avatar">
             <div class="avatar">
-              <a href="/users/{{this.UserId}}/tweets" class="primary-anchor" id="tweetUserHref">
-                {{#if this.User.avatar}}
-                <img src="{{ this.User.avatar }}" alt="avatar" class="logo" id="tweetUserAvater">
+              <a href="/users/{{this.Tweet.UserId}}/tweets" class="primary-anchor" id="tweetUserHref">
+                {{#if this.Tweet.User.avatar}}
+                <img src="{{ this.Tweet.User.avatar }}" alt="avatar" class="logo" id="tweetUserAvater">
                 {{else}}
                 <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
                 {{/if}}
@@ -23,20 +23,20 @@
           </div>
           <div class="card-text">
             <div class="card-text-info">
-              <a href="/users/{{ this.UserId }}/tweets" class="primary-anchor" id="tweetUserHref">
-                <span class="card-name" id="tweetUserName">{{this.User.name}}</span>
+              <a href="/users/{{ this.Tweet.UserId }}/tweets" class="primary-anchor" id="tweetUserHref">
+                <span class="card-name" id="tweetUserName">{{this.Tweet.User.name}}</span>
               </a>
-              <a href="/users/{{ this.UserId }}/tweets" class="primary-anchor" id="tweetUserHref">
-                <span class="card-account" id="tweetUserAccount">{{this.User.account}}</span>
+              <a href="/users/{{ this.Tweet.UserId }}/tweets" class="primary-anchor" id="tweetUserHref">
+                <span class="card-account" id="tweetUserAccount">{{this.Tweet.User.account}}</span>
               </a>
               <span class="card-dot">·</span>
-              <span class="card-datetime" id="tweetDate">{{relativeTimeFromNow this.createdAt}}</span>
+              <span class="card-datetime" id="tweetDate">{{relativeTimeFromNow this.Tweet.createdAt}}</span>
             </div>
-            <p class="card-description" id="tweetDescription">{{this.description}}</p>
+            <p class="card-description" id="tweetDescription">{{this.Tweet.description}}</p>
             <div class="reply-to-part">
               <span class="reply-to">回覆</span>
-              <a href="/users/{{ this.UserId }}/tweets" class="primary-anchor" id="tweetUserHref">
-                <span class="card-account reply-account" id="tweetUserAccount">@{{this.User.account}}</span>
+              <a href="/users/{{ this.Tweet.UserId }}/tweets" class="primary-anchor" id="tweetUserHref">
+                <span class="card-account reply-account" id="tweetUserAccount">@{{this.Tweet.User.account}}</span>
               </a>
             </div>
           </div>
@@ -51,7 +51,7 @@
               {{/if}}
             </a>
           </div>
-          <form action="/tweets/{{this.id}}/replies" method="POST" class="create-reply-form reply-content" name="comment" id="tweetReply">
+          <form action="/tweets/{{this.Tweet.id}}/replies" method="POST" class="create-reply-form reply-content" name="comment" id="tweetReply">
             <textarea name="comment" id="reply" cols="30" rows="10" class="reply-create-input"
               placeholder="推你的回覆"></textarea>
         </div>

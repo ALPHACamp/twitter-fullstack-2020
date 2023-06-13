@@ -12,11 +12,7 @@
           {{!-- profile --}}
           <div class="profile-wrapper">
 
-            {{#if user.cover}}
             <img src="{{ user.cover }}" alt="cover" class="profile-cover background-image" id="cover-image">
-            {{else}}
-            <div class="profile-cover background-image"></div>
-            {{/if}}
 
             <label for="cover" class="file-input-label">
               <span class="edit-camera-icon background-image"></span>
@@ -25,11 +21,8 @@
             <span class="edit-x-icon background-image"></span>
 
             <div class="profile-avatar">
-              {{#if user.avatar }}
+
               <img src="{{ user.avatar }}" alt="avatar" class="logo" id="avatar-image">
-              {{else}}
-              <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
-              {{/if}}
 
               <label for="avatar" class="file-input-label-avatar">
                 <span class="edit-camera-icon-avatar background-image"></span>
