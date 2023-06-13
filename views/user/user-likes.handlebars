@@ -59,7 +59,7 @@
           </div>
           <p class="card-description">{{ this.Tweet.description }}</p>
           <div class="card-datas">
-            <div data-bs-toggle="modal" data-bs-target="#replyModal" class="reply-modal-trigger primary-anchor">
+            <div data-bs-toggle="modal" data-bs-target="#replyModal-{{this.Tweet.id}}" class="reply-modal-trigger primary-anchor">
               <span class="card-reply-icon background-image"></span>
               <span class="card-counts">{{ this.Tweet.Replies.length }}</span>
             </div>
@@ -83,6 +83,7 @@
           </div>
         </div>
       </div>
+      {{> user-likes-reply-modal}}
       {{/each}}
 
 
@@ -106,4 +107,3 @@
 {{> edit-modal}}
 
 
-{{> reply-modal}}

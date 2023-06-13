@@ -62,23 +62,26 @@ const replyController = {
   },
   postReplies: async (req, res, next) => {
     try {
+      const TweetId = req.params.tid
       const UserId = _helpers.getUser(req).id
-      const { description } = req.body
+      const { comment } = req.body
       
-      if (!description.trim()) throw new Error('Description is required!')
-      if (description.length > 140) throw new Error('Description cannot be longer than 140 characters!')
+      if (!comment.trim()) throw new Error('Description is required!')
+      if (comment.length > 140) throw new Error('Description cannot be longer than 140 characters!')
 
-      await Tweet.create({
+      await Reply.create({
         UserId,
-        description
+        TweetId,
+        comment
       })
 
-      return res.redirect('/tweets')
+      return res.redirect('back')
 
     } catch(err) {
       next(err)
     }
-  }
+  },
+
 }
 
 module.exports = replyController

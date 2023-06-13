@@ -56,7 +56,7 @@
           </div>
           <p class="card-description">{{ this.description }}</p>
           <div class="card-datas">
-            <div data-bs-toggle="modal" data-bs-target="#replyModal" class="reply-modal-trigger primary-anchor">
+            <div data-bs-toggle="modal" data-bs-target="#replyModal-{{this.id}}" class="reply-modal-trigger primary-anchor" data-tweetid="{{ this.id }}">
               <span class="card-reply-icon background-image"></span>
               <span class="card-counts">{{ this.Replies.length }}</span>
             </div>
@@ -78,78 +78,9 @@
           </div>
         </div>
       </div>
+      {{!------------- reply modal -------------}}
+      {{> reply-modal}}
       {{/each}}
-
-
-      {{!-- card 2 --}}
-      {{!-- <div class="card card-tweet-lg">
-        <a href="/tweets/{{tweet.id}}" class="tweet-href"></a>
-        <div class="avatar">
-          <a href="/users/{{user.id}}" class="primary-anchor">
-            <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
-          </a>
-        </div>
-        <div class="card-text">
-          <div class="card-text-info">
-            <a href="/users/{{user.id}}" class="primary-anchor">
-              <span class="card-name">Apple</span>
-            </a>
-            <a href="/users/{{user.id}}" class="primary-anchor">
-              <span class="card-account">@apple</span>
-            </a>
-            <span class="card-dot">·</span>
-            <span class="card-datetime">3小時</span>
-          </div>
-          <p class="card-description">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
-            dolor.
-            Voluptate exercitation incididunt
-            aliquip deserunt reprehenderit elit laborum.</p>
-          <div class="card-datas">
-            <div data-bs-toggle="modal" data-bs-target="#replyModal" class="reply-modal-trigger primary-anchor">
-              <span class="card-reply-icon background-image"></span>
-              <span class="card-counts">13</span>
-            </div>
-            <form action="/tweets/{{tweet.id}}/unlike" method="post" class="primary-anchor form-like">
-              <button type="submit" class="btn-like">
-                <span class="card-unlike-icon background-image"></span>
-                <span class="card-counts">76</span>
-              </button>
-            </form>
-          </div>
-        </div>
-      </div> --}}
-
-      {{!-- reply card example --}}
-      {{!-- <div class="card card-tweet-lg">
-        <a href="/tweets/{{tweet.id}}" class="tweet-href"></a>
-        <div class="avatar">
-          <a href="/users/{{user.id}}" class="primary-anchor">
-            <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
-          </a>
-        </div>
-        <div class="card-text">
-          <div class="card-text-info">
-            <a href="/users/{{user.id}}" class="primary-anchor">
-              <span class="card-name">Apple</span>
-            </a>
-            <a href="/users/{{user.id}}" class="primary-anchor">
-              <span class="card-account">@apple</span>
-            </a>
-            <span class="card-dot">·</span>
-            <span class="card-datetime">3小時</span>
-          </div>
-          <div class="reply-to-part">
-            <span class="reply-to">回覆</span>
-            <a href="/users/{{user.id}}" class="primary-anchor">
-              <span class="card-account reply-account">@apple</span>
-            </a>
-          </div>
-          <p class="card-description">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
-            dolor.
-            Voluptate exercitation incididunt
-            aliquip deserunt reprehenderit elit laborum.</p>
-        </div>
-      </div> --}}
     </section>
     {{> followship}}
   </div>
@@ -159,32 +90,3 @@
 {{!------------- tweet modal -------------}}
 {{> tweet-modal}}
 
-{{!------------- reply modal -------------}}
-{{> reply-modal}}
-{{!-- <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="main-create-bar">
-          <div class="avatar">
-            <a href="/users/{{user.id}}">
-              <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
-            </a>
-          </div>
-          <form action="/tweets" method="post" class="create-tweet-form">
-            <textarea name="tweet" id="tweet" cols="30" rows="10" class="main-create-input"
-              placeholder="有什麼新鮮事？"></textarea>
-          </form>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <form action="/tweets" method="post">
-          <button type="submit" class="btn btn-info">Reply</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div> --}}

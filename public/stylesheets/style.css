@@ -644,6 +644,11 @@ textarea {
   color: var(--info);
 }
 
+.tweet-modal {
+  width: 640px;
+  transform: translateX(-20%);
+}
+
 /* -------------------- card -------------------- */
 
 .no-tweet {
