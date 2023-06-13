@@ -39,7 +39,7 @@
   font-weight: 700;
   font-size: 18px;
   line-height: 26px;
-  color: #44444F;
+  color: #44444f;
 }
 
 .nav-item a {
@@ -49,8 +49,8 @@
 .tweet {
   width: 178px;
   height: 46px;
-  color: #FFFFFF;
-  background: #FF6600;
+  color: #ffffff;
+  background: #ff6600;
   border-radius: 50px;
   border: none;
 }
@@ -72,10 +72,10 @@
   height: 74px;
   padding: 24px 0 0 20.9px;
   display: flex;
-  background: #FFFFFF;
-  border-bottom: 1px solid #E6ECF0;
-  border-left: 1px solid #E6ECF0;
-  border-right: 1px solid #E6ECF0;
+  background: #ffffff;
+  border-bottom: 1px solid #e6ecf0;
+  border-left: 1px solid #e6ecf0;
+  border-right: 1px solid #e6ecf0;
 }
 
 h4 {
@@ -119,7 +119,7 @@ h5 {
   font-weight: 500;
   font-size: 14px;
   line-height: 22px;
-  color: #92929D;
+  color: #92929d;
 }
 
 .edit-user-modal {
@@ -135,7 +135,7 @@ h5 {
   font-weight: 700;
   font-size: 18px;
   line-height: 26px;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
 .xmark {
@@ -152,8 +152,8 @@ h5 {
   height: 40px;
   margin: 8px 16px 9px 375px;
   border-radius: 50px;
-  color: #FFFFFF;
-  background: #FF6600;
+  color: #ffffff;
+  background: #ff6600;
   border: none;
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -170,10 +170,10 @@ h5 {
   width: 937.13px;
   height: 118px;
   display: flex;
-  background: #FFFFFF;
-  border-bottom: 1px solid #E6ECF0;
-  border-left: 1px solid #E6ECF0;
-  border-right: 1px solid #E6ECF0;
+  background: #ffffff;
+  border-bottom: 1px solid #e6ecf0;
+  border-left: 1px solid #e6ecf0;
+  border-right: 1px solid #e6ecf0;
 }
 
 .admin-tweet-left {
@@ -201,7 +201,7 @@ h5 {
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
-  color: #6C757D;
+  color: #6c757d;
 }
 
 .admin-tweet-right .content {
@@ -239,7 +239,7 @@ h5 {
   width: 15px;
   height: 15px;
   border: none;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .banner {
@@ -279,7 +279,7 @@ a {
 .h5 {
   margin: 0;
   padding: 0;
-  font-family: "Noto Sans TC";
+  font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -288,7 +288,7 @@ a {
 }
 
 .body-14-regular {
-  font-family: "Noto Sans TC";
+  font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -325,7 +325,6 @@ img.card-avatar {
   height: 100px;
   border-radius: 50%;
   border: solid 4px #ffffff;
-
 }
 
 .body-16px-medium {
@@ -340,7 +339,7 @@ img.card-avatar {
   font-weight: 500;
   font-size: 16px;
   line-height: 15px;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
 .card-icon img {
@@ -368,6 +367,7 @@ img.card-avatar {
   background: #FFFFFF;
   border-bottom: 1px solid #E6ECF0;
   border-left: 1px solid #E6ECF0;
+
 }
 
 .admin-user-row {
@@ -406,12 +406,11 @@ img.card-avatar {
   height: 72px;
 }
 
-
 .user-tweet {
   width: 641px;
   height: 168px;
   display: flex;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
 }
 
 .user-content {
@@ -442,6 +441,7 @@ img.card-avatar {
   position: sticky;
   top: 10px;
   background: #FAFAFB;
+
   border-radius: 16px;
   overflow: hidden;
 }
@@ -449,7 +449,7 @@ img.card-avatar {
 .sidebar-header {
   padding: 24px 0 24px 24px;
   width: 273px;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
 }
 
 .follow-card {
@@ -488,7 +488,7 @@ img.card-avatar {
   font-weight: 500;
   font-size: 14px;
   line-height: 22px;
-  color: #92929D;
+  color: #92929d;
 }
 
 .following {
@@ -496,8 +496,8 @@ img.card-avatar {
   width: 96px;
   height: 40px;
   border-radius: 50px;
-  color: #FFFFFF;
-  background: #FF6600;
+  color: #ffffff;
+  background: #ff6600;
   border: none;
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -507,7 +507,7 @@ img.card-avatar {
 }
 
 .solid {
-  color: #E6ECF0
+  color: #e6ecf0;
 }
 
 .nav-card {
@@ -525,7 +525,6 @@ img.card-avatar {
   width: 178px;
   display: flex;
 }
-
 .nav-item img {
   margin: 18.78px 0 0 16.9px;
   height: 20.25px;
@@ -539,7 +538,7 @@ img.card-avatar {
   font-weight: 700;
   font-size: 18px;
   line-height: 26px;
-  color: #44444F;
+  color: #44444f;
 }
 
 .nav-item a {
@@ -549,8 +548,8 @@ img.card-avatar {
 .tweet {
   width: 178px;
   height: 46px;
-  color: #FFFFFF;
-  background: #FF6600;
+  color: #ffffff;
+  background: #ff6600;
   border-radius: 50px;
   border: none;
 }
@@ -571,7 +570,7 @@ img.card-avatar {
 .sidebar-header {
   padding: 24px 0 24px 24px;
   width: 273px;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
 }
 
 .follow-card {
@@ -606,7 +605,7 @@ img.card-avatar {
   font-weight: 500;
   font-size: 14px;
   line-height: 22px;
-  color: #92929D;
+  color: #92929d;
 }
 
 .follow {
@@ -614,9 +613,9 @@ img.card-avatar {
   width: 64px;
   height: 40px;
   border-radius: 50px;
-  color: #FF6600;
-  background: #FFFFFF;
-  border: 1px solid #FF6600;
+  color: #ff6600;
+  background: #ffffff;
+  border: 1px solid #ff6600;
   font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 400;
@@ -625,8 +624,8 @@ img.card-avatar {
 }
 
 .edit-close {
-  color: #FF6600;
-  background-color: #FFFFFF;
+  color: #ff6600;
+  background-color: #ffffff;
   border: none;
 }
 
@@ -634,7 +633,7 @@ img.card-avatar {
   width: 634px;
   height: 650px;
   border-radius: 14px;
-  padding: 0px 16px
+  padding: 0px 16px;
 }
 
 .edit-banner {
@@ -687,26 +686,26 @@ img.card-avatar {
 
 .tweet-right .name {
   font-size: 16px;
-  font-family: "Noto Sans TC", sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
   font-weight: bold;
   color: #171725;
 }
 
 .tweet-right .account {
   font-size: 14px;
-  font-family: "Noto Sans TC", sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
   color: #6c757d;
 }
 
 .tweet-right .time {
   font-size: 14px;
-  font-family: "Noto Sans TC", sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
   color: #6c757d;
 }
 
 .tweet-right .content {
   font-size: 16px;
-  font-family: "Noto Sans TC", sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
   color: #171725;
   margin-top: 8px;
   max-width: 100%;
@@ -734,12 +733,12 @@ img.card-avatar {
 }
 
 .post-new-tweet {
-  color: #FFFFFF;
+  color: #ffffff;
   width: 64px;
   height: 40px;
   border: none;
-  background: #FF6600;
-  border-radius: 50px
+  background: #ff6600;
+  border-radius: 50px;
 }
 
 .content {
@@ -752,7 +751,7 @@ img.card-avatar {
   width: 120px;
   display: flex;
   font-size: 15px;
-  font-family: "Noto Sans TC", sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
   font-weight: 700;
 }
 
@@ -763,9 +762,8 @@ img.card-avatar {
 }
 
 .nav-tabs .nav-item .nav-link.active {
-  color: #FF6600;
-  border-bottom: 2px solid #FF6600;
-
+  color: #ff6600;
+  border-bottom: 2px solid #ff6600;
 }
 
 .message {
