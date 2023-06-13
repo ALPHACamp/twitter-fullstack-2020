@@ -1,3 +1,7 @@
+.at-user-link:hover {
+  color: #FF6600
+}
+
 .botton-line-test {
   border-bottom-color: darkcyan;
   border-bottom-width: 2px;
@@ -46,6 +50,11 @@ textarea:focus {
 .svg-fill-main {
   transform: translateX(-100vw);
   filter: drop-shadow(#FF6600 100vw 0)
+}
+
+.svg-fill-error {
+  transform: translateX(-100vw);
+  filter: drop-shadow(#FC5A5A 100vw 0)
 }
 
 /* ------------------------------     Typography */

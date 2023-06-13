@@ -1,0 +1,42 @@
+<div class="d-flex flex-column justify-content-between" style="position: fixed; height:96%; width:178px">
+  <div class="mt-2">
+    {{!-- logo --}}
+    <a href="/" class="">
+      <img src="/_base/icon/logo.svg">
+    </a>
+    {{!-- 首頁 --}}
+    <div class="mt-4 mb-4">
+      <a href="/tweets" class="d-flex flex-row align-items-center">
+        <img class="ms-2 me-3 {{#if isHomePage}}svg-fill-main" src="/_base/Property 2=filled, Property 3=home.svg{{else}}"src="/_base/Property 2=outlined, Property 3=home.svg{{/if}}">
+        <h5 class="m-0 {{#if isHomePage}}color-main {{/if}}">首頁</h5>
+      </a>
+    </div>
+    {{!-- 個人資料 --}}
+    <div class="mt-4 mb-4">
+      <a href="/users/{{currentUser.id}}/tweets" class="d-flex flex-row align-items-center">
+        <img class="ms-2 me-3 {{#if isProfile}}svg-fill-main" src="/_base/Property 2=filled, Property 3=user.svg{{else}}" src="/_base/Property 2=outlined, Property 3=user.svg{{/if}}">
+        <h5 class="m-0 {{#if isProfile}}color-main {{/if}}">個人資料</h5>
+      </a>
+    </div>
+    {{!-- 設定 --}}
+    <div class="mt-4 mb-4">
+      <a href="/users/{{currentUser.id}}/setting" class="d-flex flex-row align-items-center">
+        <img class="ms-2 me-3 {{#if isSetting}}svg-fill-main" src="/_base/Property 2=filled, Property 3=cog.svg{{else}}" src="/_base/Property 2=outlined, Property 3=cog.svg{{/if}}">
+        <h5 class="m-0 {{#if isSetting}}color-main {{/if}}">設定</h5>
+      </a>
+    </div>
+    {{!-- 推文 --}}
+    <button id="modalBtn" class="mt-4 mb-4 pill pill-large pill-main " data-bs-toggle="modal"
+      data-bs-target="#postTweetModal">推文
+    </button>
+  </div>
+  <div class="">
+    {{!-- 登出 --}}
+    <div class="">
+      <a href="/logout" class="d-flex flex-row align-items-center">
+        <img class="ms-2 me-3" src="/_base/Property 2=outlined, Property 3=logout.svg">
+        <h5 class="m-0">登出</h5>
+      </a>
+    </div>
+  </div>
+</div>
