@@ -8,6 +8,7 @@ const admin = require('./modules/admin')
 
 const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
+const apiController = require('../controllers/api-controller')
 
 const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated } = require('../middleware/auth')
@@ -34,8 +35,10 @@ router.put('/users/:id', upload.fields([{ name: 'avatar', maxCount: 1 }, { name:
 router.post('/followships', authenticated, userController.addFollowing) // 追蹤功能
 router.delete('/followships/:userId', authenticated, userController.removeFollowing) // 取消追蹤
 
-router.get('/', (req, res) => res.redirect('/tweets')) // 專案初始測試路由
+router.get('/api/users/:id', authenticated, apiController.getUser)
+router.post('/api/users/:id', authenticated, apiController.postUser)
 
+router.get('/', (req, res) => res.redirect('/tweets')) // 專案初始測試路由
 router.use('/', generalErrorHandler)
 
 module.exports = router
