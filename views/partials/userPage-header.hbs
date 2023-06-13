@@ -18,8 +18,33 @@
       style="width: 140px; height: 140px; border-radius: 50%; overflow: hidden;border:4px solid #ffffff; position: relative;">
       <img src="{{user.avatar}}" style="object-fit: cover;width:100%;height:100%;">
     </figure>
-    <button type="button" id="editProfileButton" class="pill-default pill-outline m-2 flex-shrink-1"
-      data-bs-toggle="modal" data-bs-target="#editProfileModal" value="{{user.id}}">編輯個人資料</button>
+    {{#is currentUser.id user.id}}
+    <button type="button" id="editProfileButton" class="pill-default pill-outline m-2 flex-shrink-1" data-bs-toggle="modal"
+      data-bs-target="#editProfileModal" value="{{user.id}}">編輯個人資料</button>
+    {{else}}
+    <div class="d-flex align-items-center m-2 justify-content-between">
+      {{!-- 信件 --}}
+      <button class="pill-circle pill-outline me-3">
+        <img class="svg-fill-main" src="/_base/Property 2=outlined, Property 3=message.svg">
+      </button>
+      {{!-- 小鈴鐺 --}}
+      <button class="pill-circle pill-outline me-3">
+        <img class="svg-fill-main" src="/_base/Property 2=outlined, Property 3=noti.svg">
+      </button>
+      {{!-- 跟隨按鈕 --}}
+      {{#if user.isFollowed}}
+      <form action="/followships/{{user.id}}?_method=DELETE" method="POST">
+        <button type="submit" class="pill pill-default pill-main">正在跟隨</button>
+      </form>
+      {{else}}
+      <form action="/followships" method="POST">
+        <input type="text" name="id" value="{{user.id}}" style="display: none;">
+        <button type="submit" class="pill pill-default pill-outline">跟隨</button>
+      </form>
+      {{/if}}
+    </div>
+    {{/is}}
+    
   </div>
   <div class="d-flex flex-column ps-3 mt-2">
     <h5 class="mb-0">{{user.name}}</h5>
