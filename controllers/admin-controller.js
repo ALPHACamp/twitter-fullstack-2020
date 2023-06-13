@@ -33,7 +33,7 @@ const adminController = {
 
       if (!tweet) throw new Error('該推文不存在')
 
-      await Reply.destroy({ where: { tweetId: tweet.id } })
+      await Reply.destroy({ where: { TweetId: tweet.id } })
 
       await tweet.destroy()
 

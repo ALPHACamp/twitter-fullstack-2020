@@ -17,9 +17,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Reply.init({
-    comment: DataTypes.TEXT,
     UserId: DataTypes.INTEGER,
-    TweetId: DataTypes.INTEGER
+    TweetId: DataTypes.INTEGER,
+    comment: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'Reply',

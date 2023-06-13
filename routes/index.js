@@ -17,13 +17,13 @@ router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 
 router.get('/signin', userController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), authenticated, userController.signIn)
 
 router.get('/logout', userController.logOut)
 
 router.get('/tweets', authenticatedTweets, tweetController.getTweets)
 
-router.get('/users/setting', authenticated, userController.settingPage)
+router.get('/users/setting', authenticated, authenticated, userController.settingPage)
 
 router.get('/', (req, res) => res.redirect('/tweets')) // 專案初始測試路由
 

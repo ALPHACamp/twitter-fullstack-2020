@@ -13,11 +13,11 @@ const userController = {
 
     Promise.all([
       User.findOne({ where: { account } }),
-      User.findOne({ where: { name } })
+      User.findOne({ where: { email } })
     ])
-      .then(([account, name]) => {
+      .then(([account, email]) => {
         if (account) throw new Error('account 已重複註冊！')
-        if (name) throw new Error('name 已重複註冊！')
+        if (email) throw new Error('email 已重複註冊！')
 
         return bcrypt.hash(password, 10)
       })
