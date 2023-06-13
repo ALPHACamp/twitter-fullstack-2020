@@ -20,7 +20,7 @@
   {{#if loginUser}}
   {{> messages}}
   {{!-- 後台登入 --}}
-  {{#if loginUser.isAdmin}}
+  {{#is loginUser.role 'admin'}}
   <div class="container-lg">
     <div class="row">
       {{!-- 左側 fixed 欄位 --}}
@@ -168,7 +168,7 @@
       </div>
     </div>
   </div>
-  {{/if}}
+  {{/is}}
   {{else}}
   {{{body}}}
   {{/if}}
