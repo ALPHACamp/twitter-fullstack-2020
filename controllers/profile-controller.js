@@ -99,7 +99,7 @@ const profileController = {
     }
   },
   getUserReplies: async (req, res, next) => {
-    const { userData } = req.session
+    const { userData, followingData } = req.session
     // 取得userId
     const { userId } = req.params
     const route = `users/${userId}/replies`
@@ -131,13 +131,13 @@ const profileController = {
       const pagination = getPagination(page, limit, replies.count)
       const partialName = 'user-replies'
       // render
-      res.render('index', { user: userData, replies: repliesData, route, pagination, partialName, nav })
+      res.render('index', { user: userData, replies: repliesData, route, pagination, partialName, nav, followingData })
     } catch (err) {
       next(err)
     }
   },
   getUserLikes: async (req, res, next) => {
-    const { userData } = req.session
+    const { userData, followingData } = req.session
     const { userId } = req.params
     const route = `users/${userId}/likes`
     // 取得page, limit, offset
@@ -180,7 +180,7 @@ const profileController = {
       const pagination = getPagination(page, limit, likes.count)
       const partialName = 'user-likes'
       // render
-      res.render('index', { user: userData, tweets: tweetsData, pagination, route, partialName, nav })
+      res.render('index', { user: userData, tweets: tweetsData, pagination, route, partialName, nav, followingData })
     } catch (err) {
       next(err)
     }
@@ -188,6 +188,7 @@ const profileController = {
   getUserFollowings: async (req, res, next) => {
     const loginUser = helpers.getUser(req)
     const { userId } = req.params
+    const { followingData } = req.session
     // 判斷active
     const followings = true
     const route = `users/${userId}/followings`
@@ -241,7 +242,7 @@ const profileController = {
       // pagination
       const pagination = getPagination(page, limit, followingsCount)
       const partialName = 'user-followings'
-      res.render('index', { user: userData, followings, pagination, route, partialName, nav })
+      res.render('index', { user: userData, followings, pagination, route, partialName, nav, followingData })
     } catch (err) {
       next(err)
     }
@@ -249,6 +250,7 @@ const profileController = {
   getUserFollowers: async (req, res, next) => {
     const loginUser = helpers.getUser(req)
     const { userId } = req.params
+    const { followingData } = req.session
     // 判斷active
     const followers = true
     const route = `users/${userId}/followers`
@@ -296,7 +298,7 @@ const profileController = {
       // pagination
       const pagination = getPagination(page, limit, followersCount)
       const partialName = 'user-followers'
-      res.render('index', { user: userData, followers, pagination, route, partialName, nav })
+      res.render('index', { user: userData, followers, pagination, route, partialName, nav, followingData })
     } catch (err) {
       next(err)
     }
