@@ -43,6 +43,7 @@ router.use('/', authenticated, generalErrorHandler)
 router.get('/user', userController.getOther)
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.get('/tweets/:id/replies', authenticated, tweetController.getTweetReplies)
+router.post('/tweets', authenticated, tweetController.postTweet)
 router.post('/tweets/:id/replies', authenticated, tweetController.postTweetReply)
 router.get('/other-likes', (req, res) => {
   res.render('other-likes')
