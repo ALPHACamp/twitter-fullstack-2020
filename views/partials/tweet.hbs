@@ -11,8 +11,11 @@
   <div class="d-flex flex-column">
     <div class="d-flex flex-row">
       <div class="flex-shrink-1 p-0">
-        <img src={{tweet.User.avatar}} alt="avatar" class="tweet-user-img"
-          onerror="this.onerror=null; this.src='/images/profile-img.svg'">
+        <button class="tweet-click-block"
+          onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{tweet.User.id}}/tweets';">
+          <img src="{{tweet.User.avatar}}" alt="avatar" class="tweet-user-img"
+            onerror="this.onerror=null; this.src='/images/profile-img.svg'">
+        </button>
       </div>
       <div class="tweet-text">
         <div class="user-name">{{tweet.User.name}}</div>

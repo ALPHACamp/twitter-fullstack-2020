@@ -45,7 +45,8 @@ const profileController = {
         FollowingsCount,
         FollowersCount,
         tweetsCount,
-        isLoginUser
+        isLoginUser,
+        isFollowing: isLoginUser ? null : loginUser.Followings.some(following => following.id === user.id)
       }
       // next
       return next()
@@ -54,7 +55,8 @@ const profileController = {
     }
   },
   getUserTweets: async (req, res, next) => {
-    const { userData, followingData } = req.session
+    const { userData } = req.session
+    const { followingData } = req
     // 取得 id
     const { userId } = req.params
     const loginUser = helpers.getUser(req)
@@ -108,7 +110,8 @@ const profileController = {
     }
   },
   getUserReplies: async (req, res, next) => {
-    const { userData, followingData } = req.session
+    const { userData } = req.session
+    const { followingData } = req
     // 取得userId
     const { userId } = req.params
     const route = `users/${userId}/replies`
@@ -132,6 +135,7 @@ const profileController = {
             attributes: ['id']
           }
         ],
+        order: [['createdAt', 'DESC']],
         limit,
         offset
       })
@@ -153,7 +157,8 @@ const profileController = {
     }
   },
   getUserLikes: async (req, res, next) => {
-    const { userData, followingData } = req.session
+    const { userData } = req.session
+    const { followingData } = req
     const loginUser = helpers.getUser(req)
     const { userId } = req.params
     const route = `users/${userId}/likes`
@@ -179,13 +184,13 @@ const profileController = {
       // 整理資料
       const tweetsData = likes.rows.map((like, index) => ({
         ...like.Tweet.toJSON(),
+        createdAt: like.createdAt,
         likesCount: counts[index].likesCount,
         repliesCount: counts[index].repliesCount,
         isLiked: loginUser.Likes.some(l => l.TweetId === like.TweetId)
       }))
       // pagination
       const pagination = getPagination(page, limit, likes.count)
-      // const partialName = 'user-likes'
       // render
       const partialName = 'user-profile'
       const navbar = 'likes'
@@ -197,7 +202,7 @@ const profileController = {
   getUserFollowings: async (req, res, next) => {
     const loginUser = helpers.getUser(req)
     const { userId } = req.params
-    const { followingData } = req.session
+    const { followingData } = req
     // 判斷active
     const followings = true
     const route = `users/${userId}/followings`
@@ -260,7 +265,7 @@ const profileController = {
   getUserFollowers: async (req, res, next) => {
     const loginUser = helpers.getUser(req)
     const { userId } = req.params
-    const { followingData } = req.session
+    const { followingData } = req
     // 判斷active
     const followers = true
     const route = `users/${userId}/followers`
@@ -389,7 +394,7 @@ const profileController = {
         avatar: avatarFilePath || user.avatar
       })
       // redirect /tweets
-      res.redirect('/tweets')
+      res.redirect(`/users/${userId}/tweets`)
     } catch (err) {
       next(err)
     }

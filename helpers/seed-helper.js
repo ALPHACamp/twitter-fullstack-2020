@@ -14,18 +14,22 @@ const userIndex = (i, userLength) => {
   }
 }
 
-const doNotFollowSelf = users => {
-  const randomIdA = users[Math.floor(Math.random() * users.length)].id
-  const usersOther = users.filter(user => user.id !== randomIdA)
-  const randomIdB = usersOther[Math.floor(Math.random() * usersOther.length)].id
-  return {
-    follower_id: randomIdA,
-    following_id: randomIdB
-  }
+const followingArr = (users, followingNumber) => {
+  const arr = []
+  users.forEach(user => {
+    const randomIdA = user.id
+    let usersOther = users.filter(user => user.id !== randomIdA)
+    for (let i = 0; i < followingNumber / users.length; i++) {
+      const randomIdB = usersOther[Math.floor(Math.random() * usersOther.length)].id
+      usersOther = usersOther.filter(user => user.id !== randomIdB)
+      arr.push({ randomIdA: randomIdA, randomIdB: randomIdB })
+    }
+  })
+  return arr
 }
 
 module.exports = {
   randomNumber,
   userIndex,
-  doNotFollowSelf
+  followingArr
 }

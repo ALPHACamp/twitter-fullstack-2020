@@ -14,6 +14,14 @@ replySubmitButtons.forEach((replySubmitButton, index) => {
 
 replyForms.forEach(replyForm => {
   replyForm.addEventListener('submit', event => {
+    const input = event.target.firstElementChild.firstElementChild
+    const inputValue = input.value.trim()
+    if (!inputValue) {
+      input.setCustomValidity('內容不可空白')
+      replyFeedbacks[0].innerText = input.validationMessage
+      event.stopPropagation()
+      event.preventDefault()
+    }
     if (!replyForm.checkValidity()) {
       event.stopPropagation()
       event.preventDefault()
@@ -38,7 +46,7 @@ replyCloses.forEach((replyClose, index) => {
   })
 })
 
-function checkReplyValid (target, content, maxLength, index) {
+function checkReplyValid(target, content, maxLength, index) {
   // 如果內容只有空白或換行
   if (content.trim().length === 0) {
     target.setCustomValidity('內容不可空白')
