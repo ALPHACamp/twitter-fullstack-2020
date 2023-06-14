@@ -65,7 +65,7 @@ const userController = {
 
     return Promise.all([
       Tweet.findAll({
-        where: { userId: req.params.id },
+        where: { UserId: req.params.id },
         include: [
           User,
           Reply,
