@@ -6,23 +6,22 @@
     </li>
     <div class="admin-tweets-page">
       {{#each tweets}}
-      <li class="list-group-item tweet-list position-relative">
-        <a href="/tweets/{{this.id}}/replies" class="text-decoration-none" ></a>
-        <div class="d-flex">
-          <div class="flex-shrink-1 p-0">
-            <img src="{{this.User.avatar}}" alt="" class="recommend-followings-img">
-          </div>
-          <div class="tweet-text d-flex flex-column">
-            <div class="d-flex justify-content-between">
-              <div class="d-flex align-items-baseline mb-2">
-                <div class="tweet-name me-2">{{this.User.name}} </div>
-                <div class="tweet-account">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
+      <li class="list-group-item tweet-list position-relative collapse show" id="tweet-{{this.id}}">
+        <form action="/admin/tweets?_method=DELETE" method="POST">
+          <div class="d-flex">
+            <div class="tweet-text d-flex flex-column">
+              <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-baseline mb-2">
+                  <div class="tweet-name me-2">{{this.User.name}} </div>
+                  <div class="tweet-account">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
+                </div>
+                <input type="hidden" name="tweetId" value="{{this.id}}" />
+                <button type="submit" class="btn-close position-absolute end-0" data-bs-toggle="collapse" data-bs-target="#tweet-{{this.id}}" aria-expanded="false" aria-controls="collapseExample" aria-label="Close"></button>
               </div>
-              <button type="button" class="btn-close position-absolute end-0" aria-label="Close"></button>
+              <p class="mb-2" >{{this.description}}</p>
             </div>
-            <p class="mb-2" style="white-space:break-spaces;">{{this.description}}</p>
           </div>
-        </div>
+        </form>
       </li>
       {{/each}}
     </div>

@@ -14,6 +14,7 @@ router.post(
   adminController.adminSignin
 )
 router.get('/tweets', adminAuthenticated, adminController.adminGetTweets)
+router.delete('/tweets', adminAuthenticated, adminController.deleteTweet)
 router.get('/users', adminAuthenticated, adminController.adminGetUsers)
 
 router.use('/', (req, res) => res.redirect('/admin/tweets'))
