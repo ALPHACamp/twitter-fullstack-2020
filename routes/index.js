@@ -24,16 +24,20 @@ router.post(
 router.get('/logout', userController.logout)
 
 //* 追蹤功能
-router.post('/followships/:userId', authenticated, userController.addFollowing)
-router.delete(
-  '/followships/:userId',
-  authenticated,
-  userController.removeFollowing
-)
+router.post('/followships', authenticated, userController.addFollowing)
+router.delete('/followships/:id', authenticated, userController.removeFollowing)
 
-router.get('/tweets/:id/replies', authenticated, tweetController.getTweetReplies)
+router.get(
+  '/tweets/:id/replies',
+  authenticated,
+  tweetController.getTweetReplies
+)
 router.post('/tweets', authenticated, tweetController.postTweet)
-router.post('/tweets/:id/replies', authenticated, tweetController.postTweetReply)
+router.post(
+  '/tweets/:id/replies',
+  authenticated,
+  tweetController.postTweetReply
+)
 router.post('/tweets/:id/like', authenticated, userController.addLike)
 router.delete('/tweets/:id/unlike', authenticated, userController.removeLike)
 router.get('/tweets', authenticated, tweetController.getTweets)

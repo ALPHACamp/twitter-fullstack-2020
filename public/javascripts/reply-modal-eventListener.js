@@ -41,7 +41,7 @@ replyBtns.forEach(btn => {
       </div>
       <div class="d-flex justify-content-end" >
         <p class="warnig-meg" style="font-size:15px;color:#FC5A5A;margin:0;display: flex;align-items: center">內容不可空白</p>
-        <input class="form-control" type="hidden" name="tweetId" value="{{this.id}}" />
+        <input class="form-control" type="hidden" name="tweetId" value="${id}" />
         <button type="submit" class="btn btn-primary m-1" style="color:#FFFFFF;width:64px;height:40px;border:none;background:#FF6600;border-radius:50px">推文</button>
       </div> 
     </form>   
