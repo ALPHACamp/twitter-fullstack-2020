@@ -17,10 +17,10 @@ module.exports = {
       randomUsers.forEach(user => {
         replies.push({
           comment: faker.lorem.sentence(),
-          created_at: new Date(),
-          updated_at: new Date(),
-          tweet_id: tweet.id,
-          user_id: user.id
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          tweetId: tweet.id,
+          userId: user.id
         })
       })
     })

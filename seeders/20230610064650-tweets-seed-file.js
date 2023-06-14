@@ -11,9 +11,9 @@ module.exports = {
       for (let i = 0; i < 10; i++) {
         tweets.push({
           description: generateLimitedParagraph(140),
-          created_at: new Date(),
-          updated_at: new Date(),
-          user_id: user.id
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          userId: user.id
         })
       }
     })
