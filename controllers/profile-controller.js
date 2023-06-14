@@ -7,7 +7,6 @@ const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 // 推文顯示數量
 const DEFAULT_LIMIT = 50
-let nav = 'profile'
 
 const profileController = {
   getUser: async (req, res, next) => {
@@ -102,7 +101,7 @@ const profileController = {
       // render
       const partialName = 'user-profile'
       const navbar = 'tweets'
-      res.render('index', { user: userData, tweets: tweetsData, route, pagination, partialName, navbar, nav, followingData })
+      res.render('index', { user: userData, tweets: tweetsData, route, pagination, partialName, navbar, followingData })
       // const partialName = 'user-tweets'
       // res.render('users/tweets', { user: userData, tweets: tweetsData, route, pagination })
     } catch (err) {
@@ -151,7 +150,7 @@ const profileController = {
       const partialName = 'user-profile'
       const navbar = 'replies'
       const repliesPage = true
-      res.render('index', { user: userData, replies: repliesData, route, pagination, partialName, repliesPage, navbar, nav, followingData })
+      res.render('index', { user: userData, replies: repliesData, route, pagination, partialName, repliesPage, navbar, followingData })
     } catch (err) {
       next(err)
     }
@@ -194,7 +193,7 @@ const profileController = {
       // render
       const partialName = 'user-profile'
       const navbar = 'likes'
-      res.render('index', { user: userData, tweets: tweetsData, pagination, route, partialName, nav, followingData, navbar })
+      res.render('index', { user: userData, tweets: tweetsData, pagination, route, partialName, followingData, navbar })
     } catch (err) {
       next(err)
     }
@@ -265,7 +264,7 @@ const profileController = {
       const pagination = getPagination(page, limit, followingsCount)
       const partialName = 'user-followships-list'
       const followingsPage = true
-      res.render('index', { user: userData, followings, pagination, route, partialName, followingsPage, nav, followingData })
+      res.render('index', { user: userData, followings, pagination, route, partialName, followingsPage, followingData })
     } catch (err) {
       next(err)
     }
@@ -332,13 +331,12 @@ const profileController = {
       // pagination
       const pagination = getPagination(page, limit, followersCount)
       const partialName = 'user-followships-list'
-      res.render('index', { user: userData, followers, pagination, route, partialName, nav, followingData })
+      res.render('index', { user: userData, followers, pagination, route, partialName, followingData })
     } catch (err) {
       next(err)
     }
   },
   editUserAccount: async (req, res, next) => {
-    nav = 'setting'
     // 抓id
     const { userId } = req.params
     const loginUser = helpers.getUser(req)
