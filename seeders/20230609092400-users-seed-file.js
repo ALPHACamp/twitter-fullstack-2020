@@ -16,8 +16,8 @@ module.exports = {
       cover: `https://loremflickr.com/320/240/background/?random=${Math.random() * 100}`,
       avatar: `https://loremflickr.com/320/240/avatar,person/?random=${Math.random() * 100}`,
       introduction: generateLimitedParagraph(160),
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }
     fakeUsers.push(admin)
 
@@ -31,8 +31,8 @@ module.exports = {
         cover: `https://loremflickr.com/320/240/background/?random=${Math.random() * 100}`,
         avatar: `https://loremflickr.com/320/240/avatar,person/?random=${Math.random() * 100}`,
         introduction: generateLimitedParagraph(160),
-        created_at: new Date(),
-        updated_at: new Date()
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
       fakeUsers.push(user)
     }

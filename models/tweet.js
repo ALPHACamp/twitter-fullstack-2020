@@ -10,15 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate (models) {
-      // define association here
       Tweet.hasMany(models.Reply, { foreignKey: 'TweetId' })
-
-      Tweet.hasMany(models.Like, { foreignKey: 'TweetId' })
-
+      Tweet.hasMany(models.Like, { foreignKey: 'TweetId' }) // like也順便補上
       Tweet.belongsTo(models.User, { foreignKey: 'UserId' })
-
       Tweet.belongsToMany(models.User, {
-        through: models.Like,
+        through: models.Like, // 我翻之前就教案是用model.xxx
         foreignKey: 'TweetId',
         as: 'LikedUsers'
       })
@@ -30,8 +26,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Tweet',
-    tableName: 'Tweets',
-    underscored: true
+    tableName: 'Tweets'
   })
   return Tweet
 }

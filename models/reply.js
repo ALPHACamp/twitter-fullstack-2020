@@ -10,12 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate (models) {
-      // define association here
-      Reply.belongsTo(models.User, { foreignKey: 'UserId' })
-
       Reply.belongsTo(models.Tweet, { foreignKey: 'TweetId' })
+      Reply.belongsTo(models.User, { foreignKey: 'UserId' })
     }
-  };
+  }
   Reply.init({
     UserId: DataTypes.INTEGER,
     TweetId: DataTypes.INTEGER,
@@ -23,8 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Reply',
-    tableName: 'Replies',
-    underscored: true
+    tableName: 'Replies'
   })
   return Reply
 }
