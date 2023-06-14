@@ -5,7 +5,8 @@ module.exports = {
       type: Sequelize.STRING
     })
     await queryInterface.addColumn('Users', 'cover', {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      defaultValue: 'https://i.imgur.com/ndXEE6d.jpg'
     })
   },
 
