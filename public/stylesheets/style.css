@@ -927,6 +927,20 @@ h5 {
   font-size: 16px;
 }
 
+.invalid-feedback .tweet-feedback,
+.invalid-feedback .reply-feedback {
+  display: none;
+  font-weight: 500;
+  font-size: 15px;
+  color: #fc5a5a;
+}
+
+form.was-validated .invalid-message:invalid ~ .invalid-parent .invalid-feedback.tweet-feedback,
+form.was-validated .invalid-message:invalid ~ .invalid-parent .reply-feedback {
+  display: initial;
+  /* 顯示 */
+}
+
 form.invalid-feedback {
   display: none;
   font-size: 0.8em;
