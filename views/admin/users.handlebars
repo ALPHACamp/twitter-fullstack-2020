@@ -7,6 +7,7 @@
       <h4 class="main-title">使用者列表</h4>
 
       <div class="users-container" style="flex-wrap: wrap;display:flex">
+        {{!-- user card --}}
         {{#each users}}
         <div class="card mt-2 ml-2" style="width:210px;height:314px;">
           <div class="user-image" style="height:50%">
@@ -18,9 +19,9 @@
             {{/if}}
 
             {{#if this.avatar}}
-            <div style=""><img class="admin-user-avatar" src="{{this.avatar}}"></div>
+            <div><img class="admin-user-avatar" src="{{this.avatar}}"></div>
             {{else}}
-            <div style=""><img class="admin-user-avatar" src="/stylesheets/icons/avatar.png"></div>
+            <div><img class="admin-user-avatar" src="/stylesheets/icons/avatar.png"></div>
             {{/if}}
           </div>
 
