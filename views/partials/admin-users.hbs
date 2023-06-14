@@ -7,7 +7,8 @@
     <div class="admin-users-page">
       <li class="d-flex justify-content-start flex-wrap list-group-item tweet-list">
         {{#each users}}
-        <a href="" class="admin-user-info">
+        <form action="/admin/users" class="admin-user-info">
+          <input type="hidden" name="userId" value="{{this.id}}">
           <div class="position-relative card admin-user-card mt-2 mb-2 me-3">
             <div class="admin-user-card-cover">
               <img src="{{this.cover}}" class="card-img-top" alt="...">
@@ -30,7 +31,7 @@
               </div>
             </div>
           </div>
-        </a>
+        </form>
         {{/each}}
       </li>
     </div>

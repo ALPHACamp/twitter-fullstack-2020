@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'Tweet',
       tableName: 'Tweets',
-      underscored: true
+      underscored: true,
+      paranoid: true
     }
   )
   return Tweet
