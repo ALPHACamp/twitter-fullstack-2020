@@ -33,6 +33,7 @@ const tweetsController = {
   getTweet: async (req, res, next) => {
     const { tweetId } = req.params
     const user = helpers.getUser(req)
+    const { followingData } = req.session
     try {
       const tweet = await Tweet.findByPk(tweetId, {
         include: [User, { model: Like }, { model: Reply, include: User }]
@@ -50,7 +51,8 @@ const tweetsController = {
         replyCount,
         isLiked,
         partialName,
-        nav
+        nav,
+        followingData
       })
     } catch (err) {
       next(err)
