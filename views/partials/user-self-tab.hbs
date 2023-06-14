@@ -1,5 +1,12 @@
 <nav class="nav" style="border-bottom: 1px solid #E6ECF0;">
-  <a class="nav-link {{#ifCond route 'tweets'}}active{{/ifCond}}" aria-current="page" href="/user/self/tweets">推文</a>
-  <a class="nav-link {{#ifCond route 'replies'}}active{{/ifCond}}" href="/user/self/replies">回覆</a>
-  <a class="nav-link {{#ifCond route 'like'}}active{{/ifCond}}" href="/user/self/likes">喜歡的內容</a>
+  <button class="{{#if userTweet}}user-tab-active{{else}}user-tab{{/if}}" 
+    aria-current="page" 
+    href="/users/{{user.id}}/tweets">推文
+  </button>
+  <button class="{{#if userTweet}}user-tab-active{{else}}user-tab{{/if}}" 
+    href="/user/self/replies">回覆
+  </button>
+  <button class="{{#if userLike}}user-tab-active{{else}}user-tab{{/if}}" 
+    href="/users/{{user.id}}/likes">喜歡的內容
+  </button>
 </nav>
