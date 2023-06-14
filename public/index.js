@@ -8,7 +8,7 @@ targetNodes.push(editProfileModal)
 targetNodes.push(postReplyModal)
 
 // 取得目前現在視窗大小的函式
-function updatePageHeight() {
+function updatePageHeight () {
   let pageHeight = Math.max(
     document.documentElement.scrollHeight,
     document.body.scrollHeight
@@ -24,7 +24,7 @@ window.addEventListener('resize', function () {
   pageHeight = updatePageHeight()
 })
 
-const observer = new MutationObserver(function async(mutationsList, observer) {
+const observer = new MutationObserver(function async (mutationsList, observer) {
   for (const mutation of mutationsList) {
     if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
       // 如果監聽對象的 class 有 show 的話
@@ -32,14 +32,14 @@ const observer = new MutationObserver(function async(mutationsList, observer) {
         // 將他的 top 設定到固定位置
         mutation.target.style.top = `-${pageHeight}px`
         // 抓出要監聽的 Modal 內部元件
-        const ModalSubmitBtn = mutation.target.querySelector('#ModalSubmitBtn')
-        const ModalTextarea = mutation.target.querySelector('#ModalTextarea')
-        const ModalErrorMessage = mutation.target.querySelector('#ModalErrorMessage')
-        const ModalCloseBtn = mutation.target.querySelector('#ModalCloseBtn')
-
-        ModalSubmitBtn.addEventListener('click', modalErrorHandler)
-
-        ModalCloseBtn.addEventListener('click', closeModalEventListener)
+        const ModalSubmitBtn = mutation.target.querySelector('#ModalSubmitBtn') || null
+        const ModalTextarea = mutation.target.querySelector('#ModalTextarea') || null
+        const ModalErrorMessage = mutation.target.querySelector('#ModalErrorMessage') || null
+        const ModalCloseBtn = mutation.target.querySelector('#ModalCloseBtn') || null
+        if (ModalSubmitBtn) {
+          ModalSubmitBtn.addEventListener('click', modalErrorHandler)
+          ModalCloseBtn.addEventListener('click', closeModalEventListener)
+        }
 
         // 函式：消滅已產生的事件監聽器
         function closeModalEventListener (e) {
@@ -64,10 +64,10 @@ const observer = new MutationObserver(function async(mutationsList, observer) {
         }
       } else {
         // 如果沒有 .show 將時刻維持回覆內容、錯誤訊息為空值
-        const ModalTextarea = mutation.target.querySelector('#ModalTextarea')
-        const ModalErrorMessage = mutation.target.querySelector('#ModalErrorMessage')
-        ModalTextarea.value = ''
-        ModalErrorMessage.innerText = ''
+        const ModalTextarea = mutation.target.querySelector('#ModalTextarea') || null
+        const ModalErrorMessage = mutation.target.querySelector('#ModalErrorMessage') || null
+        if (ModalTextarea) { ModalTextarea.value = '' }
+        if (ModalErrorMessage) { ModalErrorMessage.innerText = '' }
       }
     }
   }
@@ -83,24 +83,25 @@ targetNodes.forEach(function (targetNode) {
 })
 
 // 首頁推文區域錯誤事件處理
-const mainPostTweet = document.getElementById('mainPostTweet')
-const ModalSubmitBtn = mainPostTweet.querySelector('#ModalSubmitBtn')
-const ModalTextarea = mainPostTweet.querySelector('#ModalTextarea')
-const ModalErrorMessage = mainPostTweet.querySelector('#ModalErrorMessage')
+const mainPostTweet = document.getElementById('mainPostTweet') || null
+if (mainPostTweet) {
+  const ModalSubmitBtn = mainPostTweet.querySelector('#ModalSubmitBtn')
+  const ModalTextarea = mainPostTweet.querySelector('#ModalTextarea')
+  const ModalErrorMessage = mainPostTweet.querySelector('#ModalErrorMessage')
 
-ModalSubmitBtn.addEventListener('click', mainPostTweetErrorHandler)
-
-// 函式：提供錯誤處理訊息，若符合發文條件則改變 btn.type 讓其可以發送
-function mainPostTweetErrorHandler (e) {
-  if (!ModalTextarea.value || ModalTextarea.value.trim() === '') {
-    ModalErrorMessage.innerText = '內容不可空白'
-  } else if (ModalTextarea.value.trim().length > 140) {
-    ModalErrorMessage.innerText = '字數不可超過140字'
-  } else {
-    ModalErrorMessage.innerText = ''
-    // 消滅現在的事件監聽器
-    ModalSubmitBtn.removeEventListener('click', mainPostTweetErrorHandler)
-    ModalSubmitBtn.type = 'submit'
+  ModalSubmitBtn.addEventListener('click', mainPostTweetErrorHandler)
+  // 函式：提供錯誤處理訊息，若符合發文條件則改變 btn.type 讓其可以發送
+  function mainPostTweetErrorHandler (e) {
+    if (!ModalTextarea.value || ModalTextarea.value.trim() === '') {
+      ModalErrorMessage.innerText = '內容不可空白'
+    } else if (ModalTextarea.value.trim().length > 140) {
+      ModalErrorMessage.innerText = '字數不可超過140字'
+    } else {
+      ModalErrorMessage.innerText = ''
+      // 消滅現在的事件監聽器
+      ModalSubmitBtn.removeEventListener('click', mainPostTweetErrorHandler)
+      ModalSubmitBtn.type = 'submit'
+    }
   }
 }
 
@@ -161,7 +162,7 @@ putProfileButton.addEventListener('click', event => {
     })
 })
 
-// 監聽按鈕 把封面換成初始值 
+// 監聽按鈕 把封面換成初始值
 removeCoverButton.addEventListener('click', event => {
   const previewCover = document.querySelector('#previewCover')
   previewCover.src = 'https://i.imgur.com/b7U6LXD.jpg'
@@ -169,7 +170,7 @@ removeCoverButton.addEventListener('click', event => {
 })
 
 // 預覽大頭貼 當avatarInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的avatar
-function previewAvatar() {
+function previewAvatar () {
   const preview = document.querySelector('#previewAvatar')
   const file = document.querySelector('#avatarInput').files[0]
   const reader = new FileReader()
@@ -183,7 +184,7 @@ function previewAvatar() {
 }
 
 // 預覽封面 當coverInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的cover
-function previewCover() {
+function previewCover () {
   const preview = document.querySelector('#previewCover')
   const file = document.querySelector('#coverInput').files[0]
   const reader = new FileReader()
