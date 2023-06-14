@@ -65,6 +65,7 @@ const userController = {
   },
   getUser: async (req, res, next) => {
     const userTweet = true
+    const userTweets = true
     const { id } = req.params
     // User 點擊他人頭像會擋掉，先刪除
     // const loginUser = helpers.getUser(req)
@@ -124,7 +125,7 @@ const userController = {
         FollowersCount,
         tweetsCount
       }
-      return res.render('self-tweets', { user: userData, userTweet, tweet: tweetData })
+      return res.render('self-tweets', { user: userData, userTweet, tweet: tweetData, userTweets })
     } catch (err) {
       next(err)
     }
@@ -135,7 +136,7 @@ const userController = {
   //* 追蹤功能
   addFollowing: async (req, res, next) => {
     try {
-      if (req.user.id == req.params.userId) throw new Error('不能追蹤自己')
+      if (req.user.id === req.params.userId) throw new Error('不能追蹤自己')
       const user = await User.findByPk(req.user.id)
       if (!user) throw new Error('找不到該用戶')
       await Followship.create({
@@ -277,6 +278,63 @@ const userController = {
 
       req.flash('success_messages', '已更新成功！')
       res.redirect('/tweets')
+    } catch (err) {
+      next(err)
+    }
+  },
+  getUserReplies: async (req, res, next) => {
+    const userTweet = true
+    const userReply = true
+    const { id } = req.params
+    try {
+      const [user, FollowingsCount, FollowersCount, tweetsCount] =
+        await Promise.all([
+          User.findByPk(id, {
+            include: [{ model: Tweet, include: User }]
+          }),
+          // 計算user的folowing數量
+          Followship.count({
+            where: { follower_id: id }
+          }),
+          // 計算user的folower數量
+          Followship.count({
+            where: { following_id: id }
+          }),
+          // 計算user的推文數
+          Tweet.count({
+            where: { user_id: id }
+          })
+        ])
+      const replies = await Reply.findAll({
+        raw: true,
+        where: { user_id: id }
+      })
+
+      const replyData = await Promise.all(
+        replies.map(async reply => {
+          const userId = reply.userId
+          const tweetId = reply.tweetId
+          const [userData, tweetData] = await Promise.all([
+            User.findByPk(userId),
+            Tweet.findByPk(tweetId)
+          ])
+          const tweetOwner = await User.findByPk(tweetData.userId)
+          reply.userName = userData.name
+          reply.userAccount = userData.account
+          reply.tweetOwner = tweetOwner.account
+
+          return reply
+        })
+      )
+      const userData = {
+        ...user.toJSON(),
+        cover: user.cover || 'https://i.imgur.com/TGRK7uy.png',
+        avatar: user.avatar || 'https://i.imgur.com/mhXz6z9.png?1',
+        FollowingsCount,
+        FollowersCount,
+        tweetsCount
+      }
+      return res.render('self-replies', { user: userData, replies: replyData, userTweet, userReply })
     } catch (err) {
       next(err)
     }

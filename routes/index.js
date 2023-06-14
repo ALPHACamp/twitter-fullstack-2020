@@ -39,6 +39,7 @@ router.delete('/tweets/:id/unlike', authenticated, userController.removeLike)
 router.get('/tweets', authenticated, tweetController.getTweets)
 
 router.get('/users/:id/tweets', authenticated, userController.getUser)
+router.get('/users/:id/replies', authenticated, userController.getUserReplies)
 router.get('/users/:id/account', authenticated, userController.editUserAccount)
 router.put('/users/:id/account', authenticated, userController.putUserAccount)
 router.put(
