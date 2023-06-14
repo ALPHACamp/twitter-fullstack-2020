@@ -1,6 +1,7 @@
 // files
 const { Followship, User } = require('../models')
 const helpers = require('../_helpers')
+const { Op } = require('sequelize')
 
 // controllers
 const followshipController = {
@@ -49,10 +50,11 @@ const followshipController = {
       .catch(err => next(err))
   },
   getTopFollowedUsers: (req, res, next) => {
+    const loginUser = helpers.getUser(req)
     const topFollowedUsersNumber = 10
     return User.findAll({
       include: [{ model: User, as: 'Followers' }],
-      where: { role: 'user' }
+      where: { role: 'user', id: { [Op.not]: loginUser.id } }
     })
       .then(users => {
         const result = users
@@ -63,7 +65,6 @@ const followshipController = {
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
         req.session.followingData = result.slice(0, topFollowedUsersNumber - 1)
-        console.log(result)
         return next()
       })
       .catch(err => next(err))
