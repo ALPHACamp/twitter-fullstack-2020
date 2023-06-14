@@ -99,34 +99,30 @@ putProfileButton.addEventListener('click', event => {
     })
 })
 
+// 當avatarInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的avatar
 function previewAvatar() {
   const preview = document.querySelector('#previewAvatar')
   const file = document.querySelector('#avatarInput').files[0]
   const reader = new FileReader()
 
+  // 定義好當reader完成讀取時的動作 將reader的結果交給preview元素顯示
   reader.onloadend = function () {
     preview.src = reader.result
   }
-
-  if (file) {
-    reader.readAsDataURL(file)
-  } else {
-    preview.src = ''
-  }
+  // 如果file存在，就用reader物件將file轉換為DataURL，完成後會將DataURL存放在reader.result並觸發onloadend
+  if (file) reader.readAsDataURL(file)
 }
 
+// 當coverInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的cover
 function previewCover() {
   const preview = document.querySelector('#previewCover')
   const file = document.querySelector('#coverInput').files[0]
   const reader = new FileReader()
 
+  // 定義好當reader完成讀取時的動作 將reader的結果交給preview元素顯示
   reader.onloadend = function () {
     preview.src = reader.result
   }
-
-  if (file) {
-    reader.readAsDataURL(file)
-  } else {
-    preview.src = ''
-  }
+  // 如果file存在，就用reader物件將file轉換為DataURL，完成後會將DataURL存放在reader.result並觸發onloadend
+  if (file) reader.readAsDataURL(file)
 }
