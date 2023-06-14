@@ -69,7 +69,7 @@ editProfileButton.addEventListener('click', event => {
     })
 })
 
-// 監聽按鈕 call API更新個人資料 把個人資料插入modal
+// 監聽按鈕 call API更新個人資料 關閉Modal刷新個人資料頁面
 putProfileButton.addEventListener('click', event => {
   const userId = editProfileButton.value
   // 取得使用者輸入的資料
@@ -89,9 +89,8 @@ putProfileButton.addEventListener('click', event => {
       'Content-Type': 'multipart/form-data'
     }
   })
-    .then(response => {
-      console.log(response)
-      alert('個人資料已成功修改') // 給使用者顯示一個提示
+    .then(() => {
+      window.location.href = `/users/${userId}/tweets` // 前往個人資料頁面
     })
     .catch(err => {
       console.error('Error during API call:', err) // 在控制台中打印錯誤
@@ -99,7 +98,7 @@ putProfileButton.addEventListener('click', event => {
     })
 })
 
-// 當avatarInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的avatar
+// 預覽大頭貼 當avatarInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的avatar
 function previewAvatar() {
   const preview = document.querySelector('#previewAvatar')
   const file = document.querySelector('#avatarInput').files[0]
@@ -113,7 +112,7 @@ function previewAvatar() {
   if (file) reader.readAsDataURL(file)
 }
 
-// 當coverInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的cover
+// 預覽封面 當coverInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的cover
 function previewCover() {
   const preview = document.querySelector('#previewCover')
   const file = document.querySelector('#coverInput').files[0]
