@@ -13,49 +13,51 @@ const userController = {
     req.flash('success_messages', '成功登入!')
     res.redirect('/tweets')
   },
-  signup: (req, res) => {
+  signup: (req, res, next) => {
     const { account, name, email, password, passwordCheck } = req.body
+    const errors = []
 
     if (password !== passwordCheck) {
-      throw new Error('密碼不符合!')
+      errors.push('密碼不符合!')
     }
 
     User.findOne({ where: { account } })
       .then(user => {
         if (user) {
-          req.flash('error_messages', 'account 已重複註冊！')
-          res.redirect('/signup')
-          throw new Error('account already exists!')
+          errors.push('account 已重複註冊！')
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => next(err))
 
-    User.findOne({ where: { email } }).then(user => {
-      if (user) {
-        req.flash('error_messages', 'email 已重複註冊！')
-        res.redirect('/signup')
-        throw new Error('email already exists!')
-      }
-      return bcrypt
-        .genSalt(10)
-        .then(salt => bcrypt.hash(password, salt))
-        .then(hash =>
-          User.create({
-            account,
-            name,
-            email,
-            password: hash,
-            role: 'user',
-            avatar: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-            cover: '/images/profile/cover.png'
+    User.findOne({ where: { email } })
+      .then(user => {
+        if (user) {
+          errors.push('email 已重複註冊！')
+        }
+        if (errors.length) {
+          return res.render('signup', { errors, account, name, email })
+        }
+        return bcrypt
+          .genSalt(10)
+          .then(salt => bcrypt.hash(password, salt))
+          .then(hash =>
+            User.create({
+              account,
+              name,
+              email,
+              password: hash,
+              role: 'user',
+              avatar: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+              cover: '/images/profile/cover.png'
+            })
+          )
+          .then(() => {
+            req.flash('success_messages', '成功註冊帳號！')
+            res.redirect('/signin')
           })
-        )
-        .then(() => {
-          req.flash('success_messages', '成功註冊帳號！')
-          res.redirect('/signin')
-        })
-        .catch(err => console.log(err))
-    })
+          .catch(err => next(err))
+      })
+      .catch(err => next(err))
   },
   logout: (req, res) => {
     req.flash('success_messages', '登出成功！')
