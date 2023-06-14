@@ -22,7 +22,6 @@ hr {
   margin: 16px 0;
 }
 
-
 /* font */
 h4 {
   font-weight: 700;
@@ -94,7 +93,6 @@ h5 {
   font-size: 13px;
   color: #6c757d;
 }
-
 
 /* btn */
 .btn {
@@ -168,8 +166,6 @@ h5 {
   color: #ffffff;
 }
 
-
-
 /****** index ******/
 .home-page {
   /* layout */
@@ -180,8 +176,6 @@ h5 {
   /* scrollbar */
   overflow-y: auto;
 }
-
-
 
 /****** nav ******/
 /* homepage */
@@ -267,7 +261,6 @@ h5 {
   background-image: url('/images/navbar/logout_colored.svg');
 }
 
-
 /* followship-navbar */
 .user-container .nav-link {
   /* layout */
@@ -286,8 +279,6 @@ h5 {
   color: #ff6600;
   border-bottom: 2px solid #ff6600;
 }
-
-
 
 /****** recommend-followings ******/
 .recommend-followings {
@@ -349,8 +340,6 @@ h5 {
   width: 76px;
 }
 
-
-
 /****** modal ******/
 .modal-dialog {
   padding: 0;
@@ -371,7 +360,7 @@ h5 {
   height: 57px;
   margin: 0;
   padding: 8px 16px;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
 }
 
 .modal-close-btn {
@@ -404,8 +393,6 @@ h5 {
 .modal-body-content {
   height: 100%;
 }
-
-
 
 /****** tweets-list ******/
 .home-list {
@@ -487,8 +474,6 @@ h5 {
   margin-right: 128px;
 }
 
-
-
 /****** profile ******/
 .profile-header {
   padding: 16px 24px;
@@ -549,8 +534,8 @@ h5 {
   color: #6c757d;
 }
 
-.user-container>.card>div>span,
-.user-container>.card>div>span>a {
+.user-container > .card > div > span,
+.user-container > .card > div > span > a {
   font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 400;
@@ -567,20 +552,19 @@ h5 {
   margin: 16px;
 }
 
-.profile-btn-block >.mail-btn,
-.profile-btn-block >.notification-btn {
+.profile-btn-block > .mail-btn,
+.profile-btn-block > .notification-btn {
   width: 40px;
   margin-right: 16px;
 }
 
-
 /* user-profile-modal */
-.user-edit-modal .modal-body>.cover-edit,
-.user-edit-modal .modal-body>.avatar-edit {
+.user-edit-modal .modal-body > .cover-edit,
+.user-edit-modal .modal-body > .avatar-edit {
   position: relative;
 }
 
-.user-edit-modal .modal-body>.cover-edit>.cover-img {
+.user-edit-modal .modal-body > .cover-edit > .cover-img {
   -webkit-filter: brightness(0.5);
   filter: brightness(0.5);
   width: 100%;
@@ -588,7 +572,7 @@ h5 {
   border-radius: 0px;
 }
 
-.user-edit-modal .modal-body>.cover-edit>.cover {
+.user-edit-modal .modal-body > .cover-edit > .cover {
   position: absolute;
   top: 0;
   left: 0;
@@ -599,15 +583,15 @@ h5 {
   height: 100%;
 }
 
-.user-edit-modal .modal-body>.cover-edit>.cover>.form-control,
-.user-edit-modal .modal-body>.avatar-edit>.avatar>.form-control {
+.user-edit-modal .modal-body > .cover-edit > .cover > .form-control,
+.user-edit-modal .modal-body > .avatar-edit > .avatar > .form-control {
   top: 0;
   width: 0;
   opacity: 0;
   pointer-events: none;
 }
 
-.user-edit-modal .modal-body>.cover-edit>.cover>.form-label {
+.user-edit-modal .modal-body > .cover-edit > .cover > .form-label {
   margin: 0;
   top: 0;
   left: 0;
@@ -615,7 +599,7 @@ h5 {
   cursor: pointer;
 }
 
-.user-edit-modal .modal-body>.cover-edit>.cover>.cover-delete {
+.user-edit-modal .modal-body > .cover-edit > .cover > .cover-delete {
   width: 15px;
   text-align: center;
   border: 0;
@@ -627,10 +611,11 @@ h5 {
   filter: brightness(0.5);
   position: absolute;
   transform: translateY(-50%);
+  left: 15px;
   z-index: 0;
 }
 
-.user-edit-modal .modal-body>.avatar-edit>.avatar {
+.user-edit-modal .modal-body > .avatar-edit > .avatar {
   position: absolute;
   top: 0;
   left: 75px;
@@ -640,37 +625,37 @@ h5 {
   height: 100%;
 }
 
-.user-edit-modal .modal-body>.avatar-edit>.avatar>.form-label {
+.user-edit-modal .modal-body > .avatar-edit > .avatar > .form-label {
   margin: 0;
   top: 0;
   color: #ffffff;
   cursor: pointer;
 }
 
-.user-edit-modal .modal-body>.form-text {
+.user-edit-modal .modal-body > .form-text {
   margin: 80px 16px 0;
 }
 
-.user-edit-modal .modal-body>.form-text .box {
+.user-edit-modal .modal-body > .form-text .box {
   background: #f5f8fa;
 }
 
-.user-edit-modal .modal-body>.form-text .box>input,
-.user-edit-modal .modal-body>.form-text .box>textarea {
+.user-edit-modal .modal-body > .form-text .box > input,
+.user-edit-modal .modal-body > .form-text .box > textarea {
   border-bottom: 2px solid #657786;
 }
 
-.user-edit-modal .modal-body>.form-text .box>input:valid,
-.user-edit-modal .modal-body>.form-text .box>textarea:valid {
+.user-edit-modal .modal-body > .form-text .box > input:valid,
+.user-edit-modal .modal-body > .form-text .box > textarea:valid {
   border-bottom: 2px solid #50b5ff;
 }
 
-.user-edit-modal .modal-body>.form-text .box>input:invalid,
-.user-edit-modal .modal-body>.form-text .box>textarea:invalid {
+.user-edit-modal .modal-body > .form-text .box > input:invalid,
+.user-edit-modal .modal-body > .form-text .box > textarea:invalid {
   border-bottom: 2px solid #fc5a5a;
 }
 
-.user-edit-modal .modal-body>.form-text .form-label {
+.user-edit-modal .modal-body > .form-text .form-label {
   margin: 0;
   padding: 0;
   font-family: 'Noto Sans TC';
@@ -681,13 +666,13 @@ h5 {
   color: #696974;
 }
 
-.user-edit-modal .modal-body>.form-text .form-control {
+.user-edit-modal .modal-body > .form-text .form-control {
   background-color: transparent;
   border: 0;
 }
 
-.user-edit-modal .modal-body>.form-text .name-amount,
-.user-edit-modal .modal-body>.form-text .introduction-amount {
+.user-edit-modal .modal-body > .form-text .name-amount,
+.user-edit-modal .modal-body > .form-text .introduction-amount {
   text-align: right;
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -696,8 +681,6 @@ h5 {
   line-height: 20px;
   color: #696974;
 }
-
-
 
 /****** user edit ******/
 .user-edit-container {
@@ -731,15 +714,15 @@ h5 {
   margin-bottom: 32px;
 }
 
-.user-edit-container .box>input {
+.user-edit-container .box > input {
   border-bottom: 2px solid #657786;
 }
 
-.user-edit-container .validated .box>input:valid {
+.user-edit-container .validated .box > input:valid {
   border-bottom: 2px solid #50b5ff;
 }
 
-.user-edit-container .validated .box>input:invalid {
+.user-edit-container .validated .box > input:invalid {
   border-bottom: 2px solid #fc5a5a;
 }
 
@@ -759,8 +742,6 @@ h5 {
   background-color: transparent;
   border: 0;
 }
-
-
 
 /****** signin signup admin/signin ******/
 .form-row {
@@ -804,8 +785,6 @@ h5 {
 .other-page-btn p {
   width: 354px;
 }
-
-
 
 /****** message ******/
 .msg-container {
@@ -865,8 +844,6 @@ h5 {
 .btn-container .btn-info {
   border: 2px solid #50b5ff;
 }
-
-
 
 /****** admin-users ******/
 .admin-user-page {
@@ -948,4 +925,28 @@ h5 {
   font-family: 'Montserrat';
   font-weight: 500;
   font-size: 16px;
+}
+
+.invalid-feedback .tweet-feedback,
+.invalid-feedback .reply-feedback {
+  display: none;
+  font-weight: 500;
+  font-size: 15px;
+  color: #fc5a5a;
+}
+
+form.was-validated .invalid-message:invalid ~ .invalid-parent .invalid-feedback.tweet-feedback,
+form.was-validated .invalid-message:invalid ~ .invalid-parent .reply-feedback {
+  display: initial;
+  /* 顯示 */
+}
+
+form.invalid-feedback {
+  display: none;
+  font-size: 0.8em;
+  color: #fc5a5a;
+}
+
+.validated .form-control:invalid ~ .invalid-feedback {
+  display: initial;
 }

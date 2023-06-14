@@ -14,18 +14,37 @@ const userIndex = (i, userLength) => {
   }
 }
 
-const doNotFollowSelf = users => {
-  const randomIdA = users[Math.floor(Math.random() * users.length)].id
-  const usersOther = users.filter(user => user.id !== randomIdA)
-  const randomIdB = usersOther[Math.floor(Math.random() * usersOther.length)].id
-  return {
-    follower_id: randomIdA,
-    following_id: randomIdB
-  }
+const followingArr = (users, followingNumber) => {
+  const arr = []
+  users.forEach(user => {
+    const randomIdA = user.id
+    let usersOther = users.filter(user => user.id !== randomIdA)
+    for (let i = 0; i < followingNumber / users.length; i++) {
+      const randomIdB = usersOther[Math.floor(Math.random() * usersOther.length)].id
+      usersOther = usersOther.filter(user => user.id !== randomIdB)
+      arr.push({ randomIdA: randomIdA, randomIdB: randomIdB })
+    }
+  })
+  return arr
+}
+
+const likeArr = (users, tweets, likeNumber) => {
+  const arr = []
+  let tweetsOther = tweets
+  users.forEach(user => {
+    const userId = user.id
+    for (let i = 0; i < likeNumber; i++) {
+      const tweetId = tweets[Math.floor(Math.random() * tweets.length)].id
+      tweetsOther = tweetsOther.filter(tweet => tweet.id !== tweetId)
+      arr.push({ userId: userId, tweetId: tweetId })
+    }
+  })
+  return arr
 }
 
 module.exports = {
   randomNumber,
   userIndex,
-  doNotFollowSelf
+  followingArr,
+  likeArr
 }

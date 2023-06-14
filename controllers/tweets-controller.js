@@ -1,12 +1,11 @@
 const { User, Followship, Tweet, Reply, Like } = require('../models')
 const helpers = require('../_helpers')
 
-const nav = 'tweets'
 const tweetsController = {
   getTweets: async (req, res, next) => {
     // 取得登入使用者的資料
     const loginUser = helpers.getUser(req)
-    const { followingData } = req.session
+    const { followingData } = req
     try {
       let tweets = await Tweet.findAll({
         include: [User, { model: Like }, { model: Reply, include: User }],
@@ -23,7 +22,6 @@ const tweetsController = {
         user: loginUser,
         tweets: tweets,
         partialName,
-        nav,
         followingData
       })
     } catch (err) {
@@ -33,6 +31,7 @@ const tweetsController = {
   getTweet: async (req, res, next) => {
     const { tweetId } = req.params
     const user = helpers.getUser(req)
+    const { followingData } = req
     try {
       const tweet = await Tweet.findByPk(tweetId, {
         include: [User, { model: Like }, { model: Reply, include: User }]
@@ -50,7 +49,7 @@ const tweetsController = {
         repliesCount,
         isLiked,
         partialName,
-        nav
+        followingData
       })
     } catch (err) {
       next(err)

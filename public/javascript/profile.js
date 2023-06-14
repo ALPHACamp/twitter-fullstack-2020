@@ -5,22 +5,27 @@ const coverImg = document.querySelector('.cover-img')
 const avatarImg = document.querySelector('.avatar-img')
 const inputName = document.querySelector('.input-name')
 const inputIntroduction = document.querySelector('.input-introduction')
-const editButton = document.querySelector('.edit-btn')
+const closeButton = document.querySelector('.close-btn')
+const avatarInput = document.querySelector('input[name="avatar"]')
+const coverInput = document.querySelector('input[name="cover"]')
 
 // 自定變數
 const maxName = 50
 const maxIntroduction = 160
-// 紀錄modal有無送出
-let buttonPressed = false
-// 紀錄原始圖片
+// 紀錄原始資料
 const originCoverImg = coverImg.src
 const originAvatarImg = avatarImg.src
+const inputNameValue = inputName.value
+const inputIntroductionValue = inputIntroduction.value
 
-editButton.addEventListener('click', () => {
-  if (!buttonPressed) {
-    coverImg.src = originCoverImg
-    avatarImg.src = originAvatarImg
-  }
+// 如果直接關閉，回覆成原始資料
+closeButton.addEventListener('click', () => {
+  coverImg.src = originCoverImg
+  coverInput.value = ''
+  avatarImg.src = originAvatarImg
+  avatarInput.value = ''
+  inputName.value = inputNameValue
+  inputIntroduction.value = inputIntroductionValue
 })
 
 inputForm.addEventListener('input', event => {
@@ -53,7 +58,6 @@ inputForm.addEventListener('input', event => {
 })
 
 inputForm.addEventListener('submit', event => {
-  submitButton()
   if (!inputForm.checkValidity()) {
     event.stopPropagation()
     event.preventDefault()
@@ -77,9 +81,4 @@ function checkLength(target, length, maxLength) {
   } else {
     target.setCustomValidity('')
   }
-}
-
-// 用於modal的按鈕有無被觸發
-function submitButton() {
-  return (buttonPressed = true)
 }

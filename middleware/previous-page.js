@@ -25,7 +25,6 @@ const previousPage = (req, res, next) => {
       ) {
         historyPage.push(currentUrl)
         break
-        // return next()
       } else {
         historyPage.pop()
       }
@@ -45,7 +44,6 @@ const previousPage = (req, res, next) => {
       ) {
         historyPage.push(currentUrl)
         break
-        // return next()
       } else {
         historyPage.pop()
       }
@@ -55,6 +53,10 @@ const previousPage = (req, res, next) => {
   // 如果按上一頁將原本的頁面以及目前頁面從historyPage刪除
   if (back) {
     historyPage.splice(-2)
+  }
+  // 將重複的去除
+  if (historyPage[historyPage.length - 1] === historyPage[historyPage.length - 2]) {
+    historyPage.pop()
   }
   req.session.previousPage = historyPage[historyPage.length - 2]
 
