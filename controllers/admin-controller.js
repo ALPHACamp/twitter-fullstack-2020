@@ -46,7 +46,7 @@ const adminController = {
   },
   getUsers: (req, res, next) => {
     return User.findAll({
-      where: { isAdmin: false },
+      where: { role: 'user' },
       include: [
         { model: User, as: 'Followers', attributes: ['id'] },
         { model: User, as: 'Followings', attributes: ['id'] },
