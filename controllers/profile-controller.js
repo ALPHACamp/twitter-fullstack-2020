@@ -340,6 +340,7 @@ const profileController = {
     // 抓id
     const { userId } = req.params
     const loginUser = helpers.getUser(req)
+    const { followingData } = req
     // 判斷是否為本人
     if (loginUser.id !== Number(userId)) return res.redirect('back')
     try {
@@ -352,7 +353,7 @@ const profileController = {
       const partialName = 'user-edit'
       const visibleToggle = 'invisible'
       // render
-      return res.render('index', { user, partialName, visibleToggle })
+      return res.render('index', { user, partialName, visibleToggle, followingData })
     } catch (err) {
       next(err)
     }
