@@ -218,7 +218,9 @@ const profileController = {
             {
               model: User,
               as: 'Followings',
-              order: [['createdAt', 'DESC']]
+              through: {
+                attributes: ['createdAt']
+              }
             }
           ],
           limit,
@@ -239,6 +241,10 @@ const profileController = {
         user.Followings.map(following => {
           return loginUser.Followings.some(f => f.id === following.id)
         })
+      // 依照追隨時間排序
+      user.Followings.sort((a, b) => {
+        return b.Followship.createdAt - a.Followship.createdAt
+      })
 
       const userData = {
         ...user.toJSON(),
@@ -279,7 +285,13 @@ const profileController = {
         User.findByPk(userId, {
           include: [
             // Followers
-            { model: User, as: 'Followers', order: [['createdAt', 'DESC']] }
+            {
+              model: User,
+              as: 'Followers',
+              through: {
+                attributes: ['createdAt']
+              }
+            }
           ],
           limit,
           offset
@@ -300,6 +312,7 @@ const profileController = {
         user.Followers.map(follower => {
           return loginUser.Followings.some(f => f.id === follower.id)
         })
+
       const userData = {
         ...user.toJSON(),
         tweetsCount
@@ -308,13 +321,16 @@ const profileController = {
       userData.Followers.forEach((follower, index) => {
         follower.isFollowing = isFollowing[index]
       })
+      // 依照被追隨時間排序
+      userData.Followers.sort((a, b) => {
+        return b.Followship.createdAt - a.Followship.createdAt
+      })
       // 根據isFollowing排序
       userData.Followers.sort((a, b) => b.isFollowing - a.isFollowing)
       // pagination
       const pagination = getPagination(page, limit, followersCount)
       const partialName = 'user-followships-list'
       res.render('index', { user: userData, followers, pagination, route, partialName, nav, followingData })
-      // const partialName = 'user-followers'
     } catch (err) {
       next(err)
     }
