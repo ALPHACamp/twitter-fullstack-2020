@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const { Op } = require('sequelize')
-const { User, Followship, Like, Tweet } = require('../models')
+const { User, Followship, Like, Tweet, Reply } = require('../models')
 const { imgurFileHandler } = require('../helpers/file-helpers')
 const helpers = require('../helpers/auth-helpers')
 
@@ -89,6 +89,31 @@ const userController = {
             where: { user_id: id }
           })
         ])
+      // 抓出此user發過的tweet
+      const tweets = await Tweet.findAll({
+        raw: true,
+        where: { user_id: id }
+      })
+      // 找出所有tweet的回覆樹根喜歡數
+      const tweetData = await Promise.all(
+        tweets.map(async tweet => { // 找出每篇的喜歡及回覆數
+          const tweetId = tweet.id
+          const [replies, likes, thisTweet, thisUser] = await Promise.all([
+            Reply.count({ where: { tweet_id: tweetId } }),
+            Like.count({ where: { tweet_id: tweetId } }),
+            Tweet.findByPk(tweetId),
+            User.findByPk(id)
+          ])
+          tweet.repliesCount = replies
+          tweet.likesCount = likes
+          tweet.description = thisTweet.description
+          tweet.createdAt = thisTweet.createdAt
+          tweet.userName = thisUser.name
+          tweet.account = thisUser.account
+
+          return tweet
+        })
+      )
 
       if (!user) throw new Error('該用戶不存在!')
       const userData = {
@@ -99,7 +124,7 @@ const userController = {
         FollowersCount,
         tweetsCount
       }
-      return res.render('self-tweets', { user: userData, userTweet })
+      return res.render('self-tweets', { user: userData, userTweet, tweet: tweetData })
     } catch (err) {
       next(err)
     }
