@@ -5,7 +5,7 @@
 
 {{! tweet }}
 {{#each tweets}}
-  <form action='/admin/tweets?_method=DELETE' method='POST'>
+  <form action='/admin/tweets/{{this.id}}?_method=DELETE' method='POST'>
     <li class='list-group-item tweet-list p-3'>
       <div class='d-flex'>
         {{! avatar }}
@@ -20,7 +20,6 @@
             <div class='user-account'>@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
           </div>
           {{! delete btn }}
-          <input type='hidden' name='tweetId' value='{{this.id}}' />
           <button
             type='submit'
             class='btn-close position-absolute end-0'

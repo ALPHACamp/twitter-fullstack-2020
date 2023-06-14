@@ -76,7 +76,7 @@ const adminController = {
     res.redirect('admin/signin')
   },
   deleteTweet: (req, res, next) => {
-    const tweetId = req.body.tweetId
+    const tweetId = req.params.id
     Tweet.destroy({ where: { id: tweetId } })
       .then(tweet => {
         res.redirect('/admin/tweets')
