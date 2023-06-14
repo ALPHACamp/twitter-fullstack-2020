@@ -8,7 +8,7 @@ router.get('/signin', adminController.adminSigninPage)
 router.post(
   '/signin',
   passport.authenticate('local', {
-    failureRedirect: '/signin',
+    failureRedirect: '/admin/signin',
     failureFlash: true
   }),
   adminController.adminSignin
@@ -17,7 +17,7 @@ router.post(
 // logout
 router.get('/logout', adminController.logout)
 router.get('/tweets', adminAuthenticated, adminController.adminGetTweets)
-router.delete('/tweets', adminAuthenticated, adminController.deleteTweet)
+router.delete('/tweets/:id', adminAuthenticated, adminController.deleteTweet)
 router.get('/users', adminAuthenticated, adminController.adminGetUsers)
 
 router.use('/', (req, res) => res.redirect('/admin/tweets'))
