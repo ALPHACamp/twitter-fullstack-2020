@@ -12,6 +12,7 @@ const tweetController = {
         nest: true,
         include: [User]
       })
+      console.log(tweets)
       const sortedTweets = tweets.sort((a, b) => b.createdAt - a.createdAt)
       const top10Followers = await getTop10Following(req, next)
       return res.render('tweets', {
@@ -58,11 +59,11 @@ const tweetController = {
     try {
       const { comment, tweetId } = req.body
       const userId = req.user.id
-      console.log(req)
+      console.log(tweetId)
       if (!comment) throw new Error('內容不可為空白')
       const tweet = await Tweet.findByPk(tweetId)
       const user = await User.findByPk(userId)
-      if (!tweet) throw new Error('推文不存在')
+      
       if (!user) throw new Error('使用者不存在')
       await Reply.create({
         comment,
