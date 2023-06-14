@@ -32,7 +32,6 @@ replyForms.forEach(replyForm => {
 replyForms.forEach((replyForm, index) => {
   replyForm.addEventListener('input', event => {
     const { target } = event
-    console.log(target)
     const content = target.value
     // reply
     checkReplyValid(target, content, MAX_COMMENT_COUNT, index)
@@ -48,7 +47,6 @@ replyCloses.forEach((replyClose, index) => {
 })
 
 function checkReplyValid(target, content, maxLength, index) {
-  console.log(target)
   // 如果內容只有空白或換行
   if (content.trim().length === 0) {
     target.setCustomValidity('內容不可空白')
