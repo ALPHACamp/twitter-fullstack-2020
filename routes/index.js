@@ -30,12 +30,14 @@ router.post(
 // signup
 router.get('/signup', userController.signupPage)
 router.post('/signup', userController.signup)
+// logout
+router.get('/logout', userController.logout)
 
 // logout
 router.get('/logout', userController.logout)
 
 // index
-router.get('/tweets/:tweetId/replies', authenticated, tweetsController.getTweet)
+router.get('/tweets/:tweetId/replies', authenticated, followshipController.getTopFollowedUsers, tweetsController.getTweet)
 router.post('/tweets/:tweetId/replies', authenticated, tweetsController.postReply)
 router.post('/tweets/:tweetId/like', authenticated, userController.postLike)
 router.post('/tweets/:tweetId/unlike', authenticated, userController.postUnlike)
@@ -43,12 +45,18 @@ router.get('/tweets', authenticated, followshipController.getTopFollowedUsers, t
 router.post('/tweets', authenticated, tweetsController.postTweet)
 
 // profile
-router.get('/users/:userId/tweets', authenticated, profileController.getUser, profileController.getUserTweets)
-router.get('/users/:userId/replies', authenticated, profileController.getUserReplies)
-router.get('/users/:userId/likes', authenticated, profileController.getUserLikes)
-router.get('/users/:userId/followings', authenticated, profileController.getUserFollowings)
-router.get('/users/:userId/followers', authenticated, profileController.getUserFollowers)
-router.get('/users/:userId', authenticated, profileController.editUserAccount)
+router.get(
+  '/users/:userId/tweets',
+  authenticated,
+  followshipController.getTopFollowedUsers,
+  profileController.getUser,
+  profileController.getUserTweets
+)
+router.get('/users/:userId/replies', authenticated, followshipController.getTopFollowedUsers, profileController.getUserReplies)
+router.get('/users/:userId/likes', authenticated, followshipController.getTopFollowedUsers, profileController.getUserLikes)
+router.get('/users/:userId/followings', authenticated, followshipController.getTopFollowedUsers, profileController.getUserFollowings)
+router.get('/users/:userId/followers', authenticated, followshipController.getTopFollowedUsers, profileController.getUserFollowers)
+router.get('/users/:userId', authenticated, followshipController.getTopFollowedUsers, profileController.editUserAccount)
 router.put(
   '/users/:userId',
   authenticated,

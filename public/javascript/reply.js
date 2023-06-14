@@ -46,7 +46,7 @@ replyCloses.forEach((replyClose, index) => {
   })
 })
 
-function checkReplyValid (target, content, maxLength, index) {
+function checkReplyValid(target, content, maxLength, index) {
   // 如果內容只有空白或換行
   if (content.trim().length === 0) {
     target.setCustomValidity('內容不可空白')

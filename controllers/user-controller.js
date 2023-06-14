@@ -13,31 +13,35 @@ const userController = {
     req.flash('success_messages', '成功登入！')
     res.redirect('/tweets')
   },
-  signup: (req, res) => {
+  signup: (req, res, next) => {
     const { account, name, email, password, passwordCheck } = req.body
+    const errors = []
 
     if (password !== passwordCheck) {
-      throw new Error('密碼不符合!')
+      errors.push('密碼不一致!')
+    }
+    if (name.length > 50) {
+      errors.push('字數超出上限!')
     }
 
     User.findOne({ where: { account } })
       .then(user => {
         if (user) {
-          req.flash('error_messages', '帳號已重複註冊！')
-          res.redirect('/signup')
-          throw new Error('account already exists!')
+          errors.push('account已重複註冊!')
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => next(err))
 
     User.findOne({ where: { email } })
       .then(user => {
         if (user) {
-          req.flash('error_messages', 'Email 已重複註冊！')
-          res.redirect('/signup')
-          throw new Error('email already exists!')
+          errors.push('email已重複註冊!')
         }
-        return bcrypt.genSalt(10)
+        if (errors.length) {
+          return res.render('signup', { errors, account, name, email })
+        }
+        return bcrypt
+          .genSalt(10)
           .then(salt => bcrypt.hash(password, salt))
           .then(hash =>
             User.create({
@@ -54,8 +58,14 @@ const userController = {
             req.flash('success_messages', '成功註冊帳號！')
             res.redirect('/signin')
           })
-          .catch(err => console.log(err))
+          .catch(err => next(err))
       })
+      .catch(err => next(err))
+  },
+  logout: (req, res) => {
+    req.flash('success_messages', '登出成功！')
+    req.logout()
+    res.redirect('/signin')
   },
   logout: (req, res) => {
     req.flash('success_messages', '登出成功！')
