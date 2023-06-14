@@ -11,6 +11,14 @@ tweetSubmitButton.addEventListener('click', event => {
 })
 
 tweetForm.addEventListener('submit', event => {
+  const input = event.target.firstElementChild.firstElementChild
+  const inputValue = input.value.trim()
+  if (!inputValue) {
+    input.setCustomValidity('內容不可空白')
+    tweetFeedback.innerText = input.validationMessage
+    event.stopPropagation()
+    event.preventDefault()
+  }
   if (!tweetForm.checkValidity()) {
     event.stopPropagation()
     event.preventDefault()
@@ -36,7 +44,7 @@ function checkTweetValid (target, content, maxLength) {
     target.setCustomValidity('內容不可空白')
     tweetFeedback.innerText = target.validationMessage
   } else if (content.length > maxLength) {
-    target.setCustomValidity(`字數不可超過${maxLength}字`)
+    target.setCustomValidity(`字數不可超過 ${maxLength} 字`)
     tweetFeedback.innerText = target.validationMessage
   } else {
     target.setCustomValidity('')

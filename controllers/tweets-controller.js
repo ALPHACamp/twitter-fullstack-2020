@@ -23,7 +23,7 @@ const tweetsController = {
         user: loginUser,
         tweets: tweets,
         partialName,
-        nav,
+        // nav,
         followingData
       })
     } catch (err) {
