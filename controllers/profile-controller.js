@@ -174,6 +174,7 @@ const profileController = {
         limit,
         offset
       })
+
       const counts = await Promise.all(
         likes.rows.map(async like => ({
           repliesCount: await Reply.count({ where: { TweetId: like.TweetId } }),
@@ -186,8 +187,9 @@ const profileController = {
         createdAt: like.createdAt,
         likesCount: counts[index].likesCount,
         repliesCount: counts[index].repliesCount,
-        isLiked: loginUser.Likes.some(l => l.TweetId === like.TweetId)
+        isLiked: loginUser.Likes?.some(l => l.TweetId === like.TweetId)
       }))
+
       // pagination
       const pagination = getPagination(page, limit, likes.count)
       // render
@@ -258,8 +260,6 @@ const profileController = {
         if (loginUser.id === a.id || loginUser.id === b.id) return -1
         return b.isFollowing - a.isFollowing
       })
-      console.log(userData.Followings)
-      console.log(loginUser.id)
       // pagination
       const pagination = getPagination(page, limit, followingsCount)
       const partialName = 'user-followships-list'
