@@ -1,4 +1,4 @@
-const form = document.querySelector('form')
+const form = document.querySelector('#edit-form')
 const input = document.querySelectorAll('input')
 const button = document.querySelector('.save-btn')
 
@@ -12,16 +12,14 @@ const matches = url.match(/\/(\d+)/)
 const userId = matches[1]
 
 const inputValue = {}
-form.addEventListener('input', () => {
-  input.forEach(item => {
-    inputValue[item.name] = item.value
-  })
-})
 
 button.addEventListener('click', event => {
   form.classList.add('validated')
   input.forEach(item => {
-    item.setCustomValidity('')
+    inputValue[item.name] = item.value
+    if (item.value) {
+      return item.setCustomValidity('')
+    }
   })
   axios
     .post(`/api/users/${userId}`, inputValue)
