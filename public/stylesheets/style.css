@@ -72,7 +72,15 @@ h5 {
   /* font */
   font-weight: 400;
   font-size: 16px;
-  white-space: break-spaces;
+
+  /* wrap words */
+  white-space: pre-line;
+
+  /* limit display content */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
 }
 
 .text-title {
@@ -419,6 +427,26 @@ h5 {
 
 .tweet-text {
   margin-left: 8px;
+
+  /* limit excessive width */
+  box-sizing: border-box;
+  width: calc(100% - 54px);
+
+  /* wrap long string */
+  overflow-wrap: break-word;
+
+  position: relative;
+  line-height: 1.5;
+  max-height: calc(1.5 * 5);
+  /* overflow: hidden; */
+}
+
+.show-more-content {
+  text-decoration: none;
+}
+
+.show-more-content:hover {
+  color: #ff6600
 }
 
 .tweet-interact-btn {
@@ -466,6 +494,7 @@ h5 {
 .tweet-content {
   font-size: 24px;
   margin: 8px 0;
+  white-space: pre-line;
 }
 
 .tweet-icon {
