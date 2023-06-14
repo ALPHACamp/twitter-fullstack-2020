@@ -105,7 +105,7 @@ const userController = {
   // API: 送出編輯個人資料資訊
   editUserProfile: (req, res, next) => {
     const userId = req.params.id
-    const { name, intro } = req.body
+    const { name, intro, coverReset } = req.body
     const avatarFile = req.files?.avatar ? req.files.avatar[0] : null // avatar是一個file的陣列，但裡面最多只會有1個file。file包含了上傳的檔案資訊
     const coverFile = req.files?.cover ? req.files.cover[0] : null // cover是一個file的陣列，但裡面最多只會有1個file。file包含了上傳的檔案資訊
     // 檢查是不是自己本人
@@ -125,6 +125,7 @@ const userController = {
     ])
       .then(([avatarFilePath, coverFilePath, user]) => {
         if (!user) throw new Error('User did not exist.')
+        if (coverReset === 'true') coverFilePath = 'https://i.imgur.com/b7U6LXD.jpg'
         return user.update({ name, intro: intro || user.intro, avatar: avatarFilePath || user.avatar, cover: coverFilePath || user.cover })
       })
       .then(user => {
