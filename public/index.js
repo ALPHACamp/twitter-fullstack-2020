@@ -1,3 +1,9 @@
+// 抓出要監聽的 Modal 內部元件
+const ModalSubmitBtn = document.getElementById('ModalSubmitBtn')
+const ModalDescription = document.getElementById('ModalDescription')
+const ModalErrorMessage = document.getElementById('ModalErrorMessage')
+
+// 設定監聽中的 Modal
 const targetNodes = []
 const postTweetModal = document.getElementById('postTweetModal')
 const editProfileModal = document.getElementById('editProfileModal')
@@ -30,6 +36,17 @@ const observer = new MutationObserver(function async(mutationsList, observer) {
       if (mutation.target.classList.contains('show')) {
         // 將他的 top 設定到固定位置
         mutation.target.style.top = `-${pageHeight}px`
+        // 監聽 Modal 內容，並提供錯誤處理訊息
+        ModalSubmitBtn.addEventListener('click', e => {
+          if (!ModalDescription.value || ModalDescription.value.trim() === '') {
+            ModalErrorMessage.innerText = '內容不可空白'
+          } else if (ModalDescription.value.trim().length > 140) {
+            ModalErrorMessage.innerText = '字數不可超過140字'
+          } else {
+            ModalSubmitBtn.type = 'submit'
+            ModalErrorMessage.innerText = ''
+          }
+        })
       }
     }
   }
