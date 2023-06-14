@@ -45,7 +45,8 @@ const profileController = {
         FollowingsCount,
         FollowersCount,
         tweetsCount,
-        isLoginUser
+        isLoginUser,
+        isFollowing: isLoginUser ? null : loginUser.Followings.some(following => following.id === user.id)
       }
       // next
       return next()

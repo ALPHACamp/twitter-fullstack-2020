@@ -26,9 +26,17 @@
       <a class='notification' href='#'>
         <img class='like-icon' src='/images/profile/btn_notfi.svg' alt='notification' />
       </a>
-      <form class='' action='/follow/{{this.id}}' method='POST'>
-        <button type='submit' class='btn'>正在跟隨</button>
-      </form>
+      {{#if user.isFollowing}}
+        <form class='' action='/followships/{{user.id}}?_method=DELETE' method='POST'>
+          <button type='submit' class='btn'>正在跟隨</button>
+        </form>
+        </form>
+      {{else}}
+        <form class='' action='/followships' method='POST'>
+          <input type="hidden" name="id" value={{user.id}}>
+          <button type='submit' class='btn btn-unfollow'>跟隨</button>
+        </form>
+      {{/if}}
     </div>
   {{/if}}
   
