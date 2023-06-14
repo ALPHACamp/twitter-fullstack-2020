@@ -12,11 +12,7 @@ const passport = require('./config/passport')
 
 // helpers
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
-const authHelpers = require('./_helpers')
-const helpers = {
-  ...handlebarsHelpers,
-  ...authHelpers
-}
+const helpers = require('./_helpers')
 const previousPage = require('./middleware/previous-page')
 
 // files
@@ -26,7 +22,7 @@ app.use(express.static('public'))
 const port = process.env.PORT || 3000
 const SESSION_SECRET = process.env.SESSION_SECRET || 'simple_twitter_session_secret'
 
-app.engine('hbs', handlebars({ extname: '.hbs', defaultLayout: 'main', helpers: helpers }))
+app.engine('hbs', handlebars({ extname: '.hbs', defaultLayout: 'main', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 
 app.use(express.urlencoded({ extended: true }))

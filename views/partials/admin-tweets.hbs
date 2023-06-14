@@ -1,35 +1,42 @@
-{{!-- header --}}
-<li class="list-group-item tweet-list p-4 d-flex align-items-center">
+{{! header }}
+<li class='list-group-item tweet-list p-4 d-flex align-items-center'>
   <h4>推文清單</h4>
 </li>
 
-{{!-- tweet --}}
+{{! tweet }}
 {{#each tweets}}
 <div class="collapse show" id="tweet-{{this.id}}">
-  <li class="list-group-item tweet-list p-3">
-    <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="text-decoration-none" >
-      <div class="d-flex">
-        {{!-- avatar --}}
-        <div class="flex-shrink-1 p-0">
-          <img src="{{this.User.avatar}}" class="tweet-user-img" onerror="this.onerror=null; this.src='/images/profile-img.svg'">
+  <form action='/admin/tweets/{{this.id}}?_method=DELETE' method='POST'>
+    <li class='list-group-item tweet-list p-3'>
+      <div class='d-flex'>
+        {{! avatar }}
+        <div class='flex-shrink-1 p-0'>
+          <img src='{{this.User.avatar}}' class='tweet-user-img' onerror="this.onerror=null; this.src='/images/profile-img.svg'" />
         </div>
 
-        <div class="tweet-text d-flex flex-column">
-          {{!-- user name and account --}}
-          <div class="d-flex align-items-baseline">
-            <div class="user-name">{{this.User.name}} </div>
-            <div class="user-account">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
+        <div class='tweet-text d-flex flex-column'>
+          {{! user name and account }}
+          <div class='d-flex align-items-baseline'>
+            <div class='user-name'>{{this.User.name}} </div>
+            <div class='user-account'>@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
           </div>
+          {{! delete btn }}
+          <button 
+            type="submit"
+            class="btn-close position-absolute end-0" 
+            aria-label="Close"
+            data-bs-toggle="collapse"
+            data-bs-target="#tweet-{{this.id}}"
+            aria-expanded="false" 
+            aria-controls="tweet-{{this.id}}"
+            onclick="return confirm(`確定要刪除此貼文嗎？`)"
+          ></button>
 
-          {{!-- delete btn --}}
-          <input type="hidden" name="tweetId" value="{{this.id}}" />
-          <button type="submit" class="btn-close position-absolute end-0" aria-label="Close" data-bs-toggle="collapse" data-bs-target="#tweet-{{this.id}}" aria-expanded="false" aria-controls="tweet-{{this.id}}" onclick="return confirm(`確定要刪除此貼文嗎？`)"></button>
-          
-          {{!-- tweet description --}}
-          <p class="text-content">{{this.description}}</p>
+          {{! tweet description }}
+          <p class='text-content m-0 p-0'>{{this.description}}</p>
         </div>
       </div>
-    </form>
-  </li>
+    </li>
+  </form>
 </div>
 {{/each}}

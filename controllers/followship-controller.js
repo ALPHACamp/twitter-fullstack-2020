@@ -61,10 +61,10 @@ const followshipController = {
           .map(user => ({
             ...user.toJSON(),
             followerCount: user.Followers.length,
-            isFollowed: req.user.Followings.some(f => f.id === user.id)
+            isFollowed: loginUser.Followings?.some(f => f.id === user.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
-        req.session.followingData = result.slice(0, topFollowedUsersNumber - 1)
+        req.followingData = result.slice(0, topFollowedUsersNumber - 1)
         return next()
       })
       .catch(err => next(err))

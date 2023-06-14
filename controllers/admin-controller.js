@@ -58,7 +58,6 @@ const adminController = {
         },
         order: [['createdAt', 'DESC']]
       })
-
       const count = await Promise.all(
         users.map(async user => ({
           tweetsCount: await Tweet.count({ where: { UserId: user.id } }),
