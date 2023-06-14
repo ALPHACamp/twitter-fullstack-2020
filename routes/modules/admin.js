@@ -8,9 +8,10 @@ const adminController = require('../../controllers/admin-controller')
 const { authenticatedAdmin } = require('../../middleware/auth')
 
 router.get('/signin', adminController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), authenticatedAdmin, adminController.signIn)
 
-router.get('/tweets', authenticatedAdmin, adminController.tweetsPage)
-router.get('/users', authenticatedAdmin, adminController.usersPage)
+router.get('/tweets', authenticatedAdmin, adminController.getTweets)
+router.delete('/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
+router.get('/users', authenticatedAdmin, adminController.getUsers)
 
 module.exports = router

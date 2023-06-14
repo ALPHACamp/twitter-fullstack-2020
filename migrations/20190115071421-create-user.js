@@ -18,13 +18,16 @@ module.exports = {
         type: Sequelize.STRING
       },
       avatar: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: 'https://i.imgur.com/ehh37fR.jpg'
       },
       introduction: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        defaultValue: '跟大家介紹你自己吧！！！'
       },
       role: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: 'user'
       },
       createdAt: {
         allowNull: false,

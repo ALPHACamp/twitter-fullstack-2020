@@ -6,63 +6,38 @@ const { generateLimitedParagraph } = require('../helpers/seed-helpers')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Users', [{
+    const fakeUsers = []
+    const admin = {
       account: 'root',
       name: 'root',
       email: 'root@example.com',
       password: await bcrypt.hash('12345678', 10),
       role: 'admin',
-      cover: '/images/users/cover.png',
-      avatar: faker.image.avatar(),
+      cover: `https://loremflickr.com/320/240/background/?random=${Math.random() * 100}`,
+      avatar: `https://loremflickr.com/320/240/avatar,person/?random=${Math.random() * 100}`,
       introduction: generateLimitedParagraph(160),
       createdAt: new Date(),
       updatedAt: new Date()
-    }, {
-      account: 'user1',
-      name: faker.lorem.word(50),
-      email: 'user1@example.com',
-      password: await bcrypt.hash('12345678', 10),
-      role: 'user',
-      cover: '/images/users/cover.png',
-      avatar: faker.image.avatar(),
-      introduction: generateLimitedParagraph(160),
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      account: 'user2',
-      name: faker.lorem.word(50),
-      email: 'user2@example.com',
-      password: await bcrypt.hash('12345678', 10),
-      role: 'user',
-      cover: '/images/users/cover.png',
-      avatar: faker.image.avatar(),
-      introduction: generateLimitedParagraph(160),
-      createdAt: new Date(),
-      updatedAt: new Date()
+    }
+    fakeUsers.push(admin)
 
-    }, {
-      account: 'user3',
-      name: faker.lorem.word(50),
-      email: 'user1@example.com',
-      password: await bcrypt.hash('12345678', 10),
-      role: 'user',
-      cover: '/images/users/cover.png',
-      avatar: faker.image.avatar(),
-      introduction: generateLimitedParagraph(160),
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      account: 'user4',
-      name: faker.lorem.word(50),
-      email: 'user1@example.com',
-      password: await bcrypt.hash('12345678', 10),
-      role: 'user',
-      cover: '/images/users/cover.png',
-      avatar: faker.image.avatar(),
-      introduction: generateLimitedParagraph(160),
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }], {})
+    for (let i = 1; i <= 12; i++) {
+      const user = {
+        account: `user${i}`,
+        name: faker.lorem.word(50),
+        email: `user${i}@example.com`,
+        password: await bcrypt.hash('12345678', 10),
+        role: 'user',
+        cover: `https://loremflickr.com/320/240/background/?random=${Math.random() * 100}`,
+        avatar: `https://loremflickr.com/320/240/avatar,person/?random=${Math.random() * 100}`,
+        introduction: generateLimitedParagraph(160),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+      fakeUsers.push(user)
+    }
+
+    await queryInterface.bulkInsert('Users', fakeUsers, {})
   },
 
   down: async (queryInterface, Sequelize) => {
