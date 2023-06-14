@@ -53,16 +53,14 @@ const adminController = {
   },
   adminGetUsers: async (req, res, next) => {
     try {
-      const [users] = await Promise.all([
-        User.findAll({
-          raw: true,
-          nest: true,
-          where: {
-            role: 'user'
-          },
-          order: [['createdAt', 'DESC']]
-        })
-      ])
+      const users = await User.findAll({
+        raw: true,
+        nest: true,
+        where: {
+          role: 'user'
+        },
+        order: [['createdAt', 'DESC']]
+      })
       const partialName = 'admin-users'
       const userPage = true
       res.render('admin/tweets', { users, partialName, userPage })
