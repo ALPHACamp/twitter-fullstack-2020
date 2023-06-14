@@ -259,6 +259,8 @@ const profileController = {
         if (loginUser.id === a.id || loginUser.id === b.id) return -1
         return b.isFollowing - a.isFollowing
       })
+      console.log(userData.Followings)
+      console.log(loginUser.id)
       // pagination
       const pagination = getPagination(page, limit, followingsCount)
       const partialName = 'user-followships-list'
