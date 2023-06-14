@@ -5,17 +5,20 @@ const tweetController = {
   getTweets: async (req, res, next) => {
     const tweetRoute = true
     try {
+      const user = await User.findByPk(req.user.id, { raw: true, nest: true })
+      const userAvatar = user.avatar
       const tweets = await Tweet.findAll({
         raw: true,
         nest: true,
         include: [User]
       })
-      const top10Followers = await getTop10Following(req, next)
       const sortedTweets = tweets.sort((a, b) => b.createdAt - a.createdAt)
+      const top10Followers = await getTop10Following(req, next)
       return res.render('tweets', {
         tweets: sortedTweets,
         topFollowers: top10Followers,
-        tweetRoute
+        tweetRoute,
+        userAvatar
       })
     } catch (err) {
       next(err)
@@ -65,6 +68,24 @@ const tweetController = {
         comment,
         userId,
         tweetId
+      })
+      return res.redirect('back')
+    } catch (err) {
+      next(err)
+    }
+  },
+  postTweet: async (req, res, next) => {
+    try {
+      const { description } = req.body
+      const userId = req.user.id
+      console.log(req)
+      if (!description) throw new Error('內容不可為空白')
+      if (description.length > 140) throw new Error('內容不可超過140字')
+      const user = await User.findByPk(userId)
+      if (!user) throw new Error('使用者不存在')
+      await Tweet.create({
+        description,
+        userId
       })
       return res.redirect('back')
     } catch (err) {

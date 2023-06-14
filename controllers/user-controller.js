@@ -66,8 +66,9 @@ const userController = {
   getUser: async (req, res, next) => {
     const userTweet = true
     const { id } = req.params
-    const loginUser = helpers.getUser(req)
-    if (loginUser.id !== Number(id)) throw new Error('您沒有權限查看此個人資料')
+    // User 點擊他人頭像會擋掉，先刪除
+    // const loginUser = helpers.getUser(req)
+    // if (loginUser.id !== Number(id)) throw new Error('您沒有權限查看此個人資料')
 
     try {
       const [user, FollowingsCount, FollowersCount, tweetsCount] =
