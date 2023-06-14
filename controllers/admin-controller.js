@@ -1,5 +1,5 @@
 const helpers = require('../_helpers')
-const { User, Tweet } = require('../models')
+const { User, Tweet, Like, Followship } = require('../models')
 
 const adminController = {
   adminSigninPage: (req, res) => {
@@ -51,17 +51,25 @@ const adminController = {
     }
   },
   adminGetUsers: async (req, res, next) => {
+    const loginUser = helpers.getUser(req)
+    if (loginUser.role === 'user') {
+      res.redirect('/')
+    }
     try {
-      const [users] = await Promise.all([
+      const [users, likes, follows] = await Promise.all([
         User.findAll({
-          raw: true,
-          nest: true,
-          where: {
-            role: 'user'
-          },
-          order: [['createdAt', 'DESC']]
-        })
+          include: [Tweet, { model: Like }]
+        }),
+        Like.findAll(),
+        Followship.findAll()
       ])
+      console.log(users)
+      console.log('-----------------------------')
+      console.log(likes)
+      console.log('-----------------2----------------------')
+      console.log(follows)
+
+
       const partialName = 'admin-users'
       const userPage = true
       res.render('admin/tweets', { users, partialName, userPage })
