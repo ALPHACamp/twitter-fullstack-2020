@@ -172,6 +172,7 @@ const profileController = {
       // 整理資料
       const tweetsData = likes.rows.map((like, index) => ({
         ...like.Tweet.toJSON(),
+        createdAt: like.createdAt,
         likesCount: counts[index].likesCount,
         repliesCount: counts[index].repliesCount,
         isLiked: loginUser.Likes.some(l => l.TweetId === like.TweetId)
@@ -179,6 +180,7 @@ const profileController = {
       // pagination
       const pagination = getPagination(page, limit, likes.count)
       const partialName = 'user-likes'
+      console.log(tweetsData[0])
       // render
       res.render('index', { user: userData, tweets: tweetsData, pagination, route, partialName, nav, followingData })
     } catch (err) {
