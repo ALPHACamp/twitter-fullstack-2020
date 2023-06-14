@@ -15,8 +15,8 @@ module.exports = {
       cover: '/images/users/cover.png',
       avatar: faker.image.avatar(),
       introduction: generateLimitedParagraph(160),
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       account: 'user1',
       name: faker.lorem.word(50),
@@ -26,8 +26,8 @@ module.exports = {
       cover: '/images/users/cover.png',
       avatar: faker.image.avatar(),
       introduction: generateLimitedParagraph(160),
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       account: 'user2',
       name: faker.lorem.word(50),
@@ -37,8 +37,8 @@ module.exports = {
       cover: '/images/users/cover.png',
       avatar: faker.image.avatar(),
       introduction: generateLimitedParagraph(160),
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
 
     }, {
       account: 'user3',
@@ -49,8 +49,8 @@ module.exports = {
       cover: '/images/users/cover.png',
       avatar: faker.image.avatar(),
       introduction: generateLimitedParagraph(160),
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       account: 'user4',
       name: faker.lorem.word(50),
@@ -60,8 +60,8 @@ module.exports = {
       cover: '/images/users/cover.png',
       avatar: faker.image.avatar(),
       introduction: generateLimitedParagraph(160),
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {})
   },
 

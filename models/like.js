@@ -10,26 +10,23 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate (models) {
-      // define association here
-      Like.belongsTo(models.User, { foreignKey: 'userId' })
-
-      Like.belongsTo(models.Tweet, { foreignKey: 'tweetId' })
+      Like.belongsTo(models.User, { foreignKey: 'UserId' })
+      Like.belongsTo(models.Tweet, { foreignKey: 'TweetId' })
     }
-  };
+  }
   Like.init({
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
-    },
+    }, // 加了這條本地才有通過
     UserId: DataTypes.INTEGER,
     TweetId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Like',
-    tableName: 'Likes',
-    underscored: true
+    tableName: 'Likes'
   })
   return Like
 }

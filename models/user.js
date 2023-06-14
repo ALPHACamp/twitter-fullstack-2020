@@ -10,45 +10,39 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate (models) {
-      // define association here
-      User.hasMany(models.Tweet, { foreignKey: 'userId' })
-
-      User.hasMany(models.Reply, { foreignKey: 'userId' })
-
-      User.hasMany(models.Like, { foreignKey: 'userId' })
+      User.hasMany(models.Tweet, { foreignKey: 'UserId' })
+      User.hasMany(models.Reply, { foreignKey: 'UserId' })
+      User.hasMany(models.Like, { foreignKey: 'UserId' }) // 補上一個這個
       User.belongsToMany(models.Tweet, {
         through: models.Like,
-        foreignKey: 'userId',
+        foreignKey: 'UserId',
         as: 'LikedTweets'
       })
-
-      User.belongsToMany(User, {
+      User.belongsToMany(models.User, {
         through: models.Followship,
         foreignKey: 'followingId',
         as: 'Followers'
       })
-
-      User.belongsToMany(User, {
+      User.belongsToMany(models.User, {
         through: models.Followship,
         foreignKey: 'followerId',
         as: 'Followings'
       })
     }
-  };
+  }
   User.init({
-    account: DataTypes.STRING,
-    name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
+    name: DataTypes.STRING,
     avatar: DataTypes.STRING,
-    cover: DataTypes.STRING,
     introduction: DataTypes.STRING,
-    role: DataTypes.STRING
+    role: DataTypes.STRING,
+    account: DataTypes.STRING,
+    cover: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',
-    tableName: 'Users',
-    underscored: true
+    tableName: 'Users'
   })
   return User
 }
