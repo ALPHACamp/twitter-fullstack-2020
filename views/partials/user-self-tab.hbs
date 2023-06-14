@@ -1,12 +1,15 @@
 <nav class="nav" style="border-bottom: 1px solid #E6ECF0;">
-  <button class="{{#if userTweet}}user-tab-active{{else}}user-tab{{/if}}" 
-    aria-current="page" 
-    href="/users/{{user.id}}/tweets">推文
-  </button>
-  <button class="{{#if userTweet}}user-tab-active{{else}}user-tab{{/if}}" 
-    href="/user/self/replies">回覆
-  </button>
-  <button class="{{#if userLike}}user-tab-active{{else}}user-tab{{/if}}" 
-    href="/users/{{user.id}}/likes">喜歡的內容
-  </button>
+  <a href="/users/{{user.id}}/tweets">
+    <button class="{{#if userTweet}}user-tab-active{{else}}user-tab{{/if}}" 
+      aria-current="page" >推文
+    </button>
+  </a>
+  <a href="/user/self/replies">
+    <button class="{{#if userTweet}}user-tab-active{{else}}user-tab{{/if}}">回覆
+    </button>
+  </a>
+  <a href="/users/{{user.id}}/likes">
+    <button class="{{#if userLike}}user-tab-active{{else}}user-tab{{/if}}" >喜歡的內容
+    </button>
+  </a>
 </nav>
