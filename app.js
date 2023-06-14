@@ -12,11 +12,9 @@ const passport = require('./config/passport')
 
 // helpers
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
-const partialHelpers = require('./helpers/partial-helpers')
 const authHelpers = require('./_helpers')
 const helpers = {
   ...handlebarsHelpers,
-  ...partialHelpers,
   ...authHelpers
 }
 const previousPage = require('./middleware/previous-page')
