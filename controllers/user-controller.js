@@ -85,7 +85,7 @@ const userController = {
     req.flash('success_messages', '你已成功登出。')
     res.redirect('/signin')
   },
-  // API: 取得目前登入的使用者資料 只回傳json (待刪除取得的password)
+  // API: 取得目前登入的使用者資料 只回傳json
   getUserData: (req, res, next) => {
     const userId = req.params.id
     // 檢查是不是自己本人
@@ -98,6 +98,7 @@ const userController = {
     User.findByPk(helpers.getUser(req).id, { raw: true })
       .then(user => {
         if (!user) throw new Error('User did not exist.')
+        delete user.password // 刪除取得的password再回傳
         return res.json(user)
       })
       .catch(err => next(err))
@@ -130,7 +131,8 @@ const userController = {
       })
       .then(user => {
         if (!user) throw new Error('User did not exist.')
-        // 待確認有沒有回傳到密碼
+        user = user.toJSON()
+        delete user.password // 刪除取得的password再回傳
         return res.json(user)
       })
       .catch(err => next(err))
