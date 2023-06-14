@@ -55,7 +55,8 @@ const profileController = {
     }
   },
   getUserTweets: async (req, res, next) => {
-    const { userData, followingData } = req.session
+    const { userData } = req.session
+    const { followingData } = req
     // 取得 id
     const { userId } = req.params
     const loginUser = helpers.getUser(req)
@@ -107,7 +108,8 @@ const profileController = {
     }
   },
   getUserReplies: async (req, res, next) => {
-    const { userData, followingData } = req.session
+    const { userData } = req.session
+    const { followingData } = req
     // 取得userId
     const { userId } = req.params
     const route = `users/${userId}/replies`
@@ -146,7 +148,8 @@ const profileController = {
     }
   },
   getUserLikes: async (req, res, next) => {
-    const { userData, followingData } = req.session
+    const { userData } = req.session
+    const { followingData } = req
     const loginUser = helpers.getUser(req)
     const { userId } = req.params
     const route = `users/${userId}/likes`
@@ -190,7 +193,7 @@ const profileController = {
   getUserFollowings: async (req, res, next) => {
     const loginUser = helpers.getUser(req)
     const { userId } = req.params
-    const { followingData } = req.session
+    const { followingData } = req
     // 判斷active
     const followings = true
     const route = `users/${userId}/followings`
@@ -252,7 +255,7 @@ const profileController = {
   getUserFollowers: async (req, res, next) => {
     const loginUser = helpers.getUser(req)
     const { userId } = req.params
-    const { followingData } = req.session
+    const { followingData } = req
     // 判斷active
     const followers = true
     const route = `users/${userId}/followers`
