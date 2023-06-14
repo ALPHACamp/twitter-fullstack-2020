@@ -68,6 +68,7 @@ const adminController = {
         user.totalLikes = userTotalLikes
         return user
       }))
+      users = users.sort((a, b) => b.totalTweets - a.totalTweets)
 
       return res.render('admin/users', { users })
     } catch (e) {
