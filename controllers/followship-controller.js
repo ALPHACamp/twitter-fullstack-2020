@@ -1,6 +1,7 @@
 // files
 const { Followship, User } = require('../models')
 const helpers = require('../_helpers')
+const { Op } = require('sequelize')
 
 // controllers
 const followshipController = {
@@ -11,6 +12,7 @@ const followshipController = {
     if (userId.toString() === followingId.toString()) {
       return res.status(200).json({ error: "You can't follow yourself." })
     }
+
     return Promise.all([
       User.findByPk(followingId),
       Followship.findOne({
@@ -48,8 +50,11 @@ const followshipController = {
       .catch(err => next(err))
   },
   getTopFollowedUsers: (req, res, next) => {
+    const loginUser = helpers.getUser(req)
+    const topFollowedUsersNumber = 10
     return User.findAll({
-      include: [{ model: User, as: 'Followers' }]
+      include: [{ model: User, as: 'Followers' }],
+      where: { role: 'user', id: { [Op.not]: loginUser.id } }
     })
       .then(users => {
         const result = users
@@ -59,10 +64,8 @@ const followshipController = {
             isFollowed: req.user.Followings.some(f => f.id === user.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
-        req.userData = {
-          ...result
-        }
-        res.send(req.userData) // 測試用
+        req.session.followingData = result.slice(0, topFollowedUsersNumber - 1)
+        return next()
       })
       .catch(err => next(err))
   }

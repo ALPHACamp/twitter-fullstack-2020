@@ -32,12 +32,20 @@ const adminController = {
         ...tweet.toJSON()
       }))
       const partialName = 'admin-tweets'
+
+      tweets.forEach(tweet => {
+        if (tweet.description.length > 50) {
+          const newText = tweet.description.slice(0, 50) + '...'
+          delete tweet.description
+          tweet.description = newText
+        }
+      })
+
       res.render('admin/tweets', {
         user,
         tweets: tweets,
         partialName
       })
-      console.log('adminGetTweets')
     } catch (err) {
       next(err)
     }
@@ -66,6 +74,16 @@ const adminController = {
     req.flash('success_messages', '登出成功！')
     req.logout()
     res.redirect('admin/signin')
+  },
+  deleteTweet: (req, res, next) => {
+    const tweetId = req.body.tweetId
+    Tweet.destroy(
+      { where: { id: tweetId } }
+    )
+      .then(() => {
+        res.redirect('/admin/tweets')
+      })
+      .catch(err => console.log(err))
   }
 }
 

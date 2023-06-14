@@ -1,16 +1,24 @@
 'use strict'
 
 const faker = require('faker')
+const { randomNumber } = require('../helpers/seed-helper')
+
+const tweetsNumber = 10
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const users = await queryInterface.sequelize.query(
-      'SELECT id FROM Users;',
-      { type: queryInterface.sequelize.QueryTypes.SELECT }
+      // 限制只有user
+      'SELECT id FROM Users WHERE role="user";',
+      {
+        type: queryInterface.sequelize.QueryTypes.SELECT
+      }
     )
-    await queryInterface.bulkInsert('Tweets',
-      Array.from({ length: 50 }, () => ({
-        user_id: users[Math.floor(Math.random() * users.length)].id,
+    const arr = Array.from(Array(users.length * tweetsNumber).keys())
+    await queryInterface.bulkInsert(
+      'Tweets',
+      Array.from({ length: users.length * tweetsNumber }, () => ({
+        user_id: users[randomNumber(arr, tweetsNumber)].id,
         description: faker.lorem.text(),
         created_at: new Date(),
         updated_at: new Date()

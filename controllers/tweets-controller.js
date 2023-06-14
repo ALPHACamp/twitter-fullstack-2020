@@ -1,9 +1,12 @@
 const { User, Followship, Tweet, Reply, Like } = require('../models')
 const helpers = require('../_helpers')
+
+const nav = 'tweets'
 const tweetsController = {
   getTweets: async (req, res, next) => {
     // 取得登入使用者的資料
     const loginUser = helpers.getUser(req)
+    const { followingData } = req.session
     try {
       let tweets = await Tweet.findAll({
         include: [User, { model: Like }, { model: Reply, include: User }],
@@ -19,7 +22,9 @@ const tweetsController = {
       return res.render('index', {
         user: loginUser,
         tweets: tweets,
-        partialName
+        partialName,
+        nav,
+        followingData
       })
     } catch (err) {
       next(err)
@@ -44,7 +49,8 @@ const tweetsController = {
         likesCount,
         repliesCount,
         isLiked,
-        partialName
+        partialName,
+        nav
       })
     } catch (err) {
       next(err)

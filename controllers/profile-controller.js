@@ -7,7 +7,7 @@ const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 // 推文顯示數量
 const DEFAULT_LIMIT = 50
-const nav = 'profile'
+let nav = 'profile'
 
 const profileController = {
   getUser: async (req, res, next) => {
@@ -54,32 +54,27 @@ const profileController = {
     }
   },
   getUserTweets: async (req, res, next) => {
-    const { userData } = req.session
+    const { userData, followingData } = req.session
     // 取得 id
     const { userId } = req.params
-
+    const loginUser = helpers.getUser(req)
     const route = `users/${userId}/tweets`
     // 取得page, limit, offset
     const page = Number(req.query.page) || 1
     const limit = DEFAULT_LIMIT
     const offset = getOffset(page, limit)
-    const loginUser = helpers.getUser(req)
     try {
       // tweets找相對應的資料，跟user關聯，依照建立時間排列
       // replies、likes數量計算
       const tweets = await Tweet.findAndCountAll({
         attributes: {
-          include: [
-            [Sequelize.fn('COUNT', Sequelize.col('Replies.id')), 'repliesCount'],
-            [Sequelize.fn('COUNT', Sequelize.col('Likes.id')), 'likesCount']
-          ]
+          include: [[Sequelize.fn('COUNT', Sequelize.col('Replies.id')), 'repliesCount']]
         },
         where: { UserId: userId },
         include: [
           User,
           // 不要引入reply資料
-          { model: Reply, attributes: [] },
-          { model: Like, attributes: [] }
+          { model: Reply, attributes: [] }
         ],
         order: [['createdAt', 'DESC']],
         group: ['Tweet.id'],
@@ -87,23 +82,33 @@ const profileController = {
         offset,
         subQuery: false
       })
+      const likes = await Promise.all(
+        tweets.rows.map(tweet =>
+          Like.findAndCountAll({
+            where: { TweetId: tweet.id }
+          })
+        )
+      )
       // 整理資料
-      const tweetsData = tweets.rows.map(tweet => ({
+      const tweetsData = tweets.rows.map((tweet, index) => ({
         ...tweet.toJSON(),
-        isLiked: loginUser && loginUser.Likes && loginUser.Likes.some(like => like.TweetId === tweet.id)
+        likesCount: likes[index].count,
+        isLiked: likes[index].rows.some(like => like.UserId === loginUser.id)
       }))
       // pagination
       const pagination = getPagination(page, limit, tweets.count.length)
       // render
       const partialName = 'user-profile'
       const navbar = 'tweets'
-      res.render('index', { user: userData, tweets: tweetsData, route, pagination, partialName, navbar })
+      res.render('index', { user: userData, tweets: tweetsData, route, pagination, partialName, navbar, nav, followingData })
+      // const partialName = 'user-tweets'
+      // res.render('users/tweets', { user: userData, tweets: tweetsData, route, pagination })
     } catch (err) {
       next(err)
     }
   },
   getUserReplies: async (req, res, next) => {
-    const { userData } = req.session
+    const { userData, followingData } = req.session
     // 取得userId
     const { userId } = req.params
     const route = `users/${userId}/replies`
@@ -137,11 +142,12 @@ const profileController = {
       }))
       // pagination
       const pagination = getPagination(page, limit, replies.count)
+      // const partialName = 'user-replies'
       // render
       const partialName = 'user-profile'
       const navbar = 'replies'
       const repliesPage = true
-      res.render('index', { user: userData, replies: repliesData, route, pagination, partialName, repliesPage, navbar })
+      res.render('index', { user: userData, replies: repliesData, route, pagination, partialName, repliesPage, navbar, nav, followingData })
     } catch (err) {
       next(err)
     }
@@ -170,6 +176,7 @@ const profileController = {
           likesCount: await Like.count({ where: { TweetId: like.TweetId } })
         }))
       )
+      // 整理資料
       const tweetsData = likes.rows.map((like, index) => ({
         ...like.Tweet.toJSON(),
         likesCount: counts[index].likesCount,
@@ -178,6 +185,7 @@ const profileController = {
       }))
       // pagination
       const pagination = getPagination(page, limit, likes.count)
+      // const partialName = 'user-likes'
       // render
       const partialName = 'user-profile'
       const navbar = 'likes'
@@ -189,6 +197,7 @@ const profileController = {
   getUserFollowings: async (req, res, next) => {
     const loginUser = helpers.getUser(req)
     const { userId } = req.params
+    const { followingData } = req.session
     // 判斷active
     const followings = true
     const route = `users/${userId}/followings`
@@ -235,12 +244,15 @@ const profileController = {
         following.isFollowing = isFollowing[index]
       })
       // 根據isFollowing排序
-      userData.Followings.sort((a, b) => b.isFollowing - a.isFollowing)
+      userData.Followings.sort((a, b) => {
+        if (loginUser.id === a.id || loginUser.id === b.id) return -1
+        return b.isFollowing - a.isFollowing
+      })
       // pagination
       const pagination = getPagination(page, limit, followingsCount)
       const partialName = 'user-followships-list'
       const followingsPage = true
-      res.render('index', { user: userData, followings, pagination, route, partialName, followingsPage })
+      res.render('index', { user: userData, followings, pagination, route, partialName, followingsPage, nav, followingData })
     } catch (err) {
       next(err)
     }
@@ -248,6 +260,7 @@ const profileController = {
   getUserFollowers: async (req, res, next) => {
     const loginUser = helpers.getUser(req)
     const { userId } = req.params
+    const { followingData } = req.session
     // 判斷active
     const followers = true
     const route = `users/${userId}/followers`
@@ -295,12 +308,14 @@ const profileController = {
       // pagination
       const pagination = getPagination(page, limit, followersCount)
       const partialName = 'user-followships-list'
-      res.render('index', { user: userData, followers, pagination, route, partialName })
+      res.render('index', { user: userData, followers, pagination, route, partialName, nav, followingData })
+      // const partialName = 'user-followers'
     } catch (err) {
       next(err)
     }
   },
   editUserAccount: async (req, res, next) => {
+    nav = 'setting'
     // 抓id
     const { userId } = req.params
     const loginUser = helpers.getUser(req)
@@ -313,9 +328,9 @@ const profileController = {
       })
       // 找不到就報錯
       if (!user) throw new Error('帳號不存在!')
-      // render
       const partialName = 'user-edit'
       const visibleToggle = 'invisible'
+      // render
       return res.render('index', { user, partialName, visibleToggle })
     } catch (err) {
       next(err)

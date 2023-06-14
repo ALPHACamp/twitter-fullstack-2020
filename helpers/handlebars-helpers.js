@@ -45,5 +45,8 @@ module.exports = {
   },
   chooseEach: function (condition, options) {
     return condition ? options.fn(this) : options.inverse(this)
+  },
+  lookupPartial: function (partialName) {
+    return partialName
   }
 }
