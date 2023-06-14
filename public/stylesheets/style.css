@@ -611,6 +611,7 @@ h5 {
   filter: brightness(0.5);
   position: absolute;
   transform: translateY(-50%);
+  left: 15px;
   z-index: 0;
 }
 
@@ -1092,9 +1093,6 @@ form.was-validated .invalid-message:invalid ~ .invalid-parent .reply-feedback {
 form.invalid-feedback {
   display: none;
   font-size: 0.8em;
-}
-
-form.invalid-feedback {
   color: #fc5a5a;
 }
 

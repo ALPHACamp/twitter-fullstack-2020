@@ -65,7 +65,6 @@ const adminController = {
       const partialName = 'admin-users'
       const userPage = true
       res.render('admin/tweets', { users, partialName, userPage })
-      console.log('adminGetUsers')
     } catch (err) {
       next(err)
     }
@@ -77,9 +76,7 @@ const adminController = {
   },
   deleteTweet: (req, res, next) => {
     const tweetId = req.body.tweetId
-    Tweet.destroy(
-      { where: { id: tweetId } }
-    )
+    Tweet.destroy({ where: { id: tweetId } })
       .then(() => {
         res.redirect('/admin/tweets')
       })

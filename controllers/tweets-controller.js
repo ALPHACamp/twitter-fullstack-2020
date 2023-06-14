@@ -62,7 +62,6 @@ const tweetsController = {
     let { description } = req.body
     const UserId = helpers.getUser(req).id
     try {
-      console.log('aaaaaaaaaa')
       // 推文字數不可超過140字
       if (description.length > 140) throw new Error('字數不可超過140字')
 

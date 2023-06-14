@@ -394,7 +394,7 @@ const profileController = {
         avatar: avatarFilePath || user.avatar
       })
       // redirect /tweets
-      res.redirect('/tweets')
+      res.redirect(`/users/${userId}/tweets`)
     } catch (err) {
       next(err)
     }
