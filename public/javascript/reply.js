@@ -12,8 +12,16 @@ replySubmitButtons.forEach((replySubmitButton, index) => {
   })
 })
 
-replyForms.forEach(replyForm => {
+replyForms.forEach((replyForm, index) => {
   replyForm.addEventListener('submit', event => {
+    const input = event.target.firstElementChild.firstElementChild
+    const inputValue = input.value.trim()
+    if (!inputValue) {
+      input.setCustomValidity('內容不可空白')
+      replyFeedbacks[index].innerText = input.validationMessage
+      event.stopPropagation()
+      event.preventDefault()
+    }
     if (!replyForm.checkValidity()) {
       event.stopPropagation()
       event.preventDefault()
@@ -44,7 +52,7 @@ function checkReplyValid (target, content, maxLength, index) {
     target.setCustomValidity('內容不可空白')
     replyFeedbacks[index].innerText = target.validationMessage
   } else if (content.length > maxLength) {
-    target.setCustomValidity(`字數不可超過${maxLength}字`)
+    target.setCustomValidity(`字數不可超過 ${maxLength} 字`)
     replyFeedbacks[index].innerText = target.validationMessage
   } else {
     target.setCustomValidity('')
