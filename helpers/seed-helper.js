@@ -18,9 +18,10 @@ const followingArr = (users, followingNumber) => {
   const arr = []
   users.forEach(user => {
     const randomIdA = user.id
+    let usersOther = users.filter(user => user.id !== randomIdA)
     for (let i = 0; i < followingNumber / users.length; i++) {
-      const usersOther = users.filter(user => user.id !== randomIdA)
       const randomIdB = usersOther[Math.floor(Math.random() * usersOther.length)].id
+      usersOther = usersOther.filter(user => user.id !== randomIdB)
       arr.push({ randomIdA: randomIdA, randomIdB: randomIdB })
     }
   })
