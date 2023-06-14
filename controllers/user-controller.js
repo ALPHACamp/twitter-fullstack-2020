@@ -140,35 +140,12 @@ const userController = {
     const userId = req.params.id
     // 檢查是不是自己本人
     if (Number(userId) !== helpers.getUser(req).id) throw new Error('Permission denied.')
-    Promise.all([
-      // 取得自己的帳戶資訊
-      User.findByPk(userId, { raw: true }),
-      // 取得包含追蹤者的使用者資料
-      User.findAll({
-        where: {
-          role: 'user',
-          id: { [Op.ne]: helpers.getUser(req).id }
-        },
-        include: [
-          { model: User, as: 'Followers' }
-        ],
-        group: ['User.id'],
-        limit: 10
-      })
-    ])
-      .then(([currentUser, topUsers]) => {
-        if (!currentUser) throw new Error('User did not exist.')
-        // 將目前使用者追蹤的使用者做成一張清單
-        const followingList = helpers.getUser(req).Followings.map(f => f.id)
-        const data = topUsers
-          .map(user => ({
-            ...user.toJSON(),
-            isFollowed: followingList.includes(user.id),
-            followerCount: user.Followers.length
-          }))
-          // 排序：從追蹤數多的排到少的
-          .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('setting', { currentUser, topUsers: data, isSetting: true })
+    // 取得自己的帳戶資訊
+    User.findByPk(userId, { raw: true })
+      .then(user => {
+        if (!user) throw new Error('User did not exist.')
+        const { account, name, email } = user
+        res.render('setting', { account, name, email, userId, isSetting: true, isHide: true }) // 左側欄設定頁籤選擇中，且隱藏右側欄
       })
       .catch(err => next(err))
   },
@@ -193,9 +170,9 @@ const userController = {
         account,
         name,
         email,
-        password,
-        checkPassword
-      })
+        isSetting: true,
+        isHide: true
+      }) // 左側欄設定頁籤選擇中，且隱藏右側欄
     }
     // 檢查帳戶資訊是否正確 資料庫中是否已經有非管理者使用了該 account 或 email
     return Promise.all([
@@ -217,8 +194,10 @@ const userController = {
             name,
             email,
             password,
-            checkPassword
-          })
+            checkPassword,
+            isSetting: true,
+            isHide: true
+          }) // 左側欄設定頁籤選擇中，且隱藏右側欄
         }
         // 取得自己的帳戶資訊 同時生成密碼
         return Promise.all([
