@@ -773,13 +773,14 @@ h5 {
 .account-label,
 .password-label {
   margin-bottom: 0;
-  padding: 0 0 0 10px;
+  padding: 5px 0 2px 10px;
   font-size: 14px;
+  color: #696974;
 }
 
 .account-input,
 .password-input {
-  padding-left: 10px;
+  padding: 2px 0 5px 10px;
   font-size: 16px;
   background-color: #f5f8fa;
   border: 0;
@@ -866,6 +867,15 @@ h5 {
   border: 2px solid #50b5ff;
 }
 
+/****** admin-users ******/
+.admin-tweets-li {
+  transition: 0.5s;
+}
+
+.admin-tweets-0 {
+  height: 0;
+  transition: 1s;
+}
 
 
 /****** admin-users ******/
@@ -879,6 +889,7 @@ h5 {
 
 .admin-user-info {
   text-decoration: none;
+  cursor: default;
 }
 
 .admin-user-card {
@@ -933,7 +944,7 @@ h5 {
 }
 
 .admin-user-info-count i {
-  vertical-align: text-top;
+  vertical-align: bottom;
 }
 
 .admin-user-info-follower i {

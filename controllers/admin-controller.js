@@ -98,7 +98,7 @@ const adminController = {
       { where: { id: tweetId } }
     )
       .then(() => {
-        res.redirect('/admin/tweets')
+        console.log('tweet deleted!')
       })
       .catch(err => console.log(err))
   }

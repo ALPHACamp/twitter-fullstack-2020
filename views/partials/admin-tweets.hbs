@@ -5,26 +5,31 @@
 
 {{!-- tweet --}}
 {{#each tweets}}
-<li class="list-group-item tweet-list p-3">  
-  <div class="d-flex">
-    {{!-- avatar --}}
-    <div class="flex-shrink-1 p-0">
-      <img src="{{this.User.avatar}}" class="tweet-user-img" onerror="this.onerror=null; this.src='/images/profile-img.svg'">
-    </div>
+<div class="collapse show" id="tweet-{{this.id}}">
+  <li class="list-group-item tweet-list p-3">
+    <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="text-decoration-none" >
+      <div class="d-flex">
+        {{!-- avatar --}}
+        <div class="flex-shrink-1 p-0">
+          <img src="{{this.User.avatar}}" class="tweet-user-img" onerror="this.onerror=null; this.src='/images/profile-img.svg'">
+        </div>
 
-    <div class="tweet-text d-flex flex-column">
-      {{!-- user name and account --}}
-      <div class="d-flex align-items-baseline">
-        <div class="user-name">{{this.User.name}} </div>
-        <div class="user-account">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
+        <div class="tweet-text d-flex flex-column">
+          {{!-- user name and account --}}
+          <div class="d-flex align-items-baseline">
+            <div class="user-name">{{this.User.name}} </div>
+            <div class="user-account">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
+          </div>
+
+          {{!-- delete btn --}}
+          <input type="hidden" name="tweetId" value="{{this.id}}" />
+          <button type="submit" class="btn-close position-absolute end-0" aria-label="Close" data-bs-toggle="collapse" data-bs-target="#tweet-{{this.id}}" aria-expanded="false" aria-controls="tweet-{{this.id}}" onclick="return confirm(`確定要刪除此貼文嗎？`)"></button>
+          
+          {{!-- tweet description --}}
+          <p class="text-content">{{this.description}}</p>
+        </div>
       </div>
-
-      {{!-- delete btn --}}
-      <button type="button" class="btn-close position-absolute end-0" aria-label="Close"></button>
-      
-      {{!-- tweet description --}}
-      <p class="text-content">{{this.description}}</p>
-    </div>
-  </div>
-</li>
+    </form>
+  </li>
+</div>
 {{/each}}
