@@ -1,0 +1,51 @@
+<div class="followship mt-3"
+  style="width: 273px; height:100%px; margin-bottom: 24px; border-radius: 16px; background-color:#FAFAFB;">
+  <div class="title pt-3 ps-3 pb-2" style="border-bottom: 1px solid #E6ECF0; background-color:#FAFAFB;">
+    <h4 style="font-family: 'Noto Sans TC'; font-weight: 700;font-size: 24px; line-height: 24px;">
+      推薦跟隨
+    </h4>
+    <span style="width: 273px; "></span>
+  </div>
+
+  {{#each getFollowship}}
+  <div class="follower" style="background-color:#FAFAFB;">
+
+    <div class="users d-flex flex-row flex-nowrap justify-content-between mt-4">
+      <div class="user-info d-flex">
+        <div class="avatar" style="width: 50px;height: 50px; margin-left:10px; word-wrap:break-word;">
+          <a href="/users/{{this.id}}/tweets">
+            <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}"
+              class="rounded-circle" style="width: 50px;height: 50px;background: #C4C4C4;">
+          </a>
+        </div>
+        <div class="name" style="width:110px; height:48px;">
+          <p class="user-name text-truncate m-0 ms-1" style="font-weight: 700;font-size:16px;">
+            {{this.name}}
+          </p>
+          <p class="user-account text-truncate m-0 ms-1" style="font-size:14px; color:#C4C4C4 word-wrap:break-word;">
+            {{this.account}}
+          </p>
+        </div>
+      </div>
+      {{#if this.isFollowed }}
+      <div class="follow-btn d-flex justify-content-center align-items-center me-2 mt-1"
+        style="width:96px; height:40px; background: #FF6600; border-radius:50px;">
+
+        <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn" style="white-space: nowrap;color:#ffffff;font-size: 16px;">正在跟隨</button>
+        </form>
+      </div>
+      {{else}}
+      <div class="follow-btn d-flex justify-content-center align-items-center me-2 mt-1"
+        style="width:64px; height:40px; background:  #FFFFFF; border-radius:50px; white-space: nowrap;">
+        <form action="/followships" method="POST">
+          <input type="hidden" name="id" value="{{this.id}}" />
+          <button type="submit" class="btn"
+            style="width: 64px;height: 40px; background: #FFFFFF;border-radius: 50px;border:1px solid #FF6600;color:#FF6600; font-size: 16px;">跟隨</button>
+        </form>
+        {{/if}}
+      </div>
+    </div>
+    {{/each}}
+
+  </div>

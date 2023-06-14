@@ -1,0 +1,26 @@
+<div class="container-signin ">
+  <div class="row text-center">
+    <div class="col">
+      <img id="ac-logo-icon" src="/images/icons/logo.png" alt="">
+      <h3>後台登入</h3>
+    </div>
+  </div>
+  <div id="container-form-front-back-end-signin">
+    <form class="form-signin" action="/admin/signin" method="POST">
+      <div class="mb-3" id="form-input-line">
+        <label class="form-label" for="account">帳號</label>
+        <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" required autofocus>
+      </div>
+      <div class="mb-3" id="form-input-line">
+        <label class="form-label" for="password">密碼</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="請輸入密碼" required>
+      </div>
+      <button id="btn-signin-signup-submit" class="btn btn-primary" type="submit">登入</button>
+    </form>
+    <div class="row text-end">
+      <div class="col">
+        <a href="/signin" class="btn btn-link">前台登入</a>
+      </div>
+    </div>
+  </div>
+</div>

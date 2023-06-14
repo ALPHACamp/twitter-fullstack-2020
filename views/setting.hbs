@@ -1,0 +1,47 @@
+<div id="whole-container" class="container d-flex h-100">
+  <div id="left-nav" class="col-3">
+    {{> nav route='setting'}}
+    {{!-- </div> --}}
+  <div id="mid-tweets" class="col-7">
+    <div id="mid-tweets-content" class="tweet container">
+
+      <div id="tweets-top">
+        <h4 id="home-word" class="pt-3 ps-3">帳戶設定</h4>
+      </div>
+
+      <div class="container-form-setting pt-3 ps-3 pe-3">
+        <form class="form-setting" action="/users/{{user.id}}/setting?_method=PUT" method="POST">
+          <div class="mb-3" id="form-input-line">
+            <label class="form-label" for="account">帳號</label>
+            <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" value="{{user.account}}" required
+              autofocus>
+          </div>
+          <div class="mb-3" id="form-input-line">
+            <label class="form-label" for="account">名稱</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="請輸入暱稱" value="{{user.name}}"required autofocus>
+          </div>
+          <div class="mb-3" id="form-input-line">
+            <label class="form-label" for="email">Email</label>
+            <input type="text" id="email" name="email" class="form-control" placeholder="請輸入Email" value="{{user.email}}" required>
+          </div>
+          <div class="mb-3" id="form-input-line">
+            <label class="form-label" for="password">密碼</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="請設定密碼" required>
+          </div>
+          <div class="mb-3" id="form-input-line">
+            <label class="form-label" for="passwordCheck">密碼確認</label>
+            <input type="password" id="passwordCheck" name="passwordCheck" class="form-control" placeholder="請再次輸入密碼"
+              required>
+          </div>
+          <div class="container-btn-setting">
+            <button class="btn btn-primary" id="btn-setting-submit" type="submit">儲存</button>
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</div>
