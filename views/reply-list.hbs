@@ -5,7 +5,9 @@
   <div class="show-tweet-page" style="width:45%">
     <!--header-->
     <div class="header">
-      <a href="/tweets"><img src="https://i.postimg.cc/QxZdg4vB/Vector.png" alt="" class="arrow-left"></a>
+      <button onclick="window.history.back()" class="back-icon">
+        <img src="https://i.postimg.cc/QxZdg4vB/Vector.png" alt="back" class="arrow-left">
+      </button>
       <h4 class="header-tweet">推文</h4>
     </div>
     <!--推文-->
@@ -57,13 +59,15 @@
           </div>
         </div>
       </div>
-        <hr class="solid">
-        {{#each replies}}
-        <div class="tweet-replies d-flex flex-column mt-2">
-          <div class="show-reply-user-info d-flex flex-row">
+      <hr class="solid">
+      {{#each replies}}
+      <div class="tweet-replies d-flex flex-column mt-2">
+        <div class="show-reply-user-info d-flex flex-row">
           <div class="user-avatar">
             <a href="/users/{{this.User.id}}/tweets">
-              <img src="{{this.User.avatar}}" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;border:2px  solid;margin:auto 8px auto 24px;margin:auto 8 auto 0" alt="avatar"> 
+              <img src="{{this.User.avatar}}" width="50px" ;height="50px"
+                style="display:inline-block;border-radius:100%;border:2px  solid;margin:auto 8px auto 24px;margin:auto 8 auto 0"
+                alt="avatar">
             </a>
           </div>
           <div class="d-flex flex-column">
@@ -82,7 +86,7 @@
       {{/each}}
     </div>
 
-</div> 
-{{> right-sidebar}}   
-{{> reply-page-modal}} 
+  </div>
+  {{> right-sidebar}}
+  {{> reply-page-modal}}
 </div>
