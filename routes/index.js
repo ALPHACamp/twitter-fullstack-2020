@@ -37,12 +37,12 @@ router.get('/logout', userController.logout)
 router.get('/logout', userController.logout)
 
 // index
-router.get('/tweets/:tweetId/replies', authenticated, tweetsController.getTweet)
+router.get('/tweets/:tweetId/replies', authenticated, followshipController.getTopFollowedUsers, tweetsController.getTweet)
 router.post('/tweets/:tweetId/replies', authenticated, tweetsController.postReply)
 router.post('/tweets/:tweetId/like', authenticated, userController.postLike)
 router.post('/tweets/:tweetId/unlike', authenticated, userController.postUnlike)
 router.get('/tweets', authenticated, followshipController.getTopFollowedUsers, tweetsController.getTweets)
-router.post('/tweets', authenticated, followshipController.getTopFollowedUsers, tweetsController.postTweet)
+router.post('/tweets', authenticated, tweetsController.postTweet)
 
 // profile
 router.get(
