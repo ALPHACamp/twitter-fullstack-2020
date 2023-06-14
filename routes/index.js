@@ -33,6 +33,9 @@ router.post('/signup', userController.signup)
 // logout
 router.get('/logout', userController.logout)
 
+// logout
+router.get('/logout', userController.logout)
+
 // index
 router.get('/tweets/:tweetId/replies', authenticated, tweetsController.getTweet)
 router.post('/tweets/:tweetId/replies', authenticated, tweetsController.postReply)

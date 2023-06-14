@@ -100,9 +100,11 @@ const profileController = {
       // pagination
       const pagination = getPagination(page, limit, tweets.count.length)
       // render
-      const partialName = 'user-tweets'
+      const partialName = 'user-profile'
+      const navbar = 'tweets'
+      res.render('index', { user: userData, tweets: tweetsData, route, pagination, partialName, navbar, nav, followingData })
+      // const partialName = 'user-tweets'
       // res.render('users/tweets', { user: userData, tweets: tweetsData, route, pagination })
-      res.render('index', { user: userData, tweets: tweetsData, route, pagination, partialName, nav, followingData })
     } catch (err) {
       next(err)
     }
@@ -126,6 +128,7 @@ const profileController = {
             model: Tweet,
             include: [
               // 只取回覆的推文者
+              { model: User, attributes: ['id'] },
               { model: User, attributes: ['account'] }
             ],
             // 不能是空的
@@ -137,12 +140,18 @@ const profileController = {
         offset
       })
       // 整理資料
-      const repliesData = replies.rows.map(reply => reply.toJSON())
+      const repliesData = replies.rows.map(reply => ({
+        ...reply.toJSON(),
+        user: userData
+      }))
       // pagination
       const pagination = getPagination(page, limit, replies.count)
-      const partialName = 'user-replies'
+      // const partialName = 'user-replies'
       // render
-      res.render('index', { user: userData, replies: repliesData, route, pagination, partialName, nav, followingData })
+      const partialName = 'user-profile'
+      const navbar = 'replies'
+      const repliesPage = true
+      res.render('index', { user: userData, replies: repliesData, route, pagination, partialName, repliesPage, navbar, nav, followingData })
     } catch (err) {
       next(err)
     }
@@ -182,10 +191,10 @@ const profileController = {
       }))
       // pagination
       const pagination = getPagination(page, limit, likes.count)
-      const partialName = 'user-likes'
-      console.log(tweetsData[0])
       // render
-      res.render('index', { user: userData, tweets: tweetsData, pagination, route, partialName, nav, followingData })
+      const partialName = 'user-profile'
+      const navbar = 'likes'
+      res.render('index', { user: userData, tweets: tweetsData, pagination, route, partialName, nav, followingData, navbar })
     } catch (err) {
       next(err)
     }
@@ -246,8 +255,9 @@ const profileController = {
       })
       // pagination
       const pagination = getPagination(page, limit, followingsCount)
-      const partialName = 'user-followings'
-      res.render('index', { user: userData, followings, pagination, route, partialName, nav, followingData })
+      const partialName = 'user-followships-list'
+      const followingsPage = true
+      res.render('index', { user: userData, followings, pagination, route, partialName, followingsPage, nav, followingData })
     } catch (err) {
       next(err)
     }
@@ -302,8 +312,9 @@ const profileController = {
       userData.Followers.sort((a, b) => b.isFollowing - a.isFollowing)
       // pagination
       const pagination = getPagination(page, limit, followersCount)
-      const partialName = 'user-followers'
+      const partialName = 'user-followships-list'
       res.render('index', { user: userData, followers, pagination, route, partialName, nav, followingData })
+      // const partialName = 'user-followers'
     } catch (err) {
       next(err)
     }

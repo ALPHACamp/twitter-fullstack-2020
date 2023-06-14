@@ -9,10 +9,10 @@ const adminController = {
     res.render('admin/tweets')
   },
   adminUsersPage: (req, res) => {
-    res.render('admin/users')
+    res.render('admin/tweets')
   },
   adminSignin: (req, res, next) => {
-    req.flash('success_messages', '成功登入!')
+    req.flash('success_messages', '成功登入！')
     res.redirect('/admin/tweets')
   },
   adminGetTweets: async (req, res, next) => {
@@ -31,6 +31,7 @@ const adminController = {
       tweets = tweets.map(tweet => ({
         ...tweet.toJSON()
       }))
+      const partialName = 'admin-tweets'
 
       tweets.forEach(tweet => {
         if (tweet.description.length > 50) {
@@ -42,7 +43,8 @@ const adminController = {
 
       res.render('admin/tweets', {
         user,
-        tweets: tweets
+        tweets: tweets,
+        partialName
       })
     } catch (err) {
       next(err)
@@ -60,10 +62,18 @@ const adminController = {
           order: [['createdAt', 'DESC']]
         })
       ])
-      res.render('admin/users', { users })
+      const partialName = 'admin-users'
+      const userPage = true
+      res.render('admin/tweets', { users, partialName, userPage })
+      console.log('adminGetUsers')
     } catch (err) {
       next(err)
     }
+  },
+  logout: (req, res) => {
+    req.flash('success_messages', '登出成功！')
+    req.logout()
+    res.redirect('admin/signin')
   },
   deleteTweet: (req, res, next) => {
     const tweetId = req.body.tweetId

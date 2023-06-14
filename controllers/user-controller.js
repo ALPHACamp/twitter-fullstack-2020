@@ -10,7 +10,7 @@ const userController = {
     res.render('signup')
   },
   signin: (req, res) => {
-    req.flash('success_messages', '成功登入!')
+    req.flash('success_messages', '成功登入！')
     res.redirect('/tweets')
   },
   signup: (req, res, next) => {
@@ -61,6 +61,11 @@ const userController = {
           .catch(err => next(err))
       })
       .catch(err => next(err))
+  },
+  logout: (req, res) => {
+    req.flash('success_messages', '登出成功！')
+    req.logout()
+    res.redirect('/signin')
   },
   logout: (req, res) => {
     req.flash('success_messages', '登出成功！')

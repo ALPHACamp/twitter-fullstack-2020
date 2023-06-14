@@ -1,0 +1,20 @@
+<div class='user-container m-0 p-0'>
+
+  {{!-- user header --}}
+  {{> header route = 'users'}}
+
+  {{!-- list nav --}}
+  {{> navbar/navbar-followships}}
+
+  {{!-- followings-list --}}
+  {{#chooseEach followingsPage}}
+    {{#each user.Followings}}
+      {{> user-followships}}
+    {{/each}}
+  {{else}}
+    {{#each user.Followers}}
+      {{> user-followships}}
+    {{/each}}
+  {{/chooseEach}}
+
+</div>
