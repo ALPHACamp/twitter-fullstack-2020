@@ -3,6 +3,7 @@ const { User, Tweet } = require('../models')
 
 const adminController = {
   adminSigninPage: (req, res) => {
+    console.log('a')
     res.render('admin/signin')
   },
   adminTweetsPage: (req, res) => {
