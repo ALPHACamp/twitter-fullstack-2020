@@ -4,7 +4,7 @@ const helpers = require('../_helpers')
 const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
-  signUpPage: (req, res) => {
+  getSignUp: (req, res) => {
     res.render('signup')
   },
   signUp: (req, res, next) => {
@@ -13,7 +13,7 @@ const userController = {
     if (name.length > 50) throw new Error('暱稱不得超過50字')
     if (req.body.password !== req.body.passwordCheck) throw new Error('密碼不相符!')
 
-    Promise.all([
+    return Promise.all([
       User.findOne({ where: { account } }),
       User.findOne({ where: { email } })
     ])
@@ -39,7 +39,7 @@ const userController = {
         res.redirect('/signup')
       })
   },
-  signInPage: (req, res) => {
+  getSignIn: (req, res) => {
     res.render('signin')
   },
   signIn: (req, res) => {
@@ -51,8 +51,58 @@ const userController = {
     req.logOut(() => { })
     res.redirect('/signin')
   },
-  settingPage: (req, res) => {
-    res.render('setting')
+  getSetting: (req, res, next) => {
+    const userId = helpers.getUser(req).id
+    // 避免非本人修改資料
+    if (Number(userId) !== Number(req.params.id)) {
+      res.redirect(`/users/${req.user.id}}/setting`)
+    }
+    return User.findByPk((userId), {
+      where: { role: 'user' },
+      raw: true
+    })
+      .then(user => {
+        if (!user) throw new Error('該使用者不存在')
+        return res.render('setting', { user: user })
+      })
+      .catch(err => next(err))
+  },
+  putSetting: (req, res, next) => {
+    console.log('進入putSetting')
+    const userId = helpers.getUser(req).id
+    const { account, name, email, password, passwordCheck } = req.body
+    // 避免非本人修改資料
+    if (Number(userId) !== Number(req.params.id)) {
+      res.redirect(`/users/${req.user.id}}/setting`)
+    }
+
+    if (name.length > 50) throw new Error('暱稱不得超過50字')
+    if (password !== passwordCheck) throw new Error('密碼不相符')
+
+    return Promise.all([
+      User.count({ where: { account } }),
+      User.count({ where: { email } }),
+      User.findByPk((userId), { where: { role: 'user' } }),
+      bcrypt.hash(password, 10)
+    ])
+      .then(([accountCount, emailCount, user, hash]) => {
+        if (!user) throw new Error('該使用者不存在')
+        if (accountCount > 0 && account !== user.account) throw new Error('account 已重複註冊！')
+        if (emailCount > 0 && email !== user.email) throw new Error('email 已重複註冊！')
+
+        return user.update({
+          account: account,
+          name: name,
+          email: email,
+          password: hash
+        })
+      })
+      .then(() => {
+        console.log('結束put setting 導回setting')
+        req.flash('success_messages', '編輯帳戶設定成功')
+        res.redirect(`/users/${userId}/setting`)
+      })
+      .catch(err => next(err))
   },
   getUser: (req, res, next) => { // 取得個人資料頁面(推文清單)
     const isUser = helpers.getUser(req).id === Number(req.params.id)
@@ -93,6 +143,7 @@ const userController = {
       .catch(err => next(err))
   },
   putUser: (req, res, next) => { // 修改使用者名稱、自我介紹、大頭照、背景圖
+    console.log('進到putUser拉')
     const { name, introduction } = req.body
     const avatar = req.files ? req.files.avatar : null
     const cover = req.files ? req.files.cover : null

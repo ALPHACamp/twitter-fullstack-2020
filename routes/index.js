@@ -18,10 +18,10 @@ const { authenticated, authenticatedTweets } = require('../middleware/auth')
 
 router.use('/admin', admin)
 
-router.get('/signup', userController.signUpPage)
+router.get('/signup', userController.getSignUp)
 router.post('/signup', userController.signUp)
 
-router.get('/signin', userController.signInPage)
+router.get('/signin', userController.getSignIn)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), authenticated, userController.signIn)
 
 router.get('/logout', userController.logOut)
@@ -32,8 +32,11 @@ router.get('/tweets', authenticatedTweets, tweetController.getTweets) // 顯示�
 router.post('/tweets', tweetController.createTweet) // 新增推文
 
 router.get('/reply/:id', authenticated, replyController.getReplies)
+
 router.get('/users/:id/likes', authenticated, likesController.getLikes)
-router.get('/users/setting', authenticated, userController.settingPage)
+
+router.get('/users/:id/setting', authenticated, userController.getSetting)
+router.put('/users/:id/setting', authenticated, userController.putSetting)
 
 router.get('/users/:id/followers', authenticated, userController.getFollowship, userController.getFollower) // 跟隨中清單頁面
 router.get('/users/:id/followings', authenticated, userController.getFollowship, userController.getFollowing) // 跟隨者清單頁面
