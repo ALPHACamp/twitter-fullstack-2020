@@ -489,18 +489,13 @@ const userController = {
         const tweetsLength = user.Tweets.length
         // 登入使用者目前的 following 清單
         const followingList = helpers.getUser(req).Followings.map(f => f.id)
-        // console.log('Followers')
-        // console.log(user.toJSON().Followers)
-        // console.log('Followings')
-        // console.log(user.toJSON().Followings)
-        // 特定使用者的 following 清單
+        // 取出特定使用者 following 清單並和 登入使用者的 following 清單比對是否正在追蹤, 後排序
         const followings = user.toJSON().Followings
           .map(following => ({
             ...following,
             isFollowed: followingList.includes(following.id)
           }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        // console.log(followings)
         res.render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followings, isFollowings: true })
       })
       .catch(err => next(err))
@@ -524,17 +519,13 @@ const userController = {
         const tweetsLength = user.Tweets.length
         // 登入使用者目前的 following 清單
         const followingList = helpers.getUser(req).Followings.map(f => f.id)
-        // console.log('Followers')
-        // console.log(user.toJSON().Followers)
-        // console.log('Followings')
-        // console.log(user.toJSON().Followings)
+        // 取出特定使用者 follower 清單並和 登入使用者的 following 清單比對是否正在追蹤, 後排序
         const followers = user.toJSON().Followers
           .map(follower => ({
             ...follower,
             isFollowed: followingList.includes(follower.id)
           }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        console.log(followers)
         res.status(200).render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followers, isFollowers: true })
       })
       .catch(err => next(err))
