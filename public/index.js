@@ -7,7 +7,7 @@ targetNodes.push(editProfileModal)
 targetNodes.push(postReplyModal)
 
 // 取得目前現在視窗大小的函式
-function updatePageHeight () {
+function updatePageHeight() {
   let pageHeight = Math.max(
     document.documentElement.scrollHeight,
     document.body.scrollHeight
@@ -23,7 +23,7 @@ window.addEventListener('resize', function () {
   pageHeight = updatePageHeight()
 })
 
-const observer = new MutationObserver(function async (mutationsList, observer) {
+const observer = new MutationObserver(function async(mutationsList, observer) {
   for (const mutation of mutationsList) {
     if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
       // 如果監聽對象的 class 有 show 的話
@@ -47,16 +47,20 @@ targetNodes.forEach(function (targetNode) {
 // 編輯個人資料相關
 const editProfileButton = document.querySelector('#editProfileButton')
 const putProfileButton = document.querySelector('#putProfileButton')
-const nameInput = document.querySelector('#name')
-const introInput = document.querySelector('#intro')
-const userId = editProfileButton.value
+const removeCoverButton = document.querySelector('#removeCoverButton')
 
 // 監聽按鈕 call API取得個人資料 把個人資料插入modal
 editProfileButton.addEventListener('click', event => {
-  // 待補上：檢查是否為本人
+  const userId = editProfileButton.value
+  const nameInput = document.querySelector('#name')
+  const introInput = document.querySelector('#intro')
+  const previewCover = document.querySelector('#previewCover')
+  const previewAvatar = document.querySelector('#previewAvatar')
   axios.get(`/api/users/${userId}`)
     .then(response => {
-      const { name, intro } = response.data
+      const { cover, avatar, name, intro } = response.data
+      previewCover.src = cover
+      previewAvatar.src = avatar
       nameInput.value = name
       introInput.value = intro
     })
@@ -66,21 +70,69 @@ editProfileButton.addEventListener('click', event => {
     })
 })
 
-// 監聽按鈕 call API更新個人資料 把個人資料插入modal
+// 監聽按鈕 call API更新個人資料 關閉Modal刷新個人資料頁面
 putProfileButton.addEventListener('click', event => {
+  const userId = editProfileButton.value
   // 取得使用者輸入的資料
-  const name = nameInput.value
-  const intro = introInput.value
-  // 待補上：檢查是否為本人
-  axios.post(`/api/users/${userId}`, { name, intro })
-    .then(response => {
-      const { name, intro } = response.data
-      nameInput.value = name
-      introInput.value = intro
-      alert('個人資料已成功修改') // 給使用者顯示一個提示
+  const name = document.querySelector('#name').value
+  const intro = document.querySelector('#intro').value
+  const avatar = document.querySelector('#avatarInput').files[0]
+  const cover = document.querySelector('#coverInput').files[0]
+  const coverReset = document.querySelector('#previewCover').dataset.reset
+  // 打包成FormData
+  const formData = new FormData()
+  formData.append('name', name)
+  formData.append('intro', intro)
+  formData.append('avatar', avatar)
+  formData.append('cover', cover)
+  formData.append('coverReset', coverReset)
+  // 發送打包好的formData
+  axios.post(`/api/users/${userId}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+    .then(() => {
+      window.location.href = `/users/${userId}/tweets` // 前往個人資料頁面
     })
     .catch(err => {
       console.error('Error during API call:', err) // 在控制台中打印錯誤
       alert('An error occurred while fetching profile data.') // 給使用者顯示一個錯誤提示
     })
 })
+
+// 監聽按鈕 把封面換成初始值 
+removeCoverButton.addEventListener('click', event => {
+  const previewCover = document.querySelector('#previewCover')
+  previewCover.src = 'https://i.imgur.com/b7U6LXD.jpg'
+  previewCover.dataset.reset = 'true'
+})
+
+// 預覽大頭貼 當avatarInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的avatar
+function previewAvatar() {
+  const preview = document.querySelector('#previewAvatar')
+  const file = document.querySelector('#avatarInput').files[0]
+  const reader = new FileReader()
+
+  // 定義好當reader完成讀取時的動作 將reader的結果交給preview元素顯示
+  reader.onloadend = function () {
+    preview.src = reader.result
+  }
+  // 如果file存在，就用reader物件將file轉換為DataURL，完成後會將DataURL存放在reader.result並觸發onloadend
+  if (file) reader.readAsDataURL(file)
+}
+
+// 預覽封面 當coverInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的cover
+function previewCover() {
+  const preview = document.querySelector('#previewCover')
+  const file = document.querySelector('#coverInput').files[0]
+  const reader = new FileReader()
+
+  // 定義好當reader完成讀取時的動作 將reader的結果交給preview元素顯示
+  reader.onloadend = function () {
+    preview.src = reader.result
+    preview.dataset.reset = 'false' // 若使用者在預覽階段先恢復預設再選擇檔案，就需要將reset改為false
+  }
+  // 如果file存在，就用reader物件將file轉換為DataURL，完成後會將DataURL存放在reader.result並觸發onloadend
+  if (file) reader.readAsDataURL(file)
+}

@@ -1,6 +1,7 @@
 const { Op } = require('sequelize') // 用「不等於」的條件查詢資料庫時需要用到的東西
 const bcrypt = require('bcryptjs')
 const db = require('../models')
+const { localFileHandler } = require('../helpers/file-helpers')
 const { User, Tweet, Followship, Like, Reply } = db
 const helpers = require('../_helpers')
 
@@ -84,7 +85,7 @@ const userController = {
     req.flash('success_messages', '你已成功登出。')
     res.redirect('/signin')
   },
-  // API: 取得目前登入的使用者資料 只回傳json (待刪除取得的password)
+  // API: 取得目前登入的使用者資料 只回傳json
   getUserData: (req, res, next) => {
     const userId = req.params.id
     // 檢查是不是自己本人
@@ -97,14 +98,17 @@ const userController = {
     User.findByPk(helpers.getUser(req).id, { raw: true })
       .then(user => {
         if (!user) throw new Error('User did not exist.')
+        delete user.password // 刪除取得的password再回傳
         return res.json(user)
       })
       .catch(err => next(err))
   },
   // API: 送出編輯個人資料資訊
   editUserProfile: (req, res, next) => {
-    const { name, intro } = req.body
     const userId = req.params.id
+    const { name, intro, coverReset } = req.body
+    const avatarFile = req.files?.avatar ? req.files.avatar[0] : null // avatar是一個file的陣列，但裡面最多只會有1個file。file包含了上傳的檔案資訊
+    const coverFile = req.files?.cover ? req.files.cover[0] : null // cover是一個file的陣列，但裡面最多只會有1個file。file包含了上傳的檔案資訊
     // 檢查是不是自己本人
     if (Number(userId) !== helpers.getUser(req).id) {
       return res.json({
@@ -114,14 +118,21 @@ const userController = {
     }
     // 驗證name是否有值
     if (!name || name.trim() === '') throw new Error('Name is required.')
-    // 去資料庫找user並更新資料
-    User.findByPk(helpers.getUser(req).id)
-      .then(user => {
+    // 把temp中的檔案複製一份到upload並回傳路徑 同時前往資料庫找user
+    return Promise.all([
+      localFileHandler(avatarFile),
+      localFileHandler(coverFile),
+      User.findByPk(helpers.getUser(req).id)
+    ])
+      .then(([avatarFilePath, coverFilePath, user]) => {
         if (!user) throw new Error('User did not exist.')
-        return user.update({ name, intro: intro || user.intro })
+        if (coverReset === 'true') coverFilePath = 'https://i.imgur.com/b7U6LXD.jpg'
+        return user.update({ name, intro: intro || user.intro, avatar: avatarFilePath || user.avatar, cover: coverFilePath || user.cover })
       })
       .then(user => {
         if (!user) throw new Error('User did not exist.')
+        user = user.toJSON()
+        delete user.password // 刪除取得的password再回傳
         return res.json(user)
       })
       .catch(err => next(err))
@@ -131,35 +142,12 @@ const userController = {
     const userId = req.params.id
     // 檢查是不是自己本人
     if (Number(userId) !== helpers.getUser(req).id) throw new Error('Permission denied.')
-    Promise.all([
-      // 取得自己的帳戶資訊
-      User.findByPk(userId, { raw: true }),
-      // 取得包含追蹤者的使用者資料
-      User.findAll({
-        where: {
-          role: 'user',
-          id: { [Op.ne]: helpers.getUser(req).id }
-        },
-        include: [
-          { model: User, as: 'Followers' }
-        ],
-        group: ['User.id'],
-        limit: 10
-      })
-    ])
-      .then(([currentUser, topUsers]) => {
-        if (!currentUser) throw new Error('User did not exist.')
-        // 將目前使用者追蹤的使用者做成一張清單
-        const followingList = helpers.getUser(req).Followings.map(f => f.id)
-        const data = topUsers
-          .map(user => ({
-            ...user.toJSON(),
-            isFollowed: followingList.includes(user.id),
-            followerCount: user.Followers.length
-          }))
-          // 排序：從追蹤數多的排到少的
-          .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('setting', { currentUser, topUsers: data, isSetting: true })
+    // 取得自己的帳戶資訊
+    User.findByPk(userId, { raw: true })
+      .then(user => {
+        if (!user) throw new Error('User did not exist.')
+        const { account, name, email } = user
+        res.render('setting', { account, name, email, userId, isSetting: true, isHide: true }) // 左側欄設定頁籤選擇中，且隱藏右側欄
       })
       .catch(err => next(err))
   },
@@ -184,9 +172,9 @@ const userController = {
         account,
         name,
         email,
-        password,
-        checkPassword
-      })
+        isSetting: true,
+        isHide: true
+      }) // 左側欄設定頁籤選擇中，且隱藏右側欄
     }
     // 檢查帳戶資訊是否正確 資料庫中是否已經有非管理者使用了該 account 或 email
     return Promise.all([
@@ -208,8 +196,10 @@ const userController = {
             name,
             email,
             password,
-            checkPassword
-          })
+            checkPassword,
+            isSetting: true,
+            isHide: true
+          }) // 左側欄設定頁籤選擇中，且隱藏右側欄
         }
         // 取得自己的帳戶資訊 同時生成密碼
         return Promise.all([
