@@ -13,8 +13,8 @@ const tweetsController = {
         order: [['createdAt', 'DESC']]
       })
       tweets = tweets.map(tweet => ({
-        likeCount: tweet.Likes.length,
-        replyCount: tweet.Replies.length,
+        likesCount: tweet.Likes.length,
+        repliesCount: tweet.Replies.length,
         ...tweet.toJSON(),
         isLiked: loginUser && loginUser.Likes && loginUser.Likes.some(like => like.TweetId === tweet.id)
       }))
@@ -37,17 +37,17 @@ const tweetsController = {
       const tweet = await Tweet.findByPk(tweetId, {
         include: [User, { model: Like }, { model: Reply, include: User }]
       })
-      const likeCount = tweet.Likes.length
-      const replyCount = tweet.Replies.length
+      const likesCount = tweet.Likes.length
+      const repliesCount = tweet.Replies.length
       const isLiked = tweet.Likes.some(l => l.dataValues.UserId === user.id)
       // 按照發文順序顯示
       tweet.Replies = tweet.Replies.sort((a, b) => b.createdAt - a.createdAt)
       const partialName = 'tweet'
-      return res.render('index', {
+      res.render('index', {
         tweet: tweet.toJSON(),
         user,
-        likeCount,
-        replyCount,
+        likesCount,
+        repliesCount,
         isLiked,
         partialName,
         nav

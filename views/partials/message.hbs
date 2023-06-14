@@ -1,20 +1,52 @@
-{{#if error_messages}}
-  <div class='alert alert-danger alert-dismissible msg-container' role='alert'>
-    <div class='msg'>
-      {{error_messages}}
-    </div>
-    <button type='button' class='btn-error' data-bs-dismiss='alert' aria-label='Close'>
-      <img src='/images/message/message_danger.svg' />
-    </button>
-  </div>
-{{/if}}
 {{#if success_messages}}
   <div class='alert alert-success alert-dismissible msg-container' role='alert'>
     <div class='msg'>
       {{success_messages}}
     </div>
-    <button type='button' class='btn-success' data-bs-dismiss='alert' aria-label='Close'>
-      <img src='/images/message/message_danger.svg' />
-    </button>
+    <div class='btn-container'>
+      <button type='button' class='btn-success' data-bs-dismiss='alert' aria-label='Close'>
+        <img src='/images/message/message_success.svg' />
+      </button>
+    </div>
   </div>
 {{/if}}
+
+{{#if error_messages}}
+  <div class='alert alert-danger alert-dismissible msg-container' role='alert'>
+    <div class='msg'>
+      {{error_messages}}
+    </div>
+    <div class='btn-container'>
+      <button type='button' class='btn-error' data-bs-dismiss='alert' aria-label='Close'>
+        <img src='/images/message/message_danger.svg' />
+      </button>
+    </div>
+  </div>
+{{/if}}
+
+{{#if warning_messages}}
+  <div class='alert alert-warning alert-dismissible msg-container' role='alert'>
+    <div class='msg'>
+      {{warning_messages}}
+    </div>
+    <div class='btn-container'>
+      <button type='button' class='btn-warning' data-bs-dismiss='alert' aria-label='Close'>
+        <img src='/images/message/message_warning.svg' />
+      </button>
+    </div>
+  </div>
+{{/if}}
+
+{{#if info_messages}}
+  <div class='alert alert-info alert-dismissible msg-container' role='alert'>
+    <div class='msg'>
+      {{info_messages}}
+    </div>
+    <div class='btn-container'>
+      <button type='button' class='btn-info' data-bs-dismiss='alert' aria-label='Close'>
+        <img src='/images/message/message_info.svg' />
+      </button>
+    </div>
+  </div>
+{{/if}}
+
