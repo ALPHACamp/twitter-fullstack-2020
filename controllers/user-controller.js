@@ -2,7 +2,8 @@ const bcrypt = require('bcryptjs')
 const { Op } = require('sequelize')
 const { User, Followship, Like, Tweet, Reply } = require('../models')
 const { imgurFileHandler } = require('../helpers/file-helpers')
-const helpers = require('../helpers/auth-helpers')
+const helpers = require('../_helpers')
+const { getTop10Following } = require('../helpers/getTop10Following-helper')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -69,7 +70,6 @@ const userController = {
     // User 點擊他人頭像會擋掉，先刪除
     // const loginUser = helpers.getUser(req)
     // if (loginUser.id !== Number(id)) throw new Error('您沒有權限查看此個人資料')
-
     try {
       const [user, FollowingsCount, FollowersCount, tweetsCount] =
         await Promise.all([
@@ -96,7 +96,8 @@ const userController = {
       })
       // 找出所有tweet的回覆樹根喜歡數
       const tweetData = await Promise.all(
-        tweets.map(async tweet => { // 找出每篇的喜歡及回覆數
+        tweets.map(async tweet => {
+          // 找出每篇的喜歡及回覆數
           const tweetId = tweet.id
           const [replies, likes, thisTweet, thisUser] = await Promise.all([
             Reply.count({ where: { tweet_id: tweetId } }),
@@ -124,7 +125,13 @@ const userController = {
         FollowersCount,
         tweetsCount
       }
-      return res.render('self-tweets', { user: userData, userTweet, tweet: tweetData })
+      const top10Followers = await getTop10Following(req, next)
+      return res.render('self-tweets', {
+        user: userData,
+        userTweet,
+        tweet: tweetData,
+        topFollowers: top10Followers
+      })
     } catch (err) {
       next(err)
     }
@@ -135,12 +142,19 @@ const userController = {
   //* 追蹤功能
   addFollowing: async (req, res, next) => {
     try {
-      if (req.user.id == req.params.userId) throw new Error('不能追蹤自己')
-      const user = await User.findByPk(req.user.id)
+      const userId = helpers.getUser(req).id
+      const followingId = req.body.id
+      //! 不能用自用錯誤處理..
+      // if (req.user.id == followingId) throw new Error('不能追蹤自己')
+
+      if (userId == followingId)
+        return res.status(200).json({ error: '不能追蹤自己' })
+
+      const user = await User.findByPk(userId)
       if (!user) throw new Error('找不到該用戶')
       await Followship.create({
-        followerId: req.user.id,
-        followingId: req.params.userId
+        followerId: userId,
+        followingId
       })
       return res.redirect('back')
     } catch (err) {
@@ -149,10 +163,12 @@ const userController = {
   },
   removeFollowing: async (req, res, next) => {
     try {
-      const user = await User.findByPk(req.user.id)
+      const userId = helpers.getUser(req).id
+      const followingId = req.params.id
+      const user = await User.findByPk(userId)
       if (!user) throw new Error('找不到該用戶')
       const followShip = await Followship.findOne({
-        where: { followerId: req.user.id, followingId: req.params.userId }
+        where: { followerId: userId, followingId }
       })
       if (!followShip) throw new Error('還沒有追蹤用戶')
       await followShip.destroy()
@@ -163,7 +179,6 @@ const userController = {
   },
   //* Like tweet
   addLike: async (req, res, next) => {
-    console.log('like')
     try {
       const tweet = await Tweet.findByPk(req.user.id)
       if (!tweet) throw new Error('找不到該篇推文')
@@ -174,7 +189,6 @@ const userController = {
     }
   },
   removeLike: async (req, res, next) => {
-    console.log('unlike')
     try {
       const like = await Like.findOne({
         where: { userId: req.user.id, tweetId: req.params.id }
