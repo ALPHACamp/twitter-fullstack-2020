@@ -288,6 +288,7 @@ const userController = {
         }))
         // 將目前使用者追蹤的使用者做成一張清單
         const followingList = helpers.getUser(req).Followings.map(f => f.id)
+        user.isFollowed = followingList.includes(user.id)
         const data = topUsers
           .map(user => ({
             ...user.toJSON(),
@@ -298,6 +299,7 @@ const userController = {
           .sort((a, b) => b.followerCount - a.followerCount)
         res.render('userPage-tweets', { user: userData, tweets: tweetsData, currentUser, topUsers: data, isProfile: true })
       })
+      .catch(err => next(err))
   },
   // 取得特定使用者所有回覆頁面
   getUserRepliesPage: (req, res, next) => {
@@ -338,6 +340,7 @@ const userController = {
       .then(([user, replies, tweets, currentUser, topUsers]) => {
         // 將目前使用者追蹤的使用者做成一張清單
         const followingList = helpers.getUser(req).Followings.map(f => f.id)
+        user.isFollowed = followingList.includes(user.id)
         const data = topUsers
           .map(user => ({
             ...user.toJSON(),
@@ -405,6 +408,7 @@ const userController = {
         }))
         // 將目前使用者追蹤的使用者做成一張清單
         const followingList = helpers.getUser(req).Followings.map(f => f.id)
+        user.isFollowed = followingList.includes(user.id)
         const data = topUsers
           .map(user => ({
             ...user.toJSON(),
@@ -466,7 +470,6 @@ const userController = {
       .then(() => res.redirect('back'))
       .catch(err => next(err))
   },
-
   // 取得特定使用者 Following(正在追蹤) 名單
   getUserFollowings: (req, res, next) => {
     return Promise.all([
@@ -498,11 +501,10 @@ const userController = {
           }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
         // console.log(followings)
-        res.render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followings })
+        res.render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followings, isFollowings: true })
       })
       .catch(err => next(err))
   },
-
   // 取得特定使用者 Follower(追隨者) 名單
   getUserFollowers: (req, res, next) => {
     return Promise.all([
@@ -533,7 +535,7 @@ const userController = {
           }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
         console.log(followers)
-        res.status(200).render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followers })
+        res.status(200).render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followers, isFollowers: true })
       })
       .catch(err => next(err))
   }
