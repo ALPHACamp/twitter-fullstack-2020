@@ -52,7 +52,7 @@
             </div>
             <div class="tweetfooter d-flex">
               <div class="replies d-flex align-items-center">
-                <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal" data-bs-target="#replyModal{{tweets.id}}">
+                <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal" data-bs-target="#replyModal{{this.id}}">
                   <i class="fa-regular fa-comment"></i>&ensp;{{this.Replies.length}}
                 </button>
               </div>
@@ -60,7 +60,7 @@
                 {{#if isLiked}}
                 <form action="/tweets/{{this.id}}/unlike" method="post">
                   <div class="d-flex">
-                    <button type="submit" class="btn"><i class="fa-solid fa-heart" style="color: #FF6600">&ensp;</i>
+                    <button type="submit" class="btn"><i class="fa-solid fa-heart" style="color: #FF6600;">&ensp;</i>
                       <span>{{this.LikedUsers.length}}</span>
                     </button>
                   </div>
@@ -76,7 +76,7 @@
             </div>
           </div>
         </div>
-      {{> reply-modal}}
+      {{> reply-modal tweets=this user=../user }}
       {{/each}}
       </div>
     </div>
