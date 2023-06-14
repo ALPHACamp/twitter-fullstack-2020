@@ -4,7 +4,7 @@
     <div class="modal-content modal-twitter">
       <div class="modal-header">
         {{!-- 關閉 Modal 按鈕 --}}
-        <button type="button" data-bs-dismiss="modal" aria-label="Close">
+        <button id="ModalCloseBtn" type="button" data-bs-dismiss="modal" aria-label="Close">
           <img class="ms-2 me-3 svg-fill-main" src="/_base/Property 2=outlined, Property 3=close.svg">
         </button>
       </div>
@@ -16,7 +16,7 @@
             <img src="{{currentUser.avatar}}" style="object-fit: cover;width:100%; height:100%">
           </figure>
           {{!-- tweet 文字輸入區 --}}
-          <textarea placeholder="有什麼新鮮事？" id="ModalDescription" name="description" class="text-basic-reg mt-2" rows="5"
+          <textarea placeholder="有什麼新鮮事？" id="ModalTextarea" name="description" class="text-basic-reg mt-2" rows="5"
             cols="50"></textarea>
         </div>
         <div class="modal-footer" style="border:0px">
@@ -89,7 +89,7 @@
     <div class="modal-content modal-twitter">
       <div class="modal-header">
         {{!-- 關閉 Modal 按鈕 --}}
-        <button type="button" data-bs-dismiss="modal" aria-label="Close">
+        <button id="ModalCloseBtn" type="button" data-bs-dismiss="modal" aria-label="Close">
           <img class="ms-2 me-3 svg-fill-main" src="/_base/Property 2=outlined, Property 3=close.svg">
         </button>
       </div>
@@ -136,10 +136,11 @@
               </figure>
               {{!-- reply 文字輸入區 --}}
               <textarea id="ModalTextarea" placeholder="推你的回覆" class="text-basic-reg mt-2" name="comment" rows="8"
-                cols="50" maxlength="140" required></textarea>
+                cols="50"></textarea>
             </div>
-            <div class="d-flex flex-row-reverse">
-              <button type="submit" class="pill-default pill-main">回覆</button>
+            <div class="modal-footer" style="border:0px">
+              <p id="ModalErrorMessage" class="color-error text-14px-reg me-3"></p>
+              <button id="ModalSubmitBtn" type="button" class="pill-default pill-main me-2">回覆</button>
             </div>
           </div>
         </form>

@@ -1,8 +1,3 @@
-// 抓出要監聽的 Modal 內部元件
-const ModalSubmitBtn = document.getElementById('ModalSubmitBtn')
-const ModalDescription = document.getElementById('ModalDescription')
-const ModalErrorMessage = document.getElementById('ModalErrorMessage')
-
 // 設定監聽中的 Modal
 const targetNodes = []
 const postTweetModal = document.getElementById('postTweetModal')
@@ -36,17 +31,41 @@ const observer = new MutationObserver(function async(mutationsList, observer) {
       if (mutation.target.classList.contains('show')) {
         // 將他的 top 設定到固定位置
         mutation.target.style.top = `-${pageHeight}px`
-        // 監聽 Modal 內容，並提供錯誤處理訊息
-        ModalSubmitBtn.addEventListener('click', e => {
-          if (!ModalDescription.value || ModalDescription.value.trim() === '') {
+        // 抓出要監聽的 Modal 內部元件
+        const ModalSubmitBtn = mutation.target.querySelector('#ModalSubmitBtn')
+        const ModalTextarea = mutation.target.querySelector('#ModalTextarea')
+        const ModalErrorMessage = mutation.target.querySelector('#ModalErrorMessage')
+        const ModalCloseBtn = mutation.target.querySelector('#ModalCloseBtn')
+
+        ModalSubmitBtn.addEventListener('click', modalErrorHandler)
+
+        ModalCloseBtn.addEventListener('click', closeModalEventListener)
+
+        // 函式：消滅已產生的事件監聽器
+        function closeModalEventListener (e) {
+          ModalTextarea.value = ''
+          ModalErrorMessage.innerText = ''
+          ModalSubmitBtn.removeEventListener('click', modalErrorHandler)
+          ModalCloseBtn.removeEventListener('click', closeModalEventListener)
+        }
+
+        // 函式：提供錯誤處理訊息，若符合發文條件則改變 btn.type 讓其可以發送
+        function modalErrorHandler (e) {
+          if (!ModalTextarea.value || ModalTextarea.value.trim() === '') {
             ModalErrorMessage.innerText = '內容不可空白'
-          } else if (ModalDescription.value.trim().length > 140) {
+          } else if (ModalTextarea.value.trim().length > 140) {
             ModalErrorMessage.innerText = '字數不可超過140字'
           } else {
-            ModalSubmitBtn.type = 'submit'
             ModalErrorMessage.innerText = ''
+            ModalSubmitBtn.type = 'submit'
           }
-        })
+        }
+      } else {
+        // 如果沒有 .show 將時刻維持回覆內容、錯誤訊息為空值
+        const ModalTextarea = mutation.target.querySelector('#ModalTextarea')
+        const ModalErrorMessage = mutation.target.querySelector('#ModalErrorMessage')
+        ModalTextarea.value = ''
+        ModalErrorMessage.innerText = ''
       }
     }
   }
