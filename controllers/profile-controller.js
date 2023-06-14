@@ -130,6 +130,7 @@ const profileController = {
             attributes: ['id']
           }
         ],
+        order: [['createdAt', 'DESC']],
         limit,
         offset
       })
