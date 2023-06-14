@@ -17,13 +17,13 @@
           <div class='flex-shrink-1 p-0'>
               {{#if this.isFollowed}}
                 <form class='' action='/followships/{{this.id}}?_method=DELETE' method='POST'>
-                  <button type='submit' class='btn btn-primary recommend-followings-btn followed col'>正在跟隨</button>
+                  <button type='submit' class='btn'>正在跟隨</button>
                 </form>
                 </form>
               {{else}}
                 <form class='' action='/followships' method='POST'>
                   <input type="hidden" name="id" value={{this.id}}>
-                  <button type='submit' class='btn btn-primary recommend-followings-btn followed col'>跟隨</button>
+                  <button type='submit' class='btn recommend-followings-btn'>跟隨</button>
                 </form>
               {{/if}}
           </div>
