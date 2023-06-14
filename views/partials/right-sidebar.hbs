@@ -13,15 +13,16 @@
         </div>
       </a>
       {{#if this.isFollowed}}
-        <form action='/followships/{{this.id}}' method='post'><button
-            class='following'
-            type='submit'
-          >正在跟隨</button></form>
-      {{else}}
         <form
           action='/followships/{{this.id}}?_method=DELETE'
           method='post'
-        ><button class='follow' type='submit'>跟隨</button></form>
+        ><button class='following' type='submit'>正在跟隨</button></form>
+      {{else}}
+        <form action='/followships/{{this.id}}' method='post'><button
+            class='follow'
+            type='submit'
+          >跟隨</button></form>
+
       {{/if}}
     </div>
   {{/each}}
