@@ -1,47 +1,47 @@
 <div class='sidebar-left'>
-  <a href='/'><img src='/images/acIcon.png' alt='' /></a>
+  <a href='/tweets'><img src='/images/acIcon.png' alt='' /></a>
   <div class='nav-card'>
     <div class='nav-item'>
       {{#if tweetRoute}}
-        <img src='/images/homeOrange.png' alt='' />
-        <a href='/tweets'>
-          <h5 style='color: #FF6600;'>首頁</h5>
-        </a>
+      <img src='/images/homeOrange.png' alt='' />
+      <a href='/tweets'>
+        <h5 style='color: #FF6600;'>首頁</h5>
+      </a>
       {{else}}
-        <img src='/images/homeBlack.png' alt='' />
-        <a href='/tweets'>
-          <h5>首頁</h5>
-        </a>
+      <img src='/images/homeBlack.png' alt='' />
+      <a href='/tweets'>
+        <h5>首頁</h5>
+      </a>
       {{/if}}
     </div>
     <div class='nav-item'>
       {{#if userTweet}}
-        <img src='/images/homeOrange.png' alt='' />
-        <a href='/users/{{user.id}}/tweets'>
-          <h5 style='color: #FF6600;'>個人資料</h5>
-        </a>
+      <img src='/images/homeOrange.png' alt='' />
+      <a href='/users/{{user.id}}/tweets'>
+        <h5 style='color: #FF6600;'>個人資料</h5>
+      </a>
       {{else}}
-        <img src='/images/homeBlack.png' alt='' />
-        <a href='/users/{{user.id}}/tweets'>
-          <h5>個人資料</h5>
-        </a>
+      <img src='/images/homeBlack.png' alt='' />
+      <a href='/users/{{user.id}}/tweets'>
+        <h5>個人資料</h5>
+      </a>
       {{/if}}
     </div>
     <div class='nav-item'>
       {{#if userRoute}}
-        <img src='/images/settingOrange.png' alt='' />
-        <a href='/users/{{user.id}}/account'>
-          <h5 style='color: #FF6600;'>設定</h5>
-        </a>
+      <img src='/images/settingOrange.png' alt='' />
+      <a href='/users/{{user.id}}/account'>
+        <h5 style='color: #FF6600;'>設定</h5>
+      </a>
       {{else}}
-        <img src='/images/settingBlack.png' alt='' />
-        <a href='/users/{{user.id}}/account'>
-          <h5>設定</h5>
-        </a>
+      <img src='/images/settingBlack.png' alt='' />
+      <a href='/users/{{user.id}}/account'>
+        <h5>設定</h5>
+      </a>
       {{/if}}
     </div>
     <div class='nav-tweet'>
-      <a href=''><button class='tweet'>推文</button></a>
+      <button class='tweet' data-bs-toggle="modal" data-bs-target="#tweetModal">推文</button>
     </div>
   </div>
   <div class='nav-item nav-logout'>

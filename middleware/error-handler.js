@@ -5,7 +5,7 @@ module.exports = {
     } else {
       req.flash('error_messages', `${err}`)
     }
-    // res.redirect('back')
+    res.redirect('back')
     next(err)
   }
 }
