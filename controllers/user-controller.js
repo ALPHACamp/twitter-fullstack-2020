@@ -470,7 +470,6 @@ const userController = {
       .then(() => res.redirect('back'))
       .catch(err => next(err))
   },
-
   // 取得特定使用者 Following(正在追蹤) 名單
   getUserFollowings: (req, res, next) => {
     return Promise.all([
@@ -502,11 +501,10 @@ const userController = {
           }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
         // console.log(followings)
-        res.render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followings })
+        res.render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followings, isFollowings: true })
       })
       .catch(err => next(err))
   },
-
   // 取得特定使用者 Follower(追隨者) 名單
   getUserFollowers: (req, res, next) => {
     return Promise.all([
@@ -537,7 +535,7 @@ const userController = {
           }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
         console.log(followers)
-        res.status(200).render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followers })
+        res.status(200).render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followers, isFollowers: true })
       })
       .catch(err => next(err))
   }
