@@ -18,13 +18,16 @@ const userController = {
     const errors = []
 
     if (password !== passwordCheck) {
-      errors.push('密碼不符合!')
+      errors.push('密碼不一致!')
+    }
+    if (name.length > 50) {
+      errors.push('字數超出上限!')
     }
 
     User.findOne({ where: { account } })
       .then(user => {
         if (user) {
-          errors.push('account 已重複註冊！')
+          errors.push('account已重複註冊!')
         }
       })
       .catch(err => next(err))
@@ -32,7 +35,7 @@ const userController = {
     User.findOne({ where: { email } })
       .then(user => {
         if (user) {
-          errors.push('email 已重複註冊！')
+          errors.push('email已重複註冊!')
         }
         if (errors.length) {
           return res.render('signup', { errors, account, name, email })
