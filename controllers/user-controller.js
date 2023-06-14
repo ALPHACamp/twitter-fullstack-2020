@@ -30,32 +30,37 @@ const userController = {
       })
       .catch(err => console.log(err))
 
-    User.findOne({ where: { email } })
-      .then(user => {
-        if (user) {
-          req.flash('error_messages', 'email 已重複註冊！')
-          res.redirect('/signup')
-          throw new Error('email already exists!')
-        }
-        return bcrypt.genSalt(10)
-          .then(salt => bcrypt.hash(password, salt))
-          .then(hash =>
-            User.create({
-              account,
-              name,
-              email,
-              password: hash,
-              role: 'user',
-              avatar: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-              cover: '/images/profile/cover.png'
-            })
-          )
-          .then(() => {
-            req.flash('success_messages', '成功註冊帳號！')
-            res.redirect('/signin')
+    User.findOne({ where: { email } }).then(user => {
+      if (user) {
+        req.flash('error_messages', 'email 已重複註冊！')
+        res.redirect('/signup')
+        throw new Error('email already exists!')
+      }
+      return bcrypt
+        .genSalt(10)
+        .then(salt => bcrypt.hash(password, salt))
+        .then(hash =>
+          User.create({
+            account,
+            name,
+            email,
+            password: hash,
+            role: 'user',
+            avatar: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+            cover: '/images/profile/cover.png'
           })
-          .catch(err => console.log(err))
-      })
+        )
+        .then(() => {
+          req.flash('success_messages', '成功註冊帳號！')
+          res.redirect('/signin')
+        })
+        .catch(err => console.log(err))
+    })
+  },
+  logout: (req, res) => {
+    req.flash('success_messages', '登出成功！')
+    req.logout()
+    res.redirect('/signin')
   },
   postLike: async (req, res, next) => {
     const { tweetId } = req.params
