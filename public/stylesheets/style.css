@@ -193,7 +193,7 @@ h5 {
 }
 
 .admin-tweet-right-up .account {
-  width: 150px;
+  width: 200px;
   margin: 2px 0 0 8px;
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -865,4 +865,23 @@ img.card-avatar {
 .back-icon {
   border: none;
   background-color: #FFFFFF;
+}
+
+.user-tab-active {
+  width: 130px;
+  padding-bottom: 10px;
+  color: #ff6600;
+  background-color: #FFFFFF;
+  border: none;
+  border-color: #FFFFFF;
+  border-bottom: 1px solid #ff6600;
+}
+
+.user-tab {
+  width: 130px;
+  padding-bottom: 10px;
+  color: #657786;
+  background-color: #FFFFFF;
+  border: none;
+  border-color: #FFFFFF;
 }
