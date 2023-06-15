@@ -6,7 +6,7 @@ const authenticated = (req, res, next) => {
     }
     req.logOut(() => { }) // 是admin就登出
   }
-  req.flash('error_message', '帳號不存在')
+  req.flash('error_messages', '帳號不存在！')
   return res.redirect('/signin')
 }
 // 後台驗證是不是admin
@@ -17,7 +17,7 @@ const authenticatedAdmin = (req, res, next) => {
     }
     req.logOut(() => { }) // 是一般users就登出
   }
-  req.flash('error_message', '帳號不存在')
+  req.flash('error_messages', '帳號不存在')
   return res.redirect('/admin/signin')
 }
 
