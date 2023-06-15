@@ -28,7 +28,7 @@ router.get('/logout', userController.logOut)
 
 router.post('/tweets/:id/replies', authenticated, replyController.createReply)
 router.get('/tweets/:id/replies', tweetController.getTweet)
-router.get('/tweets', authenticatedTweets, tweetController.getTweets) // 顯示全部推文
+router.get('/tweets', authenticatedTweets, userController.getFollowship, tweetController.getTweets) // 顯示全部推文
 router.post('/tweets', tweetController.createTweet) // 新增推文
 
 router.get('/reply/:id', authenticated, replyController.getReplies)
