@@ -25,13 +25,9 @@ router.get('/logout', userController.logout)
 
 //* 追蹤功能
 router.post('/followships', authenticated, userController.addFollowing)
+
 router.delete('/followships/:id', authenticated, userController.removeFollowing)
 
-router.get(
-  '/tweets/:id/replies',
-  authenticated,
-  tweetController.getTweetReplies
-)
 router.post('/tweets', authenticated, tweetController.postTweet)
 router.post(
   '/tweets/:id/replies',
@@ -47,6 +43,16 @@ router.get('/users/:id/replies', authenticated, userController.getUserReplies)
 router.get('/users/:id/likes', authenticated, userController.getUserLikes)
 router.get('/users/:id/account', authenticated, userController.editUserAccount)
 router.put('/users/:id/account', authenticated, userController.putUserAccount)
+router.get(
+  '/users/:id/followings',
+  authenticated,
+  userController.getUserFollowing
+)
+router.get(
+  '/users/:id/followers',
+  authenticated,
+  userController.getUserFollower
+)
 router.put(
   '/users/:id',
   authenticated,

@@ -142,6 +142,88 @@ const userController = {
       next(err)
     }
   },
+  getUserFollowing: async (req, res, next) => {
+    try {
+      const loginUser = helpers.getUser(req)
+      const id = Number(req.params.id)
+
+      const [user, currentUser] = await Promise.all([
+        User.findByPk(id, {
+          include: [
+            { model: User, as: 'Followings' },
+            { model: User, as: 'Followers' },
+            { model: Tweet }
+          ],
+          nest: true
+        }),
+        User.findByPk(loginUser.id, { raw: true })
+      ])
+
+      if (!user) throw new Error('帳號不存在')
+
+      const tweetsLength = user.Tweets.length
+      const followingList = loginUser.Followings.map(f => f.id)
+
+      const followings = user
+        .toJSON()
+        .Followings.map(following => ({
+          ...following,
+          isFollowed: followingList.includes(following.id)
+        }))
+        .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+
+      return res.render('following', {
+        user: user.toJSON(),
+        tweetsLength,
+        currentUser,
+        users: followings,
+        isFollowings: true
+      })
+    } catch (err) {
+      next(err)
+    }
+  },
+  getUserFollower: async (req, res, next) => {
+    try {
+      const loginUser = helpers.getUser(req)
+      const id = Number(req.params.id)
+
+      const [user, currentUser] = await Promise.all([
+        User.findByPk(id, {
+          include: [
+            { model: User, as: 'Followings' },
+            { model: User, as: 'Followers' },
+            { model: Tweet }
+          ],
+          nest: true
+        }),
+        User.findByPk(loginUser.id, { raw: true })
+      ])
+
+      if (!user) throw new Error('帳號不存在')
+
+      const tweetsLength = user.Tweets.length
+      const followingList = loginUser.Followings.map(f => f.id)
+
+      const followers = user
+        .toJSON()
+        .Followers.map(follower => ({
+          ...follower,
+          isFollowed: followingList.includes(follower.id)
+        }))
+        .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+
+      return res.render('follower', {
+        user: user.toJSON(),
+        tweetsLength,
+        currentUser,
+        users: followers,
+        isFollowers: true
+      })
+    } catch (err) {
+      next(err)
+    }
+  },
   getOther: (req, res) => {
     res.render('other-tweets')
   },
@@ -156,9 +238,7 @@ const userController = {
       if (userId == followingId)
         return res.status(200).json({ error: '不能追蹤自己' })
 
-
       const user = await User.findByPk(userId)
-
 
       if (!user) throw new Error('找不到該用戶')
       await Followship.create({
@@ -189,7 +269,7 @@ const userController = {
   //* Like tweet
   addLike: async (req, res, next) => {
     try {
-      const tweet = await Tweet.findByPk(req.user.id)
+      const tweet = await Tweet.findByPk(req.params.id)
       if (!tweet) throw new Error('找不到該篇推文')
       await Like.create({ tweetId: req.params.id, userId: req.user.id })
       return res.redirect('back')

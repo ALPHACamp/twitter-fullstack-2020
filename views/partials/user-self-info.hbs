@@ -18,17 +18,19 @@
   </div>
   <div class="info user-info">
     <div class="h5">{{user.name}}</div>
-    <div class="body-14-regular secondary">{{user.account}}</div>
+    <div class="body-14-regular secondary" style="margin-top: -10px;">@{{user.account}}</div>
     <p class="body-14-regular grayscale mt-2">{{user.introduction}}</p>
   </div>
   <div class="m-3 following-info">
     <span class="combined ">
-      <span class="body-14-regular grayscale float-start">{{user.FollowingsCount}}個</span>
+      <a href="/users/{{user.id}}/followings"><span
+          class="body-14-regular grayscale float-start">{{user.FollowingsCount}}個</span></a>
       <span class="body-14-regular secondary float-start">跟隨中　</span>
     </span>
     <span class="separator">　</span>
     <span class="combined ">
-      <span class="body-14-regular grayscale float-start">{{user.FollowersCount}}位</span>
+      <a href="/users/{{user.id}}/followers"><span
+          class="body-14-regular grayscale float-start">{{user.FollowersCount}}位</span></a>
       <span class="body-14-regular secondary float-start">跟隨者</span>
     </span>
   </div>
