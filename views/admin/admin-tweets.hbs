@@ -1,31 +1,29 @@
-<div class="container col col-10 p-0" style="height: 100vh; border-right: 1px solid #E6ECF0;">
+<div class="user-list d-flex align-items-center" style="height: 74px; border-bottom: 1px solid #E6ECF0;">
+  <h4 class="ms-4">推文清單</h4>
+</div>
 
-  <div class="user-list d-flex align-items-center" style="height: 74px; border-bottom: 1px solid #E6ECF0;">
-    <h4 class="ms-4">推文清單</h4>
-  </div>
-
-  <div class="user-panel d-flex flex-column" style="overflow: hidden;">
-    {{#each tweets}}
-    <div class='row p-0' style="height: 118px; border-bottom: 1px solid #E6ECF0">
-      <div class="col col-1 ps-5 pt-3" style="position: relative;">
-        <img class='user-avatar' src="{{this.User.avatar}}" alt=""
-          style="position: absolute; left: 42px; top: 18px; width: 50px; height: 50px; object-fit: cover; border: 4px solid #FFFFFF; border-radius: 50%;">
+<div class="user-panel d-flex flex-column" style="overflow: hidden;">
+  {{#each tweets}}
+  <div class='row p-0' style="height: 118px; border-bottom: 1px solid #E6ECF0">
+    <div class="col col-1 ps-2 pt-2" style="position: relative;">
+      <img class='user-avatar' src="{{this.User.avatar}}" alt=""
+        style="position: absolute; left: 42px; top: 18px; width: 50px; height: 50px; object-fit: cover; border: 4px solid #FFFFFF; border-radius: 50%;">
+    </div>
+    <div class="col col-9 ps-4 d-flex flex-column justify-content-center">
+      <div class="uppen d-flex" style="height: 26px;">
+        <p class="text-16px-med m-0" style="display: inline-block;">{{this.User.name}} &nbsp</p>
+        <p class="text-14px-reg m-0" style="display: inline-block;position:relative; top: 3px;">
+          {{this.User.accout}}．{{relativeTime this.createdAt}}</p>
       </div>
-      <div class="col col-9 d-flex flex-column justify-content-center">
-        <div class="uppen d-flex" style="height: 26px;">
-          <p class="text-16px-med m-0" style="display: inline-block;">{{this.User.name}} &nbsp</p>
-          <p class="text-14px-reg m-0" style="display: inline-block;position:relative; top: 3px;">
-            {{this.User.accout}}．{{relativeTime this.createdAt}}</p>
-        </div>
-        <div class="bottom mt-2" style="height: 52px;">
-          <p class="text-16px-reg">{{this.description}}</p>
-        </div>
-      </div>
-      <div class="col col-2 d-flex flex-row-reverse">
-        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="me-2 pt-2">
-          <button type="submit" style="height: 15px; width: 15px; color: #696974;">X</button>
-        </form>
+      <div class="bottom mt-2" style="height: 52px;">
+        <p class="text-16px-reg">{{this.description}}</p>
       </div>
     </div>
-    {{/each}}
+    <div class="col col-2 d-flex flex-row-reverse">
+      <button id="" class="me-2 pt-2 deleteTweetButton" data-bs-toggle="modal" data-bs-target="#deleteTweetModal"
+        value="{{this.id}}" style="height: 15px; width: 15px; color: #696974;">
+        X
+      </button>
+    </div>
   </div>
+  {{/each}}

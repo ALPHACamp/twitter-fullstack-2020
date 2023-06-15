@@ -1,14 +1,17 @@
 // 設定監聽中的 Modal
 const targetNodes = []
-const postTweetModal = document.getElementById('postTweetModal')
-const editProfileModal = document.getElementById('editProfileModal')
-const postReplyModal = document.getElementById('postReplyModal')
+const postTweetModal = document.getElementById('postTweetModal') || null
+const editProfileModal = document.getElementById('editProfileModal') || null
+const postReplyModal = document.getElementById('postReplyModal') || null
+const deleteTweetModal = document.getElementById('deleteTweetModal') || null
+
 targetNodes.push(postTweetModal)
 targetNodes.push(editProfileModal)
 targetNodes.push(postReplyModal)
+targetNodes.push(deleteTweetModal)
 
 // 取得目前現在視窗大小的函式
-function updatePageHeight () {
+function updatePageHeight() {
   let pageHeight = Math.max(
     document.documentElement.scrollHeight,
     document.body.scrollHeight
@@ -24,7 +27,7 @@ window.addEventListener('resize', function () {
   pageHeight = updatePageHeight()
 })
 
-const observer = new MutationObserver(function async (mutationsList, observer) {
+const observer = new MutationObserver(function async(mutationsList, observer) {
   for (const mutation of mutationsList) {
     if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
       // 如果監聽對象的 class 有 show 的話
@@ -42,7 +45,7 @@ const observer = new MutationObserver(function async (mutationsList, observer) {
         }
 
         // 函式：消滅已產生的事件監聽器
-        function closeModalEventListener (e) {
+        function closeModalEventListener(e) {
           ModalTextarea.value = ''
           ModalErrorMessage.innerText = ''
           ModalSubmitBtn.removeEventListener('click', modalErrorHandler)
@@ -50,7 +53,7 @@ const observer = new MutationObserver(function async (mutationsList, observer) {
         }
 
         // 函式：提供錯誤處理訊息，若符合發文條件則改變 btn.type 讓其可以發送
-        function modalErrorHandler (e) {
+        function modalErrorHandler(e) {
           if (!ModalTextarea.value || ModalTextarea.value.trim() === '') {
             ModalErrorMessage.innerText = '內容不可空白'
           } else if (ModalTextarea.value.trim().length > 140) {
@@ -91,7 +94,7 @@ if (mainPostTweet) {
 
   ModalSubmitBtn.addEventListener('click', mainPostTweetErrorHandler)
   // 函式：提供錯誤處理訊息，若符合發文條件則改變 btn.type 讓其可以發送
-  function mainPostTweetErrorHandler (e) {
+  function mainPostTweetErrorHandler(e) {
     if (!ModalTextarea.value || ModalTextarea.value.trim() === '') {
       ModalErrorMessage.innerText = '內容不可空白'
     } else if (ModalTextarea.value.trim().length > 140) {
@@ -110,67 +113,73 @@ const editProfileButton = document.querySelector('#editProfileButton')
 const putProfileButton = document.querySelector('#putProfileButton')
 const removeCoverButton = document.querySelector('#removeCoverButton')
 
-// 監聽按鈕 call API取得個人資料 把個人資料插入modal
-editProfileButton.addEventListener('click', event => {
-  const userId = editProfileButton.value
-  const nameInput = document.querySelector('#name')
-  const introInput = document.querySelector('#intro')
-  const previewCover = document.querySelector('#previewCover')
-  const previewAvatar = document.querySelector('#previewAvatar')
-  axios.get(`/api/users/${userId}`)
-    .then(response => {
-      const { cover, avatar, name, intro } = response.data
-      previewCover.src = cover
-      previewAvatar.src = avatar
-      nameInput.value = name
-      introInput.value = intro
-    })
-    .catch(err => {
-      console.error('Error during API call:', err) // 在控制台中打印錯誤
-      alert('An error occurred while fetching profile data.') // 給使用者顯示一個錯誤提示
-    })
-})
-
-// 監聽按鈕 call API更新個人資料 關閉Modal刷新個人資料頁面
-putProfileButton.addEventListener('click', event => {
-  const userId = editProfileButton.value
-  // 取得使用者輸入的資料
-  const name = document.querySelector('#name').value
-  const intro = document.querySelector('#intro').value
-  const avatar = document.querySelector('#avatarInput').files[0]
-  const cover = document.querySelector('#coverInput').files[0]
-  const coverReset = document.querySelector('#previewCover').dataset.reset
-  // 打包成FormData
-  const formData = new FormData()
-  formData.append('name', name)
-  formData.append('intro', intro)
-  formData.append('avatar', avatar)
-  formData.append('cover', cover)
-  formData.append('coverReset', coverReset)
-  // 發送打包好的formData
-  axios.post(`/api/users/${userId}`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
+if (editProfileButton) {
+  // 監聽按鈕 call API取得個人資料 把個人資料插入modal
+  editProfileButton.addEventListener('click', event => {
+    const userId = editProfileButton.value
+    const nameInput = document.querySelector('#name')
+    const introInput = document.querySelector('#intro')
+    const previewCover = document.querySelector('#previewCover')
+    const previewAvatar = document.querySelector('#previewAvatar')
+    axios.get(`/api/users/${userId}`)
+      .then(response => {
+        const { cover, avatar, name, intro } = response.data
+        previewCover.src = cover
+        previewAvatar.src = avatar
+        nameInput.value = name
+        introInput.value = intro
+      })
+      .catch(err => {
+        console.error('Error during API call:', err) // 在控制台中打印錯誤
+        alert('An error occurred while fetching profile data.') // 給使用者顯示一個錯誤提示
+      })
   })
-    .then(() => {
-      window.location.href = `/users/${userId}/tweets` // 前往個人資料頁面
-    })
-    .catch(err => {
-      console.error('Error during API call:', err) // 在控制台中打印錯誤
-      alert('An error occurred while fetching profile data.') // 給使用者顯示一個錯誤提示
-    })
-})
+}
 
-// 監聽按鈕 把封面換成初始值
-removeCoverButton.addEventListener('click', event => {
-  const previewCover = document.querySelector('#previewCover')
-  previewCover.src = 'https://i.imgur.com/b7U6LXD.jpg'
-  previewCover.dataset.reset = 'true'
-})
+if (putProfileButton) {
+  // 監聽按鈕 call API更新個人資料 關閉Modal刷新個人資料頁面
+  putProfileButton.addEventListener('click', event => {
+    const userId = editProfileButton.value
+    // 取得使用者輸入的資料
+    const name = document.querySelector('#name').value
+    const intro = document.querySelector('#intro').value
+    const avatar = document.querySelector('#avatarInput').files[0]
+    const cover = document.querySelector('#coverInput').files[0]
+    const coverReset = document.querySelector('#previewCover').dataset.reset
+    // 打包成FormData
+    const formData = new FormData()
+    formData.append('name', name)
+    formData.append('intro', intro)
+    formData.append('avatar', avatar)
+    formData.append('cover', cover)
+    formData.append('coverReset', coverReset)
+    // 發送打包好的formData
+    axios.post(`/api/users/${userId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+      .then(() => {
+        window.location.href = `/users/${userId}/tweets` // 前往個人資料頁面
+      })
+      .catch(err => {
+        console.error('Error during API call:', err) // 在控制台中打印錯誤
+        alert('An error occurred while fetching profile data.') // 給使用者顯示一個錯誤提示
+      })
+  })
+}
+
+if (removeCoverButton) {
+  // 監聽按鈕 把封面換成初始值
+  removeCoverButton.addEventListener('click', event => {
+    const previewCover = document.querySelector('#previewCover')
+    previewCover.src = 'https://i.imgur.com/b7U6LXD.jpg'
+    previewCover.dataset.reset = 'true'
+  })
+}
 
 // 預覽大頭貼 當avatarInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的avatar
-function previewAvatar () {
+function previewAvatar() {
   const preview = document.querySelector('#previewAvatar')
   const file = document.querySelector('#avatarInput').files[0]
   const reader = new FileReader()
@@ -184,7 +193,7 @@ function previewAvatar () {
 }
 
 // 預覽封面 當coverInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的cover
-function previewCover () {
+function previewCover() {
   const preview = document.querySelector('#previewCover')
   const file = document.querySelector('#coverInput').files[0]
   const reader = new FileReader()
@@ -196,4 +205,40 @@ function previewCover () {
   }
   // 如果file存在，就用reader物件將file轉換為DataURL，完成後會將DataURL存放在reader.result並觸發onloadend
   if (file) reader.readAsDataURL(file)
+}
+
+// 後台 admin 監聽刪除按紐
+const deleteTweetButton = document.querySelectorAll('.deleteTweetButton')
+
+if (deleteTweetButton) {
+  // 每個刪除按鈕加上監聽器
+  deleteTweetButton.forEach(button => {
+    // 監聽按鈕 call API 取得推文資料 把個人資料插入 modal
+    button.addEventListener('click', () => {
+      const tweetId = button.value
+      console.log('tweetId 是：', tweetId)
+      const ModalUserName = deleteTweetModal.querySelector('#ModalUserName')
+      const ModalUserAvatar = deleteTweetModal.querySelector('#ModalUserAvatar')
+      const ModalUserAccount1 = deleteTweetModal.querySelector('#ModalUserAccount1')
+      const ModalDescription = deleteTweetModal.querySelector('#ModalDescription')
+      const ModalForm = deleteTweetModal.querySelector('#ModalForm')
+      // deleteTweetModal.getElementById
+      axios.get(`/api/admin/tweets/${tweetId}`)
+        .then(response => {
+          const { name, avatar, account } = response.data.tweet.User
+          const { description } = response.data.tweet
+          // 更改 Modal 中的資料
+          ModalUserName.textContent = name
+          ModalUserAvatar.src = avatar
+          ModalUserAccount1.textContent = account
+          ModalDescription.textContent = description
+          ModalForm.action = `/admin/tweets/${tweetId}?_method=DELETE`
+          console.log('response為:', response)
+        })
+        .catch(err => {
+          console.error('Error during API call:', err) // 在控制台中打印錯誤
+          alert('An error occurred while fetching tweet data.') // 給使用者顯示一個錯誤提示
+        })
+    })
+  })
 }
