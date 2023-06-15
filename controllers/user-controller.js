@@ -1,7 +1,7 @@
 const { Op } = require('sequelize') // 用「不等於」的條件查詢資料庫時需要用到的東西
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const { localFileHandler } = require('../helpers/file-helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
 const { User, Tweet, Followship, Like, Reply } = db
 const helpers = require('../_helpers')
 
@@ -122,8 +122,8 @@ const userController = {
     if (name.length > 50 || intro ? intro.length > 160 : false) throw new Error('Limit exceeded.')
     // 把temp中的檔案複製一份到upload並回傳路徑 同時前往資料庫找user
     return Promise.all([
-      localFileHandler(avatarFile),
-      localFileHandler(coverFile),
+      imgurFileHandler(avatarFile),
+      imgurFileHandler(coverFile),
       User.findByPk(helpers.getUser(req).id)
     ])
       .then(([avatarFilePath, coverFilePath, user]) => {
