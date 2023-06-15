@@ -6,9 +6,9 @@ replyBtns.forEach(btn => {
     const btn = e.target.classList.contains('reply-btn')
       ? e.target
       : e.target.parentElement
-    const { account, id, img, time, name, description, userAvatar } =
+    const { id, account, img, time, name, description, useravatar } =
       btn.dataset
-
+    console.log(btn.dataset)
     replyModal.innerHTML = `<div class="modal-dialog">
     <div class="modal-content" style="width:634px;height:500px;border-radius:14px;padding:0px 16px">
     <div class=" d-flex justify-content-start m-2">
@@ -34,14 +34,14 @@ replyBtns.forEach(btn => {
         </div>
         <div class="form-row d-flex flex-row mb-3" style="display:inline-block">
           <div>
-            <img src="${userAvatar}" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;border:2px black solid;margin:auto 8px auto 24px" alt="avatar"> 
+            <img src="${useravatar}" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;border:2px black solid;margin:auto 8px auto 24px" alt="avatar"> 
           </div>
           <textarea class="form-control" id="comment" style="border:none;padding:0px;resize: none" name="comment" rows="7" cols="20" maxlength="140" minlength="1"  placeholder="推你的回覆"></textarea>
         </div>
       </div>
       <div class="d-flex justify-content-end" >
         <p class="warnig-meg" style="font-size:15px;color:#FC5A5A;margin:0;display: flex;align-items: center">內容不可空白</p>
-        <input class="form-control" type="hidden" name="tweetId" value="{{this.id}}" />
+        <input class="form-control" type="hidden" name="tweetId" value="${id}" />
         <button type="submit" class="btn btn-primary m-1" style="color:#FFFFFF;width:64px;height:40px;border:none;background:#FF6600;border-radius:50px">推文</button>
       </div> 
     </form>   

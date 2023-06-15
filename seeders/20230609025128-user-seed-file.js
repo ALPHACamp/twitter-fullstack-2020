@@ -11,7 +11,8 @@ const generateUsers = async () => {
       password: await bcrypt.hash('12345678', 10),
       role: 'user',
       created_at: new Date(),
-      updated_at: new Date()
+      updated_at: new Date(),
+      avatar: `https://xsgames.co/randomusers/assets/avatars/female/${i}.jpg`
     }
     users.push(user)
   }

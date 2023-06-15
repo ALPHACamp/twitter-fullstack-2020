@@ -28,17 +28,21 @@ router.post('/followships/:id', authenticated, userController.addFollowing)
 router.delete(
   '/followships/:id',
   authenticated,
-  userController.removeFollowing
+  tweetController.getTweetReplies
 )
-
-router.get('/tweets/:id/replies', authenticated, tweetController.getTweetReplies)
 router.post('/tweets', authenticated, tweetController.postTweet)
-router.post('/tweets/:id/replies', authenticated, tweetController.postTweetReply)
+router.post(
+  '/tweets/:id/replies',
+  authenticated,
+  tweetController.postTweetReply
+)
 router.post('/tweets/:id/like', authenticated, userController.addLike)
 router.delete('/tweets/:id/unlike', authenticated, userController.removeLike)
 router.get('/tweets', authenticated, tweetController.getTweets)
 
 router.get('/users/:id/tweets', authenticated, userController.getUser)
+router.get('/users/:id/replies', authenticated, userController.getUserReplies)
+router.get('/users/:id/likes', authenticated, userController.getUserLikes)
 router.get('/users/:id/account', authenticated, userController.editUserAccount)
 router.put('/users/:id/account', authenticated, userController.putUserAccount)
 router.get('/users/:id/followings', authenticated, userController.getUserFollowing)

@@ -1,42 +1,31 @@
 {{> left-sidebar}}
 
 <div class="user-main">
-  {{> user-self-info route='self'}}
-  {{> user-self-tab route='user'}}
+  {{> user-self-info}}
+  {{> user-self-tab}}
   <div class="user-tweets">
-    {{!-- each here 回覆的頁面--}}
+    {{#each replies}}
     <div class="user-tweet">
       <div class="admin-tweet-left">
-        <img class="rounded-circle" src="/images/acIcon.png" alt="avatar" title="avatar" width="50px" height="50px">
+        <img class="rounded-circle" src="{{this.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
       </div>
       <div class="admin-tweet-right">
         <div class="admin-tweet-right-up">
-          <span class="name">Apple</span>
-          <span class="account">&nbsp;@apple<b> •</b>&nbsp;3小時</span>
+          <span class="name">{{this.userName}}</span>
+          <span class="account">&nbsp;@{{this.userAccount}}<b> •</b>&nbsp;{{relativeTimeFromNow this.createdAt}}</span>
         </div>
         <div class="d-flex">
           <div class="body-14-regular secondary"><a href="" style="color: #6C757D;">回覆</a></div>
-          <div class="body-14-regular secondary"><a href="" style="color: #FF6600;">@{{user.name}}apple</a></div>
+          <div class="body-14-regular secondary"><a href="" style="color: #FF6600;">@{{this.tweetOwner}}</a></div>
         </div>
-        <p class="user-content">{{tweet.content}} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod
-          tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris
-          nisi
-          ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-          dolore
-          eu
-          fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit
-          anim
-          id est laborum.</p>
+        <p class="user-content">{{this.comment}}</p>
       </div>
 
     </div>
-    {{!-- end --}}
+    {{/each}}
 
   </div>
 </div>
-{{> right-sidebar route='user'}}
-{{> user-edit-modal route='user'}}
+{{> right-sidebar}}
+{{> user-edit-modal}}
+{{> post-tweet-modal}}
