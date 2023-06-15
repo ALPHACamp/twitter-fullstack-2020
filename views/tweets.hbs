@@ -1,8 +1,8 @@
-<div class="d-flex justify-content-evenly" style="">
+<div class="d-flex justify-content-evenly">
   <!--左欄-->
   {{> left-sidebar}}
   <!--中欄-->
-  <div class="main-page">
+  <div class="tweet-main-page">
     <!--header-->
     <div class="header">
       <h4>首頁</h4>
@@ -14,7 +14,7 @@
         <div class="user-avatar ">
           <a href="/users/{{user.id}}/tweets">
             <img src="{{userAvatar}}" width="50px" ;height="50px"
-              style="display:inline-block;border-radius:100%;border:2px black solid;margin:auto 8px auto 24px"
+              style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px"
               alt="avatar">
           </a>
         </div>

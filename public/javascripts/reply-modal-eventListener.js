@@ -10,31 +10,32 @@ replyBtns.forEach(btn => {
       btn.dataset
     console.log(btn.dataset)
     replyModal.innerHTML = `<div class="modal-dialog">
-    <div class="modal-content" style="width:634px;height:500px;border-radius:14px;padding:0px 16px">
-    <div class=" d-flex justify-content-start m-2">
-      <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close" style="color: #FF6600;">
+    <div class="modal-content" style="width:634px;border-radius:14px;">
+    <div class=" d-flex justify-content-start modal-head"">
+      <button type="button" class="reply-modal-xmark " data-bs-dismiss="modal" aria-label="Close">X
       </button>
     </div>
-    <hr class="solid">
     <form action="/tweets/${id}/replies" method="POST">  
-      <div class="d-flex flex-column">
+      <div class="d-flex flex-column" style="padding:0px 16px">
         <div class="d-flex flex-row mb-3" >
           <div>
-            <img src="${img}" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;border:2px black solid;margin:auto 8px auto 24px" alt="avatar"> 
+            <img src="${img}" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px" alt="avatar"> 
           </div>
-          <div class="d-flex flex-column">
-            <div class="d-flex justify-content-start m-2">
-              <p class="name mb-0" style="font-size:15px">${name}@</p>
-              <p class="account mb-0" style="font-size:15px">${account}</p>
-              <p class="time mb-0" style="font-size:15px">${time}</p>
+          <div class="d-flex flex-column reply-modal">
+            <div class="d-flex justify-content-start">
+              <p class="name" style="font-size:15px">${name}</p>
+              <p class="account" style="font-size:15px; margin-top:0px;">@${account}</p>
+              <p class="time" style="font-size:15px; margin-top:0px;">${time}</p>
             </div>
             <p class="content mt-0 pt-0">${description} </p>
-            <p class="reply-to"> 回覆給@${account}</p>
+            <div class="reply-to d-flex" style="color: #6C757D;">回覆給
+              <p class="ms-1" style="color: #FF6600;">@${account}</p>
+            </div>
           </div>  
         </div>
         <div class="form-row d-flex flex-row mb-3" style="display:inline-block">
           <div>
-            <img src="${useravatar}" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;border:2px black solid;margin:auto 8px auto 24px" alt="avatar"> 
+            <img src="${userAvatar}" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px" alt="avatar"> 
           </div>
           <textarea class="form-control" id="comment" style="border:none;padding:0px;resize: none" name="comment" rows="7" cols="20" maxlength="140" minlength="1"  placeholder="推你的回覆"></textarea>
         </div>

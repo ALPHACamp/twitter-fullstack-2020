@@ -4,26 +4,38 @@
   </div>
 
   {{#each topFollowers}}
-  <div class='follow-card'>
-    <a href='/users/{{this.id}}/tweets'>
-      <img src='{{this.avatar}}' alt='avatar' />
-      <div class='follow-card-user'>
-        <h5>{{this.name}}</h5>
-        <p>@{{this.account}}</p>
-      </div>
-    </a>
-    {{#if this.isFollowed}}
-    <form action='/followships/{{this.id}}?_method=DELETE' method='post'>
-      <input class='form-control' type='hidden' name='id' value='{{this.id}}' />
-      <button class='following' type='submit'>正在跟隨</button>
-    </form>
-    {{else}}
-    <form action='/followships' method='post'><button class='follow' type='submit'>跟隨</button>
-      <input class='form-control' type='hidden' name='id' value='{{this.id}}' />
-    </form>
+    <div class='follow-card'>
+      <a href='/users/{{this.id}}/tweets'>
+        <img class='rounded-circle' src='{{this.avatar}}' alt='avatar' />
+        <div class='follow-card-user'>
+          <h5>{{this.name}}</h5>
+          <p>@{{this.account}}</p>
+        </div>
+      </a>
+      {{#if this.isFollowed}}
+        <form action='/followships/{{this.id}}?_method=DELETE' method='post'>
+          <input
+            class='form-control'
+            type='hidden'
+            name='id'
+            value='{{this.id}}'
+          />
+          <button class='following' type='submit'>正在跟隨</button></form>
+      {{else}}
+        <form action='/followships' method='post'><button
+            class='follow'
+            type='submit'
+          >跟隨</button>
+          <input
+            class='form-control'
+            type='hidden'
+            name='id'
+            value='{{this.id}}'
+          />
+        </form>
 
-    {{/if}}
-  </div>
+      {{/if}}
+    </div>
   {{/each}}
 
 </div>

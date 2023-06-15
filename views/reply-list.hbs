@@ -1,8 +1,8 @@
-<div class="d-flex justify-content-evenly" style="height: 1400px;width:1200px">
+<div class="d-flex justify-content-evenly">
 
   {{> left-sidebar}}
 
-  <div class="show-tweet-page" style="width:45%">
+  <div class="show-tweet-page">
     <!--header-->
     <div class="header">
       <button onclick="window.history.back()" class="back-icon">
@@ -16,7 +16,7 @@
         <div class="show-tweet-user-info d-flex flex-row">
           <div class="user-avatar">
             <img src="{{tweet.User.avatar}}" width="50px" ;height="50px"
-              style="display:inline-block;border-radius:100%;border:2px  solid;margin:auto 8px auto 24px;margin:auto 8 auto 0"
+              style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px;margin:auto 8 auto 0"
               alt="avatar">
           </div>
           <div class="user-name-account">
@@ -80,7 +80,7 @@
           <div class="user-avatar">
             <a href="/users/{{this.User.id}}/tweets">
               <img src="{{this.User.avatar}}" width="50px" ;height="50px"
-                style="display:inline-block;border-radius:100%;border:2px  solid;margin:auto 8px auto 24px;margin:auto 8 auto 0"
+                style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px;margin:auto 8 auto 0"
                 alt="avatar">
             </a>
           </div>
@@ -88,9 +88,11 @@
             <div class="user-name-account-time ">
               <span style="font-size: 16px;margin:0;">{{this.User.name}}</span>
               <span style="font-size: 14px;margin:0;color:#6C757D">@{{this.User.account}}</span>
-              <span class="time"><b>•</b>&nbsp;{{relativeTimeFromNow this.createdAt}}</span>
+              <span class="time" style="color:#6C757D;"><b>•</b>&nbsp;{{relativeTimeFromNow this.createdAt}}</span>
             </div>
-            <div class="reply-to-who" style="font-size:14px">回應@{{this.Tweet.User.account}}</div>
+            <div class="reply-to-who d-flex" style="font-size:14px; color:#6C757D;">回復
+              <p class="ms-1" style="color: #FF6600;">@{{this.Tweet.User.account}}</p>
+            </div>
             <div class="reply-content mt-2">
               <p class="content">{{this.comment}} </p>
             </div>
