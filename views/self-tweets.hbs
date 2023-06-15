@@ -4,8 +4,10 @@
   {{> user-self-info }}
   {{> user-self-tab }}
   <div class="user-tweets">
+
     {{#each tweet}}
-    <div class="user-tweet ">
+
+    <div class="user-tweet">
       <div class="admin-tweet-left">
         <img class="rounded-circle" src="{{this.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
       </div>
@@ -15,23 +17,11 @@
           <span class="account">&nbsp;{{this.account}}<b> •</b>&nbsp;{{relativeTimeFromNow this.createdAt}}</span>
         </div>
         <p class="user-content">{{this.description}}</p>
-        {{!-- ? old --}}
-        {{!-- <div class="d-flex">
-          <div class="replies">
-            <img src="/images/replyIcon.png" alt="">
-            {{this.repliesCount}}
-          </div>
-          <div class="likes">
-            <img src="/images/likeIcon.png" alt="">
-            {{this.likesCount}}
-          </div>
-        </div> --}}
-        {{!-- ! new  but break --}}
-        <div class="d-flex replies-likes-icon ">
+        <div class="d-flex replies-likes-icon">
           <div class="replies">
             <button type="button" class="btn reply-btn" data-bs-toggle="modal" data-bs-target="#replyModal"
-              data-id="{{this.id}}" data-name="{{this.User.name}}" data-account="{{this.User.account}}"
-              data-time="{{relativeTimeFromNow this.createdAt}}" data-img="{{this.User.avatar}}"
+              data-id="{{this.id}}" data-name="{{this.userName}}" data-account="{{this.account}}"
+              data-time="{{relativeTimeFromNow this.createdAt}}" data-img="{{this.avatar}}"
               data-description="{{this.description}}" data-userAvatar="{{user.avatar}}" style="z-index:2">
               <img src="/images/replyIcon.png" alt="">
               {{this.repliesCount}}
@@ -54,7 +44,11 @@
               </form>
             {{/if}}
           </div>
-        </div>
+
+    </div>
+
+      </div>
+
     </div>
     {{/each}}
   </div>
@@ -63,3 +57,16 @@
 {{> right-sidebar }}
 {{> user-edit-modal }}
 {{> post-tweet-modal}}
+<!--modal-->
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" ariahidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:634px;height:500px;border-radius:14px;padding:0px 16px">
+      <div class=" d-flex justify-content-start m-2">
+        <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close" style="color: #FF6600;">
+        </button>
+      </div>
+      <hr class="solid">
+    </div>
+  </div>
+</div>
+<script src="/javascripts/reply-modal-eventListener.js"></script>
