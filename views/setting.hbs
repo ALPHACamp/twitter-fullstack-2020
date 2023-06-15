@@ -2,7 +2,7 @@
 <hr>
 {{!-- 表單 --}}
 <form class="form-setting" action="/users/{{ userId }}/setting?_method=PUT" method="POST"
-  style="position: relative; top: 24px; width:639px; margin: 0 auto; padding: 0 23px 0 23px;">
+  style="position: relative; top: 24px; width: 100%; margin: 0 auto; padding: 0 16px;">
   {{!-- 帳號 --}}
   <div class="form-row">
     <label class="form-label text-14px-reg color-dark-80" for="account">帳號</label>
@@ -10,8 +10,8 @@
       value="{{ account }}" required autofocus>
   </div>
   <div class="form-gap d-flex">
-    <label class="flex-fill text-12px-med text-start color-error" id="helper">帳號不存在</label>
-    <label class="flex-fill text-12px-med text-end color-dark-80" id="count">13/50</label>
+    <label class="flex-fill text-12px-med text-start color-error" id="helper"></label>
+    <label class="flex-fill text-12px-med text-end color-dark-80" id="count"></label>
   </div>
   {{!-- 名稱 --}}
   <div class="form-row">
