@@ -5,6 +5,7 @@
 
 {{! tweet }}
 {{#each tweets}}
+<div class="collapse show" id="tweet-{{this.id}}">
   <form action='/admin/tweets/{{this.id}}?_method=DELETE' method='POST'>
     <li class='list-group-item tweet-list p-3'>
       <div class='d-flex'>
@@ -20,15 +21,15 @@
             <div class='user-account'>@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
           </div>
           {{! delete btn }}
-          <button
-            type='submit'
-            class='btn-close position-absolute end-0'
-            style='top: 10px;'
-            data-bs-toggle='collapse'
-            data-bs-target='#tweet-{{this.id}}'
-            aria-expanded='false'
-            aria-controls='collapseExample'
-            aria-label='Close'
+          <button 
+            type="submit"
+            class="btn-close position-absolute end-0" 
+            aria-label="Close"
+            data-bs-toggle="collapse"
+            data-bs-target="#tweet-{{this.id}}"
+            aria-expanded="false" 
+            aria-controls="tweet-{{this.id}}"
+            onclick="return confirm(`確定要刪除此貼文嗎？`)"
           ></button>
 
           {{! tweet description }}
@@ -37,4 +38,5 @@
       </div>
     </li>
   </form>
+</div>
 {{/each}}
