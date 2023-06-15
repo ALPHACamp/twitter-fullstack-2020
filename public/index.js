@@ -126,10 +126,37 @@ centerColumn.addEventListener('click', event => {
   // 監聽編輯個人資料按鈕 call API取得個人資料 把個人資料插入modal
   if (event.target.matches('#editProfileButton')) {
     const userId = document.querySelector('#editProfileButton').value
+    const putProfileButton = document.querySelector('#putProfileButton')
     const nameInput = document.querySelector('#name')
     const introInput = document.querySelector('#intro')
     const previewCover = document.querySelector('#previewCover')
     const previewAvatar = document.querySelector('#previewAvatar')
+    const nameHelper = document.querySelector('#nameHelper')
+    const nameCount = document.querySelector('#nameCount')
+    const introHelper = document.querySelector('#introHelper')
+    const introCount = document.querySelector('#introCount')
+    const nameRow = nameInput.parentElement
+    const introRow = introInput.parentElement
+
+    // 欄位樣式恢復初始值
+    nameCount.textContent = ''
+    nameHelper.textContent = ''
+    introCount.textContent = ''
+    introHelper.textContent = ''
+    // 如果底線是紅色，就恢復灰色
+    if (nameRow.classList.contains('form-row-error')) {
+      nameRow.classList.remove('form-row-error')
+      nameRow.classList.add('form-row')
+    }
+    if (introRow.classList.contains('form-row-error')) {
+      introRow.classList.remove('form-row-error')
+      introRow.classList.add('form-row')
+    }
+    // 啟用儲存按鈕
+    putProfileButton.dataset.nameErr = false
+    putProfileButton.dataset.introErr = false
+    putProfileButton.disabled = false
+
     axios.get(`/api/users/${userId}`)
       .then(response => {
         const { cover, avatar, name, intro } = response.data
@@ -178,6 +205,90 @@ centerColumn.addEventListener('click', event => {
     const previewCover = document.querySelector('#previewCover')
     previewCover.src = 'https://i.imgur.com/b7U6LXD.jpg'
     previewCover.dataset.reset = 'true'
+  }
+})
+centerColumn.addEventListener('input', event => {
+  // 監聽名稱輸入框
+  if (event.target.matches('#name')) {
+    const putProfileButton = document.querySelector('#putProfileButton')
+    const nameHelper = document.querySelector('#nameHelper')
+    const nameCount = document.querySelector('#nameCount')
+    const row = event.target.parentElement
+    const value = event.target.value
+    // 更新字數
+    nameCount.textContent = `${value.length}/50`
+    // 檢查字數
+    if (value.length > 50) {
+      // 如果底線是灰色，就改紅色
+      if (row.classList.contains('form-row')) {
+        row.classList.remove('form-row')
+        row.classList.add('form-row-error')
+      }
+      // 禁用儲存按鈕 記錄錯誤狀態
+      putProfileButton.disabled = true
+      putProfileButton.dataset.nameErr = 'true'
+      // 顯示提示
+      nameHelper.textContent = '字數超出上限！'
+      // 檢查是否空白
+    } else if (value.trim() === '') {
+      // 如果底線是灰色，就改紅色
+      if (row.classList.contains('form-row')) {
+        row.classList.remove('form-row')
+        row.classList.add('form-row-error')
+      }
+      // 禁用儲存按鈕 記錄錯誤狀態
+      putProfileButton.disabled = true
+      putProfileButton.dataset.nameErr = 'true'
+      // 顯示提示
+      nameHelper.textContent = '名稱不可空白！'
+    } else {
+      // 如果底線是紅色，就改灰色
+      if (row.classList.contains('form-row-error')) {
+        row.classList.remove('form-row-error')
+        row.classList.add('form-row')
+      }
+      // 清空提示
+      nameHelper.textContent = ''
+      // 清除錯誤狀態
+      putProfileButton.dataset.nameErr = 'false'
+      // 檢查另一欄位的錯誤狀態 來決定是否啟用儲存按鈕
+      if (putProfileButton.dataset.introErr !== 'true') putProfileButton.disabled = false
+    }
+  }
+  // 監聽自我介紹輸入框
+  if (event.target.matches('#intro')) {
+    const putProfileButton = document.querySelector('#putProfileButton')
+    const introHelper = document.querySelector('#introHelper')
+    const introCount = document.querySelector('#introCount')
+    const row = event.target.parentElement
+    const value = event.target.value
+    // 更新字數
+    introCount.textContent = `${value.length}/160`
+    // 檢查字數
+    if (value.length > 160) {
+      // 如果底線是灰色，就改紅色
+      if (row.classList.contains('form-row')) {
+        row.classList.remove('form-row')
+        row.classList.add('form-row-error')
+      }
+      // 禁用儲存按鈕 記錄錯誤狀態
+      putProfileButton.disabled = true
+      putProfileButton.dataset.introErr = 'true'
+      // 顯示提示
+      introHelper.textContent = '字數超出上限！'
+    } else {
+      // 如果底線是紅色，就改灰色
+      if (row.classList.contains('form-row-error')) {
+        row.classList.remove('form-row-error')
+        row.classList.add('form-row')
+      }
+      // 清空提示
+      introHelper.textContent = ''
+      // 清除錯誤狀態
+      putProfileButton.dataset.introErr = 'false'
+      // 檢查另一欄位的錯誤狀態 來決定是否啟用儲存按鈕
+      if (putProfileButton.dataset.nameErr !== 'true') putProfileButton.disabled = false
+    }
   }
 })
 
