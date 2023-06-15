@@ -145,7 +145,6 @@ const profileController = {
       }))
       // pagination
       const pagination = getPagination(page, limit, replies.count)
-      // const partialName = 'user-replies'
       // render
       const partialName = 'user-profile'
       const navbar = 'replies'
@@ -189,7 +188,8 @@ const profileController = {
         repliesCount: counts[index].repliesCount,
         isLiked: loginUser.Likes?.some(l => l.TweetId === like.TweetId)
       }))
-
+      console.log('-----------------------------')
+      console.log(tweetsData)
       // pagination
       const pagination = getPagination(page, limit, likes.count)
       // render

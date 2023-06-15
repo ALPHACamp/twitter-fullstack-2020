@@ -757,13 +757,14 @@ h5 {
 .account-label,
 .password-label {
   margin-bottom: 0;
-  padding: 0 0 0 10px;
+  padding: 5px 0 2px 10px;
   font-size: 14px;
+  color: #696974;
 }
 
 .account-input,
 .password-input {
-  padding-left: 10px;
+  padding: 2px 0 5px 10px;
   font-size: 16px;
   background-color: #f5f8fa;
   border: 0;
@@ -859,6 +860,7 @@ h5 {
 
 .admin-user-info {
   text-decoration: none;
+  cursor: default;
 }
 
 .admin-user-card {
@@ -913,7 +915,7 @@ h5 {
 }
 
 .admin-user-info-count i {
-  vertical-align: text-top;
+  vertical-align: bottom;
 }
 
 .admin-user-info-follower i {

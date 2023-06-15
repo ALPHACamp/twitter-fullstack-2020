@@ -1,5 +1,5 @@
 const helpers = require('../_helpers')
-const { User, Tweet, Like, Followship } = require('../models')
+const { User, Followship, Tweet, Like } = require('../models')
 
 const adminController = {
   adminSigninPage: (req, res) => {
@@ -51,27 +51,37 @@ const adminController = {
     }
   },
   adminGetUsers: async (req, res, next) => {
-    const loginUser = helpers.getUser(req)
-    if (loginUser.role === 'user') {
-      res.redirect('/')
-    }
     try {
-      const [users, likes, follows] = await Promise.all([
-        User.findAll({
-          include: [Tweet, { model: Like }]
-        }),
-        Like.findAll(),
-        Followship.findAll()
-      ])
-      console.log(users)
-      console.log('-----------------------------')
-      console.log(likes)
-      console.log('-----------------2----------------------')
-      console.log(follows)
+      const users = await User.findAll({
+        where: {
+          role: 'user'
+        },
+        order: [['createdAt', 'DESC']]
+      })
+      const count = await Promise.all(
+        users.map(async user => ({
+          tweetsCount: await Tweet.count({ where: { UserId: user.id } }),
+          followingsCount: await Followship.count({
+            where: { followerId: user.id }
+          }),
+          followersCount: await Followship.count({
+            where: { followingId: user.id }
+          }),
+          likeCount: await Like.count({ where: { UserId: user.id } })
+        }))
+      )
+
+      const userData = await users.map((user, index) => ({
+        ...user.toJSON(),
+        tweetsCount: count[index].tweetsCount,
+        followingsCount: count[index].followingsCount,
+        followersCount: count[index].followersCount,
+        likeCount: count[index].likeCount
+      }))
 
       const partialName = 'admin-users'
       const userPage = true
-      res.render('admin/tweets', { users, partialName, userPage })
+      res.render('admin/tweets', { userData, partialName, userPage })
     } catch (err) {
       next(err)
     }
@@ -84,7 +94,7 @@ const adminController = {
   deleteTweet: (req, res, next) => {
     const tweetId = req.params.id
     Tweet.destroy({ where: { id: tweetId } })
-      .then(tweet => {
+      .then(() => {
         res.redirect('/admin/tweets')
       })
       .catch(err => console.log(err))
