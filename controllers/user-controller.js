@@ -164,12 +164,21 @@ const userController = {
       const tweetsLength = user.Tweets.length
       const followingList = loginUser.Followings.map(f => f.id)
 
-      const followings = user.toJSON().Followings.map(following => ({
-        ...following,
-        isFollowed: followingList.includes(following.id)
-      })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+      const followings = user
+        .toJSON()
+        .Followings.map(following => ({
+          ...following,
+          isFollowed: followingList.includes(following.id)
+        }))
+        .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
 
-      return res.render('following', { user: user.toJSON(), tweetsLength, currentUser, users: followings, isFollowings: true })
+      return res.render('following', {
+        user: user.toJSON(),
+        tweetsLength,
+        currentUser,
+        users: followings,
+        isFollowings: true
+      })
     } catch (err) {
       next(err)
     }
@@ -196,12 +205,21 @@ const userController = {
       const tweetsLength = user.Tweets.length
       const followingList = loginUser.Followings.map(f => f.id)
 
-      const followers = user.toJSON().Followers.map(follower => ({
-        ...follower,
-        isFollowed: followingList.includes(follower.id)
-      })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+      const followers = user
+        .toJSON()
+        .Followers.map(follower => ({
+          ...follower,
+          isFollowed: followingList.includes(follower.id)
+        }))
+        .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
 
-      return res.render('follower', { user: user.toJSON(), tweetsLength, currentUser, users: followers, isFollowers: true })
+      return res.render('follower', {
+        user: user.toJSON(),
+        tweetsLength,
+        currentUser,
+        users: followers,
+        isFollowers: true
+      })
     } catch (err) {
       next(err)
     }
@@ -212,12 +230,20 @@ const userController = {
   //* 追蹤功能
   addFollowing: async (req, res, next) => {
     try {
-      if (req.user.id === req.params.id) throw new Error('不能追蹤自己')
-      const user = await User.findByPk(req.user.id)
+      const userId = helpers.getUser(req).id
+      const followingId = req.body.id
+      //! 不能用自用錯誤處理..
+      // if (req.user.id == followingId) throw new Error('不能追蹤自己')
+
+      if (userId == followingId)
+        return res.status(200).json({ error: '不能追蹤自己' })
+
+      const user = await User.findByPk(userId)
+
       if (!user) throw new Error('找不到該用戶')
       await Followship.create({
-        followerId: req.user.id,
-        followingId: req.params.id
+        followerId: userId,
+        followingId
       })
       return res.redirect('back')
     } catch (err) {
@@ -231,7 +257,7 @@ const userController = {
       const user = await User.findByPk(userId)
       if (!user) throw new Error('找不到該用戶')
       const followShip = await Followship.findOne({
-        where: { followerId: req.user.id, followingId: req.params.id }
+        where: { followerId: userId, followingId }
       })
       if (!followShip) throw new Error('還沒有追蹤用戶')
       await followShip.destroy()

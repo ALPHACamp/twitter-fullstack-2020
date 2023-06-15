@@ -24,7 +24,7 @@ router.post(
 router.get('/logout', userController.logout)
 
 //* 追蹤功能
-router.post('/followships/:id', authenticated, userController.addFollowing)
+router.post('/followships', authenticated, userController.addFollowing)
 router.delete(
   '/followships/:id',
   authenticated,
@@ -45,8 +45,16 @@ router.get('/users/:id/replies', authenticated, userController.getUserReplies)
 router.get('/users/:id/likes', authenticated, userController.getUserLikes)
 router.get('/users/:id/account', authenticated, userController.editUserAccount)
 router.put('/users/:id/account', authenticated, userController.putUserAccount)
-router.get('/users/:id/followings', authenticated, userController.getUserFollowing)
-router.get('/users/:id/followers', authenticated, userController.getUserFollower)
+router.get(
+  '/users/:id/followings',
+  authenticated,
+  userController.getUserFollowing
+)
+router.get(
+  '/users/:id/followers',
+  authenticated,
+  userController.getUserFollower
+)
 router.put(
   '/users/:id',
   authenticated,
