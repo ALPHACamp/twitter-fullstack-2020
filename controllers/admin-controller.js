@@ -1,5 +1,4 @@
 const { Tweet, User, Reply, Like } = require('../models')
-const Sequelize = require('sequelize')
 
 const adminController = {
   signInPage: (req, res) => {
@@ -75,7 +74,7 @@ const adminController = {
             LikesCounts: sumLikes
           }
         })
-
+        // 依推文數排序
         result.sort((a, b) => b.tweetsCounts - a.tweetsCounts)
 
         res.render('admin/users', { users: result })
