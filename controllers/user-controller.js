@@ -146,8 +146,10 @@ const userController = {
     User.findByPk(userId, { raw: true })
       .then(user => {
         if (!user) throw new Error('User did not exist.')
+        delete user.password // 刪除取得的password
+        const currentUser = user
         const { account, name, email } = user
-        res.render('setting', { account, name, email, userId, isSetting: true, isHide: true }) // 左側欄設定頁籤選擇中，且隱藏右側欄
+        res.render('setting', { account, name, email, userId, currentUser, isSetting: true, isHide: true }) // 左側欄設定頁籤選擇中，且隱藏右側欄
       })
       .catch(err => next(err))
   },
