@@ -22,11 +22,21 @@
     </div>
     <div class="form-row mb-5">
       <label class="form-label password-label" for="password">密碼</label>
-      <input class="form-control password-input" id="password" type="text" name="password" class="form-control" placeholder="請輸入密碼" required autofocus>
+      <div class="input-group">
+        <input class="form-control password-input pwd-btn-input" id="password" type="password" name="password" class="form-control" placeholder="請輸入密碼" required autofocus>
+        <button class="pwd-eye" type="button">
+          <img class="pwd-eye-img close-eye" src="/images/eye-slash.svg" alt="">
+        </button>
+      </div>
     </div>
     <div class="form-row mb-5">
       <label class="form-label password-label" for="checkPassword">密碼確認</label>
-      <input class="form-control password-input" id="checkPassword" type="text" name="checkPassword" class="form-control" placeholder="請再次輸入密碼" required autofocus>
+      <div class="input-group">
+        <input class="form-control password-input check-pwd-btn-input" id="checkPassword" type="password" name="checkPassword" class="form-control" placeholder="請再次輸入密碼" required autofocus>
+        <button class="check-pwd-eye" type="button">
+          <img class="check-pwd-eye-img close-eye" src="/images/eye-slash.svg" alt="">
+        </button>
+      </div>
     </div>
     <div>
       <button class="btn btn-primary mb-4 signin-btn" type="submit">註冊</button>
@@ -36,3 +46,5 @@
     <p><a href="/signin">取消</a></p>
   </div>
 </div>
+
+<script src="/javascript/signup.js"></script>
