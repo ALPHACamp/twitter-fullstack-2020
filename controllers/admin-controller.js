@@ -52,16 +52,14 @@ const adminController = {
   },
   adminGetUsers: async (req, res, next) => {
     try {
-      const [users] = await Promise.all([
-        User.findAll({
-          raw: true,
-          nest: true,
-          where: {
-            role: 'user'
-          },
-          order: [['createdAt', 'DESC']]
-        })
-      ])
+      const users = await User.findAll({
+        raw: true,
+        nest: true,
+        where: {
+          role: 'user'
+        },
+        order: [['createdAt', 'DESC']]
+      })
       const partialName = 'admin-users'
       const userPage = true
       res.render('admin/tweets', { users, partialName, userPage })
@@ -75,9 +73,9 @@ const adminController = {
     res.redirect('admin/signin')
   },
   deleteTweet: (req, res, next) => {
-    const tweetId = req.body.tweetId
+    const tweetId = req.params.id
     Tweet.destroy({ where: { id: tweetId } })
-      .then(() => {
+      .then(tweet => {
         res.redirect('/admin/tweets')
       })
       .catch(err => console.log(err))

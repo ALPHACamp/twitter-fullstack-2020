@@ -7,7 +7,6 @@ const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 // 推文顯示數量
 const DEFAULT_LIMIT = 50
-let nav = 'profile'
 
 const profileController = {
   getUser: async (req, res, next) => {
@@ -102,7 +101,7 @@ const profileController = {
       // render
       const partialName = 'user-profile'
       const navbar = 'tweets'
-      res.render('index', { user: userData, tweets: tweetsData, route, pagination, partialName, navbar, nav, followingData })
+      res.render('index', { user: userData, tweets: tweetsData, route, pagination, partialName, navbar, followingData })
       // const partialName = 'user-tweets'
       // res.render('users/tweets', { user: userData, tweets: tweetsData, route, pagination })
     } catch (err) {
@@ -151,7 +150,7 @@ const profileController = {
       const partialName = 'user-profile'
       const navbar = 'replies'
       const repliesPage = true
-      res.render('index', { user: userData, replies: repliesData, route, pagination, partialName, repliesPage, navbar, nav, followingData })
+      res.render('index', { user: userData, replies: repliesData, route, pagination, partialName, repliesPage, navbar, followingData })
     } catch (err) {
       next(err)
     }
@@ -175,6 +174,7 @@ const profileController = {
         limit,
         offset
       })
+
       const counts = await Promise.all(
         likes.rows.map(async like => ({
           repliesCount: await Reply.count({ where: { TweetId: like.TweetId } }),
@@ -187,14 +187,15 @@ const profileController = {
         createdAt: like.createdAt,
         likesCount: counts[index].likesCount,
         repliesCount: counts[index].repliesCount,
-        isLiked: loginUser.Likes.some(l => l.TweetId === like.TweetId)
+        isLiked: loginUser.Likes?.some(l => l.TweetId === like.TweetId)
       }))
+
       // pagination
       const pagination = getPagination(page, limit, likes.count)
       // render
       const partialName = 'user-profile'
       const navbar = 'likes'
-      res.render('index', { user: userData, tweets: tweetsData, pagination, route, partialName, nav, followingData, navbar })
+      res.render('index', { user: userData, tweets: tweetsData, pagination, route, partialName, followingData, navbar })
     } catch (err) {
       next(err)
     }
@@ -218,7 +219,9 @@ const profileController = {
             {
               model: User,
               as: 'Followings',
-              order: [['createdAt', 'DESC']]
+              through: {
+                attributes: ['createdAt']
+              }
             }
           ],
           limit,
@@ -239,6 +242,10 @@ const profileController = {
         user.Followings.map(following => {
           return loginUser.Followings.some(f => f.id === following.id)
         })
+      // 依照追隨時間排序
+      user.Followings.sort((a, b) => {
+        return b.Followship.createdAt - a.Followship.createdAt
+      })
 
       const userData = {
         ...user.toJSON(),
@@ -257,7 +264,7 @@ const profileController = {
       const pagination = getPagination(page, limit, followingsCount)
       const partialName = 'user-followships-list'
       const followingsPage = true
-      res.render('index', { user: userData, followings, pagination, route, partialName, followingsPage, nav, followingData })
+      res.render('index', { user: userData, followings, pagination, route, partialName, followingsPage, followingData })
     } catch (err) {
       next(err)
     }
@@ -279,7 +286,13 @@ const profileController = {
         User.findByPk(userId, {
           include: [
             // Followers
-            { model: User, as: 'Followers', order: [['createdAt', 'DESC']] }
+            {
+              model: User,
+              as: 'Followers',
+              through: {
+                attributes: ['createdAt']
+              }
+            }
           ],
           limit,
           offset
@@ -300,6 +313,7 @@ const profileController = {
         user.Followers.map(follower => {
           return loginUser.Followings.some(f => f.id === follower.id)
         })
+
       const userData = {
         ...user.toJSON(),
         tweetsCount
@@ -308,22 +322,25 @@ const profileController = {
       userData.Followers.forEach((follower, index) => {
         follower.isFollowing = isFollowing[index]
       })
+      // 依照被追隨時間排序
+      userData.Followers.sort((a, b) => {
+        return b.Followship.createdAt - a.Followship.createdAt
+      })
       // 根據isFollowing排序
       userData.Followers.sort((a, b) => b.isFollowing - a.isFollowing)
       // pagination
       const pagination = getPagination(page, limit, followersCount)
       const partialName = 'user-followships-list'
-      res.render('index', { user: userData, followers, pagination, route, partialName, nav, followingData })
-      // const partialName = 'user-followers'
+      res.render('index', { user: userData, followers, pagination, route, partialName, followingData })
     } catch (err) {
       next(err)
     }
   },
   editUserAccount: async (req, res, next) => {
-    nav = 'setting'
     // 抓id
     const { userId } = req.params
     const loginUser = helpers.getUser(req)
+    const { followingData } = req
     // 判斷是否為本人
     if (loginUser.id !== Number(userId)) return res.redirect('back')
     try {
@@ -336,7 +353,7 @@ const profileController = {
       const partialName = 'user-edit'
       const visibleToggle = 'invisible'
       // render
-      return res.render('index', { user, partialName, visibleToggle })
+      return res.render('index', { user, partialName, visibleToggle, followingData })
     } catch (err) {
       next(err)
     }
