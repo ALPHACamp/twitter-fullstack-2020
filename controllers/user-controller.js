@@ -112,6 +112,7 @@ const userController = {
           tweet.createdAt = thisTweet.createdAt
           tweet.userName = thisUser.name
           tweet.account = thisUser.account
+          tweet.avatar = thisUser.avatar || 'https://i.imgur.com/mhXz6z9.png?1'
 
           return tweet
         })
@@ -128,7 +129,6 @@ const userController = {
       }
 
       return res.render('self-tweets', { user: userData, userTweet, tweet: tweetData, userTweets })
-
     } catch (err) {
       next(err)
     }
@@ -325,6 +325,7 @@ const userController = {
           const tweetOwner = await User.findByPk(tweetData.userId)
           reply.userName = userData.name
           reply.userAccount = userData.account
+          reply.avatar = userData.avatar || 'https://i.imgur.com/mhXz6z9.png?1'
           reply.tweetOwner = tweetOwner.account
 
           return reply
@@ -339,6 +340,67 @@ const userController = {
         tweetsCount
       }
       return res.render('self-replies', { user: userData, replies: replyData, userTweet, userReply })
+    } catch (err) {
+      next(err)
+    }
+  },
+  getUserLikes: async (req, res, next) => {
+    const userTweet = true
+    const userLike = true
+    const { id } = req.params
+
+    try {
+      const [user, FollowingsCount, FollowersCount, tweetsCount] =
+        await Promise.all([
+          User.findByPk(id, {
+            include: [{ model: Tweet, include: User }]
+          }),
+          // 計算user的folowing數量
+          Followship.count({
+            where: { follower_id: id }
+          }),
+          // 計算user的folower數量
+          Followship.count({
+            where: { following_id: id }
+          }),
+          // 計算user的推文數
+          Tweet.count({
+            where: { user_id: id }
+          })
+        ])
+
+      const likes = await Like.findAll({
+        raw: true,
+        where: { userId: id }
+      })
+      const likesData = await Promise.all(
+        likes.map(async like => {
+          const tweetId = like.tweetId
+          const thisTweet = await Tweet.findByPk(tweetId)
+          const ownerData = await User.findByPk(thisTweet.userId)
+          const replyCount = await Reply.count({ where: { tweet_id: tweetId } })
+          const likeCount = await Like.count({ where: { tweet_id: tweetId } })
+
+          like.name = ownerData.name
+          like.account = ownerData.account
+          like.avatar = ownerData.avatar || 'https://i.imgur.com/mhXz6z9.png?1'
+          like.createdAt = thisTweet.createdAt
+          like.description = thisTweet.description
+          like.replyCount = replyCount
+          like.likeCount = likeCount
+
+          return like
+        })
+      )
+      const userData = {
+        ...user.toJSON(),
+        cover: user.cover || 'https://i.imgur.com/TGRK7uy.png',
+        avatar: user.avatar || 'https://i.imgur.com/mhXz6z9.png?1',
+        FollowingsCount,
+        FollowersCount,
+        tweetsCount
+      }
+      return res.render('self-likes', { user: userData, likes: likesData, userTweet, userLike })
     } catch (err) {
       next(err)
     }
