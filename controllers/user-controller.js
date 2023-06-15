@@ -8,10 +8,10 @@ const userController = {
     res.render('signup')
   },
   signUp: (req, res, next) => {
-    const { account, name, email, password, passwordCheck } = req.body
-    if (!account || !name || !email || !password || !passwordCheck) throw new Error('所有欄位都是必填!')
+    const { account, name, email, password, checkPassword } = req.body
+    if (!account || !name || !email || !password || !checkPassword) throw new Error('所有欄位都是必填!')
     if (name.length > 50) throw new Error('暱稱不得超過50字')
-    if (req.body.password !== req.body.passwordCheck) throw new Error('密碼不相符!')
+    if (req.body.password !== req.body.checkPassword) throw new Error('密碼不相符!')
 
     return Promise.all([
       User.findOne({ where: { account } }),
@@ -69,14 +69,14 @@ const userController = {
   },
   putSetting: (req, res, next) => {
     const userId = helpers.getUser(req).id
-    const { account, name, email, password, passwordCheck } = req.body
+    const { account, name, email, password, checkPassword } = req.body
     // 避免非本人修改資料
     if (Number(userId) !== Number(req.params.id)) {
       res.redirect(`/users/${req.user.id}}/setting`)
     }
 
     if (name.length > 50) throw new Error('暱稱不得超過50字')
-    if (password !== passwordCheck) throw new Error('密碼不相符')
+    if (password !== checkPassword) throw new Error('密碼不相符')
 
     return Promise.all([
       User.count({ where: { account } }),
