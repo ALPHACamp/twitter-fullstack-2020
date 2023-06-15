@@ -12,7 +12,11 @@
             <div class="card-img-top">
               <img src="{{ this.cover }}"
                 alt="...">
-              <img class="card-avatar" src="https://xsgames.co/randomusers/assets/avatars/male/71.jpg">
+              {{#if this.avatar}}
+                <img class="card-avatar" src="{{this.avaatar}}">
+              {{else}}
+                <img class="card-avatar" src="https://i.imgur.com/mhXz6z9.png?1">
+              {{/if}}
             </div>
             <div class="card-body text-center">
               <div class="body-16px-medium">{{this.name}}</div>
