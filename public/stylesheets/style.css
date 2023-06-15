@@ -706,12 +706,20 @@ img.card-avatar {
 }
 
 .reply-modal .account {
+  margin: 3px 0 0 10px;
   font-size: 14px;
   font-family: 'Noto Sans TC', sans-serif;
   color: #6c757d;
 }
 
 .tweet-right .time {
+  font-size: 14px;
+  font-family: 'Noto Sans TC', sans-serif;
+  color: #6c757d;
+}
+
+.reply-modal .time {
+  margin: 3px 0 0 6px;
   font-size: 14px;
   font-family: 'Noto Sans TC', sans-serif;
   color: #6c757d;
@@ -910,4 +918,24 @@ img.card-avatar {
   width: 273px;
   height: 731px;
   margin-left: 30px;
+}
+
+.show-tweet-page {
+  width: 641px;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+}
+
+.modal-head {
+  width: 632px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.reply-modal-xmark {
+  margin: 20.5px 0 20.5px 19.5px;
+  color: #ff6600;
+  background-color: #FFFFFF;
+  border: none;
+  font-size: 20px;
 }
