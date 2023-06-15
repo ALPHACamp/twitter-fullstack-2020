@@ -1,11 +1,11 @@
 <nav class="nav" style="border-bottom: 1px solid #E6ECF0;">
   <a href="/users/{{user.id}}/tweets">
-    <button class="{{#if userTweet}}user-tab-active{{else}}user-tab{{/if}}" 
+    <button class="{{#if userTweets}}user-tab-active{{else}}user-tab{{/if}}" 
       aria-current="page" >推文
     </button>
   </a>
-  <a href="/user/self/replies">
-    <button class="{{#if userTweet}}user-tab-active{{else}}user-tab{{/if}}">回覆
+  <a href="/users/{{user.id}}/replies">
+    <button class="{{#if userReply}}user-tab-active{{else}}user-tab{{/if}}">回覆
     </button>
   </a>
   <a href="/users/{{user.id}}/likes">
