@@ -116,7 +116,10 @@ const adminController = {
         console.log('找到要刪除的貼文 id 為:', req.params.id)
         return tweet.destroy()
       })
-      .then(() => res.redirect(302, '/admin/tweets'))
+      .then(() => {
+        req.flash('success_messages', '刪除成功！')
+        res.redirect(302, '/admin/tweets')
+      })
       .catch(err => next(err))
   }
 }
