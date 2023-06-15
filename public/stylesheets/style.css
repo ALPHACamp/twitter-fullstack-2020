@@ -86,13 +86,12 @@ h4 {
   font-weight: 700;
   font-size: 24px;
   line-height: 26px;
-  color: #171725;
 }
 
 .arrow-left {
   width: 17px;
   height: 14px;
-  margin-top: -4px;
+  margin-top: -25px;
 }
 
 .header-tweet {
@@ -196,7 +195,7 @@ h5 {
 }
 
 .admin-tweet-right-up .account {
-  width: 150px;
+  width: 200px;
   margin: 2px 0 0 8px;
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -527,6 +526,7 @@ img.card-avatar {
   width: 178px;
   display: flex;
 }
+
 .nav-item img {
   margin: 18.78px 0 0 16.9px;
   height: 20.25px;
@@ -862,4 +862,28 @@ img.card-avatar {
 .main-page {
   border-left: 1px solid #E6ECF0;
   border-right: 1px solid #E6ECF0;
+}
+
+.back-icon {
+  border: none;
+  background-color: #FFFFFF;
+}
+
+.user-tab-active {
+  width: 130px;
+  padding-bottom: 10px;
+  color: #ff6600;
+  background-color: #FFFFFF;
+  border: none;
+  border-color: #FFFFFF;
+  border-bottom: 1px solid #ff6600;
+}
+
+.user-tab {
+  width: 130px;
+  padding-bottom: 10px;
+  color: #657786;
+  background-color: #FFFFFF;
+  border: none;
+  border-color: #FFFFFF;
 }

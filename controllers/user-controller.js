@@ -1,8 +1,9 @@
 const bcrypt = require('bcryptjs')
 const { Op } = require('sequelize')
-const { User, Followship, Like, Tweet } = require('../models')
+const { User, Followship, Like, Tweet, Reply } = require('../models')
 const { imgurFileHandler } = require('../helpers/file-helpers')
-const helpers = require('../helpers/auth-helpers')
+const helpers = require('../_helpers')
+const { getTop10Following } = require('../helpers/getTop10Following-helper')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -66,9 +67,9 @@ const userController = {
   getUser: async (req, res, next) => {
     const userTweet = true
     const { id } = req.params
-    const loginUser = helpers.getUser(req)
-    if (loginUser.id !== Number(id)) throw new Error('您沒有權限查看此個人資料')
-
+    // User 點擊他人頭像會擋掉，先刪除
+    // const loginUser = helpers.getUser(req)
+    // if (loginUser.id !== Number(id)) throw new Error('您沒有權限查看此個人資料')
     try {
       const [user, FollowingsCount, FollowersCount, tweetsCount] =
         await Promise.all([
@@ -88,6 +89,32 @@ const userController = {
             where: { user_id: id }
           })
         ])
+      // 抓出此user發過的tweet
+      const tweets = await Tweet.findAll({
+        raw: true,
+        where: { user_id: id }
+      })
+      // 找出所有tweet的回覆樹根喜歡數
+      const tweetData = await Promise.all(
+        tweets.map(async tweet => {
+          // 找出每篇的喜歡及回覆數
+          const tweetId = tweet.id
+          const [replies, likes, thisTweet, thisUser] = await Promise.all([
+            Reply.count({ where: { tweet_id: tweetId } }),
+            Like.count({ where: { tweet_id: tweetId } }),
+            Tweet.findByPk(tweetId),
+            User.findByPk(id)
+          ])
+          tweet.repliesCount = replies
+          tweet.likesCount = likes
+          tweet.description = thisTweet.description
+          tweet.createdAt = thisTweet.createdAt
+          tweet.userName = thisUser.name
+          tweet.account = thisUser.account
+
+          return tweet
+        })
+      )
 
       if (!user) throw new Error('該用戶不存在!')
       const userData = {
@@ -98,7 +125,13 @@ const userController = {
         FollowersCount,
         tweetsCount
       }
-      return res.render('self-tweets', { user: userData, userTweet })
+      const top10Followers = await getTop10Following(req, next)
+      return res.render('self-tweets', {
+        user: userData,
+        userTweet,
+        tweet: tweetData,
+        topFollowers: top10Followers
+      })
     } catch (err) {
       next(err)
     }
@@ -109,22 +142,32 @@ const userController = {
   //* 追蹤功能
   addFollowing: async (req, res, next) => {
     try {
-      const user = await User.findByPk(req.user.id)
+      const userId = helpers.getUser(req).id
+      const followingId = req.body.id
+      //! 不能用自用錯誤處理..
+      // if (req.user.id == followingId) throw new Error('不能追蹤自己')
+
+      if (userId == followingId) return res.status(200).json({ error: '不能追蹤自己' })
+
+      const user = await User.findByPk(userId)
       if (!user) throw new Error('找不到該用戶')
-      return Followship.create({
-        followerId: req.user.id,
-        followingId: req.params.userId
+      await Followship.create({
+        followerId: userId,
+        followingId
       })
+      return res.redirect('back')
     } catch (err) {
       next(err)
     }
   },
   removeFollowing: async (req, res, next) => {
     try {
-      const user = await User.findByPk(req.user.id)
+      const userId = helpers.getUser(req).id
+      const followingId = req.params.id
+      const user = await User.findByPk(userId)
       if (!user) throw new Error('找不到該用戶')
       const followShip = await Followship.findOne({
-        where: { followerId: req.user.id, followingId: req.params.userId }
+        where: { followerId: userId, followingId }
       })
       if (!followShip) throw new Error('還沒有追蹤用戶')
       await followShip.destroy()
@@ -139,7 +182,7 @@ const userController = {
       const tweet = await Tweet.findByPk(req.user.id)
       if (!tweet) throw new Error('找不到該篇推文')
       await Like.create({ tweetId: req.params.id, userId: req.user.id })
-      return res.render('back')
+      return res.redirect('back')
     } catch (err) {
       next(err)
     }
@@ -190,8 +233,12 @@ const userController = {
 
       if (!user) throw new Error('該用戶不存在!')
       // 如果account、email有更動就判斷是否有重複
-      if (user.account !== account && isAccountExist) { throw new Error('該帳號已存在!') }
-      if (user.email !== email && isEmailExist) { throw new Error('該email已存在!') }
+      if (user.account !== account && isAccountExist) {
+        throw new Error('該帳號已存在!')
+      }
+      if (user.email !== email && isEmailExist) {
+        throw new Error('該email已存在!')
+      }
       // 確認name有無超過50字
       if (name?.length > 50) throw new Error('該名字超過字數上限 50 個字!')
       // 確認密碼是否正確
@@ -224,7 +271,9 @@ const userController = {
       const { files } = req
 
       if (name?.length > 50) throw new Error('名稱不能超過 50 個字')
-      if (introduction?.length > 160) { throw new Error('自我介紹不能超過 160 個字') }
+      if (introduction?.length > 160) {
+        throw new Error('自我介紹不能超過 160 個字')
+      }
 
       const [user, avatarPath, coverPath] = await Promise.all([
         User.findByPk(id),
