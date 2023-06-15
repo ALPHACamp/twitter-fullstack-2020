@@ -45,7 +45,6 @@ const tweetController = {
           { model: Like, attributes: [] }
         ]
       })
-
       const top10Followers = await getTop10Following(req, next)
       return res.render('tweets', {
         tweets,

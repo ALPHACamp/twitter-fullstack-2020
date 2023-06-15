@@ -6,9 +6,7 @@ replyBtns.forEach(btn => {
     const btn = e.target.classList.contains('reply-btn')
       ? e.target
       : e.target.parentElement
-    const { account, id, img, time, name, description, userAvatar } =
-      btn.dataset
-
+    const { id, account, img, time, name, description, userAvatar } = btn.dataset
     replyModal.innerHTML = `<div class="modal-dialog">
     <div class="modal-content" style="width:634px;height:500px;border-radius:14px;padding:0px 16px">
     <div class=" d-flex justify-content-start m-2">

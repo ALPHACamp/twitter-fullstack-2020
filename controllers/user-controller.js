@@ -40,7 +40,7 @@ const userController = {
       }
 
       const hash = await bcrypt.hash(req.body.password, 10)
-      await User.create({ account, name, email, password: hash })
+      await User.create({ account, name, email, password: hash, role: 'user' })
 
       req.flash('success_messages', '成功註冊帳號！')
       return res.redirect('/signin')
@@ -139,8 +139,16 @@ const userController = {
   //* 追蹤功能
   addFollowing: async (req, res, next) => {
     try {
-      if (req.user.id === req.params.userId) throw new Error('不能追蹤自己')
+
+      const userId = helpers.getUser(req).id
+      const followingId = req.body.id
+      //! 不能用自用錯誤處理..
+      // if (req.user.id == followingId) throw new Error('不能追蹤自己')
+
+      if (userId == followingId) return res.status(200).json({ error: '不能追蹤自己' })
+
       const user = await User.findByPk(req.user.id)
+
 
       if (!user) throw new Error('找不到該用戶')
       await Followship.create({
