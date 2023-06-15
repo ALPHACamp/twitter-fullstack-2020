@@ -1,38 +1,72 @@
-<div class="mb-4 text-center">
-  {{> messages}}
-  {{!-- logo --}}
-  <a href="/" class="">
-    <img src="/_base/icon/logo.svg">
-  </a>
-  <h1 class="h3 font-weight-normal mb-3">建立你的帳號</h1>
-</div>
-<form class="form-regist" action="/signup" method="POST" style="width: 100%;">
-  <div class="form-row mb-3">
-    <label class="form-label" for="account">帳號</label>
-    <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" value="{{ account }}"
-      required autofocus>
+<div class="container" style="margin:0 auto;">
+  <div class="mt-4 mb-4 text-center" style="position:relative; top:64px;">
+    {{> messages}}
+    {{!-- logo --}}
+    <a href="/admin/signin" class="">
+      <img src="/_base/icon/logo.svg">
+    </a>
+    <h3 class="font-weight-normal mt-2 mb-3">建立你的帳號</h3>
   </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="name">名稱</label>
-    <input type="text" id="name" name="name" class="form-control" placeholder="請輸入使用者名稱" value="{{ name }}" required>
-  </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="email">Email</label>
-    <input type="text" id="email" name="email" class="form-control" placeholder="請輸入 Email" value="{{ email }}"
-      required>
-  </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="password">密碼</label>
-    <input type="password" id="password" name="password" class="form-control" placeholder="請設定密碼" value="{{ password }}"
-      required>
-  </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="checkPassword">密碼確認</label>
-    <input type="password" id="checkPassword" name="checkPassword" class="form-control" placeholder="請再次輸入密碼"
-      value="{{ checkPassword }}" required>
-  </div>
-  <button class="btn btn-primary btn-block" type="submit">註冊</button>
-</form>
-<div class="mb-4 text-center">
-  <p><a href="/signin">取消</a></p>
+  {{!-- 表單 --}}
+  <form class="form-regist" action="/signup" method="POST"
+    style="position: relative; top: 60px; width: 356px; margin: 0 auto;">
+    {{!-- 帳號 --}}
+    <div class="form-row">
+      <label class="form-label text-14px-reg color-dark-80" for="account">帳號</label>
+      <input class="form-input text-16px-reg" id="account" type="text" name="account" placeholder="請輸入帳號"
+        value="{{ account }}" required autofocus>
+    </div>
+    <div class="form-gap d-flex">
+      <label class="flex-fill text-12px-med text-start color-error" id="helper">帳號不存在</label>
+      <label class="flex-fill text-12px-med text-end color-dark-80" id="count">13/50</label>
+    </div>
+    {{!-- 名稱 --}}
+    <div class="form-row">
+      <label class="form-label text-14px-reg color-dark-80" for="name">名稱</label>
+      <input class="form-input text-16px-reg" id="name" type="text" name="name" placeholder="請輸入使用者名稱"
+        value="{{ name }}" required>
+    </div>
+    <div class="form-gap d-flex">
+      <label class="flex-fill text-12px-med text-start color-error" id="helper"></label>
+      <label class="flex-fill text-12px-med text-end color-dark-80" id="count"></label>
+    </div>
+    {{!-- Email --}}
+    <div class="form-row">
+      <label class="form-label text-14px-reg color-dark-80" for="email">Email</label>
+      <input class="form-input text-16px-reg" id="email" type="email" name="email" placeholder="請輸入Email"
+        value="{{ email }}" required>
+    </div>
+    <div class="form-gap d-flex">
+      <label class="flex-fill text-12px-med text-start color-error" id="helper"></label>
+      <label class="flex-fill text-12px-med text-end color-dark-80" id="count"></label>
+    </div>
+    {{!-- 密碼 --}}
+    <div class="form-row">
+      <label class="form-label text-14px-reg color-dark-80" for="password">密碼</label>
+      <input class="form-input text-16px-reg" id="password" type="password" name="password" placeholder="請輸入密碼"
+        value="{{ password }}" required>
+    </div>
+    <div class="form-gap d-flex">
+      <label class="flex-fill text-12px-med text-start color-error" id="helper"></label>
+      <label class="flex-fill text-12px-med text-end color-dark-80" id="count"></label>
+    </div>
+    {{!-- 密碼確認 --}}
+    <div class="form-row">
+      <label class="form-label text-14px-reg color-dark-80" for="checkPassword">密碼確認</label>
+      <input class="form-input text-16px-reg" id="checkPassword" type="password" name="checkPassword"
+        placeholder="請再次輸入密碼" value="{{ checkPassword }}" required>
+    </div>
+    <div class="form-gap d-flex">
+      <label class="flex-fill text-12px-med text-start color-error" id="helper"></label>
+      <label class="flex-fill text-12px-med text-end color-dark-80" id="count"></label>
+    </div>
+    {{!-- 註冊 --}}
+    <button class="pill pill-large pill-main" type="submit" style="margin-top: 8px;">註冊</button>
+    {{!-- 取消 --}}
+    <div class="d-flex justify-content-center" style="margin: 16px auto 0 auto; height: 36px; width: 56px">
+      <a href="/signin">
+        <p class="color-primary text-16px-reg" style="border-bottom: 1px solid;">取消</p>
+      </a>
+    </div>
+  </form>
 </div>

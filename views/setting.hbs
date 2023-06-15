@@ -1,30 +1,58 @@
-<div class="mb-4 text-center">
-  <h1 class="h3 font-weight-normal mb-3">帳戶設定</h1>
-</div>
-<form class="form-regist" action="/users/{{ userId }}/setting?_method=PUT" method="POST" style="width: 100%;">
-  <div class="form-row mb-3">
-    <label class="form-label" for="account">帳號</label>
-    <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" value="{{ account }}"
-      required autofocus>
+<h4 class="pt-4 ps-4 pe-4 pb-1">帳戶設定</h4>
+<hr>
+{{!-- 表單 --}}
+<form class="form-setting" action="/users/{{ userId }}/setting?_method=PUT" method="POST"
+  style="position: relative; top: 24px; width:639px; margin: 0 auto; padding: 0 23px 0 23px;">
+  {{!-- 帳號 --}}
+  <div class="form-row">
+    <label class="form-label text-14px-reg color-dark-80" for="account">帳號</label>
+    <input class="form-input text-16px-reg" id="account" type="text" name="account" placeholder="請輸入帳號"
+      value="{{ account }}" required autofocus>
   </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="name">名稱</label>
-    <input type="text" id="name" name="name" class="form-control" placeholder="請輸入名稱" value="{{ name }}" required>
+  <div class="form-gap d-flex">
+    <label class="flex-fill text-12px-med text-start color-error" id="helper">帳號不存在</label>
+    <label class="flex-fill text-12px-med text-end color-dark-80" id="count">13/50</label>
   </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="email">Email</label>
-    <input type="text" id="email" name="email" class="form-control" placeholder="請輸入 Email" value="{{ email }}"
+  {{!-- 名稱 --}}
+  <div class="form-row">
+    <label class="form-label text-14px-reg color-dark-80" for="name">名稱</label>
+    <input class="form-input text-16px-reg" id="name" type="text" name="name" placeholder="請輸入使用者名稱" value="{{ name }}"
       required>
   </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="password">密碼</label>
-    <input type="password" id="password" name="password" class="form-control" placeholder="請設定密碼" value="{{ password }}"
-      required>
+  <div class="form-gap d-flex">
+    <label class="flex-fill text-12px-med text-start color-error" id="helper"></label>
+    <label class="flex-fill text-12px-med text-end color-dark-80" id="count"></label>
   </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="checkPassword">密碼再確認</label>
-    <input type="password" id="checkPassword" name="checkPassword" class="form-control" placeholder="請再次輸入密碼"
-      value="{{ checkPassword }}" required>
+  {{!-- Email --}}
+  <div class="form-row">
+    <label class="form-label text-14px-reg color-dark-80" for="email">Email</label>
+    <input class="form-input text-16px-reg" id="email" type="email" name="email" placeholder="請輸入Email"
+      value="{{ email }}" required>
   </div>
-  <button class="btn btn-primary btn-block" type="submit">儲存</button>
+  <div class="form-gap d-flex">
+    <label class="flex-fill text-12px-med text-start color-error" id="helper"></label>
+    <label class="flex-fill text-12px-med text-end color-dark-80" id="count"></label>
+  </div>
+  {{!-- 密碼 --}}
+  <div class="form-row">
+    <label class="form-label text-14px-reg color-dark-80" for="password">密碼</label>
+    <input class="form-input text-16px-reg" id="password" type="password" name="password" placeholder="請輸入密碼"
+      value="{{ password }}" required>
+  </div>
+  <div class="form-gap d-flex">
+    <label class="flex-fill text-12px-med text-start color-error" id="helper"></label>
+    <label class="flex-fill text-12px-med text-end color-dark-80" id="count"></label>
+  </div>
+  {{!-- 密碼確認 --}}
+  <div class="form-row">
+    <label class="form-label text-14px-reg color-dark-80" for="checkPassword">密碼確認</label>
+    <input class="form-input text-16px-reg" id="checkPassword" type="password" name="checkPassword"
+      placeholder="請再次輸入密碼" value="{{ checkPassword }}" required>
+  </div>
+  <div class="form-gap d-flex">
+    <label class="flex-fill text-12px-med text-start color-error" id="helper"></label>
+    <label class="flex-fill text-12px-med text-end color-dark-80" id="count"></label>
+  </div>
+  {{!-- 儲存 --}}
+  <button class="pill-default pill-main" type="submit" style="margin-top: 8px; margin-left: auto;">儲存</button>
 </form>
