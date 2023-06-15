@@ -1,12 +1,14 @@
 // 設定監聽中的 Modal
 const targetNodes = []
-const postTweetModal = document.getElementById('postTweetModal')
-const editProfileModal = document.getElementById('editProfileModal')
-const postReplyModal = document.getElementById('postReplyModal')
+const postTweetModal = document.getElementById('postTweetModal') || null
+const editProfileModal = document.getElementById('editProfileModal') || null
+const postReplyModal = document.getElementById('postReplyModal') || null
+const deleteTweetModal = document.getElementById('deleteTweetModal') || null
 
 targetNodes.push(postTweetModal)
 targetNodes.push(editProfileModal)
 targetNodes.push(postReplyModal)
+targetNodes.push(deleteTweetModal)
 
 // 取得目前現在視窗大小的函式
 function updatePageHeight() {
@@ -203,4 +205,40 @@ function previewCover() {
   }
   // 如果file存在，就用reader物件將file轉換為DataURL，完成後會將DataURL存放在reader.result並觸發onloadend
   if (file) reader.readAsDataURL(file)
+}
+
+// 後台 admin 監聽刪除按紐
+const deleteTweetButton = document.querySelectorAll('.deleteTweetButton')
+
+if (deleteTweetButton) {
+  // 每個刪除按鈕加上監聽器
+  deleteTweetButton.forEach(button => {
+    // 監聽按鈕 call API 取得推文資料 把個人資料插入 modal
+    button.addEventListener('click', () => {
+      const tweetId = button.value
+      console.log('tweetId 是：', tweetId)
+      const ModalUserName = deleteTweetModal.querySelector('#ModalUserName')
+      const ModalUserAvatar = deleteTweetModal.querySelector('#ModalUserAvatar')
+      const ModalUserAccount1 = deleteTweetModal.querySelector('#ModalUserAccount1')
+      const ModalDescription = deleteTweetModal.querySelector('#ModalDescription')
+      const ModalForm = deleteTweetModal.querySelector('#ModalForm')
+      // deleteTweetModal.getElementById
+      axios.get(`/api/admin/tweets/${tweetId}`)
+        .then(response => {
+          const { name, avatar, account } = response.data.tweet.User
+          const { description } = response.data.tweet
+          // 更改 Modal 中的資料
+          ModalUserName.textContent = name
+          ModalUserAvatar.src = avatar
+          ModalUserAccount1.textContent = account
+          ModalDescription.textContent = description
+          ModalForm.action = `/admin/tweets/${tweetId}?_method=DELETE`
+          console.log('response為:', response)
+        })
+        .catch(err => {
+          console.error('Error during API call:', err) // 在控制台中打印錯誤
+          alert('An error occurred while fetching tweet data.') // 給使用者顯示一個錯誤提示
+        })
+    })
+  })
 }

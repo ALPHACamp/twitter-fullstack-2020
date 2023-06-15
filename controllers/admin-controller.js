@@ -109,9 +109,11 @@ const adminController = {
 
   // 刪除貼文
   deleteTweet: (req, res, next) => {
+    console.log('要刪除的貼文 id 為:', req.params.id)
     return Tweet.findByPk(req.params.id)
       .then(tweet => {
         if (!tweet) throw new Error("Tweet didn't exist!")
+        console.log('找到要刪除的貼文 id 為:', req.params.id)
         return tweet.destroy()
       })
       .then(() => res.redirect(302, '/admin/tweets'))
