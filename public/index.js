@@ -1,3 +1,4 @@
+// 設定監聽中的 Modal
 const targetNodes = []
 const postTweetModal = document.getElementById('postTweetModal')
 const editProfileModal = document.getElementById('editProfileModal')
@@ -31,6 +32,43 @@ const observer = new MutationObserver(function async(mutationsList, observer) {
       if (mutation.target.classList.contains('show')) {
         // 將他的 top 設定到固定位置
         mutation.target.style.top = `-${pageHeight}px`
+        // 抓出要監聽的 Modal 內部元件
+        const ModalSubmitBtn = mutation.target.querySelector('#ModalSubmitBtn') || null
+        const ModalTextarea = mutation.target.querySelector('#ModalTextarea') || null
+        const ModalErrorMessage = mutation.target.querySelector('#ModalErrorMessage') || null
+        const ModalCloseBtn = mutation.target.querySelector('#ModalCloseBtn') || null
+        if (ModalSubmitBtn) {
+          ModalSubmitBtn.addEventListener('click', modalErrorHandler)
+          ModalCloseBtn.addEventListener('click', closeModalEventListener)
+        }
+
+        // 函式：消滅已產生的事件監聽器
+        function closeModalEventListener(e) {
+          ModalTextarea.value = ''
+          ModalErrorMessage.innerText = ''
+          ModalSubmitBtn.removeEventListener('click', modalErrorHandler)
+          ModalCloseBtn.removeEventListener('click', closeModalEventListener)
+        }
+
+        // 函式：提供錯誤處理訊息，若符合發文條件則改變 btn.type 讓其可以發送
+        function modalErrorHandler(e) {
+          if (!ModalTextarea.value || ModalTextarea.value.trim() === '') {
+            ModalErrorMessage.innerText = '內容不可空白'
+          } else if (ModalTextarea.value.trim().length > 140) {
+            ModalErrorMessage.innerText = '字數不可超過140字'
+          } else {
+            ModalErrorMessage.innerText = ''
+            ModalSubmitBtn.removeEventListener('click', modalErrorHandler)
+            ModalCloseBtn.removeEventListener('click', closeModalEventListener)
+            ModalSubmitBtn.type = 'submit'
+          }
+        }
+      } else {
+        // 如果沒有 .show 將時刻維持回覆內容、錯誤訊息為空值
+        const ModalTextarea = mutation.target.querySelector('#ModalTextarea') || null
+        const ModalErrorMessage = mutation.target.querySelector('#ModalErrorMessage') || null
+        if (ModalTextarea) { ModalTextarea.value = '' }
+        if (ModalErrorMessage) { ModalErrorMessage.innerText = '' }
       }
     }
   }
@@ -44,6 +82,29 @@ const observerOptions = {
 targetNodes.forEach(function (targetNode) {
   observer.observe(targetNode, observerOptions)
 })
+
+// 首頁推文區域錯誤事件處理
+const mainPostTweet = document.getElementById('mainPostTweet') || null
+if (mainPostTweet) {
+  const ModalSubmitBtn = mainPostTweet.querySelector('#ModalSubmitBtn')
+  const ModalTextarea = mainPostTweet.querySelector('#ModalTextarea')
+  const ModalErrorMessage = mainPostTweet.querySelector('#ModalErrorMessage')
+
+  ModalSubmitBtn.addEventListener('click', mainPostTweetErrorHandler)
+  // 函式：提供錯誤處理訊息，若符合發文條件則改變 btn.type 讓其可以發送
+  function mainPostTweetErrorHandler(e) {
+    if (!ModalTextarea.value || ModalTextarea.value.trim() === '') {
+      ModalErrorMessage.innerText = '內容不可空白'
+    } else if (ModalTextarea.value.trim().length > 140) {
+      ModalErrorMessage.innerText = '字數不可超過140字'
+    } else {
+      ModalErrorMessage.innerText = ''
+      // 消滅現在的事件監聽器
+      ModalSubmitBtn.removeEventListener('click', mainPostTweetErrorHandler)
+      ModalSubmitBtn.type = 'submit'
+    }
+  }
+}
 
 // 編輯個人資料相關
 const editProfileButton = document.querySelector('#editProfileButton')

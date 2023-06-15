@@ -264,12 +264,6 @@ const userController = {
       })
     ])
       .then(([user, tweets, replies, likes, currentUser, topUsers]) => {
-        // 抓取特定使用者的資料
-        const userData = ({
-          ...user.toJSON(),
-          followerCount: user.Followings.length,
-          followingCount: user.Followers.length
-        })
         const tweetsData = tweets.map(tweet => ({
           ...tweet,
           replyCount: replies.filter(reply => reply.tweetId === tweet.id).length,
@@ -278,7 +272,13 @@ const userController = {
         }))
         // 將目前使用者追蹤的使用者做成一張清單
         const followingList = helpers.getUser(req).Followings.map(f => f.id)
-        user.isFollowed = followingList.includes(user.id)
+        // 抓取特定使用者的資料
+        const userData = ({
+          ...user.toJSON(),
+          isFollowed: followingList.includes(user.id),
+          followerCount: user.Followings.length,
+          followingCount: user.Followers.length
+        })
         const data = topUsers
           .map(user => ({
             ...user.toJSON(),
