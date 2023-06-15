@@ -20,7 +20,12 @@ module.exports = {
         references: {
           model: 'Tweets',
           key: 'id'
-        }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      deleted_at: {
+        type: Sequelize.DATE
       },
       created_at: {
         allowNull: false,

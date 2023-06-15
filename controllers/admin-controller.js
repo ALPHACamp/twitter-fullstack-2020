@@ -1,5 +1,5 @@
 const helpers = require('../_helpers')
-const { User, Tweet } = require('../models')
+const { User, Followship, Tweet, Like } = require('../models')
 
 const adminController = {
   adminSigninPage: (req, res) => {
@@ -53,16 +53,40 @@ const adminController = {
   adminGetUsers: async (req, res, next) => {
     try {
       const users = await User.findAll({
-        raw: true,
-        nest: true,
         where: {
           role: 'user'
         },
         order: [['createdAt', 'DESC']]
       })
+      const count = await Promise.all(
+        users.map(async user => ({
+          tweetsCount: await Tweet.count({ where: { UserId: user.id } }),
+          followingsCount: await Followship.count({
+            where: { followerId: user.id }
+          }),
+          followersCount: await Followship.count({
+            where: { followingId: user.id }
+          }),
+          likeCount: await Like.count({ where: { UserId: user.id } })
+        }))
+      )
+
+      const userData = await users.map((user, index) => ({
+        ...user.toJSON(),
+        tweetsCount: count[index].tweetsCount,
+        followingsCount: count[index].followingsCount,
+        followersCount: count[index].followersCount,
+        likeCount: count[index].likeCount
+      }))
+
+      // 依照追隨時間排序
+      userData.sort((a, b) => {
+        return b.tweetsCount - a.tweetsCount
+      })
+
       const partialName = 'admin-users'
       const userPage = true
-      res.render('admin/tweets', { users, partialName, userPage })
+      res.render('admin/tweets', { userData, partialName, userPage })
     } catch (err) {
       next(err)
     }

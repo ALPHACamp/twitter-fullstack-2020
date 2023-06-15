@@ -13,7 +13,6 @@ const passport = require('./config/passport')
 // helpers
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const helpers = require('./_helpers')
-
 const previousPage = require('./middleware/previous-page')
 
 // files
