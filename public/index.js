@@ -1,3 +1,15 @@
+// 取得通知的容器
+const notiContainer = document.getElementById('notification') || null
+
+if (notiContainer) {
+  const toasts = notiContainer.querySelectorAll('.toast')
+  toasts.forEach(toast => {
+    toast = new bootstrap.Toast(toast)
+    // 顯現通知
+    toast.show()
+  })
+}
+
 // 設定監聽中的 Modal
 const targetNodes = []
 const postTweetModal = document.getElementById('postTweetModal') || null
