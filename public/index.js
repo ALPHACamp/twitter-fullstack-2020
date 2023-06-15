@@ -120,15 +120,12 @@ if (mainPostTweet) {
   }
 }
 
-// 編輯個人資料相關
-const editProfileButton = document.querySelector('#editProfileButton')
-const putProfileButton = document.querySelector('#putProfileButton')
-const removeCoverButton = document.querySelector('#removeCoverButton')
-
-if (editProfileButton) {
-  // 監聽按鈕 call API取得個人資料 把個人資料插入modal
-  editProfileButton.addEventListener('click', event => {
-    const userId = editProfileButton.value
+// 監聽 編輯個人資料 相關按鈕
+const centerColumn = document.querySelector('#center-column')
+centerColumn.addEventListener('click', event => {
+  // 監聽編輯個人資料按鈕 call API取得個人資料 把個人資料插入modal
+  if (event.target.matches('#editProfileButton')) {
+    const userId = document.querySelector('#editProfileButton').value
     const nameInput = document.querySelector('#name')
     const introInput = document.querySelector('#intro')
     const previewCover = document.querySelector('#previewCover')
@@ -145,13 +142,10 @@ if (editProfileButton) {
         console.error('Error during API call:', err) // 在控制台中打印錯誤
         alert('An error occurred while fetching profile data.') // 給使用者顯示一個錯誤提示
       })
-  })
-}
-
-if (putProfileButton) {
-  // 監聽按鈕 call API更新個人資料 關閉Modal刷新個人資料頁面
-  putProfileButton.addEventListener('click', event => {
-    const userId = editProfileButton.value
+  }
+  // 監聽儲存按鈕 call API更新個人資料 關閉Modal刷新個人資料頁面
+  if (event.target.matches('#putProfileButton')) {
+    const userId = document.querySelector('#editProfileButton').value
     // 取得使用者輸入的資料
     const name = document.querySelector('#name').value
     const intro = document.querySelector('#intro').value
@@ -178,17 +172,14 @@ if (putProfileButton) {
         console.error('Error during API call:', err) // 在控制台中打印錯誤
         alert('An error occurred while fetching profile data.') // 給使用者顯示一個錯誤提示
       })
-  })
-}
-
-if (removeCoverButton) {
-  // 監聽按鈕 把封面換成初始值
-  removeCoverButton.addEventListener('click', event => {
+  }
+  if (event.target.matches('#removeCoverButton')) {
+    // 監聽封面上的X按鈕 把封面換成初始值
     const previewCover = document.querySelector('#previewCover')
     previewCover.src = 'https://i.imgur.com/b7U6LXD.jpg'
     previewCover.dataset.reset = 'true'
-  })
-}
+  }
+})
 
 // 預覽大頭貼 當avatarInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的avatar
 function previewAvatar() {
