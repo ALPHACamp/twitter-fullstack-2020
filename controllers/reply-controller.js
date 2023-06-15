@@ -25,26 +25,26 @@ const replyController = {
   },
   createReply: (req, res, next) => { // 新增回覆
     const UserId = helpers.getUser(req).id
-    const { description } = req.body
+    const { comment } = req.body
     const TweetId = req.params.id
 
-    //     if (!description) {
-    //       req.flash('error_reply', '內容不可空白')
-    //       return res.redirect('back')
-    //     }
-    //     if (description.trim() === '') {
-    //       req.flash('error_reply', '內容不可空白')
-    //       return res.redirect('back')
-    //     }
-    //     if (description.length > 140) {
-    //       req.flash('error_reply', '字數已超過上限140個字')
-    //       return res.redirect('back')
-    //     }
+    if (!comment) {
+      req.flash('error_reply', '內容不可空白')
+      return res.redirect('back')
+    }
+    if (comment.trim() === '') {
+      req.flash('error_reply', '內容不可空白')
+      return res.redirect('back')
+    }
+    if (comment.length > 140) {
+      req.flash('error_reply', '字數已超過上限140個字')
+      return res.redirect('back')
+    }
 
     return Reply.create({
       UserId,
       TweetId,
-      comment: description
+      comment: comment
     })
       .then(() => res.redirect(`/tweets/${TweetId}/replies`))
       .catch(err => next(err))
