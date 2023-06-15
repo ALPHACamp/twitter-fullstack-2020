@@ -28,8 +28,23 @@ const followingArr = (users, followingNumber) => {
   return arr
 }
 
+const likeArr = (users, tweets, likeNumber) => {
+  const arr = []
+  let tweetsOther = tweets
+  users.forEach(user => {
+    const userId = user.id
+    for (let i = 0; i < likeNumber; i++) {
+      const tweetId = tweets[Math.floor(Math.random() * tweets.length)].id
+      tweetsOther = tweetsOther.filter(tweet => tweet.id !== tweetId)
+      arr.push({ userId: userId, tweetId: tweetId })
+    }
+  })
+  return arr
+}
+
 module.exports = {
   randomNumber,
   userIndex,
-  followingArr
+  followingArr,
+  likeArr
 }

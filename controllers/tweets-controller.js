@@ -1,7 +1,6 @@
 const { User, Followship, Tweet, Reply, Like } = require('../models')
 const helpers = require('../_helpers')
 
-const nav = 'tweets'
 const tweetsController = {
   getTweets: async (req, res, next) => {
     // 取得登入使用者的資料
@@ -23,7 +22,6 @@ const tweetsController = {
         user: loginUser,
         tweets: tweets,
         partialName,
-        // nav,
         followingData
       })
     } catch (err) {
@@ -51,7 +49,6 @@ const tweetsController = {
         repliesCount,
         isLiked,
         partialName,
-        nav,
         followingData
       })
     } catch (err) {

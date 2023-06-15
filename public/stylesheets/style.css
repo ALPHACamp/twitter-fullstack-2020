@@ -935,7 +935,7 @@ h5 {
   display: none;
   font-weight: 500;
   font-size: 15px;
-  color: #FC5A5A;
+  color: #fc5a5a;
 }
 
 form.was-validated .invalid-message:invalid ~ .invalid-parent .invalid-feedback.tweet-feedback,

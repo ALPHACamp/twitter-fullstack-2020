@@ -14,10 +14,9 @@ const userController = {
     res.redirect('/tweets')
   },
   signup: (req, res, next) => {
-    const { account, name, email, password, passwordCheck } = req.body
+    const { account, name, email, password, checkPassword } = req.body
     const errors = []
-
-    if (password !== passwordCheck) {
+    if (password !== checkPassword) {
       errors.push('密碼不一致!')
     }
     if (name.length > 50) {
@@ -40,6 +39,7 @@ const userController = {
         if (errors.length) {
           return res.render('signup', { errors, account, name, email })
         }
+
         return bcrypt
           .genSalt(10)
           .then(salt => bcrypt.hash(password, salt))

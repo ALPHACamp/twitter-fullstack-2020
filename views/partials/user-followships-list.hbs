@@ -9,11 +9,11 @@
   {{!-- followings-list --}}
   {{#chooseEach followingsPage}}
     {{#each user.Followings}}
-      {{> user-followships}}
+      {{> user-followships loginUser = ../loginUser}}
     {{/each}}
   {{else}}
     {{#each user.Followers}}
-      {{> user-followships}}
+      {{> user-followships loginUser = ../loginUser}}
     {{/each}}
   {{/chooseEach}}
 
