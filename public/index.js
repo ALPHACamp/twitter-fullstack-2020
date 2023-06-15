@@ -2,6 +2,7 @@ const targetNodes = []
 const postTweetModal = document.getElementById('postTweetModal')
 const editProfileModal = document.getElementById('editProfileModal')
 const postReplyModal = document.getElementById('postReplyModal')
+
 targetNodes.push(postTweetModal)
 targetNodes.push(editProfileModal)
 targetNodes.push(postReplyModal)
@@ -49,64 +50,70 @@ const editProfileButton = document.querySelector('#editProfileButton')
 const putProfileButton = document.querySelector('#putProfileButton')
 const removeCoverButton = document.querySelector('#removeCoverButton')
 
-// 監聽按鈕 call API取得個人資料 把個人資料插入modal
-editProfileButton.addEventListener('click', event => {
-  const userId = editProfileButton.value
-  const nameInput = document.querySelector('#name')
-  const introInput = document.querySelector('#intro')
-  const previewCover = document.querySelector('#previewCover')
-  const previewAvatar = document.querySelector('#previewAvatar')
-  axios.get(`/api/users/${userId}`)
-    .then(response => {
-      const { cover, avatar, name, intro } = response.data
-      previewCover.src = cover
-      previewAvatar.src = avatar
-      nameInput.value = name
-      introInput.value = intro
-    })
-    .catch(err => {
-      console.error('Error during API call:', err) // 在控制台中打印錯誤
-      alert('An error occurred while fetching profile data.') // 給使用者顯示一個錯誤提示
-    })
-})
-
-// 監聽按鈕 call API更新個人資料 關閉Modal刷新個人資料頁面
-putProfileButton.addEventListener('click', event => {
-  const userId = editProfileButton.value
-  // 取得使用者輸入的資料
-  const name = document.querySelector('#name').value
-  const intro = document.querySelector('#intro').value
-  const avatar = document.querySelector('#avatarInput').files[0]
-  const cover = document.querySelector('#coverInput').files[0]
-  const coverReset = document.querySelector('#previewCover').dataset.reset
-  // 打包成FormData
-  const formData = new FormData()
-  formData.append('name', name)
-  formData.append('intro', intro)
-  formData.append('avatar', avatar)
-  formData.append('cover', cover)
-  formData.append('coverReset', coverReset)
-  // 發送打包好的formData
-  axios.post(`/api/users/${userId}`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
+if (editProfileButton) {
+  // 監聽按鈕 call API取得個人資料 把個人資料插入modal
+  editProfileButton.addEventListener('click', event => {
+    const userId = editProfileButton.value
+    const nameInput = document.querySelector('#name')
+    const introInput = document.querySelector('#intro')
+    const previewCover = document.querySelector('#previewCover')
+    const previewAvatar = document.querySelector('#previewAvatar')
+    axios.get(`/api/users/${userId}`)
+      .then(response => {
+        const { cover, avatar, name, intro } = response.data
+        previewCover.src = cover
+        previewAvatar.src = avatar
+        nameInput.value = name
+        introInput.value = intro
+      })
+      .catch(err => {
+        console.error('Error during API call:', err) // 在控制台中打印錯誤
+        alert('An error occurred while fetching profile data.') // 給使用者顯示一個錯誤提示
+      })
   })
-    .then(() => {
-      window.location.href = `/users/${userId}/tweets` // 前往個人資料頁面
-    })
-    .catch(err => {
-      console.error('Error during API call:', err) // 在控制台中打印錯誤
-      alert('An error occurred while fetching profile data.') // 給使用者顯示一個錯誤提示
-    })
-})
+}
 
-// 監聽按鈕 把封面換成初始值 
-removeCoverButton.addEventListener('click', event => {
-  const previewCover = document.querySelector('#previewCover')
-  previewCover.src = 'https://i.imgur.com/b7U6LXD.jpg'
-  previewCover.dataset.reset = 'true'
-})
+if (putProfileButton) {
+  // 監聽按鈕 call API更新個人資料 關閉Modal刷新個人資料頁面
+  putProfileButton.addEventListener('click', event => {
+    const userId = editProfileButton.value
+    // 取得使用者輸入的資料
+    const name = document.querySelector('#name').value
+    const intro = document.querySelector('#intro').value
+    const avatar = document.querySelector('#avatarInput').files[0]
+    const cover = document.querySelector('#coverInput').files[0]
+    const coverReset = document.querySelector('#previewCover').dataset.reset
+    // 打包成FormData
+    const formData = new FormData()
+    formData.append('name', name)
+    formData.append('intro', intro)
+    formData.append('avatar', avatar)
+    formData.append('cover', cover)
+    formData.append('coverReset', coverReset)
+    // 發送打包好的formData
+    axios.post(`/api/users/${userId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+      .then(() => {
+        window.location.href = `/users/${userId}/tweets` // 前往個人資料頁面
+      })
+      .catch(err => {
+        console.error('Error during API call:', err) // 在控制台中打印錯誤
+        alert('An error occurred while fetching profile data.') // 給使用者顯示一個錯誤提示
+      })
+  })
+}
+
+if (removeCoverButton) {
+  // 監聽按鈕 把封面換成初始值
+  removeCoverButton.addEventListener('click', event => {
+    const previewCover = document.querySelector('#previewCover')
+    previewCover.src = 'https://i.imgur.com/b7U6LXD.jpg'
+    previewCover.dataset.reset = 'true'
+  })
+}
 
 // 預覽大頭貼 當avatarInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的avatar
 function previewAvatar() {

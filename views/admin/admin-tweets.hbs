@@ -22,8 +22,10 @@
         </div>
       </div>
       <div class="col col-2 d-flex flex-row-reverse">
-        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="me-2 pt-2">
-          <button type="submit" style="height: 15px; width: 15px; color: #696974;">X</button>
+        <form action="/admin/tweets/{{this.id}}?_method=DELETE" id="deleteTweetForm" method="POST" class="me-2 pt-2">
+          <button type="button" class="deleteTweetButton" id="deleteTweetButton" data-bs-toggle="modal"
+            data-bs-target="#deleteTweetModal" style="height: 15px; width: 15px; color: #696974;"
+            value="{{this.id}}">X</button>
         </form>
       </div>
     </div>

@@ -4,8 +4,9 @@ const passport = require('../config/passport')
 
 const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
+const adminController = require('../controllers/admin-controller')
 
-const { authenticator } = require('../middleware/auth')
+const { authenticator, authenticatedAdmin } = require('../middleware/auth')
 const { generalErrorHandler, apiErrorHandler } = require('../middleware/error-handler')
 const upload = require('../middleware/multer')
 
@@ -19,6 +20,7 @@ router.use('/admin', admin)
 router.get('/api/users/:id', authenticator, userController.getUserData)
 router.post('/api/users/:id', authenticator, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.editUserProfile)
 router.use('/api/tweets/:id', authenticator, tweetController.apiGetTweet)
+router.get('/api/admin/tweets/:id', authenticatedAdmin, adminController.apiGetTweet)
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)

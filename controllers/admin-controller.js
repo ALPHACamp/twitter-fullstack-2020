@@ -90,6 +90,23 @@ const adminController = {
     }
   },
 
+  // 抓特定推文資料傳給前端
+  apiGetTweet: (req, res, next) => {
+    const tweetId = req.params.id
+    console.log('後端看到 tweetId 是:', tweetId)
+    Tweet.findByPk(tweetId, {
+      include: [User],
+      raw: true,
+      nest: true
+    })
+      .then(tweet => {
+        if (!tweet) throw new Error('Tweet did not exist.')
+        const result = { tweet }
+        return res.json(result)
+      })
+      .catch(err => next(err))
+  },
+
   // 刪除貼文
   deleteTweet: (req, res, next) => {
     return Tweet.findByPk(req.params.id)
