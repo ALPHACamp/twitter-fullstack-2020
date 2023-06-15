@@ -40,7 +40,7 @@ const userController = {
       }
 
       const hash = await bcrypt.hash(req.body.password, 10)
-      await User.create({ account, name, email, password: hash })
+      await User.create({ account, name, email, password: hash, role: 'user' })
 
       req.flash('success_messages', '成功註冊帳號！')
       return res.redirect('/signin')
