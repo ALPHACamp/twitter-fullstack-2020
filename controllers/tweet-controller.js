@@ -62,12 +62,13 @@ const tweetController = {
   // 新增一則推文
   postTweets: (req, res, next) => {
     const { description } = req.body
-    if (!description) throw new Error('Tweet is required!')
-    if (description.length > 140) throw new Error('Tweet length must be under 140 character!')
+    if (!description || description.trim() === '') throw new Error('內容不可空白！')
+    if (description.length > 140) throw new Error('字數不可超過140字！')
     Promise.all([
       Tweet.create({ description, UserId: helpers.getUser(req).id })
     ])
       .then(() => {
+        req.flash('success_messages', '推文成功！')
         res.redirect('/tweets')
       })
       .catch(err => next(err))
@@ -150,9 +151,14 @@ const tweetController = {
   // 新增回覆
   postReply: (req, res, next) => {
     const { comment } = req.body
+    if (!comment || comment.trim() === '') throw new Error('內容不可空白！')
+    if (comment.length > 140) throw new Error('字數不可超過140字！')
     const tweetId = req.params.id
     Reply.create({ comment, UserId: helpers.getUser(req).id, tweetId })
-      .then(reply => res.redirect(`/tweets/${tweetId}/replies`))
+      .then(reply => {
+        req.flash('success_messages', '回覆成功！')
+        res.redirect(`/tweets/${tweetId}/replies`)
+      })
       .catch(err => next(err))
   },
 
