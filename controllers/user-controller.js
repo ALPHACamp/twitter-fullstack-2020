@@ -28,7 +28,7 @@ const userController = {
         name,
         email,
         password: hash,
-        isAdmin: false
+        role: 'user'
       }))
       .then(() => {
         req.flash('success_messages', '成功註冊帳號！')

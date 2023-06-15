@@ -27,13 +27,13 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/logout', userController.logOut)
 
 router.post('/tweets/:id/replies', authenticated, replyController.createReply)
-router.get('/tweets/:id/replies', tweetController.getTweet)
+router.get('/tweets/:id/replies', authenticated, userController.getFollowship, tweetController.getTweet)
 router.get('/tweets', authenticatedTweets, userController.getFollowship, tweetController.getTweets) // 顯示全部推文
-router.post('/tweets', tweetController.createTweet) // 新增推文
+router.post('/tweets', authenticated, tweetController.createTweet) // 新增推文
 
-router.get('/reply/:id', authenticated, replyController.getReplies)
+router.get('/reply/:id', authenticated, userController.getFollowship, replyController.getReplies)
 
-router.get('/users/:id/likes', authenticated, likesController.getLikes)
+router.get('/users/:id/likes', authenticated, userController.getFollowship, likesController.getLikes)
 
 router.get('/users/:id/setting', authenticated, userController.getSetting)
 router.put('/users/:id/setting', authenticated, userController.putSetting)
