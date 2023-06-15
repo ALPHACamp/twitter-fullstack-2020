@@ -100,7 +100,6 @@ const adminController = {
     const tweetId = req.params.id
     Tweet.destroy({ where: { id: tweetId } })
       .then(tweet => {
-        console.log(tweet)
         res.redirect('/admin/tweets')
       })
       .catch(err => console.log(err))
