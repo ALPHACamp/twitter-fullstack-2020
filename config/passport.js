@@ -36,7 +36,7 @@ passport.use(
     // authenticate admin
     (req, account, password, cb) => {
       User.findOne({ where: { account, role: 'admin' } }).then(admin => {
-        if (!admin) { return cb(null, false, req.flash('error_messages', '請至前台登入！')) }
+        if (!admin) { return cb(null, false, req.flash('error_messages', '此帳號不是admin!')) }
         bcrypt.compare(password, admin.password).then(res => {
           if (!res) { return cb(null, false, req.flash('error_messages', '密碼錯誤！')) }
           return cb(null, admin)
