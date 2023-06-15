@@ -100,12 +100,14 @@ const userController = {
         tweets.map(async tweet => {
           // 找出每篇的喜歡及回覆數
           const tweetId = tweet.id
-          const [replies, likes, thisTweet, thisUser] = await Promise.all([
-            Reply.count({ where: { tweet_id: tweetId } }),
-            Like.count({ where: { tweet_id: tweetId } }),
-            Tweet.findByPk(tweetId),
-            User.findByPk(id)
-          ])
+          const [replies, likes, thisTweet, thisUser, isLiked] =
+            await Promise.all([
+              Reply.count({ where: { tweet_id: tweetId } }),
+              Like.count({ where: { tweet_id: tweetId } }),
+              Tweet.findByPk(tweetId),
+              User.findByPk(id),
+              Like.findOne({ where: { tweet_id: tweetId, user_id: id } })
+            ])
           tweet.repliesCount = replies
           tweet.likesCount = likes
           tweet.description = thisTweet.description
@@ -113,6 +115,7 @@ const userController = {
           tweet.userName = thisUser.name
           tweet.account = thisUser.account
           tweet.avatar = thisUser.avatar || 'https://i.imgur.com/mhXz6z9.png?1'
+          tweet.isLiked = isLiked
 
           return tweet
         })
@@ -127,8 +130,14 @@ const userController = {
         FollowersCount,
         tweetsCount
       }
-
-      return res.render('self-tweets', { user: userData, userTweet, tweet: tweetData, userTweets })
+      const top10Followers = await getTop10Following(req, next)
+      return res.render('self-tweets', {
+        user: userData,
+        userTweet,
+        tweet: tweetData,
+        userTweets,
+        topFollowers: top10Followers
+      })
     } catch (err) {
       next(err)
     }
@@ -139,16 +148,15 @@ const userController = {
   //* 追蹤功能
   addFollowing: async (req, res, next) => {
     try {
-
       const userId = helpers.getUser(req).id
       const followingId = req.body.id
       //! 不能用自用錯誤處理..
       // if (req.user.id == followingId) throw new Error('不能追蹤自己')
 
-      if (userId == followingId) return res.status(200).json({ error: '不能追蹤自己' })
+      if (userId == followingId)
+        return res.status(200).json({ error: '不能追蹤自己' })
 
       const user = await User.findByPk(req.user.id)
-
 
       if (!user) throw new Error('找不到該用戶')
       await Followship.create({
@@ -347,7 +355,14 @@ const userController = {
         FollowersCount,
         tweetsCount
       }
-      return res.render('self-replies', { user: userData, replies: replyData, userTweet, userReply })
+      const top10Followers = await getTop10Following(req, next)
+      return res.render('self-replies', {
+        user: userData,
+        replies: replyData,
+        userTweet,
+        userReply,
+        topFollowers: top10Followers
+      })
     } catch (err) {
       next(err)
     }
@@ -408,7 +423,14 @@ const userController = {
         FollowersCount,
         tweetsCount
       }
-      return res.render('self-likes', { user: userData, likes: likesData, userTweet, userLike })
+      const top10Followers = await getTop10Following(req, next)
+      return res.render('self-likes', {
+        user: userData,
+        likes: likesData,
+        userTweet,
+        userLike,
+        topFollowers: top10Followers
+      })
     } catch (err) {
       next(err)
     }
