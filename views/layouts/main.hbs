@@ -91,7 +91,10 @@
       </div>
       {{!-- 右側 fixed 欄位 --}}
       <div class="col col-3">
+        {{#if isHide}}
+        {{else}}
         {{> mainPage-topUsers}}
+        {{/if}}
       </div>
     </div>
   </div>

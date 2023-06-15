@@ -57,6 +57,11 @@ textarea:focus {
   filter: drop-shadow(#FC5A5A 100vw 0)
 }
 
+.svg-fill-dark-0 {
+  transform: translateX(-100vw);
+  filter: drop-shadow(#FFFFFF 100vw 0)
+}
+
 /* ------------------------------     Typography */
 
 h1 {

@@ -26,7 +26,7 @@ app.use(express.json())
 app.use(methodOverride('_method'))
 app.use('/upload', express.static(path.join(__dirname, 'upload')))
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET || 'ThisMySecret',
   resave: false,
   saveUninitialized: false
 }))
