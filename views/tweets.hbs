@@ -8,8 +8,7 @@
       <h4>首頁</h4>
     </div>
     <!--po文欄位-->
-    <div class="d-flex flex-column mt-3" data-userAvatar="{{userAvatar}}" data-bs-toggle="modal"
-      data-bs-target="#tweetModal" >
+    <div class="d-flex flex-column mt-3" data-userAvatar="{{userAvatar}}" data-bs-toggle="modal">
       <div class="form-row d-flex flex-row mb-3 " style="display:inline-block">
         <div class="user-avatar ">
           <a href="/users/{{this.User.id}}/tweets">
@@ -52,7 +51,7 @@
           data-id="{{this.id}}" data-name="{{this.User.name}}" data-account="{{this.User.account}}"
           data-time="{{relativeTimeFromNow this.createdAt}}" data-img="{{this.User.avatar}}"
 
-          data-description="{{this.description}}" data-userAvatar="{{../user.avatar}}" style="z-index:2">
+          data-description="{{this.description}}" data-userAvatar="{{../user.avatar}}" style="z-index:2;border-color:white;outline:none;box-shadow:none">
 
           <img src="/images/replyIcon.png" alt="">
           {{this.repliesLength}}
@@ -61,13 +60,13 @@
       <div class="likes">
         {{#if this.isLiked }}
           <form action='/tweets/{{this.id}}/unlike?_method=DELETE' method='post'>
-            <button class='btn like-btn' type='submit'>
+            <button class='btn like-btn' type='submit' style="border-color:white;outline:none;box-shadow:none">
               <img src="/images/likeIcon-red.png" alt="">   
               {{this.likesLength}}
             </button>
           </form>
         {{else}}
-          <form action='/tweets/{{this.id}}/like' method='post'>
+          <form action='/tweets/{{this.id}}/like' method='post'style="border-color:white;outline:none;box-shadow:none">
             <button class='btn like-btn' type='submit'>
               <img src="/images/likeIcon.png" alt="">   
               {{this.likesLength}}
