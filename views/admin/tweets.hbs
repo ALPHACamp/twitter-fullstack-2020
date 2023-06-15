@@ -1,4 +1,4 @@
-<div class="row h-100">
+<div class="row" style="min-height: 100vh;">
 
   <div class="col-3">
     <div class="row position-relative h-100">
@@ -13,7 +13,7 @@
 
   <div class="col-7" style="padding: 0;">
 
-    <div class="container-admin-tweets" style="height: 100%;border:1px solid #E6ECF0; ">
+    <div class="container-admin-tweets" style="height: 100%;border:1px solid #E6ECF0;">
 
       <div style="border-bottom: 1px solid #E6ECF0;">
         <h4 class="pt-3 ps-3 pb-3 mb-0"
@@ -21,42 +21,46 @@
           推文清單
         </h4>
       </div>
-
-      <table class="table align-top bg-light">
-        <tbody>
-          {{#each tweets}}
-          <tr>
-            <td class="bg-light">
-              <div class="row">
-                <div class="col-1 text-end">
-                  <img id="ac-avatar-icon-admin" src="{{this.User.avatar}}" alt="avatar image">
-                </div>
-                <div class="col">
-                  <div class="name">
-                    <span id="span-tweets-name-admin">{{this.User.name}}</span>
-                    <span id="span-tweets-account-time-admin">@{{this.User.account}}・{{relativeTimeFromNow
-                      this.User.createdAt}}</span>
+      <div style="overflow-y: auto; height:100%; weight:100%">
+        <table class="table align-top bg-light">
+          <tbody>
+            {{#each tweets}}
+            <tr>
+              <td class="bg-light">
+                <div class="row">
+                  <div class="col-1 text-end">
+                    <img id="ac-avatar-icon-admin" src="{{this.User.avatar}}" alt="avatar image">
                   </div>
-                  <div class="description">
-                    <p id="p-tweets-description-admin" class="mb-0">
-                      {{this.description}}
-                    </p>
+                  <div class="col">
+                    <div class="name">
+                      <span id="span-tweets-name-admin">{{this.User.name}}</span>
+                      <span id="span-tweets-account-time-admin">@{{this.User.account}}・{{relativeTimeFromNow
+                        this.User.createdAt}}</span>
+                    </div>
+                    <div class="description">
+                      <p id="p-tweets-description-admin" class="mb-0">
+                        {{this.description}}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </td>
+              </td>
 
-            <td class="text-end pt-0 bg-light">
-              <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-                <button type="submit" class="btn btn-link link-danger" onclick="return confirm(`確定要刪除嗎？`)">
-                  <img id="ac-delete-icon-admin" src="/images/icons/delete.png" alt="">
-                </button>
-              </form>
-            </td>
-          </tr>
-          {{/each}}
-        </tbody>
-      </table>
+              <td class="text-end pt-0 bg-light">
+                <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+                  <button type="submit" class="btn btn-link link-danger" onclick="return confirm(`確定要刪除嗎？`)">
+                    <img id="ac-delete-icon-admin" src="/images/icons/delete.png" alt="">
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+
+      </div>
+
+
 
 
     </div>

@@ -43,7 +43,7 @@ const userController = {
     res.render('signin')
   },
   signIn: (req, res) => {
-    req.flash('success_message', '成功登入')
+    req.flash('success_messages', '成功登入')
     res.redirect('/tweets')
   },
   logOut: (req, res) => {
@@ -68,7 +68,6 @@ const userController = {
       .catch(err => next(err))
   },
   putSetting: (req, res, next) => {
-    console.log('進入putSetting')
     const userId = helpers.getUser(req).id
     const { account, name, email, password, passwordCheck } = req.body
     // 避免非本人修改資料
@@ -98,7 +97,6 @@ const userController = {
         })
       })
       .then(() => {
-        console.log('結束put setting 導回setting')
         req.flash('success_messages', '編輯帳戶設定成功')
         res.redirect(`/users/${userId}/setting`)
       })
