@@ -50,7 +50,9 @@
         <button type="button" class="btn reply-btn" data-bs-toggle="modal" data-bs-target="#replyModal"
           data-id="{{this.id}}" data-name="{{this.User.name}}" data-account="{{this.User.account}}"
           data-time="{{relativeTimeFromNow this.createdAt}}" data-img="{{this.User.avatar}}"
-          data-description="{{this.description}}" data-userAvatar="{{user.avatar}}" style="z-index:2">
+
+          data-description="{{this.description}}" data-userAvatar="{{../user.avatar}}" style="z-index:2">
+
           <img src="/images/replyIcon.png" alt="">
           {{this.repliesLength}}
         </button>
