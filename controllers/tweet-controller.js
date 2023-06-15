@@ -74,13 +74,17 @@ const tweetController = {
         raw: true,
         nest: true
       })
+      const isLiked = likes.some(like => like.user_id === req.user.id)
+      const top10Followers = await getTop10Following(req, next)
       const replyQuantity = replies.length
       const likeQuantity = likes.length
       return res.render('reply-list', {
         tweet,
         replies,
         replyQuantity,
-        likeQuantity
+        likeQuantity,
+        isLiked,
+        topFollowers: top10Followers
       })
     } catch (err) {
       next(err)

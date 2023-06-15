@@ -2,7 +2,7 @@
 
 .sidebar-left {
   width: 178px;
-  height: 100%;
+  height: 760px;
   margin-right: 35px;
   position: sticky;
   top: 0;
@@ -70,14 +70,12 @@
 }
 
 .header-admin {
-  width: 937.13px;
+  width: 1077px;
   height: 74px;
   padding: 24px 0 0 20.9px;
   display: flex;
   background: #ffffff;
   border-bottom: 1px solid #e6ecf0;
-  border-left: 1px solid #e6ecf0;
-  border-right: 1px solid #e6ecf0;
 }
 
 h4 {
@@ -164,17 +162,15 @@ h5 {
 }
 
 .admin-tweets {
-  width: 937.13px;
+  width: 1075px;
 }
 
 .admin-tweet {
-  width: 937.13px;
+  width: 1075px;
   height: 118px;
   display: flex;
   background: #ffffff;
   border-bottom: 1px solid #e6ecf0;
-  border-left: 1px solid #e6ecf0;
-  border-right: 1px solid #e6ecf0;
 }
 
 .admin-tweet-left {
@@ -206,9 +202,12 @@ h5 {
 }
 
 .admin-tweet-right .content {
-  width: 855px;
+  width: 790px;
   height: 52px;
   margin: 10px 0 0 8px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -233,7 +232,7 @@ h5 {
 }
 
 .tweet-xmark {
-  margin-left: 628px;
+  margin-left: 720px;
 }
 
 .tweet-xmark button {

@@ -100,18 +100,22 @@ const userController = {
         tweets.map(async tweet => {
           // 找出每篇的喜歡及回覆數
           const tweetId = tweet.id
-          const [replies, likes, thisTweet, thisUser] = await Promise.all([
-            Reply.count({ where: { tweet_id: tweetId } }),
-            Like.count({ where: { tweet_id: tweetId } }),
-            Tweet.findByPk(tweetId),
-            User.findByPk(id)
-          ])
+          const [replies, likes, thisTweet, thisUser, isLiked] =
+            await Promise.all([
+              Reply.count({ where: { tweet_id: tweetId } }),
+              Like.count({ where: { tweet_id: tweetId } }),
+              Tweet.findByPk(tweetId),
+              User.findByPk(id),
+              Like.findOne({ where: { tweet_id: tweetId, user_id: id } })
+            ])
           tweet.repliesCount = replies
           tweet.likesCount = likes
           tweet.description = thisTweet.description
           tweet.createdAt = thisTweet.createdAt
           tweet.userName = thisUser.name
           tweet.account = thisUser.account
+          tweet.avatar = thisUser.avatar || 'https://i.imgur.com/mhXz6z9.png?1'
+          tweet.isLiked = isLiked
 
           return tweet
         })
@@ -126,8 +130,14 @@ const userController = {
         FollowersCount,
         tweetsCount
       }
-
-      return res.render('self-tweets', { user: userData, userTweet, tweet: tweetData, userTweets })
+      const top10Followers = await getTop10Following(req, next)
+      return res.render('self-tweets', {
+        user: userData,
+        userTweet,
+        tweet: tweetData,
+        userTweets,
+        topFollowers: top10Followers
+      })
     } catch (err) {
       next(err)
     }
@@ -143,9 +153,13 @@ const userController = {
       //! 不能用自用錯誤處理..
       // if (req.user.id == followingId) throw new Error('不能追蹤自己')
 
-      if (userId == followingId) return res.status(200).json({ error: '不能追蹤自己' })
-      const user = await User.findByPk(req.user.id)
-      
+      if (userId == followingId)
+        return res.status(200).json({ error: '不能追蹤自己' })
+
+
+      const user = await User.findByPk(userId)
+
+
       if (!user) throw new Error('找不到該用戶')
       await Followship.create({
         followerId: userId,
@@ -329,6 +343,7 @@ const userController = {
           const tweetOwner = await User.findByPk(tweetData.userId)
           reply.userName = userData.name
           reply.userAccount = userData.account
+          reply.avatar = userData.avatar || 'https://i.imgur.com/mhXz6z9.png?1'
           reply.tweetOwner = tweetOwner.account
 
           return reply
@@ -342,7 +357,82 @@ const userController = {
         FollowersCount,
         tweetsCount
       }
-      return res.render('self-replies', { user: userData, replies: replyData, userTweet, userReply })
+      const top10Followers = await getTop10Following(req, next)
+      return res.render('self-replies', {
+        user: userData,
+        replies: replyData,
+        userTweet,
+        userReply,
+        topFollowers: top10Followers
+      })
+    } catch (err) {
+      next(err)
+    }
+  },
+  getUserLikes: async (req, res, next) => {
+    const userTweet = true
+    const userLike = true
+    const { id } = req.params
+
+    try {
+      const [user, FollowingsCount, FollowersCount, tweetsCount] =
+        await Promise.all([
+          User.findByPk(id, {
+            include: [{ model: Tweet, include: User }]
+          }),
+          // 計算user的folowing數量
+          Followship.count({
+            where: { follower_id: id }
+          }),
+          // 計算user的folower數量
+          Followship.count({
+            where: { following_id: id }
+          }),
+          // 計算user的推文數
+          Tweet.count({
+            where: { user_id: id }
+          })
+        ])
+
+      const likes = await Like.findAll({
+        raw: true,
+        where: { userId: id }
+      })
+      const likesData = await Promise.all(
+        likes.map(async like => {
+          const tweetId = like.tweetId
+          const thisTweet = await Tweet.findByPk(tweetId)
+          const ownerData = await User.findByPk(thisTweet.userId)
+          const replyCount = await Reply.count({ where: { tweet_id: tweetId } })
+          const likeCount = await Like.count({ where: { tweet_id: tweetId } })
+
+          like.name = ownerData.name
+          like.account = ownerData.account
+          like.avatar = ownerData.avatar || 'https://i.imgur.com/mhXz6z9.png?1'
+          like.createdAt = thisTweet.createdAt
+          like.description = thisTweet.description
+          like.replyCount = replyCount
+          like.likeCount = likeCount
+
+          return like
+        })
+      )
+      const userData = {
+        ...user.toJSON(),
+        cover: user.cover || 'https://i.imgur.com/TGRK7uy.png',
+        avatar: user.avatar || 'https://i.imgur.com/mhXz6z9.png?1',
+        FollowingsCount,
+        FollowersCount,
+        tweetsCount
+      }
+      const top10Followers = await getTop10Following(req, next)
+      return res.render('self-likes', {
+        user: userData,
+        likes: likesData,
+        userTweet,
+        userLike,
+        topFollowers: top10Followers
+      })
     } catch (err) {
       next(err)
     }
