@@ -1,11 +1,12 @@
 const { Tweet, User, Reply, Like } = require('../models')
+const Sequelize = require('sequelize')
 
 const adminController = {
   signInPage: (req, res) => {
     res.render('admin/signin')
   },
   signIn: (req, res) => {
-    req.flash('success_message', '成功登入後台')
+    req.flash('success_messages', '成功登入後台')
     res.redirect('/admin/tweets')
   },
   getTweets: (req, res, next) => {
@@ -37,7 +38,7 @@ const adminController = {
 
       await tweet.destroy()
 
-      req.flash('success_message', '成功刪除推文')
+      req.flash('success_messages', '成功刪除推文')
 
       res.redirect('/admin/tweets')
     } catch (err) {
@@ -74,6 +75,8 @@ const adminController = {
             LikesCounts: sumLikes
           }
         })
+
+        result.sort((a, b) => b.tweetsCounts - a.tweetsCounts)
 
         res.render('admin/users', { users: result })
       })
