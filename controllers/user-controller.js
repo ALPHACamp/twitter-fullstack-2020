@@ -153,12 +153,11 @@ const userController = {
       //! 不能用自用錯誤處理..
       // if (req.user.id == followingId) throw new Error('不能追蹤自己')
 
-      if (userId == followingId)
+      if (userId === followingId) {
         return res.status(200).json({ error: '不能追蹤自己' })
-
+      }
 
       const user = await User.findByPk(userId)
-
 
       if (!user) throw new Error('找不到該用戶')
       await Followship.create({
