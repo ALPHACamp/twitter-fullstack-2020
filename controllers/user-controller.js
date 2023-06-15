@@ -156,7 +156,7 @@ const userController = {
       if (userId == followingId)
         return res.status(200).json({ error: '不能追蹤自己' })
 
-      const user = await User.findByPk(req.user.id)
+      const user = await User.findByPk(userId)
 
       if (!user) throw new Error('找不到該用戶')
       await Followship.create({
