@@ -22,7 +22,7 @@ const adminController = {
           ...tweet.toJSON(),
           description: tweet.description.substring(0, 50)
         }))
-        return res.render('admin/admin-tweets', { tweets: data })
+        return res.render('admin/admin-tweets', { tweets: data, isHomePage: true })
       })
       .catch(err => next(err))
   },
@@ -84,7 +84,7 @@ const adminController = {
       // 迴圈跑完後, 以陣列內每一筆資料的 tweetCount 多寡來做排序
       usersData.sort((a, b) => b.tweetCount - a.tweetCount)
       // console.log(usersData)
-      res.render('admin/admin-users', { users: usersData })
+      res.render('admin/admin-users', { users: usersData, isProfile: true })
     } catch (err) {
       next(err)
     }

@@ -23,39 +23,11 @@
   {{#is loginUser.role 'admin'}}
   <div class="container-lg">
     <div class="row">
-      {{!-- 左側 fixed 欄位 --}}
-      <div class="col-2 p-0" style="height: 100vh; border-right: 1px solid #E6ECF0;">
-        <div class="d-flex flex-column mt-2" style="position: fixed; height: 96%; width:178px;">
-          {{!-- logo --}}
-          <a href="/admin/tweets" class="">
-            <img src="/_base/icon/logo.svg">
-          </a>
-          {{!-- 推文清單 --}}
-          <div class="mt-4">
-            <a href="/admin/tweets" class="d-flex flex-row align-items-center">
-              <img class="ms-2 me-3 svg-fill-main" src="/_base/Property 2=filled, Property 3=home.svg">
-              <h5 class="color-main m-0">推文清單</h5>
-            </a>
-          </div>
-          {{!-- 使用者列表 --}}
-          <div class="mt-4">
-            <a href="/admin/users" class="d-flex flex-row align-items-center">
-              <img class="ms-2 me-3" src="/_base/Property 2=outlined, Property 3=user.svg">
-              <h5 class="m-0">使用者列表</h5>
-            </a>
-          </div>
-          {{!-- 登出 --}}
-          <div class="d-flex flex-column-reverse mt-4" style="flex-grow: 1;">
-            <a href="/logout" class="mb-4 d-flex flex-row align-items-center">
-              <img class="ms-2 me-3" src="/_base/Property 2=outlined, Property 3=logout.svg">
-              <h5 class="m-0">登出</h5>
-            </a>
-          </div>
-        </div>
-      </div>
-      {{!-- 中間欄位 --}}
-      {{{body}}}
+      {{> mainPage-adminTabs}}
     </div>
+    {{!-- 中間欄位 --}}
+    {{{body}}}
+  </div>
   </div>
   </div>
   {{else}}
