@@ -104,6 +104,16 @@ h5 {
   line-height: 26px;
 }
 
+.text-20px-nor {
+  font-family: 'Noto Sans TC';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  text-align: left;
+  color: #000000;
+}
+
 .text-16px-reg {
   font-family: 'Noto Sans TC';
   font-style: normal;
@@ -372,4 +382,50 @@ body {
   height: 100%;
   width: calc(100vw + 18px);
   overflow: auto;
+}
+
+
+/* ------------------------------     Notification */
+.toast-container {
+position: fixed;
+z-index: 9999
+}
+
+.toast {
+  height: 96px;
+  width: 273px;
+  max-width: 500px;
+  border: 0px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.9)
+}
+
+.noti-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0
+}
+
+.noti-green {
+  border: 2px solid #82c43c
+}
+
+.noti-red {
+  border: 2px solid #FC5A5A
+}
+
+.noti-yellow {
+  border: 2px solid #FFC542
+}
+
+.noti-blue {
+  border: 2px solid #50B5FF
 }

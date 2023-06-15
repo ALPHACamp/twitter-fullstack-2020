@@ -379,7 +379,7 @@ const userController = {
         raw: true
       }),
       Like.findAll({
-        attributes: ['id', 'userId', 'tweetId'],
+        attributes: ['id', 'userId', 'tweetId', 'createdAt'],
         raw: true,
         nest: true
       }),
@@ -401,13 +401,16 @@ const userController = {
       })
     ])
       .then(([user, likedtweets, replies, likes, tweets, currentUser, topUsers]) => {
-        // 調整 isLiked 及計算 likeCount、replyCount
-        const tweetsData = likedtweets.map(tweet => ({
-          ...tweet,
-          replyCount: replies.filter(reply => reply.tweetId === tweet.id).length,
-          isLiked: likes.some(like => (like.userId === helpers.getUser(req).id && like.tweetId === tweet.id)),
-          likeCount: likes.filter(like => like.tweetId === tweet.id).length
-        }))
+        // 新增 isLiked、likedTime 及計算 likeCount、replyCount
+        const tweetsData = likedtweets
+          .map(tweet => ({
+            ...tweet,
+            replyCount: replies.filter(reply => reply.tweetId === tweet.id).length,
+            isLiked: likes.some(like => (like.userId === helpers.getUser(req).id && like.tweetId === tweet.id)),
+            likeCount: likes.filter(like => like.tweetId === tweet.id).length,
+            likedTime: likes.find(like => like.tweetId === tweet.id)?.createdAt || null
+          }))
+          .sort((a, b) => b.likedTime - a.likedTime)
         // 將目前使用者追蹤的使用者做成一張清單
         const followingList = helpers.getUser(req).Followings.map(f => f.id)
         user.isFollowed = followingList.includes(user.id)
