@@ -92,12 +92,10 @@ const adminController = {
     res.redirect('admin/signin')
   },
   deleteTweet: (req, res, next) => {
-    const tweetId = req.body.tweetId
-    Tweet.destroy(
-      { where: { id: tweetId } }
-    )
+    const tweetId = req.params.id
+    Tweet.destroy({ where: { id: tweetId } })
       .then(() => {
-        console.log('tweet deleted!')
+        res.redirect('/admin/tweets')
       })
       .catch(err => console.log(err))
   }
