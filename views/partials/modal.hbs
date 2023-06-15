@@ -32,11 +32,17 @@
 <div class="modal fade" id="editProfileModal">
   <div class="modal-dialog" style="max-width: 100%;">
     <div class="modal-content modal-twitter">
-      <div class="modal-header">
+      <div class="modal-header" style="margin: 0; padding: 0;">
         {{!-- 關閉 Modal 按鈕 --}}
         <button type="button" data-bs-dismiss="modal" aria-label="Close">
           <img class="ms-2 me-3 svg-fill-main" src="/_base/Property 2=outlined, Property 3=close.svg">
         </button>
+        {{!-- 編輯個人資料 --}}
+        <h5 style="margin: 15px auto 16px 0">編輯個人資料</h5>
+        {{!-- 儲存 --}}
+        <div style="margin: 8px 16px 9px auto">
+          <button type="button" id="putProfileButton" class="pill-default pill-main">儲存</button>
+        </div>
       </div>
       {{!-- 封面跟大頭區域 --}}
       <figure class="m-0 align-self-start" style="width: 100%; height: 126px; position: relative">
@@ -69,16 +75,26 @@
       </div>
       {{!-- 編輯個人資料的表單內容 --}}
       {{!-- 名稱 --}}
-      <div class="mb-3">
-        <label class="form-label" for="name">名稱</label>
-        <input type="text" id="name" name="name" class="form-control" placeholder="請輸入使用者名稱" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label" for="intro">自我介紹</label>
-        <input type="text" id="intro" name="intro" class="form-control" placeholder="請輸入自我介紹" required>
-      </div>
-      <div class="modal-footer" style="border:0px">
-        <button type="button" id="putProfileButton" class="pill-default pill-main me-2">儲存</button>
+      <div style="margin: 16px 16px 0 16px;">
+        <div class="form-row">
+          <label class="form-label text-14px-reg color-dark-80" for="name">名稱</label>
+          <input class="form-input text-16px-reg" id="name" type="text" name="name" placeholder="請輸入使用者名稱"
+            value="{{ name }}" required>
+        </div>
+        <div class="form-gap d-flex">
+          <label class="flex-fill text-12px-med text-start color-error" id="helper"></label>
+          <label class="flex-fill text-12px-med text-end color-dark-80" id="count">8/50</label>
+        </div>
+        {{!-- 自我介紹 --}}
+        <div class="form-row">
+          <label class="form-label text-14px-reg color-dark-80" for="intro">自我介紹</label>
+          <textarea class="form-input text-16px-reg" style="height: 147px;" id="intro" type="text" name="intro"
+            placeholder="請輸入自我介紹" value="{{ intro }}" rows="3" cols="50" required></textarea>
+        </div>
+        <div class=" form-gap d-flex">
+          <label class="flex-fill text-12px-med text-start color-error" id="helper"></label>
+          <label class="flex-fill text-12px-med text-end color-dark-80" id="count">0/160</label>
+        </div>
       </div>
     </div>
   </div>
