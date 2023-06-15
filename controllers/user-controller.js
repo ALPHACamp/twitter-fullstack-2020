@@ -224,7 +224,6 @@ const userController = {
     Promise.all([
       // 取得特定使用者 Id
       User.findByPk(userId, {
-        // raw: true,
         nest: true,
         include: [
           { model: User, as: 'Followers' },
@@ -297,8 +296,11 @@ const userController = {
     Promise.all([
       // 取得特定使用者個人資料
       User.findByPk(userId, {
-        raw: true,
-        nest: true
+        nest: true,
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
       }),
       // 取得特定使用者所有的回覆內容
       Reply.findAll({
@@ -331,6 +333,13 @@ const userController = {
         // 將目前使用者追蹤的使用者做成一張清單
         const followingList = helpers.getUser(req).Followings.map(f => f.id)
         user.isFollowed = followingList.includes(user.id)
+        // 抓取特定使用者的資料
+        const userData = ({
+          ...user.toJSON(),
+          isFollowed: followingList.includes(user.id),
+          followerCount: user.Followings.length,
+          followingCount: user.Followers.length
+        })
         const data = topUsers
           .map(user => ({
             ...user.toJSON(),
@@ -339,7 +348,7 @@ const userController = {
           }))
           // 排序：從追蹤數多的排到少的
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('userPage-replies', { user, replies, tweets, currentUser, topUsers: data })
+        res.render('userPage-replies', { user: userData, replies, tweets, currentUser, topUsers: data })
       })
   },
   // 取得特定使用者所有喜歡的內容頁面
@@ -348,8 +357,11 @@ const userController = {
     Promise.all([
       // 取得特定使用者個人資料
       User.findByPk(userId, {
-        raw: true,
-        nest: true
+        nest: true,
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
       }),
       // 取得該使用者喜歡的所有貼文
       Tweet.findAll({
@@ -399,6 +411,13 @@ const userController = {
         // 將目前使用者追蹤的使用者做成一張清單
         const followingList = helpers.getUser(req).Followings.map(f => f.id)
         user.isFollowed = followingList.includes(user.id)
+        // 抓取特定使用者的資料
+        const userData = ({
+          ...user.toJSON(),
+          isFollowed: followingList.includes(user.id),
+          followerCount: user.Followings.length,
+          followingCount: user.Followers.length
+        })
         const data = topUsers
           .map(user => ({
             ...user.toJSON(),
@@ -407,7 +426,7 @@ const userController = {
           }))
           // 排序：從追蹤數多的排到少的
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('userPage-likes', { user, likedtweets: tweetsData, tweets, currentUser, topUsers: data })
+        res.render('userPage-likes', { user: userData, likedtweets: tweetsData, tweets, currentUser, topUsers: data })
       })
       .catch(err => next(err))
   },

@@ -90,7 +90,7 @@ const adminController = {
     }
   },
 
-  // 抓特定推文資料傳給前端
+  // API: 取得特定貼文的資料 只回傳json
   apiGetTweet: (req, res, next) => {
     const tweetId = req.params.id
     console.log('後端看到 tweetId 是:', tweetId)
