@@ -119,7 +119,7 @@ const userController = {
     // 驗證name是否有值
     if (!name || name.trim() === '') throw new Error('Name is required.')
     // 驗證是否name不超過50字 且 intro不超過160字 (如果intro有值)
-    // if (name.length > 50 || intro ? intro.length > 160 : false) throw new Error('Limit exceeded.')
+    if (name.length > 50 || intro ? intro.length > 160 : false) throw new Error('Limit exceeded.')
     // 把temp中的檔案複製一份到upload並回傳路徑 同時前往資料庫找user
     return Promise.all([
       localFileHandler(avatarFile),
