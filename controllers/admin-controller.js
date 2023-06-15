@@ -79,6 +79,11 @@ const adminController = {
         likeCount: count[index].likeCount
       }))
 
+      // 依照追隨時間排序
+      userData.sort((a, b) => {
+        return b.tweetsCount - a.tweetsCount
+      })
+
       const partialName = 'admin-users'
       const userPage = true
       res.render('admin/tweets', { userData, partialName, userPage })
@@ -94,7 +99,7 @@ const adminController = {
   deleteTweet: (req, res, next) => {
     const tweetId = req.params.id
     Tweet.destroy({ where: { id: tweetId } })
-      .then(() => {
+      .then(tweet => {
         res.redirect('/admin/tweets')
       })
       .catch(err => console.log(err))
