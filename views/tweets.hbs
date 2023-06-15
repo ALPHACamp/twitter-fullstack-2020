@@ -9,18 +9,19 @@
     </div>
     <!--po文欄位-->
     <div class="d-flex flex-column mt-3" data-userAvatar="{{userAvatar}}" data-bs-toggle="modal"
-      data-bs-target="#tweetModal" >
+      data-bs-target="#tweetModal">
       <div class="form-row d-flex flex-row mb-3 " style="display:inline-block">
         <div class="user-avatar ">
-          <a href="/users/{{this.User.id}}/tweets">
+          <a href="/users/{{user.id}}/tweets">
             <img src="{{userAvatar}}" width="50px" ;height="50px"
               style="display:inline-block;border-radius:100%;border:2px black solid;margin:auto 8px auto 24px"
               alt="avatar">
           </a>
         </div>
 
-        <textarea class="form-control " id="description" style="border:none;padding:0px;resize: none;border-color:white;outline:none;box-shadow:none"; name="description"
-          rows="2" cols="20" maxlength:"140" minlength:"1" placeholder="有什麼新鮮事?"></textarea>
+        <textarea class="form-control " id="description"
+          style="border:none;padding:0px;resize: none;border-color:white;outline:none;box-shadow:none" ;
+          name="description" rows="2" cols="20" maxlength:"140" minlength:"1" placeholder="有什麼新鮮事?"></textarea>
       </div>
       <div class="d-flex justify-content-end ">
         <button class="post-new-tweet m-3 ">推文</button>
@@ -30,60 +31,60 @@
     <div class=" d-flex flex-column">
       <!--瀏覽推文-->
       {{#each tweets}}
-  <div class="tweets d-flex flex-row">
-    <a style=" text-decoration:none" class="link-to-replies" href="/tweets/{{this.id}}/replies" style="z-index:0">
-      <div class="tweet-left m-2">
-        <img class="rounded-circle" src="{{this.User.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
-      </div>
-      <div class="tweet-right m-2 d-flex flex-column">
-        <div class="tweets-info">
-          <span class="name">{{this.User.name}}</span>
-          <span class="account">&nbsp;@{{this.User.account}}</span>
-          <span class="time"><b>•</b>&nbsp;{{relativeTimeFromNow this.createdAt}}</span>
+      <div class="tweets d-flex flex-row">
+        <a style=" text-decoration:none" class="link-to-replies" href="/tweets/{{this.id}}/replies" style="z-index:0">
+          <div class="tweet-left m-2">
+            <a href="/users/{{this.User.id}}/tweets"><img class="rounded-circle" src="{{this.User.avatar}}" alt="avatar"
+                title="avatar" width="50px" height="50px"></a>
+          </div>
+          <div class="tweet-right m-2 d-flex flex-column">
+            <div class="tweets-info">
+              <span class="name">{{this.User.name}}</span>
+              <span class="account">&nbsp;@{{this.User.account}}</span>
+              <span class="time"><b>•</b>&nbsp;{{relativeTimeFromNow this.createdAt}}</span>
+            </div>
+            <!--推文-->
+            <p class="content">{{this.description}}.</p>
+        </a>
+        <!--icon-->
+        <div class="d-flex replies-likes-icon">
+          <div class="replies">
+            <button type="button" class="btn reply-btn" data-bs-toggle="modal" data-bs-target="#replyModal"
+              data-id="{{this.id}}" data-name="{{this.User.name}}" data-account="{{this.User.account}}"
+              data-time="{{relativeTimeFromNow this.createdAt}}" data-img="{{this.User.avatar}}"
+              data-description="{{this.description}}" data-userAvatar="{{../user.avatar}}" style="z-index:2">
+
+              <img src="/images/replyIcon.png" alt="">
+              {{this.repliesLength}}
+            </button>
+          </div>
+          <div class="likes">
+            {{#if this.isLiked }}
+            <form action='/tweets/{{this.id}}/unlike?_method=DELETE' method='post'>
+              <button class='btn like-btn' type='submit'>
+                <img src="/images/likeIcon-red.png" alt="">
+                {{this.likesLength}}
+              </button>
+            </form>
+            {{else}}
+            <form action='/tweets/{{this.id}}/like' method='post'>
+              <button class='btn like-btn' type='submit'>
+                <img src="/images/likeIcon.png" alt="">
+                {{this.likesLength}}
+              </button>
+            </form>
+            {{/if}}
+          </div>
+
         </div>
-        <!--推文-->
-        <p class="content">{{this.description}}.</p>
-    </a>
-    <!--icon-->
-    <div class="d-flex replies-likes-icon">
-      <div class="replies">
-        <button type="button" class="btn reply-btn" data-bs-toggle="modal" data-bs-target="#replyModal"
-          data-id="{{this.id}}" data-name="{{this.User.name}}" data-account="{{this.User.account}}"
-          data-time="{{relativeTimeFromNow this.createdAt}}" data-img="{{this.User.avatar}}"
-
-          data-description="{{this.description}}" data-userAvatar="{{../user.avatar}}" style="z-index:2">
-
-          <img src="/images/replyIcon.png" alt="">
-          {{this.repliesLength}}
-        </button>
-      </div>
-      <div class="likes">
-        {{#if this.isLiked }}
-          <form action='/tweets/{{this.id}}/unlike?_method=DELETE' method='post'>
-            <button class='btn like-btn' type='submit'>
-              <img src="/images/likeIcon-red.png" alt="">   
-              {{this.likesLength}}
-            </button>
-          </form>
-        {{else}}
-          <form action='/tweets/{{this.id}}/like' method='post'>
-            <button class='btn like-btn' type='submit'>
-              <img src="/images/likeIcon.png" alt="">   
-              {{this.likesLength}}
-            </button>
-          </form>
-        {{/if}}
       </div>
 
     </div>
+    {{/each}}
   </div>
-
 </div>
-{{/each}}
-    </div>
-  </div>
-  {{> right-sidebar}}
-  {{> post-tweet-modal}}
+{{> right-sidebar}}
+{{> post-tweet-modal}}
 </div>
 
 

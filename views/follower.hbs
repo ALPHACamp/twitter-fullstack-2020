@@ -5,7 +5,9 @@
   <div class="follower-following-page" style="width:45%">
     <!--header-->
     <div class="header">
-      <a href=""><img src="https://i.postimg.cc/QxZdg4vB/Vector.png" alt="" class="arrow-left m-1"></a>
+      <button onclick="window.history.back()" class="back-icon">
+        <img src="https://i.postimg.cc/QxZdg4vB/Vector.png" alt="back" class="arrow-left mb-1">
+      </button>
       <div class="header-user">
         <h5 class="mb-0">{{user.name}}</h5>
         <p style="font-size: 13px; color: #6C757D;">{{tweetsLength}} 推文</p>
@@ -19,9 +21,11 @@
       {{#each users}}
       <div class="following-user-content d-flex flex-row">
         <div class="user-avatar">
-          <img src="{{this.avatar}}" width="50px" ;height="50px"
-            style="display:inline-block;border-radius:100%;border:2px  solid;margin:auto 8px auto 24px;margin:auto 8 auto 0"
-            alt="avatar">
+          <a href="/users/{{this.id}}/tweets">
+            <img src="{{this.avatar}}" width="50px" ;height="50px"
+              style="display:inline-block;border-radius:100%;border:2px  solid;margin:auto 8px auto 24px;margin:auto 8 auto 0"
+              alt="avatar">
+          </a>
         </div>
         <div class="d-flex flex-column">
           <div class="following-user-info d-flex justify-content-between">
