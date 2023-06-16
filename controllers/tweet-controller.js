@@ -1,6 +1,7 @@
 const { Tweet, User, Reply, Like } = require('../models')
 const { Op } = require('sequelize')
 const helpers = require('../_helpers')
+const dayjs = require('../helpers/dayjs-helper')
 
 const tweetController = {
   // 獲得所有推文
@@ -143,6 +144,7 @@ const tweetController = {
     ])
       .then(([tweet, currentUser]) => {
         if (!tweet) throw new Error('Tweet did not exist.')
+        tweet.fromNow = dayjs(tweet.createdAt).fromNow()
         const result = { tweet, currentUser }
         return res.json(result)
       })

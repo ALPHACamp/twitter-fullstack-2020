@@ -1,22 +1,25 @@
-const getTweetButton = document.querySelectorAll('.getTweetButton')
+const getTweetButton = document.querySelectorAll('.getTweetButton') || null
+const ReplyModal = document.getElementById('postReplyModal') || null
+console.log(ReplyModal)
 
 if (getTweetButton) {
   // 在每個回覆按鈕都加上監聽器
   getTweetButton.forEach(button => {
     button.addEventListener('click', () => {
       const tweetId = button.value
-      const ModalUserName = document.getElementById('ModalUserName')
-      const ModalUserAvatar = document.getElementById('ModalUserAvatar')
-      const ModalUserAccount1 = document.getElementById('ModalUserAccount1')
-      const ModalUserAccount2 = document.getElementById('ModalUserAccount2')
-      const ModalDescription = document.getElementById('ModalDescription')
-      const ModalCurrentUserAvatar = document.getElementById('ModalCurrentUserAvatar')
-      const ModalReplyForm = document.getElementById('ModalReplyForm')
+      const ModalUserName = ReplyModal.querySelector('#ModalUserName')
+      const ModalUserAvatar = ReplyModal.querySelector('#ModalUserAvatar')
+      const ModalUserAccount1 = ReplyModal.querySelector('#ModalUserAccount1')
+      const ModalUserAccount2 = ReplyModal.querySelector('#ModalUserAccount2')
+      const ModalDescription = ReplyModal.querySelector('#ModalDescription')
+      const ModalCurrentUserAvatar = ReplyModal.querySelector('#ModalCurrentUserAvatar')
+      const ModalReplyForm = ReplyModal.querySelector('#ModalReplyForm')
+      const ModalTweetFromNow = ReplyModal.querySelector('#ModalTweetFromNow')
       // 呼叫 api 取得特定貼文資料
       axios.get(`/api/tweets/${tweetId}`)
         .then(response => {
           const { name, avatar, account } = response.data.tweet.User
-          const { description, id } = response.data.tweet
+          const { description, id, fromNow } = response.data.tweet
           const currentUserAvatar = response.data.currentUser.avatar
           // 更改 Modal 中的資料
           ModalUserName.innerText = name
@@ -26,7 +29,7 @@ if (getTweetButton) {
           ModalDescription.innerText = description
           ModalCurrentUserAvatar.src = currentUserAvatar
           ModalReplyForm.action = `/tweets/${id}/replies`
-          console.log(response)
+          ModalTweetFromNow.innerText = fromNow
         })
         .catch(err => {
           console.error('Error during API call:', err) // 在控制台中打印錯誤
