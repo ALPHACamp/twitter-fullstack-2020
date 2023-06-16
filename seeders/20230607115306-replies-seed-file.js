@@ -2,6 +2,7 @@
 
 const faker = require('faker')
 const { randomNumber, userIndex } = require('../helpers/seed-helper')
+
 const repliesNumber = 3
 
 module.exports = {

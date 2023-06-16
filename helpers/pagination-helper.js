@@ -1,7 +1,9 @@
 // 計算offset
 // 利用limit, page，預設page = 1, limit = 10
 const getOffset = (page = 1, limit = 10) => {
-  return (page - 1) * limit
+  page = Number(page) || 1
+  const offset = (page - 1) * limit
+  return { page, limit, offset }
 }
 // 計算pagination需要的資訊，包含總頁數、全部頁數、當前頁數、前一頁、下一頁
 const getPagination = (page, limit, total) => {
