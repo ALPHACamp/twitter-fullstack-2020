@@ -9,50 +9,6 @@ const { getOffset, getPagination } = require('../helpers/pagination-helper')
 const DEFAULT_LIMIT = 50
 
 const profileController = {
-  getUser: async (req, res, next) => {
-    // 取得loginUser(使用helpers), userId
-    const loginUser = helpers.getUser(req)
-    const { userId } = req.params
-    try {
-      // 判斷session儲存的資料是否跟req相同
-      if (req.session.userData?.id === userId) return next()
-      // 取對應的user資料，包含following跟follower的count
-      const [user, FollowingsCount, FollowersCount, tweetsCount] = await Promise.all([
-        User.findByPk(userId),
-        // 計算user的folowing數量
-        Followship.count({
-          where: { followerId: userId }
-        }),
-        // 計算user的folower數量
-        Followship.count({
-          where: { followingId: userId }
-        }),
-        // 推文及推文數
-        Tweet.count({
-          where: { UserId: userId }
-        })
-      ])
-      // 判斷user是否存在，沒有就err
-      if (!user) throw new Error('該用戶不存在!')
-      // 變數存，user是否為使用者
-      const isLoginUser = user.id === loginUser.id
-      // 將變數加入session
-      req.session.userData = {
-        ...user.toJSON(),
-        cover: user.cover || '/images/profile/cover.png',
-        avatar: user.avatar || 'https://ionicframework.com/docs/img/demos/avatar.svg',
-        FollowingsCount,
-        FollowersCount,
-        tweetsCount,
-        isLoginUser,
-        isFollowing: isLoginUser ? null : loginUser.Followings.some(following => following.id === user.id)
-      }
-      // next
-      return next()
-    } catch (err) {
-      next(err)
-    }
-  },
   getUserTweets: async (req, res, next) => {
     const { userData } = req.session
     const { followingData } = req
@@ -61,9 +17,7 @@ const profileController = {
     const loginUser = helpers.getUser(req)
     const route = `users/${userId}/tweets`
     // 取得page, limit, offset
-    const page = Number(req.query.page) || 1
-    const limit = DEFAULT_LIMIT
-    const offset = getOffset(page, limit)
+    const { page, limit, offset } = getOffset(req.query.page, DEFAULT_LIMIT)
     try {
       // tweets找相對應的資料，跟user關聯，依照建立時間排列
       // replies、likes數量計算
@@ -102,8 +56,6 @@ const profileController = {
       const partialName = 'user-profile'
       const navbar = 'tweets'
       res.render('index', { user: userData, tweets: tweetsData, route, pagination, partialName, navbar, followingData, loginUserAvatar: loginUser.avatar })
-      // const partialName = 'user-tweets'
-      // res.render('users/tweets', { user: userData, tweets: tweetsData, route, pagination })
     } catch (err) {
       next(err)
     }
@@ -115,9 +67,7 @@ const profileController = {
     const { userId } = req.params
     const route = `users/${userId}/replies`
     // 取得page, limit, offset
-    const page = Number(req.query.page) || 1
-    const limit = DEFAULT_LIMIT
-    const offset = getOffset(page, limit)
+    const { page, limit, offset } = getOffset(req.query.page, DEFAULT_LIMIT)
     try {
       // 取得reply資料及回覆的推文者
       const replies = await Reply.findAndCountAll({
@@ -161,9 +111,7 @@ const profileController = {
     const { userId } = req.params
     const route = `users/${userId}/likes`
     // 取得page, limit, offset
-    const page = Number(req.query.page) || 1
-    const limit = DEFAULT_LIMIT
-    const offset = getOffset(page, limit)
+    const { page, limit, offset } = getOffset(req.query.page, DEFAULT_LIMIT)
     try {
       // likes找相對應的資料，跟user推文者關聯，依照like建立時間排列
       const likes = await Like.findAndCountAll({
@@ -206,9 +154,7 @@ const profileController = {
     const followings = true
     const route = `users/${userId}/followings`
     // 取得page, limit, offset
-    const page = Number(req.query.page) || 1
-    const limit = DEFAULT_LIMIT
-    const offset = getOffset(page, limit)
+    const { page, limit, offset } = getOffset(req.query.page, DEFAULT_LIMIT)
     try {
       // 取對應的user資料、包含追隨的人、推文數
       const [user, tweetsCount, followingsCount] = await Promise.all([
@@ -275,9 +221,7 @@ const profileController = {
     const followers = true
     const route = `users/${userId}/followers`
     // 取得page, limit, offset
-    const page = Number(req.query.page) || 1
-    const limit = DEFAULT_LIMIT
-    const offset = getOffset(page, limit)
+    const { page, limit, offset } = getOffset(req.query.page, DEFAULT_LIMIT)
     try {
       // 取對應的user資料、包含追隨的人、推文數
       const [user, tweetsCount, followersCount] = await Promise.all([
