@@ -290,7 +290,8 @@ const userController = {
           }))
           // 排序：從追蹤數多的排到少的
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('userPage-tweets', { user: userData, tweets: tweetsData, currentUser, topUsers: data, isProfile: true })
+        const isProfile = currentUser.id === user.id
+        res.render('userPage-tweets', { user: userData, tweets: tweetsData, currentUser, topUsers: data, isProfile })
       })
       .catch(err => next(err))
   },
