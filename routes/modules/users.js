@@ -4,7 +4,7 @@ const profileController = require('../../controllers/profile-controller')
 const cpUpload = require('../../middleware/multer')
 
 const { authenticated } = require('../../middleware/auth')
-const { getUser, getTopFollowedUsers } = require('../middleware/general-data')
+const { getUser, getTopFollowedUsers } = require('../../middleware/general-data')
 
 // users
 router.use('/', authenticated)
