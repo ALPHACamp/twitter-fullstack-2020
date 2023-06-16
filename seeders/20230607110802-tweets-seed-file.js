@@ -1,9 +1,11 @@
 'use strict'
 
 const faker = require('faker')
-const { randomNumber } = require('../helpers/seed-helper')
+const { randomNumber, randomDate } = require('../helpers/seed-helper')
 
 const tweetsNumber = 10
+const startDate = new Date('2023-01-01')
+const endDate = new Date()
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -20,8 +22,8 @@ module.exports = {
       Array.from({ length: users.length * tweetsNumber }, () => ({
         user_id: users[randomNumber(arr, tweetsNumber)].id,
         description: faker.lorem.text(),
-        created_at: new Date(),
-        updated_at: new Date()
+        created_at: randomDate(startDate, endDate),
+        updated_at: randomDate(startDate, endDate)
       }))
     )
   },
