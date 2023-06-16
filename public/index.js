@@ -23,7 +23,7 @@ targetNodes.push(postReplyModal)
 targetNodes.push(deleteTweetModal)
 
 // 取得目前現在視窗大小的函式
-function updatePageHeight() {
+function updatePageHeight () {
   let pageHeight = Math.max(
     document.documentElement.scrollHeight,
     document.body.scrollHeight
@@ -39,7 +39,7 @@ window.addEventListener('resize', function () {
   pageHeight = updatePageHeight()
 })
 
-const observer = new MutationObserver(function async(mutationsList, observer) {
+const observer = new MutationObserver(function async (mutationsList, observer) {
   for (const mutation of mutationsList) {
     if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
       // 如果監聽對象的 class 有 show 的話
@@ -57,7 +57,7 @@ const observer = new MutationObserver(function async(mutationsList, observer) {
         }
 
         // 函式：消滅已產生的事件監聽器
-        function closeModalEventListener(e) {
+        function closeModalEventListener (e) {
           ModalTextarea.value = ''
           ModalErrorMessage.innerText = ''
           ModalSubmitBtn.removeEventListener('click', modalErrorHandler)
@@ -65,7 +65,7 @@ const observer = new MutationObserver(function async(mutationsList, observer) {
         }
 
         // 函式：提供錯誤處理訊息，若符合發文條件則改變 btn.type 讓其可以發送
-        function modalErrorHandler(e) {
+        function modalErrorHandler (e) {
           if (!ModalTextarea.value || ModalTextarea.value.trim() === '') {
             ModalErrorMessage.innerText = '內容不可空白'
           } else if (ModalTextarea.value.trim().length > 140) {
@@ -106,7 +106,7 @@ if (mainPostTweet) {
 
   ModalSubmitBtn.addEventListener('click', mainPostTweetErrorHandler)
   // 函式：提供錯誤處理訊息，若符合發文條件則改變 btn.type 讓其可以發送
-  function mainPostTweetErrorHandler(e) {
+  function mainPostTweetErrorHandler (e) {
     if (!ModalTextarea.value || ModalTextarea.value.trim() === '') {
       ModalErrorMessage.innerText = '內容不可空白'
     } else if (ModalTextarea.value.trim().length > 140) {
@@ -295,7 +295,7 @@ if (centerColumn) {
 }
 
 // 預覽大頭貼 當avatarInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的avatar
-function previewAvatar() {
+function previewAvatar () {
   const preview = document.querySelector('#previewAvatar')
   const file = document.querySelector('#avatarInput').files[0]
   const reader = new FileReader()
@@ -309,7 +309,7 @@ function previewAvatar() {
 }
 
 // 預覽封面 當coverInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的cover
-function previewCover() {
+function previewCover () {
   const preview = document.querySelector('#previewCover')
   const file = document.querySelector('#coverInput').files[0]
   const reader = new FileReader()
