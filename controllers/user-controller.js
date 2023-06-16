@@ -489,6 +489,7 @@ const userController = {
   // 取得特定使用者 Following(正在追蹤) 名單
   getUserFollowings: (req, res, next) => {
     return Promise.all([
+      // 取得特定使用者個人資料
       User.findByPk(req.params.id, {
         include: [
           { model: User, as: 'Followings' },
@@ -497,9 +498,22 @@ const userController = {
         ],
         nest: true
       }),
-      User.findByPk(helpers.getUser(req).id, { raw: true })
+      // 取得目前登入的使用者資料
+      User.findByPk(helpers.getUser(req).id, { raw: true }),
+      // 取得包含追蹤者的使用者資料
+      User.findAll({
+        where: {
+          role: 'user',
+          id: { [Op.ne]: helpers.getUser(req).id }
+        },
+        include: [
+          { model: User, as: 'Followers' }
+        ],
+        group: ['User.id'],
+        limit: 10
+      })
     ])
-      .then(([user, currentUser]) => {
+      .then(([user, currentUser, topUsers]) => {
         if (!user) throw new Error('User not found')
         // 推文數量
         const tweetsLength = user.Tweets.length
@@ -509,16 +523,27 @@ const userController = {
         const followings = user.toJSON().Followings
           .map(following => ({
             ...following,
-            isFollowed: followingList.includes(following.id)
+            isFollowed: followingList.includes(following.id),
+            isNotCurrentUser: following.id !== helpers.getUser(req).id
           }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        res.render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followings, isFollowings: true })
+        // 推薦跟隨名單, 和登入使用者的 followings 清單進行 isFollowed 比較
+        const data = topUsers
+          .map(user => ({
+            ...user.toJSON(),
+            isFollowed: followingList.includes(user.id),
+            followerCount: user.Followers.length
+          }))
+          // 排序：從追蹤數多的排到少的
+          .sort((a, b) => b.followerCount - a.followerCount)
+        res.render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followings, topUsers: data, isFollowings: true })
       })
       .catch(err => next(err))
   },
   // 取得特定使用者 Follower(追隨者) 名單
   getUserFollowers: (req, res, next) => {
     return Promise.all([
+      // 取得特定使用者個人資料
       User.findByPk(req.params.id, {
         include: [
           { model: User, as: 'Followings' },
@@ -527,9 +552,22 @@ const userController = {
         ],
         nest: true
       }),
-      User.findByPk(helpers.getUser(req).id, { raw: true })
+      // 取得目前登入的使用者資料
+      User.findByPk(helpers.getUser(req).id, { raw: true }),
+      // 取得包含追蹤者的使用者資料
+      User.findAll({
+        where: {
+          role: 'user',
+          id: { [Op.ne]: helpers.getUser(req).id }
+        },
+        include: [
+          { model: User, as: 'Followers' }
+        ],
+        group: ['User.id'],
+        limit: 10
+      })
     ])
-      .then(([user, currentUser]) => {
+      .then(([user, currentUser, topUsers]) => {
         if (!user) throw new Error('User not found')
         // 推文數量
         const tweetsLength = user.Tweets.length
@@ -539,10 +577,21 @@ const userController = {
         const followers = user.toJSON().Followers
           .map(follower => ({
             ...follower,
-            isFollowed: followingList.includes(follower.id)
+            isFollowed: followingList.includes(follower.id),
+            isNotCurrentUser: follower.id !== helpers.getUser(req).id
           }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        res.status(200).render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followers, isFollowers: true })
+        console.log(followers)
+        // 推薦跟隨名單, 和登入使用者的 followings 清單進行 isFollowed 比較
+        const data = topUsers
+          .map(user => ({
+            ...user.toJSON(),
+            isFollowed: followingList.includes(user.id),
+            followerCount: user.Followers.length
+          }))
+          // 排序：從追蹤數多的排到少的
+          .sort((a, b) => b.followerCount - a.followerCount)
+        res.status(200).render('followship', { user: user.toJSON(), tweetsLength, currentUser, users: followers, topUsers: data, isFollowers: true })
       })
       .catch(err => next(err))
   }
