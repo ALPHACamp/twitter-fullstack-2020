@@ -21,6 +21,7 @@
   </div>
   {{!-- 追蹤按鈕 --}}
   <div class="col col-2 d-flex flex-row-reverse">
+    {{#if this.isNotCurrentUser }}
     {{#if this.isFollowed}}
     <form action="/followships/{{this.id}}?_method=DELETE" method="POST" class="me-1 pt-1">
       <button type="submit" class="pill pill-default pill-main">正在跟隨</button>
@@ -30,6 +31,7 @@
       <input type="text" name="id" value="{{this.id}}" style="display: none;">
       <button type="submit" class="pill pill-default pill-outline">跟隨</button>
     </form>
+    {{/if}}
     {{/if}}
   </div>
 </div>

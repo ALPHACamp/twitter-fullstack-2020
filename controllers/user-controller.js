@@ -523,7 +523,8 @@ const userController = {
         const followings = user.toJSON().Followings
           .map(following => ({
             ...following,
-            isFollowed: followingList.includes(following.id)
+            isFollowed: followingList.includes(following.id),
+            isNotCurrentUser: following.id !== helpers.getUser(req).id
           }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
         // 推薦跟隨名單, 和登入使用者的 followings 清單進行 isFollowed 比較
@@ -576,9 +577,11 @@ const userController = {
         const followers = user.toJSON().Followers
           .map(follower => ({
             ...follower,
-            isFollowed: followingList.includes(follower.id)
+            isFollowed: followingList.includes(follower.id),
+            isNotCurrentUser: follower.id !== helpers.getUser(req).id
           }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        console.log(followers)
         // 推薦跟隨名單, 和登入使用者的 followings 清單進行 isFollowed 比較
         const data = topUsers
           .map(user => ({
