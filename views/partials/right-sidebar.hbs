@@ -6,7 +6,11 @@
   {{#each topFollowers}}
     <div class='follow-card'>
       <a href='/users/{{this.id}}/tweets'>
-        <img class='rounded-circle' src='{{this.avatar}}' alt='avatar' />
+        {{#if this.avatar}}
+          <img class='rounded-circle' src='{{this.avatar}}' alt='avatar' />
+        {{else}}
+          <img class='rounded-circle' src='https://i.imgur.com/mhXz6z9.png?1' alt='avatar' />
+        {{/if}}
         <div class='follow-card-user'>
           <h5>{{this.name}}</h5>
           <p>@{{this.account}}</p>

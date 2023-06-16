@@ -15,9 +15,13 @@
       <div class="show-tweet-context d-flex flex-column mt-2">
         <div class="show-tweet-user-info d-flex flex-row">
           <div class="user-avatar">
-            <img src="{{tweet.User.avatar}}" width="50px" ;height="50px"
-              style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px;margin:auto 8 auto 0"
-              alt="avatar">
+            {{#if tweet.User.avatar}}
+              <img src="{{tweet.User.avatar}}" width="50px" ;height="50px"
+                style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px" alt="avatar">
+            {{else}}
+              <img src="https://i.imgur.com/mhXz6z9.png?1" width="50px" ;height="50px"
+                style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px" alt="avatar">
+            {{/if}}
           </div>
           <div class="user-name-account">
             <p style="font-size: 16px;margin:0;">{{tweet.User.name}}</p>
@@ -65,9 +69,13 @@
         <div class="show-reply-user-info d-flex flex-row">
           <div class="user-avatar">
             <a href="/users/{{this.User.id}}/tweets">
-              <img src="{{this.User.avatar}}" width="50px" ;height="50px"
-                style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px;margin:auto 8 auto 0"
-                alt="avatar">
+              {{#if this.User.avatar}}
+                <img src="{{this.User.avatar}}" width="50px" ;height="50px"
+                  style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px" alt="avatar">
+              {{else}}
+                <img src="https://i.imgur.com/mhXz6z9.png?1" width="50px" ;height="50px"
+                  style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px" alt="avatar">
+              {{/if}}
             </a>
           </div>
           <div class="d-flex flex-column">
