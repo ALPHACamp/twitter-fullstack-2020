@@ -121,176 +121,178 @@ if (mainPostTweet) {
 }
 
 // 監聽 編輯個人資料 相關按鈕
-const centerColumn = document.querySelector('#center-column')
-centerColumn.addEventListener('click', event => {
-  // 監聽編輯個人資料按鈕 call API取得個人資料 把個人資料插入modal
-  if (event.target.matches('#editProfileButton')) {
-    const userId = document.querySelector('#editProfileButton').value
-    const putProfileButton = document.querySelector('#putProfileButton')
-    const nameInput = document.querySelector('#name')
-    const introInput = document.querySelector('#intro')
-    const previewCover = document.querySelector('#previewCover')
-    const previewAvatar = document.querySelector('#previewAvatar')
-    const nameHelper = document.querySelector('#nameHelper')
-    const nameCount = document.querySelector('#nameCount')
-    const introHelper = document.querySelector('#introHelper')
-    const introCount = document.querySelector('#introCount')
-    const nameRow = nameInput.parentElement
-    const introRow = introInput.parentElement
+const centerColumn = document.querySelector('#center-column') || null
+if (centerColumn) {
+  centerColumn.addEventListener('click', event => {
+    // 監聽編輯個人資料按鈕 call API取得個人資料 把個人資料插入modal
+    if (event.target.matches('#editProfileButton')) {
+      const userId = document.querySelector('#editProfileButton').value
+      const putProfileButton = document.querySelector('#putProfileButton')
+      const nameInput = document.querySelector('#name')
+      const introInput = document.querySelector('#intro')
+      const previewCover = document.querySelector('#previewCover')
+      const previewAvatar = document.querySelector('#previewAvatar')
+      const nameHelper = document.querySelector('#nameHelper')
+      const nameCount = document.querySelector('#nameCount')
+      const introHelper = document.querySelector('#introHelper')
+      const introCount = document.querySelector('#introCount')
+      const nameRow = nameInput.parentElement
+      const introRow = introInput.parentElement
 
-    // 欄位樣式恢復初始值
-    nameCount.textContent = ''
-    nameHelper.textContent = ''
-    introCount.textContent = ''
-    introHelper.textContent = ''
-    // 如果底線是紅色，就恢復灰色
-    if (nameRow.classList.contains('form-row-error')) {
-      nameRow.classList.remove('form-row-error')
-      nameRow.classList.add('form-row')
-    }
-    if (introRow.classList.contains('form-row-error')) {
-      introRow.classList.remove('form-row-error')
-      introRow.classList.add('form-row')
-    }
-    // 啟用儲存按鈕
-    putProfileButton.dataset.nameErr = false
-    putProfileButton.dataset.introErr = false
-    putProfileButton.disabled = false
-
-    axios.get(`/api/users/${userId}`)
-      .then(response => {
-        const { cover, avatar, name, intro } = response.data
-        previewCover.src = cover
-        previewAvatar.src = avatar
-        nameInput.value = name
-        introInput.value = intro
-      })
-      .catch(err => {
-        console.error('Error during API call:', err) // 在控制台中打印錯誤
-        alert('An error occurred while fetching profile data.') // 給使用者顯示一個錯誤提示
-      })
-  }
-  // 監聽儲存按鈕 call API更新個人資料 關閉Modal刷新個人資料頁面
-  if (event.target.matches('#putProfileButton')) {
-    const userId = document.querySelector('#editProfileButton').value
-    // 取得使用者輸入的資料
-    const name = document.querySelector('#name').value
-    const intro = document.querySelector('#intro').value
-    const avatar = document.querySelector('#avatarInput').files[0]
-    const cover = document.querySelector('#coverInput').files[0]
-    const coverReset = document.querySelector('#previewCover').dataset.reset
-    // 打包成FormData
-    const formData = new FormData()
-    formData.append('name', name)
-    formData.append('intro', intro)
-    formData.append('avatar', avatar)
-    formData.append('cover', cover)
-    formData.append('coverReset', coverReset)
-    // 發送打包好的formData
-    axios.post(`/api/users/${userId}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-      .then(() => {
-        window.location.href = `/users/${userId}/tweets` // 前往個人資料頁面
-      })
-      .catch(err => {
-        console.error('Error during API call:', err) // 在控制台中打印錯誤
-        alert('An error occurred while fetching profile data.') // 給使用者顯示一個錯誤提示
-      })
-  }
-  if (event.target.matches('#removeCoverButton')) {
-    // 監聽封面上的X按鈕 把封面換成初始值
-    const previewCover = document.querySelector('#previewCover')
-    previewCover.src = 'https://i.imgur.com/b7U6LXD.jpg'
-    previewCover.dataset.reset = 'true'
-  }
-})
-centerColumn.addEventListener('input', event => {
-  // 監聽名稱輸入框
-  if (event.target.matches('#name')) {
-    const putProfileButton = document.querySelector('#putProfileButton')
-    const nameHelper = document.querySelector('#nameHelper')
-    const nameCount = document.querySelector('#nameCount')
-    const row = event.target.parentElement
-    const value = event.target.value
-    // 更新字數
-    nameCount.textContent = `${value.length}/50`
-    // 檢查字數
-    if (value.length > 50) {
-      // 如果底線是灰色，就改紅色
-      if (row.classList.contains('form-row')) {
-        row.classList.remove('form-row')
-        row.classList.add('form-row-error')
-      }
-      // 禁用儲存按鈕 記錄錯誤狀態
-      putProfileButton.disabled = true
-      putProfileButton.dataset.nameErr = 'true'
-      // 顯示提示
-      nameHelper.textContent = '字數超出上限！'
-      // 檢查是否空白
-    } else if (value.trim() === '') {
-      // 如果底線是灰色，就改紅色
-      if (row.classList.contains('form-row')) {
-        row.classList.remove('form-row')
-        row.classList.add('form-row-error')
-      }
-      // 禁用儲存按鈕 記錄錯誤狀態
-      putProfileButton.disabled = true
-      putProfileButton.dataset.nameErr = 'true'
-      // 顯示提示
-      nameHelper.textContent = '名稱不可空白！'
-    } else {
-      // 如果底線是紅色，就改灰色
-      if (row.classList.contains('form-row-error')) {
-        row.classList.remove('form-row-error')
-        row.classList.add('form-row')
-      }
-      // 清空提示
+      // 欄位樣式恢復初始值
+      nameCount.textContent = ''
       nameHelper.textContent = ''
-      // 清除錯誤狀態
-      putProfileButton.dataset.nameErr = 'false'
-      // 檢查另一欄位的錯誤狀態 來決定是否啟用儲存按鈕
-      if (putProfileButton.dataset.introErr !== 'true') putProfileButton.disabled = false
-    }
-  }
-  // 監聽自我介紹輸入框
-  if (event.target.matches('#intro')) {
-    const putProfileButton = document.querySelector('#putProfileButton')
-    const introHelper = document.querySelector('#introHelper')
-    const introCount = document.querySelector('#introCount')
-    const row = event.target.parentElement
-    const value = event.target.value
-    // 更新字數
-    introCount.textContent = `${value.length}/160`
-    // 檢查字數
-    if (value.length > 160) {
-      // 如果底線是灰色，就改紅色
-      if (row.classList.contains('form-row')) {
-        row.classList.remove('form-row')
-        row.classList.add('form-row-error')
-      }
-      // 禁用儲存按鈕 記錄錯誤狀態
-      putProfileButton.disabled = true
-      putProfileButton.dataset.introErr = 'true'
-      // 顯示提示
-      introHelper.textContent = '字數超出上限！'
-    } else {
-      // 如果底線是紅色，就改灰色
-      if (row.classList.contains('form-row-error')) {
-        row.classList.remove('form-row-error')
-        row.classList.add('form-row')
-      }
-      // 清空提示
+      introCount.textContent = ''
       introHelper.textContent = ''
-      // 清除錯誤狀態
-      putProfileButton.dataset.introErr = 'false'
-      // 檢查另一欄位的錯誤狀態 來決定是否啟用儲存按鈕
-      if (putProfileButton.dataset.nameErr !== 'true') putProfileButton.disabled = false
+      // 如果底線是紅色，就恢復灰色
+      if (nameRow.classList.contains('form-row-error')) {
+        nameRow.classList.remove('form-row-error')
+        nameRow.classList.add('form-row')
+      }
+      if (introRow.classList.contains('form-row-error')) {
+        introRow.classList.remove('form-row-error')
+        introRow.classList.add('form-row')
+      }
+      // 啟用儲存按鈕
+      putProfileButton.dataset.nameErr = false
+      putProfileButton.dataset.introErr = false
+      putProfileButton.disabled = false
+
+      axios.get(`/api/users/${userId}`)
+        .then(response => {
+          const { cover, avatar, name, intro } = response.data
+          previewCover.src = cover
+          previewAvatar.src = avatar
+          nameInput.value = name
+          introInput.value = intro
+        })
+        .catch(err => {
+          console.error('Error during API call:', err) // 在控制台中打印錯誤
+          alert('An error occurred while fetching profile data.') // 給使用者顯示一個錯誤提示
+        })
     }
-  }
-})
+    // 監聽儲存按鈕 call API更新個人資料 關閉Modal刷新個人資料頁面
+    if (event.target.matches('#putProfileButton')) {
+      const userId = document.querySelector('#editProfileButton').value
+      // 取得使用者輸入的資料
+      const name = document.querySelector('#name').value
+      const intro = document.querySelector('#intro').value
+      const avatar = document.querySelector('#avatarInput').files[0]
+      const cover = document.querySelector('#coverInput').files[0]
+      const coverReset = document.querySelector('#previewCover').dataset.reset
+      // 打包成FormData
+      const formData = new FormData()
+      formData.append('name', name)
+      formData.append('intro', intro)
+      formData.append('avatar', avatar)
+      formData.append('cover', cover)
+      formData.append('coverReset', coverReset)
+      // 發送打包好的formData
+      axios.post(`/api/users/${userId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then(() => {
+          window.location.href = `/users/${userId}/tweets` // 前往個人資料頁面
+        })
+        .catch(err => {
+          console.error('Error during API call:', err) // 在控制台中打印錯誤
+          alert('An error occurred while fetching profile data.') // 給使用者顯示一個錯誤提示
+        })
+    }
+    if (event.target.matches('#removeCoverButton')) {
+      // 監聽封面上的X按鈕 把封面換成初始值
+      const previewCover = document.querySelector('#previewCover')
+      previewCover.src = 'https://i.imgur.com/b7U6LXD.jpg'
+      previewCover.dataset.reset = 'true'
+    }
+  })
+  centerColumn.addEventListener('input', event => {
+    // 監聽名稱輸入框
+    if (event.target.matches('#name')) {
+      const putProfileButton = document.querySelector('#putProfileButton')
+      const nameHelper = document.querySelector('#nameHelper')
+      const nameCount = document.querySelector('#nameCount')
+      const row = event.target.parentElement
+      const value = event.target.value
+      // 更新字數
+      nameCount.textContent = `${value.length}/50`
+      // 檢查字數
+      if (value.length > 50) {
+        // 如果底線是灰色，就改紅色
+        if (row.classList.contains('form-row')) {
+          row.classList.remove('form-row')
+          row.classList.add('form-row-error')
+        }
+        // 禁用儲存按鈕 記錄錯誤狀態
+        putProfileButton.disabled = true
+        putProfileButton.dataset.nameErr = 'true'
+        // 顯示提示
+        nameHelper.textContent = '字數超出上限！'
+        // 檢查是否空白
+      } else if (value.trim() === '') {
+        // 如果底線是灰色，就改紅色
+        if (row.classList.contains('form-row')) {
+          row.classList.remove('form-row')
+          row.classList.add('form-row-error')
+        }
+        // 禁用儲存按鈕 記錄錯誤狀態
+        putProfileButton.disabled = true
+        putProfileButton.dataset.nameErr = 'true'
+        // 顯示提示
+        nameHelper.textContent = '名稱不可空白！'
+      } else {
+        // 如果底線是紅色，就改灰色
+        if (row.classList.contains('form-row-error')) {
+          row.classList.remove('form-row-error')
+          row.classList.add('form-row')
+        }
+        // 清空提示
+        nameHelper.textContent = ''
+        // 清除錯誤狀態
+        putProfileButton.dataset.nameErr = 'false'
+        // 檢查另一欄位的錯誤狀態 來決定是否啟用儲存按鈕
+        if (putProfileButton.dataset.introErr !== 'true') putProfileButton.disabled = false
+      }
+    }
+    // 監聽自我介紹輸入框
+    if (event.target.matches('#intro')) {
+      const putProfileButton = document.querySelector('#putProfileButton')
+      const introHelper = document.querySelector('#introHelper')
+      const introCount = document.querySelector('#introCount')
+      const row = event.target.parentElement
+      const value = event.target.value
+      // 更新字數
+      introCount.textContent = `${value.length}/160`
+      // 檢查字數
+      if (value.length > 160) {
+        // 如果底線是灰色，就改紅色
+        if (row.classList.contains('form-row')) {
+          row.classList.remove('form-row')
+          row.classList.add('form-row-error')
+        }
+        // 禁用儲存按鈕 記錄錯誤狀態
+        putProfileButton.disabled = true
+        putProfileButton.dataset.introErr = 'true'
+        // 顯示提示
+        introHelper.textContent = '字數超出上限！'
+      } else {
+        // 如果底線是紅色，就改灰色
+        if (row.classList.contains('form-row-error')) {
+          row.classList.remove('form-row-error')
+          row.classList.add('form-row')
+        }
+        // 清空提示
+        introHelper.textContent = ''
+        // 清除錯誤狀態
+        putProfileButton.dataset.introErr = 'false'
+        // 檢查另一欄位的錯誤狀態 來決定是否啟用儲存按鈕
+        if (putProfileButton.dataset.nameErr !== 'true') putProfileButton.disabled = false
+      }
+    }
+  })
+}
 
 // 預覽大頭貼 當avatarInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的avatar
 function previewAvatar() {
