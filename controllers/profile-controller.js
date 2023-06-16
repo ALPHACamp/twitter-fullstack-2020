@@ -9,52 +9,6 @@ const { getOffset, getPagination } = require('../helpers/pagination-helper')
 const DEFAULT_LIMIT = 50
 
 const profileController = {
-  getUser: async (req, res, next) => {
-    // 取得loginUser(使用helpers), userId
-    const loginUser = helpers.getUser(req)
-    const { userId } = req.params
-    try {
-      // 判斷session儲存的資料是否跟req相同
-      if (req.session.userData?.id === userId) return next()
-      // 取對應的user資料
-      const user = await User.findByPk(userId)
-
-      // 取得following跟follower的count
-      const [FollowingsCount, FollowersCount, tweetsCount] = await Promise.all([
-        // 計算user的folowing數量
-        Followship.count({
-          where: { followerId: userId }
-        }),
-        // 計算user的folower數量
-        Followship.count({
-          where: { followingId: userId }
-        }),
-        // 推文及推文數
-        Tweet.count({
-          where: { UserId: userId }
-        })
-      ])
-      // 判斷user是否存在，沒有就err
-      if (!user) throw new Error('該用戶不存在!')
-      // 變數存，user是否為使用者
-      const isLoginUser = user.id === loginUser.id
-      // 將變數加入session
-      req.session.userData = {
-        ...user.toJSON(),
-        cover: user.cover || '/images/profile/cover.png',
-        avatar: user.avatar || 'https://ionicframework.com/docs/img/demos/avatar.svg',
-        FollowingsCount,
-        FollowersCount,
-        tweetsCount,
-        isLoginUser,
-        isFollowing: isLoginUser ? null : loginUser.Followings.some(following => following.id === user.id)
-      }
-      // next
-      return next()
-    } catch (err) {
-      next(err)
-    }
-  },
   getUserTweets: async (req, res, next) => {
     const { userData } = req.session
     const { followingData } = req

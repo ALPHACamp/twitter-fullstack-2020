@@ -12,6 +12,7 @@ const apiProfileController = require('../controllers/api-profile-controller')
 const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const upload = require('../middleware/multer')
+const { getUser } = require('../middleware/general-data')
 
 // admin
 router.use('/admin', admin)
@@ -42,13 +43,7 @@ router.get('/tweets', authenticated, followshipController.getTopFollowedUsers, t
 router.post('/tweets', authenticated, tweetsController.postTweet)
 
 // profile
-router.get(
-  '/users/:userId/tweets',
-  authenticated,
-  followshipController.getTopFollowedUsers,
-  profileController.getUser,
-  profileController.getUserTweets
-)
+router.get('/users/:userId/tweets', authenticated, followshipController.getTopFollowedUsers, getUser, profileController.getUserTweets)
 router.get('/users/:userId/replies', authenticated, followshipController.getTopFollowedUsers, profileController.getUserReplies)
 router.get('/users/:userId/likes', authenticated, followshipController.getTopFollowedUsers, profileController.getUserLikes)
 router.get('/users/:userId/followings', authenticated, followshipController.getTopFollowedUsers, profileController.getUserFollowings)
