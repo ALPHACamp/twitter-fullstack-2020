@@ -75,7 +75,9 @@ const tweetController = {
         raw: true,
         nest: true
       })
-      const isLiked = likes.some(like => like.user_id === req.user.id)
+      console.log(tweet)
+      console.log(likes)
+      const isLiked = likes.some(like => like.UserId === req.user.id)
       const top10Followers = await getTop10Following(req, next)
       const replyQuantity = replies.length
       const likeQuantity = likes.length
