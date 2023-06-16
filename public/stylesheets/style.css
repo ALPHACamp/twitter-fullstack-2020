@@ -450,11 +450,7 @@ h5 {
 
 .tweet-text {
   margin-left: 8px;
-<<<<<<< HEAD
   overflow-wrap: break-word;
-  box-sizing: border-box;
-  width: calc(100% - 54px);
-=======
 
   /* limit excessive width */
   box-sizing: border-box;
@@ -475,7 +471,6 @@ h5 {
 
 .show-more-content:hover {
   color: #ff6600
->>>>>>> origin/master
 }
 
 .tweet-interact-btn {
