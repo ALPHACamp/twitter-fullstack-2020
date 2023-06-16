@@ -171,8 +171,10 @@ const userController = {
           isFollowed: followingList.includes(following.id)
         }))
         .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+      const top10Followers = await getTop10Following(req, next)
 
       return res.render('following', {
+        topFollowers : top10Followers,
         user: user.toJSON(),
         tweetsLength,
         currentUser,
@@ -212,8 +214,10 @@ const userController = {
           isFollowed: followingList.includes(follower.id)
         }))
         .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+      const top10Followers = await getTop10Following(req, next)
 
       return res.render('follower', {
+        topFollowers: top10Followers,
         user: user.toJSON(),
         tweetsLength,
         currentUser,
