@@ -6,7 +6,7 @@ const { User, Followship, Tweet, Reply, Like } = require('../models')
 const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 // 推文顯示數量
-const DEFAULT_LIMIT = 50
+const DEFAULT_LIMIT = 5
 
 const profileController = {
   getUserTweets: async (req, res, next) => {
@@ -17,9 +17,7 @@ const profileController = {
     const loginUser = helpers.getUser(req)
     const route = `users/${userId}/tweets`
     // 取得page, limit, offset
-    const page = Number(req.query.page) || 1
-    const limit = DEFAULT_LIMIT
-    const offset = getOffset(page, limit)
+    const { page, limit, offset } = getOffset(req.query.page, DEFAULT_LIMIT)
     try {
       // tweets找相對應的資料，跟user關聯，依照建立時間排列
       // replies、likes數量計算
@@ -69,9 +67,7 @@ const profileController = {
     const { userId } = req.params
     const route = `users/${userId}/replies`
     // 取得page, limit, offset
-    const page = Number(req.query.page) || 1
-    const limit = DEFAULT_LIMIT
-    const offset = getOffset(page, limit)
+    const { page, limit, offset } = getOffset(req.query.page, DEFAULT_LIMIT)
     try {
       // 取得reply資料及回覆的推文者
       const replies = await Reply.findAndCountAll({
@@ -115,9 +111,7 @@ const profileController = {
     const { userId } = req.params
     const route = `users/${userId}/likes`
     // 取得page, limit, offset
-    const page = Number(req.query.page) || 1
-    const limit = DEFAULT_LIMIT
-    const offset = getOffset(page, limit)
+    const { page, limit, offset } = getOffset(req.query.page, DEFAULT_LIMIT)
     try {
       // likes找相對應的資料，跟user推文者關聯，依照like建立時間排列
       const likes = await Like.findAndCountAll({
@@ -161,9 +155,7 @@ const profileController = {
     const followings = true
     const route = `users/${userId}/followings`
     // 取得page, limit, offset
-    const page = Number(req.query.page) || 1
-    const limit = DEFAULT_LIMIT
-    const offset = getOffset(page, limit)
+    const { page, limit, offset } = getOffset(req.query.page, DEFAULT_LIMIT)
     try {
       // 取對應的user資料、包含追隨的人、推文數
       const [user, tweetsCount, followingsCount] = await Promise.all([
@@ -230,9 +222,7 @@ const profileController = {
     const followers = true
     const route = `users/${userId}/followers`
     // 取得page, limit, offset
-    const page = Number(req.query.page) || 1
-    const limit = DEFAULT_LIMIT
-    const offset = getOffset(page, limit)
+    const { page, limit, offset } = getOffset(req.query.page, DEFAULT_LIMIT)
     try {
       // 取對應的user資料、包含追隨的人、推文數
       const [user, tweetsCount, followersCount] = await Promise.all([
