@@ -21,7 +21,12 @@
         </button>
 
         {{!-- tweet description --}}
-        <p class="text-content">{{this.description}}</p>
+        {{#isTextTruncated this.description 5}}
+        <p class="text-content">{{{this.description}}}</p>
+        <p class="show-more-content secondary-color">顯示更多</p>
+        {{else}}
+        <p class="text-content">{{{this.description}}}</p>
+        {{/isTextTruncated}}
 
         <div class="d-flex">
           {{!-- reply icon --}}

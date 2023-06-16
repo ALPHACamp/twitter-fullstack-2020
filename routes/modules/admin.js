@@ -4,6 +4,7 @@ const passport = require('../../config/passport')
 const adminController = require('../../controllers/admin-controller')
 const { adminAuthenticated } = require('../../middleware/auth')
 
+// signin
 router.get('/signin', adminController.adminSigninPage)
 router.post(
   '/signin',
