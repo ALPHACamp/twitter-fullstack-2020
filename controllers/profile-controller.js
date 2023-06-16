@@ -16,9 +16,11 @@ const profileController = {
     try {
       // 判斷session儲存的資料是否跟req相同
       if (req.session.userData?.id === userId) return next()
-      // 取對應的user資料，包含following跟follower的count
-      const [user, FollowingsCount, FollowersCount, tweetsCount] = await Promise.all([
-        User.findByPk(userId),
+      // 取對應的user資料
+      const user = await User.findByPk(userId)
+
+      // 取得following跟follower的count
+      const [FollowingsCount, FollowersCount, tweetsCount] = await Promise.all([
         // 計算user的folowing數量
         Followship.count({
           where: { followerId: userId }
