@@ -32,26 +32,26 @@
         </div>
         <hr class="solid" style="margin: 8px 0 16px 0;">
         <div class="reply-and-like d-flex flex-row" style="padding:  0 0 0 24px;font-size:19px">
-          <span>&nbsp; {{replyQuantity}}回覆 </span>
-          <span>&nbsp; {{likeQuantity}}喜歡次數 </span>
+          <span>&nbsp; {{replyQuantity}} <span style="color: #6C757D;">回覆</span> </span>
+          <span>&nbsp; {{likeQuantity}} <span style="color: #6C757D;">喜歡次數</span> </span>
         </div>
         <hr class="solid" style="margin: 8px 0 16px 0;">
-        <div class="d-flex" style="padding:  0 0 0 24px">
-          <div class="replies">
+        <div class="d-flex">
+          <div class="replies" style="padding-left: 8px;">
             <button type="button" class="btn reply-btn" data-bs-toggle="modal" data-bs-target="#replyModal" style="none;box-shadow: none;border: #E6ECF0;">
               <!--<img src="/images/reply-small.svg" alt="reply"> -->
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="25" height="25" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M8.36401 0.49446L5.59867 0.487793H5.59734C2.68134 0.487793 0.397339 2.77246 0.397339 5.68913C0.397339 8.42113 2.52134 10.4931 5.37401 10.6025V13.1545C5.37401 13.2265 5.40334 13.3451 5.45401 13.4231C5.54867 13.5731 5.71001 13.6545 5.87534 13.6545C5.96734 13.6545 6.06001 13.6291 6.14334 13.5758C6.31934 13.4638 10.4587 10.8158 11.5353 9.90513C12.8033 8.83179 13.562 7.25846 13.564 5.69713V5.68579C13.56 2.77446 11.2773 0.49446 8.36401 0.493793V0.49446ZM10.8887 9.14246C10.1327 9.78246 7.64734 11.4125 6.37401 12.2378V10.1131C6.37401 9.83713 6.15067 9.61313 5.87401 9.61313H5.61001C3.17001 9.61313 1.39801 7.96246 1.39801 5.68913C1.39801 3.33313 3.24334 1.48779 5.59801 1.48779L8.36267 1.49446H8.36401C10.7187 1.49446 12.564 3.33846 12.5653 5.69179C12.5633 6.96513 11.9373 8.25446 10.8893 9.14246H10.8887Z"
                   fill="#6C757D" />
               </svg>
             </button>
           </div>
-          <div class="likes">
+          <div class="likes" style="margin-left: 121px;">
               {{#if isLiked }}
                 <form action='/tweets/{{tweet.id}}/unlike?_method=DELETE' method='post'>
                   <button class='btn like-btn' type='submit' style="border-color: white;outline:none;box-shadow:none">
-                    <svg width="14" height="14" viewBox="0 0 14 14"  xmlns="http://www.w3.org/2000/svg">
+                    <svg width="25" height="25" viewBox="0 0 14 14"  xmlns="http://www.w3.org/2000/svg">
                     <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" fill='red'/>
                     </svg>
                   </button>
@@ -59,7 +59,7 @@
               {{else}}
                 <form action='/tweets/{{tweet.id}}/like' method='post'>
                   <button class='btn like-btn' type='submit'style="border-color: white;outline:none;box-shadow:none">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="25" height="25" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M7.00005 13.4253H6.99072C5.26872 13.3933 0.300049 8.90392 0.300049 4.65192C0.300049 2.60925 1.98338 0.815918 3.90205 0.815918C5.42872 0.815918 6.45538 1.86925 6.99938 2.63592C7.54205 1.87058 8.56871 0.815918 10.096 0.815918C12.016 0.815918 13.6987 2.60925 13.6987 4.65258C13.6987 8.90325 8.72938 13.3926 7.00738 13.4239H7.00005V13.4253ZM3.90272 1.81658C2.51605 1.81658 1.30072 3.14192 1.30072 4.65325C1.30072 8.47992 5.99005 12.3839 7.00072 12.4253C8.01272 12.3839 12.7007 8.48058 12.7007 4.65325C12.7007 3.14192 11.4854 1.81658 10.0987 1.81658C8.41338 1.81658 7.47205 3.77392 7.46405 3.79325C7.31072 4.16792 6.69338 4.16792 6.53938 3.79325C6.53005 3.77325 5.58938 1.81658 3.90338 1.81658H3.90272Z"
                       fill="#6C757D" />

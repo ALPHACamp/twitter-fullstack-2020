@@ -507,7 +507,7 @@ img.card-avatar {
 }
 
 .solid {
-  color: #e6ecf0;
+  color: #E6ECF0;
 }
 
 .nav-card {
@@ -938,4 +938,8 @@ img.card-avatar {
   background-color: #FFFFFF;
   border: none;
   font-size: 20px;
+}
+
+.tweets, .tweet-replies {
+  border-bottom: 1px solid #E6ECF0;
 }
