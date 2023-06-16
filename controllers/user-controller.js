@@ -293,7 +293,10 @@ const userController = {
     const userRoute = true
     const { id } = req.params
     const loginUser = helpers.getUser(req)
-    if (loginUser.id !== Number(id)) throw new Error('您沒有權限編緝帳戶')
+    // console.log('id:' + id)
+    // console.log('loginUser:' + loginUser)
+    // ? 抓不到 id ＆ loginUser 資料
+    // if (loginUser.id !== Number(id)) throw new Error('您沒有權限編緝帳戶')
 
     try {
       const user = await User.findByPk(id, {
@@ -349,7 +352,7 @@ const userController = {
         password: hashedPassword || user.password
       })
       req.flash('success_messages', '已更新成功！')
-      res.redirect('/tweets')
+      return res.redirect('back')
     } catch (err) {
       next(err)
     }
@@ -379,7 +382,7 @@ const userController = {
       })
 
       req.flash('success_messages', '已更新成功！')
-      res.redirect('/tweets')
+      return res.redirect('back')
     } catch (err) {
       next(err)
     }
