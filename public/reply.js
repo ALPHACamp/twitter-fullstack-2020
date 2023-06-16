@@ -1,6 +1,5 @@
 const getTweetButton = document.querySelectorAll('.getTweetButton') || null
 const ReplyModal = document.getElementById('postReplyModal') || null
-console.log(ReplyModal)
 
 if (getTweetButton) {
   // 在每個回覆按鈕都加上監聽器
