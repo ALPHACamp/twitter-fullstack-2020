@@ -12,7 +12,7 @@ const apiProfileController = require('../controllers/api-profile-controller')
 const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const upload = require('../middleware/multer')
-const { getUser } = require('../middleware/general-data')
+const { getUser, getTopFollowedUsers } = require('../middleware/general-data')
 
 // admin
 router.use('/admin', admin)
@@ -35,20 +35,20 @@ router.post('/signup', userController.signup)
 router.get('/logout', userController.logout)
 
 // index
-router.get('/tweets/:tweetId/replies', authenticated, followshipController.getTopFollowedUsers, tweetsController.getTweet)
+router.get('/tweets/:tweetId/replies', authenticated, getTopFollowedUsers, tweetsController.getTweet)
 router.post('/tweets/:tweetId/replies', authenticated, tweetsController.postReply)
 router.post('/tweets/:tweetId/like', authenticated, userController.postLike)
 router.post('/tweets/:tweetId/unlike', authenticated, userController.postUnlike)
-router.get('/tweets', authenticated, followshipController.getTopFollowedUsers, tweetsController.getTweets)
+router.get('/tweets', authenticated, getTopFollowedUsers, tweetsController.getTweets)
 router.post('/tweets', authenticated, tweetsController.postTweet)
 
 // profile
-router.get('/users/:userId/tweets', authenticated, followshipController.getTopFollowedUsers, getUser, profileController.getUserTweets)
-router.get('/users/:userId/replies', authenticated, followshipController.getTopFollowedUsers, profileController.getUserReplies)
-router.get('/users/:userId/likes', authenticated, followshipController.getTopFollowedUsers, profileController.getUserLikes)
-router.get('/users/:userId/followings', authenticated, followshipController.getTopFollowedUsers, profileController.getUserFollowings)
-router.get('/users/:userId/followers', authenticated, followshipController.getTopFollowedUsers, profileController.getUserFollowers)
-router.get('/users/:userId', authenticated, followshipController.getTopFollowedUsers, profileController.editUserAccount)
+router.get('/users/:userId/tweets', authenticated, getTopFollowedUsers, getUser, profileController.getUserTweets)
+router.get('/users/:userId/replies', authenticated, getTopFollowedUsers, profileController.getUserReplies)
+router.get('/users/:userId/likes', authenticated, getTopFollowedUsers, profileController.getUserLikes)
+router.get('/users/:userId/followings', authenticated, getTopFollowedUsers, profileController.getUserFollowings)
+router.get('/users/:userId/followers', authenticated, getTopFollowedUsers, profileController.getUserFollowers)
+router.get('/users/:userId', authenticated, getTopFollowedUsers, profileController.editUserAccount)
 router.put(
   '/users/:userId',
   authenticated,

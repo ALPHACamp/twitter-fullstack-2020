@@ -1,5 +1,6 @@
 const { User, Followship, Tweet } = require('../models')
 const helpers = require('../_helpers')
+const { Op } = require('sequelize')
 
 const getUser = async (req, res, next) => {
   // 取得loginUser(使用helpers), userId
@@ -49,6 +50,28 @@ const getUser = async (req, res, next) => {
   }
 }
 
+const getTopFollowedUsers = (req, res, next) => {
+  const loginUser = helpers.getUser(req)
+  const topFollowedUsersNumber = 10
+  return User.findAll({
+    include: [{ model: User, as: 'Followers' }],
+    where: { role: 'user', id: { [Op.not]: loginUser.id } }
+  })
+    .then(users => {
+      const result = users
+        .map(user => ({
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+          isFollowed: loginUser.Followings?.some(f => f.id === user.id)
+        }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+      req.followingData = result.slice(0, topFollowedUsersNumber - 1)
+      return next()
+    })
+    .catch(err => next(err))
+}
+
 module.exports = {
-  getUser
+  getUser,
+  getTopFollowedUsers
 }
