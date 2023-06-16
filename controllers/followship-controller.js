@@ -1,7 +1,6 @@
 // files
 const { Followship, User } = require('../models')
 const helpers = require('../_helpers')
-const { Op } = require('sequelize')
 
 // controllers
 const followshipController = {

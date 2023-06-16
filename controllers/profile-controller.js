@@ -58,8 +58,6 @@ const profileController = {
       const partialName = 'user-profile'
       const navbar = 'tweets'
       res.render('index', { user: userData, tweets: tweetsData, route, pagination, partialName, navbar, followingData })
-      // const partialName = 'user-tweets'
-      // res.render('users/tweets', { user: userData, tweets: tweetsData, route, pagination })
     } catch (err) {
       next(err)
     }
@@ -101,7 +99,6 @@ const profileController = {
       }))
       // pagination
       const pagination = getPagination(page, limit, replies.count)
-      // const partialName = 'user-replies'
       // render
       const partialName = 'user-profile'
       const navbar = 'replies'
