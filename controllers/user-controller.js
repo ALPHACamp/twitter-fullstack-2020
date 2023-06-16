@@ -1,7 +1,7 @@
 const { Op } = require('sequelize') // 用「不等於」的條件查詢資料庫時需要用到的東西
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const { localFileHandler } = require('../helpers/file-helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
 const { User, Tweet, Followship, Like, Reply } = db
 const helpers = require('../_helpers')
 
@@ -118,10 +118,12 @@ const userController = {
     }
     // 驗證name是否有值
     if (!name || name.trim() === '') throw new Error('Name is required.')
+    // 驗證是否name不超過50字 且 intro不超過160字 (如果intro有值)
+    if (name.length > 50 || intro ? intro.length > 160 : false) throw new Error('Limit exceeded.')
     // 把temp中的檔案複製一份到upload並回傳路徑 同時前往資料庫找user
     return Promise.all([
-      localFileHandler(avatarFile),
-      localFileHandler(coverFile),
+      imgurFileHandler(avatarFile),
+      imgurFileHandler(coverFile),
       User.findByPk(helpers.getUser(req).id)
     ])
       .then(([avatarFilePath, coverFilePath, user]) => {
@@ -146,8 +148,10 @@ const userController = {
     User.findByPk(userId, { raw: true })
       .then(user => {
         if (!user) throw new Error('User did not exist.')
+        delete user.password // 刪除取得的password
+        const currentUser = user
         const { account, name, email } = user
-        res.render('setting', { account, name, email, userId, isSetting: true, isHide: true }) // 左側欄設定頁籤選擇中，且隱藏右側欄
+        res.render('setting', { account, name, email, userId, currentUser, isSetting: true, isHide: true }) // 左側欄設定頁籤選擇中，且隱藏右側欄
       })
       .catch(err => next(err))
   },
@@ -379,7 +383,7 @@ const userController = {
         raw: true
       }),
       Like.findAll({
-        attributes: ['id', 'userId', 'tweetId'],
+        attributes: ['id', 'userId', 'tweetId', 'createdAt'],
         raw: true,
         nest: true
       }),
@@ -401,13 +405,16 @@ const userController = {
       })
     ])
       .then(([user, likedtweets, replies, likes, tweets, currentUser, topUsers]) => {
-        // 調整 isLiked 及計算 likeCount、replyCount
-        const tweetsData = likedtweets.map(tweet => ({
-          ...tweet,
-          replyCount: replies.filter(reply => reply.tweetId === tweet.id).length,
-          isLiked: likes.some(like => (like.userId === helpers.getUser(req).id && like.tweetId === tweet.id)),
-          likeCount: likes.filter(like => like.tweetId === tweet.id).length
-        }))
+        // 新增 isLiked、likedTime 及計算 likeCount、replyCount
+        const tweetsData = likedtweets
+          .map(tweet => ({
+            ...tweet,
+            replyCount: replies.filter(reply => reply.tweetId === tweet.id).length,
+            isLiked: likes.some(like => (like.userId === helpers.getUser(req).id && like.tweetId === tweet.id)),
+            likeCount: likes.filter(like => like.tweetId === tweet.id).length,
+            likedTime: likes.find(like => like.tweetId === tweet.id)?.createdAt || null
+          }))
+          .sort((a, b) => b.likedTime - a.likedTime)
         // 將目前使用者追蹤的使用者做成一張清單
         const followingList = helpers.getUser(req).Followings.map(f => f.id)
         user.isFollowed = followingList.includes(user.id)
