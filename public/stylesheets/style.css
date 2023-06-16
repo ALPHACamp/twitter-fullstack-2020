@@ -1017,3 +1017,11 @@ form.invalid-feedback {
 .signup-container::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
+
+.pwd-eye,
+.check-pwd-eye {
+  width: 35px;
+  border: 0;
+  border-bottom: 2px solid #657786;
+  background-color: #f5f8fa;
+}

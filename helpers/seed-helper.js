@@ -42,9 +42,14 @@ const likeArr = (users, tweets, likeNumber) => {
   return arr
 }
 
+const randomDate = (start, end) => {
+  return new Date(start.valueOf() + Math.ceil(Math.random() * (end.valueOf() - start.valueOf())))
+}
+
 module.exports = {
   randomNumber,
   userIndex,
   followingArr,
-  likeArr
+  likeArr,
+  randomDate
 }
