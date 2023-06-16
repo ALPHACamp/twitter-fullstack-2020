@@ -12,19 +12,21 @@
             </a>
           </div>
           <form action="/tweets" method="POST" class="create-tweet-form">
-            <textarea name="description" id="tweet" cols="30" rows="10" class="main-create-input"
+            <textarea name="description" id="textareaInput" cols="30" rows="10" class="main-create-input"
               placeholder="有什麼新鮮事？"></textarea>
           {{!-- </form> --}}
         </div>
       </div>
       <div class="modal-footer">
         <div>
-          <h6 class="tweetTips">字數不可超過140字</h6>
+          <h6 id="errorMsg" class="tweetTips"></h6>
         </div>
         {{!-- <form action="/tweets" method="POST"> --}}
-        <button type="submit" class="btn btn-info">推文</button>
+        <button id="submitBtn" type="submit" class="btn btn-info" disabled>推文</button>
           </form>
       </div>
     </div>
   </div>
 </div>
+
+<script src="/javascripts/tweets.js"></script>

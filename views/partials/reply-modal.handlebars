@@ -52,17 +52,20 @@
             </a>
           </div>
           <form action="/tweets/{{this.id}}/replies" method="POST" class="create-reply-form reply-content" name="comment" id="tweetReply">
-            <textarea name="comment" id="reply" cols="30" rows="10" class="reply-create-input"
-              placeholder="推你的回覆"></textarea>
+            <textarea name="comment" id="replyareaInput" cols="30" rows="10" class="reply-create-input"
+              placeholder="推你的回覆" ></textarea>
         </div>
       </div>
       <div class="modal-footer">
         <div>
-          <h6 class="tweetTips">內容不可以空白</h6>
+          <h6 id="replyErrorMsg" class="tweetTips"></h6>
         </div>
-          <button type="submit" class="btn btn-info">回覆</button>
+          <button id="replySubmitBtn" type="submit" class="btn btn-info" disabled>回覆</button>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+
+<script src="/javascripts/reply.js"></script>
