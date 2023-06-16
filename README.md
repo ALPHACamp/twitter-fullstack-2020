@@ -138,7 +138,7 @@ $ npm run test
 * handlebars-helpers@0.10.0 - 樣版引擎條件外掛
 * bootstrap@5.0.2 - 切版、元件基礎樣式
 * dayjs@1.10.6 - 時間處理
-* multer@1.4.5-lts.1 - 圖片處理
+* imgur@1.0.2 - 圖片處理
 
 ### ｜登入功能：
 * bcryptjs@2.4.3 - 密碼雜湊外掛
