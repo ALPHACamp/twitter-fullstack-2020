@@ -20,11 +20,15 @@
             name='id'
             value='{{this.id}}'
           />
-          <button class='following' type='submit'>正在跟隨</button></form>
+          <button class='following' type='submit'>正在跟隨</button>
+        </form>
       {{else}}
-        <form action='/followships' method='post'><button
+
+        <form action='/followships' method='post'>
+          <button
             class='follow'
             type='submit'
+            {{#ifCond this.id ../user.id }}  disabled="disabled"  {{/ifCond}}
           >跟隨</button>
           <input
             class='form-control'
@@ -33,7 +37,6 @@
             value='{{this.id}}'
           />
         </form>
-
       {{/if}}
     </div>
   {{/each}}

@@ -507,7 +507,7 @@ img.card-avatar {
 }
 
 .solid {
-  color: #e6ecf0;
+  color: #E6ECF0;
 }
 
 .nav-card {
@@ -938,4 +938,18 @@ img.card-avatar {
   background-color: #FFFFFF;
   border: none;
   font-size: 20px;
+}
+
+.tweets, .tweet-replies {
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.follower-following-page {
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+}
+
+.following-user-content {
+  margin-bottom: 16px;
+  border-bottom: 1px solid #E6ECF0;
 }

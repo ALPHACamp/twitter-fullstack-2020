@@ -25,7 +25,6 @@ router.get('/logout', userController.logout)
 
 //* 追蹤功能
 router.post('/followships', authenticated, userController.addFollowing)
-
 router.delete('/followships/:id', authenticated, userController.removeFollowing)
 
 router.post('/tweets', authenticated, tweetController.postTweet)
