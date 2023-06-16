@@ -1,7 +1,7 @@
 # twitter-fullstack-2020
 ALPHA Camp | 學期 3 | Simple Twitter | 自動化測試檔 (全端開發組)
 
-[!home_page_prev](/public/stylesheets/icons/home_page_img.png)
+[!img](/public/stylesheets/icons/home_page_img.png)
 
 ## 安裝與使用
 
