@@ -6,7 +6,7 @@ const { User, Followship, Tweet, Reply, Like } = require('../models')
 const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 // 推文顯示數量
-const DEFAULT_LIMIT = 5
+const DEFAULT_LIMIT = 50
 
 const profileController = {
   getUserTweets: async (req, res, next) => {

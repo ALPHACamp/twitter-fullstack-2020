@@ -73,6 +73,10 @@
 
     {{/chooseEach}}
 
+    {{#if pagination.hasManyPages}}
+      {{> pagination route = route }}
+    {{/if}}
+
   </ul>
 </div>
 
