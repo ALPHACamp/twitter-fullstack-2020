@@ -5,13 +5,17 @@ ALPHA Camp | 學期 3 | Simple Twitter | 自動化測試檔 (全端開發組)
 
 ## 安裝與使用
 
-### 1. 下載至本機
+### ※事前準備
+### 進行下列步驟前請先確認已註冊 [Imgur](https://imgur.com/) 帳號並建立自己的Application
+### 確認已安裝 [Node.js](https://nodejs.org/zh-tw/download) 與 [MySQL](https://dev.mysql.com/doc/)
+### 並在MySQL中建立名為`ac_twitter_workspace`的資料庫
+
+
+### 1. 下載至本機並安裝套件
 開啟cmd並輸入下方指令
 ```js
 git clone 網址
 ```
-
-### 2. 安裝套件並啟動
 繼續在cmd中輸入指令
 ```js
 cd twitter-fullstack-2020
@@ -20,14 +24,31 @@ cd twitter-fullstack-2020
 ```js
 npm install
 ```
-安裝完畢後輸入
+
+### 2. 建立資料表與種子資料
+安裝完套件後輸入
+```js
+npx sequelize db:migrate
+```
+再接著建立種子資料
+```js
+npx sequelize db:seed:all
+```
+
+### 3. 設定環境變數並啟用
+輸入以下指令建立環境變數
+```js
+touch .env
+```
+至.env的檔案中將ImgurID 與 Secret存入
+
+回到cmd輸入
 ```js
 npm run start
 ```
 如出現`Example app listening on port 3000!`表示已成功啟動
 
-### 3. 使用
-點選下方連結進入
+啟動後點選下方連結進入
 
 [http://localhost:3000](http://localhost:3000)
 
