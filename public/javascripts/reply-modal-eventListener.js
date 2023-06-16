@@ -6,7 +6,7 @@ replyBtns.forEach(btn => {
     const btn = e.target.classList.contains('reply-btn')
       ? e.target
       : e.target.parentElement
-    const { id, account, img, time, name, description, useravatar } =
+    const { id, account, img, time, name, description, userAvatar } =
       btn.dataset
     console.log(btn.dataset)
     replyModal.innerHTML = `<div class="modal-dialog">
@@ -37,7 +37,7 @@ replyBtns.forEach(btn => {
           <div>
             <img src="${userAvatar}" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px" alt="avatar"> 
           </div>
-          <textarea class="form-control" id="comment" style="border:none;padding:0px;resize: none" name="comment" rows="7" cols="20" maxlength="140" minlength="1"  placeholder="推你的回覆"></textarea>
+          <textarea class="form-control" id="comment" style="border:none;padding:0px;resize: none;outline:none;box-shadow: none;border: #E6ECF0" name="comment" rows="7" cols="20" maxlength="140" minlength="1"  placeholder="推你的回覆"></textarea>
         </div>
       </div>
       <div class="d-flex justify-content-end" >

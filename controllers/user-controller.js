@@ -269,7 +269,7 @@ const userController = {
   //* Like tweet
   addLike: async (req, res, next) => {
     try {
-      const tweet = await Tweet.findByPk(req.user.id)
+      const tweet = await Tweet.findByPk(req.params.id)
       if (!tweet) throw new Error('找不到該篇推文')
       await Like.create({ tweetId: req.params.id, userId: req.user.id })
       return res.redirect('back')
