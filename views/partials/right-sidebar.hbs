@@ -16,6 +16,7 @@
           <p>@{{this.account}}</p>
         </div>
       </a>
+      
       {{#if this.isFollowed}}
         <form action='/followships/{{this.id}}?_method=DELETE' method='post'>
           <input
@@ -27,12 +28,11 @@
           <button class='following' style="margin-left: 0" type='submit'>正在跟隨</button>
         </form>
       {{else}}
-
         <form action='/followships' method='post'>
           <button
             class='follow'
             type='submit'
-            {{#ifCond this.id ../user.id }}  disabled="disabled"  {{/ifCond}}
+            {{#ifCond this.id ../userId }}  disabled="disabled"  {{/ifCond}}
           >跟隨</button>
           <input
             class='form-control'

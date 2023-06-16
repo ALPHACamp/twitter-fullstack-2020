@@ -11,10 +11,52 @@
   <img src="{{user.cover}}" class="banner" alt="cover" />
   <div class="d-flex justify-content-between user-banner">
     <img class="avatar ms-3" src="{{user.avatar}}">
+    {{#ifCond user.id userId}}
     <div class="btns" id="data-panel">
       <!-- todo 下面新增觸發編輯的MODAL，API : /api/users/:id/profile-->
       <button class="btn-outline m-3" data-bs-toggle="modal" data-bs-target="#editModal">編輯個人資料</button>
     </div>
+    {{else}}
+    <div class="btns">
+    <button class='btn-outline m-3'>
+      <a href="#">
+        <i class="fa-envelope" style="color: #ff6600;">
+        </i>
+      </a>
+    </button>
+    <button class='btn-outline m-3'>
+      <a href="#">
+        <i class="fa-regular fa-bell" style="color: #ff6600;">
+        </i>
+      </a>
+    </button>
+    <!-- todo 下面新增至資料庫-->
+    {{#if user.isFollowed}}
+        <form action='/followships/{{user.id}}?_method=DELETE' method='post'>
+          <input
+            class='form-control'
+            type='hidden'
+            name='id'
+            value='{{user.id}}'
+          />
+          <button class='following' style="margin-left: 0" type='submit'>正在跟隨</button>
+        </form>
+      {{else}}
+        <form action='/followships' method='post'>
+          <button
+            class='follow'
+            type='submit'
+          >跟隨</button>
+          <input
+            class='form-control'
+            type='hidden'
+            name='id'
+            value='{{user.id}}'
+          />
+        </form>
+      {{/if}}
+  </div>
+    {{/ifCond}}
   </div>
   <div class="info user-info">
     <div class="h5">{{user.name}}</div>

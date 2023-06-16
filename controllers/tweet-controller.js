@@ -1,10 +1,12 @@
 const { getTop10Following } = require('../helpers/getTop10Following-helper')
 const { Tweet, User, Reply, Like, sequelize } = require('../models')
+const helpers = require('../_helpers')
 
 const tweetController = {
   getTweets: async (req, res, next) => {
     const tweetRoute = true
     const id = req.user.id
+    const userId = helpers.getUser(req).id
     try {
       const user = await User.findByPk(req.user.id, { raw: true, nest: true })
       const userAvatar = user.avatar
@@ -51,7 +53,8 @@ const tweetController = {
         topFollowers: top10Followers,
         tweetRoute,
         userAvatar,
-        id
+        id,
+        userId
       })
     } catch (err) {
       next(err)

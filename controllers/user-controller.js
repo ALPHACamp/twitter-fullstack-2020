@@ -68,11 +68,12 @@ const userController = {
     const userTweet = true
     const userTweets = true
     const { id } = req.params
+    const userId = helpers.getUser(req).id
     // User 點擊他人頭像會擋掉，先刪除
     // const loginUser = helpers.getUser(req)
     // if (loginUser.id !== Number(id)) throw new Error('您沒有權限查看此個人資料')
     try {
-      const [user, FollowingsCount, FollowersCount, tweetsCount] =
+      const [user, FollowingsCount, FollowersCount, tweetsCount, isFollowed] =
         await Promise.all([
           User.findByPk(id, {
             include: [{ model: Tweet, include: User }]
@@ -88,6 +89,9 @@ const userController = {
           // 計算user的推文數
           Tweet.count({
             where: { user_id: id }
+          }),
+          Followship.findOne({
+            where: { follower_id: userId, following_id: id }
           })
         ])
       // 抓出此user發過的tweet
@@ -128,15 +132,18 @@ const userController = {
         avatar: user.avatar || 'https://i.imgur.com/mhXz6z9.png?1',
         FollowingsCount,
         FollowersCount,
-        tweetsCount
+        tweetsCount,
+        isFollowed
       }
+
       const top10Followers = await getTop10Following(req, next)
       return res.render('self-tweets', {
         user: userData,
         userTweet,
         tweet: tweetData,
         userTweets,
-        topFollowers: top10Followers
+        topFollowers: top10Followers,
+        userId
       })
     } catch (err) {
       next(err)
@@ -174,7 +181,7 @@ const userController = {
       const top10Followers = await getTop10Following(req, next)
 
       return res.render('following', {
-        topFollowers : top10Followers,
+        topFollowers: top10Followers,
         user: user.toJSON(),
         tweetsLength,
         currentUser,
@@ -296,7 +303,7 @@ const userController = {
   editUserAccount: async (req, res, next) => {
     const userRoute = true
     const { id } = req.params
-    const loginUser = helpers.getUser(req)
+    const userId = helpers.getUser(req).id
     // console.log('id:' + id)
     // console.log('loginUser:' + loginUser)
     // ? 抓不到 id ＆ loginUser 資料
@@ -307,7 +314,7 @@ const userController = {
         raw: true
       })
       if (!user) throw new Error('該用戶不存在!')
-      return res.render('account-setting', { user, userRoute })
+      return res.render('account-setting', { user, userRoute, userId })
     } catch (err) {
       next(err)
     }
@@ -395,6 +402,7 @@ const userController = {
     const userTweet = true
     const userReply = true
     const { id } = req.params
+    const userId = helpers.getUser(req).id
     try {
       const [user, FollowingsCount, FollowersCount, tweetsCount] =
         await Promise.all([
@@ -450,7 +458,8 @@ const userController = {
         replies: replyData,
         userTweet,
         userReply,
-        topFollowers: top10Followers
+        topFollowers: top10Followers,
+        userId
       })
     } catch (err) {
       next(err)
@@ -460,6 +469,7 @@ const userController = {
     const userTweet = true
     const userLike = true
     const { id } = req.params
+    const userId = helpers.getUser(req).id
 
     try {
       const [user, FollowingsCount, FollowersCount, tweetsCount] =
@@ -518,7 +528,8 @@ const userController = {
         likes: likesData,
         userTweet,
         userLike,
-        topFollowers: top10Followers
+        topFollowers: top10Followers,
+        userId
       })
     } catch (err) {
       next(err)
