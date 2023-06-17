@@ -61,14 +61,14 @@
               <span class="card-counts">{{ this.Replies.length }}</span>
             </div>
             {{#if this.isLike}}
-            <form action="/tweets/{{this.id}}/unlike" method="POST" class="primary-anchor form-like">
+            <form action="/tweets/{{this.id}}/unlike" method="POST" class="primary-anchor form-like likeBtn">
               <button type="submit" class="btn-like">
                 <span class="card-unlike-icon background-image"></span>
                 <span class="card-counts">{{ this.Likes.length }}</span>
               </button>
             </form>
             {{else}}
-            <form action="/tweets/{{this.id}}/like" method="POST" class="primary-anchor form-like">
+            <form action="/tweets/{{this.id}}/like" method="POST" class="primary-anchor form-like likeBtn">
               <button type="submit" class="btn-like">
                 <span class="card-like-icon background-image"></span>
                 <span class="card-counts">{{ this.Likes.length }}</span>

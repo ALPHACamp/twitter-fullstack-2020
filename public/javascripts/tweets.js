@@ -1,8 +1,10 @@
 const textareaInput = document.querySelector('#textareaInput');
 const submitBtn = document.querySelector('#submitBtn');
 const errorMsg = document.querySelector('#errorMsg');
-const logoutBtn = document.querySelector('#logoutBtn');
+const likeBtns = document.querySelectorAll('.likeBtn');
+const followBtns = document.querySelectorAll('.followBtn');
 const maxLength = 140;
+
 
 textareaInput.addEventListener('input', function () {
     const textareaValue = textareaInput.value.trim();
@@ -22,10 +24,17 @@ textareaInput.addEventListener('input', function () {
     }
 })
 
-window.addEventListener('scroll', function() {
-  // 將滾動位置存儲在localStorage中
+likeBtns.forEach(function(likeBtn){
+  likeBtn.addEventListener('click', function() {
   localStorage.setItem('scrollPosition', window.scrollY);
-});
+  })
+})
+
+followBtns.forEach(function(followBtn){
+  followBtn.addEventListener('click', function() {
+  localStorage.setItem('scrollPosition', window.scrollY);
+  })
+})
 
 window.addEventListener('load', function() {
   // 從localStorage中讀取滾動位置
@@ -38,9 +47,8 @@ window.addEventListener('load', function() {
   }
 });
 
-logoutBtn.addEventListener('click', function() {
-  localStorage.removeItem('scrollPosition');
-});
+
+
 
 
 
