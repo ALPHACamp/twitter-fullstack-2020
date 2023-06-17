@@ -39,7 +39,7 @@
                 <label for="name" class="form-label">名稱</label>
                 <input type="text" id="edit-name" name="name" placeholder="請輸入名稱" class="form-input"
                   value="{{ user.name }}" required>
-                <div class="invalid-feedback">請輸入50個字以內</div>
+                <div class="invalid-feedback">字數超出上限！</div>
                 <div class="input-minmax"></div>
               </div>
 
@@ -48,7 +48,7 @@
                 <label for="introduction" class="form-label">自我介紹</label>
                 <textarea id="intro" name="introduction" placeholder="請輸入自我介紹" class="form-textarea"
                   required>{{ user.introduction }}</textarea>
-                <div class="invalid-feedback">請輸入160個字以內</div>
+                <div class="invalid-feedback">字數超出上限！</div>
                 <div class="textarea-minmax"></div>
               </div>
 
