@@ -204,6 +204,26 @@ h5 {
   background-color: #555;
 }
 
+/* textarea scrollbar */
+textarea::-webkit-scrollbar {
+  width: 16px;
+  background-color: #fafafa;
+  box-shadow: inset 1px 0px 0px #e8e8e8, inset -1px 0px 0px #f0f0f0;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background-clip: content-box;
+  background-color: #c1c1c1;
+  border: 4px solid transparent;
+  border-radius: 50px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+
+
 /****** nav ******/
 /* homepage */
 .navbar.navbar-vertical {
@@ -425,6 +445,18 @@ h5 {
   height: 100%;
 }
 
+.vertical-box {
+  position: relative;
+  flex: 1;
+}
+
+.vertical-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border: 1px solid #b5b5be;
+}
+
 /****** tweets-list ******/
 .home-list {
   /* layout */
@@ -439,6 +471,10 @@ h5 {
   border-radius: 0 !important;
   border-bottom: 1px solid #e6ecf0;
   padding: 16px 30px 16px 24px;
+}
+
+.tweets-hr {
+  border-bottom: 10px solid #e6ecf0 !important;
 }
 
 .tweet-click-block {
@@ -461,7 +497,6 @@ h5 {
   position: relative;
   line-height: 1.5;
   max-height: calc(1.5 * 5);
-  /* overflow: hidden; */
 }
 
 .show-more-content {
@@ -518,6 +553,7 @@ h5 {
   font-size: 24px;
   margin: 8px 0;
   white-space: pre-line;
+  overflow-wrap: break-word;
 }
 
 .tweet-icon {
@@ -586,14 +622,11 @@ h5 {
   color: #6c757d;
 }
 
-.user-container > .card > div > span,
-.user-container > .card > div > span > a {
-  font-family: 'Noto Sans TC';
-  font-style: normal;
+.user-container>.card>div>span,
+.user-container>.card>div>span>a {
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
-  color: #171725;
   text-decoration: none;
 }
 
@@ -604,19 +637,19 @@ h5 {
   margin: 16px;
 }
 
-.profile-btn-block > .mail-btn,
-.profile-btn-block > .notification-btn {
+.profile-btn-block>.mail-btn,
+.profile-btn-block>.notification-btn {
   width: 40px;
   margin-right: 16px;
 }
 
 /* user-profile-modal */
-.user-edit-modal .modal-body > .cover-edit,
-.user-edit-modal .modal-body > .avatar-edit {
+.user-edit-modal .modal-body>.cover-edit,
+.user-edit-modal .modal-body>.avatar-edit {
   position: relative;
 }
 
-.user-edit-modal .modal-body > .cover-edit > .cover-img {
+.user-edit-modal .modal-body>.cover-edit>.cover-img {
   -webkit-filter: brightness(0.5);
   filter: brightness(0.5);
   width: 100%;
@@ -624,7 +657,7 @@ h5 {
   border-radius: 0px;
 }
 
-.user-edit-modal .modal-body > .cover-edit > .cover {
+.user-edit-modal .modal-body>.cover-edit>.cover {
   position: absolute;
   top: 0;
   left: 0;
@@ -635,15 +668,15 @@ h5 {
   height: 100%;
 }
 
-.user-edit-modal .modal-body > .cover-edit > .cover > .form-control,
-.user-edit-modal .modal-body > .avatar-edit > .avatar > .form-control {
+.user-edit-modal .modal-body>.cover-edit>.cover>.form-control,
+.user-edit-modal .modal-body>.avatar-edit>.avatar>.form-control {
   top: 0;
   width: 0;
   opacity: 0;
   pointer-events: none;
 }
 
-.user-edit-modal .modal-body > .cover-edit > .cover > .form-label {
+.user-edit-modal .modal-body>.cover-edit>.cover>.form-label {
   margin: 0;
   top: 0;
   left: 0;
@@ -651,7 +684,7 @@ h5 {
   cursor: pointer;
 }
 
-.user-edit-modal .modal-body > .cover-edit > .cover > .cover-delete {
+.user-edit-modal .modal-body>.cover-edit>.cover>.cover-delete {
   width: 15px;
   text-align: center;
   border: 0;
@@ -667,7 +700,7 @@ h5 {
   z-index: 0;
 }
 
-.user-edit-modal .modal-body > .avatar-edit > .avatar {
+.user-edit-modal .modal-body>.avatar-edit>.avatar {
   position: absolute;
   top: 0;
   left: 75px;
@@ -677,57 +710,20 @@ h5 {
   height: 100%;
 }
 
-.user-edit-modal .modal-body > .avatar-edit > .avatar > .form-label {
+.user-edit-modal .modal-body>.avatar-edit>.avatar>.form-label {
   margin: 0;
   top: 0;
   color: #ffffff;
   cursor: pointer;
 }
 
-.user-edit-modal .modal-body > .form-text {
+.user-edit-modal .modal-body>.form-text {
   margin: 80px 16px 0;
 }
 
-.user-edit-modal .modal-body > .form-text .box {
-  background: #f5f8fa;
-}
-
-.user-edit-modal .modal-body > .form-text .box > input,
-.user-edit-modal .modal-body > .form-text .box > textarea {
-  border-bottom: 2px solid #657786;
-}
-
-.user-edit-modal .modal-body > .form-text .box > input:valid,
-.user-edit-modal .modal-body > .form-text .box > textarea:valid {
-  border-bottom: 2px solid #50b5ff;
-}
-
-.user-edit-modal .modal-body > .form-text .box > input:invalid,
-.user-edit-modal .modal-body > .form-text .box > textarea:invalid {
-  border-bottom: 2px solid #fc5a5a;
-}
-
-.user-edit-modal .modal-body > .form-text .form-label {
-  margin: 0;
-  padding: 0;
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 22px;
-  color: #696974;
-}
-
-.user-edit-modal .modal-body > .form-text .form-control {
-  background-color: transparent;
-  border: 0;
-}
-
-.user-edit-modal .modal-body > .form-text .name-amount,
-.user-edit-modal .modal-body > .form-text .introduction-amount {
+.user-edit-modal .modal-body>.form-text .name-amount,
+.user-edit-modal .modal-body>.form-text .introduction-amount {
   text-align: right;
-  font-family: 'Noto Sans TC';
-  font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 20px;
@@ -766,28 +762,16 @@ h5 {
   margin-bottom: 32px;
 }
 
-.user-edit-container .box > input {
+.user-edit-container .box>input {
   border-bottom: 2px solid #657786;
 }
 
-.user-edit-container .validated .box > input:valid {
+.user-edit-container .validated .box>input:valid {
   border-bottom: 2px solid #50b5ff;
 }
 
-.user-edit-container .validated .box > input:invalid {
+.user-edit-container .validated .box>input:invalid {
   border-bottom: 2px solid #fc5a5a;
-}
-
-.user-edit-container .form-label {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Noto Sans TC';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 22px;
-  color: #696974;
 }
 
 .user-edit-container .form-control {
@@ -803,17 +787,24 @@ h5 {
   background-color: #f5f8fa;
 }
 
-.account-label,
-.password-label {
+.edit-box {
+  background-color: #f5f8fa;
+}
+
+.edit-box textarea {
+  resize: none;
+}
+
+.edit-label {
   margin-bottom: 0;
-  padding: 5px 0 2px 10px;
+  padding: 2px 16px 0px 16px;
+  font-weight: 400;
   font-size: 14px;
   color: #696974;
 }
 
-.account-input,
-.password-input {
-  padding: 2px 0 5px 10px;
+.edit-input {
+  padding: 0px 16px 2px 16px;
   font-size: 16px;
   background-color: #f5f8fa;
   border: 0;
@@ -821,8 +812,7 @@ h5 {
   border-radius: 0;
 }
 
-.account-input::placeholder,
-.password-input::placeholder {
+.edit-input::placeholder {
   color: #b5b5be;
 }
 
@@ -899,10 +889,6 @@ h5 {
 }
 
 /****** admin-users ******/
-.admin-user-page {
-  /* border-right: 0; */
-}
-
 .secondary-color {
   color: #6c757d;
 }
@@ -989,8 +975,8 @@ h5 {
   color: #fc5a5a;
 }
 
-form.was-validated .invalid-message:invalid ~ .invalid-parent .invalid-feedback.tweet-feedback,
-form.was-validated .invalid-message:invalid ~ .invalid-parent .reply-feedback {
+form.was-validated .invalid-message:invalid~.invalid-parent .invalid-feedback.tweet-feedback,
+form.was-validated .invalid-message:invalid~.invalid-parent .reply-feedback {
   display: initial;
   /* 顯示 */
 }
@@ -1001,7 +987,7 @@ form.invalid-feedback {
   color: #fc5a5a;
 }
 
-.validated .form-control:invalid ~ .invalid-feedback {
+.validated .form-control:invalid~.invalid-feedback {
   display: initial;
 }
 
