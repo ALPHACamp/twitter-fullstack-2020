@@ -41,6 +41,7 @@ module.exports = {
     return a === b ? options.fn(this) : options.inverse(this)
   },
   ifQuery: function (a, b) {
+    if (a === '') return '/tweets'
     return a?.includes('?') ? `${a}&${b}` : `${a}?${b}`
   },
   chooseEach: function (condition, options) {

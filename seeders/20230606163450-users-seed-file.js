@@ -28,7 +28,7 @@ module.exports = {
         name: `user${index + 1}`,
         role: 'user',
         avatar: `https://loremflickr.com/200/200/portrait,nature/?lock=${Math.random() * 100}`,
-        cover: `https://loremflickr.com/640/200/landscape/?lock=${Math.random() * 100}`,
+        cover: `https://loremflickr.com/960/300/landscape/?lock=${Math.random() * 100}`,
         introduction: faker.lorem.words(10),
         created_at: new Date(),
         updated_at: new Date()
