@@ -9,7 +9,7 @@
     <div class="profile-user-img-block">
       <img src='{{user.avatar}}' class='profile-user-img ms-3' alt='avatar' onerror="this.style.visibility= 'hidden'" />
     </div>
-    <div class='profile-btn-block'>
+    <div class='profile-btn-block' id="edit-user-data">
       <a href="/users/{{user.id}}"></a>
       <div class='btn recommend-followings-btn' data-bs-toggle='modal' data-bs-target='#edit-modal'>編輯個人資料</div>
     </div>
