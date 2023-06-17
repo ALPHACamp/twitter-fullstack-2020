@@ -9,7 +9,7 @@ const tweetController = {
     const userId = helpers.getUser(req).id
     try {
       const user = await User.findByPk(req.user.id, { raw: true, nest: true })
-      const userAvatar = user.avatar
+      const userAvatar = user.avatar || 'https://i.imgur.com/mhXz6z9.png?1'
       const tweets = await Tweet.findAll({
         group: 'Tweet.id',
         attributes: [
@@ -61,7 +61,10 @@ const tweetController = {
     }
   },
   getTweetReplies: async (req, res, next) => {
+    const userId = helpers.getUser(req).id
     try {
+      const user = await User.findByPk(req.user.id, { raw: true, nest: true })
+      const userAvatar = user.avatar || 'https://i.imgur.com/mhXz6z9.png?1'
       const tweet = await Tweet.findByPk(req.params.id, {
         raw: true,
         nest: true,
@@ -90,7 +93,9 @@ const tweetController = {
         replyQuantity,
         likeQuantity,
         isLiked,
-        topFollowers: top10Followers
+        topFollowers: top10Followers,
+        userId,
+        userAvatar
       })
     } catch (err) {
       next(err)
