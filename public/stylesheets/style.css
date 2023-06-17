@@ -75,6 +75,11 @@ a:hover {
 
 /* -------------------- Partial Messages -------------------- */
 
+.message-wrapper {
+  position: relative;
+  left: -32px;
+}
+
 .message-text {
   width: 300px;
   padding-left: 24px;
@@ -254,7 +259,6 @@ a:hover {
 /* ------------------ page flexbox & positions ------------------ */
 .wrapper {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
   min-width: 1100px;
 }
@@ -274,11 +278,12 @@ a:hover {
   border-left: 1px solid #E6ECF0;
   border-right: 1px solid #E6ECF0;
   position: relative;
+  margin: 0 24px;
 }
 
 .admin-users {
   position: relative;
-  width: 900px;
+  width: 1000px;
   border-left: 1px solid #E6ECF0;
 }
 
@@ -660,6 +665,7 @@ textarea {
 .no-tweet {
   text-align: center;
   padding: 20px;
+  border-bottom: 1px solid #E6ECF0;
 }
 
 .card-tweet-lg {
@@ -885,10 +891,24 @@ textarea {
   object-fit: cover;
 }
 
-.admin-user-avatar {
+.admin-user-card {
+  margin: 16px 0 0 16px;
+  border: 0px;
+  border-radius: 10px;
+  background-color: #F6F7F8;
+}
+
+.admin-user-bg {
   position: absolute;
   top: 64px;
   left: 55px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.admin-user-avatar {
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -903,6 +923,7 @@ textarea {
   height: 140px;
   border-radius: 50%;
   border: 5px solid white;
+  background-color: white;
 }
 
 .profile-info {
@@ -1008,7 +1029,7 @@ textarea {
   height: 24px;
   width: 24px;
   background-size: contain;
-  margin: 3px 120px 10px 0px ;
+  margin: 3px 120px 10px 0px;
 }
 
 .reply-count,
@@ -1035,7 +1056,7 @@ textarea {
 }
 
 .reply-datetime-hr {
-  margin-top: 8px; 
+  margin-top: 8px;
 }
 
 .reply-modal {

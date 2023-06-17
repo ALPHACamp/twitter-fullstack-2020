@@ -9,7 +9,7 @@
       <div class="users-container" style="flex-wrap: wrap;display:flex">
         {{!-- user card --}}
         {{#each users}}
-        <div class="card mt-2 ml-2" style="width:210px;height:314px;">
+        <div class="card admin-user-card" style="width:210px;height:314px;">
           <div class="user-image" style="height:50%">
             {{#if this.cover}}
             <div class="background-image"
@@ -19,9 +19,9 @@
             {{/if}}
 
             {{#if this.avatar}}
-            <div><img class="admin-user-avatar" src="{{this.avatar}}"></div>
+            <div class="admin-user-bg"><img class="admin-user-avatar" src="{{this.avatar}}"></div>
             {{else}}
-            <div><img class="admin-user-avatar" src="/stylesheets/icons/avatar.png"></div>
+            <div class="admin-user-bg"><img class="admin-user-avatar" src="/stylesheets/icons/avatar.png"></div>
             {{/if}}
           </div>
 

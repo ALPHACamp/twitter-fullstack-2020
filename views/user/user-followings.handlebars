@@ -50,8 +50,7 @@
 
           {{!-- 1. 不是log in user 本人。2. log in user 跟隨中--}}
           {{#ifTrueAndNotEqual this.isFollow this.id ../loginUserId}}
-          <form action="/followships/{{ this.id }}?_method=DELETE" method="post">
-            <input type="hidden" name="loginUserId" value="{{../loginUserId}}" />
+          <form action="/followships/{{ ../this.id }}?_method=DELETE" method="post">
             <div class="follow-button-wrapper">
               <button type="submit" class="btn btn-info btn-following-card">正在跟隨</button>
             </div>
@@ -61,8 +60,7 @@
           {{!-- 1.不是log in user 本人。2. log in user 沒有跟隨--}}
           {{#ifFalseAndNotEqual this.isFollow this.id ../loginUserId}}
           <form action="/followships" method="post">
-            <input type="hidden" name="userId" value="{{this.id}}" />
-            <input type="hidden" name="loginUserId" value="{{../loginUserId}}" />
+            <input type="hidden" name="id" value="{{../this.id}}" />
             <div class="follow-button-wrapper">
               <button type="submit" class="btn btn-outline-info btn-follow  btn-following-card">跟隨</button>
             </div>
