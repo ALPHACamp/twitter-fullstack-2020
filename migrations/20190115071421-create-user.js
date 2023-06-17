@@ -21,12 +21,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       avatar: {
-        type: Sequelize.STRING,
-        defaultValue: 'https://i.imgur.com/f7FShQ2.png'
+        type: Sequelize.STRING
       },
       cover: {
-        type: Sequelize.STRING,
-        defaultValue: 'https://i.imgur.com/xVTwoZ1.jpeg'
+        type: Sequelize.STRING
       },
       introduction: {
         type: Sequelize.TEXT
