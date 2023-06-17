@@ -65,10 +65,13 @@ const userController = {
     const userTweets = true
     const { id } = req.params
     const userId = helpers.getUser(req).id
+
     // User 點擊他人頭像會擋掉，先刪除
     // const loginUser = helpers.getUser(req)
     // if (loginUser.id !== Number(id)) throw new Error('您沒有權限查看此個人資料')
     try {
+      const loginUser = await User.findByPk(userId)
+      const userAvatar = loginUser.avatar
       const [user, FollowingsCount, FollowersCount, tweetsCount, isFollowed] =
         await Promise.all([
           User.findByPk(id, {
@@ -139,8 +142,8 @@ const userController = {
         tweet: tweetData,
         userTweets,
         topFollowers: top10Followers,
-        userId
-
+        userId,
+        userAvatar
       })
     } catch (err) {
       next(err)
@@ -243,7 +246,9 @@ const userController = {
       //! 不能用自用錯誤處理..
       // if (req.user.id == followingId) throw new Error('不能追蹤自己')
 
-      if (userId == followingId) { return res.status(200).json({ error: '不能追蹤自己' }) }
+      if (userId == followingId) {
+        return res.status(200).json({ error: '不能追蹤自己' })
+      }
 
       const user = await User.findByPk(userId)
 
@@ -312,13 +317,18 @@ const userController = {
     // if (loginUser.id !== Number(id)) throw new Error('您沒有權限編緝帳戶')
 
     try {
-      const user = await User.findByPk(id, {
+      const user = await User.findByPk(userId, {
         raw: true
       })
       const userAvatar = user.avatar || 'https://i.imgur.com/mhXz6z9.png?1'
       if (!user) throw new Error('該用戶不存在!')
 
-      return res.render('account-setting', { user, userRoute, userId })
+      return res.render('account-setting', {
+        user,
+        userRoute,
+        userId,
+        userAvatar
+      })
     } catch (err) {
       next(err)
     }
@@ -408,6 +418,8 @@ const userController = {
     const { id } = req.params
     const userId = helpers.getUser(req).id
     try {
+      const loginUser = await User.findByPk(userId)
+      const userAvatar = loginUser.avatar
       const [user, FollowingsCount, FollowersCount, tweetsCount] =
         await Promise.all([
           User.findByPk(id, {
@@ -463,7 +475,8 @@ const userController = {
         userTweet,
         userReply,
         topFollowers: top10Followers,
-        userId
+        userId,
+        userAvatar
       })
     } catch (err) {
       next(err)
@@ -476,8 +489,8 @@ const userController = {
     const userId = helpers.getUser(req).id
 
     try {
-      const originUser = await User.findByPk(userId)
-      const userAvatar = originUser.avatar
+      const loginUser = await User.findByPk(userId)
+      const userAvatar = loginUser.avatar
       const [user, FollowingsCount, FollowersCount, tweetsCount] =
         await Promise.all([
           User.findByPk(id, {
