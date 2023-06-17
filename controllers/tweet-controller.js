@@ -63,7 +63,7 @@ const tweetController = {
   getTweetReplies: async (req, res, next) => {
     const userId = helpers.getUser(req).id
     try {
-      const user = await User.findByPk(req.user.id, { raw: true, nest: true })
+      const user = await User.findByPk(userId, { raw: true, nest: true })
       const userAvatar = user.avatar || 'https://i.imgur.com/mhXz6z9.png?1'
       const tweet = await Tweet.findByPk(req.params.id, {
         raw: true,
@@ -81,8 +81,6 @@ const tweetController = {
         raw: true,
         nest: true
       })
-      console.log(tweet)
-      console.log(likes)
       const isLiked = likes.some(like => like.UserId === req.user.id)
       const top10Followers = await getTop10Following(req, next)
       const replyQuantity = replies.length
