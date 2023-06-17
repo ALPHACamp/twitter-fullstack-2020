@@ -18,7 +18,7 @@ const adminController = {
       })
       tweets = tweets.map(tweet => ({
         ...tweet.toJSON(),
-        description: tweet.description.substring(0, 50)
+        simpleText: tweet.description.substring(0, 50)
       })
       )
       return res.render('admin/tweets', { tweets })

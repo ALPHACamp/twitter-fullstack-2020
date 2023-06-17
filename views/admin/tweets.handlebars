@@ -18,29 +18,34 @@
           </a>
         </div>
 
-        <div class="card-text">
-          <div style="position:absolute;right:3px;top:6px">
-            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="tweet-delete-form"
-              style="float:right">
-              <button class="btn" type="submit">
-                <img src="/stylesheets/icons/delete.png" alt="delete icon">
-              </button>
-            </form>
+        <div data-bs-toggle="modal" data-bs-target="#adminTweetModal-{{this.id}}" class="modal-trigger primary-anchor"
+          data-tweetid="{{ this.id }}">
+          <div class="card-text">
+            <div style="position:absolute;right:3px;top:6px">
+              <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="tweet-delete-form"
+                style="float:right">
+                <button class="btn" type="submit">
+                  <img src="/stylesheets/icons/delete.png" alt="delete icon">
+                </button>
+              </form>
+            </div>
+            <div class="card-text-info">
+              <a class="primary-anchor">
+                <span class="card-name">{{this.User.name}}</span>
+              </a>
+              <a class="primary-anchor">
+                <span class="card-account">@{{this.User.account}}</span>
+              </a>
+              <span class="card-dot">·</span>
+              <span class="card-datetime">{{relativeTimeFromNow this.updatedAt}}</span>
+            </div>
+            <p class=" card-description">{{this.simpleText}}</p>
           </div>
-          <div class="card-text-info">
-            <a href="#" class="primary-anchor">
-              <span class="card-name">{{this.User.name}}</span>
-            </a>
-            <a href="#" class="primary-anchor">
-              <span class="card-account">@{{this.User.account}}</span>
-            </a>
-            <span class="card-dot">·</span>
-            <span class="card-datetime">{{relativeTimeFromNow this.updatedAt}}</span>
-          </div>
-          <p class=" card-description">{{this.description}}</p>
         </div>
       </div>
+      {{> admin-tweet-madal}}
       {{/each}}
     </section>
   </div>
+
 </div>
