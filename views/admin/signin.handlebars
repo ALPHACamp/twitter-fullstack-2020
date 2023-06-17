@@ -5,7 +5,9 @@
         <img src="/stylesheets/icons/ac_icon.png" alt="logo" class="logo">
       </div>
       <h3 class="text-center">後台登入</h3>
-      {{> messages}}
+      <div class="message-wrapper">
+        {{> messages}}
+      </div>
       <form action="/admin/signin" method="POST" id="form" class="needs-validation" novalidate>
 
         {{!-- Account --}}
