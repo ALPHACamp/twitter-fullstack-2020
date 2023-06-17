@@ -259,7 +259,6 @@ a:hover {
 /* ------------------ page flexbox & positions ------------------ */
 .wrapper {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
   min-width: 1100px;
 }
@@ -279,6 +278,7 @@ a:hover {
   border-left: 1px solid #E6ECF0;
   border-right: 1px solid #E6ECF0;
   position: relative;
+  margin: 0 24px;
 }
 
 .admin-users {
@@ -665,6 +665,7 @@ textarea {
 .no-tweet {
   text-align: center;
   padding: 20px;
+  border-bottom: 1px solid #E6ECF0;
 }
 
 .card-tweet-lg {
