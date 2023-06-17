@@ -1,64 +1,31 @@
 const express = require('express')
 const router = express.Router()
-const passport = require('../config/passport')
-
 const admin = require('./modules/admin')
-const followshipController = require('../controllers/followship-controller')
-const profileController = require('../controllers/profile-controller')
-const userController = require('../controllers/user-controller')
-const tweetsController = require('../controllers/tweets-controller')
-const apiProfileController = require('../controllers/api-profile-controller')
+const tweets = require('./modules/tweets')
+const users = require('./modules/users')
+const followships = require('./modules/followships')
+const loginSystem = require('./modules/login-system')
+const api = require('./modules/api')
 
-const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
-const cpUpload = require('../middleware/multer')
-const { getUser, getTopFollowedUsers } = require('../middleware/general-data')
 
 // admin
 router.use('/admin', admin)
 
-// signin
-router.get('/signin', userController.signinPage)
-router.post(
-  '/signin',
-  passport.authenticate('local', {
-    failureRedirect: '/signin',
-    failureFlash: true
-  }),
-  userController.signin
-)
-
-// signup
-router.get('/signup', userController.signupPage)
-router.post('/signup', userController.signup)
-// logout
-router.get('/logout', userController.logout)
+// signin signup logout
+router.use('/', loginSystem)
 
 // index
-router.get('/tweets/:tweetId/replies', authenticated, getTopFollowedUsers, tweetsController.getTweet)
-router.post('/tweets/:tweetId/replies', authenticated, tweetsController.postReply)
-router.post('/tweets/:tweetId/like', authenticated, userController.postLike)
-router.post('/tweets/:tweetId/unlike', authenticated, userController.postUnlike)
-router.get('/tweets', authenticated, getTopFollowedUsers, tweetsController.getTweets)
-router.post('/tweets', authenticated, tweetsController.postTweet)
+router.use('/tweets', tweets)
 
 // profile
-router.get('/users/:userId/tweets', authenticated, getTopFollowedUsers, getUser, profileController.getUserTweets)
-router.get('/users/:userId/replies', authenticated, getTopFollowedUsers, profileController.getUserReplies)
-router.get('/users/:userId/likes', authenticated, getTopFollowedUsers, profileController.getUserLikes)
-router.get('/users/:userId/followings', authenticated, getTopFollowedUsers, profileController.getUserFollowings)
-router.get('/users/:userId/followers', authenticated, getTopFollowedUsers, profileController.getUserFollowers)
-router.get('/users/:userId', authenticated, getTopFollowedUsers, profileController.editUserAccount)
-router.put('/users/:userId', authenticated, cpUpload, profileController.putUserAccount)
+router.use('/users', users)
 
 // followship
-router.post('/followships', authenticated, followshipController.addFollowing)
-router.delete('/followships/:userId', authenticated, followshipController.removeFollowing)
+router.use('/followships', followships)
 
 // api
-router.get('/api/users/:userId', authenticated, apiProfileController.editUserAccount)
-
-router.post('/api/users/:userId', authenticated, cpUpload, apiProfileController.putUserAccount)
+router.use('/api', api)
 
 router.use('/', (req, res) => res.redirect('/tweets'))
 

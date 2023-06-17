@@ -52,5 +52,8 @@ module.exports = {
   isTextTruncated: function (text, lines, options) {
     const linesCount = text.split('\n').length
     return linesCount > lines ? options.fn(this) : options.inverse(this)
+  },
+  avatarHelper: function (a, b) {
+    return a || b
   }
 }
