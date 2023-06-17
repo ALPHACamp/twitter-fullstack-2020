@@ -15,7 +15,11 @@
         <div class="avatar" data-bs-toggle="modal" data-bs-target="#adminTweetModal-{{this.id}}"
           data-tweetid="{{ this.id }}">
           <a class="primary-anchor">
+            {{#if this.User.avatar}}
             <img src="{{this.User.avatar}}" alt="avatar" class="logo">
+            {{else}}
+            <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+            {{/if}}
           </a>
         </div>
 
