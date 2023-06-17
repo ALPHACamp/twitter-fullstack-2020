@@ -6,7 +6,9 @@ const maxLength = 140;
 textareaInput.addEventListener('input', function () {
     const textareaValue = textareaInput.value.trim();
 
-    if (textareaValue.length > maxLength) {
+    if (textareaValue.length >= 1 && textareaValue.length <= maxLength) {
+      errorMsg.textContent = `${textareaValue.length}/140`
+    } else if (textareaValue.length > maxLength) {
         textareaInput.value = textareaValue.slice(0, maxLength);
         errorMsg.textContent = '字數不可超過140字';
     } else if (textareaValue.length < 1) {
