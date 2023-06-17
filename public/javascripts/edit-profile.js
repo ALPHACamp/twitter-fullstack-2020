@@ -48,6 +48,7 @@ editProfileBtn.addEventListener('click', async () => {
 // AJAX for cover image
 coverFile.addEventListener('change', async () => {
   try {
+    if (coverFile.files[0].size > 10485760) return alert('請上傳10MB以下的檔案')
     spinnerBackground.classList.add('spinning-background-show')
     spinner.classList.add('spinner-border-show')
 
@@ -81,6 +82,8 @@ deleteCoverButton.addEventListener('click', async () => {
 // AJAX for avatar image
 avatarFile.addEventListener('change', async () => {
   try {
+    if (avatarFile.files[0].size > 10485760) return alert('請上傳10MB以下的檔案')
+
     spinnerBackground.classList.add('spinning-background-show')
     spinner.classList.add('spinner-border-show')
 

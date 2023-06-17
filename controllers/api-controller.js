@@ -54,6 +54,9 @@ const apiController = {
   },
   uploadImage: async (req, res) => {
     const { files } = req
+
+    if (files?.cover?.[0].size > 10485760 || files?.avatar?.[0].size > 10485760) throw new Error('請上傳10MB以下的檔案')
+
     const coverPath = await imgurFileHandler(files?.cover?.[0])
     const avatarPath = await imgurFileHandler(files?.avatar?.[0])
     res.json({ coverPath, avatarPath })
