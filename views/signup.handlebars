@@ -5,9 +5,17 @@
         <img src="/stylesheets/icons/ac_icon.png" alt="logo" class="logo">
       </div>
       <h3 class="text-center">建立你的帳號</h3>
+      {{#if message}}
       <div class="message-wrapper">
-        {{> messages}}
+      <div class="danger-message mx-auto my-4">
+        <div class="message-text">
+          {{ message }}
+        </div>
+        <div class="danger-icon"><img src="/stylesheets/icons/x.png" alt="x icon"></div>
       </div>
+      </div>
+      {{/if}}
+
       <form action="/signup" method="POST" id="form" class="needs-validation" novalidate>
 
         {{!-- Account --}}

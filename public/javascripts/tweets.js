@@ -11,7 +11,7 @@ textareaInput.addEventListener('input', function () {
 
     if (textareaValue.length >= 1 && textareaValue.length <= maxLength) {
       errorMsg.textContent = `${textareaValue.length}/140`
-      submitBtn.disabled = false;
+      submitBtn.disabled = false
     } else if (textareaValue.length > maxLength) {
         textareaInput.value = textareaValue.slice(0, maxLength);
         errorMsg.textContent = '字數不可超過140字';

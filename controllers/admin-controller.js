@@ -1,4 +1,4 @@
-const { User, Tweet, Like, Followship } = require('../models')
+const { User, Tweet, Like, Reply } = require('../models')
 
 const adminController = {
   // 後台登入
@@ -18,7 +18,7 @@ const adminController = {
       })
       tweets = tweets.map(tweet => ({
         ...tweet.toJSON(),
-        description: tweet.description.substring(0, 50)
+        simpleText: tweet.description.substring(0, 50)
       })
       )
       return res.render('admin/tweets', { tweets })
@@ -30,8 +30,12 @@ const adminController = {
     const { tid } = req.params
     try {
       const tweet = await Tweet.findByPk(tid)
+      const replies = await Reply.findAll({ where: { TweetId: tid } })
+      const likes = await Like.findAll({ where: { TweetId: tid } })
       if (!tweet) throw new Error("This tweet didn't exist!")
       await tweet.destroy()
+      if (replies) await Reply.destroy({ where: { TweetId: tid } })
+      if (likes) await Like.destroy({ where: { TweetId: tid } })
       return res.redirect('/admin/tweets')
     } catch (e) {
       next(e)

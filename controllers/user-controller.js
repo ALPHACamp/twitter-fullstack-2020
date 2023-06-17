@@ -22,10 +22,14 @@ const userController = {
 
     try {
       const usedAccount = await User.findOne({ where: { account } })
-      if (usedAccount) throw new Error('該帳號已被使用')
+      if (usedAccount) {
+        return res.render('signup', { account, name, email, password, checkPassword, message: '該帳號已被使用' })
+      }
       const usedEmail = await User.findOne({ where: { email } })
-      if (usedEmail) throw new Error('該email已被使用')
-
+      if (usedEmail) {
+        req.flash('danger_msg', '該email已被使用')
+        return res.render('signup', { account, name, email, password, checkPassword, message: '該email已被使用'})
+      }
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(password, salt)
       await User.create({
@@ -45,7 +49,6 @@ const userController = {
     return res.render('signin')
   },
   signIn: (req, res) => {
-    // req.flash('success_msg', '登入成功')  似乎沒地方顯示?
     return res.redirect('/tweets')
   },
   // 登出

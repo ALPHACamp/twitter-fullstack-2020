@@ -12,7 +12,8 @@
       {{#each tweets}}
       <div class="card card-tweet-lg">
         <a class="tweet-href"></a>
-        <div class="avatar">
+        <div class="avatar" data-bs-toggle="modal" data-bs-target="#adminTweetModal-{{this.id}}"
+          data-tweetid="{{ this.id }}">
           <a class="primary-anchor">
             <img src="{{this.User.avatar}}" alt="avatar" class="logo">
           </a>
@@ -22,25 +23,30 @@
           <div style="position:absolute;right:3px;top:6px">
             <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="tweet-delete-form"
               style="float:right">
-              <button class="btn" type="submit">
+              <button class="btn" id="adminDeleteButton" type="submit">
                 <img src="/stylesheets/icons/delete.png" alt="delete icon">
               </button>
             </form>
           </div>
-          <div class="card-text-info">
-            <a href="#" class="primary-anchor">
+          <div class="card-text-info" data-bs-toggle="modal" data-bs-target="#adminTweetModal-{{this.id}}"
+            data-tweetid="{{ this.id }}">
+            <a class="primary-anchor">
               <span class="card-name">{{this.User.name}}</span>
             </a>
-            <a href="#" class="primary-anchor">
+            <a class="primary-anchor">
               <span class="card-account">@{{this.User.account}}</span>
             </a>
             <span class="card-dot">·</span>
             <span class="card-datetime">{{relativeTimeFromNow this.updatedAt}}</span>
+            <a class="primary-anchor">
+              <p class="card-description">{{this.simpleText}}</p>
+            </a>
           </div>
-          <p class=" card-description">{{this.description}}</p>
         </div>
       </div>
+      {{> admin-tweet-madal}}
       {{/each}}
     </section>
   </div>
+
 </div>
