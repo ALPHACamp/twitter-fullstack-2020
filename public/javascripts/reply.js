@@ -8,6 +8,7 @@ replyareaInput.addEventListener('input', function () {
 
     if (replyareaValue.length >= 1 && replyareaValue.length <= maxLength) {
       replyErrorMsg.textContent = `${replyareaValue.length}/140`
+      replySubmitBtn.disabled = false
     } else if (replyareaValue.length > replyMaxLength) {
         replyareaInput.value = replyareaValue.slice(0, replyMaxLength);
         replyErrorMsg.textContent = '字數不可超過140字';
