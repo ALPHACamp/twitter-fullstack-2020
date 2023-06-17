@@ -14,7 +14,7 @@ passport.use(
     },
     // authenticate user
     (req, account, password, cb) => {
-      User.findOne({ where: { account, role: 'user' } }).then(user => {
+      User.findOne({ where: { account } }).then(user => {
         if (!user) { return cb(null, false, req.flash('error_messages', '帳號尚未註冊！')) }
         bcrypt.compare(password, user.password).then(res => {
           if (!res) { return cb(null, false, req.flash('error_messages', '密碼錯誤！')) }
