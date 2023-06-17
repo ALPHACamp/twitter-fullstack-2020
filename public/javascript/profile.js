@@ -28,7 +28,6 @@ editUserData.addEventListener('click', event => {
     .get(`/api/users/${userId}`)
     // json資料
     .then(res => {
-      console.log(res.data)
       if (res.data.status === 'success') {
         coverImg.src = res.data.cover
         avatarImg.src = res.data.avatar
