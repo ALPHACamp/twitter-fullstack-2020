@@ -1,14 +1,21 @@
 const textareaInput = document.querySelector('#textareaInput');
 const submitBtn = document.querySelector('#submitBtn');
 const errorMsg = document.querySelector('#errorMsg');
+const likeBtns = document.querySelectorAll('.likeBtn');
+const followBtns = document.querySelectorAll('.followBtn');
 const maxLength = 140;
+
 
 textareaInput.addEventListener('input', function () {
     const textareaValue = textareaInput.value.trim();
 
     if (textareaValue.length >= 1 && textareaValue.length <= maxLength) {
       errorMsg.textContent = `${textareaValue.length}/140`
+<<<<<<< HEAD
       submitBtn.disabled = false
+=======
+      submitBtn.disabled = false;
+>>>>>>> 05ae5aeb1e74e8173bc8a1a124fc3d7a0e88bc05
     } else if (textareaValue.length > maxLength) {
         textareaInput.value = textareaValue.slice(0, maxLength);
         errorMsg.textContent = '字數不可超過140字';
@@ -21,10 +28,17 @@ textareaInput.addEventListener('input', function () {
     }
 })
 
-window.addEventListener('scroll', function() {
-  // 將滾動位置存儲在localStorage中
+likeBtns.forEach(function(likeBtn){
+  likeBtn.addEventListener('click', function() {
   localStorage.setItem('scrollPosition', window.scrollY);
-});
+  })
+})
+
+followBtns.forEach(function(followBtn){
+  followBtn.addEventListener('click', function() {
+  localStorage.setItem('scrollPosition', window.scrollY);
+  })
+})
 
 window.addEventListener('load', function() {
   // 從localStorage中讀取滾動位置
@@ -36,6 +50,9 @@ window.addEventListener('load', function() {
     localStorage.removeItem('scrollPosition');
   }
 });
+
+
+
 
 
 

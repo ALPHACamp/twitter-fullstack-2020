@@ -5,6 +5,7 @@
         <img src="/stylesheets/icons/ac_icon.png" alt="logo" class="logo">
       </div>
       <h3 class="text-center">建立你的帳號</h3>
+<<<<<<< HEAD
       {{#if message}}
       <div class="danger-message mx-auto my-4">
         <div class="message-text">
@@ -14,6 +15,11 @@
       </div>
       {{/if}}
 
+=======
+      <div class="message-wrapper">
+        {{> messages}}
+      </div>
+>>>>>>> 05ae5aeb1e74e8173bc8a1a124fc3d7a0e88bc05
       <form action="/signup" method="POST" id="form" class="needs-validation" novalidate>
 
         {{!-- Account --}}
