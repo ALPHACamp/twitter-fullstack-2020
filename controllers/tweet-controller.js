@@ -8,10 +8,9 @@ const tweetController = {
     const id = req.user.id
     const userId = helpers.getUser(req).id
     try {
-
       const user = await User.findByPk(userId, { raw: true, nest: true })
       const userAvatar = user.avatar
-      
+
       const tweets = await Tweet.findAll({
         group: 'Tweet.id',
         attributes: [
@@ -68,22 +67,24 @@ const tweetController = {
       const user = await User.findByPk(userId, { raw: true, nest: true })
       const userAvatar = user.avatar || 'https://i.imgur.com/mhXz6z9.png?1'
       const tweet = await Tweet.findByPk(req.params.id, {
+        include: [User],
         raw: true,
-        nest: true,
-        include: [User]
+        nest: true
       })
+      // console.log(tweet)
       const replies = await Reply.findAll({
         where: { Tweet_id: req.params.id },
         include: [User, { model: Tweet, include: User }],
         raw: true,
         nest: true
       })
+
       const likes = await Like.findAll({
         where: { Tweet_id: req.params.id },
         raw: true,
         nest: true
       })
-      const isLiked = likes.some(like => like.UserId === req.user.id)
+      const isLiked = likes.some(like => like.UserId === userId)
       const top10Followers = await getTop10Following(req, next)
       const replyQuantity = replies.length
       const likeQuantity = likes.length
@@ -103,8 +104,9 @@ const tweetController = {
   },
   postTweetReply: async (req, res, next) => {
     try {
-      const { comment, tweetId } = req.body
-      const userId = req.user.id
+      const { comment } = req.body
+      const tweetId = req.params.id
+      const userId = helpers.getUser(req).id
       if (!comment) throw new Error('內容不可為空白')
       const tweet = await Tweet.findByPk(tweetId)
       const user = await User.findByPk(userId)
@@ -124,7 +126,6 @@ const tweetController = {
     try {
       const { description } = req.body
       const userId = req.user.id
-      console.log(req)
       if (!description) throw new Error('內容不可為空白')
       if (description.length > 140) throw new Error('內容不可超過140字')
       const user = await User.findByPk(userId)
