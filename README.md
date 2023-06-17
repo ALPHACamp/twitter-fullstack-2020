@@ -4,7 +4,17 @@
 
 使用 Node.js + Express + MySQL 製作的簡易社群網站，使用者可以註冊帳號、登入，並進行發文、瀏覽他人推文、回覆他人留言、對別人的推文按 Like，以及追蹤其他使用者等。
 
-(待補：網站截圖)
+![](public/screenshots/tweets.png)
+
+### 雲端試用
+
+- 試用連結: [https://glacial-reef-40489.herokuapp.com](https://vast-basin-23192.herokuapp.com/)
+- 前台試用帳密
+    - 帳號: user1
+    - 密碼: 12345678
+- 後台試用帳密
+    - 帳號: root
+    - 密碼: 12345678
 
 ## **Features 功能**
 
@@ -60,4 +70,4 @@ $ npm run dev
 
 ## **Contributors 貢獻者**
 
-(待補)
+[evaaaaawu](https://github.com/evaaaaawu) | [gary86442](https://github.com/gary86442) | [thpss91103](https://github.com/thpss91103) | [arubakingpikachu](https://github.com/arubakingpikachu)
