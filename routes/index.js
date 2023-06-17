@@ -71,6 +71,7 @@ router.get('/self-likes', (req, res) => {
   res.render('self-likes')
 })
 
+router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', authenticated, generalErrorHandler)
 router.use('/', generalErrorHandler)
 
