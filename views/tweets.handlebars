@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="main-bg-bray"></div>
-      
+
       {{> messages}}
       {{!-- card 1 --}}
       {{#each tweetList}}
@@ -56,7 +56,7 @@
           </div>
           <p class="card-description">{{ this.description }}</p>
           <div class="card-datas">
-            <div data-bs-toggle="modal" data-bs-target="#replyModal-{{this.id}}" class="reply-modal-trigger primary-anchor" data-tweetid="{{ this.id }}">
+            <div data-bs-toggle="modal" data-bs-target="#replyModal" class="reply-modal-trigger primary-anchor">
               <span class="card-reply-icon background-image"></span>
               <span class="card-counts">{{ this.Replies.length }}</span>
             </div>
@@ -79,8 +79,9 @@
         </div>
       </div>
       {{!------------- reply modal -------------}}
-      {{> reply-modal }}
+
       {{/each}}
+      {{> reply-modal }}
     </section>
     {{> followship}}
   </div>
@@ -89,4 +90,3 @@
 
 {{!------------- tweet modal -------------}}
 {{> tweet-modal}}
-

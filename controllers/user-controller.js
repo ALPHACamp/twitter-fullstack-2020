@@ -28,7 +28,7 @@ const userController = {
       const usedEmail = await User.findOne({ where: { email } })
       if (usedEmail) {
         req.flash('danger_msg', '該email已被使用')
-        return res.render('signup', { account, name, email, password, checkPassword, message: '該email已被使用'})
+        return res.render('signup', { account, name, email, password, checkPassword, message: '該email已被使用' })
       }
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(password, salt)
@@ -69,7 +69,7 @@ const userController = {
       const UserId = req.params.uid
       const loginUserId = _helpers.getUser(req).id
 
-      let [user, tweetList, likeList] = await Promise.all([
+      let [user, tweetList, likeList, loginUser] = await Promise.all([
         User.findByPk(UserId, {
           include: [
             { model: User, as: 'Followings', attributes: ['id'] },
@@ -89,13 +89,14 @@ const userController = {
           where: { UserId: loginUserId },
           raw: true,
           attributes: ['TweetId']
-        })
+        }),
+        User.findByPk(loginUserId, { raw: true })
       ])
       const topUsers = await userServices.getTopUsers(loginUserId)
 
       if (!user) throw new Error('使用者不存在')
       user = user.toJSON()
-      loginUserAvatar = user.avatar
+      loginUserAvatar = loginUser.avatar
       user.isFollow = user.Followers.some(i => i.id === loginUserId)
 
       likeList = likeList.map(i => i.TweetId)
@@ -105,12 +106,10 @@ const userController = {
           return {
             ...i,
             isLike: likeList.some(j => j === i.id),
-            loginUserAvatar,
-            loginUserId
           }
         })
 
-      res.render('user/user-tweets', { user, tweetList, loginUserId, topUsers })
+      res.render('user/user-tweets', { user, tweetList, loginUserId, loginUserAvatar, topUsers })
     } catch (err) { next(err) }
   },
   // User Replies 頁面 
@@ -153,7 +152,7 @@ const userController = {
       const UserId = req.params.uid
       const loginUserId = _helpers.getUser(req).id
 
-      let [user, likeList, loginUserLikeList] = await Promise.all([
+      let [user, likeList, loginUserLikeList, loginUser] = await Promise.all([
         User.findByPk(UserId, {
           include: [
             { model: User, as: 'Followings', attributes: ['id'] },
@@ -179,13 +178,14 @@ const userController = {
           where: { UserId: loginUserId },
           raw: true,
           attributes: ['TweetId']
-        })
+        }),
+        User.findByPk(loginUserId, { raw: true })
       ])
       const topUsers = await userServices.getTopUsers(loginUserId)
 
       if (!user) throw new Error('使用者不存在')
       user = user.toJSON()
-      loginUserAvatar = user.avatar
+      loginUserAvatar = loginUser.avatar
       user.isFollow = user.Followers.some(i => i.id === loginUserId)
 
       loginUserLikeList = loginUserLikeList.map(i => i.TweetId)
@@ -195,12 +195,10 @@ const userController = {
           return {
             ...i,
             isLike: loginUserLikeList.some(j => j === i.TweetId),
-            loginUserId,
-            loginUserAvatar
           }
         })
 
-      res.render('user/user-likes', { user, likeList, loginUserId, topUsers })
+      res.render('user/user-likes', { user, likeList, loginUserId, loginUserAvatar, topUsers })
     } catch (err) { next(err) }
   },
   // User Followings頁面

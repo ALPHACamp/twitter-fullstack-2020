@@ -749,6 +749,7 @@ textarea {
 
 .card-reply-icon {
   background-image: url('/stylesheets/icons/chat.png');
+  pointer-events: none;
 }
 
 .form-like {
@@ -772,6 +773,7 @@ textarea {
 .card-counts {
   margin-right: 40px;
   color: #6C757D;
+  pointer-events: none;
 }
 
 .reply-modal-trigger {
