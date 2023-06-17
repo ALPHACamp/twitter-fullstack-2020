@@ -8,24 +8,48 @@ const inputIntroduction = document.querySelector('.input-introduction')
 const closeButton = document.querySelector('.close-btn')
 const avatarInput = document.querySelector('input[name="avatar"]')
 const coverInput = document.querySelector('input[name="cover"]')
+const editUserData = document.querySelector('#edit-user-data')
 
 // 自定變數
 const maxName = 50
 const maxIntroduction = 160
-// 紀錄原始資料
-const originCoverImg = coverImg.src
-const originAvatarImg = avatarImg.src
-const inputNameValue = inputName.value
-const inputIntroductionValue = inputIntroduction.value
+
+// 取得完整的URL
+const url = window.location.href
+
+// 使用正則表達式從URL中匹配數字
+const matches = url.match(/\/(\d+)/)
+
+// 取得匹配結果中的數字
+const userId = matches[1]
+
+editUserData.addEventListener('click', event => {
+  axios
+    .get(`/api/users/${userId}`)
+    // json資料
+    .then(res => {
+      if (res.data.status === 'success') {
+        coverImg.src = res.data.cover
+        avatarImg.src = res.data.avatar
+        inputName.value = res.data.name
+        nameAmount.innerText = `${res.data.name.length}/${maxName}`
+        inputIntroduction.value = res.data.introduction
+        introductionAmount.innerText = `${res.data.introduction.length}/${maxIntroduction}`
+      } else {
+        throw new Error(res.data.messages)
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
+})
 
 // 如果直接關閉，回覆成原始資料
 closeButton.addEventListener('click', () => {
-  coverImg.src = originCoverImg
   coverInput.value = ''
-  avatarImg.src = originAvatarImg
   avatarInput.value = ''
-  inputName.value = inputNameValue
-  inputIntroduction.value = inputIntroductionValue
+  inputName.setCustomValidity('')
+  inputIntroduction.setCustomValidity('')
 })
 
 inputForm.addEventListener('input', event => {
