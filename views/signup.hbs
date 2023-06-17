@@ -9,24 +9,37 @@
   {{> message}}
   <form class="d-flex flex-column align-items-center form-signup" action="/signup" method="POST">
     <div class="form-row mb-5">
-      <label class="form-label account-label" for="account" >帳號</label>
-      <input class="form-control account-input" id="account" type="text" name="account" class="form-control" placeholder="請輸入帳號" value="{{account}}" required autofocus>
+      <label class="form-label edit-label" for="account">帳號</label>
+      <input class="form-control edit-input" id="account" type="text" name="account" class="form-control"
+        placeholder="請輸入帳號" value="{{account}}" required autofocus>
     </div>
     <div class="form-row mb-5">
-      <label class="form-label password-label" for="name">名稱</label>
-      <input class="form-control password-input" id="name" type="text" name="name" class="form-control" placeholder="請輸入使用者名稱" value="{{name}}" required autofocus>
+      <label class="form-label edit-label" for="name">名稱</label>
+      <input class="form-control edit-input" id="name" type="text" name="name" class="form-control"
+        placeholder="請輸入使用者名稱" value="{{name}}" required autofocus>
     </div>
     <div class="form-row mb-5">
-      <label class="form-label password-label" for="email">Email</label>
-      <input class="form-control password-input" id="email" type="text" name="email" class="form-control" placeholder="請輸入 Email" value="{{email}}" required autofocus>
+      <label class="form-label edit-label" for="email">Email</label>
+      <input class="form-control edit-input" id="email" type="text" name="email" class="form-control"
+        placeholder="請輸入 Email" value="{{email}}" required autofocus>
     </div>
     <div class="form-row mb-5">
-      <label class="form-label password-label" for="password">密碼</label>
-      <input class="form-control password-input" id="password" type="text" name="password" class="form-control" placeholder="請輸入密碼" required autofocus>
+      <label class="form-label edit-label" for="password">密碼</label>
+      <div class="input-group">
+        <input class="form-control edit-input pwd-btn-input" id="password" type="password" name="password" class="form-control" placeholder="請輸入密碼" required autofocus>
+        <button class="pwd-eye" type="button">
+          <img class="pwd-eye-img close-eye" src="/images/eye-slash.svg" alt="">
+        </button>
+      </div>
     </div>
     <div class="form-row mb-5">
-      <label class="form-label password-label" for="checkPassword">密碼確認</label>
-      <input class="form-control password-input" id="checkPassword" type="text" name="checkPassword" class="form-control" placeholder="請再次輸入密碼" required autofocus>
+      <label class="form-label edit-label" for="checkPassword">密碼確認</label>
+      <div class="input-group">
+        <input class="form-control edit-input check-pwd-btn-input" id="checkPassword" type="password" name="checkPassword" class="form-control" placeholder="請再次輸入密碼" required autofocus>
+        <button class="check-pwd-eye" type="button">
+          <img class="check-pwd-eye-img close-eye" src="/images/eye-slash.svg" alt="">
+        </button>
+      </div>
     </div>
     <div>
       <button class="btn btn-primary mb-4 signin-btn" type="submit">註冊</button>
@@ -36,3 +49,5 @@
     <p><a href="/signin">取消</a></p>
   </div>
 </div>
+
+<script src="/javascript/signup.js"></script>

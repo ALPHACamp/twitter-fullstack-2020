@@ -102,7 +102,7 @@ const adminController = {
       .then(tweet => {
         res.redirect('/admin/tweets')
       })
-      .catch(err => console.log(err))
+      .catch(err => next(err))
   }
 }
 
