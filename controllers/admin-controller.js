@@ -33,7 +33,7 @@ const adminController = {
       const replies = await Reply.findAll({ where: { TweetId: tid } })
       const likes = await Like.findAll({ where: { TweetId: tid } })
       if (!tweet) throw new Error("This tweet didn't exist!")
-      // await tweet.destroy()
+      await tweet.destroy()
       if (replies) await Reply.destroy({ where: { TweetId: tid } })
       if (likes) await Like.destroy({ where: { TweetId: tid } })
       return res.redirect('/admin/tweets')
