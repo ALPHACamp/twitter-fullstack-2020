@@ -8,7 +8,6 @@ replyBtns.forEach(btn => {
       : e.target.parentElement
     const { id, account, time, name, description, useravatar, img } =
       btn.dataset
-    console.log(btn.dataset)
     replyModal.innerHTML = `<div class="modal-dialog">
     <div class="modal-content" style="width:634px;border-radius:14px;">
     <div class=" d-flex justify-content-start modal-head"">

@@ -106,7 +106,7 @@ const userController = {
               Like.count({ where: { tweet_id: tweetId } }),
               Tweet.findByPk(tweetId),
               User.findByPk(id),
-              Like.findOne({ where: { tweet_id: tweetId, user_id: id } })
+              Like.findOne({ where: { tweet_id: tweetId, user_id: userId } })
             ])
           tweet.repliesCount = replies
           tweet.likesCount = likes
@@ -139,8 +139,8 @@ const userController = {
         tweet: tweetData,
         userTweets,
         topFollowers: top10Followers,
-        userId,
-        userAvatar: userData.avatar
+        userId
+
       })
     } catch (err) {
       next(err)
@@ -276,18 +276,24 @@ const userController = {
   //* Like tweet
   addLike: async (req, res, next) => {
     try {
+      const userId = helpers.getUser(req).id
+      console.log(`userId:${userId}`)
       const tweet = await Tweet.findByPk(req.params.id)
       if (!tweet) throw new Error('找不到該篇推文')
-      await Like.create({ tweetId: req.params.id, userId: req.user.id })
+
+      await Like.create({ tweetId: req.params.id, userId })
       return res.redirect('back')
     } catch (err) {
       next(err)
     }
   },
   removeLike: async (req, res, next) => {
+    const userId = helpers.getUser(req).id
+    console.log(`userId:${userId}`)
+    console.log(`tweetId:${req.params.id}`)
     try {
       const like = await Like.findOne({
-        where: { userId: req.user.id, tweetId: req.params.id }
+        where: { user_id: userId, tweet_id: req.params.id }
       })
       like.destroy()
       return res.redirect('back')
@@ -311,7 +317,8 @@ const userController = {
       })
       const userAvatar = user.avatar || 'https://i.imgur.com/mhXz6z9.png?1'
       if (!user) throw new Error('該用戶不存在!')
-      return res.render('account-setting', { user, userRoute, userId, userAvatar })
+
+      return res.render('account-setting', { user, userRoute, userId })
     } catch (err) {
       next(err)
     }
@@ -456,8 +463,7 @@ const userController = {
         userTweet,
         userReply,
         topFollowers: top10Followers,
-        userId,
-        userAvatar: userData.avatar
+        userId
       })
     } catch (err) {
       next(err)
@@ -470,6 +476,8 @@ const userController = {
     const userId = helpers.getUser(req).id
 
     try {
+      const originUser = await User.findByPk(userId)
+      const userAvatar = originUser.avatar
       const [user, FollowingsCount, FollowersCount, tweetsCount] =
         await Promise.all([
           User.findByPk(id, {
@@ -491,7 +499,7 @@ const userController = {
 
       const likes = await Like.findAll({
         raw: true,
-        where: { userId: id }
+        where: { user_id: id }
       })
       const likesData = await Promise.all(
         likes.map(async like => {
@@ -500,6 +508,11 @@ const userController = {
           const ownerData = await User.findByPk(thisTweet.userId)
           const replyCount = await Reply.count({ where: { tweet_id: tweetId } })
           const likeCount = await Like.count({ where: { tweet_id: tweetId } })
+          const isLiked = Boolean(
+            await Like.findOne({
+              where: { tweet_id: tweetId, user_id: userId }
+            })
+          )
 
           like.name = ownerData.name
           like.account = ownerData.account
@@ -508,10 +521,13 @@ const userController = {
           like.description = thisTweet.description
           like.replyCount = replyCount
           like.likeCount = likeCount
+          like.isLiked = isLiked
 
           return like
         })
       )
+      // console.log(likes[10])
+
       const userData = {
         ...user.toJSON(),
         cover: user.cover || 'https://i.imgur.com/TGRK7uy.png',
@@ -528,7 +544,7 @@ const userController = {
         userLike,
         topFollowers: top10Followers,
         userId,
-        userAvatar: userData.avatar
+        userAvatar
       })
     } catch (err) {
       next(err)

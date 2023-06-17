@@ -14,14 +14,37 @@
           <span class="account">&nbsp;@{{this.account}}<b> •</b>&nbsp;{{relativeTimeFromNow this.createdAt}}</span>
         </div>
         <p class="user-content">{{this.description}}</p>
-        <div class="d-flex">
+        <div class="d-flex replies-likes-icon">
           <div class="replies">
-            <img src="/images/replyIcon.png" alt="11">
-            {{this.replyCount}}
+            <button type="button" class="btn reply-btn" data-bs-toggle="modal" data-bs-target="#replyModal"
+              data-id="{{this.tweetId}}" data-name="{{this.name}}" data-account="{{this.account}}"
+              data-time="{{relativeTimeFromNow this.createdAt}}" data-img="
+                {{#if this.avatar}}
+                  {{this.avatar}}
+                {{else}}
+                  https://i.imgur.com/mhXz6z9.png?1
+                {{/if}}"
+              data-description="{{this.description}}" data-useravatar="{{../userAvatar}}" style="z-index:2;outline:none;box-shadow: none;border: #E6ECF0">
+              <img src="/images/replyIcon.png" alt="">
+              {{this.replyCount}}
+            </button>
           </div>
           <div class="likes">
-            <img src="/images/likeIcon-red.png" alt="">
-            {{this.likeCount}}
+            {{#if this.isLiked }}
+            <form action='/tweets/{{this.tweetId}}/unlike?_method=DELETE' method='post'>
+              <button class='btn like-btn' type='submit' style="outline:none;box-shadow: none;border: #E6ECF0">
+                <img src="/images/likeIcon-red.png" alt="">
+                {{this.likeCount}}
+              </button>
+            </form>
+            {{else}}
+            <form action='/tweets/{{this.tweetId}}/like' method='post'>
+              <button class='btn like-btn' type='submit' style="outline:none;box-shadow: none;border: #E6ECF0">
+                <img src="/images/likeIcon.png" alt="">
+                {{this.likeCount}}
+              </button>
+            </form>
+            {{/if}}
           </div>
         </div>
       </div>
