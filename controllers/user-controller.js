@@ -143,7 +143,8 @@ const userController = {
         tweet: tweetData,
         userTweets,
         topFollowers: top10Followers,
-        userId
+        userId,
+        userAvatar: userData.avatar
       })
     } catch (err) {
       next(err)
@@ -313,8 +314,9 @@ const userController = {
       const user = await User.findByPk(id, {
         raw: true
       })
+      const userAvatar = user.avatar || 'https://i.imgur.com/mhXz6z9.png?1'
       if (!user) throw new Error('該用戶不存在!')
-      return res.render('account-setting', { user, userRoute, userId })
+      return res.render('account-setting', { user, userRoute, userId, userAvatar })
     } catch (err) {
       next(err)
     }
@@ -459,7 +461,8 @@ const userController = {
         userTweet,
         userReply,
         topFollowers: top10Followers,
-        userId
+        userId,
+        userAvatar: userData.avatar
       })
     } catch (err) {
       next(err)
@@ -529,7 +532,8 @@ const userController = {
         userTweet,
         userLike,
         topFollowers: top10Followers,
-        userId
+        userId,
+        userAvatar: userData.avatar
       })
     } catch (err) {
       next(err)
