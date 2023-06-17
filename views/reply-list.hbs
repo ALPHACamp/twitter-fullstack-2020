@@ -48,7 +48,7 @@
           </div>
           <div class="likes" style="margin-left: 121px;">
               {{#if isLiked }}
-                <form action='/tweets/{{tweet.id}}/unlike?_method=DELETE' method='post'>
+                <form action='/tweets/{{tweet.id}}/unlike' method='post'>
                   <button class='btn like-btn' type='submit'style="border-color: white;outline:none;box-shadow:none">
                     <img src="/images/likeIcon-red.png" alt="">
                   </button>

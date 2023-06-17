@@ -5,7 +5,6 @@ const helpers = require('../_helpers')
 const tweetController = {
   getTweets: async (req, res, next) => {
     const tweetRoute = true
-    const id = req.user.id
     const userId = helpers.getUser(req).id
     try {
 
@@ -35,7 +34,7 @@ const tweetController = {
           ],
           [
             sequelize.literal(
-              `EXISTS (SELECT 1 FROM likes where User_id = ${id} AND Tweet_id = Tweet.id)`
+              `EXISTS (SELECT 1 FROM likes where User_id = ${userId} AND Tweet_id = Tweet.id)`
             ),
             'isLiked'
           ]
@@ -55,7 +54,6 @@ const tweetController = {
         topFollowers: top10Followers,
         tweetRoute,
         userAvatar,
-        id,
         userId
       })
     } catch (err) {
