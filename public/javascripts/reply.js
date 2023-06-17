@@ -8,11 +8,8 @@ replyareaInput.addEventListener('input', function () {
 
     if (replyareaValue.length >= 1 && replyareaValue.length <= maxLength) {
       replyErrorMsg.textContent = `${replyareaValue.length}/140`
-<<<<<<< HEAD
       replySubmitBtn.disabled = false
-=======
-      replySubmitBtn.disabled = false;
->>>>>>> 05ae5aeb1e74e8173bc8a1a124fc3d7a0e88bc05
+
     } else if (replyareaValue.length > replyMaxLength) {
         replyareaInput.value = replyareaValue.slice(0, replyMaxLength);
         replyErrorMsg.textContent = '字數不可超過140字';
