@@ -1,4 +1,4 @@
-<div class="modal fade"id="replyModal"tabindex="-1"aria-labelledby="exampleModalLabel"ariahidden="true">
+<div class="modal fade"id="replyListModal"tabindex="-1"aria-labelledby="exampleModalLabel"ariahidden="true">
   <div class="modal-dialog">
     <div class="modal-content" style="width:634px;border-radius:14px;">
       <div class=" d-flex justify-content-start modal-head">
@@ -35,12 +35,8 @@
           </div>
           <div class="form-row d-flex flex-row mb-3" style="display:inline-block">
             <div>
-              {{#if user.avatar}}
                 <img src="{{user.avatar}}" width="50px" ;height="50px"
                   style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px" alt="avatar">
-              {{else}}
-                <img src="https://i.imgur.com/mhXz6z9.png?1" width="50px" ;height="50px" style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px" alt="avatar"> 
-              {{/if}}
              </div>
             <textarea class="form-control" id="comment" style="border:none;padding:0px;resize: none" name="comment" rows="7" cols="20" maxlength="140" minlength="1"  placeholder="推你的回覆"></textarea>
           </div>
