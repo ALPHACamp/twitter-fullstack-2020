@@ -16,7 +16,7 @@ passport.use(
     (req, account, password, cb) => {
       User.findOne({ where: { account, role: 'user' } }).then(user => {
         if (!user) { return cb(null, false, req.flash('error_messages', '帳號尚未註冊！')) }
-        bcrypt.compare(password, user.password).then(res => {
+        return bcrypt.compare(password, user.password).then(res => {
           if (!res) { return cb(null, false, req.flash('error_messages', '密碼錯誤！')) }
           return cb(null, user)
         })
@@ -54,6 +54,7 @@ passport.deserializeUser(async (id, cb) => {
     const user = await User.findByPk(id, {
       include: [
         // 關聯資料
+        { model: Like },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
