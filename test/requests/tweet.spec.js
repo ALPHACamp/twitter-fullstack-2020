@@ -224,7 +224,7 @@ describe('# tweet request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .end(function (err, res) {
-            if (err) return done(err)
+            if (err) return console.log(err)
             done()
           })
       })
