@@ -4,7 +4,7 @@
 
 使用 Node.js + Express + MySQL 製作的簡易社群網站，使用者可以註冊帳號、登入，並進行發文、瀏覽他人推文、回覆他人留言、對別人的推文按 Like，以及追蹤其他使用者等。
 
-![](public/screenshots/tweets.png)
+![](public/screenshots/tweets.jpg)
 
 ### 雲端試用
 
