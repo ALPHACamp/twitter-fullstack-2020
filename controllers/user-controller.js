@@ -7,7 +7,7 @@ const { getTop10Following } = require('../helpers/getTop10Following-helper')
 
 const userController = {
   signUpPage: (req, res) => {
-    res.render('signup')
+    return res.render('signup')
   },
   signUp: async (req, res, next) => {
     try {
@@ -49,16 +49,16 @@ const userController = {
     }
   },
   signInPage: (req, res) => {
-    res.render('signin')
+    return res.render('signin')
   },
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
-    res.redirect('/tweets')
+    return res.redirect('/tweets')
   },
   logout: (req, res) => {
     req.flash('success_messages', '登出成功！')
     req.logout()
-    res.redirect('/signin')
+    return res.redirect('/signin')
   },
   getUser: async (req, res, next) => {
     const userTweet = true
@@ -594,7 +594,8 @@ const userController = {
     // 驗證name是否有值
     if (!name || name.trim() === '') throw new Error('Name is required.')
     // 驗證是否name不超過50字 且 intro不超過160字 (如果intro有值)
-    if (name.length > 50 || intro ? intro.length > 160 : false) throw new Error('Limit exceeded.')
+    if (name.length > 50 || intro ? intro.length > 160 : false)
+      throw new Error('Limit exceeded.')
     // 把temp中的檔案複製一份到upload並回傳路徑 同時前往資料庫找user
     return Promise.all([
       imgurFileHandler(avatarFile),
@@ -603,8 +604,14 @@ const userController = {
     ])
       .then(([avatarFilePath, coverFilePath, user]) => {
         if (!user) throw new Error('User did not exist.')
-        if (coverReset === 'true') coverFilePath = 'https://i.imgur.com/b7U6LXD.jpg'
-        return user.update({ name, intro: intro || user.intro, avatar: avatarFilePath || user.avatar, cover: coverFilePath || user.cover })
+        if (coverReset === 'true')
+          coverFilePath = 'https://i.imgur.com/b7U6LXD.jpg'
+        return user.update({
+          name,
+          intro: intro || user.intro,
+          avatar: avatarFilePath || user.avatar,
+          cover: coverFilePath || user.cover
+        })
       })
       .then(user => {
         if (!user) throw new Error('User did not exist.')
