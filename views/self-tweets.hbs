@@ -1,0 +1,60 @@
+{{> left-sidebar }}
+
+<div class="user-main">
+  {{> user-self-info }}
+  {{> user-self-tab }}
+  <div class="user-tweets">
+
+    {{#each tweet}}
+
+    <div class="user-tweet">
+      <div class="admin-tweet-left">
+        <img class="rounded-circle" src="{{this.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
+      </div>
+      <div class="admin-tweet-right">
+        <div class="admin-tweet-right-up">
+          <span class="name">{{this.userName}}</span>
+          <span class="account">&nbsp;@{{this.account}}<b> •</b>&nbsp;{{relativeTimeFromNow this.createdAt}}</span>
+        </div>
+        <p class="user-content">{{this.description}}</p>
+        <div class="d-flex replies-likes-icon">
+          <div class="replies">
+            <button type="button" class="btn reply-btn" data-bs-toggle="modal" data-bs-target="#replyModal"
+              data-id="{{this.id}}" data-name="{{this.userName}}" data-account="{{this.account}}"
+              data-time="{{relativeTimeFromNow this.createdAt}}" data-img="{{this.avatar}}"
+
+              data-description="{{this.description}}" data-userAvatar="{{../userAvatar}}" style="z-index:2">
+
+              <img src="/images/replyIcon.png" alt="">
+              {{this.repliesCount}}
+            </button>
+          </div>
+          <div class="likes">
+            {{#if this.isLiked }}
+              <form action='/tweets/{{this.id}}/unlike' method='post'>
+                <button class='btn like-btn' type='submit'>
+                  <img src="/images/likeIcon-red.png" alt="">   
+                  {{this.likesCount}}
+                </button>
+              </form>
+            {{else}}
+              <form action='/tweets/{{this.id}}/like' method='post'>
+                <button class='btn like-btn' type='submit'>
+                  <img src="/images/likeIcon.png" alt="">   
+                  {{this.likesCount}}
+                </button>
+              </form>
+            {{/if}}
+          </div>
+
+    </div>
+
+      </div>
+
+    </div>
+    {{/each}}
+  </div>
+</div>
+
+{{> right-sidebar }}
+

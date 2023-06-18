@@ -1,0 +1,60 @@
+<div class="col-3 container mt-5" style="background-color:white">
+  {{!-- logo --}}
+  <div class="text-center">
+    <img src="/images/logo.svg" alt="logo">
+  </div>
+  {{!-- Title --}}
+  <div class="m-4 text-center">
+    <h3 class="fw-bold" style="color:black; font-size:28px;  font-family:'Noto Sans TC'">
+      建立你的帳號
+    </h3>
+  </div>
+  {{!-- Form --}}
+  <div class=" d-flex justify-content-center">
+    <form action="/signup" method="POST">
+      {{!-- 帳號 --}}
+      <div class="form-group form-floating m-4">
+        <input type="text" name="account" id="account" class="form-control" placeholder="請輸入帳號" value="{{account}}"
+          style="background-color:#F5F8FA; border-bottom:2px solid #657786; width:356px; height:54px" required>
+        <label for="account" style="color:#696974">帳號</label>
+      </div>
+      {{!-- 名稱 --}}
+      <div class="form-group form-floating m-4">
+        <input type="text" name="name" id="name" class="form-control" placeholder="請輸入使用者名稱" value="{{name}}"
+          style="background-color:#F5F8FA; border-bottom:2px solid #657786; width:356px; height:54px" required>
+        <label for="name" style="color:#696974">名稱</label>
+      </div>
+      {{!-- Email --}}
+      <div class="form-group form-floating m-4">
+        <input type="email" name="email" id="email" class="form-control" placeholder="請輸入 Email" value="{{email}}"
+          style="background-color:#F5F8FA; border-bottom:2px solid #657786; width:356px; height:54px" required>
+        <label for="email" style="color:#696974">Email</label>
+      </div>
+      {{!-- 密碼 --}}
+      <div class="form-group form-floating m-4">
+        <input type="password" name="password" id="password" class="form-control" placeholder="請設定密碼"
+          value="{{password}}"
+          style="background-color:#F5F8FA; border-bottom:2px solid #657786; width:356px; height:54px" required>
+        <label for="password" style="color: #696974">密碼</label>
+      </div>
+      {{!-- 密碼確認 --}}
+      <div class="form-group form-floating m-4">
+        <input type="password" name="checkPassword" id="checkPassword" class="form-control" placeholder="請再次輸入密碼"
+          value="{{checkPassword}}"
+          style="background-color:#F5F8FA; border-bottom:2px solid #657786; width:356px; height:54px" required>
+        <label for="password" style="color: #696974">密碼確認</label>
+      </div>
+      {{!-- 註冊 button --}}
+      <div class="mb-3 text-center">
+        <button class="btn col-2 m-2" type="submit"
+          style="color:white; background-color:#FF6600; font-size: 20px; border-radius:50px; width:356px; height:45px">
+          註冊
+        </button>
+      </div>
+    </form>
+  </div>
+  {{!-- Link --}}
+  <div class="mb-4 text-center">
+    <a href="/signin" class="m-1" style="font-size: 16px">取消</a>
+  </div>
+</div>

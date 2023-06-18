@@ -1,0 +1,101 @@
+<div class="d-flex justify-content-evenly">
+  <!--左欄-->
+  {{> left-sidebar}}
+  <!--中欄-->
+  <div class="tweet-main-page">
+    <!--header-->
+    <div class="header">
+      <h4>首頁</h4>
+    </div>
+    <!--po文欄位-->
+    <div class="d-flex flex-column mt-3" data-userAvatar="{{userAvatar}}" data-bs-toggle="modal"
+      data-bs-target="#tweetModal">
+      <div class="form-row d-flex flex-row mb-3 " style="display:inline-block">
+        <div class="user-avatar ">
+          <a href="/users/{{id}}/tweets">
+            {{#if userAvatar}}
+              <img src="{{userAvatar}}" width="50px" ;height="50px"
+                style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px"
+                alt="avatar">
+            {{else}}
+              <img src="https://i.imgur.com/mhXz6z9.png?1" width="50px" ;height="50px"
+                style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px" alt="avatar">
+            {{/if}}
+          </a>
+        </div>
+        <textarea class="form-control " id="description"
+          style="border:none;padding:0px;resize: none;border-color:white;outline:none;box-shadow:none" ;
+          name="description" rows="2" cols="20" maxlength="140" minlength="1" placeholder="有什麼新鮮事?"></textarea>
+      </div>
+      <div class="d-flex justify-content-end ">
+        <button class="post-new-tweet m-3 ">推文</button>
+
+      </div>
+    </div>
+    <hr class=" mt-2" style="height: 10px; background-color:#D9D9D9">
+    <div class=" d-flex flex-column">
+      <!--瀏覽推文-->
+      {{#each tweets}}
+      <div class="tweets d-flex flex-row">
+          <div class="tweet-left m-2">
+            <a href="/users/{{this.User.id}}/tweets">
+              {{#if this.User.avatar}}
+                <img class="rounded-circle" src="{{this.User.avatar}}" alt="avatar"
+                title="avatar" width="50px" height="50px">
+              {{else}}
+                <img class="rounded-circle" src="https://i.imgur.com/mhXz6z9.png?1" alt="avatar" title="avatar" width="50px" height="50px">
+              {{/if}}
+            </a>
+          </div>
+          <a style=" text-decoration:none" class="link-to-replies" href="/tweets/{{this.id}}/replies" style="z-index:0">
+          <div class="tweet-right m-2 d-flex flex-column">
+            <div class="tweets-info">
+              <span class="name">{{this.User.name}}</span>
+              <span class="account">&nbsp;@{{this.User.account}}</span>
+              <span class="time"><b>•</b>&nbsp;{{relativeTimeFromNow this.createdAt}}</span>
+            </div>
+            <!--推文-->
+            <p class="content">{{this.description}}</p>
+        </a>
+        <!--icon-->
+        <div class="d-flex replies-likes-icon">
+          <div class="replies">
+            <button type="button" class="btn reply-btn" data-bs-toggle="modal" data-bs-target="#replyModal"
+              data-id="{{this.id}}" data-name="{{this.User.name}}" data-account="{{this.User.account}}"
+              data-time="{{relativeTimeFromNow this.createdAt}}" data-img="
+                {{#if this.User.avatar}}
+                  {{this.User.avatar}}
+                {{else}}
+                  https://i.imgur.com/mhXz6z9.png?1
+                {{/if}}"
+              data-description="{{this.description}}" data-userAvatar="{{../userAvatar}}" style="z-index:2;outline:none;box-shadow: none;border: #E6ECF0">
+              <img src="/images/replyIcon.png" alt="">
+              {{this.repliesLength}}
+            </button>
+          </div>
+          <div class="likes">
+            {{#if this.isLiked }}
+            <form action='/tweets/{{this.id}}/unlike' method='post'>
+              <button class='btn like-btn' type='submit' style="outline:none;box-shadow: none;border: #E6ECF0">
+                <img src="/images/likeIcon-red.png" alt="">
+                {{this.likesLength}}
+              </button>
+            </form>
+            {{else}}
+            <form action='/tweets/{{this.id}}/like' method='post'>
+              <button class='btn like-btn' type='submit' style="outline:none;box-shadow: none;border: #E6ECF0">
+                <img src="/images/likeIcon.png" alt="">
+                {{this.likesLength}}
+              </button>
+            </form>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+{{> right-sidebar}}
+{{> tweets-reply-modal}}
+</div>

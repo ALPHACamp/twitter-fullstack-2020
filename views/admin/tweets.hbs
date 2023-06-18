@@ -1,0 +1,33 @@
+  {{>admin-sidebars route="admin"}}
+<div class="admin">
+  <div class="admin-main">
+    <div class="header-admin">
+      <h4>推文清單</h4>
+    </div>
+    <div class="admin-tweets">
+      {{#each tweets }}
+      <div class="admin-tweet">
+        <div class="admin-tweet-left">
+          {{#if this.User.avatar}}
+            <img class="rounded-circle" src="{{this.User.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
+          {{else}}
+            <img class="rounded-circle" src="https://i.imgur.com/mhXz6z9.png?1" alt="avatar" title="avatar" width="50px" height="50px">
+          {{/if}}
+        </div>
+        <div class="admin-tweet-right">
+          <div class="admin-tweet-right-up">
+            <span class="name">{{ this.User.name }}</span>
+            <span class="account">&nbsp;@{{ this.User.account}}<b> • </b>{{relativeTimeFromNow this.createdAt}}</span>
+            <div class="tweet-xmark">
+              <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+                <button type="submit"><img src="/images/xmarkGray.png" onclick="return confirm(`確定要刪除此tweet嗎？`)"></button>
+              </form>
+            </div>
+          </div>
+          <p class="content">{{this.description}}</p>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
