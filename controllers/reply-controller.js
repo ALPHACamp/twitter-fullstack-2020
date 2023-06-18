@@ -34,6 +34,7 @@ const replyController = {
       if (!loginUser) throw new Error('使用者不存在')
 
       loginUser = loginUser.toJSON()
+      loginUserAvatar = loginUser.avatar
       tweet = tweet.toJSON()
 
       tweet.isLike = tweet.Likes.some(like => like.UserId === loginUserId);
@@ -52,6 +53,7 @@ const replyController = {
 
       return res.render('replies', {
         loginUserId,
+        loginUserAvatar,
         loginUser,
         replies,
         tweet,
