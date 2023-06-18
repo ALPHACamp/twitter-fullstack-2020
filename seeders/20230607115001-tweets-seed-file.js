@@ -14,7 +14,7 @@ module.exports = {
 
       for (let i = 0; i < tweetCount; i++) {
         const userIndex = parseInt(i / 10);
-        const createdAt = new Date(Date.now() + i * delayInMinutes * 60000).toISOString().substring(0, 16);
+        const createdAt = new Date(Date.now() - i * delayInMinutes * 60000).toISOString().substring(0, 16);
 
         tweets.push({
           User_id: users[userIndex].id,
