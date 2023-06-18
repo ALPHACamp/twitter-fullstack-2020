@@ -12,21 +12,32 @@ module.exports = {
           "SELECT id FROM Tweets;",
           { type: queryInterface.sequelize.QueryTypes.SELECT }
         )
-      ])
+      ]);
 
-      await queryInterface.bulkInsert('Replies', Array.from({ length: 150 }).map((d, i) => ({
-        User_id: users[i % 5].id,
-        Tweet_id: tweets[parseInt(i / 3)].id,
-        comment: faker.lorem.text().substring(0, 80),
-        created_at: new Date(),
-        updated_at: new Date()
-      })), {});
+      const delayInMinutes = 5;
+      const replyCount = 150;
+      const replies = [];
+
+
+      for (let i = 0; i < replyCount; i++) {
+        const userIndex = i % 5;
+        const tweetIndex = parseInt(i / 3);
+        const createdAt = new Date(Date.now() + i * delayInMinutes * 60000).toISOString().substring(0, 16);
+
+        replies.push({
+          User_id: users[userIndex].id,
+          Tweet_id: tweets[tweetIndex].id,
+          comment: faker.lorem.text().substring(0, 80),
+          created_at: createdAt,
+          updated_at: createdAt
+        });
+      }
+      await queryInterface.bulkInsert('Replies', replies, {});
       console.log('Replies seeded successfully.');
-    }
-    catch (error) {
-      console.error('Error seeding replies.', error);
-    }
-  },
+  } catch (error) {
+    console.error('Error seeding replies.', error);
+  }
+},
   down: async (queryInterface, Sequelize) => {
     try {
       await queryInterface.bulkDelete('Replies', {});

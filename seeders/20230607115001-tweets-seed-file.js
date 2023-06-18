@@ -8,13 +8,23 @@ module.exports = {
         "SELECT id FROM Users WHERE `role` = 'user';",
         { type: queryInterface.sequelize.QueryTypes.SELECT }
       )
-      await queryInterface.bulkInsert('Tweets', Array.from({ length: 50 }).map((d, i) => ({
-        User_id: users[parseInt( i / 10 )].id,
-        description: faker.lorem.text().substring(0,100),
-        created_at: new Date(),
-        updated_at: new Date()
-      })), {});
-    console.log('Tweets seeded successfully.');
+      const delayInMinutes = 5; 
+      const tweetCount = 50;
+      const tweets = [];
+
+      for (let i = 0; i < tweetCount; i++) {
+        const userIndex = parseInt(i / 10);
+        const createdAt = new Date(Date.now() + i * delayInMinutes * 60000).toISOString().substring(0, 16);
+
+        tweets.push({
+          User_id: users[userIndex].id,
+          description: faker.lorem.text().substring(0, 100),
+          created_at: createdAt,
+          updated_at: createdAt
+        });
+      }
+      await queryInterface.bulkInsert('Tweets', tweets, {});
+      console.log('Tweets seeded successfully.');
     } 
     catch (error) {
       console.error('Error seeding tweets.', error);
