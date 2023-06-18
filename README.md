@@ -1,6 +1,23 @@
 # twitter-fullstack-2020
 ALPHA Camp | 學期 3 | Simple Twitter | 自動化測試檔 (全端開發組)
+
+## 畫面
+
+![asignin](https://github.com/alvinkane/twitter-fullstack-2020/assets/55631549/28645bb7-d212-460a-88d3-3535539e0c76)
+![admi-signin](https://github.com/alvinkane/twitter-fullstack-2020/assets/55631549/efa1714f-cadc-4780-a9ab-5d171e19a845)
+![signup](https://github.com/alvinkane/twitter-fullstack-2020/assets/55631549/624ea2de-f028-4a69-94a3-b3ec18c9c53b)
+![tweets](https://github.com/alvinkane/twitter-fullstack-2020/assets/55631549/990466b3-4f45-4a80-bbd6-79d7f3e78beb)
+![create-new-tweet](https://github.com/alvinkane/twitter-fullstack-2020/assets/55631549/395738ce-4806-4d93-b519-12c219ff193c)
+![tweet-reply](https://github.com/alvinkane/twitter-fullstack-2020/assets/55631549/46c4737f-ebb5-4fb0-8aed-47447cce2405)
+![user-profile](https://github.com/alvinkane/twitter-fullstack-2020/assets/55631549/661d5d90-eb24-4f33-bf0e-53379bff3d41)
+![user-edit](https://github.com/alvinkane/twitter-fullstack-2020/assets/55631549/c0146f06-e191-4d07-a7e5-244e8f49334e)
+![user-account-edit](https://github.com/alvinkane/twitter-fullstack-2020/assets/55631549/b203dd07-c19c-42ff-a723-ac02e63cf7dc)
+![admin-tweets](https://github.com/alvinkane/twitter-fullstack-2020/assets/55631549/7ff6ce85-8e63-4ec1-82dd-d2a86d162d11)
+![admin-users](https://github.com/alvinkane/twitter-fullstack-2020/assets/55631549/f47b02b1-fecc-413a-b62a-baaa228569ae)
+
+
 ## 功能
+
 這個網站有兩種使用角色：
 
 一般使用者 ( 以下稱 `user` )、管理員 ( 以下稱 `admin` )。
