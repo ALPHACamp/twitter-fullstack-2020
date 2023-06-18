@@ -43,8 +43,11 @@
 
     {{!-- 1. 不是log in user 本人。2. log in user 跟隨中--}}
     {{#ifTrueAndNotEqual user.isFollow user.id loginUserId}}
+
     <form action="/followships/{{ ../user.id }}/?_method=DELETE" method="post">
       <input type="hidden" name="loginUserId" value="{{../loginUserId}}" />
+      <span class="profile-msg-icon background-image"></span>
+      <span class="profile-notifi-icon background-image"></span>
       <div class="follow-button-wrapper">
         <button type="submit" class="btn btn-info btn-edit-profile">正在跟隨</button>
       </div>
@@ -57,8 +60,11 @@
     <form action="/followships" method="post">
       <input type="hidden" name="userId" value="{{../user.id}}" />
       <input type="hidden" name="loginUserId" value="{{../loginUser.id}}" />
+      <span class="profile-msg-icon-follow background-image"></span>
+      <span class="profile-notifi-icon-follow background-image"></span>
       <div class="follow-button-wrapper">
-        <button type="submit" class="btn btn-outline-info btn-follow  btn-edit-profile" name="id" value={{../user.id}}>跟隨</button>
+        <button type="submit" class="btn btn-outline-info btn-follow  btn-edit-profile" name="id"
+          value={{../user.id}}>跟隨</button>
       </div>
     </form>
     {{/ifFalseAndNotEqual}}

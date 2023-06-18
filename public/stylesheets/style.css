@@ -752,6 +752,40 @@ textarea {
   pointer-events: none;
 }
 
+.profile-msg-icon,
+.profile-notifi-icon,
+.profile-msg-icon-follow,
+.profile-notifi-icon-follow {
+  display: inline-block;
+  position: absolute;
+  top: 218px;
+  height: 40px;
+  width: 40px;
+  background-size: contain;
+  margin-right: 6px;
+}
+
+.profile-msg-icon,
+.profile-msg-icon-follow {
+  background-image: url('/stylesheets/icons/btn_msg.png');
+  right: 193px;
+}
+
+.profile-msg-icon-follow {
+  right: 161px
+}
+
+
+.profile-notifi-icon,
+.profile-notifi-icon-follow {
+  background-image: url('/stylesheets/icons/btn_notfi.png');
+  right: 129px;
+}
+
+.profile-notifi-icon-follow {
+  right: 97px
+}
+
 .form-like {
   display: inline;
 }
