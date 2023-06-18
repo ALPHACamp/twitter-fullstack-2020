@@ -7,8 +7,12 @@
       <div class="modal-body">
         <div class="main-create-bar">
           <div class="avatar">
-            <a href="/users/{{user.id}}">
-              <img src="{{user.avatar}}" alt="avatar" class="logo">
+            <a href="/users/{{loginUserId}}/tweets">
+              {{#if loginUserAvatar }}
+              <img src="{{ loginUserAvatar }}" alt="avatar" class="logo">
+              {{else}}
+              <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+              {{/if}}
             </a>
           </div>
           <form action="/tweets" method="POST" class="create-tweet-form">

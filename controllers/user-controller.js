@@ -118,7 +118,7 @@ const userController = {
       const UserId = req.params.uid
       const loginUserId = _helpers.getUser(req).id
 
-      let [user, replyList] = await Promise.all([
+      let [user, replyList, loginUser] = await Promise.all([
         User.findByPk(UserId, {
           include: [
             { model: User, as: 'Followings', attributes: ['id'] },
@@ -133,9 +133,18 @@ const userController = {
             { model: Tweet, attributes: ['id'], include: [User] }
           ],
           order: [['createdAt', 'DESC']],
-        })
+        }),
+        User.findByPk(loginUserId, {
+          include: [
+            { model: User, as: 'Followings', attributes: ['id'] },
+            { model: User, as: 'Followers', attributes: ['id'] },
+            { model: Tweet, attributes: ['id'] },
+          ],
+        }),
       ])
       const topUsers = await userServices.getTopUsers(loginUserId)
+      loginUser = loginUser.toJSON()
+      loginUserAvatar = loginUser.avatar
 
       if (!user) throw new Error('使用者不存在')
       user = user.toJSON()
@@ -143,7 +152,7 @@ const userController = {
       replyList = replyList
         .map(i => i.toJSON())
 
-      res.render('user/user-replies', { user, replyList, loginUserId, topUsers })
+      res.render('user/user-replies', { user, replyList, loginUserId, topUsers,loginUserAvatar })
     } catch (err) { next(err) }
   },
   // User likes 頁面
@@ -207,7 +216,7 @@ const userController = {
       const UserId = req.params.uid
       const loginUserId = _helpers.getUser(req).id
 
-      let [user, loginUserFollowingList] = await Promise.all([
+      let [user, loginUserFollowingList, loginUser] = await Promise.all([
         User.findByPk(UserId, {
           include: [
             { model: User, as: 'Followings' },
@@ -218,9 +227,18 @@ const userController = {
         Followship.findAll({
           where: { followerId: loginUserId },
           raw: true
-        })
+        }),
+        User.findByPk(loginUserId, {
+          include: [
+            { model: User, as: 'Followings', attributes: ['id'] },
+            { model: User, as: 'Followers', attributes: ['id'] },
+            { model: Tweet, attributes: ['id'] },
+          ],
+        }),
       ])
       const topUsers = await userServices.getTopUsers(loginUserId)
+      loginUser = loginUser.toJSON()
+      loginUserAvatar = loginUser.avatar
 
       loginUserFollowingList = loginUserFollowingList.map(i => i.followingId)
 
@@ -235,7 +253,7 @@ const userController = {
           return b.Followship.createdAt.toLocaleString().localeCompare(a.Followship.createdAt.toLocaleString())
         })
 
-      res.render('user/user-followings', { user, FollowingList, loginUserId, topUsers })
+      res.render('user/user-followings', { user, FollowingList, loginUserId, topUsers, loginUserAvatar })
     } catch (err) { next(err) }
   },
   // User Followers頁面
@@ -244,7 +262,7 @@ const userController = {
       const UserId = req.params.uid
       const loginUserId = _helpers.getUser(req).id
 
-      let [user, loginUserFollowingList] = await Promise.all([
+      let [user, loginUserFollowingList, loginUser] = await Promise.all([
         User.findByPk(UserId, {
           include: [
             { model: User, as: 'Followings' },
@@ -255,9 +273,18 @@ const userController = {
         Followship.findAll({
           where: { followerId: loginUserId },
           raw: true
-        })
+        }),
+        User.findByPk(loginUserId, {
+          include: [
+            { model: User, as: 'Followings', attributes: ['id'] },
+            { model: User, as: 'Followers', attributes: ['id'] },
+            { model: Tweet, attributes: ['id'] },
+          ],
+        }),
       ])
       const topUsers = await userServices.getTopUsers(loginUserId)
+      loginUser = loginUser.toJSON()
+      loginUserAvatar = loginUser.avatar
 
       loginUserFollowingList = loginUserFollowingList.map(i => i.followingId)
 
@@ -272,7 +299,7 @@ const userController = {
           return b.Followship.createdAt.toLocaleString().localeCompare(a.Followship.createdAt.toLocaleString())
         })
 
-      res.render('user/user-followers', { user, FollowerList, loginUserId, topUsers })
+      res.render('user/user-followers', { user, FollowerList, loginUserId, topUsers, loginUserAvatar })
     } catch (err) { next(err) }
   },
   getUserSetting: async (req, res, next) => {
@@ -294,8 +321,8 @@ const userController = {
         account: account || user.account,
         email: email || user.email
       }
-
-      res.render('user/user-settings', { user, loginUserId })
+      loginUserAvatar = user.avatar
+      res.render('user/user-settings', { user, loginUserId, loginUserAvatar })
     } catch (err) { next(err) }
   },
   postUserSetting: async (req, res, next) => {
