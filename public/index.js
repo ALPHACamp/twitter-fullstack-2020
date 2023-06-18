@@ -23,7 +23,7 @@ targetNodes.push(postReplyModal)
 targetNodes.push(deleteTweetModal)
 
 // 取得目前現在視窗大小的函式
-function updatePageHeight () {
+function updatePageHeight() {
   let pageHeight = Math.max(
     document.documentElement.scrollHeight,
     document.body.scrollHeight
@@ -39,7 +39,7 @@ window.addEventListener('resize', function () {
   pageHeight = updatePageHeight()
 })
 
-const observer = new MutationObserver(function async (mutationsList, observer) {
+const observer = new MutationObserver(function async(mutationsList, observer) {
   for (const mutation of mutationsList) {
     if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
       // 如果監聽對象的 class 有 show 的話
@@ -57,7 +57,7 @@ const observer = new MutationObserver(function async (mutationsList, observer) {
         }
 
         // 函式：消滅已產生的事件監聽器
-        function closeModalEventListener (e) {
+        function closeModalEventListener(e) {
           ModalTextarea.value = ''
           ModalErrorMessage.innerText = ''
           ModalSubmitBtn.removeEventListener('click', modalErrorHandler)
@@ -65,7 +65,7 @@ const observer = new MutationObserver(function async (mutationsList, observer) {
         }
 
         // 函式：提供錯誤處理訊息，若符合發文條件則改變 btn.type 讓其可以發送
-        function modalErrorHandler (e) {
+        function modalErrorHandler(e) {
           if (!ModalTextarea.value || ModalTextarea.value.trim() === '') {
             ModalErrorMessage.innerText = '內容不可空白'
           } else if (ModalTextarea.value.trim().length > 140) {
@@ -106,7 +106,7 @@ if (mainPostTweet) {
 
   ModalSubmitBtn.addEventListener('click', mainPostTweetErrorHandler)
   // 函式：提供錯誤處理訊息，若符合發文條件則改變 btn.type 讓其可以發送
-  function mainPostTweetErrorHandler (e) {
+  function mainPostTweetErrorHandler(e) {
     if (!ModalTextarea.value || ModalTextarea.value.trim() === '') {
       ModalErrorMessage.innerText = '內容不可空白'
     } else if (ModalTextarea.value.trim().length > 140) {
@@ -123,6 +123,33 @@ if (mainPostTweet) {
 // 監聽 編輯個人資料 相關按鈕
 const centerColumn = document.querySelector('#center-column') || null
 if (centerColumn) {
+  const inputs = document.querySelectorAll('input')
+  // 所有輸入框個別加上focus跟blur監聽器
+  inputs.forEach(function (input) {
+    input.addEventListener('focus', function () {
+      // 底線改藍色
+      this.parentElement.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+      this.parentElement.classList.add('form-row-focus')
+    })
+    input.addEventListener('blur', function () {
+      // 底線改灰色
+      this.parentElement.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+      this.parentElement.classList.add('form-row')
+    })
+  })
+  // 自介輸入框textarea 加上focus跟blur監聽器
+  const intro = document.querySelector('#intro')
+  intro.addEventListener('focus', function () {
+    // 底線改藍色
+    this.parentElement.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+    this.parentElement.classList.add('form-row-focus')
+  })
+  intro.addEventListener('blur', function () {
+    // 底線改灰色
+    this.parentElement.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+    this.parentElement.classList.add('form-row')
+  })
+
   centerColumn.addEventListener('click', event => {
     // 監聽編輯個人資料按鈕 call API取得個人資料 把個人資料插入modal
     if (event.target.matches('#editProfileButton')) {
@@ -144,15 +171,11 @@ if (centerColumn) {
       nameHelper.textContent = ''
       introCount.textContent = ''
       introHelper.textContent = ''
-      // 如果底線是紅色，就恢復灰色
-      if (nameRow.classList.contains('form-row-error')) {
-        nameRow.classList.remove('form-row-error')
-        nameRow.classList.add('form-row')
-      }
-      if (introRow.classList.contains('form-row-error')) {
-        introRow.classList.remove('form-row-error')
-        introRow.classList.add('form-row')
-      }
+      // 底線恢復灰色
+      nameRow.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+      nameRow.classList.add('form-row')
+      introRow.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+      introRow.classList.add('form-row')
       // 啟用儲存按鈕
       putProfileButton.dataset.nameErr = false
       putProfileButton.dataset.introErr = false
@@ -220,11 +243,9 @@ if (centerColumn) {
       nameCount.textContent = `${value.length}/50`
       // 檢查字數
       if (value.length > 50) {
-        // 如果底線是灰色，就改紅色
-        if (row.classList.contains('form-row')) {
-          row.classList.remove('form-row')
-          row.classList.add('form-row-error')
-        }
+        // 底線改紅色
+        row.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+        row.classList.add('form-row-error')
         // 禁用儲存按鈕 記錄錯誤狀態
         putProfileButton.disabled = true
         putProfileButton.dataset.nameErr = 'true'
@@ -232,22 +253,18 @@ if (centerColumn) {
         nameHelper.textContent = '字數超出上限！'
         // 檢查是否空白
       } else if (value.trim() === '') {
-        // 如果底線是灰色，就改紅色
-        if (row.classList.contains('form-row')) {
-          row.classList.remove('form-row')
-          row.classList.add('form-row-error')
-        }
+        // 底線改紅色
+        row.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+        row.classList.add('form-row-error')
         // 禁用儲存按鈕 記錄錯誤狀態
         putProfileButton.disabled = true
         putProfileButton.dataset.nameErr = 'true'
         // 顯示提示
         nameHelper.textContent = '名稱不可空白！'
       } else {
-        // 如果底線是紅色，就改灰色
-        if (row.classList.contains('form-row-error')) {
-          row.classList.remove('form-row-error')
-          row.classList.add('form-row')
-        }
+        // 底線改藍色
+        row.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+        row.classList.add('form-row-focus')
         // 清空提示
         nameHelper.textContent = ''
         // 清除錯誤狀態
@@ -267,22 +284,18 @@ if (centerColumn) {
       introCount.textContent = `${value.length}/160`
       // 檢查字數
       if (value.length > 160) {
-        // 如果底線是灰色，就改紅色
-        if (row.classList.contains('form-row')) {
-          row.classList.remove('form-row')
-          row.classList.add('form-row-error')
-        }
+        // 底線改紅色
+        row.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+        row.classList.add('form-row-error')
         // 禁用儲存按鈕 記錄錯誤狀態
         putProfileButton.disabled = true
         putProfileButton.dataset.introErr = 'true'
         // 顯示提示
         introHelper.textContent = '字數超出上限！'
       } else {
-        // 如果底線是紅色，就改灰色
-        if (row.classList.contains('form-row-error')) {
-          row.classList.remove('form-row-error')
-          row.classList.add('form-row')
-        }
+        // 底線改藍色
+        row.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+        row.classList.add('form-row-focus')
         // 清空提示
         introHelper.textContent = ''
         // 清除錯誤狀態
@@ -295,7 +308,7 @@ if (centerColumn) {
 }
 
 // 預覽大頭貼 當avatarInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的avatar
-function previewAvatar () {
+function previewAvatar() {
   const preview = document.querySelector('#previewAvatar')
   const file = document.querySelector('#avatarInput').files[0]
   const reader = new FileReader()
@@ -309,7 +322,7 @@ function previewAvatar () {
 }
 
 // 預覽封面 當coverInput元素改變時會被呼叫 也就是當使用者選擇了要上傳的cover
-function previewCover () {
+function previewCover() {
   const preview = document.querySelector('#previewCover')
   const file = document.querySelector('#coverInput').files[0]
   const reader = new FileReader()

@@ -1,6 +1,21 @@
 // 監聽 註冊頁面
 const signUpPage = document.querySelector('#sign-up-page') || null
 if (signUpPage) {
+  const inputs = document.querySelectorAll('input')
+  // 所有輸入框個別加上focus跟blur監聽器
+  inputs.forEach(function (input) {
+    input.addEventListener('focus', function () {
+      // 底線改藍色
+      this.parentElement.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+      this.parentElement.classList.add('form-row-focus')
+    })
+    input.addEventListener('blur', function () {
+      // 底線改灰色
+      this.parentElement.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+      this.parentElement.classList.add('form-row')
+    })
+  })
+
   signUpPage.addEventListener('input', event => {
     // 監聽名稱輸入框
     if (event.target.matches('#name')) {
@@ -13,32 +28,26 @@ if (signUpPage) {
       nameCount.textContent = `${value.length}/50`
       // 檢查字數
       if (value.length > 50) {
-        // 如果底線是灰色，就改紅色
-        if (row.classList.contains('form-row')) {
-          row.classList.remove('form-row')
-          row.classList.add('form-row-error')
-        }
+        // 底線改紅色
+        row.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+        row.classList.add('form-row-error')
         // 禁用註冊按鈕
         signUpButton.disabled = true
         // 顯示提示
         nameHelper.textContent = '字數超出上限！'
         // 檢查是否空白
       } else if (value.trim() === '') {
-        // 如果底線是灰色，就改紅色
-        if (row.classList.contains('form-row')) {
-          row.classList.remove('form-row')
-          row.classList.add('form-row-error')
-        }
+        // 底線改紅色
+        row.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+        row.classList.add('form-row-error')
         // 禁用註冊按鈕
         signUpButton.disabled = true
         // 顯示提示
         nameHelper.textContent = '名稱不可空白！'
       } else {
-        // 如果底線是紅色，就改灰色
-        if (row.classList.contains('form-row-error')) {
-          row.classList.remove('form-row-error')
-          row.classList.add('form-row')
-        }
+        // 底線改藍色
+        row.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+        row.classList.add('form-row-focus')
         // 清空提示
         nameHelper.textContent = ''
         // 恢復註冊按鈕可用
@@ -49,11 +58,9 @@ if (signUpPage) {
     if (event.target.matches('#account')) {
       const accountHelper = document.querySelector('#accountHelper')
       const row = event.target.parentElement
-      // 如果底線是紅色，就改灰色
-      if (row.classList.contains('form-row-error')) {
-        row.classList.remove('form-row-error')
-        row.classList.add('form-row')
-      }
+      // 底線改藍色
+      row.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+      row.classList.add('form-row-focus')
       // 清空提示
       accountHelper.textContent = ''
     }
@@ -61,11 +68,9 @@ if (signUpPage) {
     if (event.target.matches('#email')) {
       const emailHelper = document.querySelector('#emailHelper')
       const row = event.target.parentElement
-      // 如果底線是紅色，就改灰色
-      if (row.classList.contains('form-row-error')) {
-        row.classList.remove('form-row-error')
-        row.classList.add('form-row')
-      }
+      // 底線改藍色
+      row.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+      row.classList.add('form-row-focus')
       // 清空提示
       emailHelper.textContent = ''
     }
@@ -73,11 +78,9 @@ if (signUpPage) {
     if (event.target.matches('#checkPassword')) {
       const checkPasswordHelper = document.querySelector('#checkPasswordHelper')
       const row = event.target.parentElement
-      // 如果底線是紅色，就改灰色
-      if (row.classList.contains('form-row-error')) {
-        row.classList.remove('form-row-error')
-        row.classList.add('form-row')
-      }
+      // 底線改藍色
+      row.classList.remove('form-row', 'form-row-error', 'form-row-focus')
+      row.classList.add('form-row-focus')
       // 清空提示
       checkPasswordHelper.textContent = ''
     }
