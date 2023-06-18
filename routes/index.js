@@ -16,7 +16,6 @@ router.get('/signin', userController.signInPage)
 router.post(
   '/signin',
   passport.authenticate('user', {
-    successRedirect: '/tweets',
     failureRedirect: '/signin'
   }),
   userController.signIn
