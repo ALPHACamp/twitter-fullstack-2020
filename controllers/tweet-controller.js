@@ -20,7 +20,7 @@ const tweetController = {
           [
             sequelize.fn(
               'COUNT',
-              sequelize.fn('DISTINCT', sequelize.col('Likes.id'))
+              sequelize.fn('DISTINCT', sequelize.col('likes.id'))
             ),
             'likesLength'
           ],
