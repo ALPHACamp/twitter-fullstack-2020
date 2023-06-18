@@ -246,7 +246,7 @@ const userController = {
       //! 不能用自用錯誤處理..
       // if (req.user.id == followingId) throw new Error('不能追蹤自己')
 
-      if (userId == followingId) {
+      if (userId === followingId) {
         return res.status(200).json({ error: '不能追蹤自己' })
       }
 
@@ -309,7 +309,7 @@ const userController = {
   //* 帳戶/個人資料設定
   editUserAccount: async (req, res, next) => {
     const userRoute = true
-    const { id } = req.params
+    // const { id } = req.params
     const userId = helpers.getUser(req).id
     // console.log('id:' + id)
     // console.log('loginUser:' + loginUser)
