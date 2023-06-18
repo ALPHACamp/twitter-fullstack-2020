@@ -1,0 +1,59 @@
+<div class="d-flex justify-content-evenly">
+
+  {{> left-sidebar}}
+
+  <div class="follower-following-page">
+    <!--header-->
+    <div class="header">
+      <button onclick="window.history.back()" class="back-icon">
+        <img src="https://i.postimg.cc/QxZdg4vB/Vector.png" alt="back" class="arrow-left mb-1">
+      </button>
+      <div class="header-user">
+        <h5 class="mb-0">{{user.name}}</h5>
+        <p style="font-size: 13px; color: #6C757D;">{{tweetsLength}} 推文</p>
+      </div>
+    </div>
+    <!--tabs-->
+    <div class="user-following d-flex flex-column mt-2">
+      {{> follow-tabs route='following'}}
+      {{#each users}}
+      <div class="following-user-content d-flex flex-row">
+        <div class="user-avatar">
+          <a href="/users/{{this.id}}/tweets">
+            <img src="{{this.avatar}}" width="50px" ;height="50px"
+              style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px;"
+              alt="avatar">
+          </a>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="following-user-info d-flex justify-content-between" style="height: 50px;">
+            <div class="user-name-account d-flex col-11" style="align-items: center; padding-top: -20px;">
+              <p style="font-size: 16px; margin:0;font-weight:700;">{{this.name}}</p>
+            </div>
+            <div class="following-btn">
+              {{#if this.isFollowed}}
+              <form action='/followships/{{this.id}}?_method=DELETE' method='post'>
+                <input class='form-control' type='hidden' name='id' value='{{this.id}}' />
+                <button class='following' style="margin: 0 0 0 -52px;" type='submit'>正在跟隨</button>
+              </form>
+              {{else}}
+              <form action='/followships' method='post'><button class='follow' type='submit'>跟隨</button>
+                <input class='form-control' type='hidden' name='id' value='{{this.id}}' />
+              </form>
+              {{/if}}
+            </div>
+          </div>
+          <div class="tweet-content mt-3" style="width: 528px;">
+            <p class="content" style="word-wrap:break-word;">{{this.introduction}}</p>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+
+
+    </div>
+
+  </div>
+  {{> right-sidebar}}
+  {{> reply-page-modal}}
+</div>
