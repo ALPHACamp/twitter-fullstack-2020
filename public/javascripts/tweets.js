@@ -3,6 +3,7 @@ const submitBtn = document.querySelector('#submitBtn');
 const errorMsg = document.querySelector('#errorMsg');
 const likeBtns = document.querySelectorAll('.likeBtn');
 const followBtns = document.querySelectorAll('.followBtn');
+const replyBtns = document.querySelectorAll('.replyBtn');
 const maxLength = 140;
 
 
@@ -32,6 +33,12 @@ likeBtns.forEach(function(likeBtn){
 
 followBtns.forEach(function(followBtn){
   followBtn.addEventListener('click', function() {
+  localStorage.setItem('scrollPosition', window.scrollY);
+  })
+})
+
+replyBtns.forEach(function(replyBtn){
+  replyBtn.addEventListener('click', function() {
   localStorage.setItem('scrollPosition', window.scrollY);
   })
 })
