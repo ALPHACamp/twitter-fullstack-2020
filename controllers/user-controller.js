@@ -413,7 +413,7 @@ const userController = {
             replyCount: replies.filter(reply => reply.tweetId === tweet.id).length,
             isLiked: likes.some(like => (like.userId === helpers.getUser(req).id && like.tweetId === tweet.id)),
             likeCount: likes.filter(like => like.tweetId === tweet.id).length,
-            likedTime: likes.find(like => like.tweetId === tweet.id)?.createdAt || null
+            likedTime: likes.find(like => like.tweetId === tweet.id && like.userId === user.id)?.createdAt || null
           }))
           .sort((a, b) => b.likedTime - a.likedTime)
         // 將目前使用者追蹤的使用者做成一張清單
