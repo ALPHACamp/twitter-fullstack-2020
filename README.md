@@ -78,9 +78,9 @@ admin 帳號會由工程師手動開設，例如直接操作資料庫或設定�
 
 `推文與回覆`：使用者回覆過的內容，排序依日期，最新的在前。
 
-`跟隨中 (Following)`：該使用者的關注清單，排序依照追蹤紀錄成立的時間，愈新的在愈前面。
+`跟隨中 (Following)`：該使用者的關注清單，排序會先排(正在追隨->自己->未追隨)再來才會依照追蹤紀錄成立的時間，愈新的在愈前面。
 
-`跟隨者 (Follower)`：該使用者的跟隨者清單，排序依照追蹤紀錄成立的時間，愈新的在愈前面。
+`跟隨者 (Follower)`：該使用者的跟隨者清單，排序會先排(正在追隨->自己->未追隨)再來才會依照追蹤紀錄成立的時間，愈新的在愈前面。
 
 `喜歡的內容 (Like)`：該使用者 like 過的推文清單，排序依 like 紀錄成立的時間，愈新的在愈前面。
 
@@ -116,10 +116,30 @@ admin 帳號會由工程師手動開設，例如直接操作資料庫或設定�
 
 
 ## 初始化
+### 下載專案
+```
+git clone https://github.com/alvinkane/twitter-fullstack-2020.git
+```
 ### 下載相關套件
+移動到資料夾內後執行以下指令下載套件
 ```
 npm install
 ```
+### 設定環境變數
+參考.env.example新增.env檔設定環境變數
+### 確認測試環境設定
+packge.json裡指令預設使用set \"NODE_ENV=test\"指令來改變測試環境，適用於Cmder。
+若你是使用git bash可以參考以下手動更改測試環境:
+由於本地開發預設會使用 development 設定，因此需要使用指令切換到測試環境。
+切換到測試環境，如果在等號後加其他的字串，則會切到其他的環境。
+```
+export NODE_ENV=test
+```
+確認目前使用的環境。
+```
+echo $NODE_ENV
+```
+第一次呼叫 `echo $NODE_ENV` 時，回傳值會是空白的，但在空白情況下，本地會預設使用 development 環境。
 ### 設定資料庫
 新增兩個資料庫，開發環境用的，以及測試環境用的。
 在一個新的 Query 頁面輸入 SQL 指令。
@@ -144,7 +164,7 @@ npx sequelize db:migrate:status
 npx sequelize db:migrate:undo:all
 ```
 ### 執行Sseeder
-用指令載入種子資料：
+用指令生成種子資料：
 ```
 npx sequelize db:seed:all
 ```
@@ -156,22 +176,21 @@ npx sequelize db:seed:undo:all
 ```
 sequelize --help
 ```
-
-### 確認測試環境設定
-由於本地開發預設會使用 development 設定，因此需要使用指令切換到測試環境。
-切換到測試環境，如果在等號後加其他的字串，則會切到其他的環境。
-```
-export NODE_ENV=test
-```
-確認目前使用的環境。
-```
-echo $NODE_ENV
-```
-第一次呼叫 `echo $NODE_ENV` 時，回傳值會是空白的，但在空白情況下，本地會預設使用 development 環境。
 ### 執行測試
+執行測試檔前 要先執行 npx sequelize db:seed:undo:all 清空資料庫
 ```
 npm run test
 ```
+package.json還提供其他指令
+```
+npm run start
+npm run dev
+```
+分別對應以下功能
+"start": "set \"NODE_ENV=development\" && node app.js",
+"dev": "set \"NODE_ENV=development\" && nodemon app.js",
+"test": "set \"NODE_ENV=test\" && mocha test --exit --recursive --timeout 5000"
+執行完npm run start後就能在網頁輸入網址http://localhost:3000/ 開始使用twitter
 ### 測試帳號
 
 * 1 組 admin 帳號：`root`
