@@ -1,36 +1,26 @@
 <div id="notification" class="toast-container">
-{{#if errors}}
-{{#each errors}}
-<div class="toast m-2 mt-3" role="alert" aria-live="assertive" aria-atomic="true">
-  <div class="text-20px-nor ms-4">{{this.message}}</div>
-  <div class="noti-circle noti-red me-4">
-    <img class="" src="/_base/noti/Property 1=noti, Property 2=icon, Property 3=danger.svg">
+  {{#if error_messages}}
+  <div class="toast m-2 mt-3" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="text-20px-nor ms-4">{{error_messages}}</div>
+    <div class="noti-circle noti-red me-4">
+      <img class="" src="/_base/noti/Property 1=noti, Property 2=icon, Property 3=danger.svg">
+    </div>
   </div>
-</div>
-{{/each}}
-{{/if}}
-{{#if error_messages}}
-<div class="toast m-2 mt-3" role="alert" aria-live="assertive" aria-atomic="true">
-  <div class="text-20px-nor ms-4">{{error_messages}}</div>
-  <div class="noti-circle noti-red me-4">
-    <img class="" src="/_base/noti/Property 1=noti, Property 2=icon, Property 3=danger.svg">
+  {{/if}}
+  {{#if success_messages}}
+  <div class="toast m-2 mt-3" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="text-20px-nor ms-4">{{success_messages}}</div>
+    <div class="noti-circle noti-green me-4">
+      <img class="" src="/_base/noti/Property 1=noti, Property 2=icon, Property 3=success.svg">
+    </div>
   </div>
-</div>
-{{/if}}
-{{#if success_messages}}
-<div class="toast m-2 mt-3" role="alert" aria-live="assertive" aria-atomic="true">
-  <div class="text-20px-nor ms-4">{{success_messages}}</div>
-  <div class="noti-circle noti-green me-4">
-    <img class="" src="/_base/noti/Property 1=noti, Property 2=icon, Property 3=success.svg">
+  {{/if}}
+  {{#if warning_messages}}
+  <div class="toast m-2 mt-3" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="text-20px-nor ms-4">{{warning_messages}}</div>
+    <div class="noti-circle noti-yellow me-4">
+      <img class="" src="/_base/noti/Property 1=noti, Property 2=icon, Property 3=warning.svg">
+    </div>
   </div>
-</div>
-{{/if}}
-{{#if warning_messages}}
-<div class="toast m-2 mt-3" role="alert" aria-live="assertive" aria-atomic="true">
-  <div class="text-20px-nor ms-4">{{warning_messages}}</div>
-  <div class="noti-circle noti-yellow me-4">
-    <img class="" src="/_base/noti/Property 1=noti, Property 2=icon, Property 3=warning.svg">
-  </div>
-</div>
-{{/if}}
+  {{/if}}
 </div>

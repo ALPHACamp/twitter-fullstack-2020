@@ -15,16 +15,24 @@ const userController = {
     // 取出註冊資訊
     const { account, name, email, password, checkPassword } = req.body
     // 準備裝錯誤訊息的陣列 為了同時顯示多個錯誤
-    const errors = []
+    const errors = {}
 
     // 檢查註冊資訊是否正確 任一欄不得為空 密碼與確認密碼必須相同
     if (!account || !name || !email || !password || !checkPassword) {
-      errors.push({ message: '所有欄位都是必填。' })
+      req.flash('error_messages', '所有欄位都是必填。')
+      return res.render('signup', {
+        errors,
+        account,
+        name,
+        email,
+        password,
+        checkPassword
+      })
     }
     if (password !== checkPassword) {
-      errors.push({ message: '密碼與確認密碼不一致。' })
+      errors.checkPassword = '密碼與確認密碼不一致。'
     }
-    if (errors.length) {
+    if (Object.keys(errors).length) {
       return res.render('signup', {
         errors,
         account,
@@ -41,12 +49,12 @@ const userController = {
     ])
       .then(([accountUser, emailUser]) => {
         if (emailUser) {
-          errors.push({ message: 'email 已重複註冊！' })
+          errors.email = 'email 已重複註冊！'
         }
         if (accountUser) {
-          errors.push({ message: 'account 已重複註冊！' })
+          errors.account = 'account 已重複註冊！'
         }
-        if (errors.length) {
+        if (Object.keys(errors).length) {
           return res.render('signup', {
             errors,
             account,
@@ -120,7 +128,7 @@ const userController = {
     if (!name || name.trim() === '') throw new Error('Name is required.')
     // 驗證是否name不超過50字 且 intro不超過160字 (如果intro有值)
     if (name.length > 50 || intro ? intro.length > 160 : false) throw new Error('Limit exceeded.')
-    // 把temp中的檔案複製一份到upload並回傳路徑 同時前往資料庫找user
+    // 把檔案上傳到imgur並回傳路徑 同時前往資料庫找user
     return Promise.all([
       imgurFileHandler(avatarFile),
       imgurFileHandler(coverFile),
@@ -164,12 +172,20 @@ const userController = {
     if (Number(userId) !== helpers.getUser(req).id) throw new Error('Permission denied.')
     // 檢查帳戶資訊是否正確 任一欄不得為空 密碼與確認密碼必須相同
     if (!account || !name || !email || !password || !checkPassword) {
-      errors.push({ message: '所有欄位都是必填。' })
+      req.flash('error_messages', '所有欄位都是必填。')
+      return res.render('setting', {
+        errors,
+        account,
+        name,
+        email,
+        password,
+        checkPassword
+      })
     }
     if (password !== checkPassword) {
-      errors.push({ message: '密碼與確認密碼不一致。' })
+      errors.checkPassword = '密碼與確認密碼不一致。'
     }
-    if (errors.length) {
+    if (Object.keys(errors).length) {
       return res.render('setting', {
         userId,
         errors,
@@ -187,12 +203,12 @@ const userController = {
     ])
       .then(([accountUser, emailUser]) => {
         if (emailUser) {
-          errors.push({ message: 'email 已重複註冊！' })
+          errors.email = 'email 已重複註冊！'
         }
         if (accountUser) {
-          errors.push({ message: 'account 已重複註冊！' })
+          errors.account = 'account 已重複註冊！'
         }
-        if (errors.length) {
+        if (Object.keys(errors).length) {
           return res.render('setting', {
             userId,
             errors,

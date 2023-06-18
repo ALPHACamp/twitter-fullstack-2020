@@ -1,4 +1,4 @@
-<div class="container" style="margin:0 auto;">
+<div class="container" id="sign-up-page" style="margin:0 auto;">
   <div class="mt-4 mb-4 text-center" style="position:relative; top:64px;">
     <div class="d-flex" style="position:relative; top:-50px;">
       <div class="col-9"></div>
@@ -14,13 +14,13 @@
   <form class="form-regist" action="/signup" method="POST"
     style="position: relative; top: 60px; width: 356px; margin: 0 auto;">
     {{!-- 帳號 --}}
-    <div class="form-row">
+    <div class="{{#if errors.account}}form-row-error{{else}}form-row{{/if}}">
       <label class="form-label text-14px-reg color-dark-80" for="account">帳號</label>
       <input class="form-input text-16px-reg" id="account" type="text" name="account" placeholder="請輸入帳號"
         value="{{ account }}" required autofocus>
     </div>
     <div class="form-gap d-flex">
-      <label class="flex-fill text-12px-med text-start color-error" id="helper"></label>
+      <label class="flex-fill text-12px-med text-start color-error" id="accountHelper">{{ errors.account }}</label>
       <label class="flex-fill text-12px-med text-end color-dark-80" id="count"></label>
     </div>
     {{!-- 名稱 --}}
@@ -30,17 +30,17 @@
         value="{{ name }}" required>
     </div>
     <div class="form-gap d-flex">
-      <label class="flex-fill text-12px-med text-start color-error" id="helper"></label>
-      <label class="flex-fill text-12px-med text-end color-dark-80" id="count"></label>
+      <label class="flex-fill text-12px-med text-start color-error" id="nameHelper"></label>
+      <label class="flex-fill text-12px-med text-end color-dark-80" id="nameCount"></label>
     </div>
     {{!-- Email --}}
-    <div class="form-row">
+    <div class="{{#if errors.email}}form-row-error{{else}}form-row{{/if}}">
       <label class="form-label text-14px-reg color-dark-80" for="email">Email</label>
       <input class="form-input text-16px-reg" id="email" type="email" name="email" placeholder="請輸入Email"
         value="{{ email }}" required>
     </div>
     <div class="form-gap d-flex">
-      <label class="flex-fill text-12px-med text-start color-error" id="helper"></label>
+      <label class="flex-fill text-12px-med text-start color-error" id="emailHelper">{{ errors.email }}</label>
       <label class="flex-fill text-12px-med text-end color-dark-80" id="count"></label>
     </div>
     {{!-- 密碼 --}}
@@ -50,21 +50,22 @@
         value="{{ password }}" required>
     </div>
     <div class="form-gap d-flex">
-      <label class="flex-fill text-12px-med text-start color-error" id="helper"></label>
+      <label class="flex-fill text-12px-med text-start color-error" id="passwordHelper"></label>
       <label class="flex-fill text-12px-med text-end color-dark-80" id="count"></label>
     </div>
     {{!-- 密碼確認 --}}
-    <div class="form-row">
+    <div class="{{#if errors.checkPassword}}form-row-error{{else}}form-row{{/if}}">
       <label class="form-label text-14px-reg color-dark-80" for="checkPassword">密碼確認</label>
       <input class="form-input text-16px-reg" id="checkPassword" type="password" name="checkPassword"
         placeholder="請再次輸入密碼" value="{{ checkPassword }}" required>
     </div>
     <div class="form-gap d-flex">
-      <label class="flex-fill text-12px-med text-start color-error" id="helper"></label>
+      <label class="flex-fill text-12px-med text-start color-error" id="checkPasswordHelper">{{ errors.checkPassword
+        }}</label>
       <label class="flex-fill text-12px-med text-end color-dark-80" id="count"></label>
     </div>
     {{!-- 註冊 --}}
-    <button class="pill pill-large pill-main" type="submit" style="margin-top: 8px;">註冊</button>
+    <button class="pill pill-large pill-main" id="sign-up-button" type="submit" style="margin-top: 8px;">註冊</button>
     {{!-- 取消 --}}
     <div class="d-flex justify-content-center" style="margin: 16px auto 0 auto; height: 36px; width: 56px">
       <a href="/signin">
