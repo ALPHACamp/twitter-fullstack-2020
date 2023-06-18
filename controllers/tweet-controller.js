@@ -33,7 +33,7 @@ const tweetController = {
           ],
           [
             sequelize.literal(
-              `EXISTS (SELECT 1 FROM likes where User_id = ${userId} AND Tweet_id = Tweet.id)`
+              `EXISTS (SELECT 1 FROM Likes where User_id = ${userId} AND Tweet_id = Tweet.id)`
             ),
             'isLiked'
           ]
