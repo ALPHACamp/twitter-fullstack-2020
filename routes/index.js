@@ -38,6 +38,8 @@ router.post('/tweets/:id/like', authenticated, userController.addLike)
 router.post('/tweets/:id/unlike', authenticated, userController.removeLike)
 router.get('/tweets', authenticated, tweetController.getTweets)
 
+router.get('/api/users/:id', authenticated, userController.getUserData)
+router.post('/api/users/:id', authenticated, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.editUserProfile)
 router.get('/users/:id/tweets', authenticated, userController.getUser)
 router.get('/users/:id/replies', authenticated, userController.getUserReplies)
 router.get('/users/:id/likes', authenticated, userController.getUserLikes)
