@@ -1106,6 +1106,25 @@ textarea {
   height: 140px;
 }
 
+.replies-card {
+  height: 100%;
+  padding-bottom: 40px;
+}
+
+.reply-card-datas {
+  margin-top: 8px;
+  position: relative;
+}
+
+.replies-reply-icon {
+  position: absolute;
+}
+
+.replies-like-icon {
+  position: absolute;
+  transform: translateX(80%);
+}
+
 /* -------------------- User Setting -------------------- */
 .user-setting {
   padding: 23px;
