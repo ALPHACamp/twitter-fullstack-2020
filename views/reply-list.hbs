@@ -15,13 +15,8 @@
       <div class="show-tweet-context d-flex flex-column mt-2">
         <div class="show-tweet-user-info d-flex flex-row">
           <div class="user-avatar">
-            {{#if tweet.User.avatar}}
-              <img src="{{tweet.User.avatar}}" width="50px" ;height="50px"
-                style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px" alt="avatar">
-            {{else}}
-              <img src="https://i.imgur.com/mhXz6z9.png?1" width="50px" ;height="50px"
-                style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px" alt="avatar">
-            {{/if}}
+            <img src="{{tweet.User.avatar}}" width="50px" ;height="50px"
+              style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px" alt="avatar">
           </div>
           <div class="user-name-account">
             <p style="font-size: 16px;margin:0;">{{tweet.User.name}}</p>
@@ -35,9 +30,11 @@
           <p style="font-size: 14px;color:#6C757D;margin: 0 0 8px;">{{tweetCreatedAt tweet.createdAt}}</p>
         </div>
         <hr class="solid" style="margin: 8px 0 16px 0;">
-        <div class="reply-and-like d-flex flex-row" style="padding:  0 0 0 24px;font-size:19px">
-          <span>&nbsp; {{replyQuantity}} <span style="color: #6C757D;">回覆</span> </span>
-          <span>&nbsp; {{likeQuantity}} <span style="color: #6C757D;">喜歡次數</span> </span>
+        <div class="reply-and-like d-flex flex-row" style="padding:  0 0 0 24px;">
+          <span style="font-weight: 700;">&nbsp; {{replyQuantity}} </span>
+          <span style="margin-left: 4px; color: #6C757D;">回覆</span>
+          <span style="margin-left: 12px; font-weight: 700;">&nbsp; {{likeQuantity}}</span>
+          <span style="margin-left: 4px; color: #6C757D;">喜歡次數</span>
         </div>
         <hr class="solid" style="margin: 8px 0 16px 0;">
         <div class="d-flex">
@@ -46,7 +43,7 @@
               <img src="/images/replyIcon.png" alt="">
             </button>
           </div>
-          <div class="likes" style="margin-left: 121px;">
+          <div class="likes" style="margin-left: 80px;">
               {{#if isLiked }}
                 <form action='/tweets/{{tweet.id}}/unlike' method='post'>
                   <button class='btn like-btn' type='submit'style="border-color: white;outline:none;box-shadow:none">
@@ -69,20 +66,15 @@
         <div class="show-reply-user-info d-flex flex-row">
           <div class="user-avatar">
             <a href="/users/{{this.User.id}}/tweets">
-              {{#if this.User.avatar}}
-                <img src="{{this.User.avatar}}" width="50px" ;height="50px"
-                  style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px" alt="avatar">
-              {{else}}
-                <img src="https://i.imgur.com/mhXz6z9.png?1" width="50px" ;height="50px"
-                  style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px" alt="avatar">
-              {{/if}}
+              <img src="{{this.User.avatar}}" width="50px" ;height="50px"
+                style="display:inline-block;border-radius:100%;margin:auto 8px auto 24px" alt="avatar">
             </a>
           </div>
           <div class="d-flex flex-column">
             <div class="user-name-account-time ">
               <span style="font-size: 16px;margin:0;">{{this.User.name}}</span>
               <span style="font-size: 14px;margin:0;color:#6C757D">@{{this.User.account}}</span>
-              <span class="time" style="color:#6C757D;"><b>•</b>&nbsp;{{relativeTimeFromNow this.createdAt}}</span>
+              <span class="time" style="color:#6C757D; font-size: 14px;"><b>•</b>&nbsp;{{relativeTimeFromNow this.createdAt}}</span>
             </div>
             <div class="reply-to-who d-flex" style="font-size:14px; color:#6C757D;">回復
               <p class="ms-1" style="color: #FF6600;">@{{this.Tweet.User.account}}</p>
