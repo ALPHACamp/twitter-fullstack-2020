@@ -96,7 +96,8 @@ const userController = {
       // 抓出此user發過的tweet
       const tweets = await Tweet.findAll({
         raw: true,
-        where: { user_id: id }
+        where: { user_id: id },
+        order: [['createdAt', 'DESC']]
       })
       // 找出所有tweet的回覆樹根喜歡數
       const tweetData = await Promise.all(
@@ -282,7 +283,6 @@ const userController = {
   addLike: async (req, res, next) => {
     try {
       const userId = helpers.getUser(req).id
-      console.log(`userId:${userId}`)
       const tweet = await Tweet.findByPk(req.params.id)
       if (!tweet) throw new Error('找不到該篇推文')
 
@@ -294,8 +294,6 @@ const userController = {
   },
   removeLike: async (req, res, next) => {
     const userId = helpers.getUser(req).id
-    console.log(`userId:${userId}`)
-    console.log(`tweetId:${req.params.id}`)
     try {
       const like = await Like.findOne({
         where: { user_id: userId, tweet_id: req.params.id }
@@ -440,7 +438,8 @@ const userController = {
         ])
       const replies = await Reply.findAll({
         raw: true,
-        where: { user_id: id }
+        where: { user_id: id },
+        order: [['createdAt', 'DESC']]
       })
 
       const replyData = await Promise.all(
@@ -512,7 +511,8 @@ const userController = {
 
       const likes = await Like.findAll({
         raw: true,
-        where: { user_id: id }
+        where: { user_id: id },
+        order: [['createdAt', 'DESC']]
       })
       const likesData = await Promise.all(
         likes.map(async like => {
@@ -539,7 +539,6 @@ const userController = {
           return like
         })
       )
-      // console.log(likes[10])
 
       const userData = {
         ...user.toJSON(),

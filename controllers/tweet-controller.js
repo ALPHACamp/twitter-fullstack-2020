@@ -69,12 +69,12 @@ const tweetController = {
         raw: true,
         nest: true
       })
-      // console.log(tweet)
       const replies = await Reply.findAll({
         where: { Tweet_id: req.params.id },
         include: [User, { model: Tweet, include: User }],
         raw: true,
-        nest: true
+        nest: true,
+        order: [['createdAt', 'DESC']]
       })
 
       const likes = await Like.findAll({
