@@ -241,8 +241,8 @@ const userController = {
   //* 追蹤功能
   addFollowing: async (req, res, next) => {
     try {
-      const userId = helpers.getUser(req).id
-      const followingId = req.body.id
+      const userId = Number(helpers.getUser(req).id)
+      const followingId = Number(req.body.id)
       //! 不能用自用錯誤處理..
       // if (req.user.id == followingId) throw new Error('不能追蹤自己')
 
