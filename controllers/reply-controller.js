@@ -6,17 +6,17 @@ const replyController = {
     try {
       const loginUserId = _helpers.getUser(req).id
       const TweetId = req.params.tid
-      let [ loginUser, replies, topUsers, tweet ] = await Promise.all([
+      let [loginUser, replies, topUsers, tweet] = await Promise.all([
         User.findByPk(loginUserId, {
           include: [
-            { model: User, as: 'Followings'},
-            { model: User, as: 'Followers'},
+            { model: User, as: 'Followings' },
+            { model: User, as: 'Followers' },
             { model: Tweet, as: 'LikedTweets' }
           ],
         }),
         Reply.findAll({
           order: [['createdAt', 'ASC']],
-          include: [ 
+          include: [
             { model: User },
             { model: Tweet, include: [User] },
             { model: Tweet, include: [Like] }
@@ -28,9 +28,9 @@ const replyController = {
         }),
         Tweet.findByPk(TweetId, {
           include: [User, Like]
-      })
+        })
       ])
-     
+
       if (!loginUser) throw new Error('使用者不存在')
 
       loginUser = loginUser.toJSON()
@@ -38,15 +38,15 @@ const replyController = {
       tweet = tweet.toJSON()
 
       tweet.isLike = tweet.Likes.some(like => like.UserId === loginUserId);
-      
+
       replies = replies.map(reply => ({
-          ...reply.toJSON(),
-          }))
+        ...reply.toJSON(),
+      }))
 
       topUsers = topUsers.map(user => ({
-          ...user.toJSON(),
-          isFollow: user.Followers.some(f => f.id === loginUserId)
-          }))
+        ...user.toJSON(),
+        isFollow: user.Followers.some(f => f.id === loginUserId)
+      }))
         .filter(user => user.role === 'user' && user.id !== loginUserId)
         .sort((a, b) => b.Followers.length - a.Followers.length)
         .slice(0, 10)
@@ -59,7 +59,7 @@ const replyController = {
         tweet,
         topUsers
       })
-    } catch(err) {
+    } catch (err) {
       next(err)
     }
   },
@@ -68,7 +68,7 @@ const replyController = {
       const TweetId = req.params.tid
       const UserId = _helpers.getUser(req).id
       const { comment } = req.body
-      
+
       if (!comment.trim()) throw new Error('Description is required!')
       if (comment.length > 140) throw new Error('Description cannot be longer than 140 characters!')
 
@@ -80,7 +80,7 @@ const replyController = {
 
       return res.redirect('back')
 
-    } catch(err) {
+    } catch (err) {
       next(err)
     }
   },
