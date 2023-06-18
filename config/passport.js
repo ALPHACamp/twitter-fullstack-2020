@@ -54,7 +54,6 @@ passport.deserializeUser(async (id, cb) => {
     const user = await User.findByPk(id, {
       include: [
         // 關聯資料
-        { model: Like },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
