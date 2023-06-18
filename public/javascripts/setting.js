@@ -1,4 +1,4 @@
-const form = document.querySelector('.form-signup')
+const form = document.querySelector('.form-setting')
 const nameInput = document.querySelector('#name')
 const passwordInput = document.querySelector('#password')
 const checkPasswordInput = document.querySelector('#checkPassword')
