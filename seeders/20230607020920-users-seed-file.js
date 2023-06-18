@@ -63,7 +63,7 @@ module.exports = {
       const delayInMinutes = 5;
 
       for (let i = 0; i < users.length; i++) {
-        const createdAt = new Date(Date.now() + i * delayInMinutes * 60000).toISOString().substring(0, 16);
+        const createdAt = new Date(Date.now() - i * delayInMinutes * 60000).toISOString().substring(0, 16);
 
         users[i].created_at = createdAt;
         users[i].updated_at = createdAt;

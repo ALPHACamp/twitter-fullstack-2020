@@ -22,7 +22,7 @@ module.exports = {
       for (let i = 0; i < replyCount; i++) {
         const userIndex = i % 5;
         const tweetIndex = parseInt(i / 3);
-        const createdAt = new Date(Date.now() + i * delayInMinutes * 60000).toISOString().substring(0, 16);
+        const createdAt = new Date(Date.now() - i * delayInMinutes * 60000).toISOString().substring(0, 16);
 
         replies.push({
           User_id: users[userIndex].id,
