@@ -56,7 +56,8 @@ const tweetController = {
         userId
       })
     } catch (err) {
-      next(err)
+      console.log(err)
+      // next(err)
     }
   },
   getTweetReplies: async (req, res, next) => {
