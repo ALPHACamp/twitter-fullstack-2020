@@ -58,28 +58,65 @@ const adminController = {
         },
         order: [['createdAt', 'DESC']]
       })
-      const count = await Promise.all(
-        users.map(async user => ({
-          tweetsCount: await Tweet.count({ where: { UserId: user.id } }),
-          followingsCount: await Followship.count({
-            where: { followerId: user.id }
-          }),
-          followersCount: await Followship.count({
-            where: { followingId: user.id }
-          }),
-          likeCount: await Like.count({ where: { UserId: user.id } })
-        }))
-      )
+
+      const [tweets, follows, likes] = await Promise.all([
+        Tweet.findAll({ raw: true }),
+        Followship.findAll({ raw: true }),
+        Like.findAll({ raw: true })
+      ])
+
+      const tweetsMap = {} // 推文數量計數 { 'userId' : count }
+      tweets.forEach(tweet => {
+        if (!tweetsMap[tweet.UserId]) {
+          tweetsMap[tweet.UserId] = 1
+        } else {
+          tweetsMap[tweet.UserId] = tweetsMap[tweet.UserId] + 1
+        }
+      })
+
+      const followingsMap = {} // 跟隨中數量計數 { 'userId' : count }
+      const followersMap = {} // 跟隨者數量計數 { 'userId' : count }
+      follows.forEach(follow => {
+        if (!followingsMap[follow.followerId]) {
+          followingsMap[follow.followerId] = 1
+        } else {
+          followingsMap[follow.followerId] = followingsMap[follow.followerId] + 1
+        }
+        if (!followersMap[follow.followingId]) {
+          followersMap[follow.followingId] = 1
+        } else {
+          followersMap[follow.followingId] = followersMap[follow.followingId] + 1
+        }
+      })
+
+      const tweetLikedMap = {} // 推文被喜歡數量計數 { 'tweetId' : count }
+      likes.forEach(like => {
+        if (!tweetLikedMap[like.TweetId]) {
+          tweetLikedMap[like.TweetId] = 1
+        } else {
+          tweetLikedMap[like.TweetId] = tweetLikedMap[like.TweetId] + 1
+        }
+      })
+
+      const userLikedMap = {} // 使用者全部推文被喜歡數量計數 { 'userId' : count }
+      tweets.forEach(tweet => {
+        if (tweetLikedMap[tweet.id]) {
+          if (!userLikedMap[tweet.UserId]) {
+            userLikedMap[tweet.UserId] = 0
+          }
+          userLikedMap[tweet.UserId] = userLikedMap[tweet.UserId] + tweetLikedMap[tweet.id]
+        }
+      })
 
       const userData = await users.map((user, index) => ({
         ...user.toJSON(),
-        tweetsCount: count[index].tweetsCount,
-        followingsCount: count[index].followingsCount,
-        followersCount: count[index].followersCount,
-        likeCount: count[index].likeCount
+        tweetsCount: tweetsMap[user.id] ? tweetsMap[user.id] : 0,
+        followingsCount: followingsMap[user.id] ? followingsMap[user.id] : 0,
+        followersCount: followersMap[user.id] ? followersMap[user.id] : 0,
+        likeCount: userLikedMap[user.id] ? userLikedMap[user.id] : 0
       }))
 
-      // 依照追隨時間排序
+      // 依照推文數量排序
       userData.sort((a, b) => {
         return b.tweetsCount - a.tweetsCount
       })
