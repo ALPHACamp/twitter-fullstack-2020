@@ -7,7 +7,7 @@ const userController = {
   getSignUp: (req, res) => {
     res.render('signup')
   },
-  signUp: async (req, res, next) => {
+  signUp: (req, res, next) => {
     const { account, name, email, password, checkPassword } = req.body
     if (!account.trim() || !name.trim() || !email.trim() || !password.trim() || !checkPassword.trim()) {
       req.flash('error_messages', '所有欄位都是必填!')
@@ -72,7 +72,7 @@ const userController = {
     })
       .then(user => {
         if (!user) throw new Error('該使用者不存在')
-        return res.render('setting', { user: user })
+        return res.render('setting', { id: user.id, account: user.account, name: user.name, email: user.email })
       })
       .catch(err => next(err))
   },
@@ -85,16 +85,16 @@ const userController = {
     }
     if (!account.trim() || !name.trim() || !email.trim() || !password.trim() || !checkPassword.trim()) {
       req.flash('error_messages', '所有欄位都是必填!')
-      return res.render('setting', { account, name, email, password, checkPassword })
+      return res.render('setting', { id: req.user.id, account, name, email })
     }
 
     if (name.length > 50) {
       req.flash('error_messages', '暱稱不得超過50字!')
-      return res.render('setting', { account, name, email, password, checkPassword })
+      return res.render('setting', { id: req.user.id, account, name, email })
     }
     if (password !== checkPassword) {
       req.flash('error_messages', '密碼不相符!')
-      return res.render('setting', { account, name, email, password, checkPassword })
+      return res.render('setting', { id: req.user.id, account, name, email })
     }
 
     return Promise.all([
