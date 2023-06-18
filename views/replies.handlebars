@@ -15,7 +15,7 @@
       </div>
 
       {{!-- create-bar --}}
-      <div class="card">
+      <div class="card replies-card">
         <div class="card reply-tweet-lg">
           <div class="avatar">
             <a href="/users/{{tweet.UserId}}/tweets">
@@ -46,18 +46,18 @@
                 <span class="reply-like-text">喜歡次數</span>
           </div>
           <hr>
-          <div class="card-datas">
-            <div data-bs-toggle="modal" data-bs-target="#replyModal-{{tweet.id}}" class="reply-modal-trigger primary-anchor">
+          <div class="reply-card-datas">
+            <div data-bs-toggle="modal" data-bs-target="#replyModal-{{tweet.id}}" class="reply-modal-trigger primary-anchor replies-reply-icon">
               <span class="card-reply-icon reply-background-image"></span>
             </div>
             {{#if tweet.isLike}}
-            <form action="/tweets/{{tweet.id}}/unlike" method="post" class="primary-anchor form-like">
+            <form action="/tweets/{{tweet.id}}/unlike" method="post" class="primary-anchor form-like replies-like-icon">
               <button type="submit" class="btn-like">
                 <span class="card-unlike-icon reply-background-image"></span>
               </button>
             </form>
             {{else}}
-            <form action="/tweets/{{tweet.id}}/like" method="post" class="primary-anchor form-like">
+            <form action="/tweets/{{tweet.id}}/like" method="post" class="primary-anchor form-like replies-like-icon">
               <button type="submit" class="btn-like">
                 <span class="card-like-icon reply-background-image"></span>
               </button>
