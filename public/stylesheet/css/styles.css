@@ -143,6 +143,14 @@ body {
   border-bottom: 2px solid #50B5FF;
 }
 
+.invalid:invalid {
+  background-color: transparent;
+
+  border: none;
+  border-radius: 0px 0px 4px 4px;
+  border-bottom: 2px solid #FC5A5A;
+}
+
 .form-label {
   margin-left: 10.55px;
 }
@@ -344,6 +352,10 @@ body {
 .btn-close-msg {
   border: none;
   background: #FFFFFF;
+}
+
+#invalid-message {
+  color: #FC5A5A;
 }
 
 

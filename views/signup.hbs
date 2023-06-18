@@ -2,14 +2,15 @@
   <img id="ac-logo-icon" src="/images/icons/logo.png" alt="">
   <h3 id="sign-up-h3">建立你的帳號</h3>
   <div id="container-form-signup">
-    <form class="form-signup"  action="/signup" method="POST">
+    <form class="form-signup" action="/signup" method="POST">
       <div class="mb-3" id="form-input-line">
         <label class="form-label" for="account">帳號</label>
         <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" required autofocus>
       </div>
       <div class="mb-3" id="form-input-line">
         <label class="form-label" for="name">名稱</label>
-        <input type="text" id="name" name="name" class="form-control" maxlength="50" placeholder="請輸入使用者名稱" required autofocus>
+        <input type="text" id="name" name="name" class="form-control" placeholder="請輸入使用者名稱" required autofocus>
+        <span id="invalid-message"></span>
       </div>
       <div class="mb-3" id="form-input-line">
         <label class="form-label" for="email">Email</label>
@@ -23,6 +24,7 @@
         <label class="form-label" for="checkPassword">密碼確認</label>
         <input type="password" id="checkPassword" name="checkPassword" class="form-control" placeholder="請再次輸入密碼"
           required>
+        <span id="invalid-message"></span>
       </div>
       <button class="btn btn-primary" id="btn-signin-signup-submit" type="submit">註冊</button>
     </form>
@@ -35,3 +37,5 @@
   </div>
 
 </div>
+
+<script src="/javascripts/signup.js"></script>
