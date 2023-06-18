@@ -561,6 +561,58 @@ const userController = {
     } catch (err) {
       next(err)
     }
+  },
+  getUserData: (req, res, next) => {
+    const userId = req.params.id
+    // 檢查是不是自己本人
+    if (Number(userId) !== helpers.getUser(req).id) {
+      return res.json({
+        status: 'error',
+        message: 'Unauthorized operation. You can only access your own data.'
+      })
+    }
+    User.findByPk(helpers.getUser(req).id, { raw: true })
+      .then(user => {
+        if (!user) throw new Error('User did not exist.')
+        delete user.password // 刪除取得的password再回傳
+        return res.json(user)
+      })
+      .catch(err => next(err))
+  },
+  editUserProfile: (req, res, next) => {
+    const userId = req.params.id
+    const { name, intro, coverReset } = req.body
+    const avatarFile = req.files?.avatar ? req.files.avatar[0] : null // avatar是一個file的陣列，但裡面最多只會有1個file。file包含了上傳的檔案資訊
+    const coverFile = req.files?.cover ? req.files.cover[0] : null // cover是一個file的陣列，但裡面最多只會有1個file。file包含了上傳的檔案資訊
+    // 檢查是不是自己本人
+    if (Number(userId) !== helpers.getUser(req).id) {
+      return res.json({
+        status: 'error',
+        message: 'Unauthorized operation. You can only access your own data.'
+      })
+    }
+    // 驗證name是否有值
+    if (!name || name.trim() === '') throw new Error('Name is required.')
+    // 驗證是否name不超過50字 且 intro不超過160字 (如果intro有值)
+    if (name.length > 50 || intro ? intro.length > 160 : false) throw new Error('Limit exceeded.')
+    // 把temp中的檔案複製一份到upload並回傳路徑 同時前往資料庫找user
+    return Promise.all([
+      imgurFileHandler(avatarFile),
+      imgurFileHandler(coverFile),
+      User.findByPk(helpers.getUser(req).id)
+    ])
+      .then(([avatarFilePath, coverFilePath, user]) => {
+        if (!user) throw new Error('User did not exist.')
+        if (coverReset === 'true') coverFilePath = 'https://i.imgur.com/b7U6LXD.jpg'
+        return user.update({ name, intro: intro || user.intro, avatar: avatarFilePath || user.avatar, cover: coverFilePath || user.cover })
+      })
+      .then(user => {
+        if (!user) throw new Error('User did not exist.')
+        user = user.toJSON()
+        delete user.password // 刪除取得的password再回傳
+        return res.json(user)
+      })
+      .catch(err => next(err))
   }
 }
 module.exports = userController
