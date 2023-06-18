@@ -15,10 +15,10 @@ passport.use('local', new LocalStrategy(
   (req, account, password, cb) => {
     User.findOne({ where: { account, role: 'user' } })
       .then(user => {
-        if (!user) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+        if (!user) return cb(null, false, req.flash('error_messages', '帳號不存在！'))
         return bcrypt.compare(password, user.password).then(isMatch => {
           if (!isMatch) {
-            return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+            return cb(null, false, req.flash('error_messages', '帳號不存在！'))
           }
           return cb(null, user)
         })
@@ -39,10 +39,10 @@ passport.use('local-admin', new LocalStrategy(
   (req, account, password, cb) => {
     User.findOne({ where: { account, role: 'admin' } })
       .then(user => {
-        if (!user) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+        if (!user) return cb(null, false, req.flash('error_messages', '帳號不存在！'))
         return bcrypt.compare(password, user.password).then(isMatch => {
           if (!isMatch) {
-            return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+            return cb(null, false, req.flash('error_messages', '帳號不存在！'))
           }
           return cb(null, user)
         })

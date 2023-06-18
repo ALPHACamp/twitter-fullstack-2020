@@ -41,10 +41,10 @@ const userController = {
     ])
       .then(([accountUser, emailUser]) => {
         if (emailUser) {
-          errors.push({ message: '這個Email已被註冊。' })
+          errors.push({ message: 'email 已重複註冊！' })
         }
         if (accountUser) {
-          errors.push({ message: '這個帳號已被註冊。' })
+          errors.push({ message: 'account 已重複註冊！' })
         }
         if (errors.length) {
           return res.render('signup', {
@@ -187,10 +187,10 @@ const userController = {
     ])
       .then(([accountUser, emailUser]) => {
         if (emailUser) {
-          errors.push({ message: '這個Email已被註冊。' })
+          errors.push({ message: 'email 已重複註冊！' })
         }
         if (accountUser) {
-          errors.push({ message: '這個帳號已被註冊。' })
+          errors.push({ message: 'account 已重複註冊！' })
         }
         if (errors.length) {
           return res.render('setting', {
