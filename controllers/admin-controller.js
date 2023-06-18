@@ -60,9 +60,8 @@ const adminController = {
             raw: true,
             nest: true,
             include: [
-              { model: Tweet, attributes: [], include: [{ model: User, attributes: ['id'], raw: true, nest: true }] }
-            ],
-            where: { userId: user }
+              { model: Tweet, where: { UserId: user } }
+            ]
           })
         ])
           .then(([user, likes]) => {
