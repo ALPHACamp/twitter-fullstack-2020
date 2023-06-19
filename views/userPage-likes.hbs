@@ -1,0 +1,59 @@
+{{> userPage-header}}
+{{> userPage-tabs route ='likes'}}
+
+<hr class="mt-0">
+{{#each likedtweets}}
+{{!-- 一篇貼文 --}}
+<div class="d-flex flex-row align-items-center ps-4 pe-4 p-3align-items-start" style="width: 100%">
+  <div class="d-flex align-items-center">
+    {{!-- 用戶大頭貼 --}}
+    <a href="/users/{{this.User.id}}/tweets" class="align-self-start">
+      <figure class="me-2 flex-shrink-0" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
+        <img src="{{this.User.avatar}}" style="object-fit: cover;width:100%;height:100%">
+      </figure>
+    </a>
+    <div class="me-2 d-flex flex-column flex-shrink-1">
+      <div class="d-flex align-items-center">
+        {{!-- 用戶名稱 --}}
+        <p class="m-0 text-16px-med">{{this.User.name}}</p>
+        {{!-- 用戶id --}}
+        <p class="m-0 text-14px-reg color-secondary">&nbsp @{{this.User.account}} ・</p>
+        <p class="m-0 text-14px-reg color-secondary">{{relativeTime this.createdAt}}</p>
+      </div>
+      {{!-- tweets 內容 --}}
+      <div class="m-0 text-16px-reg text-break mt-2">
+        <a href="/tweets/{{this.id}}/replies">{{this.description}}</a>
+      </div>
+      <div class="d-flex mt-3">
+        {{!-- 留言數 Comment --}}
+        <button id="" class="me-5 number getTweetButton d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#postReplyModal"
+          value="{{this.id}}">
+          <img class="me-2" src="/_base/Property 2=outlined, Property 3=reply.svg" style="width: 13px">
+          <span>{{this.replyCount}}</span>
+        </button>
+        {{!-- 喜歡數 Like --}}
+        <div class="number">
+          {{#if this.isLiked}}
+          <form action="/tweets/{{this.id}}/unlike" method="POST" class="me-2">
+            <button type="submit" class="d-flex align-items-center">
+              <img src="/_base/Property 2=filled, Property 3=like.svg" style="width: 13px" class="me-2 svg-fill-error">
+              <span
+                style="line-height: 14px;font-size:14px; font-weight:600; color: #6C757D; text-align: left">{{this.likeCount}}</span>
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{this.id}}/like" method="POST" class="me-2">
+            <button type="submit" class="d-flex align-items-center">
+              <img src="/_base/Property 2=outlined, Property 3=like.svg" style="width: 13px" class="me-2">
+              <span
+                style="line-height: 14px;font-size:14px; font-weight:600; color: #6C757D; text-align: left">{{this.likeCount}}</span>
+            </button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+{{/each}}

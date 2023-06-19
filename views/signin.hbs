@@ -1,0 +1,48 @@
+<div class="container" id="sign-in-page" style="margin:0 auto;">
+  <div class="mt-4 mb-4 text-center" style="position:relative; top:64px;">
+    <div class="d-flex" style="position:relative; top:-50px;">
+      <div class="col-9"></div>
+      <div>{{> messages}}</div>
+    </div>
+    {{!-- logo --}}
+    <a href="/admin/signin" class="">
+      <img src="/_base/icon/logo.svg">
+    </a>
+    <h3 class="font-weight-normal mt-4 mb-5">登入 Alphitter</h3>
+  </div>
+  {{!-- 表單 --}}
+  <form class="form-signin" action="/signin" method="POST"
+    style="position: relative; top: 60px; width: 356px; margin: 0 auto;">
+    {{!-- 帳號 --}}
+    <div class="form-row">
+      <label class="form-label text-14px-reg color-dark-80" for="account">帳號</label>
+      <input class="form-input text-16px-reg" id="account" type="text" name="account" placeholder="請輸入帳號" required>
+    </div>
+    <div class="form-gap d-flex">
+      <label class="flex-fill text-12px-med text-start color-error" id="accountHelper"></label>
+      <label class="flex-fill text-12px-med text-end color-dark-80" id="count"></label>
+    </div>
+    {{!-- 密碼 --}}
+    <div class="form-row">
+      <label class="form-label text-14px-reg color-dark-80" for="password">密碼</label>
+      <input class="form-input text-16px-reg" id="password" type="password" name="password" placeholder="請輸入密碼"
+        required>
+    </div>
+    <div class="form-gap d-flex">
+      <label class="flex-fill text-12px-med text-start color-error" id="passwordHelper"></label>
+      <label class="flex-fill text-12px-med text-end color-dark-80" id="count"></label>
+    </div>
+    {{!-- 登入 --}}
+    <button class="pill pill-large pill-main" type="submit" style="margin-top: 8px;">登入</button>
+    {{!-- 註冊・後台登入 --}}
+    <div class="d-flex justify-content-evenly" style="margin-top: 16px; margin-left: auto; height: 36px; width: 160px">
+      <a href="/signup">
+        <p class="color-primary text-16px-reg" style="border-bottom: 1px solid;">註冊</p>
+      </a>
+      <p class="text-16px-reg">・</p>
+      <a href="/admin/signin">
+        <p class="color-primary text-16px-reg" style="border-bottom: 1px solid;">後台登入</p>
+      </a>
+    </div>
+  </form>
+</div>

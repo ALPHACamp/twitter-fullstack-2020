@@ -1,0 +1,77 @@
+<h4 class="pt-4 ps-4 pe-4 pb-1">首頁</h4>
+<hr>
+<div id="mainPostTweet" class="d-flex flex-column m-4">
+  <form action="/tweets" method="POST">
+    <div class="d-flex">
+      {{!-- 用戶大頭貼 --}}
+      <figure class="me-2 align-self-start flex-shrink-0"
+        style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
+        <img src="{{currentUser.avatar}}" style="object-fit: cover;width:100%;height:100%">
+      </figure>
+      {{!-- tweet 文字輸入區 --}}
+      <textarea placeholder="有什麼新鮮事？" id="ModalTextarea" name="description" class="text-basic-reg mt-2" rows="3" cols="50"></textarea>
+    </div>
+    {{!-- 發送按鈕 --}}
+    <div class="d-flex justify-content-end align-items-center">
+      <div id="ModalErrorMessage" class="color-error text-14px-reg me-3"></div>
+      <button id="ModalSubmitBtn" type="button" class="pill-default pill-main">推文</button>
+    </div>
+  </form>
+</div>
+<hr style="height:10px; color:#E6ECF0;;">
+{{#each tweets}}
+{{!-- 一篇貼文 --}}
+<div class="d-flex flex-row align-items-center ps-4 pe-4 p-3 mb-3 mt-3 align-items-start" style="width: 100%">
+  <div class="d-flex align-items-center">
+    {{!-- 用戶大頭貼 --}}
+    <a href="/users/{{this.User.id}}/tweets" class="align-self-start">
+      <figure class="me-2 flex-shrink-0" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
+        <img src="{{this.User.avatar}}" style="object-fit: cover;width:100%;height:100%">
+      </figure>
+    </a>
+    <div class="me-2 d-flex flex-column flex-shrink-1">
+      <div class="d-flex align-items-center">
+        {{!-- 用戶名稱 --}}
+        <p class="m-0 text-16px-med">{{this.User.name}}</p>
+        {{!-- 用戶id --}}
+        <p class="m-0 text-14px-reg color-secondary">&nbsp @{{this.User.account}} ・</p>
+        <p class="m-0 text-14px-reg color-secondary">{{relativeTime this.createdAt}}</p>
+      </div>
+      {{!-- tweets 內容 --}}
+      <div class="m-0 text-16px-reg text-break mt-2">
+        <a href="/tweets/{{this.id}}/replies">{{this.description}}</a>
+      </div>
+      <div class="d-flex mt-3">
+        {{!-- 留言數 Comment --}}
+        <button id="" class="me-5 number getTweetButton d-flex align-items-center" data-bs-toggle="modal"
+          data-bs-target="#postReplyModal" value="{{this.id}}">
+          <img class="me-2" src="/_base/Property 2=outlined, Property 3=reply.svg" style="width: 13px">
+          <span>{{this.replyCount}}</span>
+        </button>
+        {{!-- 喜歡數 Like --}}
+        <div class="number">
+          {{#if this.isLiked}}
+          <form action="/tweets/{{this.id}}/unlike" method="POST" class="me-2">
+            <button type="submit" class="d-flex align-items-center">
+              <img src="/_base/Property 2=filled, Property 3=like.svg" style="width: 13px" class="me-2 svg-fill-error">
+              <span
+                style="line-height: 14px;font-size:14px; font-weight:600; color: #6C757D;text-align: left">{{this.likeCount}}</span>
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{this.id}}/like" method="POST" class="me-2">
+            <button type="submit" class="d-flex align-items-center">
+              <img src="/_base/Property 2=outlined, Property 3=like.svg" style="width: 13px; ine-height: 14px;"
+                class="me-2">
+              <span
+                style="line-height: 14px;font-size:14px; font-weight:600; color: #6C757D;text-align: left">{{this.likeCount}}</span>
+            </button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+{{/each}}

@@ -1,0 +1,54 @@
+<div class="user-list d-flex align-items-center pt-4 ps-4 pe-4 pb-1">
+  <div class="col-9">
+    <h4>使用者列表</h4>
+  </div>
+  <div class="align-self-start">{{> messages}}</div>
+</div>
+<hr>
+<div class="user-panel ps-3" style="display: grid; grid-template-columns: 25% 25% 25% 25%; grid-gap: 1px;">
+  {{#each users}}
+  <div class="userCard mt-3" style="position: relative; height: 314px; width: 210px; background-color: #F6F7F8;
+    border-radius: 20px;">
+    <div class="card-top">
+      <div class='user-cover'>
+        <img src="{{this.cover}}" alt=""
+          style="height:140px ; width: 210px; object-fit: cover; border-top-left-radius: 16px; border-top-right-radius: 16px;">
+      </div>
+      <img class='user-avatar' src="{{this.avatar}}" alt=""
+        style="position: absolute; left: 55px; top: 65px; width: 100px; height: 100px; object-fit: cover; border: 4px solid #FFFFFF; border-radius: 50%;">
+    </div>
+    <div class="card-content" style="position: relative; top: 30px; height: 145px; text-align: center;">
+      <div class="d-flex flex-column justify-content-center">
+        <div class='user-name text-16px-med' style="">{{this.name}}</div>
+        <div class="user-account text-14px-reg"
+          style="display: inline; color:#6C757D;">
+          {{this.account}}</div>
+      </div>
+      <div class=" user-data">
+        <div class='tweet-like'
+          style="position: relative; top: 15px; left: 30px; display: flex; justify-content: space-evenly; width: 150px;align-items: center">
+          <div class='tweet-count text-16px-med-Montserrat'>
+            <img src="/_base/icon/Vector.svg" alt="">
+            <span class='count ps-1'> {{this.tweetCount}}</span>
+          </div>
+          <div class='like-count text-16px-med-Montserrat'>
+            <img src="/_base/icon/heart-outline.svg" alt="">
+            <span class='count ps-1'> {{this.likeCount}}</span>
+          </div>
+        </div>
+        <div class="follow"
+          style="position: relative; top: 27px; left: 28px; display: flex; justify-content: space-between; width: 160px;">
+          <div>
+            <span class='follow-count text-14px-reg'>{{this.followingCount}} 個<p style="display: inline; color:#6C757D">
+                跟隨中</p></span>
+          </div>
+          <div>
+            <span class='follow-count text-14px-reg'>{{this.followerCount}} 位<p style="display: inline; color:#6C757D">
+                跟隨者</p></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>

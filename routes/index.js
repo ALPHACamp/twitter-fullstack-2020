@@ -1,0 +1,37 @@
+const express = require('express')
+const router = express.Router()
+const passport = require('../config/passport')
+
+const userController = require('../controllers/user-controller')
+const tweetController = require('../controllers/tweet-controller')
+const adminController = require('../controllers/admin-controller')
+
+const { authenticator, authenticatedAdmin } = require('../middleware/auth')
+const { generalErrorHandler, apiErrorHandler } = require('../middleware/error-handler')
+const upload = require('../middleware/multer')
+
+const users = require('./modules/users')
+const tweets = require('./modules/tweets')
+const admin = require('./modules/admin')
+
+router.use('/users', authenticator, users)
+router.use('/tweets', authenticator, tweets)
+router.use('/admin', admin)
+router.get('/api/users/:id', authenticator, userController.getUserData)
+router.post('/api/users/:id', authenticator, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.editUserProfile)
+router.use('/api/tweets/:id', authenticator, tweetController.apiGetTweet)
+router.get('/api/admin/tweets/:id', authenticatedAdmin, adminController.apiGetTweet)
+router.get('/signup', userController.signUpPage)
+router.post('/signup', userController.signUp)
+router.get('/signin', userController.signInPage)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+router.post('/followships', authenticator, userController.addFollow)
+router.delete('/followships/:id', authenticator, userController.removeFollow)
+router.post('/tweets/:id/like', authenticator, tweetController.postLike)
+router.post('/tweets/:id/unlike', authenticator, tweetController.postUnlike)
+router.get('/logout', userController.logout)
+router.use('/', (req, res) => res.redirect('/tweets'))
+router.use('/api', apiErrorHandler)
+router.use('/', generalErrorHandler)
+
+module.exports = router

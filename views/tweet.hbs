@@ -1,0 +1,90 @@
+<div class="d-flex align-items-center border p-3 ps-4" style="position: relative">
+  <a href="javascript:history.back()">
+    <img class="me-3" src="/_base/Property 2=outlined, Property 3=back.svg" style="width: 23px">
+  </a>
+  <h5 class="m-0" style="font-size: 20px">推文</h5>
+</div>
+<hr class="m-0">
+{{!-- 一篇貼文 --}}
+<div class="d-flex flex-column ps-4 pe-4 p-3" style="width: 100%">
+  <div class="d-flex">
+    {{!-- 用戶大頭貼 --}}
+    <a href="/users/{{tweet.User.id}}/tweets" class="align-self-start">
+      <figure class="m-0 me-2 flex-shrink-0" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
+        <img src="{{tweet.User.avatar}}" style="object-fit: cover;width:100%;height:100%">
+      </figure>
+    </a>
+    <div class="d-flex flex-column m-0">
+      {{!-- 用戶名稱 --}}
+      <p class="m-0 text-16px-med">{{tweet.User.name}}</p>
+      {{!-- 用戶id --}}
+      <p class="m-0 text-14px-reg color-secondary">@{{tweet.User.account}}</p>
+    </div>
+  </div>
+  {{!-- tweet 內容 --}}
+  <div class="m-0 mt-2 mb-2 text-16px-reg text-break">
+    {{tweet.description}}
+  </div>
+  <p class="m-0 mb-2 text-14px-reg color-secondary">{{modifyTime tweet.createdAt}}</p>
+  <hr class="m-0">
+  <p class="m-0 pt-2 pb-2 text-14px-reg color-secondary">
+    <span class="color-dark-100 number">{{replies.length}}</span> 回覆&nbsp&nbsp&nbsp
+    <span class="color-dark-100 number">{{tweet.likeCount}}</span> 喜歡次數
+  </p>
+  <hr class="m-0">
+  <div class="d-flex mt-3 align-items-center">
+    {{!-- 留言數 Comment --}}
+    <button class="me-5 number getTweetButton d-flex align-items-center" data-bs-toggle="modal"
+      data-bs-target="#postReplyModal" value="{{tweet.id}}">
+      <img class="me-3" src="/_base/Property 2=outlined, Property 3=reply.svg" style="width: 25px">
+    </button>
+    {{!-- 喜歡數 Like --}}
+    <div class="number">
+      {{#if tweet.isLiked}}
+      <form action="/tweets/{{tweet.id}}/unlike" method="POST" class="me-2">
+        <button type="submit" style="">
+          <img src="/_base/Property 2=filled, Property 3=like.svg" style="width: 25px" class="svg-fill-error">
+        </button>
+      </form>
+      {{else}}
+      <form action="/tweets/{{tweet.id}}/like" method="POST" class="me-2">
+        <button type="submit">
+          <img src="/_base/Property 2=outlined, Property 3=like.svg" style="width: 25px">
+        </button>
+      </form>
+      {{/if}}
+    </div>
+  </div>
+</div>
+<hr class="mt-0">
+{{#each replies}}
+{{!-- 一篇回覆 --}}
+<div class="d-flex flex-row align-items-center ps-4 pe-4 p-3align-items-start" style="width: 100%">
+  <div class="d-flex align-items-center">
+    {{!-- 用戶大頭貼 --}}
+    <a href="/users/{{this.User.id}}/tweets" class="align-self-start">
+      <figure class="me-2 flex-shrink-0" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
+        <img src="{{this.User.avatar}}" style="object-fit: cover;width:100%;height:100%">
+      </figure>
+    </a>
+    <div class="me-2 d-flex flex-column flex-shrink-1">
+      <div class="d-flex align-items-center">
+        {{!-- 用戶名稱 --}}
+        <p class="m-0 text-16px-med">{{this.User.name}}</p>
+        {{!-- 用戶id --}}
+        <p class="m-0 text-14px-reg color-secondary">&nbsp @{{this.User.account}} ・</p>
+        <p class="m-0 text-14px-reg color-secondary">{{relativeTime this.createdAt}}</p>
+      </div>
+      <div class="m-0 text-14px-reg color-main text-break mt-2">
+        <span class="color-secondary">回覆</span>
+        <a href="/tweets/{{../tweet.id}}/replies" class="color-main at-user-link">@{{../tweet.User.account}}</a>
+      </div>
+      {{!-- reply 內容 --}}
+      <div class="m-0 text-16px-reg text-break mt-2">
+        {{this.comment}}
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+{{/each}}
