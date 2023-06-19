@@ -1,0 +1,45 @@
+{{!-- followship --}}
+<section class="followship">
+  <h4 class="followship-title">推薦跟隨</h4>
+  <div class="followship-card-wrapper">
+    {{#each topUsers}}
+    {{!-- card 1 --}}
+    <div class="followship-card">
+      <div class="avatar">
+        <a href="/users/{{ this.id }}/tweets">
+          {{#if this.avatar }}
+          <img src="{{ this.avatar }}" alt="avatar" class="logo">
+          {{else}}
+          <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+          {{/if}}
+        </a>
+      </div>
+      <div class="card-text-info">
+        <a href="/users/{{ this.id }}/tweets" class="primary-anchor">
+          <span class="card-name followship-name ellipsis">{{ this.name }}</span>
+        </a>
+        <a href="/users/{{ this.id }}/tweets" class="primary-anchor">
+          <span class="card-account followship-account ellipsis">@{{ this.account }}</span>
+        </a>
+      </div>
+      {{#if this.isFollow}}
+      <form action="/followships/{{ this.id }}?_method=DELETE" method="post" class="followBtn">
+        <input type="hidden" name="loginUserId" value="{{loginUserId}}" />
+        <div class="follow-button-wrapper">
+          <button type="submit" class="btn btn-info">正在跟隨</button>
+        </div>
+      </form>
+      {{else}}
+      <form action="/followships" method="post" class="followBtn">
+        <input type="hidden" name="userId" value="{{this.id}}" />
+        <input type="hidden" name="loginUserId" value="{{loginUser.id}}" />
+        <div class="follow-button-wrapper">
+          <button type="submit" class="btn btn-outline-info btn-follow" name="id" value={{this.id}}>跟隨</button>
+        </div>
+      </form>
+      {{/if}}
+    </div>
+    {{/each}}
+
+  </div>
+</section>

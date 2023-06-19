@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="wrapper" style="justify-content:flex-start">
+
+    {{> admin-navbar}}
+
+    {{!-- main --}}
+    <section class="main">
+      <h4 class="main-title">
+        推文清單
+      </h4>
+      {{!-- tweet cards --}}
+      {{#each tweets}}
+      <div class="card card-tweet-lg">
+        <a class="tweet-href"></a>
+        <div class="avatar" data-bs-toggle="modal" data-bs-target="#adminTweetModal-{{this.id}}"
+          data-tweetid="{{ this.id }}">
+          <a class="primary-anchor">
+            {{#if this.User.avatar}}
+            <img src="{{this.User.avatar}}" alt="avatar" class="logo">
+            {{else}}
+            <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+            {{/if}}
+          </a>
+        </div>
+
+        <div class="card-text">
+          <div style="position:absolute;right:3px;top:6px">
+            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="tweet-delete-form"
+              style="float:right">
+              <button class="btn" id="adminDeleteButton" type="submit">
+                <img src="/stylesheets/icons/delete.png" alt="delete icon">
+              </button>
+            </form>
+          </div>
+          <div class="card-text-info" data-bs-toggle="modal" data-bs-target="#adminTweetModal-{{this.id}}"
+            data-tweetid="{{ this.id }}">
+            <a class="primary-anchor">
+              <span class="card-name">{{this.User.name}}</span>
+            </a>
+            <a class="primary-anchor">
+              <span class="card-account">@{{this.User.account}}</span>
+            </a>
+            <span class="card-dot">·</span>
+            <span class="card-datetime">{{relativeTimeFromNow this.updatedAt}}</span>
+            <a class="primary-anchor">
+              <p class="card-description">{{this.simpleText}}</p>
+            </a>
+          </div>
+        </div>
+      </div>
+      {{> admin-tweet-madal}}
+      {{/each}}
+    </section>
+  </div>
+
+</div>

@@ -1,0 +1,39 @@
+{{!-- Email 重複--}}
+{{#if danger_msg}}
+<div class="danger-message mx-auto my-4">
+  <div class="message-text">
+    {{ danger_msg }}
+  </div>
+  <div class="danger-icon"><img src="/stylesheets/icons/x.png" alt="x icon"></div>
+</div>
+{{/if}}
+
+{{!-- 推文發送成功 --}}
+{{#if success_msg}}
+<div class="light-green-message mx-auto my-4">
+  <div class="message-text">
+    {{ success_msg }}
+  </div>
+  <div class="light-green-icon"><img src="/stylesheets/icons/v.png" alt="tick icon"></div>
+</div>
+{{/if}}
+
+{{!-- 網路連線中斷--}}
+{{#if warning_msg}}
+<div class="warning-message mx-auto my-4">
+  <div class="message-text">
+    {{ warning_msg }}
+  </div>
+  <div class="warning-icon"><img src="/stylesheets/icons/!.png" alt="! icon"></div>
+</div>
+{{/if}}
+
+{{!-- 收到新推文--}}
+{{#if info_msg}}
+<div class="light-blue-message mx-auto my-4">
+  <div class="message-text">
+    {{ info_msg }}
+  </div>
+  <div class="light-blue-icon"><img src="/stylesheets/icons/i.png" alt="info icon"></div>
+</div>
+{{/if}}

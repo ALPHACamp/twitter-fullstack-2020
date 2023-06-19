@@ -1,0 +1,34 @@
+{{!-- nav bar --}}
+<nav class="navbar-column" style="width:174px;">
+
+  <div class="logo-container">
+    <a href="/admin/tweets">
+      <img src="/stylesheets/icons/ac_icon.png" alt="logo" class="logo">
+    </a>
+  </div>
+
+  {{!-- front page --}}
+  <a class="nav-row {{#if tweets}}active{{/if}}" id="adminTweets" href="/admin/tweets">
+    <div class="nav-row-house-icon background-image">
+    </div>
+    <h5 class="nav-row-title">推文清單</h5>
+  </a>
+
+  {{!-- users list --}}
+  <a class="nav-row {{#if users}}active{{/if}}" id="adminUsers" href="/admin/users">
+    <div class="nav-row-user-icon background-image">
+    </div>
+    <h5 class="nav-row-title">使用者列表</h5>
+  </a>
+
+  {{!-- signout --}}
+  <form action="/signout" method="POST" class="signout-form">
+    <button type="submit" class="btn" id="adminSignout">
+      <div class="nav-row">
+        <div class="nav-row-signout-icon background-image">
+        </div>
+        <h5 class="nav-row-title">登出</h5>
+      </div>
+    </button>
+  </form>
+</nav>

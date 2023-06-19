@@ -1,0 +1,70 @@
+<div class="modal fade" id="replyModal-{{tweet.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content reply-modal">
+      <div class="modal-header">
+        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card reply-tweet-lg">
+          <a href="/tweets/{{tweet.id}}/replies" class="tweet-href" id="tweetHref"></a>
+          <div class="reply-avatar">
+            <div class="avatar">
+              <a href="/users/{{tweet.UserId}}/tweets" class="primary-anchor" id="tweetUserHref">
+                {{#if tweet.User.avatar}}
+                <img src="{{ tweet.User.avatar }}" alt="avatar" class="logo" id="tweetUserAvater">
+                {{else}}
+                <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+                {{/if}}
+              </a>
+            </div>
+            <div class="reply-line">
+              <div class="vertical-line"></div>
+            </div>
+          </div>
+          <div class="card-text">
+            <div class="card-text-info">
+              <a href="/users/{{ tweet.UserId }}/tweets" class="primary-anchor" id="tweetUserHref">
+                <span class="card-name" id="tweetUserName">{{tweet.User.name}}</span>
+              </a>
+              <a href="/users/{{ tweet.UserId }}/tweets" class="primary-anchor" id="tweetUserHref">
+                <span class="card-account" id="tweetUserAccount">{{tweet.User.account}}</span>
+              </a>
+              <span class="card-dot">·</span>
+              <span class="card-datetime" id="tweetDate">{{relativeTimeFromNow tweet.createdAt}}</span>
+            </div>
+            <p class="card-description" id="tweetDescription">{{tweet.description}}</p>
+            <div class="reply-to-part">
+              <span class="reply-to">回覆</span>
+              <a href="/users/{{ tweet.UserId }}/tweets" class="primary-anchor" id="tweetUserHref">
+                <span class="card-account reply-account" id="tweetUserAccount">@{{tweet.User.account}}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="main-create-bar">
+          <div class="avatar">
+            <a href="/users/{{loginUser.id}}/tweets">
+              {{#if loginUser.avatar }}
+              <img src="{{ loginUser.avatar}}" alt="avatar" class="logo">
+              {{else}}
+              <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+              {{/if}}
+            </a>
+          </div>
+          <form action="/tweets/{{tweet.id}}/replies" method="POST" class="create-reply-form reply-content" name="comment" id="tweetReply">
+            <textarea name="comment" id="replyareaInput" cols="30" rows="10" class="reply-create-input"
+              placeholder="推你的回覆"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div>
+          <h6 id="replyErrorMsg" class="tweetTips"></h6>
+        </div>
+          <button id="replySubmitBtn" type="submit" class="btn btn-info" disabled>回覆</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/javascripts/reply.js"></script>

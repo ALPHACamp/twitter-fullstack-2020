@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="wrapper" style="justify-content:flex-start">
+
+    {{> admin-navbar}}
+
+    <section class="admin-users">
+      <h4 class="main-title">使用者列表</h4>
+
+      <div class="users-container" style="flex-wrap: wrap;display:flex">
+        {{!-- user card --}}
+        {{#each users}}
+        <div class="card admin-user-card" style="width:210px;height:314px;">
+          <div class="user-image" style="height:50%">
+            {{#if this.cover}}
+            <div class="background-image"
+              style="height:140px;border-radius:10px 10px 0px 0px;background-image: url('{{this.cover}}')"></div>
+            {{else}}
+            <div class="profile-cover background-image" style="height:140px;border-radius:10px 10px 0px 0px"></div>
+            {{/if}}
+
+            {{#if this.avatar}}
+            <div class="admin-user-bg"><img class="admin-user-avatar" src="{{this.avatar}}"></div>
+            {{else}}
+            <div class="admin-user-bg"><img class="admin-user-avatar" src="/stylesheets/icons/avatar.png"></div>
+            {{/if}}
+          </div>
+
+          <div class="user-info" style="height:50%;position:absolute;top:172px;left:29px;font-family: 'Noto Sans TC'">
+            <div class="user-name" style="text-align:center;font-weight:bold">{{this.name}}</div>
+            <div class="user-account" style="text-align:center;color:#6C757D">@{{this.account}}</div>
+            <div class="user-data mt-3" style="display:flex;justify-content:space-around">
+              <div class="tweets"><img src=" /stylesheets/icons/pen_gray.png"
+                  style="width:23.87px;height:21.6px">&nbsp&nbsp{{this.totalTweets}}
+              </div>
+              <div class="likes"><img src="/stylesheets/icons/like_white.png"
+                  style="width:23.87px;height:21.6px">&nbsp&nbsp{{this.totalLikes}}
+              </div>
+            </div>
+            <div class="user-followships mt-2" style="display:flex;justify-content:space-around">
+              <div class="followings mx-1" style="font-size:14px">{{this.totalFollowings}}&nbsp個跟隨中</div>
+              <div class="followers mx-1" style="font-size:14px">{{this.totalFollowers}}&nbsp位跟隨者</div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </section>
+  </div>
+</div>

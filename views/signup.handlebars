@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-6 m-auto sign-up-section">
+      <div class="logo-container text-center">
+        <img src="/stylesheets/icons/ac_icon.png" alt="logo" class="logo">
+      </div>
+      <h3 class="text-center">建立你的帳號</h3>
+      {{#if message}}
+      <div class="message-wrapper">
+      <div class="danger-message mx-auto my-4">
+        <div class="message-text">
+          {{ message }}
+        </div>
+        <div class="danger-icon"><img src="/stylesheets/icons/x.png" alt="x icon"></div>
+      </div>
+      </div>
+      {{/if}}
+
+      <form action="/signup" method="POST" id="form" class="needs-validation" novalidate>
+
+        {{!-- Account --}}
+        <div class="bg-form-gray">
+          <label for="account" class="form-label">帳號</label>
+          <input type="text" id="account" name="account" placeholder="請輸入帳號" class="form-input" value="{{ account }}"
+            required>
+          {{!-- 驗證錯誤的提示訊息 --}}
+          <div class="invalid-feedback">請輸入10個字以內</div>
+          <div class="input-minmax"></div>
+        </div>
+
+        {{!-- Name --}}
+        <div class="bg-form-gray">
+          <label for="name" class="form-label">名稱</label>
+          <input type="text" id="name" name="name" placeholder="請輸入使用者名稱" class="form-input" value="{{ name }}"
+            required>
+          <div class="invalid-feedback">請輸入50個字以內</div>
+          <div class="input-minmax"></div>
+        </div>
+
+        {{!-- Email --}}
+        <div class="bg-form-gray">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" name="email" placeholder="請輸入Email" class="form-input" value="{{ email }}"
+            required>
+          <div class="invalid-feedback">請輸入Email</div>
+          <div class="input-minmax"></div>
+        </div>
+
+        {{!-- Password --}}
+        <div class="bg-form-gray">
+          <label for="password" class="form-label">密碼</label>
+          <input type="password" id="password" name="password" placeholder="請設定密碼" class="form-input"
+            value="{{ password }}" required>
+          <div class="invalid-feedback">請設定密碼</div>
+          <div class="input-minmax"></div>
+        </div>
+
+        {{!-- Confirm Password --}}
+        <div class="bg-form-gray">
+          <label for="checkPassword" class="form-label">密碼確認</label>
+          <input type="password" id="checkPassword" name="checkPassword" placeholder="請再次輸入密碼" class="form-input"
+            value="{{ checkPassword }}" required>
+          <div class="invalid-feedback">密碼不一致</div>
+          <div class="input-minmax"></div>
+        </div>
+
+
+        {{!-- button --}}
+        <div class="">
+          <button type="submit" class="btn btn-info btn-submit" id="submit">註冊</button>
+        </div>
+      </form>
+
+      <div class="text-center mt-3">
+        <a class="btn-cancel" style="text-decoration:underline" href="/signin">取消</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/javascripts/register.js"></script>

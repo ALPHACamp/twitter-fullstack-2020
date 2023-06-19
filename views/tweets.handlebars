@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="wrapper">
+
+    {{> navbar}}
+
+    {{!-- main --}}
+    <section class="main">
+      <h4 class="main-title">
+        首頁
+      </h4>
+
+      {{!-- create-bar --}}
+      <div class="main-create-bar">
+        <div class="avatar">
+          <a href="/users/{{user.id}}/tweets">
+            {{#if user.avatar }}
+            <img src="{{ user.avatar }}" alt="avatar" class="logo">
+            {{else}}
+            <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+            {{/if}}
+          </a>
+        </div>
+        <div class="main-create-modal-trigger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <div class="main-create-input">
+            有什麼新鮮事？
+          </div>
+          <button type="submit" class="btn btn-info btn-create-tweet">
+            推文
+          </button>
+        </div>
+      </div>
+      <div class="main-bg-bray"></div>
+
+      {{> messages}}
+      {{!-- card 1 --}}
+      {{#each tweetList}}
+      <div class="card card-tweet-lg">
+        <a href="/tweets/{{this.id}}/replies" class="tweet-href"></a>
+        <div class="avatar">
+          <a href="/users/{{this.UserId}}/tweets" class="primary-anchor">
+            {{#if this.User.avatar}}
+            <img src="{{ this.User.avatar }}" alt="avatar" class="logo">
+            {{else}}
+            <img src="/stylesheets/icons/avatar.png" alt="avatar" class="logo">
+            {{/if}}
+          </a>
+        </div>
+        <div class="card-text">
+          <div class="card-text-info">
+            <a href="/users/{{ this.UserId }}/tweets" class="primary-anchor">
+              <span class="card-name">{{ this.User.name }}</span></a>
+            <a href="/users/{{ this.UserId }}/tweets" class="primary-anchor">
+              <span class="card-account">@{{ this.User.account }}</span></a>
+            <span class="card-dot">·</span>
+            <span class="card-datetime">{{relativeTimeFromNow this.createdAt }}</span>
+          </div>
+          <p class="card-description">{{ this.description }}</p>
+          <div class="card-datas">
+            <div data-bs-toggle="modal" data-bs-target="#replyModal" class="reply-modal-trigger primary-anchor replyBtn">
+              <span class="card-reply-icon background-image"></span>
+              <span class="card-counts">{{ this.Replies.length }}</span>
+            </div>
+            {{#if this.isLike}}
+            <form action="/tweets/{{this.id}}/unlike" method="POST" class="primary-anchor form-like likeBtn">
+              <button type="submit" class="btn-like">
+                <span class="card-unlike-icon background-image"></span>
+                <span class="card-counts">{{ this.Likes.length }}</span>
+              </button>
+            </form>
+            {{else}}
+            <form action="/tweets/{{this.id}}/like" method="POST" class="primary-anchor form-like likeBtn">
+              <button type="submit" class="btn-like">
+                <span class="card-like-icon background-image"></span>
+                <span class="card-counts">{{ this.Likes.length }}</span>
+              </button>
+            </form>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+      {{!------------- reply modal -------------}}
+
+      {{/each}}
+      {{> reply-modal }}
+    </section>
+    {{> followship}}
+  </div>
+</div>
+
+
+{{!------------- tweet modal -------------}}
+{{> tweet-modal}}
