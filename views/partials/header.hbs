@@ -1,0 +1,25 @@
+{{#ifCond route 'homepage'}}
+  <li class='list-group-item tweet-list p-4'>
+    <h4>首頁</h4>
+  </li>
+{{/ifCond}}
+
+{{#ifCond route 'users'}}
+  <div class='d-flex flex-row profile-header tweet-list'>
+    <span class='d-flex justify-content-start align-items-center'>
+      <a href='{{ifQuery previousPage "back=1"}}'>
+        <img src='/images/back.svg' alt='back' />
+      </a>
+    </span>
+    <span class='ms-3'>
+      <h5 class='m-0'>{{user.name}}</h5>
+      <p class='m-0 interact-counts-title'>{{user.tweetsCount}} 推文</p>
+    </span>
+  </div>
+{{/ifCond}}
+
+{{#ifCond route 'settings'}}
+  <li class='list-group-item tweet-list p-4'>
+    <h4>帳戶設定</h4>
+  </li>
+{{/ifCond}}

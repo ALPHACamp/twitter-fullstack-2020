@@ -1,0 +1,101 @@
+{{!-- header --}}
+<a href='{{ifQuery previousPage 'back=1'}}' class="text-decoration-none">
+  <li class="list-group-item tweet-list p-4 d-flex align-items-center">
+    <img src="/images/back.svg" alt="">
+    <h4 class="ms-3">推文</h4>
+  </li>
+</a>
+
+{{!-- tweet --}}
+<li class="list-group-item tweet-list p-3">
+  <div class="d-flex flex-column">
+    <div class="d-flex flex-row">
+      <div class="flex-shrink-1 p-0">
+        <button class="tweet-click-block"
+          onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{tweet.User.id}}/tweets';">
+          <img src="{{tweet.User.avatar}}" alt="avatar" class="tweet-user-img"
+            onerror="this.onerror=null; this.src='/images/profile-img.svg'">
+        </button>
+      </div>
+      <div class="tweet-text">
+        <div class="user-name">{{tweet.User.name}}</div>
+        <span class="user-account">@{{tweet.User.account}}</span>
+      </div>
+    </div>
+    <p class="tweet-content">{{tweet.description}}</p>
+    <div class="user-account">{{formatDateTime tweet.createdAt}}</div>
+  </div>
+
+  <hr class="mt-2">
+  <div class="d-flex align-items-center">
+    <div class="tweet-interact-counts">{{repliesCount}}</div>
+    <div class="tweet-interact-text me-4">回覆</div>
+    <div class="tweet-interact-counts">{{likesCount}}</div>
+    <div class="tweet-interact-text">喜歡次數</div>
+  </div>
+
+  <hr>
+  <div class="d-flex align-items-center">
+    <img src="/images/reply_outlined.svg" alt="" type="button" data-bs-toggle="modal"
+      data-bs-target="#reply-modal-{{tweet.id}}" class="tweet-icon">
+
+    {{#if isLiked }}
+    <form action="/tweets/{{tweet.id}}/unlike" method="POST" style="display: contents;">
+      <input type="image" src="/images/like_filled.svg" alt="提交" class="tweet-icon">
+    </form>
+    {{else}}
+    <form action="/tweets/{{tweet.id}}/like" method="POST" style="display: contents;">
+      <input type="image" src="/images/like_outlined.svg" alt="提交" class="tweet-icon">
+    </form>
+    {{/if}}
+
+  </div>
+
+</li>
+
+{{#each tweet.Replies}}
+<li class="list-group-item tweet-list">
+  <div class="d-flex">
+    {{!-- avatar --}}
+    <div class="flex-shrink-1 p-0">
+      <button class="tweet-click-block"
+        onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{this.User.id}}/tweets';">
+        <img src="{{this.User.avatar}}" alt="avatar" class="tweet-user-img"
+          onerror="this.onerror=null; this.src='/images/profile-img.svg'">
+      </button>
+    </div>
+
+    <div class="d-flex flex-column">
+      <div class="tweet-text flex-grow-1 ">
+        {{!-- user name and account --}}
+        <button class="tweet-click-block"
+          onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{this.User.id}}/tweets';">
+          <div class="d-flex align-items-baseline mb-2">
+            <div class="user-name me-2 flex-shrink-0">{{this.User.name}}</div>
+            <div class="user-account flex-shrink-0">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
+          </div>
+        </button>
+
+        {{!-- reply tweet --}}
+        <div class="d-flex mb-2">
+          <div class="user-account me-1">回覆</div>
+          <button class="tweet-click-block"
+            onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{../tweet.User.id}}/tweets';">
+            <div class="tag-user-name">@{{../tweet.User.name}}</div>
+          </button>
+        </div>
+
+        {{!-- tweet description --}}
+        <p class="text-content">{{this.comment}}</p>
+      </div>
+    </div>
+  </div>
+</li>
+{{/each}}
+
+{{!-- modal --}}
+{{#with tweet}}
+  {{> modal/modal-reply user = ../user}}
+{{/with}}
+
+<script src="/javascript/reply.js"></script>

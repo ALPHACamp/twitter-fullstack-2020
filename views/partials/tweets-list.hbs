@@ -1,0 +1,63 @@
+<a href="/tweets/{{this.id}}/replies" class="text-decoration-none">
+  <li class="list-group-item tweet-list">
+    <div class="d-flex">
+      {{!-- avatar --}}
+      <div class="flex-shrink-1 p-0">
+        <button class="tweet-click-block"
+          onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{this.User.id}}/tweets';">
+          <img src="{{this.User.avatar}}" class="tweet-user-img"
+            onerror="this.onerror=null; this.src='/images/profile-img.svg'">
+        </button>
+      </div>
+
+      <div class="tweet-text d-flex flex-column">
+        {{!-- user name and account --}}
+        <button class="tweet-click-block"
+          onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{this.User.id}}/tweets';">
+          <div class="d-flex align-items-baseline">
+            <div class="user-name">{{this.User.name}} </div>
+            <div class="user-account">@{{this.User.account}}・{{formatRelativeTime this.createdAt}}</div>
+          </div>
+        </button>
+
+        {{!-- tweet description --}}
+        {{#isTextTruncated this.description 5}}
+        <p class="text-content">{{{this.description}}}</p>
+        <p class="show-more-content secondary-color">顯示更多</p>
+        {{else}}
+        <p class="text-content">{{{this.description}}}</p>
+        {{/isTextTruncated}}
+
+        <div class="d-flex">
+          {{!-- reply icon --}}
+          <div class="d-flex align-items-center" onclick="event.stopImmediatePropagation();event.preventDefault();"
+            data-bs-toggle="modal" data-bs-target="#reply-modal-{{this.id}}">
+            <img src="/images/reply_outlined.svg" alt="" class="tweet-list-icon">
+            <span class="interact-counts-text">{{this.repliesCount}}</span>
+          </div>
+
+          {{!-- like icon --}}
+          <div class="d-flex align-items-center">
+            {{#if this.isLiked }}
+            <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
+              <input type="image" src="/images/like_filled.svg" alt="提交" style="margin-left:40px;"
+                class="tweet-list-icon">
+            </form>
+            {{else}}
+            <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
+              <input type="image" src="/images/like_outlined.svg" alt="提交" style="margin-left:40px;"
+                class="tweet-list-icon">
+            </form>
+            {{/if}}
+
+            <span class="interact-counts-text">{{this.likesCount}}</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </li>
+</a>
+
+{{!-- modal --}}
+{{> modal/modal-reply}}

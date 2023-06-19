@@ -1,0 +1,17 @@
+<div class="d-flex justify-content-center">
+  {{!-- navbar --}}
+  {{> navbar/navbar route = (lookupPartial partialName)}}
+
+  {{!--tweet-list --}}
+  <div class="col-7 home-page">
+    <ul class="list-group home-list">
+      
+      {{> (lookupPartial partialName)}}
+      
+    </ul>
+  </div>
+
+  {{!-- recommend-followings --}}
+  {{> recommend-followings followingData = followingData }}
+
+</div>
