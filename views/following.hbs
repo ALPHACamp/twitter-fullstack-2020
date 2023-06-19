@@ -1,0 +1,77 @@
+<!--left bar-->
+<div class="container d-flex">
+<div id="left-nav" >
+    {{> nav}}
+    <!--</div>-->
+
+  <!--middle bar-->
+  <div class="col-7 user-profile" >
+    <div class="tweets-container"
+      style="width: 639px;height:1200px;border-right:1px solid #C4C4C4; border-left:1px solid #C4C4C4; ">
+      <!--head-->
+      <div class="card-header col-12 row m-0" style="height: 75px; background-color:#FFFFFF;">
+        <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
+          class="col-auto d-flex align-items-center">
+          <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
+        </a>
+        <a href="/users/{{user.id}}"
+          class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
+          style="text-decoration: none;">
+          <span class="h5"
+            style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{user.name}}</span>
+          <span style="color: #657786; font-size: 13px; line-height: 15px;">{{user.Tweets.length}}推文</span>
+        </a>
+      </div>
+      <!--profile nav-->
+      <div class="profile-head col-12">
+        <nav>
+          <div class="nav nav-tabs " id="nav-tab" role="tablist">
+            <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="/users/{{user.id}}/followers"
+              style="color: #657786; border: none; " role="tab" aria-controls="nav-home" aria-selected="true">追隨者 </a>
+            <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="/users/{{user.id}}/followings"
+              style="color: #ff6600; border: none;border-bottom: 1px solid #ff6600; " role="tab"
+              aria-controls="nav-profile" aria-selected="false">正在追隨</a>
+          </div>
+        </nav>
+      </div>
+
+      <!--follower-->
+      <div class="tweets-container">
+        {{#each follow}}
+        <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
+          <div class="avatar ps-3">
+            <a href="/users/{{this.following.id}}/tweets" style="text-decoration:none;">
+              <img
+                src="{{#if this.following.avatar}}{{this.following.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}"
+                class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+            </a>
+          </div>
+          <div class="tweet-content">
+            <div class="name-container d-flex justify-content-between pe-3" style="width: 555px;">
+              <div class="name">
+                <span style="font-size: 16px;font-weight:700;">{{this.following.name}}</span>
+              </div>
+
+              <div class="follow-btn" style="width: 96px;height: 40px">
+                <form action="/followships/{{this.followingId}}?_method=DELETE" method="POST">
+                  <button type="submit" class="btn"
+                    style="display: flex; justify-content: center; width: 100px; font-size: 16px; background: #FF6600;border-radius: 100px;color:#ffffff;">正在跟隨</button>
+                </form>
+              </div>
+
+            </div>
+            <div class="content mt-3 mb-3" style="min-height:15px;">
+              {{this.following.introduction}}
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+  <!--right bar-->
+  <div class="col-3 followship">
+    {{> followship}}
+  </div>
+</div>

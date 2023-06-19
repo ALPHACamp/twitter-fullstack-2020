@@ -1,0 +1,52 @@
+<div id="whole-container" class="container d-flex h-100">
+  <div id="left-nav" class="col-3">
+    {{> nav setting='setting'}}
+    {{!-- </div> --}}
+  <div id="mid-tweets" class="col-7">
+    <div id="mid-tweets-content" class="tweet container">
+
+      <div id="tweets-top">
+        <h4 id="home-word" class="pt-3 ps-3">帳戶設定</h4>
+      </div>
+
+      <div class="container-form-setting pt-3 ps-3 pe-3">
+        <form class="form-setting" action="/users/{{id}}/setting?_method=PUT" method="POST">
+          <div class="mb-3" id="form-input-line">
+            <label class="form-label" for="account">帳號</label>
+            <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號"
+              value="{{account}}" required autofocus>
+          </div>
+          <div class="mb-3" id="form-input-line">
+            <label class="form-label" for="name">名稱</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="請輸入暱稱" value="{{name}}"
+              required autofocus>
+            <span id="invalid-message"></span>
+          </div>
+          <div class="mb-3" id="form-input-line">
+            <label class="form-label" for="email">Email</label>
+            <input type="text" id="email" name="email" class="form-control" placeholder="請輸入Email"
+              value="{{email}}" required>
+          </div>
+          <div class="mb-3" id="form-input-line">
+            <label class="form-label" for="password">密碼</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="請設定密碼" required>
+          </div>
+          <div class="mb-3" id="form-input-line">
+            <label class="form-label" for="checkPassword">密碼確認</label>
+            <input type="password" id="checkPassword" name="checkPassword" class="form-control" placeholder="請再次輸入密碼"
+              required>
+            <span id="invalid-message"></span>
+          </div>
+          <div class="container-btn-setting">
+            <button class="btn btn-primary" id="btn-setting-submit" type="submit">儲存</button>
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</div>
+<script src="/javascripts/setting.js"></script>

@@ -1,0 +1,50 @@
+<div class="container d-flex ">
+  <div class="col-2">
+  </div>
+  {{!-- 首頁標題 --}}
+  <div class="col-7 tweets" style="width: 639px;">
+    <div class="tweets-container" style="width: 639px;height:1200px;;border:1px solid #E6ECF0; ">
+      <div style="border-bottom: 1px solid #E6ECF0;">
+        <h4 class="pt-3 ps-3"
+          style="display:flex; justify-content:start; align-iten:center; height: 75px;font-weight: 700;">首頁</h4>
+      </div>
+
+      <div class="mytweet d-flex flex-column ps-3 pb-3 pe-3" style="border-bottom: 8px solid #E6ECF0">
+        <div class="avatar d-flex mt-3">
+          <a href="/users/{{user.id}}/tweets" style="text-decoration:none;">
+            <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}"
+              class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+          </a>
+          <button type="button" class="btn"
+            style="padding-left: 0px; width: 526px; height: 36px;text-align:start; font-size: 18px;color:#6C757D"
+            data-bs-toggle="modal" data-bs-target="#tweetModal">
+            有什麼新鮮事?
+          </button>
+        </div>
+        <div class="button d-flex justify-content-end">
+          <button type="submit" class="btn tweet-button d-flex justify-content-center align-items-center"
+            data-bs-toggle="modal" data-bs-target="#tweetModal"
+            style="width: 64px; height: 40px; background: #FF6600;border-radius: 100px;white-space:nowrap;">
+            <span style=" font-size: 16px; color: #FFFFFF;">推文</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{!-- 推文串 --}}
+
+  {{!-- modal --}}
+   <button type="button" class="mt-4 mb-4 btn" data-bs-toggle="modal" data-bs-target="#replyModal{{this.id}}">
+    假回覆留言按鈕
+      <i class="far fa-comment"></i>&ensp;{{this.Replies.length}}{{!-- 這則貼文 --}}
+    </button>
+  
+  {{> reply-modal tweets=this user=../user}}
+</div>
+<button type="button" class="btn"
+  style="padding-left: 0px; width: 526px; height: 36px;text-align:start; font-size: 18px;color:#6C757D"
+  data-bs-toggle="modal" data-bs-target="#editModal">
+  編輯個人畫面
+</button>
+{{> post-modal}}
+{{> edit-modal}}
