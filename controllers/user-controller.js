@@ -45,7 +45,6 @@ const userController = {
       })
       .catch(err => {
         next(err)
-        res.redirect('/signup')
       })
   },
   getSignIn: (req, res) => {
