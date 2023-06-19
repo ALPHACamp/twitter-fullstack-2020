@@ -16,7 +16,7 @@
         <button class="tweet-click-block"
           onclick="event.stopPropagation(); event.preventDefault(); window.location.href='/users/{{this.user.id}}/tweets';">
           <div class="d-flex align-items-baseline mb-2">
-            <div class="user-name me-2">{{this.user.name}}</div>
+            <div class="user-name me-2 flex-shrink-0">{{this.user.name}}</div>
             <div class="user-account flex-shrink-0">@{{this.user.account}}・{{formatRelativeTime this.createdAt}}</div>
           </div>
         </button>
