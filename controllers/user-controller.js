@@ -9,17 +9,26 @@ const userController = {
   },
   signUp: (req, res, next) => {
     const { account, name, email, password, checkPassword } = req.body
-    if (!account || !name || !email || !password || !checkPassword) throw new Error('所有欄位都是必填!')
-    if (name.length > 50) throw new Error('暱稱不得超過50字')
-    if (req.body.password !== req.body.checkPassword) throw new Error('密碼不相符!')
+    if (!account.trim() || !name.trim() || !email.trim() || !password.trim() || !checkPassword.trim()) {
+      req.flash('error_messages', '所有欄位都是必填!')
+      return res.render('signup', { account, name, email, password, checkPassword })
+    }
+    if (name.length > 50) {
+      req.flash('error_messages', '暱稱不得超過50字!')
+      return res.render('signup', { account, name, email, password, checkPassword })
+    }
+    if (password !== checkPassword) {
+      req.flash('error_messages', '密碼不相符!')
+      return res.render('signup', { account, name, email, password, checkPassword })
+    }
 
     return Promise.all([
       User.findOne({ where: { account } }),
       User.findOne({ where: { email } })
     ])
-      .then(([account, email]) => {
-        if (account) throw new Error('account 已重複註冊！')
-        if (email) throw new Error('email 已重複註冊！')
+      .then(([filterAccount, filterEmail]) => {
+        if (filterAccount) throw new Error('account 已重複註冊！')
+        if (filterEmail) throw new Error('email 已重複註冊！')
 
         return bcrypt.hash(password, 10)
       })
@@ -63,7 +72,7 @@ const userController = {
     })
       .then(user => {
         if (!user) throw new Error('該使用者不存在')
-        return res.render('setting', { user: user })
+        return res.render('setting', { id: user.id, account: user.account, name: user.name, email: user.email })
       })
       .catch(err => next(err))
   },
@@ -74,9 +83,19 @@ const userController = {
     if (Number(userId) !== Number(req.params.id)) {
       res.redirect(`/users/${req.user.id}}/setting`)
     }
+    if (!account.trim() || !name.trim() || !email.trim() || !password.trim() || !checkPassword.trim()) {
+      req.flash('error_messages', '所有欄位都是必填!')
+      return res.render('setting', { id: req.user.id, account, name, email })
+    }
 
-    if (name.length > 50) throw new Error('暱稱不得超過50字')
-    if (password !== checkPassword) throw new Error('密碼不相符')
+    if (name.length > 50) {
+      req.flash('error_messages', '暱稱不得超過50字!')
+      return res.render('setting', { id: req.user.id, account, name, email })
+    }
+    if (password !== checkPassword) {
+      req.flash('error_messages', '密碼不相符!')
+      return res.render('setting', { id: req.user.id, account, name, email })
+    }
 
     return Promise.all([
       User.count({ where: { account } }),

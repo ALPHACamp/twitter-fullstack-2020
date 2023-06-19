@@ -1,18 +1,43 @@
 {{#if error_messages}}
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-  {{ error_messages }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="message-container row justify-content-center align-items-center">
+  <div class="message-text col-8">
+    {{error_messages}}
+  </div>
+  <div class="message-icon col-3">
+    <img class="img-err-msg-icon" src="/images/icons/err-msg.png" alt="error-msg">
+  </div>
+  <button class="btn-close-msg col-1">X</button>
 </div>
+
 {{/if}}
 {{#if success_messages}}
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-  {{ success_messages }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="message-container row justify-content-center align-items-center">
+  <div class="message-text col-8">
+    {{success_messages}}
+  </div>
+  <div class="message-icon col-3">
+    <img class="img-success-msg-icon" src="/images/icons/success-msg.png" alt="success-msg">
+  </div>
+  <button class="btn-close-msg col-1">X</button>
 </div>
 {{/if}}
 {{#if warning_msg}}
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-  {{ warning_msg }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="message-container row justify-content-center align-items-center">
+  <div class="message-text col-9">
+    {{warning_messages}}
+  </div>
+  <div class="message-icon col-3">
+    <img class="img-warn-msg-icon" src="/images/icons/warn-msg.png" alt="warn-msg">
+  </div>
+  <button class="btn-close-msg col-1">X</button>
 </div>
 {{/if}}
+
+<script>
+  const closeBtn = document.querySelector('.btn-close-msg')
+  const messageContainer = document.querySelector('.message-container')
+  closeBtn.addEventListener('click', () => {
+    messageContainer.style.display = 'none'
+  })
+
+</script>
