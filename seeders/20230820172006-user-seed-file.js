@@ -2,7 +2,9 @@
 
 /** @type {import('sequelize-cli').Migration} */
 const bcrypt = require('bcryptjs')
+
 const BCRYPT_SALT_ROUNDS = 10
+
 // 先hardcode之後在改成json
 const seeds = [
   {
