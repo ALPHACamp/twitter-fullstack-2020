@@ -5,14 +5,15 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
+const passport = require('./config/passport')
 const path = require('path')
 const session = require('express-session')
 const flash = require('connect-flash')
+const cookieParser = require('cookie-parser')
 
 // 自己的套件
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-const helpers = require('./helpers/_helpers') // 這個是AC提供的
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const { pages } = require('./routes')
 
@@ -35,12 +36,14 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(express.static(path.join(__dirname, 'public'))) // for css and 前端js
 
+app.use(cookieParser()) // 用來找到JWS cookie
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
 app.use(flash())
+app.use(passport.initialize())
 app.use((req, res, next) => {
   // 預留給需要放到res.local的message
   res.locals.error_messages = req.flash('error_messages')
