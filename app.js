@@ -6,6 +6,7 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const path = require('path')
+const session = require('express-session')
 const flash = require('connect-flash')
 
 // 自己的套件
@@ -14,6 +15,7 @@ const flash = require('connect-flash')
 const helpers = require('./helpers/_helpers') // 這個是AC提供的
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const { pages } = require('./routes')
+
 // 固定變數
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -33,9 +35,18 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(express.static(path.join(__dirname, 'public'))) // for css and 前端js
 
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}))
+app.use(flash())
 app.use((req, res, next) => {
   // 預留給需要放到res.local的message
+  res.locals.error_messages = req.flash('error_messages')
+  next()
 })
+
 app.use(pages)
 app.listen(PORT, () => console.log(`Simple Twitter app listening on port ${PORT}!`))
 
