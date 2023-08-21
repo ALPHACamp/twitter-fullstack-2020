@@ -3,13 +3,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express')
+const helpers = require('./_helpers')
 const exphbs = require('express-handlebars')
 const routes = require('./routes')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('./config/passport')
 const flash = require('connect-flash')
-const helpers = require('./helpers/auth-helpers')
+// const helpers = require('./helpers/auth-helpers')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 
 const app = express()
