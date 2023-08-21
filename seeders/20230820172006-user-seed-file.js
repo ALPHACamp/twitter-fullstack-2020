@@ -9,6 +9,7 @@ const BCRYPT_SALT_ROUNDS = 10
 const seeds = [
   {
     name: 'user1',
+    account: 'user1',
     email: 'user1@example.com',
     password: '12345678',
     avatar: 'https://loremflickr.com/300/300/girl/?lock=1',
@@ -17,6 +18,7 @@ const seeds = [
   },
   {
     name: 'root',
+    account: 'root',
     email: 'root@example.com',
     password: '12345678',
     avatar: 'https://loremflickr.com/300/300/girl/?lock=2',
