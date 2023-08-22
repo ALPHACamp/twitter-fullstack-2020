@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { Tweet, User, Followship } = require("../models");
-
+const { imgurFileHandler } = require('../helpers/file-helpers')
+const randomUsersHelper = require('../helpers/randomUsersHelper');
 const userController = {
   signupPage: (req, res) => {
     res.render('signup')
@@ -67,6 +68,94 @@ const userController = {
       console.log(err)
     }
   },
+  getUser: async (req, res, next) => {
+    try {
+      const userId = req.params.id;
+      const user = await User.findByPk(userId);
+
+      if (user) {
+        const userData = user.toJSON();
+        const tenRandomUsers = await randomUsersHelper.getTenRandomUsers(10); // 使用 helper 模块获取10个随机用户
+
+        const dataToRender = {
+          users: userData,
+          recommend: tenRandomUsers,
+        };
+
+        res.render('user/user-tweets', dataToRender);
+      } else {
+        res.status(404).send('未找到用户');
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("获取用户数据时出错。");
+    }
+  },
+  getFollower: async (req, res, next) => { // 跟隨者
+      try {
+        const userId = req.params.id;
+        const user = await User.findByPk(userId);
+
+        if (user) {
+          const userData = user.toJSON();
+          const tenRandomUsers = await randomUsersHelper.getTenRandomUsers(10); // 使用 helper 模块获取10个随机用户
+
+          const dataToRender = {
+            users: userData,
+            recommend: tenRandomUsers,
+          };
+
+          res.render('user/user-follower', dataToRender);
+        } else {
+          res.status(404).send('未找到用户');
+        }
+      } catch (err) {
+        console.error(err);
+        res.status(500).send("获取用户数据时出错。");
+      }
+    // return User.findByPk(req.params.id)
+    //   .then(user => {
+    //     return res.render('user/user-follower', {
+    //       users: user.toJSON()
+    //     })
+    //   })
+  },
+  getFollowing: async (req, res, next) => { // 跟隨中
+    try {
+      const userId = req.params.id;
+      const user = await User.findByPk(userId);
+
+      if (user) {
+        const userData = user.toJSON();
+        const tenRandomUsers = await randomUsersHelper.getTenRandomUsers(10); // 使用 helper 模块获取10个随机用户
+
+        const dataToRender = {
+          users: userData,
+          recommend: tenRandomUsers,
+        };
+
+        res.render('user/user-following', dataToRender);
+      } else {
+        res.status(404).send('未找到用户');
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("获取用户数据时出错。");
+    }
+  },
+  putUser: (req, res, next) => { //修改使用者名稱、自我介紹
+    const { name, introduction } = req.body
+    return User.findByPk(req.params.id)
+      .then(user => {
+        return user.update({
+          name,
+          introduction
+        })
+      })
+      .then(() => {
+        res.redirect(`/users/${req.params.id}/tweets`)
+      })
+  }
 };
 
 module.exports = userController;
