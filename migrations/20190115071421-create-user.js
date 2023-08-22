@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(50)
       },
       avatar: {
         type: Sequelize.STRING
@@ -24,6 +24,12 @@ module.exports = {
         type: Sequelize.TEXT
       },
       role: {
+        type: Sequelize.STRING
+      },
+      account: {
+        type: Sequelize.STRING
+      },
+      cover: {
         type: Sequelize.STRING
       },
       createdAt: {
