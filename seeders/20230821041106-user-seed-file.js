@@ -26,7 +26,7 @@ module.exports = {
 
     // 創建基本用戶
     for (let i = 1; i <= userCount; i++) {
-      const hashedPassword = await bcrypt.hash('user123', 10);
+      const hashedPassword = await bcrypt.hash('12345678', 10);
 
       const user = {
         name: `user${i}`,
