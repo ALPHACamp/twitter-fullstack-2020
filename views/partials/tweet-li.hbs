@@ -1,0 +1,129 @@
+<div
+  class="tweet mt-3 mb-3 d-flex justify-content-center"
+  style="border-bottom:1px solid #E6ECF0; min-height:153px"
+>
+  <div
+    class="avatar"
+    style="width:50px; height:50px; border-radius:50%; background-color:gray"
+  >
+    <img src="" alt="" />
+  </div>
+  <div class="content ms-2" style="max-width:528px">
+    <div class="account d-dlex flex-row mt-2">
+      <p style="display: inline; font-weight:700">Apple</p>
+      <p style="display: inline; color:#6C757D">@apple．3小時</p>
+    </div>
+    <div class="text mt-2">
+      <a href="/tweets/:id" style="text-decoration: none; color:#000000">
+        i wanna cry~~~~cry~~~~ cry~~~i wanna cry~~~~i wanna cry~~~~i wanna
+        cry~~~~i wanna cry~~~~i wanna cry~~~~</a>
+
+    </div>
+    <div
+      class="reaction d-flex justify-content-between mt-2"
+      style="width:120px"
+    >
+      <div class="replies d-flex">
+        <button
+          type="button"
+          class="btn p-0"
+          data-bs-toggle="modal"
+          data-bs-target="#replyModal"
+        >
+          <img src="/images/reply-icon.svg" alt="" />
+        </button>
+        <p class="m-0" style="color:#6C757D; font-weight:600">30</p>
+      </div>
+      <div class="likes d-flex">
+        <img src="/images/icon-like.svg" alt="" />
+        <p class="m-0" style="color:#6C757D; font-weight:600">50</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{! modal }}
+<div
+  class="modal fade"
+  id="replyModal"
+  tabindex="-1"
+  aria-labelledby="replyModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:600px">
+      <div class="modal-header">
+        <button
+          type="button"
+          style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <img src="/images/icon-close.svg" alt="" />
+        </button>
+      </div>
+      <div class="modal-body d-flex position-relative">
+        <div
+          class="avatar d-flex flex-column"
+          style="width:50px; height:50px; border-radius:50%; background-color:gray"
+        >
+          <img src="" alt="" />
+        </div>
+        <div class="content ms-2" style="max-width:510px">
+          <div class="account d-dlex flex-row mt-2">
+            <p style="display: inline; font-weight:700">Apple</p>
+            <p style="display: inline; color:#6C757D">@apple．3小時</p>
+          </div>
+          <div class="text mt-2">
+            i wanna cry~~~~cry~~~~ cry~~~i wanna cry~~~~i wanna cry~~~~i wanna
+            cry~~~~i wanna cry~~~~i wanna cry~~~~
+          </div>
+          <div class="toWhom m-3">
+            <p
+              style="display: inline; font-weight:600; color:#6C757D"
+            >回覆給</p><p
+              style="display: inline; font-weight:600; color:#FF6600"
+            > @apple</p>
+          </div>
+        </div>
+        <div
+          class="divider position-absolute"
+          style="height:76px; width:2px; background-color:#CCD6DD; left:40px; top:76px"
+        ></div>
+      </div>
+      <div
+        class="footer position-relative"
+        style="height:245px; padding-left:1rem"
+      >
+        <form action="/tweets/:id/reply" method="post" class="d-flex">
+          <div
+            class="avatar"
+            style="width:50px; height:50px; border-radius:50%; background-color:antiquewhite;"
+          >
+            <img src="" alt="" />
+          </div>
+          <input
+            type="text"
+            class="w-100"
+            style="border:none; outline: none; background: none; max-width:510px"
+            placeholder="推你的回覆"
+            name="text"
+            required
+          />
+          <div
+            class="position-absolute bottom-0 end-0 d-flex align-items-center"
+          >
+            <p
+              class="warning mb-0"
+              style="text-align:center"
+            >字數不可超過140個字</p>
+            <button
+              type="submit"
+              style="border: none; background: none; padding: 0; margin: 15px; cursor: pointer; background-color:#FF6600; width:64px; height:40px; border-radius:50px; color:white"
+            >回覆</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

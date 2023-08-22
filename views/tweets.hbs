@@ -1,6 +1,42 @@
 <main class="d-flex justify-content-center">
-{{> sidebar-left}}
-<section style="width:636px">main</section>
-{{> recommendation}}
-</main>
+  {{> sidebar-left}}
+  <section style="width:636px; border:1px solid #E6ECF0">
+    <div class="tweet">
+      <div class="main-name" style="border-bottom:1px solid #E6ECF0">
+        <h1 style="font-weight:700; font-size:24px; margin:1.5rem">首頁</h1>
+      </div>
+      <div class="tweet-text-container position-relative">
+        <form action="/tweets" method="post" class="d-flex align-items-start m-3" style="height:130px">
+          <div class="avatar flex-grow-1"
+            style="width:50px; height:50px; border-radius:50%; background-color:antiquewhite;">
+            <img src="" alt="" />
+          </div>
+          <input type="text" class="w-100" style="border:none; outline: none; background: none" placeholder="有什麼新鮮事?"
+            name="text" required />
+          <div class="position-absolute bottom-0 end-0 d-flex align-items-center">
+            <p class="warning mb-0" style="text-align:center">字數不可超過140個字</p>
+            <button type="submit"
+              style="border: none; background: none; padding: 0; margin: 15px; cursor: pointer; background-color:#FF6600; width:64px; height:40px; border-radius:50px; color:white">推文</button>
+          </div>
+        </form>
+      </div>
+      <div class="divider" style="height:10px; background-color:#E6ECF0"></div>
+      <div class="tweets-list">
+        <div class="li-container">
+          {{> tweet-li}}
+          {{> tweet-li}}
+          {{> tweet-li}}
+          {{> tweet-li}}
+          {{> tweet-li}}
+          {{> tweet-li}}
+          {{> tweet-li}}
+          {{> tweet-li}}
+          {{> tweet-li}}
+          {{> tweet-li}}
+        </div>
 
+      </div>
+    </div>
+  </section>
+  {{> recommendation}}
+</main>

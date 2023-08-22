@@ -1,7 +1,4 @@
-<section
-  class="container m-0 ps-0 position-relative"
-  style="max-width:180px; height:100vh; "
->
+<section class="container m-0 ps-0 me-3" style="max-width:180px; height:100vh; position:sticky; top:0 ">
   <div class="icon-wrapper">
     <img src="/images/logo.svg" alt="logo-SVG" />
   </div>
@@ -11,9 +8,9 @@
         <a href="/tweets">
           <div class="icon">
             {{#ifCond route "home"}}
-              <img src="/images/home-active.svg" alt="home-SVG" />
+            <img src="/images/home-active.svg" alt="home-SVG" />
             {{else}}
-              <img src="/images/home.svg" alt="home-SVG" />
+            <img src="/images/home.svg" alt="home-SVG" />
             {{/ifCond}}
           </div>
         </a>
@@ -22,9 +19,9 @@
         <a href="/users/self">
           <div class="icon">
             {{#ifCond route "profile"}}
-              <img src="/images/profile-active.svg" alt="home-SVG" />
+            <img src="/images/profile-active.svg" alt="home-SVG" />
             {{else}}
-              <img src="/images/profile.svg" alt="home-SVG" />
+            <img src="/images/profile.svg" alt="home-SVG" />
             {{/ifCond}}
           </div>
         </a>
@@ -32,19 +29,14 @@
       <li>
         <a href="/settings">
           {{#ifCond route "profile"}}
-            <img src="/images/setting.svg" alt="setting-SVG" />
+          <img src="/images/setting.svg" alt="setting-SVG" />
           {{else}}
-            <img src="/images/setting.svg" alt="setting-SVG" />
+          <img src="/images/setting.svg" alt="setting-SVG" />
           {{/ifCond}}
         </a>
       </li>
       <li>
-        <button
-          type="button"
-          class="btn p-0"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        >
+        <button type="button" class="btn p-0" data-bs-toggle="modal" data-bs-target="#tweetModal">
           <img src="/images/tweet-btn.svg" alt="tweet" />
         </button>
       </li>
@@ -55,58 +47,32 @@
       <img src="/images/logout.svg" alt="logout" />
     </a>
   </div>
+</section>
 
-  <!-- Modal -->
-  <div
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button
-            type="button"
-            style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          >
-            <img src="/images/icon_close.svg" alt="" />
-          </button>
-        </div>
-        <div class="modal-body position-relative" style="height:245px">
-          <form action="/tweets" method="post" class="d-flex">
-            <div
-              class="avatar"
-              style="width:50px; height:50px; border-radius:50%; background-color:antiquewhite;"
-            >
-              <img src="" alt="" />
-            </div>
-            <input
-              type="text"
-              class="w-100"
-              style="border:none; outline: none; background: none"
-              placeholder="有什麼新鮮事?"
-              name="text"
-            />
-            <div
-              class="position-absolute bottom-0 end-0 d-flex align-items-center"
-            >
-              <p
-                class="warning mb-0"
-                style="text-align:center"
-              >字數不可超過140個字</p>
-              <button
-                type="submit"
-                style="border: none; background: none; padding: 0; margin: 15px; cursor: pointer; background-color:#FF6600; width:64px; height:40px; border-radius:50px; color:white"
-              >推文</button>
-            </div>
-
-          </form>
-        </div>
+{{!-- modal --}}
+<div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
+  <div class="modal-dialog mx-auto" style="width:600px">
+    <div class="modal-content mx-auto" style="width:600px">
+      <div class="modal-header">
+        <button type="button" style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;"
+          data-bs-dismiss="modal" aria-label="Close">
+          <img src="/images/icon-close.svg" alt="" />
+        </button>
+      </div>
+      <div class="modal-body position-relative" style="height:245px">
+        <form action="/tweets" method="post" class="d-flex">
+          <div class="avatar" style="width:50px; height:50px; border-radius:50%; background-color:antiquewhite;">
+            <img src="" alt="" />
+          </div>
+          <input type="text" class="w-100" style="border:none; outline: none; background: none" placeholder="有什麼新鮮事?"
+            name="text" required />
+          <div class="position-absolute bottom-0 end-0 d-flex align-items-center">
+            <p class="warning mb-0" style="text-align:center">字數不可超過140個字</p>
+            <button type="submit"
+              style="border: none; background: none; padding: 0; margin: 15px; cursor: pointer; background-color:#FF6600; width:64px; height:40px; border-radius:50px; color:white">推文</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-</section>
+</div>
