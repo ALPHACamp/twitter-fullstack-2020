@@ -27,7 +27,7 @@ router.get('/users/:id/replies', replyController.getReplies)
 router.get('/users/:id/likes', likesController.getLikes)
 router.get('/users/:id/followers', userController.getFollower) 
 router.get('/users/:id/followings', userController.getFollowing) 
-router.put('/users/:id', userController.putUser)
+router.put('/users/:id', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]),userController.putUser)
 router.get('/settings', (req, res) => {
   res.render('settings')
 })
