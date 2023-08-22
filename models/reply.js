@@ -2,7 +2,6 @@
 const {
   Model
 } = require('sequelize')
-
 module.exports = (sequelize, DataTypes) => {
   class Reply extends Model {
     /**
