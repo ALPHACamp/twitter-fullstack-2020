@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 
 const passport = require('../config/passport')
 
-const errors = require('../errors/errors')
+const errors = require('../helpers/errors-helpers')
 
 // adminLocalAuth 與 userLocalAuth是提供給第一次login使用的
 const adminLocalAuth = (req, res, next) => {
