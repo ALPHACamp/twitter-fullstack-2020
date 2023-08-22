@@ -1,0 +1,52 @@
+<div class="signup-container mt-5">
+
+  {{!-- logo --}}
+  <div class="text-center">
+    <img id="signup-logo" src="/images/icons/logo.png" alt="logo">
+  </div>
+
+  {{!-- Title --}}
+  <div class="text-center">
+    <h3 id="signup-title">建立你的帳號</h3>
+  </div>
+
+  {{!-- Form --}}
+  <div class=" d-flex justify-content-center">
+    <form class="form-signup" action="/signup" method="POST">
+      {{!-- 帳號 --}}
+      <div class="mb-3" id="form-input-line">
+        <label class="form-label" for="account">帳號</label>
+        <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" required autofocus>
+      </div>
+      {{!-- 名稱 --}}
+      <div class="mb-3" id="form-input-line">
+        <label class="form-label" for="account">名稱</label>
+        <input type="text" id="name" name="name" class="form-control" placeholder="請輸入使用者名稱" required autofocus>
+      </div>
+      {{!-- Email --}}
+      <div class="mb-3" id="form-input-line">
+        <label class="form-label" for="email">Email</label>
+        <input type="text" id="email" name="email" class="form-control" placeholder="請輸入 Email" required>
+      </div>
+      {{!-- 密碼 --}}
+      <div class="mb-3" id="form-input-line">
+        <label class="form-label" for="password">密碼</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="請設定密碼" required>
+      </div>
+      {{!-- 密碼確認 --}}
+      <div class="mb-3" id="form-input-line">
+        <label class="form-label" for="passwordCheck">密碼確認</label>
+        <input type="password" id="passwordCheck" name="passwordCheck" class="form-control" placeholder="請再次輸入密碼"
+          required>
+      </div>
+      {{!-- 註冊 button --}}
+      <button class="btn btn-primary" id="btn-signup-submit" type="submit">註冊</button>
+    </form>
+  </div>
+
+  {{!-- 取消 Link --}}
+  <div class="text-center">
+    <a href="javascript:history.back()" class="btn btn-link">取消</a>
+  </div>
+
+</div>

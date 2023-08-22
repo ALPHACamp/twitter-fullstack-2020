@@ -1,0 +1,57 @@
+/* alpha logo icon */
+#signup-logo {
+  display: block;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+}
+
+#signup-title {
+  width: 168px;
+  height: 26px;
+  font: "Noto Sans TC";
+  font-weight: 700;
+  line-height: 26px;
+  font-size: 28px;
+  color: #1C1C1C;
+  margin: 29px auto;
+}
+
+/* form */
+#form-input-line {
+  width: 356px;
+  height: 78px;
+  background-color: #F5F8FA;
+}
+
+.form-control {
+  background-color: transparent;
+  border: none;
+  border-radius: 0px 0px 4px 4px;
+  border-bottom: 2px solid #657786;
+}
+
+.form-label {
+  margin-left: 10.55px;
+}
+
+/* button */
+#btn-signup-submit {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
+
+  width: 356px;
+  height: 46px;
+
+  background: #FF6600;
+  border: none;
+  border-radius: 50px;
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
