@@ -1,45 +1,46 @@
+<div
+  class="tweet mt-3 mb-3 d-flex justify-content-center"
+  style="border-bottom:1px solid #E6ECF0; min-height:153px"
+>
   <div
-    class="tweet mt-3 mb-3 d-flex justify-content-center"
-    style="border-bottom:1px solid #E6ECF0; min-height:153px"
+    class="avatar"
+    style="width:50px; height:50px; border-radius:50%; background-color:gray"
   >
-    <div
-      class="avatar"
-      style="width:50px; height:50px; border-radius:50%; background-color:gray"
-    >
-      <img src="" alt="" />
+    <img src="" alt="" />
+  </div>
+  <div class="content ms-2" style="max-width:528px">
+    <div class="account d-dlex flex-row mt-2">
+      <p style="display: inline; font-weight:700">Apple</p>
+      <p style="display: inline; color:#6C757D">@apple．3小時</p>
     </div>
-    <div class="content ms-2" style="max-width:528px">
-      <div class="account d-dlex flex-row mt-2">
-        <p style="display: inline; font-weight:700">Apple</p>
-        <p style="display: inline; color:#6C757D">@apple．3小時</p>
+    <div class="text mt-2">
+      <a href="/tweets/:id" style="text-decoration: none; color:#000000">
+        i wanna cry~~~~cry~~~~ cry~~~i wanna cry~~~~i wanna cry~~~~i wanna
+        cry~~~~i wanna cry~~~~i wanna cry~~~~</a>
+
+    </div>
+    <div
+      class="reaction d-flex justify-content-between mt-2"
+      style="width:120px"
+    >
+      <div class="replies d-flex">
+        <button
+          type="button"
+          class="btn p-0"
+          data-bs-toggle="modal"
+          data-bs-target="#replyModal"
+        >
+          <img src="/images/reply-icon.svg" alt="" />
+        </button>
+        <p class="m-0" style="color:#6C757D; font-weight:600">30</p>
       </div>
-      <div class="text mt-2">
-        <a href="/tweets/:id" style=" text-decoration: none; color:#000000"> i wanna cry~~~~cry~~~~ cry~~~i wanna cry~~~~i wanna cry~~~~i wanna
-        cry~~~~i wanna cry~~~~i wanna cry~~~~</a> 
-        {{!-- 先預設點擊文字會跳轉，而不是點框框會跳轉，這個需要求救一下 --}}
-      </div>
-      <div
-        class="reaction d-flex justify-content-between mt-2"
-        style="width:120px"
-      >
-        <div class="replies d-flex">
-          <button
-            type="button"
-            class="btn p-0"
-            data-bs-toggle="modal"
-            data-bs-target="#replyModal"
-          >
-            <img src="/images/reply-icon.svg" alt="" />
-          </button>
-          <p class="m-0" style="color:#6C757D; font-weight:600">30</p>
-        </div>
-        <div class="likes d-flex">
-          <img src="/images/icon-like.svg" alt="" />
-          <p class="m-0" style="color:#6C757D; font-weight:600">50</p>
-        </div>
+      <div class="likes d-flex">
+        <img src="/images/icon-like.svg" alt="" />
+        <p class="m-0" style="color:#6C757D; font-weight:600">50</p>
       </div>
     </div>
   </div>
+</div>
 
 {{! modal }}
 <div
@@ -126,4 +127,3 @@
     </div>
   </div>
 </div>
-
