@@ -1,12 +1,11 @@
-const express = require('express')
-const tweetsController = require('../controllers/tweets-controller')
-const router = express.Router()
+const express = require("express");
+const tweetsController = require("../controllers/tweets-controller");
+const userController = require("../controllers/user-controller");
+const router = express.Router();
 
+router.get("/tweets", tweetsController.getTweets);
+router.post("/tweets", tweetsController.postTweet);
 
-router.get('/tweets', (req, res) => {
-  res.render('tweets')
-})
+router.post("/users/:followingUserId/follow", userController.postFollow);
 
-router.post('/tweets', tweetsController.postTweet )
-
-module.exports = router
+module.exports = router;
