@@ -8,7 +8,7 @@
     "dev": "nodemon app.js",
     "test": "mocha test --exit --recursive --timeout 5000",
     "dbmigrate": "npx sequelize db:migrate && npx sequelize db:seed:all",
-    "dbundo": "npx sequelize npx sequelize db:seed:undo:all &&  db:migrate:undo:all "
+    "dbundo": "npx sequelize db:seed:undo:all &&  npx sequelize db:migrate:undo:all "
   },
   "author": "",
   "license": "ISC",
