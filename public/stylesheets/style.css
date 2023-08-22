@@ -1,0 +1,29 @@
+.nav-link {
+  color: #657786;
+  border: none;
+}
+
+.nav-link:hover,
+.nav-link.active{
+  color: #FF6600 !important;
+  border: none !important;
+  border-bottom: 1px solid #ff6600 !important;
+}
+
+.user-edit-button{
+  background: #FFFFFF;
+  color: #FF6600;
+  border-radius: 100px;
+  border: 1px solid #FF6600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.user-edit-button:hover{
+  background-color: #FF6600;
+  color: white;
+  border-radius: 100px;
+  border: 1px solid #FF6600;
+  font-size: 16px;
+  line-height: 24px;
+}

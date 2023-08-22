@@ -1,0 +1,13 @@
+<div class="container d-flex mx-0">
+  <!--left bar-->
+  <div class="col-3 nav">
+    {{> sidebar-left}}
+  </div>
+  <!--middle bar-->
+  <div class="col-7 user-profile" style="width: 639px;">
+    <div class="tweets-container">
+      {{>profile-card route='user-tweets'}}
+    </div>
+  </div>
+</div>
+{{> edit-modal}}

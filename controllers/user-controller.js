@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const { Tweet, User, Followship } = require("../models");
-
+const { imgurFileHandler } = require('../helpers/file-helpers')
 const userController = {
   signupPage: (req, res) => {
     res.render('signup')
@@ -67,6 +67,44 @@ const userController = {
       console.log(err)
     }
   },
+  // User tweet 頁面 
+  getUser: (req, res, next) => {
+    return User.findByPk(req.params.id)
+      .then(user => {
+        return res.render('user/user-tweets', {
+          users: user.toJSON()
+        })
+      })
+  },
+  getFollower: (req, res, next) => { // 跟隨者
+    return User.findByPk(req.params.id)
+      .then(user => {
+        return res.render('user/user-follower', {
+          users: user.toJSON()
+        })
+      })
+  },
+  getFollowing: (req, res, next) => { // 跟隨中
+    return User.findByPk(req.params.id)
+      .then(user => {
+        return res.render('user/user-following', {
+          users: user.toJSON()
+        })
+      })
+  },
+  putUser: (req, res, next) => { //修改使用者名稱、自我介紹
+    const { name, introduction } = req.body
+    return User.findByPk(req.params.id)
+      .then(user => {
+        return user.update({
+          name,
+          introduction
+        })
+      })
+      .then(() => {
+        res.redirect(`/users/${req.params.id}/tweets`)
+      })
+  }
 };
 
 module.exports = userController;

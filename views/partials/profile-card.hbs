@@ -1,0 +1,82 @@
+<!--head-->
+<div class="card-header col-12 row"
+  style="height: 75px;margin-left:1px; background-color:#FFFFFF; border-right:1px solid #C4C4C4;">
+  <a href="javascript:history.back()" style="color: #171725;; text-decoration: none;"
+    class="col-auto d-flex align-items-center ms-0 ps-0">
+    <i class="fas fa-arrow-left" style="width:17px; height:14px;"></i>
+  </a>
+  <a href="/users/{{users.id}}/tweets"
+    class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
+    style="text-decoration: none; ">
+    <span class="h5 my-0"
+      style="line-height: 26px; color: #171725;; font-size: 18px; font-weight: 700;">{{users.name}}</span>
+    <span
+      style="color: #6C757D; font-size: 13px; line-height: 19px;font-weight: 500;">{{user.Tweets.length}}推文</span>
+  </a>
+</div>
+
+<!--cover & avatar & Edit button-->
+<div class="card-body col-12 m-0 p-0 position-relative">
+  <div class="bg-holder" style="height: 280px;">
+    <img src="{{#if users.cover}}{{users.cover}}{{else}}https://i.imgur.com/ndXEE6d.jpg{{/if}}" class="card-img-top"
+      alt="..." class="img-fluid" id="bgImage" style="height:100%;width:100%;object-fit:cover">
+    <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}"
+      class="rounded-circle" alt="user_Aavtar" height="130px" width="130px"
+      style="border: 2px solid white; position: absolute; object-fit: cover; top: 55%; left: 3%;">
+  </div>
+  <div class="card-body col-12 d-flex justify-content-end">
+    <button type="submit" class="btn user-edit-button mt-2" data-bs-toggle="modal" data-bs-target="#editModal">編輯個人資料
+    </button>
+    {{!-- <div class="d-flex justify-content-center align-items-center me-3"
+      style="margin-top:8px; width:40px; height:40px;border-radius: 50px; border:1px solid #FF6600;">
+      <a href="mailto:someone@example.com"><i class="fa-regular fa-envelope fa-lg justify-content-center"
+          style="color: #FF6600;"></i>
+      </a>
+    </div>
+    <div class="d-flex justify-content-center align-items-center me-3"
+      style="margin-top:7px; width:40px; height:40px;border-radius: 50px; border:1px solid #FF6600;">
+      <i class="fa-regular fa-bell fa-lg justify-content-center align-items-center" style="color: #FF6600;"></i>
+    </div>
+    <div class="follow-btn d-flex justify-content-center align-items-center me-3 mt-1"
+      style="width:96px; height:40px; background: #FF6600; border-radius:50px;">
+      <form action="/followships/{{users.id}}?_method=DELETE" method="POST">
+        <button type="submit" class="btn" style="white-space: nowrap;color:#ffffff;font-size: 16px;">正在跟隨</button>
+      </form>
+    </div> --}}
+  </div>
+</div>
+
+<!--profile-->
+<div class="card-body col-12">
+  <div class="card-text ps-2">
+    <h4 style="font-weight: 900; line-height: 18px">{{users.name}}</h4>
+    <span class="text-muted" style="font-size: 0.93em; line-height: 18px;">{{users.account}}</span>
+    <p class="my-2" style="font-size: 0.96em; line-height: 25px">{{#if
+      users.introduction}}{{users.introduction}}{{else}}Lorem example text example text for AC simple twitter
+      project practice{{/if}}</p>
+    <a href="/users/{{users.id}}/followers" style="text-decoration:none;">
+      <span class="fw-bold text-dark">{{users.Followers.length}}</span><span
+        class="text-muted text-dark me-3">個跟隨中</span>
+    </a>
+    <a href="/users/{{users.id}}/followings" style="text-decoration:none;">
+      <span class="fw-bold text-dark">{{users.Followings.length}}</span><span class="text-muted">位跟隨者</span>
+    </a>
+  </div>
+</div>
+
+<!--profile nav-->
+<div class="profile-head col-12">
+  <nav>
+    <div class="nav nav-tabs " id="nav-tab" role="tablist">
+      <a class="nav-link {{#ifCond route 'user-tweets'}}active{{/ifCond}}" id="nav-home-tab" data-toggle="tab" href="/users/{{users.id}}/tweets"
+        role="tab" aria-controls="nav-home"
+        aria-selected="true">推文 </a>
+      <a class="nav-link {{#ifCond route 'user-replies'}}active{{/ifCond}}" id="nav-profile-tab" data-toggle="tab" href="/users/{{users.id}}/replies" role="tab" aria-controls="nav-profile" aria-selected="false">回覆</a>
+      <a class="nav-link {{#ifCond route 'user-likes'}}active{{/ifCond}}" id="nav-contact-tab" data-toggle="tab" href="/users/{{users.id}}/likes" role="tab" aria-controls="nav-contact" aria-selected="false">喜歡的內容</a>
+    </div>
+  </nav>
+</div>
+
+{{!-- style="color: #FF6600; border: none; border-bottom: 1px solid #ff6600;" --}}
+{{!-- style="color: #657786; border: none;" --}}
+{{!-- style="color: #657786; border: none;" --}}
