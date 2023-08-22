@@ -1,4 +1,4 @@
-const errors = require('../errors/errors')
+const errors = require('../helpers/errors-helpers')
 
 const errorHandler = (err, req, res, next) => {
   let errorMessage = ''

@@ -9,7 +9,7 @@ const { User } = require('../models')
 // 自己的變數
 const JwtStrategy = passportJWT.Strategy
 const jwtOption = {
-  jwtFromRequest: (req) => { // 從http中直接取出jwt cookie
+  jwtFromRequest: req => { // 從http中直接取出jwt cookie
     let token = null
     if (req && req.cookies) {
       token = req.cookies.jwtToken
