@@ -1,17 +1,11 @@
-<div class="container d-flex mx-0">
-  <!--left bar-->
-  <div class="col-3 nav">
-    {{> sidebar-left}}
-  </div>
-  <!--middle bar-->
-  <div class="col-7 user-profile" style="width: 639px;">
-    <div class="tweets-container">
-      {{>profile-card route='user-replies'}}
-    </div>
-  </div>
-    <!--right bar-->
-    <div class="col-2 followship mx-0" style="width: 273px; height:100%px;">
-      {{> recommendation}}
-    </div>
-</div>
+<main class="d-flex justify-content-center">
+  {{> sidebar-left}}
+  <section style="width:636px; border:1px solid #E6ECF0">
+    {{>profile-card route='user-replies'}}
+    <div class="replies-list">
+      <div class="li-container">
+      </div>
+  </section>
+  {{> recommendation}}
+</main>
 {{> edit-modal}}
