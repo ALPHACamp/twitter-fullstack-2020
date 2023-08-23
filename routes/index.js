@@ -6,10 +6,12 @@ const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
 const replyController = require('../controllers/reply-controller')
 
+// test
+router.get('/tweets', tweetController.getTweets)
+
 router.use('/admin', admin)
 
 router.get('/', (req, res) => res.send('Hello World!'))
-// add routes here
 
 router.use('/', (req, res) => res.redirect('/tweets'))
 
