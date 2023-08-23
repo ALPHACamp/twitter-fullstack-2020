@@ -39,6 +39,8 @@ app.use((req, res, next) => {
     next()
   })
 
+app.use(express.urlencoded({ extended: true }))
+
 // 使用路由器
 app.use(routes)
 
