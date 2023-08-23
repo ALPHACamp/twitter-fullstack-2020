@@ -7,7 +7,7 @@ const BCRYPT_SALT_ROUNDS = 10
 const USER_AMOUNT = 10
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up (queryInterface, Sequelize) {
     const salt = bcrypt.genSaltSync(BCRYPT_SALT_ROUNDS)
 
     await queryInterface.bulkInsert('Users',
@@ -41,7 +41,7 @@ module.exports = {
     )
   },
 
-  async down(queryInterface, Sequelize) {
+  async down (queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Users', null, {})
   }
 }
