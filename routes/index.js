@@ -4,8 +4,10 @@ const router = express.Router()
 const userController = require('../controllers/user-controller')
 
 // 引入Modules
+const tweetController = require('../controllers/tweet-controller')
 const admin = require('./modules/admin')
 // 使用Modules
+router.get('/', tweetController.getTweets)
 router.use('/admin', admin)
 
 // 路由: GET 註冊頁
