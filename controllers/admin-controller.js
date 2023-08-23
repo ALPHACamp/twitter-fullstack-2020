@@ -26,6 +26,18 @@ const adminController = {
         res.render('admin/tweets', { tweets: data })
       })
   },
+  deleteTweet: (req, res) => {
+    const { tweetId } = req.params
+    Tweet.findByPk(tweetId)
+      .then(tweet => {
+        if (!tweet) {
+          console.log('tweet不存在')
+          res.redirect('back')
+        }
+        return tweet.destroy()
+      })
+      .then(() => res.redirect('/admin/tweets'))
+  },
   getUsers: (req, res) => {
     User.findAll({
       include: [
@@ -35,21 +47,20 @@ const adminController = {
       ],
       order: [
         [sequelize.literal('(SELECT COUNT(*) FROM Tweets WHERE Tweets.UserId = User.id)'), 'DESC']
-      ]
+      ],
+      where: { role: 'user' }
     })
       .then(users => {
         const data = users.map(user => {
           const newUser = user.toJSON()
-          newUser.likeCount = 0
-          newUser.likeCount += newUser.Tweets.map(tweet => {
-            return Number(tweet.Likes.length)
-          })
+          newUser.likeCount = newUser.Tweets.reduce((totalLikes, tweet) => {
+            return totalLikes + tweet.Likes.length;
+          }, 0)
           newUser.tweetCount = newUser.Tweets.length
           newUser.followingCount = newUser.Followings.length
           newUser.followerCount = newUser.Followers.length
           return newUser
         })
-        console.log(data[0])
         res.render('admin/users', { users: data })
       })
   }
