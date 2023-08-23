@@ -24,7 +24,30 @@ router.post(
   userController.sigin
 );
 router.get("/logout", userController.logout);
-
+router.get("/tweets", authenticated, tweetsController.getTweets);
+router.post("/tweets", authenticated, tweetsController.postTweet);
+router.get("/tweets/:tweetId", authenticated, tweetsController.getTweet);
+router.post(
+  "/users/:followingUserId/follow",
+  authenticated,
+  userController.postFollow
+);
+router.delete(
+  "/users/:followingUserId/follow",
+  authenticated,
+  userController.deleteFollow
+);
+router.post("/tweets/:tweetId/like", authenticated, tweetsController.addLike);
+router.delete(
+  "/tweets/:tweetId/like",
+  authenticated,
+  tweetsController.deleteLike
+);
+router.post(
+  "/tweets/:tweetId/reply",
+  authenticated,
+  tweetsController.postReply
+);
 router.get("/tweets", authenticated, tweetsController.getTweets);
 router.post("/tweets", authenticated, tweetsController.postTweet);
 router.post("/users/:followingUserId/follow", userController.postFollow);

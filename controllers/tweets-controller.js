@@ -7,7 +7,7 @@ const tweetsController = {
       const recommend = await getEightRandomUsers(req);
       const currentUserId = req.user.id;
       const tweets = await Tweet.findAll({
-        include: [User, Reply, {model:User, as:'LikedUsers'}],
+        include: [User, Reply, { model: User, as: "LikedUsers" }],
         order: [["updatedAt", "DESC"]],
         limit: 15,
       });
@@ -51,19 +51,19 @@ const tweetsController = {
       include: [
         User,
         { model: Reply, include: User },
-        { model: User, as:'LikedUsers'}
+        { model: User, as: "LikedUsers" },
       ],
     });
     const repliesAmount = tweet.Replies.length;
     const likesAmount = tweet.LikedUsers.length;
-    const isLiked = tweet.LikedUsers.some(l => l.id === req.user.id)
+    const isLiked = tweet.LikedUsers.some((l) => l.id === req.user.id);
 
     res.render("tweet", {
       tweet: tweet.toJSON(),
       repliesAmount,
       likesAmount,
       recommend,
-      isLiked
+      isLiked,
     });
   },
   addLike: async (req, res, next) => {
