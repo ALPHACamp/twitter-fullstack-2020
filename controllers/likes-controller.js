@@ -1,7 +1,9 @@
 const { User } = require('../models')
 const randomUsersHelper = require('../helpers/randomUsersHelper');
+const helpers = require('../_helpers')
 const likeController = {
   getLikes: async (req, res, next) => {
+    const isUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
     try {
       const userId = req.params.id;
       const user = await User.findByPk(userId);
@@ -11,8 +13,9 @@ const likeController = {
         const tenRandomUsers = await randomUsersHelper.getTenRandomUsers(10); 
 
         const dataToRender = {
-          users: userData,
+          user: userData,
           recommend: tenRandomUsers,
+          isUser
         };
 
         res.render('user/user-likes', dataToRender);
