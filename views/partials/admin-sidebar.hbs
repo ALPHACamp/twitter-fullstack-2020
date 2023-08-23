@@ -1,0 +1,36 @@
+<section class="container m-0 ps-0 me-3" style="max-width:180px; height:100vh; position:sticky; top:0 ">
+  <div class="icon-wrapper">
+    <img src="/images/logo.svg" alt="logo-SVG" />
+  </div>
+  <div class="menu">
+    <ul class="ps-0" style="list-style-type: none">
+      <li class="ps-0">
+        <a href="/admin/tweets">
+          <div class="icon">
+            {{#ifCond route "tweets"}}
+            <img src="/images/admin/tweets-active.svg" alt="home-SVG" />
+            {{else}}
+            <img src="/images/admin/tweets.svg" alt="home-SVG" />
+            {{/ifCond}}
+          </div>
+        </a>
+      </li>
+      <li class="ps-0">
+        <a href="/admin/users">
+          <div class="icon">
+            {{#ifCond route "users"}}
+            <img src="/images/admin/users-active.svg" alt="home-SVG" />
+            {{else}}
+            <img src="/images/admin/users.svg" alt="home-SVG" />
+            {{/ifCond}}
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="logout-btn position-absolute bottom-0 start-0">
+    <a href="/logout">
+      <img src="/images/logout.svg" alt="logout" />
+    </a>
+  </div>
+</section>

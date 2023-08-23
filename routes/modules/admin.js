@@ -10,6 +10,8 @@ router.get('/signin', adminController.signinPage)
 // router.post('/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signin)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/admin/signin' }), adminController.signin)
 
-router.get('/tweets', authenticatedAdmin, (req, res) => res.send('building'))
+router.get('/tweets', authenticatedAdmin, adminController.getTweets)
+
+router.get('/users', authenticatedAdmin, adminController.getUsers)
 
 module.exports = router

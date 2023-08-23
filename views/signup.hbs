@@ -1,35 +1,88 @@
-<div class="w-25" style="margin: 0 auto;">
-  <div class="d-flex justify-content-center">
+<style>
+  label {
+    color: #696974;
+  }
+
+  input {
+    border: none;
+    border-bottom: solid 2px #657786;
+  }
+
+  p {
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #FC5A5A;
+    height: 20px;
+  }
+
+  button {
+    margin: 8px 0;
+    height: 46px;
+    border: none;
+    background: #FF6600;
+    color: #FFFFFF;
+  }
+
+  input:focus {
+    outline: none;
+    border-bottom: solid 2px #50B5FF;
+  }
+
+  input:hover {
+    border-bottom: solid 2px #50B5FF;
+  }
+
+  label,
+  input {
+    padding: 0 16px;
+    background: #F5F8FA;
+  }
+
+  input::placeholder {
+    color: #B5B5BE;
+  }
+</style>
+
+<div class="w-25" style="margin: 64px auto;min-width: 356px;">
+  <div class="d-flex justify-content-center" style="margin-bottom: 24px;">
     <img src="/images/logo.svg" alt="">
   </div>
-  <h3 class="d-flex justify-content-center fw-bold">
+  <h3 class="d-flex justify-content-center fw-bold" style="margin-bottom: 40px;">
     建立你的帳號
   </h3>
   <div class="">
     <form action="/signup" method="post">
-      <div class="d-flex flex-column">
+      <div class="d-flex flex-column" style=" height: 78px;">
         <label for="account">帳號</label>
-        <input type="text" placeholder="請輸入帳號" name="account" id="account" required>
+        <input {{#if accountMsg}}style="border-bottom: solid 2px #FC5A5A;" {{/if}} type="text" placeholder="請輸入帳號"
+          name="account" id="account" required>
+        <p>{{accountMsg}}</p>
       </div>
-      <div class="d-flex flex-column">
+      <div class="d-flex flex-column" style=" height: 78px;">
         <label for="name">名稱</label>
         <input type="text" placeholder="請輸入使用者名稱" name="name" id="name" maxlength="50" required>
       </div>
-      <div class="d-flex flex-column">
+      <div class="d-flex flex-column" style=" height: 78px;">
         <label for="email">Email</label>
-        <input type="email" placeholder="請輸入使用者名稱" name="email" id="email" required>
+        <input {{#if mailMsg}}style="border-bottom: solid 2px #FC5A5A;" {{/if}} type="email" placeholder="請輸入使用者名稱"
+          name="email" id="email" required>
+        <p>{{mailMsg}}</p>
       </div>
-      <div class="d-flex flex-column">
+      <div class="d-flex flex-column" style=" height: 78px;">
         <label for="password">密碼</label>
-        <input type="password" placeholder="請輸入密碼" name="password" id="password" required>
+        <input {{#if passwordMsg}}style="border-bottom: solid 2px #FC5A5A;" {{/if}} type="password" placeholder="請輸入密碼"
+          name="password" id="password" required>
+        <p>{{passwordMsg}}</p>
       </div>
-      <div class="d-flex flex-column">
-        <label for="passwordCheck">密碼確認</label>
-        <input type="password" placeholder="請再次輸入密碼" name="passwordCheck" id="passwordCheck" required>
+      <div class="d-flex flex-column" style=" height: 78px;">
+        <label for="checkPassword">密碼確認</label>
+        <input {{#if passwordMsg}}style="border-bottom: solid 2px #FC5A5A;" {{/if}} type="password"
+          placeholder="請再次輸入密碼" name="checkPassword" id="checkPassword" required>
+        <p>{{passwordMsg}}</p>
       </div>
       <div class="d-flex justify-content-center">
-        <button class="w-100 rounded-pill" type="submit"
-          style="height: 46px; border: none; background:#FF6600;color:#FFFFFF;">註冊</button>
+        <button class="w-100 rounded-pill" type="submit">註冊</button>
       </div>
     </form>
     <div>
