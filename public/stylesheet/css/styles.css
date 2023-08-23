@@ -1,5 +1,10 @@
-/* alpha logo icon */
-#signup-logo {
+html,
+body {
+  font-family: 'Noto Sans TC';
+}
+
+/* ac-logo */
+#ac-logo {
   display: block;
   width: 50px;
   height: 50px;
@@ -9,7 +14,16 @@
 #signup-title {
   width: 168px;
   height: 26px;
-  font: "Noto Sans TC";
+  font-weight: 700;
+  line-height: 26px;
+  font-size: 28px;
+  color: #1C1C1C;
+  margin: 29px auto;
+}
+
+#signin-title {
+  width: 185px;
+  height: 26px;
   font-weight: 700;
   line-height: 26px;
   font-size: 28px;
@@ -29,6 +43,13 @@
   border: none;
   border-radius: 0px 0px 4px 4px;
   border-bottom: 2px solid #657786;
+}
+
+.form-control:hover {
+  background-color: transparent;
+  border: none;
+  border-radius: 0px 0px 4px 4px;
+  border-bottom: 2px solid #50B5FF;
 }
 
 .form-label {
@@ -55,3 +76,22 @@
   align-self: stretch;
   flex-grow: 0;
 }
+
+#btn-signin-submit {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 24px;
+
+    width: 356px;
+    height: 46px;
+
+    background: #FF6600;
+    border: none;
+    border-radius: 50px;
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+  }
