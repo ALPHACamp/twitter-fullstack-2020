@@ -6,14 +6,13 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate (models) {
       User.hasMany(models.Reply, { foreignKey: 'UserId' })
+      User.hasMany(models.Like, { foreignKey: 'UserId', as: 'LikedTweets' })
       User.hasMany(models.Tweet, { foreignKey: 'UserId' })
-      User.hasMany(models.Like, { foreignKey: 'UserId' })
       User.belongsToMany(User, {
         through: models.Followship,
         foreignKey: 'followingId',
         as: 'Followers'
       })
-
       User.belongsToMany(User, {
         through: models.Followship,
         foreignKey: 'followerId',
@@ -22,13 +21,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
-    account: DataTypes.STRING,
-    name: DataTypes.STRING,
+    account: DataTypes.STRING(50),
+    name: DataTypes.STRING(50),
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     avatar: DataTypes.STRING,
     cover: DataTypes.STRING,
-    introduction: DataTypes.TEXT,
+    introduction: DataTypes.TEXT(160),
     role: DataTypes.STRING
   }, {
     sequelize,

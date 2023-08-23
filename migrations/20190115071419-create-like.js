@@ -14,11 +14,16 @@ module.exports = {
       Tweet_id: {
         type: Sequelize.INTEGER
       },
-      created_at: {
+      is_like: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
+        allowNull: false
+      },
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updated_at: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       }
