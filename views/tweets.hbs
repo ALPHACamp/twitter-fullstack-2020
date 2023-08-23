@@ -1,0 +1,78 @@
+<main class="container">
+
+  <div class="row">
+    {{!-- 側邊欄 --}}
+    {{>sidebar}}
+
+    <div class="col-6" style="max-width: 639px;">
+      {{!-- 中間column --}}
+      <nav class="navbar navbar-light border-start border-end">
+        <div class="container-fluid">
+          <h4 class="navbar-brand mb-0 h1 fs-4">首頁</h4>
+        </div>
+      </nav>
+      <div class="border" style="height: 130px;" data-bs-toggle="modal" data-bs-target="#postTweet">
+        <div class="d-flex pt-3 ps-3">
+          <img src="https://i.imgur.com/vmlBmQJ.png" title="source: imgur.com" style="width: 50px;height: 50px;" />
+          <p class="m-3" style="color: #6C757D;">有什麼新鮮事？</p>
+        </div>
+        <div class="d-flex flex-row-reverse">
+          <button class="btn btn-default mb-3 mx-3"
+            style="background-color: #FF6600;border-radius: 23px; color: white;">推文</button>
+        </div>
+      </div>
+      {{!-- 推文串 --}}
+      {{!-- each twitters 迴圈開始 --}}
+      <div class="border-start border-end border-bottom d-flex align-items-end flex-column pt-2"
+        style="min-height: 130px;">
+        <div class="align-self-start">
+          <img src="https://i.imgur.com/hpSLhnx.png" title="source: imgur.com" style="width: 50px;height: 50px;"
+            class="ms-4">
+          <div class="d-inline-flex pt-3">
+            <h5 class="mx-2" style="color: #171725;">Apple</h5>
+            <span style="color: #6C757D;">@apple · 3小時</span>
+          </div>
+        </div>
+        <div class="pe-2" style="max-width: 528px">
+          <p class="ms-auto">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.
+            Voluptate exercitation incididunt
+            aliquip deserunt reprehenderit elit laborum.
+          </p>
+          <div class="d-flex align-items-baseline">
+            <img src="https://i.imgur.com/AXqSL48.png" title="source: imgur.com" style="width: 16px;height: 16px;"
+              class="me-1">
+            <p class="me-5">3</p>
+            <img src="https://i.imgur.com/gdUkdVf.png" title="source: imgur.com" style="width: 16px;height: 16px;"
+              class="me-1">
+            <p>16</p>
+          </div>
+        </div>
+      </div>
+      {{!-- each迴圈結束 --}}
+    </div>
+
+    {{!-- 推薦跟隨 --}}
+    
+    <div class="col-3 mt-4">
+      <div class="d-flex flex-column" style="background-color: #FAFAFB; border-radius: 16px">
+        <div class="px-4 py-3 border-bottom">
+          <h4 style="color: #171725; font-weight: 500;">推薦跟隨</h4>
+        </div>
+        {{!-- each topUser --}}
+        <div class="d-flex mx-auto my-3">
+          <img src="https://i.imgur.com/hpSLhnx.png" style="width: 50px;" class="me-3">
+          <div class="d-flex flex-column me-2">
+            <span class="fs-6" style="color: #171725; font-weight: 700;">Pizza Hut</span>
+            <span style="color: #92929D;">@pizzahut</span>
+          </div>
+          <button class="btn btn-default"
+            style="background-color: #FF6600;border-radius: 23px; color: white; width: 96px; height: 40px;">正在跟隨</button>
+        </div>
+        {{!-- /each --}}
+      </div>
+    </div>
+    
+  </div>
+</main>
+
+{{>post-modal}}
