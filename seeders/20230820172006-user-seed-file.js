@@ -4,44 +4,44 @@
 const bcrypt = require('bcryptjs')
 
 const BCRYPT_SALT_ROUNDS = 10
+const USER_AMOUNT = 10
 
-// 先hardcode之後在改成json
-const seeds = [
-  {
-    name: 'user1',
-    account: 'user1',
-    email: 'user1@example.com',
-    password: '12345678',
-    avatar: 'https://loremflickr.com/300/300/girl/?lock=1',
-    introduction: 'Hello, I am user1',
-    role: 'user'
-  },
-  {
-    name: 'root',
-    account: 'root',
-    email: 'root@example.com',
-    password: '12345678',
-    avatar: 'https://loremflickr.com/300/300/girl/?lock=2',
-    introduction: 'Hello, I am root',
-    role: 'admin'
-  }
-]
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     const salt = bcrypt.genSaltSync(BCRYPT_SALT_ROUNDS)
 
-    const userSeeds = seeds.map(seed => {
-      // 把seed的password hash過一次
-      seed.password = bcrypt.hashSync(seed.password, salt)
-      seed.created_at = new Date()
-      seed.updated_at = new Date()
-      return seed
-    })
-
-    await queryInterface.bulkInsert('Users', userSeeds, {})
+    await queryInterface.bulkInsert('Users',
+      Array.from({ length: USER_AMOUNT }, (_, index) => {
+        if (index === 0) {
+          return {
+            name: 'root',
+            account: 'root',
+            email: 'root@example.com',
+            password: bcrypt.hashSync('12345678', salt),
+            avatar: `https://loremflickr.com/300/300/girl/?lock=${index + 1}`,
+            introduction: 'Hello, I am root',
+            role: 'admin',
+            created_at: new Date(),
+            updated_at: new Date()
+          }
+        } else {
+          return {
+            name: `user${index}`,
+            account: `user${index}`,
+            email: `user${index}@example.com`,
+            password: bcrypt.hashSync('12345678', salt),
+            avatar: `https://loremflickr.com/300/300/girl/?lock=${index + 1}`,
+            introduction: `Hello, I am user${index}`,
+            role: 'user',
+            created_at: new Date(),
+            updated_at: new Date()
+          }
+        }
+      })
+    )
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Users', null, {})
   }
 }
