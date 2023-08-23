@@ -1,6 +1,6 @@
 const passport = require('passport')
-const LocalStrategy = require('passport-local')
-const bcrypt = require('bcrypt-nodejs')
+const LocalStrategy = require('passport-local').Strategy
+const bcrypt = require('bcryptjs')
 const { User } = require('../models')
 
 passport.use(new LocalStrategy(
@@ -9,17 +9,20 @@ passport.use(new LocalStrategy(
     passwordField: 'password',
     passReqToCallback: true
   },
-  (req, account, password, cb) => {
-    User.findOne({ where: { account } })
-      .then(user => {
-        if (!user) return cb(null, false, req.flash('error_messages', '此帳號不存在！'))
-        bcrypt.compare(password, user.password).then(res => {
-          if (!res) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
-          return cb(null, user)
-        })
-      })
-  }
-))
+  async (req, account, password, cb) => {
+    try {
+      const user = await User.findOne({ where: { account } })
+      if (!user) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤!'))
+      if (user.role !== 'user') return cb(null, false, req.flash('error_messages', '此帳號不存在!'))
+
+      const passwordCompare = await bcrypt.compare(password, user.password)
+      if (!passwordCompare) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤!'))
+      return cb(null, user)
+    } catch (err) {
+      return cb(err)
+    }
+  })
+)
 
 passport.serializeUser((user, cb) => {
   cb(null, user.id)

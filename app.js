@@ -16,18 +16,30 @@ const app = express()
 const port = process.env.PORT || 3000
 const SESSION_SECRET = 'secret'
 
+// handlebars
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 
-app.use(express.static('public'))
+// Body-parser
 app.use(express.urlencoded({ extended: true }))
+
+app.use(express.static('public'))
+
+// session
 app.use(session({
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }))
+
+// passport
 app.use(passport.initialize())
 app.use(passport.session())
+
+// method-override
+app.use(methodOverride('_method'))
+
+// flash
 app.use(flash())
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
@@ -35,10 +47,6 @@ app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)
   next()
 })
-app.use(methodOverride('_method'))
-
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 app.use(routes)
 
