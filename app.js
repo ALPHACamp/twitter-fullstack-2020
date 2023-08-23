@@ -21,7 +21,9 @@ app.set('view engine', 'hbs')
 
 // 使用路由器
 app.use(routes)
-
+const { User } = require('./models')
+User.findByPk(10)
+.then(user => console.log(user))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 module.exports = app
