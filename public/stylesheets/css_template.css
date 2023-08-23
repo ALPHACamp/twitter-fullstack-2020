@@ -1,0 +1,27 @@
+/*Position class*/
+.img-center {
+    display: block;
+    margin: auto;
+}
+
+/*color*/
+.filter-main-color{ /*for svg icon*/
+    filter: invert(48%) sepia(53%) saturate(5638%) hue-rotate(4deg) brightness(107%) contrast(102%);
+}
+.main-color{
+    color: #FF6600;
+}
+
+/*Tweet-Component*/
+.tweet-user-horizontal{
+    height: 26px;
+}
+
+.tweet-user-icon{
+    height: 50px;
+    width: 50px;
+}
+
+.tweet-user-action{
+    width:120px;
+}
