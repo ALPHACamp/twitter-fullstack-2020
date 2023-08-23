@@ -11,11 +11,11 @@ const replyController = {
 
       if (user) {
         const userData = user.toJSON();
-        const tenRandomUsers = await randomUsersHelper.getTenRandomUsers(10); // 使用 helper 模块获取10个随机用户
+        const eightRandomUsers = await randomUsersHelper.getEightRandomUsers(req);
 
         const dataToRender = {
           user: userData,
-          recommend: tenRandomUsers,
+          recommend: eightRandomUsers,
           isUser
         };
 

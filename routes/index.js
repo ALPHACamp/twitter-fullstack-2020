@@ -68,8 +68,7 @@ router.put(
 );
 router.get("/settings", authenticated, userController.getSetting); // 個人資料設定
 router.put("/settings", authenticated, userController.putSetting); // 個人資料編輯
-
-router.use("/", (req, res) => res.redirect("/tweets"));
+router.use('/', (req, res) => res.redirect('/tweets'));
 router.use("/", generalErrorHandler);
 
 module.exports = router;

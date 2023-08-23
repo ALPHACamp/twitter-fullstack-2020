@@ -95,11 +95,11 @@ const userController = {
 
       if (user) {
         const userData = user.toJSON();
-        const tenRandomUsers = await randomUsersHelper.getTenRandomUsers(10); // 使用 helper 模块获取10个随机用户
+        const eightRandomUsers = await randomUsersHelper.getEightRandomUsers(req); 
 
         const dataToRender = {
           user: userData,
-          recommend: tenRandomUsers,
+          recommend: eightRandomUsers,
           isUser,
         };
 
@@ -112,19 +112,14 @@ const userController = {
       res.status(500).send("获取用户数据时出错。");
     }
   },
-  putUser: (req, res, next) => {
-    //修改使用者名稱、自我介紹
-    const { name, introduction } = req.body;
-    const avatar = req.files ? req.files.avatar : null;
-    const background = req.files ? req.files.background : null;
-    User.findByPk(req.params.id)
-      .then(async (user) => {
-        const avatarFilePath = avatar
-          ? await imgurFileHandler(avatar[0])
-          : user.avatar;
-        const backgroundFilePath = background
-          ? await imgurFileHandler(background[0])
-          : user.background;
+  putUser: (req, res, next) => { //修改使用者名稱、自我介紹
+    const { name, introduction } = req.body
+    const avatar = req.files ? req.files.avatar : null
+    const background = req.files ? req.files.background : null
+    User.findByPk(helpers.getUser(req).id)
+      .then(async user => {
+        const avatarFilePath = avatar ? await imgurFileHandler(avatar[0]) : user.avatar
+        const backgroundFilePath = background ? await imgurFileHandler(background[0]) : user.background
         console.log("Avatar File Path:", avatarFilePath);
         console.log("Background File Path:", backgroundFilePath);
         return user.update({
@@ -135,7 +130,7 @@ const userController = {
         });
       })
       .then(() => {
-        res.redirect(`/users/${req.params.id}/tweets`);
+        res.redirect(`/users/${helpers.getUser(req).id}/tweets`)
       })
       .catch((err) => next(err));
   },

@@ -10,11 +10,11 @@ const likeController = {
 
       if (user) {
         const userData = user.toJSON();
-        const tenRandomUsers = await randomUsersHelper.getTenRandomUsers(10); 
+        const eightRandomUsers = await randomUsersHelper.getEightRandomUsers(req);
 
         const dataToRender = {
           user: userData,
-          recommend: tenRandomUsers,
+          recommend: eightRandomUsers,
           isUser
         };
 
