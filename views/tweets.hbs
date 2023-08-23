@@ -1,1 +1,103 @@
-<div>tweets</div>
+<div class="row">
+  <div class="col-2" style="padding:0 0 0 20px;">
+    <div class=" container" style="padding: 0;">
+      <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <img
+            src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR3WNnCALDPSam9ghySfPzaNm1GX0ek5obw2AAB6ngoJNlT4lIy"
+            width="40" height="40" href="#" alt="logo">
+        </div>
+      </nav>
+
+      <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#" style="color: rgb(255, 106, 0);font-size:medium;"><strong>首頁</strong></a>
+        </div>
+      </nav>
+
+      <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#" style="color: black;font-size:medium;"><strong>個人資料</strong></a>
+        </div>
+      </nav>
+
+      <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#" style="color: black;font-size:medium;"><strong>設定</strong></a>
+        </div>
+      </nav>
+
+      <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            style="color: white; background-color:rgb(255, 106, 0); font-size:medium;">
+            推文
+          </button>
+        </div>
+      </nav>
+    </div>
+
+    <nav class="navbar bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#" style="color: black;font-size:medium;"><strong>登出</strong></a>
+      </div>
+    </nav>
+  </div>
+  <div class="col-7" style="padding:0;background-color:white; border:2px #ECECEC solid; border-top-color:white;">
+    <div style="padding:15px;height:50px;display: flex; align-items:center;">
+      <span style="font-size: 20px;"><strong>首頁</strong></span>
+    </div>
+    <div style="padding:15px; border-top:2px #ECECEC solid;">
+      <div class="position-relative" style="height:70px;">
+        <h6><strong style="color:	#757676;">有什麼新鮮事?</strong></h6>
+        <button type="button" class="btn btn-sm btn-warning position-absolute bottom-0 end-0" data-bs-toggle="modal"
+          data-bs-target="#exampleModal" style="color: white; background-color:rgb(255, 106, 0); font-size:small;">
+          推文
+        </button>
+
+      </div>
+    </div>
+    {{> messages}}
+    <div style="margin: 0;height:7px;background-color: #ECECEC;"></div>
+  </div>
+  <div class=" col-3" style="padding: 12px 0 0 20px;">
+    <div class=" card" style="width: 14rem;">
+      <div class="card-header" style="display:flex;align-items:center;">
+        <span style="font-size:20px;"><strong>推薦跟隨</strong></span>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" style="background-color: #F5F5F5; border-color:#F5F5F5">An item</li>
+        <li class=" list-group-item" style="background-color: #F5F5F5; border-color:#F5F5F5">A second item</li>
+        <li class="list-group-item" style="background-color: #F5F5F5; border-color:#F5F5F5">A third item</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <form action="/tweets" method="POST">
+        <div class="modal-body">
+          <textarea class="form-control" id="description" name="description" rows="3" cols="140" placeholder="有什麼新鮮事?"
+            required></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-warning"
+            style="color: white; background-color:rgb(255, 106, 0); font-size:small;">
+            推文
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
