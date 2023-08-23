@@ -19,6 +19,8 @@ const port = process.env.PORT || 3000
 app.engine('hbs', handlebars({ extname: '.hbs', defaultLayout: 'main' }))
 app.set('view engine', 'hbs')
 
+app.use(express.urlencoded({ extended: true }))
+
 // 使用路由器
 app.use(routes)
 
