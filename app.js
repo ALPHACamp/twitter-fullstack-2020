@@ -30,7 +30,7 @@ app.use(methodOverride('_method'))
 app.use('/upload', express.static(path.join(__dirname, 'upload')))//上傳圖片
 app.use("/", express.static("public"));
 app.use((req, res, next) => {
-  res.locals.user = helpers.getUser
+  res.locals.user = helpers.getUser(req)
   next()
 })
 

@@ -19,9 +19,15 @@ router.get('/signin', userController.signinPage)
 // router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), usersController.sigin)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin' }), userController.sigin)
 router.get('/logout', userController.logout)
-router.get("/tweets", tweetsController.getTweets);
-router.post("/tweets", tweetsController.postTweet);
-router.post("/users/:followingUserId/follow", userController.postFollow);
+
+router.get("/tweets",authenticated, tweetsController.getTweets);
+router.post("/tweets",authenticated, tweetsController.postTweet);
+router.get('/tweets/:tweetId',authenticated, tweetsController.getTweet)
+router.post("/users/:followingUserId/follow",authenticated, userController.postFollow);
+router.delete('/users/:followingUserId/follow', authenticated, userController.deleteFollow)
+router.post('/tweets/:tweetId/like', authenticated, tweetsController.addLike)
+router.delete('/tweets/:tweetId/like', authenticated, tweetsController.deleteLike)
+router.post('/tweets/:tweetId/reply', authenticated, tweetsController.postReply)
 router.get('/users/:id/tweets', userController.getUser)
 router.get('/users/:id/replies', replyController.getReplies)
 router.get('/users/:id/likes', likesController.getLikes)

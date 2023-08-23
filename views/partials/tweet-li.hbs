@@ -8,15 +8,14 @@
   >
     <img src="" alt="" />
   </div>
-  <div class="content ms-2" style="max-width:528px">
+  <div class="content ms-2" style="max-width:528px;min-width:528px">
     <div class="account d-dlex flex-row mt-2">
-      <p style="display: inline; font-weight:700">Apple</p>
-      <p style="display: inline; color:#6C757D">@apple．3小時</p>
+      <p style="display: inline; font-weight:700">{{this.userAccount}}</p>
+      <p style="display: inline; color:#6C757D">@{{this.userName}}．{{relativeTimeFromNow this.createdAt}}</p>
     </div>
     <div class="text mt-2">
-      <a href="/tweets/:id" style="text-decoration: none; color:#000000">
-        i wanna cry~~~~cry~~~~ cry~~~i wanna cry~~~~i wanna cry~~~~i wanna
-        cry~~~~i wanna cry~~~~i wanna cry~~~~</a>
+      <a href="/tweets/{{this.tweetId}}" style="text-decoration: none; color:#000000">
+        {{this.text}}</a>
 
     </div>
     <div
@@ -28,15 +27,27 @@
           type="button"
           class="btn p-0"
           data-bs-toggle="modal"
-          data-bs-target="#replyModal"
+          data-bs-target="#reply{{this.tweetId}}Modal"
         >
           <img src="/images/reply-icon.svg" alt="" />
         </button>
-        <p class="m-0" style="color:#6C757D; font-weight:600">30</p>
+        <p class="m-0" style="color:#6C757D; font-weight:600">{{this.replies}}</p>
       </div>
       <div class="likes d-flex">
-        <img src="/images/icon-like.svg" alt="" />
-        <p class="m-0" style="color:#6C757D; font-weight:600">50</p>
+        {{#if this.isLiked}}
+        <form action="/tweets/{{this.tweetId}}/like?_method=DELETE" method="post">
+          <button type="submit" style="border:none ; background:none">
+            <img src="/images/icon-like-active.svg" alt="" / style="fill:#FC5A5A">
+          </button>
+        </form>
+        {{else}}
+        <form action="/tweets/{{this.tweetId}}/like" method="post">
+          <button type="submit" style="border:none ; background:none">
+            <img src="/images/icon-like.svg" alt="" />
+          </button>
+        </form>
+        {{/if}}
+        <p class="m-0" style="color:#6C757D; font-weight:600">{{this.likes}}</p>
       </div>
     </div>
   </div>
@@ -45,9 +56,9 @@
 {{! modal }}
 <div
   class="modal fade"
-  id="replyModal"
+  id="reply{{this.tweetId}}Modal"
   tabindex="-1"
-  aria-labelledby="replyModalLabel"
+  aria-labelledby="reply{{this.tweetId}}ModalLabel"
   aria-hidden="true"
 >
   <div class="modal-dialog">
@@ -71,19 +82,18 @@
         </div>
         <div class="content ms-2" style="max-width:510px">
           <div class="account d-dlex flex-row mt-2">
-            <p style="display: inline; font-weight:700">Apple</p>
-            <p style="display: inline; color:#6C757D">@apple．3小時</p>
+            <p style="display: inline; font-weight:700">{{this.userAccount}}</p>
+            <p style="display: inline; color:#6C757D">@{{this.userName}}．{{relativeTimeFromNow this.createdAt}}</p>
           </div>
           <div class="text mt-2">
-            i wanna cry~~~~cry~~~~ cry~~~i wanna cry~~~~i wanna cry~~~~i wanna
-            cry~~~~i wanna cry~~~~i wanna cry~~~~
+           {{this.text}}
           </div>
           <div class="toWhom m-3">
             <p
               style="display: inline; font-weight:600; color:#6C757D"
             >回覆給</p><p
               style="display: inline; font-weight:600; color:#FF6600"
-            > @apple</p>
+            > @{{this.userName}}</p>
           </div>
         </div>
         <div
@@ -95,7 +105,7 @@
         class="footer position-relative"
         style="height:245px; padding-left:1rem"
       >
-        <form action="/tweets/:id/reply" method="post" class="d-flex">
+        <form action="/tweets/{{this.tweetId}}/reply" method="post" class="d-flex">
           <div
             class="avatar"
             style="width:50px; height:50px; border-radius:50%; background-color:antiquewhite;"
