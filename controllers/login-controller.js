@@ -2,13 +2,13 @@ const { User } = require('../models')
 const bcrypt = require('bcryptjs')
 const loginController = {
   signUpPage: (req, res) => {
-    return res.render('logins/signup')
+    res.render('logins/signup')
   },
   signUp: (req, res, next) => {
-    const { account, name, email, password, passwordCheck } = req.body
-    if (password !== passwordCheck) throw new Error('密碼不相符!')
+    const { account, name, email, password, checkPassword } = req.body
+    if (password !== checkPassword) throw new Error('密碼不相符!')
     if (name.length > 50) throw new Error('暱稱長度不可超過50個字!')
-    if (!account.trim() || !name.trim() || !email.trim() || !password.trim() || !passwordCheck.trim()) throw new Error('所有欄位皆要填寫!')
+    if (!account.trim() || !name.trim() || !email.trim() || !password.trim() || !checkPassword.trim()) throw new Error('所有欄位皆要填寫!')
 
     return Promise.all([User.findOne({ where: { email } }), User.findOne({ where: { account } })])
       .then(([sameEmailUser, sameAccountUser]) => {
