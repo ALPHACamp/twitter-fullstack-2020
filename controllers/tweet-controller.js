@@ -1,8 +1,17 @@
-const { Tweet } = require('../models')
+const { Tweet, User } = require('../models')
 
 const tweetController = {
-  getTweets: (req, res) => {
-    return res.render('tweets')
+  getTweets: (req, res, next) => {
+    return Tweet.findAll({
+      include: [User],
+      order: [['createdAt', 'DESC']],
+      raw: true,
+      nest: true
+    })
+      .then(tweets => {
+        res.render('tweets', { tweets })
+      })
+      .catch(err => next(err))
   },
   postTweet: (req, res, next) => {
     const description = req.body.description
