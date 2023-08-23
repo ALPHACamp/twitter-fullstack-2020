@@ -154,8 +154,13 @@
             </div>
             <div class="p-0 m-0">
                 {{#if this.isFollowed}}
+                    <form action="#" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-outline-primary rounded-pill" >跟隨</button>
+                    </form>
                 {{else}}
-                    <a href="#" class="btn btn-primary rounded-pill">正在跟隨</a>
+                    <form action="#" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-primary rounded-pill" >正在跟隨</button>
+                    </form>
                 {{/if}}
             </div>
         </div>
