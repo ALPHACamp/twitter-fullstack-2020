@@ -1,11 +1,135 @@
-<div class="card w-50 mx-auto">
+{{!-- 發文 --}}
+<div class="card col-6 mx-auto">
   <h5 class="card-header">首頁</h5>
-  <div class="test">test</div>
-  <div class="card-body">
-    <div class="flex-row">
-      <img src="" alt="">
-      <p class="inline-block">有什麼新鮮事?</p>
+  <h4 class="check">test</h4>
+
+    <div class="card-body">
+      <div class="d-flex flex-row">
+        <a href="#">
+          <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt="" width="40px" height="40px"
+          style="background-color:#FF6600; border-radius: 30px">
+        </a>
+        <p class="inline ms-1 mt-2">有什麼新鮮事?</p>
+
+      </div>
+
+      <div class="d-flex flex-row-reverse">
+        <button class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px" type="submit" data-bs-toggle="modal" data-bs-target="#myModalmain">
+          推文
+        </button>
+      </div>
     </div>
-    <a href="#" class="btn btn-primary">推文</a>
+
+</div>
+
+<br/>
+{{!-- 留言 --}}
+<div class="card col-6 mx-auto">
+  <div class="card-body">
+    <div class="d-flex flex-row">
+      <a href="#">
+        <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt="" width="40px" height="40px"
+        style="background-color:#FF6600; border-radius: 30px">
+      </a>
+      <p class="inline ms-1 mt-1">Christofu</p>
+      <span class="ms-1 mt-2" style="font-size: 0.2rem;">@account</span>
+      <span class="ms-1 mt-2" style="font-size: 0.2em;">. 3小時</span>
+    </div>
+    <div class="col-10 mx-auto">
+      <p>Voluptatem cumque non quibusdam. Repudiandae consequatur veritatis ducimus ut. Quia quae harum fuga et rerum eos neque ut. Aut unde aliquam </p>
+    </div>
+    <div class="d-flex flex-row ms-5">
+      <div class="me-4">
+        <a href="#" style="text-decoration: none;">
+          {{!-- <img class="" src="/public/icon/icon_reply.jpg" alt="" width="40px" height="40px"> --}}
+          <i class="fa-regular fa-comment" style="color: #414d56;"></i>
+        </a>
+        <span class="m-1" style="font-size: 0.2rem;">10</span>
+      </div>
+
+      <div>
+        <a href="#" style="text-decoration: none;">
+          <img class="" src="/icon/icon_like.png" alt="" width="40px" height="40px">
+          <i class="fa-regular fa-heart" style="color: #414d56;"></i>
+        </a>
+        <span class="m-1"  style="font-size: 0.2rem;">20</span>
+      </div>
+      
+    </div>
   </div>
 </div>
+
+
+{{!-- modal 主頁欄 --}}
+
+<div class="modal" id="myModalmain" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="d-flex justify-content-start">
+        <button type="button" class="btn-close ms-2 mt-2" style="background-color:#FF6600" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <hr style="margin-top: 5px; margin-bottom: 5px;">
+
+      <form action="" method="POST">
+        <div class="ms-2">
+          <div class="d-flex flex-row">
+            <a href="#">
+              <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt="" width="40px" height="40px"
+              style="background-color:#FF6600; border-radius: 30px">
+            </a>
+    
+            <textarea class="ms-1 mt-2" name="tweet" id="" cols="45" rows="6" placeholder="有什麼新鮮事"style="border:none" ></textarea>
+          </div>
+        </div>
+      
+        <div class="d-flex flex-row-reverse mb-3 me-2">
+          <button class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px" type="submit">
+          推文
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+{{!-- modal sidecolumn --}}
+<button style="width:178px;background-color:#FF6600; color:white; border-radius: 30px" class="btn" data-bs-toggle="modal" data-bs-target="#myModal">推文
+</button>
+
+
+<div class="modal" id="myModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="d-flex justify-content-start">
+        <button type="button" class="btn-close ms-2 mt-2" style="background-color:#FF6600" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <hr style="margin-top: 5px; margin-bottom: 5px;">
+
+      <form action="" method="POST">
+        <div class="ms-2">
+          <div class="d-flex flex-row">
+            <a href="#">
+              <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt="" width="40px" height="40px"
+              style="background-color:#FF6600; border-radius: 30px">
+            </a>
+    
+            <textarea class="ms-1 mt-2" name="tweet" id="" cols="45" rows="6" placeholder="有什麼新鮮事"style="border:none" ></textarea>
+          </div>
+        </div>
+      
+        <div class="d-flex flex-row-reverse mb-3 me-2">
+          <button class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px" type="submit">
+          推文
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
