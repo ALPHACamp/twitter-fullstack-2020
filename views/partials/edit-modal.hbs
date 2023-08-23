@@ -1,0 +1,101 @@
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:634px; height:650px;">
+      <form id="edit-modal" action="/users/{{user.id}}?_method=PUT" method="post" enctype="multipart/form-data">
+        <div class="modal-header">
+          <div class="d-flex align-items-center">
+            <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close" style="color: #FF6600;">
+              <i class="fas fa-times"></i>
+            </button>
+            <span class="modal-title h5 fw-bold ps-3" id="ModalLabel">編輯個人資料</span>
+          </div>
+          <button type="submit" class="badge btn rounded-pill" style="font-size:1.0rem; background: #FF6600;">
+            <span style="color: #FFFFFF;">儲存</span>
+          </button>
+        </div>
+
+        <div class="modal-body row">
+          <div class="col-12 m-0 p-0 position-relative mb-1">
+
+            <div class="bg-holder" style="height: 170px;">
+              <img id="background-image"
+                src="{{#if user.background}}{{user.background}}{{else}}https://i.imgur.com/ndXEE6d.jpg{{/if}}"
+                class="card-img-top" alt="..." class="img-fluid" id="bgImage"
+                style="height:100%;width:100%;object-fit:cover">
+            </div>
+            <div class="form-row mb-3">
+              <label for="background" class="btn form-label">
+                <input class="d-none" type="file" id="background" name="background" accept="image/*" style="display: none">
+                <i class="fa-solid fa-camera"
+                  style="position: absolute; object-fit: cover; top: 30%; left: 45%;; width:20; height:20px; color: #FFFFFF;"></i>
+              </label>
+            </div>
+
+            <div class="avatar-holder">
+              <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}"
+                class="rounded-circle" alt="user_Aavtor" height="140px" width="140px"
+                style="border: 2px solid white; position: absolute; object-fit: cover; top: 40%; left: 3%;">
+            </div>
+            <label for="avatar" class="btn avator-uploader">
+              <input class="d-none" type="file" id="avatar" name="avatar" accept="image/*">
+              <i class="fas fa-camera" style="color: white;"></i>
+            </label>
+          </div>
+          <div class="form-row mb-1">
+            <label for="avatar" class="btn form-label">
+              <input class="form-control-file" type="file" id="avatar" name="avatar" accept="image/*"
+                style="display: none">
+              <i class="fa-solid fa-camera"
+                style="position: absolute; object-fit: cover; top: 57%; left: 15%;; width:20; height:20px; color:#FFFFFF">
+              </i>
+            </label>
+          </div>
+
+        </div>
+        <div class="col-12 ms-2" style="width: 600px; background-color:#F5F8FA; height:54px;">
+          <label for="name" style="font-size:14px; ">名稱</label>
+          <input type="text" class="form-control pt-0" id="name" name="name" maxlength="50" onkeyup='nameWordsCheck()'
+            style="width: 600px; border:none;outline: none; background-color:#F5F8FA; border-bottom:1px solid #657786;font-size:14px"
+            aria-describedby="nameHelp" value="{{user.name}}"></input>
+          <div id="name-area">
+            <p class="text-end text-muted now1" style="font-size: 12px;">{{user.name.length}}/50</p>
+          </div>
+        </div>
+        <div class="col-12 mt-4 ms-2" style=" width: 600px;background-color:#F5F8FA;">
+          <label for="introduction" style="margin-left: 8px; font-size: 0.8em;">自我介紹</label>
+          <textarea class="form-control" id="introduction" name="introduction" onkeyup='introWordsCheck()'
+            style="border:none; border-bottom:1px solid #657786; outline: none; background-color:#F5F8FA; font-size:16px;"
+            maxlength="160" aria-describedby="descriptionHelp">{{user.introduction}}</textarea>
+          <div id="introduction-area">
+            <p class="text-end text-muted now2" style="font-size:12px;">{{user.introduction.length}}/160</p>
+          </div>
+        </div>
+    </div>
+    </form>
+  </div>
+</div>
+
+
+<script>
+  const editModal = document.querySelector('#edit-modal')
+  const introductionCount = document.querySelector('#introduction-area')
+  const nameCount = document.querySelector('#name-area')
+
+  function introWordsCheck () {
+    const content = document.querySelector('#introduction').value.trim().length
+    if (content === 160) {
+      introductionCount.innerHTML = `<span style="font-weight: 500;font-size: 15px;color: #FC5A5A;">目前字數已達${content}字,不可超過${content}字</span>`
+    } else {
+      introductionCount.innerHTML = `<p class="text-end text-muted now2" style="font-size:12px;">${content}/160</p>`
+    }
+  }
+  function nameWordsCheck () {
+    const content = document.querySelector('#name').value.trim().length
+    if (content === 50) {
+      nameCount.innerHTML = `<span style="font-weight: 500;font-size: 15px;color: #FC5A5A;">目前字數已達${content}字,不可超過${content}字</span>`
+    } else {
+      nameCount.innerHTML = `<p class="text-end text-muted now1" style="font-size: 12px;">${content}/50</p>`
+    }
+  }
+
+</script>

@@ -1,5 +1,8 @@
 const bcrypt = require('bcryptjs')
 const { Tweet, User, Followship } = require("../models");
+const { imgurFileHandler } = require('../helpers/file-helpers')
+const randomUsersHelper = require('../helpers/randomUsersHelper');
+const helpers = require('../_helpers')
 
 const userController = {
   signupPage: (req, res) => {
@@ -70,6 +73,132 @@ const userController = {
     } catch (err) {
       console.log(err)
     }
+  },
+  getUser: async (req, res, next) => {
+    const isUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
+    try {
+      const userId = req.params.id;
+      const user = await User.findByPk(userId);
+
+      if (user) {
+        const userData = user.toJSON();
+        const tenRandomUsers = await randomUsersHelper.getTenRandomUsers(10); // 使用 helper 模块获取10个随机用户
+
+        const dataToRender = {
+          user: userData,
+          recommend: tenRandomUsers,
+          isUser
+        };
+
+        res.render('user/user-tweets', dataToRender);
+      } else {
+        res.status(404).send('未找到用户');
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("获取用户数据时出错。");
+    }
+  },
+  putUser: (req, res, next) => { //修改使用者名稱、自我介紹
+    const { name, introduction } = req.body
+    const avatar = req.files ? req.files.avatar : null
+    const background = req.files ? req.files.background : null
+    User.findByPk(req.params.id)
+      .then(async user => {
+        const avatarFilePath = avatar ? await imgurFileHandler(avatar[0]) : user.avatar
+        const backgroundFilePath = background ? await imgurFileHandler(background[0]) : user.background
+        console.log("Avatar File Path:", avatarFilePath);
+        console.log("Background File Path:", backgroundFilePath);
+        return user.update({
+          name,
+          introduction,
+          avatar: avatarFilePath || user.avatar,
+          background: backgroundFilePath || user.background
+        })
+      })
+      .then(() => {
+        res.redirect(`/users/${req.params.id}/tweets`)
+      })
+      .catch(err => next(err))
+  },
+  getFollower: async (req, res, next) => { // 跟隨者
+    try {
+      const userId = req.params.id;
+      const user = await User.findByPk(userId);
+
+      if (user) {
+        const userData = user.toJSON();
+        const tenRandomUsers = await randomUsersHelper.getTenRandomUsers(10); // 使用 helper 模块获取10个随机用户
+
+        const dataToRender = {
+          users: userData,
+          recommend: tenRandomUsers,
+        };
+
+        res.render('user/user-follower', dataToRender);
+      } else {
+        res.status(404).send('未找到用户');
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("获取用户数据时出错。");
+    }
+  },
+  getFollowing: async (req, res, next) => { // 跟隨中
+    try {
+      const userId = req.params.id;
+      const user = await User.findByPk(userId);
+
+      if (user) {
+        const userData = user.toJSON();
+        const tenRandomUsers = await randomUsersHelper.getTenRandomUsers(10); // 使用 helper 模块获取10个随机用户
+
+        const dataToRender = {
+          users: userData,
+          recommend: tenRandomUsers,
+        };
+
+        res.render('user/user-following', dataToRender);
+      } else {
+        res.status(404).send('未找到用户');
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("获取用户数据时出错。");
+    }
+  },
+  getSetting: (req, res,) => { // 取得帳戶設定頁面
+    return User.findByPk(helpers.getUser(req).id)
+      .then(user => {
+        user = user.toJSON()
+        const { name, account, email } = user
+        return res.render('settings', { name, account, email })
+      })
+  },
+  putSetting: (req, res, next) => { // 編輯帳戶設定
+    const { account, name, email, password, passwordCheck } = req.body
+    if (!name || !email || !password || !account || !passwordCheck) throw new Error('所有欄位都是必填。')
+    if (password !== passwordCheck) throw new Error('密碼不相同')
+    return Promise.all([
+      User.findByPk(helpers.getUser(req).id),
+      User.findOne({ where: { email } }),
+      User.findOne({ where: { account } })
+    ])
+      .then(async ([user, emailCheck, accountCheck]) => {
+        if (accountCheck && Number(accountCheck.id) !== Number(helpers.getUser(req).id)) throw new Error('帳號已有人註冊')
+        if (emailCheck && Number(emailCheck.id) !== Number(helpers.getUser(req).id)) throw new Error('信箱已有人註冊')
+        return user.update({
+          name,
+          account,
+          email,
+          password: password ? await bcrypt.hash(password, 10) : user.password
+        })
+      })
+      .then(() => {
+        req.flash('success_messages', '帳戶設定編輯成功!')
+        return res.redirect('settings')
+      })
+      .catch(err => next(err))
   },
 };
 

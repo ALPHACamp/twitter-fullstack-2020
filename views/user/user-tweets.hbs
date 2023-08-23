@@ -1,0 +1,21 @@
+<main class="d-flex justify-content-center">
+  {{> sidebar-left}}
+  <section style="width:636px; border:1px solid #E6ECF0">
+    {{>profile-card route='user-tweets'}}
+    <div class="tweets-list">
+      <div class="li-container">
+        {{> tweet-li}}
+        {{> tweet-li}}
+        {{> tweet-li}}
+        {{> tweet-li}}
+        {{> tweet-li}}
+        {{> tweet-li}}
+        {{> tweet-li}}
+        {{> tweet-li}}
+        {{> tweet-li}}
+        {{> tweet-li}}
+      </div>
+  </section>
+  {{> recommendation}}
+</main>
+{{> edit-modal}}

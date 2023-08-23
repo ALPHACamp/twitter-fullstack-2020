@@ -1,0 +1,40 @@
+<div class="container d-flex mx-0">
+  <!--left bar-->
+  <div class="col-3 nav">
+    {{> sidebar-left}}
+  </div>
+  <!--middle bar-->
+  <div class="col-7 user-profile">
+    <div class="tweets-container"
+      style="width: 639px;height:1200px;border-right:1px solid #C4C4C4; border-left:1px solid #C4C4C4; ">
+      <!--head-->
+      <div class="card-header col-12 row m-0 border-bottom" style="height: 75px; background-color:#FFFFFF;">
+        <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
+          class="col-auto d-flex align-items-center">
+          <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
+        </a>
+        <a href="/users/{{user.id}}"
+          class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
+          style="text-decoration: none;">
+          <span class="h5"
+            style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{user.name}}</span>
+          <span style="color: #657786; font-size: 13px; line-height: 15px;">{{user.Tweets.length}}推文</span>
+        </a>
+      </div>
+      <!--profile nav-->
+      <div class="profile-head col-12">
+        <nav>
+          <div class="nav nav-tabs " id="nav-tab" role="tablist">
+            <a class="nav-link" id="nav-home-tab" data-toggle="tab" href="/users/{{user.id}}/followers" role="tab" aria-controls="nav-home" aria-selected="true">追隨者 </a>
+            <a class="nav-link active" id="nav-profile-tab" data-toggle="tab" href="/users/{{user.id}}/followings" role="tab"
+              aria-controls="nav-profile" aria-selected="false">正在追隨</a>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!--right bar-->
+  <div class="col-2 followship mx-0" style="width: 273px; height:100%px;">
+    {{> recommendation}}
+  </div>
+</div>
