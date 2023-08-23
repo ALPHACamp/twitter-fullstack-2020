@@ -4,11 +4,12 @@ const router = express.Router()
 const userController = require('../controllers/user-controller')
 
 // 引入Modules
-
+const admin = require('./modules/admin')
 // 使用Modules
+router.use('/admin', admin)
 
 // 路由: GET 註冊頁
-router.get('/signup',userController.signUpPage)
+router.get('/signup', userController.signUpPage)
 // 路由: POST 註冊
 router.post('/signup', userController.signUp)
 // 路由: GET 註冊頁
