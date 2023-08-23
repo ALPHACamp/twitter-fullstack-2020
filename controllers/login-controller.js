@@ -5,39 +5,41 @@ const loginController = {
     return res.render('logins/signup')
   },
   signUp: (req, res, next) => {
-    if (req.body.password !== req.body.passwordCheck) throw new Error('Passwords do not match!')
+    const { account, name, email, password, passwordCheck } = req.body
+    if (password !== passwordCheck) throw new Error('密碼不相符!')
+    if (name.length > 50) throw new Error('暱稱長度不可超過50個字!')
+    if (!account.trim() || !name.trim() || !email.trim() || !password.trim() || !passwordCheck.trim()) throw new Error('所有欄位皆要填寫!')
 
-    return Promise.all([User.findOne({ where: { email: req.body.email } }), User.findOne({ where: { account: req.body.account } })])
+    return Promise.all([User.findOne({ where: { email } }), User.findOne({ where: { account } })])
       .then(([sameEmailUser, sameAccountUser]) => {
         if (sameEmailUser) throw new Error('Email already exists!')
         if (sameAccountUser) throw new Error('Account already exists!')
-        if (req.body.name.length > 50) throw new Error('Name length should be equal or less than 50!')
         return bcrypt.hash(req.body.password, 10)
       })
       .then(hash => User.create({
-        account: req.body.account,
-        name: req.body.name,
-        email: req.body.email,
+        account,
+        name,
+        email,
         password: hash,
         role: 'user'
       }))
       .then(() => {
         req.flash('success_messages', '成功註冊帳號！')
-        return res.redirect('/signin')
+        res.redirect('/signin')
       })
       .catch(err => next(err))
   },
   signInPage: (req, res) => {
-    return res.render('logins/signin')
+    res.render('logins/signin')
   },
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
-    return res.redirect('/tweets')
+    res.redirect('/tweets')
   },
   logout: (req, res) => {
     req.flash('success_messages', '登出成功！')
     req.logout()
-    return res.redirect('/signin')
+    res.redirect('/signin')
   }
 }
 
