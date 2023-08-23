@@ -11,5 +11,7 @@ const userController = require('../controllers/user-controller')
 router.get('/signup',userController.signUpPage)
 // 路由: POST 註冊
 router.post('/signup', userController.signUp)
+// 路由: GET 註冊頁
+router.get('/signin', userController.signInPage)
 
 module.exports = router

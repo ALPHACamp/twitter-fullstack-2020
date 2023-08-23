@@ -36,6 +36,9 @@ const userController = {
         return res.redirect('/signin')
       })
       .catch(err => console.log(err))
+  },
+  signInPage:(req,res) => {
+    return res.render('signin')
   }
 }
 
