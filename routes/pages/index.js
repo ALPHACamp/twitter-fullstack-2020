@@ -6,6 +6,7 @@ const admin = require('./modules/admin')
 const router = express.Router()
 
 router.use('/admin', admin)
+router.get('/css_template', (req, res) => res.render('main/css_template')) // 展現各前端模板，咖發結束後刪除
 router.get('/', (req, res) => res.render('main/homepage'))
 router.use('/', (req, res) => {
 // 預留，將找不到router的網址都先轉入root
