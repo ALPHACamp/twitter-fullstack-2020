@@ -12,6 +12,7 @@ const { getUser } = require('./helpers/auth-helpers')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const passport = require('./config/passport')
 const SESSION_SECRET = 'secret'
+
 // 建立app
 const app = express()
 const port = process.env.PORT || 3000
@@ -20,6 +21,7 @@ const port = process.env.PORT || 3000
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 // Handlebars 設定
+
 app.engine('hbs', handlebars({ extname: '.hbs', defaultLayout: 'main', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
@@ -36,6 +38,7 @@ app.use((req, res, next) => {
     res.locals.user = getUser(req)
     next()
   })
+
 // 使用路由器
 app.use(routes)
 
