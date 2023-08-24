@@ -95,7 +95,8 @@ const userController = {
         include: [{
           model:Tweet,include:[
             {model:User},
-            {model:Reply, include:[{model:Tweet}]}
+            {model:Reply, include:[{model:Tweet}]},
+            {model: User, as: "LikedUsers" }
           ],
           order: [["updatedAt", "DESC"]]
           },
@@ -110,6 +111,8 @@ const userController = {
  
         const tweets = user.Tweets.map((tweet) => {
           const replies = tweet.Replies.length;
+          const likes = tweet.LikedUsers.length;
+          const isLiked = tweet.LikedUsers.some((l) => l.id === userId);
           return {
             tweetId: tweet.id,
             userId: tweet.User.id,
@@ -117,7 +120,9 @@ const userController = {
             userName: tweet.User.name,
             text: tweet.description,
             createdAt: tweet.createdAt,
-            replies
+            replies,
+            likes,
+            isLiked
           };
         });
         

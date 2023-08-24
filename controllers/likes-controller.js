@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { Tweet, User, Reply, Like, Followship } = require('../models')
 const { getEightRandomUsers } = require("../helpers/randomUsersHelper");
 const helpers = require('../_helpers')
 const likeController = {
@@ -6,14 +6,43 @@ const likeController = {
     const isUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
     try {
       const userId = req.params.id;
-      const user = await User.findByPk(userId);
+      const user = await User.findByPk(userId,{
+        include: [{
+          model: Tweet,
+          as: "LikedTweets",
+          include: [
+            { model: User },
+            { model: Reply, include: [{ model: Tweet }] },
+            { model: User, as: "LikedUsers" }
+          ],
+          order: [["updatedAt", "DESC"]]
+        }]
+      });
 
       if (user) {
         const userData = user.toJSON();
         const recommend = await getEightRandomUsers(req);
+        
+        const likedTweets = user.LikedTweets.map((likedTweet) => {
+          const replies = likedTweet.Replies.length; 
+          const likes = likedTweet.LikedUsers.length; 
+          const isLiked = likedTweet.LikedUsers.some((l) => l.id === userId);
+          return {
+            tweetId: likedTweet.id,
+            userId: likedTweet.User.id,
+            userAccount: likedTweet.User.account,
+            userName: likedTweet.User.name,
+            text: likedTweet.description,
+            createdAt: likedTweet.createdAt,
+            replies,
+            likes,
+            isLiked
+          };
+        });
 
         const dataToRender = {
           user: userData,
+          likedTweets,
           recommend,
           isUser
         };

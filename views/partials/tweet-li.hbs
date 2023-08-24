@@ -35,13 +35,13 @@
       </div>
       <div class="likes d-flex">
         {{#if this.isLiked}}
-        <form action="/tweets/{{this.tweetId}}/like?_method=DELETE" method="post">
+        <form action="/{{this.tweetId}}/like?_method=DELETE" method="post">
           <button type="submit" style="border:none ; background:none">
             <img src="/images/icon-like-active.svg" alt="" / style="fill:#FC5A5A">
           </button>
         </form>
         {{else}}
-        <form action="/tweets/{{this.tweetId}}/like" method="post">
+        <form action="/{{this.tweetId}}/like" method="post">
           <button type="submit" style="border:none ; background:none">
             <img src="/images/icon-like.svg" alt="" />
           </button>
