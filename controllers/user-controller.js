@@ -1,4 +1,4 @@
-const db = require('../../models')
+const db = require('../models')
 const { User, Tweet, Reply, Index, Like, Followship } = db
 
 const userController = {
@@ -14,6 +14,7 @@ const userController = {
       })
     ])
       .then(([user, followship]) => {
+        if (user.toJSON().id === req.user.id) throw new Error("Can't follow yourself")
         if (!user) throw new Error("User didn't exist!")
         if (followship) throw new Error('Your are already following this user!')
         return Followship.create({
