@@ -11,5 +11,9 @@ router.get('/users/:id/followers', userController.getUserFollowers)
 router.get('/users/:id/followings', userController.getUserFollowings)
 router.get('/users/:id/setting', userController.getUserSetting)
 
+// test
+router.get('/', (req, res) => {
+  res.render('user-setting')
+})
 
 module.exports = router

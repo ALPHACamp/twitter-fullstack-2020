@@ -6,12 +6,12 @@
     {{#ifCond route 'followings'}}
     <li class="nav-item d-flex align-items-center justify-content-center"
       style="border-bottom:2px solid #FF6600; width:130px;">
-      <a class="nav-link" href="/users/followings">
+      <a class="nav-link" href="/users/{{user.id}}/followings">
         <font color="#FF6600">追蹤者</font>
       </a>
     </li>
     <li class="nav-item d-flex align-items-center justify-content-center" style="width:130px;">
-      <a class="nav-link" href="/users/followers">
+      <a class="nav-link" href="/users/{{user.id}}/followers">
         <font color="#657786">正在追隨</font>
       </a>
     </li>
@@ -19,12 +19,12 @@
 
     {{#ifCond route 'followers'}}
     <li class="nav-item d-flex align-items-center justify-content-center" style="width:130px;">
-      <a class="nav-link" href="/users/followings">
+      <a class="nav-link" href="/users/{{user.id}}/followings">
         <font color="#657786">追蹤者</font>
       </a>
     </li>
     <li class="nav-item d-flex align-items-center justify-content-center" style="border-bottom:2px solid #FF6600; width:130px;">
-      <a class="nav-link" href="/users/followers">
+      <a class="nav-link" href="/users/{{user.id}}/followers">
         <font color="#FF6600">正在追隨</font>
       </a>
     </li>
