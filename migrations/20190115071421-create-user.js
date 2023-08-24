@@ -19,6 +19,7 @@ module.exports = {
       },
       avatar: {
         type: Sequelize.STRING,
+        allowNull: false,
         defaultValue: "https://i.imgur.com/TEssa4K.jpeg"
       },
       introduction: {
