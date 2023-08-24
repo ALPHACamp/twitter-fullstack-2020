@@ -7,6 +7,7 @@ const userController = require('../controllers/user-controller')
 // 使用Modules
 router.get('/tweets', tweetController.getTweets)
 
+router.get('/users/:id/followers', userController.getUserFollowers)
 router.get('/users/:id/followings', userController.getUserFollowings)
 router.get('/users/:id/setting', userController.getUserSetting)
 
