@@ -1,7 +1,3 @@
-const adminController = {
-  signInPage: (req, res) => {
-    return res.render('admin/signin')
-  }
-}
+const adminController = {}
 
 module.exports = adminController

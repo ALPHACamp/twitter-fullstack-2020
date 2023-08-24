@@ -6,8 +6,8 @@ const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
   },
-  signUp: (req, res) => {
-    if (req.body.password !== req.body.passwordCheck) console.log('密碼不一致!')
+  signUp: (req, res, next) => {
+    if (req.body.password !== req.body.passwordCheck) throw new Error('密碼不一致!')
 
     User.findOne({
       where: {
@@ -21,8 +21,7 @@ const userController = {
         if (user) {
           if (user.toJSON().email === req.body.email) throw new Error('email 已重複註冊！')
           if (user.toJSON().account === req.body.account) throw new Error('account 已重複註冊！')
-        }        
-
+        }
         return bcrypt.hash(req.body.password, 10)
       })
       .then(hash => User.create({
@@ -30,15 +29,27 @@ const userController = {
         email: req.body.email,
         password: hash,
         account: req.body.account,
+        role: 'user'
       }))
       .then(() => {
-        console.log('成功註冊！')
+        req.flash('success_messages', '成功註冊！')
         return res.redirect('/signin')
       })
-      .catch(err => console.log(err))
+      .catch(err => next(err))
   },
-  signInPage:(req,res) => {
+  signInPage: (req, res) => {
     return res.render('signin')
+  },
+  signIn: (req, res ,next) => {
+    req.flash('success_messages', '成功登入！')
+    res.redirect('/')
+  },
+  adminSignInPage: (req, res) => {
+    return res.render('admin/signin')
+  },
+  adminSignIn: (req, res, next) => {
+    req.flash('success_messages', '成功登入！')
+    res.redirect('/admin/')
   }
 }
 
