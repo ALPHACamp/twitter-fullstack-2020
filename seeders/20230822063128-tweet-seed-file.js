@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 /** @type {import('sequelize-cli').Migration} */
 const faker = require('faker')
@@ -13,7 +13,7 @@ module.exports = {
     )
 
     for (const user of users) {
-      await queryInterface.bulkInsert('Tweets', 
+      await queryInterface.bulkInsert('Tweets',
         Array.from({ length: TWEET_AMOUNT_FOR_EACH_USER }, () => ({
           user_id: user.id,
           description: faker.lorem.lines(LIMIT_LINE),
@@ -27,4 +27,4 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Tweets', {})
   }
-};
+}

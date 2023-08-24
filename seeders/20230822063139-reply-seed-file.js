@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 /** @type {import('sequelize-cli').Migration} */
 const faker = require('faker')
@@ -15,9 +15,9 @@ module.exports = {
       'SELECT id FROM Tweets',
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
-    
+
     for (const tweet of tweets) {
-      await queryInterface.bulkInsert('Replies', 
+      await queryInterface.bulkInsert('Replies',
         Array.from({ length: REPLY_AMOUNT_FOR_EACH_TWEET }, () => ({
           tweet_id: tweet.id,
           user_id: users[Math.floor(Math.random() * users.length)].id,
@@ -32,4 +32,4 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Replies', {})
   }
-};
+}

@@ -1,7 +1,9 @@
 /**font-size*/
+
 .font-size-sm{
     font-size: 0.875rem;
 }
+
 /*Position class*/
 .child-img-center {
     display: flex;
@@ -11,9 +13,15 @@
 }
 
 /*color*/
-.filter-main-color{ /*for svg icon*/
+.filter-main-color {
+    /*for svg icon*/
     filter: invert(48%) sepia(53%) saturate(5638%) hue-rotate(4deg) brightness(107%) contrast(102%);
 }
+
+.filter-main-color:hover {
+    filter:brightness(0) invert(1);
+}
+
 .filter-white-color{
     filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
 }
@@ -21,6 +29,7 @@
     filter: invert(41%) sepia(8%) saturate(495%) hue-rotate(202deg) brightness(97%) contrast(85%);
 }
 .main-color{
+
     color: #FF6600;
 }
 .bg-main-color{
@@ -28,29 +37,33 @@
 }
 
 /*remove style of link*/
-.link-unstyled, .link-unstyled:link, .link-unstyled:hover {
-  color: inherit;
-  text-decoration: inherit;
+.link-unstyled,
+.link-unstyled:link,
+.link-unstyled:hover {
+    color: inherit;
+    text-decoration: inherit;
 }
 
 /*bottom boarder of card*/
-.bottom-border{
+.bottom-border {
     width: 100%;
     height: 1px;
     background-color: #E6ECF0;
 }
+
 /*Tweet-Component*/
-.tweet-user-horizontal, .tweet-user-replied{
+.tweet-user-horizontal,
+.tweet-user-replied {
     height: 26px;
 }
 
-.tweet-user-icon{
+.tweet-user-icon {
     height: 50px;
     width: 50px;
 }
 
-.tweet-user-action{
-    width:120px;
+.tweet-user-action {
+    width: 120px;
 }
 
 .tweet-action-icon{
