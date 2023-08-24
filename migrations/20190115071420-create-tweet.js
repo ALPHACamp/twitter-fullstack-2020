@@ -16,16 +16,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT
       },
-      like_counts: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0
-      },
-      reply_counts: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0
-      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE
