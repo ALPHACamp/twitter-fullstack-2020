@@ -6,6 +6,7 @@ const likeController = {
     const isUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
     try {
       const userId = req.params.id;
+      const currentUserId = req.user.id;
       const user = await User.findByPk(userId,{
         include: [{
           model: Tweet,
@@ -26,7 +27,7 @@ const likeController = {
         const likedTweets = user.LikedTweets.map((likedTweet) => {
           const replies = likedTweet.Replies.length; 
           const likes = likedTweet.LikedUsers.length; 
-          const isLiked = likedTweet.LikedUsers.some((l) => l.id === userId);
+          const isLiked = likedTweet.LikedUsers.some((l) => l.id === currentUserId);
           return {
             tweetId: likedTweet.id,
             userId: likedTweet.User.id,

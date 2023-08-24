@@ -91,6 +91,7 @@ const userController = {
       helpers.getUser(req).id === Number(req.params.id) ? true : false;
     try {
       const userId = req.params.id;
+      const currentUserId = req.user.id;
       const user = await User.findByPk(userId,{
         include: [{
           model:Tweet,include:[
@@ -108,11 +109,10 @@ const userController = {
       if (user) {
         const userData = user.toJSON();
         const recommend = await getEightRandomUsers(req);
- 
         const tweets = user.Tweets.map((tweet) => {
           const replies = tweet.Replies.length;
           const likes = tweet.LikedUsers.length;
-          const isLiked = tweet.LikedUsers.some((l) => l.id === userId);
+          const isLiked = tweet.LikedUsers.some((l) => l.id === currentUserId);
           return {
             tweetId: tweet.id,
             userId: tweet.User.id,
