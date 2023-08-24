@@ -3,8 +3,9 @@
     {{>sidebar}}
 
     {{!-- follower --}}
-    {{>follow-tabs route='followers'}}
-
+    <div class="col-md-6" style="border: 1px #E6ECF0 solid;">
+      {{>user-header}}
+      {{>follow-tabs route='followers'}}
     {{!-- {{#each userfollowers}} --}}
       <div class="border-bottom d-flex flex-column pt-2 mt-2" style="min-height: 130px;">
         <div class="align-self-start">
@@ -39,7 +40,6 @@
         </div>
       </div>
     {{!-- {{/each}} --}}
-
     </div>
 
 {{!-- 推薦追隨 --}}
