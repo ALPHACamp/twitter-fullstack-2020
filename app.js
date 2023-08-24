@@ -7,7 +7,6 @@ const flash = require('connect-flash')
 // 引入路由
 const routes = require('./routes/index')
 // 引入helper
-const helpers = require('./_helpers')
 const { getUser } = require('./helpers/auth-helpers')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const passport = require('./config/passport')

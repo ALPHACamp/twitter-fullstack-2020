@@ -5,7 +5,7 @@ const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
 
 // 使用Modules
-router.get('/', tweetController.getTweets)
+// router.get('/', tweetController.getTweets)
 
 
 router.get('/', (req, res) => {
