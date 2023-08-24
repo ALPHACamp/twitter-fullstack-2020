@@ -4,12 +4,7 @@ const userController = {
   getEditPage: async (req, res, next) => {
     try {
       const user = await User.findByPk(req.params.id, { raw: true })
-      return res.render('users/edit', {
-        id: req.params.id,
-        account: user.account,
-        name: user.name,
-        email: user.email
-      })
+      return res.render('users/edit', { user })
     } catch (err) {
       next(err)
     }

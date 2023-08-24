@@ -1,18 +1,18 @@
 <div class="mb-4">
   <h1 class="h3 font-weight-normal mb-3">帳戶設定</h1>
 </div>
-<form class="form-signup" action="/api/users/{{id}}" method="POST" style="width: 100%;">
+<form class="form-signup" action="/api/users/{{user.id}}" method="POST" style="width: 100%;">
   <div class="form-row m-3">
     <label for="account">帳號</label>
-    <input type="text" id="account" name="account" class="form-control" value="{{account}}">
+    <input type="text" id="account" name="account" class="form-control" value="{{user.account}}">
   </div>
   <div class="form-row m-3">
     <label for="name">名稱</label>
-    <input type="text" id="name" name="name" class="form-control" value="{{name}}">
+    <input type="text" id="name" name="name" class="form-control" value="{{user.name}}">
   </div>
   <div class="form-row m-3">
     <label for="email">Email</label>
-    <input type="text" id="email" name="email" class="form-control" value="{{email}}">
+    <input type="text" id="email" name="email" class="form-control" value="{{user.email}}">
   </div>
   <div class="form-row m-3">
     <label for="password">密碼</label>
