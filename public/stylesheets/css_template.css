@@ -238,3 +238,107 @@
 
     resize: none; /*remove the resize handle on the bottom right*/
 }
+
+
+/*Alan 部份*/
+  .homepage-user-card {
+    min-height: 378px;
+  }
+
+  .homepage-user-card .user-cover {
+    height: 200px;
+  }
+
+  .homepage-user-card .user-avatar {
+    width: 141.1px;
+    height: 140px;
+    border: 4px white solid;
+    border-radius: 50%;
+
+    top: 124px;
+    left: 16.13px;
+  }
+
+  .homepage-user-card .user-action {
+    height: 40px;
+  }
+
+  .homepage-user-card .btn {
+    width: 128px;
+    border: 1px solid;
+    border-radius: 50px;
+  }
+
+  .homepage-user-card .info-pic,.homepage-user-card .mes-pic {
+    width: 40px;
+  }
+
+  .admin-user-card .card {
+    height: 314px;
+
+    border-radius: 10px;
+  }
+
+   .admin-user-card .card .card-body {
+    background-color: #f6f7f8;
+
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+   }
+
+  .admin-user-card .card .user-info {
+    top: 64px;
+  }
+
+  .admin-user-card .user-cover {
+    height: 140px;
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .admin-user-card .user-avatar {
+    height: 100px;
+    
+    border: 4px solid white;
+    border-radius: 50%;
+  }
+
+  .admin-user-card .user-like img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .admin-user-card .user-followship {
+    line-height: 22px;
+  }
+
+  .recommend-user-card {
+    border-radius: 16px;
+
+    background-color: #fafafb;
+  }
+
+  .recommend-user-card .card-title {
+    top: 24px;
+    left: 24px;
+    
+    font-weight: 700;
+  }
+
+  .recommend-user-card hr {
+    height: 1px;
+    color: #E6ECF0;
+  }
+
+  .recommend-user-card .card-body, .recommend-user-card .single-user-card, .recommend-user-card .single-user-card .card-body {
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+
+    background-color: #fafafb;
+  }
+
+  .recommend-user-card .single-user-card .btn {
+    border: 1px solid;
+    border-radius: 50px;
+  }
