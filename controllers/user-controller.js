@@ -7,9 +7,10 @@ const userController = {
     return res.render('signup')
   },
   signUp: (req, res, next) => {
-    if (req.body.password !== req.body.passwordCheck) throw new Error('密碼不一致!')
+    if (req.body.password !== req.body.checkPassword) throw new Error('密碼不一致!')
+    if (req.body.name.length > 50) throw new Error('名稱字數限制為50字!')
 
-    User.findOne({
+    return User.findOne({
       where: {
         [Op.or]: [
           { email: req.body.email },
@@ -42,14 +43,14 @@ const userController = {
   },
   signIn: (req, res ,next) => {
     req.flash('success_messages', '成功登入！')
-    res.redirect('/')
+    res.redirect('/tweets')
   },
   adminSignInPage: (req, res) => {
     return res.render('admin/signin')
   },
   adminSignIn: (req, res, next) => {
     req.flash('success_messages', '成功登入！')
-    res.redirect('/admin/')
+    res.redirect('/admin/tweets')
   }
 }
 
