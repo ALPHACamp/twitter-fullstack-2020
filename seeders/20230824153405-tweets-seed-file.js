@@ -12,7 +12,7 @@ module.exports = {
         .map(item => {
           return {
             description: item,
-            User_id: users[Math.floor(Math.random() * users.length)].id,
+            user_id: users[Math.floor(Math.random() * users.length)].id,
             created_at: new Date(),
             updated_at: new Date()
           }
