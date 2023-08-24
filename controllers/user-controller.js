@@ -7,36 +7,42 @@ const userController = {
   signupPage: (req, res) => {
     res.render("signup");
   },
-  signup: (req, res) => {
-    const { account, name, email, password, passwordCheck } = req.body;
-    // if (password !== passwordCheck) throw new Error('密碼與確認密碼不相符')
-    return User.findOne({ where: { email } })
-      .then((user) => {
-        if (user) {
-          throw new Error("Email已經被使用");
+  signup: (req, res, next) => {
+    const { account, name, email, password, checkPassword } = req.body
+    const emailPromise = User.findOne({ where: { email } })
+    const accountPromise = User.findOne({ where: { account } })
+    let mailMsg = ''
+    let accountMsg = ''
+    let passwordMsg = ''
+
+    // if (!account|| !name|| !email|| !password|| !checkPassword)throw new Error ('所有欄位皆為必填')
+
+    return Promise.all([emailPromise, accountPromise])
+      .then(([mailUser, accountUser]) => {
+        if (mailUser) {
+          mailMsg = '此信箱已被使用'
         }
-        return User.findOne({ where: { account } });
-      })
-      .then((user) => {
-        if (user) {
-          throw new Error("帳號已經被使用");
+        if (accountUser) {
+          accountMsg = '此帳號已被使用'
         }
-        return bcrypt.hash(password, 10);
+        if (password !== checkPassword) {
+          passwordMsg = '密碼與確認密碼不相符'
+        }
+        if (mailMsg || accountMsg || passwordMsg) {
+          return res.render('signup', { passwordMsg, mailMsg, accountMsg, account, name, email })
+        } else {
+          bcrypt.hash(password, 10)
+            .then(hashedPassword => {
+              return User.create({
+                account,
+                name,
+                email,
+                password: hashedPassword
+              })
+            })
+            .then(() => res.redirect('/signin'))
+        }
       })
-      .then((hashedPassword) => {
-        return User.create({
-          account,
-          name,
-          email,
-          password: hashedPassword,
-        });
-      })
-      .then(() => {
-        res.redirect("/signin");
-      })
-      .catch((err) => {
-        console.error(err);
-      });
   },
   signinPage: (req, res) => {
     res.render("signin");

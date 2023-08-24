@@ -64,39 +64,27 @@
       </div>
       <div class="replies-list">
       {{#each tweet.Replies}}
-        {{>reply-li}}
+      {{>reply-li}}
       {{/each}}
-      </div>
-    </section>
-    {{>recommendation}}
-  </main>
+    </div>
+  </section>
+  {{>recommendation}}
+</main>
 
 {{!-- modal --}}
 
-  <div
-  class="modal fade"
-  id="replyModal"
-  tabindex="-1"
-  aria-labelledby="replyModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content" style="width:600px">
       <div class="modal-header">
-        <button
-          type="button"
-          style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;"
+          data-bs-dismiss="modal" aria-label="Close">
           <img src="/images/icon-close.svg" alt="" />
         </button>
       </div>
       <div class="modal-body d-flex position-relative">
-        <div
-          class="avatar d-flex flex-column"
-          style="width:50px; height:50px; border-radius:50%; background-color:gray"
-        >
+        <div class="avatar d-flex flex-column"
+          style="width:50px; height:50px; border-radius:50%; background-color:gray">
           <img src="" alt="" />
         </div>
         <div class="content ms-2" style="max-width:510px">
@@ -108,17 +96,12 @@
             {{tweet.description}}
           </div>
           <div class="toWhom m-3">
-            <p
-              style="display: inline; font-weight:600; color:#6C757D"
-            >回覆給</p><p
-              style="display: inline; font-weight:600; color:#FF6600"
-            > @{{tweet.User.name}}</p>
+            <p style="display: inline; font-weight:600; color:#6C757D">回覆給</p>
+            <p style="display: inline; font-weight:600; color:#FF6600"> @{{tweet.User.name}}</p>
           </div>
         </div>
-        <div
-          class="divider position-absolute"
-          style="height:76px; width:2px; background-color:#CCD6DD; left:40px; top:76px"
-        ></div>
+        <div class="divider position-absolute"
+          style="height:76px; width:2px; background-color:#CCD6DD; left:40px; top:76px"></div>
       </div>
       <div
         class="footer position-relative"
@@ -131,25 +114,12 @@
           >
             <img src="" alt="" />
           </div>
-          <input
-            type="text"
-            class="w-100"
-            style="border:none; outline: none; background: none; max-width:510px"
-            placeholder="推你的回覆"
-            name="text"
-            required
-          />
-          <div
-            class="position-absolute bottom-0 end-0 d-flex align-items-center"
-          >
-            <p
-              class="warning mb-0"
-              style="text-align:center"
-            >字數不可超過140個字</p>
-            <button
-              type="submit"
-              style="border: none; background: none; padding: 0; margin: 15px; cursor: pointer; background-color:#FF6600; width:64px; height:40px; border-radius:50px; color:white"
-            >回覆</button>
+          <input type="text" class="w-100" style="border:none; outline: none; background: none; max-width:510px"
+            placeholder="推你的回覆" name="text" required />
+          <div class="position-absolute bottom-0 end-0 d-flex align-items-center">
+            <p class="warning mb-0" style="text-align:center">字數不可超過140個字</p>
+            <button type="submit"
+              style="border: none; background: none; padding: 0; margin: 15px; cursor: pointer; background-color:#FF6600; width:64px; height:40px; border-radius:50px; color:white">回覆</button>
           </div>
         </form>
       </div>

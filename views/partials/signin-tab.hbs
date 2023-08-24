@@ -8,14 +8,6 @@
     border-bottom: solid 2px #657786;
   }
 
-  p {
-    margin-top: 4px;
-    font-size: 12px;
-    font-weight: 500;
-    color: #FC5A5A;
-    height: 20px;
-  }
-
   button {
     margin: 8px 0;
     height: 46px;
@@ -47,7 +39,7 @@
 
 <div class="d-flex flex-column" style=" height: 78px;">
   <label for="account">帳號</label>
-  <input {{#if error_messages}}style="border-bottom: solid 2px red;" {{/if}} type="text" placeholder="請輸入帳號"
+  <input {{#if account_messages}}style="border-bottom: solid 2px red;" {{/if}} type="text" placeholder="請輸入帳號"
     name="account" id="account" required>
   {{> form-msg}}
 </div>

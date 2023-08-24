@@ -3,13 +3,25 @@
     margin: 0;
   }
 
+  .main-name {
+    border-bottom: 1px solid #E6ECF0
+  }
+
+  .main-name h1 {
+    font-weight: 700;
+    font-size: 24px;
+    margin: 1.5rem
+  }
+
   .cards-group {
+    padding-left: 8px;
+    padding-bottom: 8px;
     display: flex;
     flex-wrap: wrap;
   }
 
   .card-container {
-    margin: 16px;
+    margin: 8px;
     width: 210px;
     height: 314px;
     background-color: #F6F7F8;
@@ -82,10 +94,13 @@
   }
 </style>
 
-<main "d-flex justify-content-center">
-  {{> admin-sidebar}}
-  <section>
-    <div>使用者列表</div>
+<main class="d-flex justify-content-center">
+  {{> admin-sidebar route='users'}}
+  <section style="width:937px; border:1px solid #E6ECF0">
+
+    <div class="main-name">
+      <h1>使用者列表</h1>
+    </div>
     <div class="cards-group">
       {{#each users}}
       <div class="card-container">
@@ -112,12 +127,12 @@
             </div>
             <div class="like-content d-flex">
               <img src="/images/like.svg" alt="">
-              <p>999</p>
+              <p>{{this.likeCount}}</p>
             </div>
           </div>
           <div class="d-flex justify-content-center">
             <p class="followingCount">{{this.followingCount}}個<span>跟隨中</span></p>
-            <p class="followerCount">{{this.followingCount}}位<span>跟隨者</span></p>
+            <p class="followerCount">{{this.followerCount}}位<span>跟隨者</span></p>
           </div>
         </div>
 
