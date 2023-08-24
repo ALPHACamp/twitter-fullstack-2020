@@ -8,10 +8,10 @@
           <img src="/images/user-avatar.svg" class="user-avatar position-absolute" alt="">
           <div class="user-action d-flex flex-row-reverse gap-3">
             <a href="" class="btn btn-outline-primary d-flex justify-content-center align-items-center">編輯個人資料</a>
-            <a href="" class="info-pic btn btn-outline-primary d-flex justify-content-center align-items-center">
+            <a href="" class="{{#if isNoted}}active{{/if}} info-pic btn btn-outline-primary d-flex justify-content-center align-items-center  user-card-icon user-card-icon-noti">
               <img src="/images/icons/noti_outlined.svg" alt="" class="filter-main-color">
             </a>
-            <a href="" class="mes-pic btn btn-outline-primary d-flex justify-content-center align-items-center">
+            <a href="" class="{{#if isMessaged}}active{{/if}}mes-pic btn btn-outline-primary d-flex justify-content-center align-items-center user-card-icon user-card-icon-message">
               <img src="/images/icons/message_outlined.svg" alt="" class="filter-main-color">
             </a>
           </div>

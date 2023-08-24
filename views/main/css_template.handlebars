@@ -1,4 +1,18 @@
 <h2>發文/回文tweet</h2>
+
+
+<div class="post-tweet-area link-unstyled m-0 py-0 px-4" data-bs-toggle="modal" data-bs-target="#tweet-model">
+    <div class="m-0 gap-2 d-flex align-items-center">
+        <div class="tweet-user-icon flex-shrink-0  p-0">
+            <a href="#" class="overflow-hidden  rounded-circle link-unstyled  child-img-center w-100 h-100 p-0">
+                <img src="/images/icons/ac_icon.svg" alt="" class="w-100 h-100">
+            </a>
+        </div>
+        <p class="p-0 m-0 text-secondary fw-bold">有什麼新鮮事？</p>
+    </div>
+    <button type="" class="btn btn-primary rounded-pill">回覆</button>
+</div>
+
 <hr/>
 <div class="tweet-user-horizontal">
     <a href="#" class=" d-flex gap-2 link-unstyled align-items-center">
@@ -64,8 +78,32 @@
 </div>
 <hr/>
 {{!--隱藏起來的Model--}}
+{{!-- 以下是tweet model --}}
+
+<div class="modal fade" id="tweet-model" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-start">
+                <button type="button" class="btn btn-outline-light modal-close-btn" data-bs-dismiss="modal" aria-label="Close">
+                    <img src="/images/icons/close_outlined.svg" alt="" class="filter-main-color">
+                </button>
+            </div>
+            <div class="modal-body p-0 m-0">
+                <form action="" class="modal-form m-0 mt-3 py-0 px-4">
+                    <div class="m-0 gap-2 d-flex">
+                        <label for="tweet" class="form-label overflow-hidden  flex-shrink-0 rounded-circle  child-img-center p-0 m-0">
+                            <img src="/images/icons/ac_icon.svg" alt="" class="p-0 m-0 h-100 w-100">
+                        </label>
+                        <textarea class="form-control ps-0" id="tweet" name="tweet" rows="1" placeholder="有什麼新鮮事？"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary rounded-pill">回覆</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <!--reply Modal -->
-<div class="modal fade" id="reply-model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="reply-model" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-start">
@@ -103,10 +141,10 @@
                 </div>
                 <form action="" class="modal-form m-0 mt-3 py-0 px-4">
                     <div class="m-0 gap-2 d-flex">
-                        <label for="reply" class="form-label tweet-user-icon overflow-hidden  rounded-circle  child-img-center p-0 m-0">
-                            <img src="/images/icons/ac_icon.svg" alt="" class="p-0 m-0">
+                        <label for="reply" class="form-label overflow-hidden  flex-shrink-0 rounded-circle  child-img-center p-0 m-0">
+                            <img src="/images/icons/ac_icon.svg" alt="" class="p-0 m-0 h-100 w-100">
                         </label>
-                        <textarea class="form-control" id="reply" name="reply" rows="1" placeholder="推你的回覆"></textarea>
+                        <textarea class="form-control ps-0" id="reply" name="reply" rows="1" placeholder="推你的回覆"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary rounded-pill">回覆</button>
                 </form>
