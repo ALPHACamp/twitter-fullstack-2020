@@ -239,12 +239,11 @@
     right: 16px;
 }
 
-.form-label{
+#tweet-model .form-label, #reply-model .form-label{
     height: 50px;
     width: 50px;
 }
-.form-label img{
-}
+
 .modal-form textarea, .modal-form textarea:focus{
     padding-top:17px;
     border: none;
