@@ -31,6 +31,7 @@ app.use(flash());
 app.use("/upload", express.static(path.join(__dirname, "upload"))); //上傳圖片
 app.use("/", express.static("public"));
 app.use((req, res, next) => {
+  res.locals.currentUser = req.user
   res.locals.success_messages = req.flash("success_messages");
   res.locals.error_messages = req.flash("error_messages");
 

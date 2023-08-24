@@ -7,6 +7,7 @@ const replyController = {
     const isUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
     try {
       const userId = req.params.id;
+      const currentUserId = req.user.id;
       const user = await User.findByPk(userId,{
         include: [{ 
           model: Reply,include: [
@@ -22,6 +23,7 @@ const replyController = {
       if (user) {
         const userData = user.toJSON();
         const recommend = await getEightRandomUsers(req);
+        const isFollowed = user.Followers.some((l) => l.id === currentUserId);
         const replies = user.Replies.map(reply => ({
           User: {
             account: reply.User.account,
@@ -39,6 +41,7 @@ const replyController = {
           recommend,
           isUser,
           replies,
+          isFollowed
         };
 
         res.render('user/user-replies', dataToRender);

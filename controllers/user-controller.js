@@ -109,6 +109,7 @@ const userController = {
       if (user) {
         const userData = user.toJSON();
         const recommend = await getEightRandomUsers(req);
+        const isFollowed = user.Followers.some((l) => l.id === currentUserId);
         const tweets = user.Tweets.map((tweet) => {
           const replies = tweet.Replies.length;
           const likes = tweet.LikedUsers.length;
@@ -131,6 +132,7 @@ const userController = {
           tweets,
           recommend,
           isUser,
+          isFollowed
         };
 
         res.render("user/user-tweets", dataToRender);
@@ -170,14 +172,14 @@ const userController = {
       const userId = req.params.id;
       const user = await User.findByPk(userId,{
         include:[
-          { model: User, as: 'Followers' }
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
         ]
       });
 
       if (user) {
         const userData = user.toJSON();
         const recommend = await getEightRandomUsers(req); 
-
         const follow = userData.Followers.map((followerUser) => {
           return {
             id: followerUser.id,
@@ -190,7 +192,7 @@ const userController = {
         const dataToRender = {
           users: userData,
           recommend,
-          follow
+          follow,
         };
 
         res.render("user/user-follower", dataToRender);
@@ -209,14 +211,14 @@ const userController = {
       const userId = req.params.id;
       const user = await User.findByPk(userId,{
         include: [
-          { model: User, as: 'Followings' }
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings'}
         ]
       });
 
       if (user) {
         const userData = user.toJSON();
         const recommend = await getEightRandomUsers(req);
-
         const follow = userData.Followings.map((followingUser) => {
           return {
             id: followingUser.id,
@@ -225,13 +227,11 @@ const userController = {
             introduction: followingUser.introduction
           };
         });
-
         const dataToRender = {
           users: userData,
           recommend,
-          follow
+          follow,
         };
-
         res.render("user/user-following", dataToRender);
       } else {
         res.status(404).send("未找到用户");

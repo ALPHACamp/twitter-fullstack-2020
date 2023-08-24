@@ -17,13 +17,16 @@ const likeController = {
             { model: User, as: "LikedUsers" }
           ],
           order: [["updatedAt", "DESC"]]
-        }]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
       });
 
       if (user) {
         const userData = user.toJSON();
         const recommend = await getEightRandomUsers(req);
-        
+        const isFollowed = user.Followers.some((l) => l.id === currentUserId);
         const likedTweets = user.LikedTweets.map((likedTweet) => {
           const replies = likedTweet.Replies.length; 
           const likes = likedTweet.LikedUsers.length; 
@@ -45,7 +48,8 @@ const likeController = {
           user: userData,
           likedTweets,
           recommend,
-          isUser
+          isUser,
+          isFollowed
         };
 
         res.render('user/user-likes', dataToRender);

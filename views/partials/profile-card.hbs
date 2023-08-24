@@ -40,12 +40,24 @@
       style="margin-top:7px; width:40px; height:40px;border-radius: 50px; border:1px solid #FF6600;">
       <i class="fa-regular fa-bell fa-lg justify-content-center align-items-center" style="color: #FF6600;"></i>
     </div>
-    <div class="follow-btn d-flex justify-content-center align-items-center me-3 mt-1"
-      style="width:96px; height:40px; background: #FF6600; border-radius:50px;">
-      <form action="/followships/{{user.id}}?_method=DELETE" method="POST">
-        <button type="submit" class="btn" style="white-space: nowrap;color:#ffffff;font-size: 16px;">正在跟隨</button>
-      </form>
-    </div>
+      {{#if this.isFollowed}}
+      <div class="follow-btn d-flex justify-content-center align-items-center me-3 mt-1"
+        style="width:96px; height:40px; background: #FF6600; border-radius:50px;">
+        <form action="/users/{{user.id}}/follow?_method=DELETE" method="post">
+          <button type="submit"
+            style="border: none; background: none; padding: 0; margin: 0px; cursor: pointer; background-color:#FF6600; width:96px; height:40px; border-radius:50px; color:white">正在跟隨</button>
+        </form>
+      </div>
+      {{else}}
+      <div class="follow-btn d-flex justify-content-center align-items-center me-2 mt-1"
+        style="width:64px; height:40px; background:  #FFFFFF; border-radius:50px; white-space: nowrap;">
+        <form action="/users/{{user.id}}/follow" method="post">
+          <button type="submit"
+            style="border: none; background: none; padding: 0; margin: 0px; cursor: pointer; color:#FF6600; border:1px solid #FF6600; width:64px; height:40px; border-radius:50px;">跟隨</button>
+          </form>
+        </form>
+      </div>
+      {{/if}}
     {{/if}}
   </div>
 </div>
