@@ -91,7 +91,37 @@ body {
   border: none;
   border-radius: 50px;
 
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-  }
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+/* admin-navbar */
+.container-logo {
+  margin-top: 16px;
+}
+
+.container-logo .logo {
+  height: 40px;
+  width: 40px;
+  object-fit: unset;
+}
+
+.nav-row {
+  position: relative;
+  height: 26px;
+  text-decoration: none;
+  color: #44444F;
+}
+
+.nav-row:hover,
+.active {
+  text-decoration: none;
+  color: #FF6600;
+}
+
+.nav-row-title {
+  padding-left: 35px;
+  margin-bottom: 40px;
+}
+
