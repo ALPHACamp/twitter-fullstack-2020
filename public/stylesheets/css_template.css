@@ -126,7 +126,7 @@
 
 .navbar-main{
     position: relative;
-    height:1200px;
+    height: 100vh;
     width:182px;
 }
 .navbar-ac-icon{

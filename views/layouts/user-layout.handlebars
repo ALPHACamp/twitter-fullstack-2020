@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="https://lighthouse.alphacamp.co/images/logo-simple.jpg">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap_custom.css">
+    <link rel="stylesheet" href="/stylesheets/css_template.css">
+    <title>Simple Twitter</title>
+
+<body class="">
+    {{!-- 先把error message放在這邊 --}}
+    {{> message}}
+    <main role="main" class="">
+        <div class="container-lg">
+            <div class="row">
+                <div class="col-2">
+
+                <div class="navbar-main pt-2">
+                    <a href="#" class="navbar-ac-icon overflow-hidden  rounded-circle link-unstyled  child-img-center m-2">
+                        <img src="/images/icons/ac_icon.svg" alt="" class="w-100 h-100">
+                    </a>
+                    <ul class="nav flex-column gap-2">
+                        <li class="nav-item">
+                            <a href="#" aria-current="{{#ifCond route 'home'}}page{{/ifCond}}" class="{{#ifCond route 'home'}}active{{/ifCond}} nav-link nav-link-home link-unstyled d-flex justify-content-start align-items-center ">
+                                <div class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1">
+                                    <img src="/images/icons/home_outlined.svg" alt="">
+                                    <p class=" p-0 m-0">首頁</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" aria-current="{{#ifCond route 'user'}}page{{/ifCond}}" class="{{#ifCond route 'user'}}active{{/ifCond}} nav-link nav-link-info link-unstyled d-flex justify-content-start align-items-center ">
+                                <div class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1">
+                                    <img src="/images/icons/user_outlined.svg" alt="">
+                                    <p class=" p-0 m-0">個人資料</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" aria-current="{{#ifCond route 'setting'}}page{{/ifCond}}" class="{{#ifCond route 'setting'}}active{{/ifCond}} nav-link nav-link-setting link-unstyled d-flex justify-content-start align-items-center ">
+                                <div class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1">
+                                    <img src="/images/icons/cog_outlined.svg" alt="">
+                                    <p class=" p-0 m-0">設定</p>
+                                </div>
+                            </a>
+                        </li>
+
+                        <button type="button" class="nav-tweet-btn btn btn-primary rounded-pill px-4 py-2" data-bs-toggle="modal" data-bs-target="#tweet-model">
+                            推文
+                        </button>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link nav-link-logout link-unstyled d-flex justify-content-start align-items-center ">
+                                <div class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1">
+                                    <img src="/images/icons/logout_outlined.svg" alt="">
+                                    <p class=" p-0 m-0">登出</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+                </div>
+                <div class="col-7">
+                    {{{body}}}
+                </div>
+                <div class="col-3">
+                    <div class="recommend-user-card card border-0 shadow-none mt-3">
+                        <h4 class="card-title m-0 p-4">推薦跟隨</h4>
+                        <hr class="m-0">
+                        {{!-- 要使用each的地方 --}}
+                        <div class="card-body p-0">
+                            <div class="single-user-card card border-0 shadow-none">
+                                <div class="card-body d-flex justify-content-between align-items-center p-3">
+                                    <div class="d-flex gap-2">
+                                        <img src="/images/icons/default_avatar.svg" alt="">
+                                        <div>
+                                        <p class="fw-bold fs-6 m-0 p-0 text-truncate">Apple</p>
+                                        <p class="font-size-sm text-secondary m-0 p-0 text-truncate">@apple</p>
+                                    </div>
+                                </div>
+                                {{#if isFollowed}}
+                                    {{!-- 要使用if/else的地方 --}}
+                                    <form action="" method="post">
+                                        <button type="submit" class="btn btn-primary">正在跟隨</button>
+                                    </form>
+                                {{else}}
+                                    {{!-- 要使用if/else的地方 --}}
+                                    <form action="" method="post">
+                                        <button type="submit" class="btn btn-outline-primary">跟隨</button>
+                                    </form>
+                                {{/if}}
+                                {{!-- 要使用if/else的地方 --}}
+                                </div>
+                            </div>
+                            {{!-- 要使用each的地方 --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+<script src="/javascripts/popper.min.js"></script>
+<script src="/javascripts/bootstrap.js"></script>
+</html>
