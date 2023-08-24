@@ -1,0 +1,32 @@
+<div class="tweets-container">
+  {{#each follow}}
+  <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
+    <div class="avatar ps-3">
+      <a href="/users/{{this.id}}" style="text-decoration:none;">
+        <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}"
+          class="rounded-circle me-3" style="width: 50px;height: 50px;background: #C4C4C4;">
+      </a>
+    </div>
+    <div class="tweet-content">
+      <div class="name-container d-flex justify-content-between pe-3" style="width: 555px;">
+        <div class="name">
+          <span style="font-size: 16px;font-weight:700;">{{this.name}}</span>
+        </div>
+
+        <div class="follow-btn" style="width: 96px;height: 40px">
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn"
+              style="display: flex; justify-content: center; width: 100px; font-size: 16px; background: #FF6600;border-radius: 100px;color:#ffffff;">正在跟隨</button>
+          </form>
+        </div>
+
+      </div>
+      <div class="content mt-3 mb-3" style="min-height:15px;">
+        {{this.introduction}}
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+</div>
+</div>

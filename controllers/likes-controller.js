@@ -1,5 +1,5 @@
 const { User } = require('../models')
-const randomUsersHelper = require('../helpers/randomUsersHelper');
+const { getEightRandomUsers } = require("../helpers/randomUsersHelper");
 const helpers = require('../_helpers')
 const likeController = {
   getLikes: async (req, res, next) => {
@@ -10,11 +10,11 @@ const likeController = {
 
       if (user) {
         const userData = user.toJSON();
-        const eightRandomUsers = await randomUsersHelper.getEightRandomUsers(req);
+        const recommend = await getEightRandomUsers(req);
 
         const dataToRender = {
           user: userData,
-          recommend: eightRandomUsers,
+          recommend,
           isUser
         };
 

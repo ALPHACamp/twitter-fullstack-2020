@@ -1,26 +1,53 @@
 const { User } = require('../models')
+const helpers = require('../_helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
 
-const apiController = {
-  getUser: (req, res, next) => { // 取得帳戶設定頁面
-    const id = req.params.id
+  const apiController = {
+    getUser: async (req, res, next) => {
+      try {
+        const currentUser = helpers.getUser(req)
+        const UserId = req.params.id
+        const user = await User.findOne({
+          where: { id: UserId }
+        })
+        if (currentUser.id !== user.id) {
+          return res.json({ status: 'error', messages: '無法編輯其他使用者資料！' })
+        }
+        res.json(user.toJSON())
+      } catch (err) {
+        next(err)
+      }
+    },
+    putUser: async (req, res, next) => {
+      try {
+        const logInUserId = helpers.getUser(req).id
+        const UserId = req.params.id
+        const { name } = req.body
+        const introduction = req.body.introduction || ''
+        const avatar = req.files ? req.files.avatar : ''
+        const background = req.files ? req.files.background : ''
 
-    return User.findByPk(id, { raw: true, nest: true })
-      .then(user => {
-        return res.status(200).json(user)
-      })
-      .catch(err => next(err))
-  },
+        let uploadAvatar = ''
+        let uploadBackground = ''
+        if (avatar) {
+          uploadAvatar = await imgurFileHandler(avatar[0])
+        }
+        if (background) {
+          uploadBackground = await imgurFileHandler(background[0])
+        }
+        const user = await User.findByPk(UserId)
 
-  postUser: (req, res, next) => { // 編輯帳戶設定
-    const { name } = req.body
-    const id = req.params.id
-    return User.findByPk(id)
-      .then(user => {
-        return user.update({ name })
-      })
-      .then(user => res.json({ status: 'success', user }))
-      .catch(err => next(err))
-  }
+        const data = await user.update({
+          name,
+          introduction,
+          avatar: uploadAvatar || user.avatar,
+          background: uploadBackground || user.background
+        })
+        res.json({ status: 'success', message: '已成功更新!', data })
+      } catch (err) {
+        next(err)
+      }
+    },
 }
 
 module.exports = apiController

@@ -4,16 +4,9 @@
     {{>profile-card route='user-tweets'}}
     <div class="tweets-list">
       <div class="li-container">
+        {{#each tweets}}
         {{> tweet-li}}
-        {{> tweet-li}}
-        {{> tweet-li}}
-        {{> tweet-li}}
-        {{> tweet-li}}
-        {{> tweet-li}}
-        {{> tweet-li}}
-        {{> tweet-li}}
-        {{> tweet-li}}
-        {{> tweet-li}}
+        {{/each}}
       </div>
   </section>
   {{> recommendation}}

@@ -1,7 +1,7 @@
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content" style="width:634px; height:650px;">
-      <form id="edit-modal" action="/users/{{user.id}}?_method=PUT" method="post" enctype="multipart/form-data">
+      <form id="edit-modal" action="/api/users/{{user.id}}" data-id="{{user.id}}" enctype="multipart/form-data">
         <div class="modal-header">
           <div class="d-flex align-items-center">
             <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close" style="color: #FF6600;">
@@ -74,9 +74,9 @@
     </form>
   </div>
 </div>
+<script src="/javascripts/editModal.js"></script>
 
-
-<script>
+{{!-- <script>
   const editModal = document.querySelector('#edit-modal')
   const introductionCount = document.querySelector('#introduction-area')
   const nameCount = document.querySelector('#name-area')
@@ -98,4 +98,4 @@
     }
   }
 
-</script>
+</script> --}}
