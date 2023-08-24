@@ -1,15 +1,17 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
-const { authenticated, authenticatedAdmin } = require('../middleware/auth')
+const { authenticated, authenticatedAdmin, authenticatedSelfOnly } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const admin = require('./modules/admin')
+const api = require('./modules/api')
 const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
 const replyController = require('../controllers/reply-controller')
 const loginController = require('../controllers/login-controller')
 
 router.use('/admin', admin)
+router.use('/api', api)
 router.get('/tweets', authenticated, tweetController.getTweets) // test
 router.get('/signup', loginController.signUpPage)
 router.post('/signup', loginController.signUp)

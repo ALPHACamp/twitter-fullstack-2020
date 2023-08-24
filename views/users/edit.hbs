@@ -1,0 +1,26 @@
+<div class="mb-4">
+  <h1 class="h3 font-weight-normal mb-3">帳戶設定</h1>
+</div>
+<form class="form-signup" action="/api/users/{{userId}}" method="POST" style="width: 100%;">
+  <div class="form-row m-3">
+    <label for="account">帳號</label>
+    <input type="text" id="account" name="account" class="form-control" value="{{account}}" required>
+  </div>
+  <div class="form-row m-3">
+    <label for="name">名稱</label>
+    <input type="text" id="name" name="name" class="form-control" value="{{name}}" required>
+  </div>
+  <div class="form-row m-3">
+    <label for="email">Email</label>
+    <input type="text" id="email" name="email" class="form-control" value="{{email}}" required>
+  </div>
+  <div class="form-row m-3">
+    <label for="password">密碼</label>
+    <input type="password" id="password" name="password" class="form-control" required>
+  </div>
+  <div class="form-row m-3">
+    <label for="checkPassword">密碼再確認</label>
+    <input type="password" id="checkPassword" name="checkPassword" class="form-control" required>
+  </div>
+  <button class="btn btn-primary btn-block btn-end" type="submit">儲存</button>
+</form>
