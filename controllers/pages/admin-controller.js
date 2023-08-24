@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken')
 const _helper = require('../../_helpers')
 
 const adminController = {
