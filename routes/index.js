@@ -13,7 +13,7 @@ router.get('/users/:id/setting', userController.getUserSetting)
 
 // test
 router.get('/', (req, res) => {
-  res.render('user-setting')
+  res.render('followings')
 })
 
 module.exports = router

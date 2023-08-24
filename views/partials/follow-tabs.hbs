@@ -3,31 +3,16 @@
 
 <div class="row mb-2" style="height: 53px; border: 1px #E6ECF0 solid;">
   <ul class="nav nav-tab" style="height: 53px;">
-    {{#ifCond route 'followings'}}
     <li class="nav-item d-flex align-items-center justify-content-center"
-      style="border-bottom:2px solid #FF6600; width:130px;">
-      <a class="nav-link" href="/users/{{user.id}}/followings">
-        <font color="#FF6600">追蹤者</font>
+      style="width:130px;{{#ifCond route 'followings'}} border-bottom:2px solid #FF6600;{{/ifCond}}">
+      <a class="nav-link" href="/users/{{user.id}}/followings"  style="color:#657786;{{#ifCond route 'followings'}}color:#FF6600;{{/ifCond}}">
+        追蹤者
       </a>
     </li>
-    <li class="nav-item d-flex align-items-center justify-content-center" style="width:130px;">
-      <a class="nav-link" href="/users/{{user.id}}/followers">
-        <font color="#657786">正在追隨</font>
+    <li class="nav-item d-flex align-items-center justify-content-center" style="width:130px; {{#ifCond route 'followers'}} border-bottom:2px solid #FF6600;{{/ifCond}}">
+      <a class="nav-link" href="/users/{{user.id}}/followers" style="color:#657786; {{#ifCond route 'followers'}}color:#FF6600;{{/ifCond}}">
+        正在追隨
       </a>
     </li>
-    {{/ifCond}}
-
-    {{#ifCond route 'followers'}}
-    <li class="nav-item d-flex align-items-center justify-content-center" style="width:130px;">
-      <a class="nav-link" href="/users/{{user.id}}/followings">
-        <font color="#657786">追蹤者</font>
-      </a>
-    </li>
-    <li class="nav-item d-flex align-items-center justify-content-center" style="border-bottom:2px solid #FF6600; width:130px;">
-      <a class="nav-link" href="/users/{{user.id}}/followers">
-        <font color="#FF6600">正在追隨</font>
-      </a>
-    </li>
-    {{/ifCond}}
   </ul>
 </div>
