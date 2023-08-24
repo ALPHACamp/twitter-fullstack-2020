@@ -4,6 +4,11 @@ const router = express.Router()
 const passport = require('../config/passport')
 const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
+// 使用Modules
+router.get('/tweets', tweetController.getTweets)
+
+router.get('/', (req, res) => res.redirect('/tweets'))
+
 const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated, authenticatedAdmin } = require('../middleware/auth')
 // 引入Modules
