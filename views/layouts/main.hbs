@@ -12,8 +12,15 @@
   <link rel="stylesheet" href="/stylesheets/style.css">
 
 </head>
-<body>
-  {{{body}}}
+<body class="d-flex flex-column h-100 bg-light">
+  <main class="flex-shrink-0" role="main">
+    <div class="album container pt-5">
+      <div class="pt-5">
+        {{> messages}}
+        {{{body}}}
+      </div>
+    </div>
+  </main>
 </body>
 
 <script src="https://kit.fontawesome.com/e5eef540c2.js" crossorigin="anonymous"></script>

@@ -1,18 +1,22 @@
 const express = require('express')
 const router = express.Router()
-
+const passport = require('../config/passport')
+const { authenticated, authenticatedAdmin } = require('../middleware/auth')
+const { generalErrorHandler } = require('../middleware/error-handler')
 const admin = require('./modules/admin')
 const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
 const replyController = require('../controllers/reply-controller')
-
-// test
-router.get('/tweets', tweetController.getTweets)
+const loginController = require('../controllers/login-controller')
 
 router.use('/admin', admin)
-
-router.get('/', (req, res) => res.send('Hello World!'))
-
-router.use('/', (req, res) => res.redirect('/tweets'))
+router.get('/tweets', authenticated, tweetController.getTweets) // test
+router.get('/signup', loginController.signUpPage)
+router.post('/signup', loginController.signUp)
+router.get('/signin', loginController.signInPage)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), loginController.signIn)
+router.get('/logout', loginController.logout)
+router.get('/', (req, res) => res.redirect('/tweets'))
+router.use('/', generalErrorHandler)
 
 module.exports = router
