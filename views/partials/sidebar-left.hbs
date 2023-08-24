@@ -61,11 +61,11 @@
       </div>
       <div class="modal-body position-relative" style="height:245px">
         <form action="/tweets" method="post" class="d-flex">
-          <div class="avatar" style="width:50px; height:50px; border-radius:50%; background-color:antiquewhite;">
-            <img src="" alt="" />
+          <div class="avatar d-flex justify-content-center" style="width:50px; height:50px; border-radius:50%; background-color:#FF6600; overflow:hidden">
+            <img src="{{currentUser.avatar}}" alt="" style="width:100%; height:100%; object-fit:cover; border-radius:50%"/>
           </div>
-          <input type="description" class="w-100" style="border:none; outline: none; background: none" placeholder="有什麼新鮮事?"
-            name="text" required />
+          <input type="text" class="w-100" style="border:none; outline: none; background: none" placeholder="有什麼新鮮事?"
+            name="description" required />
           <div class="position-absolute bottom-0 end-0 d-flex align-items-center">
             <p class="warning mb-0" style="text-align:center">字數不可超過140個字</p>
             <button type="submit"

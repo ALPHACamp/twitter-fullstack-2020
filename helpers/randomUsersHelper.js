@@ -19,6 +19,7 @@ async function getEightRandomUsers (req) {
       return {
         id: user.id,
         name: user.name,
+        avatar: user.avatar,
         account: user.account,
         isFollowed,
       };

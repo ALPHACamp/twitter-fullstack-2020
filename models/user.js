@@ -18,15 +18,9 @@ module.exports = (sequelize, DataTypes) => {
       });
       User.belongsToMany(User, {
         through: models.Followship,
-        foreignKey: 'followerId',
-        as: 'Followings'
-      })
-      User.belongsToMany(models.Tweet, {
-        through: models.Like,
-        as: "LikedTweets",
-        foreignKey: "UserId",
+        foreignKey: "followerId",
+        as: "Followings",
       });
-
     }
   }
   User.init(

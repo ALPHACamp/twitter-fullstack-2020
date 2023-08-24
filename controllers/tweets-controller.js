@@ -7,6 +7,7 @@ const tweetsController = {
     try {
       const recommend = await getEightRandomUsers(req);
       const currentUserId = helpers.getUser(req).id;
+      const currentUser = helpers.getUser(req)
       const tweets = await Tweet.findAll({
         include: [User, Reply, Like],
         order: [["updatedAt", "DESC"]],
@@ -17,6 +18,7 @@ const tweetsController = {
         const replies = tweet.Replies.length;
         const likes = tweet.Likes.length;
         const isLiked = tweet.Likes.some((l) => l.UserId === currentUserId);
+        const userAvatar = tweet.User.avatar;
         return {
           tweetId: tweet.id,
           userId: tweet.User.id,
@@ -27,9 +29,10 @@ const tweetsController = {
           replies,
           likes,
           isLiked,
+          userAvatar
         };
       });
-      return res.render("tweets", { tweets: showTweets, recommend });
+      return res.render("tweets", { tweets: showTweets, recommend, currentUser });
     } catch (err) {
       next(err);
     }
@@ -54,6 +57,7 @@ const tweetsController = {
     try {
       const recommend = await getEightRandomUsers(req);
       const currentUserId = helpers.getUser(req).id;
+      const currentUser = helpers.getUser(req)
       const { id } = req.params;
       const tweet = await Tweet.findByPk(id, {
         nest: true,
@@ -69,6 +73,7 @@ const tweetsController = {
         likesAmount,
         recommend,
         isLiked,
+        currentUser
       });
     } catch (err) {
       next(err);

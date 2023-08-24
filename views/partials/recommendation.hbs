@@ -18,18 +18,32 @@
             class="avatar"
             style="width:50px; height:50px; border-radius:50%; background-color:gray"
           >
-            <img src="" alt="" />
+            <a
+              href="/users/{{this.id}}/tweets"
+              class="d-flex justify-content-center align-items-center"
+            >
+              <img
+                src="{{this.avatar}}"
+                alt=""
+                style="width:100%; height:100%; object-fit:cover; border-radius:50%;"
+              />
+            </a>
           </div>
           <div
             class="user-name d-flex flex-column justify-content-center"
             style="height:47px; width:88px"
           >
-            <p class="m-0" style="font-weight:700">{{this.account}}</p>
+            <a class="user-text-link" href="/users/{{this.id}}/tweets">
+              <p class="m-0" style="font-weight:700">{{this.account}}</p>
+            </a>
             <p class="m-0" style="color:#92929D">@ {{this.name}}</p>
           </div>
           <div class="follow">
             {{#if this.isFollowed}}
-              <form action="/users/{{this.id}}/follow?_method=DELETE" method="post">
+              <form
+                action="/users/{{this.id}}/follow?_method=DELETE"
+                method="post"
+              >
                 <button
                   type="submit"
                   style="border: none; background: none; padding: 0; margin: 0px; cursor: pointer; background-color:#FF6600; width:96px; height:40px; border-radius:50px; color:white"

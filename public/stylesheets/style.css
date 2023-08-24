@@ -48,3 +48,12 @@
 .like-btn:hover {
   background-color: lightcoral;
 }
+
+.user-text-link {
+  text-decoration: none;
+  color: #000000;
+}
+
+.user-text-link:hover {
+  text-decoration: underline;
+}

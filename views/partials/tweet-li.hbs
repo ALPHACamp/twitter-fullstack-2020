@@ -4,13 +4,24 @@
 >
   <div
     class="avatar"
-    style="width:50px; height:50px; border-radius:50%; background-color:gray"
+    style="width:50px; height:50px; background-color:gray; border-radius:50%;"
   >
-    <img src="" alt="" />
+    <a
+      href="/users/{{this.userId}}/tweets"
+      class="d-flex justify-content-center align-items-center"
+    >
+      <img
+        src="{{this.userAvatar}}"
+        alt=""
+        style="width:100%; height:100%; object-fit:cover; border-radius:50%;"
+      />
+    </a>
   </div>
   <div class="content ms-2" style="max-width:528px;min-width:528px">
     <div class="account d-dlex flex-row mt-2">
-      <p style="display: inline; font-weight:700">{{this.userAccount}}</p>
+      <a class="user-text-link" href="/users/{{this.userId}}/tweets">
+        <p style="display: inline; font-weight:700">{{this.userAccount}}</p>
+      </a>
       <p
         style="display: inline; color:#6C757D"
       >@{{this.userName}}．{{relativeTimeFromNow this.createdAt}}</p>
@@ -44,13 +55,10 @@
       <div class="likes d-flex align-items-center">
         {{#if this.isLiked}}
           <form
-            action="/tweets/{{this.tweetId}}/like?_method=DELETE"
+            action="/tweets/{{this.tweetId}}/unlike"
             method="post"
           >
-            <button
-              class="like-btn"
-              type="submit" 
-            >
+            <button class="like-btn" type="submit">
               <img
                 src="/images/icon-like-active.svg"
                 alt=""
@@ -60,10 +68,7 @@
           </form>
         {{else}}
           <form action="/tweets/{{this.tweetId}}/like" method="post">
-            <button
-              class="like-btn"
-              type="submit"
-            >
+            <button class="like-btn" type="submit">
               <img src="/images/icon-like.svg" alt="" />
             </button>
           </form>
@@ -144,7 +149,7 @@
             class="w-100"
             style="border:none; outline: none; background: none; max-width:510px"
             placeholder="推你的回覆"
-            name="text"
+            name="comment"
             required
           />
           <div

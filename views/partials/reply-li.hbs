@@ -4,15 +4,31 @@
 >
   <div
     class="avatar me-3"
-    style="width:50px; height:50px; border-radius:50%; background-color:gray"
+    style="width:50px; height:50px; border-radius:50%; background-color:gray; overflow:hidden"
   >
-    <img src="" alt="" />
+    <a
+      href="/users/{{this.userId}}/tweets"
+      class="d-flex justify-content-center align-items-center"
+    >
+      <img
+        src="{{this.User.avatar}}"
+        alt=""
+        style="width:100%; height:100%; object-fit:cover; border-radius:50%;"
+      />
+    </a>
   </div>
   <div class="content ms-2 mb-3" style="width:528px">
     <div class="account d-dlex flex-row">
-      <p style="display: inline; font-weight:700">{{this.User.account}}</p>
-      <p style="display: inline; color:#6C757D">@{{this.User.name}}．{{relativeTimeFromNow this.createdAt}}</p>
-      <div class="toWhom mt-1" style="color:#6C757D">回覆 <p style="display: inline; color:#FF6600">@{{@root.tweet.User.name}}</p></div>
+      <a class="user-text-link" href="/users/{{this.User.id}}/tweets">
+        <p style="display: inline; font-weight:700">{{this.User.account}}</p>
+      </a>
+      <p
+        style="display: inline; color:#6C757D"
+      >@{{this.User.name}}．{{relativeTimeFromNow this.createdAt}}</p>
+      <div class="toWhom mt-1" style="color:#6C757D">回覆
+        <p
+          style="display: inline; color:#FF6600"
+        >@{{@root.tweet.User.name}}</p></div>
     </div>
     <div class="text mt-2">
       {{this.comment}}
