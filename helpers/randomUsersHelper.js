@@ -1,10 +1,11 @@
 const {User} = require('../models'); // 根据你的项目结构导入 User 模型
 const { Sequelize, Op } = require("sequelize");
+const helpers = require("../_helpers");
 
 // 随机获取指定数量的用户
 async function getEightRandomUsers (req) {
   try {
-    const currentUserId = req.user.id;
+    const currentUserId = helpers.getUser(req).id;
     const eightRandomUsers = await User.findAll({
       where: { id: { [Op.notIn]: [1, currentUserId] } }, //推薦清單排除第一個root跟自己  修改:用role判斷isAdmin在哪
       include: [{ model: User, as: "Followers" }],

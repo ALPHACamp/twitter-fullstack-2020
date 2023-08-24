@@ -11,10 +11,15 @@
   <div class="content ms-2" style="max-width:528px;min-width:528px">
     <div class="account d-dlex flex-row mt-2">
       <p style="display: inline; font-weight:700">{{this.userAccount}}</p>
-      <p style="display: inline; color:#6C757D">@{{this.userName}}．{{relativeTimeFromNow this.createdAt}}</p>
+      <p
+        style="display: inline; color:#6C757D"
+      >@{{this.userName}}．{{relativeTimeFromNow this.createdAt}}</p>
     </div>
     <div class="text mt-2">
-      <a href="/tweets/{{this.tweetId}}" style="text-decoration: none; color:#000000">
+      <a
+        href="/tweets/{{this.tweetId}}/replies"
+        style="text-decoration: none; color:#000000"
+      >
         {{this.text}}</a>
 
     </div>
@@ -22,30 +27,46 @@
       class="reaction d-flex justify-content-between mt-2"
       style="width:120px"
     >
-      <div class="replies d-flex">
+      <div class="replies d-flex align-items-center">
         <button
           type="button"
-          class="btn p-0"
+          class="reply-btn btn p-0"
           data-bs-toggle="modal"
           data-bs-target="#reply{{this.tweetId}}Modal"
         >
           <img src="/images/reply-icon.svg" alt="" />
         </button>
-        <p class="m-0" style="color:#6C757D; font-weight:600">{{this.replies}}</p>
+        <p
+          class="m-0"
+          style="color:#6C757D; font-weight:600"
+        >{{this.replies}}</p>
       </div>
-      <div class="likes d-flex">
+      <div class="likes d-flex align-items-center">
         {{#if this.isLiked}}
-        <form action="/tweets/{{this.tweetId}}/like?_method=DELETE" method="post">
-          <button type="submit" style="border:none ; background:none">
-            <img src="/images/icon-like-active.svg" alt="" / style="fill:#FC5A5A">
-          </button>
-        </form>
+          <form
+            action="/tweets/{{this.tweetId}}/like?_method=DELETE"
+            method="post"
+          >
+            <button
+              class="like-btn"
+              type="submit" 
+            >
+              <img
+                src="/images/icon-like-active.svg"
+                alt=""
+                style="fill:#FC5A5A"
+              />
+            </button>
+          </form>
         {{else}}
-        <form action="/tweets/{{this.tweetId}}/like" method="post">
-          <button type="submit" style="border:none ; background:none">
-            <img src="/images/icon-like.svg" alt="" />
-          </button>
-        </form>
+          <form action="/tweets/{{this.tweetId}}/like" method="post">
+            <button
+              class="like-btn"
+              type="submit"
+            >
+              <img src="/images/icon-like.svg" alt="" />
+            </button>
+          </form>
         {{/if}}
         <p class="m-0" style="color:#6C757D; font-weight:600">{{this.likes}}</p>
       </div>
@@ -83,10 +104,12 @@
         <div class="content ms-2" style="max-width:510px">
           <div class="account d-dlex flex-row mt-2">
             <p style="display: inline; font-weight:700">{{this.userAccount}}</p>
-            <p style="display: inline; color:#6C757D">@{{this.userName}}．{{relativeTimeFromNow this.createdAt}}</p>
+            <p
+              style="display: inline; color:#6C757D"
+            >@{{this.userName}}．{{relativeTimeFromNow this.createdAt}}</p>
           </div>
           <div class="text mt-2">
-           {{this.text}}
+            {{this.text}}
           </div>
           <div class="toWhom m-3">
             <p
@@ -105,7 +128,11 @@
         class="footer position-relative"
         style="height:245px; padding-left:1rem"
       >
-        <form action="/tweets/{{this.tweetId}}/reply" method="post" class="d-flex">
+        <form
+          action="/tweets/{{this.tweetId}}/replies"
+          method="post"
+          class="d-flex"
+        >
           <div
             class="avatar"
             style="width:50px; height:50px; border-radius:50%; background-color:antiquewhite;"
@@ -113,7 +140,7 @@
             <img src="" alt="" />
           </div>
           <input
-            type="text"
+            type="comment"
             class="w-100"
             style="border:none; outline: none; background: none; max-width:510px"
             placeholder="推你的回覆"
