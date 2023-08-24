@@ -126,7 +126,7 @@
 
 .navbar-main{
     position: relative;
-    height:1200px;
+    height:100vh;
     width:182px;
 }
 .navbar-ac-icon{
@@ -164,7 +164,6 @@
 /*後台區*/
 /*tweet*/
 .admin-tweet-card{
-    width:1075px;
     padding:0 24px 0 24px;
 }
 .admin-delete-btn{
