@@ -1,1 +1,25 @@
-<div>admin tweets</div>
+<div class="container">
+  <div class="wrapper" style="justify-content:flex-start">
+
+    {{> admin-navbar}}
+
+    {{!-- 推文清單 --}}
+    <div class="col-5" style="padding:0;background-color:white; border:2px #ECECEC solid; border-top-color:white;">
+
+      <div style="padding:15px;height:50px;display: flex; align-items:center;">
+        <span style="font-size: 22px;"><strong>推文清單</strong></span>
+      </div>
+
+      <div style="margin: 0;height:7px;background-color: #ECECEC;"></div>
+
+      {{#each tweets}}
+      <div style="padding:15px; border-top:2px #ECECEC solid;">
+        <div class="position-relative">
+          <span style="font-size:18px;"><strong>{{this.User.name}} </strong></span>
+          <span style="color:gray; font-size:14px;"> @{{this.User.account}}·{{relativeTimeFromNow
+            this.createdAt}}</span>
+          <p>{{this.description}}</p>
+        </div>
+      </div>
+      {{/each}}
+    </div>

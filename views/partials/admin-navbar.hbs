@@ -1,0 +1,31 @@
+<nav class="navbar-column" style="width:178px;">
+
+  {{!-- Logo --}}
+  <div class="container-logo">
+    <a href="/admin/tweets">
+      <img src="/images/icons/logo.png" alt="logo" class="logo">
+    </a>
+  </div>
+
+  {{!-- Tweets list --}}
+  <a class="nav-row {{#if tweets}}active{{/if}}" id="adminTweets" href="/admin/tweets">
+    <img class="nav-row-house-icon" src="/images/icons/home_outlined.svg" alt="house">
+    <h5 class="nav-row-title">推文清單</h5>
+  </a>
+
+  {{!-- Users list --}}
+  <a class="nav-row {{#if users}}active{{/if}}" id="adminUsers" href="/admin/users">
+    <img class="nav-row-user-icon" src="/images/icons/user_outlined.svg" alt="user">
+    <h5 class="nav-row-title">使用者列表</h5>
+  </a>
+
+  {{!-- Log out --}}
+  <form action="/logout" method="POST" class="logout-form">
+    <button type="submit" class="btn" id="adminLogout">
+      <div class="nav-row">
+        <img class="nav-row-logout-icon" src="/images/icons/logout.svg" alt="logout">
+        <h5 class="nav-row-title">登出</h5>
+      </div>
+    </button>
+  </form>
+</nav>
