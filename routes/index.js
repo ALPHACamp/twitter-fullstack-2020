@@ -10,7 +10,10 @@ const replyController = require('../controllers/reply-controller')
 const loginController = require('../controllers/login-controller')
 
 router.use('/admin', admin)
-router.get('/tweets', authenticated, tweetController.getTweets) // test
+
+router.get('/tweets', tweetController.getTweets) // test
+router.get('/tweets/replies', tweetController.getTweetsReply) // test
+
 router.get('/signup', loginController.signUpPage)
 router.post('/signup', loginController.signUp)
 router.get('/signin', loginController.signInPage)
