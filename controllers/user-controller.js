@@ -12,21 +12,21 @@ const userController = {
       const errors = []
 
       if (name.length > 50) {
-        errors.push('名稱不能超過 50 個字')
+        errors.push('名稱不得超過 50 個字')
       }
 
       if (password !== checkPassword) {
-        errors.push('密碼與密碼確認不相符。')
+        errors.push('密碼與密碼確認不相符')
       }
 
       const usedAccount = await User.findOne({ where: { account } })
       if (usedAccount) {
-        errors.push('此帳號已被註冊。')
+        errors.push('此帳號已被註冊')
       }
 
       const usedEmail = await User.findOne({ where: { email } })
       if (usedEmail) {
-        errors.push('此 Email 已被註冊。')
+        errors.push('此 Email 已被註冊')
       }
 
       if (errors.length > 0) {
