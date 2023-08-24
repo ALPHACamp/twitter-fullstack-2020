@@ -11,9 +11,10 @@ module.exports = {
     const tweets = []
     for (const user of users) {
         for (let i = 0; i < tweetsPerUser; i++) {
+          const maxLength = 140
           const tweet = {
             user_id: user.id,
-            description: faker.lorem.text(2),
+            description: faker.lorem.text().slice(0, maxLength),
             created_at: new Date(),
             updated_at: new Date()
           }

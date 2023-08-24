@@ -15,10 +15,11 @@ module.exports = {
     const replies = []
     for (const tweet of tweets) {
       for (let i = 0; i < replyPerTweet; i++) {
+        const maxLength = 140
         const reply = {
           user_id: users[Math.floor(Math.random() * users.length)].id,
           tweet_id: tweet.id,
-          comment: faker.lorem.text(2),
+          comment: faker.lorem.text().slice(0, maxLength),
           created_at: new Date(),
           updated_at: new Date()
         }
