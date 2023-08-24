@@ -35,11 +35,12 @@ const adminJWTAuth = (req, res, next) => {
   const middleware = passport.authenticate('jwt', { session: false }, function callback (error, user) { // 這個function會被傳入passport的jwt strategy
     if (error || !user) return res.redirect('/admin/login')
     if (user.role !== 'admin') {
-      // 這邊不確定可不可以這樣寫
+      // 亂登入就刪你cookie(避免signin時發現已登入過直接跳轉的問題)
+      res.cookie('jwtToken', '', { expires: new Date(0) })
       return next(new errors.JWTStrategyError('只有管理員可以訪問此區域。'))
     }
     req.user = user
-
+    res.locals.layout = 'admin-layout'// 指定admin要使用admin-layout.handlebars
     next()
   })
   middleware(req, res, next)
@@ -47,12 +48,14 @@ const adminJWTAuth = (req, res, next) => {
 
 const userJWTAuth = (req, res, next) => {
   const middleware = passport.authenticate('jwt', { session: false }, function callback (error, user) { // 這個function會被傳入passport的jwt strategy
-    if (error || !user) return res.redirect('/admin/login')
+    if (error || !user) return res.redirect('/login')
     if (user.role === 'admin') {
-      // 這邊不確定可不可以這樣寫
+      // 亂登入就刪你cookie(避免signin時發現已登入過直接跳轉的問題)
+      res.cookie('jwtToken', '', { expires: new Date(0) })
       return next(new errors.LocalStrategyError('管理員不能訪問此區域。'))
     }
     req.user = user
+    res.locals.layout = 'user-layout' // 指定user要使用user-layout.handlebars
     next()
   })
   middleware(req, res, next)
