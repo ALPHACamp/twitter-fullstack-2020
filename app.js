@@ -7,7 +7,6 @@ const methodOverride = require('method-override')
 const routes = require('./routes/index')
 // 引入helper
 const helpers = require('./_helpers');
-const routes = require('./routes')
 
 // 建立app
 const app = express()

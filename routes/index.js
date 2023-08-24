@@ -8,6 +8,6 @@ const userController = require('../controllers/user-controller')
 
 
 router.get('/', (req, res) => {
-  res.render('right')
+  res.render('following')
 })
 module.exports = router
