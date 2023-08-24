@@ -1,0 +1,64 @@
+<style>
+  .err-msg {
+    font-size: 12px;
+    font-weight: 500;
+    color: #FC5A5A;
+  }
+
+  label {
+    color: #696974;
+  }
+
+  input {
+    border: none;
+    border-bottom: solid 2px #657786;
+  }
+
+  input:focus {
+    outline: none;
+    border-bottom: solid 2px #50B5FF;
+  }
+
+  input:hover {
+    border-bottom: solid 2px #50B5FF;
+  }
+
+  label,
+  input {
+    padding: 0 16px;
+    background: #F5F8FA;
+  }
+
+  input::placeholder {
+    color: #B5B5BE;
+  }
+</style>
+
+<div class="d-flex flex-column" style=" height: 78px;">
+  <label for="account">帳號</label>
+  <input {{#if accountMsg}}style="border-bottom: solid 2px #FC5A5A;" {{/if}} type="text" placeholder="請輸入帳號"
+    name="account" id="account" value="{{account}}" required>
+  <p class="err-msg">{{accountMsg}}</p>
+</div>
+<div class="d-flex flex-column" style=" height: 78px;">
+  <label for="name">名稱</label>
+  <input type="text" placeholder="請輸入使用者名稱" name="name" id="name" maxlength="50" value="{{name}}" required>
+</div>
+<div class="d-flex flex-column" style=" height: 78px;">
+  <label for="email">Email</label>
+  <input {{#if mailMsg}}style="border-bottom: solid 2px #FC5A5A;" {{/if}} type="email" placeholder="請輸入使用者名稱"
+    name="email" id="email" value="{{email}}" required>
+  <p class="err-msg">{{mailMsg}}</p>
+</div>
+<div class="d-flex flex-column" style=" height: 78px;">
+  <label for="password">密碼</label>
+  <input {{#if passwordMsg}}style="border-bottom: solid 2px #FC5A5A;" {{/if}} type="password" placeholder="請輸入密碼"
+    name="password" id="password" required>
+  <p class="err-msg">{{passwordMsg}}</p>
+</div>
+<div class="d-flex flex-column" style=" height: 78px;">
+  <label for="checkPassword">密碼確認</label>
+  <input {{#if passwordMsg}}style="border-bottom: solid 2px #FC5A5A;" {{/if}} type="password" placeholder="請再次輸入密碼"
+    name="checkPassword" id="checkPassword" required>
+  <p class="err-msg">{{passwordMsg}}</p>
+</div>

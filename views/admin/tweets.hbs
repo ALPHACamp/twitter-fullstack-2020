@@ -19,7 +19,7 @@
             <div class="content ms-2 w-100">
 
               <div class="d-flex justify-content-between">
-                <div class="account d-dlex flex-row mt-2">
+                <div class="account d-dlex flex-row ">
                   <p style="display: inline; font-weight:700">{{this.User.name}}</p>
                   <p style="display: inline; color:#6C757D">@{{this.User.account}}．{{relativeTimeFromNow
                     this.createdAt}}</p>
@@ -35,18 +35,6 @@
 
               <div class="text mt-2">
                 <p style="text-decoration: none; color:#000000;padding-right:2rem;">{{this.description}}</p>
-              </div>
-              <div class="reaction d-flex justify-content-between mt-2" style="width:120px">
-                <div class="replies d-flex">
-
-                  <img src="/images/reply-icon.svg" alt="" />
-
-                  <p class="m-0" style="color:#6C757D; font-weight:600">{{this.ReplyCount}}</p>
-                </div>
-                <div class="likes d-flex">
-                  <img src="/images/icon-like.svg" alt="" />
-                  <p class="m-0" style="color:#6C757D; font-weight:600">{{this.LikeCount}}</p>
-                </div>
               </div>
             </div>
 

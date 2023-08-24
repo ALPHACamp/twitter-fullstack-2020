@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const { Op } = require('sequelize')
 const { Tweet, User, Followship } = require("../models");
 const { imgurFileHandler } = require("../helpers/file-helpers");
 const randomUsersHelper = require("../helpers/randomUsersHelper");
@@ -233,39 +234,52 @@ const userController = {
     });
   },
   putSetting: (req, res, next) => {
-    // 編輯帳戶設定
-    const { account, name, email, password, passwordCheck } = req.body;
-    if (!name || !email || !password || !account || !passwordCheck)
-      throw new Error("所有欄位都是必填。");
-    if (password !== passwordCheck) throw new Error("密碼不相同");
-    return Promise.all([
-      User.findByPk(helpers.getUser(req).id),
-      User.findOne({ where: { email } }),
-      User.findOne({ where: { account } }),
-    ])
-      .then(async ([user, emailCheck, accountCheck]) => {
-        if (
-          accountCheck &&
-          Number(accountCheck.id) !== Number(helpers.getUser(req).id)
-        )
-          throw new Error("帳號已有人註冊");
-        if (
-          emailCheck &&
-          Number(emailCheck.id) !== Number(helpers.getUser(req).id)
-        )
-          throw new Error("信箱已有人註冊");
-        return user.update({
-          name,
-          account,
-          email,
-          password: password ? await bcrypt.hash(password, 10) : user.password,
-        });
+    const { account, name, email, password, checkPassword } = req.body
+    const userId = req.user.id
+    const emailPromise = User.findOne({ where: { email, id: { [Op.ne]: userId } } })
+    const accountPromise = User.findOne({ where: { account, id: { [Op.ne]: userId } } })
+    let mailMsg = ''
+    let accountMsg = ''
+    let passwordMsg = ''
+
+    return Promise.all([emailPromise, accountPromise])
+      .then(([mailUser, accountUser]) => {
+        console.log('---------開始一堆if----------')
+        if (mailUser) {
+          console.log('if>此信箱已被使用')
+          mailMsg = '此信箱已被使用'
+        }
+        if (accountUser) {
+          console.log('if>此帳號已被使用')
+          accountMsg = '此帳號已被使用'
+        }
+        if (password !== checkPassword) {
+          console.log('if>密碼與確認密碼不相符')
+          passwordMsg = '密碼與確認密碼不相符'
+        }
+        if (mailMsg || accountMsg || passwordMsg) {
+          console.log('達到if條件  準備返回')
+          return res.render('settings', { mailMsg, accountMsg, passwordMsg, account, name, email })
+        } else {
+          console.log('----------判斷完了一堆if------------')
+          Promise.all([
+            User.findByPk(userId),
+            bcrypt.hash(password, 10)
+          ])
+            .then(([user, hashedPassword]) => {
+              return user.update({
+                account,
+                name,
+                email,
+                password: hashedPassword
+              })
+            })
+            .then(() => {
+              console.log('!!!!!-------最後一個then-------!!!!!')
+              res.redirect('/settings')
+            })
+        }
       })
-      .then(() => {
-        req.flash("success_messages", "帳戶設定編輯成功!");
-        return res.redirect("settings");
-      })
-      .catch((err) => next(err));
   },
 
   putUser: (req, res, next) => {

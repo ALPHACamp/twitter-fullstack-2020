@@ -7,58 +7,66 @@
           <h4 class="pt-3 ps-3"
             style="display:flex; justify-content:start; align-iten:center; height: 75px;font-weight: 700;">帳戶設定</h4>
         </div>
+
         <div class="tweets-container">
-          <form id="setting" class="form-setting ms-3 mt-3" action="/setting?_method=PUT" method="POST"
-            style="width: 100%; ">
-  
-            <div class="form-row" style="width:593px; height:54px; margin-bottom:45px; background: #F5F8FA;">
+          <form id="setting" class="form-setting ms-3 mt-3" action="/settings?_method=PUT" method="post"
+            style="width: 95%; ">
+
+            {{> user-form}}
+
+            {{!-- <div class="form-row" style="width:593px; height:54px; margin-bottom:45px; background: #F5F8FA;">
               <label class="form-labe" style="font-size: 14px; margin-left:10.55px;" for="account">帳號</label>
               <input type="text" id="account" name="account" class="form-control"
-                style="border-style:none; border-bottom: 2px solid #657786; background: #F5F8FA; font-size: 16px; border-radius:0px;"
+                style="border-style:none; border-bottom: 2px solid {{#if accountMsg}} #FC5A5A {{else}}#657786 {{/if}}; background: #F5F8FA; font-size: 16px; border-radius:0px;"
                 placeholder="請輸入帳號" value="{{user.account}}">
+              <p>{{accountMsg}}</p>
             </div>
-  
+
             <div class="form-row" style="width:593px; height:54px; margin-bottom:55px; background: #F5F8FA;">
               <label class="form-label" style="font-size: 14px; margin-left:10.55px;" for="email">名稱</label>
               <input type="text" id="name" name="name" class="form-control" maxlength="50" onkeyup='nameWordsCheck()'
                 style="border-style:none; border-bottom: 2px solid #657786;background: #F5F8FA; font-size: 16px; border-radius:0px;"
                 placeholder="請輸入使用者名稱" value="{{user.name}}">
             </div>
-  
+
             <div class="form-row" style="width:593px; height:54px; margin-bottom:55px; background: #F5F8FA;">
               <label class="form-label" style="font-size: 14px; margin-left:10.55px;" for="email">Email</label>
               <input type="text" id="email" name="email" class="form-control"
-                style="border-style:none; border-bottom: 2px solid #657786; background: #F5F8FA; font-size: 16px; border-radius:0px;"
+                style="border-style:none; border-bottom: 2px solid {{#if mailMsg}} #FC5A5A{{else}}#657786{{/if}}; background: #F5F8FA; font-size: 16px; border-radius:0px;"
                 placeholder="請輸入Email" value="{{user.email}}">
+              <p>{{mailMsg}}</p>
             </div>
-  
+
             <div class="form-row" style="width:593px; height:54px; margin-bottom:55px; background: #F5F8FA;">
               <label class="form-label" style="font-size: 14px; margin-left:10.55px;" for="password">密碼</label>
               <input type="password" id="password" name="password" class="form-control"
-                style="border-style:none; border-bottom: 2px solid #657786;background: #F5F8FA; font-size: 16px; border-radius:0px;"
+                style="border-style:none; border-bottom: 2px solid {{#if passwordMsg}} #FC5A5A{{else}}#657786{{/if}};background: #F5F8FA; font-size: 16px; border-radius:0px;"
                 placeholder="請設定密碼">
+              <p>{{passwordMsg}}</p>
             </div>
-  
+
             <div class="form-row" style="width:593px; height:54px; margin-bottom:55px; background: #F5F8FA;">
-              <label class="form-label" style="font-size: 14px; margin-left:10.55px;" for="passwordCheck">密碼再確認</label>
-              <input type="password" id="passwordCheck" name="passwordCheck" class="form-control"
-                style="border-style:none; border-bottom:2px solid #657786; background: #F5F8FA; font-size: 16px; border-radius:0px;"
+              <label class="form-label" style="font-size: 14px; margin-left:10.55px;" for="checkPassword">密碼再確認</label>
+              <input type="password" id="checkPassword" name="checkPassword" class="form-control"
+                style="border-style:none; border-bottom:2px solid {{#if passwordMsg}} #FC5A5A{{else}}#657786{{/if}}; background: #F5F8FA; font-size: 16px; border-radius:0px;"
                 placeholder="請再次輸入密碼">
-            </div>
+              <p>{{passwordMsg}}</p>
+            </div> --}}
+
             <div class="d-flex align-items-center justify-content-end">
-              <button class="btn btn-primary"
+              <button type="submit" class="btn btn-primary"
                 style="border-radius:50px; margin-top:8px; margin-bottom:8px; margin-right:45px; background:#FF6600; border-color:#FF6600; font-size:20px; font-family:'Noto Sans TC'; padding-top:8px; width: 88px; height: 46px;"
                 type="submit">儲存
               </button>
             </div>
-  
+
           </form>
         </div>
       </div>
     </div>
   </section>
   <section class="recom-wrapper" style="position:sticky; top:0; height:100vh">
-      <div class="card m-3" style="width: 20rem; max-height:731px; border:none">
-      </div>
+    <div class="card m-3" style="width: 20rem; max-height:731px; border:none">
+    </div>
   </section>
 </main>
