@@ -7,7 +7,7 @@ const adminController = require('../../controllers/admin-controller')
 
 // Sign in
 router.get('/signin', adminController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
+router.post('/signin', passport.authenticate('adminSignin', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
 
 router.get('/tweets', adminController.getTweets)
 router.use('/', (req, res) => res.redirect('/admin/tweets'))
