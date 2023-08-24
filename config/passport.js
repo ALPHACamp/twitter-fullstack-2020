@@ -33,7 +33,7 @@ async (req, account, password, cb) => {
   try {
     const user = await User.findOne({ where: { account } })
     if (!user) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
-    if (user.role !== 'admin') return cb(null, false, req.flash('danger_msg', '此帳號不存在！'))
+    if (user.role !== 'admin') return cb(null, false, req.flash('error_messages', '此帳號不存在！'))
 
     const passwordCompare = await bcrypt.compare(password, user.password)
     if (!passwordCompare) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
