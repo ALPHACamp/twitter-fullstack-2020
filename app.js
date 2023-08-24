@@ -7,7 +7,7 @@ const helpers = require('./_helpers')
 const exphbs = require('express-handlebars')
 const routes = require('./routes')
 const methodOverride = require('method-override')
-const session = require('express-session')
+// const session = require('express-session')
 const passport = require('./config/passport')
 const flash = require('connect-flash')
 // const helpers = require('./helpers/auth-helpers')
@@ -21,11 +21,11 @@ app.set('view engine', 'hbs')
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false
-}))
+// app.use(session({
+//   secret: process.env.SESSION_SECRET,
+//   resave: false,
+//   saveUninitialized: false
+// }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
