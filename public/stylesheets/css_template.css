@@ -18,16 +18,23 @@
     filter: invert(48%) sepia(53%) saturate(5638%) hue-rotate(4deg) brightness(107%) contrast(102%);
 }
 
+/*
 .filter-main-color:hover {
     filter:brightness(0) invert(1);
 }
-
+*/
+.filter-white-color{
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+}
 .filter-grey-7{
     filter: invert(41%) sepia(8%) saturate(495%) hue-rotate(202deg) brightness(97%) contrast(85%);
 }
 .main-color{
 
     color: #FF6600;
+}
+.bg-main-color{
+    background-color: #FF6600;
 }
 
 /*remove style of link*/
@@ -66,7 +73,7 @@
 }
 
 .tweet-card{
-    width:639px;
+    width:637px;
 }
 
 /*tweet-reply*/
@@ -87,6 +94,73 @@
     font-size: 19px;
 }
 
+/*Navbar區*/
+.nav-link{
+    height:58px;
+    width: 182px;
+    margin: 0;
+    padding: 16px 0 16px 16px;
+    font-size: 18px;
+}
+.nav-link-content img{
+    height: 24px;
+    width: 24px;
+}
+
+.nav-tweet-btn-sm{
+    position: relative;
+    height: 40px;
+    width: 40px;
+    margin: 0;
+    padding: 0;
+}
+.nav-tweet-btn-sm img{
+    position: absolute;
+    top: 8px;
+    left:8px;
+    height:24px;
+    width: 24px;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-main{
+    position: relative;
+    height:1200px;
+    width:182px;
+}
+.navbar-ac-icon{
+    height:50px;
+    width:50px;
+    padding: 5px;
+}
+.navbar-ac-icon img{
+    height:40px;
+    width: 40px;
+}
+.nav-link.active{
+    filter: invert(48%) sepia(53%) saturate(5638%) hue-rotate(4deg) brightness(107%) contrast(102%);
+}
+
+.nav-link:hover{
+    filter: invert(65%) sepia(87%) saturate(563%) hue-rotate(324deg) brightness(100%) contrast(102%);
+} 
+.nav-link-home:hover img, .nav-link-home.active img{
+    content:url("/images/icons/home_filled.svg");
+}
+
+.nav-link-info:hover img, .nav-link-info.active img{
+    content:url("/images/icons/user_filled.svg");
+}
+
+.nav-link-setting:hover img, .nav-link-setting.active img{
+    content:url("/images/icons/cog_filled.svg");
+}
+
+.nav-link-logout{
+    position: absolute;
+    bottom: 0px;
+}
 /*後台區*/
 /*tweet*/
 .admin-tweet-card{
@@ -102,3 +176,199 @@
     align-items: center;
     justify-content: center;
 }
+
+/*主頁面最上面的"有什麼新鮮事？"*/
+.post-tweet-area{
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    height:120px;
+    width: 637px;
+}
+.post-tweet-area .btn{
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+}
+/*以下是model*/
+.modal{
+}
+.modal-content{
+    position: fix;
+    margin-top: 56px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 637px;
+}
+#tweet-model .modal-content{
+    min-height: 300px;
+}
+#reply-model .modal-content{
+    min-height: 500px;
+}
+.modal-close-btn{
+    position: relative;
+    height: 24px;
+    width:24px;
+    margin:0px;
+    padding: 0px;
+    border: none;
+}
+.modal-close-btn img{
+    position: absolute;
+    top:3px;
+    left:3px;
+    height: 15px;
+    width: 15px;
+    margin:0px;
+    padding: 0px;
+}
+
+.reply-modal-bar{
+    width:2px;
+    height:calc(100% - 66px);
+    padding:0;
+    margin:5px 0 0 0;
+    background-color: #B5B5BE;
+}
+
+
+.modal-form .btn{
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+}
+
+.form-label{
+    height: 50px;
+    width: 50px;
+}
+.form-label img{
+}
+.modal-form textarea, .modal-form textarea:focus{
+    padding-top:17px;
+    border: none;
+    overflow: auto;
+    outline: none;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    resize: none; /*remove the resize handle on the bottom right*/
+}
+
+
+/*Alan 部份*/
+  .homepage-user-card {
+    min-height: 378px;
+  }
+
+  .homepage-user-card .user-cover {
+    height: 200px;
+  }
+
+  .homepage-user-card .user-avatar {
+    width: 141.1px;
+    height: 140px;
+    border: 4px white solid;
+    border-radius: 50%;
+
+    top: 124px;
+    left: 16.13px;
+  }
+
+  .homepage-user-card .user-action {
+    height: 40px;
+  }
+
+  .homepage-user-card .btn {
+    width: 128px;
+    border: 1px solid;
+    border-radius: 50px;
+  }
+
+  .homepage-user-card .info-pic,.homepage-user-card .mes-pic {
+    width: 40px;
+  }
+
+  .admin-user-card .card {
+    height: 314px;
+
+    border-radius: 10px;
+  }
+
+   .admin-user-card .card .card-body {
+    background-color: #f6f7f8;
+
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+   }
+
+  .admin-user-card .card .user-info {
+    top: 64px;
+  }
+
+  .admin-user-card .user-cover {
+    height: 140px;
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .admin-user-card .user-avatar {
+    height: 100px;
+    
+    border: 4px solid white;
+    border-radius: 50%;
+  }
+
+  .admin-user-card .user-like img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .admin-user-card .user-followship {
+    line-height: 22px;
+  }
+
+  .recommend-user-card {
+    border-radius: 16px;
+
+    background-color: #fafafb;
+  }
+
+  .recommend-user-card .card-title {
+    top: 24px;
+    left: 24px;
+    
+    font-weight: 700;
+  }
+
+  .recommend-user-card hr {
+    height: 1px;
+    color: #E6ECF0;
+  }
+
+  .recommend-user-card .card-body, .recommend-user-card .single-user-card, .recommend-user-card .single-user-card .card-body {
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+
+    background-color: #fafafb;
+  }
+
+  .recommend-user-card .single-user-card .btn {
+    border: 1px solid;
+    border-radius: 50px;
+  }
+
+  .user-card-icon:hover img, .user-card-icon.active img{
+
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+  }
+  .user-card-icon-noti:hover img, .user-card-icon-noti.active img{
+    content:url("/images/icons/noti_filled.svg");
+  }
+  .user-card-icon-message:hover img, .user-card-icon-message.active img{
+    content:url("/images/icons/message_filled.svg");
+  }
