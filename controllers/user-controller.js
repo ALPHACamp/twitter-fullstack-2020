@@ -30,7 +30,7 @@ const userController = {
       }
 
       if (errors.length > 0) {
-        throw new Error(errors.join('\n 且 \n'))
+        throw new Error(errors.join('\n & \n'))
       }
 
       const hash = await bcrypt.hash(req.body.password, 10)

@@ -1,0 +1,37 @@
+<div class="container-signin m-5">
+  <div class="text-center">
+    {{!-- Logo --}}
+    <img id="ac-logo" src="/images/icons/logo.png" alt="logo">
+    {{!-- Title --}}
+    <h3 id="signin-title">登入 Alphitter</h3>
+  </div>
+
+  {{!-- Form --}}
+  <div class=" d-flex justify-content-center">
+    <form class="form-signin" action="/signin" method="POST">
+      {{!-- 帳號 --}}
+      <div class="mb-3" id="form-input-line">
+        <label class="form-label" for="account">帳號</label>
+        <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" required>
+      </div>
+      {{!-- 密碼 --}}
+      <div class="mb-3" id="form-input-line">
+        <label class="form-label" for="password">密碼</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="請輸入密碼" required>
+      </div>
+      {{!-- 登入 button --}}
+      <button id="btn-signin-submit" class="btn btn-primary" type="submit">登入</button>
+    </form>
+  </div>
+
+  <div class="text-end">
+    <div class="col">
+      {{!-- 註冊 Link --}}
+      <a href="/signup" class="btn btn-link">註冊</a>
+      <span>・</span>
+      {{!-- 後台登入 Link --}}
+      <a href="/admin/signin" class="btn btn-link">後台登入</a>
+    </div>
+  </div>
+
+</div>
