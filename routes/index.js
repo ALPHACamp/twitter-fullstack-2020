@@ -19,7 +19,7 @@ router.post('/signup', userController.signUp)
 
 // Sign in
 router.get('/signin', userController.signInPage)
-router.post('/signin', passport.authenticate('local', { successRedirect: '/tweets', failureRedirect: '/signin' }))
+router.post('/signin', passport.authenticate('userSignin', { successRedirect: '/tweets', failureRedirect: '/signin' }))
 
 // Log out
 router.get('/logout', userController.logout)
