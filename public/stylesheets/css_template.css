@@ -1,5 +1,6 @@
 /**font-size*/
-.font-size-sm {
+
+.font-size-sm{
     font-size: 0.875rem;
 }
 
@@ -21,11 +22,11 @@
     filter:brightness(0) invert(1);
 }
 
-.filter-grey-7 {
+.filter-grey-7{
     filter: invert(41%) sepia(8%) saturate(495%) hue-rotate(202deg) brightness(97%) contrast(85%);
 }
+.main-color{
 
-.main-color {
     color: #FF6600;
 }
 
@@ -59,44 +60,40 @@
     width: 120px;
 }
 
-.tweet-action-icon {
-    height: 1rem;
+.tweet-action-icon{
+    height:1rem;
     width: 1rem;
 }
 
-.tweet-card {
-    width: 639px;
+.tweet-card{
+    width:639px;
 }
 
 /*tweet-reply*/
-.tweet-reply {
-    width: 639px;
-    padding: 0 21px 0 16px;
+.tweet-reply{
+    width:639px;
+    padding:0 21px 0 16px;
 }
-
-.tweet-reply-icons {
+.tweet-reply-icons{
     padding: 3px 0 3px 0;
     width: 188px;
 }
-
-.tweet-reply-icons img {
+.tweet-reply-icons img{
     height: 30px;
     width: 30px;
 }
-
-.tweet-reply-number-follower {
-    width: 210px;
+.tweet-reply-number-follower{
+    width:210px;
     font-size: 19px;
 }
 
 /*後台區*/
 /*tweet*/
-.admin-tweet-card {
-    width: 1075px;
-    padding: 0 24px 0 24px;
+.admin-tweet-card{
+    width:1075px;
+    padding:0 24px 0 24px;
 }
-
-.admin-delete-btn {
+.admin-delete-btn{
     height: 24px;
     width: 24px;
     margin: 0;
