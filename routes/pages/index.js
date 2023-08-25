@@ -10,6 +10,7 @@ router.get('/login', isAuthenticated, userController.getUserSignInPage)
 router.get('/logout', userController.userLogout)
 router.post('/login', userLocalAuth, sendToken, userController.userSignin)
 router.use('/admin', admin)
+router.get('/css_template2', (req, res) => res.render('main/edit_user_info'))
 router.get('/css_template1', (req, res) => res.render('main/user_card'))
 router.get('/css_template', (req, res) => res.render('main/css_template')) // 展現各前端模板，咖發結束後刪除
 router.get('/', userJWTAuth, (req, res) => res.render('main/homepage'))

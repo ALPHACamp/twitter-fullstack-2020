@@ -371,3 +371,61 @@
   .user-card-icon-message:hover img, .user-card-icon-message.active img{
     content:url("/images/icons/message_filled.svg");
   }
+
+.sign-in, .sign-up {
+      top: 64px;
+ }
+
+ .sign-in h3, .sign-up h3 {
+      font-weight: 700;
+ }
+
+  .sign-in input,
+  .sign-up input,
+  .edit-user-info input {
+      height: 54px;
+      padding: 24px 10.55px 0 10.55px;
+
+      border-top: 0px;
+      border-left: 0px;
+      border-right: 0px;
+      border-radius: 2px;
+  }
+
+  .sign-in label,
+  .sign-up label,
+  .edit-user-info label {
+      top: 2px;
+      left: 10.55px;
+
+      color: #696974;
+  }
+
+  .sign-in button,
+  .sign-up button {
+      border-radius: 50px;
+  }
+
+  .sign-in .dot {
+      font-weight: 400;
+  }
+
+  .sign-in a,
+  .sign-up a {
+      color: #0062FF;
+      text-decoration: underline;
+  }
+
+  .edit-user-info button {
+      width: 88px;
+      height: 46px;
+      border-radius: 50px;
+  }
+
+  .partial-title {
+      border-bottom: 1px #E6ECF0 solid;
+  }
+
+  .partial-title h4 {
+      font-weight: 700;
+   }
