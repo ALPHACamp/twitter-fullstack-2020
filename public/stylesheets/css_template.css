@@ -75,6 +75,12 @@
     text-decoration: inherit;
 }
 
+/*Division line between post tweet and tweets*/
+.division{
+  height: 10px;
+  width: 100%;
+  background-color: #E6ECF0;
+}
 /*bottom boarder of card*/
 .bottom-border {
     width: 100%;

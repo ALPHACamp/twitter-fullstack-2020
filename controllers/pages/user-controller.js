@@ -44,7 +44,7 @@ const userController = {
   getUserSignInPage: (req, res, next) => {
     try {
       console.log('is authenticated: ', req.isAuthenticated())
-      if (_helper.ensureAuthenticated(req)) return res.redirect('/') // 如果已經有user就轉去root
+      if (_helper.ensureAuthenticated(req)) return res.redirect('/tweets') // 如果已經有user就轉去root
       return res.render('login/signin')
     } catch (error) {
       return next(error)

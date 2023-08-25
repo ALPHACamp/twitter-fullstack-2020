@@ -37,5 +37,3 @@ function removeInput (event, inputId, originCoverId) {
   preview.src = originCover
   input.value = ''
 }
-
-/* user setting end */
