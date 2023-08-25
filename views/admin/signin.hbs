@@ -1,1 +1,45 @@
-<div> admin signin page </div>
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <div class="col-5">
+      <div class="login-section">
+        {{!-- logo --}}
+        <div class="text-center mb-4">
+          <img src="/images/logo.png" alt="Icon" style="width: 50px">
+        </div>
+        {{!-- login Title --}}
+        <h5 class="text-center mb-4" style="font-size:28px"><Strong> 後台登入 <Strong></h5>
+        {{!-- login form --}}
+        <form action="/admin/signin" method="post">
+          <div class="mx-auto" style="width:356px; height:46px;">
+            {{!-- account --}}
+            <div class="form-group mb-4">
+              <div class="label bg-light">
+                <label for="account" class="form-label bg-light">帳號</label>
+              </div>
+              <input type="text" class="form-control border-0 border-bottom border-primary shadow-none bg-light" id="account"
+                name="account" placeholder="請輸入帳號">
+            </div>
+            {{!-- password --}}
+            <div class="form-group mb-4">
+              <div class="label bg-light">
+                <label for="account" class="form-label bg-light">密碼</label>
+              </div>
+              <input type="text" class="form-control border-0 border-bottom border-primary shadow-none bg-light" id="account"
+                name="account" placeholder="請輸入密碼">
+            </div>
+            {{!-- submit button --}}
+            <div class="text-center">
+              <button class="btn btn-primary my-3"
+                style="width:356px; height:46px; border-radius: 50px; background-color:#FF6600; color: white;"
+                type="button">登入</button>
+            </div>
+            {{!-- frontend login --}}
+            <div class="d-flex justify-content-end">
+              <a href="/signin">前台登入</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
