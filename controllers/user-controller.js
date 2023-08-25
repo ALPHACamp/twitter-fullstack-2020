@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const { Op } = require('sequelize')
 const { Tweet, User, Reply, Like, Followship } = require("../models");
 const { imgurFileHandler } = require("../helpers/file-helpers");
 const { getEightRandomUsers } = require("../helpers/randomUsersHelper");
@@ -14,11 +15,14 @@ const userController = {
     let mailMsg = ''
     let accountMsg = ''
     let passwordMsg = ''
+    let nameMsg = ''
 
     // if (!account|| !name|| !email|| !password|| !checkPassword)throw new Error ('所有欄位皆為必填')
 
     return Promise.all([emailPromise, accountPromise])
       .then(([mailUser, accountUser]) => {
+        console.log(name)
+        console.log(name.length > 50)
         if (mailUser) {
           mailMsg = '此信箱已被使用'
         }
@@ -28,8 +32,11 @@ const userController = {
         if (password !== checkPassword) {
           passwordMsg = '密碼與確認密碼不相符'
         }
-        if (mailMsg || accountMsg || passwordMsg) {
-          return res.render('signup', { passwordMsg, mailMsg, accountMsg, account, name, email })
+        if (name.length > 50 || name.length === 0) {
+          nameMsg = '名稱字數應為 1 ~ 50'
+        }
+        if (mailMsg || accountMsg || passwordMsg || nameMsg) {
+          return res.render('signup', { nameMsg, passwordMsg, mailMsg, accountMsg, account, name, email })
         } else {
           bcrypt.hash(password, 10)
             .then(hashedPassword => {
@@ -97,20 +104,20 @@ const userController = {
     try {
       const userId = req.params.id;
       const currentUserId = helpers.getUser(req).id;
-      const user = await User.findByPk(userId,{
+      const user = await User.findByPk(userId, {
         include: [{
-          model:Tweet,include:[
-            {model:User},
-            {model:Reply, include:[{model:Tweet}]},
-            {model: Like }
+          model: Tweet, include: [
+            { model: User },
+            { model: Reply, include: [{ model: Tweet }] },
+            { model: Like }
           ],
           order: [["updatedAt", "DESC"]]
-          },
-          { model: User, as: 'Followers' }, 
-          { model: User, as: 'Followings' }
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
         ]
       });
-          
+
       if (user) {
         const userData = user.toJSON();
         const recommend = await getEightRandomUsers(req);
@@ -133,7 +140,7 @@ const userController = {
             userAvatar
           };
         });
-        
+
         const dataToRender = {
           user: userData,
           tweets,
@@ -156,8 +163,8 @@ const userController = {
     try {
       const userId = req.params.id;
       const currentUserId = helpers.getUser(req).id;
-      const user = await User.findByPk(userId,{
-        include:[
+      const user = await User.findByPk(userId, {
+        include: [
           { model: User, as: 'Followers', include: { model: User, as: 'Followers' } },
           { model: User, as: 'Followings' }
         ]
@@ -165,8 +172,8 @@ const userController = {
 
       if (user) {
         const userData = user.toJSON();
-        const recommend = await getEightRandomUsers(req); 
-        const follows = user.Followers.map((e)=>{
+        const recommend = await getEightRandomUsers(req);
+        const follows = user.Followers.map((e) => {
           const isFollowed = e.Followers.some(f => f.id === helpers.getUser(req).id)
           return {
             id: e.id,
@@ -206,7 +213,7 @@ const userController = {
     try {
       const userId = req.params.id;
       const currentUserId = helpers.getUser(req).id;
-      const user = await User.findByPk(userId,{
+      const user = await User.findByPk(userId, {
         include: [
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings', include: { model: User, as: 'Followers' } }
@@ -249,37 +256,55 @@ const userController = {
     });
   },
   putSetting: (req, res, next) => {
-    // 編輯帳戶設定
-    const { account, name, email, password, passwordCheck } = req.body;
-    if (!name || !email || !password || !account || !passwordCheck)
-      throw new Error("所有欄位都是必填。");
-    if (password !== passwordCheck) throw new Error("密碼不相同");
-    return Promise.all([
-      User.findByPk(helpers.getUser(req).id),
-      User.findOne({ where: { email } }),
-      User.findOne({ where: { account } }),
-    ])
-      .then(async ([user, emailCheck, accountCheck]) => {
-        if (
-          accountCheck &&
-          Number(accountCheck.id) !== Number(helpers.getUser(req).id)
-        )
-          throw new Error("帳號已有人註冊");
-        if (
-          emailCheck &&
-          Number(emailCheck.id) !== Number(helpers.getUser(req).id)
-        )
-          throw new Error("信箱已有人註冊");
-        return user.update({
-          name,
-          account,
-          email,
-          password: password ? await bcrypt.hash(password, 10) : user.password,
-        });
-      })
-      .then(() => {
-        req.flash("success_messages", "帳戶設定編輯成功!");
-        return res.redirect("settings");
+    const { account, name, email, password, checkPassword } = req.body
+    const userId = req.user.id
+    const emailPromise = User.findOne({ where: { email, id: { [Op.ne]: userId } } })
+    const accountPromise = User.findOne({ where: { account, id: { [Op.ne]: userId } } })
+    let mailMsg = ''
+    let accountMsg = ''
+    let passwordMsg = ''
+    let nameMsg = ''
+
+    return Promise.all([emailPromise, accountPromise])
+      .then(([mailUser, accountUser]) => {
+        console.log('---------開始一堆if----------')
+        if (mailUser) {
+          console.log('if>此信箱已被使用')
+          mailMsg = '此信箱已被使用'
+        }
+        if (accountUser) {
+          console.log('if>此帳號已被使用')
+          accountMsg = '此帳號已被使用'
+        }
+        if (password !== checkPassword) {
+          console.log('if>密碼與確認密碼不相符')
+          passwordMsg = '密碼與確認密碼不相符'
+        }
+        if (name.length > 50 || name.length === 0) {
+          nameMsg = '名稱字數應為 1 ~ 50'
+        }
+        if (mailMsg || accountMsg || passwordMsg || nameMsg) {
+          console.log('達到if條件  準備返回')
+          return res.render('settings', { nameMsg, mailMsg, accountMsg, passwordMsg, account, name, email })
+        } else {
+          console.log('----------判斷完了一堆if------------')
+          Promise.all([
+            User.findByPk(userId),
+            bcrypt.hash(password, 10)
+          ])
+            .then(([user, hashedPassword]) => {
+              return user.update({
+                account,
+                name,
+                email,
+                password: hashedPassword
+              })
+            })
+            .then(() => {
+              console.log('!!!!!-------最後一個then-------!!!!!')
+              res.redirect('/settings')
+            })
+        }
       })
       .catch((err) => next(err));
   }
