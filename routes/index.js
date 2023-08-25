@@ -17,7 +17,7 @@ router.get('/tweets/replies', authenticated, tweetController.getTweetsReply) // 
 router.get('/signup', loginController.signUpPage)
 router.post('/signup', loginController.signUp)
 router.get('/signin', loginController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), loginController.signIn)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), authenticated, loginController.signIn)
 router.get('/logout', loginController.logout)
 router.get('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
