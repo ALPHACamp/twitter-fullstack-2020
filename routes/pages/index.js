@@ -10,6 +10,7 @@ const router = express.Router()
 
 router.get('/css_template2', (req, res) => res.render('main/edit_user_info'))
 router.get('/css_template1', (req, res) => res.render('main/user_card'))
+router.get('/notification', (req, res) => res.render('partials/notification'))
 router.get('/css_template', (req, res) => res.render('main/css_template')) // 展現各前端模板，咖發結束後刪除
 
 router.use('/admin', admin)
