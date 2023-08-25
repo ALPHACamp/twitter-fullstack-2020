@@ -14,13 +14,17 @@ const adminController = {
   },
   getAdminTweets: async (req, res, next) => {
     try {
-      const tweets = await Tweet.findAll({ include: User, raw: true, nest: true, order: [['createdAt', 'DESC']] })
+      const tweets = await Tweet.findAll({
+        include: User,
+        raw: true,
+        nest: true,
+        order: [['createdAt', 'DESC']]
+      })
+      if (!tweets) throw new Error('沒有推文!')
       tweets.forEach(tweet => {
         tweet.description = tweet.description.substring(0, 50)
       })
-      res.render('admins/tweets', {
-        tweets
-      })
+      return res.render('admins/tweets', { tweets })
     } catch (err) {
       next(err)
     }
@@ -30,7 +34,7 @@ const adminController = {
       await Tweet.destroy({
         where: { id: req.params.tweetId }
       })
-      res.redirect('/admin/tweets')
+      return res.redirect('/admin/tweets')
     } catch (err) {
       next(err)
     }
