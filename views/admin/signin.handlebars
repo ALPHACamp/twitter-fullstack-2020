@@ -1,19 +1,30 @@
-<div class="mb-4 text-center">
-  <h1 class="h3 font-weight-normal mb-3">Sign In</h1>
-</div>
-<form class="form-signin" action="/admin/signin" method="POST">
-  <div class="form-row mb-3">
-    <label class="form-label" for="account">Account</label>
-    <input class="form-control" id="account" type="text" name="account" class="form-control" placeholder="account" required
-      autofocus>
+<div class="row">
+  <div class="col-4"></div>
+  <div class="sign-in col-4 d-flex flex-column justify-content-center align-items-center gap-4 position-relative">
+    <img src="/images/icons/ac_icon.svg" alt="">
+    <h3>
+      後台登入
+    </h3>
+    <form action="/signin" method="post" class="w-100 needs-validation" novalidate>
+        <div class="mb-4 position-relative">
+          <label for="account" class="form-label position-absolute font-size-sm">帳號</label>
+          <input type="text" class="form-control fs-6" id="account" placeholder="請輸入帳號" required>
+          <div class="invalid-feedback">
+            請輸入帳號
+          </div>
+        </div>
+        <div class="mb-4 position-relative">
+          <label for="password" class="form-label position-absolute font-size-sm">密碼</label>
+          <input type="password" class="form-control fs-6" id="password" placeholder="請輸入密碼" required>
+          <div class="invalid-feedback">
+            請輸入密碼
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">登入</button>
+    </form>
+    <div class="d-flex flex-row-reverse w-100">
+        <a href="/signin">前台登入</a>
+    </div>
   </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="password">Password</label>
-    <input class="form-control" id="password" type="password" name="password" class="form-control"
-      placeholder="Password" required>
-  </div>
-  <button class="btn btn-primary btn-block" type="submit">Submit</button>
-</form>
-<div class="mb-4 text-center">
-  <p><a href="/signup">Sign Up</a></p>
+  <div class="col-4"></div>
 </div>
