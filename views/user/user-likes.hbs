@@ -4,7 +4,11 @@
     {{>profile-card route='user-likes'}}
     <div class="likes-list">
       <div class="li-container">
+        {{#each likedTweets}}
+        {{> tweet-li}}
+        {{/each}}
       </div>
+    </div>
   </section>
   {{> recommendation}}
 </main>

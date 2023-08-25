@@ -1,5 +1,5 @@
-const { User } = require('../models')
-const randomUsersHelper = require('../helpers/randomUsersHelper');
+const { Tweet, User, Reply, Like, Followship } = require('../models')
+const { getEightRandomUsers } = require("../helpers/randomUsersHelper");
 const helpers = require('../_helpers')
 
 const replyController = {
@@ -7,16 +7,42 @@ const replyController = {
     const isUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
     try {
       const userId = req.params.id;
-      const user = await User.findByPk(userId);
+      const currentUserId = req.user.id;
+      const user = await User.findByPk(userId,{
+        include: [{ 
+          model: Reply,include: [
+            {model: Tweet, include: [{model: User}]},
+            {model: User}],
+          order: [['updatedAt', 'DESC']],
+        }, 
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+      });
 
       if (user) {
         const userData = user.toJSON();
-        const tenRandomUsers = await randomUsersHelper.getTenRandomUsers(10); // 使用 helper 模块获取10个随机用户
-
+        const recommend = await getEightRandomUsers(req);
+        const isFollowed = user.Followers.some((l) => l.id === currentUserId);
+        const replies = user.Replies.map(reply => ({
+          User: {
+            account: reply.User.account,
+            name: reply.User.name,
+          },
+          Tweet:{
+            userAvatar: reply.Tweet.User.avatar,
+            username: reply.Tweet.User.name,
+            id: reply.Tweet.id
+          },
+          comment: reply.comment,
+          createdAt: reply.createdAt
+        }));
         const dataToRender = {
           user: userData,
-          recommend: tenRandomUsers,
-          isUser
+          recommend,
+          isUser,
+          replies,
+          isFollowed
         };
 
         res.render('user/user-replies', dataToRender);
@@ -28,14 +54,6 @@ const replyController = {
       res.status(500).send("获取用户数据时出错。");
     }
   }
-  // getReplies: (req, res, next) => {
-  //   return User.findByPk(req.params.id)
-  //     .then(user => {
-  //       return res.render('user/user-replies', {
-  //         users: user.toJSON()
-  //       })
-  //     })
-  // }
 }
 
 module.exports = replyController

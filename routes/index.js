@@ -3,11 +3,11 @@ const router = express.Router();
 const passport = require("../config/passport");
 const upload = require("../middleware/multer");
 
-const tweetsController = require("../controllers/tweets-controller");
-const userController = require("../controllers/user-controller");
-
-const replyController = require("../controllers/reply-controller");
-const likesController = require("../controllers/likes-controller");
+const tweetsController = require('../controllers/tweets-controller')
+const userController = require('../controllers/user-controller')
+const replyController = require('../controllers/reply-controller')
+const likesController = require('../controllers/likes-controller')
+const apiController = require('../controllers/api-controller')
 
 const { authenticated, authenticatedAdmin } = require("../middleware/auth");
 const { generalErrorHandler } = require("../middleware/error-handler");
@@ -57,19 +57,11 @@ router.get("/users/:id/replies", authenticated, replyController.getReplies);
 router.get("/users/:id/likes", authenticated, likesController.getLikes);
 router.get("/users/:id/followers", authenticated, userController.getFollower);
 router.get("/users/:id/followings", authenticated, userController.getFollowing);
-router.put(
-  "/users/:id",
-  upload.fields([
-    { name: "avatar", maxCount: 1 },
-    { name: "background", maxCount: 1 },
-  ]),
-  authenticated,
-  userController.putUser
-);
+router.get('/api/users/:id', authenticated, apiController.getUser)
+router.post('/api/users/:id', upload.fields([{ name: 'background', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), authenticated, apiController.putUser)
 router.get("/settings", authenticated, userController.getSetting); // 個人資料設定
 router.put("/settings", authenticated, userController.putSetting); // 個人資料編輯
-
-router.use("/", (req, res) => res.redirect("/tweets"));
+router.use('/', (req, res) => res.redirect('/tweets'));
 router.use("/", generalErrorHandler);
 
 module.exports = router;

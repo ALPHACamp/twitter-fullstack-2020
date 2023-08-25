@@ -24,6 +24,7 @@ const tweetsController = {
           userId: tweet.User.id,
           userAccount: tweet.User.account,
           userName: tweet.User.name,
+          userAvatar: tweet.User.avatar,
           text: tweet.description,
           createdAt: tweet.createdAt,
           replies,
