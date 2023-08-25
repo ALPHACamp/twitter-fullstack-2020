@@ -5,11 +5,16 @@ const passport = require('../../config/passport')
 // Controllers
 const adminController = require('../../controllers/admin-controller')
 
+// middleware
+const { adminAuthenticated } = require('../../middleware/auth')
+
 // Sign in
 router.get('/signin', adminController.signInPage)
 router.post('/signin', passport.authenticate('adminSignin', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
 
-router.get('/tweets', adminController.getTweets)
-router.use('/', (req, res) => res.redirect('/admin/tweets'))
+// admin tweets
+router.get('/tweets', adminAuthenticated, (req, res) => {
+  return res.render('admin/tweets')
+})
 
 module.exports = router

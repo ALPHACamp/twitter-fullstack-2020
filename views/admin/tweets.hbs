@@ -1,25 +1,36 @@
 <div class="container">
-  <div class="wrapper" style="justify-content:flex-start">
+  <div class="wrapper">
 
     {{> admin-navbar}}
 
-    {{!-- 推文清單 --}}
-    <div class="col-5" style="padding:0;background-color:white; border:2px #ECECEC solid; border-top-color:white;">
+    <section class="main">
+      {{!-- Title --}}
+      <h4 class="main-title">
+        推文清單
+      </h4>
 
-      <div style="padding:15px;height:50px;display: flex; align-items:center;">
-        <span style="font-size: 22px;"><strong>推文清單</strong></span>
-      </div>
-
-      <div style="margin: 0;height:7px;background-color: #ECECEC;"></div>
-
-      {{#each tweets}}
-      <div style="padding:15px; border-top:2px #ECECEC solid;">
-        <div class="position-relative">
-          <span style="font-size:18px;"><strong>{{this.User.name}} </strong></span>
-          <span style="color:gray; font-size:14px;"> @{{this.User.account}}·{{relativeTimeFromNow
-            this.createdAt}}</span>
-          <p>{{this.description}}</p>
+     {{!-- Tweet --}}
+      <div class="card card-tweet-lg">
+        <a href="#" class="tweet-href"></a>
+        <div class="avatar">
+          <a href="#" class="primary-anchor">
+            <img src="/images/icons/profile-img.svg" alt="avatar" class="avatar">
+          </a>
+        </div>
+        <div class="card-text">
+          <div class="card-text-info">
+            <a href="#" class="primary-anchor">
+              <span class="card-name">Apple</span>
+            </a>
+            <a href="#" class="primary-anchor">
+              <span class="card-account">@apple</span>
+            </a>
+            <span class="card-dot">·</span>
+            <span class="card-datetime">3小時</span>
+          </div>
+          <p class="card-description">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
+            dolor.
+            Voluptate exercitation incididunt
+            aliquip deserunt reprehenderit elit laborum.</p>
         </div>
       </div>
-      {{/each}}
-    </div>

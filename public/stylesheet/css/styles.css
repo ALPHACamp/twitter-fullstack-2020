@@ -3,6 +3,219 @@ body {
   font-family: 'Noto Sans TC';
 }
 
+/* ---------- page flexbox & position ---------- */
+
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+  min-width: 1200px;
+}
+
+.navbar-column {
+  /* position */
+  position: static;
+  top: 0;
+  left: 130px;
+  /* sizing */
+  /* width: 150px;
+  height: 95vh;
+  min-height: 400px; */
+  width: 178px;
+  height: 1200px;
+}
+
+
+
+/* ---------- navbar ---------- */
+
+.logo-container {
+  position: relative; 
+  top: 8px;
+  left: 8px;
+  padding: 5px;
+  width: 50px;
+  height: 50px;
+}
+
+.logo {
+  position: relative; 
+  top: 5px;
+  left: 5px;
+  width: 40px;
+  height: 40px;
+}
+
+.main-navbar {
+  position: relative;
+  top: 66px;
+  gap: 8px;
+  width: 178px;
+  height: 124px;
+}
+
+.nav-row {
+  position: relative;
+  width: 178px;
+  height: 58px;
+}
+
+.nav-item-tweet {
+  position: relative;
+  justify-content: space-between;
+  top: 16px;
+  left: 16px;
+  gap: 16px;
+  width: 112px;
+  height: 26px;
+  color: #44444F;
+  text-decoration: none;
+}
+
+.nav-item-tweet:hover, .active {
+  text-decoration: none;
+  color: #FF6600;
+}
+
+.nav-item-user {
+  position: relative;
+  top: 16px;
+  left: 16px;
+  gap: 16px;
+  width: 130px;
+  height: 26px;
+  color: #44444F;
+  text-decoration: none;
+}
+
+.nav-item-user:hover, .active {
+  text-decoration: none;
+  color: #FF6600;
+}
+
+.home-icon {
+  position: absolute;
+  left: 0px;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url('/images/icons/home_outlined.svg');
+  background-size: contain;
+}
+
+.nav-item-tweet:hover>.home-icon,
+.active>.home-icon {
+  position: absolute;
+  left: 0px;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url('/images/icons/home_filled.svg');
+  background-size: contain;
+}
+
+.user-icon {
+  position: absolute;
+  left: 0px;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url('/images/icons/user_outlined.svg');
+  background-size: contain;
+}
+
+.nav-item-user:hover>.user-icon,
+.active>.user-icon {
+  position: absolute;
+  left: 0px;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url('/images/icons/user_filled.svg');
+  background-size: contain;
+} 
+
+.nav-title-tweet-tab {
+  width: 72px;
+  height: 26px;
+  /* padding-left: 35px; */
+  /* margin-bottom: 40px; */
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.nav-title-user-tab {
+  width: 72px;
+  height: 26px;
+  /* padding-left: 35px; */
+  /* margin-bottom: 40px; */
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.nav-row-logout{
+  position: absolute;
+  width: 178px;
+  height: 58px;
+  top: 1142px;
+  /* bottom: 50px; */
+}
+
+.nav-item-logout {
+  position: relative;
+  /* top: 16px;
+  left: 16px; */
+  width: 76px;
+  height: 26px;
+  gap: 16px;
+  color: #44444F;
+  text-decoration: none;
+}
+
+.nav-item-logout:hover {
+  text-decoration: none;
+  color: #FF6600;
+}
+
+.logout-icon {
+  position: absolute;
+  left: 0px;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url('/images/icons/logout.svg');
+  background-size: contain;
+}
+
+.nav-item-logout:hover>.logout-icon {
+  position: absolute;
+  left: 0px;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url('/images/icons/logout_colored.svg');
+  background-size: contain;
+}
+
+.nav-title-logout {
+  width: 36px;
+  height: 26px;
+  /* padding-left: 35px; */
+  /* margin-bottom: 40px; */
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+
+
 /* ac-logo */
 #ac-logo {
   display: block;
@@ -32,7 +245,8 @@ body {
 }
 
 /* form */
-#form-input-line {
+/* #form-input-line {
+  position: absolute;
   width: 356px;
   height: 78px;
   background-color: #F5F8FA;
@@ -54,7 +268,7 @@ body {
 
 .form-label {
   margin-left: 10.55px;
-}
+} */
 
 /* button */
 #btn-signup-submit {
@@ -96,32 +310,7 @@ body {
   flex-grow: 0;
 }
 
-/* admin-navbar */
-.container-logo {
-  margin-top: 16px;
-}
 
-.container-logo .logo {
-  height: 40px;
-  width: 40px;
-  object-fit: unset;
-}
 
-.nav-row {
-  position: relative;
-  height: 26px;
-  text-decoration: none;
-  color: #44444F;
-}
 
-.nav-row:hover,
-.active {
-  text-decoration: none;
-  color: #FF6600;
-}
-
-.nav-row-title {
-  padding-left: 35px;
-  margin-bottom: 40px;
-}
 

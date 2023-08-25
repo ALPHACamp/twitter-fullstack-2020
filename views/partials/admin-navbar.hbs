@@ -1,31 +1,39 @@
-<nav class="navbar-column" style="width:178px;">
+<nav class="navbar-column">
 
   {{!-- Logo --}}
-  <div class="container-logo">
+  <div class="logo-container">
     <a href="/admin/tweets">
-      <img src="/images/icons/logo.png" alt="logo" class="logo">
+      <img src="/images/icons/logo.svg" alt="Logo" class="logo">
     </a>
   </div>
 
-  {{!-- Tweets list --}}
-  <a class="nav-row {{#if tweets}}active{{/if}}" id="adminTweets" href="/admin/tweets">
-    <img class="nav-row-house-icon" src="/images/icons/home_outlined.svg" alt="house">
-    <h5 class="nav-row-title">推文清單</h5>
-  </a>
+  <div class="main-navbar">
+    {{!-- Tweets tab --}}
+    <div class="nav-row">
+      <a class="nav-item-tweet {{#if tweets}}active{{/if}}" href="/admin/tweets">
+        <div class="home-icon"></div>
+        <h5 class="nav-title-tweet-tab">推文清單</h5>
+      </a>
+    </div>
 
   {{!-- Users list --}}
-  <a class="nav-row {{#if users}}active{{/if}}" id="adminUsers" href="/admin/users">
-    <img class="nav-row-user-icon" src="/images/icons/user_outlined.svg" alt="user">
-    <h5 class="nav-row-title">使用者列表</h5>
-  </a>
+    <div class="nav-row">
+      <a class="nav-item-user {{#if users}}active{{/if}}" href="/admin/users">
+        <div class="user-icon"></div>
+        <h5 class="nav-title-user-tab">使用者列表</h5>
+      </a>
+    </div>
+  </div>
 
   {{!-- Log out --}}
-  <form action="/logout" method="POST" class="logout-form">
-    <button type="submit" class="btn" id="adminLogout">
-      <div class="nav-row">
-        <img class="nav-row-logout-icon" src="/images/icons/logout.svg" alt="logout">
-        <h5 class="nav-row-title">登出</h5>
-      </div>
-    </button>
-  </form>
+  <div class="nav-row-logout">
+    <form action="/logout" method="POST" class="logout-form">
+      <button type="submit" class="btn nav-item-logout">
+        <div class="logout-icon">
+        </div>
+        <h5 class="nav-title-logout">登出</h5>
+      </button>
+    </form>
+  </div>
+
 </nav>
