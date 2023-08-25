@@ -4,4 +4,27 @@
     帳戶設定
   </h4>
   {{/ifCond}}
+
+  {{#ifCond route 'user'}}
+    <div class="d-flex gap-3 justify-content-start align-items-center h-43px p-0 m-0">
+        <div class="p-1 m-0">
+            <img src="/images/icons/back_outlined.svg" alt="">
+        </div>
+        <div class="d-flex flex-column m-0 p-0 gap-0">
+            <p class="fw-bold m-0 p-0 align-bottom fs-18px ln-height-26px">{{user.name}}</p>
+            <p class="font-size-sm text-secondary m-0 p-0 fs-13px ln-height-16px fw-500">{{tweetsAmounts}} 推文</p>
+        </div>
+    </div>
+
+  {{/ifCond}}
+  {{#ifCond route 'replies'}}
+    <div class="d-flex gap-3 p-0 m-0 h-26px justify-content-start align-items-center">
+        <div class="p-1 m-0">
+            <img src="/images/icons/back_outlined.svg" class="p-0 m-0" alt="">
+        </div>
+        <div class="d-flex flex-column m-0 p-0 gap-0">
+            <p class="fw-bold m-0 p-0 align-bottom fs-4 ln-height-26px">推文</p>
+        </div>
+    </div>
+  {{/ifCond}}
 </div>
