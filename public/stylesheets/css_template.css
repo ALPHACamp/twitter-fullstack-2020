@@ -209,9 +209,6 @@
     min-height: 500px;
 }
 
-#user-setting-model .modal-content{
-    height: 6010px;
-}
 .modal-close-btn{
     position: relative;
     height: 24px;

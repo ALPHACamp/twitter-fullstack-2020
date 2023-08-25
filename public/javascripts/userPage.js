@@ -20,7 +20,6 @@ userSettingCoverInput.addEventListener('change', event => { showPreview(event, U
 const removeUserSettingCoverInput = document.querySelector(REMOVE_COVER_INPUT)
 removeUserSettingCoverInput.addEventListener('click', event => {
   event.stopPropagation() // 防止觸發label
-  console.log(event)
   removeInput(event, USER_COVER_INPUT, USER_COVER)
 })
 
