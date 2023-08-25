@@ -152,28 +152,6 @@ const userController = {
       res.status(500).send("获取用户数据时出错。");
     }
   },
-  putUser: (req, res, next) => { //修改使用者名稱、自我介紹
-    const { name, introduction } = req.body
-    const avatar = req.files ? req.files.avatar : null
-    const background = req.files ? req.files.background : null
-    User.findByPk(helpers.getUser(req).id)
-      .then(async user => {
-        const avatarFilePath = avatar ? await imgurFileHandler(avatar[0]) : user.avatar
-        const backgroundFilePath = background ? await imgurFileHandler(background[0]) : user.background
-        console.log("Avatar File Path:", avatarFilePath);
-        console.log("Background File Path:", backgroundFilePath);
-        return user.update({
-          name,
-          introduction,
-          avatar: avatarFilePath || user.avatar,
-          background: backgroundFilePath || user.background,
-        });
-      })
-      .then(() => {
-        res.redirect(`/users/${helpers.getUser(req).id}/tweets`)
-      })
-      .catch((err) => next(err));
-  },
   getFollower: async (req, res, next) => {
     // 跟隨者
     try {
