@@ -4,7 +4,7 @@ const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
 const admin = require('./modules/admin')
 const passport = require('../config/passport')
-const { authenticated, authenticatedAdmin } = require('../middleware/auth')
+const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 
 router.use('/admin', admin)

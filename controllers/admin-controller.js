@@ -5,12 +5,17 @@ const adminController = {
     res.render('admin/signin')
   },
   signIn: (req, res) => {
-    req.flash('success_messages', '成功登入')
-    res.redirect('/admin/tweets')
+    if (req.user.role === 'user') {
+      req.flash('error_messages', '帳號不存在！')
+      res.redirect('/admin/signin')
+    } else {
+      req.flash('success_messages', '成功登入')
+      res.redirect('/admin/tweets')
+    }
   },
   logOut: (req, res) => {
     req.flash('success_messages', '成功登出')
-    res.redirect('/admin/signin')
+    res.redirect('/signin')
   },
   getTweets: (req, res, next) => {
     return Tweet.findAll({

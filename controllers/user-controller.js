@@ -1,5 +1,5 @@
-const db = require('../models')
-const { User, Tweet, Reply, Like, Followship } = db
+// const db = require('../models')
+// const { User, Tweet, Reply, Like, Followship } = db
 
 const userController = {
   editUser: (req, res, next) => {
@@ -22,7 +22,7 @@ const userController = {
   },
   signUpPage: (req, res, next) => {
     res.render('signup')
-  },
+  }
 
   // signUp: (req, res, next) => {
   //   if (req.body.password !== req.body.checkPassword) throw new Error('Passwords do not match!')
