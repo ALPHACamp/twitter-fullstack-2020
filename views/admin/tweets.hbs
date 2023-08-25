@@ -1,0 +1,10 @@
+{{!-- handlebars 頁面還要再修 --}}
+<h4>推文清單</h4>
+<a href="/admin/users">使用者清單</a>
+{{#each tweets}}
+<p>使用者頭像: {{ this.User.avatar }}
+<p>使用者姓名：{{ this.User.name }}</p>
+<p>使用者帳號：{{ this.User.account }}</p>
+<p>發文時間：{{ relativeTimeFromNow this.User.createdAt }}</p>
+<p>推文內容 {{ this.description }}</p>
+{{/each}}
