@@ -48,6 +48,12 @@ const { imgurFileHandler } = require('../helpers/file-helpers')
         next(err)
       }
     },
+    uploadImage: async (req, res) => {
+      const { files } = req
+      const uploadBackground = await imgurFileHandler(files?.background?.[0])
+      const uploadAvatar = await imgurFileHandler(files?.avatar?.[0])
+      res.json({ uploadBackground, uploadAvatar })
+    }
 }
 
 module.exports = apiController

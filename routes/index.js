@@ -59,6 +59,10 @@ router.get("/users/:id/followers", authenticated, userController.getFollower);
 router.get("/users/:id/followings", authenticated, userController.getFollowing);
 router.get('/api/users/:id', authenticated, apiController.getUser)
 router.post('/api/users/:id', upload.fields([{ name: 'background', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), authenticated, apiController.putUser)
+router.post('/api/image', upload.fields([
+  { name: 'background' },
+  { name: 'avatar' }
+]), apiController.uploadImage)
 router.get("/settings", authenticated, userController.getSetting); // 個人資料設定
 router.put("/settings", authenticated, userController.putSetting); // 個人資料編輯
 router.use('/', (req, res) => res.redirect('/tweets'));

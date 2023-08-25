@@ -4,8 +4,38 @@ const nameCount = document.querySelector('#name-area')
 const inputName = document.querySelector('#name')
 const inputIntroduction = document.querySelector('#introduction')
 const editButton = document.querySelector('#editButton')
+const backgroundImage = document.querySelector('#background-image')
 const inputBackground = document.querySelector('#background')
+const avatarImage = document.querySelector('#avatar-image')
 const inputAvatar = document.querySelector('#avatar')
+
+inputBackground.addEventListener('change', async () => {
+  try{
+  const formData = new FormData()
+  formData.append('background', inputBackground.files[0])
+  const data = await axios.post(`/api/image`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+  backgroundPath = data.data.uploadBackground
+  backgroundImage.src = backgroundPath
+  } catch (err) { console.log(err) }
+})
+
+inputAvatar.addEventListener('change', async () => {
+  try {
+    const formData = new FormData()
+    formData.append('avatar', inputAvatar.files[0])
+    const data = await axios.post(`/api/image`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    avatarPath = data.data.uploadAvatar
+    avatarImage.src = avatarPath
+  } catch (err) { console.log(err) }
+})
 
 // 儲存modal資訊，刷新頁面
 editModal.addEventListener('submit', function (event) {
