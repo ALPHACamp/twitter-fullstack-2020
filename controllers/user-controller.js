@@ -2,6 +2,12 @@
 // const { User, Tweet, Reply, Index, Like, Followship } = db
 
 const userController = {
+  editUser: (req, res, next) => {
+    res.render('setting')
+  },
+  getUserTweets: (req, res, next) => {
+    res.render('profile')
+  }
   // addFollowing: (req, res, next) => {
   //   const { userId } = req.params
   //   Promise.all([

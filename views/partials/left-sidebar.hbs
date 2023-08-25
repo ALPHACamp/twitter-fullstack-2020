@@ -6,19 +6,28 @@
   </div>
   <div class="sidebar-container">
     <nav class="nav d-flex flex-row" class="sidebar-container" id="buttons-container">
+      {{#if tweetRoute}}
+        <a href="/tweets" class="nav-link button-container" id="home">
+          <span class="icon-description p-0" id="home-span" style="color: #FF4400">
+            <img src="/images/icons/orange-home.png" alt="home" id="home-icon" class="sidebar-icon">
+            首頁
+          </span>
+        </a>
+      {{else}}  
       <a href="/tweets" class="nav-link button-container" id="home">
       <span class="icon-description p-0" id="home-span">
         <img src="/images/icons/home.png" alt="home" id="home-icon" class="sidebar-icon">
         首頁
       </span>
       </a>
-      <a href="/profile" class="nav-link button-container" id="profile">
+      {{/if}}
+      <a href="/users/:id/tweets" class="nav-link button-container" id="profile">
         <span class="icon-description p-0" id="profile-span">
         <img src="/images/icons/profile.png" alt="profile" id="profile-icon" class="sidebar-icon">
         個人資料
       </span>
       </a>
-      <a href="/setting" class="nav-link button-container" id="setting">
+      <a href="/users/:id/edit" class="nav-link button-container" id="setting">
         <span class="icon-description p-0" id="setting-span">
           <img src="/images/icons/setting.png" alt="setting" id="setting-icon" class="sidebar-icon">
           設定
@@ -30,14 +39,13 @@
         <span class="new-tweet-span" style="font-size: 20px;">推文</span>
       </button>
       {{> add-tweet-modal}}
-      
       </div>
     </nav>
   </div>
   <div id="logout">
     <a href="/logout" class="btn">
       <span class="icon-description" id="logout-span">
-        <img src="/images/icons/leave.png" alt="logout" id="logout-icon" class="sidebar-icon">
+        <img src="/images/icons/logout.png" alt="logout" id="logout-icon" class="sidebar-icon">
         登出
     </a>
   </div>
