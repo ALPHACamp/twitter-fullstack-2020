@@ -16,8 +16,7 @@ const SESSION_SECRET = 'secret'
 const app = express()
 const port = process.env.PORT || 3000
 
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+
 
 // Handlebars 設定
 

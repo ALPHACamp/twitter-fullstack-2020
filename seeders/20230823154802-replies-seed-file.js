@@ -4,11 +4,11 @@ const faker = require('faker')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const users = await queryInterface.sequelize.query(
-      'SELECT id, role FROM Users WHERE role = "user"',
+      "SELECT id, role FROM Users WHERE role = 'user'",
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
     const tweets = await queryInterface.sequelize.query(
-      'SELECT id FROM Tweets',
+      "SELECT id FROM Tweets",
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
     const replyPerTweet = 3

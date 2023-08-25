@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 // 引入Controller
 const passport = require('../config/passport')
-const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
 
@@ -31,9 +30,11 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 
 router.get('/tweets', tweetController.getTweets)
 
+// 使用者功能路由
 router.get('/users/:id/followers', userController.getUserFollowers)
 router.get('/users/:id/followings', userController.getUserFollowings)
 router.get('/users/:id/setting', userController.getUserSetting)
+
 // 首頁
 router.get('/', authenticated, tweetController.getTweets)
 
