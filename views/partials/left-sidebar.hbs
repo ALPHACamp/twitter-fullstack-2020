@@ -1,6 +1,8 @@
 <div class="sidebar" id="left-sidebar">
   <div class="sidebar-container" id="logo-container">
-    <img src="/images/logo.png" alt="" id="logo">
+    <a href="/">
+      <img src="/images/logo.png" alt="" id="logo">
+    </a>
   </div>
   <div class="sidebar-container">
     <nav class="nav d-flex flex-row" class="sidebar-container" id="buttons-container">
@@ -17,34 +19,18 @@
       </span>
       </a>
       <a href="/setting" class="nav-link button-container" id="setting">
-      <span class="icon-description p-0" id="setting-span">
-        <img src="/images/icons/setting.png" alt="setting" id="setting-icon" class="sidebar-icon">
-        設定
-      </span>
+        <span class="icon-description p-0" id="setting-span">
+          <img src="/images/icons/setting.png" alt="setting" id="setting-icon" class="sidebar-icon">
+          設定
+        </span>
       </a>
-      <div class="button-container d-block" id="add-tweet">
+      <div class="button-container d-block p-0" id="add-tweet">
       <!-- Button trigger modal -->
-      <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#newTweet" id="new-tweet">
-        <span class="new-tweet-span" style="color: #FFFFFF; font-size: 20px;">推文</span>
+      <button type="button" class="btn d-grid" data-bs-toggle="modal" data-bs-target="#newTweet" id="new-tweet">
+        <span class="new-tweet-span" style="font-size: 20px;">推文</span>
       </button>
-      <!-- Modal -->
-      <div class="modal fade" id="newTweet" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Understood</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      {{> add-tweet-modal}}
+      
       </div>
     </nav>
   </div>

@@ -14,14 +14,27 @@ button {
    outline: none;
 }
 
+textarea {
+  border: none;
+  padding: 0px;
+  resize: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.form-control {
+  border: none;
+}
+
 @media (min-width: 1200px) {}
 
 #left-sidebar {
   position: absolute;
   width: 178px;
-  max-height: 1200px; 
+  height: 1200px; 
   left: 130px;
   background-color: #FFFFFF;
+  margin-right: 24px;
 }
 
 #logo-container {
@@ -86,6 +99,7 @@ button {
   padding: 8px 24px 8px 24px; 
   border-radius: 50px;
   background: #FF6600;
+  color: #FFFFFF;
 }
 
 #new-tweet.span {
@@ -96,4 +110,35 @@ button {
   line-height: 30px;
   letter-spacing: 0px;
   text-align: center;
+}
+
+.main-middle {
+  position: absolute;
+  left: 333px;
+  height: 1200px;
+}
+
+#add-tweet-button {
+  position: absolute;
+  width: Hug (64px);
+  height: Hug (40px); 
+  bottom: 16px; 
+  right: 16px;
+  border-radius: 50px;
+  background: #FF6600;
+  color: #FFFFFF;
+}
+
+.btn-close {
+  margin-top: 16px;
+  margin-left: 15px;
+  color: #FF6600;
+}
+
+.modal-user-avatar {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  border-radius: 100%;
+  margin:auto 8px auto 24px;
 }
