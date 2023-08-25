@@ -6,9 +6,6 @@ const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
 
 // 使用Modules
-router.get('/tweets', tweetController.getTweets)
-
-router.get('/', (req, res) => res.redirect('/tweets'))
 
 const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated, authenticatedAdmin } = require('../middleware/auth')
@@ -28,7 +25,7 @@ router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 
-router.get('/tweets', tweetController.getTweets)
+router.get('/tweets', authenticated, tweetController.getTweets)
 
 // 使用者功能路由
 router.get('/users/:id/followers', userController.getUserFollowers)
