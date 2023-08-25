@@ -72,7 +72,7 @@ const userController = {
       });
       res.redirect("back");
     } catch (err) {
-      console.log(err);
+      next(err);
     }
   },
   deleteFollow: async (req, res, next) => {
@@ -88,8 +88,7 @@ const userController = {
       await followship.destroy();
       return res.redirect("back");
     } catch (err) {
-      console.log(err);
-      // next(err)
+      next(err);
     }
   },
   getUser: async (req, res, next) => {

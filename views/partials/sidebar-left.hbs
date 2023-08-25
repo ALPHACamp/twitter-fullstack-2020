@@ -67,7 +67,9 @@
           <input type="text" class="w-100" style="border:none; outline: none; background: none" placeholder="有什麼新鮮事?"
             name="description" required />
           <div class="position-absolute bottom-0 end-0 d-flex align-items-center">
-            <p class="warning mb-0" style="text-align:center">字數不可超過140個字</p>
+            {{#if error_messages}}
+              <p class="m-0" style="color:red;">{{error_messages}}</p>
+            {{/if}}
             <button type="submit"
               style="border: none; background: none; padding: 0; margin: 15px; cursor: pointer; background-color:#FF6600; width:64px; height:40px; border-radius:50px; color:white">推文</button>
           </div>

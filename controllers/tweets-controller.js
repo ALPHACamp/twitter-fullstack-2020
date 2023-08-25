@@ -42,7 +42,6 @@ const tweetsController = {
     try {
       const { description } = req.body;
       const currentUserId = helpers.getUser(req).id;
-      // console.log(text);
       if (!description) throw new Error("內容不可為空白");
       if (description.length > 140) throw new Error("內容不可超過140字");
       await Tweet.create({
@@ -87,7 +86,7 @@ const tweetsController = {
       const likes = await Like.findOne({
         where: { userId: currentUserId, TweetId: id },
       });
-      // if (likes) throw new Error("You already liked this tweet!");
+      if (likes) throw new Error("You already liked this tweet!");
       await Like.create({
         UserId: currentUserId,
         TweetId: id,
@@ -104,7 +103,7 @@ const tweetsController = {
       const likes = await Like.findOne({
         where: { userId: currentUserId, TweetId: id },
       });
-      // if (!likes) throw new Error("You already unlike it!");
+      if (!likes) throw new Error("You already unlike it!");
       await likes.destroy();
       return res.redirect("back");
     } catch (err) {
