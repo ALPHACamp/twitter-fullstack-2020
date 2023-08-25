@@ -51,6 +51,15 @@ const userController = {
   adminSignIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
     res.redirect('/admin/tweets')
+  },
+  getUserSetting: (req, res, next) => {
+    return res.render('user-setting')
+  },
+  getUserFollowings: (req, res, next) => {
+    return res.render('followings')
+  },
+  getUserFollowers: (req, res, next) => {
+    return res.render('followers')
   }
 }
 

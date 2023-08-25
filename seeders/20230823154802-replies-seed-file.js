@@ -8,7 +8,7 @@ module.exports = {
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
     const tweets = await queryInterface.sequelize.query(
-      'SELECT id FROM Tweets',
+      "SELECT id FROM Tweets",
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
     const replyPerTweet = 3
