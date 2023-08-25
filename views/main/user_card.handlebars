@@ -122,11 +122,11 @@
       <div class="modal fade" id="user-setting-modal" tabindex="-1" aria-labelledby="userSettingModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header d-flex justify-content-start">
-                <button type="button" class="btn btn-outline-light modal-close-btn" data-bs-dismiss="modal" aria-label="Close">
+            <div class="modal-header border-0 d-flex justify-content-start align-items-center p-0 m-3 gap-4">
+                <button type="button" class="btn btn-outline-light modal-close-btn m-0 d-flex justify-content-start align-items-center" data-bs-dismiss="modal" aria-label="Close">
                     <img src="/images/icons/close_outlined.svg" alt="" class="filter-main-color">
                 </button>
-                <p class="fw-bold text-black">編輯個人資料</p>
+                <p class="fw-bold text-black m-0 p-0">編輯個人資料</p>
             </div>
             <div class="modal-body p-0 m-0">
               {{!--需要更改以下form的連結位置--}}
@@ -146,6 +146,18 @@
                     <img src="/images/icons/addphoto_outlined.svg" class="" alt="">
                   </label>
                   <input type="file" accept="image/*" name="avatar" id="user-avatar-input" class="user-avatar-input">
+                </div>
+                <div class="user-setting-text m-3 p-0">
+                  <div class="form-row mb-2 position-relative">
+                    <label for="name" class="form-label position-absolute font-size-sm">名稱</label>
+                    <input type="text" class="text-input form-control user-setting-name-input text-input" id="name" name="name" placeholder="請輸入名稱" value="John Doe" maxlength="50" required>
+                    <div class="p-0 m-0 mt-1 d-flex justify-content-end w-100">
+                      <div class="input-length text-secondary font-size-xs">0/50</div>
+                    </div>
+                    <div class="invalid-feedback">
+                      請輸入名稱
+                    </div>
+                  </div>
                 </div>
               </form>
             </div>

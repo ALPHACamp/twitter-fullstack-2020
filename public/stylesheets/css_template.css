@@ -4,6 +4,9 @@
     font-size: 0.875rem;
 }
 
+.font-size-xs{
+    font-size: 0.75rem;
+}
 /*Position class*/
 .child-img-center {
     display: flex;
@@ -424,7 +427,8 @@
 
   .sign-in input,
   .sign-up input,
-  .edit-user-info input {
+  .edit-user-info input,
+  .user-setting-text input{
       height: 54px;
       padding: 24px 10.55px 0 10.55px;
 
@@ -436,7 +440,8 @@
 
   .sign-in label,
   .sign-up label,
-  .edit-user-info label {
+  .edit-user-info label,
+  .user-setting-text label {
       top: 2px;
       left: 10.55px;
 

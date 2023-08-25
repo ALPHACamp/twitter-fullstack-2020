@@ -18,7 +18,6 @@ router.get('/signup', userController.getUserSignUpPage)
 router.get('/logout', userController.userLogout)
 router.post('/signin', userLocalAuth, sendToken, userController.userSignin)
 
-
 router.get('/', userJWTAuth, (req, res) => res.render('main/homepage'))
 router.use('/', (req, res) => {
 // 預留，將找不到router的網址都先轉入root
