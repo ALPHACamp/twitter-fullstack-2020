@@ -30,6 +30,7 @@ const replyController = {
             name: reply.User.name,
           },
           Tweet:{
+            userAvatar: reply.Tweet.User.avatar,
             username: reply.Tweet.User.name,
             id: reply.Tweet.id
           },

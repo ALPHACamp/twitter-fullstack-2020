@@ -1,5 +1,5 @@
 <main class="d-flex justify-content-center">
-  {{> sidebar-left}}
+  {{> sidebar-left route="home"}}
   <section style="width:636px; border:1px solid #E6ECF0">
     <div class="tweet">
       <div class="main-name" style="border-bottom:1px solid #E6ECF0">
@@ -7,12 +7,12 @@
       </div>
       <div class="tweet-text-container position-relative">
         <form action="/tweets" method="post" class="d-flex align-items-start m-3" style="height:130px">
-          <div class="avatar flex-grow-1"
-            style="width:50px; height:50px; border-radius:50%; background-color:antiquewhite;">
-            <img src="" alt="" />
+          <div class="avatar d-flex justify-content-center"
+            style="width:50px; height:50px; border-radius:50%; background-color:#FF6600; overflow:hidden">
+            <img src="{{currentUser.avatar}}" alt="" />
           </div>
           <input type="text" class="w-100" style="border:none; outline: none; background: none" placeholder="有什麼新鮮事?"
-            name="text" required />
+            name="description" required />
           <div class="position-absolute bottom-0 end-0 d-flex align-items-center">
             <p class="warning mb-0" style="text-align:center">字數不可超過140個字</p>
             <button type="submit"

@@ -1,6 +1,6 @@
-{{#if error_messages}}
+{{#if account_messages}}
 <p>
-  {{ error_messages }}
+  {{ account_messages }}
 </p>
 {{/if}}
 
@@ -10,6 +10,7 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {{/if}}
+
 {{#if warning_msg}}
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
   {{ warning_msg }}
