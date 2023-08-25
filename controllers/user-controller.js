@@ -1,8 +1,8 @@
 const bcrypt = require("bcryptjs");
 const { Op } = require('sequelize')
-const { Tweet, User, Followship } = require("../models");
+const { Tweet, User, Reply, Like, Followship } = require("../models");
 const { imgurFileHandler } = require("../helpers/file-helpers");
-const randomUsersHelper = require("../helpers/randomUsersHelper");
+const { getEightRandomUsers } = require("../helpers/randomUsersHelper");
 const helpers = require("../_helpers");
 const userController = {
   signupPage: (req, res) => {
@@ -15,11 +15,14 @@ const userController = {
     let mailMsg = ''
     let accountMsg = ''
     let passwordMsg = ''
+    let nameMsg = ''
 
     // if (!account|| !name|| !email|| !password|| !checkPassword)throw new Error ('所有欄位皆為必填')
 
     return Promise.all([emailPromise, accountPromise])
       .then(([mailUser, accountUser]) => {
+        console.log(name)
+        console.log(name.length > 50)
         if (mailUser) {
           mailMsg = '此信箱已被使用'
         }
@@ -29,8 +32,11 @@ const userController = {
         if (password !== checkPassword) {
           passwordMsg = '密碼與確認密碼不相符'
         }
-        if (mailMsg || accountMsg || passwordMsg) {
-          return res.render('signup', { passwordMsg, mailMsg, accountMsg, account, name, email })
+        if (name.length > 50 || name.length === 0) {
+          nameMsg = '名稱字數應為 1 ~ 50'
+        }
+        if (mailMsg || accountMsg || passwordMsg || nameMsg) {
+          return res.render('signup', { nameMsg, passwordMsg, mailMsg, accountMsg, account, name, email })
         } else {
           bcrypt.hash(password, 10)
             .then(hashedPassword => {
@@ -73,7 +79,7 @@ const userController = {
       });
       res.redirect("back");
     } catch (err) {
-      console.log(err);
+      next(err);
     }
   },
   deleteFollow: async (req, res, next) => {
@@ -89,8 +95,7 @@ const userController = {
       await followship.destroy();
       return res.redirect("back");
     } catch (err) {
-      console.log(err);
-      // next(err)
+      next(err);
     }
   },
   getUser: async (req, res, next) => {
@@ -98,16 +103,50 @@ const userController = {
       helpers.getUser(req).id === Number(req.params.id) ? true : false;
     try {
       const userId = req.params.id;
-      const user = await User.findByPk(userId);
+      const currentUserId = helpers.getUser(req).id;
+      const user = await User.findByPk(userId, {
+        include: [{
+          model: Tweet, include: [
+            { model: User },
+            { model: Reply, include: [{ model: Tweet }] },
+            { model: Like }
+          ],
+          order: [["updatedAt", "DESC"]]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+        ]
+      });
 
       if (user) {
         const userData = user.toJSON();
-        const tenRandomUsers = await randomUsersHelper.getTenRandomUsers(10); // 使用 helper 模块获取10个随机用户
+        const recommend = await getEightRandomUsers(req);
+        const isFollowed = user.Followers.some((l) => l.id === currentUserId);
+        const tweets = user.Tweets.map((tweet) => {
+          const replies = tweet.Replies.length;
+          const likes = tweet.Likes.length;
+          const isLiked = tweet.Likes.some((l) => l.UserId === currentUserId);
+          const userAvatar = tweet.User.avatar;
+          return {
+            tweetId: tweet.id,
+            userId: tweet.User.id,
+            userAccount: tweet.User.account,
+            userName: tweet.User.name,
+            text: tweet.description,
+            createdAt: tweet.createdAt,
+            replies,
+            likes,
+            isLiked,
+            userAvatar
+          };
+        });
 
         const dataToRender = {
           user: userData,
-          recommend: tenRandomUsers,
+          tweets,
+          recommend,
           isUser,
+          isFollowed
         };
 
         res.render("user/user-tweets", dataToRender);
@@ -119,19 +158,14 @@ const userController = {
       res.status(500).send("获取用户数据时出错。");
     }
   },
-  putUser: (req, res, next) => {
-    //修改使用者名稱、自我介紹
-    const { name, introduction } = req.body;
-    const avatar = req.files ? req.files.avatar : null;
-    const background = req.files ? req.files.background : null;
-    User.findByPk(req.params.id)
-      .then(async (user) => {
-        const avatarFilePath = avatar
-          ? await imgurFileHandler(avatar[0])
-          : user.avatar;
-        const backgroundFilePath = background
-          ? await imgurFileHandler(background[0])
-          : user.background;
+  putUser: (req, res, next) => { //修改使用者名稱、自我介紹
+    const { name, introduction } = req.body
+    const avatar = req.files ? req.files.avatar : null
+    const background = req.files ? req.files.background : null
+    User.findByPk(helpers.getUser(req).id)
+      .then(async user => {
+        const avatarFilePath = avatar ? await imgurFileHandler(avatar[0]) : user.avatar
+        const backgroundFilePath = background ? await imgurFileHandler(background[0]) : user.background
         console.log("Avatar File Path:", avatarFilePath);
         console.log("Background File Path:", backgroundFilePath);
         return user.update({
@@ -142,7 +176,7 @@ const userController = {
         });
       })
       .then(() => {
-        res.redirect(`/users/${req.params.id}/tweets`);
+        res.redirect(`/users/${helpers.getUser(req).id}/tweets`)
       })
       .catch((err) => next(err));
   },
@@ -150,40 +184,40 @@ const userController = {
     // 跟隨者
     try {
       const userId = req.params.id;
-      const user = await User.findByPk(userId);
+      const currentUserId = helpers.getUser(req).id;
+      const user = await User.findByPk(userId, {
+        include: [
+          { model: User, as: 'Followers', include: { model: User, as: 'Followers' } },
+          { model: User, as: 'Followings' }
+        ]
+      });
 
       if (user) {
         const userData = user.toJSON();
-        const tenRandomUsers = await randomUsersHelper.getTenRandomUsers(10); // 使用 helper 模块获取10个随机用户
+        const recommend = await getEightRandomUsers(req);
+        const follows = user.Followers.map((e) => {
+          const isFollowed = e.Followers.some(f => f.id === helpers.getUser(req).id)
+          return {
+            id: e.id,
+            name: e.name,
+            avatar: e.avatar,
+            introduction: e.introduction,
+            isFollowed
+          };
+        })
+        // const follow = userData.Followers.map((followerUser) => {
+        //   return {
+        //     id: followerUser.id,
+        //     name: followerUser.name,
+        //     avatar: followerUser.avatar,
+        //     introduction: followerUser.introduction
+        //   };
+        // });
 
         const dataToRender = {
           users: userData,
-          recommend: tenRandomUsers,
-        };
-
-        res.render("user/user-tweets", dataToRender);
-      } else {
-        res.status(404).send("未找到用户");
-      }
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("获取用户数据时出错。");
-    }
-  },
-
-  getFollower: async (req, res, next) => {
-    // 跟隨者
-    try {
-      const userId = req.params.id;
-      const user = await User.findByPk(userId);
-
-      if (user) {
-        const userData = user.toJSON();
-        const tenRandomUsers = await randomUsersHelper.getTenRandomUsers(10); // 使用 helper 模块获取10个随机用户
-
-        const dataToRender = {
-          users: userData,
-          recommend: tenRandomUsers,
+          recommend,
+          follows,
         };
 
         res.render("user/user-follower", dataToRender);
@@ -194,28 +228,38 @@ const userController = {
       console.error(err);
       res.status(500).send("获取用户数据时出错。");
     }
-    // return User.findByPk(req.params.id)
-    //   .then(user => {
-    //     return res.render('user/user-follower', {
-    //       users: user.toJSON()
-    //     })
-    //   })
   },
+
   getFollowing: async (req, res, next) => {
     // 跟隨中
     try {
       const userId = req.params.id;
-      const user = await User.findByPk(userId);
+      const currentUserId = helpers.getUser(req).id;
+      const user = await User.findByPk(userId, {
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings', include: { model: User, as: 'Followers' } }
+        ]
+      });
 
       if (user) {
         const userData = user.toJSON();
-        const tenRandomUsers = await randomUsersHelper.getTenRandomUsers(10); // 使用 helper 模块获取10个随机用户
-
+        const recommend = await getEightRandomUsers(req);
+        const follows = user.Followings.map((e) => {
+          const isFollowed = e.Followers.some(f => f.id === helpers.getUser(req).id)
+          return {
+            id: e.id,
+            name: e.name,
+            avatar: e.avatar,
+            introduction: e.introduction,
+            isFollowed
+          };
+        })
         const dataToRender = {
           users: userData,
-          recommend: tenRandomUsers,
+          recommend,
+          follows,
         };
-
         res.render("user/user-following", dataToRender);
       } else {
         res.status(404).send("未找到用户");
@@ -241,6 +285,7 @@ const userController = {
     let mailMsg = ''
     let accountMsg = ''
     let passwordMsg = ''
+    let nameMsg = ''
 
     return Promise.all([emailPromise, accountPromise])
       .then(([mailUser, accountUser]) => {
@@ -257,9 +302,12 @@ const userController = {
           console.log('if>密碼與確認密碼不相符')
           passwordMsg = '密碼與確認密碼不相符'
         }
-        if (mailMsg || accountMsg || passwordMsg) {
+        if (name.length > 50 || name.length === 0) {
+          nameMsg = '名稱字數應為 1 ~ 50'
+        }
+        if (mailMsg || accountMsg || passwordMsg || nameMsg) {
           console.log('達到if條件  準備返回')
-          return res.render('settings', { mailMsg, accountMsg, passwordMsg, account, name, email })
+          return res.render('settings', { nameMsg, mailMsg, accountMsg, passwordMsg, account, name, email })
         } else {
           console.log('----------判斷完了一堆if------------')
           Promise.all([
@@ -280,22 +328,8 @@ const userController = {
             })
         }
       })
-  },
-
-  putUser: (req, res, next) => {
-    //修改使用者名稱、自我介紹
-    const { name, introduction } = req.body;
-    return User.findByPk(req.params.id)
-      .then((user) => {
-        return user.update({
-          name,
-          introduction,
-        });
-      })
-      .then(() => {
-        res.redirect(`/users/${req.params.id}/tweets`);
-      });
-  },
+      .catch((err) => next(err));
+  }
 };
 
 module.exports = userController;

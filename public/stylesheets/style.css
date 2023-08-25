@@ -4,26 +4,56 @@
 }
 
 .nav-link:hover,
-.nav-link.active{
-  color: #FF6600 !important;
+.nav-link.active {
+  color: #ff6600 !important;
   border: none !important;
   border-bottom: 1px solid #ff6600 !important;
 }
 
-.user-edit-button{
-  background: #FFFFFF;
-  color: #FF6600;
+.user-edit-button {
+  background: #ffffff;
+  color: #ff6600;
   border-radius: 100px;
-  border: 1px solid #FF6600;
+  border: 1px solid #ff6600;
   font-size: 16px;
   line-height: 24px;
 }
 
-.user-edit-button:hover{
-  background-color: #FF6600;
+.user-edit-button:hover {
+  background-color: #ff6600;
   color: white;
   border-radius: 100px;
-  border: 1px solid #FF6600;
+  border: 1px solid #ff6600;
   font-size: 16px;
   line-height: 24px;
+}
+
+.reply-btn,
+.like-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease-in;
+}
+
+.reply-btn:hover {
+  background-color: lightblue;
+}
+
+.like-btn:hover {
+  background-color: lightcoral;
+}
+
+.user-text-link {
+  text-decoration: none;
+  color: #000000;
+}
+
+.user-text-link:hover {
+  text-decoration: underline;
 }
