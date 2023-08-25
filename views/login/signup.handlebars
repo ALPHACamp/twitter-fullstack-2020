@@ -13,8 +13,9 @@
       </div>
       <div class="mb-4 position-relative">
         <label for="name" class="form-label position-absolute font-size-sm">名稱</label>
-        <input type="text" class="form-control fs-6" name="name" id="name" placeholder="請輸入使用者名稱" required>
-        <div class="invalid-feedback">
+        <input type="text" class="form-control fs-6" name="name" id="name" placeholder="請輸入使用者名稱" maxlength="50" required>
+        <div class="d-flex flex-row-reverse position-absolute count-name-character text-secondary w-100"></div>
+        <div class="invalid-feedback m-0">
           請輸入欲設定使用者名稱
         </div>
       </div>
@@ -47,3 +48,15 @@
   </div>
   <div class="col-4"></div>
 </div>
+
+<script>
+  const getNameInput = document.querySelector('#name')
+  const countNameCharacter = document.querySelector('.count-name-character')
+
+  getNameInput.addEventListener('input', () => {
+    const currentLength = getNameInput.value.length
+    const maxLength = Number(getNameInput.getAttribute('maxlength'))
+
+    countNameCharacter.textContent = `${currentLength}/${maxLength}`
+  })
+</script>
