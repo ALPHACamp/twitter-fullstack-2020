@@ -10,20 +10,22 @@
     <div class="tweet-content">
       <div class="name-container d-flex justify-content-between pe-3" style="width: 555px;">
         <div class="name">
+          <a class="user-text-link" href="/users/{{this.id}}/tweets">
           <span style="font-size: 16px;font-weight:700;">{{this.name}}</span>
+          </a>
         </div>
         {{#if this.isFollowed }}
         <div class="follow-btn d-flex justify-content-end" style="width: 96px;height: 40px">
-          <form action="/users/{{this.id}}/follow?_method=DELETE" method="POST">
-            <button type="submit" class="btn"
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn" value="this.id" name="id"
               style="width: 95px; font-size: 16px; white-space:nowrap; background: #FF6600;border-radius: 100px;color:#ffffff;">正在跟隨</button>
           </form>
         </div>
         {{else}}
         <div class="follow-btn d-flex justify-content-end" style="width: 90px;height: 40px">
-          <form action="/users/{{this.id}}/follow" method="POST">
+          <form action="/followships" method="POST">
             <input type="hidden" name="id" value="{{this.id}}" />
-            <button type="submit" class="btn"
+            <button type="submit" class="btn" value="this.id" name="id"
               style="width: 64px;height: 40px; background: #FFFFFF;white-space:nowrap; border-radius: 50px;border:1px solid #FF6600;color:#FF6600; font-size: 16px;">跟隨</button>
           </form>
         </div>
