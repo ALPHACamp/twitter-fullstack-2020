@@ -2,6 +2,12 @@ const db = require('../models')
 const { User, Tweet, Reply, Like, Followship } = db
 
 const userController = {
+  editUser: (req, res, next) => {
+    res.render('setting')
+  },
+  getUserTweets: (req, res, next) => {
+    res.render('profile')
+  },
   signInPage: (req, res, next) => {
     res.render('signin')
   },
@@ -39,7 +45,7 @@ const userController = {
   //       res.redirect('/signin')
   //     })
   //     .catch(err => next(err)) // 接住前面拋出的錯誤，呼叫專門做錯誤處理的 middleware
-  // }
+  // },
   // addFollowing: (req, res, next) => {
   //   const { userId } = req.params
   //   Promise.all([
