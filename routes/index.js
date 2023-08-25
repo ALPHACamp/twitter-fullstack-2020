@@ -9,15 +9,18 @@ const tweetController = require('../controllers/tweet-controller')
 const loginController = require('../controllers/login-controller')
 const userController = require('../controllers/user-controller')
 const replyController = require('../controllers/reply-controller')
-const loginController = require('../controllers/login-controller')
 
 router.use('/admin', admin)
 
 router.get('/tweets', tweetController.getTweets) // test
 router.get('/tweets/replies', tweetController.getTweetsReply) // test
 
-router.get('/users/id/tweets', userController.getUser)
-// router.get('/users/:id/tweets', userController.getUser)
+router.get('/users/userId/tweets', userController.getUser)
+// router.get('/users/:userId/tweets', userController.getUser)
+router.get('/users/userId/likes', userController.getUserLikes)
+// router.get('/users/:userId/likes', userController.getUserLikes)
+router.get('/users/userId/replies', userController.getUserReplies)
+// router.get('/users/:userId/replies', userController.getUserReplies)
 
 router.get('/signup', loginController.signUpPage)
 router.post('/signup', loginController.signUp)

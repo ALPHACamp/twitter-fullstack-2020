@@ -5,10 +5,9 @@
         <!-- user info -->
         <nav class="navbar sticky-top navbar-light bg-light">
             <div class="d-flex flex-row align-items-center px-3">
-                <div style="width:50px; height:auto" class="mx-1">
+                <div style="width:50px; height:auto" class="ms-1">
                     <a class="navbar-brand" href="#">
-                        <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-forward-icon-png-image_4184777.jpg"
-                            style="width: 100%; transform: rotate(180deg)" class="" alt="...">
+                        {{>back-icon}}
                     </a>
                 </div>
                 <div class="container">
@@ -30,14 +29,14 @@
                 </div>
             </div>
             <div class="card-body text-end">
-                <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn mx-1">
+                {{!-- <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn mx-1">
                     <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-forward-icon-png-image_4184777.jpg"
                         style="width: 13px; height: 13px" alt="...">
                 </a>
                 <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn mx-1">
                     <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-forward-icon-png-image_4184777.jpg"
                         style="width: 13px; height: 13px" alt="...">
-                </a>
+                </a> --}}
                 <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px"
                     class="btn mx-1 px-3" data-bs-toggle="modal" data-bs-target="#personalData">編輯個人資料</a>
             </div>
@@ -50,25 +49,11 @@
                 <a href="#" style="color:#000000" class="text-decoration-none"><small>34個跟隨者</small></a>
             </div>
 
-            <!-- tabs -->
-            <div class="card-body pb-0 px-0">
-                <ul class="nav">
-                    <li style="color:#FF6600; border-color:#FF6600; border-width: medium; border-style: none none solid none;"
-                        class="nav-item text-center w-25">
-                        <a style="color:#FF6600" class="nav-link active" aria-current="page" href="#">推文</a>
-                    </li>
-                    <li class="nav-item text-center w-25">
-                        <a style="color:#FF6600" class="nav-link" href="#">回覆</a>
-                    </li>
-                    <li class="nav-item text-center w-25">
-                        <a style="color:#FF6600" class="nav-link" href="#">喜歡的內容</a>
-                    </li>
-                </ul>
-            </div>
+             {{>userpage-tabs route='tweets'}}
         </div>
     </div>
     {{!-- 留言 --}}
-    <div class="mx-auto p-2 mt-2" style="border: 1px solid #E6ECF0">
+    <div class="mx-auto p-2" style="border: 1px solid #E6ECF0">
         <div class="card-body">
             <div class="d-flex flex-row">
                 <a href="#">
