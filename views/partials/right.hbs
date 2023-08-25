@@ -1,0 +1,45 @@
+
+<div class="col-md-3 mt-4" style="width: 273px;">
+  <div class="d-flex flex-column justify-content-start" style="background-color: #FAFAFB; border-radius: 16px; width:273px">
+    
+    <div class="px-4 py-3 border-bottom">
+      <h4 style="color: #171725; font-weight: 500;">推薦跟隨</h4>
+    </div>
+    
+    {{!-- each topUser --}}
+      <li class="list-group-item bg-light" style="border: none">
+        <div class="row justify-content-around align-items-center">
+      
+          <div class="col-3 d-flex justify-content-center align-items-center">
+            <a href="/users/{{this.id}}/tweets">
+              <img src="https://i.imgur.com/hpSLhnx.png" alt="user-avatar" width="50" height="50" class="rounded-circle">
+            </a>
+          </div>
+          <div class="col-4 pt-3 d-flex flex-column align-items-start" style="margin-left:-10px">
+            <h5 style="line-height: 18px; width:inherit;">pizzahut</h5>
+            <p class="text-muted" style="line-height: 16px; width:inherit;">@pizzahut</p>
+          </div>
+          {{!-- 追蹤鈕 --}}
+          <div class="col-5 d-flex justify-content-end">
+            {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+              <button type="submit" class="btn btn-primary"
+                style="height:40px; font-size: 15px; border-radius: 50px; background-color: #FF6600; border:none;">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
+              <button type="submit" class="btn btn-outline-light btn-block"
+                style="width:64px; height:40px; font-size: 15px; border-radius: 50px; font-weight: bold; border-color: #FF6600;">
+                <font color="#FF6600">跟隨</font>
+              </button>
+            </form>
+            {{/if}}
+          </div>
+      
+        </div>
+      </li>
+      {{!-- /each --}}
+      
+
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<main class="container">
+  <div class="row">
+    {{>sidebar}}
+
+    {{!-- following --}}
+    <div class="col-md-6" style="border: 1px #E6ECF0 solid; max-width: 639px;">
+      {{>user-header}}
+      {{>follow-tabs route='followings'}}
+      {{!-- {{#each followings}} --}}
+        <div class="border-bottom d-flex flex-column pt-2 mt-2" style="min-height: 130px;">
+          <div class="d-flex justify-content-between">
+            <div class="align-self-start d-inline-flex">
+              <img src="https://i.imgur.com/hpSLhnx.png" title="source: imgur.com" style="width: 50px;height: 50px;" class="ms-4">
+              <div class="d-flex align-self-center">
+                <h5 class="mx-2" style="color: #171725;">Apple</h5>
+              </div>
+            </div>
+            <div>
+              {{#if this.isFollowed}}
+                <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                  <button type="submit" class="btn btn-primary"
+                    style="height:40px; font-size: 15px; border-radius: 50px; background-color: #FF6600; border:none;">正在跟隨</button>
+                </form>
+              {{else}}
+                <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
+                  <button type="submit" class="btn btn-outline-light btn-block"
+                    style="width:64px; height:40px; font-size: 15px; border-radius: 50px; font-weight: bold; border-color: #FF6600;">
+                    <font color="#FF6600">跟隨</font>
+                  </button>
+                </form>
+              {{/if}}
+            </div>
+
+            </div>
+          <div class="align-self-end mt-2" style="max-width: 580px">
+            <p style="padding-left:30px;">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.
+              Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.
+            </p>
+          </div>
+        </div>
+      {{!-- {{/each}} --}}
+      
+    </div>
+    {{> right}}
+  </div>
+</main>
