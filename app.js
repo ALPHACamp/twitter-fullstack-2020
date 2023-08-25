@@ -13,14 +13,13 @@ const routes = require('./routes')
 const helpers = require('./_helpers')
 const app = express()
 const port = process.env.PORT || 3000
-const SESSION_SECRET = 'secret'
 
 app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 app.use(session({
-  secret: SESSION_SECRET,
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }))
