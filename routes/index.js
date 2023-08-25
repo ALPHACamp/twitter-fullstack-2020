@@ -5,9 +5,7 @@ const passport = require('../config/passport')
 const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
 // 使用Modules
-router.get('/tweets', tweetController.getTweets)
 
-router.get('/', (req, res) => res.redirect('/tweets'))
 
 const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated, authenticatedAdmin } = require('../middleware/auth')
@@ -28,7 +26,10 @@ router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 
 // 首頁
-router.get('/', authenticated, tweetController.getTweets)
+router.get('/tweets', authenticated, tweetController.getTweets)
+
+// 其他路由都不符合時，最終會經過的
+router.use('/', (req, res) => res.redirect('/tweets'))
 
 // 錯誤處理
 router.use('/', generalErrorHandler)
