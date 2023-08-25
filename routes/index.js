@@ -8,6 +8,7 @@ const tweetController = require('../controllers/tweet-controller')
 // const userController = require('../controllers/user-controller')
 // const replyController = require('../controllers/reply-controller')
 const loginController = require('../controllers/login-controller')
+const userController = require('../controllers/user-controller')
 
 router.use('/admin', admin)
 
