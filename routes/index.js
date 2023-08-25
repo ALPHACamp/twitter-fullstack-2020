@@ -33,10 +33,8 @@ router.get('/users/:id/setting', userController.getUserSetting)
 // 首頁
 router.get('/tweets', authenticated, tweetController.getTweets)
 
-
 // 其他路由都不符合時，最終會經過的
 router.use('/', (req, res) => res.redirect('/tweets'))
-
 
 // 錯誤處理
 router.use('/', generalErrorHandler)
