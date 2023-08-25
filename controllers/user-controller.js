@@ -57,20 +57,30 @@ const userController = {
     res.redirect("/signin");
   },
   postFollow: async (req, res, next) => {
+
     try {
-      const { followingUserId } = req.params;
-      const currentUserId = req.user.id;
-      const user = await User.findByPk(followingUserId);
-      const followship = await Followship.findOne({
-        where: { followerId: currentUserId, followingId: followingUserId },
-      });
-      if (!user) throw new Error("User didn't exist");
-      if (followship) throw new Error("You are already following this user!");
-      await Followship.create({
-        followerId: currentUserId,
-        followingId: followingUserId,
-      });
-      res.redirect("back");
+      const id = +req.body.id
+      if (+helpers.getUser(req).id === id) {
+        throw new Error('不得追蹤自己')
+      }
+      return Followship.create({
+        followerId: helpers.getUser(req).id,
+        followingId: id
+      })
+      .then(() => res.redirect('back'))
+    //   const { followingUserId } = req.params;
+    //   const currentUserId = req.user.id;
+    //   const user = await User.findByPk(followingUserId);
+    //   const followship = await Followship.findOne({
+    //     where: { followerId: currentUserId, followingId: followingUserId },
+    //   });
+    //   if (!user) throw new Error("User didn't exist");
+    //   if (followship) throw new Error("You are already following this user!");
+    //   await Followship.create({
+    //     followerId: currentUserId,
+    //     followingId: followingUserId,
+    //   });
+    // res.redirect('back');
     } catch (err) {
       next(err);
     }
@@ -114,7 +124,9 @@ const userController = {
       if (user) {
         const userData = user.toJSON();
         const recommend = await getEightRandomUsers(req);
+
         const isFollowed = user.Followers.some((l) => l.id === currentUserId);
+
         const tweets = user.Tweets.map((tweet) => {
           const replies = tweet.Replies.length;
           const likes = tweet.Likes.length;
@@ -135,7 +147,7 @@ const userController = {
         });
         
         const dataToRender = {
-          user: userData,
+          user: userData,//這邊剛好命名是user 不是users
           tweets,
           recommend,
           isUser,
@@ -176,17 +188,10 @@ const userController = {
             isFollowed
           };
         })
-        // const follow = userData.Followers.map((followerUser) => {
-        //   return {
-        //     id: followerUser.id,
-        //     name: followerUser.name,
-        //     avatar: followerUser.avatar,
-        //     introduction: followerUser.introduction
-        //   };
-        // });
+
 
         const dataToRender = {
-          users: userData,
+          user: userData,
           recommend,
           follows,
         };
@@ -227,7 +232,7 @@ const userController = {
           };
         })
         const dataToRender = {
-          users: userData,
+          user: userData,
           recommend,
           follows,
         };

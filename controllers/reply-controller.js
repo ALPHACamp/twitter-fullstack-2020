@@ -27,11 +27,12 @@ const replyController = {
         const replies = user.Replies.map(reply => ({
           User: {
             account: reply.User.account,
-            name: reply.User.name,
+            name: reply.User.name
           },
           Tweet:{
             userAvatar: reply.Tweet.User.avatar,
             username: reply.Tweet.User.name,
+            userId: reply.Tweet.User.id,
             id: reply.Tweet.id
           },
           comment: reply.comment,
