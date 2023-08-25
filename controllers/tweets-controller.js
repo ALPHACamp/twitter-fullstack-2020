@@ -7,7 +7,7 @@ const tweetsController = {
     try {
       const recommend = await getEightRandomUsers(req);
       const currentUserId = helpers.getUser(req).id;
-      const currentUser = helpers.getUser(req)
+      const currentUser = helpers.getUser(req);
       const tweets = await Tweet.findAll({
         include: [User, Reply, Like],
         order: [["updatedAt", "DESC"]],
@@ -30,10 +30,14 @@ const tweetsController = {
           replies,
           likes,
           isLiked,
-          userAvatar
+          userAvatar,
         };
       });
-      return res.render("tweets", { tweets: showTweets, recommend, currentUser });
+      return res.render("tweets", {
+        tweets: showTweets,
+        recommend,
+        currentUser,
+      });
     } catch (err) {
       next(err);
     }
@@ -57,7 +61,7 @@ const tweetsController = {
     try {
       const recommend = await getEightRandomUsers(req);
       const currentUserId = helpers.getUser(req).id;
-      const currentUser = helpers.getUser(req)
+      const currentUser = helpers.getUser(req);
       const { id } = req.params;
       const tweet = await Tweet.findByPk(id, {
         nest: true,
@@ -73,7 +77,7 @@ const tweetsController = {
         likesAmount,
         recommend,
         isLiked,
-        currentUser
+        currentUser,
       });
     } catch (err) {
       next(err);
@@ -124,6 +128,43 @@ const tweetsController = {
       return res.redirect("back");
     } catch (err) {
       next(err);
+    }
+  },
+  getMoreTweets: async (req, res, next) => {
+    try{
+      const offset = parseInt(req.query.offset) || 0;
+      const limit = parseInt(req.query.limit) || 15;
+      const currentUserId = helpers.getUser(req).id;
+      // const currentUser = helpers.getUser(req);
+      const tweets = await Tweet.findAll({
+        include: [User, Reply, Like],
+        order: [["updatedAt", "DESC"]],
+        limit,
+        offset,
+      });
+      console.log("tweets", tweets);
+      const showTweets = tweets.map((tweet) => {
+        const replies = tweet.Replies.length;
+        const likes = tweet.Likes.length;
+        const isLiked = tweet.Likes.some((l) => l.UserId === currentUserId);
+        const userAvatar = tweet.User.avatar;
+        return {
+          tweetId: tweet.id,
+          userId: tweet.User.id,
+          userAccount: tweet.User.account,
+          userName: tweet.User.name,
+          userAvatar: tweet.User.avatar,
+          text: tweet.description,
+          createdAt: tweet.createdAt,
+          replies,
+          likes,
+          isLiked,
+          userAvatar,
+        };
+      });
+      res.json(showTweets);
+    } catch(err) {
+      console.log(err)
     }
   },
 };

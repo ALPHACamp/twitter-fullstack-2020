@@ -48,6 +48,10 @@ router.post(
   authenticated,
   tweetsController.postReply
 );
+router.get(
+  "/tweets/more",
+  tweetsController.getMoreTweets
+);
 router.get("/tweets", authenticated, tweetsController.getTweets);
 router.post("/tweets", authenticated, tweetsController.postTweet);
 router.post("/users/:followingUserId/follow", userController.postFollow);
