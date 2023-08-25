@@ -2,16 +2,10 @@ const jwt = require('jsonwebtoken')
 
 const _helper = require('../../_helpers')
 const userController = {
+  /* admin 登入 */
   adminSignin: (req, res, next) => {
     try {
       return res.redirect('/admin')
-    } catch (error) {
-      return next(error)
-    }
-  },
-  userSignin: (req, res, next) => {
-    try {
-      return res.redirect('/')
     } catch (error) {
       return next(error)
     }
@@ -44,7 +38,25 @@ const userController = {
       return next(error)
     }
   },
+  /* admin登入結束 */
+  /* user登入 */
 
+  getUserSignInPage: (req, res, next) => {
+    try {
+      console.log('is authenticated: ', req.isAuthenticated())
+      if (_helper.ensureAuthenticated(req)) return res.redirect('/') // 如果已經有user就轉去root
+      return res.render('login/login')
+    } catch (error) {
+      return next(error)
+    }
+  },
+  userSignin: (req, res, next) => {
+    try {
+      return res.redirect('/')
+    } catch (error) {
+      return next(error)
+    }
+  },
   userLogout: (req, res, next) => {
     try {
       if (req && req.cookies) {
@@ -56,6 +68,7 @@ const userController = {
       return next(error)
     }
   }
+  /* user登入結束 */
 }
 
 module.exports = userController
