@@ -14,11 +14,15 @@ router.use('/admin', admin)
 router.get('/tweets', tweetController.getTweets) // test
 router.get('/tweets/replies', tweetController.getTweetsReply) // test
 
+router.get('/users/id/tweets', userController.getUser)
+// router.get('/users/:id/tweets', userController.getUser)
+
 router.get('/signup', loginController.signUpPage)
 router.post('/signup', loginController.signUp)
 router.get('/signin', loginController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), loginController.signIn)
 router.get('/logout', loginController.logout)
+
 router.get('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
 
