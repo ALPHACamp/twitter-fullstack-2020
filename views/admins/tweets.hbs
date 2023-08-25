@@ -1,3 +1,43 @@
-<div style="width: 937px;">
-  <h4 class="m-2">推文清單</h4>
+<div style="width: 937px;margin: 0 auto;">
+  <div class="text-center">
+    <h4 class="m-2">推文清單</h4>
+  </div>
+  {{#each tweets}}
+    <div class="border mb-2">
+      <div class="row">
+        <div class="col-1 p-3">
+          <img src="https://i.imgur.com/bCBt6ga.jpeg" alt="icon" style="height: 50px; width: 50px;border-radius: 50%;">
+        </div>
+        <div class="col p-3">
+          <div class="d-flex justify-content-between">
+            <div class="">
+              <span class="mr-2">{{this.User.name}}</span>
+              <span class="mr-2">@{{this.User.account}}</span>
+              <span class="mr-2">・</span>
+              <span class="mr-2">{{relativeTimeFromNow this.createdAt}}</span>
+            </div>
+            <form id="deleteTweet" action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+              <button style="border: none;background-color: inherit;" type="button" data-bs-toggle="modal" data-bs-target="#checkDelete">X</button>
+            </form>
+          </div>
+          <p>{{this.description}}</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- checkDeleteModal -->
+    <div class="modal fade" id="checkDelete" tabindex="-1" aria-labelledby="checkDeleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            確認刪除該則推文?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+            <button type="submit" class="btn btn-danger" form="deleteTweet">刪除</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/each }}
 </div>

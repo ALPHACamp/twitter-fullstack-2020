@@ -5,6 +5,7 @@ const flash = require('connect-flash')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('./config/passport')
+const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const { getUser } = require('./helpers/auth-helpers')
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -13,9 +14,9 @@ if (process.env.NODE_ENV !== 'production') {
 const app = express()
 const port = process.env.PORT || 3000
 
-app.engine('hbs', handlebars({ extname: '.hbs' }))
+app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
-app.use(express.static('public'))
+app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(flash())
 app.use(methodOverride('_method'))

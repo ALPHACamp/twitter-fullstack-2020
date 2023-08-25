@@ -14,8 +14,13 @@ const adminController = {
   },
   getAdminTweets: async (req, res, next) => {
     try {
-      const tweets = await Tweet.findAll({ include: User, nest: true, order: ['createdAt', 'DESC'] })
-      res.render('admins/tweets', { tweets: tweets.toJSON() })
+      const tweets = await Tweet.findAll({ include: User, raw: true, nest: true, order: [['createdAt', 'DESC']] })
+      tweets.forEach(tweet => {
+        tweet.description = tweet.description.substring(0, 50)
+      })
+      res.render('admins/tweets', {
+        tweets
+      })
     } catch (err) {
       next(err)
     }
