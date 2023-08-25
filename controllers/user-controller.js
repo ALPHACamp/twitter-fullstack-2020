@@ -178,9 +178,10 @@ const userController = {
     // 跟隨者
     try {
       const userId = req.params.id;
+      const currentUserId = helpers.getUser(req).id;
       const user = await User.findByPk(userId,{
         include:[
-          { model: User, as: 'Followers' },
+          { model: User, as: 'Followers', include: { model: User, as: 'Followers' } },
           { model: User, as: 'Followings' }
         ]
       });
@@ -188,19 +189,29 @@ const userController = {
       if (user) {
         const userData = user.toJSON();
         const recommend = await getEightRandomUsers(req); 
-        const follow = userData.Followers.map((followerUser) => {
+        const follows = user.Followers.map((e)=>{
+          const isFollowed = e.Followers.some(f => f.id === helpers.getUser(req).id)
           return {
-            id: followerUser.id,
-            name: followerUser.name,
-            avatar: followerUser.avatar,
-            introduction: followerUser.introduction
+            id: e.id,
+            name: e.name,
+            avatar: e.avatar,
+            introduction: e.introduction,
+            isFollowed
           };
-        });
+        })
+        // const follow = userData.Followers.map((followerUser) => {
+        //   return {
+        //     id: followerUser.id,
+        //     name: followerUser.name,
+        //     avatar: followerUser.avatar,
+        //     introduction: followerUser.introduction
+        //   };
+        // });
 
         const dataToRender = {
           users: userData,
           recommend,
-          follow,
+          follows,
         };
 
         res.render("user/user-follower", dataToRender);
@@ -217,28 +228,31 @@ const userController = {
     // 跟隨中
     try {
       const userId = req.params.id;
+      const currentUserId = helpers.getUser(req).id;
       const user = await User.findByPk(userId,{
         include: [
           { model: User, as: 'Followers' },
-          { model: User, as: 'Followings'}
+          { model: User, as: 'Followings', include: { model: User, as: 'Followers' } }
         ]
       });
 
       if (user) {
         const userData = user.toJSON();
         const recommend = await getEightRandomUsers(req);
-        const follow = userData.Followings.map((followingUser) => {
+        const follows = user.Followings.map((e) => {
+          const isFollowed = e.Followers.some(f => f.id === helpers.getUser(req).id)
           return {
-            id: followingUser.id,
-            name: followingUser.name,
-            avatar: followingUser.avatar,
-            introduction: followingUser.introduction
+            id: e.id,
+            name: e.name,
+            avatar: e.avatar,
+            introduction: e.introduction,
+            isFollowed
           };
-        });
+        })
         const dataToRender = {
           users: userData,
           recommend,
-          follow,
+          follows,
         };
         res.render("user/user-following", dataToRender);
       } else {

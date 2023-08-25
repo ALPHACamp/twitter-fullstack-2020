@@ -1,5 +1,5 @@
 <div class="tweets-container">
-  {{#each follow}}
+  {{#each follows}}
   <div class="tweets d-flex mt-3" style="border-bottom: 1px solid #C4C4C4;">
     <div class="avatar ps-3">
       <a href="/users/{{this.id}}/tweets" style="text-decoration:none;">
@@ -14,14 +14,14 @@
         </div>
         {{#if this.isFollowed }}
         <div class="follow-btn d-flex justify-content-end" style="width: 96px;height: 40px">
-          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+          <form action="/users/{{this.id}}/follow?_method=DELETE" method="POST">
             <button type="submit" class="btn"
               style="width: 95px; font-size: 16px; white-space:nowrap; background: #FF6600;border-radius: 100px;color:#ffffff;">正在跟隨</button>
           </form>
         </div>
         {{else}}
         <div class="follow-btn d-flex justify-content-end" style="width: 90px;height: 40px">
-          <form action="/followships" method="POST">
+          <form action="/users/{{this.id}}/follow" method="POST">
             <input type="hidden" name="id" value="{{this.id}}" />
             <button type="submit" class="btn"
               style="width: 64px;height: 40px; background: #FFFFFF;white-space:nowrap; border-radius: 50px;border:1px solid #FF6600;color:#FF6600; font-size: 16px;">跟隨</button>

@@ -38,7 +38,7 @@
             </div>
             <label for="avatar" class="btn avator-uploader">
               <input class="d-none" type="file" id="avatar" name="avatar" accept="image/*">
-              <i class="fas fa-camera" style="color: white;"></i>
+              <i class="fas fa-camera" style="top: 57%; left: 70%; color: white;"></i>
             </label>
           </div>
           <div class="form-row mb-1">
@@ -46,7 +46,7 @@
               <input class="form-control-file" type="file" id="avatar" name="avatar" accept="image/*"
                 style="display: none">
               <i class="fa-solid fa-camera"
-                style="position: absolute; object-fit: cover; top: 57%; left: 15%;; width:20; height:20px; color:#FFFFFF">
+                style="position: absolute; object-fit: cover; top: 57%; left: 15%;; width:20; height:20px; color:grey">
               </i>
             </label>
           </div>
@@ -76,26 +76,3 @@
 </div>
 <script src="/javascripts/editModal.js"></script>
 
-{{!-- <script>
-  const editModal = document.querySelector('#edit-modal')
-  const introductionCount = document.querySelector('#introduction-area')
-  const nameCount = document.querySelector('#name-area')
-
-  function introWordsCheck () {
-    const content = document.querySelector('#introduction').value.trim().length
-    if (content === 160) {
-      introductionCount.innerHTML = `<span style="font-weight: 500;font-size: 15px;color: #FC5A5A;">目前字數已達${content}字,不可超過${content}字</span>`
-    } else {
-      introductionCount.innerHTML = `<p class="text-end text-muted now2" style="font-size:12px;">${content}/160</p>`
-    }
-  }
-  function nameWordsCheck () {
-    const content = document.querySelector('#name').value.trim().length
-    if (content === 50) {
-      nameCount.innerHTML = `<span style="font-weight: 500;font-size: 15px;color: #FC5A5A;">目前字數已達${content}字,不可超過${content}字</span>`
-    } else {
-      nameCount.innerHTML = `<p class="text-end text-muted now1" style="font-size: 12px;">${content}/50</p>`
-    }
-  }
-
-</script> --}}

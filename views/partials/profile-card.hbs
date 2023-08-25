@@ -52,6 +52,7 @@
       <div class="follow-btn d-flex justify-content-center align-items-center me-2 mt-1"
         style="width:64px; height:40px; background:  #FFFFFF; border-radius:50px; white-space: nowrap;">
         <form action="/users/{{user.id}}/follow" method="post">
+          <input type="hidden" name="id" value="{{user.id}}" />
           <button type="submit"
             style="border: none; background: none; padding: 0; margin: 0px; cursor: pointer; color:#FF6600; border:1px solid #FF6600; width:64px; height:40px; border-radius:50px;">跟隨</button>
           </form>
