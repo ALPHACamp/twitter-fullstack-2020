@@ -3,6 +3,8 @@ body {
   font-family: 'Noto Sans TC', sans-serif;
   font-size: 16px;
   color: #171725;
+  padding: 0;
+  margin: 0;
 }
  
 button {
@@ -10,4 +12,88 @@ button {
    padding: 0;
    border: none;
    outline: none;
+}
+
+@media (min-width: 1200px) {}
+
+#left-sidebar {
+  position: absolute;
+  width: 178px;
+  max-height: 1200px; 
+  left: 130px;
+  background-color: #FFFFFF;
+}
+
+#logo-container {
+  position: absolute;
+  width: 50px; 
+  height: 50px;
+  top: 0px; 
+  left: 0px;
+  margin: 8px;
+  padding: 5px;
+}
+
+#logo {
+  width: 50px;
+  height: 50px; 
+}
+
+#buttons-container {
+  position: relative;
+  width: Fixed (178px);
+  height: 244px;
+  top: 66px;
+  gap: 8px;
+}
+
+.button-container {
+  width: 178px;
+  height: 58px;
+  padding-top: 16px;
+  padding-left: 16px;
+}
+
+.sidebar-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 16px;
+  margin-bottom: 3.5px;
+}
+
+.icon-description {
+  width: 36px;
+  height: 26px;
+  font-family: Noto Sans TC;
+  font-size: 18px;
+  font-weight: 700;
+  color: #44444f;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+#logout {
+  position: fixed;
+  width: 178px;
+  height: 58px;
+  bottom: 0px;
+}
+
+#new-tweet {
+  width: 178px;
+  height: Hug (46px); 
+  padding: 8px 24px 8px 24px; 
+  border-radius: 50px;
+  background: #FF6600;
+}
+
+#new-tweet.span {
+  width: 130px;
+  height: 30px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0px;
+  text-align: center;
 }
