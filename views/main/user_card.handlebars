@@ -128,7 +128,7 @@
                 </button>
                 <p class="fw-bold text-black m-0 p-0">編輯個人資料</p>
             </div>
-            <div class="modal-body p-0 m-0">
+            <div class="modal-body rounded-5 p-0 m-0">
               {{!--需要更改以下form的連結位置--}}
               <form action="" method="post" class="homepage-user-card card border-0 shadow-none position-relative">
                 <img src="/images/default-cover.png" id="user-setting-cover" class="card-img-top user-cover" alt="...">
@@ -158,7 +158,18 @@
                       請輸入名稱
                     </div>
                   </div>
+                  <div class="form-row mb-2 position-relative">
+                    <label for="introduction" class="form-label position-absolute font-size-sm">自我介紹</label>
+                    <textarea class="text-input form-control user-setting-name-input text-input" id="introduction" name="introduction" placeholder="請輸入自我介紹" value="John Doe" maxlength="160" required>John Doe</textarea>
+                    <div class="p-0 m-0 mt-1 d-flex justify-content-end w-100">
+                      <div class="input-length text-secondary font-size-xs">0/160</div>
+                    </div>
+                    <div class="invalid-feedback">
+                      請輸入自我介紹
+                    </div>
+                  </div>
                 </div>
+                <button type="submit" class="btn btn-primary rounded-pill m-0">儲存</button>
               </form>
             </div>
           </div>
@@ -170,107 +181,3 @@
   </div>
 </div>
 <script src="/javascripts/userPage.js"></script>
-<style>
-  .homepage-user-card {
-    min-height: 378px;
-  }
-
-  .homepage-user-card .user-cover {
-    height: 200px;
-  }
-
-  .homepage-user-card .user-avatar {
-    width: 141.1px;
-    height: 140px;
-    border: 4px white solid;
-    border-radius: 50%;
-
-    top: 124px;
-    left: 16.13px;
-  }
-
-  .homepage-user-card .user-action {
-    height: 40px;
-  }
-
-  .homepage-user-card .btn {
-    width: 128px;
-    border: 1px solid;
-    border-radius: 50px;
-  }
-
-  .homepage-user-card .info-pic,.homepage-user-card .mes-pic {
-    width: 40px;
-  }
-
-  .admin-user-card .card {
-    height: 314px;
-
-    border-radius: 10px;
-  }
-
-   .admin-user-card .card .card-body {
-    background-color: #f6f7f8;
-
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-   }
-
-  .admin-user-card .card .user-info {
-    top: 64px;
-  }
-
-  .admin-user-card .user-cover {
-    height: 140px;
-
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-  }
-
-  .admin-user-card .user-avatar {
-    height: 100px;
-    
-    border: 4px solid white;
-    border-radius: 50%;
-  }
-
-  .admin-user-card .user-like img {
-    width: 24px;
-    height: 24px;
-  }
-
-  .admin-user-card .user-followship {
-    line-height: 22px;
-  }
-
-  .recommend-user-card {
-    border-radius: 16px;
-
-    background-color: #fafafb;
-  }
-
-  .recommend-user-card .card-title {
-    top: 24px;
-    left: 24px;
-    
-    font-weight: 700;
-  }
-
-  .recommend-user-card hr {
-    height: 1px;
-    color: #E6ECF0;
-  }
-
-  .recommend-user-card .card-body, .recommend-user-card .single-user-card, .recommend-user-card .single-user-card .card-body {
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-
-    background-color: #fafafb;
-  }
-
-  .recommend-user-card .single-user-card .btn {
-    border: 1px solid;
-    border-radius: 50px;
-  }
-
-</style>

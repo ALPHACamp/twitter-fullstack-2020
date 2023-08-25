@@ -208,6 +208,10 @@
 #reply-model .modal-content{
     min-height: 500px;
 }
+
+#user-setting-model .modal-content{
+    height: 6010px;
+}
 .modal-close-btn{
     position: relative;
     height: 24px;
@@ -441,13 +445,33 @@
   .sign-in label,
   .sign-up label,
   .edit-user-info label,
-  .user-setting-text label {
+  .user-setting-text label{
       top: 2px;
       left: 10.55px;
 
       color: #696974;
   }
+  #user-setting-modal form{
+    height:559px;
+  }
+  #user-setting-modal form .btn{
+    position: absolute;
+    top: -48px;
+    right:16px;
+    padding: 8px 16px;
+    width:auto; 
+  }
+  .user-setting-text textarea{
+    height:147px;
+    resize: none;
 
+    padding: 24px 10.55px 0 10.55px;
+
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 2px;
+  }
   .sign-in button,
   .sign-up button {
       border-radius: 50px;
