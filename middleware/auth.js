@@ -5,8 +5,7 @@ const authenticated = (req, res, next) => {
     if (helpers.getUser(req).role === 'user') {
       return next()
     } else {
-      req.flash('error_messages', '此帳號不存在')
-      return res.redirect('/signin')
+      return res.redirect('/admin/tweets')
     }
   }
   req.flash('error_messages', '使用前請先登入')
@@ -18,8 +17,7 @@ const adminAuthenticated = (req, res, next) => {
     if (helpers.getUser(req).role === 'admin') {
       return next()
     } else {
-      req.flash('error_messages', '此帳號不存在')
-      return res.redirect('/admin/signin')
+      return res.redirect('/tweets')
     }
   }
   req.flash('error_messages', '使用前請先登入')
