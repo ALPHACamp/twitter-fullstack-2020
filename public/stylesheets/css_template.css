@@ -4,6 +4,37 @@
     font-size: 0.875rem;
 }
 
+.font-size-xs{
+    font-size: 0.75rem;
+}
+
+.fs-18px{
+  font-size: 18px;
+}
+.fs-13px{
+  font-size: 13px;
+}
+/*line height*/
+.ln-height-26px{
+  line-height: 26px; /* 144.444% */ 
+}
+.ln-height-24px{
+  line-height: 24px; /* 144.444% */ 
+}
+.ln-height-16px{
+  line-height: 16px; /* 144.444% */ 
+}
+/*height*/
+.h-26px{
+  height: 26px;
+}
+.h-43px{
+  height: 43px;
+}
+/*font weight*/
+.fw-500{
+  font-weight: 500; 
+}
 /*Position class*/
 .child-img-center {
     display: flex;
@@ -30,7 +61,6 @@
     filter: invert(41%) sepia(8%) saturate(495%) hue-rotate(202deg) brightness(97%) contrast(85%);
 }
 .main-color{
-
     color: #FF6600;
 }
 .bg-main-color{
@@ -206,6 +236,7 @@
 #reply-model .modal-content{
     min-height: 500px;
 }
+
 .modal-close-btn{
     position: relative;
     height: 24px;
@@ -263,20 +294,64 @@
     min-height: 378px;
   }
 
-  .homepage-user-card .user-cover {
+  .homepage-user-card .user-cover, .homepage-user-card .user-cover-input-label {
     height: 200px;
   }
 
+  .homepage-user-card .user-cover-input-label{
+    position: absolute;
+
+    width: 100%;
+    top:0;
+    left:0;
+    background-color:rgba(23, 23, 37,0.5);
+  }
+  .homepage-user-card .user-setting-cover-icon{
+    width:80;
+    margin: auto;
+  }
+  .homepage-user-card .user-setting-cover-icon div{
+    height: 20px;
+    width: 20px;
+  }
+  .homepage-user-card .user-cover-input-label img{
+    z-index: 2;
+    opacity: 1;
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+    height: 20px;
+    width: 20px;
+  }
+  #remove-cover-input{
+    position: absolute;
+    top:88px;
+    left:333px;
+  }
   .homepage-user-card .user-avatar {
     width: 141.1px;
     height: 140px;
     border: 4px white solid;
     border-radius: 50%;
-
     top: 124px;
     left: 16.13px;
   }
-
+  .homepage-user-card .user-avatar-input, .homepage-user-card .user-cover-input{
+    /* 編輯個人資料時可上傳圖片的input*/
+    display: none;
+  }
+  .homepage-user-card .user-avatar-input-label{
+    z-index: 1;
+    border: none;
+    border-radius: 141.104px;
+    background-color:rgba(23, 23, 37,0.5);
+  }
+  .homepage-user-card .user-avatar-input-label img, #remove-cover-input{
+    z-index: 2;
+    opacity: 1;
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+    height: 24px;
+    width: 24px;
+    padding:2px;
+  }
   .homepage-user-card .user-action {
     height: 40px;
   }
@@ -308,13 +383,12 @@
     top: 64px;
   }
 
-  .admin-user-card .user-cover {
+  .admin-user-card .user-cover{
     height: 140px;
 
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
   }
-
   .admin-user-card .user-avatar {
     height: 100px;
     
@@ -381,3 +455,82 @@
     background: var(--colors-white, #FFF);
     flex-shrink: 0;
   }
+.sign-in, .sign-up {
+      top: 64px;
+ }
+
+ .sign-in h3, .sign-up h3 {
+      font-weight: 700;
+ }
+
+  .sign-in input,
+  .sign-up input,
+  .edit-user-info input,
+  .user-setting-text input{
+      height: 54px;
+      padding: 24px 10.55px 0 10.55px;
+
+      border-top: 0px;
+      border-left: 0px;
+      border-right: 0px;
+      border-radius: 2px;
+  }
+
+  .sign-in label,
+  .sign-up label,
+  .edit-user-info label,
+  .user-setting-text label{
+      top: 2px;
+      left: 10.55px;
+
+      color: #696974;
+  }
+  #user-setting-modal form{
+    height:559px;
+  }
+  #user-setting-modal form .btn{
+    position: absolute;
+    top: -48px;
+    right:16px;
+    padding: 8px 16px;
+    width:auto; 
+  }
+  .user-setting-text textarea{
+    height:147px;
+    resize: none;
+
+    padding: 24px 10.55px 0 10.55px;
+
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 2px;
+  }
+  .sign-in button,
+  .sign-up button {
+      border-radius: 50px;
+  }
+
+  .sign-in .dot {
+      font-weight: 400;
+  }
+
+  .sign-in a,
+  .sign-up a {
+      color: #0062FF;
+      text-decoration: underline;
+  }
+
+  .edit-user-info button {
+      width: 88px;
+      height: 46px;
+      border-radius: 50px;
+  }
+
+  .partial-title {
+      border-bottom: 1px #E6ECF0 solid;
+  }
+
+  .partial-title h4 {
+      font-weight: 700;
+   }

@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-4"></div>
+  <div class="sign-up col-4 d-flex flex-column justify-content-center align-items-center gap-4 position-relative">
+    <img src="/images/icons/ac_icon.svg" alt="">
+    <h3>建立你的帳號</h3>
+    <form action="/signup" method="post" class="w-100 needs-validation" id="sign-up-form" novalidate>
+      <div class="mb-4 position-relative">
+        <label for="account" class="form-label position-absolute font-size-sm">帳號</label>
+        <input type="text" class="form-control fs-6" name="account" id="account" placeholder="請輸入帳號" required>
+        <div class="invalid-feedback">
+          請輸入欲設定帳號
+        </div>
+      </div>
+          <div class="mb-4 position-relative">
+            <label for="name" class="form-label position-absolute font-size-sm">名稱</label>
+            <input type="text" class="text-input form-control fs-6" name="name" id="name" placeholder="請輸入使用者名稱" maxlength="50" required>
+            <div class="d-flex justify-content-end w-100 position-absolute">
+              <div class="input-length"></div>
+            </div>
+            <div class="invalid-feedback m-0">
+              請輸入欲設定使用者名稱
+            </div>
+          </div>
+      <div class="mb-4 position-relative">
+        <label for="email" class="form-label position-absolute font-size-sm">Email</label>
+        <input type="password" class="form-control fs-6" name="email" id="email" placeholder="請輸入Email" required>
+        <div class="invalid-feedback">
+          請輸入欲設定Email
+        </div>
+      </div>
+      <div class="mb-4 position-relative">
+        <label for="password" class="form-label position-absolute font-size-sm">密碼</label>
+        <input type="password" class="form-control fs-6" name="password" id="password" placeholder="請設定密碼" required>
+        <div class="invalid-feedback">
+          請輸入欲設定密碼
+        </div>
+      </div>
+      <div class="mb-4 position-relative">
+        <label for="passwordCheck" class="form-label position-absolute font-size-sm">密碼確認</label>
+        <input type="password" class="form-control fs-6" id="passwordCheck" placeholder="請再次輸入密碼" required>
+        <div class="invalid-feedback">
+          請再次輸入密碼
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">註冊</button>
+    </form>
+    <div>
+      <a href="/signin">取消</a>
+    </div>
+  </div>
+  <div class="col-4"></div>
+</div>
