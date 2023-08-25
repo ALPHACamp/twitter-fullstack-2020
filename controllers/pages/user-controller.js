@@ -31,7 +31,7 @@ const userController = {
     try {
       if (req && req.cookies) {
         res.cookie('jwtToken', '', { expires: new Date(0) })
-        return res.redirect('/admin/signin')
+        return res.redirect('/admin/signin', { role: 'admin' })
       }
       next()
     } catch (error) {
@@ -45,7 +45,7 @@ const userController = {
     try {
       console.log('is authenticated: ', req.isAuthenticated())
       if (_helper.ensureAuthenticated(req)) return res.redirect('/') // 如果已經有user就轉去root
-      return res.render('login/login')
+      return res.render('login/signin')
     } catch (error) {
       return next(error)
     }
@@ -53,6 +53,13 @@ const userController = {
   userSignin: (req, res, next) => {
     try {
       return res.redirect('/')
+    } catch (error) {
+      return next(error)
+    }
+  },
+  getUserSignUpPage: (req, res, next) => {
+    try {
+      return res.render('login/signup')
     } catch (error) {
       return next(error)
     }
