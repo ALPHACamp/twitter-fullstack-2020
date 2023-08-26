@@ -12,21 +12,23 @@ const replyController = require('../controllers/reply-controller')
 
 router.use('/admin', admin)
 
-router.get('/tweets', tweetController.getTweets) // test
-router.get('/tweets/replies', tweetController.getTweetsReply) // test
+router.get('/signup', loginController.signUpPage)
+router.post('/signup', loginController.signUp)
+router.get('/signin', loginController.signInPage)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), loginController.signIn)
+
+router.get('/logout', loginController.logout)
 
 router.get('/users/:userId/tweets', authenticated, userController.getUser)
 router.get('/users/:userId/likes', authenticated, userController.getUserLikes)
 router.get('/users/:userId/replies', authenticated, userController.getUserReplies)
 
+router.get('/tweets/replies', authenticated, tweetController.getTweetsReply) // test
+router.get('/tweets', authenticated, tweetController.getTweets) // test
+
+
 router.post('/following/:userId', authenticated, userController.addFollowing)
 router.delete('/following/:userId', authenticated, userController.removeFollowing)
-
-router.get('/signup', loginController.signUpPage)
-router.post('/signup', loginController.signUp)
-router.get('/signin', loginController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), authenticated, loginController.signIn)
-router.get('/logout', loginController.logout)
 
 router.get('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
