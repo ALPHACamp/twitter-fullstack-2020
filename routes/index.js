@@ -4,7 +4,7 @@ const userController = require('../controllers/user-controller')
 const tweetController = require('../controllers/tweet-controller')
 const admin = require('./modules/admin')
 const passport = require('../config/passport')
-const { authenticated, authenticatedAdmin } = require('../middleware/auth')
+const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 
 router.use('/admin', admin)
@@ -13,6 +13,7 @@ router.get('/tweets', tweetController.getTweets)
 
 router.get('/users/:id/edit', userController.editUser)
 router.get('/users/:id/tweets', userController.getUserTweets)
+
 // authenticated還沒載入 還沒寫這功能
 // router.post('/followships/:userId', authenticated, userController.addFollowing)
 // router.delete('/followships/:userId', authenticated, userController.deleteFollowing)
