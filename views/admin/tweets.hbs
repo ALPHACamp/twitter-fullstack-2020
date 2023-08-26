@@ -25,9 +25,11 @@
                     this.createdAt}}</p>
                 </div>
                 <div>
-                  <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="post">
-                    <button type="submit" style="background :none; border: none;"><img src="/images/cancel.svg"
-                        alt=""></button>
+                  <form class="form-{{this.id}}" action="/admin/tweets/{{this.id}}?_method=DELETE" method="post">
+                    {{!-- <button type="submit" style="background :none; border: none;"> --}}
+                      <img style="cursor: pointer;margin-right:5px" data-id="{{this.id}}" src="/images/cancel.svg"
+                        alt="">
+                      {{!-- </button> --}}
                   </form>
                 </div>
               </div>
@@ -45,3 +47,7 @@
     </div>
   </section>
 </main>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/javascripts/deleteConfirm.js"></script>

@@ -9,6 +9,7 @@ const adminController = {
       req.flash('account_messages', '帳號不存在！')
       res.redirect('/admin/signin')
     }
+    req.flash('success_messages', '登入成功')
     res.redirect('/admin/tweets')
   },
   getTweets: (req, res) => {
