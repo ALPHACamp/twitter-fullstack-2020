@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "root",
+    "username": "tinymurky",
     "password": "password",
     "database": "ac_twitter_workspace",
     "host": "127.0.0.1",
