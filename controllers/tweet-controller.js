@@ -13,8 +13,18 @@ const tweetController = {
           replyCount: tweet.Replies.length,
           ...tweet.toJSON()
         }))
-        console.log(tweets)
         res.render('tweets', { user, tweets })})   
+  },
+  postTweet: (req, res, next) => {
+    const { description } = req.body
+    const UserId = req.user.id
+    if (!description) throw new Error('內容不可空白')
+    return Tweet.create({
+      UserId,
+      description
+    })
+      .then(() => res.redirect('/tweets'))
+      .catch(err => next(err))
   }
 }
 
