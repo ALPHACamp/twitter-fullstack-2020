@@ -1,0 +1,50 @@
+{{> admin-navbar}}
+
+<div class="admin d-flex">
+  <div class="admin-main">
+    <div class="header-admin-user">
+      <h4>使用者列表</h4>
+    </div>
+
+    <div class="admin-user">
+      <div class="admin-user-row">
+        {{#each user}}
+        <div class="admin-user-card">
+          <div class="card mb-4">
+            <div class="card-img-top">
+              <img src="{{ this.cover }}"
+                alt="...">
+              {{#if this.avatar}}
+                <img class="card-avatar" src="{{this.avatar}}">
+              {{else}}
+                <img class="card-avatar" src="/images/icons/profile-img.svg">
+              {{/if}}
+            </div>
+            <div class="card-body text-center">
+              <div class="body-16px-medium">{{this.name}}</div>
+              <div class="body-14-regular secondary">@{{this.account}}</div>
+              <div class='mt-2 d-flex justify-content-center card-icon '>
+                <span><img src="/images/icons/post_dark80.svg" alt="">{{this.tweetsCount}}</span>
+                <span><img src="/images/icons/like_secondary.svg" alt="">{{this.likesCount}}</span>
+              </div>
+              <div class='mt-2 d-flex justify-content-center '>
+                <span class="combined ">
+                  <!-- todo {{user.following.length}}   -->
+                  <span class="body-14-regular grayscale float-start">{{this.followersCount}} 個</span>
+                  <span class="body-14-regular secondary float-start">跟隨中</span>
+                </span>
+                <span class="combined ">
+                  <!-- todo {{user.follower.length}} -->
+                  <span class="body-14-regular grayscale float-start">{{this.followingsCount}} 位</span>
+                  <span class="body-14-regular secondary float-start">跟隨者</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+
+      </div>
+    </div>
+  </div>
+</div>
