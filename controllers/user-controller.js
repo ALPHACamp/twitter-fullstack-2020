@@ -302,6 +302,8 @@ const userController = {
     let passwordMsg = "";
     let nameMsg = "";
 
+    if (!account || !name || !email || !password || !checkPassword) throw new Error('所有欄位皆為必填')
+
     return Promise.all([emailPromise, accountPromise])
       .then(([mailUser, accountUser]) => {
         if (mailUser) {
