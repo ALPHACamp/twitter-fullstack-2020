@@ -85,12 +85,13 @@
                                     </div>
                                     {{#if isFollowed}}
                                         {{!-- 要使用if/else的地方 --}}
-                                        <form action="" method="post">
+                                        <form action="/followships/{{this.id}}?_method=DELETE" method="post">
                                             <button type="submit" class="btn btn-primary">正在跟隨</button>
                                         </form>
                                     {{else}}
                                         {{!-- 要使用if/else的地方 --}}
-                                        <form action="" method="post">
+                                        <form action="/followships" method="post">
+                                            <input type="text" name="id" value="{{this.id}}" class="d-none">
                                             <button type="submit" class="btn btn-outline-primary">跟隨</button>
                                         </form>
                                     {{/if}}
