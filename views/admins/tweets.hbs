@@ -1,26 +1,30 @@
-<div style="width: 937px;margin: 0 auto;">
-  <div class="text-center">
-    <h4 class="m-2">推文清單</h4>
+{{> admin-left-column}}
+<div class="border-start border-end" style="width: 937px;margin-left: 333px;">
+  <div class="border-bottom" style="margin-top: 24px; height: 51px;">
+    <h4 class="fw-bold" style="margin-left: 21px;">推文清單</h4>
   </div>
   {{#each tweets}}
-    <div class="border mb-2">
-      <div class="row">
-        <div class="col-1 p-3">
-          <img src="https://i.imgur.com/bCBt6ga.jpeg" alt="icon" style="height: 50px; width: 50px;border-radius: 50%;">
+    <div class="border-bottom" style="padding: 16px 0 16px 0;">
+      <div class="d-flex">
+        <div class="">
+          {{!-- 先用網路圖片代替頭像 --}}
+          <img src={{#if user.avatar}}{{user.avatar}}{{else}}"https://i.imgur.com/bCBt6ga.jpeg"{{/if}} alt="icon" style="height: 50px; width: 50px;border-radius: 50%;margin-left: 24px;margin-right: 8px;">
         </div>
-        <div class="col p-3">
+        <div class="w-100">
           <div class="d-flex justify-content-between">
-            <div class="">
-              <span class="mr-2">{{this.User.name}}</span>
-              <span class="mr-2">@{{this.User.account}}</span>
-              <span class="mr-2">・</span>
-              <span class="mr-2">{{relativeTimeFromNow this.createdAt}}</span>
+            <div>
+              <span class="fw-bold">{{this.User.name}}</span>
+              <span style="margin-left: 8px;color:#6C757D;font-size: 14px;font-weight: 400;">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</span>
             </div>
             <form id="deleteTweet" action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
-              <button style="border: none;background-color: inherit;" type="button" data-bs-toggle="modal" data-bs-target="#checkDelete">X</button>
+              <button style="border: none;background-color: inherit;" type="button" data-bs-toggle="modal" data-bs-target="#checkDelete">
+                <div style="height: 24px; width: 24px; padding: 4.5px;">
+                  {{> close-icon}}
+                </div>
+              </button>
             </form>
           </div>
-          <p>{{this.description}}</p>
+          <div>{{this.description}}</div>
         </div>
       </div>
     </div>

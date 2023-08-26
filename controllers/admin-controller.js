@@ -20,11 +20,11 @@ const adminController = {
         nest: true,
         order: [['createdAt', 'DESC']]
       })
-      if (!tweets) throw new Error('沒有推文!')
+      if (!tweets) throw new Error('沒有推文可顯示!')
       tweets.forEach(tweet => {
         tweet.description = tweet.description.substring(0, 50)
       })
-      return res.render('admins/tweets', { tweets })
+      return res.render('admins/tweets', { tweets, route: 'tweets' })
     } catch (err) {
       next(err)
     }
@@ -34,6 +34,7 @@ const adminController = {
       await Tweet.destroy({
         where: { id: req.params.tweetId }
       })
+      req.flash('success_messages', '成功刪除該則推文!')
       return res.redirect('/admin/tweets')
     } catch (err) {
       next(err)
@@ -42,7 +43,7 @@ const adminController = {
   getAdminUsers: async (req, res, next) => {
     try {
       const users = await User.findAll()
-      res.render('admins/users', { users: users.toJSON() })
+      res.render('admins/users', { route: 'users' })
     } catch (err) {
       next(err)
     }
