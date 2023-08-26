@@ -1,4 +1,4 @@
-const { Tweet, User, Like } = require('../models')
+const { Tweet, User, Like } = require('../../models')
 
 const tweetController = {
   getTweets: async (req, res, next) => {
@@ -20,7 +20,6 @@ const tweetController = {
         likedTweetsId.push(like.TweetId)
       }
     })
-    console.log(likedTweetsId)
 
     const tweetLikedMap = {}
     likes.forEach(like => {
@@ -36,7 +35,10 @@ const tweetController = {
       isLiked: likedTweetsId.includes(r.id),
       likeCount: tweetLikedMap[r.id] ? tweetLikedMap[r.id] : 0
     }))
-    res.render('tweets', { tweets: data })
+
+    const sortedData = data.sort((a, b) => b.createdAt - a.createdAt)
+
+    res.render('tweets', { tweets: sortedData })
   },
   postTweet: (req, res, next) => {
     const description = req.body.description
