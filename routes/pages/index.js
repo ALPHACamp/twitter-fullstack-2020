@@ -20,7 +20,8 @@ router.use('/tweets', userJWTAuth, tweet)
 router.get('/signin', isAuthenticated, userController.getUserSignInPage)
 router.get('/signup', userController.getUserSignUpPage)
 router.get('/logout', userController.userLogout)
-router.post('/signin', userLocalAuth, sendToken, userController.userSignin)
+router.post('/signin', userLocalAuth, sendToken, userController.userSignIn)
+router.post('/signup', userController.userSignUp)
 
 router.use('/', (req, res) => {
 // 預留，將找不到router的網址都先轉入root
