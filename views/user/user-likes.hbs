@@ -4,9 +4,15 @@
     {{>profile-card route='user-likes'}}
     <div class="likes-list">
       <div class="li-container">
+        {{#if likedTweets}}
         {{#each likedTweets}}
         {{> tweet-li}}
         {{/each}}
+        {{else}}
+          <div class="tweet mt-3 mb-3 d-flex justify-content-center" style="border-bottom:1px solid #E6ECF0; min-height:153px">
+            <span style="color: gray;">尚無喜歡的內容</span>
+          </div>
+        {{/if}}
       </div>
     </div>
   </section>

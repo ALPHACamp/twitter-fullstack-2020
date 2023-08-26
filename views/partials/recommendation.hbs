@@ -41,7 +41,7 @@
           <div class="follow">
             {{#if this.isFollowed}}
               <form
-                action="/users/{{this.id}}/follow?_method=DELETE"
+                action="/followships/{{this.id}}?_method=DELETE"
                 method="post"
               >
                 <button
@@ -50,9 +50,9 @@
                 >正在跟隨</button>
               </form>
             {{else}}
-              <form action="/users/{{this.id}}/follow" method="post">
+              <form action="/followships" method="post">
                 <button
-                  type="submit"
+                  type="submit" value="{{this.id}}" name="id"
                   style="border: none; background: none; padding: 0; margin: 0px; cursor: pointer; color:#FF6600; border:1px solid #FF6600; width:64px; height:40px; border-radius:50px;"
                 >跟隨</button>
               </form>

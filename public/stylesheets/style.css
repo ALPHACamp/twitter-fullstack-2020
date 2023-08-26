@@ -57,3 +57,12 @@
 .user-text-link:hover {
   text-decoration: underline;
 }
+
+.tweet-user-text-link{
+    text-decoration: none;
+    color: #FF6600;
+  }
+
+.tweet-user-text-link:hover{
+    text-decoration: underline;
+  }

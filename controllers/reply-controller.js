@@ -28,10 +28,13 @@ const replyController = {
           User: {
             account: reply.User.account,
             name: reply.User.name,
+            id: reply.User.id,
+            avatar: reply.User.avatar || 'https://i.imgur.com/ehh37fR.jpg'
           },
           Tweet:{
             userAvatar: reply.Tweet.User.avatar,
             username: reply.Tweet.User.name,
+            userId: reply.Tweet.User.id,
             id: reply.Tweet.id
           },
           comment: reply.comment,
