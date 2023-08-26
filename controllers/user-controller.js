@@ -60,6 +60,11 @@ const userController = {
   },
   getUserFollowers: (req, res, next) => {
     return res.render('followers')
+  },
+  logout: (req, res) => {
+    req.flash('success_messages', '成功登出！')
+    req.logout()
+    res.redirect('/signin')
   }
 }
 
