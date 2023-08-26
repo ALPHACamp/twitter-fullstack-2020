@@ -2,6 +2,7 @@ const express = require('express')
 
 const errorHandler = require('../../middlewares/error-handler')
 const admin = require('./modules/admin')
+const tweet = require('./modules/tweet')
 const { userLocalAuth, userJWTAuth, sendToken, isAuthenticated } = require('../../middlewares/auth')
 const userController = require('../../controllers/pages/user-controller')
 
@@ -14,15 +15,17 @@ router.get('/css_template', (req, res) => res.render('main/css_template')) // �
 
 router.use('/admin', admin)
 
+router.use('/tweets', userJWTAuth, tweet)
+
 router.get('/signin', isAuthenticated, userController.getUserSignInPage)
 router.get('/signup', userController.getUserSignUpPage)
 router.get('/logout', userController.userLogout)
-router.post('/signin', userLocalAuth, sendToken, userController.userSignin)
+router.post('/signin', userLocalAuth, sendToken, userController.userSignIn)
+router.post('/signup', userController.userSignUp)
 
-router.get('/', userJWTAuth, (req, res) => res.render('main/homepage'))
 router.use('/', (req, res) => {
 // 預留，將找不到router的網址都先轉入root
-  res.redirect('/')
+  res.redirect('/tweets')
 })
 
 /* Error handleling, 接住所有的error */
