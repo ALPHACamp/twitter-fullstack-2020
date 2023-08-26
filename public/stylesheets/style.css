@@ -26,7 +26,19 @@ textarea {
   border: none;
 }
 
+.border-container {
+  width: 1140px;
+  height: 1200px;
+}
+
+.main-middle {
+  position: absolute;
+  width: 641px; 
+  height: 1200px;
+}
+
 @media (min-width: 1200px) {}
+@media (min-width: 768px) and (max-width: 1199.98px) {}
 
 #left-sidebar {
   position: absolute;
@@ -35,6 +47,13 @@ textarea {
   left: 130px;
   background-color: #FFFFFF;
   margin-right: 24px;
+}
+
+#right-sidebar {
+  position: absolute;
+  left: 973px;
+  width: 178px;
+  margin: 0px;
 }
 
 #logo-container {
@@ -141,4 +160,26 @@ textarea {
   display: inline-block;
   border-radius: 100%;
   margin:auto 8px auto 24px;
+}
+
+#top-users-container {
+  position: relative;
+  width: 273px;
+  height: 731px; 
+  top: 16px; 
+  left: 16px;
+  border-radius: 16px;
+  background-color: #fafafb;
+}
+
+#recommended-users {
+  width: 96px;
+  height: 26px; 
+  margin-top: 24px; 
+  margin-left: 24px;
+}
+
+.recommended-users-card {
+  width: 273px; 
+  height: 82px;
 }
