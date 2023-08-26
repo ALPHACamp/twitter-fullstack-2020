@@ -1,17 +1,42 @@
-const { Tweet, User } = require('../models')
+const { Tweet, User, Like } = require('../models')
 
 const tweetController = {
-  getTweets: (req, res, next) => {
-    return Tweet.findAll({
-      include: [User],
-      order: [['createdAt', 'DESC']],
-      raw: true,
-      nest: true
+  getTweets: async (req, res, next) => {
+    const [tweets, likes] = await Promise.all([
+      Tweet.findAll({
+        include: [User],
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
+      }),
+      Like.findAll({
+        raw: true,
+        nest: true
+      })])
+
+    const likedTweetsId = []
+    likes.forEach(like => {
+      if (like.UserId === req.user.id) {
+        likedTweetsId.push(like.TweetId)
+      }
     })
-      .then(tweets => {
-        res.render('tweets', { tweets })
-      })
-      .catch(err => next(err))
+    console.log(likedTweetsId)
+
+    const tweetLikedMap = {}
+    likes.forEach(like => {
+      if (!tweetLikedMap[like.TweetId]) {
+        tweetLikedMap[like.TweetId] = 1
+      } else {
+        tweetLikedMap[like.TweetId] = tweetLikedMap[like.TweetId] + 1
+      }
+    })
+
+    const data = tweets.map(r => ({
+      ...r,
+      isLiked: likedTweetsId.includes(r.id),
+      likeCount: tweetLikedMap[r.id] ? tweetLikedMap[r.id] : 0
+    }))
+    res.render('tweets', { tweets: data })
   },
   postTweet: (req, res, next) => {
     const description = req.body.description
@@ -31,6 +56,49 @@ const tweetController = {
       .then(() => {
         res.redirect('/tweets')
       })
+      .catch(err => next(err))
+  },
+  addLike: (req, res, next) => {
+    const TweetId = req.params.id
+    return Promise.all([
+      Tweet.findByPk(TweetId),
+      Like.findOne({
+        where: {
+          UserId: req.user.id,
+          TweetId
+        }
+      })
+    ])
+      .then(([tweet, like]) => {
+        if (!tweet) throw new Error("Tweet didn't exist!")
+        if (like) throw new Error('You have liked this Tweet!')
+
+        return Like.create({
+          UserId: req.user.id,
+          TweetId
+        })
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+  removeLike: (req, res, next) => {
+    const TweetId = req.params.id
+    return Promise.all([
+      Tweet.findByPk(TweetId),
+      Like.findOne({
+        where: {
+          UserId: req.user.id,
+          TweetId
+        }
+      })
+    ])
+      .then(([tweet, like]) => {
+        if (!tweet) throw new Error("Tweet didn't exist!")
+        if (!like) throw new Error("You haven't liked this Tweet")
+
+        return like.destroy()
+      })
+      .then(() => res.redirect('back'))
       .catch(err => next(err))
   }
 }
