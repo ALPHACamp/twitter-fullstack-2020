@@ -7,17 +7,13 @@ const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
 
 // middleware
-const { authenticated, authenticatedAdmin } = require('../middleware/auth')
+const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 
 // Admin
 const admin = require('./modules/admin')
 
 router.use('/admin', admin)
-
-// Like
-router.post('/like/:TweetId', authenticated, userController.addLike)
-router.delete('/like/:TweetId', authenticated, userController.removeLike)
 
 // Sign up
 router.get('/signup', userController.signUpPage)
@@ -33,6 +29,8 @@ router.get('/logout', userController.logout)
 // Tweets
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
+router.post('/tweets/:id/like', authenticated, tweetController.addLike)
+router.post('/tweets/:id/unlike', authenticated, tweetController.removeLike)
 
 router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)

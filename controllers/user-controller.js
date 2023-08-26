@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const { User, Tweet, Like } = db
+const { User } = db
 
 const userController = {
   signUpPage: (req, res) => {
@@ -53,49 +53,6 @@ const userController = {
     req.flash('success_messages', '成功登出！')
     req.logout()
     res.redirect('/signin')
-  },
-  addLike: (req, res, next) => {
-    const { TweetId } = req.params
-    return Promise.all([
-      Tweet.findByPk(TweetId),
-      Like.findOne({
-        where: {
-          UserId: req.user.id,
-          TweetId
-        }
-      })
-    ])
-      .then(([tweet, like]) => {
-        if (!tweet) throw new Error("Tweet didn't exist!")
-        if (like) throw new Error('You have liked this restaurant!')
-
-        return Like.create({
-          UserId: req.user.id,
-          TweetId
-        })
-      })
-      .then(() => res.redirect('back'))
-      .catch(err => next(err))
-  },
-  removeLike: (req, res, next) => {
-    const { TweetId } = req.params
-    return Promise.all([
-      Tweet.findByPk(TweetId),
-      Like.findOne({
-        where: {
-          UserId: req.user.id,
-          TweetId
-        }
-      })
-    ])
-      .then(([tweet, like]) => {
-        if (!tweet) throw new Error("Tweet didn't exist!")
-        if (!like) throw new Error("You haven't liked this Tweet")
-
-        return like.destroy()
-      })
-      .then(() => res.redirect('back'))
-      .catch(err => next(err))
   }
 }
 
