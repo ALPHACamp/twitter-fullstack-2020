@@ -23,6 +23,11 @@ const userController = {
   signUpPage: (req, res, next) => {
     res.render('signup')
   },
+  logOut: (req, res, next) => {
+    req.flash('success_messages', '您已成功登出！')
+    req.logout()
+    res.redirect('/signin')
+  }
 
   // signUp: (req, res, next) => {
   //   if (req.body.password !== req.body.checkPassword) throw new Error('Passwords do not match!')
