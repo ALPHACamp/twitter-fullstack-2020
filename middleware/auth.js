@@ -13,7 +13,12 @@ const authenticatedAdmin = (req, res, next) => {
   }
   res.redirect('/admin/signin')
 }
+const authenticatedSelfOnly = (req, res, next) => {
+  if (helpers.getUser(req).id === Number(req.params.userId)) return next()
+  throw new Error('Invalid authorization!')
+}
 module.exports = {
   authenticated,
-  authenticatedAdmin
+  authenticatedAdmin,
+  authenticatedSelfOnly
 }
