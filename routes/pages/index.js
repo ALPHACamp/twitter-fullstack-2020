@@ -5,6 +5,7 @@ const admin = require('./modules/admin')
 const tweet = require('./modules/tweet')
 const { userLocalAuth, userJWTAuth, sendToken, isAuthenticated } = require('../../middlewares/auth')
 const userController = require('../../controllers/pages/user-controller')
+const followshipController = require('../../controllers/pages/followship-controller')
 
 const router = express.Router()
 
@@ -22,6 +23,10 @@ router.get('/signup', userController.getUserSignUpPage)
 router.get('/logout', userController.userLogout)
 router.post('/signin', userLocalAuth, sendToken, userController.userSignIn)
 router.post('/signup', userController.userSignUp)
+
+/* 測試檔把followship放在最外面 */
+router.post('/followships', userJWTAuth, followshipController.postFollowship)
+router.delete('/followships/:id', userJWTAuth, followshipController.deleteFollowship)
 
 router.use('/', (req, res) => {
 // 預留，將找不到router的網址都先轉入root

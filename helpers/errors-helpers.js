@@ -16,8 +16,16 @@ class JWTStrategyError extends Error {
     this.name = 'localStrategyError'
   }
 }
+
+class FollowshipError extends Error {
+  constructor (message) {
+    super(message)
+    this.name = 'followshipError'
+  }
+}
 module.exports = {
   JWTTokenError,
   LocalStrategyError,
-  JWTStrategyError
+  JWTStrategyError,
+  FollowshipError
 }
