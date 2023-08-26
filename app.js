@@ -32,8 +32,7 @@ app.use(methodOverride('_method'))
 
 // 讓express可以解讀form, 也可以用api接收json
 app.use(express.urlencoded({ extended: true }))
-// app.use(express.json())
-
+app.use(express.json()) // for test
 app.use(express.static(path.join(__dirname, 'public'))) // for css and 前端js
 
 app.use(cookieParser()) // 用來找到JWS cookie

@@ -15,7 +15,12 @@ const tweetController = {
         followingUsersTweets(req),
         topFollowedUser(req) // 給右邊的渲染用
       ])
-      return res.render('main/tweets', { tweets, recommendUser, javascripts })
+      return res.render('main/tweets', {
+        tweets,
+        recommendUser,
+        javascripts,
+        route: 'home'
+      })
     } catch (error) {
       return next(error)
     }
@@ -28,7 +33,12 @@ const tweetController = {
       const [recommendUser] = await Promise.all([
         topFollowedUser(req) // 給右邊的渲染用
       ])
-      return res.render('main/replies', { id, recommendUser, javascripts })
+      return res.render('main/replies', {
+        id,
+        recommendUser,
+        javascripts,
+        route: 'home'
+      })
     } catch (error) {
       return next(error)
     }
