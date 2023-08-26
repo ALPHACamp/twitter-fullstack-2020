@@ -9,8 +9,6 @@ const { generalErrorHandler } = require('../middleware/error-handler')
 
 router.use('/admin', admin)
 
-router.get('/tweets', tweetController.getTweets)
-
 router.get('/users/:id/edit', userController.editUser)
 router.get('/users/:id/tweets', userController.getUserTweets)
 
