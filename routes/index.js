@@ -9,11 +9,12 @@ const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
 
 // middleware
-const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
+const { authenticated } = require('../middleware/auth')
 
 // Admin
 router.use('/admin', admin)
+
 
 // Sign up
 router.get('/signup', userController.signUpPage)
