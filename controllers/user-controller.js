@@ -21,8 +21,6 @@ const userController = {
 
     return Promise.all([emailPromise, accountPromise])
       .then(([mailUser, accountUser]) => {
-        console.log(name)
-        console.log(name.length > 50)
         if (mailUser) {
           mailMsg = '此信箱已被使用'
         }
@@ -32,8 +30,8 @@ const userController = {
         if (password !== checkPassword) {
           passwordMsg = '密碼與確認密碼不相符'
         }
-        if (name.length > 50 || name.length === 0) {
-          nameMsg = '名稱字數應為 1 ~ 50'
+        if (name.length > 50) {
+          nameMsg = '字數超出上限！'
         }
         if (mailMsg || accountMsg || passwordMsg || nameMsg) {
           return res.render('signup', { nameMsg, passwordMsg, mailMsg, accountMsg, account, name, email })
@@ -44,7 +42,9 @@ const userController = {
                 account,
                 name,
                 email,
-                password: hashedPassword
+                password: hashedPassword,
+                avatar: process.env.DEFAULT_AVATAR,
+                background: process.env.DEFAULT_BACKGROUND
               })
             })
             .then(() => res.redirect('/signin'))
@@ -55,6 +55,10 @@ const userController = {
     res.render("signin");
   },
   sigin: (req, res) => {
+    if (req.user.role === 'admin') {
+      req.flash('account_messages', '帳號不存在！')
+      res.redirect('/signin')
+    }
     // req.flash('success_messages', '成功登入!')
     res.redirect("/tweets");
   },
@@ -289,27 +293,21 @@ const userController = {
 
     return Promise.all([emailPromise, accountPromise])
       .then(([mailUser, accountUser]) => {
-        console.log('---------開始一堆if----------')
         if (mailUser) {
-          console.log('if>此信箱已被使用')
           mailMsg = '此信箱已被使用'
         }
         if (accountUser) {
-          console.log('if>此帳號已被使用')
           accountMsg = '此帳號已被使用'
         }
         if (password !== checkPassword) {
-          console.log('if>密碼與確認密碼不相符')
           passwordMsg = '密碼與確認密碼不相符'
         }
-        if (name.length > 50 || name.length === 0) {
-          nameMsg = '名稱字數應為 1 ~ 50'
+        if (name.length > 50) {
+          nameMsg = '字數超出上限！'
         }
         if (mailMsg || accountMsg || passwordMsg || nameMsg) {
-          console.log('達到if條件  準備返回')
           return res.render('settings', { nameMsg, mailMsg, accountMsg, passwordMsg, account, name, email })
         } else {
-          console.log('----------判斷完了一堆if------------')
           Promise.all([
             User.findByPk(userId),
             bcrypt.hash(password, 10)
@@ -323,7 +321,6 @@ const userController = {
               })
             })
             .then(() => {
-              console.log('!!!!!-------最後一個then-------!!!!!')
               res.redirect('/settings')
             })
         }

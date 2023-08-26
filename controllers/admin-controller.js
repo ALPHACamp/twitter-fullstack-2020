@@ -5,6 +5,10 @@ const adminController = {
     res.render('admin/signin')
   },
   signin: (req, res) => {
+    if (req.user.role === 'user') {
+      req.flash('account_messages', '帳號不存在！')
+      res.redirect('/admin/signin')
+    }
     res.redirect('/admin/tweets')
   },
   getTweets: (req, res) => {
