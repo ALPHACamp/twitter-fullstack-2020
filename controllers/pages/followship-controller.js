@@ -3,16 +3,18 @@ const { Followship, User } = require('../../models')
 const { FollowshipError } = require('../../helpers/errors-helpers')
 const { topFollowedUser } = require('../../helpers/recommand-followship-helper')
 const { followingUsersTweets } = require('../../helpers/tweets-helper')
+const helper = require('../../_helpers')
 const TWEET_LINK_JS = 'tweetLink.js'
 const followshipController = {
   postFollowship: async (req, res, next) => {
     try {
-      const followerId = req.user.id // 我追蹤別人
+      const followerId = helper.getUser(req).id // 我追蹤別人
       const followingId = parseInt(req.body.id)// 我要追蹤的人
       console.log('followerId:', followerId)
       console.log('followingId:', followingId)
       if (followerId === followingId) {
-        throw new FollowshipError('Don\'t follow yourself!')
+        return res.redirect(200, 'back')
+        // throw new FollowshipError('Don\'t follow yourself!')
       }// 不要追蹤自己
       const [user, followship] = await Promise.all([
         User.findByPk(followingId), // 我要follow的人在不在
