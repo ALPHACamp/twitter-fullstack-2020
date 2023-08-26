@@ -60,6 +60,14 @@ textarea {
   gap: 8px;
 }
 
+#admin-buttons-container {
+  position: relative;
+  width: Fixed (178px);
+  height: 124px;
+  top: 66px;
+  gap: 8px;
+}
+
 .button-container {
   width: 178px;
   height: 58px;
