@@ -13,8 +13,12 @@ const loginController = require('../controllers/login-controller')
 router.use('/api', api)
 router.use('/admin', admin)
 
-router.get('/tweets', tweetController.getTweets) // test
-router.get('/tweets/replies', tweetController.getTweetsReply) // test
+router.get('/tweets/:id/replies', authenticated, replyController.getTweetReplies)
+router.post('/tweets/:tweetId/replies', authenticated, replyController.postReply)
+router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
+router.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
+router.get('/tweets', authenticated, tweetController.getTweets)
+router.post('/tweets', authenticated, tweetController.postTweets)
 
 router.get('/users/:userId/tweets', authenticated, userController.getUser)
 router.get('/users/:userId/likes', authenticated, userController.getUserLikes)
