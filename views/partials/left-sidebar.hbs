@@ -6,6 +6,7 @@
   </div>
   <div class="sidebar-container">
     <nav class="nav d-flex flex-row" class="sidebar-container" id="buttons-container">
+      <!--點擊首頁後變成橘色圖示與文字-->
       {{#if tweetRoute}}
         <a href="/tweets" class="nav-link button-container" id="home">
           <span class="icon-description p-0" id="home-span" style="color: #FF4400">
@@ -21,18 +22,38 @@
       </span>
       </a>
       {{/if}}
+      <!--點擊個人個人資料後變成橘色圖示與文字-->
+      {{#if profileRoute}}
       <a href="/users/:id/tweets" class="nav-link button-container" id="profile">
-        <span class="icon-description p-0" id="profile-span">
-        <img src="/images/icons/profile.png" alt="profile" id="profile-icon" class="sidebar-icon">
+        <span class="icon-description p-0" id="profile-span" style="color: #FF4400">
+        <img src="/images/icons/orange-profile.png" alt="profile" id="profile-icon" class="sidebar-icon">
         個人資料
       </span>
       </a>
+      {{else}}
+      <a href="/users/:id/tweets" class="nav-link button-container" id="profile">
+        <span class="icon-description p-0" id="profile-span">
+          <img src="/images/icons/profile.png" alt="profile" id="profile-icon" class="sidebar-icon">
+          個人資料
+        </span>
+      </a>
+      {{/if}}
+      {{#if settingRoute}}
+      <!--點擊設定後變成橘色圖示與文字-->
+      <a href="/users/:id/edit" class="nav-link button-container" id="setting">
+        <span class="icon-description p-0" id="setting-span" style="color: #FF4400">
+          <img src="/images/icons/orange-setting.png" alt="setting" id="setting-icon" class="sidebar-icon">
+          設定
+        </span>
+      </a>
+      {{else}}
       <a href="/users/:id/edit" class="nav-link button-container" id="setting">
         <span class="icon-description p-0" id="setting-span">
           <img src="/images/icons/setting.png" alt="setting" id="setting-icon" class="sidebar-icon">
           設定
         </span>
       </a>
+      {{/if}}
       <div class="button-container d-block p-0" id="add-tweet">
       <!-- Button trigger modal -->
       <button type="button" class="btn d-grid" data-bs-toggle="modal" data-bs-target="#newTweet" id="new-tweet">

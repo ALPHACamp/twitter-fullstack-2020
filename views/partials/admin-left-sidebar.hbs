@@ -1,0 +1,39 @@
+<div class="sidebar" id="left-sidebar">
+  <div class="sidebar-container" id="logo-container">
+    <a href="/admin/tweets">
+      <img src="/images/logo.png" alt="" id="logo">
+    </a>
+  </div>
+  <div class="sidebar-container">
+    <nav class="nav d-flex flex-row" class="sidebar-container" id="buttons-container">
+      {{#if tweetRoute}}
+      <a href="/admin/tweets" class="nav-link button-container" id="home">
+        <span class="icon-description p-0" id="home-span" style="color: #FF4400">
+          <img src="/images/icons/orange-home.png" alt="home" id="home-icon" class="sidebar-icon">
+          推文清單
+        </span>
+      </a>
+      {{else}}
+      <a href="/admin/tweets" class="nav-link button-container" id="home">
+        <span class="icon-description p-0" id="home-span">
+          <img src="/images/icons/home.png" alt="home" id="home-icon" class="sidebar-icon">
+          推文清單
+        </span>
+      </a>
+      {{/if}}
+      <a href="/admin/users" class="nav-link button-container" id="profile">
+        <span class="icon-description p-0" id="profile-span">
+          <img src="/images/icons/profile.png" alt="profile" id="profile-icon" class="sidebar-icon">
+          使用者列表
+        </span>
+      </a>
+    </nav>
+  </div>
+  <div id="logout">
+    <a href="/admin/logout" class="btn">
+      <span class="icon-description" id="logout-span">
+        <img src="/images/icons/logout.png" alt="logout" id="logout-icon" class="sidebar-icon">
+        登出
+    </a>
+  </div>
+</div>

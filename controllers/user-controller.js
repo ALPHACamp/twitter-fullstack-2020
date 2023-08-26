@@ -1,13 +1,36 @@
 const db = require('../models')
-const { User } = db
 const bcrypt = require('bcryptjs')
+const { User, Tweet } = db
+// const helper = require('../_helpers')
 
 const userController = {
   editUser: (req, res, next) => {
-    res.render('setting')
+    const settingRoute = true
+    // 待測試取到的值是否正確
+    // const currentUser = helper.getUser(req).id || null
+    User.findByPk(2, { raw: true, nest: true })
+      .then(user => res.render('setting', { user, settingRoute }))
+      .catch(err => next(err))
   },
   getUserTweets: (req, res, next) => {
-    res.render('profile')
+    const profileRoute = true
+    // 待測試取到的值是否正確
+    // const currentUser = helper.getUser(req).id || null
+    return Promise.all([
+      Tweet.findAll({
+        // test for now
+        where: { UserId: 2 },
+        raw: true,
+        nest: true,
+        include: User,
+        order: [['createdAt', 'DESC']]
+      }),
+      User.findByPk(2, { raw: true })
+    ])
+      .then(([tweets, user]) => {
+        res.render('profile', { tweets, user, profileRoute })
+      })
+      .catch(err => next(err))
   },
   signInPage: (req, res, next) => {
     res.render('signin')
