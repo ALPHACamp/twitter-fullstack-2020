@@ -12,14 +12,17 @@
   <link rel="stylesheet" href="/stylesheets/style.css">
 
 </head>
-<body class="d-flex flex-column h-100 bg-light">
-  <main class="flex-shrink-0" role="main">
-    <div class="album container pt-5">
-      <div class="pt-5">
+
+<body class="d-flex flex-column h-100 bg-white">
+  <main class="mx-auto" role="main">
+    {{!-- <div class="album container pt-5">
+      <div class="pt-5"> --}}
         {{> messages}}
+        <div class="d-flex justify-content-between">
         {{{body}}}
-      </div>
-    </div>
+        </div>
+      {{!-- </div>
+    </div> --}}
   </main>
 </body>
 

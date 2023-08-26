@@ -1,0 +1,27 @@
+<div class="container">
+<div style="height: 50px;width: 50px;margin: 64px auto 24px auto;padding: 5px;">
+  {{> ac-logo}}
+</div>
+<div class="my-4 text-center">
+  <h3 class="fw-bold mb-3">後台登入</h3>
+</div>
+<form style="width: 356px;margin: 0 auto;" action="/admin/signin" method="POST">
+  <div class="form-floating mb-3">
+    <input type="account" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="account"
+      name="account" placeholder="請輸入帳號" style="background-color: #f5f8fa !important;" required autofocus>
+    <label for="account">帳號</label>
+  </div>
+  <div class="form-floating mb-4">
+    <input type="password" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="password"
+      name="password" placeholder="請輸入密碼" style="background-color: #f5f8fa !important;" required>
+    <label for="password">密碼</label>
+  </div>
+  <div class="d-grid mb-3">
+    <button class="btn pt-1 pb-1 ps-3 pe-3" type="submit"
+      style="background-color:#FF6600; color:white; border-radius: 30px">登入</button>
+  </div>
+  <div class="mb-4 d-flex justify-content-end">
+    <p class="fw-bold"><a href="/signin">前台登入</a></p>
+  </div>
+</form>
+</div>

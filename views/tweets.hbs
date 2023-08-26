@@ -1,63 +1,71 @@
-{{!-- 發文 --}}
-<div class="card col-6 mx-auto">
-  <h5 class="card-header">首頁</h5>
-  <h4 class="check">test</h4>
 
-    <div class="card-body">
+{{>navigation}}
+
+<div style="margin-left:198px; padding: 0px 10px; width:641px; " class="border border-light">
+  {{!-- 發文 --}}
+  <div class="mx-auto" style="border: 1px solid #E6ECF0">
+    <h5 class="d-flex flex-row ps-3 pt-3 pb-3" style="border-bottom: 1px solid #E6ECF0">首頁</h5>
+    <div class="d-flex flex-column p-2">
       <div class="d-flex flex-row">
         <a href="#">
-          <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt="" width="40px" height="40px"
-          style="background-color:#FF6600; border-radius: 30px">
+          <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt=""
+            width="40px" height="40px" style="background-color:#FF6600; border-radius: 30px">
         </a>
         <p class="inline ms-1 mt-2">有什麼新鮮事?</p>
-
       </div>
 
-      <div class="d-flex flex-row-reverse">
-        <button class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px" type="submit" data-bs-toggle="modal" data-bs-target="#myModalmain">
+      <div class="d-flex flex-row-reverse ">
+        <button class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px"
+           data-bs-toggle="modal" data-bs-target="#myModalmain">
           推文
         </button>
       </div>
     </div>
+  </div>
+  {{!-- 留言 --}}
+  <div class="mx-auto p-2 mt-2" style="border: 1px solid #E6ECF0">
+    <div class="card-body">
+      <div class="d-flex flex-row">
+        <a href="#">
+          <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt=""
+            width="40px" height="40px" style="background-color:#FF6600; border-radius: 30px">
+        </a>
+        <p class="inline ms-1 mt-1">Christofu</p>
+        <span class="ms-1 mt-2" style="font-size: 0.2rem;">@account</span>
+        <span class="ms-1 mt-2" style="font-size: 0.2em;">. 3小時</span>
+      </div>
 
-</div>
-
-<br/>
-{{!-- 留言 --}}
-<div class="card col-6 mx-auto">
-  <div class="card-body">
-    <div class="d-flex flex-row">
-      <a href="#">
-        <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt="" width="40px" height="40px"
-        style="background-color:#FF6600; border-radius: 30px">
+      <a href="/tweets/replies" style="text-decoration: none; color:#171725">
+        <div class="col-10 mx-auto">
+          <p>Voluptatem cumque non quibusdam. Repudiandae consequatur veritatis ducimus ut. Quia quae harum fuga et
+            rerum eos neque ut. Aut unde aliquam </p>
+        </div>
       </a>
-      <p class="inline ms-1 mt-1">Christofu</p>
-      <span class="ms-1 mt-2" style="font-size: 0.2rem;">@account</span>
-      <span class="ms-1 mt-2" style="font-size: 0.2em;">. 3小時</span>
-    </div>
-    <div class="col-10 mx-auto">
-      <p>Voluptatem cumque non quibusdam. Repudiandae consequatur veritatis ducimus ut. Quia quae harum fuga et rerum eos neque ut. Aut unde aliquam </p>
-    </div>
-    <div class="d-flex flex-row ms-5">
-      <div class="me-4">
-        <a href="#" style="text-decoration: none;">
-          {{!-- <img class="" src="/public/icon/icon_reply.jpg" alt="" width="40px" height="40px"> --}}
-          <i class="fa-regular fa-comment" style="color: #414d56;"></i>
-        </a>
-        <span class="m-1" style="font-size: 0.2rem;">10</span>
-      </div>
 
-      <div>
-        <a href="#" style="text-decoration: none;">
-          <img class="" src="/icon/icon_like.png" alt="" width="40px" height="40px">
-          <i class="fa-regular fa-heart" style="color: #414d56;"></i>
-        </a>
-        <span class="m-1"  style="font-size: 0.2rem;">20</span>
+      <div class="d-flex flex-row ms-5">
+
+        <div class="me-4">
+          <button type="submit"
+            style="background-color:transparent; border-color:transparent; border: none; padding: 0;"
+            data-bs-toggle="modal" data-bs-target="#ModalReply">
+            <img src="/icon/Reply.png" alt="" width="20px" height="20px" />
+          </button>
+          <span class="m-1" style="font-size: 0.2rem;">10</span>
+        </div>
+
+        <div>
+          <a href="#" style="text-decoration: none;">
+            <img class="" src="/icon/icon_like.png" alt="" width="20px" height="20px">
+          </a>
+          <span class="m-1" style="font-size: 0.2rem;">20</span>
+        </div>
+
       </div>
-      
     </div>
   </div>
 </div>
+
+{{>top-users-bar}}
 
 
 {{!-- modal 主頁欄 --}}
@@ -66,7 +74,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="d-flex justify-content-start">
-        <button type="button" class="btn-close ms-2 mt-2" style="background-color:#FF6600" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close ms-2 mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <hr style="margin-top: 5px; margin-bottom: 5px;">
 
@@ -74,17 +82,19 @@
         <div class="ms-2">
           <div class="d-flex flex-row">
             <a href="#">
-              <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt="" width="40px" height="40px"
-              style="background-color:#FF6600; border-radius: 30px">
+              <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png"
+                alt="" width="40px" height="40px" style="background-color:#FF6600; border-radius: 30px">
             </a>
-    
-            <textarea class="ms-1 mt-2" name="tweet" id="" cols="45" rows="6" placeholder="有什麼新鮮事"style="border:none" ></textarea>
+
+            <textarea class="ms-1 mt-2" name="tweet" id="" cols="45" rows="6" placeholder="有什麼新鮮事"
+              style="border:none"></textarea>
           </div>
         </div>
-      
+
         <div class="d-flex flex-row-reverse mb-3 me-2">
-          <button class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px" type="submit">
-          推文
+          <button class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px"
+            type="submit">
+            推文
           </button>
         </div>
       </form>
@@ -92,19 +102,13 @@
   </div>
 </div>
 
+{{!-- 留言modal --}}
 
-
-
-{{!-- modal sidecolumn --}}
-<button style="width:178px;background-color:#FF6600; color:white; border-radius: 30px" class="btn" data-bs-toggle="modal" data-bs-target="#myModal">推文
-</button>
-
-
-<div class="modal" id="myModal" tabindex="-1">
+<div class="modal" id="ModalReply" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="d-flex justify-content-start">
-        <button type="button" class="btn-close ms-2 mt-2" style="background-color:#FF6600" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close ms-2 mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <hr style="margin-top: 5px; margin-bottom: 5px;">
 
@@ -112,24 +116,38 @@
         <div class="ms-2">
           <div class="d-flex flex-row">
             <a href="#">
-              <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt="" width="40px" height="40px"
-              style="background-color:#FF6600; border-radius: 30px">
+              <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png"
+                alt="" width="40px" height="40px" style="background-color:#FF6600; border-radius: 30px">
             </a>
-    
-            <textarea class="ms-1 mt-2" name="tweet" id="" cols="45" rows="6" placeholder="有什麼新鮮事"style="border:none" ></textarea>
+            <p class="inline ms-1 mt-1">Christofu</p>
+            <span class="ms-1 mt-2" style="font-size: 0.2rem;">@account</span>
+            <span class="ms-1 mt-2" style="font-size: 0.2em;">. 3小時</span>
+          </div>
+
+          <div class="col-10 mx-auto ps-1">
+            <p>Voluptatem cumque non quibusdam. Repudiandae consequatur veritatis ducimus ut.Quia quae harum fuga et
+              rerum eos neque ut. Aut unde aliquam </p>
+            <P style="font-size: 14px">回覆給<span style="color:#FF6600">@Christofu</span></P>
+          </div>
+
+          <div class="d-flex flex-row">
+            <a href="#">
+              <img class="" src="https://i.imgur.com/Na2PT87.jpg" alt="" width="40px" height="40px"
+                style="background-color:#FF6600; border-radius: 30px">
+            </a>
+            <textarea class="ms-1 mt-2" name="tweet" id="" cols="45" rows="6" placeholder="推你的回覆"
+              style="border:none"></textarea>
           </div>
         </div>
-      
+
         <div class="d-flex flex-row-reverse mb-3 me-2">
-          <button class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px" type="submit">
-          推文
+          <button class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px"
+            type="submit">
+            回覆
           </button>
         </div>
       </form>
     </div>
   </div>
 </div>
-
-
-
 

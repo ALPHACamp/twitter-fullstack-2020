@@ -1,30 +1,46 @@
-<div class="mb-4 text-center">
-  <h1 class="h3 font-weight-normal mb-3">Sign Up</h1>
-</div>
-<form class="form-signup" action="/signup" method="POST" style="width: 100%;">
-  <div class="form-row mb-3">
-    <label class="form-label" for="account">帳號</label>
-    <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" required autofocus>
+<div class="container">
+  <div style="height: 50px;width: 50px;margin: 64px auto 24px auto;padding: 5px;">
+    {{> ac-logo}}
   </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="name">名稱</label>
-    <input type="text" id="name" name="name" class="form-control" placeholder="請輸入使用者名稱" maxlength="50" required autofocus>
+  <div class="mb-4 text-center">
+    <h3 class="fw-bold mb-3">建立你的帳號</h3>
   </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="email">Email</label>
-    <input type="text" id="email" name="email" class="form-control" placeholder="請輸入Email" required>
-  </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="password">密碼</label>
-    <input type="password" id="password" name="password" class="form-control" placeholder="請設定密碼" required>
-  </div>
-  <div class="form-row mb-3">
-    <label class="form-label" for="checkPassword">密碼確認</label>
-    <input type="password" id="checkPassword" name="checkPassword" class="form-control" placeholder="請再次輸入密碼"
-      required>
-  </div>
-  <button class="btn btn-primary btn-block" type="submit">註冊</button>
-</form>
-<div class="mb-4 text-center">
-  <p><a href="/signin">取消</a></p>
+  <form style="width: 356px;margin: 0 auto;" action="/signup" method="POST">
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="account"
+        name="account" placeholder="請輸入帳號" style="background-color: #f5f8fa !important;" required autofocus>
+      <label for="account">帳號</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="text" id="name" name="name" placeholder="請輸入使用者名稱" maxlength="50"
+        class="form-control border-3 border-top-0 border-start-0 border-end-0"
+        style="background-color: #f5f8fa !important;" required>
+      <label for="name">名稱</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="text" id="email" name="email" placeholder="請輸入Email"
+        class="form-control border-3 border-top-0 border-start-0 border-end-0"
+        style="background-color: #f5f8fa !important;" required>
+      <label for="email">Email</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="password" id="password" name="password" placeholder="請輸入密碼"
+        class="form-control border-3 border-top-0 border-start-0 border-end-0"
+        style="background-color: #f5f8fa !important;" required>
+      <label for="password">密碼</label>
+    </div>
+    <div class="form-floating mb-4">
+      <input type="password" id="checkPassword" name="checkPassword" placeholder="請再次輸入密碼"
+        class="form-control border-3 border-top-0 border-start-0 border-end-0"
+        style="background-color: #f5f8fa !important;" required>
+      <label for="checkPassword">密碼確認</label>
+    </div>
+    <div class="d-grid mb-3">
+      <button class="btn pt-1 pb-1 ps-3 pe-3" type="submit"
+        style="background-color:#FF6600; color:white; border-radius: 30px">註冊</button>
+    </div>
+    <div class="mb-4 d-flex justify-content-center">
+      <p class="fw-bold"><a href="/signin">取消</a></p>
+    </div>
+  </form>
 </div>
