@@ -66,6 +66,9 @@ const userController = {
   },
   getUserReplies: (req, res, next) => {
     res.render('user-replies')
+  },
+  getUserLikes: (req, res, next) => {
+    res.render('user-likes')
   }
 }
 

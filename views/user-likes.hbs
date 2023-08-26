@@ -5,11 +5,13 @@
     <div class="col-md-6 p-0" style="border: 1px #E6ECF0 solid; max-width:639px;">
       {{>user-header}}
       {{>profile}}
-      {{>user-tabs route='tweets'}}
-      {{!-- #each tweets --}}
-      <div class="border-start border-end border-bottom d-flex align-items-end flex-column pt-2" style="min-height: 130px;">
+      {{>user-tabs route='likes'}}
+      {{!-- #each likedTwitters --}}
+      <div class="border-start border-end border-bottom d-flex align-items-end flex-column pt-2"
+        style="min-height: 130px;">
         <div class="align-self-start">
-          <img src="https://i.imgur.com/hpSLhnx.png" title="source: imgur.com" style="width: 50px;height: 50px;" class="ms-4">
+          <img src="https://i.imgur.com/hpSLhnx.png" title="source: imgur.com" style="width: 50px;height: 50px;"
+            class="ms-4">
           <div class="d-inline-flex pt-3">
             <h5 class="mx-2" style="color: #171725;">Apple</h5>
             <span style="color: #6C757D;">@apple · 3小時</span>
@@ -21,21 +23,21 @@
             aliquip deserunt reprehenderit elit laborum.
           </p>
           <div class="d-flex align-items-baseline">
-            <img src="https://i.imgur.com/AXqSL48.png" title="source: imgur.com" style="width: 16px;height: 16px;"
+            <img src="https://i.imgur.com/AXqSL48.png" title="source: imgur.com" style="width: 16px; height: 16px;"
               class="me-1" data-bs-toggle="modal" data-bs-target="#replyTweet{{this.id}}">
             <p class="me-5">3</p>
             {{#if isliked}}
-            <form action="/users/{{user.id}}/unlike" method="POST">
-              <button class="btn btn-outline-light rounded-circle" type="submit" style="border:none;">
-                <i class="fa-solid fa-heart" style="color: #fc5a5a;"></i>
-              </button>
-            </form>
+              <form action="/users/{{user.id}}/unlike" method="POST">
+                <button class="btn btn-outline-light rounded-circle" type="submit" style="border:none;">
+                  <i class="fa-solid fa-heart" style="color: #fc5a5a;"></i>
+                </button>
+              </form>
             {{else}}
-            <form action="/users/{{user.id}}/like" method="POST">
-              <button class="btn btn-outline rounded-circle" type="submit" style="border:none;">
-                <i class="fa-regular fa-heart"></i>
-              </button>
-            </form>
+              <form action="/users/{{user.id}}/like" method="POST">
+                <button class="btn btn-outline rounded-circle" type="submit" style="border:none;">
+                  <i class="fa-regular fa-heart"></i>
+                </button>
+              </form>
             {{/if}}
             <p style="margin-left:-5px;">16</p>
           </div>
@@ -43,6 +45,7 @@
       </div>
       {{>reply-modal}}
       {{!-- /each --}}
+      
       
     </div>
     {{>right}}
