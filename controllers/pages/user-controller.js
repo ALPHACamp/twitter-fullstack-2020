@@ -3,7 +3,11 @@ const { Op } = require('sequelize')
 const bcrypt = require('bcryptjs')
 
 const _helper = require('../../_helpers')
-const { User } = require('../../models')
+const { User, Tweet, Reply, sequelize } = require('../../models')
+const recommendUserHelper = require('../../helpers/recommand-followship-helper')
+const userHelper = require('../../helpers/user-helper')
+const INPUT_LENGTH_JS = 'inputLength.js'
+const USER_PAGE_JS = 'userPage.js'
 
 const userController = {
   /* admin 登入 */
@@ -39,7 +43,7 @@ const userController = {
   /* admin登入結束 */
   /* user登入 */
 
-  getUserSignInPage: (req, res, next) => {
+  getLoginPage: (req, res, next) => {
     try {
       console.log('is authenticated: ', req.isAuthenticated())
       if (_helper.ensureAuthenticated(req)) return res.redirect('/tweets') // 如果已經有user就轉去root
@@ -48,21 +52,21 @@ const userController = {
       return next(error)
     }
   },
-  userSignIn: (req, res, next) => {
+  postLogin: (req, res, next) => {
     try {
       return res.redirect('/tweets')
     } catch (error) {
       return next(error)
     }
   },
-  getUserSignUpPage: (req, res, next) => {
+  getSignupPage: (req, res, next) => {
     try {
       return res.render('login/signup')
     } catch (error) {
       return next(error)
     }
   },
-  userSignUp: async (req, res, next) => {
+  postSignup: async (req, res, next) => {
     const { account, name, email, password, checkPassword } = req.body
     const errors = []
 
@@ -126,7 +130,7 @@ const userController = {
       return next(error)
     }
   },
-  userLogout: (req, res, next) => {
+  getLogout: (req, res, next) => {
     try {
       if (req && req.cookies) {
         res.cookie('jwtToken', '', { expires: new Date(0) })
@@ -136,8 +140,43 @@ const userController = {
     } catch (error) {
       return next(error)
     }
-  }
+  },
   /* user登入結束 */
+  getUserTweets: async (req, res, next) => {
+    try {
+      const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
+      const user = await userHelper.getUserInfo(req)
+      if (!user) throw new Error("User didn't exist!")
+
+      const tweets = await Tweet.findAll({
+        include: [
+          User,
+          Reply,
+          { model: User, as: 'LikedUsers' }
+        ],
+        where: { userId: req.params.id },
+        order: [['createdAt', 'DESC']]
+      })
+
+      const result = tweets.map(tweet => ({
+        ...tweet.toJSON(),
+        countReply: tweet.Replies.length,
+        countLike: tweet.LikedUsers.length
+      }))
+
+      const recommendUser = await recommendUserHelper.topFollowedUser(req)
+
+      return res.render('user/tweets', {
+        route: 'user',
+        tweets: result,
+        user,
+        recommendUser,
+        javascripts
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 module.exports = userController

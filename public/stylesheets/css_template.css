@@ -588,3 +588,47 @@
     display: block;
     width:346px;
   }
+
+/* user layout */
+
+#user-layout .row {
+  height: 100vh;
+} 
+
+/* user profile tab */
+
+#user-tab ul {
+  height: 52px;
+  border-bottom: 1px #E6ECF0 solid;
+
+  list-style: none;
+}
+
+#user-tab a,
+#user-tab li {
+  min-width: 130px;
+}
+
+#user-tab a {
+  font-size: 15px;
+  font-weight: 700;
+  color: #657786;
+
+  text-decoration: none;
+}
+
+#user-tab a:hover {
+  color: #ff6600;
+}
+
+#user-tab li:hover {
+  border-bottom: 2px #ff6600 solid;
+}
+
+#user-tab .active {
+  border-bottom: 2px #ff6600 solid;
+}
+
+#user-tab .active>a {
+  color: #ff6600;
+}

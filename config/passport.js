@@ -23,7 +23,10 @@ const jwtStrategy = new JwtStrategy(jwtOption, async function (jwtPayload, done)
   try {
     const user = await User.findByPk(jwtPayload.id,
       {
-        include: [] // 預留給以後include別的資料
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ] // 預留給以後include別的資料
       })
     return done(null, user)
   } catch (error) {
