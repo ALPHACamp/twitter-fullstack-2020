@@ -1,4 +1,5 @@
 const db = require('../models')
+const bcrypt = require('bcryptjs')
 const { User, Tweet } = db
 // const helper = require('../_helpers')
 
@@ -45,30 +46,38 @@ const userController = {
   },
   signUpPage: (req, res, next) => {
     res.render('signup')
+  },
+  logOut: (req, res, next) => {
+    req.flash('success_messages', '您已成功登出！')
+    req.logout()
+    res.redirect('/signin')
+  },
+  signUp: (req, res, next) => {
+    const { account, name, email, password, checkPassword } = req.body
+    if (account.length > 50) throw new Error('字數超出上限！')
+    if (name.length > 50) throw new Error('字數超出上限！')
+    if (password !== checkPassword) throw new Error('密碼輸入不一致！')
+    Promise.all([
+      User.findOne({ where: { account } }),
+      User.findOne({ where: { email } })]
+    )
+      .then(([userAccount, userEmail]) => {
+        if (userAccount) throw new Error('account 已重複註冊！')
+        if (userEmail) throw new Error('email 已重複註冊！')
+        return bcrypt.hash(password, 10)
+      })
+      .then(hash => User.create({
+        account,
+        name,
+        email,
+        password: hash
+      }))
+      .then(() => {
+        req.flash('success_messages', '恭喜註冊成功！')
+        res.redirect('/signin')
+      })
+      .catch(err => next(err))
   }
-
-  // signUp: (req, res, next) => {
-  //   if (req.body.password !== req.body.checkPassword) throw new Error('Passwords do not match!')
-
-  //   Promise.all([
-  //     User.findOne({ where: { account: req.body.account } }),
-  //     User.findOne({ where: { email: req.body.email } })]
-  //   )
-  //     .then([account, email] => {
-  //       if (user) throw new Error('Email already exists!')
-  //       return bcrypt.hash(req.body.password, 10) // 前面加 return
-  //     })
-  //     .then(hash => User.create({ // 上面錯誤狀況都沒發生，就把使用者的資料寫入資料庫
-  //       name: req.body.name,
-  //       email: req.body.email,
-  //       password: hash
-  //     }))
-  //     .then(() => {
-  //       req.flash('success_messages', '成功註冊帳號！') // 並顯示成功訊息
-  //       res.redirect('/signin')
-  //     })
-  //     .catch(err => next(err)) // 接住前面拋出的錯誤，呼叫專門做錯誤處理的 middleware
-  // },
   // addFollowing: (req, res, next) => {
   //   const { userId } = req.params
   //   Promise.all([
