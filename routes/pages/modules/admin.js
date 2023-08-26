@@ -10,6 +10,6 @@ router.get('/tweets', isAuthenticated, adminController.getTweets)
 router.get('/signin', isAuthenticated, userController.getAdminSignInPage)
 router.get('/logout', userController.adminLogout)
 router.post('/signin', adminLocalAuth, sendToken, userController.adminSignin)
-router.get('/', adminJWTAuth, userController.getAdminHomePage)
+router.get('/', adminJWTAuth, adminController.getAdminHomePage)
 
 module.exports = router

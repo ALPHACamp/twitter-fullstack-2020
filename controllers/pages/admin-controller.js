@@ -1,6 +1,14 @@
 const { User, Tweet } = require('../../models')
 
 const adminController = {
+  getAdminHomePage: (req, res, next) => {
+    try {
+      return res.render('admin/homepage')
+    } catch (error) {
+      return next(error)
+    }
+  },
+
   getTweets: async (req, res, next) => {
     try {
       let tweets = await Tweet.findAll({

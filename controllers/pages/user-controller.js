@@ -23,13 +23,7 @@ const userController = {
       return next(error)
     }
   },
-  getAdminHomePage: (req, res, next) => {
-    try {
-      return res.render('admin/homepage')
-    } catch (error) {
-      return next(error)
-    }
-  },
+
   // 以下兩個logout重複需要合併優化
   adminLogout: (req, res, next) => {
     try {
@@ -73,15 +67,15 @@ const userController = {
     const errors = []
 
     if (!account || !name || !email || !password || !checkPassword) {
-      errors.push({ messages: '所有欄位皆為必填' }) 
+      errors.push({ messages: '所有欄位皆為必填' })
     }
 
     if (name.length > 50) {
-      errors.push({ messages: '暱稱不得超過50字' }) 
+      errors.push({ messages: '暱稱不得超過50字' })
     }
 
     if (password !== checkPassword) {
-      errors.push({ messages: '密碼與確認密碼不相符!' }) 
+      errors.push({ messages: '密碼與確認密碼不相符!' })
     }
 
     if (errors.length) {
@@ -97,7 +91,7 @@ const userController = {
 
     try {
       const isAccountExist = await User.findOne({ where: { account } })
-      const isEmailExist = await User.findOne({ where: { email }})
+      const isEmailExist = await User.findOne({ where: { email } })
 
       if (isAccountExist) {
         errors.push({ messages: 'account 已重複註冊！' })
@@ -124,15 +118,13 @@ const userController = {
         account,
         name,
         email,
-        password: hash,
+        password: hash
       })
 
       return res.redirect('/signin')
-
     } catch (error) {
       return next(error)
     }
-    
   },
   userLogout: (req, res, next) => {
     try {
@@ -144,7 +136,7 @@ const userController = {
     } catch (error) {
       return next(error)
     }
-  },
+  }
   /* user登入結束 */
 }
 
