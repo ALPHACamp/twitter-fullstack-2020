@@ -1,3 +1,4 @@
+const { Tweet, User } = require('../models')
 const adminController = {
   signInPage: (req, res) => {
     res.render('admins/signin')
@@ -10,6 +11,42 @@ const adminController = {
     req.flash('success_messages', '管理員登出成功！')
     req.logout()
     res.redirect('/admin/signin')
+  },
+  getAdminTweets: async (req, res, next) => {
+    try {
+      const tweets = await Tweet.findAll({
+        include: User,
+        raw: true,
+        nest: true,
+        order: [['createdAt', 'DESC']]
+      })
+      if (!tweets) throw new Error('沒有推文可顯示!')
+      tweets.forEach(tweet => {
+        tweet.description = tweet.description.substring(0, 50)
+      })
+      return res.render('admins/tweets', { tweets, route: 'tweets' })
+    } catch (err) {
+      next(err)
+    }
+  },
+  deleteTweet: async (req, res, next) => {
+    try {
+      await Tweet.destroy({
+        where: { id: req.params.tweetId }
+      })
+      req.flash('success_messages', '成功刪除該則推文!')
+      return res.redirect('/admin/tweets')
+    } catch (err) {
+      next(err)
+    }
+  },
+  getAdminUsers: async (req, res, next) => {
+    try {
+      const users = await User.findAll()
+      res.render('admins/users', { route: 'users' })
+    } catch (err) {
+      next(err)
+    }
   }
 }
 
