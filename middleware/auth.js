@@ -1,6 +1,9 @@
 const helpers = require('../helpers/auth-helpers')
 const authenticated = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) return next()
+  if (helpers.ensureAuthenticated(req)) {
+    if (helpers.getUser(req).role === 'user') return next()
+    res.redirect('/signin')
+  }
   res.redirect('/signin')
 }
 const authenticatedAdmin = (req, res, next) => {
@@ -10,7 +13,12 @@ const authenticatedAdmin = (req, res, next) => {
   }
   res.redirect('/admin/signin')
 }
+const authenticatedSelfOnly = (req, res, next) => {
+  if (helpers.getUser(req).id === Number(req.params.userId)) return next()
+  throw new Error('Invalid authorization!')
+}
 module.exports = {
   authenticated,
-  authenticatedAdmin
+  authenticatedAdmin,
+  authenticatedSelfOnly
 }
