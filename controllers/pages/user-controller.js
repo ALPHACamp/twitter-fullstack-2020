@@ -23,13 +23,7 @@ const userController = {
       return next(error)
     }
   },
-  getAdminHomePage: (req, res, next) => {
-    try {
-      return res.render('admin/homepage')
-    } catch (error) {
-      return next(error)
-    }
-  },
+
   // 以下兩個logout重複需要合併優化
   adminLogout: (req, res, next) => {
     try {
