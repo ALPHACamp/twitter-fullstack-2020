@@ -15,7 +15,6 @@ const { authenticated } = require('../middleware/auth')
 // Admin
 router.use('/admin', admin)
 
-
 // Sign up
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)

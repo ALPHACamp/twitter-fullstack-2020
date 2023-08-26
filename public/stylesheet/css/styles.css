@@ -29,7 +29,7 @@ body {
 /* ---------- navbar ---------- */
 
 .logo-container {
-  position: relative; 
+  position: relative;
   top: 8px;
   left: 8px;
   padding: 5px;
@@ -38,7 +38,7 @@ body {
 }
 
 .logo {
-  position: relative; 
+  position: relative;
   top: 5px;
   left: 5px;
   width: 40px;
@@ -71,7 +71,8 @@ body {
   text-decoration: none;
 }
 
-.nav-item-tweet:hover, .active {
+.nav-item-tweet:hover,
+.active {
   text-decoration: none;
   color: #FF6600;
 }
@@ -87,7 +88,8 @@ body {
   text-decoration: none;
 }
 
-.nav-item-user:hover, .active {
+.nav-item-user:hover,
+.active {
   text-decoration: none;
   color: #FF6600;
 }
@@ -132,7 +134,7 @@ body {
   height: 24px;
   background-image: url('/images/icons/user_filled.svg');
   background-size: contain;
-} 
+}
 
 .nav-title-tweet-tab {
   width: 72px;
@@ -158,7 +160,7 @@ body {
   text-align: left;
 }
 
-.nav-row-logout{
+.nav-row-logout {
   position: absolute;
   width: 178px;
   height: 58px;
@@ -214,7 +216,44 @@ body {
   text-align: left;
 }
 
+#btn-nav-tweet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
 
+  width: 156px;
+  height: 46px;
+
+  background: #FF6600;
+  border: none;
+  border-radius: 50px;
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+#btn-tweet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 56px;
+  height: 35px;
+
+  background: #FF6600;
+  border: none;
+  border-radius: 50px;
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
 
 /* ac-logo */
 #ac-logo {
@@ -309,5 +348,3 @@ body {
   order: 0;
   flex-grow: 0;
 }
-
-
