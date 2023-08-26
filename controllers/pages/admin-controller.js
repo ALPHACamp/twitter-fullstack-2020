@@ -1,6 +1,15 @@
+const { User, Tweet } = require('../../models')
+
 const adminController = {
-  getTweets: (req, res, next) => {
-    res.render('admin/tweets')
+  getTweets: async (req, res, next) => {
+    try {
+      const tweets = await Tweet.findAll({
+        include: [User]
+      })
+      res.render('admin/tweets', { tweets: tweets.map(tweet => tweet.toJSON()) })
+    } catch (error) {
+      return next(error)
+    }
   }
 }
 
