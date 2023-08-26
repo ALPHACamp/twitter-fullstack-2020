@@ -7,14 +7,14 @@ const followingUsersTweets = async req => {
     where: {
       [Op.or]: [
         {
-          userId: {
+          UserId: {
             [Op.in]: sequelize.literal(
               `(SELECT following_id FROM Followships
                 WHERE Followships.follower_id = ${helpers.getUser(req).id}
               )`)
           }
         },
-        { userId: { [Op.eq]: helpers.getUser(req).id } } // 自己的也撈出來, 因為要過測試
+        { UserId: { [Op.eq]: helpers.getUser(req).id } } // 自己的也撈出來, 因為要過測試
       ]
     },
     include: [User],
