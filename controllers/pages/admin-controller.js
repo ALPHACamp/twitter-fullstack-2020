@@ -18,8 +18,10 @@ const adminController = {
       })
 
       tweets = tweets.map(tweet => {
-        if (tweet.description && tweet.description.length > 50) {
+        if (tweet.description.length > 50) {
           tweet.description = tweet.description.substring(0, 50) + '...'
+        } else {
+          tweet.description = tweet.description.substring(0, 50)
         }
         return tweet
       })
