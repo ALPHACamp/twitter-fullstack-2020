@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="https://lighthouse.alphacamp.co/images/logo-simple.jpg">
   <link rel="stylesheet" href="/stylesheets/bootstrap.css">
@@ -27,7 +27,8 @@
             </a>
             <ul class="nav flex-column gap-2">
               <li class="nav-item">
-                <a href="#" aria-current="{{#ifCond route 'home'}}page{{/ifCond}}" class="{{#ifCond route 'home'}}active{{/ifCond}} nav-link nav-link-home link-unstyled d-flex justify-content-start align-items-center">
+                <a href="#" aria-current="{{#ifCond route 'home'}}page{{/ifCond}}"
+                  class="{{#ifCond route 'home'}}active{{/ifCond}} nav-link nav-link-home link-unstyled d-flex justify-content-start align-items-center">
                   <div class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1">
                     <img src="/images/icons/home_outlined.svg" alt="">
                     <p class=" p-0 m-0">首頁</p>
@@ -35,7 +36,8 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" aria-current="{{#ifCond route 'user'}}page{{/ifCond}}" class="{{#ifCond route 'user'}}active{{/ifCond}} nav-link nav-link-info link-unstyled d-flex justify-content-start align-items-center ">
+                <a href="#" aria-current="{{#ifCond route 'user'}}page{{/ifCond}}"
+                  class="{{#ifCond route 'user'}}active{{/ifCond}} nav-link nav-link-info link-unstyled d-flex justify-content-start align-items-center ">
                   <div class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1">
                     <img src="/images/icons/user_outlined.svg" alt="">
                     <p class=" p-0 m-0">個人資料</p>
@@ -44,7 +46,8 @@
               </li>
 
               <li class="nav-item">
-                <a href="/logout" class="nav-link nav-link-logout link-unstyled d-flex justify-content-start align-items-center ">
+                <a href="/logout"
+                  class="nav-link nav-link-logout link-unstyled d-flex justify-content-start align-items-center ">
                   <div class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1">
                     <img src="/images/icons/logout_outlined.svg" alt="">
                     <p class=" p-0 m-0">登出</p>
@@ -55,7 +58,7 @@
 
           </div>
         </div>
-        
+
         <div class="col main-middle-col  border-start-1 border-end-1 border-1px  px-0 mx-0">
           {{{body}}}
         </div>
