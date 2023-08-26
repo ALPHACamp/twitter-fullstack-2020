@@ -181,8 +181,9 @@
         </div>
     </main>
 </body>
-<script src="/javascripts/inputLength.js"></script>
-<script src="/javascripts/userPage.js"></script>
+{{#each javascripts}}
+    <script src="/javascripts/{{this}}"></script>
+{{/each}}
 <script src="/javascripts/popper.min.js"></script>
 <script src="/javascripts/bootstrap.js"></script>
 </html>

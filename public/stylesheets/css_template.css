@@ -111,6 +111,12 @@
   display: none;
 }
 /*Tweet-Component*/
+.tweet-card-link{
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
 .tweet-user-horizontal,
 .tweet-user-replied {
     height: 26px;
@@ -132,6 +138,8 @@
 
 .tweet-card{
     width:100%;
+    /*cusrsor change to link type*/
+    cursor: pointer;
 }
 
 /*tweet-reply*/
