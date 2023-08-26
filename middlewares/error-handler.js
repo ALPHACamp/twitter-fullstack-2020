@@ -13,6 +13,9 @@ const errorHandler = (err, req, res, next) => {
     case errors.LocalStrategyError:
       errorMessage = `Passport local strategy login Related Error: ${err.message}`
       break
+    case errors.FollowshipError:
+      errorMessage = `Followship Error: ${err.message}`
+      break
     default:
       errorMessage = `Non Error Class Error: ${err.message}`
       break

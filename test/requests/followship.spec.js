@@ -49,12 +49,12 @@ describe('# followship request', () => {
               // 檢查是否沒有追蹤自己的資料
               user.Followings.length.should.equal(0)
               return done();
-            })
+            }).catch(done);
           });
       })
 
       // 測試: 可以追蹤 user2
-      it('can follow user2', (done) => {
+      it('can follow user2', async (done) => {
         // 送出 request POST /followships
         request(app)
           .post('/followships')
@@ -69,9 +69,10 @@ describe('# followship request', () => {
                 { model: db.User, as: 'Followings' } 
               ]}).then(user => {
               // 檢查是否有多一筆資料
+              console.log('user.toJSON():', user.toJSON());
               user.Followings.length.should.equal(1)
               return done();
-            })
+            }).catch(done);
           });
       })
 
@@ -125,7 +126,7 @@ describe('# followship request', () => {
               // 檢查是否清除了追蹤資料，因此 Followings 資料長度為 0
               user.Followings.length.should.equal(0)
               return done();
-            })
+            }).catch(done);
           });
       })
 
