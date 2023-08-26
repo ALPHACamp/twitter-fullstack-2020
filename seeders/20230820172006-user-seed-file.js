@@ -4,7 +4,7 @@
 const bcrypt = require('bcryptjs')
 
 const BCRYPT_SALT_ROUNDS = 10
-const USER_AMOUNT = 10
+const USER_AMOUNT = 15
 
 module.exports = {
   async up (queryInterface, Sequelize) {
