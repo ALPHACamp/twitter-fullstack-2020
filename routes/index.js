@@ -13,7 +13,6 @@ const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated } = require('../middleware/auth')
 
 // Admin
-const admin = require('./modules/admin')
 router.use('/admin', admin)
 
 
