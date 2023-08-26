@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken')
 
 const passport = require('../config/passport')
-
+const helpers = require('../_helpers')
 const errors = require('../helpers/errors-helpers')
 
 // adminLocalAuth 與 userLocalAuth是提供給第一次login使用的
@@ -32,6 +32,7 @@ const userLocalAuth = (req, res, next) => {
 }
 
 const adminJWTAuth = (req, res, next) => {
+  if (helpers.ensureAuthenticated(req)) return next() // 測試檔使用
   const middleware = passport.authenticate('jwt', { session: false }, function callback (error, user) { // 這個function會被傳入passport的jwt strategy
     if (error || !user) return res.redirect('/admin/signin')
     if (user.role !== 'admin') {
@@ -47,6 +48,7 @@ const adminJWTAuth = (req, res, next) => {
 }
 
 const userJWTAuth = (req, res, next) => {
+  if (helpers.ensureAuthenticated(req)) return next() // 測試檔使用
   const middleware = passport.authenticate('jwt', { session: false }, function callback (error, user) { // 這個function會被傳入passport的jwt strategy
     if (error || !user) return res.redirect('/signin')
     if (user.role === 'admin') {
