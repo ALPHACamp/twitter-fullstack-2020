@@ -1,10 +1,44 @@
 {{!-- handlebars 頁面還要再修 --}}
-<h4>推文清單</h4>
-<a href="/admin/users">使用者清單</a>
-{{#each tweets}}
-<p>使用者頭像: {{ this.User.avatar }}
-<p>使用者姓名：{{ this.User.name }}</p>
-<p>使用者帳號：{{ this.User.account }}</p>
-<p>發文時間：{{ relativeTimeFromNow this.User.createdAt }}</p>
-<p>推文內容 {{ this.description }}</p>
-{{/each}}
+{{> admin-left-sidebar route="getTweets"}}
+<div class="main-middle border-start" id="admin-tweets-page-container">
+  <div class="col-9 mt-2">
+    <div class="card-header p-3">
+      <h4>推文清單</h4>
+    </div>
+    {{#each tweets}}
+    <div class="card col-12 hovercard d-flex flex-row">
+      <div class="card-body col-12 p-3">
+        <div class="row mb-2 p-1">
+          <div class="col-1 d-flex justify-content-center align-items-start">
+            <a href="/users/{{this.UserId}}">
+              <img src="{{#if this.User.avatar}}{{ this.User.avatar }}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}"
+                class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
+            </a>
+          </div>
+          <div class="col-10 row">
+            <div class="col-12 d-inline-flex align-items-center">
+              <div style="height: 26px; font-size: 15px">
+                <a href="/users/{{ this.UserId }}" class="text-dark" style="font-size: 16px; font-weight: 700; margin-right: 8px; text-decoration: none;">{{ this.User.name }}</a>
+                <span style="font-size: 14px; font-weight: 400">
+                  @{{ this.User.account }}·{{ relativeTime this.User.createdAt }}
+                </span>
+              </div>
+            </div>
+            <div class="col-12 mt-1" onclick="javascript:location.href='/tweets/{{this.id}}'" style="cursor: pointer;">
+              {{ this.description }}
+            </div>
+          </div>
+          <div class="col d-flex justify-content-end">
+            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST"
+              onsubmit="return confirm('確定要刪除此 Tweet 嗎？');">
+              <button type="submit" style="background: none; border: none; cursor: pointer;">
+                <img src="/images/icons/close.png" alt="">
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
