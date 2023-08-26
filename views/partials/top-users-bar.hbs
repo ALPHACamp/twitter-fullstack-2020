@@ -4,45 +4,36 @@
       <h4 class="card-title m-0">推薦跟隨</h4>
     </div>
   </nav>
-
+  {{#each topUsers}}
   <div style="height:82px" class="d-flex flex-row">
 
-    <div style="width:50px; height:auto" class="container align-self-center mx-1">
-      <img class="" src="https://cdn2.ettoday.net/images/1457/1457773.jpg" alt="" width="50px" height="50px" style="background-color:#FF6600; border-radius: 30px">
+    <div style="width:50px; height:auto" class="container align-self-center ms-1 me-2">
+      <img class="" src="https://cdn2.ettoday.net/images/1457/1457773.jpg" alt="" width="50px" height="50px"
+        style="background-color:#FF6600; border-radius: 30px">
     </div>
 
-    <div style="max-width:100px" class="container align-self-center ms-1">
-      <h5 class="m-0">name</h5>
+    <div style="max-width:95px" class="container align-self-center ms-1 pe-0">
+      <h6 style="overflow:hidden; white-space:nowrap; text-overflow:ellipsis" class="m-0 word-break:break-all;">{{this.name}}</h5>
       <small>
-        <p class="m-0 text-muted">@account</p>
+        <p style="overflow:hidden; white-space:nowrap; text-overflow:ellipsis" class="m-0 text-muted word-break:break-all;">@{{this.account}}</p>
       </small>
     </div>
 
-    <div class="container align-self-center me-3 p-0 text-end">
-             <a href="#" style="background-color:#FF6600; color:#ffffff; border-radius: 30px" class="btn">正在跟隨</a>
-<!--       <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn">跟隨</a> -->
+    <div class="align-self-center ms-0 me-3 p-0 text-end">      
+      {{#if this.isFollowed }}
+      <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+        <button type="submit" style="background-color:#FF6600; color:#ffffff; height:40px;border-radius: 30px"
+          class="btn">正在跟隨</button>
+      </form>
+      {{else}}
+      <form action="/following/{{this.id}}" method="POST">
+        <button type="submit" style="background-color:#FF6600; color:#ffffff; height:40px;border-radius: 30px"
+          class="btn">跟隨</button>
+      </form>
+      {{/if}}
     </div>
 
   </div>
-  
-  <div style="height:82px" class="d-flex flex-row">
-
-    <div style="width:50px; height:auto" class="container align-self-center mx-1">
-      <img class="" src="https://cdn2.ettoday.net/images/1457/1457773.jpg" alt="" width="50px" height="50px" style="background-color:#FF6600; border-radius: 30px">
-    </div>
-
-    <div style="max-width:100px" class="container align-self-center ms-1">
-      <h5 class="m-0">name</h5>
-      <small>
-        <p class="m-0 text-muted">@account</p>
-      </small>
-    </div>
-
-    <div class="container align-self-center me-3 p-0 text-end">
-      
-      <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn">跟隨</a>
-    </div>
-
-  </div>
+  {{/each}}
 
 </div>
