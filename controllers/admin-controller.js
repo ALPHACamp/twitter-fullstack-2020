@@ -5,6 +5,7 @@ const adminController = {
     res.render('admin/signin')
   },
   signin: (req, res) => {
+    req.flash("success_messages", "登入成功！");
     res.redirect('/admin/tweets')
   },
   getTweets: (req, res) => {
@@ -34,6 +35,7 @@ const adminController = {
           console.log('tweet不存在')
           res.redirect('back')
         }
+        req.flash("success_messages", "刪除成功！");
         return tweet.destroy()
       })
       .then(() => res.redirect('/admin/tweets'))

@@ -52,6 +52,7 @@ const tweetsController = {
         UserId: currentUserId,
         description,
       });
+      req.flash("success_messages", "推文成功！");
       return res.redirect("back");
     } catch (err) {
       next(err);
@@ -125,17 +126,17 @@ const tweetsController = {
         TweetId: req.params.id,
         comment,
       });
+      req.flash("success_messages", "留言成功！");
       return res.redirect("back");
     } catch (err) {
       next(err);
     }
   },
   getMoreTweets: async (req, res, next) => {
-    try{
-      const offset = parseInt(req.query.offset) || 0;
-      const limit = parseInt(req.query.limit) || 15;
+    try {
+      const offset = parseInt(req.params.offset) || 0;
+      const limit = 15;
       const currentUserId = helpers.getUser(req).id;
-      // const currentUser = helpers.getUser(req);
       const tweets = await Tweet.findAll({
         include: [User, Reply, Like],
         order: [["updatedAt", "DESC"]],
@@ -163,8 +164,8 @@ const tweetsController = {
         };
       });
       res.json(showTweets);
-    } catch(err) {
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
   },
 };

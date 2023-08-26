@@ -49,7 +49,7 @@ router.post(
   tweetsController.postReply
 );
 router.get(
-  "/tweets/more",
+  "/tweets/more/:offset",
   tweetsController.getMoreTweets
 );
 router.get("/tweets", authenticated, tweetsController.getTweets);

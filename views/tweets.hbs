@@ -23,18 +23,17 @@
         </form>
       </div>
       <div class="divider" style="height:10px; background-color:#E6ECF0"></div>
-      <div class="tweets-list" id="tweet-li-template">
-        <div class="li-container">
+      <div class="tweets-list" >
+        <div class="li-container" >
         {{#each tweets}}
           {{> tweet-li}}
         {{/each}}
         </div>
-
       </div>
     </div>
   </section>
   {{> recommendation}}
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/handlebars/dist/handlebars.min.js"></script>
-<script src="/javascripts/infiniteScroll.js"></script>
+{{!-- <script src="https://cdn.jsdelivr.net/npm/handlebars/dist/handlebars.min.js"></script>
+<script src="/javascripts/infiniteScroll.js"></script> --}}
