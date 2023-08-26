@@ -20,34 +20,25 @@
             <div class="bg-holder" style="height: 170px;">
               <img id="background-image"
                 src="{{#if user.background}}{{user.background}}{{else}}https://i.imgur.com/ndXEE6d.jpg{{/if}}"
-                class="card-img-top" alt="..." class="img-fluid" id="bgImage"
+                id="background-image" class="card-img-top" alt="..." class="img-fluid" id="bgImage"
                 style="height:100%;width:100%;object-fit:cover">
             </div>
             <div class="form-row mb-3">
-              <label for="background" class="btn form-label">
+              <label for="background" class=" form-label">
                 <input class="d-none" type="file" id="background" name="background" accept="image/*" style="display: none">
-                <i class="fa-solid fa-camera"
-                  style="position: absolute; object-fit: cover; top: 30%; left: 45%;; width:20; height:20px; color: #FFFFFF;"></i>
+                <i class="btn fa-solid fa-camera fa-lg"
+                  style="position: absolute; object-fit: cover; top: 30%; left: 45%;; width:20; height:20px; color: gray;"></i>
               </label>
             </div>
 
             <div class="avatar-holder">
               <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}"
-                class="rounded-circle" alt="user_Aavtor" height="140px" width="140px"
+                id="avatar-image" class="rounded-circle" alt="user_Aavtor" height="140px" width="140px"
                 style="border: 2px solid white; position: absolute; object-fit: cover; top: 40%; left: 3%;">
             </div>
-            <label for="avatar" class="btn avator-uploader">
-              <input class="d-none" type="file" id="avatar" name="avatar" accept="image/*">
-              <i class="fas fa-camera" style="top: 57%; left: 70%; color: white;"></i>
-            </label>
-          </div>
-          <div class="form-row mb-1">
-            <label for="avatar" class="btn form-label">
-              <input class="form-control-file" type="file" id="avatar" name="avatar" accept="image/*"
-                style="display: none">
-              <i class="fa-solid fa-camera"
-                style="position: absolute; object-fit: cover; top: 57%; left: 15%;; width:20; height:20px; color:grey">
-              </i>
+            <label for="avatar" class=" form-label">
+              <input class="d-none" type="file" id="avatar" name="avatar" accept="image/*" style="display: none">
+              <i class="btn fa-solid fa-camera fa-lg" style="position: absolute; top: 71%; left: 14%; transform: translate(-50%, -50%); color: grey;"></i>
             </label>
           </div>
 

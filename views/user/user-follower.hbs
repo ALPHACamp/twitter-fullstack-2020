@@ -17,17 +17,17 @@
           class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
           style="text-decoration: none;">
           <span class="h5"
-            style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{users.name}}</span>
-          <span style="color: #657786; font-size: 13px; line-height: 15px;">{{users.Tweets.length}}推文</span>
+            style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{user.name}}</span>
+          <span style="color: #657786; font-size: 13px; line-height: 15px;">{{user.Tweets.length}}推文</span>
         </a>
       </div>
       <!--profile nav-->
       <div class="profile-head col-12">
         <nav>
           <div class="nav nav-tabs " id="nav-tab" role="tablist">
-            <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="/users/{{users.id}}/followers" role="tab" aria-controls="nav-home"
+            <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="/users/{{user.id}}/followers" role="tab" aria-controls="nav-home"
               aria-selected="true">追隨者 </a>
-            <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="/users/{{users.id}}/followings" role="tab" aria-controls="nav-profile" aria-selected="false">正在追隨</a>
+            <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="/users/{{user.id}}/followings" role="tab" aria-controls="nav-profile" aria-selected="false">正在追隨</a>
           </div>
         </nav>
       </div>
