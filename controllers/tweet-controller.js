@@ -1,15 +1,32 @@
-const { Tweet, User } = require('../models')
+const { Tweet, User, Like } = require('../models')
 
 const tweetController = {
   getTweets: (req, res, next) => {
-    return Tweet.findAll({
-      include: [User],
-      order: [['createdAt', 'DESC']],
-      raw: true,
-      nest: true
-    })
-      .then(tweets => {
-        res.render('tweets', { tweets })
+    return Promise.all([
+      Tweet.findAll({
+        include: [User],
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
+      }),
+      Like.findAll({
+        where: { UserId: req.user.id },
+        raw: true,
+        nest: true
+      })])
+      .then(([tweets, likes]) => {
+        const likedTweetsId = req.user && likes.map(lr => lr.TweetId)
+        const data = tweets.map(r => ({
+          ...r,
+          isLiked: likedTweetsId.includes(r.id),
+          countLiked: Like.findAll({
+            where: { TweetId: r.id }
+          }).then(likes => {
+            const usersLiked = likes.map(lr => lr.UserId)
+            return usersLiked.length
+          })
+        }))
+        res.render('tweets', { tweets: data })
       })
       .catch(err => next(err))
   },

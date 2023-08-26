@@ -54,7 +54,7 @@
     <nav class="navbar">
       <div class="container-fluid">
         <a class="navbar-brand" href="/logout" style="color: black;font-size:18px;">
-          <img style="margin: 0 7px 5px 0;" src="/images/icons/logout.png" width="18" height="18" href="#" alt="logout">
+          <img style="margin: 0 7px 5px 0;" src="/images/icons/logout.svg" width="18" height="18" href="#" alt="logout">
           <strong>登出</strong>
         </a>
       </div>
@@ -81,17 +81,31 @@
 
     <!-- 中間貼文 -->
     {{#each tweets}}
-    <div style="padding:15px; border-top:2px #ECECEC solid;">
+    <div style="padding:5px 15px; border-top:2px #ECECEC solid;">
       <div class="position-relative">
         <span style="font-size:18px;"><strong>{{this.User.name}} </strong></span>
         <span style="color:gray; font-size:14px;"> @{{this.User.account}}·{{relativeTimeFromNow
           this.createdAt}}</span>
-        <p>{{this.description}}</p>
+        <p style="margin: 2px; word-break: break-all;">{{this.description}}</p>
+        <div id="icon-container" style="display: flex;">
+          <img style="margin: 0 25px 0 0;" src="/images/icons/reply_outlined.svg" width="16" height="16" href="#"
+            alt="reply">
+          {{#if this.isLiked}}
+          <form id="unlike" name="unlike" action="/like/{{this.id}}?_method=DELETE" method="POST">
+            <input type="image" img src="/images/icons/like_filled.svg" width="16" height="16"
+              onClick="document.unlike.submit()">
+          </form>
+          {{else}}
+          <form id="like" name="like" action="/like/{{this.id}}" method="POST">
+            <input type="image" img src="/images/icons/like_outlined.svg" width="16" height="16"
+              onClick="document.unlike.submit()">
+          </form>
+          {{/if}}
+          <span>{{this.countLiked}}</span>
+        </div>
       </div>
     </div>
     {{/each}}
-
-
   </div>
 
   <!-- 右側推薦跟隨 -->
