@@ -19,7 +19,7 @@
 
             <div class="bg-holder" style="height: 170px;">
               <img id="background-image"
-                src="{{user.background}}"
+                src="{{#if user.background}}{{user.background}}{{else}}https://i.imgur.com/ndXEE6d.jpg{{/if}}"
                 id="background-image" class="card-img-top" alt="..." class="img-fluid" id="bgImage"
                 style="height:100%;width:100%;object-fit:cover">
             </div>
@@ -32,7 +32,7 @@
             </div>
 
             <div class="avatar-holder">
-              <img src="{{user.avatar}}"
+              <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}"
                 id="avatar-image" class="rounded-circle" alt="user_Aavtor" height="140px" width="140px"
                 style="border: 2px solid white; position: absolute; object-fit: cover; top: 40%; left: 3%;">
             </div>

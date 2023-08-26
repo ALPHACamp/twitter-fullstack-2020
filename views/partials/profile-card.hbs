@@ -69,8 +69,7 @@
     <h4 style="font-weight: 900; line-height: 18px">{{user.name}}</h4>
     <span class="text-muted" style="font-size: 0.93em; line-height: 18px;">{{user.account}}</span>
     <p class="my-2" style="font-size: 0.96em; line-height: 25px">
-      {{#if user.introduction}}{{user.introduction}}{{else}}Lorem example text example text for AC simple twitter
-      project practice{{/if}}</p>
+      {{#if user.introduction}}{{user.introduction}}{{else}}<span style="color:gray">請至編輯個人資料頁面填寫自我介紹</span>{{/if}}</p>
     <a href="/users/{{user.id}}/followings" style="text-decoration:none;">
       <span class="fw-bold text-dark">{{user.Followings.length}}</span><span
         class="text-muted text-dark me-3">個跟隨中</span>

@@ -27,7 +27,9 @@ const replyController = {
         const replies = user.Replies.map(reply => ({
           User: {
             account: reply.User.account,
-            name: reply.User.name
+            name: reply.User.name,
+            id: reply.User.id,
+            avatar: reply.User.avatar || 'https://i.imgur.com/ehh37fR.jpg'
           },
           Tweet:{
             userAvatar: reply.Tweet.User.avatar,
