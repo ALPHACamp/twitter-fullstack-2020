@@ -24,6 +24,7 @@ router.post('/signup', userController.signUp)
 // 前台登入路由
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+router.get('/logout', userController.logout)
 
 // 使用者功能路由
 router.get('/users/:id/likes', userController.getUserLikes)
@@ -33,8 +34,11 @@ router.get('/users/:id/followers', userController.getUserFollowers)
 router.get('/users/:id/followings', userController.getUserFollowings)
 router.get('/users/:id/setting', userController.getUserSetting)
 
+router.post('/tweets/:id/replies', authenticated, tweetController.postReply)
+
 // 首頁
 router.get('/tweets', authenticated, tweetController.getTweets)
+router.post('/tweets', authenticated, tweetController.postTweet)
 
 // 其他路由都不符合時，最終會經過的
 router.use('/', (req, res) => res.redirect('/tweets'))
