@@ -30,6 +30,8 @@ router.get('/users/:id/followers', userController.getUserFollowers)
 router.get('/users/:id/followings', userController.getUserFollowings)
 router.get('/users/:id/setting', userController.getUserSetting)
 
+router.post('/tweets/:id/replies', authenticated, tweetController.postReply)
+
 // 首頁
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
