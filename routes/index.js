@@ -26,6 +26,7 @@ router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 
 // 使用者功能路由
+router.get('/users/:id/replies', userController.getUserReplies)
 router.get('/users/:id/tweets', userController.getUserTweets)
 router.get('/users/:id/followers', userController.getUserFollowers)
 router.get('/users/:id/followings', userController.getUserFollowings)
