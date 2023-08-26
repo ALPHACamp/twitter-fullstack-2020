@@ -1,14 +1,11 @@
 /* test檔案 followship 是 自己一個route@@ */
 const { Followship, User } = require('../../models')
 const { FollowshipError } = require('../../helpers/errors-helpers')
-const { topFollowedUser } = require('../../helpers/recommand-followship-helper')
-const { followingUsersTweets } = require('../../helpers/tweets-helper')
-const helper = require('../../_helpers')
-const TWEET_LINK_JS = 'tweetLink.js'
+const helpers = require('../../_helpers')
 const followshipController = {
   postFollowship: async (req, res, next) => {
     try {
-      const followerId = helper.getUser(req).id // 我追蹤別人
+      const followerId = helpers.getUser(req).id // 我追蹤別人
       const followingId = parseInt(req.body.id)// 我要追蹤的人
       console.log('followerId:', followerId)
       console.log('followingId:', followingId)
@@ -39,7 +36,7 @@ const followshipController = {
   },
   deleteFollowship: async (req, res, next) => {
     try {
-      const followerId = req.user.id // 我追蹤別人
+      const followerId = helpers.getUser(req).id // 我追蹤別人
       const followingId = req.params.id // 我要追蹤的人
       const followship = await Followship.findOne({
         where: {

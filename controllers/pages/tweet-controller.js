@@ -28,7 +28,6 @@ const tweetController = {
   getReplies: async (req, res, next) => {
     try {
       const id = req.params.id
-      console.log('aaaaa', id)
       const javascripts = [TWEET_LINK_JS]
       const [recommendUser] = await Promise.all([
         topFollowedUser(req) // 給右邊的渲染用

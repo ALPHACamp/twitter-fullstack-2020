@@ -1,15 +1,21 @@
+const helpers = require('../_helpers')
 const { Op } = require('sequelize')
 const { Tweet, User, Followship, sequelize } = require('../models')
 
 const followingUsersTweets = async req => {
   return await Tweet.findAll({
     where: {
-      userId: {
-        [Op.in]: sequelize.literal(
-        `(SELECT following_id FROM Followships
-            WHERE Followships.follower_id = ${req.user.id}
-        )`)
-      }
+      [Op.or]: [
+        {
+          userId: {
+            [Op.in]: sequelize.literal(
+              `(SELECT following_id FROM Followships
+                WHERE Followships.follower_id = ${helpers.getUser(req).id}
+              )`)
+          }
+        },
+        { userId: { [Op.eq]: helpers.getUser(req).id } } // 自己的也撈出來, 因為要過測試
+      ]
     },
     include: [User],
     attributes: {
