@@ -1,4 +1,4 @@
-const { Tweet, User } = require('../models')
+const { Tweet, User, Like } = require('../models')
 const adminController = {
   signInPage: (req, res) => {
     res.render('admins/signin')
@@ -42,8 +42,21 @@ const adminController = {
   },
   getAdminUsers: async (req, res, next) => {
     try {
-      const users = await User.findAll()
-      res.render('admins/users', { route: 'users' })
+      const users = await User.findAll({
+        include: [
+          { model: Like },
+          { model: Tweet },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ],
+        raw: true,
+        nest: true
+      })
+      if (!users) throw new Error('沒有使用者可顯示!')
+      res.render('admins/users', {
+        users,
+        route: 'users'
+      })
     } catch (err) {
       next(err)
     }
