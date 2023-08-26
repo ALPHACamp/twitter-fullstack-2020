@@ -565,3 +565,36 @@
   background: var(--colors-white, #FFF);
   flex-shrink: 0;
 }
+
+.notification-content {
+  display: flex;
+  width: 394px;
+  height: 96px;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 34px 88px 34px 24px;
+}
+
+.notification-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  padding: 20px 24px 20px 314px;
+  z-index: 2;
+}
+
+#notification-success-icon {
+  background-color: #82C43C;
+}
+
+#notification-error-icon {
+  background-color: #FC5A5A;
+}
+
+#notification-warning-icon {
+  background-color: #FFC542;
+}
+
+#notification-info-icon {
+  background-color: #50B5FF;
+}
