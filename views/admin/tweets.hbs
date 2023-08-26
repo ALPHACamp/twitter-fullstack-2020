@@ -1,12 +1,12 @@
 {{!-- handlebars 頁面還要再修 --}}
 {{> admin-left-sidebar route="getTweets"}}
-<div class="main-middle border-start" id="admin-tweets-page-container">
-  <div class="col-9 mt-2">
-    <div class="card-header p-3">
-      <h4>推文清單</h4>
+<div class="main-middle" id="admin-tweets-page-container">
+  <div class="col-9  border border-top-0 mt-0">
+    <div class="card-header p-4">
+      <h4 class="m-0">推文清單</h4>
     </div>
     {{#each tweets}}
-    <div class="card col-12 hovercard d-flex flex-row">
+    <div class="card col-12 hovercard d-flex flex-row rounded-0 border-0 border-top">
       <div class="card-body col-12 p-3">
         <div class="row mb-2 p-1">
           <div class="col-1 d-flex justify-content-center align-items-start">
