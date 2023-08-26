@@ -15,11 +15,9 @@ router.use('/admin', admin)
 router.get('/tweets', tweetController.getTweets) // test
 router.get('/tweets/replies', tweetController.getTweetsReply) // test
 
-router.get('/users/userId/tweets', userController.getUser)
-// router.get('/users/:userId/tweets', userController.getUser)
-router.get('/users/userId/likes', userController.getUserLikes)
-// router.get('/users/:userId/likes', userController.getUserLikes)
-router.get('/users/userId/replies', userController.getUserReplies)
+router.get('/users/:userId/tweets', userController.getUser)
+router.get('/users/:userId/likes', userController.getUserLikes)
+router.get('/users/:userId/replies', userController.getUserReplies)
 // router.get('/users/:userId/replies', userController.getUserReplies)
 
 router.get('/signup', loginController.signUpPage)
