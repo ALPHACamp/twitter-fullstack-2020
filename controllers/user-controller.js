@@ -4,7 +4,7 @@ const helpers = require('../helpers/auth-helpers')
 const userController = {
   getEditPage: async (req, res, next) => {
     try {
-      if (req.params.id !== helpers.getUser(req)) throw new Error('沒有瀏覽權限!')
+      if (Number(req.params.id) !== helpers.getUser(req).id) throw new Error('沒有瀏覽權限!')
       const user = await User.findByPk(req.params.id, { raw: true })
       return res.render('users/edit', { user })
     } catch (err) {
@@ -13,17 +13,17 @@ const userController = {
   },
   editUser: async (req, res, next) => {
     try {
-      if (req.params.id !== helpers.getUser(req)) throw new Error('沒有編輯權限!')
+      if (Number(req.params.id) !== helpers.getUser(req).id) throw new Error('沒有編輯權限!')
       const { name, account, email, password, checkPassword } = req.body
       if (password !== checkPassword) throw new Error('密碼不相符!')
       if (name.length > 50) throw new Error('暱稱長度不可超過50個字!')
 
       const sameAccountUser = await User.findOne({ where: { account } })
       const sameEmailUser = await User.findOne({ where: { email } })
-      if (sameEmailUser && sameEmailUser.id !== req.params.id) throw new Error('該Email已被使用!')
-      if (sameAccountUser && sameAccountUser.id !== req.params.id) throw new Error('該帳號名稱已被使用!')
+      if (sameEmailUser && sameEmailUser.id !== Number(req.params.id)) throw new Error('該Email已被使用!')
+      if (sameAccountUser && sameAccountUser.id !== Number(req.params.id)) throw new Error('該帳號名稱已被使用!')
 
-      const user = await User.findByPk(req.params.id)
+      const user = await User.findByPk(Number(req.params.id))
       if (!user) throw new Error('使用者不存在!')
       const updateInfo = {}
       if (password) {
