@@ -1,9 +1,9 @@
 const { User, Tweet } = require('../../models')
 
 const adminController = {
-  getAdminHomePage: (req, res, next) => {
+  getAdminHomePage: async (req, res, next) => {
     try {
-      return res.render('admin/homepage')
+      res.redirect('/admin/tweets')
     } catch (error) {
       return next(error)
     }
