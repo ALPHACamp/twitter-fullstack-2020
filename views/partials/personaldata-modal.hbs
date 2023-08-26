@@ -1,0 +1,43 @@
+<div class="modal" id="personalData" tabindex="-1">
+    <form action="" method="POST">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="d-flex justify-content-between m-2">
+                    <div class="d-flex">
+                        <button type="button" class="btn-close ms-2 mt-2" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                        <span class="ms-4 mt-2" style="font-weight:bold">編輯個人資料頁</span>
+                    </div>
+
+                    <div class="d-flex mt-2">
+                        <button class="btn pt-1 pb-1 ps-3 pe-3" type="submit"
+                            style="background-color:#FF6600; color:white; border-radius: 30px" type="submit">儲存
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-0 mb-5 position-relative">
+                    <img src="https://live.staticflickr.com/65535/49985934496_ce401213ed_3k.jpg" class="card-img-top"
+                        alt="...">
+                    <div style="width:140px; height:140px"
+                        class="bg-primary position-absolute top-100 start-0 translate-middle-y rounded-circle ms-3 overflow-hidden border border-4 border-white ">
+                        <img src="https://cdn2.ettoday.net/images/1457/1457773.jpg"
+                            style="max-width: 100%; height: auto" class="" alt="...">
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <div class="d-flex flex-column mx-auto" style="max-width: 90%;">
+                        <input class="mb-3" type="text" name="name" value="{{user.name}}"
+                            style="border-bottom: 2px solid #657786; border-left: none; border-right: none; border-top: none; background-color:#F5F8FA; background-color:#F5F8FA"
+                            placeholder="名稱">
+                        <textarea class="mb-4" name="description" id="" cols="30" rows="6" placeholder="自我介紹" value="{{user.introduction}}"
+                            style="border-bottom: 2px solid #657786; border-left: none; border-right: none; border-top: none; background-color:#F5F8FA"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div>

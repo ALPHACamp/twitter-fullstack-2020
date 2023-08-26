@@ -1,0 +1,47 @@
+{{> admin-left-column}}
+<div class="border-start border-end" style="width: 937px;margin-left: 333px;">
+  <div class="border-bottom" style="margin-top: 24px; height: 51px;">
+    <h4 class="fw-bold" style="margin-left: 21px;">推文清單</h4>
+  </div>
+  {{#each tweets}}
+    <div class="border-bottom" style="padding: 16px 0 16px 0;">
+      <div class="d-flex">
+        <div class="">
+          {{!-- 先用網路圖片代替頭像 --}}
+          <img src={{#if user.avatar}}{{user.avatar}}{{else}}"https://i.imgur.com/bCBt6ga.jpeg"{{/if}} alt="icon" style="height: 50px; width: 50px;border-radius: 50%;margin-left: 24px;margin-right: 8px;">
+        </div>
+        <div class="w-100">
+          <div class="d-flex justify-content-between">
+            <div>
+              <span class="fw-bold">{{this.User.name}}</span>
+              <span style="margin-left: 8px;color:#6C757D;font-size: 14px;font-weight: 400;">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</span>
+            </div>
+            <form id="deleteTweet" action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+              <button style="border: none;background-color: inherit;" type="button" data-bs-toggle="modal" data-bs-target="#checkDelete">
+                <div style="height: 24px; width: 24px; padding: 4.5px;">
+                  {{> close-icon}}
+                </div>
+              </button>
+            </form>
+          </div>
+          <div>{{this.description}}</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- checkDeleteModal -->
+    <div class="modal fade" id="checkDelete" tabindex="-1" aria-labelledby="checkDeleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            確認刪除該則推文?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+            <button type="submit" class="btn btn-danger" form="deleteTweet">刪除</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/each }}
+</div>

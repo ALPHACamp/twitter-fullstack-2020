@@ -12,8 +12,8 @@ const loginController = {
 
     return Promise.all([User.findOne({ where: { email } }), User.findOne({ where: { account } })])
       .then(([sameEmailUser, sameAccountUser]) => {
-        if (sameEmailUser) throw new Error('Email already exists!')
-        if (sameAccountUser) throw new Error('Account already exists!')
+        if (sameEmailUser) throw new Error('該Email已被使用!')
+        if (sameAccountUser) throw new Error('該帳號名稱已被使用!')
         return bcrypt.hash(req.body.password, 10)
       })
       .then(hash => User.create({
