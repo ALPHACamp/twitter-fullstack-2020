@@ -28,12 +28,12 @@ router.get("/tweets", authenticated, tweetsController.getTweets);
 router.post("/tweets", authenticated, tweetsController.postTweet);
 router.get("/tweets/:id/replies", authenticated, tweetsController.getTweet);
 router.post(
-  "/users/:followingUserId/follow",
+  "/followships",
   authenticated,
   userController.postFollow
 );
 router.delete(
-  "/users/:followingUserId/follow",
+  "/followships/:followingUserId",
   authenticated,
   userController.deleteFollow
 );
@@ -49,7 +49,7 @@ router.post(
   tweetsController.postReply
 );
 router.get(
-  "/tweets/more",
+  "/tweets/more/:offset",
   tweetsController.getMoreTweets
 );
 router.get("/tweets", authenticated, tweetsController.getTweets);
@@ -63,6 +63,10 @@ router.get("/users/:id/followers", authenticated, userController.getFollower);
 router.get("/users/:id/followings", authenticated, userController.getFollowing);
 router.get('/api/users/:id', authenticated, apiController.getUser)
 router.post('/api/users/:id', upload.fields([{ name: 'background', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), authenticated, apiController.putUser)
+router.post('/api/image', upload.fields([
+  { name: 'background' },
+  { name: 'avatar' }
+]), authenticated, apiController.uploadImage)
 router.get("/settings", authenticated, userController.getSetting); // 個人資料設定
 router.put("/settings", authenticated, userController.putSetting); // 個人資料編輯
 router.use('/', (req, res) => res.redirect('/tweets'));

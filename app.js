@@ -31,12 +31,14 @@ app.use(flash());
 app.use("/upload", express.static(path.join(__dirname, "upload"))); //上傳圖片
 app.use("/", express.static("public"));
 app.use((req, res, next) => {
-  res.locals.currentUser = req.user
+  res.locals.currentUser = req.user;
   res.locals.success_messages = req.flash("success_messages");
   res.locals.error_messages = req.flash("error_messages");
-  res.locals.account_messages = req.flash("account_messages")
+  res.locals.warning_messages = req.flash("warning_messages");
+  res.locals.info_messages = req.flash("info_messages");
+  res.locals.account_messages = req.flash("account_messages");
   res.locals.user = helpers.getUser(req);
-  res.locals.paramsUser = req.params.user
+  res.locals.paramsUser = req.params.user;
   next();
 });
 

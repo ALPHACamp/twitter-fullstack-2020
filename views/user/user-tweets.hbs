@@ -4,9 +4,15 @@
     {{>profile-card route='user-tweets'}}
     <div class="tweets-list">
       <div class="li-container">
+        {{#if tweets}}
         {{#each tweets}}
         {{> tweet-li}}
         {{/each}}
+        {{else}}
+          <div class="tweet mt-3 mb-3 d-flex justify-content-center" style="border-bottom:1px solid #E6ECF0; min-height:153px">
+            <span style="color: gray;">尚無推文</span>
+          </div>
+        {{/if}}
       </div>
     </div>
   </section>

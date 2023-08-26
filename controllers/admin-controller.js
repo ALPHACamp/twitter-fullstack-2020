@@ -38,6 +38,7 @@ const adminController = {
           console.log('tweet不存在')
           res.redirect('back')
         }
+        req.flash("success_messages", "刪除成功！");
         return tweet.destroy()
       })
       .then(() => res.redirect('/admin/tweets'))

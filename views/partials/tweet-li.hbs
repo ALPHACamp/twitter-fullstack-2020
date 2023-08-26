@@ -17,7 +17,7 @@
       />
     </a>
   </div>
-  <div class="content ms-2" style="max-width:528px;min-width:528px">
+  <div class="content ms-2" style="width:528px">
     <div class="account d-dlex flex-row mt-2">
       <a class="user-text-link" href="/users/{{this.userId}}/tweets">
         <p style="display: inline; font-weight:700">{{this.userAccount}}</p>
@@ -29,10 +29,10 @@
     <div class="text mt-2">
       <a
         href="/tweets/{{this.tweetId}}/replies"
-        style="text-decoration: none; color:#000000"
+        style="display: inline; text-decoration: none; color:#000000;word-wrap:break-word;"
       >
-        {{this.text}}</a>
-
+        <p>{{this.text}}</p>
+      </a>
     </div>
     <div
       class="reaction d-flex justify-content-between mt-2"
@@ -54,10 +54,7 @@
       </div>
       <div class="likes d-flex align-items-center">
         {{#if this.isLiked}}
-          <form
-            action="/tweets/{{this.tweetId}}/unlike"
-            method="post"
-          >
+          <form action="/tweets/{{this.tweetId}}/unlike" method="post">
             <button class="like-btn" type="submit">
               <img
                 src="/images/icon-like-active.svg"

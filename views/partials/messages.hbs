@@ -1,0 +1,78 @@
+<section
+  class="alert-wrapper d-flex flex-column jusfigy-content-center align-items-center"
+  style="z-index:1; position:fixed; bottom:10px; right:10px;"
+>
+
+  {{#if success_messages}}
+    <div
+      class="alert block d-flex justify-content-around align-items-center position-relative"
+      style="width:394px; height:96px; box-shadow: 0 0 5px gray;background:white; border-radius:15px"
+      role="alert"
+    >
+      <p
+        class="m-0"
+        style="font-weight:700; font-size:20px"
+      >{{success_messages}}</p>
+      <img src="/images/alert-success.svg" alt="" />
+      <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+  {{/if}}
+
+  {{#if error_messages}}
+    <div
+      class="alert block d-flex justify-content-around align-items-center position-relative"
+      style="width:394px; height:96px; box-shadow: 0 0 5px gray;background:white; border-radius:15px"
+      role="alert"
+    >
+      <p
+        class="m-0"
+        style="font-weight:700; font-size:20px"
+      >{{error_messages}}</p>
+      <img src="/images/alert-success.svg" alt="" />
+      <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {{/if}}
+
+  {{#if warning_messages}}
+    <div
+      class="alert block d-flex justify-content-around align-items-center position-relative"
+      style="width:394px; height:96px; box-shadow: 0 0 5px gray;background:white; border-radius:15px"
+      role="alert"
+    >
+      <p
+        class="m-0"
+        style="font-weight:700; font-size:20px"
+      >{{warning_messages}}</p>
+      <img src="/images/alert-success.svg" alt="" />
+      <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {{/if}}
+
+  {{#if info_messages}}
+        <div
+      class="alert block d-flex justify-content-around align-items-center position-relative"
+      style="width:394px; height:96px; box-shadow: 0 0 5px gray;background:white; border-radius:15px"
+      role="alert"
+    >
+      <p
+        class="m-0"
+        style="font-weight:700; font-size:20px"
+      >{{info_messages}}</p>
+      <img src="/images/alert-success.svg" alt="" />
+      <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {{/if}}
+
+  {{#if errors}}
+    {{#each errors}}
+    <div
+      class="block d-flex justify-content-around align-items-center"
+      style="width:394px; height:96px; box-shadow: 0 0 5px gray;background:white; border-radius:15px"
+    >
+      <p class="m-0" style="font-weight:700; font-size:20px">{{this}}</p>
+      <img src="/images/alert-error.svg" alt="" />
+    </div>
+    {{/each}}
+  {{/if}}
+</section>
