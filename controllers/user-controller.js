@@ -60,6 +60,9 @@ const userController = {
   },
   getUserFollowers: (req, res, next) => {
     return res.render('followers')
+  },
+  getUserTweets: (req, res, next) => {
+    res.render('user-tweets')
   }
 }
 

@@ -4,8 +4,8 @@ const router = express.Router()
 const passport = require('../config/passport')
 const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
-// 使用Modules
 
+// 使用Modules
 
 const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated, authenticatedAdmin } = require('../middleware/auth')
@@ -26,6 +26,7 @@ router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 
 // 使用者功能路由
+router.get('/users/:id/tweets', userController.getUserTweets)
 router.get('/users/:id/followers', userController.getUserFollowers)
 router.get('/users/:id/followings', userController.getUserFollowings)
 router.get('/users/:id/setting', userController.getUserSetting)
