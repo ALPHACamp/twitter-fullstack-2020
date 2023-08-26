@@ -17,7 +17,7 @@
                 <label for="account" class="form-label bg-light">帳號</label>
               </div>
               <input type="text" class="form-control border-0 border-bottom border-primary shadow-none bg-light"
-                id="account" name="account" placeholder="請輸入帳號" required>
+                id="account" name="account" placeholder="請輸入帳號" value='{{account}}' required>
             </div>
             {{!-- name --}}
             <div class="form-group mb-4">
@@ -25,7 +25,7 @@
                 <label for="name" class="form-label bg-light">名稱</label>
               </div>
               <input type="text" class="form-control border-0 border-bottom border-primary shadow-none bg-light" id="name"
-                name="name" placeholder="請輸入使用者名稱" maxlength="50" required>
+                name="name" placeholder="請輸入使用者名稱" value='{{name}}' required>
             </div>
             {{!-- email --}}
             <div class="form-group mb-4">
@@ -33,7 +33,7 @@
                 <label for="email" class="form-label bg-light">Email</label>
               </div>
               <input type="email" class="form-control border-0 border-bottom border-primary shadow-none bg-light" id="email"
-                name="email" placeholder="請輸入Email" required>
+                name="email" placeholder="請輸入Email" value='{{email}}' required>
             </div>
             {{!-- password --}}
             <div class="form-group mb-4">
@@ -41,7 +41,7 @@
                 <label for="password" class="form-label bg-light">密碼</label>
               </div>
               <input type="password" class="form-control border-0 border-bottom border-primary shadow-none bg-light"
-                id="password" name="password" placeholder="請設定密碼" required>
+                id="password" name="password" placeholder="請設定密碼" value='{{password}}' required>
             </div>
             {{!-- check password --}}
             <div class="form-group mb-4">
@@ -49,7 +49,7 @@
                 <label for="checkPassword" class="form-label bg-light">密碼確認</label>
               </div>
               <input type="password" class="form-control border-0 border-bottom border-primary shadow-none bg-light" id="checkPassword"
-                name="checkPassword" placeholder="請再次輸入密碼" required>
+                name="checkPassword" placeholder="請再次輸入密碼" value='{{checkPassword}}' required>
             </div>
             {{!-- submit button --}}
             <div class="text-center">
