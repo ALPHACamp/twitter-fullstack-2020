@@ -53,14 +53,16 @@ const adminController = {
         nest: true
       })
       if (!users) throw new Error('沒有使用者可顯示!')
-      const userInfos = users.filter(user => user.toJSON().role === 'user').map(user => {
-        const userInfo = user.toJSON()
-        userInfo.tweetCount = userInfo.Tweets.length
-        userInfo.likeCount = userInfo.Likes.length
-        userInfo.followerCount = userInfo.Followers.length
-        userInfo.followingCount = userInfo.Followings.length
-        return userInfo
-      })
+      const userInfos = users.filter(user => user.toJSON().role === 'user')
+        .map(user => {
+          const userInfo = user.toJSON()
+          userInfo.tweetCount = userInfo.Tweets.length
+          userInfo.likeCount = userInfo.Likes.length
+          userInfo.followerCount = userInfo.Followers.length
+          userInfo.followingCount = userInfo.Followings.length
+          return userInfo
+        })
+        .sort((a, b) => b.tweetCount - a.tweetCount)
       res.render('admins/users', {
         userInfos,
         route: 'users'
