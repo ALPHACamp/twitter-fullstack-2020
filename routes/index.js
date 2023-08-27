@@ -13,8 +13,18 @@ const loginController = require('../controllers/login-controller')
 router.use('/api', api)
 router.use('/admin', admin)
 
-router.get('/tweets', tweetController.getTweets) // test
-router.get('/tweets/replies', tweetController.getTweetsReply) // test
+router.get('/signup', loginController.signUpPage)
+router.post('/signup', loginController.signUp)
+router.get('/signin', loginController.signInPage)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), loginController.signIn)
+router.get('/logout', loginController.logout)
+
+router.get('/tweets/:id/replies', authenticated, replyController.getTweetReplies)
+router.post('/tweets/:tweetId/replies', authenticated, replyController.postReply)
+router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
+router.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
+router.get('/tweets', authenticated, tweetController.getTweets)
+router.post('/tweets', authenticated, tweetController.postTweets)
 
 router.get('/users/:userId/tweets', authenticated, userController.getUser)
 router.get('/users/:userId/likes', authenticated, userController.getUserLikes)
@@ -22,12 +32,6 @@ router.get('/users/:userId/replies', authenticated, userController.getUserReplie
 
 router.post('/following/:userId', authenticated, userController.addFollowing)
 router.delete('/following/:userId', authenticated, userController.removeFollowing)
-
-router.get('/signup', loginController.signUpPage)
-router.post('/signup', loginController.signUp)
-router.get('/signin', loginController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), authenticated, loginController.signIn)
-router.get('/logout', loginController.logout)
 
 router.get('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)

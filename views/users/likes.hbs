@@ -3,10 +3,10 @@
 <div style="margin-left:198px; padding: 0px 10px; width:641px; " class="border border-light">
     <div class="mx-auto border border-light">
         {{>userpage-info}}
-        {{>userpage-tabs route='tweets'}}
+        {{>userpage-tabs route='likes'}}
     </div>
     {{!-- 留言 --}}
-    {{#each user.Tweets}}
+    {{#each user.Likes}}
     <div class="mx-auto p-2" style="border: 1px solid #E6ECF0">
         <div class="card-body">
             <div class="d-flex flex-row">
@@ -15,14 +15,14 @@
                         src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt=""
                         width="40px" height="40px" style="background-color:#FF6600; border-radius: 30px">
                 </a>
-                <p class="inline ms-1 mt-1">{{../user.name}}</p>
-                <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{../user.account}}</span>
+                <p class="inline ms-1 mt-1">{{this.Tweet.User.name}}</p>
+                <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{this.Tweet.User.account}}</span>
                 <span class="ms-1 mt-2" style="font-size: 0.2em;">• {{relativeTimeFromNow this.createdAt}}</span>
             </div>
 
             <a href="/tweets/replies" style="text-decoration: none; color:#171725">
                 <div class="col-10 mx-auto">
-                    <p>{{this.description}}</p>
+                    <p>{{this.Tweet.description}}</p>
                 </div>
             </a>
 
@@ -34,14 +34,14 @@
                         data-bs-toggle="modal" data-bs-target="#ModalReply" data-id="{{this.Replies.id}}">
                         <img src="/icon/Reply.png" alt="" width="20px" height="20px" />
                     </button>
-                    <span class="m-1" style="font-size: 0.2rem;">{{this.Replies.length}}</span>
+                    <span class="m-1" style="font-size: 0.2rem;">{{this.Tweet.Replies.length}}</span>
                 </div>
 
                 <div>
                     <a href="#" style="text-decoration: none;">
                         <img class="" src="/icon/icon_like.png" alt="" width="20px" height="20px">
                     </a>
-                    <span class="m-1" style="font-size: 0.2rem;">{{this.Likes.length}}</span>
+                    <span class="m-1" style="font-size: 0.2rem;">{{this.Tweet.Likes.length}}</span>
                 </div>
 
             </div>
@@ -138,5 +138,6 @@
         </div>
     </div>
 </div>
+
 
 {{>personaldata-modal}}
