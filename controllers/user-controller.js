@@ -65,6 +65,15 @@ const userController = {
     req.flash('success_messages', '成功登出！')
     req.logout()
     res.redirect('/signin')
+  },
+  getUserTweets: (req, res, next) => {
+    res.render('user-tweets')
+  },
+  getUserReplies: (req, res, next) => {
+    res.render('user-replies')
+  },
+  getUserLikes: (req, res, next) => {
+    res.render('user-likes')
   }
 }
 

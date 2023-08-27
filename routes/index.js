@@ -4,8 +4,8 @@ const router = express.Router()
 const passport = require('../config/passport')
 const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
-// 使用Modules
 
+// 使用Modules
 
 const { generalErrorHandler } = require('../middleware/error-handler')
 const { authenticated, authenticatedAdmin } = require('../middleware/auth')
@@ -27,12 +27,18 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/logout', userController.logout)
 
 // 使用者功能路由
+router.get('/users/:id/likes', userController.getUserLikes)
+router.get('/users/:id/replies', userController.getUserReplies)
+router.get('/users/:id/tweets', userController.getUserTweets)
 router.get('/users/:id/followers', userController.getUserFollowers)
 router.get('/users/:id/followings', userController.getUserFollowings)
 router.get('/users/:id/setting', userController.getUserSetting)
 
+router.post('/tweets/:id/replies', authenticated, tweetController.postReply)
+
 // 首頁
 router.get('/tweets', authenticated, tweetController.getTweets)
+router.post('/tweets', authenticated, tweetController.postTweet)
 
 // 其他路由都不符合時，最終會經過的
 router.use('/', (req, res) => res.redirect('/tweets'))
