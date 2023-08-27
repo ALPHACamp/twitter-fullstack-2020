@@ -30,17 +30,27 @@ class LikeError extends Error {
     this.name = 'likeError'
   }
 }
+
 class TweetError extends Error {
   constructor (message) {
     super(message)
     this.name = 'tweetError'
   }
 }
+
+class UserError extends Error {
+  constructor (message) {
+    super(message)
+    this.name = 'userError'
+  }
+}
+
 module.exports = {
   JWTTokenError,
   LocalStrategyError,
   JWTStrategyError,
   FollowshipError,
   LikeError,
-  TweetError
+  TweetError,
+  UserError
 }
