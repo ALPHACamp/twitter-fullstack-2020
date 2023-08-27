@@ -67,7 +67,7 @@ const userJWTAuth = (req, res, next) => {
 const JWT_DURATION_HOURS = 24
 const sendToken = (req, res, next) => {
   try {
-    const userData = req.user.toJSON() // 關閉session後直接從localstrategy得到user，是直接從sequelize中撈出來的
+    const userData = helpers.getUser(req).toJSON() // 關閉session後直接從localstrategy得到user，是直接從sequelize中撈出來的
     delete userData.password
     const token = jwt.sign(userData, process.env.JWT_SECRET, { algorithm: 'HS256', expiresIn: `${JWT_DURATION_HOURS}h` }) // 簽發jwt
     res.cookie('jwtToken', token, {
