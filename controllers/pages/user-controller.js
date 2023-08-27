@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 
-const { User, Tweet, Reply, Like } = require('../../models')
+const { User, Tweet, Reply, Like, sequelize } = require('../../models')
 const helpers = require('../../_helpers')
 const recommendUserHelper = require('../../helpers/recommand-followship-helper')
 const userHelper = require('../../helpers/user-helper')
@@ -144,30 +144,32 @@ const userController = {
   getUserTweets: async (req, res, next) => {
     try {
       const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
+
       const user = await userHelper.getUserInfo(req)
-      if (!user) throw new Error("User didn't exist!")
+      if (!user) throw new errorHandler.UserError("User didn't exist!")
 
       const tweets = await Tweet.findAll({
         include: [
-          User,
-          Reply,
-          Like
+          User
         ],
         where: { userId: req.params.id },
-        order: [['createdAt', 'DESC']]
+        attributes: {
+          include: [
+            [sequelize.literal('( SELECT COUNT(*) FROM Replies WHERE Replies.tweet_id = Tweet.id)'), 'countReply'],
+            [sequelize.literal('( SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id)'), 'countLike']
+          ]
+        },
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
       })
-
-      const result = tweets.map(tweet => ({
-        ...tweet.toJSON(),
-        countReply: tweet.Replies.length,
-        countLike: tweet.Likes.length
-      }))
 
       const recommendUser = await recommendUserHelper.topFollowedUser(req)
 
       return res.render('user/tweets', {
         route: 'user',
-        tweets: result,
+        userTab: 'tweets',
+        tweets,
         user,
         recommendUser,
         javascripts
