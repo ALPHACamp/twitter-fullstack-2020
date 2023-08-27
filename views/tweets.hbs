@@ -28,6 +28,12 @@
         {{#each tweets}}
           {{> tweet-li}}
         {{/each}}
+
+        {{#if moreTweets}}
+          {{#each moreTweets}}
+            {{> tweet-li}}
+          {{/each}}
+        {{/if}}
         </div>
       </div>
     </div>
@@ -35,5 +41,4 @@
   {{> recommendation}}
 </main>
 
-{{!-- <script src="https://cdn.jsdelivr.net/npm/handlebars/dist/handlebars.min.js"></script>
-<script src="/javascripts/infiniteScroll.js"></script> --}}
+<script src="/javascripts/infiniteScroll.js"></script>

@@ -8,37 +8,39 @@ const tweetsController = {
       const recommend = await getEightRandomUsers(req);
       const currentUserId = helpers.getUser(req).id;
       const currentUser = helpers.getUser(req);
-      const tweets = await Tweet.findAll({
-        include: [User, Reply, Like],
-        order: [["updatedAt", "DESC"]],
-        limit: 15,
-      });
+        const tweets = await Tweet.findAll({
+          include: [User, Reply, Like],
+          order: [["updatedAt", "DESC"]],
+          limit: 15,
+        });
 
-      const showTweets = tweets.map((tweet) => {
-        const replies = tweet.Replies.length;
-        const likes = tweet.Likes.length;
-        const isLiked = tweet.Likes.some((l) => l.UserId === currentUserId);
-        const userAvatar = tweet.User.avatar;
-        return {
-          tweetId: tweet.id,
-          userId: tweet.User.id,
-          userAccount: tweet.User.account,
-          userName: tweet.User.name,
-          userAvatar: tweet.User.avatar,
-          text: tweet.description,
-          createdAt: tweet.createdAt,
-          replies,
-          likes,
-          isLiked,
-          userAvatar,
-          currentUser
-        };
-      });
-      return res.render("tweets", {
-        tweets: showTweets,
-        recommend,
-        currentUser,
-      });
+        const showTweets = tweets.map((tweet) => {
+          const replies = tweet.Replies.length;
+          const likes = tweet.Likes.length;
+          const isLiked = tweet.Likes.some((l) => l.UserId === currentUserId);
+          const userAvatar = tweet.User.avatar;
+          return {
+            tweetId: tweet.id,
+            userId: tweet.User.id,
+            userAccount: tweet.User.account,
+            userName: tweet.User.name,
+            userAvatar: tweet.User.avatar,
+            text: tweet.description,
+            createdAt: tweet.createdAt,
+            replies,
+            likes,
+            isLiked,
+            userAvatar,
+            currentUser,
+          };
+        });
+        return res.render("tweets", {
+          tweets: showTweets,
+          recommend,
+          currentUser,
+        })
+
+      
     } catch (err) {
       next(err);
     }
@@ -164,7 +166,11 @@ const tweetsController = {
           userAvatar,
         };
       });
-      res.json(showTweets);
+      res.render("tweets", {
+        tweets: showTweets,
+        recommend,
+        currentUser,
+      });
     } catch (err) {
       console.log(err);
     }
