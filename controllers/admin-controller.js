@@ -1,4 +1,5 @@
 const { Tweet, User, Like } = require('../models')
+
 const adminController = {
   signInPage: (req, res) => {
     res.render('admins/signin')
@@ -44,17 +45,24 @@ const adminController = {
     try {
       const users = await User.findAll({
         include: [
-          { model: Like },
-          { model: Tweet },
+          Like,
+          Tweet,
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ],
-        raw: true,
         nest: true
       })
       if (!users) throw new Error('沒有使用者可顯示!')
+      const userInfos = users.filter(user => user.toJSON().role === 'user').map(user => {
+        const userInfo = user.toJSON()
+        userInfo.tweetCount = userInfo.Tweets.length
+        userInfo.likeCount = userInfo.Likes.length
+        userInfo.followerCount = userInfo.Followers.length
+        userInfo.followingCount = userInfo.Followings.length
+        return userInfo
+      })
       res.render('admins/users', {
-        users,
+        userInfos,
         route: 'users'
       })
     } catch (err) {

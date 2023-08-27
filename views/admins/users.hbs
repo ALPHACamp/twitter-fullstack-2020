@@ -4,7 +4,7 @@
     <h4 class="fw-bold" style="margin-left: 21px;">使用者列表</h4>
   </div>
   <div class="d-flex flex-wrap">
-    {{#each users}}
+    {{#each userInfos}}
       <div class="card border-light bg-light" style="width:210px; height:314px; margin: 16px 0 0 16px;">
         <div class="p-0 position-relative">
           <div style="width:210px; height:140px" class="overflow-hidden">
@@ -25,27 +25,27 @@
             </small>
           </div>
     
-          <div class="d-flex justify-content-center">
-            <div style="width: 61px; height: 24px;; margin-right: 16px;"> 
-              <span style="width: 24px; height: 24px; margin-right: 8px;">
+          <div class="d-flex justify-content-center" style="height: 24px;">
+            <div style="margin-right: 8px;"> 
+              <span style="width: 24px; height: 24px">
                 {{>post-icon}}
               </span>
               <span>
-                {{this.tweetCount}}30
+                {{this.tweetCount}}
               </span>
             </div>
-            <div style="width: 62px; height: 26px">
-              <span style="width: 24px; height: 24px; margin-right: 8px;">
+            <div>
+              <span style="width: 24px; height: 24px;">
                 {{>like-icon w=24 h=24}}
               </span>
               <span>
-                {{this.likeCount}}10
+                {{this.likeCount}}
               </span>
             </div>
           </div>
           <div style="margin: 8px auto 24px auto;">
-            <small style="margin-right: 8px;">{{this.followingCount}}20 個<span class="text-secondary">跟隨中</span></small>
-            <small class="mx-1">{{this.followerCount}}20 個<span class="text-secondary">跟隨者</span></small>
+            <small style="margin-right: 8px;">{{this.followingCount}} 個<span class="text-secondary">跟隨中</span></small>
+            <small class="mx-1">{{this.followerCount}} 個<span class="text-secondary">跟隨者</span></small>
           </div>
         </div>
       </div>
