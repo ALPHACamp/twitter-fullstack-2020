@@ -6,6 +6,7 @@ const adminController = require('../../../controllers/pages/admin-controller')
 
 const router = express.Router()
 
+router.get('/users', adminJWTAuth, adminController.getUsers)
 router.get('/tweets', adminJWTAuth, adminController.getTweets)
 router.get('/signin', adminJWTAuth, userController.getAdminSignInPage)
 router.get('/logout', userController.adminLogout)
