@@ -4,7 +4,7 @@ const errorHandler = require('../../middlewares/error-handler')
 const helper = require('../../_helpers')
 const admin = require('./modules/admin')
 const tweet = require('./modules/tweet')
-const { userLocalAuth, userJWTAuth, sendToken, isAuthenticated } = require('../../middlewares/auth')
+const { userJWTAuth, sendToken, isAuthenticated } = require('../../middlewares/auth')
 const userController = require('../../controllers/pages/user-controller')
 const followshipController = require('../../controllers/pages/followship-controller')
 
@@ -19,10 +19,10 @@ router.use('/admin', admin)
 
 router.use('/tweets', userJWTAuth, tweet)
 
-router.get('/signin', isAuthenticated, userController.getUserSignInPage)
+router.get('/signin', userJWTAuth, userController.getUserSignInPage)
 router.get('/signup', userController.getUserSignUpPage)
 router.get('/logout', userController.userLogout)
-router.post('/signin', userLocalAuth, sendToken, userController.userSignIn)
+router.post('/signin', userJWTAuth, sendToken, userController.userSignIn)
 router.post('/signup', userController.userSignUp)
 
 /* 測試檔把followship放在最外面 */
