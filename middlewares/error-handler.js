@@ -19,6 +19,9 @@ const errorHandler = (err, req, res, next) => {
     case errors.LikeError:
       errorMessage = `Like Error: ${err.message}`
       break
+    case errors.TweetError:
+      errorMessage = `Tweet Error: ${err.message}`
+      break
     default:
       errorMessage = `Non Error Class Error: ${err.message}`
       break

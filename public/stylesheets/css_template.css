@@ -137,6 +137,15 @@
 }
 
 /*Tweet-Component*/
+
+/*讓display area可以滾動*/
+.tweet-display{
+    overflow: hidden; /* 啟用捲軸 */
+    margin-bottom: 4vh;
+}
+.main-tweets-area.tweet-display{
+  height: 979px; /* 設定容器的固定高度 */
+}
 .tweet-card-link {
   display: block;
   text-decoration: none;
@@ -148,12 +157,13 @@
   height: 26px;
 }
 
-.tweet-user-icon {
+.tweet-user-icon,
+.recommend-user-icon {
   height: 50px;
   width: 50px;
 }
 
-.tweet-user-action {
+.tweet-user-action{
   width: 120px;
 }
 
@@ -350,9 +360,13 @@
 }
 
 #tweet-model .modal-form .tweet-reply-warning{
+  padding: 0;
+  margin: 0;
   font-weight: 500;
+  font-size: 15px;
+  line-height: 15px;
   position: absolute;
-  bottom: 16px;
+  bottom: 27px;
   right: 101px;
 }
 

@@ -1,6 +1,7 @@
 const helpers = require('../_helpers')
+const errorHandler = require('./errors-helpers')
 const { Op } = require('sequelize')
-const { Tweet, User, Followship, sequelize } = require('../models')
+const { Tweet, User, sequelize } = require('../models')
 
 const followingUsersTweets = async req => {
   return await Tweet.findAll({
@@ -31,4 +32,17 @@ const followingUsersTweets = async req => {
     nest: true
   })
 }
-module.exports = { followingUsersTweets }
+
+const isValidWordsLength = (text, len, next) => {
+  try {
+    if (!text || !text.length) {
+      throw new errorHandler.TweetError('內容不可空白')
+    }
+    if (text.length > len) {
+      throw new errorHandler.TweetError(`字數不可超過${len}字`)
+    }
+  } catch (error) {
+    return next(error)
+  }
+}
+module.exports = { followingUsersTweets, isValidWordsLength }
