@@ -1,6 +1,8 @@
 {{!-- 首頁表頭 --}}
 <div class="partial-title p-4">
-  <div class="d-flex gap-3 p-0 m-0 h-26px justify-content-start align-items-center">
+  <div
+    class="d-flex gap-3 p-0 m-0 h-26px justify-content-start align-items-center"
+  >
     <div class="d-flex flex-column m-0 p-0 gap-0">
       <p class="fw-bold m-0 p-0 align-bottom fs-4 ln-height-26px">首頁</p>
     </div>
@@ -8,11 +10,18 @@
 </div>
 
 {{!--最上面的有什麼新鮮事?欄位--}}
-<div class="post-tweet-area link-unstyled m-0 pb-0 pt-3 px-4" data-bs-toggle="modal" data-bs-target="#tweet-model">
-  <div class="m-0 gap-2 d-flex align-items-center ">
-    <div class="tweet-user-icon flex-shrink-0  p-0">
-      <a href="#" class="overflow-hidden  rounded-circle link-unstyled  child-img-center w-100 h-100 p-0">
-        <img src="{{user.avatar}}" alt="" class="w-100 h-100">
+<div
+  class="post-tweet-area link-unstyled m-0 pb-0 pt-3 px-4"
+  data-bs-toggle="modal"
+  data-bs-target="#tweet-model"
+>
+  <div class="m-0 gap-2 d-flex align-items-center">
+    <div class="tweet-user-icon flex-shrink-0 p-0">
+      <a
+        href="#"
+        class="overflow-hidden rounded-circle link-unstyled child-img-center w-100 h-100 p-0"
+      >
+        <img src="{{ user.avatar }}" alt="" class="w-100 h-100" />
       </a>
     </div>
     <p class="p-0 m-0 text-secondary fw-bold">有什麼新鮮事？</p>
