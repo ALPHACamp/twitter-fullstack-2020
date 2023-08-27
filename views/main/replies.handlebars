@@ -1,1 +1,105 @@
-{{id}}
+<div class="partial-title p-4">
+  <div class="d-flex gap-3 p-0 m-0 h-26px justify-content-start align-items-center">
+    <a href="/tweets" class="p-1 m-0 link-unstyled">
+      <img src="/images/icons/back_outlined.svg" class="p-0 m-0" alt="">
+    </a>
+    <div class="d-flex flex-column m-0 p-0 gap-0">
+      <p class="fw-bold m-0 p-0 align-bottom fs-4 ln-height-26px">推文</p>
+    </div>
+  </div>
+</div>
+<div
+  class="tweet-reply card shadow-none  pt-0 pb-3 px-4 border-1px border-bottom-1 border-top-0 border-start-0 border-end-0">
+  <div class="card-body m-0 p-0 d-flex flex-column gap-3">
+    <div class="tweet-reply-content d-flex flex-column gap-2">
+      <div class="tweet-reply-user d-flex gap-2">
+        <div class="tweet-user-icon flex-shrink-0  p-0">
+          <a href="#" class="overflow-hidden  rounded-circle link-unstyled  child-img-center w-100 h-100 p-0">
+            <img src="{{tweetWithReplies.User.avatar}}" alt="" class="w-100 h-100">
+          </a>
+        </div>
+        <div class="tweet-user-vertical d-flex flex-column">
+          <a href="#" class="d-flex flex-column link-unstyled">
+            <p class="fw-bold mb-0">{{tweetWithReplies.User.name}}</p>
+            <p class="font-size-sm mt-0">@{{tweetWithReplies.User.account}}</p>
+          </a>
+        </div>
+      </div>
+      <p class="m-0 fs-4 text-wrap text-break">
+        {{tweetWithReplies.description}}
+      </p>
+      <p class="font-size-sm text-secondary p-0 m-0">
+        {{detailTime tweetWithReplies.createdAt}}
+      </p>
+      <div class="bottom-border"></div>
+    </div>
+    <div class="tweet-reply-number-follower d-flex gap-4 link-unstyled align-items-center">
+      <p class="m-0"><span class="fw-bold">{{tweetWithReplies.replies}} </span><span class="text-secondary">回覆</span>
+      </p>
+      <p class="m-0"><span class="fw-bold">{{tweetWithReplies.likes}} </span><span class="text-secondary">喜歡次數</span>
+      </p>
+    </div>
+    <div class="bottom-border"></div>
+
+    <div class="tweet-reply-icons d-flex justify-content-between">
+
+      <button type="button" class="btn btn-outline-light d-flex align-items-center gap-2 link-unstyled p-0 m-0"
+        data-bs-toggle="modal" data-bs-target="#reply-model">
+        <img src="/images/icons/icon_reply_outlined.svg" alt="" class="img-fluid center tweet-action-icon">
+      </button>
+      {{#if tweetWithReplies.isLiked}}
+      <form action="/tweets/{{tweetWithReplies.id}}/unlike" method="post">
+        <button href="#" class="btn border-0 btn-outline-light p-0 m-0 d-flex align-items-center gap-2 link-unstyled">
+          <img src="/images/icons/icon_like_filled.svg" alt=""
+            class="filter-red-color img-fluid center tweet-action-icon">
+        </button>
+      </form>
+      {{else}}
+      <form action="/tweets/{{tweetWithReplies.id}}/like" method="post">
+        <button href="#" class="btn border-0 btn-outline-light p-0 m-0 d-flex align-items-center gap-2 link-unstyled">
+          <img src="/images/icons/icon_like_outlined.svg" alt="" class="img-fluid center tweet-action-icon">
+        </button>
+      </form>
+      {{/if}}
+    </div>
+  </div>
+</div>
+{{!-- 分隔線 --}}
+<div class="division"></div>
+{{!-- 分隔線 --}}
+<div class="container main-replies-area d-flex flex-column gap-3 p-0  m-0  tweet-display">
+  <div class="scrollbar-hidden p-0 pt-3 m-0">
+    {{#each tweetWithReplies.Replies}}
+    <div
+      class="tweet-card card  shadow-none  py-0 px-4 m-0 rounded-0  border-1px border-bottom-1 border-top-0 border-start-0 border-end-0">
+      <div class="card-body m-0 p-0 pb-3 d-flex gap-2">
+        <div class="tweet-user-icon flex-shrink-0  p-0">
+          <a href="/users/{{this.User.id}}/tweets"
+            class="overflow-hidden  rounded-circle link-unstyled  child-img-center w-100 h-100 p-0">
+            <img src="{{this.User.avatar}}" alt="" class="w-100 h-100">
+          </a>
+        </div>
+        <div class="tweet-card-content d-flex flex-column gap-2">
+
+          <div class="tweet-user-horizontal">
+            <a href="#" class=" d-flex gap-2 link-unstyled align-items-center">
+              <p class="fw-bold">{{this.User.name}}</p>
+              <p class="font-size-sm text-secondary">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</p>
+            </a>
+          </div>
+
+          <div class="tweet-user-replied">
+            <a href="#" class=" d-flex gap-2 link-unstyled align-items-center">
+              <p class="font-size-sm text-secondary">回覆</p>
+              <p class="font-size-sm main-color">@{{../tweetWithReplies.User.account}}</p>
+            </a>
+          </div>
+          <p class="m-0 text-wrap text-break">
+            {{this.comment}}
+          </p>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>

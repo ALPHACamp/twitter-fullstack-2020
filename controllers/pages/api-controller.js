@@ -23,7 +23,7 @@ const apiController = {
       }
 
       if (introduction.length > 160) {
-        errors.push({ messages: '自我介紹不得超過50字!' })
+        errors.push({ messages: '自我介紹不得超過160字!' })
       }
 
       if (errors.length) {

@@ -1,6 +1,7 @@
 const { Tweet, Like } = require('../../models')
 const { topFollowedUser } = require('../../helpers/recommand-followship-helper')
 const { followingUsersTweets, isValidWordsLength } = require('../../helpers/tweets-helper')
+const { getTweetReplies } = require('../../helpers/replies-helper')
 const errorHandler = require('../../helpers/errors-helpers')
 const helpers = require('../../_helpers')
 const MAX_TWEET_LENGTH = 140
@@ -45,12 +46,14 @@ const tweetController = {
   getReplies: async (req, res, next) => {
     try {
       const id = req.params.id
-      const javascripts = [TWEET_LINK_JS]
-      const [recommendUser] = await Promise.all([
-        topFollowedUser(req) // 給右邊的渲染用
+      const javascripts = [TWEET_LINK_JS, TWEET_MODAL_JS, REMEMBER_SCROLL_JS]
+      const [recommendUser, tweetWithReplies] = await Promise.all([
+        topFollowedUser(req), // 給右邊的渲染用
+        getTweetReplies(req)
       ])
+      // console.log('#tweet-contoller #L54 tweetWithRepies:', tweetWithReplies)
       return res.render('main/replies', {
-        id,
+        tweetWithReplies,
         recommendUser,
         javascripts,
         route: 'home'

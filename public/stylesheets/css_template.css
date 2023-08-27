@@ -1,3 +1,9 @@
+/*限制user card 中欄高度*/
+.main-middle-col{
+  max-height: 1200px;
+  overflow: hidden;
+}
+
 .border-1px {
   border: 1px solid #E6ECF0;
 
@@ -144,7 +150,11 @@
     margin-bottom: 4vh;
 }
 .main-tweets-area.tweet-display{
-  height: 979px; /* 設定容器的固定高度 */
+  height: 100%; /* 設定容器的固定高度 */
+}
+
+.main-replies-area.tweet-display{
+  height: 100%;
 }
 .tweet-card-link {
   display: block;

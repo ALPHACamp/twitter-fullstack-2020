@@ -50,6 +50,6 @@ module.exports = {
   JWTStrategyError,
   FollowshipError,
   LikeError,
-  TweetError
+  TweetError,
   UserError
 }
