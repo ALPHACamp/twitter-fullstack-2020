@@ -39,7 +39,7 @@
                 <h4 class="card-title mb-1">{{user.name}}</h4>
                 <p class="card-subtitle mb-2 text-muted">@{{user.account}}</p>
                 <p class="card-text">{{user.introduction}}</p>
-                <a href="#" style="color:#000000" class="text-decoration-none"><small>{{user.Followings.length}} 個跟隨中</small></a>
-                <a href="#" style="color:#000000" class="text-decoration-none"><small>{{user.Followers.length}} 個跟隨者</small></a>
+                <a href="/users/{{user.id}}/followings" style="color:#000000" class="text-decoration-none"><small>{{user.Followings.length}} 個跟隨中</small></a>
+                <a href="/users/{{user.id}}/followers" style="color:#000000" class="text-decoration-none"><small>{{user.Followers.length}} 個跟隨者</small></a>
             </div>
         </div>
