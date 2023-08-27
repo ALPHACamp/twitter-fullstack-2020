@@ -283,22 +283,17 @@ a:focus {
   border-bottom: 1px solid #E6ECF0;
 }
 
-header {
-  height: 75px;
-  border-bottom: 1px solid #E6ECF0;
+.nav-title-tweet {
+  /* size */
+  width: 72px;
+  height: 26px;
 
-  .header-title {
-    height: 51px;
-    margin-top: 24px;
-    padding-left: 20px;
-    font-family: "Noto Sans TC";
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 26px;
-    letter-spacing: 0px;
-    text-align: left;
-    color: #171725;
-  }
+  /* font */
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: left;
 }
 
 .tweet-card-list {
@@ -584,8 +579,11 @@ header {
   }
 }
 
+.tweet-xmark {
+  margin-left: 720px;
+}
 
-/* ---------- Signin / Signup  ---------- */
+/* ---------- User signin ---------- */
 
 .signin-content,
 .signup-content {
