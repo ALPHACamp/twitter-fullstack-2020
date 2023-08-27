@@ -45,6 +45,14 @@ const adminController = {
     } catch (error) {
       return next(error)
     }
+  },
+
+  getUsers: async (req, res, next) => {
+    try {
+      res.render('admin/users')
+    } catch (error) {
+      return next(error)
+    }
   }
 }
 
