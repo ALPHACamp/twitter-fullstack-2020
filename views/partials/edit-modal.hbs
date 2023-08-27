@@ -5,7 +5,7 @@
         <div class="modal-header">
           <div class="d-flex align-items-center">
             <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close" style="color: #FF6600;">
-              <i class="fas fa-times"></i>
+              <img src="/images/icon-close.svg">
             </button>
             <span class="modal-title h5 fw-bold ps-3" id="ModalLabel">編輯個人資料</span>
           </div>
@@ -22,16 +22,17 @@
                 src="{{#if user.background}}{{user.background}}{{else}}https://i.imgur.com/ndXEE6d.jpg{{/if}}"
                 id="background-image" class="card-img-top" alt="..." class="img-fluid" id="bgImage"
                 style="filter: brightness(70%);height:100%;width:100%;object-fit:cover">
-
             </div>
             <div class="form-row mb-3">
               <label for="background" class=" form-label">
                 <input class="d-none" type="file" id="background" name="background" accept="image/*" style="display: none">
+                {{!-- <img src="/images/camera.svg" class="btn" style="position: relative; object-fit: cover; top: 30%; left: 45%;; width:20; height:20px; "> --}}
                 <i class="btn fa-solid fa-camera fa-lg"
                   style="position: absolute; object-fit: cover; top: 30%; left: 45%;; width:20; height:20px; color: white;"></i>
               </label>
-              <span><i class="edit-x-icon btn fa-solid fa-x" style="position: absolute; object-fit: cover; top: 27%; left: 50%;; width:20; height:20px; color: white;"></i></span>
-
+              <span><i class="edit-x-icon btn fa-solid fa-x"
+                  style="position: absolute; object-fit: cover; top: 27%; left: 50%;; width:20; height:20px; color: white;"></i></span>
+              {{!-- <img src="images/icon-delete.svg" class="btn edit-x-icon" style="position: absolute; object-fit: cover; top: 27%; left: 50%;; width:20; height:20px;"> --}}
             </div>
 
             <div class="avatar-holder">
@@ -41,7 +42,8 @@
             </div>
             <label for="avatar" class=" form-label">
               <input class="d-none" type="file" id="avatar" name="avatar" accept="image/*" style="display: none">
-              <i class="btn fa-solid fa-camera fa-lg" style="position: absolute; top: 71%; left: 14%; transform: translate(-50%, -50%); color: white;"></i>
+              <img src="/images/camera.svg" class="btn" style="position: absolute; top: 71%; left: 14%; transform: translate(-50%, -50%); color: white; alt="" "/>
+              {{!-- <i class="btn fa-solid fa-camera fa-lg" style="position: absolute; top: 71%; left: 14%; transform: translate(-50%, -50%); color: white;"></i> --}}
             </label>
           </div>
 
