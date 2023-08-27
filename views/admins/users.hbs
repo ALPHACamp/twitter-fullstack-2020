@@ -3,4 +3,52 @@
   <div class="border-bottom" style="margin-top: 24px; height: 51px;">
     <h4 class="fw-bold" style="margin-left: 21px;">使用者列表</h4>
   </div>
+  <div class="d-flex flex-wrap">
+    {{#each userInfos}}
+      <div class="card border-light bg-light" style="width:210px; height:314px; margin: 16px 0 0 16px;">
+        <div class="p-0 position-relative">
+          <div style="width:210px; height:140px" class="overflow-hidden">
+            <img src={{#if this.cover}}{{this.cover}}{{else}}"https://live.staticflickr.com/65535/49985934496_ce401213ed_3k.jpg"{{/if}} style="height: 100%"
+              class="card-img-top  mx-auto" alt="cover">
+          </div>
+          <div style="width:100px; height:100px; background-color:#FF6600"
+            class="position-absolute top-50 start-50 translate-middle-x rounded-circle overflow-hidden border border-4 border-white">
+            <img src={{#if this.avatar}}{{this.avatar}}{{else}}"https://cdn2.ettoday.net/images/1457/1457773.jpg"{{/if}} style="max-width: 100%; height: auto" class=""
+              alt="avatar">
+          </div>
+        </div>
+        <div class="card-body text-center">
+          <div style="margin: 16px auto;">
+            <h4 class="card-title mx-0">{{this.name}}</h4>
+            <small>
+              <p class="card-subtitle mx-0 text-muted">@{{this.account}}</p>
+            </small>
+          </div>
+    
+          <div class="d-flex justify-content-center" style="height: 24px;">
+            <div style="margin-right: 8px;"> 
+              <span style="width: 24px; height: 24px">
+                {{>post-icon}}
+              </span>
+              <span>
+                {{this.tweetCount}}
+              </span>
+            </div>
+            <div>
+              <span style="width: 24px; height: 24px;">
+                {{>like-icon w=24 h=24}}
+              </span>
+              <span>
+                {{this.likeCount}}
+              </span>
+            </div>
+          </div>
+          <div style="margin: 8px auto 24px auto;">
+            <small style="margin-right: 8px;">{{this.followingCount}} 個<span class="text-secondary">跟隨中</span></small>
+            <small class="mx-1">{{this.followerCount}} 個<span class="text-secondary">跟隨者</span></small>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
 </div>
