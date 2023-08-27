@@ -30,14 +30,9 @@ module.exports = (sequelize, DataTypes) => {
           as: 'Followings'
         }
       )
-      // user m->like->m tweet
-      User.belongsToMany(models.Tweet, // 多對多關係
-        {
-          through: models.Like,
-          foreignKey: 'userId',
-          as: 'LikedTweets'
-        }
-      )
+      // test檔要求 1 -> m -> 1的關係
+      // user 1->m like m->1 tweet
+      User.hasMany(models.Like, { foreignKey: 'userId' })
     }
   }
   User.init({

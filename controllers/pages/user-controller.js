@@ -20,7 +20,6 @@ const userController = {
   },
   getAdminSignInPage: (req, res, next) => {
     try {
-      console.log('is authenticated: ', req.isAuthenticated())
       if (_helper.ensureAuthenticated(req)) return res.redirect('/admin')
       return res.render('admin/signin')
     } catch (error) {
@@ -45,7 +44,6 @@ const userController = {
 
   getLoginPage: (req, res, next) => {
     try {
-      console.log('is authenticated: ', req.isAuthenticated())
       if (_helper.ensureAuthenticated(req)) return res.redirect('/tweets') // 如果已經有user就轉去root
       return res.render('login/signin')
     } catch (error) {
