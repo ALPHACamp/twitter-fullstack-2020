@@ -44,6 +44,7 @@ class TweetError extends Error {
     this.name = 'tweetError'
   }
 }
+
 module.exports = {
   JWTTokenError,
   LocalStrategyError,
