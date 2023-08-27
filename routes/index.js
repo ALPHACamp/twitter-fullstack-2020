@@ -17,7 +17,6 @@ router.get('/signup', loginController.signUpPage)
 router.post('/signup', loginController.signUp)
 router.get('/signin', loginController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), loginController.signIn)
-
 router.get('/logout', loginController.logout)
 
 router.get('/users/:userId/tweets', authenticated, userController.getUserTweetsPage)
@@ -26,9 +25,12 @@ router.get('/users/:userId/replies', authenticated, userController.getUserReplie
 router.get('/users/:userId/followings', authenticated, userController.getUserFollowingsPage)
 router.get('/users/:userId/followers', authenticated, userController.getUserFollowersPage)
 
-router.get('/tweets/replies', authenticated, tweetController.getTweetsReply) // test
-router.get('/tweets', authenticated, tweetController.getTweets) // test
-
+router.get('/tweets/:id/replies', authenticated, replyController.getTweetReplies)
+router.post('/tweets/:tweetId/replies', authenticated, replyController.postReply)
+router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
+router.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
+router.get('/tweets', authenticated, tweetController.getTweets)
+router.post('/tweets', authenticated, tweetController.postTweets)
 
 router.post('/following/:userId', authenticated, userController.addFollowing)
 router.delete('/following/:userId', authenticated, userController.removeFollowing)
