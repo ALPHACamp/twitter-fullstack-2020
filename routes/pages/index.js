@@ -19,7 +19,7 @@ router.use('/admin', admin)
 
 router.use('/tweets', userJWTAuth, tweet)
 
-router.get('/signin', isAuthenticated, userController.getUserSignInPage)
+router.get('/signin', userJWTAuth, userController.getUserSignInPage)
 router.get('/signup', userController.getUserSignUpPage)
 router.get('/logout', userController.userLogout)
 router.post('/signin', userJWTAuth, sendToken, userController.userSignIn)
