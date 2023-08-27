@@ -6,14 +6,14 @@
 
       <nav class="navbar">
         <div class="container-fluid">
-          <img src="/images/icons/logo.svg" width="40" height="40" href="#" alt="logo">
+          <img src="/stylesheets/icons/logo.svg" width="40" height="40" href="#" alt="logo">
         </div>
       </nav>
 
       <nav class="navbar">
         <div class="container-fluid">
           <a class="navbar-brand" href="#" style="color: rgb(255, 106, 0);font-size:18px;">
-            <img style="margin: 0 7px 5px 0;" src="/images/icons/home_filled.svg" width="18" height="18" href="#"
+            <img style="margin: 0 7px 5px 0;" src="/stylesheets/icons/home_filled.svg" width="18" height="18" href="#"
               alt="homepage">
             <strong>首頁</strong>
           </a>
@@ -23,7 +23,7 @@
       <nav class="navbar">
         <div class="container-fluid">
           <a class="navbar-brand" href="#" style="color: black;font-size:18px;">
-            <img style="margin: 0 7px 5px 0;" src="/images/icons/user_outlined.svg" width="18" height="18" href="#"
+            <img style="margin: 0 7px 5px 0;" src="/stylesheets/icons/user_outlined.svg" width="18" height="18" href="#"
               alt="profile">
             <strong>個人資料</strong>
           </a>
@@ -33,7 +33,7 @@
       <nav class="navbar">
         <div class="container-fluid">
           <a class="navbar-brand" href="#" style="color: black;font-size:18px;">
-            <img style="margin: 0 7px 5px 0;" src="/images/icons/cog_outlined.svg" width="18" height="18" href="#"
+            <img style="margin: 0 7px 5px 0;" src="/stylesheets/icons/cog_outlined.svg" width="18" height="18" href="#"
               alt="setting">
             <strong>設定</strong>
           </a>
@@ -54,7 +54,8 @@
     <nav class="navbar">
       <div class="container-fluid">
         <a class="navbar-brand" href="/logout" style="color: black;font-size:18px;">
-          <img style="margin: 0 7px 5px 0;" src="/images/icons/logout.svg" width="18" height="18" href="#" alt="logout">
+          <img style="margin: 0 7px 5px 0;" src="/stylesheets/icons/logout.svg" width="18" height="18" href="#"
+            alt="logout">
           <strong>登出</strong>
         </a>
       </div>
@@ -91,19 +92,19 @@
         <div id="icon-container" style="display: flex; align-items:center">
 
           <img id="reply" data-bs-toggle="modal" data-bs-target="#replyModal"
-            style="margin: 0 25px 0 0; cursor:pointer;" src="/images/icons/reply_outlined.svg" width="16" height="16"
-            href="#" alt="reply">
+            style="margin: 0 25px 0 0; cursor:pointer;" src="/stylesheets/icons/reply_outlined.svg" width="16"
+            height="16" href="#" alt="reply" onclick="btnReply(`{{this.id}}`)">
 
           {{#if this.isLiked}}
           <form id="unlike" name="unlike" action="/tweets/{{this.id}}/unlike" method="POST"
             style="display: flex; align-items:center;">
-            <input type="image" img src="/images/icons/like_filled.svg" width="16" height="16"
+            <input type="image" img src="/stylesheets/icons/like_filled.svg" width="16" height="16"
               onClick="document.unlike.submit()">
           </form>
           {{else}}
           <form id="like" name="like" action="/tweets/{{this.id}}/like" method="POST"
             style="display: flex; align-items:center;">
-            <input type="image" img src="/images/icons/like_outlined.svg" width="16" height="16"
+            <input type="image" img src="/stylesheets/icons/like_outlined.svg" width="16" height="16"
               onClick="document.unlike.submit()">
           </form>
           {{/if}}
@@ -168,13 +169,14 @@
       <form action="/tweets" method="POST">
         <div class="modal-body">
 
-          <strong><span id="modal-name" style="font-size:18px;"> </span></strong>
-          {{!-- <span style="color:gray; font-size:14px;"> @{{this.User.account}}·{{relativeTimeFromNow
+          <span style="font-size:18px;" id="replyModalName"><strong>{{this.User.name}} </strong></span>
+          <span style="color:gray; font-size:14px;" id="replyModalAccount"> @{{this.User.account}}·</span>
+          <sapn style="color:gray; font-size:14px;" id="replyModalFromNow">{{relativeTimeFromNow
             this.createdAt}}</span>
-          <p style="margin: 2px 0; word-break: break-all;">{{this.description}}</p> --}}
+            <p style="margin: 2px 0; word-break: break-all;" id="replyModalDescription">{{this.description}}</p>
 
-          <textarea class="form-control" id="description" name="description" rows="3" cols="140" placeholder="推你的回覆"
-            required></textarea>
+            <textarea class="form-control" id="description" name="description" rows="3" cols="140" placeholder="推你的回覆"
+              required></textarea>
         </div>
 
         <div class="modal-footer">
@@ -190,12 +192,21 @@
 </div>
 
 <script>
-  const reply = document.getElementById('reply')
+  function btnReply(id) {
+    const replyModal = document.getElementById('replyModal')
 
-  reply.addEventListener('click', function () {
-    const name = document.querySelector("#name")
-    console.log(name)
-    document.querySelector("#modal-name").textContent = name
-  }, false);
+    if (replyModal) {
+      replyModal.addEventListener('shown.bs.modal', event => {
+        // alert(id)
+        fetch(`http://localhost:3000/api/tweets/${id}`)
+          .then(res => {
+            return res.text();
+          })
+          .then(result => {
+            document.querySelector('#replyModalName').textContent = result
+          })
+      })
+    }
+  }
 
 </script>

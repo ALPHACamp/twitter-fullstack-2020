@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const helpers = require('./_helpers')
 const exphbs = require('express-handlebars')
-const { pages } = require('./routes')
+const { pages, apis } = require('./routes')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('./config/passport')
@@ -47,7 +47,7 @@ app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)
   next()
 })
-// app.use('/api', apis)
+app.use('/api', apis)
 app.use(pages)
 
 app.listen(port, () => console.log(`App is running on http://localhost:${port}`))
