@@ -1,0 +1,40 @@
+<main class="container">
+
+  <div class="row">
+    {{!-- 側邊欄 --}}
+    {{> admin-sidebar route='Tweets'}}
+
+    <div class="col-6" style="width: 940px; margin: 0 0 0 327px">
+      <nav class="navbar navbar-light border-start border-end">
+        <div class="container-fluid">
+          <h4 class="navbar-brand mb-0 h1 fs-4">推文清單</h4>
+        </div>
+      </nav>
+      {{!-- 推文串 --}}
+      {{!-- each twitters 迴圈開始 --}}
+      <ul class="list-group">
+        {{#each tweets}}
+        <li class="list-group-item">
+          <div class="d-flex  flex-column pt-2" style="min-height: 130px;">
+            <div class="align-self-start" style="width: 910px; position: relative;">
+              <img src="{{this.User.avatar}}" title="source: imgur.com" style="width: 50px;height: 50px;" class="ms-4">
+              <div class="d-inline-flex pt-3">
+                <h5 class="mx-2" style="color: #171725;">{{this.User.name}}</h5>
+                <span style="color: #6C757D;">@{{this.User.account}} · {{relativeTimeFromNow this.createdAt}}</span>
+              </div>
+              <div class="d-inline-flex" style="position: absolute; right: 10px;">
+                <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="post"> <button class="btn-close"
+                    style=" text-decoration:none; color:#44444f;" onclick="return confirm(`確定要刪除這則推文嗎？`)"></button></form>
+              </div>
+            </div>
+            <div style="max-width: 855px">
+              <p style="margin-left: 85px;">{{this.description}}</p>
+            </div>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+      {{!-- each迴圈結束 --}}
+    </div>
+  </div>
+</main>

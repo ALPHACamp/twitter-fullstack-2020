@@ -24,6 +24,7 @@ router.post('/signup', userController.signUp)
 // 前台登入路由
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+router.get('/logout', userController.logout)
 
 // 使用者功能路由
 router.get('/users/:id/followers', userController.getUserFollowers)
