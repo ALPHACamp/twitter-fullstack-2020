@@ -10,8 +10,12 @@
     </div>
     <div class="mb-4 position-relative">
       <label for="name" class="form-label position-absolute font-size-sm">名稱</label>
-      <input type="text" class="form-control fs-6" name="name" id="name" placeholder="請輸入使用者名稱" value="{{name}}" required>
-      <div class="invalid-feedback">
+      <input type="text" class="text-input form-control fs-6" name="name" id="name" placeholder="請輸入使用者名稱" maxlength="50"
+        value="{{name}}" required>
+      <div class="d-flex justify-content-end w-100 position-absolute">
+        <div class="input-length"></div>
+      </div>
+      <div class="invalid-feedback m-0">
         請輸入欲設定使用者名稱
       </div>
     </div>

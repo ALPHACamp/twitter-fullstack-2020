@@ -177,6 +177,7 @@ const userController = {
     }
   },
   getUserEditPage: async (req, res, next) => {
+    const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
     await userService.getUserEditPage(req, (error, data) => {
       if (error) return next(error)
 
@@ -186,6 +187,7 @@ const userController = {
       }
 
       res.render('user/setting', {
+        javascripts,
         ...data,
         isSettingPage: true,
         route: 'setting'
