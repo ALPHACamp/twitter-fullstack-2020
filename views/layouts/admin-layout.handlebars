@@ -1,70 +1,95 @@
-<!DOCTYPE html>
+<!doctype html>
 <html class="h-100">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="https://lighthouse.alphacamp.co/images/logo-simple.jpg"
+    />
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+    <link rel="stylesheet" href="/stylesheets/bootstrap_custom.css" />
+    <link rel="stylesheet" href="/stylesheets/css_template.css" />
+    <title>Simple Twitter</title>
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="https://lighthouse.alphacamp.co/images/logo-simple.jpg">
-  <link rel="stylesheet" href="/stylesheets/bootstrap.css">
-  <link rel="stylesheet" href="/stylesheets/bootstrap_custom.css">
-  <link rel="stylesheet" href="/stylesheets/css_template.css">
-  <title>Simple Twitter</title>
-</head>
+    <body class="">
+      {{!-- 先把error message放在這邊 --}}
+      {{> message}}
 
-<body class="">
-  {{!-- 先把error message放在這邊 --}}
-  {{> message}}
-
-  <main role="main" class="">
-    <div class="container-lg">
-      <div class="row gap-4">
-        <div class="col-2 px-0 mx-0 d-flex flex-column align-items-end">
-
-          <div class="navbar-main pt-2">
-            <a href="#" class="navbar-ac-icon overflow-hidden  rounded-circle link-unstyled  child-img-center m-2">
-              <img src="/images/icons/ac_icon.svg" alt="" class="w-100 h-100">
-            </a>
-            <ul class="nav flex-column gap-2">
-              <li class="nav-item">
-                <a href="#" aria-current="{{#ifCond route 'home'}}page{{/ifCond}}"
-                  class="{{#ifCond route 'home'}}active{{/ifCond}} nav-link nav-link-home link-unstyled d-flex justify-content-start align-items-center">
-                  <div class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1">
-                    <img src="/images/icons/home_outlined.svg" alt="">
-                    <p class=" p-0 m-0">首頁</p>
-                  </div>
+      <main role="main" class="">
+        <div class="container-lg">
+          <div class="row gap-4">
+            <div class="col-2 px-0 mx-0 d-flex flex-column align-items-end">
+              <div class="navbar-main pt-2">
+                <a
+                  href="#"
+                  class="navbar-ac-icon overflow-hidden rounded-circle link-unstyled child-img-center m-2"
+                >
+                  <img
+                    src="/images/icons/ac_icon.svg"
+                    alt=""
+                    class="w-100 h-100"
+                  />
                 </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" aria-current="{{#ifCond route 'user'}}page{{/ifCond}}"
-                  class="{{#ifCond route 'user'}}active{{/ifCond}} nav-link nav-link-info link-unstyled d-flex justify-content-start align-items-center ">
-                  <div class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1">
-                    <img src="/images/icons/user_outlined.svg" alt="">
-                    <p class=" p-0 m-0">個人資料</p>
-                  </div>
-                </a>
-              </li>
+                <ul class="nav flex-column gap-2">
+                  <li class="nav-item">
+                    <a
+                      href="#"
+                      aria-current="{{#ifCond route 'home'}}page{{/ifCond}}"
+                      class="{{#ifCond route 'home'}}active{{/ifCond}} nav-link nav-link-home link-unstyled d-flex justify-content-start align-items-center"
+                    >
+                      <div
+                        class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1"
+                      >
+                        <img src="/images/icons/home_outlined.svg" alt="" />
+                        <p class="p-0 m-0">首頁</p>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      href="#"
+                      aria-current="{{#ifCond route 'user'}}page{{/ifCond}}"
+                      class="{{#ifCond route 'user'}}active{{/ifCond}} nav-link nav-link-info link-unstyled d-flex justify-content-start align-items-center "
+                    >
+                      <div
+                        class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1"
+                      >
+                        <img src="/images/icons/user_outlined.svg" alt="" />
+                        <p class="p-0 m-0">個人資料</p>
+                      </div>
+                    </a>
+                  </li>
 
-              <li class="nav-item">
-                <a href="/logout"
-                  class="nav-link nav-link-logout link-unstyled d-flex justify-content-start align-items-center ">
-                  <div class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1">
-                    <img src="/images/icons/logout_outlined.svg" alt="">
-                    <p class=" p-0 m-0">登出</p>
-                  </div>
-                </a>
-              </li>
-            </ul>
+                  <li class="nav-item">
+                    <a
+                      href="/logout"
+                      class="nav-link nav-link-logout link-unstyled d-flex justify-content-start align-items-center"
+                    >
+                      <div
+                        class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1"
+                      >
+                        <img src="/images/icons/logout_outlined.svg" alt="" />
+                        <p class="p-0 m-0">登出</p>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
 
+            <div
+              class="col main-middle-col border-start-1 border-end-1 border-1px px-0 mx-0"
+            >
+              {{{body}}}
+            </div>
+
+            <script src="/javascripts/popper.min.js"></script>
+            <script src="/javascripts/bootstrap.js"></script>
           </div>
         </div>
-
-        <div class="col main-middle-col  border-start-1 border-end-1 border-1px  px-0 mx-0">
-          {{{body}}}
-        </div>
-</body>
-
-<script src="/javascripts/popper.min.js"></script>
-<script src="/javascripts/bootstrap.js"></script>
-
+      </main>
+    </body>
+  </head>
 </html>
