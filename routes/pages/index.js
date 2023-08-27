@@ -1,16 +1,14 @@
 const express = require('express')
+const router = express.Router()
 
-const helper = require('../../_helpers')
 const admin = require('./modules/admin')
 const tweet = require('./modules/tweet')
 const user = require('./modules/user')
 const api = require('./modules/api')
 const errorHandler = require('../../middlewares/error-handler')
-const { userJWTAuth, sendToken, isAuthenticated } = require('../../middlewares/auth')
+const { userJWTAuth, sendToken} = require('../../middlewares/auth')
 const userController = require('../../controllers/pages/user-controller')
 const followshipController = require('../../controllers/pages/followship-controller')
-
-const router = express.Router()
 
 router.get('/css_template2', (req, res) => res.render('main/edit_user_info'))
 router.get('/css_template1', (req, res) => res.render('main/user_card'))
@@ -22,11 +20,11 @@ router.use('/users', userJWTAuth, user)
 router.use('/tweets', userJWTAuth, tweet)
 router.use('/api/users', userJWTAuth, api)
 
-router.get('/signin', userJWTAuth, userController.getUserSignInPage)
-router.get('/signup', userController.getUserSignUpPage)
-router.get('/logout', userController.userLogout)
-router.post('/signin', userJWTAuth, sendToken, userController.userSignIn)
-router.post('/signup', userController.userSignUp)
+router.get('/signin', userJWTAuth, userController.getLoginPage)
+router.get('/signup', userController.getSignupPage)
+router.get('/logout', userController.getLogout)
+router.post('/signin', userJWTAuth, sendToken, userController.postLogin)
+router.post('/signup', userController.postSignup)
 
 /* 測試檔把followship放在最外面 */
 router.post('/followships', userJWTAuth, followshipController.postFollowship)

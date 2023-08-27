@@ -1,20 +1,10 @@
 const { User } = require('../../models')
+const helpers = require('../../_helpers')
+const userService = require('../../service/user-services')
 
 const apiController = {
   getUserEditPage: async (req, res, next) => {
-    try {
-      if (req.params.id !== req.user.id) throw new Error("Can't edit other profile!")
-
-      const user = await User.findByPk(req.params.id, { raw: true })
-      if (!user) throw new Error("User didn't exist!")
-
-      return res.render('user/tweets', {
-        name: user.name,
-        introduction: user.introduction
-      })
-    } catch (error) {
-      return next(error)
-    }
+    userService.getUserEditPage(req, (err, user) => err ? next(err) : res.json({ ...user }))
   },
   postUserInfo: async (req, res, next) => {
     try {

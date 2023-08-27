@@ -1,0 +1,43 @@
+{{> title route='editUserInfo'}}
+<div class="edit-user-info">
+  <form action="/api/users/{{user.id}}" method="post" class="w-100 needs-validation p-4" novalidate>
+    <div class="mb-4 position-relative">
+      <label for="account" class="form-label position-absolute font-size-sm">帳號</label>
+      <input type="text" class="form-control fs-6" name="account" id="account" placeholder="請輸入帳號" value="{{account}}" required>
+      <div class="invalid-feedback">
+        請輸入欲設定帳號
+      </div>
+    </div>
+    <div class="mb-4 position-relative">
+      <label for="name" class="form-label position-absolute font-size-sm">名稱</label>
+      <input type="text" class="form-control fs-6" name="name" id="name" placeholder="請輸入使用者名稱" value="{{name}}" required>
+      <div class="invalid-feedback">
+        請輸入欲設定使用者名稱
+      </div>
+    </div>
+    <div class="mb-4 position-relative">
+      <label for="email" class="form-label position-absolute font-size-sm">Email</label>
+      <input type="email" class="form-control fs-6" name="email" id="email" placeholder="請輸入Email" value="{{email}}" required>
+      <div class="invalid-feedback">
+        請輸入欲設定Email
+      </div>
+    </div>
+    <div class="mb-4 position-relative">
+      <label for="password" class="form-label position-absolute font-size-sm">密碼</label>
+      <input type="password" class="form-control fs-6" name="password" id="password" placeholder="請設定密碼" required>
+      <div class="invalid-feedback">
+        請輸入欲設定密碼
+      </div>
+    </div>
+    <div class="mb-4 position-relative">
+      <label for="passwordCheck" class="form-label position-absolute font-size-sm">密碼確認</label>
+      <input type="password" class="form-control fs-6" id="passwordCheck" placeholder="請再次輸入密碼" required>
+      <div class="invalid-feedback">
+        請再次輸入密碼
+      </div>
+    </div>
+    <div class="d-flex flex-row-reverse">
+      <button type="submit" class="btn btn-primary">儲存</button>
+    </div>
+  </form>
+</div>

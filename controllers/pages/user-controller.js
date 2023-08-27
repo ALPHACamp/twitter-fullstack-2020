@@ -1,11 +1,12 @@
-const jwt = require('jsonwebtoken')
-const { Op } = require('sequelize')
 const bcrypt = require('bcryptjs')
 
-const _helper = require('../../_helpers')
-const { User, Tweet, Reply, sequelize } = require('../../models')
+const { User, Tweet, Reply, Like } = require('../../models')
+const helpers = require('../../_helpers')
 const recommendUserHelper = require('../../helpers/recommand-followship-helper')
 const userHelper = require('../../helpers/user-helper')
+const userService = require('../../service/user-services')
+const errorHandler = require('../../helpers/errors-helpers')
+
 const INPUT_LENGTH_JS = 'inputLength.js'
 const USER_PAGE_JS = 'userPage.js'
 
@@ -20,7 +21,7 @@ const userController = {
   },
   getAdminSignInPage: (req, res, next) => {
     try {
-      if (_helper.ensureAuthenticated(req)) return res.redirect('/admin')
+      if (helpers.ensureAuthenticated(req)) return res.redirect('/admin')
       return res.render('admin/signin')
     } catch (error) {
       return next(error)
@@ -44,7 +45,7 @@ const userController = {
 
   getLoginPage: (req, res, next) => {
     try {
-      if (_helper.ensureAuthenticated(req)) return res.redirect('/tweets') // 如果已經有user就轉去root
+      if (helpers.ensureAuthenticated(req)) return res.redirect('/tweets') // 如果已經有user就轉去root
       return res.render('login/signin')
     } catch (error) {
       return next(error)
@@ -134,7 +135,7 @@ const userController = {
         res.cookie('jwtToken', '', { expires: new Date(0) })
         return res.redirect('/signin')
       }
-      next()
+      // next()
     } catch (error) {
       return next(error)
     }
@@ -150,7 +151,7 @@ const userController = {
         include: [
           User,
           Reply,
-          { model: User, as: 'LikedUsers' }
+          Like
         ],
         where: { userId: req.params.id },
         order: [['createdAt', 'DESC']]
@@ -159,7 +160,7 @@ const userController = {
       const result = tweets.map(tweet => ({
         ...tweet.toJSON(),
         countReply: tweet.Replies.length,
-        countLike: tweet.LikedUsers.length
+        countLike: tweet.Likes.length
       }))
 
       const recommendUser = await recommendUserHelper.topFollowedUser(req)
@@ -174,6 +175,22 @@ const userController = {
     } catch (error) {
       next(error)
     }
+  },
+  getUserEditPage: async (req, res, next) => {
+    await userService.getUserEditPage(req, (error, data) => {
+      if (error) return next(error)
+
+      // 為了配合api，將錯誤寫成json，再到這裡導入錯誤
+      if (data.status === 'error') {
+        throw new errorHandler.UserError(data.messages)
+      }
+
+      res.render('user/setting', {
+        ...data,
+        isSettingPage: true,
+        route: 'setting'
+      })
+    })
   }
 }
 

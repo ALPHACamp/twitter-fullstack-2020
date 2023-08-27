@@ -13,7 +13,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a href="#" aria-current="{{#ifCond route 'user'}}page{{/ifCond}}"
+      <a href="/users/{{user.id}}/tweets" aria-current="{{#ifCond route 'user'}}page{{/ifCond}}"
         class="{{#ifCond route 'user'}}active{{/ifCond}} nav-link nav-link-info link-unstyled d-flex justify-content-start align-items-center ">
         <div class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1">
           <img src="/images/icons/user_outlined.svg" alt="">
@@ -22,7 +22,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a href="#" aria-current="{{#ifCond route 'setting'}}page{{/ifCond}}"
+      <a href="/users/{{user.id}}" aria-current="{{#ifCond route 'setting'}}page{{/ifCond}}"
         class="{{#ifCond route 'setting'}}active{{/ifCond}} nav-link nav-link-setting link-unstyled d-flex justify-content-start align-items-center ">
         <div class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1">
           <img src="/images/icons/cog_outlined.svg" alt="">
