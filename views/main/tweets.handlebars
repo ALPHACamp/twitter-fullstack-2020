@@ -39,14 +39,14 @@
       class="tweet-card card  shadow-none  py-0 px-4 m-0 rounded-0  border-1px border-bottom-1 border-top-0 border-start-0 border-end-0">
       <div class="card-body m-0 p-0 pb-3 d-flex gap-2">
         <div class="tweet-user-icon flex-shrink-0  p-0">
-          <a href="/api/users/{{this.User.id}}"
+          <a href="/users/{{this.User.id}}/tweets"
             class="overflow-hidden  rounded-circle link-unstyled  child-img-center w-100 h-100 p-0">
             <img src="{{this.User.avatar}}" alt="" class="w-100 h-100">
           </a>
         </div>
         <div class="tweet-card-content d-flex flex-column gap-2">
           <div class="tweet-user-horizontal">
-            <a href="/api/users/{{this.User.id}}" class=" d-flex gap-2 link-unstyled align-items-center">
+            <a href="/users/{{this.User.id}}/tweets" class=" d-flex gap-2 link-unstyled align-items-center">
               <p class="fw-bold">{{this.User.name}}</p>
               <p class="font-size-sm text-secondary">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</p>
             </a>

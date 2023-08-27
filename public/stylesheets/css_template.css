@@ -1,6 +1,7 @@
 /*限制user card 中欄高度*/
 .main-middle-col{
   max-height: 1200px;
+  overflow: hidden;
 }
 
 .border-1px {
