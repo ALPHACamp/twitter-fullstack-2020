@@ -23,13 +23,24 @@
   --light-green: #82C43C;
   --light-purple: #A461D8;
   --light-pink: #FF9AD5;
+  --form-gray: #F5F8FA;
 }
 
+html,
 body {
+  /* layout */
+  height: 100vh;
+  margin: 0;
+
+  /* font */
   font-family: 'custom-font';
+  font-style: normal;
+  color: #171725;
   font-size: 1rem;
   line-height: 26px;
-  margin: 0;
+
+  /* scrollbar */
+  overflow-y: hidden;
 }
 
 h1,
@@ -65,6 +76,7 @@ h5 {
   font-size: 18px;
 }
 
+
 /* ---------- page flexbox & position ---------- */
 
 .wrapper {
@@ -90,8 +102,10 @@ h5 {
 
 /* ---------- navbar ---------- */
 
+
 .logo-container {
   position: relative;
+
   top: 8px;
   left: 8px;
   padding: 5px;
@@ -101,11 +115,12 @@ h5 {
 
 .logo {
   position: relative;
+
   top: 5px;
   left: 5px;
   width: 40px;
   height: 40px;
-}
+} 
 
 .main-navbar {
   position: relative;
@@ -196,7 +211,7 @@ h5 {
   height: 24px;
   background-image: url('/images/icons/user_filled.svg');
   background-size: contain;
-}
+} 
 
 .nav-title-tweet-tab {
   width: 72px;
@@ -278,135 +293,161 @@ h5 {
   text-align: left;
 }
 
-#btn-nav-tweet {
+
+/* ---------- User signin ---------- */
+
+.signin-container {
+  height: 100vh;
+  max-width: 356px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 8px 24px;
-
-  width: 156px;
-  height: 46px;
-
-  background: #FF6600;
-  border: none;
-  border-radius: 50px;
-
-  flex: none;
-  order: 0;
-  align-self: stretch;
-  flex-grow: 0;
-}
-
-#btn-tweet {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  width: 56px;
-  height: 35px;
-
-  background: #FF6600;
-  border: none;
-  border-radius: 50px;
-
-  flex: none;
-  order: 0;
-  align-self: stretch;
-  flex-grow: 0;
-}
-
-/* ac-logo */
-#ac-logo {
-  display: block;
-  width: 50px;
-  height: 50px;
   margin: 0 auto;
 }
 
-#signup-title {
-  width: 168px;
-  height: 26px;
-  font-weight: 700;
-  line-height: 26px;
-  font-size: 28px;
-  color: #1C1C1C;
-  margin: 29px auto;
+.signin-logo-container {
+  position: relative;
+  margin: 0 auto;
+  top: 64px;
+  width: 50px;
+  height: 50px;
+  padding: 5px;
 }
 
-#signin-title {
+.signin-logo {
+  position: relative; 
+  top: 5px;
+  left: 5px;
+  width: 40px;
+  height: 40px;
+}
+
+.signin-title {
+  position: sticky;
+  margin: 0 auto;
+  top: 138px;
   width: 185px;
   height: 26px;
   font-weight: 700;
-  line-height: 26px;
-  font-size: 28px;
-  color: #1C1C1C;
-  margin: 29px auto;
 }
 
-/* form */
-/* #form-input-line {
-  position: absolute;
+.form-item-account {
+  position: sticky;
+  margin: 0 auto;
   width: 356px;
-  height: 78px;
-  background-color: #F5F8FA;
+  top: 204px;
+  margin-bottom: 60px;
+  border-radius: 2px;
+  background-color: var(--form-gray);
 }
 
-.form-control {
-  background-color: transparent;
-  border: none;
-  border-radius: 0px 0px 4px 4px;
-  border-bottom: 2px solid #657786;
-}
-
-.form-control:hover {
-  background-color: transparent;
-  border: none;
-  border-radius: 0px 0px 4px 4px;
-  border-bottom: 2px solid #50B5FF;
+.form-item-password {
+  position: relative;
+  margin: 0 auto;
+  width: 356px;
+  top: 86px;
+  margin-bottom: 32px;
+  border-radius: 2px;
+  background-color: var(--form-gray);
 }
 
 .form-label {
-  margin-left: 10.55px;
-} */
-
-/* button */
-#btn-signup-submit {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 8px 24px;
-
+  height: 22px;
   width: 356px;
-  height: 46px;
-
-  background: #FF6600;
-  border: none;
-  border-radius: 50px;
-
-  flex: none;
-  order: 0;
-  align-self: stretch;
-  flex-grow: 0;
+  margin-left: 10.55px;
+  color: #696974;
+  font-size: 14px;
 }
 
-#btn-signin-submit {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 8px 24px;
+.form-input {
+  height: 26px;
+  width: 346px;
+  padding: 0 0 0 10px;
+  background-color: var(--form-gray);
+  /* border */
+  border-radius: 2px;
+  border-width: 0;
+  border-bottom: 2px solid #657786;
+}
 
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #B5B5BE
+}
+
+.form-input:hover,
+.form-input:focus,
+.form-textarea:hover,
+.form-textarea:focus {
+  border-bottom: 2px solid var(--light-blue);
+  outline-width: 0;
+}
+
+/* .was-validated .form-input:invalid,
+.was-validated .form-textarea:invalid {
+  border-bottom: 2px solid var(--danger);
+} */
+
+.invalid-feedback {
+  background-color: white;
+  width: 270px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #696974;
+  line-height: 20px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.input-minmax,
+.textarea-minmax {
+  position: absolute;
+  right: 0;
+  top: 56px;
+  text-align: right;
+  background-color: white;
+  width: 270px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #696974;
+  line-height: 20px;
+  letter-spacing: 0px;
+}
+
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  padding: 8px 24px;
+  position: relative;
   width: 356px;
   height: 46px;
-
+  top: 94px;
+  margin: 0 auto;
+  border-radius: 50px;
   background: #FF6600;
   border: none;
-  border-radius: 50px;
+}
 
-  flex: none;
-  order: 0;
-  flex-grow: 0;
+.btn-signin-text {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.sub-btn {
+  text-align: right;
+  position: relative;
+  top: 120px;
+  left: 180px;
+  width: 160px;
+  height: 36px;
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0px;
 }
