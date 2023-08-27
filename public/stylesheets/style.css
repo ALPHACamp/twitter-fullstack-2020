@@ -76,12 +76,6 @@ h5 {
   font-size: 18px;
 }
 
-/* ---------- Partial messages ---------- */
-
-.message-wrapper {
-  position: relative;
-  left: -32px;
-}
 
 /* ---------- page flexbox & position ---------- */
 
@@ -108,22 +102,25 @@ h5 {
 
 /* ---------- navbar ---------- */
 
-/* .logo-container {
-  position: relative; 
+
+.logo-container {
+  position: relative;
+
   top: 8px;
   left: 8px;
   padding: 5px;
   width: 50px;
   height: 50px;
-} */
+}
 
-/* .logo {
-  position: relative; 
+.logo {
+  position: relative;
+
   top: 5px;
   left: 5px;
   width: 40px;
   height: 40px;
-} */
+} 
 
 .main-navbar {
   position: relative;
@@ -151,7 +148,8 @@ h5 {
   text-decoration: none;
 }
 
-.nav-item-tweet:hover, .active {
+.nav-item-tweet:hover,
+.active {
   text-decoration: none;
   color: #FF6600;
 }
@@ -167,7 +165,8 @@ h5 {
   text-decoration: none;
 }
 
-.nav-item-user:hover, .active {
+.nav-item-user:hover,
+.active {
   text-decoration: none;
   color: #FF6600;
 }
@@ -238,7 +237,7 @@ h5 {
   text-align: left;
 }
 
-.nav-row-logout{
+.nav-row-logout {
   position: absolute;
   width: 178px;
   height: 58px;
