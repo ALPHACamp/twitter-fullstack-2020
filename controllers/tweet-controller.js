@@ -10,6 +10,7 @@ const tweetController = {
       order: [['createdAt', 'DESC']]
     })
       .then(tweets => {
+        if (!tweets) throw new Error('Tweets do not exist!')
         res.render('tweets', { tweets, tweetRoute })
       })
       .catch(err => next(err))

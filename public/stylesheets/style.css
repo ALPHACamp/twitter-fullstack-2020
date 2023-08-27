@@ -129,6 +129,15 @@ textarea {
   color: #FFFFFF;
 }
 
+#fake-tweet {
+  width: 64px;
+  height: 40px;
+  padding: 8px 16px 8px 16px;
+  border-radius: 50px;
+  background: #FF6600;
+  color: #FFFFFF;
+}
+
 #new-tweet.span {
   width: 130px;
   height: 30px;
