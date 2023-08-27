@@ -1,18 +1,19 @@
 const { Tweet, Like } = require('../../models')
 const { topFollowedUser } = require('../../helpers/recommand-followship-helper')
-const { followingUsersTweets } = require('../../helpers/tweets-helper')
+const { followingUsersTweets, isValidWordsLength } = require('../../helpers/tweets-helper')
 const errorHandler = require('../../helpers/errors-helpers')
 const helpers = require('../../_helpers')
-const INPUT_LENGTH_JS = 'inputLength.js'
-const USER_PAGE_JS = 'userPage.js'
+const MAX_TWEET_LENGTH = 140
 const TWEET_LINK_JS = 'tweetLink.js'
+const TWEET_MODAL_JS = 'tweetModal.js'
+const REMEMBER_SCROLL_JS = 'rememberScrollPosition.js'
 
 const tweetController = {
 
   /* user home page */
   getTweets: async (req, res, next) => {
     try {
-      const javascripts = [TWEET_LINK_JS]
+      const javascripts = [TWEET_LINK_JS, TWEET_MODAL_JS, REMEMBER_SCROLL_JS]
       const [tweets, recommendUser] = await Promise.all([
         followingUsersTweets(req),
         topFollowedUser(req) // 給右邊的渲染用
@@ -28,8 +29,18 @@ const tweetController = {
     }
   },
   postTweets: async (req, res, next) => {
-    const userId = helpers.getUser(req).id
-    const text = req.body.tweet
+    try {
+      const userId = helpers.getUser(req).id
+      const description = req.body?.description.trim()
+      isValidWordsLength(description, MAX_TWEET_LENGTH, next)
+      await Tweet.create({
+        UserId: userId,
+        description
+      })
+      return res.redirect('back')
+    } catch (error) {
+      return (next)
+    }
   },
   getReplies: async (req, res, next) => {
     try {
