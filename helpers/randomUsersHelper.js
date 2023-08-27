@@ -1,17 +1,27 @@
-const {User} = require('../models'); // 根据你的项目结构导入 User 模型
-const { Sequelize, Op } = require("sequelize");
+const { User } = require("../models"); 
+const { Op } = require("sequelize");
 const helpers = require("../_helpers");
 
-// 随机获取指定数量的用户
-async function getEightRandomUsers (req) {
+// 取得前八多追蹤人數的使用者
+async function getEightRandomUsers(req) {
   try {
     const currentUserId = helpers.getUser(req).id;
-    const eightRandomUsers = await User.findAll({
-      where: { id: { [Op.notIn]: [1, currentUserId] } }, //推薦清單排除第一個root跟自己  修改:用role判斷isAdmin在哪
+    const users = await User.findAll({
+      where: { id: { [Op.notIn]: [currentUserId] } }, //推薦清單排除跟自己
       include: [{ model: User, as: "Followers" }],
-      order: Sequelize.literal("RAND()"), // 隨機排序
-      limit: 8, // 取 8 筆資料
     });
+    const usersWithoutAdmin = await users.filter((user) => {
+      return user.dataValues.role !== "admin";
+    }); //排除Admin
+    const eightRandomUsers = usersWithoutAdmin
+      .map((user) => {
+        return {
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+        };
+      })
+      .sort((a, b) => b.followerCount - a.followerCount)
+      .slice(0, 8); //排序並取出前八
     const recommend = eightRandomUsers.map((user) => {
       const isFollowed = user.Followers.some(
         (follower) => follower.id === currentUserId
@@ -24,10 +34,9 @@ async function getEightRandomUsers (req) {
         isFollowed,
       };
     });
-    return recommend
+    return recommend;
   } catch (err) {
-    console.error(err);
-    throw err; // 抛出错误以供调用方处理
+    next(err)
   }
 }
 

@@ -31,6 +31,7 @@ const tweetsController = {
           likes,
           isLiked,
           userAvatar,
+          currentUser
         };
       });
       return res.render("tweets", {

@@ -1,4 +1,4 @@
-const { Sequelize, sequelize, Tweet, User, Like, Reply, Followship } = require('../models')
+const { sequelize, Tweet, User, Like, Reply } = require('../models')
 
 const adminController = {
   signinPage: (req, res) => {
