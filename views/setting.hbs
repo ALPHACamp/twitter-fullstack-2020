@@ -1,7 +1,70 @@
 <div class="page-container">
   {{> left-sidebar route="editUser"}}
-  <div class="main-middle border-start border-end" id="tweets-page-container">
-    <h1>Setting</h1>
+  <div class="main-middle border-start border-end" id="setting-page-container">
+
+  {{!-- Title --}}
+  <div style="margin-top: 24px; width: 639px; border-bottom:solid 1px #E6ECF0">
+    <h4 class="text-start mb-4" style="margin-left: 24px; font-size:28px"><Strong> 帳戶設定 <Strong></h4>
+  </div>
+
+  <div class="row d-flex" style="margin-left: 24px">
+    <div class="col-5">
+      <div class="setting-section">
+        {{!-- setting form --}}
+        <form action="/users/{{user.id}}?_method=PUT" method="POST">
+          <div style="width:593px; height:78px">
+            {{!-- account --}}
+            <div class="form-group mb-4 mt-4">
+              <div class="label bg-light">
+                <label for="account" class="form-label bg-light">帳號</label>
+              </div>
+              <input type="text" class="form-control border-0 border-bottom border-primary shadow-none bg-light"
+                id="account" name="account" placeholder="請輸入帳號" value='{{user.account}}'>
+            </div>
+            {{!-- name --}}
+            <div class="form-group mb-4">
+              <div class="label bg-light">
+                <label for="name" class="form-label bg-light">名稱</label>
+              </div>
+              <input type="text" class="form-control border-0 border-bottom border-primary shadow-none bg-light" id="name"
+                name="name" placeholder="請輸入使用者名稱" value='{{user.name}}'>
+            </div>
+            {{!-- email --}}
+            <div class="form-group mb-4">
+              <div class="label bg-light">
+                <label for="email" class="form-label bg-light">Email</label>
+              </div>
+              <input type="email" class="form-control border-0 border-bottom border-primary shadow-none bg-light"
+                id="email" name="email" placeholder="請輸入Email" value='{{user.email}}'>
+            </div>
+            {{!-- password --}}
+            <div class="form-group mb-4">
+              <div class="label bg-light">
+                <label for="password" class="form-label bg-light">密碼</label>
+              </div>
+              <input type="password" class="form-control border-0 border-bottom border-primary shadow-none bg-light"
+                id="password" name="password" placeholder="請設定密碼">
+            </div>
+            {{!-- check password --}}
+            <div class="form-group mb-4">
+              <div class="label bg-light">
+                <label for="checkPassword" class="form-label bg-light">密碼確認</label>
+              </div>
+              <input type="password" class="form-control border-0 border-bottom border-primary shadow-none bg-light"
+                id="checkPassword" name="checkPassword" placeholder="請再次輸入密碼">
+            </div>
+            {{!-- submit button --}}
+            <div class="text-end">
+              <button class="btn btn-primary my-3"
+                style="width:88px; height:46px; border: solid; border-radius: 50px; background-color:#FF6600; color: white;"
+                type="submit">儲存</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
   </div>
   {{> right-sidebar}}
 </div>
