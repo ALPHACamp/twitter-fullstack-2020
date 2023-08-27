@@ -7,17 +7,21 @@ async function getEightRandomUsers(req) {
   try {
     const currentUserId = helpers.getUser(req).id;
     const users = await User.findAll({
-      where: { id: { [Op.notIn]: [currentUserId] } }, //推薦清單排除跟自己  
+      where: { id: { [Op.notIn]: [currentUserId] } }, //推薦清單排除跟自己
       include: [{ model: User, as: "Followers" }],
     });
-    const usersWithoutAdmin = await users.filter((user) => {return user.dataValues.role !== 'admin'}) //排除Admin
-    const eightRandomUsers = usersWithoutAdmin.map(user => {
-      return {
-        ...user.toJSON(),
-        followerCount: user.Followers.length,
-      }
-    })
-    eightRandomUsers.sort((a,b) => b.followerCount - a.followerCount)
+    const usersWithoutAdmin = await users.filter((user) => {
+      return user.dataValues.role !== "admin";
+    }); //排除Admin
+    const eightRandomUsers = usersWithoutAdmin
+      .map((user) => {
+        return {
+          ...user.toJSON(),
+          followerCount: user.Followers.length,
+        };
+      })
+      .sort((a, b) => b.followerCount - a.followerCount)
+      .slice(0, 8); //排序並取出前八
     const recommend = eightRandomUsers.map((user) => {
       const isFollowed = user.Followers.some(
         (follower) => follower.id === currentUserId
