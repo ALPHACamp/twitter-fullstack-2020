@@ -1,0 +1,14 @@
+{{> admin-left-sidebar route="getUsers"}}
+<div class="main-middle border-start border-end" id="tweets-page-container">
+  <h1>使用者列表</h1>
+  {{#each users}}
+  <p>User cover: {{this.cover}}</p>
+  <p>User avatar: {{this.avatar}}</p>
+  <p>User name: {{this.name}}</p>
+  <p>User account: {{this.account}}</p>
+  <p>Tweet count: {{this.tweetsCount}}</p>
+  <p>Like count: {{this.likesCount}}</p>
+  <p>Followings: {{this.followingsCount}}</p>
+  <p>Followers: {{this.followersCount}}</p>
+  {{/each}}
+</div>

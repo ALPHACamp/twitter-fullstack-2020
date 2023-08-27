@@ -9,8 +9,8 @@ const { generalErrorHandler } = require('../middleware/error-handler')
 
 router.use('/admin', admin)
 
-router.get('/users/:id/edit', userController.editUser)
-router.get('/users/:id/tweets', userController.getUserTweets)
+router.get('/users/:id/edit', authenticated, userController.editUser)
+router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 
 // authenticated還沒載入 還沒寫這功能
 // router.post('/followships/:userId', authenticated, userController.addFollowing)

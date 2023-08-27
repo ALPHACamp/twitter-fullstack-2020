@@ -10,6 +10,7 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/admin
 router.get('/logout', adminController.logOut)
 
 router.get('/tweets', authenticatedAdmin, adminController.getTweets)
+router.get('/users', authenticatedAdmin, adminController.getUsers)
 router.use('/', (req, res) => { res.redirect('/admin/signin') })
 
 module.exports = router
