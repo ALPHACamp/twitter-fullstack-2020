@@ -25,7 +25,7 @@
 
 <div class="container main-tweets-area d-flex flex-column gap-3 p-0 pt-3 m-0 scrollbar-hidden">
   {{#each tweets}}
-  <div data-link="/tweets/{{this.User.id}}/replies"
+  <div data-link="/tweets/{{this.User.id}}/replies" data-id="{{this.User.id}}"
     class="tweet-card card  shadow-none  py-0 px-4 m-0 rounded-0  border-1px border-bottom-1 border-top-0 border-start-0 border-end-0">
     <div class="card-body m-0 p-0 pb-3 d-flex gap-2">
       <div class="tweet-user-icon flex-shrink-0  p-0">
@@ -51,10 +51,21 @@
             <img src="/images/icons/icon_reply_outlined.svg" alt="" class="img-fluid center tweet-action-icon">
             <p class="font-size-sm m-0 text-secondary">{{this.replies}}</p>
           </button>
-          <a href="#" class="d-flex align-items-center gap-2 link-unstyled">
-            <img src="/images/icons/icon_like_outlined.svg" alt="" class="img-fluid center tweet-action-icon">
-            <p class="font-size-sm m-0 text-secondary">{{this.likes}}</p>
-          </a>
+          {{#if isLiked}}
+            <form action="/tweets/{{this.id}}/unlike" method="post">
+              <button href="#" class="btn border-0 btn-outline-light p-0 m-0 d-flex align-items-center gap-2 link-unstyled">
+                <img src="/images/icons/icon_like_filled.svg" alt="" class="filter-red-color img-fluid center tweet-action-icon">
+                <p class="font-size-sm m-0 text-secondary">{{this.likes}}</p>
+              </button>
+            </form>
+          {{else}}
+            <form action="/tweets/{{this.id}}/like" method="post">
+              <button href="#" class="btn border-0 btn-outline-light p-0 m-0 d-flex align-items-center gap-2 link-unstyled">
+                <img src="/images/icons/icon_like_outlined.svg" alt="" class="img-fluid center tweet-action-icon">
+                <p class="font-size-sm m-0 text-secondary">{{this.likes}}</p>
+              </button>
+            </form>
+          {{/if}}
         </div>
       </div>
     </div>

@@ -23,9 +23,17 @@ class FollowshipError extends Error {
     this.name = 'followshipError'
   }
 }
+
+class LikeError extends Error {
+  constructor (message) {
+    super(message)
+    this.name = 'likeError'
+  }
+}
 module.exports = {
   JWTTokenError,
   LocalStrategyError,
   JWTStrategyError,
-  FollowshipError
+  FollowshipError,
+  LikeError
 }
