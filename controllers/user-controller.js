@@ -142,6 +142,15 @@ const userController = {
     try {
       const { userId } = req.params
 
+      const user = await User.findByPk(userId, {
+        include: [
+          { model: Tweet, include: Like },
+          { model: Tweet, include: Reply },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+
       const users = await User.findAll({ include: [{ model: User, as: 'Followers', include: Tweet }] })
       const topUsers = await users
         .map(u => ({
@@ -175,7 +184,7 @@ const userController = {
         order: [['createdAt', 'DESC']]
       })
 
-      return res.render('users/followings', { followingsTweets, topUsers })
+      return res.render('users/followings', { user: user.toJSON(), followingsTweets, topUsers })
     } catch (err) {
       next(err)
     }
@@ -183,6 +192,15 @@ const userController = {
   getUserFollowersPage: async (req, res, next) => {
     try {
       const { userId } = req.params
+
+      const user = await User.findByPk(userId, {
+        include: [
+          { model: Tweet, include: Like },
+          { model: Tweet, include: Reply },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
 
       const users = await User.findAll({ include: [{ model: User, as: 'Followers', include: Tweet }] })
       const topUsers = await users
@@ -217,7 +235,7 @@ const userController = {
         order: [['createdAt', 'DESC']]
       })
 
-      return res.render('users/followers', { followersTweets, topUsers })
+      return res.render('users/followers', { user: user.toJSON(), followersTweets, topUsers })
     } catch (err) {
       next(err)
     }
