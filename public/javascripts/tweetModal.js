@@ -32,10 +32,10 @@ function invalidSubmitWarning (event) {
 function checkTextareaLength (event) {
   const target = event.target
   if (target.matches('textarea')) {
-    const warningDiv = tweetModal.querySelector(MAX_TWEET_LENGTH)
+    const warningDiv = tweetModal.querySelector(MODAL_WARNING_CLASS)
     if (!target.value.trim().length) {
       warningDiv.textContent = '內容不可空白'
-    } else if (target.value.length > 140) {
+    } else if (target.value.length > MAX_TWEET_LENGTH) {
       warningDiv.textContent = '字數不可超過 140 字'
     } else {
       warningDiv.textContent = ''
