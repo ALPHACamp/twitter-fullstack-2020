@@ -16,7 +16,7 @@ const userController = {
     let passwordMsg = "";
     let nameMsg = "";
 
-    // if (!account|| !name|| !email|| !password|| !checkPassword)throw new Error ('所有欄位皆為必填')
+    if (!account || !name || !email || !password || !checkPassword) throw new Error('所有欄位皆為必填')
 
     return Promise.all([emailPromise, accountPromise])
       .then(([mailUser, accountUser]) => {
@@ -71,7 +71,7 @@ const userController = {
       req.flash('account_messages', '帳號不存在！')
       res.redirect('/signin')
     }
-    // req.flash('success_messages', '成功登入!')
+    req.flash('success_messages', '成功登入!')
     res.redirect("/tweets");
   },
   logout: (req, res) => {
@@ -311,6 +311,8 @@ const userController = {
     let passwordMsg = "";
     let nameMsg = "";
 
+    if (!account || !name || !email || !password || !checkPassword) throw new Error('所有欄位皆為必填')
+
     return Promise.all([emailPromise, accountPromise])
       .then(([mailUser, accountUser]) => {
         if (mailUser) {
@@ -341,6 +343,7 @@ const userController = {
               });
             })
             .then(() => {
+              req.flash('success_messages', '編輯成功 !')
               res.redirect('/settings')
             })
         }
