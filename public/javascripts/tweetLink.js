@@ -32,7 +32,7 @@ function renderReplyModal (event) {
     event.currentTarget.matches(TWEET_CARD_CLASS)
   ) {
     const tweetCard = event.currentTarget
-    const userId = tweetCard.dataset.id
+    const tweetId = tweetCard.dataset.id
     const userIcon = tweetCard.querySelector('.tweet-user-icon img').src
     const userInfo = tweetCard.querySelectorAll('.tweet-user-horizontal p')
     const userName = userInfo[0].textContent
@@ -46,6 +46,6 @@ function renderReplyModal (event) {
     modelUserInfo[1].textContent = userAccount
     replyModal.querySelector('.tweet-card-content>p').textContent = tweetContent
     replyModal.querySelector('.tweet-user-replied p:last-of-type').textContent = userAccountAt
-    replyModal.querySelector('form').action = `/tweets/${userId}/replies`
+    replyModal.querySelector('form').action = `/tweets/${tweetId}/replies`
   }
 }
