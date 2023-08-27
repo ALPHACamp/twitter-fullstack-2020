@@ -125,13 +125,13 @@
             </button>
           </div>
           <div class="modal-body p-0 m-0">
-            <form action="" class="modal-form m-0 mt-3 py-0 px-4">
+            <form action="/tweets" method="post" class="modal-form m-0 mt-3 py-0 px-4">
               <div class="m-0 gap-2 d-flex">
                 <label for="tweet"
                   class="form-label overflow-hidden  flex-shrink-0 rounded-circle  child-img-center p-0 m-0">
                   <img src="{{user.avatar}}" alt="" class="p-0 m-0 h-100 w-100">
                 </label>
-                <textarea class="form-control ps-0" id="tweet" name="tweet" rows="1" placeholder="有什麼新鮮事？"></textarea>
+                <textarea class="form-control ps-0" id="tweet" name="tweet" rows="1" placeholder="有什麼新鮮事？" maxlength="140"></textarea>
               </div>
               <button type="submit" class="btn btn-primary rounded-pill">回覆</button>
             </form>
@@ -179,13 +179,13 @@
                 </div>
               </div>
             </div>
-            <form action="" class="modal-form m-0 mt-3 py-0 px-4">
+            <form action="" method="post" class="modal-form m-0 mt-3 py-0 px-4">
               <div class="m-0 gap-2 d-flex">
                 <label for="reply"
                   class="form-label overflow-hidden  flex-shrink-0 rounded-circle  child-img-center p-0 m-0">
                   <img src="{{user.avatar}}" alt="" class="p-0 m-0 h-100 w-100">
                 </label>
-                <textarea class="form-control ps-0" id="reply" name="reply" rows="1" placeholder="推你的回覆"></textarea>
+                <textarea class="form-control ps-0" id="reply" name="reply" rows="1" placeholder="推你的回覆" maxlength="140"></textarea>
               </div>
               <button type="submit" class="btn btn-primary rounded-pill">回覆</button>
             </form>

@@ -16,7 +16,6 @@ const userController = {
   },
   getAdminSignInPage: (req, res, next) => {
     try {
-      console.log('is authenticated: ', req.isAuthenticated())
       if (_helper.ensureAuthenticated(req)) return res.redirect('/admin')
       return res.render('admin/signin')
     } catch (error) {
