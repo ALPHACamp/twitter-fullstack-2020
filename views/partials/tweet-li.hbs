@@ -1,14 +1,14 @@
 <div
-  class="tweet mt-3 mb-3 d-flex justify-content-center"
+  class="tweet pt-3 pb-3 d-flex justify-content-center w-100"
   style="border-bottom:1px solid #E6ECF0; min-height:153px"
 >
   <div
-    class="avatar"
-    style="width:50px; height:50px; background-color:gray; border-radius:50%;"
+    class="avatar me-3"
+    style="width:50px; height:50px; border-radius:50%; background-color:gray"
   >
     <a
       href="/users/{{this.userId}}/tweets"
-      class="d-flex justify-content-center align-items-center"
+      class="d-flex justify-content-center align-items-center w-100 h-100"
     >
       <img
         src="{{this.userAvatar}}"
@@ -97,7 +97,11 @@
           data-bs-dismiss="modal"
           aria-label="Close"
         >
-          <img src="/images/icon-close.svg" alt="" />
+          <img
+            src="/images/icon-close.svg"
+            alt=""
+            style="width:100%; height:100%; object-fit:cover; border-radius:50%;"
+          />
         </button>
       </div>
       <div class="modal-body d-flex position-relative">
@@ -105,7 +109,11 @@
           class="avatar d-flex flex-column justify-content-center"
           style="width:50px; height:50px; border-radius:50%; background-color:#FF6600; overflow:hidden"
         >
-          <img src="{{this.userAvatar}}" alt="" />
+          <img
+            src="{{this.userAvatar}}"
+            alt=""
+            style="width:100%; height:100%; object-fit:cover; border-radius:50%;"
+          />
         </div>
         <div class="content ms-2" style="max-width:510px">
           <div class="account d-dlex flex-row mt-2">
@@ -143,7 +151,11 @@
             class="avatar d-flex justify-content-center position-relative"
             style="width:50px; height:50px; border-radius:50%; background-color:#FF6600; overflow:hidden"
           >
-            <img src="{{@root.currentUser.avatar}}" alt="" style="width:100%; height:100%; object-fit:cover; border-radius:50%;" />
+            <img
+              src="{{@root.currentUser.avatar}}"
+              alt=""
+              style="width:100%; height:100%; object-fit:cover; border-radius:50%;"
+            />
           </div>
           <input
             type="comment"

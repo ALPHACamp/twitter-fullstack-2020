@@ -70,6 +70,7 @@ const tweetsController = {
         nest: true,
         include: [User, { model: Reply, include: User }, Like],
       });
+      if (!tweet) throw new Error('推文不存在!')
       const repliesAmount = tweet.Replies.length;
       const likesAmount = tweet.Likes.length;
       const isLiked = tweet.Likes.some((l) => l.UserId === currentUserId);
