@@ -40,6 +40,7 @@ const userJWTAuth = (req, res, next) => {
     }
     req.user = user
     res.locals.layout = 'user-layout' // 指定user要使用user-layout.handlebars
+    res.locals.user = user.toJSON() // 在本地端也放入user參數方便模板使用
     next()
   })
   middleware(req, res, next)
