@@ -1,8 +1,7 @@
 {{!-- 貼文 --}}
 <div class="col-6 mx-auto" style="border: 1px solid #E6ECF0">
-
   <div class="d-flex flex-row p-2" style="border-bottom: 1px solid #E6ECF0">
-    <a class="ms-2" href="javascript:history.back()">
+    <a class="ms-2" href="/tweets">
       <img src="/icon/arrow.png" alt="" width="17px" height="14px"/>
     </a>
     <h5 class="ms-3">推文</h5>
@@ -15,21 +14,17 @@
           style="background-color:#FF6600; border-radius: 30px">
         </a>
         <div class="d-flex flex-column">
-          <span class="ms-1" style="font-size:16px">Christofu</span>
-          <span class="ms-2" style="font-size:14px; color:#6C757D;">@christofu</span>
+          <span class="ms-1" style="font-size:16px">{{tweet.User.name}}</span>
+          <span class="ms-2" style="font-size:14px; color:#6C757D;">@{{tweet.User.account}}</span>
         </div>
       </div>
-
       <div>
-        <P>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt.</P>
+        <P>{{tweet.description}}</P>
       </div>
-
       <div>
-        <span style="font-size:14px; color:#6C757D;">上午 10:05・2021年11月10日</span>
+        <span style="font-size:14px; color:#6C757D;">{{localTime tweet.createdAt}}</span>
       </div>
-
       <hr style="margin-top: 5px; margin-bottom: 5px; height: 1px; background-color: #cad4db;">
-
       <div>
         <span style="font-weight: bold;"> 66 <span style="color:#6C757D">回覆</span></span>
         <span style="font-weight: bold;"> 888 <span style="color:#6C757D">喜歡次數</span></span>
@@ -44,32 +39,45 @@
           </button>
         </div>
 
-        <div class="ms-5">
-          <a href="#" style="text-decoration: none;">
-            <img class="" src="/icon/icon_like.png" alt="" width="20px" height="20px">
-          </a>
-        </div>
+      <div class="d-flex flex-row">
+        {{#if isLiked}}
+          <form action="/tweets/{{tweet.id}}/unlike" method="POST">
+            <button type="submit" style="background-color:transparent; border-color:transparent; border: none; padding: 0;"> 
+            <img src="/icon/icon_like_fill.png" alt="..." width="13px" height="13px"/>
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{tweet.id}}/like" method="POST">
+            <button type="submit" style="background-color:transparent; border-color:transparent; border: none; padding: 0;"> 
+            <img src="/icon/icon_like.png" alt="..." width="16px" height="16px"/>
+            </button>
+          </form>
+        {{/if}}
+      </div>
       </div>
     </div>
 </div>
 
 {{!-- 貼文回覆 --}}
+{{#each replies}}
 <div class="col-6 mx-auto p-2" style="border: 1px solid #E6ECF0">
   <div class="d-flex flex-column">
     <div class="d-flex flex-row">
       <a href="#">
-        <img class="" src="https://i.imgur.com/aCxYyck.jpg" alt="" width="40px" height="40px"
+        <img class="" src="https://i.imgur.com/aCxYyck.jpg" alt="..." width="40px" height="40px"
       style="border-radius: 30px">
       </a>
-      <p class="inline ms-1 mt-1">Justin Biber</p>
-      <span class="ms-1 mt-2" style="font-size: 0.2rem;">@justin</span>
-      <span class="ms-1 mt-2" style="font-size: 0.2em;">・ 3小時</span>
+      <p class="inline ms-1 mt-1">{{this.User.name}}</p>
+      <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{this.User.account}}</span>
+      <span class="ms-1 mt-2" style="font-size: 0.2em;">・{{relativeTimeFromNow this.createdAt}}</span>
     </div>
 
-    <span class="ms-5" style="font-size:14px; color:#6C757D;">回覆 <span style="color:#FF6600">@christofu</span></span>
-    <p class="ms-5 me-5 mt-2">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt.</p>
+    <span class="ms-5" style="font-size:14px; color:#6C757D;">回覆 <span style="color:#FF6600">
+      @{{this.Tweet.User.name}}</span></span>
+    <p class="ms-5 me-5 mt-2">{{this.comment}}</p>
   </div>
 </div>
+{{/each}}
 
 {{!-- modal --}}
 <div class="modal" id="ModaltweetsReplies" tabindex="-1">
@@ -80,21 +88,21 @@
       </div>
       <hr style="margin-top: 5px; margin-bottom: 5px;">
 
-      <form action="" method="POST">
+      <form action="/tweets/{{tweet.id}}/replies" method="POST">
         <div class="ms-2">
           <div class="d-flex flex-row">
             <a href="#">
               <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt="" width="40px" height="40px"
               style="background-color:#FF6600; border-radius: 30px">
             </a>
-            <p class="inline ms-1 mt-1">Christofu</p>
-            <span class="ms-1 mt-2" style="font-size: 0.2rem;">@account</span>
-            <span class="ms-1 mt-2" style="font-size: 0.2em;">. 3小時</span>
+            <p class="inline ms-1 mt-1">{{tweet.User.name}}</p>
+            <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{tweet.User.account}}</span>
+            <span class="mt-2" style="font-size: 0.2em;">・{{relativeTimeFromNow tweet.createdAt}}</span>
           </div>
 
           <div class="col-10 mx-auto ps-1">
-            <p>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt. </p>
-            <P style="font-size: 14px">回覆給<span style="color:#FF6600">@Christofu</span></P>
+            <p>{{tweet.description}}</p>
+            <P style="font-size: 14px">回覆給<span style="color:#FF6600">@{{tweet.User.account}}</span></P>
           </div>
 
           <div class="d-flex flex-row">
@@ -102,7 +110,7 @@
               <img class="" src="https://i.imgur.com/Na2PT87.jpg" alt="" width="40px" height="40px"
               style="background-color:#FF6600; border-radius: 30px">
             </a>
-            <textarea class="ms-1 mt-2" name="tweet" id="" cols="45" rows="6" placeholder="推你的回覆"style="border:none" ></textarea>
+            <textarea class="ms-1 mt-2" name="comment" id="" cols="45" rows="6" placeholder="推你的回覆"style="border:none" required></textarea>
           </div>
         </div>
 
