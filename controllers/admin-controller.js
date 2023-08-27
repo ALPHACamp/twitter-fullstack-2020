@@ -1,4 +1,4 @@
-const { User, Tweet, Reply, Like } = require('../models')
+const { User, Tweet } = require('../models')
 
 const adminController = {
   signInPage: (req, res) => {
@@ -24,24 +24,32 @@ const adminController = {
       next(error)
     }
   },
-  deleteTweet: async (req, res, next) => {
-    const { tweetId } = req.params
-    try {
-      const tweet = await Tweet.findByPk(tweetId)
-      const replies = await Reply.findAll({ where: { TweetId: tweetId } })
-      const likes = await Like.findAll({ where: { TweetId: tweetId } })
+  // deleteTweet: async (req, res, next) => {
+  //   const { tweetId } = req.params
+  //   try {
+  //     const tweet = await Tweet.findByPk(tweetId)
+  //     const replies = await Reply.findAll({ where: { TweetId: tweetId } })
+  //     const likes = await Like.findAll({ where: { TweetId: tweetId } })
 
-      if (!tweet) throw new Error("This tweet didn't exist!")
-      await tweet.destroy()
+  //     if (!tweet) throw new Error("This tweet didn't exist!")
+  //     await tweet.destroy()
 
-      if (replies) await Reply.destroy({ where: { TweetId: tweetId } })
+  //     if (replies) await Reply.destroy({ where: { TweetId: tweetId } })
 
-      if (likes) await Like.destroy({ where: { TweetId: tweetId } })
+  //     if (likes) await Like.destroy({ where: { TweetId: tweetId } })
 
-      return res.redirect('/admin/tweets')
-    } catch (error) {
-      next(error)
-    }
+  //     return res.redirect('/admin/tweets')
+  //   } catch (error) {
+  //     next(error)
+  //   }
+  deleteTweet: (req, res, next) => {
+    return Tweet.findByPk(req.params.id)
+      .then(tweet => {
+        if (!tweet) throw new Error("Tweet did'n exist!")
+        return tweet.destroy()
+      })
+      .then(() => res.redirect('/admin/tweets'))
+      .catch(err => next(err))
   }
 }
 

@@ -254,11 +254,12 @@ a:focus {
 }
 
 #btn-nav-tweet {
-  width: 178px; 
+  width: 178px;
   height: 46px;
   padding: 8px 24px;
   border-radius: 50px;
   background-color: var(--brand-color);
+
   .nav-btn-text {
     font-family: "Noto Sans TC";
     font-size: 20px;
@@ -283,17 +284,22 @@ a:focus {
   border-bottom: 1px solid #E6ECF0;
 }
 
-.nav-title-tweet {
-  /* size */
-  width: 72px;
-  height: 26px;
+header {
+  height: 75px;
+  border-bottom: 1px solid #E6ECF0;
 
-  /* font */
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 26px;
-  letter-spacing: 0px;
-  text-align: left;
+  .header-title {
+    height: 51px;
+    margin-top: 24px;
+    padding-left: 20px;
+    font-family: "Noto Sans TC";
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 26px;
+    letter-spacing: 0px;
+    text-align: left;
+    color: #171725;
+  }
 }
 
 .tweet-card-list {
@@ -579,11 +585,8 @@ a:focus {
   }
 }
 
-.tweet-xmark {
-  margin-left: 720px;
-}
 
-/* ---------- User signin ---------- */
+/* ---------- Signin / Signup  ---------- */
 
 .signin-content,
 .signup-content {
@@ -888,19 +891,21 @@ a:focus {
       height: 10px;
       background-image: url('/stylesheets/icons/close.svg');
       filter: invert(53%) sepia(87%) saturate(3477%) hue-rotate(358deg) brightness(98%) contrast(110%);
-      background-size: cover;    
+      background-size: cover;
     }
   }
 }
 
-.modal-body{
+.modal-body {
   .form {
     display: flex;
-    .modal-avatar{
+
+    .modal-avatar {
       width: 50px;
       height: 50px;
       border-radius: 50%;
     }
+
     #description {
       outline: none;
       border: none;
@@ -921,7 +926,8 @@ a:focus {
   top: 190px;
   width: 64px;
   height: 40px;
-  font-family: "Noto Sans TC"; font-weight: 400;
+  font-family: "Noto Sans TC";
+  font-weight: 400;
   font-size: 16px;
   line-height: 24px;
 }
