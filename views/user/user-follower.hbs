@@ -1,8 +1,6 @@
-<div class="container d-flex mx-0">
-  <!--left bar-->
-  <div class="col-3 nav">
-    {{> sidebar-left route="profile"}}
-  </div>
+<main class="d-flex justify-content-center">
+  {{> sidebar-left route="profile"}}
+  <section style="width:636px; border:1px solid #E6ECF0">
   <!--middle bar-->
   <div class="col-7 user-profile">
     <div class="tweets-container"
@@ -11,7 +9,8 @@
       <div class="card-header col-12 row m-0 border-bottom" style="height: 75px; background-color:#FFFFFF;">
         <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
           class="col-auto d-flex align-items-center">
-          <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
+          <img src="/images/arrow-left.svg" alt="">
+          {{!-- <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i> --}}
         </a>
         <a href="/users/{{user.id}}"
           class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
@@ -34,8 +33,7 @@
       {{> follower}}
     </div>
   </div>
-  <!--right bar-->
-  <div class="col-2 followship mx-0" style="width: 273px; height:100%px;">
-    {{> recommendation}}
-  </div>
-</div>
+  </section>
+  {{> recommendation}}
+</main>
+
