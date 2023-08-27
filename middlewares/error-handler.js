@@ -21,7 +21,7 @@ const errorHandler = (err, req, res, next) => {
       break
     case errors.TweetError:
       errorMessage = `Tweet Error: ${err.message}`
-      break
+       break
     case errors.UserError:
       errorMessage = `User Error: ${err.message}`
       break
