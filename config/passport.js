@@ -3,6 +3,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const passportJWT = require('passport-jwt')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 // 自己的套件
 const { User } = require('../models')
@@ -11,52 +12,41 @@ const JwtStrategy = passportJWT.Strategy
 const jwtOption = {
   jwtFromRequest: req => { // 從http中直接取出jwt cookie
     let token = null
-    if (req && req.cookies) {
+    if (req && req.cookies.jwtToken) {
       token = req.cookies.jwtToken
-    }
+    } else {
+      token = jwt.sign(req.body, process.env.JWT_SECRET, { algorithm: 'HS256', expiresIn: '1s' })
+    } // JwtStrategy只能吃Token, 所以生出一個只存在1秒token讓它吃
     return token
   },
-  secretOrKey: process.env.JWT_SECRET
+  secretOrKey: process.env.JWT_SECRET,
+  passReqToCallback: true
 }
 
-const jwtStrategy = new JwtStrategy(jwtOption, async function (jwtPayload, done) {
+const jwtStrategy = new JwtStrategy(jwtOption, async function (req, jwtPayload, done) {
   try {
-    const user = await User.findByPk(jwtPayload.id,
-      {
-        include: [] // 預留給以後include別的資料
-      })
-    return done(null, user)
+    let user = null
+    if (jwtPayload.id) {
+      user = await User.findByPk(jwtPayload.id, { include: [] })
+      return done(null, user)
+    }
+
+    // 如果是post /signin走這邊
+    if (jwtPayload.account && jwtPayload.password) {
+      user = await User.findOne({ where: { account: jwtPayload.account } })
+      const passwordCorrect = await bcrypt.compare(jwtPayload.password, user.password)
+
+      if (passwordCorrect) {
+        return done(null, user)
+      } else {
+        return done(null, false, req.flash('error_messages', '帳號或密碼錯誤！'))
+      }
+    }
+    return done(null, false)
   } catch (error) {
     return done(error, false)
   }
 })
 
-// 前後端區分我先放在middleware/auth內
-const localStrategy = new LocalStrategy(
-  {
-    usernameField: 'account',
-    passwordField: 'password',
-    passReqToCallback: true
-  },
-  async function (req, account, password, done) {
-    try {
-      const user = await User.findOne({ where: { account } })
-      if (!user) {
-        return done(null, false, req.flash('error_messages', '帳號或密碼錯誤！'))
-      }
-
-      const passwordCorrect = await bcrypt.compare(password, user.password)
-      if (!passwordCorrect) {
-        return done(null, false, req.flash('error_messages', '帳號或密碼錯誤！'))
-      }
-
-      return done(null, user)
-    } catch (error) {
-      return done(error, false)
-    }
-  }
-)
-
 passport.use(jwtStrategy)
-passport.use(localStrategy)
 module.exports = passport
