@@ -1,5 +1,7 @@
-{{!-- 貼文 --}}
-<div class="col-6 mx-auto" style="border: 1px solid #E6ECF0">
+<div style="padding: 0px 10px; width:641px; " class="border border-light">
+
+  {{!-- 貼文 --}}
+  <div class="col-12 mx-auto" style="border: 1px solid #E6ECF0">
   <div class="d-flex flex-row p-2" style="border-bottom: 1px solid #E6ECF0">
     <a class="ms-2" href="/tweets">
       <img src="/icon/arrow.png" alt="" width="17px" height="14px"/>
@@ -56,11 +58,12 @@
       </div>
       </div>
     </div>
-</div>
+  </div>
 
 {{!-- 貼文回覆 --}}
-{{#each replies}}
-<div class="col-6 mx-auto p-2" style="border: 1px solid #E6ECF0">
+  <div class="col-12 mx-auto mt-2">
+    {{#each replies}}
+      <div class="col-12 mx-auto p-2" style="border: 1px solid #E6ECF0">
   <div class="d-flex flex-column">
     <div class="d-flex flex-row">
       <a href="#">
@@ -76,8 +79,12 @@
       @{{this.Tweet.User.name}}</span></span>
     <p class="ms-5 me-5 mt-2">{{this.comment}}</p>
   </div>
+      </div>
+    {{/each}}
+  </div>
+
 </div>
-{{/each}}
+
 
 {{!-- modal --}}
 <div class="modal" id="ModaltweetsReplies" tabindex="-1">
