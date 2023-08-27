@@ -1,45 +1,31 @@
-<nav class="navbar sticky-top navbar-light bg-light">
-            <div class="d-flex flex-row align-items-center px-3">
-                <div style="width:50px; height:auto" class="ms-1">
-                    <a class="navbar-brand" href="#">
-                        {{>back-icon}}
-                    </a>
-                </div>
-                <div class="container">
-                    <h4 class="card-title m-0">{{user.name}}</h4>
-                    <small>
-                        <p class="text-muted m-0">{{user.Tweets.length}}推文</p>
-                    </small>
-                </div>
-            </div>
-        </nav>
-        <div class="card border-white">
-            <div class="p-0 position-relative">
-                <img src={{#if user.cover}}{{user.cover}}{{else}}"https://live.staticflickr.com/65535/49985934496_ce401213ed_3k.jpg"{{/if}} class="card-img-top"
-                    alt="...">
-                <div style="width:140px; height:140px; background-color:#FF6600"
-                    class="position-absolute top-100 start-0 translate-middle-y rounded-circle ms-3 overflow-hidden border border-4 border-white ">
-                    <img src={{#if user.avatar}}{{user.avatar}}{{else}}"https://cdn2.ettoday.net/images/1457/1457773.jpg"{{/if}} style="max-width: 100%; height: auto"
-                        class="" alt="...">
-                </div>
-            </div>
-            <div class="card-body text-end">
-                {{!-- <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn mx-1">
-                    <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-forward-icon-png-image_4184777.jpg"
-                        style="width: 13px; height: 13px" alt="...">
-                </a>
-                <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn mx-1">
-                    <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-forward-icon-png-image_4184777.jpg"
-                        style="width: 13px; height: 13px" alt="...">
-                </a> --}}
-                <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px"
-                    class="btn mx-1 px-3" data-bs-toggle="modal" data-bs-target="#personalData">編輯個人資料</a>
-            </div>
-            <div class="card-body">
-                <h4 class="card-title mb-1">{{user.name}}</h4>
-                <p class="card-subtitle mb-2 text-muted">@{{user.account}}</p>
-                <p class="card-text">{{user.introduction}}</p>
-                <a href="#" style="color:#000000" class="text-decoration-none"><small>{{user.Followings.length}} 個跟隨中</small></a>
-                <a href="#" style="color:#000000" class="text-decoration-none"><small>{{user.Followers.length}} 個跟隨者</small></a>
-            </div>
+<div class="card border-white">
+    <div class="p-0 position-relative">
+        <img src="https://live.staticflickr.com/65535/49985934496_ce401213ed_3k.jpg" class="card-img-top" alt="...">
+        <div style="width:140px; height:140px; background-color:#FF6600"
+            class="position-absolute top-100 start-0 translate-middle-y rounded-circle ms-3 overflow-hidden border border-4 border-white ">
+            <img src="https://cdn2.ettoday.net/images/1457/1457773.jpg" style="max-width: 100%; height: auto" class=""
+                alt="...">
         </div>
+    </div>
+    <div class="card-body text-end">
+        {{!-- <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn mx-1">
+            <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-forward-icon-png-image_4184777.jpg"
+                style="width: 13px; height: 13px" alt="...">
+        </a>
+        <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn mx-1">
+            <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-forward-icon-png-image_4184777.jpg"
+                style="width: 13px; height: 13px" alt="...">
+        </a> --}}
+        <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn mx-1 px-3"
+            data-bs-toggle="modal" data-bs-target="#personalData">編輯個人資料</a>
+    </div>
+    <div class="card-body">
+        <h4 class="card-title mb-1">{{user.name}}</h4>
+        <p class="card-subtitle mb-2 text-muted">@{{user.account}}</p>
+        <p class="card-text">{{user.introduction}}</p>
+        <a href="/users/{{user.id}}/followings" style="color:#000000"
+            class="text-decoration-none"><small>{{user.Followings.length}} 個跟隨中</small></a>
+        <a href="/users/{{user.id}}/followers" style="color:#000000"
+            class="text-decoration-none"><small>{{user.Followers.length}} 個跟隨者</small></a>
+    </div>
+</div>
