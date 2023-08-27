@@ -66,10 +66,10 @@
 <!--profile-->
 <div class="card-body col-12">
   <div class="card-text ps-2">
-    <h4 style="font-weight: 900; line-height: 18px">{{user.name}}</h4>
-    <span class="text-muted" style="font-size: 0.93em; line-height: 18px;">{{user.account}}</span>
-    <p class="my-2" style="font-size: 0.96em; line-height: 25px">
-      {{#if user.introduction}}{{user.introduction}}{{else}}<span style="color:gray">請至編輯個人資料頁面填寫自我介紹</span>{{/if}}</p>
+    <h4 style="font-weight: 900; line-height: 18px;word-wrap:break-word">{{user.name}}</h4>
+    <span class="text-muted" style="font-size: 0.93em; line-height: 18px;word-wrap:break-word">{{user.account}}</span>
+    <p class="my-2" style="font-size: 0.96em; line-height: 25px;word-wrap:break-word">
+      {{#if user.introduction}}{{user.introduction}}{{else}}請至編輯個人資料頁面填寫自我介紹{{/if}}</p>
     <a href="/users/{{user.id}}/followings" style="text-decoration:none;">
       <span class="fw-bold text-dark">{{user.Followings.length}}</span><span
         class="text-muted text-dark me-3">個跟隨中</span>
@@ -87,7 +87,7 @@
       <a class="nav-link {{#ifCond route 'user-tweets'}}active{{/ifCond}}" id="nav-home-tab" data-toggle="tab" href="/users/{{user.id}}/tweets"
         role="tab" aria-controls="nav-home"
         aria-selected="true">推文 </a>
-      <a class="nav-link {{#ifCond route 'users-replies'}}active{{/ifCond}}" id="nav-profile-tab" data-toggle="tab" href="/users/{{user.id}}/replies" role="tab" aria-controls="nav-profile" aria-selected="false">回覆</a>
+      <a class="nav-link {{#ifCond route 'user-replies'}}active{{/ifCond}}" id="nav-profile-tab" data-toggle="tab" href="/users/{{user.id}}/replies" role="tab" aria-controls="nav-profile" aria-selected="false">回覆</a>
       <a class="nav-link {{#ifCond route 'user-likes'}}active{{/ifCond}}" id="nav-contact-tab" data-toggle="tab" href="/users/{{user.id}}/likes" role="tab" aria-controls="nav-contact" aria-selected="false">喜歡的內容</a>
     </div>
   </nav>

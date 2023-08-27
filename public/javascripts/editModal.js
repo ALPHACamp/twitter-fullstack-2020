@@ -5,6 +5,7 @@ const inputName = document.querySelector('#name')
 const inputIntroduction = document.querySelector('#introduction')
 const editButton = document.querySelector('#editButton')
 const backgroundImage = document.querySelector('#background-image')
+const deleteBgButton = document.querySelector('.edit-x-icon')
 const inputBackground = document.querySelector('#background')
 const avatarImage = document.querySelector('#avatar-image')
 const inputAvatar = document.querySelector('#avatar')
@@ -20,6 +21,16 @@ inputBackground.addEventListener('change', async () => {
   })
   backgroundPath = data.data.uploadBackground
   backgroundImage.src = backgroundPath
+  } catch (err) { console.log(err) }
+})
+
+
+deleteBgButton.addEventListener('click', async () => {
+  try {
+    const data = await axios.post(`/api/imagex`)
+    backgroundPath = data.data.uploadBackground
+    backgroundImage.src = backgroundPath
+    inputBackground.value = ''
   } catch (err) { console.log(err) }
 })
 

@@ -12,12 +12,12 @@ const likeController = {
           model: Like,
           include: [{ model: Tweet,
             include:[User, Like, Reply]}
-          ],
-          order: [["updatedAt", "DESC"]]
+          ]
         },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
-      ]
+      ],
+        order: [["Likes","updatedAt", "DESC"]]
       });
 
       if (user) {
