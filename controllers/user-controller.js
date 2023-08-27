@@ -28,7 +28,8 @@ const userController = {
       User.findByPk(2, { raw: true })
     ])
       .then(([tweets, user]) => {
-        res.render('profile', { tweets, user, profileRoute })
+        const tweetsCount = tweets.length
+        res.render('profile', { tweets, user, profileRoute, tweetsCount })
       })
       .catch(err => next(err))
   },
