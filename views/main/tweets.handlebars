@@ -36,6 +36,7 @@
   {{#each tweets}}
   <div
     data-link="/tweets/{{ this.User.id }}/replies"
+    data-id="{{ this.User.id }}"
     class="tweet-card card shadow-none py-0 px-4 m-0 rounded-0 border-1px border-bottom-1 border-top-0 border-start-0 border-end-0"
   >
     <div class="card-body m-0 p-0 pb-3 d-flex gap-2">
@@ -76,6 +77,7 @@
             />
             <p class="font-size-sm m-0 text-secondary">{{ this.replies }}</p>
           </button>
+          <<<<<<< HEAD
           <a href="#" class="d-flex align-items-center gap-2 link-unstyled">
             <img
               src="/images/icons/icon_like_outlined.svg"
@@ -84,6 +86,37 @@
             />
             <p class="font-size-sm m-0 text-secondary">{{ this.likes }}</p>
           </a>
+          =======
+          {{#if isLiked}}
+          <form action="/tweets/{{ this.id }}/unlike" method="post">
+            <button
+              href="#"
+              class="btn border-0 btn-outline-light p-0 m-0 d-flex align-items-center gap-2 link-unstyled"
+            >
+              <img
+                src="/images/icons/icon_like_filled.svg"
+                alt=""
+                class="filter-red-color img-fluid center tweet-action-icon"
+              />
+              <p class="font-size-sm m-0 text-secondary">{{ this.likes }}</p>
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{ this.id }}/like" method="post">
+            <button
+              href="#"
+              class="btn border-0 btn-outline-light p-0 m-0 d-flex align-items-center gap-2 link-unstyled"
+            >
+              <img
+                src="/images/icons/icon_like_outlined.svg"
+                alt=""
+                class="img-fluid center tweet-action-icon"
+              />
+              <p class="font-size-sm m-0 text-secondary">{{ this.likes }}</p>
+            </button>
+          </form>
+          {{/if}}
+          >>>>>>> upstream/main
         </div>
       </div>
     </div>

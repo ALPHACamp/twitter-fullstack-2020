@@ -18,181 +18,18 @@
     <div class="container-lg">
       <div class="row gap-4">
         <div class="col-2 px-0 mx-0 d-flex flex-column align-items-end">
-
-          <div class="navbar-main pt-2">
-            <a href="/tweets"
-              class="navbar-ac-icon overflow-hidden  rounded-circle link-unstyled  child-img-center m-2">
-              <img src="/images/icons/ac_icon.svg" alt="" class="w-100 h-100">
-            </a>
-            <ul class="nav flex-column gap-2">
-              <li class="nav-item">
-                <a href="#" aria-current="{{#ifCond route 'home'}}page{{/ifCond}}"
-                  class="{{#ifCond route 'home'}}active{{/ifCond}} nav-link nav-link-home link-unstyled d-flex justify-content-start align-items-center ">
-                  <div class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1">
-                    <img src="/images/icons/home_outlined.svg" alt="">
-                    <p class=" p-0 m-0">首頁</p>
-                  </div>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" aria-current="{{#ifCond route 'user'}}page{{/ifCond}}"
-                  class="{{#ifCond route 'user'}}active{{/ifCond}} nav-link nav-link-info link-unstyled d-flex justify-content-start align-items-center ">
-                  <div class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1">
-                    <img src="/images/icons/user_outlined.svg" alt="">
-                    <p class=" p-0 m-0">個人資料</p>
-                  </div>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" aria-current="{{#ifCond route 'setting'}}page{{/ifCond}}"
-                  class="{{#ifCond route 'setting'}}active{{/ifCond}} nav-link nav-link-setting link-unstyled d-flex justify-content-start align-items-center ">
-                  <div class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1">
-                    <img src="/images/icons/cog_outlined.svg" alt="">
-                    <p class=" p-0 m-0">設定</p>
-                  </div>
-                </a>
-              </li>
-
-              <button type="button" class="nav-tweet-btn btn btn-primary rounded-pill px-4 py-2" data-bs-toggle="modal"
-                data-bs-target="#tweet-model">
-                推文
-              </button>
-
-              <li class="nav-item">
-                <a href="/logout"
-                  class="nav-link nav-link-logout link-unstyled d-flex justify-content-start align-items-center ">
-                  <div class="nav-link-content d-flex justify-content-between gap-3 align-items-start pt-1">
-                    <img src="/images/icons/logout_outlined.svg" alt="">
-                    <p class=" p-0 m-0">登出</p>
-                  </div>
-                </a>
-              </li>
-            </ul>
-
-          </div>
+          {{>left_navbar}}
         </div>
         <div class="col main-middle-col  border-start-1 border-end-1 border-1px  px-0 mx-0">
           {{{body}}}
         </div>
         <div class="col-3 px-0  ms-0 me-0">
-          <div class="recommend-user-card card border-0 shadow-none mt-3">
-            <h4 class="card-title m-0 p-4">推薦跟隨</h4>
-            <hr class="m-0">
-            {{!-- 要使用each的地方 --}}
-            <div class="card-body p-0 scrollbar-hidden">
-              {{#each recommendUser}}
-              <div class="single-user-card card border-0 shadow-none">
-                <div class="card-body d-flex justify-content-between align-items-center p-3">
-                  <div class="d-flex gap-2">
-                    <img src="/images/icons/default_avatar.svg" alt="">
-                    <div>
-                      <p class="fw-bold fs-6 m-0 p-0 text-truncate">{{this.name}}</p>
-                      <p class="font-size-sm text-secondary m-0 p-0 text-truncate">@{{this.account}}</p>
-                    </div>
-                  </div>
-                  {{#if isFollowed}}
-                  {{!-- 要使用if/else的地方 --}}
-                  <form action="/followships/{{this.id}}?_method=DELETE" method="post">
-                    <button type="submit" class="btn btn-primary">正在跟隨</button>
-                  </form>
-                  {{else}}
-                  {{!-- 要使用if/else的地方 --}}
-                  <form action="/followships" method="post">
-                    <input type="text" name="id" value="{{this.id}}" class="d-none">
-                    <button type="submit" class="btn btn-outline-primary">跟隨</button>
-                  </form>
-                  {{/if}}
-                  {{!-- 要使用if/else的地方 --}}
-                </div>
-              </div>
-              {{/each}}
-              {{!-- 要使用each的地方 --}}
-            </div>
-          </div>
+          {{>recommend_users_bar}}
         </div>
       </div>
     </div>
-    {{!--隱藏起來的Model--}}
-    {{!-- 以下是tweet model --}}
-
-    <div class="modal fade" id="tweet-model" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header d-flex justify-content-start">
-            <button type="button" class="btn btn-outline-light modal-close-btn" data-bs-dismiss="modal"
-              aria-label="Close">
-              <img src="/images/icons/close_outlined.svg" alt="" class="filter-main-color">
-            </button>
-          </div>
-          <div class="modal-body p-0 m-0">
-            <form action="" class="modal-form m-0 mt-3 py-0 px-4">
-              <div class="m-0 gap-2 d-flex">
-                <label for="tweet"
-                  class="form-label overflow-hidden  flex-shrink-0 rounded-circle  child-img-center p-0 m-0">
-                  <img src="{{user.avatar}}" alt="" class="p-0 m-0 h-100 w-100">
-                </label>
-                <textarea class="form-control ps-0" id="tweet" name="tweet" rows="1" placeholder="有什麼新鮮事？"></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary rounded-pill">回覆</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--reply Modal -->
-    <div class="modal fade" id="reply-model" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header d-flex justify-content-start">
-            <button type="button" class="btn btn-outline-light modal-close-btn" data-bs-dismiss="modal"
-              aria-label="Close">
-              <img src="/images/icons/close_outlined.svg" alt="" class="filter-main-color">
-            </button>
-          </div>
-          <div class="modal-body p-0 m-0">
-            <div class=" mx-4 my-3 p-0 d-flex gap-2">
-              <div
-                class="model-reply-icon flex-shrink-0 gap-3 p-0 d-flex flex-column align-items-center justify-content-between">
-                <a href="#" class="tweet-user-icon overflow-hidden  rounded-circle link-unstyled  child-img-center p-0">
-                  <img src="/images/icons/ac_icon.svg" alt="" class="w-100 h-100">
-                </a>
-                <div class="reply-modal-bar"></div>
-              </div>
-              <div class="tweet-card-content d-flex flex-column gap-2">
-
-                <div class="tweet-user-horizontal">
-                  <a href="#" class=" d-flex gap-2 link-unstyled align-items-center">
-                    <p class="fw-bold">Apple</p>
-                    <p class="font-size-sm text-secondary">@apple・3 小時</p>
-                  </a>
-                </div>
-
-                <p class="m-0">
-                  Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate
-                  exercitation incididunt aliquip deserunt reprehenderit elit laborum.
-                </p>
-                <div class="tweet-user-replied">
-                  <a href="#" class=" d-flex gap-2 link-unstyled align-items-center">
-                    <p class="font-size-sm text-secondary">回覆給</p>
-                    <p class="font-size-sm main-color">@apple</p>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <form action="" class="modal-form m-0 mt-3 py-0 px-4">
-              <div class="m-0 gap-2 d-flex">
-                <label for="reply"
-                  class="form-label overflow-hidden  flex-shrink-0 rounded-circle  child-img-center p-0 m-0">
-                  <img src="{{user.avatar}}" alt="" class="p-0 m-0 h-100 w-100">
-                </label>
-                <textarea class="form-control ps-0" id="reply" name="reply" rows="1" placeholder="推你的回覆"></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary rounded-pill">回覆</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    {{>tweet_modal}}
+    {{>reply_modal}}
   </main>
 </body>
 {{#each javascripts}}
