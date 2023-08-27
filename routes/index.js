@@ -63,6 +63,7 @@ router.post('/api/image', upload.fields([
   { name: 'background' },
   { name: 'avatar' }
 ]), authenticated, apiController.uploadImage)
+router.post('/api/imagex', authenticated, apiController.deleteImage)
 router.get("/settings", authenticated, userController.getSetting); // 個人資料設定
 router.put("/settings", authenticated, userController.putSetting); // 個人資料編輯
 router.use('/', (req, res) => res.redirect('/tweets'));

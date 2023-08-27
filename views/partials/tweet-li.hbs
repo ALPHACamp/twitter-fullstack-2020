@@ -20,11 +20,11 @@
   <div class="content ms-2" style="width:528px">
     <div class="account d-dlex flex-row mt-2">
       <a class="user-text-link" href="/users/{{this.userId}}/tweets">
-        <p style="display: inline; font-weight:700">{{this.userAccount}}</p>
+        <p style="display: inline; font-weight:700">{{this.userName}}</p>
       </a>
       <p
         style="display: inline; color:#6C757D"
-      >@{{this.userName}}．{{relativeTimeFromNow this.createdAt}}</p>
+      >@{{this.userAccount}}．{{relativeTimeFromNow this.createdAt}}</p>
     </div>
     <div class="text mt-2">
       <a

@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
-const { Tweet, User, Reply, Like, Followship } = require("../models");
+const { Tweet, User, Reply, Like, Followship, sequelize} = require("../models");
 const { getEightRandomUsers } = require("../helpers/randomUsersHelper");
 const helpers = require("../_helpers");
 const userController = {
@@ -92,6 +92,7 @@ const userController = {
           followerId: helpers.getUser(req).id,
           followingId: id
         })
+        req.flash("info_messages", "追蹤成功！");
         return res.redirect('back')
       }
       //   const { followingUserId } = req.params;
@@ -100,7 +101,7 @@ const userController = {
       //   const followship = await Followship.findOne({
       //     where: { followerId: currentUserId, followingId: followingUserId },
       //   });
-      req.flash("info_messages", "追蹤成功！");
+      // req.flash("info_messages", "追蹤成功！");
       //   if (!user) throw new Error("User didn't exist");
       //   if (followship) throw new Error("You are already following this user!");
       //   await Followship.create({
@@ -130,121 +131,104 @@ const userController = {
     }
   },
   getUser: async (req, res, next) => {
-    const isUser =
-      helpers.getUser(req).id === Number(req.params.id) ? true : false;
-    try {
-      const userId = req.params.id;
-      const currentUserId = helpers.getUser(req).id;
-      const user = await User.findByPk(userId, {
-        include: [
-          {
-            model: Tweet,
-            include: [
-              { model: User },
-              { model: Reply, include: [{ model: Tweet }] },
-              { model: Like },
-            ],
-            order: [["updatedAt", "DESC"]],
-          },
-          { model: User, as: "Followers" },
-          { model: User, as: "Followings" },
-        ],
+  const isUser =
+    helpers.getUser(req).id === Number(req.params.id) ? true : false;
+  try {
+    const userId = req.params.id;
+    const currentUserId = helpers.getUser(req).id;
+    const user = await User.findByPk(userId, {
+      include: [
+        {
+          model: Tweet,
+          include: [
+            { model: User },
+            { model: Reply, include: [{ model: Tweet }] },
+            { model: Like },
+          ]
+        },
+        { model: User, as: "Followers" },
+        { model: User, as: "Followings" },
+      ],
+      order: [["Tweets","updatedAt", "DESC"]]
+    });
+
+    if (!user) throw new Error('使用者不存在')
+      const userData = user.toJSON();
+      const recommend = await getEightRandomUsers(req);
+
+      const isFollowed = user.Followers.some((l) => l.id === currentUserId);
+
+      const tweets = user.Tweets.map((tweet) => {
+        const replies = tweet.Replies.length;
+        const likes = tweet.Likes.length;
+        const isLiked = tweet.Likes.some((l) => l.UserId === currentUserId);
+        const userAvatar = tweet.User.avatar;
+        return {
+          tweetId: tweet.id,
+          userId: tweet.User.id,
+          userAccount: tweet.User.account,
+          userName: tweet.User.name,
+          text: tweet.description,
+          createdAt: tweet.createdAt,
+          replies,
+          likes,
+          isLiked,
+          userAvatar,
+        };
       });
 
-      if (user) {
-        const userData = user.toJSON();
-        const recommend = await getEightRandomUsers(req);
+      const dataToRender = {
+        user: userData,//這邊剛好命名是user 不是users
+        tweets,
+        recommend,
+        isUser,
+        isFollowed,
+      };
 
-        const isFollowed = user.Followers.some((l) => l.id === currentUserId);
-
-        const tweets = user.Tweets.map((tweet) => {
-          const replies = tweet.Replies.length;
-          const likes = tweet.Likes.length;
-          const isLiked = tweet.Likes.some((l) => l.UserId === currentUserId);
-          const userAvatar = tweet.User.avatar;
-          return {
-            tweetId: tweet.id,
-            userId: tweet.User.id,
-            userAccount: tweet.User.account,
-            userName: tweet.User.name,
-            text: tweet.description,
-            createdAt: tweet.createdAt,
-            replies,
-            likes,
-            isLiked,
-            userAvatar,
-          };
-        });
-
-        const dataToRender = {
-          user: userData,//這邊剛好命名是user 不是users
-          tweets,
-          recommend,
-          isUser,
-          isFollowed,
-        };
-
-        res.render("user/user-tweets", dataToRender);
-      } else {
-        res.status(404).send("未找到用户");
-      }
+      res.render("user/user-tweets", dataToRender);
     } catch (err) {
-      console.error(err);
-      res.status(500).send("获取用户数据时出错。");
+      next(err)
     }
   },
   getFollower: async (req, res, next) => {
     // 跟隨者
     try {
       const userId = req.params.id;
-
-      //const user = Followship.findAll({where: { followerId: req.params.id } })
       const user = await User.findByPk(userId, {
         include: [
-          {
-            model: User,
-            as: "Followers",
-            include: { model: User, as: "Followers" },
-          },
-          {
-            model: User,
-            as: "Followings",
-            include: { model: User, as: "Followers" },
-          },
+          { model: User, as: 'Followers', include: { model: User, as: 'Followers' } },
+          { model: User, as: 'Followings', include: { model: User, as: 'Followers' } }
         ],
+        order: [[sequelize.col('Followers.Followship.createdAt'), 'DESC']]
       });
 
-      if (user) {
-        const userData = user.toJSON();
-        const recommend = await getEightRandomUsers(req);
-        const follows = user.Followers.map((e) => {
-          const isnotUser = e.id !== helpers.getUser(req).id;
-          const isFollowed = e.Followers.some(
-            (f) => f.id === helpers.getUser(req).id
-          );
-          return {
-            id: e.id,
-            name: e.name,
-            avatar: e.avatar,
-            introduction: e.introduction,
-            isFollowed,
-            isnotUser,
-          };
-        });
-
-        const dataToRender = {
-          user: userData,
-          recommend,
-          follows,
+      if (!user) throw new Error('使用者不存在')
+      const userData = user.toJSON();
+      const recommend = await getEightRandomUsers(req);
+      const follows = user.Followers.map((e) => {
+        const isnotUser = e.id !== helpers.getUser(req).id;
+        const isFollowed = e.Followers.some(
+          (f) => f.id === helpers.getUser(req).id
+        );
+        return {
+          id: e.id,
+          name: e.name,
+          avatar: e.avatar,
+          introduction: e.introduction ? e.introduction.substring(0, 50) : null,
+          isFollowed,
+          isnotUser,
         };
+      });
 
-        res.render("user/user-follower", dataToRender);
-      } else {
-        res.status(404).send("未找到用户");
-      }
+      const dataToRender = {
+        user: userData,
+        recommend,
+        follows,
+      };
+
+      res.render("user/user-follower", dataToRender);
     } catch (err) {
-      console.error(err);
-      res.status(500).send("获取用户数据时出错。");
+      next(err)
     }
   },
 
@@ -256,35 +240,32 @@ const userController = {
       const user = await User.findByPk(userId, {
         include: [
           { model: User, as: 'Followers', include: { model: User, as: 'Followers' } },
-          { model: User, as: 'Followings', include: { model: User, as: 'Followers' } }
-        ]
+          { model: User, as: 'Followings', include: { model: User, as: 'Followers' }}
+        ],
+        order: [[sequelize.col('Followings.Followship.createdAt'), 'DESC']]
       });
 
-      if (user) {
-        const userData = user.toJSON();
-        const recommend = await getEightRandomUsers(req);
-        const follows = user.Followings.map((e) => {
-          const isnotUser = e.id !== helpers.getUser(req).id
-          const isFollowed = e.Followers.some(f => f.id === helpers.getUser(req).id)
-          return {
-            id: e.id,
-            name: e.name,
-            avatar: e.avatar,
-            introduction: e.introduction,
-            isFollowed,
-            isnotUser
-          };
-        });
-        const dataToRender = {
-          user: userData,
-          recommend,
-          follows,
+      if (!user) throw new Error('使用者不存在')
+      const userData = user.toJSON();
+      const recommend = await getEightRandomUsers(req);
+      const follows = user.Followings.map((e) => {
+        const isnotUser = e.id !== helpers.getUser(req).id
+        const isFollowed = e.Followers.some(f => f.id === helpers.getUser(req).id)
+        return {
+          id: e.id,
+          name: e.name,
+          avatar: e.avatar,
+          introduction: e.introduction ? e.introduction.substring(0, 50) : null,
+          isFollowed,
+          isnotUser
         };
-        res.render("user/user-following", dataToRender);
-      } else {
-        req.flash("error_messages", "推文成功！");
-        res.redirect("back");
-      }
+      });
+      const dataToRender = {
+        user: userData,
+        recommend,
+        follows,
+      };
+      res.render("user/user-following", dataToRender);
     } catch (err) {
       next(err);
     }

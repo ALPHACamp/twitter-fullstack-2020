@@ -21,24 +21,27 @@
               <img id="background-image"
                 src="{{#if user.background}}{{user.background}}{{else}}https://i.imgur.com/ndXEE6d.jpg{{/if}}"
                 id="background-image" class="card-img-top" alt="..." class="img-fluid" id="bgImage"
-                style="height:100%;width:100%;object-fit:cover">
+                style="filter: brightness(70%);height:100%;width:100%;object-fit:cover">
+
             </div>
             <div class="form-row mb-3">
               <label for="background" class=" form-label">
                 <input class="d-none" type="file" id="background" name="background" accept="image/*" style="display: none">
                 <i class="btn fa-solid fa-camera fa-lg"
-                  style="position: absolute; object-fit: cover; top: 30%; left: 45%;; width:20; height:20px; color: gray;"></i>
+                  style="position: absolute; object-fit: cover; top: 30%; left: 45%;; width:20; height:20px; color: white;"></i>
               </label>
+              <span><i class="edit-x-icon btn fa-solid fa-x" style="position: absolute; object-fit: cover; top: 27%; left: 50%;; width:20; height:20px; color: white;"></i></span>
+
             </div>
 
             <div class="avatar-holder">
               <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}"
                 id="avatar-image" class="rounded-circle" alt="user_Aavtor" height="140px" width="140px"
-                style="border: 2px solid white; position: absolute; object-fit: cover; top: 40%; left: 3%;">
+                style="filter: brightness(70%);border: 2px solid white; position: absolute; object-fit: cover; top: 40%; left: 3%;">
             </div>
             <label for="avatar" class=" form-label">
               <input class="d-none" type="file" id="avatar" name="avatar" accept="image/*" style="display: none">
-              <i class="btn fa-solid fa-camera fa-lg" style="position: absolute; top: 71%; left: 14%; transform: translate(-50%, -50%); color: grey;"></i>
+              <i class="btn fa-solid fa-camera fa-lg" style="position: absolute; top: 71%; left: 14%; transform: translate(-50%, -50%); color: white;"></i>
             </label>
           </div>
 
@@ -47,7 +50,7 @@
           <label for="name" style="font-size:14px; ">名稱</label>
           <input type="text" class="form-control pt-0" id="name" name="name" maxlength="50" onkeyup='nameWordsCheck()'
             style="width: 600px; border:none;outline: none; background-color:#F5F8FA; border-bottom:1px solid #657786;font-size:14px"
-            aria-describedby="nameHelp" value="{{user.name}}"></input>
+            aria-describedby="nameHelp" value="{{user.name}}" required></input>
           <div id="name-area">
             <p class="text-end text-muted now1" style="font-size: 12px;">{{user.name.length}}/50</p>
           </div>

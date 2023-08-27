@@ -12,12 +12,12 @@ const replyController = {
         include: [{ 
           model: Reply,include: [
             {model: Tweet, include: [{model: User}]},
-            {model: User}],
-          order: [['updatedAt', 'DESC']],
+            {model: User}]
         }, 
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
-      ]
+      ],
+        order: [["Replies", "updatedAt", "DESC"]]
       });
 
       if (user) {
