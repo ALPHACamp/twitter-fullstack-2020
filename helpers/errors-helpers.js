@@ -30,6 +30,14 @@ class LikeError extends Error {
     this.name = 'likeError'
   }
 }
+
+class UserError extends Error {
+  constructor (message) {
+    super(message)
+    this.name = 'userError'
+  }
+}
+
 class TweetError extends Error {
   constructor (message) {
     super(message)
@@ -43,4 +51,5 @@ module.exports = {
   FollowshipError,
   LikeError,
   TweetError
+  UserError
 }
