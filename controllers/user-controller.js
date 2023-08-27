@@ -1,7 +1,6 @@
 const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
 const { Tweet, User, Reply, Like, Followship } = require("../models");
-const { imgurFileHandler } = require("../helpers/file-helpers");
 const { getEightRandomUsers } = require("../helpers/randomUsersHelper");
 const helpers = require("../_helpers");
 const userController = {
@@ -199,29 +198,39 @@ const userController = {
     try {
       const userId = req.params.id;
 
+      //const user = Followship.findAll({where: { followerId: req.params.id } })
       const user = await User.findByPk(userId, {
         include: [
-          { model: User, as: 'Followers', include: { model: User, as: 'Followers' } },
-          { model: User, as: 'Followings', include: { model: User, as: 'Followers' } }
-        ]
+          {
+            model: User,
+            as: "Followers",
+            include: { model: User, as: "Followers" },
+          },
+          {
+            model: User,
+            as: "Followings",
+            include: { model: User, as: "Followers" },
+          },
+        ],
       });
 
       if (user) {
         const userData = user.toJSON();
         const recommend = await getEightRandomUsers(req);
         const follows = user.Followers.map((e) => {
-          const isnotUser = e.id !== helpers.getUser(req).id
-          const isFollowed = e.Followers.some(f => f.id === helpers.getUser(req).id)
+          const isnotUser = e.id !== helpers.getUser(req).id;
+          const isFollowed = e.Followers.some(
+            (f) => f.id === helpers.getUser(req).id
+          );
           return {
             id: e.id,
             name: e.name,
             avatar: e.avatar,
             introduction: e.introduction,
             isFollowed,
-            isnotUser
+            isnotUser,
           };
-        })
-
+        });
 
         const dataToRender = {
           user: userData,

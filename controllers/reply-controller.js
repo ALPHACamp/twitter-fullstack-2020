@@ -50,11 +50,11 @@ const replyController = {
 
         res.render('user/user-replies', dataToRender);
       } else {
-        res.status(404).send('未找到用户');
+        req.flash('error_messages', '未找到用戶')
+        res.redirect('back')
       }
     } catch (err) {
-      console.error(err);
-      res.status(500).send("获取用户数据时出错。");
+      next(err)
     }
   }
 }

@@ -66,3 +66,7 @@
 .tweet-user-text-link:hover{
     text-decoration: underline;
   }
+
+  .like-form, form {
+    margin-bottom:0
+  }
