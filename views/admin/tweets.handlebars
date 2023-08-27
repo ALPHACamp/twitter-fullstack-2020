@@ -12,27 +12,22 @@
 {{! 分隔線 }}
 <div class="division"></div>
 
-<div class="division"></div>
-
+{{#each tweets}}
 <div
-  class="container main-tweets-area d-flex flex-column gap-3 p-0 pt-3 m-0 scrollbar-hidden"
+  data-id="{{ this.User.id }}"
+  class="admin-tweet-card card shadow-none py-0 px-4 border-1px border-bottom-1 border-top-0 border-start-0 border-end-0"
 >
-  {{#each tweets}}
-  <div
-    data-link="/tweets/{{ this.User.id }}/replies"
-    data-id="{{ this.User.id }}"
-    class="tweet-card card shadow-none py-0 px-4 m-0 rounded-0 border-1px border-bottom-1 border-top-0 border-start-0 border-end-0"
-  >
-    <div class="card-body m-0 p-0 pb-3 d-flex gap-2">
-      <div class="tweet-user-icon flex-shrink-0 p-0">
-        <a
-          href="/api/users/{{ this.User.id }}"
-          class="overflow-hidden rounded-circle link-unstyled child-img-center w-100 h-100 p-0"
-        >
-          <img src="{{ this.User.avatar }}" alt="" class="w-100 h-100" />
-        </a>
-      </div>
-      <div class="tweet-card-content d-flex flex-column gap-2">
+  <div class="card-body m-0 pb-3 d-flex gap-2">
+    <div class="tweet-user-icon flex-shrink-0 p-0">
+      <a
+        href="/api/users/{{ this.User.id }}"
+        class="overflow-hidden rounded-circle link-unstyled child-img-center w-100 h-100 p-0"
+      >
+        <img src="{{ this.User.avatar }}" alt="" class="w-100 h-100" />
+      </a>
+    </div>
+    <div class="tweet-card-content d-flex flex-column gap-2 w-100">
+      <div class="p-0 m-0 d-flex justify-content-between align-items-center">
         <div class="tweet-user-horizontal">
           <a
             href="/api/users/{{ this.User.id }}"
@@ -44,11 +39,26 @@
             </p>
           </a>
         </div>
-        <p class="m-0">
-          {{ this.description }}
-        </p>
+
+        <form
+          action="/admin/tweets/{{ this.id }}?_method=DELETE"
+          method="POST"
+          style="display: inline"
+        >
+          <button type="submit" class="btn admin-delete-btn">
+            <img
+              src="/images/icons/close_outlined.svg"
+              alt=""
+              class="filter-grey-7"
+            />
+          </button>
+        </form>
       </div>
+      <p class="m-0">
+        {{ this.description }}
+      </p>
     </div>
   </div>
-  {{/each}}
+  <div class="bottom-border"></div>
 </div>
+{{/each}}
