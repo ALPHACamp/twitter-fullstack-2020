@@ -299,8 +299,6 @@
 }
 
 /*以下是model*/
-.modal {}
-
 .modal-content {
   position: fix;
   margin-top: 56px;
@@ -349,6 +347,13 @@
   position: absolute;
   bottom: 16px;
   right: 16px;
+}
+
+#tweet-model .modal-form .tweet-reply-warning{
+  font-weight: 500;
+  position: absolute;
+  bottom: 16px;
+  right: 101px;
 }
 
 #tweet-model .form-label,
