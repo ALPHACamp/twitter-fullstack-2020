@@ -20,18 +20,25 @@ const userHelper = {
         {
           model: User,
           as: 'Followings',
-          attributes: {
-            include: [
-              [sequelize.literal(
-            `(SELECT COUNT(*) FROM Followships
-              WHERE Followships.follower_id = ${userId}
-              AND Followships.following_id = User.id
-            )`), 'isFollowed'] // 查看此User是否已追蹤
-            ]
+          attributes: [
+            'id',
+            'name',
+            'account',
+            'avatar',
+            'introduction',
+            [sequelize.literal(
+              `(SELECT COUNT(*) FROM Followships
+                WHERE Followships.follower_id = ${userId}
+                AND Followships.following_id = User.id
+              )`), 'isFollowed'] // 查看此User是否已追蹤
+          ],
+          through: {
+            model: Followship,
+            attributes: ['createdAt']
           }
         }
       ],
-      order: [[{ model: User, as: 'Followings' }, 'Followship', 'createdAt', 'DESC']]
+      order: [[{ model: User, as: 'Followings' }, { model: Followship }, 'createdAt', 'DESC']]
 
     })
     return userWithfollowings.toJSON()
