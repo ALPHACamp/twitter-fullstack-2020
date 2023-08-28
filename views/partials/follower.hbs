@@ -16,19 +16,13 @@
         </div>
         {{#if isnotUser}}
         {{#if this.isFollowed }}
-        <div class="follow-btn d-flex justify-content-end" style="width: 96px;height: 40px">
           <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-            <button type="submit" class="btn" value="{{this.id}}" name="id"
-              style="width: 95px; font-size: 16px; white-space:nowrap; background: #FF6600;border-radius: 100px;color:#ffffff;">正在跟隨</button>
+            <button type="submit" class="follow-btn-active" value="{{this.id}}" name="id">正在跟隨</button>
           </form>
-        </div>
         {{else}}
-        <div class="follow-btn d-flex justify-content-end" style="width: 90px;height: 40px">
           <form action="/followships" method="POST">
-            <button type="submit" class="btn" value="{{this.id}}" name="id"
-              style="width: 64px;height: 40px; background: #FFFFFF;white-space:nowrap; border-radius: 50px;border:1px solid #FF6600;color:#FF6600; font-size: 16px;">跟隨</button>
+            <button type="submit" class="follow-btn" value="{{this.id}}" name="id">跟隨</button>
           </form>
-        </div>
         {{/if}}
         {{/if}}
       </div>
