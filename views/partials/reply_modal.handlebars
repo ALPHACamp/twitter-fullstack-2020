@@ -25,7 +25,7 @@
               </a>
             </div>
 
-            <p class="m-0">
+            <p class="m-0 text-break text-wrap">
               Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate
               exercitation incididunt aliquip deserunt reprehenderit elit laborum.
             </p>
@@ -39,12 +39,14 @@
         </div>
         <form action="" method="post" class="modal-form m-0 mt-3 py-0 px-4">
           <div class="m-0 gap-2 d-flex">
-            <label for="reply"
+            <label for="comment"
               class="form-label overflow-hidden  flex-shrink-0 rounded-circle  child-img-center p-0 m-0">
               <img src="{{user.avatar}}" alt="" class="p-0 m-0 h-100 w-100">
             </label>
-            <textarea class="form-control ps-0" id="reply" name="reply" rows="1" placeholder="推你的回覆"
-              maxlength="140"></textarea>
+            <textarea class="form-control ps-0" id="comment" name="comment" rows="5" placeholder="推你的回覆"
+              maxlength="140" minlength="1"></textarea>
+            <div class="tweet-reply-warning text-danger">
+            </div>
           </div>
           <button type="submit" class="btn btn-primary rounded-pill">回覆</button>
         </form>

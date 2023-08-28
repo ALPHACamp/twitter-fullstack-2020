@@ -1,3 +1,9 @@
+/*限制user card 中欄高度*/
+.main-middle-col{
+  max-height: 1200px;
+  display:block;
+}
+
 .border-1px {
   border: 1px solid #E6ECF0;
 
@@ -140,12 +146,11 @@
 
 /*讓display area可以滾動*/
 .tweet-display{
+    min-height: 0;
     overflow: hidden; /* 啟用捲軸 */
     margin-bottom: 4vh;
 }
-.main-tweets-area.tweet-display{
-  height: 979px; /* 設定容器的固定高度 */
-}
+
 .tweet-card-link {
   display: block;
   text-decoration: none;
@@ -359,7 +364,8 @@
   right: 16px;
 }
 
-#tweet-model .modal-form .tweet-reply-warning{
+#tweet-model .modal-form .tweet-reply-warning,
+#reply-model .modal-form .tweet-reply-warning{
   padding: 0;
   margin: 0;
   font-weight: 500;
