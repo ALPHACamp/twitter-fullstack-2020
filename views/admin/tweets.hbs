@@ -1,30 +1,28 @@
 {{!-- handlebars 頁面還要再修 --}}
 {{> admin-left-sidebar route="getTweets"}}
-<div class="main-middle" id="admin-tweets-page-container">
-  <div class="col-9  border border-top-0 mt-0">
+<div class="main-middle" id="admin-tweets-page-container" >
+  <div class="col-9  border border-top-0 mt-0" style="width: 937px; height: 103px; gap: 16px;">
     <div class="card-header p-4">
       <h4 class="m-0">推文清單</h4>
     </div>
     {{#each tweets}}
-    <div class="card col-12 hovercard d-flex flex-row rounded-0 border-0 border-top">
+    <div class="card col-12 hovercard d-flex flex-row rounded-0 border-0 border-top border-start border-end" style="width: 937px; height: 103px; gap: 16px;">
       <div class="card-body col-12 p-3">
         <div class="row mb-2 p-1">
           <div class="col-1 d-flex justify-content-center align-items-start">
-            <a href="/users/{{this.UserId}}">
-              <img src="{{#if this.User.avatar}}{{ this.User.avatar }}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}"
-                class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
-            </a>
+            <img src="{{#if this.User.avatar}}{{ this.User.avatar }}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}"
+              class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
           </div>
           <div class="col-10 row">
             <div class="col-12 d-inline-flex align-items-center">
               <div style="height: 26px; font-size: 15px">
-                <a href="/users/{{ this.UserId }}" class="text-dark" style="font-size: 16px; font-weight: 700; margin-right: 8px; text-decoration: none;">{{ this.User.name }}</a>
+                <span class="text-dark" style="font-size: 16px; font-weight: 700; margin-right: 8px; text-decoration: none;">{{ this.User.name }}</span>
                 <span style="font-size: 14px; font-weight: 400">
                   @{{ this.User.account }}·{{ relativeTime this.User.createdAt }}
                 </span>
               </div>
             </div>
-            <div class="col-12 mt-1" onclick="javascript:location.href='/tweets/{{this.id}}'" style="cursor: pointer;">
+            <div class="col-12 mt-1">
               {{ this.description }}
             </div>
           </div>

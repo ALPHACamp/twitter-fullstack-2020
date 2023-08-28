@@ -8,10 +8,10 @@ body {
 }
  
 button {
-   margin: 0;
-   padding: 0;
-   border: none;
-   outline: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
 }
 
 textarea {
@@ -85,6 +85,26 @@ textarea {
   height: 124px;
   top: 66px;
   gap: 8px;
+}
+
+.main-middle {
+  position: absolute;
+  left: 333px;
+  height: 1200px;
+}
+
+.row-card {
+  position: absolute;
+  left: 332px;
+  top: 1px;
+}
+
+.main-user-card {
+  width: 888px;
+  height: 314px;
+  top: 91px;
+  left: 349px;
+  gap: 16px;
 }
 
 .button-container {
