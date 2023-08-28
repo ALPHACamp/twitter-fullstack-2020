@@ -1,0 +1,15 @@
+<nav class="navbar sticky-top navbar-light bg-light">
+    <div class="d-flex flex-row align-items-center px-3">
+        <div style="width:50px; height:auto" class="ms-1">
+            <a class="navbar-brand" href="#">
+                {{>back-icon}}
+            </a>
+        </div>
+        <div class="container">
+            <h4 class="card-title m-0">{{user.name}}</h4>
+            <small>
+                <p class="text-muted m-0">{{user.Tweets.length}}推文</p>
+            </small>
+        </div>
+    </div>
+</nav>

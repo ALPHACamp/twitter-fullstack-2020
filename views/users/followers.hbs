@@ -1,0 +1,48 @@
+{{>navigation route='users'}}
+<div style="margin-left:198px; padding: 0px 10px; width:641px; " class="border border-light">
+    <div class="mx-auto border border-light">
+       {{>header}}
+       {{>user-followpage-tabs route='followers'}}
+    </div>
+    {{!-- 留言 --}}
+    {{#each tweets}}
+    <div class="mx-auto p-2" style="border: 1px solid #E6ECF0">
+        <div class="card-body">
+            <div class="d-flex flex-row">
+                <a href="#">
+                    <img class=""
+                        src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt=""
+                        width="40px" height="40px" style="background-color:#FF6600; border-radius: 30px">
+                </a>
+                <p class="inline ms-1 mt-1">{{this.User.name}}</p>
+                <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{this.User.account}}</span>
+                <span class="ms-1 mt-2" style="font-size: 0.2em;">• {{relativeTimeFromNow this.createdAt}}</span>
+                {{!-- <div class="inline align-self-center ms-0 me-3 p-0 text-end"> --}}
+                    {{#if this.isFollowed }}
+                    <form action="/following/{{this.User.id}}?_method=DELETE" method="POST">
+                        <button type="submit"
+                            style="background-color:#FF6600; color:#ffffff; height:40px;border-radius: 30px"
+                            class="btn inline text-end">正在跟隨</button>
+                    </form>
+                    {{else}}
+                    <form action="/following/{{this.User.id}}" method="POST">
+                        <button type="submit"
+                            style="background-color:#FF6600; color:#ffffff; height:40px;border-radius: 30px"
+                            class="btn inline text-end">跟隨</button>
+                    </form>
+                    {{/if}}
+                    {{!--
+                </div> --}}
+            </div>
+
+            <a href="/tweets/replies" style="text-decoration: none; color:#171725">
+                <div class="col-10 mx-auto">
+                    <p>{{this.description}}</p>
+                </div>
+            </a>
+
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{>top-users-bar}}
