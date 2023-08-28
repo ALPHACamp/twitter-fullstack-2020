@@ -29,8 +29,8 @@ const tweetController = {
   postTweets: (req, res, next) => {
     const { description } = req.body
     const UserId = req.user.id
-    // if (!description) throw new Error('內容不可空白')
-    // if (description.length > 140) throw new Error('不可超過140字')
+    if (!description) throw new Error('內容不可空白')
+    if (description.length > 140) throw new Error('不可超過140字')
     User.findByPk(UserId)
       .then(user => {
         if (!user) throw new Error("User didn't exist!")
