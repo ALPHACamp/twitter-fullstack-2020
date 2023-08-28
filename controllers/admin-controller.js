@@ -32,6 +32,17 @@ const adminController = {
         res.render('admin/tweets', { tweets, tweetRoute })
       })
       .catch(err => next(err))
+  },
+  deleteTweet: (req, res, next) => {
+    return Tweet.findByPk(req.params.id)
+      .then(tweet => {
+        if (!tweet) throw new Error('The tweet did not exist!')
+        tweet.destroy()
+      })
+      .then(() => {
+        res.redirect('/admin/tweets')
+      })
+      .catch(err => next(err))
   }
 }
 module.exports = adminController
