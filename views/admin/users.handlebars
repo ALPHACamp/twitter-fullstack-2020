@@ -9,15 +9,11 @@
   </div>
 </div>
 
-{{! 分隔線 }}
-<div class="division"></div>
-
 <div class="row admin-user-card">
   <div class="col-2"></div>
   <div class="col-10">
     <div class="row">
-      {{!-- 要重複的地方 --}}
-      {{!-- 後臺顯示使用者 --}}
+      {{#each users}}
       <div class="col-3 p-2">
         <div class="card position-relative border-0 shadow-none m-0">
           <img
@@ -64,7 +60,7 @@
           </div>
         </div>
       </div>
-      {{!-- 要重複的地方 --}}
+      {{/each}}
     </div>
   </div>
 </div>

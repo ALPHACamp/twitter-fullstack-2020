@@ -4,7 +4,10 @@ const adminController = {
   getAdminHomePage: async (req, res, next) => {
     try {
       let tweets = await Tweet.findAll({
-        include: [User],
+        include: {
+          model: User,
+          required: true
+        },
         raw: true,
         nest: true
       })
@@ -27,7 +30,10 @@ const adminController = {
   getTweets: async (req, res, next) => {
     try {
       let tweets = await Tweet.findAll({
-        include: [User],
+        include: {
+          model: User,
+          required: true
+        },
         raw: true,
         nest: true
       })
@@ -49,7 +55,12 @@ const adminController = {
 
   getUsers: async (req, res, next) => {
     try {
-      res.render('admin/users')
+      const users = await User.findAll({
+        raw: true,
+        nest: true
+      })
+
+      res.render('admin/users', { users })
     } catch (error) {
       return next(error)
     }
