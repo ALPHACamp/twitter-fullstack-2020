@@ -7,8 +7,9 @@ const userController = {
   getEditPage: async (req, res, next) => {
     try {
       if (Number(req.params.id) !== helpers.getUser(req).id) throw new Error('沒有瀏覽權限!')
+      const reqUser = req.user
       const user = await User.findByPk(req.params.id, { raw: true })
-      return res.render('users/edit', { user })
+      return res.render('users/edit', { user, reqUser })
     } catch (err) {
       next(err)
     }
@@ -56,6 +57,7 @@ const userController = {
   },
   getUserTweetsPage: async (req, res, next) => {
     try {
+      const reqUser = req.user
       const { userId } = req.params
       // info area
       const user = await User.findByPk(userId, {
@@ -92,12 +94,13 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
-      return res.render('users/tweets', { user: user.toJSON(), tweets: tweetsResult, topUsers })
+      return res.render('users/tweets', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser })
     } catch (err) {
       next(err)
     }
   },
   getUserRepliesPage: (req, res, next) => {
+    const reqUser = req.user
     const id = req.params.userId
     return Promise.all([
       User.findByPk(id, {
@@ -123,12 +126,13 @@ const userController = {
             isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
-        return res.render('users/replies', { user: user.toJSON(), topUsers })
+        return res.render('users/replies', { user: user.toJSON(), topUsers, reqUser })
       })
       .catch(err => next(err))
   },
   getUserLikesPage: async (req, res, next) => {
     try {
+      const reqUser = req.user
       const { userId } = req.params
       // info area
       const user = await User.findByPk(userId, {
@@ -171,13 +175,14 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
-      return res.render('users/likes', { user: user.toJSON(), tweets: tweetsResult, topUsers })
+      return res.render('users/likes', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser })
     } catch (err) {
       next(err)
     }
   },
   getUserFollowingsPage: async (req, res, next) => {
     try {
+      const reqUser = req.user
       const { userId } = req.params
       // header area
       const user = await User.findByPk(userId, {
@@ -214,13 +219,14 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
-      return res.render('users/followings', { user: user.toJSON(), tweets: tweetsResult, topUsers })
+      return res.render('users/followings', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser })
     } catch (err) {
       next(err)
     }
   },
   getUserFollowersPage: async (req, res, next) => {
     try {
+      const reqUser = req.user
       const { userId } = req.params
       // header area
       const user = await User.findByPk(userId, {
@@ -257,7 +263,7 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
-      return res.render('users/followers', { user: user.toJSON(), tweets: tweetsResult, topUsers })
+      return res.render('users/followers', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser })
     } catch (err) {
       next(err)
     }

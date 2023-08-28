@@ -4,6 +4,7 @@ const replyController = {
 //  add controller action here
 
   getTweetReplies: (req, res, next) => {
+    const reqUser = req.user
     const { id } = req.params
 
     Promise.all([
@@ -28,7 +29,7 @@ const replyController = {
         const likedTweets = likes.map(like => like.tweetId)
         // console.log(likes)可能更測試檔沒過有關
         const isLiked = likedTweets.includes(tweet.id)
-        res.render('replies', { tweet, replies, isLiked })
+        res.render('replies', { tweet, replies, isLiked, reqUser })
       })
       .catch(err => next(err))
   },

@@ -3,6 +3,7 @@ const { User, Tweet, Like } = require('../models')
 const tweetController = {
 //  add controller action here
   getTweets: (req, res, next) => {
+    const reqUser = req.user
     return Promise.all([
       Tweet.findAll({
         order: [['createdAt', 'DESC']],
@@ -25,7 +26,7 @@ const tweetController = {
           isLiked: likedTweets.includes(t.id)
         }))
         // console.log(data)
-        res.render('tweet', { tweets: data })
+        res.render('tweet', { tweets: data, reqUser })
       })
       .catch(err => next(err))
   },

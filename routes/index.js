@@ -10,7 +10,7 @@ const userController = require('../controllers/user-controller')
 const replyController = require('../controllers/reply-controller')
 const loginController = require('../controllers/login-controller')
 
-router.use('/api', api)
+router.use('/api', authenticated, api)
 router.use('/admin', admin)
 
 router.get('/signup', loginController.signUpPage)
