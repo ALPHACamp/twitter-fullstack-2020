@@ -34,9 +34,9 @@
             style="height:47px; width:88px"
           >
             <a class="user-text-link" href="/users/{{this.id}}/tweets">
-              <p class="m-0" style="font-weight:700">{{this.account}}</p>
+              <p class="m-0" style="font-weight:700; overflow:hidden; white-space: nowrap; text-overflow: ellipsis;">{{this.name}}</p>
             </a>
-            <p class="m-0" style="color:#92929D">@ {{this.name}}</p>
+            <p class="m-0" style="color:#92929D">@ {{this.account}}</p>
           </div>
           <div class="follow">
             {{#if this.isFollowed}}

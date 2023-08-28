@@ -18,9 +18,9 @@
 <!--background & avatar & Edit button-->
 <div class="card-body col-12 m-0 p-0 position-relative">
   <div class="bg-holder" style="height: 280px;">
-    <img src="{{#if user.background}}{{user.background}}{{else}}https://i.imgur.com/ndXEE6d.jpg{{/if}}" class="card-img-top"
+    <img src="{{#if user.background}}{{user.background}}{{else}}DEFAULT_BACKGROUND{{/if}}" class="card-img-top"
       alt="..." class="img-fluid" id="bgImage" style="height:100%;width:100%;object-fit:cover">
-    <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://i.imgur.com/ehh37fR.jpg{{/if}}"
+    <img src="{{#if user.avatar}}{{user.avatar}}{{else}}DEFAULT_AVATAR{{/if}}"
       class="rounded-circle" alt="user_Aavtar" height="130px" width="130px"
       style="border: 2px solid white; position: absolute; object-fit: cover; top: 55%; left: 3%;">
   </div>

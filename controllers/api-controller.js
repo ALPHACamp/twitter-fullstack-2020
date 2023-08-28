@@ -62,7 +62,7 @@ const { imgurFileHandler } = require('../helpers/file-helpers')
       res.json({ uploadBackground, uploadAvatar })
     },
     deleteImage: async (req, res) => {
-      const uploadBackground = helpers.getUser(req).background || 'https://i.imgur.com/ndXEE6d.jpg'
+      const uploadBackground = helpers.getUser(req).background || DEFAULT_BACKGROUND
       res.json({ uploadBackground })
     }
 }
