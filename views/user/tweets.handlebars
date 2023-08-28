@@ -45,13 +45,13 @@
 <div id="user-tab">
  <ul class="d-flex flex-wrap m-0 p-0">
   <li class="d-flex justify-content-center align-items-center {{#ifCond userTab 'tweets'}}active {{/ifCond}}">
-    <a href="" class="d-flex justify-content-center align-items-center">推文</a>
+    <a href="/users/{{user.id}}/tweets" class="d-flex justify-content-center align-items-center">推文</a>
   </li>
   <li class="d-flex justify-content-center align-items-center {{#ifCond userTab 'replies'}}active {{/ifCond}}">
-    <a href="" class="d-flex justify-content-center align-items-center">回覆</a>
+    <a href="/users/{{user.id}}/replies" class="d-flex justify-content-center align-items-center">回覆</a>
   </li>
   <li class="d-flex justify-content-center align-items-center {{#ifCond userTab 'likes'}}active {{/ifCond}}"> 
-    <a href="" class="d-flex justify-content-center align-items-center">喜歡的內容</a>
+    <a href="/users/{{user.id}}/likes" class="d-flex justify-content-center align-items-center">喜歡的內容</a>
   </li>
  </ul>
 </div>

@@ -198,6 +198,46 @@ const userController = {
   },
   postUserInfo: async (req, res, next) => {
     await userService.postUserInfo(req, (err, data) => err ? next(err) : res.redirect('back'))
+  },
+  getLikeTweets: async (req, res, next) => {
+    try {
+      const userId = req.params.id
+      const user = await userHelper.getUserInfo(req)
+      if (!user) throw new errorHandler.UserError("User didn't exist")
+
+      const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
+      const recommendUser = await recommendUserHelper.topFollowedUser(req)
+
+      const tweets = await Tweet.findAll({
+        include: [
+          User,
+          {
+            model: Like,
+            where: { UserId: userId }
+          }
+        ],
+        attributes: {
+          include: [
+            [sequelize.literal('( SELECT COUNT(*) FROM Replies WHERE Replies.tweet_id = Tweet.id)'), 'countReply'],
+            [sequelize.literal('( SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id)'), 'countLike']
+          ]
+        },
+        order: [[Like, 'createdAt', 'DESC']],
+        raw: true,
+        nest: true
+      })
+
+      return res.render('user/tweets', {
+        route: 'user',
+        userTab: 'likes',
+        tweets,
+        user,
+        recommendUser,
+        javascripts
+      })
+    } catch (error) {
+      next(error)
+    }
   }
 }
 
