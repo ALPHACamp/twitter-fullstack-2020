@@ -13,8 +13,8 @@ tweetModalForm.addEventListener('submit', event => {
 
 function invalidSubmitWarning (event) {
   const target = event.target
-  if (target.matches('form')) {
-    const warningDiv = tweetModal.querySelector(MODAL_WARNING_CLASS)
+  if (target.matches(`${TWEET_MODAL_ID} form`)) {
+    const warningDiv = tweetModal.querySelector(`${TWEET_MODAL_ID} ${MODAL_WARNING_CLASS}`)
     if (!tweetModalTextarea.value.trim().length) {
       warningDiv.textContent = '內容不可空白'
       event.preventDefault()
@@ -31,8 +31,8 @@ function invalidSubmitWarning (event) {
 }
 function checkTextareaLength (event) {
   const target = event.target
-  if (target.matches('textarea')) {
-    const warningDiv = tweetModal.querySelector(MODAL_WARNING_CLASS)
+  if (target.matches(`${TWEET_MODAL_ID} textarea`)) {
+    const warningDiv = tweetModal.querySelector(`${TWEET_MODAL_ID} ${MODAL_WARNING_CLASS}`)
     if (!target.value.trim().length) {
       warningDiv.textContent = '內容不可空白'
     } else if (target.value.length > MAX_TWEET_LENGTH) {

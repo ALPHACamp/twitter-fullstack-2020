@@ -1,20 +1,18 @@
-const { Tweet, Like } = require('../../models')
+const { Tweet, Reply, Like } = require('../../models')
 const { topFollowedUser } = require('../../helpers/recommand-followship-helper')
 const { followingUsersTweets, isValidWordsLength } = require('../../helpers/tweets-helper')
 const { getTweetReplies } = require('../../helpers/replies-helper')
 const errorHandler = require('../../helpers/errors-helpers')
 const helpers = require('../../_helpers')
 const MAX_TWEET_LENGTH = 140
-const TWEET_LINK_JS = 'tweetLink.js'
 const TWEET_MODAL_JS = 'tweetModal.js'
-const REMEMBER_SCROLL_JS = 'rememberScrollPosition.js'
 
 const tweetController = {
 
   /* user home page */
   getTweets: async (req, res, next) => {
     try {
-      const javascripts = [TWEET_LINK_JS, TWEET_MODAL_JS, REMEMBER_SCROLL_JS]
+      const javascripts = [TWEET_MODAL_JS]
       const [tweets, recommendUser] = await Promise.all([
         followingUsersTweets(req),
         topFollowedUser(req) // 給右邊的渲染用
@@ -45,8 +43,7 @@ const tweetController = {
   },
   getReplies: async (req, res, next) => {
     try {
-      const id = req.params.id
-      const javascripts = [TWEET_LINK_JS, TWEET_MODAL_JS, REMEMBER_SCROLL_JS]
+      const javascripts = [TWEET_MODAL_JS]
       const [recommendUser, tweetWithReplies] = await Promise.all([
         topFollowedUser(req), // 給右邊的渲染用
         getTweetReplies(req)
@@ -60,6 +57,22 @@ const tweetController = {
       })
     } catch (error) {
       return next(error)
+    }
+  },
+  postReplies: async (req, res, next) => {
+    try {
+      const userId = helpers.getUser(req).id
+      const tweetId = req.params.id
+      const comment = req.body?.comment.trim()
+      isValidWordsLength(comment, MAX_TWEET_LENGTH, next)
+      await Reply.create({
+        UserId: userId,
+        TweetId: tweetId,
+        comment
+      })
+      return res.redirect('back')
+    } catch (error) {
+      return (next)
     }
   },
   postLike: async (req, res, next) => {

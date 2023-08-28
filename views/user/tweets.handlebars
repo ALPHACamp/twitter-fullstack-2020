@@ -61,12 +61,12 @@
     <div class="scrollbar-hidden p-0 pt-3 m-0 d-flex flex-column gap-3">
       {{!-- user tweets --}}
       {{#each tweets}}
-      <div data-link="想要這張卡片連去的地方"
+      <div data-link="/tweets/{{this.id}}/replies" data-id="{{this.id}}"
         class="tweet-card card  shadow-none  py-0 px-4 m-0 rounded-0  border-1px border-bottom-1 border-top-0 border-start-0 border-end-0 mt-3">
         <div class="card-body m-0 p-0 pb-3 d-flex gap-2">
 
           <div class="tweet-user-icon flex-shrink-0  p-0">
-            <a href="#" class="overflow-hidden  rounded-circle link-unstyled  child-img-center w-100 h-100 p-0">
+            <a href="" class="overflow-hidden  rounded-circle link-unstyled  child-img-center w-100 h-100 p-0">
               <img src="{{this.User.avatar}}" alt="" class="w-100 h-100">
             </a>
           </div>

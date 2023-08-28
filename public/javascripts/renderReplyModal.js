@@ -81,16 +81,16 @@ function renderRepliesPageReplyModal (event) {
 }
 
 replyModalTextarea.addEventListener('input', event => {
-  checkTextareaLength(event)
+  checkReplyTextareaLength(event)
 })
 replyModalForm.addEventListener('submit', event => {
-  invalidSubmitWarning(event)
+  invalidReplySubmitWarning(event)
 })
 
-function invalidSubmitWarning (event) {
+function invalidReplySubmitWarning (event) {
   const target = event.target
-  if (target.matches('form')) {
-    const warningDiv = replyModal.querySelector(REPLY_MODAL_WARNING_CLASS)
+  if (target.matches(`${REPLY_MODAL_ID} form`)) {
+    const warningDiv = replyModal.querySelector(`${REPLY_MODAL_ID} ${REPLY_MODAL_WARNING_CLASS}`)
     if (!replyModalTextarea.value.trim().length) {
       warningDiv.textContent = '內容不可空白'
       event.preventDefault()
@@ -105,10 +105,10 @@ function invalidSubmitWarning (event) {
     }
   }
 }
-function checkTextareaLength (event) {
+function checkReplyTextareaLength (event) {
   const target = event.target
-  if (target.matches('textarea')) {
-    const warningDiv = replyModal.querySelector(REPLY_MODAL_WARNING_CLASS)
+  if (target.matches(`${REPLY_MODAL_ID} textarea`)) {
+    const warningDiv = replyModal.querySelector(`${REPLY_MODAL_ID} ${REPLY_MODAL_WARNING_CLASS}`)
     if (!target.value.trim().length) {
       warningDiv.textContent = '內容不可空白'
     } else if (target.value.length > MAX_REPLY_LENGTH) {
