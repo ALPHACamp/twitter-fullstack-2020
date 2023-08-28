@@ -277,9 +277,9 @@
   content: url("/images/icons/cog_filled.svg");
 }
 
-.nav-link-logout {
-  position: absolute;
-  bottom: 0px;
+.nav-item-logout {
+  position: sticky;
+  bottom: 0px; 
 }
 
 /*後台區*/
