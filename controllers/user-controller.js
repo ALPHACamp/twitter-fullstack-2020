@@ -7,8 +7,9 @@ const userController = {
   getEditPage: async (req, res, next) => {
     try {
       if (Number(req.params.id) !== helpers.getUser(req).id) throw new Error('沒有瀏覽權限!')
+      const reqUser = req.user
       const user = await User.findByPk(req.params.id, { raw: true })
-      return res.render('users/edit', { user })
+      return res.render('users/edit', { user, reqUser })
     } catch (err) {
       next(err)
     }
@@ -56,6 +57,7 @@ const userController = {
   },
   getUserTweetsPage: async (req, res, next) => {
     try {
+      const reqUser = req.user
       const { userId } = req.params
       // info area
       const user = await User.findByPk(userId, {
@@ -68,18 +70,23 @@ const userController = {
       // tweet area
       const tweets = await Tweet.findAll({
         order: [['createdAt', 'DESC']],
-        include: [User, Reply, { model: User, as: 'LikedUsers' }],
+        include: [User, Reply, Like],
         where: { userId: userId }
       })
+
+      const myLikedTweets = await Like.findAll({
+        where: { userId: reqUser.id }
+      })
+      const myLikedTweetsId = myLikedTweets.map(l => l.tweetId)
 
       const tweetsResult = tweets
         .map(t => ({
           ...t.toJSON(),
-          likesCount: t.LikedUsers.length,
-          isLiked: req.user && req.user.LikedTweets.some(l => l.id === t.id)
+          // likesCount: t.Like.length,
+          isLiked: myLikedTweetsId && myLikedTweetsId.some(l => l === t.id)
         }))
       // top10users area
-      const users = await User.findAll({ include: [{ model: User, as: 'Followers' }] })
+      const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
       const topUsers = users
         .map(u => ({
           ...u.toJSON(),
@@ -92,12 +99,13 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
-      return res.render('users/tweets', { user: user.toJSON(), tweets: tweetsResult, topUsers })
+      return res.render('users/tweets', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser })
     } catch (err) {
       next(err)
     }
   },
   getUserRepliesPage: (req, res, next) => {
+    const reqUser = req.user
     const id = req.params.userId
     return Promise.all([
       User.findByPk(id, {
@@ -108,7 +116,7 @@ const userController = {
           { model: User, as: 'Followings' }
         ]
       }),
-      User.findAll({ include: [{ model: User, as: 'Followers' }] })
+      User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
     ])
       .then(([user, users]) => {
         const topUsers = users
@@ -123,12 +131,13 @@ const userController = {
             isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
-        return res.render('users/replies', { user: user.toJSON(), topUsers })
+        return res.render('users/replies', { user: user.toJSON(), topUsers, reqUser })
       })
       .catch(err => next(err))
   },
   getUserLikesPage: async (req, res, next) => {
     try {
+      const reqUser = req.user
       const { userId } = req.params
       // info area
       const user = await User.findByPk(userId, {
@@ -147,17 +156,20 @@ const userController = {
       const likedTweetsId = likes.map(like => like.tweetId)
       const tweets = await Tweet.findAll({
         order: [['createdAt', 'DESC']],
-        include: [User, Reply, { model: User, as: 'LikedUsers' }],
+        include: [User, Reply, Like],
         where: { id: likedTweetsId }
       })
+      const myLikedTweets = await Like.findAll({
+        where: { userId: reqUser.id }
+      })
+      const myLikedTweetsId = myLikedTweets.map(l => l.tweetId)
       const tweetsResult = tweets
         .map(t => ({
           ...t.toJSON(),
-          likesCount: t.LikedUsers.length,
-          isLiked: req.user && req.user.LikedTweets.some(l => l.id === t.id)
+          isLiked: myLikedTweetsId && myLikedTweetsId.some(l => l === t.id)
         }))
       // top10users area
-      const users = await User.findAll({ include: [{ model: User, as: 'Followers' }] })
+      const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
       const topUsers = await users
         .map(u => ({
           // 整理格式
@@ -171,13 +183,14 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
-      return res.render('users/likes', { user: user.toJSON(), tweets: tweetsResult, topUsers })
+      return res.render('users/likes', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser })
     } catch (err) {
       next(err)
     }
   },
   getUserFollowingsPage: async (req, res, next) => {
     try {
+      const reqUser = req.user
       const { userId } = req.params
       // header area
       const user = await User.findByPk(userId, {
@@ -200,7 +213,7 @@ const userController = {
           isFollowed: req.user && req.user.Followings.some(f => f.id === t.userId)
         }))
       // top10users area
-      const users = await User.findAll({ include: [{ model: User, as: 'Followers', include: Tweet }] })
+      const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
       const topUsers = await users
         .map(u => ({
           // 整理格式
@@ -214,13 +227,14 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
-      return res.render('users/followings', { user: user.toJSON(), tweets: tweetsResult, topUsers })
+      return res.render('users/followings', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser })
     } catch (err) {
       next(err)
     }
   },
   getUserFollowersPage: async (req, res, next) => {
     try {
+      const reqUser = req.user
       const { userId } = req.params
       // header area
       const user = await User.findByPk(userId, {
@@ -243,7 +257,7 @@ const userController = {
           isFollowed: req.user && req.user.Followings.some(f => f.id === t.userId)
         }))
       // top10users area
-      const users = await User.findAll({ include: [{ model: User, as: 'Followers', include: Tweet }] })
+      const users = await User.findAll({ include: [{ model: User, as: 'Followers'}], where: { role: 'user' } })
       const topUsers = await users
         .map(u => ({
         // 整理格式
@@ -257,7 +271,7 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
-      return res.render('users/followers', { user: user.toJSON(), tweets: tweetsResult, topUsers })
+      return res.render('users/followers', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser })
     } catch (err) {
       next(err)
     }

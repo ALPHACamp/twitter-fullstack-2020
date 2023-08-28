@@ -1,0 +1,105 @@
+<div class="mx-auto p-2" style="border: 1px solid #E6ECF0">
+    {{!-- <div class="card-body"> --}}
+        <div class="d-flex flex-row">
+            <a href="/users/{{this.User.id}}/tweets">
+            <div style="width:40px; height:40px; background-color:#FF6600"
+                class="rounded-circle overflow-hidden m-1">
+                <img src={{#if
+                    this.User.avatar}}{{this.User.avatar}}{{else}}"https://s3.ap-southeast-2.amazonaws.com/cdn.greekherald.com.au/wp-content/uploads/2020/07/05194617/default-avatar.png"{{/if}}
+                    style="aspect-ratio: 1 / 1;width: 40px;object-fit: cover;object-position: center;" alt="avatar">
+            </div>
+            </a>
+            <p class="inline ms-1 mt-1">{{this.User.name}}</p>
+            <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{this.User.account}}</span>
+            <span class="ms-1 mt-2" style="font-size: 0.2em;">• {{relativeTimeFromNow this.createdAt}}</span>
+        </div>
+
+        <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color:#171725">
+            <div class="col-10 mx-auto">
+                <p>{{this.description}}</p>
+            </div>
+        </a>
+
+        <div class="d-flex flex-row ms-5">
+
+            <div class="me-4">
+                <button type="submit"
+                    style="background-color:transparent; border-color:transparent; border: none; padding: 0;"
+                    data-bs-toggle="modal" data-bs-target="#ModalReply{{this.id}}" data-bs-whatever="{{this.id}}">
+                    <img src="/icon/Reply.png" alt="" width="20px" height="20px" />
+                </button>
+                <span class="m-1" style="font-size: 0.2rem;">{{this.Replies.length}}</span>
+            </div>
+
+            <div class="d-flex flex-row">
+                {{#if isLiked}}
+                <form action="/tweets/{{this.id}}/unlike" method="POST">
+                    <button type="submit"
+                        style="background-color:transparent; border-color:transparent; border: none; padding: 0;">
+                        <img src="/icon/icon_like_fill.png" alt="..." width="13px" height="13px" />
+                    </button>
+                </form>
+                {{else}}
+                <form action="/tweets/{{this.id}}/like" method="POST">
+                    <button type="submit"
+                        style="background-color:transparent; border-color:transparent; border: none; padding: 0;">
+                        <img src="/icon/icon_like.png" alt="..." width="16px" height="16px" />
+                    </button>
+                </form>
+                {{/if}}
+                <span class="m-1" style="font-size: 0.2rem;">{{this.Likes.length}}</span>
+            </div>
+
+        </div>
+    {{!-- </div> --}}
+</div>
+{{!--留言modal--}}
+<div class="modal" id="ModalReply{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="d-flex justify-content-start">
+                <button type="button" class="btn-close ms-2 mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <hr style="margin-top: 5px; margin-bottom: 5px;">
+
+            <form action="/tweets/{{this.id}}/replies" method="POST">
+                <div class="ms-2">
+                    <div class="d-flex flex-row">
+                        <a href="#">
+                            <img class=""
+                                src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png"
+                                alt="..." width="40px" height="40px"
+                                style="background-color:#FF6600; border-radius: 30px">
+                        </a>
+                        <p class="inline ms-1 mt-1 modalUserName">{{this.User.name}}</p>
+                        <span class="ms-1 mt-2 modalAccount" style="font-size: 0.2rem;">@{{this.User.account}}</span>
+                        <span class="ms-1 mt-2 modalTime" style="font-size: 0.2em;">・{{relativeTimeFromNow
+                            this.createdAt}}</span>
+                    </div>
+
+                    <div class="col-10 mx-auto ps-1">
+                        <p>{{this.description}} </p>
+                        <P style="font-size: 14px">回覆給<span class="modalAccount"
+                                style="color:#FF6600">@{{this.User.account}}</span></P>
+                    </div>
+
+                    <div class="d-flex flex-row">
+                        <a href="#">
+                            <img class="" src="https://i.imgur.com/Na2PT87.jpg" alt="" width="40px" height="40px"
+                                style="background-color:#FF6600; border-radius: 30px">
+                        </a>
+                        <textarea class="ms-1 mt-2" name="comment" id="" cols="45" rows="6" placeholder="推你的回覆"
+                            style="border:none" maxlength="140" required></textarea>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row-reverse mb-3 me-2">
+                    <button class="btn pt-1 pb-1 ps-3 pe-3"
+                        style="background-color:#FF6600; color:white; border-radius: 30px" type="submit">
+                        回覆
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
