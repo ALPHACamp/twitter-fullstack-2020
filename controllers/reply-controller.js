@@ -29,7 +29,7 @@ const replyController = {
             account: reply.User.account,
             name: reply.User.name,
             id: reply.User.id,
-            avatar: reply.User.avatar || 'https://i.imgur.com/ehh37fR.jpg'
+            avatar: reply.User.avatar || DEFAULT_AVATAR
           },
           Tweet:{
             userAvatar: reply.Tweet.User.avatar,
