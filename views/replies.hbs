@@ -29,16 +29,16 @@
       </div>
       <hr style="margin-top: 5px; margin-bottom: 5px; height: 1px; background-color: #cad4db;">
       <div>
-        <span style="font-weight: bold;"> 66 <span style="color:#6C757D">回覆</span></span>
-        <span style="font-weight: bold;"> 888 <span style="color:#6C757D">喜歡次數</span></span>
+        <span style="font-weight: bold;">{{tweet.Replies.length}}<span style="color:#6C757D">回覆</span></span>
+        <span style="font-weight: bold;">{{tweet.Likes.length}}<span style="color:#6C757D">喜歡次數</span></span>
       </div>
 
       <hr style="margin-top: 5px; margin-bottom: 5px; height: 1px; background-color: #cad4db;">
 
       <div class="d-flex flex-row">
         <div class="me-5">
-          <button type="submit" style="background-color:transparent; border-color:transparent; border: none; padding: 0;" data-bs-toggle="modal" data-bs-target="#ModaltweetsReplies"> 
-          <img src="/icon/Reply.png" alt="" width="20px" height="20px"/>
+          <button type="submit" style="background-color:transparent; border-color:transparent; border: none; padding: 0;" data-bs-toggle="modal" data-bs-target="#ModaltweetsReplies" > 
+          <img src="/icon/Reply.png" alt="..." width="20px" height="20px"/>
           </button>
         </div>
 
@@ -65,21 +65,22 @@
   <div class="col-12 mx-auto mt-2">
     {{#each replies}}
       <div class="col-12 mx-auto p-2" style="border: 1px solid #E6ECF0">
-  <div class="d-flex flex-column">
-    <div class="d-flex flex-row">
-      <a href="#">
-        <img class="" src="https://i.imgur.com/aCxYyck.jpg" alt="..." width="40px" height="40px"
-      style="border-radius: 30px">
-      </a>
-      <p class="inline ms-1 mt-1">{{this.User.name}}</p>
-      <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{this.User.account}}</span>
-      <span class="ms-1 mt-2" style="font-size: 0.2em;">・{{relativeTimeFromNow this.createdAt}}</span>
-    </div>
+        <div class="d-flex flex-column">
+          <div class="d-flex flex-row ">
+            <a href="#">
+              <img class="" src="https://i.imgur.com/aCxYyck.jpg" alt="..." width="40px" height="40px"
+              style="border-radius: 30px">
+            </a>
+            <p class="inline ms-1 mt-1">{{this.User.name}}</p>
+            <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{this.User.account}}</span>
+            <span class="ms-1 mt-2" style="font-size: 0.2em;">・{{relativeTimeFromNow this.createdAt}}</span>
+          </div>
 
-    <span class="ms-5" style="font-size:14px; color:#6C757D;">回覆 <span style="color:#FF6600">
-      @{{this.Tweet.User.name}}</span></span>
-    <p class="ms-5 me-5 mt-2">{{this.comment}}</p>
-  </div>
+          <span class="ms-5" style="font-size:14px; color:#6C757D;">回覆 <span style="color:#FF6600">
+          @{{this.Tweet.User.name}}</span></span>
+          
+          <p class="text-break">{{this.comment}}</p>
+        </div>
       </div>
     {{/each}}
   </div>
@@ -118,14 +119,15 @@
               <img class="" src="https://i.imgur.com/Na2PT87.jpg" alt="" width="40px" height="40px"
               style="background-color:#FF6600; border-radius: 30px">
             </a>
-            <textarea class="ms-1 mt-2" name="comment" id="" cols="45" rows="6" placeholder="推你的回覆"style="border:none" required></textarea>
+            <textarea class="ms-1 mt-2" name="comment" cols="45" rows="6" placeholder="推你的回覆"style="border:none" id="contentInput2"></textarea>
           </div>
         </div>
 
         <div class="d-flex flex-row-reverse mb-3 me-2">
-          <button class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px" type="submit">
+          <button id="submitBtn2" class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px" type="submit">
           回覆
           </button>
+          <span id="contentMessage2" class="text-danger me-2 mt-2" style="font-size: 10px"></span>
         </div>
       </form>
     </div>

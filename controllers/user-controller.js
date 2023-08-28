@@ -70,15 +70,20 @@ const userController = {
       // tweet area
       const tweets = await Tweet.findAll({
         order: [['createdAt', 'DESC']],
-        include: [User, Reply, { model: User, as: 'LikedUsers' }],
+        include: [User, Reply, Like],
         where: { userId: userId }
       })
+
+      const myLikedTweets = await Like.findAll({
+        where: { userId: reqUser.id }
+      })
+      const myLikedTweetsId = myLikedTweets.map(l => l.tweetId)
 
       const tweetsResult = tweets
         .map(t => ({
           ...t.toJSON(),
-          likesCount: t.LikedUsers.length,
-          isLiked: req.user && req.user.LikedTweets.some(l => l.id === t.id)
+          // likesCount: t.Like.length,
+          isLiked: myLikedTweetsId && myLikedTweetsId.some(l => l === t.id)
         }))
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }] })
@@ -151,14 +156,17 @@ const userController = {
       const likedTweetsId = likes.map(like => like.tweetId)
       const tweets = await Tweet.findAll({
         order: [['createdAt', 'DESC']],
-        include: [User, Reply, { model: User, as: 'LikedUsers' }],
+        include: [User, Reply, Like],
         where: { id: likedTweetsId }
       })
+      const myLikedTweets = await Like.findAll({
+        where: { userId: reqUser.id }
+      })
+      const myLikedTweetsId = myLikedTweets.map(l => l.tweetId)
       const tweetsResult = tweets
         .map(t => ({
           ...t.toJSON(),
-          likesCount: t.LikedUsers.length,
-          isLiked: req.user && req.user.LikedTweets.some(l => l.id === t.id)
+          isLiked: myLikedTweetsId && myLikedTweetsId.some(l => l === t.id)
         }))
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }] })

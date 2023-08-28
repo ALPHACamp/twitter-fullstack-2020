@@ -9,9 +9,9 @@ const replyController = {
 
     Promise.all([
       Tweet.findByPk(id, {
-        include: [{ model: User }],
-        raw: true,
-        nest: true
+        include: [{ model: User }, { model: Reply }, { model: Like }]
+        // raw: true,
+        // nest: true
       }),
       Reply.findAll({
         where: { tweetId: id },
@@ -29,7 +29,7 @@ const replyController = {
         const likedTweets = likes.map(like => like.tweetId)
         // console.log(likes)可能更測試檔沒過有關
         const isLiked = likedTweets.includes(tweet.id)
-        res.render('replies', { tweet, replies, isLiked, reqUser })
+        res.render('replies', { tweet: tweet.toJSON(), replies, isLiked, reqUser })
       })
       .catch(err => next(err))
   },
