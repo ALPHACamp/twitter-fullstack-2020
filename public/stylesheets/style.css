@@ -79,22 +79,22 @@ h5 {
 }
 
 
-/* ---------- User signin ---------- */
+/* ---------- User /Admin Signin ---------- */
 
 .signin-container {
-  height: 100vh;
-  max-width: 356px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  height: 100vh;
+  max-width: 356px;
 }
 
 .signin-logo-container {
   position: relative;
-  margin: 0 auto;
   top: 64px;
   width: 50px;
   height: 50px;
+  margin: 0 auto;
   padding: 5px;
 }
 
@@ -108,19 +108,19 @@ h5 {
 
 .signin-title {
   position: sticky;
-  margin: 0 auto;
   top: 138px;
   width: 185px;
   height: 26px;
+  margin: 0 auto;
   font-weight: 700;
   line-height: 26px;
 }
 
 .form-item-account {
   position: sticky;
-  margin: 0 auto;
-  width: 356px;
   top: 204px;
+  width: 356px;
+  margin: 0 auto;
   margin-bottom: 60px;
   border-radius: 2px;
   background-color: var(--form-gray);
@@ -128,9 +128,9 @@ h5 {
 
 .form-item-password {
   position: relative;
-  margin: 0 auto;
-  width: 356px;
   top: 86px;
+  width: 356px;
+  margin: 0 auto;
   margin-bottom: 32px;
   border-radius: 2px;
   background-color: var(--form-gray);
@@ -149,7 +149,6 @@ h5 {
   width: 356px;
   padding: 0 0 0 10px;
   background-color: var(--form-gray);
-  /* border */
   border-radius: 2px;
   border-width: 0;
   border-bottom: 2px solid #657786;
@@ -200,17 +199,17 @@ h5 {
 }
 
 .btn-submit {
+  position: relative;
+  top: 94px;
   display: flex;
   justify-content: center;
+  margin: 0 auto;
   padding: 8px 24px;
-  position: relative;
   width: 356px;
   height: 46px;
-  top: 94px;
-  margin: 0 auto;
   border-radius: 50px;
-  background: #FF6600;
   border: none;
+  background: #FF6600;
 }
 
 .btn-signin-text {
@@ -223,17 +222,26 @@ h5 {
 }
 
 .sub-btn {
-  text-align: right;
   position: relative;
   top: 120px;
-  left: 180px;
+  left: 196px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
   width: 160px;
   height: 36px;
-  display: flex;
-  justify-content: space-evenly;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0px;
+  color: #0062FF;
+}
+
+.dot {
   text-align: center;
   font-size: 16px;
   font-weight: 400;
-  line-height: 30px;
+  line-height: 24px;
   letter-spacing: 0px;
+  color: #000000;
 }
