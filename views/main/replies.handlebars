@@ -9,18 +9,18 @@
     </div>
   </div>
 </div>
-<div
+<div data-id="{{tweetWithReplies.id}}"
   class="tweet-reply flex-shrink-0 card shadow-none  pt-3 pb-3 px-4 border-1px border-bottom-1 border-top-0 border-start-0 border-end-0">
   <div class="card-body m-0 p-0 d-flex flex-column gap-3">
     <div class="tweet-reply-content d-flex flex-column gap-2">
       <div class="tweet-reply-user d-flex gap-2">
         <div class="tweet-user-icon flex-shrink-0  p-0">
-          <a href="#" class="overflow-hidden  rounded-circle link-unstyled  child-img-center w-100 h-100 p-0">
+          <a href="/users/{{tweetWithReplies.User.id}}/tweets" class="overflow-hidden  rounded-circle link-unstyled  child-img-center w-100 h-100 p-0">
             <img src="{{tweetWithReplies.User.avatar}}" alt="" class="w-100 h-100">
           </a>
         </div>
         <div class="tweet-user-vertical d-flex flex-column">
-          <a href="#" class="d-flex flex-column link-unstyled">
+          <a href="/users/{{tweetWithReplies.User.id}}/tweets" class="d-flex flex-column link-unstyled">
             <p class="fw-bold mb-0">{{tweetWithReplies.User.name}}</p>
             <p class="font-size-sm mt-0">@{{tweetWithReplies.User.account}}</p>
           </a>
@@ -83,14 +83,14 @@
         <div class="tweet-card-content d-flex flex-column gap-2">
 
           <div class="tweet-user-horizontal">
-            <a href="#" class=" d-flex gap-2 link-unstyled align-items-center">
+            <a href="/users/{{this.User.id}}/tweets" class=" d-flex gap-2 link-unstyled align-items-center">
               <p class="fw-bold">{{this.User.name}}</p>
               <p class="font-size-sm text-secondary">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</p>
             </a>
           </div>
 
           <div class="tweet-user-replied">
-            <a href="#" class=" d-flex gap-2 link-unstyled align-items-center">
+            <a href="/users/{{../tweetWithReplies.User.id}}/tweets" class=" d-flex gap-2 link-unstyled align-items-center">
               <p class="font-size-sm text-secondary">回覆</p>
               <p class="font-size-sm main-color">@{{../tweetWithReplies.User.account}}</p>
             </a>

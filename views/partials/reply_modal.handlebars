@@ -43,8 +43,10 @@
               class="form-label overflow-hidden  flex-shrink-0 rounded-circle  child-img-center p-0 m-0">
               <img src="{{user.avatar}}" alt="" class="p-0 m-0 h-100 w-100">
             </label>
-            <textarea class="form-control ps-0" id="reply" name="reply" rows="1" placeholder="推你的回覆"
-              maxlength="140"></textarea>
+            <textarea class="form-control ps-0" id="reply" name="reply" rows="5" placeholder="推你的回覆"
+              maxlength="140" minlength="1"></textarea>
+            <div class="tweet-reply-warning text-danger">
+            </div>
           </div>
           <button type="submit" class="btn btn-primary rounded-pill">回覆</button>
         </form>

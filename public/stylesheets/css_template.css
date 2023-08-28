@@ -364,7 +364,8 @@
   right: 16px;
 }
 
-#tweet-model .modal-form .tweet-reply-warning{
+#tweet-model .modal-form .tweet-reply-warning,
+#reply-model .modal-form .tweet-reply-warning{
   padding: 0;
   margin: 0;
   font-weight: 500;
