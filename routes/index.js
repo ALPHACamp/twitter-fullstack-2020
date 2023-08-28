@@ -15,7 +15,6 @@ const { authenticated } = require('../middleware/auth')
 // Admin
 router.use('/admin', admin)
 
-
 // Sign up
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
@@ -36,6 +35,8 @@ router.use('/users', authenticated, users)
 // Tweets
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
+router.post('/tweets/:id/like', authenticated, tweetController.addLike)
+router.post('/tweets/:id/unlike', authenticated, tweetController.removeLike)
 
 router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
