@@ -46,7 +46,7 @@ const tweetController = {
           })
       })
       .then(result => {
-        res.render('tweets', { tweets: result, tweetRoute, currentUser })
+        res.render('tweets', { tweets: result, tweetRoute, currentUser, id: helper.getUser(req).id })
       })
       .catch(err => next(err))
   }

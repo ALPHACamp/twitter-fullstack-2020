@@ -6,9 +6,47 @@ const helper = require('../_helpers')
 const userController = {
   editUser: (req, res, next) => {
     const settingRoute = true
-    const currentUser = helper.getUser(req).id || null
-    User.findByPk(currentUser, { raw: true, nest: true })
-      .then(user => res.render('setting', { user, settingRoute }))
+    const user = req.user
+    User.findByPk(user.id, { raw: true, nest: true })
+      .then(user => res.render('setting', { user, settingRoute, id: helper.getUser(req).id }))
+      .catch(err => next(err))
+  },
+  putUser: (req, res, next) => {
+    const { account, name, email, password, checkPassword } = req.body
+    const currentUser = helper.getUser(req)
+    if (account.length > 50) throw new Error('字數超出上限！')
+    if (name.length > 50) throw new Error('字數超出上限！')
+    if (password !== checkPassword) throw new Error('密碼輸入不一致！')
+    Promise.all([
+      User.findOne({ where: { account } }),
+      User.findOne({ where: { email } })]
+    )
+      .then(([userAccount, userEmail]) => {
+        if (userAccount && (userAccount.toJSON().id !== currentUser.id)) throw new Error('account 已重複註冊！')
+        if (userEmail && (userEmail.toJSON().id !== currentUser.id)) throw new Error('email 已重複註冊！')
+        return Promise.all([User.findByPk(currentUser.id), bcrypt.hash(password, 10)])
+      })
+      .then(([user, hash]) => {
+        if (password.length) {
+          user.update({ account, name, email, password: hash })
+            .then(() => {
+              req.flash('success_messages', '恭喜個人設定更新成功，請重新登入！')
+              res.redirect('/signin')
+            })
+        } else if (account !== currentUser.account) {
+          user.update({ account, name, email, password: currentUser.password })
+            .then(() => {
+              req.flash('success_messages', '恭喜個人設定更新成功，請重新登入！')
+              res.redirect('/signin')
+            })
+        } else {
+          user.update({ account, name, email, password: currentUser.password })
+            .then(() => {
+              req.flash('success_messages', '恭喜個人設定更新成功！')
+              res.redirect('/tweets')
+            })
+        }
+      })
       .catch(err => next(err))
   },
   getUserTweets: (req, res, next) => {
