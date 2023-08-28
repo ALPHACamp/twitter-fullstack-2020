@@ -45,6 +45,9 @@ const tweetController = {
       })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
+  },
+  getTweet: (req, res, next) => {
+    res.render('tweet')
   }
 }
 
