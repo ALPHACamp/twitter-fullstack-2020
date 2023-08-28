@@ -1,4 +1,4 @@
-{{>navigation route='tweets'}}
+{{!-- {{>navigation route='tweets'}} --}}
 
 <div style="margin-left:198px; padding: 0px 10px; width:641px; " class="border border-light">
   {{!-- 發文 --}}
@@ -47,7 +47,7 @@
         <button type="submit" style="background-color:transparent; border-color:transparent; border: none; padding: 0;" data-bs-toggle="modal" data-bs-target="#ModalReply{{this.id}}" data-bs-whatever="{{this.id}}"> 
           <img src="/icon/Reply.png" alt="..." width="16px" height="16px"/>
         </button>
-        <span class="m-1" style="font-size: 0.2rem;">10</span>
+        <span class="m-1" style="font-size: 0.2rem;">{{this.Replies.length}}</span>
       </div>
 
       <div class="d-flex flex-row">
@@ -65,7 +65,7 @@
           </form>
         {{/if}}
 
-        <span class="m-1"  style="font-size: 0.2rem;">20</span>
+        <span class="m-1"  style="font-size: 0.2rem;">{{this.Likes.length}}</span>
       </div>
     </div>
   </div>
@@ -74,10 +74,15 @@
   </div>
 </div>
 
+<div>
+  <button id="submitBtnTest">button</button>
+  <p id="contentInputTest"></p>
+</div>
+
 {{>top-users-bar}}
 
 
-{{!-- modal 主頁 --}}
+{{!-- modal 首頁的推文 --}}
 
 <div class="modal" id="myModalmain" tabindex="-1">
   <div class="modal-dialog">
@@ -94,12 +99,12 @@
               <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt="" width="40px" height="40px"
               style="background-color:#FF6600; border-radius: 30px">
             </a>
-            <textarea class="ms-1 mt-2" name="description" id="" cols="45" rows="6" maxlength="140" placeholder="有什麼新鮮事"style="border:none" ></textarea>
+            <textarea class="ms-1 mt-2" name="description" id="contentInput" cols="45" rows="6" maxlength="140" placeholder="有什麼新鮮事"style="border:none" ></textarea>
           </div>
         </div>
-
+        <div id="emptyContentMessage" class="text-danger"></div>
         <div class="d-flex flex-row-reverse mb-3 me-2">
-          <button class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px" type="submit">
+          <button class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px" type="submit" id="submitBtn">
           推文
           </button>
         </div>

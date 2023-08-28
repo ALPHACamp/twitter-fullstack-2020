@@ -1,4 +1,4 @@
-const { User, Tweet, Like } = require('../models')
+const { User, Tweet, Like, Reply } = require('../models')
 
 const tweetController = {
 //  add controller action here
@@ -6,9 +6,7 @@ const tweetController = {
     return Promise.all([
       Tweet.findAll({
         order: [['createdAt', 'DESC']],
-        include: [User],
-        raw: true,
-        nest: true
+        include: [{ model: User }, { model: Reply }, { model: Like }]
       }),
       Like.findAll({
         where: {
@@ -18,10 +16,9 @@ const tweetController = {
       })
     ])
       .then(([tweets, like]) => {
-        // console.log(like)
         const likedTweets = like.map(like => like.tweetId)
         const data = tweets.map(t => ({
-          ...t,
+          ...t.toJSON(),
           isLiked: likedTweets.includes(t.id)
         }))
         // console.log(data)
@@ -32,7 +29,8 @@ const tweetController = {
   postTweets: (req, res, next) => {
     const { description } = req.body
     const UserId = req.user.id
-    if (!description) throw new Error('內容不可空白')
+    // if (!description) throw new Error('內容不可空白')
+    // if (description.length > 140) throw new Error('不可超過140字')
     User.findByPk(UserId)
       .then(user => {
         if (!user) throw new Error("User didn't exist!")
