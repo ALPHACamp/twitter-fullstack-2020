@@ -86,7 +86,7 @@ const userController = {
           isLiked: myLikedTweetsId && myLikedTweetsId.some(l => l === t.id)
         }))
       // top10users area
-      const users = await User.findAll({ include: [{ model: User, as: 'Followers' }] })
+      const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
       const topUsers = users
         .map(u => ({
           ...u.toJSON(),
@@ -116,7 +116,7 @@ const userController = {
           { model: User, as: 'Followings' }
         ]
       }),
-      User.findAll({ include: [{ model: User, as: 'Followers' }] })
+      User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
     ])
       .then(([user, users]) => {
         const topUsers = users
@@ -169,7 +169,7 @@ const userController = {
           isLiked: myLikedTweetsId && myLikedTweetsId.some(l => l === t.id)
         }))
       // top10users area
-      const users = await User.findAll({ include: [{ model: User, as: 'Followers' }] })
+      const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
       const topUsers = await users
         .map(u => ({
           // 整理格式
@@ -213,7 +213,7 @@ const userController = {
           isFollowed: req.user && req.user.Followings.some(f => f.id === t.userId)
         }))
       // top10users area
-      const users = await User.findAll({ include: [{ model: User, as: 'Followers', include: Tweet }] })
+      const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
       const topUsers = await users
         .map(u => ({
           // 整理格式
@@ -257,7 +257,7 @@ const userController = {
           isFollowed: req.user && req.user.Followings.some(f => f.id === t.userId)
         }))
       // top10users area
-      const users = await User.findAll({ include: [{ model: User, as: 'Followers', include: Tweet }] })
+      const users = await User.findAll({ include: [{ model: User, as: 'Followers'}], where: { role: 'user' } })
       const topUsers = await users
         .map(u => ({
         // 整理格式
