@@ -1,9 +1,9 @@
 <div class="mx-auto p-2" style="border: 1px solid #E6ECF0">
-    <div class="card-body">
+    {{!-- <div class="card-body"> --}}
         <div class="d-flex flex-row">
             <a href="/users/{{this.User.id}}/tweets">
             <div style="width:40px; height:40px; background-color:#FF6600"
-                class="rounded-circle overflow-hidden">
+                class="rounded-circle overflow-hidden m-1">
                 <img src={{#if
                     this.User.avatar}}{{this.User.avatar}}{{else}}"https://s3.ap-southeast-2.amazonaws.com/cdn.greekherald.com.au/wp-content/uploads/2020/07/05194617/default-avatar.png"{{/if}}
                     style="aspect-ratio: 1 / 1;width: 40px;object-fit: cover;object-position: center;" alt="avatar">
@@ -51,7 +51,7 @@
             </div>
 
         </div>
-    </div>
+    {{!-- </div> --}}
 </div>
 {{!--留言modal--}}
 <div class="modal" id="ModalReply{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
