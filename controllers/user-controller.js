@@ -46,38 +46,29 @@ const userController = {
       const user = await User.findByPk(userId, {
         include: [
           { model: Tweet },
-          // { model: Tweet, include: Reply },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
       })
-
       // tweet area
       const tweets = await Tweet.findAll({
         order: [['createdAt', 'DESC']],
-        include: [User, Reply, Like],
+        include: [User, Reply, { model: User, as: 'LikedUsers' }],
+        // include: [User, Reply],
         where: { userId: userId }
-        // raw: true,
-        // nest: true
       })
 
-      const likes = await Like.findAll({
-        where: { userId: req.user.id },
-        raw: true,
-        nest: true //
-      })
-      const likedTweetsId = likes.map(like => like.tweetId)
-      const tweetsresult = tweets
+      const tweetsResult = tweets
         .map(t => ({
           ...t.toJSON(),
-          isLiked: likedTweetsId.includes(t.id)
+          likesCount: t.LikedUsers.length,
+          isLiked: req.user && req.user.LikedTweets.some(l => l.id === t.id)
         }))
-
+      console.log('tweetsResult:', tweetsResult)
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }] })
       const topUsers = users
         .map(u => ({
-        // 整理格式
           ...u.toJSON(),
           name: u.name.substring(0, 20),
           account: u.account.substring(0, 20),
@@ -88,7 +79,7 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
-      return res.render('users/tweets', { user: user.toJSON(), tweets: tweetsresult, topUsers })
+      return res.render('users/tweets', { user: user.toJSON(), tweets: tweetsResult, topUsers })
     } catch (err) {
       next(err)
     }
@@ -135,16 +126,45 @@ const userController = {
   getUserLikesPage: async (req, res, next) => {
     try {
       const { userId } = req.params
-
+      // info area
       const user = await User.findByPk(userId, {
         include: [
-          { model: Tweet, include: Like },
-          { model: Tweet, include: Reply },
+          { model: Tweet },
+          // { model: Tweet, include: Like },
+          // { model: Tweet, include: Reply },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
       })
-
+      // likedtweet area
+      const likes = await Like.findAll({
+        where: { userId: userId },
+        raw: true,
+        nest: true //
+      })
+      const likedTweetsId = likes.map(like => like.tweetId)
+      const myLikedTweetsId = req.user && req.user.LikedTweets.map(like => like.id)
+      const tweets = await Tweet.findAll({
+        order: [['createdAt', 'DESC']],
+        include: [User, Reply, Like],
+        where: { id: likedTweetsId }
+      })
+      const tweetsResult = tweets
+        .map(t => ({
+          ...t.toJSON(),
+          isLiked: myLikedTweetsId.includes(t.id)
+        }))
+      // const likes = await Like.findAll({
+      //   include: [
+      //     { model: Tweet, include: [User, Like] }
+      //   ],
+      //   where: { userId: userId },
+      //   order: [['createdAt', 'DESC']],
+      //   raw: true,
+      //   nest: true
+      // })
+      console.log(tweets)
+      // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }] })
       const topUsers = await users
         .map(u => ({
@@ -159,18 +179,7 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
-      const likes = await Like.findAll({
-        include: [
-          { model: Tweet, include: [User, Like] }
-        ],
-        where: { userId: userId },
-        order: [['createdAt', 'DESC']],
-        raw: true,
-        nest: true
-      })
-      console.log(likes)
-
-      return res.render('users/likes', { user: user.toJSON(), likes, topUsers })
+      return res.render('users/likes', { user: user.toJSON(), tweets: tweetsResult, topUsers })
     } catch (err) {
       next(err)
     }

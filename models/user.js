@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasMany(models.Reply, { foreignKey: 'userId' })
       User.hasMany(models.Tweet, { foreignKey: 'userId' })
-      User.hasMany(models.Like, { foreignKey: 'userId' })
+      // User.hasMany(models.Like, { foreignKey: 'userId' })
       User.belongsToMany(User, {
         through: models.Followship,
         foreignKey: 'followingId',
@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
         through: models.Followship,
         foreignKey: 'followerId',
         as: 'Followings'
+      })
+      User.belongsToMany(models.Tweet, {
+        through: models.Like,
+        foreignKey: 'userId',
+        as: 'LikedTweets'
       })
     }
   };

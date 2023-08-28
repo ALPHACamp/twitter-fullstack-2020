@@ -16,8 +16,8 @@
                         src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt=""
                         width="40px" height="40px" style="background-color:#FF6600; border-radius: 30px">
                 </a>
-                <p class="inline ms-1 mt-1">{{../user.name}}</p>
-                <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{../user.account}}</span>
+                <p class="inline ms-1 mt-1">{{this.User.name}}</p>
+                <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{this.User.account}}</span>
                 <span class="ms-1 mt-2" style="font-size: 0.2em;">• {{relativeTimeFromNow this.createdAt}}</span>
             </div>
 
@@ -55,7 +55,7 @@
                         </button>
                     </form>
                     {{/if}}
-                    <span class="m-1" style="font-size: 0.2rem;">{{this.Likes.length}}</span>
+                    <span class="m-1" style="font-size: 0.2rem;">{{this.likesCount}}</span>
                 </div>
 
             </div>
