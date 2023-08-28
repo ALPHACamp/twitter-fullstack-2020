@@ -7,7 +7,7 @@
         {{>user-page-tabs route='likes'}}
     </div>
     {{!-- 留言 --}}
-    {{#each user.Likes}}
+    {{#each tweets}}
     <div class="mx-auto p-2" style="border: 1px solid #E6ECF0">
         <div class="card-body">
             <div class="d-flex flex-row">
@@ -16,14 +16,14 @@
                         src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt=""
                         width="40px" height="40px" style="background-color:#FF6600; border-radius: 30px">
                 </a>
-                <p class="inline ms-1 mt-1">{{this.Tweet.User.name}}</p>
-                <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{this.Tweet.User.account}}</span>
+                <p class="inline ms-1 mt-1">{{this.User.name}}</p>
+                <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{this.User.account}}</span>
                 <span class="ms-1 mt-2" style="font-size: 0.2em;">• {{relativeTimeFromNow this.createdAt}}</span>
             </div>
 
             <a href="/tweets/replies" style="text-decoration: none; color:#171725">
                 <div class="col-10 mx-auto">
-                    <p>{{this.Tweet.description}}</p>
+                    <p>{{this.description}}</p>
                 </div>
             </a>
 
@@ -32,17 +32,29 @@
                 <div class="me-4">
                     <button type="submit"
                         style="background-color:transparent; border-color:transparent; border: none; padding: 0;"
-                        data-bs-toggle="modal" data-bs-target="#ModalReply" data-id="{{this.Replies.id}}">
+                        data-bs-toggle="modal" data-bs-target="#ModalReply" data-id="{{this.Tweet.Replies.id}}">
                         <img src="/icon/Reply.png" alt="" width="20px" height="20px" />
                     </button>
-                    <span class="m-1" style="font-size: 0.2rem;">{{this.Tweet.Replies.length}}</span>
+                    <span class="m-1" style="font-size: 0.2rem;">{{this.Replies.length}}</span>
                 </div>
 
-                <div>
-                    <a href="#" style="text-decoration: none;">
-                        <img class="" src="/icon/icon_like.png" alt="" width="20px" height="20px">
-                    </a>
-                    <span class="m-1" style="font-size: 0.2rem;">{{this.Tweet.Likes.length}}</span>
+                <div class="d-flex flex-row">
+                    {{#if isLiked}}
+                    <form action="/tweets/{{this.id}}/unlike" method="POST">
+                        <button type="submit"
+                            style="background-color:transparent; border-color:transparent; border: none; padding: 0;">
+                            <img src="/icon/icon_like_fill.png" alt="..." width="13px" height="13px" />
+                        </button>
+                    </form>
+                    {{else}}
+                    <form action="/tweets/{{this.id}}/like" method="POST">
+                        <button type="submit"
+                            style="background-color:transparent; border-color:transparent; border: none; padding: 0;">
+                            <img src="/icon/icon_like.png" alt="..." width="16px" height="16px" />
+                        </button>
+                    </form>
+                    {{/if}}
+                    <span class="m-1" style="font-size: 0.2rem;">{{this.likesCount}}</span>
                 </div>
 
             </div>

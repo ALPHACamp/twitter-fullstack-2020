@@ -54,52 +54,56 @@ const userController = {
       next(err)
     }
   },
-  getUserTweetsPage: (req, res, next) => {
-    const id = req.params.userId
-    return Promise.all([
-      User.findByPk(id, {
+  getUserTweetsPage: async (req, res, next) => {
+    try {
+      const { userId } = req.params
+      // info area
+      const user = await User.findByPk(userId, {
         include: [
-          { model: Tweet, include: Like },
-          { model: Tweet, include: Reply },
+          { model: Tweet },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
-      }),
-      User.findAll({ include: [{ model: User, as: 'Followers' }] })
-    ])
-      .then(([user, users]) => {
-        const topUsers = users
-          .map(u => ({
-            // 整理格式
-            ...u.toJSON(),
-            name: u.name.substring(0, 20),
-            account: u.account.substring(0, 20),
-            // 計算追蹤者人數
-            followerCount: u.Followers.length,
-            // 判斷目前登入使用者是否已追蹤該 user 物件
-            isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
-          }))
-          .sort((a, b) => b.followerCount - a.followerCount)
-        return res.render('users/tweets', { user: user.toJSON(), topUsers })
       })
-      .catch(err => next(err))
+      // tweet area
+      const tweets = await Tweet.findAll({
+        order: [['createdAt', 'DESC']],
+        include: [User, Reply, { model: User, as: 'LikedUsers' }],
+        where: { userId: userId }
+      })
+
+      const tweetsResult = tweets
+        .map(t => ({
+          ...t.toJSON(),
+          likesCount: t.LikedUsers.length,
+          isLiked: req.user && req.user.LikedTweets.some(l => l.id === t.id)
+        }))
+      // top10users area
+      const users = await User.findAll({ include: [{ model: User, as: 'Followers' }] })
+      const topUsers = users
+        .map(u => ({
+          ...u.toJSON(),
+          name: u.name.substring(0, 20),
+          account: u.account.substring(0, 20),
+          // 計算追蹤者人數
+          followerCount: u.Followers.length,
+          // 判斷目前登入使用者是否已追蹤該 user 物件
+          isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
+        }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+
+      return res.render('users/tweets', { user: user.toJSON(), tweets: tweetsResult, topUsers })
+    } catch (err) {
+      next(err)
+    }
   },
   getUserRepliesPage: (req, res, next) => {
     const id = req.params.userId
     return Promise.all([
       User.findByPk(id, {
         include: [
-          { model: Tweet, include: Like },
           { model: Tweet, include: Reply },
           { model: Reply, include: { model: Tweet, include: User } },
-          {
-            model: Like,
-            include: [
-              { model: Tweet, include: User },
-              { model: Tweet, include: Reply },
-              { model: Tweet, include: Like }
-            ]
-          },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
@@ -123,49 +127,79 @@ const userController = {
       })
       .catch(err => next(err))
   },
-  getUserLikesPage: (req, res, next) => {
-    const id = req.params.userId
-    return Promise.all([
-      User.findByPk(id, {
+  getUserLikesPage: async (req, res, next) => {
+    try {
+      const { userId } = req.params
+      // info area
+      const user = await User.findByPk(userId, {
         include: [
-          { model: Tweet, include: Like },
-          { model: Tweet, include: Reply },
+          { model: Tweet },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
-      }),
-      User.findAll({ include: [{ model: User, as: 'Followers' }] })
-    ])
-      .then(([user, users]) => {
-        const topUsers = users
-          .map(u => ({
-            // 整理格式
-            ...u.toJSON(),
-            name: u.name.substring(0, 20),
-            account: u.account.substring(0, 20),
-            // 計算追蹤者人數
-            followerCount: u.Followers.length,
-            // 判斷目前登入使用者是否已追蹤該 user 物件
-            isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
-          }))
-          .sort((a, b) => b.followerCount - a.followerCount)
-        return res.render('users/likes', { user: user.toJSON(), topUsers })
       })
-      .catch(err => next(err))
+      // likedtweet area
+      const likes = await Like.findAll({
+        where: { userId: userId },
+        raw: true,
+        nest: true //
+      })
+      const likedTweetsId = likes.map(like => like.tweetId)
+      const tweets = await Tweet.findAll({
+        order: [['createdAt', 'DESC']],
+        include: [User, Reply, { model: User, as: 'LikedUsers' }],
+        where: { id: likedTweetsId }
+      })
+      const tweetsResult = tweets
+        .map(t => ({
+          ...t.toJSON(),
+          likesCount: t.LikedUsers.length,
+          isLiked: req.user && req.user.LikedTweets.some(l => l.id === t.id)
+        }))
+      // top10users area
+      const users = await User.findAll({ include: [{ model: User, as: 'Followers' }] })
+      const topUsers = await users
+        .map(u => ({
+          // 整理格式
+          ...u.toJSON(),
+          name: u.name.substring(0, 20),
+          account: u.account.substring(0, 20),
+          // 計算追蹤者人數
+          followerCount: u.Followers.length,
+          // 判斷目前登入使用者是否已追蹤該 user 物件
+          isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
+        }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+
+      return res.render('users/likes', { user: user.toJSON(), tweets: tweetsResult, topUsers })
+    } catch (err) {
+      next(err)
+    }
   },
   getUserFollowingsPage: async (req, res, next) => {
     try {
       const { userId } = req.params
-
+      // header area
       const user = await User.findByPk(userId, {
-        include: [
-          { model: Tweet, include: Like },
-          { model: Tweet, include: Reply },
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
-        ]
+        include: Tweet
       })
-
+      // tweet area
+      const followships = await Followship.findAll({
+        where: { followerId: userId },
+        raw: true
+      })
+      const followingsId = followships.map(followship => followship.followingId)
+      const tweets = await Tweet.findAll({
+        include: User,
+        where: { UserId: followingsId },
+        order: [['createdAt', 'DESC']]
+      })
+      const tweetsResult = tweets
+        .map(t => ({
+          ...t.toJSON(),
+          isFollowed: req.user && req.user.Followings.some(f => f.id === t.userId)
+        }))
+      // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers', include: Tweet }] })
       const topUsers = await users
         .map(u => ({
@@ -180,26 +214,7 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
-      const followships = await Followship.findAll({
-        attributes: ['followingId'],
-        where: { followerId: userId },
-        raw: true
-      })
-      const followIdArr = []
-      for (let i = 0; i < followships.length; i++) {
-        followIdArr.push(Object.values(followships[i]))
-      }
-      const followId = await followIdArr.flat()
-
-      const followingsTweets = await Tweet.findAll({
-        include: User,
-        where: { UserId: followId },
-        raw: true,
-        nest: true,
-        order: [['createdAt', 'DESC']]
-      })
-
-      return res.render('users/followings', { user: user.toJSON(), followingsTweets, topUsers })
+      return res.render('users/followings', { user: user.toJSON(), tweets: tweetsResult, topUsers })
     } catch (err) {
       next(err)
     }
@@ -207,20 +222,31 @@ const userController = {
   getUserFollowersPage: async (req, res, next) => {
     try {
       const { userId } = req.params
-
+      // header area
       const user = await User.findByPk(userId, {
-        include: [
-          { model: Tweet, include: Like },
-          { model: Tweet, include: Reply },
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
-        ]
+        include: Tweet
       })
-
+      // tweet area
+      const followships = await Followship.findAll({
+        where: { followingId: userId },
+        raw: true
+      })
+      const followersId = followships.map(followship => followship.followerId)
+      const tweets = await Tweet.findAll({
+        include: User,
+        where: { UserId: followersId },
+        order: [['createdAt', 'DESC']]
+      })
+      const tweetsResult = tweets
+        .map(t => ({
+          ...t.toJSON(),
+          isFollowed: req.user && req.user.Followings.some(f => f.id === t.userId)
+        }))
+      // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers', include: Tweet }] })
       const topUsers = await users
         .map(u => ({
-          // 整理格式
+        // 整理格式
           ...u.toJSON(),
           name: u.name.substring(0, 20),
           account: u.account.substring(0, 20),
@@ -231,26 +257,7 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
-      const followships = await Followship.findAll({
-        attributes: ['followerId'],
-        where: { followingId: userId },
-        raw: true
-      })
-      const followIdArr = []
-      for (let i = 0; i < followships.length; i++) {
-        followIdArr.push(Object.values(followships[i]))
-      }
-      const followId = await followIdArr.flat()
-
-      const followersTweets = await Tweet.findAll({
-        include: User,
-        where: { UserId: followId },
-        raw: true,
-        nest: true,
-        order: [['createdAt', 'DESC']]
-      })
-
-      return res.render('users/followers', { user: user.toJSON(), followersTweets, topUsers })
+      return res.render('users/followers', { user: user.toJSON(), tweets: tweetsResult, topUsers })
     } catch (err) {
       next(err)
     }
