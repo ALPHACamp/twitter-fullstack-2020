@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { Op } = require('sequelize');
+const { Op } = require('sequelize')
 const { User } = require('../models')
 
 const userController = {
@@ -60,6 +60,20 @@ const userController = {
   },
   getUserFollowers: (req, res, next) => {
     return res.render('followers')
+  },
+  logout: (req, res) => {
+    req.flash('success_messages', '成功登出！')
+    req.logout()
+    res.redirect('/signin')
+  },
+  getUserTweets: (req, res, next) => {
+    res.render('user-tweets')
+  },
+  getUserReplies: (req, res, next) => {
+    res.render('user-replies')
+  },
+  getUserLikes: (req, res, next) => {
+    res.render('user-likes')
   }
 }
 
