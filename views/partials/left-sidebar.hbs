@@ -24,14 +24,14 @@
       {{/if}}
       <!--點擊個人個人資料後變成橘色圖示與文字-->
       {{#if profileRoute}}
-      <a href="/users/:id/tweets" class="nav-link button-container" id="profile">
+      <a href="/users/{{user.id}}/tweets" class="nav-link button-container" id="profile">
         <span class="icon-description p-0" id="profile-span" style="color: #FF4400">
         <img src="/images/icons/orange-profile.png" alt="profile" id="profile-icon" class="sidebar-icon">
         個人資料
       </span>
       </a>
       {{else}}
-      <a href="/users/:id/tweets" class="nav-link button-container" id="profile">
+      <a href="/users/{{user.id}}/tweets" class="nav-link button-container" id="profile">
         <span class="icon-description p-0" id="profile-span">
           <img src="/images/icons/profile.png" alt="profile" id="profile-icon" class="sidebar-icon">
           個人資料
@@ -40,14 +40,14 @@
       {{/if}}
       {{#if settingRoute}}
       <!--點擊設定後變成橘色圖示與文字-->
-      <a href="/users/:id/edit" class="nav-link button-container" id="setting">
+      <a href="/users/{{user.id}}/edit" class="nav-link button-container" id="setting">
         <span class="icon-description p-0" id="setting-span" style="color: #FF4400">
           <img src="/images/icons/orange-setting.png" alt="setting" id="setting-icon" class="sidebar-icon">
           設定
         </span>
       </a>
       {{else}}
-      <a href="/users/:id/edit" class="nav-link button-container" id="setting">
+      <a href="/users/{{user.id}}/edit" class="nav-link button-container" id="setting">
         <span class="icon-description p-0" id="setting-span">
           <img src="/images/icons/setting.png" alt="setting" id="setting-icon" class="sidebar-icon">
           設定
