@@ -5,8 +5,8 @@ const userController = require('../../../controllers/pages/user-controller')
 const cpUpload = require('../../../middlewares/multer')
 
 router.get('/:id/tweets', userController.getUserTweets)
-router.get('/:id/followings', userController.getFollowingUsers)
-// router.get('/:/followers')
+router.get('/:id/followings', userController.getFollowings)
+router.get('/:id/followers', userController.getFollowers)
 router.get('/:id', userController.getUserEditPage)
 router.post('/:id', cpUpload, userController.postUserInfo)
 
