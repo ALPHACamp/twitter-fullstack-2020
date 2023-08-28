@@ -49,6 +49,27 @@ const tweetController = {
         res.render('tweets', { tweets: result, tweetRoute, currentUser, id: helper.getUser(req).id })
       })
       .catch(err => next(err))
+  },
+  postTweet: async (req, res, next) => {
+    let { description } = req.body
+    const UserId = helper.getUser(req).id
+    // 後端驗證
+    try {
+      // 推文字數不可超過140字
+      if (description.length > 140) throw new Error('字數不可超過140字')
+
+      // 修剪推文內容去掉前後空白
+      description = description.trim()
+      if (!description) throw new Error('內容不可空白')
+
+      await Tweet.create({
+        UserId,
+        description
+      })
+      return res.redirect('/tweets')
+    } catch (err) {
+      next(err)
+    }
   }
 }
 module.exports = tweetController
