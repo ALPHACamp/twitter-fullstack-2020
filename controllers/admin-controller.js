@@ -44,10 +44,7 @@ const adminController = {
         { model: Like, as: 'LikedTweets' },
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' }
-      ],
-      where: {
-        role: 'user'
-      }
+      ]
     })
       .then(users => {
         users = users.map(user => ({
