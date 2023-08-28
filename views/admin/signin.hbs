@@ -1,34 +1,37 @@
-<div class="container-signin m-5">
-  <div class="text-center">
-    {{!-- Logo --}}
-    <img id="ac-logo" src="/images/icons/logo.png" alt="logo">
-    {{!-- Title --}}
-    <h3 id="signin-title">後台登入</h3>
+<div class="signin-container">
+
+  {{!-- Logo --}}
+  <div class="signin-logo-container">
+    <img src="/stylesheets/icons/logo.svg" alt="logo" class="signin-logo">
   </div>
+  
+  {{!-- Title --}}
+  <h3 id="signin-title">後台登入</h3>
 
   {{!-- Form --}}
-  <div class=" d-flex justify-content-center">
-    <form class="form-signin" action="/admin/signin" method="POST">
-      {{!-- 帳號 --}}
-      <div class="mb-3" id="form-input-line">
-        <label class="form-label" for="account">帳號</label>
-        <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" required>
-      </div>
-      {{!-- 密碼 --}}
-      <div class="mb-3" id="form-input-line">
-        <label class="form-label" for="password">密碼</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="請輸入密碼" required>
-      </div>
-      {{!-- 登入 button --}}
-      <button id="btn-signin-submit" class="btn btn-primary" type="submit">登入</button>
-    </form>
-  </div>
+  <form action="/admin/signin" method="POST" id="form" class="needs-validation" novalidate>
 
-  <div class="text-end">
-    <div class="col">
-      {{!-- 前台登入 Link --}}
-      <a href="/signin" class="btn btn-link">前台登入</a>
+    {{!-- 帳號 --}}
+    <div class="form-item-account">
+      <label for="account" class="form-label">帳號</label>
+      <input type="text" id="account" name="account" placeholder="請輸入帳號" class="form-input" value="{{ account }}" required />
     </div>
+
+    {{!-- 密碼 --}}
+    <div class="form-item-password">
+      <label for="password" class="form-label">密碼</label>
+      <input type="password" id="password" name="password" placeholder="請輸入密碼" class="form-input" value="{{ password }}" required />
+    </div>
+    
+    {{!-- 登入 button --}}
+    <button type="submit" class="btn btn-info btn-submit" id="submit">
+      <span class="btn-signin-text">登入</span>
+    </button>
+  </form>
+
+  {{!-- Link --}}
+  <div class="sub-btn">
+    <a href="/signin" style="text-decoration:underline">前台登入</a>
   </div>
 
 </div>
