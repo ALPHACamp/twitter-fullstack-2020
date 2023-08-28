@@ -21,12 +21,21 @@
         </span>
       </a>
       {{/if}}
+      {{#if userRoute}}
+      <a href="/admin/users" class="nav-link button-container" id="profile">
+        <span class="icon-description p-0" id="profile-span" style="color: #FF4400">
+          <img src="/images/icons/orange-profile.png" alt="profile" id="profile-icon" class="sidebar-icon">
+          使用者列表
+        </span>
+      </a>
+      {{else}}
       <a href="/admin/users" class="nav-link button-container" id="profile">
         <span class="icon-description p-0" id="profile-span">
           <img src="/images/icons/profile.png" alt="profile" id="profile-icon" class="sidebar-icon">
           使用者列表
         </span>
       </a>
+      {{/if}}
     </nav>
   </div>
   <div id="logout">

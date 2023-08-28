@@ -1,4 +1,4 @@
-const { User, Tweet } = require('../models')
+const { User, Tweet, Like } = require('../models')
 
 const adminController = {
   signInPage: (req, res) => {
@@ -43,6 +43,30 @@ const adminController = {
         res.redirect('/admin/tweets')
       })
       .catch(err => next(err))
-  }
+  },
+  getUsers: (req, res, next) => {
+    const userRoute = true
+    return User.findAll({
+      attributes: [
+        'id', 'account', 'name', 'email', 'avatar', 'cover', 'role'
+      ],
+      include: [
+        { model: Tweet },
+        { model: Like, as: 'LikedTweets' },
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' }
+      ]
+    })
+      .then(users => {
+        users = users.map(user => ({
+          ...user.dataValues,
+          tweetsCount: user.Tweets.length,
+          likesCount: user.LikedTweets.length,
+          followingsCount: user.Followings.length,
+          followersCount: user.Followers.length
+        }))
+        console.log(users)
+        users = users.sort((a, b) => b.tweetsCount - a.tweetsCount)
+        res.render('admin/users', { users, userRoute })
 }
 module.exports = adminController
