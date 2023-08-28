@@ -1,3 +1,11 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: 'Noto Sans TC', 'Montserrat', sans-serif;
+}
+
 .check {
   color: red;
   font-size: 3rem;
