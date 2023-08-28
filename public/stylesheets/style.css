@@ -22,6 +22,7 @@ body {
   body {
     min-width: 1140px;
     max-width: 1140px;
+    font-family: 'custom-font';
   }
 }
 
