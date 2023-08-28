@@ -1,8 +1,10 @@
 const { Tweet, User, Reply } = require('../models')
+const helper = require('../_helpers')
 
 const tweetController = {
   getTweets: (req, res, next) => {
     const tweetRoute = true
+    const currentUser = helper.getUser(req)
     return Promise.all([
       Tweet.findAll({
         raw: true,
@@ -44,7 +46,7 @@ const tweetController = {
           })
       })
       .then(result => {
-        res.render('tweets', { tweets: result, tweetRoute })
+        res.render('tweets', { tweets: result, tweetRoute, currentUser })
       })
       .catch(err => next(err))
   }

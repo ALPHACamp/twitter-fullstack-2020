@@ -45,12 +45,15 @@
                   </div>
                   <div class="tweets-icon-container d-flex flex-row mt-2">
                     <div class="reply">
-                      <img src="/images/icons/reply.png" alt="" style="height: 16px; width: 16px;" class="mb-1"> 
-                      <span class="ms-1" style="height: 14px; width: 14px;">{{this.tweetCount}}</span>
+                      <button class="reply bg-white" type="button" data-bs-toggle="modal" data-bs-target="#reply-tweet-{{this.id}}">
+                        <img src="/images/icons/reply.png" alt="" style="height: 16px; width: 16px;" class="mb-1">
+                        <span class="ms-1" style="height: 14px; width: 14px; font-familt: Montserrat;">{{this.tweetCount}}</span>
+                      </button>
+                      {{> reply-modal}}
                     </div>
                     <div class="like ms-4">
                       <img src="/images/icons/like.png" alt="" style="height: 16px; width: 16px;" class="mb-1">
-                      <span class="ms-1" style="height: 14px; width: 14px;">12</span>
+                      <span class="ms-1" style="height: 14px; width: 14px; font-familt: Montserrat;">12</span>
                     </div>
                   </div>
                 </div>

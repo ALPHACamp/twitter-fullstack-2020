@@ -154,7 +154,7 @@ textarea {
   height: 1200px;
 }
 
-#add-tweet-button {
+#add-tweet-button, #reply-button {
   position: absolute;
   width: Hug (64px);
   height: Hug (40px); 
@@ -199,4 +199,17 @@ textarea {
 .recommended-users-card {
   width: 273px; 
   height: 82px;
+}
+
+.vertical-box {
+  position: relative;
+  flex: 1;
+}
+
+.vertical-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 30px;
+  border: 1px solid #b5b5be;
 }
