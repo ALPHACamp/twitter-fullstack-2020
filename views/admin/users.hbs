@@ -1,14 +1,51 @@
 {{> admin-left-sidebar route="getUsers"}}
-<div class="main-middle border-start border-end" id="tweets-page-container">
-  <h1>使用者列表</h1>
-  {{#each users}}
-  <p>User cover: {{this.cover}}</p>
-  <p>User avatar: {{this.avatar}}</p>
-  <p>User name: {{this.name}}</p>
-  <p>User account: {{this.account}}</p>
-  <p>Tweet count: {{this.tweetsCount}}</p>
-  <p>Like count: {{this.likesCount}}</p>
-  <p>Followings: {{this.followingsCount}}</p>
-  <p>Followers: {{this.followersCount}}</p>
-  {{/each}}
+<div class="admin-user-middle" id="admin-user-page-container">
+  <div class="col-9 mt-3 row-card">
+    <div class="card-header user-page-title px-4" style="font-size: 24px; font-weight: 700;">
+      使用者列表
+    </div>
+    <div class="d-flex flex-row main-user-card p-3">
+      <div class="row row-item">
+      {{#each users}}
+        <div class="d-flex flex-column col-3">
+          <div class="card my-3 rounded-4" style="border: none;">
+            <div class="user-info">
+              <img src="{{#if this.cover}}{{this.cover}}{{else}}https://i.imgur.com/f42NkFh.png{{/if}}"
+                class="position-absolute rounded-3" style="width: 100%; height: 45%; z-index:0;" alt="background">
+              <img src="{{#if this.avatar}}{{this.avatar}}{{else}}/images/no-avatar.png{{/if}}"
+                class="position-absolute rounded-circle mt-4"
+                style="width: 85px; height: 85px; left: 29%; top: 50px; border: white 4px solid; z-index: 1" alt="avatar">
+            </div>
+            <div class="card-body bg-light" style="padding-top: 88%;">
+              <div class="card-title text-center mb-3" style="color: #000000; font-size: 16px; font-weight: 700; height: 8px;">
+                {{this.name}}</div>
+              <div class="card-title text-center" style="color: #6c757d; font-size: 14px; font-weight: 400">
+                @{{this.account}}
+              </div>
+              <div class="text-center mb-2 text-dark d-flex justify-content-center">
+                <div class="tweet-count me-3">
+                  <img src="/images/icons/tweets.png" alt="tweetsCount">
+                  <span>{{this.tweetsCount}}</span>
+                </div>
+                <div class="tweets-like">
+                  <img src="/images/icons/like.png" alt="tweetsLikeCount">
+                  <span>{{this.likesCount}}</span>
+                </div>
+              </div>
+            
+              <div class="text-center mt-2 d-flex justify-content-center">
+                <div class="followings-count me-2">
+                  <span>{{this.followingsCount}}個<span style="color: #6c757d;">跟隨中</span></span>
+                </div>
+                <div class="followers-count">
+                  <span>{{this.followersCount}}位<span style="color: #6c757d;">跟隨者</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
 </div>

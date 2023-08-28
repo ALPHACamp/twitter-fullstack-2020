@@ -37,14 +37,17 @@ const adminController = {
     const userRoute = true
     return User.findAll({
       attributes: [
-        'id', 'account', 'name', 'email', 'avatar', 'cover'
+        'id', 'account', 'name', 'email', 'avatar', 'cover', 'role'
       ],
       include: [
         { model: Tweet },
         { model: Like, as: 'LikedTweets' },
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' }
-      ]
+      ],
+      where: {
+        role: 'user'
+      }
     })
       .then(users => {
         users = users.map(user => ({
@@ -54,6 +57,7 @@ const adminController = {
           followingsCount: user.Followings.length,
           followersCount: user.Followers.length
         }))
+        console.log(users)
         users = users.sort((a, b) => b.tweetsCount - a.tweetsCount)
         res.render('admin/users', { users, userRoute })
       })
