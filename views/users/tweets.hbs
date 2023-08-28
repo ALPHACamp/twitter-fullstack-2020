@@ -7,7 +7,7 @@
         {{>user-page-tabs route='tweets'}}
     </div>
     {{!-- 留言 --}}
-    {{#each user.Tweets}}
+    {{#each tweets}}
     <div class="mx-auto p-2" style="border: 1px solid #E6ECF0">
         <div class="card-body">
             <div class="d-flex flex-row">
@@ -38,10 +38,23 @@
                     <span class="m-1" style="font-size: 0.2rem;">{{this.Replies.length}}</span>
                 </div>
 
-                <div>
-                    <a href="#" style="text-decoration: none;">
-                        <img class="" src="/icon/icon_like.png" alt="" width="20px" height="20px">
-                    </a>
+
+                <div class="d-flex flex-row">
+                    {{#if isLiked}}
+                    <form action="/tweets/{{this.id}}/unlike" method="POST">
+                        <button type="submit"
+                            style="background-color:transparent; border-color:transparent; border: none; padding: 0;">
+                            <img src="/icon/icon_like_fill.png" alt="..." width="13px" height="13px" />
+                        </button>
+                    </form>
+                    {{else}}
+                    <form action="/tweets/{{this.id}}/like" method="POST">
+                        <button type="submit"
+                            style="background-color:transparent; border-color:transparent; border: none; padding: 0;">
+                            <img src="/icon/icon_like.png" alt="..." width="16px" height="16px" />
+                        </button>
+                    </form>
+                    {{/if}}
                     <span class="m-1" style="font-size: 0.2rem;">{{this.Likes.length}}</span>
                 </div>
 

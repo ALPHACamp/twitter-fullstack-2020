@@ -39,35 +39,59 @@ const userController = {
       next(err)
     }
   },
-  getUserTweetsPage: (req, res, next) => {
-    const id = req.params.userId
-    return Promise.all([
-      User.findByPk(id, {
+  getUserTweetsPage: async (req, res, next) => {
+    try {
+      const { userId } = req.params
+      // info area
+      const user = await User.findByPk(userId, {
         include: [
-          { model: Tweet, include: Like },
-          { model: Tweet, include: Reply },
+          { model: Tweet },
+          // { model: Tweet, include: Reply },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
-      }),
-      User.findAll({ include: [{ model: User, as: 'Followers' }] })
-    ])
-      .then(([user, users]) => {
-        const topUsers = users
-          .map(u => ({
-            // 整理格式
-            ...u.toJSON(),
-            name: u.name.substring(0, 20),
-            account: u.account.substring(0, 20),
-            // 計算追蹤者人數
-            followerCount: u.Followers.length,
-            // 判斷目前登入使用者是否已追蹤該 user 物件
-            isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
-          }))
-          .sort((a, b) => b.followerCount - a.followerCount)
-        return res.render('users/tweets', { user: user.toJSON(), topUsers })
       })
-      .catch(err => next(err))
+
+      // tweet area
+      const tweets = await Tweet.findAll({
+        order: [['createdAt', 'DESC']],
+        include: [User, Reply, Like],
+        where: { userId: userId }
+        // raw: true,
+        // nest: true
+      })
+
+      const likes = await Like.findAll({
+        where: { userId: req.user.id },
+        raw: true,
+        nest: true //
+      })
+      const likedTweetsId = likes.map(like => like.tweetId)
+      const tweetsresult = tweets
+        .map(t => ({
+          ...t.toJSON(),
+          isLiked: likedTweetsId.includes(t.id)
+        }))
+
+      // top10users area
+      const users = await User.findAll({ include: [{ model: User, as: 'Followers' }] })
+      const topUsers = users
+        .map(u => ({
+        // 整理格式
+          ...u.toJSON(),
+          name: u.name.substring(0, 20),
+          account: u.account.substring(0, 20),
+          // 計算追蹤者人數
+          followerCount: u.Followers.length,
+          // 判斷目前登入使用者是否已追蹤該 user 物件
+          isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
+        }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+
+      return res.render('users/tweets', { user: user.toJSON(), tweets: tweetsresult, topUsers })
+    } catch (err) {
+      next(err)
+    }
   },
   getUserRepliesPage: (req, res, next) => {
     const id = req.params.userId
@@ -124,7 +148,7 @@ const userController = {
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }] })
       const topUsers = await users
         .map(u => ({
-          // 整理格式
+        // 整理格式
           ...u.toJSON(),
           name: u.name.substring(0, 20),
           account: u.account.substring(0, 20),
@@ -136,25 +160,17 @@ const userController = {
         .sort((a, b) => b.followerCount - a.followerCount)
 
       const likes = await Like.findAll({
-        attributes: ['TweetId'],
-        where: { UserId: userId },
-        raw: true
-      })
-      const likeIdArr = []
-      for (let i = 0; i < likes.length; i++) {
-        likeIdArr.push(Object.values(likes[i]))
-      }
-      const likeId = await likeIdArr.flat()
-
-      const likesTweets = await Tweet.findAll({
-        include: [User, Like, Reply],
-        where: { UserId: likeId },
+        include: [
+          { model: Tweet, include: [User, Like] }
+        ],
+        where: { userId: userId },
+        order: [['createdAt', 'DESC']],
         raw: true,
-        nest: true,
-        order: [['createdAt', 'DESC']]
+        nest: true
       })
+      console.log(likes)
 
-      return res.render('users/likes', { user: user.toJSON(), likesTweets, topUsers })
+      return res.render('users/likes', { user: user.toJSON(), likes, topUsers })
     } catch (err) {
       next(err)
     }

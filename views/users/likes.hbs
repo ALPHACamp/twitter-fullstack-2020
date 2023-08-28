@@ -7,7 +7,7 @@
         {{>user-page-tabs route='likes'}}
     </div>
     {{!-- 留言 --}}
-    {{#each likesTweets}}
+    {{#each likes.Tweet}}
     <div class="mx-auto p-2" style="border: 1px solid #E6ECF0">
         <div class="card-body">
             <div class="d-flex flex-row">
@@ -32,7 +32,7 @@
                 <div class="me-4">
                     <button type="submit"
                         style="background-color:transparent; border-color:transparent; border: none; padding: 0;"
-                        data-bs-toggle="modal" data-bs-target="#ModalReply" data-id="{{this.Replies.id}}">
+                        data-bs-toggle="modal" data-bs-target="#ModalReply" data-id="{{this.Tweet.Replies.id}}">
                         <img src="/icon/Reply.png" alt="" width="20px" height="20px" />
                     </button>
                     <span class="m-1" style="font-size: 0.2rem;">{{this.Replies.length}}</span>
