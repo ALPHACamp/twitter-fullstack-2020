@@ -11,15 +11,15 @@
         <div class="d-flex gap-2">
 
           <div class="recommend-user-icon flex-shrink-0  p-0">
-            <a href="/api/users/{{this.id}}"
+            <a href="/users/{{this.id}}/tweets"
               class="overflow-hidden  rounded-circle link-unstyled  child-img-center w-100 h-100 p-0">
               <img src="{{this.avatar}}" alt="" class="w-100 h-100">
             </a>
           </div>
-          <div>
+          <a href="/users/{{this.id}}/tweets" class="link-unstyled">
             <p class="fw-bold fs-6 m-0 p-0 text-truncate">{{this.name}}</p>
             <p class="font-size-sm text-secondary m-0 p-0 text-truncate">@{{this.account}}</p>
-          </div>
+          </a>
         </div>
         {{#if isFollowed}}
         {{!-- 要使用if/else的地方 --}}
