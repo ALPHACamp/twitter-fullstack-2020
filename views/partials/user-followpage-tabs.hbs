@@ -1,12 +1,25 @@
 <div class="pb-0 px-0">
     <ul class="nav">
-        <li {{#ifCond route 'followers'
-            }}style="color:#FF6600; border-color:#FF6600; border-width: medium; border-style: none none solid none"{{/ifCond}} class="nav-item text-center w-25">
-            <a style="color:#FF6600" class="nav-link active" aria-current="page" href="/users/{{ user.id }}/followers">追隨者</a>
+        {{#ifCond route 'followers'
+        }}
+        <li style="color:#FF6600; border-color:#FF6600; border-width: medium; border-style: none none solid none"
+            class="nav-item text-center w-25">
+            <a style="color:#FF6600" class="nav-link active" aria-current="page"
+                href="/users/{{ user.id }}/followers">追隨者</a>
         </li>
-        <li {{#ifCond route 'followings'
-            }}style="color:#FF6600; border-color:#FF6600; border-width: medium; border-style: none none solid none"{{/ifCond}} class="nav-item text-center w-25">
+        <li class="nav-item text-center w-25">
+            <a style="color:#171725" class="nav-link" href="/users/{{ user.id }}/followings">正在追隨</a>
+        </li>
+        {{/ifCond}}
+        {{#ifCond route 'followings'
+        }}
+        <li class="nav-item text-center w-25">
+            <a style="color:#171725" class="nav-link active" aria-current="page"
+                href="/users/{{ user.id }}/followers">追隨者</a>
+        </li>
+        <li style="color:#FF6600; border-color:#FF6600; border-width: medium; border-style: none none solid none" class="nav-item text-center w-25">
             <a style="color:#FF6600" class="nav-link" href="/users/{{ user.id }}/followings">正在追隨</a>
         </li>
+        {{/ifCond}}
     </ul>
 </div>
