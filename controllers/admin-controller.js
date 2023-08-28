@@ -33,6 +33,17 @@ const adminController = {
       })
       .catch(err => next(err))
   },
+  deleteTweet: (req, res, next) => {
+    return Tweet.findByPk(req.params.id)
+      .then(tweet => {
+        if (!tweet) throw new Error('The tweet did not exist!')
+        tweet.destroy()
+      })
+      .then(() => {
+        res.redirect('/admin/tweets')
+      })
+      .catch(err => next(err))
+  },
   getUsers: (req, res, next) => {
     const userRoute = true
     return User.findAll({
@@ -57,8 +68,5 @@ const adminController = {
         console.log(users)
         users = users.sort((a, b) => b.tweetsCount - a.tweetsCount)
         res.render('admin/users', { users, userRoute })
-      })
-      .catch(err => next(err))
-  }
 }
 module.exports = adminController
