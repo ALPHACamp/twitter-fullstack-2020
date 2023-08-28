@@ -1,5 +1,3 @@
-const { User } = require('../../models')
-const helpers = require('../../_helpers')
 const userService = require('../../service/user-services')
 
 const apiController = {
@@ -7,6 +5,7 @@ const apiController = {
     userService.getUserEditPage(req, (err, user) => err ? next(err) : res.json({ ...user }))
   },
   postUserInfo: async (req, res, next) => {
+    await userService.postUserInfo(req, (err, data) => err ? next(err) : res.json(data))
     try {
       const user = await User.findByPk(req.params.id)
       if (!user) throw new Error("User didn't exist!")
