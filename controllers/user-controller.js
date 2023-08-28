@@ -1,6 +1,8 @@
 const { User, Tweet, Like, Reply, Followship } = require('../models')
 const bcrypt = require('bcryptjs')
 const helpers = require('../helpers/auth-helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
+
 const userController = {
   getEditPage: async (req, res, next) => {
     try {
@@ -14,27 +16,40 @@ const userController = {
   editUser: async (req, res, next) => {
     try {
       if (Number(req.params.id) !== helpers.getUser(req).id) throw new Error('沒有編輯權限!')
-      const { name, account, email, password, checkPassword } = req.body
+      const { name, account, email, password, checkPassword, introduction } = req.body
       if (password !== checkPassword) throw new Error('密碼不相符!')
       if (name.length > 50) throw new Error('暱稱長度不可超過50個字!')
 
-      const sameAccountUser = await User.findOne({ where: { account } })
-      const sameEmailUser = await User.findOne({ where: { email } })
-      if (sameEmailUser && sameEmailUser.id !== Number(req.params.id)) throw new Error('該Email已被使用!')
-      if (sameAccountUser && sameAccountUser.id !== Number(req.params.id)) throw new Error('該帳號名稱已被使用!')
-
       const user = await User.findByPk(Number(req.params.id))
       if (!user) throw new Error('使用者不存在!')
+
       const updateInfo = {}
-      if (password) {
-        updateInfo.password = await bcrypt.hash(password, 10)
-      }
-      if (account) updateInfo.account = account
       if (name) updateInfo.name = name
-      if (email) updateInfo.email = email
+      if (password) updateInfo.password = await bcrypt.hash(password, 10)
+      if (introduction) updateInfo.introduction = introduction
+      if (account) {
+        const sameAccountUser = await User.findOne({ where: { account } })
+        if (sameAccountUser && sameAccountUser.id !== Number(req.params.id)) throw new Error('該帳號名稱已被使用!')
+        updateInfo.account = account
+      }
+      if (email) {
+        const sameEmailUser = await User.findOne({ where: { email } })
+        if (sameEmailUser && sameEmailUser.id !== Number(req.params.id)) throw new Error('該Email已被使用!')
+        updateInfo.email = email
+      }
+
+      const { avatar, cover } = req.files
+      if (avatar) {
+        const avatarFilePath = await imgurFileHandler(...avatar)
+        updateInfo.avatar = avatarFilePath
+      }
+      if (cover) {
+        const coverFilePath = await imgurFileHandler(...cover)
+        updateInfo.cover = coverFilePath
+      }
       await user.update(updateInfo)
       req.flash('success_messages', '使用者資料編輯成功')
-      res.redirect(`/api/users/${req.params.id}`)
+      res.redirect('back')
     } catch (err) {
       next(err)
     }
