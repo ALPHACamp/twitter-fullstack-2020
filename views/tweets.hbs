@@ -22,7 +22,7 @@
           {{#each tweets}}
           <div class="card col-12 hovercard d-flex flex-row rounded-0 border-0 border-bottom">
             <div class="card-body col-12 p-3">
-              <div class="row mb-2 p-1">
+              <div class="row p-1">
                 <div class="col-1 d-flex justify-content-center align-items-start">
                   <a href="/users/{{this.UserId}}">
                     <img src="{{#if this.User.avatar}}{{ this.User.avatar }}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}"
@@ -42,6 +42,16 @@
                   </div>
                   <div class="col-12 mt-1 me-0" onclick="javascript:location.href='/tweets/{{this.id}}'" style="cursor: pointer;">
                     {{ this.description }}
+                  </div>
+                  <div class="tweets-icon-container d-flex flex-row mt-2">
+                    <div class="reply">
+                      <img src="/images/icons/reply.png" alt="" style="height: 16px; width: 16px;" class="mb-1"> 
+                      <span class="ms-1" style="height: 14px; width: 14px;">{{this.tweetCount}}</span>
+                    </div>
+                    <div class="like ms-4">
+                      <img src="/images/icons/like.png" alt="" style="height: 16px; width: 16px;" class="mb-1">
+                      <span class="ms-1" style="height: 14px; width: 14px;">12</span>
+                    </div>
                   </div>
                 </div>
               </div>
