@@ -7,12 +7,22 @@
   {{#each topUsers}}
   <div style="height:82px" class="d-flex flex-row">
 
-    <div style="width:50px; height:auto" class="container align-self-center ms-1 me-2">
+
+            <div style="width:50px; height:50px; background-color:#FF6600"
+                class="rounded-circle overflow-hidden align-self-center ms-3 me-0">
+                <a href="/users/{{this.id}}/tweets">
+                <img src={{#if
+                    this.avatar}}{{this.avatar}}{{else}}"https://s3.ap-southeast-2.amazonaws.com/cdn.greekherald.com.au/wp-content/uploads/2020/07/05194617/default-avatar.png"{{/if}}
+                    style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
+                    </a>
+            </div>
+            
+    {{!-- <div style="width:50px; height:auto" class="container align-self-center ms-1 me-2">
       <img class="" src="https://cdn2.ettoday.net/images/1457/1457773.jpg" alt="" width="50px" height="50px"
         style="background-color:#FF6600; border-radius: 30px">
-    </div>
+    </div> --}}
 
-    <div style="max-width:95px" class="container align-self-center ms-1 pe-0">
+    <div style="max-width:93px" class="container align-self-center ms-1 pe-0">
       <h6 style="overflow:hidden; white-space:nowrap; text-overflow:ellipsis" class="m-0 word-break:break-all;">{{this.name}}</h5>
       <small>
         <p style="overflow:hidden; white-space:nowrap; text-overflow:ellipsis" class="m-0 text-muted word-break:break-all;">@{{this.account}}</p>
