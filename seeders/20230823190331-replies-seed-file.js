@@ -4,7 +4,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const repliesSeederData = []
     const users = await queryInterface.sequelize.query(
-      'SELECT id FROM Users WHERE account <> "root";',
+      'SELECT id FROM Users WHERE account <> \'root\';',
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
     const tweets = await queryInterface.sequelize.query(
