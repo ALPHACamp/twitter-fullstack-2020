@@ -1,6 +1,6 @@
 const helpers = require('../_helpers')
 const { Op } = require('sequelize')
-const { User, Followship, sequelize } = require('../models')
+const { User, sequelize } = require('../models')
 /* 取出推薦的前10user */
 const topFollowedUser = async req => {
   return await User.findAll({

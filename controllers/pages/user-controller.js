@@ -197,6 +197,11 @@ const userController = {
       })
     })
   },
+  getFollowingUsers: async (req, res, next) => { // 取得正在追蹤的人
+    const userWithFollowing = await userHelper.getFollowingUsers(req)
+    console.log(userWithFollowing)
+    return res.json(userWithFollowing)
+  },
   postUserInfo: async (req, res, next) => {
     await userService.postUserInfo(req, (err, data) => err ? next(err) : res.redirect('back'))
   }
