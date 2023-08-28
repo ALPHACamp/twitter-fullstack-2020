@@ -1,6 +1,6 @@
 {{> title route='editUserInfo'}}
 <div class="edit-user-info">
-  <form action="/api/users/{{user.id}}" method="post" class="w-100 needs-validation p-4" novalidate>
+  <form action="/users/{{user.id}}" method="post" class="w-100 needs-validation p-4" enctype="multipart/form-data" novalidate>
     <div class="mb-4 position-relative">
       <label for="account" class="form-label position-absolute font-size-sm">帳號</label>
       <input type="text" class="form-control fs-6" name="account" id="account" placeholder="請輸入帳號" value="{{account}}" required>
@@ -34,12 +34,13 @@
       </div>
     </div>
     <div class="mb-4 position-relative">
-      <label for="passwordCheck" class="form-label position-absolute font-size-sm">密碼確認</label>
-      <input type="password" class="form-control fs-6" id="passwordCheck" placeholder="請再次輸入密碼" required>
+      <label for="checkPassword" class="form-label position-absolute font-size-sm">密碼確認</label>
+      <input type="password" class="form-control fs-6" id="checkPassword" name="checkPassword" placeholder="請再次輸入密碼" required>
       <div class="invalid-feedback">
         請再次輸入密碼
       </div>
     </div>
+    <input type="text" name="notTest" value="true" hidden>
     <div class="d-flex flex-row-reverse">
       <button type="submit" class="btn btn-primary">儲存</button>
     </div>

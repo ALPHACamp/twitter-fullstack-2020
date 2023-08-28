@@ -12,7 +12,7 @@
       </div>
       <div class="modal-body rounded-5 p-0 m-0">
         {{!--需要更改以下form的連結位置--}}
-        <form action="" method="post" class="homepage-user-card card border-0 shadow-none position-relative">
+        <form action="/users/{{user.id}}" method="post" class="homepage-user-card card border-0 shadow-none position-relative needs-validation" enctype="multipart/form-data" novalidate>
           <img src="{{user.cover}}" id="user-setting-cover" class="card-img-top user-cover" alt="...">
           <label for="user-cover-input" class="user-cover-input-label d-flex justify-content-center align-items-center">
             <div class="user-setting-cover-icon d-flex justify-content-between  gap-5 p-0 m-0">
@@ -45,7 +45,7 @@
             <div class="form-row mb-2 position-relative">
               <label for="introduction" class="form-label position-absolute font-size-sm">自我介紹</label>
               <textarea class="text-input form-control user-setting-name-input text-input" id="introduction"
-                name="introduction" placeholder="請輸入自我介紹" value="John Doe" maxlength="160" required>{{user.introduction}}</textarea>
+                name="introduction" placeholder="請輸入自我介紹" value="John Doe" maxlength="160">{{user.introduction}}</textarea>
               <div class="p-0 m-0 mt-1 d-flex justify-content-end w-100">
                 <div class="input-length text-secondary font-size-xs">0/160</div>
               </div>
@@ -54,6 +54,8 @@
               </div>
             </div>
           </div>
+          <input type="text" name="isModel" value="true" hidden>
+          <input type="text" name="notTest" value="true" hidden>
           <button type="submit" class="btn btn-primary rounded-pill m-0">儲存</button>
         </form>
       </div>
