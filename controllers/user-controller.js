@@ -103,17 +103,8 @@ const userController = {
     return Promise.all([
       User.findByPk(id, {
         include: [
-          { model: Tweet, include: Like },
           { model: Tweet, include: Reply },
           { model: Reply, include: { model: Tweet, include: User } },
-          {
-            model: Like,
-            include: [
-              { model: Tweet, include: User },
-              { model: Tweet, include: Reply },
-              { model: Tweet, include: Like }
-            ]
-          },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
