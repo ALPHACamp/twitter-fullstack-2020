@@ -54,7 +54,6 @@ const userController = {
       const tweets = await Tweet.findAll({
         order: [['createdAt', 'DESC']],
         include: [User, Reply, { model: User, as: 'LikedUsers' }],
-        // include: [User, Reply],
         where: { userId: userId }
       })
 
@@ -130,8 +129,6 @@ const userController = {
       const user = await User.findByPk(userId, {
         include: [
           { model: Tweet },
-          // { model: Tweet, include: Like },
-          // { model: Tweet, include: Reply },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
@@ -143,32 +140,24 @@ const userController = {
         nest: true //
       })
       const likedTweetsId = likes.map(like => like.tweetId)
-      const myLikedTweetsId = req.user && req.user.LikedTweets.map(like => like.id)
       const tweets = await Tweet.findAll({
         order: [['createdAt', 'DESC']],
-        include: [User, Reply, Like],
+        include: [User, Reply, { model: User, as: 'LikedUsers' }],
         where: { id: likedTweetsId }
       })
       const tweetsResult = tweets
         .map(t => ({
           ...t.toJSON(),
-          isLiked: myLikedTweetsId.includes(t.id)
+          likesCount: t.LikedUsers.length,
+          isLiked: req.user && req.user.LikedTweets.some(l => l.id === t.id)
         }))
-      // const likes = await Like.findAll({
-      //   include: [
-      //     { model: Tweet, include: [User, Like] }
-      //   ],
-      //   where: { userId: userId },
-      //   order: [['createdAt', 'DESC']],
-      //   raw: true,
-      //   nest: true
-      // })
+
       console.log(tweets)
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }] })
       const topUsers = await users
         .map(u => ({
-        // 整理格式
+          // 整理格式
           ...u.toJSON(),
           name: u.name.substring(0, 20),
           account: u.account.substring(0, 20),
