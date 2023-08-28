@@ -100,6 +100,20 @@ const adminController = {
     } catch (error) {
       return next(error)
     }
+  },
+
+  deleteTweets: async (req, res, next) => {
+    try {
+      const tweetId = req.params.id
+      await Tweet.destroy({
+        where: {
+          id: tweetId
+        }
+      })
+      return res.redirect('back')
+    } catch (error) {
+      return next(error)
+    }
   }
 }
 
