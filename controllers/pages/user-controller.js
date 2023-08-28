@@ -195,6 +195,9 @@ const userController = {
         route: 'setting'
       })
     })
+  },
+  postUserInfo: async (req, res, next) => {
+    await userService.postUserInfo(req, (err, data) => err ? next(err) : res.redirect('back'))
   }
 }
 
