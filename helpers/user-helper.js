@@ -1,4 +1,4 @@
-const { User, sequelize } = require('../models')
+const { User, Followship, sequelize } = require('../models')
 
 const userHelper = {
   getUserInfo: async req => {
@@ -12,6 +12,66 @@ const userHelper = {
       },
       raw: true
     })
+  },
+  getFollowings: async req => {
+    const userId = req.params.id
+    const userWithfollowings = await User.findByPk(userId, {
+      include: [
+        {
+          model: User,
+          as: 'Followings',
+          attributes: [
+            'id',
+            'name',
+            'account',
+            'avatar',
+            'introduction',
+            [sequelize.literal(
+              `(SELECT COUNT(*) FROM Followships
+                WHERE Followships.follower_id = ${userId}
+                AND Followships.following_id = Followings.id
+              )`), 'isFollowed'] // 查看此User是否已追蹤
+          ],
+          through: {
+            model: Followship,
+            attributes: ['createdAt']
+          }
+        }
+      ],
+      order: [[{ model: User, as: 'Followings' }, { model: Followship }, 'createdAt', 'DESC']]
+
+    })
+    return userWithfollowings.toJSON()
+  },
+  getFollowers: async req => {
+    const userId = req.params.id
+    const userWithfollowers = await User.findByPk(userId, {
+      include: [
+        {
+          model: User,
+          as: 'Followers',
+          attributes: [
+            'id',
+            'name',
+            'account',
+            'avatar',
+            'introduction',
+            [sequelize.literal(
+              `(SELECT COUNT(*) FROM Followships
+                WHERE Followships.follower_id = ${userId}
+                AND Followships.following_id = Followers.id
+              )`), 'isFollowed'] // 查看此User是否已追蹤
+          ],
+          through: {
+            model: Followship,
+            attributes: ['createdAt']
+          }
+        }
+      ],
+      order: [[{ model: User, as: 'Followers' }, { model: Followship }, 'createdAt', 'DESC']]
+
+    })
+    return userWithfollowers.toJSON()
   }
 }
 

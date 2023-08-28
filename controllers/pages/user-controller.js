@@ -197,6 +197,20 @@ const userController = {
       })
     })
   },
+  getFollowings: async (req, res, next) => { // 取得正在追蹤的人
+    const [followings, recommendUser] = await Promise.all([
+      userHelper.getFollowings(req),
+      recommendUserHelper.topFollowedUser(req)
+    ])
+    return res.render('user/followings', { followings, recommendUser, userTab: 'followings' })
+  },
+  getFollowers: async (req, res, next) => { // 取得在追蹤我的人
+    const [followers, recommendUser] = await Promise.all([
+      userHelper.getFollowers(req),
+      recommendUserHelper.topFollowedUser(req)
+    ])
+    return res.render('user/followers', { followers, recommendUser, userTab: 'followers' })
+  },
   postUserInfo: async (req, res, next) => {
     await userService.postUserInfo(req, (err, data) => err ? next(err) : res.redirect('back'))
   },

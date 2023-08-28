@@ -1,0 +1,59 @@
+<div class="container d-flex flex-column m-0 p-0 h-100 w-100">
+  {{!-- 標題 --}}
+  {{>title route='user'}}
+  {{!-- user nav tab --}}
+  <div id="user-tab">
+    <ul class="d-flex flex-wrap m-0 p-0">
+      <li class="d-flex justify-content-center align-items-center {{#ifCond userTab 'followers'}}active {{/ifCond}}">
+        <a href="/users/{{followers.id}}/followers" class="d-flex justify-content-center align-items-center">追蹤者</a>
+      </li>
+      <li class="d-flex justify-content-center align-items-center {{#ifCond userTab 'followings'}}active {{/ifCond}}">
+        <a href="/users/{{followers.id}}/followings" class="d-flex justify-content-center align-items-center">正在追蹤</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="container main-tweets-area  p-0  m-0  tweet-display flex-shrink-1">
+    <div class="scrollbar-hidden p-0 pt-3 m-0 gap-3 d-flex flex-column">
+      {{!-- 追蹤頁面tweet card --}}
+      {{#each followers.Followers}}
+      <div data-link="想要這張卡片連去的地方" data-id="{{this.User.id}}"
+        class="tweet-card card  border-1px shadow-none m-0 py-0 px-4 rounded-0 border-bottom-1 border-top-0 border-start-0 border-end-0">
+        <div class="card-body m-0 p-0 pb-3 d-flex gap-2">
+
+          <div class="tweet-user-icon flex-shrink-0  p-0">
+            <a href="/users/{{this.id}}/tweets" class="overflow-hidden  rounded-circle link-unstyled  child-img-center w-100 h-100 p-0">
+              <img src="{{this.avatar}}" alt="" class="w-100 h-100">
+            </a>
+          </div>
+          <div class="tweet-card-content w-100 d-flex flex-column gap-2">
+
+            <div class="d-flex p-0 m-0 justify-content-between align-items-center">
+              <div class="tweet-user-horizontal">
+                <a href="/users/{{this.id}}/tweets" class=" d-flex gap-2 link-unstyled align-items-center">
+                  <p class="fw-bold">{{this.name}}</p>
+                </a>
+              </div>
+              <div class="p-0 m-0">
+                {{#if this.isFollowed}}
+                <form action="/followships/{{this.id}}?_method=DELETE" method="post">
+                  <button type="submit" class="btn btn-primary rounded-pill">正在跟隨</button>
+                </form>
+                {{else}}
+                <form action="/followships" method="POST" style="display: inline;">
+                  <input type="text" name="id" value="{{this.id}}" class="d-none">
+                  <button type="submit" class="btn btn-outline-primary rounded-pill">跟隨</button>
+                </form>
+                {{/if}}
+              </div>
+            </div>
+            <p class="m-0">
+              {{this.introduction}}
+            </p>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
