@@ -44,7 +44,7 @@ const userServices = {
 
       // 帳戶設定沒有 introduction 所以多一個判斷
       if (isModel && introduction.length > 160) {
-        errors.push({ messages: '自我介紹不得超過50字!' })
+        errors.push({ messages: '自我介紹不得超過160字!' })
       }
 
       if (notTest) {
