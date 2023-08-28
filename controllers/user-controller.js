@@ -50,23 +50,31 @@ const userController = {
       .catch(err => next(err))
   },
   getUserTweets: (req, res, next) => {
-    const profileRoute = true
-    // 待測試取到的值是否正確
-    // const currentUser = helper.getUser(req).id || null
+    const currentUser = helper.getUser(req).id || null
+    const selectedUser = req.params.id
+    // 如果現在進入的個人頁面不是當前使用者
+    let profileRoute = true
+    let otherProfileRoute = false
+    if (currentUser !== Number(selectedUser)) {
+      profileRoute = false
+      otherProfileRoute = true
+    }
     return Promise.all([
       Tweet.findAll({
         // test for now
-        where: { UserId: 2 },
+        where: { UserId: Number(selectedUser) },
         raw: true,
         nest: true,
         include: User,
         order: [['createdAt', 'DESC']]
       }),
-      User.findByPk(2, { raw: true })
+      User.findByPk(currentUser, { raw: true })
     ])
       .then(([tweets, user]) => {
         const tweetsCount = tweets.length
-        res.render('profile', { tweets, user, profileRoute, tweetsCount })
+        // 當 user 為非使用者時
+        const tweetsUser = tweets[0].User.name
+        res.render('profile', { tweets, user, profileRoute, otherProfileRoute, tweetsCount, tweetsUser })
       })
       .catch(err => next(err))
   },
