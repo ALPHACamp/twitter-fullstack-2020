@@ -45,6 +45,13 @@ class TweetError extends Error {
   }
 }
 
+class UpdateError extends Error {
+  constructor (message) {
+    super(message)
+    this.name = 'updateError'
+  }
+}
+
 module.exports = {
   JWTTokenError,
   LocalStrategyError,
@@ -52,5 +59,6 @@ module.exports = {
   FollowshipError,
   LikeError,
   TweetError,
-  UserError
+  UserError,
+  UpdateError
 }
