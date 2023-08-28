@@ -65,8 +65,10 @@ const adminController = {
           followingsCount: user.Followings.length,
           followersCount: user.Followers.length
         }))
-        console.log(users)
         users = users.sort((a, b) => b.tweetsCount - a.tweetsCount)
         res.render('admin/users', { users, userRoute })
+      })
+      .catch(err => next(err))
+  }
 }
 module.exports = adminController
