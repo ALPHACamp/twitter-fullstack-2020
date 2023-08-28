@@ -1,0 +1,54 @@
+<main class="container">
+
+  <div class="row">
+    {{!-- 側邊欄 --}}
+    {{> admin-sidebar route='Users'}}
+
+    <div class="col-6" style="width: 940px; margin: 0 0 0 327px">
+      <nav class="navbar navbar-light border-start border-bottom">
+        <div class="container-fluid">
+          <h4 class="navbar-brand mb-0 h1 fs-4">使用者列表</h4>
+        </div>
+      </nav>
+      {{!-- each users 迴圈開始 --}}
+      <div class="cards border-start" style="width:940px; padding-left: 15px; padding-top: 15px; display: flex; justify-content:flex-start; flex-wrap: wrap;">
+        {{#each users}}
+      <div class="card" style="width: 210px; height: 314px; border-radius: 10px; position:relative; margin-bottom: 15px; margin-right: 15px; background-color:#F6F7F8">
+        <img src="{{this.cover}}"
+          style="width: 210px; height: 140px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+        <div class="content"
+          style="height: 174px; display: flex; flex-direction:column; align-items:center; justify-content: space-around; padding-top:15px;">
+          <div style="padding-top:15px;">
+            <h1 style="font-size: 16px; font-weight: 700;">{{this.name}}</h1>
+            <h2 style="font-size: 14px; font-weight: 400;">@{{this.account}}</h2>
+          </div>
+          <div>
+            <div class="tweets-detail" style="width: 150px; display: flex; justify-content: space-around;">
+              <div class="tweetsCount" style="display: flex;">
+                <img src="https://i.imgur.com/Qn1HfKL.png" style="width: 24px; height: 24px;">
+                <h1 style="font-size: 16px; font-weight: 500;">{{this.tweetsCount}}</h1>
+              </div>
+              <div class="likesCount" style="display: flex;">
+                <img src="https://i.imgur.com/F72NmgQ.png" style="width: 24px; height: 24px;">
+                <h1 style="font-size: 16px; font-weight: 500;">{{this.likesCount}}</h1>
+              </div>
+            </div>
+            <div class="followship">
+              <h3 style="font-size: 14px; font-weight: 400; color: #6C757D;">
+                <span style="color: #171725;">{{this.Followings}}個</span> 跟隨中&nbsp;&nbsp;
+                <span style="color: #171725;">{{this.Followers}}位</span> 跟隨者
+              </h3>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute; top:85px; left: 58px;">
+          <img src="{{this.avatar}}" style="width: 92px; height: 92px; border-radius: 50%; border: 4px solid #FFFFFF;">
+        </div>
+      </div>
+      {{/each}}
+      </div>
+      {{!-- each迴圈結束 --}}
+    </div>
+
+  </div>
+</main>
