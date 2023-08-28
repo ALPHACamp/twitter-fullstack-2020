@@ -4,7 +4,6 @@
   <a href="javascript:history.back()" style="color: #171725;; text-decoration: none;"
     class="col-auto d-flex align-items-center ms-2 pe-0">
     <img src="/images/arrow-left.svg" alt="">
-    {{!-- <i class="fas fa-arrow-left" style="width:17px; height:14px;"></i> --}}
   </a>
   <a href="/users/{{user.id}}/tweets"
     class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
@@ -28,37 +27,39 @@
 
   <div class="card-body col-12 d-flex justify-content-end">
     {{#if isUser}}
-    <button type="submit" class="btn user-edit-button mt-2" data-bs-toggle="modal" data-bs-target="#editModal">編輯個人資料
+    <button type="submit" class="btn user-edit-button mt-2 me-3" data-bs-toggle="modal" data-bs-target="#editModal">編輯個人資料
     </button>
     {{else}}
     <div class="d-flex justify-content-center align-items-center me-3"
       style="margin-top:8px; width:40px; height:40px;border-radius: 50px; border:1px solid #FF6600;">
       <a href="mailto:someone@example.com">
         <img src="/images/envelope.svg" class="justify-content-center" alt="">
-        {{!-- <i class="fa-regular fa-envelope fa-lg justify-content-center"
-          style="color: #FF6600;"></i> --}}
       </a>
     </div>
+    {{#if this.isFollowed}}
+    <div class="d-flex justify-content-center align-items-center me-3"
+      style="margin-top:7px; width:40px; height:40px;border-radius: 50px; border:1px solid #FF6600;">
+      <img src="/images/bell-active.svg" class="justify-content-center" alt="">
+    </div>
+    {{else}}
     <div class="d-flex justify-content-center align-items-center me-3"
       style="margin-top:7px; width:40px; height:40px;border-radius: 50px; border:1px solid #FF6600;">
       <img src="/images/bell.svg" class="justify-content-center" alt="">
-      {{!-- <i class="fa-regular fa-bell fa-lg justify-content-center align-items-center" style="color: #FF6600;"></i> --}}
     </div>
+    {{/if}}
       {{#if this.isFollowed}}
-      <div class="follow-btn d-flex justify-content-center align-items-center me-3 mt-1"
-        style="width:96px; height:40px; background: #FF6600; border-radius:50px;">
+      <div class="d-flex justify-content-center align-items-center me-3 mt-2">
         <form action="/followships/{{user.id}}?_method=DELETE" method="post">
-          <button type="submit"
-            style="border: none; background: none; padding: 0; margin: 0px; cursor: pointer; background-color:#FF6600; width:96px; height:40px; border-radius:50px; color:white">正在跟隨</button>
+          <button type="submit" class="follow-btn-active">
+            正在跟隨</button>
         </form>
       </div>
       {{else}}
-      <div class="follow-btn d-flex justify-content-center align-items-center me-2 mt-1"
-        style="width:64px; height:40px; background:  #FFFFFF; border-radius:50px; white-space: nowrap;">
+      <div class="d-flex justify-content-center align-items-center me-2 mt-2">
         <form action="/followships" method="post">
           <input type="hidden" name="id" value="{{user.id}}" />
-          <button type="submit"
-            style="border: none; background: none; padding: 0; margin: 0px; cursor: pointer; color:#FF6600; border:1px solid #FF6600; width:64px; height:40px; border-radius:50px;">跟隨</button>
+          <button type="submit" class="follow-btn">
+            跟隨</button>
           </form>
         </form>
       </div>
@@ -73,7 +74,7 @@
     <h4 style="font-weight: 900; line-height: 18px;word-wrap:break-word">{{user.name}}</h4>
     <span class="text-muted" style="font-size: 0.93em; line-height: 18px;word-wrap:break-word">{{user.account}}</span>
     <p class="my-2" style="font-size: 0.96em; line-height: 25px;word-wrap:break-word">
-      {{#if user.introduction}}{{user.introduction}}{{else}}請至編輯個人資料頁面填寫自我介紹{{/if}}</p>
+      {{#if user.introduction}}{{user.introduction}}{{else}}<span style="color:gray">{{user.name}}尚無自我介紹</span>{{/if}}</p>
     <a href="/users/{{user.id}}/followings" style="text-decoration:none;">
       <span class="fw-bold text-dark">{{user.Followings.length}}</span><span
         class="text-muted text-dark me-3">個跟隨中</span>
