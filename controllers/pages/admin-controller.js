@@ -2,29 +2,7 @@ const { User, Tweet, Like } = require('../../models')
 
 const adminController = {
   getAdminHomePage: async (req, res, next) => {
-    try {
-      let tweets = await Tweet.findAll({
-        include: {
-          model: User,
-          required: true
-        },
-        raw: true,
-        nest: true
-      })
-
-      tweets = tweets.map(tweet => {
-        if (tweet.description.length > 50) {
-          tweet.description = tweet.description.substring(0, 50) + '...'
-        } else {
-          tweet.description = tweet.description.substring(0, 50)
-        }
-        return tweet
-      })
-
-      res.render('admin/tweets', { tweets })
-    } catch (error) {
-      return next(error)
-    }
+    res.redirect('/admin/tweets')
   },
 
   getTweets: async (req, res, next) => {
