@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
   class Like extends Model {
     static associate (models) {
       // define association here
-      Like.belongsTo(models.User, { foreignKey: 'UserId' })
-      Like.belongsTo(models.Tweet, { foreignKey: 'TweetId' })
+      Like.belongsTo(models.User, { foreignKey: 'userId' })
+      Like.belongsTo(models.Tweet, { foreignKey: 'tweetId' })
     }
   };
   Like.init({
@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Like',
-    tableName: 'Likes'
+    tableName: 'Likes',
+    underscored: true
   })
   return Like
 }

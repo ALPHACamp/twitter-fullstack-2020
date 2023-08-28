@@ -1,1 +1,36 @@
-<div>admin tweets</div>
+<div class="container">
+  <div class="wrapper">
+
+    {{> admin-navbar}}
+
+    <section class="main">
+      {{!-- Title --}}
+      <h4 class="main-title">
+        推文清單
+      </h4>
+
+     {{!-- Tweet --}}
+      <div class="card card-tweet-lg">
+        <a href="#" class="tweet-href"></a>
+        <div class="avatar">
+          <a href="#" class="primary-anchor">
+            <img src="/images/icons/profile-img.svg" alt="avatar" class="avatar">
+          </a>
+        </div>
+        <div class="card-text">
+          <div class="card-text-info">
+            <a href="#" class="primary-anchor">
+              <span class="card-name">Apple</span>
+            </a>
+            <a href="#" class="primary-anchor">
+              <span class="card-account">@apple</span>
+            </a>
+            <span class="card-dot">·</span>
+            <span class="card-datetime">3小時</span>
+          </div>
+          <p class="card-description">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum
+            dolor.
+            Voluptate exercitation incididunt
+            aliquip deserunt reprehenderit elit laborum.</p>
+        </div>
+      </div>

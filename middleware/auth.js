@@ -2,20 +2,26 @@ const helpers = require('../_helpers')
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'admin') return res.redirect('/admin/tweets')
-    req.user = helpers.getUser(req)
-    return next()
+    if (helpers.getUser(req).role === 'user') {
+      return next()
+    } else {
+      return res.redirect('/admin/tweets')
+    }
   }
-  res.redirect('/signin')
+  req.flash('error_messages', '使用前請先登入')
+  return res.redirect('/signin')
 }
 
 const adminAuthenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'admin') return next()
-    res.redirect('/')
-  } else {
-    res.redirect('/signin')
+    if (helpers.getUser(req).role === 'admin') {
+      return next()
+    } else {
+      return res.redirect('/tweets')
+    }
   }
+  req.flash('error_messages', '使用前請先登入')
+  return res.redirect('/admin/signin')
 }
 
 module.exports = {

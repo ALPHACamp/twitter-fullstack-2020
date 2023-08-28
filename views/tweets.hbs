@@ -1,1 +1,201 @@
-<div>tweets</div>
+<div class="row">
+  <!-- 左側nav bar -->
+  <div class="col-3" style="padding:0 0 0 120px;">
+
+    <div class=" container" style="padding: 0;">
+
+      <nav class="navbar">
+        <div class="container-fluid">
+          <img src="/images/icons/logo.svg" width="40" height="40" href="#" alt="logo">
+        </div>
+      </nav>
+
+      <nav class="navbar">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#" style="color: rgb(255, 106, 0);font-size:18px;">
+            <img style="margin: 0 7px 5px 0;" src="/images/icons/home_filled.svg" width="18" height="18" href="#"
+              alt="homepage">
+            <strong>首頁</strong>
+          </a>
+        </div>
+      </nav>
+
+      <nav class="navbar">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#" style="color: black;font-size:18px;">
+            <img style="margin: 0 7px 5px 0;" src="/images/icons/user_outlined.svg" width="18" height="18" href="#"
+              alt="profile">
+            <strong>個人資料</strong>
+          </a>
+        </div>
+      </nav>
+
+      <nav class="navbar">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#" style="color: black;font-size:18px;">
+            <img style="margin: 0 7px 5px 0;" src="/images/icons/cog_outlined.svg" width="18" height="18" href="#"
+              alt="setting">
+            <strong>設定</strong>
+          </a>
+        </div>
+      </nav>
+
+      <nav class="navbar">
+        <div class="container-fluid">
+          <button type="button" id="btn-nav-tweet" data-bs-toggle="modal" data-bs-target="#tweetModal"
+            style="color: white; background-color:rgb(255, 106, 0); font-size:18px;">
+            <strong>推文</strong>
+          </button>
+        </div>
+      </nav>
+
+    </div>
+
+    <nav class="navbar">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/logout" style="color: black;font-size:18px;">
+          <img style="margin: 0 7px 5px 0;" src="/images/icons/logout.svg" width="18" height="18" href="#" alt="logout">
+          <strong>登出</strong>
+        </a>
+      </div>
+    </nav>
+
+  </div>
+
+  <!-- 中間首頁 -->
+  <div class="col-5" style="padding:0;background-color:white; border:2px #ECECEC solid; border-top-color:white;">
+    <div style="padding:15px;height:50px;display: flex; align-items:center;">
+      <span style="font-size: 22px;"><strong>首頁</strong></span>
+    </div>
+    <div style="padding:15px; border-top:2px #ECECEC solid;">
+      <div class="position-relative" style="height:70px;">
+        <strong style="color:	#757676; font-size: 18px;">有什麼新鮮事?</strong>
+        <button type="button" id="btn-tweet" class="position-absolute bottom-0 end-0" data-bs-toggle="modal"
+          data-bs-target="#tweetModal" style="color: white; background-color:rgb(255, 106, 0); font-size:14px;">
+          <strong>推文</strong>
+        </button>
+      </div>
+    </div>
+
+    <div style="margin: 0;height:7px;background-color: #ECECEC;"></div>
+
+    <!-- 中間貼文 -->
+    {{#each tweets}}
+    <div style="padding:5px 15px; border-top:2px #ECECEC solid;">
+      <div class="position-relative">
+        <span style="font-size:18px;" id="name"><strong>{{this.User.name}} </strong></span>
+        <span style="color:gray; font-size:14px;"> @{{this.User.account}}·{{relativeTimeFromNow
+          this.createdAt}}</span>
+        <p style="margin: 2px 0; word-break: break-all;">{{this.description}}</p>
+
+        <div id="icon-container" style="display: flex; align-items:center">
+
+          <img id="reply" data-bs-toggle="modal" data-bs-target="#replyModal"
+            style="margin: 0 25px 0 0; cursor:pointer;" src="/images/icons/reply_outlined.svg" width="16" height="16"
+            href="#" alt="reply">
+
+          {{#if this.isLiked}}
+          <form id="unlike" name="unlike" action="/tweets/{{this.id}}/unlike" method="POST"
+            style="display: flex; align-items:center;">
+            <input type="image" img src="/images/icons/like_filled.svg" width="16" height="16"
+              onClick="document.unlike.submit()">
+          </form>
+          {{else}}
+          <form id="like" name="like" action="/tweets/{{this.id}}/like" method="POST"
+            style="display: flex; align-items:center;">
+            <input type="image" img src="/images/icons/like_outlined.svg" width="16" height="16"
+              onClick="document.unlike.submit()">
+          </form>
+          {{/if}}
+          <span style="margin:0 8px;">{{this.likeCount}}</span>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+
+  <!-- 右側推薦跟隨 -->
+  <div class=" col-4" style="padding: 12px 0 0 20px;">
+    <div class=" card" style="width: 18rem;">
+      <div class="card-header" style="display:flex;align-items:center;">
+        <span style="font-size:22px;"><strong>推薦跟隨</strong></span>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" style="background-color: #F5F5F5; border-color:#F5F5F5">An item</li>
+        <li class=" list-group-item" style="background-color: #F5F5F5; border-color:#F5F5F5">A second item</li>
+        <li class="list-group-item" style="background-color: #F5F5F5; border-color:#F5F5F5">A third item</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 推文Modal -->
+<div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tweetModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <form action="/tweets" method="POST">
+        <div class="modal-body">
+          <textarea class="form-control" id="description" name="description" rows="3" cols="140" placeholder="有什麼新鮮事?"
+            required></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" id="btn-tweet" style="color: white; background-color:rgb(255, 106, 0); font-size:14px;">
+            <strong>推文</strong>
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!-- 回覆Modal -->
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="replyModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <form action="/tweets" method="POST">
+        <div class="modal-body">
+
+          <strong><span id="modal-name" style="font-size:18px;"> </span></strong>
+          {{!-- <span style="color:gray; font-size:14px;"> @{{this.User.account}}·{{relativeTimeFromNow
+            this.createdAt}}</span>
+          <p style="margin: 2px 0; word-break: break-all;">{{this.description}}</p> --}}
+
+          <textarea class="form-control" id="description" name="description" rows="3" cols="140" placeholder="推你的回覆"
+            required></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" id="btn-tweet" style="color: white; background-color:rgb(255, 106, 0); font-size:14px;">
+            <strong>回覆</strong>
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  const reply = document.getElementById('reply')
+
+  reply.addEventListener('click', function () {
+    const name = document.querySelector("#name")
+    console.log(name)
+    document.querySelector("#modal-name").textContent = name
+  }, false);
+
+</script>
