@@ -1,4 +1,5 @@
-<div class="partial-title p-4">
+<div class="container d-flex flex-column m-0 p-0 h-100 w-100">
+<div class="partial-title p-4 flex-shrink-0">
   <div class="d-flex gap-3 p-0 m-0 h-26px justify-content-start align-items-center">
     <a href="/tweets" class="p-1 m-0 link-unstyled">
       <img src="/images/icons/back_outlined.svg" class="p-0 m-0" alt="">
@@ -9,7 +10,7 @@
   </div>
 </div>
 <div
-  class="tweet-reply card shadow-none  pt-0 pb-3 px-4 border-1px border-bottom-1 border-top-0 border-start-0 border-end-0">
+  class="tweet-reply flex-shrink-0 card shadow-none  pt-3 pb-3 px-4 border-1px border-bottom-1 border-top-0 border-start-0 border-end-0">
   <div class="card-body m-0 p-0 d-flex flex-column gap-3">
     <div class="tweet-reply-content d-flex flex-column gap-2">
       <div class="tweet-reply-user d-flex gap-2">
@@ -28,7 +29,7 @@
       <p class="m-0 fs-4 text-wrap text-break">
         {{tweetWithReplies.description}}
       </p>
-      <p class="font-size-sm text-secondary p-0 m-0">
+      <p class="font-size-sm text-secondary text-break text-wrap p-0 m-0">
         {{detailTime tweetWithReplies.createdAt}}
       </p>
       <div class="bottom-border"></div>
@@ -65,10 +66,10 @@
   </div>
 </div>
 {{!-- 分隔線 --}}
-<div class="division"></div>
+<div class="division flex-shrink-0"></div>
 {{!-- 分隔線 --}}
-<div class="container main-replies-area d-flex flex-column gap-3 p-0  m-0  tweet-display">
-  <div class="scrollbar-hidden p-0 pt-3 m-0">
+<div class="container main-replies-area  p-0  m-0  tweet-display flex-shrink-1">
+  <div class="scrollbar-hidden p-0 pt-3 m-0 d-flex flex-column gap-3">
     {{#each tweetWithReplies.Replies}}
     <div
       class="tweet-card card  shadow-none  py-0 px-4 m-0 rounded-0  border-1px border-bottom-1 border-top-0 border-start-0 border-end-0">
@@ -102,4 +103,5 @@
     </div>
     {{/each}}
   </div>
+</div>
 </div>

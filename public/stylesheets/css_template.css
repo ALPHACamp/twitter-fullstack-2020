@@ -1,7 +1,7 @@
 /*限制user card 中欄高度*/
 .main-middle-col{
   max-height: 1200px;
-  overflow: hidden;
+  display:block;
 }
 
 .border-1px {
@@ -146,16 +146,11 @@
 
 /*讓display area可以滾動*/
 .tweet-display{
+    min-height: 0;
     overflow: hidden; /* 啟用捲軸 */
     margin-bottom: 4vh;
 }
-.main-tweets-area.tweet-display{
-  height: 100%; /* 設定容器的固定高度 */
-}
 
-.main-replies-area.tweet-display{
-  height: 100%;
-}
 .tweet-card-link {
   display: block;
   text-decoration: none;
