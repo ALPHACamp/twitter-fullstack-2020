@@ -1,4 +1,4 @@
-const { User, sequelize } = require('../models')
+const { User, Followship, sequelize } = require('../models')
 
 const userHelper = {
   getUserInfo: async req => {
@@ -12,6 +12,29 @@ const userHelper = {
       },
       raw: true
     })
+  },
+  getFollowingUsers: async req => {
+    const userId = req.params.id
+    const userWithfollowings = await User.findByPk(userId, {
+      include: [
+        {
+          model: User,
+          as: 'Followings',
+          attributes: {
+            include: [
+              [sequelize.literal(
+            `(SELECT COUNT(*) FROM Followships
+              WHERE Followships.follower_id = ${userId}
+              AND Followships.following_id = User.id
+            )`), 'isFollowed'] // 查看此User是否已追蹤
+            ]
+          }
+        }
+      ],
+      order: [[{ model: User, as: 'Followings' }, 'Followship', 'createdAt', 'DESC']]
+
+    })
+    return userWithfollowings.toJSON()
   }
 }
 
