@@ -86,7 +86,7 @@ a:hover {
 /* ---------- Navbar ---------- */
 
 .navbar-container {
-  position: sticky;
+  position: absolute;
   top: 0;
   left: 130px;
   width: 178px;
@@ -95,24 +95,21 @@ a:hover {
 }
 
 .navbar-logo-container {
-  position: relative;
+  position: fixed;
   top: 8px;
-  left: 8px;
+  left: 143px;
   width: 50px;
   height: 50px;
   padding: 5px;
 }
 
 .navbar-logo {
-  position: absolute;
-  top: 5px;
-  left: 5px;
   width: 40px;
   height: 40px;
 } 
 
 .main-navbar {
-  position: sticky;
+  position: fixed;
   top: 66px;
   width: 178px;
   height: 124px;
@@ -197,8 +194,8 @@ a:hover {
 }
 
 .logout-form {
-  position: absolute;
-  bottom: 0px;
+  position: fixed;
+  bottom: 0;
 }
 
 .logout-btn {
@@ -435,4 +432,176 @@ a:hover {
   letter-spacing: 0px;
 }
 
+
+/* ---------- Admin tweets ---------- */
+
+.admin-tweets {
+  display: flex;
+  flex-direction: row;
+}
+
+.admin-tweets-container {
+  position: fixed;
+  left: 332px;
+  width: 938px;
+  height: 100vh;
+  min-height: 400px;
+  margin: 0 0.87px;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  overflow: hidden;
+}
+
+.admin-tweets-header {
+  position: fixed;
+  left: 333px;
+  width: 937px;
+  height: 75px;
+  border-left: 1px solid #E6ECF0;
+  border-bottom: 1px solid #E6ECF0;
+  z-index: 1;
+  background-color: white;
+}
+
+.admin-tweets-header .main-title {
+  position: sticky;
+  top: 24px;
+  left: 354px;
+  width: 96px;
+  height: 26px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.admin-tweets-list-container {
+  position: absolute;
+  top: 91px;
+  left: 0;
+  width: 937px;
+  height: 1055px;
+  overflow-y: scroll;
+  bottom: 0;
+}
+
+.admin-tweets-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-tweets-footer {
+  position: fixed;
+  left: 332px;
+  bottom: 0;
+  width: 937px;
+  height: 54px;
+  border-top: 1px solid #E6ECF0;
+  z-index: 1;
+  background-color: white;
+}
+
+.admin-tweet-container {
+  width: 937px;
+  height: 103px;
+}
+
+.admin-tweet-left {
+  display: flex;
+  flex-direction: row;
+  padding: 0px 24px;
+  width: 634px;
+  height: 86px;
+  gap: 8px;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.admin-tweet-avatar {
+  width: 50px;
+  height: 50px;
+}
+
+.admin-tweet-avatar .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.admin-tweet-avatar .default-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.admin-tweet-right {
+  display: flex;
+  flex-direction: column;
+  width: 855px;
+  height: 86px;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.tweet-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 855px;
+  height: 26px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  height: 26px; 
+}
+
+.user-name {
+  text-align: left;
+  padding-right: 10px;
+  height: 26px;
+  font-family: "Noto Sans TC";
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0px;
+  color: #171725;
+}
+
+.user-sub-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: left;
+  height: 22px;
+  font-family: "Noto Sans TC";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0px;
+  color: #6C757D;
+}
+
+.delete-icon {
+  margin-right: 4px;
+  width: 24px;
+  height: 24px;
+  background-image: url('/stylesheets/icons/close.svg');
+  filter: invert(44%) sepia(11%) saturate(344%) hue-rotate(202deg) brightness(90%) contrast(88%);
+}
+
+.tweet-text {
+  text-align: left;
+  width: 855px;
+  height: 52px;
+  font-family: "Noto Sans TC";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  letter-spacing: 0px;
+  color: #171725;
+}
 
