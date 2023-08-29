@@ -32,7 +32,6 @@ const localStrategy = new LocalStrategy(
   }
 )
 
-// passport.use(jwtStrategy)
 passport.use(localStrategy)
 
 // serialize

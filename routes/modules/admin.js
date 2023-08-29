@@ -1,10 +1,10 @@
 const express = require('express')
 
-const userController = require('../../../controllers/pages/user-controller')
-const adminController = require('../../../controllers/pages/admin-controller')
+const userController = require('../../controllers/pages/user-controller')
+const adminController = require('../../controllers/pages/admin-controller')
 
 // passport & auth
-const { adminLocalAuth, authenticatedAdmin } = require('../../../middlewares/auth')
+const { adminLocalAuth, authenticatedAdmin } = require('../../middlewares/auth')
 
 const router = express.Router()
 

@@ -34,7 +34,7 @@ const errorHandler = (err, req, res, next) => {
   }
 
   req.flash('error_messages', errorMessage)
-  const redirectTo = helpers.getUser(req).role === 'admin' ? '/admin/signin' : '/signin'
+  const redirectTo = helpers.getUser(req)?.role === 'admin' ? '/admin/signin' : '/signin'
   const referer = req.get('Referer') || redirectTo // 避免上一頁沒有東西
   console.log('error-handler #39:', errorMessage)
   res.redirect(referer) // 回到上一頁
