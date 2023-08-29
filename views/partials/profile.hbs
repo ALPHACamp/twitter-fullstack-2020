@@ -42,10 +42,10 @@
         Lorem example text example text for AC simple twitter project practice
       {{/if}}
     </p>
-    <a href="/users/{{users.id}}/followers" style="text-decoration:none;">
+    <a href="/users/{{user.id}}/followings" style="text-decoration:none;">
       <span class="text-dark">{{followingCount}} 個</span><span class="text-muted">跟隨中</span>
     </a>
-    <a href="/users/{{users.id}}/followings" style="text-decoration:none;" class="ms-3">
+    <a href="/users/{{user.id}}/followers" style="text-decoration:none;" class="ms-3">
       <span class="text-dark">{{followerCount}} 位</span><span class="text-muted">跟隨者</span>
     </a>
   </div>

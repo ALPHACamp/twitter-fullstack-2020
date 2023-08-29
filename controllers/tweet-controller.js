@@ -13,7 +13,7 @@ const tweetController = {
           replyCount: tweet.Replies.length,
           ...tweet.toJSON()
         }))
-        res.render('tweets', { user, tweets })})   
+        res.render('tweets', { user, tweets, UserId: user.id})})   
   },
   postTweet: (req, res, next) => {
     const { description } = req.body
