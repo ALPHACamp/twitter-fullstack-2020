@@ -1,11 +1,12 @@
-<div style="width:273px; z-index:1; overflow-x:hidden" class="card border-light bg-light mt-3">
-  <nav style="height:78px;" class="navbar sticky-top navbar-light bg-light border-bottom">
+<div style="width:273px" class="card border-white vh-100 bg-white float-end sticky-top">
+  {{!-- ; z-index:1; overflow-x:hidden --}}
+  <nav style="height:78px;" class="navbar navbar-light bg-light mt-3 border-bottom">
     <div class="container mx-3">
       <h4 class="card-title m-0">推薦跟隨</h4>
     </div>
   </nav>
   {{#each topUsers}}
-  <div style="height:82px" class="d-flex flex-row">
+  <div style="height:82px" class="d-flex flex-row bg-light">
     <div style="width:50px; height:50px; background-color:#FF6600"
       class="rounded-circle overflow-hidden align-self-center ms-3 me-0">
       <a href="/users/{{this.id}}/tweets">

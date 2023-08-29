@@ -1,8 +1,10 @@
 {{>navigation route='edit'}}
-<div class="border-start border-end" style="width: 639px;height: 1400px;margin-left: 333px;">
-  <div class="border-bottom" style="margin-top: 24px; height: 51px;">
+<div style=" margin: 0px 10px; width:641px; " class="border">
+{{!-- <div class="border-start border-end" style="width: 639px;height: 1400px;margin-left: 333px;"> --}}
+  {{!-- <div class="border-bottom" style="margin-top: 24px; height: 51px;">
     <h4 class="fw-bold" style="margin-left: 21px;">帳戶設定</h4>
-  </div>
+  </div> --}}
+  {{>header}}
   <form action="/api/users/{{user.id}}" method="POST">
     <div class="form-floating mb-3" style="width: 593px;height: 54px;margin: 24px auto;">
       <input type="text" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="account"
@@ -35,3 +37,5 @@
     </div>
   </form>
 </div>
+<div style="width:273px" class="card border-white vh-100 bg-white float-end sticky-top">
+  </div>
