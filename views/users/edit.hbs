@@ -1,6 +1,6 @@
 {{>navs/user-left-column route='edit'}}
 <div style=" margin: 0px 25px; width:641px; " class="border">
-  {{>header}}
+  {{>header route='main' title='帳戶設定'}}
   <form action="/api/users/{{user.id}}" method="POST">
     <div class="form-floating mb-3" style="width: 593px;height: 54px;margin: 24px auto;">
       <input type="text" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="account"

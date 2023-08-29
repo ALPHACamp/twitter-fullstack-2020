@@ -1,15 +1,38 @@
-<nav class="navbar sticky-top navbar-light bg-white border-bottom">
+{{#ifCond route 'main'}}
+<nav style="height:75px" class="navbar sticky-top navbar-light bg-white border-bottom">
     <div class="d-flex flex-row align-items-center px-3">
-        <div style="width:50px; height:auto" class="ms-1">
+        <div class="container">
+            <h4 class="card-title m-0">{{title}}</h4>
+        </div>
+    </div>
+</nav>
+{{/ifCond}}
+{{#ifCond route 'tweetreplies'}}
+<nav style="height:75px" class="navbar sticky-top navbar-light bg-white border-bottom">
+    <div class="d-flex flex-row align-items-center px-3">
+        <div class="ms-1">
             <a class="navbar-brand" href="javascript:history.back()">
                 {{>icons/back-icon}}
             </a>
         </div>
         <div class="container">
-            <h4 class="card-title m-0">{{user.name}}</h4>
-            <small>
-                <p class="text-muted m-0">{{user.Tweets.length}}推文</p>
-            </small>
+            <h4 class="m-0">{{title}}</h4>
         </div>
     </div>
 </nav>
+{{/ifCond}}
+{{#ifCond route 'user'}}
+<nav style="height:75px" class="navbar sticky-top navbar-light bg-white border-bottom">
+    <div class="d-flex flex-row align-items-center px-3">
+        <div class="ms-1">
+            <a class="navbar-brand" href="javascript:history.back()">
+                {{>icons/back-icon}}
+            </a>
+        </div>
+        <div class="container">
+            <h5 class="m-0">{{user.name}}</h5>
+            <p style="font-size: 13px" class="text-muted m-0">{{user.Tweets.length}}推文</p>
+        </div>
+    </div>
+</nav>
+{{/ifCond}}
