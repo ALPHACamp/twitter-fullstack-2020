@@ -28,7 +28,8 @@ const tweetController = {
         const likedTweets = like.map(like => like.tweetId)
         const data = tweets.map(t => ({
           ...t.toJSON(),
-          isLiked: likedTweets.includes(t.id)
+          isLiked: likedTweets.includes(t.id),
+          // userId: req.user.id
         }))
         // topUser
         const topUsers = users
@@ -42,6 +43,7 @@ const tweetController = {
             isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
+        // console.log(data)
         res.render('tweet', { tweets: data, reqUser, topUsers })
       })
       .catch(err => next(err))

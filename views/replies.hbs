@@ -67,7 +67,7 @@
       <div class="col-12 mx-auto p-2" style="border: 1px solid #E6ECF0">
         <div class="d-flex flex-column">
           <div class="d-flex flex-row ">
-            <a href="#">
+            <a href="/users/{{this.userId}}/tweets">
               <img class="" src="https://i.imgur.com/aCxYyck.jpg" alt="..." width="40px" height="40px"
               style="border-radius: 30px">
             </a>
@@ -110,7 +110,7 @@
           </div>
 
           <div class="col-10 mx-auto ps-1">
-            <p>{{tweet.description}}</p>
+            <p class="text-break">{{tweet.description}}</p>
             <P style="font-size: 14px">回覆給<span style="color:#FF6600">@{{tweet.User.account}}</span></P>
           </div>
 
