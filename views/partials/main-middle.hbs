@@ -8,7 +8,7 @@
 <div class="card-header border-bottom" style="padding: 14.5px;">
   <div class="profile-nav d-flex column">
     <div class="m-0 d-flex align-item-center">
-      <a href="javascript:history.back()" class="d-flex my-auto">
+      <a href="/users/{{tweetsUser.id}}/tweets" class="d-flex my-auto">
         <img src="/images/icons/back.png" alt="back-icon" style="height: 24px; width: 24px;">
       </a>
     </div>
@@ -23,7 +23,7 @@
 <div class="card-header border-bottom" style="padding: 14.5px;">
   <div class="profile-nav d-flex column">
     <div class="m-0 d-flex align-item-center">
-      <a href="javascript:history.back()" class="d-flex my-auto">
+      <a href="/users/{{tweetsUser.id}}/tweets" class="d-flex my-auto">
         <img src="/images/icons/back.png" alt="back-icon" style="height: 24px; width: 24px;">
       </a>
     </div>
@@ -38,5 +38,20 @@
 {{#if settingRoute}}
 <div class="card-header p-4 border-bottom">
   <h4 class="m-0">帳戶設定</h4>
+</div>
+{{/if}}
+
+{{#if personalTweetRoute}}
+<div class="card-header border-bottom" style="padding: 16px;">
+  <div class="profile-nav d-flex column">
+    <div class="m-0 d-flex align-item-center">
+      <a href="javascript:history.back()" class="d-flex my-auto">
+        <img src="/images/icons/back.png" alt="back-icon" style="height: 24px; width: 24px;">
+      </a>
+    </div>
+    <div class="nav-user-info-container d-inline ms-3">
+      <h4 class="m-0 py-2">推文</h4>
+    </div>
+  </div>
 </div>
 {{/if}}

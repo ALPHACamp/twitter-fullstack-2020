@@ -49,6 +49,32 @@ const tweetController = {
     } catch (err) {
       next(err)
     }
+  },
+  getTweet: (req, res, next) => {
+    const currentUser = helper.getUser(req)
+    const personalTweetRoute = true
+    const tweetId = req.params.id
+    Tweet.findByPk(tweetId, {
+      include: [
+        User,
+        { model: Like, as: 'LikedUsers' },
+        { model: Reply }
+      ]
+    })
+      .then(tweet => {
+        if (!tweet) throw new Error('No tweet found!')
+        const { dataValues, Replies, User, LikedUsers } = tweet
+        tweet = {
+          ...dataValues,
+          user: User.dataValues,
+          Replies,
+          repliesCount: Replies.length,
+          likesCount: LikedUsers.filter(likedUser => likedUser.isLike).length,
+          isLiked: LikedUsers.some(likedUser => likedUser.UserId === currentUser.id && likedUser.isLike)
+        }
+        console.log(Replies)
+        res.render('tweet', { tweet, personalTweetRoute, currentUser })
+      })
   }
 }
 module.exports = tweetController
