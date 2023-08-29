@@ -47,29 +47,25 @@
                     <div class="reply">
                       <button class="reply bg-white" type="button" data-bs-toggle="modal" data-bs-target="#reply-tweet-{{this.id}}">
                         <img src="/images/icons/reply.png" alt="" style="height: 16px; width: 16px;" class="mb-1">
-                        <span class="ms-1" style="height: 14px; width: 14px; font-familt: Montserrat;">{{this.repliesCount}}</span>
+                        <span class="ms-1" style="height: 14px; width: 14px; font-family: Montserrat;">{{this.repliesCount}}</span>
                       </button>
                       {{> reply-modal}}
                     </div>
-                    {{!-- <div class="like ms-4">
-                      <img src="/images/icons/like.png" alt="" style="height: 16px; width: 16px;" class="mb-1">
-                      <span class="ms-1" style="height: 14px; width: 14px; font-familt: Montserrat;">12</span>
-                    </div> --}}
-                    {{!-- {{#if isLiked }} --}}
+                    {{#if isLiked}}
+                      <form action="/tweets/{{this.id}}/unlike" method="POST" class="like ms-4" style="background: none;">
+                        <button type="submit" class="like-button" style="background-color: transparent;">
+                          <img src="/images/icons/liked.png" alt="" style="height: 16px; width: 16px;" class="mb-1">
+                          <span class="ms-1" style="height: 14px; width: 14px; font-family: Montserrat;">{{this.likesCount}}</span>
+                        </button>
+                      </form>
+                    {{else}}
                       <form action="/tweets/{{this.id}}/like" method="POST" class="like ms-4" style="background: none;">
                         <button type="submit" class="like-button" style="background-color: transparent;">
                           <img src="/images/icons/like.png" alt="" style="height: 16px; width: 16px;" class="mb-1">
                           <span class="ms-1" style="height: 14px; width: 14px; font-family: Montserrat;">{{this.likesCount}}</span>
                         </button>
                       </form>
-                    {{!-- {{else}}
-                      <form action="/tweets/{{this.id}}/unlike" method="POST" class="like ms-4" style="background: none;">
-                        <button type="submit" class="like-button" style="background-color: transparent;">
-                          <img src="/images/icons/like.png" alt="" style="height: 16px; width: 16px;" class="mb-1">
-                          <span class="ms-1" style="height: 14px; width: 14px; font-family: Montserrat;">12</span>
-                        </button>
-                      </form>
-                    {{/if}} --}}
+                    {{/if}}
                   </div>
                 </div>
               </div>

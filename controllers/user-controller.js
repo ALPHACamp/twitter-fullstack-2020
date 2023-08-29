@@ -163,7 +163,7 @@ const userController = {
       .then(like => {
         if (!like) throw new Error('You have not liked this tweets!')
         else if (like.isLike) {
-          return Like.update({ isLike: false })
+          return like.update({ isLike: false })
         }
       })
       .then(() => {
