@@ -43,7 +43,7 @@ const adminLocalAuth = (req, res, next) => {
 
       if (user.role !== 'admin') {
         req.flash('error_messages', '只有管理員可以訪問此區域')
-        return res.redirect('back')
+        return res.redirect('/')
       }
 
       // activate passport.sequrlizeUser
