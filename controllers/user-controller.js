@@ -1,6 +1,6 @@
 const db = require('../models')
 const bcrypt = require('bcryptjs')
-const { User, Tweet, Followship } = db
+const { User, Tweet, Like, Followship } = db
 const helper = require('../_helpers')
 
 const userController = {
@@ -73,7 +73,7 @@ const userController = {
       .then(([tweets, user]) => {
         const tweetsCount = tweets.length
         // 當 user 為非使用者時
-        const tweetsUser = tweets[0].User.name
+        const tweetsUser = tweets[0].User
         res.render('profile', { tweets, user, profileRoute, otherProfileRoute, tweetsCount, tweetsUser })
       })
       .catch(err => next(err))
@@ -203,6 +203,53 @@ const userController = {
         return followship.destroy()
       })
       .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+  likeTweet: (req, res, next) => {
+    const currentUserId = helper.getUser(req).id
+    const tweetId = req.params.id
+
+    return Like.findOne({
+      where: {
+        UserId: currentUserId,
+        TweetId: tweetId
+      }
+    })
+      .then(like => {
+        if (like && !like.isLike) {
+          return like.update({ isLike: true })
+        } else if (!like) {
+          return Like.create({
+            UserId: currentUserId,
+            TweetId: tweetId,
+            isLike: true
+          })
+        }
+      })
+      .then(() => {
+        return res.redirect('back')
+      })
+      .catch(err => next(err))
+  },
+  unlikeTweet: (req, res, next) => {
+    const currentUserId = helper.getUser(req).id
+    const tweetId = req.params.id
+
+    return Like.findOne({
+      where: {
+        UserId: currentUserId,
+        TweetId: tweetId
+      }
+    })
+      .then(like => {
+        if (!like) throw new Error('You have not liked this tweets!')
+        else if (like.isLike) {
+          return like.destroy()
+        }
+      })
+      .then(() => {
+        return res.redirect('back')
+      })
       .catch(err => next(err))
   }
 }

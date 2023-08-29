@@ -1,4 +1,5 @@
 <!--Reply modal-->
+{{#ifCond route getTweets}}
 <div class="modal fade" id="reply-tweet-{{this.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content p-0" style="width: 600px; height: 450px; border-radius: 14px; padding: 0px 16px">
@@ -12,7 +13,7 @@
             <div class="row p-0">
         <!--left-side images-->
           <div class="d-flex flex-shrink-0 p-0 flex-column col-1 d-flex justify-content-center align-items-start">
-            <img src="{{#if this.User.avatar}}{{ this.User.avatar }}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}" alt="avatar" style="width: 50px; height: 50px" class="rounded-circle ms-1">
+            <img src="{{#if this.user.avatar}}{{ this.user.avatar }}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}" alt="avatar" style="width: 50px; height: 50px" class="rounded-circle ms-1">
             <div class="d-flex justify-content-center vertical-box mt-3">
               <div class="vertical-line"></div>
             </div>
@@ -22,10 +23,10 @@
             <div class="col-12 d-inline-flex align-items-center">
               <div style="height: 26px; font-size: 15px">
                 <span href="/users/{{ this.UserId }}" class="text-dark" style="font-size: 15px; font-weight: 700; margin-right: 6px; text-decoration: none;">
-                  {{ this.User.name }}
+                  {{ this.user.name }}
                 </span>
                 <span style="font-size: 14px; font-weight: 400; color: #657786">
-                  @{{ this.User.account }}·{{ relativeTime this.User.createdAt }}
+                  @{{ this.user.account }}·{{ relativeTime this.user.createdAt }}
                 </span>
               </div>
             </div>
@@ -34,7 +35,7 @@
             </div>
             <div class="col-12 mt-3 me-0" style="font-size: 13px; font-weight: 500; font-family: Noto Sans TC;">
               <span style="color: #657786;">回覆給</span>
-              <span style="color: #FF6600;">@{{this.User.account}}</span>
+              <span style="color: #FF6600;">@{{this.user.account}}</span>
             </div>
           </div>
           </div>
@@ -54,3 +55,68 @@
     </div>
   </div>
 </div>
+{{/ifCond}}
+
+{{#ifCond route getTweet}}
+<div class="modal fade" id="reply-tweet-{{tweet.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content p-0" style="width: 600px; height: 450px; border-radius: 14px; padding: 0px 16px">
+      <div class="d-flex justify-content-start m-1" style="height: 55px;">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <hr class="solid m-0">
+      <div class="modal-body p-0 ms-2">
+        <div class="card col-12 hovercard d-flex flex-row rounded-0 border-0">
+          <div class="card-body col-12">
+            <div class="row p-0">
+              <!--left-side images-->
+              <div class="d-flex flex-shrink-0 p-0 flex-column col-1 d-flex justify-content-center align-items-start">
+                <img src="{{#if tweet.user.avatar}}{{ tweet.user.avatar }}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}"
+                  alt="avatar" style="width: 50px; height: 50px" class="rounded-circle ms-1">
+                <div class="d-flex justify-content-center vertical-box mt-3">
+                  <div class="vertical-line"></div>
+                </div>
+              </div>
+              <!--right-side tweets-->
+              <div class="col-10 row">
+                <div class="col-12 d-inline-flex align-items-center">
+                  <div style="height: 26px; font-size: 15px">
+                    <span href="/users/{{ this.UserId }}" class="text-dark"
+                      style="font-size: 15px; font-weight: 700; margin-right: 6px; text-decoration: none;">
+                      {{ tweet.user.name }}
+                    </span>
+                    <span style="font-size: 14px; font-weight: 400; color: #657786">
+                      @{{ tweet.user.account }}·{{ relativeTime tweet.user.createdAt }}
+                    </span>
+                  </div>
+                </div>
+                <div class="col-12 mt-1 me-0" style="font-size: 15px; font-weight: 400;">
+                  {{ tweet.description }}
+                </div>
+                <div class="col-12 mt-3 me-0" style="font-size: 13px; font-weight: 500; font-family: Noto Sans TC;">
+                  <span style="color: #657786;">回覆給</span>
+                  <span style="color: #FF6600;">@{{ tweet.user.account }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--form area-->
+        <form action="/tweets/{{tweet.id}}/replies" class="border-0" method="POST">
+          <div class="form-row d-flex flex-row mb-3 mt-0" style="display:inline-block">
+            <div class="col-1 d-flex justify-content-center align-items-start ms-2">
+              <img
+                src="{{#if user.avatar}}{{ user.avatar}}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}"
+                class="rounded-circle ms-2" style="width: 50px; height: 50px" alt="avatar">
+            </div>
+            <textarea class="form-control mt-2 ms-0 ps-2 border-0" id="comment" name="comment" rows="7" cols="20"
+              minlength:"1" placeholder="推你的回覆"></textarea>
+          </div>
+          <button type="submit" class="btn" id="reply-button" data-bs-dismiss="modal">回覆</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{/ifCond}}
