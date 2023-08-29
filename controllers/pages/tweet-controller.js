@@ -13,10 +13,19 @@ const tweetController = {
   getTweets: async (req, res, next) => {
     try {
       const javascripts = [TWEET_MODAL_JS]
-      const [tweets, recommendUser] = await Promise.all([
-        followingUsersTweets(req),
-        topFollowedUser(req) // 給右邊的渲染用
-      ])
+
+      const tweets = await followingUsersTweets(req)
+
+      if (!tweets) {
+        throw new errorHandler.TweetError('Can not fount any tweet')
+      }
+
+      const recommendUser = await topFollowedUser(req) // 給右邊的渲染用
+
+      if (!recommendUser) {
+        throw new errorHandler.TweetError('Can not fount any recomend users')
+      }
+
       return res.render('main/tweets', {
         tweets,
         recommendUser,
@@ -27,15 +36,23 @@ const tweetController = {
       return next(error)
     }
   },
+
   postTweets: async (req, res, next) => {
     try {
       const userId = helpers.getUser(req).id
       const description = req.body.description.trim()
-      isValidWordsLength(description, MAX_TWEET_LENGTH, next)
+
+      if (!description.length) {
+        throw new errorHandler.TweetError('內容不可空白')
+      } else if (description.length > MAX_TWEET_LENGTH) {
+        throw new errorHandler.TweetError(`字數不可超過${MAX_TWEET_LENGTH}字`)
+      }
+
       await Tweet.create({
         UserId: userId,
         description
       })
+
       return res.redirect('back')
     } catch (error) {
       return next(error)
@@ -44,11 +61,18 @@ const tweetController = {
   getReplies: async (req, res, next) => {
     try {
       const javascripts = [TWEET_MODAL_JS]
-      const [recommendUser, tweetWithReplies] = await Promise.all([
-        topFollowedUser(req), // 給右邊的渲染用
-        getTweetReplies(req)
-      ])
-      // console.log('#tweet-contoller #L54 tweetWithRepies:', tweetWithReplies)
+
+      const recommendUser = await topFollowedUser(req) // 給右邊的渲染用
+
+      if (!recommendUser) {
+        throw new errorHandler.TweetError('Can not fount any recomend users')
+      }
+
+      const tweetWithReplies = await getTweetReplies(req)
+
+      if (!tweetWithReplies) {
+        throw new errorHandler.TweetError('Can not fount tweet')
+      }
       return res.render('main/replies', {
         tweetWithReplies,
         recommendUser,
@@ -64,12 +88,14 @@ const tweetController = {
       const userId = helpers.getUser(req).id
       const tweetId = req.params.id
       const comment = req.body?.comment.trim()
+
       isValidWordsLength(comment, MAX_TWEET_LENGTH, next)
       await Reply.create({
         UserId: userId,
         TweetId: tweetId,
         comment
       })
+
       return res.redirect('back')
     } catch (error) {
       return (next)
@@ -79,21 +105,29 @@ const tweetController = {
     try {
       const tweetId = req.params.id
       const userId = helpers.getUser(req).id
-      const [tweet, like] = await Promise.all([
-        Tweet.findByPk(tweetId),
-        Like.findOne({
-          where: {
-            UserId: userId,
-            TweetId: tweetId
-          }
-        })
-      ])
-      if (!tweet) throw new errorHandler.LikeError('Tweet did not exist!')
-      if (like) throw new errorHandler.LikeError('Already liked!')
+
+      const tweet = await Tweet.findByPk(tweetId)
+
+      if (!tweet) {
+        throw new errorHandler.LikeError('Tweet did not exist!')
+      }
+
+      const like = await Like.findOne({
+        where: {
+          UserId: userId,
+          TweetId: tweetId
+        }
+      })
+
+      if (like) {
+        throw new errorHandler.LikeError('Already liked!')
+      }
+
       await Like.create({
         UserId: userId,
         TweetId: tweetId
       })
+
       return res.redirect('back')
     } catch (error) {
       return next(error)
@@ -103,17 +137,23 @@ const tweetController = {
     try {
       const tweetId = req.params.id
       const userId = helpers.getUser(req).id
+
       const like = await Like.findOne({
         where: {
           UserId: userId,
           TweetId: tweetId
         }
       })
-      if (!like) throw new errorHandler.LikeError('Already unliked!')
+
+      if (!like) {
+        throw new errorHandler.LikeError('Already unliked!')
+      }
+
       await like.destroy({
         UserId: userId,
         TweetId: tweetId
       })
+
       return res.redirect('back')
     } catch (error) {
       return next(error)
