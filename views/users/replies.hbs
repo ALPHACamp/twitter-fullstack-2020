@@ -1,12 +1,9 @@
 {{>navs/user-left-column  route='users'}}
 
-<div style="position: absolute; left: 24px; width:641px;" class="border">
+<div style="position: absolute; left: 332px; width:641px;" class="border">
     {{>header route='user'}}
-    <div class="mx-auto border border-light">
-        
-        {{>userpage-info}}
-        {{>navs/user-page-tabs route='replies'}}
-    </div>
+    {{>userpage-info}}
+    {{>navs/user-page-tabs route='replies'}}
     <!-- 貼文回覆 -->
     {{#each user.Replies}}
     <div class="mx-auto p-2 border-bottom" >
