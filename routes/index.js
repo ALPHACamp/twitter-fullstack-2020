@@ -36,6 +36,8 @@ router.get('/users/:id/setting', userController.getUserSetting)
 
 router.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
 router.post('/tweets/:id/replies', authenticated, tweetController.postReply)
+router.post('/tweets/:id/like', authenticated, tweetController.addLike)
+router.post('/tweets/:id/unlike', authenticated, tweetController.removeLike)
 
 // 首頁
 router.get('/tweets', authenticated, tweetController.getTweets)
