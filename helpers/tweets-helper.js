@@ -3,8 +3,8 @@ const errorHandler = require('./errors-helpers')
 const { Op } = require('sequelize')
 const { Tweet, User, sequelize } = require('../models')
 
-const followingUsersTweets = async req => {
-  return await Tweet.findAll({
+const followingUsersTweets = req => {
+  return Tweet.findAll({
     where: {
       [Op.or]: [
         {
