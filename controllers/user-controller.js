@@ -1,15 +1,15 @@
 const { User, Tweet, Like, Reply, Followship } = require('../models')
 const bcrypt = require('bcryptjs')
-const helpers = require('../helpers/auth-helpers')
+const helpers = require('../_helpers')
 const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
   getEditPage: async (req, res, next) => {
     try {
       if (Number(req.params.id) !== helpers.getUser(req).id) throw new Error('沒有瀏覽權限!')
-      const reqUser = req.user
       const user = await User.findByPk(req.params.id, { raw: true })
-      return res.render('users/edit', { user, reqUser })
+      if (!user) throw new Error('使用者不存在!')
+      res.render('users/edit', { user })
     } catch (err) {
       next(err)
     }
@@ -17,17 +17,23 @@ const userController = {
   editUser: async (req, res, next) => {
     try {
       if (Number(req.params.id) !== helpers.getUser(req).id) throw new Error('沒有編輯權限!')
-      const { name, account, email, password, checkPassword, introduction } = req.body
-      if (password !== checkPassword) throw new Error('密碼不相符!')
-      if (name.length > 50) throw new Error('暱稱長度不可超過50個字!')
-
-      const user = await User.findByPk(Number(req.params.id))
+      const user = await User.findByPk(req.params.id)
       if (!user) throw new Error('使用者不存在!')
 
+      const { name, account, email, password, checkPassword, introduction } = req.body
       const updateInfo = {}
-      if (name) updateInfo.name = name
-      if (password) updateInfo.password = await bcrypt.hash(password, 10)
-      if (introduction) updateInfo.introduction = introduction
+      if (name) {
+        if (name.length > 50) throw new Error('暱稱長度不可超過50個字!')
+        updateInfo.name = name
+      }
+      if (password) {
+        if (password !== checkPassword) throw new Error('密碼不相符!')
+        updateInfo.password = await bcrypt.hash(password, 10)
+      }
+      if (introduction) {
+        if (introduction.length > 160) throw new Error('自我介紹長度不可超過160個字!')
+        updateInfo.introduction = introduction
+      }
       if (account) {
         const sameAccountUser = await User.findOne({ where: { account } })
         if (sameAccountUser && sameAccountUser.id !== Number(req.params.id)) throw new Error('該帳號名稱已被使用!')
@@ -39,14 +45,16 @@ const userController = {
         updateInfo.email = email
       }
 
-      const { avatar, cover } = req.files
-      if (avatar) {
-        const avatarFilePath = await imgurFileHandler(...avatar)
-        updateInfo.avatar = avatarFilePath
-      }
-      if (cover) {
-        const coverFilePath = await imgurFileHandler(...cover)
-        updateInfo.cover = coverFilePath
+      if (req.files) {
+        const { avatar, cover } = req.files
+        if (avatar) {
+          const avatarFilePath = await imgurFileHandler(...avatar)
+          updateInfo.avatar = avatarFilePath
+        }
+        if (cover) {
+          const coverFilePath = await imgurFileHandler(...cover)
+          updateInfo.cover = coverFilePath
+        }
       }
       await user.update(updateInfo)
       req.flash('success_messages', '使用者資料編輯成功')
