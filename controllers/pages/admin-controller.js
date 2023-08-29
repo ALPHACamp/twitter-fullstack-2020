@@ -1,6 +1,40 @@
 const { User, Tweet, Like } = require('../../models')
+const helpers = require('../../_helpers')
 
 const adminController = {
+  /* admin 登入 */
+  getAdminSignInPage: (req, res, next) => {
+    try {
+      if (helpers.ensureAuthenticated(req)) return res.redirect('/admin')
+      return res.render('admin/signin')
+    } catch (error) {
+      return next(error)
+    }
+  },
+
+  adminSignin: (req, res, next) => {
+    try {
+      return res.redirect('/admin/tweets')
+    } catch (error) {
+      return next(error)
+    }
+  },
+
+  adminLogout: (req, res, next) => {
+    try {
+      req.logout(function (err) {
+        if (err) {
+          return next(err)
+        }
+
+        res.redirect('/admin/signin')
+      })
+    } catch (error) {
+      return next(error)
+    }
+  },
+  /* admin登入結束 */
+
   getAdminHomePage: async (req, res, next) => {
     res.redirect('/admin/tweets')
   },

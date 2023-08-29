@@ -1,6 +1,5 @@
 const express = require('express')
 
-const userController = require('../../controllers/pages/user-controller')
 const adminController = require('../../controllers/pages/admin-controller')
 
 // passport & auth
@@ -16,11 +15,12 @@ router.get('/tweets', authenticatedAdmin, adminController.getTweets)
 router.get('/users', authenticatedAdmin, adminController.getUsers)
 
 // Signin
-router.get('/signin', userController.getAdminSignInPage)
-router.get('/logout', userController.adminLogout)
-router.post('/signin', adminLocalAuth, userController.adminSignin)
+router.get('/signin', adminController.getAdminSignInPage)
+router.get('/logout', adminController.adminLogout)
+router.post('/signin', adminLocalAuth, adminController.adminSignin)
 
-// Main route
-router.get('/', authenticatedAdmin, adminController.getAdminHomePage)
+router.get('/', adminLocalAuth, (req, res) => {
+  res.redirect('/admin/tweets')
+})
 
 module.exports = router

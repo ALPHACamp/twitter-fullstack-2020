@@ -1,10 +1,11 @@
-/* test檔案 followship 是 自己一個route@@ */
 const { Followship, User } = require('../../models')
 const { FollowshipError } = require('../../helpers/errors-helpers')
 const { topFollowedUser } = require('../../helpers/recommand-followship-helper')
 const { followingUsersTweets } = require('../../helpers/tweets-helper')
 const _helper = require('../../_helpers')
+
 const TWEET_LINK_JS = 'tweetLink.js'
+
 const followshipController = {
   postFollowship: async (req, res, next) => {
     try {
@@ -13,11 +14,14 @@ const followshipController = {
 
       if (followerId === followingId) {
         // throw new FollowshipError('Don\'t follow yourself!')
+
         const javascripts = [TWEET_LINK_JS]
+
         const [tweets, recommendUser] = await Promise.all([
           followingUsersTweets(req),
           topFollowedUser(req) // 給右邊的渲染用
         ])
+
         return res.render('main/tweets', {
           tweets,
           recommendUser,
