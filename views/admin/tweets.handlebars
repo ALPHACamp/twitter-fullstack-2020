@@ -36,7 +36,9 @@
         <form
           action="/admin/tweets/{{ this.id }}?_method=DELETE"
           method="POST"
-          style="display: inline">
+          style="display: inline"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteTweetModal">
           <button type="submit" class="btn admin-delete-btn">
             <img
               src="/images/icons/close_outlined.svg"
@@ -53,3 +55,54 @@
   <div class="bottom-border"></div>
 </div>
 {{/each}}
+
+<!-- Delete Tweet Modal -->
+<div
+  class="modal fade"
+  id="deleteTweetModal"
+  tabindex="-1"
+  aria-labelledby="deleteTweetModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteTweetModalLabel">刪除推文</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">您確定要刪除這則推文嗎?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          取消
+        </button>
+        <form id="deleteTweetForm" action="" method="POST">
+          <input type="hidden" name="_method" value="DELETE" />
+          <button type="submit" class="btn btn-danger">確定刪除</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Get delete button
+  const deleteButtons = document.querySelectorAll(".admin-delete-btn")
+
+  // Bind click event
+  deleteButtons.forEach(button => {
+    button.addEventListener("click", function () {
+      // Get tweet id
+      const tweetId = button.closest(".admin-tweet-card").dataset.id
+
+      // Fill delete form action
+      const deleteForm = document.querySelector("#deleteTweetForm")
+      deleteForm.action = `/admin/tweets/${tweetId}?_method=DELETE`
+
+      // Submit form
+      deleteForm.submit()
+    })
+  })
+</script>
