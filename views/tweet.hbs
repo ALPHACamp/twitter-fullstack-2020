@@ -30,15 +30,26 @@
         {{!-- 喜歡、留言次數 --}}
         <div style="font-size: 19px; font-weight: 700" class="mx-3 pb-3 border-bottom">
           <span>{{replyCount}}</span><span style="color: #6C757D; font-weight:500; margin-right: 15px;"> 回覆</span>
-          <span>808</span><span style="color: #6C757D; font-weight:500"> 喜歡次數</span>
+          <span>{{likeCount}}</span><span style="color: #6C757D; font-weight:500"> 喜歡次數</span>
         </div>
 
         {{!-- icon --}}
         <div class="mx-3 py-3">
           <img src="https://i.imgur.com/F9wQfqk.png" title="source: imgur.com" style="width: 25px;height: 25px;"
             data-bs-toggle="modal" data-bs-target="#replyTweet{{tweet.id}}">
-          <img src="https://i.imgur.com/ZJijDkP.png" title="source: imgur.com"
-            style="width: 25px;height: 25px; margin-left: 128px">
+          {{#if isLiked}}
+          <form action="/tweets/{{tweet.id}}/unlike" method="POST" class="d-inline">
+            <button type="submit" style="background: none; border: none; cursor: pointer;">
+              <img src="https://i.imgur.com/1JNr74p.png" title="source: imgur.com" style="width: 25px;height: 25px; margin-left: 128px">
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{tweet.id}}/like" method="POST" class="d-inline">
+            <button type="submit" style="background: none; border: none; cursor: pointer;">
+              <img src="https://i.imgur.com/gdUkdVf.png" title="source: imgur.com" style="width: 25px;height: 25px; margin-left: 128px">
+            </button>
+          </form>
+          {{/if}}
         </div>
 
         {{>reply-modal}}
