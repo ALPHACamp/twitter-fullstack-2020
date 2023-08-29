@@ -85,7 +85,7 @@ const userController = {
           isFollowed: req.user.Followings.some(f => f.id === followShip.id)
         }))
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('followings', {user: userData, tweetCount, followings, topUser})
+        res.render('followings', {user: userData, tweetCount, followings, topUser, currentUserId: req.user.id})
       })
       .catch(err => next(err))
   },
@@ -119,7 +119,7 @@ const userController = {
         }))
           .sort((a, b) => b.followerCount - a.followerCount)
 
-        res.render('followers', {user: userData, tweetCount, followers, topUser})
+        res.render('followers', {user: userData, tweetCount, followers, topUser, currentUserId: req.user.id })
       })
       .catch(err => next(err))
     
@@ -179,7 +179,7 @@ const userController = {
           .sort((a, b) => b.followerCount - a.followerCount)
         res.render('user-tweets', { 
           user: userData,
-          UserId: req.user.id,
+          currentUserId: req.user.id,
           tweetCount,
           followerCount,
           followingCount,
@@ -225,7 +225,7 @@ const userController = {
 
       res.render('user-replies', {
         user: userData,
-        UserId: req.user.id,
+        currentUserId: req.user.id,
         tweetCount,
         followerCount,
         followingCount,
@@ -280,7 +280,7 @@ const userController = {
         .sort((a, b) => b.followerCount - a.followerCount)
       res.render('user-likes', {
         user: userData,
-        UserId: req.user.id,
+        currentUserId: req.user.id,
         tweetCount,
         followerCount,
         followingCount,

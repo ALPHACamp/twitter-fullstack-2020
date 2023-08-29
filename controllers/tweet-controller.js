@@ -16,7 +16,7 @@ const tweetController = {
           isLiked: likedTweetsId.includes(tweet.id),
           ...tweet.toJSON()
         }))
-        res.render('tweets', { user, tweets, UserId: user.id})})   
+        res.render('tweets', { user, tweets, currentUserId: user.id})})   
   },
   postTweet: (req, res, next) => {
     const { description } = req.body
