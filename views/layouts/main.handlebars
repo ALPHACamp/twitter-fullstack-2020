@@ -1,24 +1,52 @@
 <!DOCTYPE html>
 <html class="h-100">
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="https://lighthouse.alphacamp.co/images/logo-simple.jpg">
-    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
-    <link rel="stylesheet" href="/stylesheets/bootstrap_custom.css">
-    <link rel="stylesheet" href="/stylesheets/css_template.css">
-    <title>Simple Twitter</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="https://lighthouse.alphacamp.co/images/logo-simple.jpg">
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+  <link rel="stylesheet" href="/stylesheets/bootstrap_custom.css">
+  <link rel="stylesheet" href="/stylesheets/css_template.css">
+  <title>Simple Twitter</title>
 
 <body class="">
-    {{!-- 先把error message放在這邊 --}}
-    {{> message}}
-    <main role="main" class="">
-        <div class="container-lg">
-            {{{body}}}
-        </div>
-    </main>
+  {{!-- 先把error message放在這邊 --}}
+  {{> message}}
+  <main role="main" class="">
+    <div class="container-lg">
+      {{{body}}}
+    </div>
+  </main>
 </body>
+
+{{#each javascripts}}
+  <script src="/javascripts/{{this}}"></script>
+{{/each}}
 <script src="/javascripts/popper.min.js"></script>
 <script src="/javascripts/bootstrap.js"></script>
+
 </html>
+
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (() => {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>

@@ -15,7 +15,7 @@ const cookieParser = require('cookie-parser')
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
-const { pages } = require('./routes')
+const routes = require('./routes')
 
 // 固定變數
 const app = express()
@@ -32,8 +32,7 @@ app.use(methodOverride('_method'))
 
 // 讓express可以解讀form, 也可以用api接收json
 app.use(express.urlencoded({ extended: true }))
-// app.use(express.json())
-
+app.use(express.json()) // for test
 app.use(express.static(path.join(__dirname, 'public'))) // for css and 前端js
 
 app.use(cookieParser()) // 用來找到JWS cookie
@@ -50,7 +49,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(pages)
+app.use(routes)
 app.listen(PORT, () => console.log(`Simple Twitter app listening on port ${PORT}!`))
 
 module.exports = app

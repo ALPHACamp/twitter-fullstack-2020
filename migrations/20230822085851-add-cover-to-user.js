@@ -1,9 +1,8 @@
-'use strict';
+'use strict'
 
 /** @type {import('sequelize-cli').Migration} */
-const path = require('path')
 
-const defaultCover = path.join(__dirname, '../public/images/default-cover.png')
+const defaultCover = '/images/default-cover.png'
 
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -16,4 +15,4 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     await queryInterface.removeColumn('Users', 'Cover')
   }
-};
+}

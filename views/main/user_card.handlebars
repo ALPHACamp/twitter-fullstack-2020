@@ -7,11 +7,20 @@
         <div class="card-body px-3 pb-0">
           <img src="/images/user-avatar.svg" class="user-avatar position-absolute" alt="">
           <div class="user-action d-flex flex-row-reverse gap-3">
-            <a href="" class="btn btn-outline-primary d-flex justify-content-center align-items-center">編輯個人資料</a>
-            <a href="" class="{{#if isNoted}}active{{/if}} info-pic btn btn-outline-primary d-flex justify-content-center align-items-center  user-card-icon user-card-icon-noti">
+            {{!--修改:編輯個人資料改成可以開啟modal的按鈕--}}
+
+            <button type="button"
+              class="nav-tweet-btn btn btn-outline-primary d-flex justify-content-center align-items-center"
+              data-bs-toggle="modal" data-bs-target="#user-setting-modal">
+              編輯個人資料
+            </button>
+            {{!--修改結束--}}
+            <a href=""
+              class="{{#if isNoted}}active{{/if}} info-pic btn btn-outline-primary d-flex justify-content-center align-items-center  user-card-icon user-card-icon-noti">
               <img src="/images/icons/noti_outlined.svg" alt="" class="filter-main-color">
             </a>
-            <a href="" class="{{#if isMessaged}}active{{/if}}mes-pic btn btn-outline-primary d-flex justify-content-center align-items-center user-card-icon user-card-icon-message">
+            <a href=""
+              class="{{#if isMessaged}}active{{/if}}mes-pic btn btn-outline-primary d-flex justify-content-center align-items-center user-card-icon user-card-icon-message">
               <img src="/images/icons/message_outlined.svg" alt="" class="filter-main-color">
             </a>
           </div>
@@ -21,7 +30,9 @@
               <p class="font-size-sm text-secondary m-0 p-0">@SXLGtTAOBwUCEItWjRogFnHWyOLagsbHNVzOlDawJwwYYyhPBv</p>
             </div>
             <div class="mb-2">
-              <p class="m-0 p-0">PNwGnEVxVHyfcSGwrbrhdevTtkeAnFFXWGnQjEipeOvyqJmoyakJIRgxVTjwdbUQfSACwsbPAIxVcTwTxQNXDFQrwxTECXluQrvVjpupbBqeYaSXVwtwrBoMdVoLQgRcWAfkzyLNjvUtgDMOCgrRRAvMEOSYbNbj</p>
+              <p class="m-0 p-0">
+                PNwGnEVxVHyfcSGwrbrhdevTtkeAnFFXWGnQjEipeOvyqJmoyakJIRgxVTjwdbUQfSACwsbPAIxVcTwTxQNXDFQrwxTECXluQrvVjpupbBqeYaSXVwtwrBoMdVoLQgRcWAfkzyLNjvUtgDMOCgrRRAvMEOSYbNbj
+              </p>
             </div>
             <div class="d-flex gap-2 font-size-sm m-0 p-0">
               <p>34個<span>跟隨中</span></p>
@@ -66,149 +77,123 @@
 
 
 
-    <div class="row admin-user-card">
-        <div class="col-2">
-        </div>
-        <div class="col-10">
-          <div class="row">
-              {{!-- 要重複的地方 --}}
-              {{!-- 後臺顯示使用者 --}}
-              <div class="col-3 p-2">
-                  <div class="card position-relative border-0 shadow-none m-0">
-                      <img src="/images/default-cover.png" class="card-img-top user-cover" alt="...">
-                      <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                        <div class="user-info position-absolute d-flex flex-column justify-content-center align-items-center">
-                            <div class="d-flex flex-column align-items-center gap-2 mb-3">
-                                <img src="/images/user-avatar.svg" class="user-avatar" alt="">
-                                <div>
-                                  <p class="fw-bold fs-6 m-0 p-0">Apple</p>
-                                  <p class="font-size-sm text-secondary m-0 p-0">@apple</p>
-                                </div>
-                            </div>
-                            <div class="user-like d-flex gap-3 m-0 mb-2"> 
-                                <div class="gap-2">
-                                    <img src="/images/icons/Vector.svg" alt="" class="text-secondary">
-                                    <span class="fs-6">1.5k</span>
-                                </div>
-                                <div class="gap-2">
-                                    <img src="/images/icons/icon_like_outlined.svg" alt="" class="text-secondary">
-                                    <span class="fs-6">1.5k</span>
-                                </div>
-                            </div>
-                            <div class="user-followship d-flex gap-2 font-size-sm">
-                                  <p>34個<span class="text-secondary">跟隨中</span></p>
-                                  <p>59位<span class="text-secondary">跟隨者</span></p>
-                            </div>
-                        </div>
-                      </div>
+  <div class="row admin-user-card">
+    <div class="col-2">
+    </div>
+    <div class="col-10">
+      <div class="row">
+        {{!-- 要重複的地方 --}}
+        {{!-- 後臺顯示使用者 --}}
+        <div class="col-3 p-2">
+          <div class="card position-relative border-0 shadow-none m-0">
+            <img src="/images/default-cover.png" class="card-img-top user-cover" alt="...">
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+              <div class="user-info position-absolute d-flex flex-column justify-content-center align-items-center">
+                <div class="d-flex flex-column align-items-center gap-2 mb-3">
+                  <img src="/images/user-avatar.svg" class="user-avatar" alt="">
+                  <div>
+                    <p class="fw-bold fs-6 m-0 p-0">Apple</p>
+                    <p class="font-size-sm text-secondary m-0 p-0">@apple</p>
                   </div>
+                </div>
+                <div class="user-like d-flex gap-3 m-0 mb-2">
+                  <div class="gap-2">
+                    <img src="/images/icons/Vector.svg" alt="" class="text-secondary">
+                    <span class="fs-6">1.5k</span>
+                  </div>
+                  <div class="gap-2">
+                    <img src="/images/icons/icon_like_outlined.svg" alt="" class="text-secondary">
+                    <span class="fs-6">1.5k</span>
+                  </div>
+                </div>
+                <div class="user-followship d-flex gap-2 font-size-sm">
+                  <p>34個<span class="text-secondary">跟隨中</span></p>
+                  <p>59位<span class="text-secondary">跟隨者</span></p>
+                </div>
               </div>
-              {{!-- 要重複的地方 --}}
+            </div>
           </div>
         </div>
+        {{!-- 要重複的地方 --}}
+      </div>
     </div>
+  </div>
+  {{!-- 以下是User編輯頁面 --}}
+  <div class="row">
+    <div class="col-2">
+    </div>
+    <div class="col-7">
+      {{!--從以下開始複製--}}
 
-<style>
-  .homepage-user-card {
-    min-height: 378px;
-  }
-
-  .homepage-user-card .user-cover {
-    height: 200px;
-  }
-
-  .homepage-user-card .user-avatar {
-    width: 141.1px;
-    height: 140px;
-    border: 4px white solid;
-    border-radius: 50%;
-
-    top: 124px;
-    left: 16.13px;
-  }
-
-  .homepage-user-card .user-action {
-    height: 40px;
-  }
-
-  .homepage-user-card .btn {
-    width: 128px;
-    border: 1px solid;
-    border-radius: 50px;
-  }
-
-  .homepage-user-card .info-pic,.homepage-user-card .mes-pic {
-    width: 40px;
-  }
-
-  .admin-user-card .card {
-    height: 314px;
-
-    border-radius: 10px;
-  }
-
-   .admin-user-card .card .card-body {
-    background-color: #f6f7f8;
-
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-   }
-
-  .admin-user-card .card .user-info {
-    top: 64px;
-  }
-
-  .admin-user-card .user-cover {
-    height: 140px;
-
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-  }
-
-  .admin-user-card .user-avatar {
-    height: 100px;
-    
-    border: 4px solid white;
-    border-radius: 50%;
-  }
-
-  .admin-user-card .user-like img {
-    width: 24px;
-    height: 24px;
-  }
-
-  .admin-user-card .user-followship {
-    line-height: 22px;
-  }
-
-  .recommend-user-card {
-    border-radius: 16px;
-
-    background-color: #fafafb;
-  }
-
-  .recommend-user-card .card-title {
-    top: 24px;
-    left: 24px;
-    
-    font-weight: 700;
-  }
-
-  .recommend-user-card hr {
-    height: 1px;
-    color: #E6ECF0;
-  }
-
-  .recommend-user-card .card-body, .recommend-user-card .single-user-card, .recommend-user-card .single-user-card .card-body {
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-
-    background-color: #fafafb;
-  }
-
-  .recommend-user-card .single-user-card .btn {
-    border: 1px solid;
-    border-radius: 50px;
-  }
-
-</style>
+      <div class="modal fade" id="user-setting-modal" tabindex="-1" aria-labelledby="userSettingModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header border-0 d-flex justify-content-start align-items-center p-0 m-3 gap-4">
+              <button type="button"
+                class="btn btn-outline-light modal-close-btn m-0 d-flex justify-content-start align-items-center"
+                data-bs-dismiss="modal" aria-label="Close">
+                <img src="/images/icons/close_outlined.svg" alt="" class="filter-main-color">
+              </button>
+              <p class="fw-bold text-black m-0 p-0">編輯個人資料</p>
+            </div>
+            <div class="modal-body rounded-5 p-0 m-0">
+              {{!--需要更改以下form的連結位置--}}
+              <form action="" method="post" class="homepage-user-card card border-0 shadow-none position-relative">
+                <img src="/images/default-cover.png" id="user-setting-cover" class="card-img-top user-cover" alt="...">
+                <label for="user-cover-input"
+                  class="user-cover-input-label d-flex justify-content-center align-items-center">
+                  <div class="user-setting-cover-icon d-flex justify-content-between  gap-5 p-0 m-0">
+                    <img src="/images/icons/addphoto_outlined.svg" class="" alt="">
+                    <div></div>
+                  </div>
+                </label>
+                <img src="/images/icons/close_outlined.svg" class="" alt="" id="remove-cover-input">
+                <input type="file" accept="image/*" name="cover" id="user-cover-input" class="user-cover-input">
+                <div class="card-body px-3 pb-0">
+                  <img src="/images/user-avatar.svg" id="user-setting-avatar" class="user-avatar position-absolute"
+                    alt="">
+                  <label for="user-avatar-input"
+                    class="user-avatar-input-label user-avatar position-absolute d-flex justify-content-center align-items-center">
+                    <img src="/images/icons/addphoto_outlined.svg" class="" alt="">
+                  </label>
+                  <input type="file" accept="image/*" name="avatar" id="user-avatar-input" class="user-avatar-input">
+                </div>
+                <div class="user-setting-text m-3 p-0">
+                  <div class="form-row mb-2 position-relative">
+                    <label for="name" class="form-label position-absolute font-size-sm">名稱</label>
+                    <input type="text" class="text-input form-control user-setting-name-input" id="name" name="name"
+                      placeholder="請輸入名稱" value="John Doe" maxlength="50" required>
+                    <div class="p-0 m-0 mt-1 d-flex justify-content-end w-100">
+                      <div class="input-length text-secondary font-size-xs">0/50</div>
+                    </div>
+                    <div class="invalid-feedback">
+                      請輸入名稱
+                    </div>
+                  </div>
+                  <div class="form-row mb-2 position-relative">
+                    <label for="introduction" class="form-label position-absolute font-size-sm">自我介紹</label>
+                    <textarea class="text-input form-control user-setting-name-input text-input" id="introduction"
+                      name="introduction" placeholder="請輸入自我介紹" value="John Doe" maxlength="160"
+                      required>John Doe</textarea>
+                    <div class="p-0 m-0 mt-1 d-flex justify-content-end w-100">
+                      <div class="input-length text-secondary font-size-xs">0/160</div>
+                    </div>
+                    <div class="invalid-feedback">
+                      請輸入自我介紹
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary rounded-pill m-0">儲存</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{!--複製到這邊--}}
+    </div>
+    <div class="col-3"></div>
+  </div>
+</div>
+<script src="/javascripts/inputLength.js"></script>
+<script src="/javascripts/userPage.js"></script>

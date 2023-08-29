@@ -1,0 +1,29 @@
+{{!--隱藏起來的Model--}}
+{{!-- 以下是tweet model --}}
+
+<div class="modal fade" id="tweet-model" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-start">
+        <button type="button" class="btn btn-outline-light modal-close-btn" data-bs-dismiss="modal" aria-label="Close">
+          <img src="/images/icons/close_outlined.svg" alt="" class="filter-main-color">
+        </button>
+      </div>
+      <div class="modal-body p-0 m-0">
+        <form action="/tweets" method="post" class="modal-form m-0 mt-3 py-0 px-4">
+          <div class="m-0 gap-2 d-flex">
+            <label for="tweet"
+              class="form-label overflow-hidden  flex-shrink-0 rounded-circle  child-img-center p-0 m-0">
+              <img src="{{user.avatar}}" alt="" class="p-0 m-0 h-100 w-100">
+            </label>
+            <textarea class="form-control ps-0" id="description" name="description" rows="5" placeholder="有什麼新鮮事？"
+              maxlength="140" minlength="1" ></textarea>
+            <div class="tweet-reply-warning text-danger">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary rounded-pill">推文</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
