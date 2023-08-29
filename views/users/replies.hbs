@@ -14,7 +14,7 @@
                         style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
                 </div>
             </a>
-            <div style="margin-left: 8px" class="d-flex flex-column">
+            <div style="margin-left: 8px; height: 116px" class="d-flex flex-column">
                 <div class="d-flex flex-row">
                     <div style="font-size: 16px; font-weight: 600" class="align-middle align-self-center">
                         {{../user.name}}
@@ -31,12 +31,14 @@
                         @{{this.Tweet.User.account}}
                     </div>
                 </div>
+                <div class="mt-auto">
+                    <a href="/tweets/{{this.Tweet.id}}/replies" class="p-0"
+                        style="text-decoration: none; color:#171725 ">
 
-                <a href="/tweets/{{this.Tweet.id}}/replies" class="p-0" style="text-decoration: none; color:#171725 ">
-                    <div class="mx-auto">
                         <p>{{this.comment}}</p>
-                    </div>
-                </a>
+
+                    </a>
+                </div>
             </div>
         </div>
 
