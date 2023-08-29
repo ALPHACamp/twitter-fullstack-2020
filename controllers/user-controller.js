@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs')
-const db = require('../models')
-const { User } = db
+const { Tweet, User } = require('../models')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -53,7 +52,22 @@ const userController = {
     req.flash('success_messages', '成功登出！')
     req.logout()
     res.redirect('/signin')
+  },
+  getUser: async (req, res, next) => {
+    try {
+      const userId = req.params.id
+      const user = await User.findByPk(userId, {
+        include: [{ model: Tweet }],
+        order: [['createdAt', 'DESC']]
+      })
+
+      if (!user) { throw new Error("User didn't exist!") }
+      res.render('users/self', { user: user.toJSON()/*, myUser: req.user.id */ })
+    } catch (err) {
+      next(err)
+    }
   }
+
 }
 
 module.exports = userController

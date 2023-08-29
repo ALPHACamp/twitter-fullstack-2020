@@ -101,7 +101,10 @@ h5 {
 
 
 /* ---------- navbar ---------- */
-
+.nav-link.active {
+  color: rgb(255, 106, 0);
+  /* 橘色 */
+}
 
 .logo-container {
   position: relative;
@@ -120,7 +123,7 @@ h5 {
   left: 5px;
   width: 40px;
   height: 40px;
-} 
+}
 
 .main-navbar {
   position: relative;
@@ -211,7 +214,7 @@ h5 {
   height: 24px;
   background-image: url('/images/icons/user_filled.svg');
   background-size: contain;
-} 
+}
 
 .nav-title-tweet-tab {
   width: 72px;
@@ -314,7 +317,7 @@ h5 {
 }
 
 .signin-logo {
-  position: relative; 
+  position: relative;
   top: 5px;
   left: 5px;
   width: 40px;
@@ -450,4 +453,9 @@ h5 {
   font-weight: 400;
   line-height: 30px;
   letter-spacing: 0px;
+}
+
+.btn-orange {
+  color: rgb(255, 106, 0);
+  border-color: rgb(255, 106, 0);
 }
