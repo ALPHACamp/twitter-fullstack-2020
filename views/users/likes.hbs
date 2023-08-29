@@ -1,19 +1,19 @@
-{{>navigation route='users'}}
+{{>navs/user-left-column  route='users'}}
 
-<div style="margin-left:198px; padding: 0px 10px; width:641px; " class="border border-light">
+<div style=" margin: 0px 25px; width:641px; " class="border">
+    {{>header route='user'}}
     <div class="mx-auto border border-light">
-        {{>header}}
+        
         {{>userpage-info}}
-        {{>user-page-tabs route='likes'}}
+        {{>navs/user-page-tabs route='likes'}}
     </div>
     {{!-- 留言 --}}
     {{#each tweets}}
-    {{>tweet-card}}
+    {{>contentcards/tweet-card}}
     {{/each}}
 </div>
 
 {{>top-users-bar}}
-
 
 {{!-- modal 主頁欄 --}}
 
