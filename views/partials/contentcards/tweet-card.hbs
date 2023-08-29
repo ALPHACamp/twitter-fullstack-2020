@@ -58,7 +58,7 @@
     </div>
 
 </div>
-{{!--留言modal--}}
+{{!--reply modal--}}
 <div class="modal" id="ModalReply{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content border-white" style="width:634px; top:56px">
@@ -108,10 +108,10 @@
                 </div>
                 <div style="padding: 16px 24px" class="mx-auto">
                     <div class="d-flex flex-row">
-                        <a class="" href="/users/{{this.User.id}}/tweets">
+                        <a class="" href="/users/{{../reqUser.id}}/tweets">
                             <div style="width:50px; height:50px; background-color:#FF6600"
                                 class="rounded-circle overflow-hidden">
-                                <img src={{#if req.user.avatar}}{{req.user.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+                                <img src={{#if ../reqUser.avatar}}{{../reqUser.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
                                     style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;"
                                     alt="avatar">
                             </div>
@@ -124,7 +124,7 @@
 
                 </div>
 
-                <div style="padding: 16px" class="d-flex flex-row-reverse align-items-center">
+                <div style="padding: 16px 24px" class="d-flex flex-row-reverse align-items-center">
                     <button class="btn text-end my-auto"
                         style="background-color:#FF6600; color:white; border-radius: 30px" type="submit">
                         回覆

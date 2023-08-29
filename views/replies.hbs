@@ -1,99 +1,107 @@
-{{>navs/user-left-column  route='tweets'}}
+{{>navs/user-left-column route='tweets'}}
 
 <div style="position: absolute; left: 332px; width:641px;" class="border">
   {{>header route='tweetreplies' title='推文'}}
   {{!-- 貼文 --}}
-  <div class="col-12 mx-auto" style="border: 1px solid #E6ECF0">
- 
-
-    <div class="d-flex flex-column p-2">
+  <div style="padding: 16px 16px" class="mx-auto border-bottom">
+    <div class="d-flex flex-column">
       <div class="d-flex flex-row">
-        <a href="#">
-          <img src={{#if
-          tweet.User.avatar}}{{tweet.User.avatar}}{{else}}"https://s3.ap-southeast-2.amazonaws.com/cdn.greekherald.com.au/wp-content/uploads/2020/07/05194617/default-avatar.png"{{/if}}
-          style="aspect-ratio: 1 / 1;width: 40px;object-fit: cover;object-position: center; border-radius: 30px" alt="avatar">
+        <a class="" href="/users/{{this.User.id}}/tweets">
+          <div style="width:50px; height:50px; background-color:#FF6600" class="rounded-circle overflow-hidden">
+            <img src={{#if tweet.User.avatar}}{{tweet.User.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+              style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
+          </div>
         </a>
-        <div class="d-flex flex-column">
-          <span class="ms-1" style="font-size:16px">{{tweet.User.name}}</span>
-          <span class="ms-2" style="font-size:14px; color:#6C757D;">@{{tweet.User.account}}</span>
+        <div style="margin-left: 8px" class="d-flex flex-column">
+          <span class="" style="font-size:16px; font-weight: 600">{{tweet.User.name}}</span>
+          <span class="" style="font-size:14px; color:#6C757D;">@{{tweet.User.account}}</span>
         </div>
       </div>
       <div>
-        <P class="text-break">{{tweet.description}}</P>
+        <p style="margin: 8px 0px" class="text-break">{{tweet.description}}</p>
       </div>
       <div>
         <span style="font-size:14px; color:#6C757D;">{{localTime tweet.createdAt}}</span>
       </div>
       <hr style="margin-top: 5px; margin-bottom: 5px; height: 1px; background-color: #cad4db;">
-      <div>
-        <span style="font-weight: bold;">{{tweet.Replies.length}}<span style="color:#6C757D">回覆</span></span>
-        <span style="font-weight: bold;">{{tweet.Likes.length}}<span style="color:#6C757D">喜歡次數</span></span>
+      <div class="d-flex flex-row">
+        <div style="">{{tweet.Replies.length}} <span style="color:#6C757D">回覆</span></div>
+        <div style="margin: 0px 8px">{{tweet.Likes.length}} <span style="color:#6C757D">喜歡次數</span></div>
       </div>
 
       <hr style="margin-top: 5px; margin-bottom: 5px; height: 1px; background-color: #cad4db;">
 
       <div class="d-flex flex-row">
         <div class="me-5">
-          <button type="submit" style="background-color:transparent; border-color:transparent; border: none; padding: 0;" data-bs-toggle="modal" data-bs-target="#ModaltweetsReplies" > 
-          <img src="/icon/Reply.png" alt="..." width="20px" height="20px"/>
+          <button type="submit"
+            style="background-color:transparent; border-color:transparent; border: none; padding: 0;"
+            data-bs-toggle="modal" data-bs-target="#ModaltweetsReplies">
+            {{>icons/reply-icon}}
           </button>
         </div>
 
-      <div class="d-flex flex-row">
-        {{#if isLiked}}
+        <div class="d-flex flex-row">
+          {{#if isLiked}}
           <form action="/tweets/{{tweet.id}}/unlike" method="POST">
-            <button type="submit" style="background-color:transparent; border-color:transparent; border: none; padding: 0;"> 
-            <img src="/icon/icon_like_fill.png" alt="..." width="13px" height="13px"/>
+            <button type="submit"
+              style="background-color:transparent; border-color:transparent; border: none; padding: 0;">
+              {{>icons/like-icon active=true}}
             </button>
+            <span class="mx-1 align-self-center "
+              style="font-size: 0.2rem;font-family: Montserrat">{{tweet.Likes.length}}</span>
           </form>
           {{else}}
           <form action="/tweets/{{tweet.id}}/like" method="POST">
-            <button type="submit" style="background-color:transparent; border-color:transparent; border: none; padding: 0;"> 
-            <img src="/icon/icon_like.png" alt="..." width="16px" height="16px"/>
+            <button type="submit"
+              style="background-color:transparent; border-color:transparent; border: none; padding: 0;">
+              {{>icons/like-icon}}
             </button>
+            <span class="mx-1 align-self-center"
+              style="font-size: 0.2rem;font-family: Montserrat;color:#6C757D">{{tweet.Likes.length}}</span>
           </form>
-        {{/if}}
-      </div>
+          {{/if}}
+
+        </div>
       </div>
     </div>
   </div>
 
-{{!-- 貼文回覆 --}}
+  {{!-- 貼文回覆 --}}
   <div class="col-12 mx-auto mt-2">
     {{#each replies}}
-      <div style="padding: 16px 24px" class="mx-auto border-bottom">
-        <div class="d-flex flex-row">
-            <a class="" href="/users/{{../user.id}}/tweets">
-                <div style="width:50px; height:50px; background-color:#FF6600" class="rounded-circle overflow-hidden">
-                    <img src={{#if ../user.avatar}}{{../user.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
-                        style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
-                </div>
-            </a>
-            <div style="margin-left: 8px" class="d-flex flex-column">
-                <div class="d-flex flex-row">
-                    <div style="font-size: 16px; font-weight: 600" class="align-middle align-self-center">
-                        {{../user.name}}
-                    </div>
-                    <div style="font-size: 14px;margin-left: 8px" class="text-muted align-middle align-self-center">
-                        @{{../user.account}}• {{relativeTimeFromNow this.createdAt}}</div>
-                </div>
-
-                <div style="margin: 8px 0px" class="d-flex flex-row">
-                    <div style="font-size: 14px; font-weight: 400" class="text-muted align-middle align-self-center">
-                        回覆給</div>
-                    <div style="font-size: 14px; font-weight: 400;color:#FF6600;margin-left: 2px"
-                        class="align-middle align-self-center">
-                        @{{this.Tweet.User.account}}
-                    </div>
-                </div>
-
-                <a href="/tweets/{{this.Tweet.id}}/replies" class="p-0" style="text-decoration: none; color:#171725 ">
-                    <div class="mx-auto">
-                        <p>{{this.comment}}</p>
-                    </div>
-                </a>
+    <div style="padding: 16px 24px" class="mx-auto border-bottom">
+      <div class="d-flex flex-row">
+        <a class="" href="/users/{{../user.id}}/tweets">
+          <div style="width:50px; height:50px; background-color:#FF6600" class="rounded-circle overflow-hidden">
+            <img src={{#if this.User.avatar}}{{this.User.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+              style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
+          </div>
+        </a>
+        <div style="margin-left: 8px" class="d-flex flex-column">
+          <div class="d-flex flex-row">
+            <div style="font-size: 16px; font-weight: 600" class="align-middle align-self-center">
+              {{this.User.name}}
             </div>
+            <div style="font-size: 14px;margin-left: 8px" class="text-muted align-middle align-self-center">
+              @{{this.User.account}}• {{relativeTimeFromNow this.createdAt}}</div>
+          </div>
+
+          <div style="margin: 8px 0px" class="d-flex flex-row">
+            <div style="font-size: 14px; font-weight: 400" class="text-muted align-middle align-self-center">
+              回覆給</div>
+            <div style="font-size: 14px; font-weight: 400;color:#FF6600;margin-left: 2px"
+              class="align-middle align-self-center">
+              @{{this.Tweet.User.account}}
+            </div>
+          </div>
+
+          <a href="/tweets/{{this.Tweet.id}}/replies" class="p-0" style="text-decoration: none; color:#171725 ">
+            <div class="mx-auto">
+              <p>{{this.comment}}</p>
+            </div>
+          </a>
         </div>
+      </div>
 
     </div>
     {{/each}}
@@ -102,53 +110,110 @@
 </div>
 
 
-{{!-- modal --}}
-<div class="modal" id="ModaltweetsReplies" tabindex="-1">
+{{!-- reply modal --}}
+<div class="modal" id="ModaltweetsReplies" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content border-white" style="width:634px; top:56px">
       <div class="d-flex justify-content-start">
         <button type="button" class="btn-close ms-2 mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <hr style="margin-top: 5px; margin-bottom: 5px;">
-
       <form action="/tweets/{{tweet.id}}/replies" method="POST">
-        <div class="ms-2">
+        <div style="padding: 16px 24px" class="mx-auto">
           <div class="d-flex flex-row">
-            <a href="#">
-              <img src={{#if
-              tweet.User.avatar}}{{tweet.User.avatar}}{{else}}"https://s3.ap-southeast-2.amazonaws.com/cdn.greekherald.com.au/wp-content/uploads/2020/07/05194617/default-avatar.png"{{/if}}
-              style="aspect-ratio: 1 / 1;width: 40px;object-fit: cover;object-position: center; border-radius: 30px" alt="avatar">
+            <a class="" href="/users/{{this.User.id}}/tweets">
+              <div style="width:50px; height:50px; background-color:#FF6600" class="rounded-circle overflow-hidden">
+                <img src={{#if tweet.User.avatar}}{{tweet.User.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+                  style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
+              </div>
             </a>
-            <p class="inline ms-1 mt-1">{{tweet.User.name}}</p>
-            <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{tweet.User.account}}</span>
-            <span class="mt-2" style="font-size: 0.2em;">・{{relativeTimeFromNow tweet.createdAt}}</span>
+            <div style="margin-left: 8px" class="d-flex flex-column">
+              <div class="d-flex flex-row">
+                <div style="font-size: 16px; font-weight: 600" class="align-middle align-self-center">
+                  {{tweet.User.name}}
+                </div>
+                <div style="font-size: 14px;margin-left: 8px" class="text-muted align-middle align-self-center">
+                  @{{tweet.User.account}}• {{relativeTimeFromNow this.createdAt}}</div>
+              </div>
+
+              <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color:#171725">
+                <div style="margin: 8px 0px" class="mx-auto">
+                  <p>{{tweet.description}}</p>
+                </div>
+              </a>
+
+              <div class="d-flex flex-row">
+                <div style="font-size: 14px; font-weight: 400" class="text-muted align-middle align-self-center">
+                  回覆給</div>
+                <div style="font-size: 14px; font-weight: 400;color:#FF6600;margin-left: 2px"
+                  class="align-middle align-self-center">
+                  @{{tweet.User.account}}
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="col-10 mx-auto ps-1">
-            <p class="text-break">{{tweet.description}}</p>
-            <P style="font-size: 14px">回覆給<span style="color:#FF6600">@{{tweet.User.account}}</span></P>
+        </div>
+        <div style="padding: 16px 24px" class="mx-auto">
+          <div class="d-flex flex-row">
+            <a class="" href="/users/{{reqUser.id}}/tweets">
+              <div style="width:50px; height:50px; background-color:#FF6600" class="rounded-circle overflow-hidden">
+                <img src={{#if reqUser.avatar}}{{reqUser.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+                  style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
+              </div>
+            </a>
+            <div class="d-flex flex-row">
+              <textarea class="ms-1 mt-2" name="comment" id="" rows="6" placeholder="推你的回覆"
+                style="border:none;width:528px" maxlength="140" required></textarea>
+            </div>
           </div>
 
-          <div class="d-flex flex-row">
-            <a href="#">
-              <img src={{#if user.avatar}}
-              {{user.avatar}}
-              {{else}}
-              "https://s3.ap-southeast-2.amazonaws.com/cdn.greekherald.com.au/wp-content/uploads/2020/07/05194617/default-avatar.png"{{/if}}
-              style="aspect-ratio: 1 / 1;width: 40px;object-fit: cover;object-position: center; border-radius: 30px" alt="avatar">
-            </a>
-            <textarea class="ms-1 mt-2" name="comment" cols="45" rows="6" placeholder="推你的回覆"style="border:none" id="contentInput2"></textarea>
-          </div>
         </div>
 
-        <div class="d-flex flex-row-reverse mb-3 me-2">
-          <button id="submitBtn2" class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px" type="submit">
-          回覆
+        <div style="padding: 16px 24px" class="d-flex flex-row-reverse align-items-center">
+          <button class="btn text-end my-auto" style="background-color:#FF6600; color:white; border-radius: 30px"
+            type="submit">
+            回覆
           </button>
-          <span id="contentMessage2" class="text-danger me-2 mt-2" style="font-size: 10px"></span>
         </div>
       </form>
     </div>
   </div>
 </div>
-{{>top-users-bar}}
+{{!-- tweet modal --}}
+<div class="modal" id="myModalmain" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content border-white d-flex flex-column" style="width:634px; height: 300px; top:56px">
+      <div class="d-flex justify-content-start">
+        <button type="button" class="btn-close ms-2 mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <hr style="margin-top: 5px; margin-bottom: 5px;">
+
+      <form action="/tweets" method="POST">
+        <div style="padding: 16px 24px" class="d-flex flex-column mx-auto">
+          <div class="d-flex flex-row">
+            <a class="" href="/users/{{user.id}}/tweets">
+              <div style="width:50px; height:50px; background-color:#FF6600" class="rounded-circle overflow-hidden">
+                <img src={{#if user.avatar}}{{user.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+                  style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
+              </div>
+            </a>
+            <div style="margin-left: 8px" class="d-flex flex-column">
+              <textarea class="ms-1 mt-2" name="description" id="contentInput" rows="6" placeholder="有什麼新鮮事?"
+                style="border:none;width:528px"></textarea>
+            </div>
+          </div>
+        </div>
+        <div style="padding: 16px" class="d-flex flex-row-reverse align-items-center">
+          <button class="btn text-end my-auto py-1 px-3"
+            style="background-color:#FF6600; color:white; border-radius: 30px" type="submit" id="submitBtn">
+            推文
+          </button>
+          {{!-- DOM render --}}
+          <span id="emptyContentMessage" class="text-danger me-2 mt-2" style="font-size: 10px"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{{>top-users-bar}}ƒ
