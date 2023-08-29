@@ -15,7 +15,8 @@
       ],
       "options": {
         "singleQuote": false,
-        "parser": "angular"
+        "parser": "angular",
+        "bracketSameLine": true
       }
     }
   ]
