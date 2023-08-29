@@ -11,5 +11,10 @@ module.exports = {
   relativeTimeFromNow: a => dayjs(a).fromNow(),
   ifCond: function (a, b, options) {
     return a === b ? options.fn(this) : options.inverse(this)
+  },
+  formatDateTime: a => {
+    const time = dayjs(a).format('A h:mm')
+    const date = dayjs(a).format('YYYY年M月D日')
+    return `${time}・${date}`
   }
 }
