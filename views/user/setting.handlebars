@@ -3,7 +3,7 @@
   <form action="/users/{{user.id}}" method="post" class="w-100 needs-validation p-4" enctype="multipart/form-data" novalidate>
     <div class="mb-4 position-relative">
       <label for="account" class="form-label position-absolute font-size-sm">帳號</label>
-      <input type="text" class="form-control fs-6" name="account" id="account" placeholder="請輸入帳號" value="{{account}}" required>
+      <input type="text" class="form-control fs-6" name="account" id="account" placeholder="請輸入帳號" value="{{account}}">
       <div class="invalid-feedback">
         請輸入欲設定帳號
       </div>
@@ -21,21 +21,23 @@
     </div>
     <div class="mb-4 position-relative">
       <label for="email" class="form-label position-absolute font-size-sm">Email</label>
-      <input type="email" class="form-control fs-6" name="email" id="email" placeholder="請輸入Email" value="{{email}}" required>
+      <input type="email" class="form-control fs-6" name="email" id="email" placeholder="請輸入Email" value="{{email}}">
       <div class="invalid-feedback">
         請輸入欲設定Email
       </div>
     </div>
     <div class="mb-4 position-relative">
       <label for="password" class="form-label position-absolute font-size-sm">密碼</label>
-      <input type="password" class="form-control fs-6" name="password" id="password" placeholder="請設定密碼" required>
+      <input type="password" class="form-control fs-6" name="password" id="password" placeholder="請設定密碼">
+      <p class="message-for-password position-absolute"></p>
       <div class="invalid-feedback">
         請輸入欲設定密碼
       </div>
     </div>
     <div class="mb-4 position-relative">
       <label for="checkPassword" class="form-label position-absolute font-size-sm">密碼確認</label>
-      <input type="password" class="form-control fs-6" id="checkPassword" name="checkPassword" placeholder="請再次輸入密碼" required>
+      <input type="password" class="form-control fs-6" id="checkPassword" name="checkPassword" placeholder="請再次輸入密碼">
+      <p class="message-for-check-password position-absolute"></p> 
       <div class="invalid-feedback">
         請再次輸入密碼
       </div>
