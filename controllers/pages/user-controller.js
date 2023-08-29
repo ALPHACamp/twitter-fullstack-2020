@@ -145,8 +145,9 @@ const userController = {
     try {
       const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
 
-      const user = await userHelper.getUserInfo(req)
-      if (!user) throw new errorHandler.UserError("User didn't exist!")
+      const viewingUser = await userHelper.getUserInfo(req)
+      if (!viewingUser) throw new errorHandler.UserError("User didn't exist!")
+      console.log('viewingUser', viewingUser)
 
       const tweets = await Tweet.findAll({
         include: [
@@ -171,7 +172,7 @@ const userController = {
         route: 'user',
         userTab: 'tweets',
         tweets,
-        user,
+        viewingUser,
         recommendUser,
         javascripts
       })
@@ -217,8 +218,8 @@ const userController = {
   getLikeTweets: async (req, res, next) => {
     try {
       const userId = req.params.id
-      const user = await userHelper.getUserInfo(req)
-      if (!user) throw new errorHandler.UserError("User didn't exist")
+      const viewingUser = await userHelper.getUserInfo(req)
+      if (!viewingUser) throw new errorHandler.UserError("User didn't exist")
 
       const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
       const recommendUser = await recommendUserHelper.topFollowedUser(req)
@@ -246,7 +247,7 @@ const userController = {
         route: 'user',
         userTab: 'likes',
         tweets,
-        user,
+        viewingUser,
         recommendUser,
         javascripts
       })
@@ -257,8 +258,8 @@ const userController = {
   getUserReplies: async (req, res, next) => {
     try {
       const userId = req.params.id
-      const user = await userHelper.getUserInfo(req)
-      if (!user) throw new errorHandler.UserError("User didn't exist")
+      const viewingUser = await userHelper.getUserInfo(req)
+      if (!viewingUser) throw new errorHandler.UserError("User didn't exist")
 
       const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
       const recommendUser = await recommendUserHelper.topFollowedUser(req)
@@ -286,7 +287,7 @@ const userController = {
         route: 'user',
         userTab: 'replies',
         tweets,
-        user,
+        viewingUser,
         recommendUser,
         javascripts
       })

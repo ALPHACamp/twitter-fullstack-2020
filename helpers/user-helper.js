@@ -1,4 +1,5 @@
 const { User, Followship, sequelize } = require('../models')
+const helpers = require('../_helpers')
 
 const userHelper = {
   getUserInfo: async req => {
@@ -7,10 +8,16 @@ const userHelper = {
         include: [
           [sequelize.literal('( SELECT COUNT(*) FROM Followships WHERE Followships.follower_id = User.id)'), 'followingCount'],
           [sequelize.literal('( SELECT COUNT(*) FROM Followships WHERE Followships.following_id = User.id)'), 'followerCount'],
-          [sequelize.literal('( SELECT COUNT(*) FROM Tweets WHERE Tweets.user_id = User.id)'), 'tweetsCount']
+          [sequelize.literal('( SELECT COUNT(*) FROM Tweets WHERE Tweets.user_id = User.id)'), 'tweetsCount'],
+          [sequelize.literal(
+              `(SELECT COUNT(*) FROM Followships
+                WHERE Followships.follower_id = ${helpers.getUser(req).id}
+                AND Followships.following_id = ${req.params.id}
+              )`), 'isFollowed']
         ]
       },
-      raw: true
+      raw: true,
+      nest: true
     })
   },
   getFollowings: async req => {
