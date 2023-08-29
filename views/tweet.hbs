@@ -1,0 +1,80 @@
+<main class="container">
+  <div class="row">
+    {{>sidebar route='tweets'}}
+
+    <div class="col-md-6" style="max-width: 639px;">
+      <nav class="navbar navbar-light border-start border-end">
+        <a href="/tweets" style="text-decoration: none; color: #171725;">
+          <div class="container-fluid">
+            <h4 class="navbar-brand mb-0 h1 fs-4"><img src="https://i.imgur.com/poPTbT5.png" title="source: imgur.com"
+                style="width: 17px;height: 14px; margin-right: 10px">推文</h4>
+          </div>
+        </a>
+      </nav>
+
+      <div class="d-flex flex-column border">
+        {{!-- 貼文 --}}
+        <div class="d-flex flex-column border-bottom m-3">
+          <div class="d-flex">
+            <img src="{{tweet.User.avatar}}" title="source: imgur.com" style="width: 50px;height: 50px;" />
+            <div class="ms-2">
+              <h5 style="color: #171725; font-size: 16px; margin-bottom: 0px">{{tweet.User.name}}</h5>
+              <span style="color: #6C757D; font-size: 14px">@ {{tweet.User.account}}
+            </div>
+          </div>
+
+          <p style="color: #171725; font-size: 1.5em;" class="mt-2">{{tweet.description}}</p>
+          <span style="color: #6C757D;font-size: 14px; margin-bottom: 13px">{{formatDateTime tweet.createdAt}}</span>
+        </div>
+
+        {{!-- 喜歡、留言次數 --}}
+        <div style="font-size: 19px; font-weight: 700" class="mx-3 pb-3 border-bottom">
+          <span>{{replyCount}}</span><span style="color: #6C757D; font-weight:500; margin-right: 15px;"> 回覆</span>
+          <span>{{likeCount}}</span><span style="color: #6C757D; font-weight:500"> 喜歡次數</span>
+        </div>
+
+        {{!-- icon --}}
+        <div class="mx-3 py-3">
+          <img src="https://i.imgur.com/F9wQfqk.png" title="source: imgur.com" style="width: 25px;height: 25px;"
+            data-bs-toggle="modal" data-bs-target="#replyTweet{{tweet.id}}">
+          {{#if isLiked}}
+          <form action="/tweets/{{tweet.id}}/unlike" method="POST" class="d-inline">
+            <button type="submit" style="background: none; border: none; cursor: pointer;">
+              <img src="https://i.imgur.com/1JNr74p.png" title="source: imgur.com" style="width: 25px;height: 25px; margin-left: 128px">
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{tweet.id}}/like" method="POST" class="d-inline">
+            <button type="submit" style="background: none; border: none; cursor: pointer;">
+              <img src="https://i.imgur.com/gdUkdVf.png" title="source: imgur.com" style="width: 25px;height: 25px; margin-left: 128px">
+            </button>
+          </form>
+          {{/if}}
+        </div>
+
+        {{>reply-modal}}
+
+
+        {{!-- 留言串 --}}
+        {{#each replies}}
+        <div class="d-flex align-items-start flex-column border-top" style="min-height: 130px;">
+          <div class="align-self-start pt-2">
+            <img src="{{this.User.avatar}}" title="source: imgur.com" style="width: 50px;height: 50px;" class="ms-4">
+            <div class="d-inline-flex pt-3">
+              <h5 class="mx-2" style="color: #171725; font-size: 16px; font-weight: 700">{{this.User.name}}</h5>
+              <span style="color: #6C757D; font-weight: 400; font-size: 14px">@{{this.User.account}} · {{relativeTimeFromNow this.createdAt}}</span>
+            </div>
+          </div>
+          <div style="max-width: 528px; margin-left: 85px;">
+            <span style="color: #657786; font-size: 14px">回覆 <span style="color: #FF6600; font-size: 14px">@{{this.User.account}}</span></span>
+            <p class="mb-3" style="font-size: 16px; margin-top: 10px">{{this.comment}}
+            </p>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    {{>right}}
+  </div>
+</main>

@@ -1,4 +1,4 @@
-const { Tweet, User, Like, Reply } = require('../models')
+const { Tweet, User, Like, Reply, sequelize } = require('../models')
 const { Op } = require('sequelize')
 const controllerHelper = require('../helpers/controller-helpers')
 const adminController = {
@@ -20,17 +20,27 @@ const adminController = {
     },
     getUsers: (req, res, next) => {
         User.findAll({
-            include: [{ model: Tweet, include: Like }, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }],
-            where: { [Op.or]: [{ role: 'user' }, { role: null }] }
-        }
-        )
+            where: { [Op.or]: [{ role: 'user' }, { role: null }] },
+            attributes: {
+                name : 'name',
+                account: 'account',
+                cover: 'cover',
+                avatar: 'avatar',
+                include: [[sequelize.literal('(SELECT COUNT(*) FROM Tweets WHERE Tweets.user_id = User.id)'), 'tweetsCount'],
+                          [sequelize.literal('(SELECT COUNT(*) FROM Followships WHERE Followships.follower_id = User.id)'), 'Followings'],
+                          [sequelize.literal('(SELECT COUNT(*) FROM Followships WHERE Followships.following_id = User.id)'), 'Followers'],
+                          [sequelize.literal('(SELECT COUNT(*) FROM Likes LEFT JOIN Tweets ON Tweets.id = Likes.tweet_id WHERE Tweets.user_id = User.id)'),
+                          'likesCount']
+                        ]
+            },
+            order: [[sequelize.literal('tweetsCount'), 'DESC']],
+            raw: true
+        })
             .then(users => {
                 return users.map(user => ({
-                    ...user.toJSON(),
-                    tweetsCount: controllerHelper.countTweets(user.Tweets.length),
-                    Followers: user.Followers.length,
-                    Followings: user.Followings.length,
-                    likesCount: controllerHelper.countLikes(user, user.Tweets.length)
+                    ...user,
+                    tweetsCount: controllerHelper.ifThousand(user.tweetsCount),
+                    likesCount: controllerHelper.ifThousand(user.likesCount)
                 }))
             })
             .then(users => {
