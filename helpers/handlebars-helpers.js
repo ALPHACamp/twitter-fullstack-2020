@@ -9,5 +9,7 @@ module.exports = {
   ifCond: function (a, b, options) {
     return a === b ? options.fn(this) : options.inverse(this)
   },
-  relativeTime: a => moment(a).fromNow()
+  relativeTime: a => moment(a).fromNow(),
+  createdDate: a => moment(a).format('LL'),
+  createdTime: a => moment(a).format('a h:mm')
 }

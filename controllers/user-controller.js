@@ -73,7 +73,7 @@ const userController = {
       .then(([tweets, user]) => {
         const tweetsCount = tweets.length
         // 當 user 為非使用者時
-        const tweetsUser = tweets[0].User.name
+        const tweetsUser = tweets[0].User
         res.render('profile', { tweets, user, profileRoute, otherProfileRoute, tweetsCount, tweetsUser })
       })
       .catch(err => next(err))
