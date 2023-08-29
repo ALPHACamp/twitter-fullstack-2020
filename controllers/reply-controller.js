@@ -5,6 +5,7 @@ const replyController = {
   getTweetReplies: (req, res, next) => {
     const reqUser = helpers.getUser(req)
     const { id } = req.params
+    const userId = req.user.id
 
     Promise.all([
       Tweet.findByPk(id, {
@@ -22,13 +23,30 @@ const replyController = {
       Like.findAll({
         where: { UserId: helpers.getUser(req).id },
         raw: true
-      })
+      }),
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }],
+        where: { role: 'user' }
+      }),
+      User.findByPk(userId)
     ])
-      .then(([tweet, replies, likes]) => {
-        const likedTweets = likes.map(like => like.tweetId)
-        // console.log(likes)可能更測試檔沒過有關
+      .then(([tweet, replies, likes, users, user]) => {
+        const likedTweets = likes.map(like => (like.tweetId))
         const isLiked = likedTweets.includes(tweet.id)
-        res.render('replies', { tweet: tweet.toJSON(), replies, isLiked, reqUser })
+        // topUser
+        const topUsers = users
+          .map(u => ({
+            ...u.toJSON(),
+            name: u.name.substring(0, 20),
+            account: u.account.substring(0, 20),
+            // 計算追蹤者人數
+            followerCount: u.Followers.length,
+            // 判斷目前登入使用者是否已追蹤該 user 物件
+            isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
+          }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+
+        res.render('replies', { tweet: tweet.toJSON(), replies, isLiked, topUsers, reqUser, user: user.toJSON() })
       })
       .catch(err => next(err))
   },
