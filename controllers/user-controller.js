@@ -67,6 +67,7 @@ const userController = {
           { model: User, as: 'Followings' }
         ]
       })
+      const isFollowed = req.user && req.user.Followings.some(f => f.id === Number(userId))
       // tweet area
       const tweets = await Tweet.findAll({
         order: [['createdAt', 'DESC']],
@@ -99,41 +100,44 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
-      return res.render('users/tweets', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser })
+      return res.render('users/tweets', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser, isFollowed })
     } catch (err) {
       next(err)
     }
   },
-  getUserRepliesPage: (req, res, next) => {
-    const reqUser = req.user
-    const id = req.params.userId
-    return Promise.all([
-      User.findByPk(id, {
+  getUserRepliesPage: async (req, res, next) => {
+    try {
+      const reqUser = req.user
+      const { userId } = req.params
+      // info area // replytweets area
+      const user = await User.findByPk(userId, {
         include: [
-          { model: Tweet, include: Reply },
+          { model: Tweet },
           { model: Reply, include: { model: Tweet, include: User } },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
-      }),
-      User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
-    ])
-      .then(([user, users]) => {
-        const topUsers = users
-          .map(u => ({
-            // 整理格式
-            ...u.toJSON(),
-            name: u.name.substring(0, 20),
-            account: u.account.substring(0, 20),
-            // 計算追蹤者人數
-            followerCount: u.Followers.length,
-            // 判斷目前登入使用者是否已追蹤該 user 物件
-            isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
-          }))
-          .sort((a, b) => b.followerCount - a.followerCount)
-        return res.render('users/replies', { user: user.toJSON(), topUsers, reqUser })
       })
-      .catch(err => next(err))
+      const isFollowed = req.user && req.user.Followings.some(f => f.id === Number(userId))
+      // top10users area
+      const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
+      const topUsers = await users
+        .map(u => ({
+          // 整理格式
+          ...u.toJSON(),
+          name: u.name.substring(0, 20),
+          account: u.account.substring(0, 20),
+          // 計算追蹤者人數
+          followerCount: u.Followers.length,
+          // 判斷目前登入使用者是否已追蹤該 user 物件
+          isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
+        }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+
+      return res.render('users/replies', { user: user.toJSON(), topUsers, reqUser, isFollowed })
+    } catch (err) {
+      next(err)
+    }
   },
   getUserLikesPage: async (req, res, next) => {
     try {
@@ -147,6 +151,7 @@ const userController = {
           { model: User, as: 'Followings' }
         ]
       })
+      const isFollowed = req.user && req.user.Followings.some(f => f.id === Number(userId))
       // likedtweet area
       const likes = await Like.findAll({
         where: { userId: userId },
@@ -183,7 +188,7 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
-      return res.render('users/likes', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser })
+      return res.render('users/likes', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser, isFollowed })
     } catch (err) {
       next(err)
     }
@@ -257,10 +262,10 @@ const userController = {
           isFollowed: req.user && req.user.Followings.some(f => f.id === t.userId)
         }))
       // top10users area
-      const users = await User.findAll({ include: [{ model: User, as: 'Followers'}], where: { role: 'user' } })
+      const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
       const topUsers = await users
         .map(u => ({
-        // 整理格式
+          // 整理格式
           ...u.toJSON(),
           name: u.name.substring(0, 20),
           account: u.account.substring(0, 20),

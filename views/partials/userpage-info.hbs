@@ -11,16 +11,38 @@
         </div>
     </div>
     <div class="card-body text-end">
-        {{!-- <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn mx-1">
+        {{!-- {{#ifCond reqUser.id user.id}}
+        {{else}}
+         <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn mx-1">
             <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-forward-icon-png-image_4184777.jpg"
                 style="width: 13px; height: 13px" alt="...">
         </a>
         <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn mx-1">
             <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-forward-icon-png-image_4184777.jpg"
                 style="width: 13px; height: 13px" alt="...">
-        </a> --}}
+        </a>
+        {{/ifCond}} --}}
+
+        {{#ifCond reqUser.id user.id}}
         <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn mx-1 px-3"
             data-bs-toggle="modal" data-bs-target="#personalData">編輯個人資料</a>
+             {{else}}
+             {{!-- <div class="ms-auto"> --}}
+                {{#if isFollowed}}
+                <form action="/following/{{user.id}}?_method=DELETE" method="POST">
+                    <button type="submit"
+                        style="background-color:#FF6600; color:#ffffff; height:40px;border-radius: 30px"
+                        class="btn">正在跟隨</button>
+                </form>
+                {{else}}
+                <form action="/following/{{user.id}}" method="POST">
+                    <button type="submit"
+                        style="background-color:#ffffff; color:#FF6600; border-color:#FF6600; height:40px;border-radius: 30px"
+                        class="btn">跟隨</button>
+                </form>
+                {{/if}}
+            {{!-- </div> --}}
+             {{/ifCond}} 
     </div>
     <div class="card-body">
         <h4 class="card-title mb-1">{{user.name}}</h4>
