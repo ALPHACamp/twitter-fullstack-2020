@@ -1,5 +1,4 @@
 <div style="width:178px" class="card border-white vh-100 float-start sticky-top">
-   {{!-- position:fixed; z-index:1; top:0; overflow-x:hidden --}}
   
   <div style="width:50px; height:50" class="m-2 p-1">
     {{>ac-logo}}
@@ -7,19 +6,19 @@
   {{#ifCond route 'tweets'}}
   <div style="height:58px" class="d-flex align-items-center mx-2 mb-1">
     <a style="color:#FF6600" class="navbar-brand text-decoration-none mx-2 px-1" href="/">
-      {{>home-icon active=true}}
+      {{>icons/home-icon active=true}}
       <span class="h5 ms-3">首頁</span>
     </a>
   </div>
   <div style="height:58px" class="d-flex align-items-center mx-2 mb-1">
     <a style="color:#171725" class="navbar-brand text-decoration-none mx-2 px-1" href="/users/{{ reqUser.id }}/tweets">
-      {{>user-icon}}
+      {{>icons/user-icon}}
       <span class="h5 ms-3">個人資料</span>
     </a>
   </div>
   <div style="height:58px" class="d-flex align-items-center mx-2 mb-1">
     <a style="color:#171725" class="navbar-brand text-decoration-none mx-2 px-1" href="/api/users/{{ reqUser.id }}">
-      {{>cog-icon}}
+      {{>icons/cog-icon}}
       <span class="h5 ms-3">設定</span>
     </a>
   </div>
@@ -28,19 +27,19 @@
   {{#ifCond route 'users'}}
   <div style="height:58px" class="d-flex align-items-center mx-2 mb-1">
     <a style="color:#171725" class="navbar-brand text-decoration-none mx-2 px-1" href="/">
-      {{>home-icon}}
+      {{>icons/home-icon}}
       <span class="h5 ms-3">首頁</span>
     </a>
   </div>
   <div style="height:58px" class="d-flex align-items-center mx-2 mb-1">
     <a style="color:#FF6600" class="navbar-brand text-decoration-none mx-2 px-1" href="/users/{{ reqUser.id }}/tweets">
-      {{>user-icon active=true}}
+      {{>icons/user-icon active=true}}
       <span class="h5 ms-3">個人資料</span>
     </a>
   </div>
   <div style="height:58px" class="d-flex align-items-center mx-2 mb-1">
     <a style="color:#171725" class="navbar-brand text-decoration-none mx-2 px-1" href="/api/users/{{ reqUser.id }}">
-      {{>cog-icon}}
+      {{>icons/cog-icon}}
       <span class="h5 ms-3">設定</span>
     </a>
   </div>
@@ -49,19 +48,19 @@
    {{#ifCond route 'edit'}}
   <div style="height:58px" class="d-flex align-items-center mx-2 mb-1">
     <a style="color:#171725" class="navbar-brand text-decoration-none mx-2 px-1" href="/">
-      {{>home-icon}}
+      {{>icons/home-icon}}
       <span class="h5 ms-3">首頁</span>
     </a>
   </div>
   <div style="height:58px" class="d-flex align-items-center mx-2 mb-1">
     <a style="color:#171725" class="navbar-brand text-decoration-none mx-2 px-1" href="/users/{{ reqUser.id }}/tweets">
-      {{>user-icon }}
+      {{>icons/user-icon }}
       <span class="h5 ms-3">個人資料</span>
     </a>
   </div>
   <div style="height:58px" class="d-flex align-items-center mx-2 mb-1">
     <a style="color:#FF6600" class="navbar-brand text-decoration-none mx-2 px-1" href="/api/users/{{ reqUser.id }}">
-      {{>cog-icon active=true}}
+      {{>icons/cog-icon active=true}}
       <span class="h5 ms-3">設定</span>
     </a>
   </div>
@@ -74,7 +73,7 @@
 
   <div style="height:58px" class="d-flex align-items-center mx-2 mb-1 position-absolute bottom-0 start-0">
     <a style="color:#171725" class="navbar-brand text-decoration-none mx-2 px-1" href="/logout">
-      {{>logout-icon}}
+      {{>icons/logout-icon}}
       <span class="h5 ms-3">登出</span>
     </a>
   </div>
