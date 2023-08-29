@@ -15,7 +15,7 @@ const cookieParser = require('cookie-parser')
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
-const { pages } = require('./routes')
+const routes = require('./routes')
 
 // 固定變數
 const app = express()
@@ -43,13 +43,14 @@ app.use(session({
 }))
 app.use(flash())
 app.use(passport.initialize())
+app.use(passport.session())
 app.use((req, res, next) => {
   // 預留給需要放到res.local的message
   res.locals.error_messages = req.flash('error_messages')
   next()
 })
 
-app.use(pages)
+app.use(routes)
 app.listen(PORT, () => console.log(`Simple Twitter app listening on port ${PORT}!`))
 
 module.exports = app

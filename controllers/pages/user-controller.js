@@ -9,6 +9,7 @@ const errorHandler = require('../../helpers/errors-helpers')
 
 const INPUT_LENGTH_JS = 'inputLength.js'
 const USER_PAGE_JS = 'userPage.js'
+const CHECK_PASSWORD_JS = 'checkPassword.js'
 
 const userController = {
   /* admin 登入 */
@@ -28,14 +29,15 @@ const userController = {
     }
   },
 
-  // 以下兩個logout重複需要合併優化
   adminLogout: (req, res, next) => {
     try {
-      if (req && req.cookies) {
-        res.cookie('jwtToken', '', { expires: new Date(0) })
-        return res.redirect('/admin/signin', { role: 'admin' })
-      }
-      next()
+      req.logout(function (err) {
+        if (err) {
+          return next(err)
+        }
+
+        res.redirect('/admin/signin')
+      })
     } catch (error) {
       return next(error)
     }
@@ -59,8 +61,10 @@ const userController = {
     }
   },
   getSignupPage: (req, res, next) => {
+    const javascripts = [INPUT_LENGTH_JS, CHECK_PASSWORD_JS]
+
     try {
-      return res.render('login/signup')
+      return res.render('login/signup', { javascripts })
     } catch (error) {
       return next(error)
     }
@@ -131,11 +135,13 @@ const userController = {
   },
   getLogout: (req, res, next) => {
     try {
-      if (req && req.cookies) {
-        res.cookie('jwtToken', '', { expires: new Date(0) })
-        return res.redirect('/signin')
-      }
-      // next()
+      req.logout(function (err) {
+        if (err) {
+          return next(err)
+        }
+
+        res.redirect('/signin')
+      })
     } catch (error) {
       return next(error)
     }
@@ -147,7 +153,6 @@ const userController = {
 
       const viewingUser = await userHelper.getUserInfo(req)
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist!")
-      console.log('viewingUser', viewingUser)
 
       const tweets = await Tweet.findAll({
         include: [
@@ -181,7 +186,7 @@ const userController = {
     }
   },
   getUserEditPage: async (req, res, next) => {
-    const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
+    const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS, CHECK_PASSWORD_JS]
     await userService.getUserEditPage(req, (error, data) => {
       if (error) return next(error)
 

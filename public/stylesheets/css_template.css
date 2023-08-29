@@ -729,3 +729,12 @@
 #user-tab .active>a {
   color: #ff6600;
 }
+
+/* check password */
+.message-for-password, .message-for-check-password {
+  font-size: 14px;
+  font-weight: 700;
+
+  top: 2px;
+  right: 10.55px;
+}

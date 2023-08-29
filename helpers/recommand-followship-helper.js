@@ -2,8 +2,8 @@ const helpers = require('../_helpers')
 const { Op } = require('sequelize')
 const { User, sequelize } = require('../models')
 /* 取出推薦的前10user */
-const topFollowedUser = async req => {
-  return await User.findAll({
+const topFollowedUser = req => {
+  return User.findAll({
     where: {
       id: { [Op.ne]: helpers.getUser(req).id }, // 不要出現登入帳號
       role: { [Op.ne]: 'admin' } // admin不推薦, ne = not
