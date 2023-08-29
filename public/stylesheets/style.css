@@ -78,6 +78,177 @@ h5 {
   font-size: 18px;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
+
+/* ---------- Navbar ---------- */
+
+.navbar-container {
+  position: absolute;
+  top: 0;
+  left: 130px;
+  width: 178px;
+  height: 100vh;
+  min-height: 400px;
+}
+
+.navbar-logo-container {
+  position: fixed;
+  top: 8px;
+  left: 143px;
+  width: 50px;
+  height: 50px;
+  padding: 5px;
+}
+
+.navbar-logo {
+  width: 40px;
+  height: 40px;
+} 
+
+.main-navbar {
+  position: fixed;
+  top: 66px;
+  width: 178px;
+  height: 124px;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-row {
+  position: relative;
+  width: 178px;
+  height: 58px;
+}
+
+.nav-item-tweet {
+  position: relative;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  justify-content: space-between;
+  width: 112px;
+  height: 26px;
+}
+
+.nav-item-user {
+  position: relative;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  justify-content: space-between;
+  width: 130px;
+  height: 26px;
+  color: #44444F;
+}
+
+.nav-item-user:hover,
+.nav-row.active .nav-item-title-user {
+  color: var(--brand-color);
+}
+
+.nav-item-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.nav-item-home-icon {
+  position: absolute;
+  top: 2.2px;
+  left: 0.9px;
+  width: 22.2px;
+  height: 20.25px;
+  background-image: url('/stylesheets/icons/home_filled.svg');
+}
+
+.nav-item-user-icon {
+  position: absolute;
+  top: 2.2px;
+  left: 0.9px;
+  width: 22.2px;
+  height: 22.2px;
+  background-image: url('/stylesheets/icons/user_outlined.svg');
+}
+
+.nav-item-user:hover .nav-item-icon .nav-item-user-icon,
+.nav-row.active .nav-item-icon .nav-item-user-icon {
+  background-image: url('/stylesheets/icons/user_filled.svg');
+}
+
+.nav-item-title-tweet {
+  width: 72px;
+  height: 26px;
+  font-weight: 700;
+  line-height: 26px;
+  color: #FF6600;
+}
+
+.nav-item-title-user {
+  width: 90px;
+  height: 26px;
+  font-weight: 700;
+  line-height: 26px;
+}
+
+.logout-form {
+  position: fixed;
+  bottom: 0;
+}
+
+.logout-btn {
+  width: 178px;
+  height: 58px;
+  text-decoration: none;
+  color: #44444F;
+  background-color: white;
+  border: none;
+}
+
+.logout-btn:focus {
+  outline: none;
+  background-color: white;
+}
+
+.nav-item-logout {
+  position: relative;
+  left: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 76px;
+  height: 26px;
+  color: #44444F;
+}
+
+.nav-item-logout:hover,
+.nav-row.active .nav-item-title-logout {
+  color: var(--brand-color);
+}
+
+.nav-item-logout-icon {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  background-image: url('/stylesheets/icons/logout.svg');
+}
+
+.nav-item-logout:hover .nav-item-icon .nav-item-logout-icon,
+.nav-row.active .nav-item-icon .nav-item-logout-icon {
+  background-image: url('/stylesheets/icons/logout_colored.svg');
+}
+
+.nav-item-title-logout {
+  width: 36px;
+  height: 26px;
+  font-weight: 700;
+  line-height: 26px;
+} 
+
 
 /* ---------- User / Admin Signin ---------- */
 
@@ -261,4 +432,176 @@ h5 {
   letter-spacing: 0px;
 }
 
+
+/* ---------- Admin tweets ---------- */
+
+.admin-tweets {
+  display: flex;
+  flex-direction: row;
+}
+
+.admin-tweets-container {
+  position: fixed;
+  left: 332px;
+  width: 938px;
+  height: 100vh;
+  min-height: 400px;
+  margin: 0 0.87px;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  overflow: hidden;
+}
+
+.admin-tweets-header {
+  position: fixed;
+  left: 333px;
+  width: 937px;
+  height: 75px;
+  border-left: 1px solid #E6ECF0;
+  border-bottom: 1px solid #E6ECF0;
+  z-index: 1;
+  background-color: white;
+}
+
+.admin-tweets-header .main-title {
+  position: sticky;
+  top: 24px;
+  left: 354px;
+  width: 96px;
+  height: 26px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.admin-tweets-list-container {
+  position: absolute;
+  top: 91px;
+  left: 0;
+  width: 937px;
+  height: 1055px;
+  overflow-y: scroll;
+  bottom: 0;
+}
+
+.admin-tweets-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-tweets-footer {
+  position: fixed;
+  left: 332px;
+  bottom: 0;
+  width: 937px;
+  height: 54px;
+  border-top: 1px solid #E6ECF0;
+  z-index: 1;
+  background-color: white;
+}
+
+.admin-tweet-container {
+  width: 937px;
+  height: 103px;
+}
+
+.admin-tweet-left {
+  display: flex;
+  flex-direction: row;
+  padding: 0px 24px;
+  width: 634px;
+  height: 86px;
+  gap: 8px;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.admin-tweet-avatar {
+  width: 50px;
+  height: 50px;
+}
+
+.admin-tweet-avatar .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.admin-tweet-avatar .default-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.admin-tweet-right {
+  display: flex;
+  flex-direction: column;
+  width: 855px;
+  height: 86px;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.tweet-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 855px;
+  height: 26px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  height: 26px; 
+}
+
+.user-name {
+  text-align: left;
+  padding-right: 10px;
+  height: 26px;
+  font-family: "Noto Sans TC";
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0px;
+  color: #171725;
+}
+
+.user-sub-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: left;
+  height: 22px;
+  font-family: "Noto Sans TC";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0px;
+  color: #6C757D;
+}
+
+.delete-icon {
+  margin-right: 4px;
+  width: 24px;
+  height: 24px;
+  background-image: url('/stylesheets/icons/close.svg');
+  filter: invert(44%) sepia(11%) saturate(344%) hue-rotate(202deg) brightness(90%) contrast(88%);
+}
+
+.tweet-text {
+  text-align: left;
+  width: 855px;
+  height: 52px;
+  font-family: "Noto Sans TC";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  letter-spacing: 0px;
+  color: #171725;
+}
 
