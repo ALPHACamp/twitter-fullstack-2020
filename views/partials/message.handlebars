@@ -1,15 +1,46 @@
-{{#if error_messages}}
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    {{ error_messages }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+{{#if success_messages}}
+<div class="error-message error-message-container  error-success">
+  <div class="error-message-content">
+    <p class="error-message-words">{{ success_messages }}</p>
+    <div class="error-message-circle">
+      <div class="error-message-img">
+      </div>
+    </div>
   </div>
+</div>
 {{/if}}
 
-{{#if errors}}
-  {{#each errors}}
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      {{ this.messages }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+{{#if error_messages}}
+<div class="error-message error-message-container  error-danger">
+  <div class="error-message-content">
+    <p class="error-message-words">{{ error_messages }}</p>
+    <div class="error-message-circle">
+      <div class="error-message-img">
+      </div>
     </div>
-  {{/each}}
+  </div>
+</div>
+{{/if}}
+
+{{#if warning_messages}}
+<div class="error-message error-message-container  error-warning">
+  <div class="error-message-content">
+    <p class="error-message-words">{{ warning_messages }}</p>
+    <div class="error-message-circle">
+      <div class="error-message-img">
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}
+{{#if info_messages}}
+<div class="error-message error-message-container  error-info">
+  <div class="error-message-content">
+    <p class="error-message-words">{{ info_messages }}</p>
+    <div class="error-message-circle">
+      <div class="error-message-img">
+      </div>
+    </div>
+  </div>
+</div>
 {{/if}}
