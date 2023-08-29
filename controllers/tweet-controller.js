@@ -7,23 +7,42 @@ const tweetController = {
     return Promise.all([
       Tweet.findAll({
         order: [['createdAt', 'DESC']],
-        include: [{ model: User }, { model: Reply }, { model: Like }]
+        include: [
+          { model: User },
+          { model: Reply },
+          { model: Like }
+        ]
       }),
       Like.findAll({
         where: {
           userId: req.user.id
         },
         raw: true
+      }),
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }],
+        where: { role: 'user' }
       })
     ])
-      .then(([tweets, like]) => {
+      .then(([tweets, like, users]) => {
         const likedTweets = like.map(like => like.tweetId)
         const data = tweets.map(t => ({
           ...t.toJSON(),
           isLiked: likedTweets.includes(t.id)
         }))
-        // console.log(data)
-        res.render('tweet', { tweets: data, reqUser })
+        // topUser
+        const topUsers = users
+          .map(u => ({
+            ...u.toJSON(),
+            name: u.name.substring(0, 20),
+            account: u.account.substring(0, 20),
+            // 計算追蹤者人數
+            followerCount: u.Followers.length,
+            // 判斷目前登入使用者是否已追蹤該 user 物件
+            isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
+          }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+        res.render('tweet', { tweets: data, reqUser, topUsers })
       })
       .catch(err => next(err))
   },
