@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const { Op } = require('sequelize')
-const { User, Tweet, Reply } = require('../models')
+const { User, Tweet, Reply, Like } = require('../models')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -116,22 +116,118 @@ const userController = {
           .sort((a, b) => b.followerCount - a.followerCount)
         res.render('user-tweets', { 
           user: userData,
-          tweets,
           UserId: req.user.id,
           tweetCount,
           followerCount,
           followingCount,
           isFollowed,
-          topUser
+          topUser,
+          tweets
         })
       })
       .catch(err => next(err))
   },
   getUserReplies: (req, res, next) => {
-    res.render('user-replies')  
+    const userId = Number(req.params.id)
+    return Promise.all([
+      User.findByPk(userId, {
+        include: [
+          Tweet,
+          { model: Reply, include: { model: Tweet, include: [User] }},
+          { model: User, as: 'Followers'}, 
+          { model: User, as: 'Followings'},
+        ],
+        order: [[Reply, 'updatedAt', 'DESC']]
+      }),
+      // 推薦追隨
+      User.findAll({
+        include: { model: User, as: 'Followers'}
+      })
+    ])
+    .then(([user, followShips]) => {
+      const userData = user.toJSON()
+      // Profile Data
+      const isFollowed = req.user.Followings.map(Fu => Fu.id).includes(userId)
+      const tweetCount =  userData.Tweets.length
+      const followerCount = userData.Followers.length
+      const followingCount = userData.Followings.length
+      // 推薦追隨
+      const topUser = followShips.map(followShip => ({
+        ...followShip.toJSON(),
+        followerCount: followShip.Followers.length,
+        isFollowed: req.user.Followings.some(f => f.id === followShip.id)
+      }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+
+      res.render('user-replies', {
+        user: userData,
+        UserId: req.user.id,
+        tweetCount,
+        followerCount,
+        followingCount,
+        isFollowed,
+        topUser,
+        replies: userData.Replies,
+      })
+    })
+    .catch(err => next(err))
+      
   },
   getUserLikes: (req, res, next) => {
-    res.render('user-likes')
+    const userId = Number(req.params.id)
+    return Promise.all([
+      User.findByPk(userId, {
+        include: [
+          Tweet,
+          { model:Tweet, as:'LikedTweets', include: [User, Reply, {model: User, as: 'LikedUsers'}]},
+          { model: User, as: 'Followers'}, 
+          { model: User, as: 'Followings'},
+        ],
+        order: [['LikedTweets', 'updatedAt', 'DESC']]
+      }),
+      // 推薦追隨
+      User.findAll({
+        include: { model: User, as: 'Followers'}
+      })
+    ])
+    .then(([user, followShips]) => {
+      const userData = user.toJSON()
+      // console.log(userData.LikedTweets)
+      // 取使用者Like的推文id
+        const likeTweets = req.user.LikedTweets.map(Lt => Lt.id)
+      // Profile Data
+      const isFollowed = req.user.Followings.map(Fu => Fu.id).includes(userId)
+      const tweetCount =  userData.Tweets.length
+      const followerCount = userData.Followers.length
+      const followingCount = userData.Followings.length
+
+      const tweets = userData.LikedTweets.map(tweet => ({
+          ...tweet,
+          isLiked : likeTweets.includes(tweet.id),
+          LikeCount: tweet.LikedUsers.length,
+          replyCount: tweet.Replies.length
+        }))
+        console.log(tweets)
+      // 推薦追隨
+      const topUser = followShips.map(followShip => ({
+        ...followShip.toJSON(),
+        followerCount: followShip.Followers.length,
+        isFollowed: req.user.Followings.some(f => f.id === followShip.id)
+      }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+      res.render('user-likes', {
+        user: userData,
+        UserId: req.user.id,
+        tweetCount,
+        followerCount,
+        followingCount,
+        isFollowed,
+        topUser,
+        likedTweets: tweets
+      })
+    })
+    .catch(err => next(err))
+    
   }
 }
 
