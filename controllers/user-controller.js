@@ -1,6 +1,6 @@
 const db = require('../models')
 const bcrypt = require('bcryptjs')
-const { User, Tweet } = db
+const { User, Tweet, Followship } = db
 const helper = require('../_helpers')
 
 const userController = {
@@ -123,44 +123,88 @@ const userController = {
         res.redirect('/signin')
       })
       .catch(err => next(err))
+  },
+  getFollowers: (req, res, next) => {
+    const otherProfileRoute = true
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        { model: Tweet }
+      ]
+    })
+      .then(currentUser => {
+        if (!currentUser) throw new Error("User didn't exist!")
+        const tweetsCount = currentUser.Tweets.length
+        const followers = currentUser.Followers.map(follower => ({
+          ...follower.toJSON(),
+          followByMe: req.user.Followings.some(following => following.id === follower.id),
+          self: req.user.id === follower.id
+        }))
+          .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        res.render('followers', { otherProfileRoute, tweetsCount, followers, currentUser, tweetsUser: currentUser.name, id: currentUser.id })
+      })
+      .catch(err => next(err))
+  },
+  getFollowings: (req, res, next) => {
+    const otherProfileRoute = true
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        { model: Tweet }
+      ]
+    })
+      .then(currentUser => {
+        if (!currentUser) throw new Error("User didn't exist!")
+        const tweetsCount = currentUser.Tweets.length
+        const followings = currentUser.Followings.map(following => ({
+          ...following.toJSON(),
+          followByMe: req.user.Followings.some(followingByMe => followingByMe.id === following.id),
+          self: req.user.id === following.id
+        }))
+          .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        res.render('followings', { otherProfileRoute, tweetsCount, followings, currentUser, tweetsUser: currentUser.name, id: currentUser.id })
+      })
+      .catch(err => next(err))
+  },
+  addFollowing: (req, res, next) => {
+    const id = req.body.id
+    return Promise.all([
+      User.findByPk(id),
+      Followship.findOne({
+        where: {
+          followerId: req.user.id,
+          followingId: id
+        }
+      })
+    ])
+      .then(([user, followship]) => {
+        if (user.toJSON().id === req.user.id) throw new Error("Can't follow yourself")
+        if (!user) throw new Error("User didn't exist!")
+        if (followship) throw new Error('Your are already following this user!')
+        return Followship.create({
+          followerId: req.user.id,
+          followingId: id
+        })
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+  deleteFollowing: (req, res, next) => {
+    return Followship.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.id
+      }
+    })
+      .then(followship => {
+        if (!followship) throw new Error("You haven't followed this user!")
+        return followship.destroy()
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
   }
-  // addFollowing: (req, res, next) => {
-  //   const { userId } = req.params
-  //   Promise.all([
-  //     User.findByPk(userId),
-  //     Followship.findOne({
-  //       where: {
-  //         followerId: req.user.id,
-  //         followingId: userId
-  //       }
-  //     })
-  //   ])
-  //     .then(([user, followship]) => {
-  //       if (user.toJSON().id === req.user.id) throw new Error("Can't follow yourself")
-  //       if (!user) throw new Error("User didn't exist!")
-  //       if (followship) throw new Error('Your are already following this user!')
-  //       return Followship.create({
-  //         followerId: req.user.id,
-  //         followingId: userId
-  //       })
-  //     })
-  //     .then(() => res.redirect('back'))
-  //     .catch(err => next(err))
-  // },
-  // deleteFollowing: (req, res, next) => {
-  //   Followship.findOne({
-  //     where: {
-  //       followerId: req.user.id,
-  //       followingId: req.params.userId
-  //     }
-  //   })
-  //     .then(followship => {
-  //       if (!followship) throw new Error("You haven't followed this user!")
-  //       return followship.destroy()
-  //     })
-  //     .then(() => res.redirect('back'))
-  //     .catch(err => next(err))
-  // }
 }
 
 module.exports = userController

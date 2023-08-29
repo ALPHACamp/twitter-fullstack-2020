@@ -12,10 +12,10 @@ router.use('/admin', admin)
 router.get('/users/:id/edit', authenticated, userController.editUser)
 router.put('/users/:id', authenticated, userController.putUser)
 router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
-
-// authenticated還沒載入 還沒寫這功能
-// router.post('/followships/:userId', authenticated, userController.addFollowing)
-// router.delete('/followships/:userId', authenticated, userController.deleteFollowing)
+router.get('/users/:id/followers', authenticated, userController.getFollowers)
+router.get('/users/:id/followings', authenticated, userController.getFollowings)
+router.post('/followships', authenticated, userController.addFollowing)
+router.delete('/followships/:id', authenticated, userController.deleteFollowing)
 
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
