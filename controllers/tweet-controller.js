@@ -45,6 +45,32 @@ const tweetController = {
       })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
+  },
+  getTweet: (req, res, next) => {
+    const TweetId = req.params.id
+    const user = req.user
+    return Promise.all([
+      Tweet.findByPk(TweetId, {
+        include: User,
+        nest: true,
+        raw: true
+      }),
+      Reply.findAndCountAll({
+        where: {
+          TweetId
+        },
+        order: [['createdAt', 'DESC']],
+        include: User,
+        nest: true,
+        raw: true
+      })
+    ])
+      .then(([tweet, replies]) => {
+        if (!tweet) throw new Error('推文不存在')
+        const replyCount = replies.count
+        res.render('tweet', { tweet, replies: replies.rows, replyCount, user })
+      })
+      .catch(err => next(err))
   }
 }
 
