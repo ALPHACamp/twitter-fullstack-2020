@@ -15,7 +15,7 @@ const cookieParser = require('cookie-parser')
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
-const { pages } = require('./routes')
+const routes = require('./routes')
 
 // 固定變數
 const app = express()
@@ -49,7 +49,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(pages)
+app.use(routes)
 app.listen(PORT, () => console.log(`Simple Twitter app listening on port ${PORT}!`))
 
 module.exports = app
