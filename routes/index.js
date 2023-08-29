@@ -12,7 +12,8 @@ router.use('/admin', admin)
 router.get('/users/:id/edit', authenticated, userController.editUser)
 router.put('/users/:id', authenticated, userController.putUser)
 router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
-
+router.post('/tweets/:id/like', authenticated, userController.likeTweet)
+router.post('/tweets/:id/unlike', authenticated, userController.unlikeTweet)
 // authenticated還沒載入 還沒寫這功能
 // router.post('/followships/:userId', authenticated, userController.addFollowing)
 // router.delete('/followships/:userId', authenticated, userController.deleteFollowing)
