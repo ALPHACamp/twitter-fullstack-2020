@@ -1,0 +1,63 @@
+<section class="recom-wrapper" style="position:sticky; top:0; height:100vh">
+  <div class="card m-3" style="width: 20rem; max-height:731px; border:none">
+    <div class="card-header" style="background-color:#FAFAFB">
+      <h2
+        class="m-2"
+        style="font-weight:700; line-height:26px; font-size:24px"
+      >推薦跟隨</h2>
+    </div>
+    <div
+      class="card-body d-flex flex-column justify-content-around"
+      style="background-color:#FAFAFB"
+    >
+      {{#each recommend}}
+        <div
+          class="person-container d-flex justify-content-between align-items-center m-3"
+        >
+          <div
+            class="avatar"
+            style="width:50px; height:50px; border-radius:50%; background-color:gray"
+          >
+            <a
+              href="/users/{{this.id}}/tweets"
+              class="d-flex justify-content-center align-items-center"
+            >
+              <img
+                src="{{this.avatar}}"
+                alt=""
+                style="width:100%; height:100%; object-fit:cover; border-radius:50%;"
+              />
+            </a>
+          </div>
+          <div
+            class="user-name d-flex flex-column justify-content-center"
+            style="height:47px; width:88px"
+          >
+            <a class="user-text-link" href="/users/{{this.id}}/tweets">
+              <p class="m-0" style="font-weight:700; overflow:hidden; white-space: nowrap; text-overflow: ellipsis;">{{this.name}}</p>
+            </a>
+            <p class="m-0" style="color:#92929D">@ {{this.account}}</p>
+          </div>
+          <div class="follow">
+            {{#if this.isFollowed}}
+              <form
+                action="/followships/{{this.id}}?_method=DELETE"
+                method="post"
+              >
+                <button
+                  type="submit" class="follow-btn-active">
+                  正在跟隨</button>
+              </form>
+            {{else}}
+              <form action="/followships" method="post">
+                <button
+                  type="submit" value="{{this.id}}" name="id" class="follow-btn">
+                跟隨</button>
+              </form>
+            {{/if}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</section>

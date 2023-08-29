@@ -1,0 +1,119 @@
+.nav-link {
+  color: #657786;
+  border: none;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #ff6600 !important;
+  border: none !important;
+  border-bottom: 1px solid #ff6600 !important;
+}
+
+.user-edit-button {
+  background: #ffffff;
+  color: #ff6600;
+  border-radius: 100px;
+  border: 1px solid #ff6600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.user-edit-button:hover {
+  background-color: #ff6600;
+  color: white;
+  border-radius: 100px;
+  border: 1px solid #ff6600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+
+.reply-btn,
+.like-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease-in;
+}
+
+.follow-btn{
+  padding: 0; margin: 0px; 
+  cursor: pointer; 
+  color:#FF6600; 
+  border:1px solid #FF6600; 
+  width:64px; 
+  height:40px; 
+  border-radius:50px;
+  background: none; 
+}
+
+.follow-btn:hover{
+  padding: 0; margin: 0px; 
+  cursor: pointer; 
+  color:white; 
+  border:1px solid #FF6600; 
+  width:64px; 
+  height:40px; 
+  border-radius:50px;
+  background-color: #ff6600;
+}
+
+.follow-btn-active{
+  padding: 0; 
+  margin: 0px; 
+  cursor: pointer; 
+  color:white;
+  background-color:#FF6600; 
+  width:96px; 
+  height:40px; 
+  border-radius:50px; 
+  border:1px solid #FF6600; 
+}
+
+.follow-btn-active:hover{
+  padding: 0; 
+  margin: 0px; 
+  cursor: pointer; 
+  color:white;
+  background-color:#ff660094; 
+  width:96px; 
+  height:40px; 
+  border-radius:50px; 
+  border: none;
+}
+
+.reply-btn:hover {
+  background-color: lightblue;
+}
+
+.like-btn:hover {
+  background-color: lightcoral;
+}
+
+.user-text-link {
+  text-decoration: none;
+  color: #000000;
+}
+
+.user-text-link:hover {
+  text-decoration: underline;
+}
+
+.tweet-user-text-link{
+    text-decoration: none;
+    color: #FF6600;
+  }
+
+.tweet-user-text-link:hover{
+    text-decoration: underline;
+  }
+
+  .like-form, form {
+    margin-bottom:0
+  }

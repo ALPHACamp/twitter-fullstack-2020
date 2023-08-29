@@ -1,0 +1,45 @@
+<main class="d-flex justify-content-center">
+  {{> sidebar-left route="profile"}}
+  <section style="width:636px; border:1px solid #E6ECF0">
+    {{>profile-card route='user-replies'}}
+    <div class="replies-list">
+      <div class="li-container">
+      {{#if replies}}
+      {{#each replies}}
+        <div class="reply-container d-flex pt-3 mb-3 d-flex justify-content-center"
+          style="border:1px solid #E6ECF0; min-height:133px">
+          <div class="avatar" style="width:50px; height:50px; border-radius:50%; background-color:gray">
+            <a href="/users/{{this.User.id}}/tweets" class="d-flex justify-content-center align-items-center">
+              <img src="{{this.User.avatar}}" alt="avatar" style="width:100%; height:100%; object-fit:cover; border-radius:50%;"/>
+            </a>
+          </div>
+          <div class="content ms-2 mb-3" style="width:528px">
+            <div class="account d-dlex flex-row">
+              <a class="user-text-link" href="/users/{{this.User.id}}/tweets">
+                <p style="display: inline; font-weight:700">{{this.User.account}}</p>
+              </a>
+              <p style="display: inline; color:#6C757D">@{{this.User.name}}．{{relativeTimeFromNow this.createdAt}}</p>
+              <div class="toWhom mt-1" style="color:#6C757D">回覆 <p style="display: inline; color:#FF6600">
+                <a class="tweet-user-text-link" href="/users/{{this.Tweet.userId}}/tweets">
+                  @{{this.Tweet.username}}</a></p>
+              </div>
+            </div>
+            <div class="text mt-2">
+              <a href="/tweets/{{this.Tweet.id}}/replies" style="text-decoration: none; color:#000000">
+              {{this.comment}}
+            </div>
+          </div>
+        </div>
+      {{/each}}
+      {{else}}
+      <div class="reply-container d-flex pt-3 mb-3 d-flex justify-content-center"
+        style="border:1px solid #E6ECF0; min-height:133px">
+        <span style="color: gray;">尚無回覆</span>
+      </div>
+      {{/if}}
+      </div>
+      </div>
+  </section>
+  {{> recommendation}}
+</main>
+{{> edit-modal}}

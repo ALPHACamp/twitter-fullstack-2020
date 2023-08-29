@@ -1,0 +1,69 @@
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:634px; height:650px;">
+      <form id="edit-modal" action="/api/users/{{user.id}}" data-id="{{user.id}}" enctype="multipart/form-data">
+        <div class="modal-header">
+          <div class="d-flex align-items-center">
+            <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close" style="color: #FF6600;">
+              <img src="/images/icon-close.svg">
+            </button>
+            <span class="modal-title h5 fw-bold ps-3" id="ModalLabel">編輯個人資料</span>
+          </div>
+          <button type="submit" class="badge btn rounded-pill" style="font-size:1.0rem; background: #FF6600;">
+            <span style="color: #FFFFFF;">儲存</span>
+          </button>
+        </div>
+
+        <div class="modal-body row">
+          <div class="col-12 m-0 p-0 position-relative mb-1">
+
+            <div class="bg-holder" style="height: 170px;">
+              <img id="background-image"
+                src="{{#if user.background}}{{user.background}}{{else}}DEFAULT_BACKGROUND{{/if}}"
+                id="background-image" class="card-img-top" alt="..." class="img-fluid" id="bgImage"
+                style="filter: brightness(70%);height:100%;width:100%;object-fit:cover">
+            </div>
+            <div class="form-row mb-3">
+              <label for="background" class=" form-label">
+                <input class="d-none" type="file" id="background" name="background" accept="image/*" style="display: none">
+                <img src="/images/camera.svg" class="btn" style="position: absolute; object-fit: cover; top: 30%; left: 45%">
+              </label>
+              <img src="/images/icon-delete.svg" class="btn edit-x-icon" style="position: absolute; object-fit: cover; top: 29.5%; left: 50%">
+            </div>
+
+            <div class="avatar-holder">
+              <img src="{{#if user.avatar}}{{user.avatar}}{{else}}DEFAULT_AVATAR{{/if}}"
+                id="avatar-image" class="rounded-circle" alt="user_Aavtor" height="140px" width="140px"
+                style="filter: brightness(70%);border: 2px solid white; position: absolute; object-fit: cover; top: 40%; left: 3%;">
+            </div>
+            <label for="avatar" class=" form-label">
+              <input class="d-none" type="file" id="avatar" name="avatar" accept="image/*" style="display: none">
+              <img src="/images/camera.svg" class="btn" style="position: absolute; top: 73%; left: 14%; transform: translate(-50%, -50%); color: white; alt="" "/>
+            </label>
+          </div>
+
+        </div>
+        <div class="col-12 ms-2" style="width: 600px; background-color:#F5F8FA; height:54px;">
+          <label for="name" style="font-size:14px; ">名稱</label>
+          <input type="text" class="form-control pt-0" id="name" name="name" maxlength="50" onkeyup='nameWordsCheck()'
+            style="width: 600px; border:none;outline: none; background-color:#F5F8FA; border-bottom:1px solid #657786;font-size:14px"
+            aria-describedby="nameHelp" value="{{user.name}}" required></input>
+          <div id="name-area">
+            <p class="text-end text-muted now1" style="font-size: 12px;">{{user.name.length}}/50</p>
+          </div>
+        </div>
+        <div class="col-12 mt-4 ms-2" style=" width: 600px;background-color:#F5F8FA;">
+          <label for="introduction" style="margin-left: 8px; font-size: 0.8em;">自我介紹</label>
+          <textarea class="form-control" id="introduction" name="introduction" onkeyup='introWordsCheck()'
+            style="border:none; border-bottom:1px solid #657786; outline: none; background-color:#F5F8FA; font-size:16px;"
+            maxlength="160" aria-describedby="descriptionHelp">{{user.introduction}}</textarea>
+          <div id="introduction-area">
+            <p class="text-end text-muted now2" style="font-size:12px;">{{user.introduction.length}}/160</p>
+          </div>
+        </div>
+    </div>
+    </form>
+  </div>
+</div>
+<script src="/javascripts/editModal.js"></script>
+
