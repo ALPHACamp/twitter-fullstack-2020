@@ -30,7 +30,7 @@ const tweetController = {
   postTweets: async (req, res, next) => {
     try {
       const userId = helpers.getUser(req).id
-      const description = req.body?.description.trim()
+      const description = req.body.description.trim()
       isValidWordsLength(description, MAX_TWEET_LENGTH, next)
       await Tweet.create({
         UserId: userId,
@@ -38,7 +38,7 @@ const tweetController = {
       })
       return res.redirect('back')
     } catch (error) {
-      return (next)
+      return next(error)
     }
   },
   getReplies: async (req, res, next) => {

@@ -35,7 +35,7 @@ const followingUsersTweets = async req => {
 
 const isValidWordsLength = (text, len, next) => {
   try {
-    if (!text || !text.length) {
+    if (!text.length) {
       throw new errorHandler.TweetError('內容不可空白')
     }
     if (text.length > len) {

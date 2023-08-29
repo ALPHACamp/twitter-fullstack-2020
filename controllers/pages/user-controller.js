@@ -150,7 +150,6 @@ const userController = {
 
       const viewingUser = await userHelper.getUserInfo(req)
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist!")
-      console.log('viewingUser', viewingUser)
 
       const tweets = await Tweet.findAll({
         include: [
