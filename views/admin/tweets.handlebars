@@ -1,28 +1,22 @@
 {{! 首頁表頭 }}
 <div class="partial-title p-4">
   <div
-    class="d-flex gap-3 p-0 m-0 h-26px justify-content-start align-items-center"
-  >
+    class="d-flex gap-3 p-0 m-0 h-26px justify-content-start align-items-center">
     <div class="d-flex flex-column m-0 p-0 gap-0">
       <p class="fw-bold m-0 p-0 align-bottom fs-4 ln-height-26px">推文清單</p>
     </div>
   </div>
 </div>
 
-{{! 分隔線 }}
-<div class="division"></div>
-
 {{#each tweets}}
 <div
   data-id="{{ this.User.id }}"
-  class="admin-tweet-card card shadow-none py-0 px-4 border-1px border-bottom-1 border-top-0 border-start-0 border-end-0"
->
+  class="admin-tweet-card card shadow-none py-0 px-4 border-1px border-bottom-1 border-top-0 border-start-0 border-end-0">
   <div class="card-body m-0 pb-3 d-flex gap-2">
     <div class="tweet-user-icon flex-shrink-0 p-0">
       <a
         href="/api/users/{{ this.User.id }}"
-        class="overflow-hidden rounded-circle link-unstyled child-img-center w-100 h-100 p-0"
-      >
+        class="overflow-hidden rounded-circle link-unstyled child-img-center w-100 h-100 p-0">
         <img src="{{ this.User.avatar }}" alt="" class="w-100 h-100" />
       </a>
     </div>
@@ -31,8 +25,7 @@
         <div class="tweet-user-horizontal">
           <a
             href="/api/users/{{ this.User.id }}"
-            class="d-flex gap-2 link-unstyled align-items-center"
-          >
+            class="d-flex gap-2 link-unstyled align-items-center">
             <p class="fw-bold">{{ this.User.name }}</p>
             <p class="font-size-sm text-secondary">
               @{{ this.User.account }}・{{relativeTimeFromNow this.createdAt}}
@@ -43,14 +36,12 @@
         <form
           action="/admin/tweets/{{ this.id }}?_method=DELETE"
           method="POST"
-          style="display: inline"
-        >
+          style="display: inline">
           <button type="submit" class="btn admin-delete-btn">
             <img
               src="/images/icons/close_outlined.svg"
               alt=""
-              class="filter-grey-7"
-            />
+              class="filter-grey-7" />
           </button>
         </form>
       </div>

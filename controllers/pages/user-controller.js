@@ -14,7 +14,7 @@ const userController = {
   /* admin 登入 */
   adminSignin: (req, res, next) => {
     try {
-      return res.redirect('/admin')
+      return res.redirect('/admin/tweets')
     } catch (error) {
       return next(error)
     }

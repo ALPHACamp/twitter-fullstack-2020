@@ -6,11 +6,19 @@ const adminController = require('../../../controllers/pages/admin-controller')
 
 const router = express.Router()
 
-router.get('/users', adminJWTAuth, adminController.getUsers)
+// Tweets page
+router.delete('/tweets/:id', adminJWTAuth, adminController.deleteTweets)
 router.get('/tweets', adminJWTAuth, adminController.getTweets)
+
+// Users page
+router.get('/users', adminJWTAuth, adminController.getUsers)
+
+// Signin
 router.get('/signin', adminJWTAuth, userController.getAdminSignInPage)
 router.get('/logout', userController.adminLogout)
 router.post('/signin', adminJWTAuth, sendToken, userController.adminSignin)
+
+// Main route
 router.get('/', adminJWTAuth, adminController.getAdminHomePage)
 
 module.exports = router
