@@ -1,6 +1,6 @@
 const db = require('../models')
 const bcrypt = require('bcryptjs')
-const { User, Tweet } = db
+const { User, Tweet, Like } = db
 const helper = require('../_helpers')
 
 const userController = {
@@ -121,6 +121,53 @@ const userController = {
       .then(() => {
         req.flash('success_messages', '恭喜註冊成功！')
         res.redirect('/signin')
+      })
+      .catch(err => next(err))
+  },
+  likeTweet: (req, res, next) => {
+    const currentUserId = helper.getUser(req).id
+    const tweetId = req.params.id
+
+    return Like.findOne({
+      where: {
+        UserId: currentUserId,
+        TweetId: tweetId
+      }
+    })
+      .then(like => {
+        if (like && !like.isLike) {
+          return like.update({ isLike: true })
+        } else if (!like) {
+          return Like.create({
+            UserId: currentUserId,
+            TweetId: tweetId,
+            isLike: true
+          })
+        }
+      })
+      .then(() => {
+        return res.redirect('back')
+      })
+      .catch(err => next(err))
+  },
+  unlikeTweet: (req, res, next) => {
+    const currentUserId = helper.getUser(req).id
+    const tweetId = req.params.id
+
+    return Like.findOne({
+      where: {
+        UserId: currentUserId,
+        TweetId: tweetId
+      }
+    })
+      .then(like => {
+        if (!like) throw new Error('You have not liked this tweets!')
+        else if (like.isLike) {
+          return Like.update({ isLike: false })
+        }
+      })
+      .then(() => {
+        return res.redirect('back')
       })
       .catch(err => next(err))
   }
