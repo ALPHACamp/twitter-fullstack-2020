@@ -95,4 +95,5 @@ const authenticatedAdmin = (req, res, next) => {
     res.redirect('/admin/signin')
   }
 }
+
 module.exports = { userLocalAuth, adminLocalAuth, authenticatedAdmin, authenticatedUser }
