@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const { Op } = require('sequelize')
-const { User } = require('../models')
+const { User, Tweet, Reply } = require('../models')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -67,10 +67,68 @@ const userController = {
     res.redirect('/signin')
   },
   getUserTweets: (req, res, next) => {
-    res.render('user-tweets')
+    const userId = Number(req.params.id)
+    return Promise.all([
+      User.findByPk( userId, {
+        include: [
+          // tweets Data
+          { model: Tweet, include: [
+              User, 
+              Reply,
+              {model: User, as: 'LikedUsers'}
+            ]
+          },
+          // profile Data
+          { model: User, as: 'Followers'}, 
+          { model: User, as: 'Followings'},
+          { model: Tweet, as: 'LikedTweets'}
+        ],
+        order: [['Tweets','createdAt', 'DESC']]
+      }),
+      // 推薦追隨
+      User.findAll({
+        include: { model: User, as: 'Followers'}
+      })
+    ]) 
+    
+      .then(([user, followShips]) => {
+        if (!user) throw new Error('使用者不存在')
+        const userData = user.toJSON()
+        // 取使用者Like的推文id
+        const likeTweets = req.user.LikedTweets.map(Lt => Lt.id)
+        // profile 追隨鈕判斷
+        const isFollowed = req.user.Followings.map(Fu => Fu.id).includes(userId)
+        const tweetCount =  userData.Tweets.length
+        const followerCount = userData.Followers.length
+        const followingCount = userData.Followings.length
+        const tweets = userData.Tweets.map(tweet => ({
+          ...tweet,
+          isLiked : likeTweets.includes(tweet.id),
+          LikeCount: tweet.LikedUsers.length,
+          replyCount: tweet.Replies.length
+        }))
+        // 推薦追隨
+        const topUser = followShips.map(followShip => ({
+          ...followShip.toJSON(),
+          followerCount: followShip.Followers.length,
+          isFollowed: req.user.Followings.some(f => f.id === followShip.id)
+        }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+        res.render('user-tweets', { 
+          user: userData,
+          tweets,
+          UserId: req.user.id,
+          tweetCount,
+          followerCount,
+          followingCount,
+          isFollowed,
+          topUser
+        })
+      })
+      .catch(err => next(err))
   },
   getUserReplies: (req, res, next) => {
-    res.render('user-replies')
+    res.render('user-replies')  
   },
   getUserLikes: (req, res, next) => {
     res.render('user-likes')
