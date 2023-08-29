@@ -1,10 +1,11 @@
 const { User, Tweet, Like, Reply } = require('../models')
+const helpers = require('../_helpers')
 
 const tweetController = {
 //  add controller action here
   getTweets: (req, res, next) => {
-    const reqUser = req.user
-    const userId = req.user.id
+    const userId = helpers.getUser(req).id
+    const reqUser = helpers.getUser(req)
     return Promise.all([
       Tweet.findAll({
         order: [['createdAt', 'DESC']],
@@ -16,7 +17,7 @@ const tweetController = {
       }),
       Like.findAll({
         where: {
-          userId: req.user.id
+          userId
         },
         raw: true
       }),
@@ -30,7 +31,8 @@ const tweetController = {
         const likedTweets = like.map(like => like.tweetId)
         const data = tweets.map(t => ({
           ...t.toJSON(),
-          isLiked: likedTweets.includes(t.id)
+          isLiked: likedTweets.includes(t.id),
+          avatar: req.user.avatar
         }))
         // topUser
         const topUsers = users
@@ -44,13 +46,14 @@ const tweetController = {
             isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
+        // console.log(req.user)
         res.render('tweet', { tweets: data, reqUser, topUsers, user: user.toJSON() })
       })
       .catch(err => next(err))
   },
   postTweets: (req, res, next) => {
     const { description } = req.body
-    const UserId = req.user.id
+    const UserId = helpers.getUser(req).id
     if (!description) throw new Error('內容不可空白')
     if (description.length > 140) throw new Error('不可超過140字')
     User.findByPk(UserId)
@@ -70,7 +73,7 @@ const tweetController = {
       Tweet.findByPk(tweetId),
       Like.findOne({
         where: {
-          userId: req.user.id,
+          userId: helpers.getUser(req).id,
           tweetId
         }
       })
@@ -81,7 +84,7 @@ const tweetController = {
         if (like) throw new Error('You have liked this tweet!')
 
         return Like.create({
-          userId: req.user.id,
+          userId: helpers.getUser(req).id,
           tweetId: req.params.tweetId
         })
       })
@@ -91,7 +94,7 @@ const tweetController = {
   removeLike: (req, res, next) => {
     return Like.findOne({
       where: {
-        userId: req.user.id,
+        userId: helpers.getUser(req).id,
         tweetId: req.params.tweetId
       }
     })
