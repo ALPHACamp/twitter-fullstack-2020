@@ -85,7 +85,7 @@
           data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
-      <div class="modal-body">您確定要刪除這則推文嗎?</div>
+      <div class="modal-body">您確定要刪除這則推文嗎？</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           取消
@@ -121,9 +121,11 @@
         "#deleteTweetForm button[type='submit']"
       )
 
-      confirmButton.addEventListener("click", () => {
+      const submitHandler = () => {
         deleteForm.submit()
-      })
+      }
+      confirmButton.removeEventListener("click", submitHandler)
+      confirmButton.addEventListener("click", submitHandler)
     })
   })
 
