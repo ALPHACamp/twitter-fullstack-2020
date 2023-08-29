@@ -28,8 +28,7 @@ const tweetController = {
         const likedTweets = like.map(like => like.tweetId)
         const data = tweets.map(t => ({
           ...t.toJSON(),
-          isLiked: likedTweets.includes(t.id),
-          // userId: req.user.id
+          isLiked: likedTweets.includes(t.id)
         }))
         // topUser
         const topUsers = users
