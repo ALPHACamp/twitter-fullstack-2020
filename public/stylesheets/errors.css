@@ -1,26 +1,10 @@
-.alert-box {
-  position: absolute;
+.error-message-container {
+  /*動畫*/
+  position: fixed;
   top: -100%;
   left: 50%;
   transform: translateX(-50%);
-  min-width: 150px;
-  max-width: 90%;
-  width: auto;
-  height: auto;
-  padding: 10px;
-  text-transform: capitalize;
-  background: rgb(255, 119, 119);
-  border-top: 10px solid rgb(255, 37, 37);
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  color: #fff;
-  font-family: 'roboto', sans-serif;
-  text-align: center;
-  transition: 1s;
-}
-
-.error-message-container {
-  position: relative;
+  transition: top 500ms;
   overflow: auto;
   /*讓裡面的div不會超過邊框*/
   width: 394px;
@@ -30,7 +14,8 @@
 
   /* Shadow */
   box-shadow: 0px 4px 16px 0px rgba(51, 51, 51, 0.08), 0px 4px 4px 0px rgba(51, 51, 51, 0.04);
-  outline: black 1px solid;
+
+  z-index: 2;
 }
 
 .error-message-content {
@@ -39,7 +24,6 @@
   height: 56px;
   overflow: auto;
   /*讓裡面的div不會超過邊框*/
-  outline: black 1px solid;
 
   /*flex*/
   display: flex;
@@ -65,4 +49,48 @@
   height: 56px;
   border-radius: 50%;
   box-sizing: border-box;
+  border: #111 2px solid;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-message-img {
+  width: 24px;
+  height: 24px;
+}
+
+.error-success .error-message-img {
+  background-image: url('/images/icons/check.svg');
+}
+
+.error-success .error-message-circle {
+  border-color: #82C43C;
+}
+
+.error-danger .error-message-img {
+  background-image: url('/images/icons/red_cross.svg');
+}
+
+.error-danger .error-message-circle {
+  border-color: #FC5A5A;
+}
+
+
+.error-warning .error-message-img {
+  background-image: url('/images/icons/exclamation.svg');
+}
+
+.error-warning .error-message-circle {
+  border-color: #FFC542;
+}
+
+
+.error-info .error-message-img {
+  background-image: url('/images/icons/info.svg');
+}
+
+.error-info .error-message-circle {
+  border-color: #50B5FF;
 }
