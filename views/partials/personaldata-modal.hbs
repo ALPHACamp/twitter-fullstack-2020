@@ -1,43 +1,49 @@
-<div class="modal" id="personalData" tabindex="-1">
-    <form action="" method="POST">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="d-flex justify-content-between m-2">
-                    <div class="d-flex">
-                        <button type="button" class="btn-close ms-2 mt-2" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                        <span class="ms-4 mt-2" style="font-weight:bold">編輯個人資料頁</span>
-                    </div>
+<div class="modal fade" id="personalData" tabindex="-1" aria-labelledby="personalDataLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="d-flex justify-content-between m-2">
+				<div class="d-flex">
+					<button type="button" class="btn-close ms-2 mt-2" data-bs-dismiss="modal"
+						aria-label="Close">
+					</button>
+					<span class="ms-4 mt-2" style="font-weight:bold">編輯個人資料頁</span>
+				</div>
 
-                    <div class="d-flex mt-2">
-                        <button class="btn pt-1 pb-1 ps-3 pe-3" type="submit"
-                            style="background-color:#FF6600; color:white; border-radius: 30px" type="submit">儲存
-                        </button>
-                    </div>
-                </div>
+				<div class="d-flex mt-2">
+					<button form="editForm" class="btn pt-1 pb-1 ps-3 pe-3" type="submit" style="background-color:#FF6600; color:white; border-radius: 30px" type="submit">
+						儲存
+					</button>
+				</div>
+			</div>
 
-                <div class="p-0 mb-5 position-relative">
-                    <img src="https://live.staticflickr.com/65535/49985934496_ce401213ed_3k.jpg" class="card-img-top"
-                        alt="...">
-                    <div style="width:140px; height:140px"
-                        class="bg-primary position-absolute top-100 start-0 translate-middle-y rounded-circle ms-3 overflow-hidden border border-4 border-white ">
-                        <img src="https://cdn2.ettoday.net/images/1457/1457773.jpg"
-                            style="max-width: 100%; height: auto" class="" alt="...">
-                    </div>
-                </div>
+			<div class="p-0 mb-5 position-relative">
+				<div style="background-color: #17172580;">
+					<img src={{#if
+            user.cover}}{{user.cover}}{{else}}"/icon/cover.png"{{/if}} class="card-img-top" alt="cover" style="height: 200px;object-fit: cover;object-position: center;opacity: 0.75;">
+					<input type="file" id="cover" name="cover" class="d-none" form="editForm">
+					<label for="cover" class="position-absolute top-50 start-50 translate-middle btn">
+						{{> icons/add-photo-icon color='#FFFFFF'}}
+					</label>
+				</div>
+				<div class="position-absolute top-100 start-0 translate-middle-y rounded-circle ms-3 overflow-hidden border border-4 border-white bg-secondary" style="background-color: #171725;">
+					<img src={{#if user.avatar}}{{user.avatar}}{{else}}"/icon/avatar.jpg"{{/if}} style="aspect-ratio: 1 / 1;width: 140px;object-fit: cover;object-position: center;opacity: 0.75;" alt="avatar">
+					<input type="file" id="avatar" name="avatar" class="d-none" form="editForm">
+					<label for="avatar" class="position-absolute top-50 start-50 translate-middle btn">
+						{{> icons/add-photo-icon color='#FFFFFF'}}
+					</label>
+				</div>
+			</div>
 
-                <div class="mt-4">
-                    <div class="d-flex flex-column mx-auto" style="max-width: 90%;">
-                        <input class="mb-3" type="text" name="name" value="{{user.name}}"
-                            style="border-bottom: 2px solid #657786; border-left: none; border-right: none; border-top: none; background-color:#F5F8FA; background-color:#F5F8FA"
-                            placeholder="名稱">
-                        <textarea class="mb-4" name="description" id="" cols="30" rows="6" placeholder="自我介紹" value="{{user.introduction}}"
-                            style="border-bottom: 2px solid #657786; border-left: none; border-right: none; border-top: none; background-color:#F5F8FA"></textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </form>
-
+			<form id="editForm" style="margin: 40px auto; width: 90%;" action="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data">
+				<div class="form-floating mb-3">
+					<input type="text" class="form-control border-3 border-top-0 border-start-0 border-end-0" name="name" id="name" value="{{user.name}}" style="background-color: #f5f8fa !important;">
+					<label for="account">名稱</label>
+				</div>
+				<div class="form-floating mb-4">
+					<textarea class="form-control border-3 border-top-0 border-start-0 border-end-0" id="introduction" name="introduction" cols="30" rows="6" style="background-color: #f5f8fa !important; height: 147px;">{{user.introduction}}</textarea>
+					<label for="introduction">自我介紹</label>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>

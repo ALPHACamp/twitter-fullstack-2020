@@ -1,6 +1,3 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
 const express = require('express')
 const routes = require('./routes')
 const handlebars = require('express-handlebars')
@@ -8,7 +5,7 @@ const flash = require('connect-flash')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('./config/passport')
-const { getUser } = require('./helpers/auth-helpers')
+const helpers = require('./_helpers')
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -29,7 +26,7 @@ app.use(passport.session())
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
-  res.locals.user = getUser(req)
+  res.locals.user = helpers.getUser(req)
   next()
 })
 app.use(routes)

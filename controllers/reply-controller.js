@@ -1,16 +1,16 @@
 const { User, Tweet, Reply, Like } = require('../models')
+const helpers = require('../_helpers')
 
 const replyController = {
-//  add controller action here
-
   getTweetReplies: (req, res, next) => {
+    const reqUser = helpers.getUser(req)
     const { id } = req.params
 
     Promise.all([
       Tweet.findByPk(id, {
-        include: [{ model: User }],
-        raw: true,
-        nest: true
+        include: [{ model: User }, { model: Reply }, { model: Like }]
+        // raw: true,
+        // nest: true
       }),
       Reply.findAll({
         where: { tweetId: id },
@@ -20,7 +20,7 @@ const replyController = {
         nest: true
       }),
       Like.findAll({
-        where: { UserId: req.user.id },
+        where: { UserId: helpers.getUser(req).id },
         raw: true
       })
     ])
@@ -28,12 +28,12 @@ const replyController = {
         const likedTweets = likes.map(like => like.tweetId)
         // console.log(likes)可能更測試檔沒過有關
         const isLiked = likedTweets.includes(tweet.id)
-        res.render('replies', { tweet, replies, isLiked })
+        res.render('replies', { tweet: tweet.toJSON(), replies, isLiked, reqUser })
       })
       .catch(err => next(err))
   },
   postReply: (req, res, next) => {
-    const userId = req.user.id
+    const userId = helpers.getUser(req).id
     const { tweetId } = req.params
     const { comment } = req.body
     if (!comment) throw new Error('內容不可空白')
