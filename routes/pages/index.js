@@ -8,8 +8,7 @@ const user = require('./modules/user')
 const api = require('./modules/api')
 
 // passport & auth
-const passport = require('../../config/passport')
-const { authenticatedUser } = require('../../middlewares/auth')
+const { userLocalAuth, authenticatedUser } = require('../../middlewares/auth')
 
 const errorHandler = require('../../middlewares/error-handler')
 const userController = require('../../controllers/pages/user-controller')
@@ -24,7 +23,7 @@ router.get('/css_template', (req, res) => res.render('main/css_template')) // å±
 
 // signin
 router.get('/signin', userController.getLoginPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.postLogin)
+router.post('/signin', userLocalAuth, userController.postLogin)
 router.get('/logout', userController.getLogout)
 
 // signup
