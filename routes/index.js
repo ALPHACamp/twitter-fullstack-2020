@@ -10,27 +10,29 @@ const userController = require('../controllers/pages/user-controller')
 const followshipController = require('../controllers/pages/followship-controller')
 
 const errorHandler = require('../middlewares/error-handler')
-const { userJWTAuth, sendToken } = require('../middlewares/auth')
+
+// passport & auth
+const { userLocalAuth, authenticatedUser } = require('../middlewares/auth')
 
 router.use('/admin', admin)
-router.use('/users', userJWTAuth, user)
-router.use('/tweets', userJWTAuth, tweet)
-router.use('/api/users', userJWTAuth, api)
+router.use('/users', authenticatedUser, user)
+router.use('/tweets', authenticatedUser, tweet)
+router.use('/api/users', authenticatedUser, api)
 
 // user sign in
-router.get('/signin', userJWTAuth, userController.getLoginPage)
-router.post('/signin', userJWTAuth, sendToken, userController.postLogin)
+router.get('/signin', userController.getLoginPage)
+router.post('/signin', userLocalAuth, userController.postLogin)
 
 // user sign up
 router.get('/signup', userController.getSignupPage)
 router.post('/signup', userController.postSignup)
 
 // user logout
-router.get('/logout', userController.getLogout)
+router.get('/logout', authenticatedUser, userController.getLogout)
 
 // follow feature
-router.post('/followships', userJWTAuth, followshipController.postFollowship)
-router.delete('/followships/:id', userJWTAuth, followshipController.deleteFollowship)
+router.post('/followships', authenticatedUser, followshipController.postFollowship)
+router.delete('/followships/:id', authenticatedUser, followshipController.deleteFollowship)
 
 /* 暫時，開發完刪除 */
 router.get('/css_template2', (req, res) => res.render('main/edit_user_info'))
@@ -42,7 +44,7 @@ router.use('/', (req, res) => {
   res.redirect('/tweets')
 })
 
-/* Error handleling, 接住所有的error */
+// error handling
 router.use('/', errorHandler)
 
 module.exports = router
