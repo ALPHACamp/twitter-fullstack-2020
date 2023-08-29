@@ -58,13 +58,16 @@ const localStrategy = new LocalStrategy(
   async function (req, account, password, done) {
     try {
       const user = await User.findOne({ where: { account } })
+
       if (!user) {
         return done(null, false, req.flash('error_messages', '帳號或密碼錯誤！'))
       }
+
       const passwordCorrect = await bcrypt.compare(password, user.password)
       if (!passwordCorrect) {
         return done(null, false, req.flash('error_messages', '帳號或密碼錯誤！'))
       }
+
       return done(null, user)
     } catch (error) {
       return done(error, false)
@@ -72,7 +75,7 @@ const localStrategy = new LocalStrategy(
   }
 )
 
-passport.use(jwtStrategy)
+// passport.use(jwtStrategy)
 passport.use(localStrategy)
 
 // serialize

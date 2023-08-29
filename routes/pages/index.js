@@ -9,7 +9,7 @@ const api = require('./modules/api')
 
 // passport & auth
 const passport = require('../../config/passport')
-const { authenticateUser } = require('../../middlewares/auth')
+const { authenticatedUser } = require('../../middlewares/auth')
 
 const errorHandler = require('../../middlewares/error-handler')
 const userController = require('../../controllers/pages/user-controller')
@@ -23,7 +23,7 @@ router.get('/css_template', (req, res) => res.render('main/css_template')) // �
 /// ////////需要刪除//////////////
 
 // signin
-router.get('/signin', authenticateUser, userController.getLoginPage)
+router.get('/signin', userController.getLoginPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.postLogin)
 router.get('/logout', userController.getLogout)
 
@@ -33,13 +33,13 @@ router.post('/signup', userController.postSignup)
 
 // routes
 router.use('/admin', admin)
-router.use('/users', authenticateUser, user)
-router.use('/tweets', authenticateUser, tweet)
-router.use('/api/users', authenticateUser, api)
+router.use('/users', authenticatedUser, user)
+router.use('/tweets', authenticatedUser, tweet)
+router.use('/api/users', authenticatedUser, api)
 
 // followship
-router.post('/followships', authenticateUser, followshipController.postFollowship)
-router.delete('/followships/:id', authenticateUser, followshipController.deleteFollowship)
+router.post('/followships', authenticatedUser, followshipController.postFollowship)
+router.delete('/followships/:id', authenticatedUser, followshipController.deleteFollowship)
 
 // redirect other url
 router.use('/', (req, res) => {
