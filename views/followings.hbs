@@ -1,0 +1,57 @@
+<div class="page-container">
+  {{> left-sidebar route="none"}}
+  <div class="main-middle border-start border-end" id="profile-page-container">
+    {{> main-middle route=profileRoute tweetsCount=tweetsCount}}
+    {{> followship-tab route="followings" id=id}}
+
+    {{#each followings}}
+    <div class="card col-12 hovercard d-flex flex-row rounded-0"
+      style="width: 639px; height: 143px; gap: 16px; border-top: 0;border-left: 0;border-right: 0; border-bottom: solid #f1f1fs">
+      <div class="card-body col-12 p-3">
+        <div class="row mb-2 p-1">
+          <div class="col-1 d-flex justify-content-center align-items-start">
+            <a href="/users/{{this.id}}/tweets">
+              <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}"
+                class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
+            </a>
+          </div>
+          <div class="col-10 row">
+            <div class="col-12 d-inline-flex align-items-center">
+              <div style="height: 26px; font-size: 15px">
+                <a href="/users/{{this.id}}/tweets" style="text-decoration: none">
+                  <span class="text-dark"
+                    style="font-size: 16px; font-weight: 700; margin-right: 8px; text-decoration: none;">{{this.name
+                    }}</span>
+                </a>
+              </div>
+            </div>
+            <div class="col-12 mt-1">
+              {{this.introduction}}
+            </div>
+          </div>
+          <div class="col-1 d-flex justify-content-end position-absolute top-0 end-0" style="align-items: top">
+            {{#if this.self}}
+            {{else}}
+              {{#if this.followByMe}}
+                <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+                  <button class="btn btn-primary my-3"
+                    style="width:96px; height:40px; border: solid; border-radius: 50px; background-color:#FF6600; color: white;"
+                    type="submit">正在跟隨</button>
+                </form>
+              {{else}}
+                <form action="/followships" method="POST">
+                  <button class="btn btn-primary my-3" name="id" value="{{this.id}}"
+                    style="width:64px; height:40px; border: #FF6600 solid; border-radius: 50px; color: #FF6600; background-color: white"
+                    type="submit">跟隨</button>
+                </form>
+              {{/if}}
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+
+  </div>
+  {{> right-sidebar}}
+</div>

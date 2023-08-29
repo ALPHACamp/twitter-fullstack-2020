@@ -1,0 +1,27 @@
+
+{{#ifCond route 'followers'}}
+<ul class="nav nav-tabs">
+  <li class="nav-item text-center" style="width: 130px; height: 52px">
+    <a class="nav-link p-0"
+      style="border-top: 0;border-left: 0;border-right: 0; border-bottom: solid #ff6600; color: #ff6600; width: 130px; height: 52px; display: flex; align-items: center; justify-content: center;"
+      href="/users/{{id}}/followers">追隨者</a>
+  </li>
+  <li class="nav-item text-center" style="width: 130px; height: 52px">
+    <a class="nav-link p-0" style="border: 0; color: #6c757d; width: 130px; height: 52px; display: flex; align-items: center; justify-content: center;"
+      href="/users/{{id}}/followings">正在追隨</a>
+  </li>
+</ul>
+{{/ifCond}}
+
+{{#ifCond route 'followings'}}
+<ul class="nav nav-tabs">
+  <li class="nav-item text-center" style="width: 130px; height: 52px">
+    <a class="nav-link p-0"
+      style="border: 0; color: #6c757d; width: 130px; height: 52px; display: flex; align-items: center; justify-content: center;"
+      href="/users/{{id}}/followers">追隨者</a>
+  </li>
+  <li class="nav-item text-center" style="width: 130px; height: 52px">
+    <a class="nav-link p-0" style="border-top: 0;border-left: 0;border-right: 0; border-bottom: solid #ff6600; color: #ff6600; width: 130px; height: 52px; display: flex; align-items: center; justify-content: center;" href="/users/{{id}}/followings">正在追隨</a>
+  </li>
+</ul>
+{{/ifCond}}
