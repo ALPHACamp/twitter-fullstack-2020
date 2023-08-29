@@ -11,6 +11,25 @@
   unicode-range: U+21-40
 }
 
+body {
+  margin-inline: auto;
+  min-width: 960px;
+  max-width: 960px;
+  font-family: 'custom-font';
+}
+
+@media (min-width: 1200px) {
+  body {
+    min-width: 1140px;
+    max-width: 1140px;
+    font-family: 'custom-font';
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
 :root {
   --brand-color: #FF6600;
   --primary: #0062FF;
@@ -24,23 +43,6 @@
   --light-purple: #A461D8;
   --light-pink: #FF9AD5;
   --form-gray: #F5F8FA;
-}
-
-html,
-body {
-  /* layout */
-  height: 100vh;
-  margin: 0;
-
-  /* font */
-  font-family: 'custom-font';
-  font-style: normal;
-  color: #171725;
-  font-size: 1rem;
-  line-height: 26px;
-
-  /* scrollbar */
-  overflow-y: hidden;
 }
 
 h1,
@@ -76,28 +78,24 @@ h5 {
   font-size: 18px;
 }
 
-
-/* ---------- page flexbox & position ---------- */
-
-.wrapper {
-  display: flex;
-  align-items: flex-start;
-  min-width: 1200px;
+a:hover {
+  text-decoration: none;
 }
 
-.navbar-column {
-  /* position */
-  position: static;
+
+/* ---------- Navbar ---------- */
+
+.navbar-container {
+  position: absolute;
   top: 0;
   left: 130px;
-  /* sizing */
-  /* width: 150px;
-  height: 95vh;
-  min-height: 400px; */
   width: 178px;
-  height: 1200px;
+  height: 100vh;
+  min-height: 400px;
 }
 
+.navbar-logo-container {
+  position: fixed;
 
 
 /* ---------- navbar ---------- */
@@ -110,27 +108,24 @@ h5 {
   position: relative;
 
   top: 8px;
-  left: 8px;
-  padding: 5px;
+  left: 143px;
   width: 50px;
   height: 50px;
+  padding: 5px;
 }
 
-.logo {
-  position: relative;
-
-  top: 5px;
-  left: 5px;
+.navbar-logo {
   width: 40px;
   height: 40px;
 }
 
 .main-navbar {
-  position: relative;
+  position: fixed;
   top: 66px;
-  gap: 8px;
   width: 178px;
   height: 124px;
+  display: flex;
+  flex-direction: column;
 }
 
 .nav-row {
@@ -141,163 +136,132 @@ h5 {
 
 .nav-item-tweet {
   position: relative;
-  justify-content: space-between;
   top: 16px;
   left: 16px;
-  gap: 16px;
+  display: flex;
+  justify-content: space-between;
   width: 112px;
   height: 26px;
-  color: #44444F;
-  text-decoration: none;
-}
-
-.nav-item-tweet:hover,
-.active {
-  text-decoration: none;
-  color: #FF6600;
 }
 
 .nav-item-user {
   position: relative;
   top: 16px;
   left: 16px;
-  gap: 16px;
+  display: flex;
+  justify-content: space-between;
   width: 130px;
   height: 26px;
   color: #44444F;
-  text-decoration: none;
 }
 
 .nav-item-user:hover,
-.active {
-  text-decoration: none;
+.nav-row.active .nav-item-title-user {
+  color: var(--brand-color);
+}
+
+.nav-item-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.nav-item-home-icon {
+  position: absolute;
+  top: 2.2px;
+  left: 0.9px;
+  width: 22.2px;
+  height: 20.25px;
+  background-image: url('/stylesheets/icons/home_filled.svg');
+}
+
+.nav-item-user-icon {
+  position: absolute;
+  top: 2.2px;
+  left: 0.9px;
+  width: 22.2px;
+  height: 22.2px;
+  background-image: url('/stylesheets/icons/user_outlined.svg');
+}
+
+.nav-item-user:hover .nav-item-icon .nav-item-user-icon,
+.nav-row.active .nav-item-icon .nav-item-user-icon {
+  background-image: url('/stylesheets/icons/user_filled.svg');
+}
+
+.nav-item-title-tweet {
+  width: 72px;
+  height: 26px;
+  font-weight: 700;
+  line-height: 26px;
   color: #FF6600;
 }
 
-.home-icon {
-  position: absolute;
-  left: 0px;
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  background-image: url('/images/icons/home_outlined.svg');
-  background-size: contain;
-}
-
-.nav-item-tweet:hover>.home-icon,
-.active>.home-icon {
-  position: absolute;
-  left: 0px;
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  background-image: url('/images/icons/home_filled.svg');
-  background-size: contain;
-}
-
-.user-icon {
-  position: absolute;
-  left: 0px;
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  background-image: url('/images/icons/user_outlined.svg');
-  background-size: contain;
-}
-
-.nav-item-user:hover>.user-icon,
-.active>.user-icon {
-  position: absolute;
-  left: 0px;
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  background-image: url('/images/icons/user_filled.svg');
-  background-size: contain;
-}
-
-.nav-title-tweet-tab {
-  width: 72px;
+.nav-item-title-user {
+  width: 90px;
   height: 26px;
-  /* padding-left: 35px; */
-  /* margin-bottom: 40px; */
   font-weight: 700;
-  font-size: 18px;
   line-height: 26px;
-  letter-spacing: 0px;
-  text-align: left;
 }
 
-.nav-title-user-tab {
-  width: 72px;
-  height: 26px;
-  /* padding-left: 35px; */
-  /* margin-bottom: 40px; */
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 26px;
-  letter-spacing: 0px;
-  text-align: left;
+.logout-form {
+  position: fixed;
+  bottom: 0;
 }
 
-.nav-row-logout {
-  position: absolute;
+.logout-btn {
   width: 178px;
   height: 58px;
-  top: 1142px;
-  /* bottom: 50px; */
+  text-decoration: none;
+  color: #44444F;
+  background-color: white;
+  border: none;
+}
+
+.logout-btn:focus {
+  outline: none;
+  background-color: white;
 }
 
 .nav-item-logout {
   position: relative;
-  /* top: 16px;
-  left: 16px; */
+  left: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 76px;
   height: 26px;
-  gap: 16px;
   color: #44444F;
-  text-decoration: none;
 }
 
-.nav-item-logout:hover {
-  text-decoration: none;
-  color: #FF6600;
+.nav-item-logout:hover,
+.nav-row.active .nav-item-title-logout {
+  color: var(--brand-color);
 }
 
-.logout-icon {
+.nav-item-logout-icon {
   position: absolute;
-  left: 0px;
-  display: inline-block;
+  top: 2px;
+  left: 3px;
   width: 24px;
   height: 24px;
-  background-image: url('/images/icons/logout.svg');
-  background-size: contain;
+  background-image: url('/stylesheets/icons/logout.svg');
 }
 
-.nav-item-logout:hover>.logout-icon {
-  position: absolute;
-  left: 0px;
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  background-image: url('/images/icons/logout_colored.svg');
-  background-size: contain;
+.nav-item-logout:hover .nav-item-icon .nav-item-logout-icon,
+.nav-row.active .nav-item-icon .nav-item-logout-icon {
+  background-image: url('/stylesheets/icons/logout_colored.svg');
 }
 
-.nav-title-logout {
+.nav-item-title-logout {
   width: 36px;
   height: 26px;
-  /* padding-left: 35px; */
-  /* margin-bottom: 40px; */
   font-weight: 700;
-  font-size: 18px;
   line-height: 26px;
-  letter-spacing: 0px;
-  text-align: left;
-}
+} 
 
 
-/* ---------- User signin ---------- */
+/* ---------- User / Admin Signin ---------- */
 
 .signin-container {
   height: 100vh;
@@ -317,7 +281,7 @@ h5 {
 }
 
 .signin-logo {
-  position: relative;
+  position: absolute; 
   top: 5px;
   left: 5px;
   width: 40px;
@@ -331,6 +295,17 @@ h5 {
   width: 185px;
   height: 26px;
   font-weight: 700;
+  line-height: 26px;
+}
+
+.admin-signin-title{
+  position: sticky;
+  margin: 0 auto;
+  top: 138px;
+  width: 112px;
+  height: 26px;
+  font-weight: 700;
+  line-height: 26px;
 }
 
 .form-item-account {
@@ -363,7 +338,7 @@ h5 {
 
 .form-input {
   height: 26px;
-  width: 346px;
+  width: 356px;
   padding: 0 0 0 10px;
   background-color: var(--form-gray);
   /* border */
@@ -455,7 +430,189 @@ h5 {
   letter-spacing: 0px;
 }
 
-.btn-orange {
-  color: rgb(255, 106, 0);
-  border-color: rgb(255, 106, 0);
+.admin-sub-btn {
+  position: relative;
+  top: 120px;
+  left: 268px;
+  width: 88px;
+  height: 36px;
+  padding: 6px 12px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0px;
 }
+
+
+/* ---------- Admin tweets ---------- */
+
+.admin-tweets {
+  display: flex;
+  flex-direction: row;
+}
+
+.admin-tweets-container {
+  position: fixed;
+  left: 332px;
+  width: 938px;
+  height: 100vh;
+  min-height: 400px;
+  margin: 0 0.87px;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  overflow: hidden;
+}
+
+.admin-tweets-header {
+  position: fixed;
+  left: 333px;
+  width: 937px;
+  height: 75px;
+  border-left: 1px solid #E6ECF0;
+  border-bottom: 1px solid #E6ECF0;
+  z-index: 1;
+  background-color: white;
+}
+
+.admin-tweets-header .main-title {
+  position: sticky;
+  top: 24px;
+  left: 354px;
+  width: 96px;
+  height: 26px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.admin-tweets-list-container {
+  position: absolute;
+  top: 91px;
+  left: 0;
+  width: 937px;
+  height: 1055px;
+  overflow-y: scroll;
+  bottom: 0;
+}
+
+.admin-tweets-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-tweets-footer {
+  position: fixed;
+  left: 332px;
+  bottom: 0;
+  width: 937px;
+  height: 54px;
+  border-top: 1px solid #E6ECF0;
+  z-index: 1;
+  background-color: white;
+}
+
+.admin-tweet-container {
+  width: 937px;
+  height: 103px;
+}
+
+.admin-tweet-left {
+  display: flex;
+  flex-direction: row;
+  padding: 0px 24px;
+  width: 634px;
+  height: 86px;
+  gap: 8px;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.admin-tweet-avatar {
+  width: 50px;
+  height: 50px;
+}
+
+.admin-tweet-avatar .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.admin-tweet-avatar .default-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.admin-tweet-right {
+  display: flex;
+  flex-direction: column;
+  width: 855px;
+  height: 86px;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.tweet-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 855px;
+  height: 26px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  height: 26px; 
+}
+
+.user-name {
+  text-align: left;
+  padding-right: 10px;
+  height: 26px;
+  font-family: "Noto Sans TC";
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0px;
+  color: #171725;
+}
+
+.user-sub-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: left;
+  height: 22px;
+  font-family: "Noto Sans TC";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0px;
+  color: #6C757D;
+}
+
+.delete-icon {
+  margin-right: 4px;
+  width: 24px;
+  height: 24px;
+  background-image: url('/stylesheets/icons/close.svg');
+  filter: invert(44%) sepia(11%) saturate(344%) hue-rotate(202deg) brightness(90%) contrast(88%);
+}
+
+.tweet-text {
+  text-align: left;
+  width: 855px;
+  height: 52px;
+  font-family: "Noto Sans TC";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  letter-spacing: 0px;
+  color: #171725;
+}
+
