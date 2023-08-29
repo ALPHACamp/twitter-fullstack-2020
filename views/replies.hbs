@@ -60,24 +60,41 @@
 {{!-- 貼文回覆 --}}
   <div class="col-12 mx-auto mt-2">
     {{#each replies}}
-      <div class="col-12 mx-auto p-2" style="border: 1px solid #E6ECF0">
-        <div class="d-flex flex-column">
-          <div class="d-flex flex-row ">
-            <a href="#">
-              <img class="" src="https://i.imgur.com/aCxYyck.jpg" alt="..." width="40px" height="40px"
-              style="border-radius: 30px">
+      <div style="padding: 16px 24px" class="mx-auto border-bottom">
+        <div class="d-flex flex-row">
+            <a class="" href="/users/{{../user.id}}/tweets">
+                <div style="width:50px; height:50px; background-color:#FF6600" class="rounded-circle overflow-hidden">
+                    <img src={{#if ../user.avatar}}{{../user.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+                        style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
+                </div>
             </a>
-            <p class="inline ms-1 mt-1">{{this.User.name}}</p>
-            <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{this.User.account}}</span>
-            <span class="ms-1 mt-2" style="font-size: 0.2em;">・{{relativeTimeFromNow this.createdAt}}</span>
-          </div>
+            <div style="margin-left: 8px" class="d-flex flex-column">
+                <div class="d-flex flex-row">
+                    <div style="font-size: 16px; font-weight: 600" class="align-middle align-self-center">
+                        {{../user.name}}
+                    </div>
+                    <div style="font-size: 14px;margin-left: 8px" class="text-muted align-middle align-self-center">
+                        @{{../user.account}}• {{relativeTimeFromNow this.createdAt}}</div>
+                </div>
 
-          <span class="ms-5" style="font-size:14px; color:#6C757D;">回覆 <span style="color:#FF6600">
-          @{{this.Tweet.User.name}}</span></span>
-          
-          <p class="text-break">{{this.comment}}</p>
+                <div style="margin: 8px 0px" class="d-flex flex-row">
+                    <div style="font-size: 14px; font-weight: 400" class="text-muted align-middle align-self-center">
+                        回覆給</div>
+                    <div style="font-size: 14px; font-weight: 400;color:#FF6600;margin-left: 2px"
+                        class="align-middle align-self-center">
+                        @{{this.Tweet.User.account}}
+                    </div>
+                </div>
+
+                <a href="/tweets/{{this.Tweet.id}}/replies" class="p-0" style="text-decoration: none; color:#171725 ">
+                    <div class="mx-auto">
+                        <p>{{this.comment}}</p>
+                    </div>
+                </a>
+            </div>
         </div>
-      </div>
+
+    </div>
     {{/each}}
   </div>
 
