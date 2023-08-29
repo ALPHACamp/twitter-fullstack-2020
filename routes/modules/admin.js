@@ -1,25 +1,26 @@
 const express = require('express')
 
-const { adminJWTAuth, sendToken } = require('../../middlewares/auth')
-const userController = require('../../controllers/pages/user-controller')
-const adminController = require('../../controllers/pages/admin-controller')
+const userController = require('../../../controllers/pages/user-controller')
+const adminController = require('../../../controllers/pages/admin-controller')
+
+// passport & auth
+const { adminLocalAuth, authenticatedAdmin } = require('../../../middlewares/auth')
 
 const router = express.Router()
 
 // Tweets page
-router.delete('/tweets/:id', adminJWTAuth, adminController.deleteTweets)
-router.get('/tweets', adminJWTAuth, adminController.getTweets)
+router.delete('/tweets/:id', authenticatedAdmin, adminController.deleteTweets)
+router.get('/tweets', authenticatedAdmin, adminController.getTweets)
 
 // Users page
-router.get('/users', adminJWTAuth, adminController.getUsers)
+router.get('/users', authenticatedAdmin, adminController.getUsers)
 
 // Signin
-router.get('/signin', adminJWTAuth, userController.getAdminSignInPage)
-router.post('/signin', adminJWTAuth, sendToken, userController.adminSignin)
+router.get('/signin', userController.getAdminSignInPage)
+router.get('/logout', userController.adminLogout)
+router.post('/signin', adminLocalAuth, userController.adminSignin)
 
 // Main route
-router.get('/logout', userController.adminLogout)
-
-router.get('/', adminJWTAuth, adminController.getAdminHomePage)
+router.get('/', authenticatedAdmin, adminController.getAdminHomePage)
 
 module.exports = router
