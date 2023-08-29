@@ -63,5 +63,37 @@ const sendToken = (req, res, next) => {
     return next(error)
   }
 }
+const authenticatedUser = (req, res, next) => {
+  try {
+    if (helpers.ensureAuthenticated(req)) {
+      const userRole = helpers.getUser(req).role
 
-module.exports = { sendToken, adminJWTAuth, userJWTAuth }
+      if (userRole !== 'admin') {
+        return next()
+      } else {
+        req.flash('error_messages', '管理員不能訪問此區域')
+        res.redirect('/admin/singin')
+      }
+    } else {
+      res.redirect('/signin')
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
+const authenticatedAdmin = (req, res, next) => {
+  if (helpers.ensureAuthenticated(req)) {
+    const userRole = helpers.getUser(req).role
+
+    if (userRole === 'admin') {
+      return next()
+    } else {
+      req.flash('error_messages', '只有管理員可以訪問此區域')
+      res.redirect('/singin')
+    }
+  } else {
+    res.redirect('/admin/signin')
+  }
+}
+module.exports = { authenticatedAdmin, authenticatedUser }
