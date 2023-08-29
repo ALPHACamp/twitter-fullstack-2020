@@ -1,8 +1,7 @@
 {{! 首頁表頭 }}
 <div class="partial-title p-4">
   <div
-    class="d-flex gap-3 p-0 m-0 h-26px justify-content-start align-items-center"
-  >
+    class="d-flex gap-3 p-0 m-0 h-26px justify-content-start align-items-center">
     <div class="d-flex flex-column m-0 p-0 gap-0">
       <p class="fw-bold m-0 p-0 align-bottom fs-4 ln-height-26px">使用者列表</p>
     </div>
@@ -19,19 +18,18 @@
           <img
             src="/images/default-cover.png"
             class="card-img-top user-cover"
-            alt="..."
-          />
+            alt="..." />
           <div
-            class="card-body d-flex flex-column justify-content-center align-items-center"
-          >
+            class="card-body d-flex flex-column justify-content-center align-items-center">
             <div
-              class="user-info position-absolute d-flex flex-column justify-content-center align-items-center"
-            >
+              class="user-info position-absolute d-flex flex-column justify-content-center align-items-center">
               <div class="d-flex flex-column align-items-center gap-2 mb-3">
-                <img src="/images/user-avatar.svg" class="user-avatar" alt="" />
+                <img src="{{ this.avatar }}" class="user-avatar" alt="" />
                 <div>
-                  <p class="fw-bold fs-6 m-0 p-0">Apple</p>
-                  <p class="font-size-sm text-secondary m-0 p-0">@apple</p>
+                  <p class="fw-bold fs-6 m-0 p-0">{{ this.name }}</p>
+                  <p class="font-size-sm text-secondary m-0 p-0">
+                    @{{ this.account }}
+                  </p>
                 </div>
               </div>
               <div class="user-like d-flex gap-3 m-0 mb-2">
@@ -39,22 +37,28 @@
                   <img
                     src="/images/icons/Vector.svg"
                     alt=""
-                    class="text-secondary"
-                  />
-                  <span class="fs-6">1.5k</span>
+                    class="text-secondary" />
+                  <span class="fs-6">{{ this.tweetCount }}</span>
                 </div>
                 <div class="gap-2">
                   <img
                     src="/images/icons/icon_like_outlined.svg"
                     alt=""
-                    class="text-secondary"
-                  />
-                  <span class="fs-6">1.5k</span>
+                    class="text-secondary" />
+                  <span class="fs-6">{{ this.likeCount }}</span>
                 </div>
               </div>
               <div class="user-followship d-flex gap-2 font-size-sm">
-                <p>34個<span class="text-secondary">跟隨中</span></p>
-                <p>59位<span class="text-secondary">跟隨者</span></p>
+                <p>
+                  {{ this.followingCount }} 個<span class="text-secondary"
+                    >跟隨中</span
+                  >
+                </p>
+                <p>
+                  {{ this.followerCount }} 位<span class="text-secondary"
+                    >跟隨者</span
+                  >
+                </p>
               </div>
             </div>
           </div>

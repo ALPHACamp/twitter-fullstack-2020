@@ -3,8 +3,8 @@ const errorHandler = require('./errors-helpers')
 const { Op } = require('sequelize')
 const { Tweet, User, sequelize } = require('../models')
 
-const followingUsersTweets = async req => {
-  return await Tweet.findAll({
+const followingUsersTweets = req => {
+  return Tweet.findAll({
     where: {
       [Op.or]: [
         {
@@ -35,7 +35,7 @@ const followingUsersTweets = async req => {
 
 const isValidWordsLength = (text, len, next) => {
   try {
-    if (!text || !text.length) {
+    if (!text.length) {
       throw new errorHandler.TweetError('內容不可空白')
     }
     if (text.length > len) {
