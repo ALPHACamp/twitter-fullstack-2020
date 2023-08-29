@@ -1,25 +1,20 @@
 {{>navs/user-left-column  route='tweets'}}
 
-<div style=" margin: 0px 25px; width:641px; " class="border">
+<div style="position: absolute; left: 332px; width:641px;" class="border">
   {{>header route='main' title='首頁'}}
   {{!-- 發文 --}}
-  <div class="mx-auto" style="border: 1px solid #E6ECF0">
-    <div class="d-flex flex-column p-2">
-      <div class="d-flex flex-row">
-        <a href="#">
-          <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt=""
-            width="40px" height="40px" style="background-color:#FF6600; border-radius: 30px">
-        </a>
-        <p class="inline ms-1 mt-2">有什麼新鮮事?</p>
-      </div>
-
-      <div class="d-flex flex-row-reverse ">
-        <button class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px"
-           data-bs-toggle="modal" data-bs-target="#myModalmain">
-          推文
-        </button>
-      </div>
+  <div class="d-flex flex-column p-2 border-bottom" style="position: fixed; top: 75px; width: 640px; height: 136px; background-color: white;">
+    <div class="d-flex flex-row">
+      <a href="#">
+        <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png" alt=""
+          width="40px" height="40px" style="background-color:#FF6600; border-radius: 30px">
+      </a>
+      <p class="inline ms-1 mt-2">有什麼新鮮事?</p>
     </div>
+    <button class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px;position: absolute; bottom: 16px; left: 550px;"
+        data-bs-toggle="modal" data-bs-target="#myModalmain">
+      推文
+    </button>
   </div>
   
   {{!-- 留言 --}}

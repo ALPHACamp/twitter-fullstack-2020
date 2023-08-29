@@ -1,15 +1,12 @@
-{{>navs/user-left-column  route='users'}}
+{{>navs/user-left-column route='users'}}
 
-<div style=" margin: 0px 25px; width:641px; " class="border">
-    {{>header route='user'}}
-    <div class="mx-auto border border-light">
-        
-        {{>userpage-info}}
-        {{>navs/user-page-tabs route='likes'}}
-    </div>
+<div style="position: absolute; left: 332px; width:641px;" class="border">
+    {{>header route='user'}}        
+    {{>userpage-info}}
+    {{>navs/user-page-tabs route='likes'}}
     {{!-- 留言 --}}
     {{#each tweets}}
-    {{>contentcards/tweet-card}}
+        {{>contentcards/tweet-card}}
     {{/each}}
 </div>
 
