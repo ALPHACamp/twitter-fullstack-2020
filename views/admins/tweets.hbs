@@ -1,10 +1,8 @@
-{{> admin-left-column}}
-<div class="border-start border-end" style="position: absolute; left: 24px; width: 937px;margin-left: 333px;">
-  <div class="border-bottom" style="margin-top: 24px; height: 51px;">
-    <h4 class="fw-bold" style="margin-left: 21px;">推文清單</h4>
-  </div>
+{{> navs/admin-left-column}}
+<div class="border-start border-end" style="position: absolute; left: 332px; width: 936px; min-height: 100%;">
+  {{>header route='main' title='推文清單'}}
   {{#each tweets}}
-    <div class="border-bottom" style="padding: 16px 0 16px 0;width: 937px;">
+    <div class="border-bottom" style="padding: 16px 0 16px 0;width: 936px;">
       <div class="d-flex">
         <div class="rounded-circle overflow-hidden" style="height: 50px; width: 50px;margin-left: 24px;margin-right: 8px;">
           <img src={{#if this.User.avatar}}{{this.User.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
@@ -19,7 +17,7 @@
             <form id="deleteTweet{{this.id}}" action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
               <button style="border: none;background-color: inherit;" type="button" data-bs-toggle="modal" data-bs-target="#checkDelete{{this.id}}">
                 <div style="height: 24px; width: 24px; padding: 4.5px;">
-                  {{> close-icon}}
+                  {{> icons/close-icon}}
                 </div>
               </button>
             </form>

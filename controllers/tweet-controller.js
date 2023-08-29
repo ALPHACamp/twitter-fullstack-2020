@@ -2,7 +2,6 @@ const { User, Tweet, Like, Reply } = require('../models')
 const helpers = require('../_helpers')
 
 const tweetController = {
-//  add controller action here
   getTweets: (req, res, next) => {
     const userId = helpers.getUser(req).id
     const reqUser = helpers.getUser(req)

@@ -1,10 +1,9 @@
 const { User, Tweet, Reply, Like } = require('../models')
-const helpers = require('../helpers/auth-helpers')
-const replyController = {
-//  add controller action here
+const helpers = require('../_helpers')
 
+const replyController = {
   getTweetReplies: (req, res, next) => {
-    const reqUser = req.user
+    const reqUser = helpers.getUser(req)
     const { id } = req.params
     const userId = req.user.id
 
@@ -22,7 +21,7 @@ const replyController = {
         nest: true
       }),
       Like.findAll({
-        where: { UserId: req.user.id },
+        where: { UserId: helpers.getUser(req).id },
         raw: true
       }),
       User.findAll({
@@ -52,7 +51,7 @@ const replyController = {
       .catch(err => next(err))
   },
   postReply: (req, res, next) => {
-    const userId = req.user.id
+    const userId = helpers.getUser(req).id
     const { tweetId } = req.params
     const { comment } = req.body
     if (!comment) throw new Error('內容不可空白')

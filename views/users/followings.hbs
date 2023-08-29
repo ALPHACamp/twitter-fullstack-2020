@@ -1,12 +1,10 @@
-{{>navigation route='users'}}
-<div style="margin-left:198px; padding: 0px 10px; width:641px; " class="border border-light">
-    <div class="mx-auto border border-light">
-        {{>header}}
-        {{>user-followpage-tabs route='followings'}}
-    </div>
+{{>navs/user-left-column route='users'}}
+<div style="position: absolute; left: 332px; width:641px;" class="border">
+    {{>header route='user'}}
+    {{>navs/user-followpage-tabs route='followings'}}
     {{!-- 留言 --}}
     {{#each tweets}}
-    {{>user-followpage-tweet-card}}
+        {{>contentcards/user-followpage-tweet-card}}
     {{/each}}
 </div>
 {{>top-users-bar}}

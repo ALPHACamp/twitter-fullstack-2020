@@ -1,18 +1,17 @@
-{{>navigation route='users'}}
+{{>navs/user-left-column  route='users'}}
 
-<div style="margin-left:198px; padding: 0px 10px; width:641px; " class="border border-light">
-    <div class="mx-auto border border-light">
-        {{>header}}
-        {{>userpage-info}}
-        {{>user-page-tabs route='replies'}}
-    </div>
+<div style="position: absolute; left: 332px; width:641px;" class="border">
+    {{>header route='user'}}
+    {{>userpage-info}}
+    {{>navs/user-page-tabs route='replies'}}
     <!-- 貼文回覆 -->
     {{#each user.Replies}}
-    <div class="mx-auto p-2" style="border: 1px solid #E6ECF0">
+    <div class="mx-auto p-2 border-bottom" >
         <div class="d-flex flex-column">
             <div class="d-flex flex-row">
                 <a href="#">
-                    <img class="" src="https://i.imgur.com/aCxYyck.jpg" alt="" width="40px" height="40px"
+                    <img class="" src={{#if
+                user.avatar}}{{user.avatar}}{{else}}"/icon/avatar.jpg"{{/if}} alt="" width="40px" height="40px"
                         style="border-radius: 30px">
                 </a>
                 <p class="inline ms-1 mt-1">{{../user.name}}</p>
@@ -26,25 +25,6 @@
         </div>
     </div>
     {{/each}}
-    <!-- 貼文回覆 -->
-    <div class="mx-auto p-2" style="border: 1px solid #E6ECF0">
-        <div class="d-flex flex-column">
-            <div class="d-flex flex-row">
-                <a href="#">
-                    <img class="" src="https://i.imgur.com/aCxYyck.jpg" alt="" width="40px" height="40px"
-                        style="border-radius: 30px">
-                </a>
-                <p class="inline ms-1 mt-1">Justin Biber</p>
-                <span class="ms-1 mt-2" style="font-size: 0.2rem;">@justin</span>
-                <span class="ms-1 mt-2" style="font-size: 0.2em;">・ 3小時</span>
-            </div>
-
-            <span class="ms-5" style="font-size:14px; color:#6C757D;">回覆 <span
-                    style="color:#FF6600">@christofu</span></span>
-            <p class="ms-5 me-5 mt-2">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.
-                Voluptate exercitation incididunt aliquip deserunt.</p>
-        </div>
-    </div>
 </div>
 
 {{>top-users-bar}}

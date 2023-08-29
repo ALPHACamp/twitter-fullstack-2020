@@ -1,6 +1,7 @@
-{{>navigation route='tweets'}}
+{{>navs/user-left-column  route='tweets'}}
 
-<div style="margin-left:198px; padding: 0px 10px; width:641px; " class="border border-light">
+<div style="position: absolute; left: 332px; width:641px;" class="border">
+  {{>header route='main' title='首頁'}}
   {{!-- 發文 --}}
   <div class="mx-auto" style="border: 1px solid #E6ECF0">
     <h5 class="d-flex flex-row ps-3 pt-3 pb-3" style="border-bottom: 1px solid #E6ECF0">首頁</h5>
@@ -34,9 +35,7 @@
         this.User.avatar}}{{this.User.avatar}}{{else}}"https://s3.ap-southeast-2.amazonaws.com/cdn.greekherald.com.au/wp-content/uploads/2020/07/05194617/default-avatar.png"{{/if}}
         style="aspect-ratio: 1 / 1;width: 40px;object-fit: cover;object-position: center; border-radius: 30px" alt="avatar">
       </a>
-      <p class="inline ms-1 mt-1">{{this.User.name}}</p>
-      <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{this.User.account}}</span>
-      <span class="mt-2" style="font-size: 0.2em;">・{{relativeTimeFromNow this.createdAt}}</span>
+      <p class="inline ms-1 mt-2">有什麼新鮮事?</p>
     </div>
 
     <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color:#171725">
@@ -70,10 +69,8 @@
 
         <span class="m-1"  style="font-size: 0.2rem;">{{this.Likes.length}}</span>
       </div>
+      {{/each}}
     </div>
-  </div>
-  </div>
-  {{/each}}
   </div>
 </div>
 
