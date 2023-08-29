@@ -1,33 +1,45 @@
 const { User, Tweet, Like, Reply, Followship } = require('../models')
 const bcrypt = require('bcryptjs')
-const helpers = require('../helpers/auth-helpers')
+const helpers = require('../_helpers')
 const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
   getEditPage: async (req, res, next) => {
     try {
-      if (Number(req.params.id) !== helpers.getUser(req).id) throw new Error('沒有瀏覽權限!')
-      const reqUser = req.user
+      if (Number(req.params.id) !== helpers.getUser(req).id) {
+        req.flash('error_messages', '沒有瀏覽權限!')
+        return res.redirect(`/api/users/${helpers.getUser(req).id}`)
+      }
       const user = await User.findByPk(req.params.id, { raw: true })
-      return res.render('users/edit', { user, reqUser })
+      if (!user) throw new Error('使用者不存在!')
+      res.render('users/edit', { user, reqUser: helpers.getUser(req) })
     } catch (err) {
       next(err)
     }
   },
   editUser: async (req, res, next) => {
     try {
-      if (Number(req.params.id) !== helpers.getUser(req).id) throw new Error('沒有編輯權限!')
-      const { name, account, email, password, checkPassword, introduction } = req.body
-      if (password !== checkPassword) throw new Error('密碼不相符!')
-      if (name.length > 50) throw new Error('暱稱長度不可超過50個字!')
-
-      const user = await User.findByPk(Number(req.params.id))
+      if (Number(req.params.id) !== helpers.getUser(req).id) {
+        req.flash('error_messages', '沒有編輯權限!')
+        return res.redirect(`/api/users/${helpers.getUser(req).id}`)
+      }
+      const user = await User.findByPk(req.params.id)
       if (!user) throw new Error('使用者不存在!')
 
+      const { name, account, email, password, checkPassword, introduction } = req.body
       const updateInfo = {}
-      if (name) updateInfo.name = name
-      if (password) updateInfo.password = await bcrypt.hash(password, 10)
-      if (introduction) updateInfo.introduction = introduction
+      if (name) {
+        if (name.length > 50) throw new Error('暱稱長度不可超過50個字!')
+        updateInfo.name = name
+      }
+      if (password) {
+        if (password !== checkPassword) throw new Error('密碼不相符!')
+        updateInfo.password = await bcrypt.hash(password, 10)
+      }
+      if (introduction) {
+        if (introduction.length > 160) throw new Error('自我介紹長度不可超過160個字!')
+        updateInfo.introduction = introduction
+      }
       if (account) {
         const sameAccountUser = await User.findOne({ where: { account } })
         if (sameAccountUser && sameAccountUser.id !== Number(req.params.id)) throw new Error('該帳號名稱已被使用!')
@@ -39,14 +51,16 @@ const userController = {
         updateInfo.email = email
       }
 
-      const { avatar, cover } = req.files
-      if (avatar) {
-        const avatarFilePath = await imgurFileHandler(...avatar)
-        updateInfo.avatar = avatarFilePath
-      }
-      if (cover) {
-        const coverFilePath = await imgurFileHandler(...cover)
-        updateInfo.cover = coverFilePath
+      if (req.files) {
+        const { avatar, cover } = req.files
+        if (avatar) {
+          const avatarFilePath = await imgurFileHandler(...avatar)
+          updateInfo.avatar = avatarFilePath
+        }
+        if (cover) {
+          const coverFilePath = await imgurFileHandler(...cover)
+          updateInfo.cover = coverFilePath
+        }
       }
       await user.update(updateInfo)
       req.flash('success_messages', '使用者資料編輯成功')
@@ -57,7 +71,7 @@ const userController = {
   },
   getUserTweetsPage: async (req, res, next) => {
     try {
-      const reqUser = req.user
+      const reqUser = helpers.getUser(req)
       const { userId } = req.params
       // info area
       const user = await User.findByPk(userId, {
@@ -67,7 +81,7 @@ const userController = {
           { model: User, as: 'Followings' }
         ]
       })
-      const isFollowed = req.user && req.user.Followings.some(f => f.id === Number(userId))
+      const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
       // tweet area
       const tweets = await Tweet.findAll({
         order: [['createdAt', 'DESC']],
@@ -96,7 +110,7 @@ const userController = {
           // 計算追蹤者人數
           followerCount: u.Followers.length,
           // 判斷目前登入使用者是否已追蹤該 user 物件
-          isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === u.id)
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
@@ -107,7 +121,7 @@ const userController = {
   },
   getUserRepliesPage: async (req, res, next) => {
     try {
-      const reqUser = req.user
+      const reqUser = helpers.getUser(req)
       const { userId } = req.params
       // info area // replytweets area
       const user = await User.findByPk(userId, {
@@ -118,7 +132,7 @@ const userController = {
           { model: User, as: 'Followings' }
         ]
       })
-      const isFollowed = req.user && req.user.Followings.some(f => f.id === Number(userId))
+      const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
       const topUsers = await users
@@ -130,7 +144,7 @@ const userController = {
           // 計算追蹤者人數
           followerCount: u.Followers.length,
           // 判斷目前登入使用者是否已追蹤該 user 物件
-          isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === u.id)
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
@@ -141,7 +155,7 @@ const userController = {
   },
   getUserLikesPage: async (req, res, next) => {
     try {
-      const reqUser = req.user
+      const reqUser = helpers.getUser(req)
       const { userId } = req.params
       // info area
       const user = await User.findByPk(userId, {
@@ -151,7 +165,7 @@ const userController = {
           { model: User, as: 'Followings' }
         ]
       })
-      const isFollowed = req.user && req.user.Followings.some(f => f.id === Number(userId))
+      const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
       // likedtweet area
       const likes = await Like.findAll({
         where: { userId: userId },
@@ -184,7 +198,7 @@ const userController = {
           // 計算追蹤者人數
           followerCount: u.Followers.length,
           // 判斷目前登入使用者是否已追蹤該 user 物件
-          isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === u.id)
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
@@ -195,7 +209,7 @@ const userController = {
   },
   getUserFollowingsPage: async (req, res, next) => {
     try {
-      const reqUser = req.user
+      const reqUser = helpers.getUser(req)
       const { userId } = req.params
       // header area
       const user = await User.findByPk(userId, {
@@ -215,7 +229,7 @@ const userController = {
       const tweetsResult = tweets
         .map(t => ({
           ...t.toJSON(),
-          isFollowed: req.user && req.user.Followings.some(f => f.id === t.userId)
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === t.userId)
         }))
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
@@ -228,7 +242,7 @@ const userController = {
           // 計算追蹤者人數
           followerCount: u.Followers.length,
           // 判斷目前登入使用者是否已追蹤該 user 物件
-          isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === u.id)
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
@@ -239,7 +253,7 @@ const userController = {
   },
   getUserFollowersPage: async (req, res, next) => {
     try {
-      const reqUser = req.user
+      const reqUser = helpers.getUser(req)
       const { userId } = req.params
       // header area
       const user = await User.findByPk(userId, {
@@ -259,7 +273,7 @@ const userController = {
       const tweetsResult = tweets
         .map(t => ({
           ...t.toJSON(),
-          isFollowed: req.user && req.user.Followings.some(f => f.id === t.userId)
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === t.userId)
         }))
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
@@ -272,7 +286,7 @@ const userController = {
           // 計算追蹤者人數
           followerCount: u.Followers.length,
           // 判斷目前登入使用者是否已追蹤該 user 物件
-          isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
+          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === u.id)
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
@@ -287,17 +301,17 @@ const userController = {
       User.findByPk(userId),
       Followship.findOne({
         where: {
-          followerId: req.user.id,
+          followerId: helpers.getUser(req).id,
           followingId: req.params.userId
         }
       })
     ])
       .then(([user, followship]) => {
         if (!user) throw new Error("User didn't exist!")
-        if (user.id === req.user.id) throw new Error('You are not allowed to follow yourself!')
+        if (user.id === helpers.getUser(req).id) throw new Error('You are not allowed to follow yourself!')
         if (followship) throw new Error('You are already following this user!')
         return Followship.create({
-          followerId: req.user.id,
+          followerId: helpers.getUser(req).id,
           followingId: userId
         })
       })
@@ -307,7 +321,7 @@ const userController = {
   removeFollowing: (req, res, next) => {
     return Followship.findOne({
       where: {
-        followerId: req.user.id,
+        followerId: helpers.getUser(req).id,
         followingId: req.params.userId
       }
     })

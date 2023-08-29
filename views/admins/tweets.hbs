@@ -1,8 +1,8 @@
 {{> navs/admin-left-column}}
-<div style=" margin: 0px 25px; width:937px; " class="border">
+<div class="border-start border-end" style="position: absolute; left: 332px; width: 936px; min-height: 100%;">
   {{>header route='main' title='推文清單'}}
   {{#each tweets}}
-    <div class="border-bottom" style="padding: 16px 0 16px 0;width: 937px;">
+    <div class="border-bottom" style="padding: 16px 0 16px 0;width: 936px;">
       <div class="d-flex">
         <div class="rounded-circle overflow-hidden" style="height: 50px; width: 50px;margin-left: 24px;margin-right: 8px;">
           <img src={{#if this.User.avatar}}{{this.User.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}

@@ -1,5 +1,5 @@
 {{>navs/user-left-column route='edit'}}
-<div style=" margin: 0px 25px; width:641px; " class="border">
+<div style="position: absolute; left: 332px; width: 641px; height: 100%" class="border border-top border-end">
   {{>header route='main' title='帳戶設定'}}
   <form action="/api/users/{{user.id}}" method="POST">
     <div class="form-floating mb-3" style="width: 593px;height: 54px;margin: 24px auto;">
@@ -33,5 +33,37 @@
     </div>
   </form>
 </div>
-<div style="width:273px" class="card border-white vh-100 bg-white float-end sticky-top">
+
+{{!-- modal 主頁欄 --}}
+
+<div class="modal" id="myModalmain" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="d-flex justify-content-start">
+        <button type="button" class="btn-close ms-2 mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <hr style="margin-top: 5px; margin-bottom: 5px;">
+
+      <form action="" method="POST">
+        <div class="ms-2">
+          <div class="d-flex flex-row">
+            <a href="#">
+              <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png"
+                alt="" width="40px" height="40px" style="background-color:#FF6600; border-radius: 30px">
+            </a>
+
+            <textarea class="ms-1 mt-2" name="tweet" id="" cols="45" rows="6" placeholder="有什麼新鮮事"
+              style="border:none"></textarea>
+          </div>
+        </div>
+
+        <div class="d-flex flex-row-reverse mb-3 me-2">
+          <button class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px"
+            type="submit">
+            推文
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
+</div>

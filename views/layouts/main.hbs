@@ -19,10 +19,12 @@
 
 <body class="d-flex flex-column h-100 bg-white">
   <main style="min-width:1000px"class="mx-auto" role="main">
-        {{> messages}}
-        <div class="d-flex justify-content-between">
-        {{{body}}}
-        </div>
+    <div style="position: fixed; bottom: 2%;left: 40%;width: 20%;opacity: 0.95;z-index: 10">
+      {{> messages}}
+    </div>  
+    <div class="d-flex justify-content-between">
+      {{{body}}}
+    </div>
   </main>
 </body>
 
