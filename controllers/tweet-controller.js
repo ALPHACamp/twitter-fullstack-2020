@@ -4,6 +4,7 @@ const tweetController = {
 //  add controller action here
   getTweets: (req, res, next) => {
     const reqUser = req.user
+    const userId = req.user.id
     return Promise.all([
       Tweet.findAll({
         order: [['createdAt', 'DESC']],
@@ -22,9 +23,10 @@ const tweetController = {
       User.findAll({
         include: [{ model: User, as: 'Followers' }],
         where: { role: 'user' }
-      })
+      }),
+      User.findByPk(userId)
     ])
-      .then(([tweets, like, users]) => {
+      .then(([tweets, like, users, user]) => {
         const likedTweets = like.map(like => like.tweetId)
         const data = tweets.map(t => ({
           ...t.toJSON(),
@@ -42,8 +44,7 @@ const tweetController = {
             isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
-        // console.log(data)
-        res.render('tweet', { tweets: data, reqUser, topUsers })
+        res.render('tweet', { tweets: data, reqUser, topUsers, user: user.toJSON() })
       })
       .catch(err => next(err))
   },

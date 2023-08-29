@@ -6,6 +6,7 @@ const replyController = {
   getTweetReplies: (req, res, next) => {
     const reqUser = req.user
     const { id } = req.params
+    const userId = req.user.id
 
     Promise.all([
       Tweet.findByPk(id, {
@@ -27,10 +28,11 @@ const replyController = {
       User.findAll({
         include: [{ model: User, as: 'Followers' }],
         where: { role: 'user' }
-      })
+      }),
+      User.findByPk(userId)
     ])
-      .then(([tweet, replies, likes, users]) => {
-        const likedTweets = likes.map(like => like.tweetId)
+      .then(([tweet, replies, likes, users, user]) => {
+        const likedTweets = likes.map(like => (like.tweetId))
         const isLiked = likedTweets.includes(tweet.id)
         // topUser
         const topUsers = users
@@ -44,7 +46,8 @@ const replyController = {
             isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
-        res.render('replies', { tweet: tweet.toJSON(), replies, isLiked, topUsers, reqUser })
+
+        res.render('replies', { tweet: tweet.toJSON(), replies, isLiked, topUsers, reqUser, user: user.toJSON() })
       })
       .catch(err => next(err))
   },
