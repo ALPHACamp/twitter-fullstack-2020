@@ -1,4 +1,5 @@
 const userService = require('../../service/user-services')
+const { User } = require('../../models')
 
 const apiController = {
   getUserEditPage: async (req, res, next) => {

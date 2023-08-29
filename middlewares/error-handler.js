@@ -1,5 +1,5 @@
 const errors = require('../helpers/errors-helpers')
-
+const helpers = require('../_helpers')
 const errorHandler = (err, req, res, next) => {
   let errorMessage = ''
   switch (err.constructor) { // 用constructor來區分不同的錯誤
@@ -34,7 +34,10 @@ const errorHandler = (err, req, res, next) => {
   }
 
   req.flash('error_messages', errorMessage)
-  res.redirect('back') // 回到上一頁
+  const redirectTo = helpers.getUser(req).role === 'admin' ? '/admin/signin' : '/signin'
+  const referer = req.get('Referer') || redirectTo // 避免上一頁沒有東西
+  console.log('error-handler #39:', errorMessage)
+  res.redirect(referer) // 回到上一頁
 
   return next(err) // 預留，以後可以記log用
 }

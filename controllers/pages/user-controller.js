@@ -28,14 +28,15 @@ const userController = {
     }
   },
 
-  // 以下兩個logout重複需要合併優化
   adminLogout: (req, res, next) => {
     try {
-      if (req && req.cookies) {
-        res.cookie('jwtToken', '', { expires: new Date(0) })
-        return res.redirect('/admin/signin', { role: 'admin' })
-      }
-      next()
+      req.logout(function (err) {
+        if (err) {
+          return next(err)
+        }
+
+        res.redirect('/admin/signin')
+      })
     } catch (error) {
       return next(error)
     }
@@ -131,11 +132,13 @@ const userController = {
   },
   getLogout: (req, res, next) => {
     try {
-      if (req && req.cookies) {
-        res.cookie('jwtToken', '', { expires: new Date(0) })
-        return res.redirect('/signin')
-      }
-      // next()
+      req.logout(function (err) {
+        if (err) {
+          return next(err)
+        }
+
+        res.redirect('/signin')
+      })
     } catch (error) {
       return next(error)
     }
@@ -147,7 +150,6 @@ const userController = {
 
       const viewingUser = await userHelper.getUserInfo(req)
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist!")
-      console.log('viewingUser', viewingUser)
 
       const tweets = await Tweet.findAll({
         include: [
